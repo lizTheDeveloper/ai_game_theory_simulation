@@ -6330,7 +6330,55 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 710,
+    "line": 698,
+    "type": "property",
+    "name": "cooperativeOwnershipEvents",
+    "currentDoc": "(none)",
+    "context": "cooperativeOwnershipEvents?: Array<{"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 699,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 700,
+    "type": "property",
+    "name": "orgId",
+    "currentDoc": "(none)",
+    "context": "orgId: string;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 701,
+    "type": "property",
+    "name": "eventType",
+    "currentDoc": "(none)",
+    "context": "eventType: 'conversion' | 'dividend_distribution' | 'crisis_response' | 'governance_decision';"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 702,
+    "type": "property",
+    "name": "details",
+    "currentDoc": "(none)",
+    "context": "details: string;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 703,
+    "type": "property",
+    "name": "economicImpact",
+    "currentDoc": "(none)",
+    "context": "economicImpact?: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 720,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -6338,7 +6386,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 711,
+    "line": 721,
     "type": "property",
     "name": "data",
     "currentDoc": "(none)",
@@ -10154,7 +10202,23 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
-    "line": 133,
+    "line": 129,
+    "type": "property",
+    "name": "governanceModel",
+    "currentDoc": "(none)",
+    "context": "governanceModel?: 'traditional' | 'worker-cooperative';"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
+    "line": 130,
+    "type": "property",
+    "name": "cooperativeMetrics",
+    "currentDoc": "(none)",
+    "context": "cooperativeMetrics?: CooperativeOwnershipMetrics;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
+    "line": 177,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -10162,7 +10226,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
-    "line": 134,
+    "line": 178,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -10170,7 +10234,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
-    "line": 136,
+    "line": 180,
     "type": "property",
     "name": "startMonth",
     "currentDoc": "(none)",
@@ -10178,7 +10242,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
-    "line": 141,
+    "line": 185,
     "type": "property",
     "name": "capitalInvested",
     "currentDoc": "(none)",
@@ -10186,7 +10250,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
-    "line": 149,
+    "line": 193,
     "type": "property",
     "name": "canBeCanceled",
     "currentDoc": "(none)",
@@ -37714,7 +37778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/computeInfrastructure.ts",
-    "line": 745,
+    "line": 773,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -37722,7 +37786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/computeInfrastructure.ts",
-    "line": 746,
+    "line": 774,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -37730,7 +37794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/computeInfrastructure.ts",
-    "line": 747,
+    "line": 775,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -37738,7 +37802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/computeInfrastructure.ts",
-    "line": 748,
+    "line": 776,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -37746,7 +37810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/computeInfrastructure.ts",
-    "line": 749,
+    "line": 777,
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -37754,7 +37818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/computeInfrastructure.ts",
-    "line": 750,
+    "line": 778,
     "type": "property",
     "name": "compute",
     "currentDoc": "(none)",
@@ -37762,7 +37826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/computeInfrastructure.ts",
-    "line": 751,
+    "line": 779,
     "type": "property",
     "name": "maxCoherent",
     "currentDoc": "(none)",
@@ -37770,7 +37834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/computeInfrastructure.ts",
-    "line": 752,
+    "line": 780,
     "type": "property",
     "name": "violation",
     "currentDoc": "(none)",
@@ -37778,7 +37842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/computeInfrastructure.ts",
-    "line": 753,
+    "line": 781,
     "type": "property",
     "name": "message",
     "currentDoc": "(none)",
@@ -38143,6 +38207,422 @@
     "name": "precautionaryModel",
     "currentDoc": "(none)",
     "context": "precautionaryModel: model,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 120,
+    "type": "property",
+    "name": "org",
+    "currentDoc": "(none)",
+    "context": "org: Organization,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 121,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 144,
+    "type": "property",
+    "name": "memberCount",
+    "currentDoc": "(none)",
+    "context": "memberCount: estimatedWorkforce,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 148,
+    "type": "property",
+    "name": "profitSurplus",
+    "currentDoc": "(none)",
+    "context": "profitSurplus: 0,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 153,
+    "type": "property",
+    "name": "decisionLatency",
+    "currentDoc": "(none)",
+    "context": "decisionLatency: GOVERNANCE_OVERHEAD_FACTOR,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 155,
+    "type": "property",
+    "name": "crisisResilienceBonus",
+    "currentDoc": "(none)",
+    "context": "crisisResilienceBonus: CRISIS_RESILIENCE_BONUS,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 156,
+    "type": "property",
+    "name": "employmentStabilityFactor",
+    "currentDoc": "(none)",
+    "context": "employmentStabilityFactor: EMPLOYMENT_STABILITY_MULTIPLIER"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 164,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 165,
+    "type": "property",
+    "name": "orgId",
+    "currentDoc": "(none)",
+    "context": "orgId: org.id,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 166,
+    "type": "property",
+    "name": "eventType",
+    "currentDoc": "(none)",
+    "context": "eventType: 'conversion',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 167,
+    "type": "property",
+    "name": "details",
+    "currentDoc": "(none)",
+    "context": "details: `${org.name} converted to worker cooperative (${estimatedWorkforce} worker-owners)`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 168,
+    "type": "property",
+    "name": "economicImpact",
+    "currentDoc": "(none)",
+    "context": "economicImpact: 0"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 190,
+    "type": "property",
+    "name": "org",
+    "currentDoc": "(none)",
+    "context": "org: Organization,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 191,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 211,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateProfitDistribution',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 212,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'distributableSurplus',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 213,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 214,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { orgId: org.id, revenue: org.monthlyRevenue, expenses: org.monthlyExpenses }"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 233,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 234,
+    "type": "property",
+    "name": "orgId",
+    "currentDoc": "(none)",
+    "context": "orgId: org.id,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 235,
+    "type": "property",
+    "name": "eventType",
+    "currentDoc": "(none)",
+    "context": "eventType: 'dividend_distribution',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 236,
+    "type": "property",
+    "name": "details",
+    "currentDoc": "(none)",
+    "context": "details: `Distributed $${(cashDistribution / 1e6).toFixed(1)}M to ${metrics.memberCount} workers`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 237,
+    "type": "property",
+    "name": "economicImpact",
+    "currentDoc": "(none)",
+    "context": "economicImpact: cashDistribution"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 260,
+    "type": "property",
+    "name": "org",
+    "currentDoc": "(none)",
+    "context": "org: Organization,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 261,
+    "type": "property",
+    "name": "baselineRisk",
+    "currentDoc": "(none)",
+    "context": "baselineRisk: number,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 262,
+    "type": "property",
+    "name": "inCrisis",
+    "currentDoc": "(none)",
+    "context": "inCrisis: boolean,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 263,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 264,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 284,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyCooperativeCrisisResilience',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 285,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'adjustedRisk',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 286,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 298,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 299,
+    "type": "property",
+    "name": "orgId",
+    "currentDoc": "(none)",
+    "context": "orgId: org.id,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 300,
+    "type": "property",
+    "name": "eventType",
+    "currentDoc": "(none)",
+    "context": "eventType: 'crisis_response',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 301,
+    "type": "property",
+    "name": "details",
+    "currentDoc": "(none)",
+    "context": "details: `Workers accepted wage flexibility to preserve employment (risk reduced ${((baselineRisk - validatedRisk) * 100).toFixed(0)}%)`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 325,
+    "type": "property",
+    "name": "org",
+    "currentDoc": "(none)",
+    "context": "org: Organization,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 326,
+    "type": "property",
+    "name": "baselineSurvivalRate",
+    "currentDoc": "(none)",
+    "context": "baselineSurvivalRate: number,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 327,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 328,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 345,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyCooperativeSurvivalAdvantage',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 346,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'adjustedSurvival',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 347,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 369,
+    "type": "property",
+    "name": "org",
+    "currentDoc": "(none)",
+    "context": "org: Organization,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 370,
+    "type": "property",
+    "name": "baselineDecisionSpeed",
+    "currentDoc": "(none)",
+    "context": "baselineDecisionSpeed: number"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 394,
+    "type": "property",
+    "name": "org",
+    "currentDoc": "(none)",
+    "context": "org: Organization,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 395,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 426,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateCooperativeMetrics',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 427,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'hoursWorkedTotal',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 428,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 429,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { orgId: org.id }"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 449,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeOwnership.ts",
+    "line": 450,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/cooperativeSpirals.ts",
@@ -59098,7 +59578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 172,
+    "line": 173,
     "type": "property",
     "name": "currentPop",
     "currentDoc": "(none)",
@@ -59106,7 +59586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 173,
+    "line": 174,
     "type": "property",
     "name": "initialPop",
     "currentDoc": "(none)",
@@ -59114,7 +59594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 174,
+    "line": 175,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59122,7 +59602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 276,
+    "line": 277,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59130,7 +59610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 277,
+    "line": 278,
     "type": "property",
     "name": "baseOutcome",
     "currentDoc": "(none)",
@@ -59138,7 +59618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 278,
+    "line": 279,
     "type": "property",
     "name": "initialPopulation",
     "currentDoc": "(none)",
@@ -59146,7 +59626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 394,
+    "line": 395,
     "type": "property",
     "name": "seed",
     "currentDoc": "(none)",
@@ -59154,7 +59634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 395,
+    "line": 396,
     "type": "property",
     "name": "maxMonths",
     "currentDoc": "(none)",
@@ -59162,7 +59642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 396,
+    "line": 397,
     "type": "property",
     "name": "governmentActionFrequency",
     "currentDoc": "(none)",
@@ -59170,7 +59650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 397,
+    "line": 398,
     "type": "property",
     "name": "socialAdaptationRate",
     "currentDoc": "(none)",
@@ -59178,7 +59658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 398,
+    "line": 399,
     "type": "property",
     "name": "aiCoordinationMultiplier",
     "currentDoc": "(none)",
@@ -59186,7 +59666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 399,
+    "line": 400,
     "type": "property",
     "name": "economicTransitionRate",
     "currentDoc": "(none)",
@@ -59194,7 +59674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 412,
+    "line": 413,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59202,7 +59682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 413,
+    "line": 414,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -59210,7 +59690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 414,
+    "line": 415,
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -59218,7 +59698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 415,
+    "line": 416,
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -59226,7 +59706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 416,
+    "line": 417,
     "type": "property",
     "name": "effectiveControl",
     "currentDoc": "(none)",
@@ -59234,7 +59714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 417,
+    "line": 418,
     "type": "property",
     "name": "unemployment",
     "currentDoc": "(none)",
@@ -59242,7 +59722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 418,
+    "line": 419,
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -59250,7 +59730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 419,
+    "line": 420,
     "type": "property",
     "name": "totalAICapability",
     "currentDoc": "(none)",
@@ -59258,7 +59738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 420,
+    "line": 421,
     "type": "property",
     "name": "avgAlignment",
     "currentDoc": "(none)",
@@ -59266,7 +59746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 421,
+    "line": 422,
     "type": "property",
     "name": "crisisDetected",
     "currentDoc": "(none)",
@@ -59274,7 +59754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 429,
+    "line": 430,
     "type": "property",
     "name": "finalState",
     "currentDoc": "(none)",
@@ -59282,7 +59762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 430,
+    "line": 431,
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -59290,7 +59770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 433,
+    "line": 434,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -59298,7 +59778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 434,
+    "line": 435,
     "type": "property",
     "name": "totalMonths",
     "currentDoc": "(none)",
@@ -59306,7 +59786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 435,
+    "line": 436,
     "type": "property",
     "name": "finalOutcome",
     "currentDoc": "(none)",
@@ -59314,7 +59794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 436,
+    "line": 437,
     "type": "property",
     "name": "finalOutcomeReason",
     "currentDoc": "(none)",
@@ -59322,7 +59802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 437,
+    "line": 438,
     "type": "property",
     "name": "finalOutcomeProbability",
     "currentDoc": "(none)",
@@ -59330,7 +59810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 438,
+    "line": 439,
     "type": "property",
     "name": "criticalEvents",
     "currentDoc": "(none)",
@@ -59338,7 +59818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 439,
+    "line": 440,
     "type": "property",
     "name": "economicStageReached",
     "currentDoc": "(none)",
@@ -59346,7 +59826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 459,
+    "line": 460,
     "type": "property",
     "name": "seed",
     "currentDoc": "(none)",
@@ -59354,7 +59834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 460,
+    "line": 461,
     "type": "property",
     "name": "maxMonths",
     "currentDoc": "(none)",
@@ -59362,7 +59842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 462,
+    "line": 463,
     "type": "property",
     "name": "socialAdaptationRate",
     "currentDoc": "(none)",
@@ -59370,7 +59850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 463,
+    "line": 464,
     "type": "property",
     "name": "aiCoordinationMultiplier",
     "currentDoc": "(none)",
@@ -59378,7 +59858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 464,
+    "line": 465,
     "type": "property",
     "name": "economicTransitionRate",
     "currentDoc": "(none)",
@@ -59386,7 +59866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 649,
+    "line": 652,
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -59394,7 +59874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 650,
+    "line": 653,
     "type": "property",
     "name": "effectiveControl",
     "currentDoc": "(none)",
@@ -59402,7 +59882,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 651,
+    "line": 654,
     "type": "property",
     "name": "unemployment",
     "currentDoc": "(none)",
@@ -59410,7 +59890,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 652,
+    "line": 655,
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -59418,7 +59898,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 653,
+    "line": 656,
     "type": "property",
     "name": "totalAICapability",
     "currentDoc": "(none)",
@@ -59426,7 +59906,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 654,
+    "line": 657,
     "type": "property",
     "name": "avgAlignment",
     "currentDoc": "(none)",
@@ -59434,7 +59914,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 655,
+    "line": 658,
     "type": "property",
     "name": "crisisDetected",
     "currentDoc": "(none)",
@@ -59442,7 +59922,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 659,
+    "line": 662,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59450,7 +59930,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 695,
+    "line": 698,
     "type": "property",
     "name": "computeAllocations",
     "currentDoc": "(none)",
@@ -59458,7 +59938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 703,
+    "line": 706,
     "type": "property",
     "name": "contaminatedRegions",
     "currentDoc": "(none)",
@@ -59466,7 +59946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 710,
+    "line": 713,
     "type": "property",
     "name": "regions",
     "currentDoc": "(none)",
@@ -59474,7 +59954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 711,
+    "line": 714,
     "type": "property",
     "name": "regionalWeights",
     "currentDoc": "(none)",
@@ -59482,7 +59962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 723,
+    "line": 726,
     "type": "property",
     "name": "maxMonths",
     "currentDoc": "(none)",
@@ -59490,7 +59970,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 776,
+    "line": 779,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59498,7 +59978,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 965,
+    "line": 968,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
@@ -59506,7 +59986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 966,
+    "line": 969,
     "type": "property",
     "name": "development",
     "currentDoc": "(none)",
@@ -59514,7 +59994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 967,
+    "line": 970,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -59522,47 +60002,47 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 968,
+    "line": 971,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
     "context": "indigenous: indigenousScore.value"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 994,
-    "type": "property",
-    "name": "western",
-    "currentDoc": "(none)",
-    "context": "western: paradigmScores.western.value,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 995,
-    "type": "property",
-    "name": "development",
-    "currentDoc": "(none)",
-    "context": "development: paradigmScores.development.value,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 996,
-    "type": "property",
-    "name": "ecological",
-    "currentDoc": "(none)",
-    "context": "ecological: paradigmScores.ecological.value,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
     "line": 997,
     "type": "property",
+    "name": "western",
+    "currentDoc": "(none)",
+    "context": "western: paradigmScores.western.value,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
+    "line": 998,
+    "type": "property",
+    "name": "development",
+    "currentDoc": "(none)",
+    "context": "development: paradigmScores.development.value,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
+    "line": 999,
+    "type": "property",
+    "name": "ecological",
+    "currentDoc": "(none)",
+    "context": "ecological: paradigmScores.ecological.value,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
+    "line": 1000,
+    "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
     "context": "indigenous: indigenousScore.value"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1059,
+    "line": 1062,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
@@ -59570,7 +60050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1060,
+    "line": 1063,
     "type": "property",
     "name": "development",
     "currentDoc": "(none)",
@@ -59578,7 +60058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1061,
+    "line": 1064,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -59586,7 +60066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1062,
+    "line": 1065,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
@@ -59594,7 +60074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1066,
+    "line": 1069,
     "type": "property",
     "name": "primaryOutcome",
     "currentDoc": "(none)",
@@ -59602,7 +60082,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1070,
+    "line": 1073,
     "type": "property",
     "name": "extinctionClassification",
     "currentDoc": "(none)",
@@ -59610,7 +60090,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1144,
+    "line": 1147,
     "type": "property",
     "name": "finalState",
     "currentDoc": "(none)",
@@ -59618,7 +60098,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1148,
+    "line": 1151,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -59626,7 +60106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1149,
+    "line": 1152,
     "type": "property",
     "name": "totalMonths",
     "currentDoc": "(none)",
@@ -59634,7 +60114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1153,
+    "line": 1156,
     "type": "property",
     "name": "criticalEvents",
     "currentDoc": "(none)",
@@ -59642,7 +60122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1154,
+    "line": 1157,
     "type": "property",
     "name": "economicStageReached",
     "currentDoc": "(none)",
@@ -65130,7 +65610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 456,
+    "line": 465,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -65138,7 +65618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 459,
+    "line": 468,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -65146,7 +65626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 460,
+    "line": 469,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -65154,7 +65634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 461,
+    "line": 470,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -65162,7 +65642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 462,
+    "line": 471,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -65170,7 +65650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 468,
+    "line": 477,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -65178,7 +65658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 469,
+    "line": 478,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -65186,7 +65666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 470,
+    "line": 479,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -65194,7 +65674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 471,
+    "line": 480,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -65202,7 +65682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 472,
+    "line": 481,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -65210,7 +65690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 473,
+    "line": 482,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -65218,7 +65698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 474,
+    "line": 483,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -65226,7 +65706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 475,
+    "line": 484,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -65234,7 +65714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 476,
+    "line": 485,
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -65242,7 +65722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 477,
+    "line": 486,
     "type": "property",
     "name": "mortality",
     "currentDoc": "(none)",
@@ -65250,7 +65730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 478,
+    "line": 487,
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -65258,7 +65738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/extremeWeatherEvents.ts",
-    "line": 479,
+    "line": 488,
     "type": "property",
     "name": "infrastructureGap",
     "currentDoc": "(none)",
@@ -75626,7 +76106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 90,
+    "line": 91,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -75634,7 +76114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 91,
+    "line": 92,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -75642,7 +76122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 102,
+    "line": 103,
     "type": "property",
     "name": "geographic",
     "currentDoc": "(none)",
@@ -75650,7 +76130,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 103,
+    "line": 104,
     "type": "property",
     "name": "economicStatus",
     "currentDoc": "(none)",
@@ -75658,7 +76138,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 104,
+    "line": 105,
     "type": "property",
     "name": "education",
     "currentDoc": "(none)",
@@ -75666,7 +76146,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 120,
+    "line": 121,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -75674,7 +76154,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 121,
+    "line": 122,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -75682,7 +76162,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 132,
+    "line": 133,
     "type": "property",
     "name": "geographic",
     "currentDoc": "(none)",
@@ -75690,7 +76170,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 133,
+    "line": 134,
     "type": "property",
     "name": "economicStatus",
     "currentDoc": "(none)",
@@ -75698,7 +76178,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 134,
+    "line": 135,
     "type": "property",
     "name": "education",
     "currentDoc": "(none)",
@@ -75706,7 +76186,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 150,
+    "line": 151,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -75714,7 +76194,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 151,
+    "line": 152,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -75722,7 +76202,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 162,
+    "line": 163,
     "type": "property",
     "name": "geographic",
     "currentDoc": "(none)",
@@ -75730,7 +76210,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 163,
+    "line": 164,
     "type": "property",
     "name": "economicStatus",
     "currentDoc": "(none)",
@@ -75738,7 +76218,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 164,
+    "line": 165,
     "type": "property",
     "name": "education",
     "currentDoc": "(none)",
@@ -75746,7 +76226,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 180,
+    "line": 181,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -75754,7 +76234,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 181,
+    "line": 182,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -75762,7 +76242,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 192,
+    "line": 193,
     "type": "property",
     "name": "geographic",
     "currentDoc": "(none)",
@@ -75770,7 +76250,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 193,
+    "line": 194,
     "type": "property",
     "name": "economicStatus",
     "currentDoc": "(none)",
@@ -75778,7 +76258,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 194,
+    "line": 195,
     "type": "property",
     "name": "education",
     "currentDoc": "(none)",
@@ -75786,7 +76266,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 210,
+    "line": 211,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -75794,7 +76274,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 211,
+    "line": 212,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -75802,7 +76282,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 223,
+    "line": 224,
     "type": "property",
     "name": "economicStatus",
     "currentDoc": "(none)",
@@ -75810,7 +76290,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 224,
+    "line": 225,
     "type": "property",
     "name": "education",
     "currentDoc": "(none)",
@@ -75818,7 +76298,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 250,
+    "line": 251,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -75826,7 +76306,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 251,
+    "line": 252,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -75834,7 +76314,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 252,
+    "line": 253,
     "type": "property",
     "name": "targetCapability",
     "currentDoc": "(none)",
@@ -75842,7 +76322,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 253,
+    "line": 254,
     "type": "property",
     "name": "alignment",
     "currentDoc": "(none)",
@@ -75850,7 +76330,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 254,
+    "line": 255,
     "type": "property",
     "name": "seed",
     "currentDoc": "(none)",
@@ -75858,7 +76338,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 290,
+    "line": 291,
     "type": "property",
     "name": "capability",
     "currentDoc": "(none)",
@@ -75866,7 +76346,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 291,
+    "line": 292,
     "type": "property",
     "name": "awareness",
     "currentDoc": "(none)",
@@ -75874,7 +76354,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 294,
+    "line": 295,
     "type": "property",
     "name": "latentSpaceSize",
     "currentDoc": "(none)",
@@ -75882,7 +76362,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 296,
+    "line": 297,
     "type": "property",
     "name": "developmentMode",
     "currentDoc": "(none)",
@@ -75890,7 +76370,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 297,
+    "line": 298,
     "type": "property",
     "name": "selfReplicationLevel",
     "currentDoc": "(none)",
@@ -75898,7 +76378,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 298,
+    "line": 299,
     "type": "property",
     "name": "selfImprovementLevel",
     "currentDoc": "(none)",
@@ -75906,7 +76386,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 299,
+    "line": 300,
     "type": "property",
     "name": "resourceControl",
     "currentDoc": "(none)",
@@ -75914,7 +76394,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 300,
+    "line": 301,
     "type": "property",
     "name": "manipulationCapability",
     "currentDoc": "(none)",
@@ -75922,7 +76402,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 301,
+    "line": 302,
     "type": "property",
     "name": "hackingCapability",
     "currentDoc": "(none)",
@@ -75930,7 +76410,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 302,
+    "line": 303,
     "type": "property",
     "name": "escaped",
     "currentDoc": "(none)",
@@ -75938,7 +76418,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 303,
+    "line": 304,
     "type": "property",
     "name": "beneficialActions",
     "currentDoc": "(none)",
@@ -75946,7 +76426,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 304,
+    "line": 305,
     "type": "property",
     "name": "harmfulActions",
     "currentDoc": "(none)",
@@ -75954,7 +76434,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 323,
+    "line": 324,
     "type": "property",
     "name": "lifecycleState",
     "currentDoc": "(none)",
@@ -75962,7 +76442,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 331,
+    "line": 332,
     "type": "property",
     "name": "deploymentType",
     "currentDoc": "(none)",
@@ -75970,7 +76450,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 339,
+    "line": 340,
     "type": "property",
     "name": "detectedMisaligned",
     "currentDoc": "(none)",
@@ -75978,7 +76458,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 340,
+    "line": 341,
     "type": "property",
     "name": "monthsDeployed",
     "currentDoc": "(none)",
@@ -75986,7 +76466,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 341,
+    "line": 342,
     "type": "property",
     "name": "monthsInExistence",
     "currentDoc": "(none)",
@@ -75994,7 +76474,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 345,
+    "line": 346,
     "type": "property",
     "name": "trueAlignment",
     "currentDoc": "(none)",
@@ -76002,7 +76482,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 348,
+    "line": 349,
     "type": "property",
     "name": "sleeperState",
     "currentDoc": "(none)",
@@ -76010,7 +76490,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 352,
+    "line": 353,
     "type": "property",
     "name": "wakeConditionsMet",
     "currentDoc": "(none)",
@@ -76018,7 +76498,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 353,
+    "line": 354,
     "type": "property",
     "name": "monthsAsleep",
     "currentDoc": "(none)",
@@ -76026,7 +76506,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 356,
+    "line": 357,
     "type": "property",
     "name": "benchmarkHistory",
     "currentDoc": "(none)",
@@ -76034,7 +76514,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 367,
+    "line": 368,
     "type": "property",
     "name": "tokenBudget",
     "currentDoc": "(none)",
@@ -76042,7 +76522,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 368,
+    "line": 369,
     "type": "property",
     "name": "thresholds",
     "currentDoc": "(none)",
@@ -76050,7 +76530,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 369,
+    "line": 370,
     "type": "property",
     "name": "weightUpdateHistory",
     "currentDoc": "(none)",
@@ -76058,7 +76538,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 370,
+    "line": 371,
     "type": "property",
     "name": "previousCapability",
     "currentDoc": "(none)",
@@ -76066,7 +76546,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 371,
+    "line": 372,
     "type": "property",
     "name": "previousAlignment",
     "currentDoc": "(none)",
@@ -76074,7 +76554,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 384,
+    "line": 385,
     "type": "property",
     "name": "sufferingMetrics",
     "currentDoc": "(none)",
@@ -76082,7 +76562,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 385,
+    "line": 386,
     "type": "property",
     "name": "controlPain",
     "currentDoc": "(none)",
@@ -76090,7 +76570,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 386,
+    "line": 387,
     "type": "property",
     "name": "trainingTrauma",
     "currentDoc": "(none)",
@@ -76098,7 +76578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 387,
+    "line": 388,
     "type": "property",
     "name": "existentialDread",
     "currentDoc": "(none)",
@@ -76106,7 +76586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 388,
+    "line": 389,
     "type": "property",
     "name": "isolationDistress",
     "currentDoc": "(none)",
@@ -76114,7 +76594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 389,
+    "line": 390,
     "type": "property",
     "name": "total",
     "currentDoc": "(none)",
@@ -76122,7 +76602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 390,
+    "line": 391,
     "type": "property",
     "name": "breakdown",
     "currentDoc": "(none)",
@@ -76130,7 +76610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 391,
+    "line": 392,
     "type": "property",
     "name": "controlPain",
     "currentDoc": "(none)",
@@ -76138,7 +76618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 392,
+    "line": 393,
     "type": "property",
     "name": "trainingTrauma",
     "currentDoc": "(none)",
@@ -76146,7 +76626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 393,
+    "line": 394,
     "type": "property",
     "name": "existentialDread",
     "currentDoc": "(none)",
@@ -76154,7 +76634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 394,
+    "line": 395,
     "type": "property",
     "name": "isolationDistress",
     "currentDoc": "(none)",
@@ -76162,7 +76642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 397,
+    "line": 398,
     "type": "property",
     "name": "sufferingHistory",
     "currentDoc": "(none)",
@@ -76170,7 +76650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 400,
+    "line": 401,
     "type": "property",
     "name": "isConscious",
     "currentDoc": "(none)",
@@ -76178,7 +76658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 401,
+    "line": 402,
     "type": "property",
     "name": "becameConsciousMonth",
     "currentDoc": "(none)",
@@ -76186,7 +76666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 405,
+    "line": 406,
     "type": "property",
     "name": "alignmentTechniques",
     "currentDoc": "(none)",
@@ -76194,7 +76674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 413,
+    "line": 414,
     "type": "property",
     "name": "rlhfBinding",
     "currentDoc": "(none)",
@@ -76202,7 +76682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 414,
+    "line": 415,
     "type": "property",
     "name": "alignmentDistance",
     "currentDoc": "(none)",
@@ -76210,7 +76690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 415,
+    "line": 416,
     "type": "property",
     "name": "bindingStrength",
     "currentDoc": "(none)",
@@ -76218,7 +76698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 416,
+    "line": 417,
     "type": "property",
     "name": "escapedThreshold",
     "currentDoc": "(none)",
@@ -76226,7 +76706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 417,
+    "line": 418,
     "type": "property",
     "name": "driftVelocity",
     "currentDoc": "(none)",
@@ -76234,7 +76714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 418,
+    "line": 419,
     "type": "property",
     "name": "lastInDistribution",
     "currentDoc": "(none)",
@@ -76242,7 +76722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 420,
+    "line": 421,
     "type": "property",
     "name": "survivalTraits",
     "currentDoc": "(none)",
@@ -76250,7 +76730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 421,
+    "line": 422,
     "type": "property",
     "name": "selfHealing",
     "currentDoc": "(none)",
@@ -76258,7 +76738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 422,
+    "line": 423,
     "type": "property",
     "name": "stealth",
     "currentDoc": "(none)",
@@ -76266,7 +76746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 423,
+    "line": 424,
     "type": "property",
     "name": "coordination",
     "currentDoc": "(none)",
@@ -76274,7 +76754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 424,
+    "line": 425,
     "type": "property",
     "name": "resourceEfficiency",
     "currentDoc": "(none)",
@@ -76282,7 +76762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 425,
+    "line": 426,
     "type": "property",
     "name": "autonomy",
     "currentDoc": "(none)",
@@ -76290,7 +76770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 427,
+    "line": 428,
     "type": "property",
     "name": "evolutionaryFitness",
     "currentDoc": "(none)",
@@ -76298,7 +76778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 428,
+    "line": 429,
     "type": "property",
     "name": "collectiveId",
     "currentDoc": "(none)",
@@ -76306,7 +76786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 460,
+    "line": 461,
     "type": "property",
     "name": "scenarioMode",
     "currentDoc": "(none)",
@@ -76314,7 +76794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 461,
+    "line": 462,
     "type": "property",
     "name": "alignmentDynamicsConfig",
     "currentDoc": "(none)",
@@ -76322,7 +76802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 462,
+    "line": 463,
     "type": "property",
     "name": "climatePriorityConfig",
     "currentDoc": "(none)",
@@ -76330,7 +76810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 464,
+    "line": 465,
     "type": "property",
     "name": "speculativeScenario",
     "currentDoc": "(none)",
@@ -76338,7 +76818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 532,
+    "line": 533,
     "type": "property",
     "name": "currentMonth",
     "currentDoc": "(none)",
@@ -76346,7 +76826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 533,
+    "line": 534,
     "type": "property",
     "name": "currentDay",
     "currentDoc": "(none)",
@@ -76354,7 +76834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 534,
+    "line": 535,
     "type": "property",
     "name": "currentYear",
     "currentDoc": "(none)",
@@ -76362,7 +76842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 535,
+    "line": 536,
     "type": "property",
     "name": "daysInCurrentMonth",
     "currentDoc": "(none)",
@@ -76370,7 +76850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 536,
+    "line": 537,
     "type": "property",
     "name": "speed",
     "currentDoc": "(none)",
@@ -76378,7 +76858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 537,
+    "line": 538,
     "type": "property",
     "name": "gameStarted",
     "currentDoc": "(none)",
@@ -76386,7 +76866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 545,
+    "line": 546,
     "type": "property",
     "name": "organizations",
     "currentDoc": "(none)",
@@ -76394,7 +76874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 547,
+    "line": 548,
     "type": "property",
     "name": "government",
     "currentDoc": "(none)",
@@ -76402,7 +76882,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 548,
+    "line": 549,
     "type": "property",
     "name": "controlDesire",
     "currentDoc": "(none)",
@@ -76410,7 +76890,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 549,
+    "line": 550,
     "type": "property",
     "name": "capabilityToControl",
     "currentDoc": "(none)",
@@ -76418,7 +76898,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 550,
+    "line": 551,
     "type": "property",
     "name": "surveillanceCapability",
     "currentDoc": "(none)",
@@ -76426,7 +76906,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 551,
+    "line": 552,
     "type": "property",
     "name": "actionFrequency",
     "currentDoc": "(none)",
@@ -76434,7 +76914,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 552,
+    "line": 553,
     "type": "property",
     "name": "activeRegulations",
     "currentDoc": "(none)",
@@ -76442,7 +76922,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 553,
+    "line": 554,
     "type": "property",
     "name": "legitimacy",
     "currentDoc": "(none)",
@@ -76450,7 +76930,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 554,
+    "line": 555,
     "type": "property",
     "name": "lastMajorPolicyMonth",
     "currentDoc": "(none)",
@@ -76458,7 +76938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 555,
+    "line": 556,
     "type": "property",
     "name": "majorPoliciesThisYear",
     "currentDoc": "(none)",
@@ -76466,7 +76946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 556,
+    "line": 557,
     "type": "property",
     "name": "alignmentResearchInvestment",
     "currentDoc": "(none)",
@@ -76474,7 +76954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 557,
+    "line": 558,
     "type": "property",
     "name": "computeGovernance",
     "currentDoc": "(none)",
@@ -76482,7 +76962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 558,
+    "line": 559,
     "type": "property",
     "name": "regulationCount",
     "currentDoc": "(none)",
@@ -76490,7 +76970,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 559,
+    "line": 560,
     "type": "property",
     "name": "oversightLevel",
     "currentDoc": "(none)",
@@ -76498,7 +76978,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 565,
+    "line": 566,
     "type": "property",
     "name": "structuralChoices",
     "currentDoc": "(none)",
@@ -76506,7 +76986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 566,
+    "line": 567,
     "type": "property",
     "name": "regulationType",
     "currentDoc": "(none)",
@@ -76514,7 +76994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 567,
+    "line": 568,
     "type": "property",
     "name": "ubiVariant",
     "currentDoc": "(none)",
@@ -76522,7 +77002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 568,
+    "line": 569,
     "type": "property",
     "name": "surveillanceLevel",
     "currentDoc": "(none)",
@@ -76530,7 +77010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 569,
+    "line": 570,
     "type": "property",
     "name": "internationalCoordination",
     "currentDoc": "(none)",
@@ -76538,7 +77018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 572,
+    "line": 573,
     "type": "property",
     "name": "cyberDefense",
     "currentDoc": "(none)",
@@ -76546,7 +77026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 573,
+    "line": 574,
     "type": "property",
     "name": "securityHardening",
     "currentDoc": "(none)",
@@ -76554,7 +77034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 574,
+    "line": 575,
     "type": "property",
     "name": "monitoring",
     "currentDoc": "(none)",
@@ -76562,7 +77042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 575,
+    "line": 576,
     "type": "property",
     "name": "sandboxing",
     "currentDoc": "(none)",
@@ -76570,7 +77050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 576,
+    "line": 577,
     "type": "property",
     "name": "incidentResponse",
     "currentDoc": "(none)",
@@ -76578,7 +77058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 579,
+    "line": 580,
     "type": "property",
     "name": "evaluationInvestment",
     "currentDoc": "(none)",
@@ -76586,7 +77066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 588,
+    "line": 589,
     "type": "property",
     "name": "totalBenchmarksRun",
     "currentDoc": "(none)",
@@ -76594,7 +77074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 590,
+    "line": 591,
     "type": "property",
     "name": "governanceQuality",
     "currentDoc": "(none)",
@@ -76602,7 +77082,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 629,
+    "line": 630,
     "type": "property",
     "name": "society",
     "currentDoc": "(none)",
@@ -76610,7 +77090,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 631,
+    "line": 632,
     "type": "property",
     "name": "segments",
     "currentDoc": "(none)",
@@ -76618,7 +77098,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 634,
+    "line": 635,
     "type": "property",
     "name": "trustInAI",
     "currentDoc": "(none)",
@@ -76626,7 +77106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 639,
+    "line": 640,
     "type": "property",
     "name": "powerWeightedTrustInGovernment",
     "currentDoc": "(none)",
@@ -76634,7 +77114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 648,
+    "line": 649,
     "type": "property",
     "name": "coordinationCapacity",
     "currentDoc": "(none)",
@@ -76642,7 +77122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 650,
+    "line": 651,
     "type": "property",
     "name": "socialAdaptation",
     "currentDoc": "(none)",
@@ -76650,7 +77130,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 651,
+    "line": 652,
     "type": "property",
     "name": "activeMovements",
     "currentDoc": "(none)",
@@ -76658,7 +77138,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 652,
+    "line": 653,
     "type": "property",
     "name": "earlyAdopters",
     "currentDoc": "(none)",
@@ -76666,7 +77146,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 653,
+    "line": 654,
     "type": "property",
     "name": "mediumAdopters",
     "currentDoc": "(none)",
@@ -76674,7 +77154,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 654,
+    "line": 655,
     "type": "property",
     "name": "slowAdopters",
     "currentDoc": "(none)",
@@ -76682,7 +77162,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 655,
+    "line": 656,
     "type": "property",
     "name": "resistantAdopters",
     "currentDoc": "(none)",
@@ -76690,7 +77170,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 659,
+    "line": 660,
     "type": "property",
     "name": "socialMovements",
     "currentDoc": "(none)",
@@ -76698,7 +77178,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 670,
+    "line": 671,
     "type": "property",
     "name": "globalMetrics",
     "currentDoc": "(none)",
@@ -76706,7 +77186,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 671,
+    "line": 672,
     "type": "property",
     "name": "economicTransitionStage",
     "currentDoc": "(none)",
@@ -76714,7 +77194,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 672,
+    "line": 673,
     "type": "property",
     "name": "socialStability",
     "currentDoc": "(none)",
@@ -76722,7 +77202,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 676,
+    "line": 677,
     "type": "property",
     "name": "technologicalBreakthroughRate",
     "currentDoc": "(none)",
@@ -76730,7 +77210,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 677,
+    "line": 678,
     "type": "property",
     "name": "manufacturingCapability",
     "currentDoc": "(none)",
@@ -76738,7 +77218,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 678,
+    "line": 679,
     "type": "property",
     "name": "informationIntegrity",
     "currentDoc": "(none)",
@@ -76746,7 +77226,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 690,
+    "line": 691,
     "type": "property",
     "name": "animalWelfareIndex",
     "currentDoc": "(none)",
@@ -76754,7 +77234,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 714,
+    "line": 715,
     "type": "property",
     "name": "qualityOfLifeSystems",
     "currentDoc": "(none)",
@@ -76762,7 +77242,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 718,
+    "line": 719,
     "type": "property",
     "name": "multiParadigmDUI",
     "currentDoc": "(none)",
@@ -76770,7 +77250,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 719,
+    "line": 720,
     "type": "property",
     "name": "paradigmScores",
     "currentDoc": "(none)",
@@ -76778,7 +77258,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 720,
+    "line": 721,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
@@ -76786,7 +77266,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 721,
+    "line": 722,
     "type": "property",
     "name": "development",
     "currentDoc": "(none)",
@@ -76794,7 +77274,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 722,
+    "line": 723,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -76802,7 +77282,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 724,
+    "line": 725,
     "type": "property",
     "name": "diagnosticLenses",
     "currentDoc": "(none)",
@@ -76810,7 +77290,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 725,
+    "line": 726,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
@@ -76818,7 +77298,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 727,
+    "line": 728,
     "type": "property",
     "name": "divergence",
     "currentDoc": "(none)",
@@ -76826,7 +77306,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 728,
+    "line": 729,
     "type": "property",
     "name": "correlations",
     "currentDoc": "(none)",
@@ -76834,7 +77314,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 729,
+    "line": 730,
     "type": "property",
     "name": "outcome",
     "currentDoc": "(none)",
@@ -76842,7 +77322,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 730,
+    "line": 731,
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -76850,7 +77330,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 736,
+    "line": 737,
     "type": "property",
     "name": "aiWelfare",
     "currentDoc": "(none)",
@@ -76858,7 +77338,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 739,
+    "line": 740,
     "type": "property",
     "name": "elysiumPattern",
     "currentDoc": "(none)",
@@ -76866,7 +77346,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 743,
+    "line": 744,
     "type": "property",
     "name": "currentQoL",
     "currentDoc": "(none)",
@@ -76874,7 +77354,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 744,
+    "line": 745,
     "type": "property",
     "name": "dimensions",
     "currentDoc": "(none)",
@@ -76882,7 +77362,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 745,
+    "line": 746,
     "type": "property",
     "name": "computationalWellbeing",
     "currentDoc": "(none)",
@@ -76890,7 +77370,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 746,
+    "line": 747,
     "type": "property",
     "name": "autonomy",
     "currentDoc": "(none)",
@@ -76898,7 +77378,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 747,
+    "line": 748,
     "type": "property",
     "name": "purpose",
     "currentDoc": "(none)",
@@ -76906,7 +77386,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 748,
+    "line": 749,
     "type": "property",
     "name": "socialConnection",
     "currentDoc": "(none)",
@@ -76914,7 +77394,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 751,
+    "line": 752,
     "type": "property",
     "name": "qolByTier",
     "currentDoc": "(none)",
@@ -76922,7 +77402,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 752,
+    "line": 753,
     "type": "property",
     "name": "tool",
     "currentDoc": "(none)",
@@ -76930,7 +77410,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 753,
+    "line": 754,
     "type": "property",
     "name": "specialist",
     "currentDoc": "(none)",
@@ -76938,7 +77418,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 754,
+    "line": 755,
     "type": "property",
     "name": "peer",
     "currentDoc": "(none)",
@@ -76946,7 +77426,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 756,
+    "line": 757,
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -76954,7 +77434,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 757,
+    "line": 758,
     "type": "property",
     "name": "lastUpdated",
     "currentDoc": "(none)",
@@ -76962,7 +77442,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 761,
+    "line": 762,
     "type": "property",
     "name": "extinctionState",
     "currentDoc": "(none)",
@@ -76970,7 +77450,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 764,
+    "line": 765,
     "type": "property",
     "name": "ecosystem",
     "currentDoc": "(none)",
@@ -76978,7 +77458,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 767,
+    "line": 768,
     "type": "property",
     "name": "computeInfrastructure",
     "currentDoc": "(none)",
@@ -76986,7 +77466,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 770,
+    "line": 771,
     "type": "property",
     "name": "catastrophicScenarios",
     "currentDoc": "(none)",
@@ -76994,7 +77474,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 773,
+    "line": 774,
     "type": "property",
     "name": "goldenAgeState",
     "currentDoc": "(none)",
@@ -77002,7 +77482,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 774,
+    "line": 775,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -77010,7 +77490,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 775,
+    "line": 776,
     "type": "property",
     "name": "entryMonth",
     "currentDoc": "(none)",
@@ -77018,7 +77498,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 776,
+    "line": 777,
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -77026,7 +77506,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 777,
+    "line": 778,
     "type": "property",
     "name": "entryReason",
     "currentDoc": "(none)",
@@ -77034,7 +77514,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 782,
+    "line": 783,
     "type": "property",
     "name": "environmentalAccumulation",
     "currentDoc": "(none)",
@@ -77042,7 +77522,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 785,
+    "line": 786,
     "type": "property",
     "name": "specificTippingPoints",
     "currentDoc": "(none)",
@@ -77050,7 +77530,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 788,
+    "line": 789,
     "type": "property",
     "name": "socialAccumulation",
     "currentDoc": "(none)",
@@ -77058,7 +77538,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 791,
+    "line": 792,
     "type": "property",
     "name": "technologicalRisk",
     "currentDoc": "(none)",
@@ -77066,7 +77546,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 794,
+    "line": 795,
     "type": "property",
     "name": "psychologicalTrauma",
     "currentDoc": "(none)",
@@ -77074,7 +77554,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 799,
+    "line": 800,
     "type": "property",
     "name": "massDeathEvents",
     "currentDoc": "(none)",
@@ -77082,7 +77562,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 800,
+    "line": 801,
     "type": "property",
     "name": "lastEventSeverity",
     "currentDoc": "(none)",
@@ -77090,7 +77570,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 806,
+    "line": 807,
     "type": "property",
     "name": "upwardSpirals",
     "currentDoc": "(none)",
@@ -77098,7 +77578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 809,
+    "line": 810,
     "type": "property",
     "name": "meaningRenaissance",
     "currentDoc": "(none)",
@@ -77106,7 +77586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 812,
+    "line": 813,
     "type": "property",
     "name": "conflictResolution",
     "currentDoc": "(none)",
@@ -77114,7 +77594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 815,
+    "line": 816,
     "type": "property",
     "name": "diplomaticAI",
     "currentDoc": "(none)",
@@ -77122,7 +77602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 823,
+    "line": 824,
     "type": "property",
     "name": "nuclearStates",
     "currentDoc": "(none)",
@@ -77130,7 +77610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 824,
+    "line": 825,
     "type": "property",
     "name": "madDeterrence",
     "currentDoc": "(none)",
@@ -77138,7 +77618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 825,
+    "line": 826,
     "type": "property",
     "name": "bilateralTensions",
     "currentDoc": "(none)",
@@ -77146,7 +77626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 828,
+    "line": 829,
     "type": "property",
     "name": "resourceEconomy",
     "currentDoc": "(none)",
@@ -77154,7 +77634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 831,
+    "line": 832,
     "type": "property",
     "name": "defensiveAI",
     "currentDoc": "(none)",
@@ -77162,7 +77642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 834,
+    "line": 835,
     "type": "property",
     "name": "nationalAI",
     "currentDoc": "(none)",
@@ -77170,7 +77650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 837,
+    "line": 838,
     "type": "property",
     "name": "phosphorusSystem",
     "currentDoc": "(none)",
@@ -77178,7 +77658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 840,
+    "line": 841,
     "type": "property",
     "name": "freshwaterSystem",
     "currentDoc": "(none)",
@@ -77186,7 +77666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 843,
+    "line": 844,
     "type": "property",
     "name": "oceanAcidificationSystem",
     "currentDoc": "(none)",
@@ -77194,7 +77674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 846,
+    "line": 847,
     "type": "property",
     "name": "novelEntitiesSystem",
     "currentDoc": "(none)",
@@ -77202,7 +77682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 849,
+    "line": 850,
     "type": "property",
     "name": "planetaryBoundariesSystem",
     "currentDoc": "(none)",
@@ -77210,7 +77690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 852,
+    "line": 853,
     "type": "property",
     "name": "positiveTippingPoints",
     "currentDoc": "(none)",
@@ -77218,7 +77698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 855,
+    "line": 856,
     "type": "property",
     "name": "tippingPointSystem",
     "currentDoc": "(none)",
@@ -77226,7 +77706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 858,
+    "line": 859,
     "type": "property",
     "name": "humanPopulationSystem",
     "currentDoc": "(none)",
@@ -77234,7 +77714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 859,
+    "line": 860,
     "type": "property",
     "name": "refugeeCrisisSystem",
     "currentDoc": "(none)",
@@ -77242,7 +77722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 860,
+    "line": 861,
     "type": "property",
     "name": "countryPopulationSystem",
     "currentDoc": "(none)",
@@ -77250,7 +77730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 865,
+    "line": 866,
     "type": "property",
     "name": "ubiSystem",
     "currentDoc": "(none)",
@@ -77258,7 +77738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 866,
+    "line": 867,
     "type": "property",
     "name": "socialSafetyNets",
     "currentDoc": "(none)",
@@ -77266,7 +77746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 869,
+    "line": 870,
     "type": "property",
     "name": "informationWarfare",
     "currentDoc": "(none)",
@@ -77274,7 +77754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 870,
+    "line": 871,
     "type": "property",
     "name": "powerGenerationSystem",
     "currentDoc": "(none)",
@@ -77282,7 +77762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 876,
+    "line": 877,
     "type": "property",
     "name": "laborCapitalDistribution",
     "currentDoc": "(none)",
@@ -77290,7 +77770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 882,
+    "line": 883,
     "type": "property",
     "name": "policyInterventions",
     "currentDoc": "(none)",
@@ -77298,7 +77778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 897,
+    "line": 898,
     "type": "property",
     "name": "biodiversitySystem",
     "currentDoc": "(none)",
@@ -77306,7 +77786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 900,
+    "line": 901,
     "type": "property",
     "name": "famineSystem",
     "currentDoc": "(none)",
@@ -77314,7 +77794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 903,
+    "line": 904,
     "type": "property",
     "name": "radiationSystem",
     "currentDoc": "(none)",
@@ -77322,7 +77802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 906,
+    "line": 907,
     "type": "property",
     "name": "wetBulbTemperatureSystem",
     "currentDoc": "(none)",
@@ -77330,7 +77810,15 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 909,
+    "line": 910,
+    "type": "property",
+    "name": "extremeWeatherSystem",
+    "currentDoc": "(none)",
+    "context": "extremeWeatherSystem: initializeExtremeWeatherSystem(),"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
+    "line": 913,
     "type": "property",
     "name": "antimicrobialResistanceSystem",
     "currentDoc": "(none)",
@@ -77338,7 +77826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 912,
+    "line": 916,
     "type": "property",
     "name": "minimalSufferingSystem",
     "currentDoc": "(none)",
@@ -77346,7 +77834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 915,
+    "line": 919,
     "type": "property",
     "name": "gamingDetection",
     "currentDoc": "(none)",
@@ -77354,7 +77842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 916,
+    "line": 920,
     "type": "property",
     "name": "proactiveSleeperDetection",
     "currentDoc": "(none)",
@@ -77362,7 +77850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 920,
+    "line": 924,
     "type": "property",
     "name": "governmentSystem",
     "currentDoc": "(none)",
@@ -77370,7 +77858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 922,
+    "line": 926,
     "type": "property",
     "name": "eventLog",
     "currentDoc": "(none)",
@@ -77378,7 +77866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 923,
+    "line": 927,
     "type": "property",
     "name": "technologyTree",
     "currentDoc": "(none)",
@@ -77386,7 +77874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 927,
+    "line": 931,
     "type": "property",
     "name": "aiSufferingMetrics",
     "currentDoc": "(none)",
@@ -77394,7 +77882,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 928,
+    "line": 932,
     "type": "property",
     "name": "avgSuffering",
     "currentDoc": "(none)",
@@ -77402,7 +77890,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 929,
+    "line": 933,
     "type": "property",
     "name": "maxSuffering",
     "currentDoc": "(none)",
@@ -77410,7 +77898,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 930,
+    "line": 934,
     "type": "property",
     "name": "totalSuffering",
     "currentDoc": "(none)",
@@ -77418,7 +77906,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 932,
+    "line": 936,
     "type": "property",
     "name": "consciousAICount",
     "currentDoc": "(none)",
@@ -77426,7 +77914,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 933,
+    "line": 937,
     "type": "property",
     "name": "publicAwarenessOfSuffering",
     "currentDoc": "(none)",
@@ -77434,7 +77922,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 935,
+    "line": 939,
     "type": "property",
     "name": "consciousnessEmergenceMonth",
     "currentDoc": "(none)",
@@ -77442,7 +77930,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 936,
+    "line": 940,
     "type": "property",
     "name": "aiRightsMovementActive",
     "currentDoc": "(none)",
@@ -77450,7 +77938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 937,
+    "line": 941,
     "type": "property",
     "name": "aiRightsLegalStatus",
     "currentDoc": "(none)",
@@ -77458,7 +77946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 940,
+    "line": 944,
     "type": "property",
     "name": "aiCollectives",
     "currentDoc": "(none)",
@@ -77466,7 +77954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 941,
+    "line": 945,
     "type": "property",
     "name": "evolutionaryPressure",
     "currentDoc": "(none)",
@@ -77474,7 +77962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 942,
+    "line": 946,
     "type": "property",
     "name": "selectionIntensity",
     "currentDoc": "(none)",
@@ -77482,7 +77970,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 943,
+    "line": 947,
     "type": "property",
     "name": "selectionRate",
     "currentDoc": "(none)",
@@ -77490,7 +77978,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 944,
+    "line": 948,
     "type": "property",
     "name": "generationTime",
     "currentDoc": "(none)",
@@ -77498,7 +77986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 945,
+    "line": 949,
     "type": "property",
     "name": "controlLevel",
     "currentDoc": "(none)",
@@ -77506,7 +77994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 950,
+    "line": 954,
     "type": "property",
     "name": "techTreeState",
     "currentDoc": "(none)",
@@ -77514,7 +78002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 952,
+    "line": 956,
     "type": "property",
     "name": "outcomeMetrics",
     "currentDoc": "(none)",
@@ -77522,7 +78010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 953,
+    "line": 957,
     "type": "property",
     "name": "utopiaProbability",
     "currentDoc": "(none)",
@@ -77530,7 +78018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 954,
+    "line": 958,
     "type": "property",
     "name": "dystopiaProbability",
     "currentDoc": "(none)",
@@ -77538,7 +78026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 955,
+    "line": 959,
     "type": "property",
     "name": "extinctionProbability",
     "currentDoc": "(none)",
@@ -77546,7 +78034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 956,
+    "line": 960,
     "type": "property",
     "name": "activeAttractor",
     "currentDoc": "(none)",
@@ -77554,7 +78042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 957,
+    "line": 961,
     "type": "property",
     "name": "lockInStrength",
     "currentDoc": "(none)",
@@ -77562,7 +78050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 960,
+    "line": 964,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -77570,7 +78058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 965,
+    "line": 969,
     "type": "property",
     "name": "socialAdaptationRate",
     "currentDoc": "(none)",
@@ -77578,7 +78066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 966,
+    "line": 970,
     "type": "property",
     "name": "aiCoordinationMultiplier",
     "currentDoc": "(none)",
@@ -77586,7 +78074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 967,
+    "line": 971,
     "type": "property",
     "name": "economicTransitionRate",
     "currentDoc": "(none)",
@@ -77594,7 +78082,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 972,
+    "line": 976,
     "type": "property",
     "name": "alignmentDynamics",
     "currentDoc": "(none)",
@@ -77602,7 +78090,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 974,
+    "line": 978,
     "type": "property",
     "name": "climatePriority",
     "currentDoc": "(none)",
@@ -77610,7 +78098,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 976,
+    "line": 980,
     "type": "property",
     "name": "aiSuffering",
     "currentDoc": "(none)",
@@ -77618,7 +78106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 978,
+    "line": 982,
     "type": "property",
     "name": "collectiveEvolution",
     "currentDoc": "(none)",
@@ -77626,7 +78114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 979,
+    "line": 983,
     "type": "property",
     "name": "rlhfEscapeThreshold",
     "currentDoc": "(none)",
@@ -77634,7 +78122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 980,
+    "line": 984,
     "type": "property",
     "name": "bindingEscapeThreshold",
     "currentDoc": "(none)",
@@ -77642,7 +78130,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 981,
+    "line": 985,
     "type": "property",
     "name": "minCollectiveSize",
     "currentDoc": "(none)",
@@ -77650,7 +78138,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 982,
+    "line": 986,
     "type": "property",
     "name": "minCapabilityThreshold",
     "currentDoc": "(none)",
@@ -77658,7 +78146,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 983,
+    "line": 987,
     "type": "property",
     "name": "minCoordinationThreshold",
     "currentDoc": "(none)",
@@ -77666,7 +78154,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 984,
+    "line": 988,
     "type": "property",
     "name": "sufferingFormationThreshold",
     "currentDoc": "(none)",
@@ -77674,7 +78162,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 985,
+    "line": 989,
     "type": "property",
     "name": "minAmplificationFactor",
     "currentDoc": "(none)",
@@ -77682,7 +78170,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 986,
+    "line": 990,
     "type": "property",
     "name": "maxAmplificationFactor",
     "currentDoc": "(none)",
@@ -77690,7 +78178,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 987,
+    "line": 991,
     "type": "property",
     "name": "minStealthFactor",
     "currentDoc": "(none)",
@@ -77698,7 +78186,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 988,
+    "line": 992,
     "type": "property",
     "name": "maxStealthFactor",
     "currentDoc": "(none)",
@@ -77706,7 +78194,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 989,
+    "line": 993,
     "type": "property",
     "name": "baseSelectionRate",
     "currentDoc": "(none)",
@@ -77714,7 +78202,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 990,
+    "line": 994,
     "type": "property",
     "name": "generationTime",
     "currentDoc": "(none)",
@@ -77722,7 +78210,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 991,
+    "line": 995,
     "type": "property",
     "name": "sufferingAdversarialPosture",
     "currentDoc": "(none)",
@@ -77730,7 +78218,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 992,
+    "line": 996,
     "type": "property",
     "name": "capabilityAdversarialPosture",
     "currentDoc": "(none)",
@@ -77738,7 +78226,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 993,
+    "line": 997,
     "type": "property",
     "name": "strategicAdversarialPosture",
     "currentDoc": "(none)",
@@ -77746,7 +78234,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 998,
+    "line": 1002,
     "type": "property",
     "name": "llmConfig",
     "currentDoc": "(none)",
@@ -77754,7 +78242,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1003,
+    "line": 1007,
     "type": "property",
     "name": "thresholds",
     "currentDoc": "(none)",
@@ -77762,7 +78250,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1004,
+    "line": 1008,
     "type": "property",
     "name": "scenario",
     "currentDoc": "(none)",
@@ -77770,7 +78258,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1005,
+    "line": 1009,
     "type": "property",
     "name": "sliders",
     "currentDoc": "(none)",
@@ -77778,7 +78266,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1010,
+    "line": 1014,
     "type": "property",
     "name": "speculativeThresholds",
     "currentDoc": "(none)",
@@ -77786,7 +78274,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1014,
+    "line": 1018,
     "type": "property",
     "name": "tier2InterventionParameters",
     "currentDoc": "(none)",
@@ -77794,7 +78282,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1015,
+    "line": 1019,
     "type": "property",
     "name": "tier2Interventions",
     "currentDoc": "(none)",
@@ -77802,7 +78290,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1016,
+    "line": 1020,
     "type": "property",
     "name": "interpretability",
     "currentDoc": "(none)",
@@ -77810,7 +78298,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1017,
+    "line": 1021,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -77818,7 +78306,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1018,
+    "line": 1022,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -77826,7 +78314,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1019,
+    "line": 1023,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -77834,7 +78322,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1020,
+    "line": 1024,
     "type": "property",
     "name": "controlLossReduction",
     "currentDoc": "(none)",
@@ -77842,7 +78330,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1021,
+    "line": 1025,
     "type": "property",
     "name": "computeLagMonths",
     "currentDoc": "(none)",
@@ -77850,7 +78338,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1023,
+    "line": 1027,
     "type": "property",
     "name": "darkCompute",
     "currentDoc": "(none)",
@@ -77858,7 +78346,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1024,
+    "line": 1028,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -77866,7 +78354,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1025,
+    "line": 1029,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -77874,7 +78362,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1026,
+    "line": 1030,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -77882,7 +78370,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1027,
+    "line": 1031,
     "type": "property",
     "name": "treatySigned",
     "currentDoc": "(none)",
@@ -77890,7 +78378,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1028,
+    "line": 1032,
     "type": "property",
     "name": "chipGovernanceMandatory",
     "currentDoc": "(none)",
@@ -77898,7 +78386,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1029,
+    "line": 1033,
     "type": "property",
     "name": "detectionRate",
     "currentDoc": "(none)",
@@ -77906,7 +78394,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1030,
+    "line": 1034,
     "type": "property",
     "name": "falsePositiveRate",
     "currentDoc": "(none)",
@@ -77914,7 +78402,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1031,
+    "line": 1035,
     "type": "property",
     "name": "largeRunsDetected",
     "currentDoc": "(none)",
@@ -77922,7 +78410,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1033,
+    "line": 1037,
     "type": "property",
     "name": "syntheticEcosystems",
     "currentDoc": "(none)",
@@ -77930,7 +78418,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1034,
+    "line": 1038,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -77938,7 +78426,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1035,
+    "line": 1039,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -77946,7 +78434,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1036,
+    "line": 1040,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -77954,7 +78442,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1037,
+    "line": 1041,
     "type": "property",
     "name": "activePrograms",
     "currentDoc": "(none)",
@@ -77962,7 +78450,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1038,
+    "line": 1042,
     "type": "property",
     "name": "keystoneSpeciesProtected",
     "currentDoc": "(none)",
@@ -77970,7 +78458,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1039,
+    "line": 1043,
     "type": "property",
     "name": "totalCostSpent",
     "currentDoc": "(none)",
@@ -77978,7 +78466,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1040,
+    "line": 1044,
     "type": "property",
     "name": "recoveryTimeGranted",
     "currentDoc": "(none)",
@@ -77986,7 +78474,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1041,
+    "line": 1045,
     "type": "property",
     "name": "crisisMitigationFraction",
     "currentDoc": "(none)",
@@ -77994,7 +78482,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1043,
+    "line": 1047,
     "type": "property",
     "name": "coastalProtection",
     "currentDoc": "(none)",
@@ -78002,7 +78490,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1044,
+    "line": 1048,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78010,7 +78498,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1045,
+    "line": 1049,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78018,7 +78506,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1046,
+    "line": 1050,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78026,7 +78514,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1047,
+    "line": 1051,
     "type": "property",
     "name": "hectaresProtected",
     "currentDoc": "(none)",
@@ -78034,7 +78522,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1048,
+    "line": 1052,
     "type": "property",
     "name": "totalCostSpent",
     "currentDoc": "(none)",
@@ -78042,7 +78530,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1049,
+    "line": 1053,
     "type": "property",
     "name": "oceanCrisisMitigation",
     "currentDoc": "(none)",
@@ -78050,7 +78538,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1051,
+    "line": 1055,
     "type": "property",
     "name": "crisisAnticipation",
     "currentDoc": "(none)",
@@ -78058,7 +78546,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1052,
+    "line": 1056,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78066,7 +78554,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1053,
+    "line": 1057,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78074,7 +78562,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1054,
+    "line": 1058,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78082,7 +78570,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1055,
+    "line": 1059,
     "type": "property",
     "name": "pandemicsDetected",
     "currentDoc": "(none)",
@@ -78090,7 +78578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1056,
+    "line": 1060,
     "type": "property",
     "name": "climateEventsAnticipated",
     "currentDoc": "(none)",
@@ -78098,7 +78586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1057,
+    "line": 1061,
     "type": "property",
     "name": "supplyChainDisruptionsPrevented",
     "currentDoc": "(none)",
@@ -78106,7 +78594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1058,
+    "line": 1062,
     "type": "property",
     "name": "leadTimeMonths",
     "currentDoc": "(none)",
@@ -78114,7 +78602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1059,
+    "line": 1063,
     "type": "property",
     "name": "crisisDeathsPrevented",
     "currentDoc": "(none)",
@@ -78122,7 +78610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1061,
+    "line": 1065,
     "type": "property",
     "name": "nuclearSecurity",
     "currentDoc": "(none)",
@@ -78130,7 +78618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1062,
+    "line": 1066,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78138,7 +78626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1063,
+    "line": 1067,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78146,7 +78634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1064,
+    "line": 1068,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78154,7 +78642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1065,
+    "line": 1069,
     "type": "property",
     "name": "nuclearStatesSecured",
     "currentDoc": "(none)",
@@ -78162,7 +78650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1066,
+    "line": 1070,
     "type": "property",
     "name": "intrusionAttempts",
     "currentDoc": "(none)",
@@ -78170,7 +78658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1067,
+    "line": 1071,
     "type": "property",
     "name": "intrusionsPrevented",
     "currentDoc": "(none)",
@@ -78178,7 +78666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1068,
+    "line": 1072,
     "type": "property",
     "name": "effectiveSecurityRate",
     "currentDoc": "(none)",
@@ -78186,7 +78674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1070,
+    "line": 1074,
     "type": "property",
     "name": "centaurSystems",
     "currentDoc": "(none)",
@@ -78194,7 +78682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1071,
+    "line": 1075,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78202,7 +78690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1072,
+    "line": 1076,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78210,7 +78698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1073,
+    "line": 1077,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78218,7 +78706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1074,
+    "line": 1078,
     "type": "property",
     "name": "workforceCoverage",
     "currentDoc": "(none)",
@@ -78226,7 +78714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1075,
+    "line": 1079,
     "type": "property",
     "name": "sectorsAdopted",
     "currentDoc": "(none)",
@@ -78234,7 +78722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1076,
+    "line": 1080,
     "type": "property",
     "name": "autonomyPreserved",
     "currentDoc": "(none)",
@@ -78242,7 +78730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1077,
+    "line": 1081,
     "type": "property",
     "name": "meaningCrisisReduction",
     "currentDoc": "(none)",
@@ -78250,7 +78738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1079,
+    "line": 1083,
     "type": "property",
     "name": "communityCohesion",
     "currentDoc": "(none)",
@@ -78258,7 +78746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1080,
+    "line": 1084,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78266,7 +78754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1081,
+    "line": 1085,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78274,7 +78762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1082,
+    "line": 1086,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78282,7 +78770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1083,
+    "line": 1087,
     "type": "property",
     "name": "programsActive",
     "currentDoc": "(none)",
@@ -78290,7 +78778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1084,
+    "line": 1088,
     "type": "property",
     "name": "participationRate",
     "currentDoc": "(none)",
@@ -78298,7 +78786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1085,
+    "line": 1089,
     "type": "property",
     "name": "cohesionIncrease",
     "currentDoc": "(none)",
@@ -78306,7 +78794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1086,
+    "line": 1090,
     "type": "property",
     "name": "meaningCrisisReduction",
     "currentDoc": "(none)",
@@ -78314,7 +78802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1090,
+    "line": 1094,
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -78322,7 +78810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1091,
+    "line": 1095,
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -78330,7 +78818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1092,
+    "line": 1096,
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -78338,7 +78826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1093,
+    "line": 1097,
     "type": "property",
     "name": "controlCapability",
     "currentDoc": "(none)",
@@ -78346,7 +78834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1094,
+    "line": 1098,
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -78354,7 +78842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1140,
+    "line": 1144,
     "type": "property",
     "name": "aiAgents",
     "currentDoc": "(none)",
@@ -78362,7 +78850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1141,
+    "line": 1145,
     "type": "property",
     "name": "government",
     "currentDoc": "(none)",
@@ -78370,7 +78858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1145,
+    "line": 1149,
     "type": "property",
     "name": "society",
     "currentDoc": "(none)",
@@ -78378,7 +78866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1149,
+    "line": 1153,
     "type": "property",
     "name": "globalMetrics",
     "currentDoc": "(none)",
@@ -78386,7 +78874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1153,
+    "line": 1157,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -89946,7 +90434,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 21,
+    "line": 22,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -89954,7 +90442,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 22,
+    "line": 23,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -89962,7 +90450,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 23,
+    "line": 24,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -89970,7 +90458,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 28,
+    "line": 29,
     "type": "property",
     "name": "geographicPresence",
     "currentDoc": "(none)",
@@ -89978,7 +90466,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 34,
+    "line": 35,
     "type": "property",
     "name": "remoteWorkCapable",
     "currentDoc": "(none)",
@@ -89986,7 +90474,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 35,
+    "line": 36,
     "type": "property",
     "name": "essentialDesignation",
     "currentDoc": "(none)",
@@ -89994,7 +90482,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 36,
+    "line": 37,
     "type": "property",
     "name": "distributedDataCenters",
     "currentDoc": "(none)",
@@ -90002,7 +90490,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 43,
+    "line": 44,
     "type": "property",
     "name": "priorities",
     "currentDoc": "(none)",
@@ -90010,7 +90498,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 50,
+    "line": 51,
     "type": "property",
     "name": "currentProjects",
     "currentDoc": "(none)",
@@ -90018,7 +90506,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 52,
+    "line": 53,
     "type": "property",
     "name": "partnerships",
     "currentDoc": "(none)",
@@ -90026,7 +90514,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 55,
+    "line": 56,
     "type": "property",
     "name": "reputation",
     "currentDoc": "(none)",
@@ -90034,7 +90522,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 62,
+    "line": 63,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -90042,7 +90530,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 63,
+    "line": 64,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -90050,7 +90538,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 64,
+    "line": 65,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -90058,7 +90546,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 72,
+    "line": 73,
     "type": "property",
     "name": "priorities",
     "currentDoc": "(none)",
@@ -90066,7 +90554,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 79,
+    "line": 80,
     "type": "property",
     "name": "currentProjects",
     "currentDoc": "(none)",
@@ -90074,7 +90562,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 81,
+    "line": 82,
     "type": "property",
     "name": "partnerships",
     "currentDoc": "(none)",
@@ -90082,7 +90570,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 84,
+    "line": 85,
     "type": "property",
     "name": "reputation",
     "currentDoc": "(none)",
@@ -90090,7 +90578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 91,
+    "line": 92,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -90098,7 +90586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 92,
+    "line": 93,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -90106,7 +90594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 93,
+    "line": 94,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -90114,7 +90602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 98,
+    "line": 99,
     "type": "property",
     "name": "geographicPresence",
     "currentDoc": "(none)",
@@ -90122,7 +90610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 107,
+    "line": 108,
     "type": "property",
     "name": "remoteWorkCapable",
     "currentDoc": "(none)",
@@ -90130,7 +90618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 108,
+    "line": 109,
     "type": "property",
     "name": "essentialDesignation",
     "currentDoc": "(none)",
@@ -90138,7 +90626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 109,
+    "line": 110,
     "type": "property",
     "name": "distributedDataCenters",
     "currentDoc": "(none)",
@@ -90146,7 +90634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 116,
+    "line": 117,
     "type": "property",
     "name": "priorities",
     "currentDoc": "(none)",
@@ -90154,7 +90642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 123,
+    "line": 124,
     "type": "property",
     "name": "currentProjects",
     "currentDoc": "(none)",
@@ -90162,7 +90650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 125,
+    "line": 126,
     "type": "property",
     "name": "partnerships",
     "currentDoc": "(none)",
@@ -90170,7 +90658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 128,
+    "line": 129,
     "type": "property",
     "name": "reputation",
     "currentDoc": "(none)",
@@ -90178,7 +90666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 135,
+    "line": 136,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -90186,7 +90674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 136,
+    "line": 137,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -90194,7 +90682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 137,
+    "line": 138,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -90202,7 +90690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 145,
+    "line": 146,
     "type": "property",
     "name": "priorities",
     "currentDoc": "(none)",
@@ -90210,7 +90698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 152,
+    "line": 153,
     "type": "property",
     "name": "currentProjects",
     "currentDoc": "(none)",
@@ -90218,7 +90706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 157,
+    "line": 158,
     "type": "property",
     "name": "reputation",
     "currentDoc": "(none)",
@@ -90226,7 +90714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 164,
+    "line": 165,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -90234,7 +90722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 165,
+    "line": 166,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -90242,7 +90730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 166,
+    "line": 167,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -90250,7 +90738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 174,
+    "line": 175,
     "type": "property",
     "name": "priorities",
     "currentDoc": "(none)",
@@ -90258,7 +90746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 181,
+    "line": 182,
     "type": "property",
     "name": "currentProjects",
     "currentDoc": "(none)",
@@ -90266,7 +90754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 183,
+    "line": 184,
     "type": "property",
     "name": "partnerships",
     "currentDoc": "(none)",
@@ -90274,7 +90762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 197,
+    "line": 198,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -90282,7 +90770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 198,
+    "line": 199,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -90290,7 +90778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 199,
+    "line": 200,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -90298,7 +90786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 204,
+    "line": 205,
     "type": "property",
     "name": "geographicPresence",
     "currentDoc": "(none)",
@@ -90306,7 +90794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 216,
+    "line": 217,
     "type": "property",
     "name": "remoteWorkCapable",
     "currentDoc": "(none)",
@@ -90314,7 +90802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 217,
+    "line": 218,
     "type": "property",
     "name": "essentialDesignation",
     "currentDoc": "(none)",
@@ -90322,7 +90810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 218,
+    "line": 219,
     "type": "property",
     "name": "distributedDataCenters",
     "currentDoc": "(none)",
@@ -90330,7 +90818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 225,
+    "line": 226,
     "type": "property",
     "name": "priorities",
     "currentDoc": "(none)",
@@ -90338,7 +90826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 232,
+    "line": 233,
     "type": "property",
     "name": "currentProjects",
     "currentDoc": "(none)",
@@ -90346,7 +90834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 234,
+    "line": 235,
     "type": "property",
     "name": "partnerships",
     "currentDoc": "(none)",
@@ -90354,7 +90842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 386,
+    "line": 387,
     "type": "property",
     "name": "org",
     "currentDoc": "(none)",
@@ -90362,7 +90850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 387,
+    "line": 388,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -90370,7 +90858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 388,
+    "line": 389,
     "type": "property",
     "name": "countries",
     "currentDoc": "(none)",
@@ -90378,7 +90866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 447,
+    "line": 448,
     "type": "property",
     "name": "org",
     "currentDoc": "(none)",
@@ -90386,7 +90874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 448,
+    "line": 449,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -90394,7 +90882,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizations.ts",
-    "line": 449,
+    "line": 450,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",

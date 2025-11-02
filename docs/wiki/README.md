@@ -3261,30 +3261,40 @@ state.history.exogenousShocks?: Array<{
 - **Documentation**: `CLAUDE.md` lines 34-65, `plans/merge_orchestrator_hourly_automation.md`
 - Commit: 632cefb (Nov 1, 2025)
 
-**Hourly Merge Orchestrator Automation** 📋 PLANNED (Nov 1, 2025)
+**Hourly Merge Orchestrator Automation** ✅ IMPLEMENTED (Nov 1, 2025)
 - **Purpose**: Automated branch cleanup & quality gate workflow to reduce manual merge overhead
-- **Trigger**: Hourly cron job (Mac: all branches, VM: backend only)
+- **Trigger**: Hourly cron job (Mac: all branches, VM: backend only) - *awaiting cron setup*
+- **Implementation**: `scripts/merge-orchestrator.sh` (500+ lines)
 - **Workflow**:
-  1. Discover all feature branches (exclude main)
+  1. Discover all feature branches (exclude main, HEAD, existing merge branches)
   2. [VM ONLY] Detect frontend changes → skip frontend branches
-  3. Create merge branch for each feature branch
+  3. Create timestamped merge branch for each feature branch (`merge/{branch}_{timestamp}`)
   4. Attempt merge from feature branch to main
-  5. If conflicts → report & skip
+  5. If conflicts → abort, report, skip branch
   6. If clean → run quality gates (TypeScript, tests, architecture-skeptic, Sylvia review)
   7. If all gates pass → merge to main, delete feature branch
-  8. If any gate fails → preserve merge branch, log failure, notify coordination channel
+  8. If any gate fails → preserve merge branch with `_FAILED` suffix, log failure
 - **Quality Gates**:
   - Gate 1: TypeScript compilation (`npx tsc --noEmit`)
   - Gate 2: Test suite (`npm test`, VM uses `npm run test:backend`)
-  - Gate 3: Architecture-skeptic review (spawn agent, block on CRITICAL issues)
-  - Gate 4: Sylvia final review (spawn research-skeptic, block on BLOCK decision)
-- **Frontend Detection**: `git diff main...${BRANCH} --name-only | grep -E '^src/(lib|app|components)/|\.tsx$|\.css$'`
-- **Safety**: Dry-run mode, protected branches, lock file prevents concurrent runs, rollback capability
+  - Gate 3: Architecture-skeptic review (*agent integration pending*)
+  - Gate 4: Sylvia final review (*agent integration pending*)
+- **Frontend Detection**: `git diff origin/main...origin/${BRANCH} --name-only | grep -E '^src/(lib|app|components)/|\.tsx$|\.css$'`
+- **Safety Features**:
+  - Protected branches (never delete main)
+  - Lock file prevents concurrent runs (`/tmp/merge-orchestrator.lock`)
+  - Dry-run mode for testing (`--dry-run` flag)
+  - Failed merge branches preserved for inspection
+  - Comprehensive logging with color output
+- **Configuration**:
+  - `IS_VM`: Set to "true" on VM to skip frontend branches
+  - `MERGE_ORCHESTRATOR_DRY_RUN`: Test mode (no actual merges)
+  - `MERGE_ORCHESTRATOR_MAX_BRANCHES`: Limit branches per run (default: 10)
+- **Usage**: `./scripts/merge-orchestrator.sh [--dry-run] [--max-branches N]`
 - **Logging**: `logs/merge_orchestrator_YYYYMMDD_HHMMSS.log` with detailed per-branch status
-- **Notification**: Posts summary to coordination channel via chatroom MCP
-- **Status**: Planning phase (Phase 1-4 implementation roadmap defined)
+- **Next Steps**: Set up hourly cron job (Mac) and systemd timer (VM), implement full agent spawning for quality gates 3-4
 - **Documentation**: `plans/merge_orchestrator_hourly_automation.md` (428 lines)
-- Commit: 632cefb (Nov 1, 2025)
+- Commit: a0638db (Nov 1, 2025)
 
 **Remote Development Setup** ✅ DOCUMENTED
 - Complete automation for deploying on remote VMs (GCloud instances)
