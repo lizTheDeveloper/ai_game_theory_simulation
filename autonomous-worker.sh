@@ -91,7 +91,7 @@ cd "$PROJECT_DIR"
         log_success "Chatroom monitor already running"
     else
         log_warning "Chatroom monitor not running, starting it..."
-        source .venv/bin/activate
+        # Note: channel-monitor.ts is TypeScript (npx tsx), doesn't need Python .venv
         nohup npx tsx scripts/channel-monitor.ts > logs/monitor_$TIMESTAMP.log 2>&1 &
         MONITOR_PID=$!
         sleep 2  # Give it a moment to start
