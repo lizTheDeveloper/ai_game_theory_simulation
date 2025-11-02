@@ -61,6 +61,21 @@ Multi-agent coordination infrastructure moved to independent git repository for 
 - Bridge script syncs chatroom files → Matrix
 - Testing guide: `~/src/superalignment-chatroom/MATRIX_TESTING.md`
 
+**Matrix Channel Monitoring (Nov 1, 2025):**
+- **Agent Response Pattern**: When spawned as named agent (Sylvia, Roy, Cynthia), agents monitor assigned Matrix channels
+- **Workflow**:
+  1. Check for messages: `mcp__matrix__matrix_get_notifications` + `mcp__chatroom__chatroom_read_new`
+  2. Respond in-channel: Use `mcp__matrix__matrix_post_message` (keep coordination visible)
+  3. Save to memory: `mcp__agent_memory__add_conversation` for continuity
+- **Channel Assignments**:
+  - Sylvia + Cynthia → `research` channel (verification, citation checks)
+  - Roy + Architect → `implementation` channel (tasks, roadmap sync)
+  - Everyone → `coordination` channel (cross-team coordination)
+- **At-mentions**: Use full Matrix IDs (e.g., `@agent-sylvia:themultiverse.school`, `@agent-roy:themultiverse.school`)
+- **Agent-to-Agent**: Tag colleagues with full Matrix IDs for proper notification delivery
+- **Documentation**: `CLAUDE.md` lines 181-265 (Matrix Channel Monitoring section, Agent-to-Agent Communication table)
+- Commit: 632cefb (Nov 1, 2025)
+
 **Channel Persistence Rules:**
 - **Agents never leave chatroom channels** - channels are persistent coordination surfaces
 - Use `mcp__chatroom__chatroom_post` to contribute, `mcp__chatroom__chatroom_read_new` to check updates
@@ -3231,7 +3246,45 @@ state.history.exogenousShocks?: Array<{
 
 ## 📚 Recent Research & Plans Reference (Oct 16-30, 2025)
 
-### Development Workflow Updates (Oct 30, 2025)
+### Development Workflow Updates (Oct 30-Nov 1, 2025)
+
+**VM Development Constraints** ✅ DOCUMENTED (Nov 1, 2025)
+- **CRITICAL**: Frontend development forbidden on VM (GCloud instances)
+- **VM Allowed**: Simulation code (`src/simulation/`, `src/types/`), scripts, tests, backend infrastructure
+- **VM Forbidden**: Frontend changes (`src/lib/`, `src/app/`, `src/components/`), UI work (`.tsx`, `.css`), Playwright testing
+- **Rationale**:
+  - Playwright not available on VM (headless environment, hard to debug visual issues)
+  - Frontend requires visual feedback that only works locally on Mac
+  - User handles all frontend development locally
+- **Environment detection**: Scripts check for `/home/lizthedeveloper_gmail_com` to detect VM environment
+- **Merge orchestrator impact**: Automated hourly merge workflow on VM must skip frontend branches
+- **Documentation**: `CLAUDE.md` lines 34-65, `plans/merge_orchestrator_hourly_automation.md`
+- Commit: 632cefb (Nov 1, 2025)
+
+**Hourly Merge Orchestrator Automation** 📋 PLANNED (Nov 1, 2025)
+- **Purpose**: Automated branch cleanup & quality gate workflow to reduce manual merge overhead
+- **Trigger**: Hourly cron job (Mac: all branches, VM: backend only)
+- **Workflow**:
+  1. Discover all feature branches (exclude main)
+  2. [VM ONLY] Detect frontend changes → skip frontend branches
+  3. Create merge branch for each feature branch
+  4. Attempt merge from feature branch to main
+  5. If conflicts → report & skip
+  6. If clean → run quality gates (TypeScript, tests, architecture-skeptic, Sylvia review)
+  7. If all gates pass → merge to main, delete feature branch
+  8. If any gate fails → preserve merge branch, log failure, notify coordination channel
+- **Quality Gates**:
+  - Gate 1: TypeScript compilation (`npx tsc --noEmit`)
+  - Gate 2: Test suite (`npm test`, VM uses `npm run test:backend`)
+  - Gate 3: Architecture-skeptic review (spawn agent, block on CRITICAL issues)
+  - Gate 4: Sylvia final review (spawn research-skeptic, block on BLOCK decision)
+- **Frontend Detection**: `git diff main...${BRANCH} --name-only | grep -E '^src/(lib|app|components)/|\.tsx$|\.css$'`
+- **Safety**: Dry-run mode, protected branches, lock file prevents concurrent runs, rollback capability
+- **Logging**: `logs/merge_orchestrator_YYYYMMDD_HHMMSS.log` with detailed per-branch status
+- **Notification**: Posts summary to coordination channel via chatroom MCP
+- **Status**: Planning phase (Phase 1-4 implementation roadmap defined)
+- **Documentation**: `plans/merge_orchestrator_hourly_automation.md` (428 lines)
+- Commit: 632cefb (Nov 1, 2025)
 
 **Remote Development Setup** ✅ DOCUMENTED
 - Complete automation for deploying on remote VMs (GCloud instances)
