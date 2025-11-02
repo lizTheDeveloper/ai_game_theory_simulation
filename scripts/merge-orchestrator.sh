@@ -31,6 +31,19 @@ MAX_BRANCHES="${MERGE_ORCHESTRATOR_MAX_BRANCHES:-10}"
 SKIP_FRONTEND="${MERGE_ORCHESTRATOR_SKIP_FRONTEND:-$IS_VM}"
 ENABLE_AGENT_REVIEWS="${MERGE_ORCHESTRATOR_ENABLE_AGENT_REVIEWS:-true}"  # Phase 2: Architecture-skeptic + Sylvia reviews
 ENABLE_AUTO_REMEDIATION="${MERGE_ORCHESTRATOR_ENABLE_AUTO_REMEDIATION:-true}"  # Phase 2.5: Auto-fix CRITICAL issues
+AGENT_REVIEW_HOUR="${MERGE_ORCHESTRATOR_AGENT_REVIEW_HOUR:-6}"  # Hour (UTC) to run Opus reviews (cost optimization)
+
+# Time-based agent review gating (cost optimization)
+# Only run expensive Opus reviews once per day at specified hour
+CURRENT_HOUR=$(date +%H | sed 's/^0//')  # Remove leading zero
+if [ "$ENABLE_AGENT_REVIEWS" = "true" ]; then
+  if [ "$CURRENT_HOUR" -ne "$AGENT_REVIEW_HOUR" ]; then
+    ENABLE_AGENT_REVIEWS="false"
+    AGENT_REVIEWS_SKIPPED_REASON="outside daily review window (runs at ${AGENT_REVIEW_HOUR}:00 UTC)"
+  else
+    AGENT_REVIEWS_SKIPPED_REASON="in daily review window (${AGENT_REVIEW_HOUR}:00 UTC)"
+  fi
+fi
 
 # ============================================
 # Logging Setup
@@ -281,7 +294,12 @@ main() {
   log_info "Dry run: $DRY_RUN"
   log_info "Skip frontend: $SKIP_FRONTEND"
   log_info "Max branches: $MAX_BRANCHES"
-  log_info "Agent reviews (Phase 2): $ENABLE_AGENT_REVIEWS"
+  log_info "Current hour (UTC): ${CURRENT_HOUR}:00"
+  if [ "$ENABLE_AGENT_REVIEWS" = "true" ]; then
+    log_info "Agent reviews (Opus): ENABLED - $AGENT_REVIEWS_SKIPPED_REASON"
+  else
+    log_info "Agent reviews (Opus): DISABLED - $AGENT_REVIEWS_SKIPPED_REASON"
+  fi
   log_info "Auto-remediation (Phase 2.5): $ENABLE_AUTO_REMEDIATION"
 
   # Acquire lock
