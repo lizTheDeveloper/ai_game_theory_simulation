@@ -29,7 +29,7 @@ AI manipulation → nuclear war is a **weak-to-moderate indirect causal pathway*
 
 **Evidence**:
 - **May 2025 India-Pakistan Crisis**: AI-generated images and deepfake videos showing fabricated damage from military strikes flooded social media, significantly increasing nuclear escalation risk (Nature, 2025)
-- **Research Finding**: "Runaway sophistry whips up fear and animosity between populations, which then supercharge nationalism, which may, in turn, drive political and military decisions down the road" (Nature, 2025)
+- **Research Finding**: Quote misattributed - "Runaway sophistry whips up fear and animosity between populations, which then supercharge nationalism, which may, in turn, drive political and military decisions down the road" (NOTE: This quote NOT FOUND in Nature Editorial 2025 - needs source verification or removal)
 - **UN Warning**: "Deep fakes" could trigger diplomatic crises, incite unrest, and undermine societal foundations (UN Security Council, 2024)
 
 **Quantitative Data**:
@@ -197,8 +197,8 @@ AI manipulation → nuclear war is a **weak-to-moderate indirect causal pathway*
 - **Strategic Risk**: "Both the widespread deployment of autonomous weapons systems (AWS) and the development of AI-enabled decision-support systems create new pathways for nuclear escalation and arms racing" (Multiple sources, 2024)
 - **Conventional-Nuclear Entanglement**: "The increasingly interdependent and commingled (or entangled) nature of states' conventional and nuclear command-and-control systems might exacerbate the incentives to escalate a situation to a nuclear level once a conventional crisis or conflict begins" (SIPRI, 2024-2025)
 
-**RAND Wargaming (2024)**:
-- **Finding**: "Where high levels of autonomy coincide with primarily human decision making, escalation risk is generally lower, as human involvement allows more time to de-escalate and humans are likely to better understand signaling compared to an AI"
+**RAND Wargaming (2018-2023) & James Johnson (2021)**:
+- **Finding**: "Where high levels of autonomy coincide with primarily human decision making, escalation risk is generally lower, as human involvement allows more time to de-escalate and humans are likely to better understand signaling compared to an AI" (Verified: Quote from James Johnson, "Deterrence in the Age of Artificial Intelligence & Autonomy," Defense & Security Analysis, 2021. RAND sources (PE296 2018, "Deterrence Under Uncertainty" 2023) may cite or summarize this claim)
 - **Implication**: AI autonomy + AI decision-making = highest escalation risk; AI autonomy + human decision-making = lower risk
 
 **CSIS Wargaming (2024)**:
@@ -221,7 +221,7 @@ AI manipulation → nuclear war is a **weak-to-moderate indirect causal pathway*
    - Updated from 2012 version
    - Available: https://www.esd.whs.mil/portals/54/documents/dd/issuances/dodd/300009p.pdf
 
-2. RAND Corporation (2024). Wargaming study on AI autonomy and escalation dynamics.
+2. RAND Corporation (2018-2023). Multiple publications on AI autonomy and escalation dynamics. See bibliography entry #11 for specific publications.
    - Credibility: Leading defense think tank
    - Experimental wargaming methodology
    - Findings reported in multiple defense journals
@@ -411,7 +411,7 @@ AI manipulation → nuclear war is a **weak-to-moderate indirect causal pathway*
    - Policy analysis with proposed bilateral detection mechanisms
    - Specific recommendations for India-Pakistan context
 
-3. European Leadership Network (2024). "Deep Fakes: The Next Digital Weapon with Worrying Implications for Nuclear Policy."
+3. European Leadership Network (2021). "Deep Fakes: The Next Digital Weapon with Worrying Implications for Nuclear Policy." (Published November 3, 2021)
    - European security research organization
    - Analysis of detection challenges
 
@@ -558,7 +558,7 @@ AI manipulation → nuclear war is a **weak-to-moderate indirect causal pathway*
 - **Overall Risk Reduction**: -1% to -5%
 
 **Primary Sources**:
-1. IEEE Spectrum (2024). "The Hunt for the Kill Switch."
+1. IEEE Spectrum (2008). "The Hunt for the Kill Switch." (Published May 1, 2008)
    - Leading engineering publication
    - Technical analysis of kill switch feasibility
 
@@ -1658,14 +1658,15 @@ AI manipulation → nuclear war is NOT a strong, direct causal chain. Instead, i
     - **Key Findings**: Conventional-nuclear entanglement; AI-DSSs escalation risks; compressed decision timeframes
     - **Cited in sections**: 1.5
 
-11. **RAND Corporation** (2018-2024). Multiple publications on AI and nuclear weapons:
-    - "Deterrence Under Uncertainty: Artificial Intelligence and Nuclear Warfare" (December 2023)
-    - "How Artificial Intelligence Could Increase the Risk of Nuclear War" (2018)
-    - "Managing Escalation: Lessons and Challenges from Three Historical Crises Between Nuclear-Armed Powers" (RRA1743-2)
-    - **Institution**: Leading U.S. defense think tank
-    - **Credibility**: Extensive wargaming and scenario analysis
-    - **Key Findings**: Wargaming study on AI autonomy and escalation; where high autonomy + human decision-making → lower escalation risk
-    - **Cited in sections**: 1.5, 5.2.5
+11. **RAND Corporation** (2018-2024) & **James Johnson** (2021). Multiple publications on AI and nuclear weapons:
+   - "Deterrence Under Uncertainty: Artificial Intelligence and Nuclear Warfare" (December 2023, Edward Geist)
+   - "How Artificial Intelligence Could Increase the Risk of Nuclear War" (2018, PE296)
+   - "Managing Escalation: Lessons and Challenges from Three Historical Crises Between Nuclear-Armed Powers" (RRA1743-2, Feb 2024)
+   - **James Johnson (2021)**: "Deterrence in the Age of Artificial Intelligence & Autonomy: A Paradigm Shift in Nuclear Deterrence Theory and Practice," Defense & Security Analysis, 2021 (Primary source for "high autonomy + human decision-making → lower escalation risk" claim)
+   - **Institution**: Leading U.S. defense think tank (RAND) + Academic research (Johnson)
+   - **Credibility**: Extensive wargaming and scenario analysis (RAND), peer-reviewed academic research (Johnson)
+   - **Key Findings**: Wargaming study on AI autonomy and escalation; where high autonomy + human decision-making → lower escalation risk (verified quote from Johnson 2021)
+   - **Cited in sections**: 1.5, 5.2.5
 
 12. **Center for Strategic and International Studies (CSIS)** (2024). "Algorithmic Stability: How AI Could Shape the Future of Deterrence." https://www.csis.org/analysis/algorithmic-stability-how-ai-could-shape-future-deterrence
     - **Institution**: Major U.S. foreign policy think tank
@@ -1701,7 +1702,7 @@ AI manipulation → nuclear war is NOT a strong, direct causal chain. Instead, i
     - **Key Findings**: AI in nuclear systems "neither all good nor all bad"; context-dependent; implementation appears inevitable; recommendations for managing risks
     - **Cited in sections**: 4.2
 
-18. **Nuclear Threat Initiative** (2024). "Deep Fakes and Dead Hands: Artificial Intelligence's Impact on Strategic Risk." *NTI Atomic Pulse*. https://www.nti.org/atomic-pulse/deep-fakes-and-dead-hands-artificial-intelligences-impact-on-strategic-risk/
+18. **Nuclear Threat Initiative** (2022). "Deep Fakes and Dead Hands: Artificial Intelligence's Impact on Strategic Risk." *NTI Atomic Pulse*. https://www.nti.org/atomic-pulse/deep-fakes-and-dead-hands-artificial-intelligences-impact-on-strategic-risk/ (Published August 1, 2022)
     - **Key Findings**: Deepfake risks to nuclear early warning; false alarm scenarios
     - **Cited in sections**: 1.2
 
@@ -1717,7 +1718,7 @@ AI manipulation → nuclear war is NOT a strong, direct causal chain. Instead, i
     - **Key Findings**: Strategic stability implications of AI; escalation risks; deterrence dynamics
     - **Cited in sections**: 1.1, 1.3
 
-21. **Modern War Institute (West Point)** (2024). "Artificial Intelligence, Autonomy, and the Risk of Catalytic Nuclear War." https://mwi.westpoint.edu/artificial-intelligence-autonomy-and-the-risk-of-catalytic-nuclear-war/
+21. **Modern War Institute (West Point)** (2021). "Artificial Intelligence, Autonomy, and the Risk of Catalytic Nuclear War." https://mwi.westpoint.edu/artificial-intelligence-autonomy-and-the-risk-of-catalytic-nuclear-war/ (Published March 18, 2021)
     - **Institution**: U.S. Military Academy research center
     - **Key Findings**: Catalytic war scenarios; autonomous systems escalation pathways
     - **Cited in sections**: 1.1, 1.5
@@ -1763,7 +1764,7 @@ AI manipulation → nuclear war is NOT a strong, direct causal chain. Instead, i
 
 ### Technology & Engineering Analysis
 
-29. **IEEE Spectrum** (2024). "The Hunt for the Kill Switch." https://spectrum.ieee.org/the-hunt-for-the-kill-switch
+29. **IEEE Spectrum** (2008). "The Hunt for the Kill Switch." https://spectrum.ieee.org/the-hunt-for-the-kill-switch (Published May 1, 2008)
     - **Institution**: Institute of Electrical and Electronics Engineers (leading engineering organization)
     - **Credibility**: Technical analysis by engineers
     - **Key Findings**: Kill switch technical feasibility; hardware vulnerabilities; patching difficulties; internet architecture persistence
@@ -1793,7 +1794,7 @@ AI manipulation → nuclear war is NOT a strong, direct causal chain. Instead, i
     - **Key Findings**: Deep fakes could trigger diplomatic crises; integration of AI with nuclear weapons must be avoided; international governance discussions
     - **Cited in sections**: 1.1
 
-34. **European Leadership Network** (2024). "Deep Fakes: The Next Digital Weapon with Worrying Implications for Nuclear Policy." https://europeanleadershipnetwork.org/commentary/deep-fakes-the-next-digital-weapon-with-worrying-implications-for-nuclear-policy/
+34. **European Leadership Network** (2021). "Deep Fakes: The Next Digital Weapon with Worrying Implications for Nuclear Policy." https://europeanleadershipnetwork.org/commentary/deep-fakes-the-next-digital-weapon-with-worrying-implications-for-nuclear-policy/ (Published November 3, 2021)
     - **Institution**: European security research organization
     - **Key Findings**: Deepfake detection challenges; nuclear early warning implications
     - **Cited in sections**: 2.3, 5.3.3
@@ -1827,7 +1828,7 @@ AI manipulation → nuclear war is NOT a strong, direct causal chain. Instead, i
 
 ### Additional References
 
-41. **Brookings Institution** (2024). "How unchecked AI could trigger a nuclear war." https://www.brookings.edu/articles/how-unchecked-ai-could-trigger-a-nuclear-war/
+41. **Brookings Institution** (2025). "How unchecked AI could trigger a nuclear war." https://www.brookings.edu/articles/how-unchecked-ai-could-trigger-a-nuclear-war/ (Published February 28, 2025, author: Michael O'Hanlon)
     - **Institution**: Major U.S. think tank
     - **Key Findings**: Policy analysis of AI-nuclear risks
     - **Cited in sections**: 1.5
@@ -1837,15 +1838,20 @@ AI manipulation → nuclear war is NOT a strong, direct causal chain. Instead, i
     - **Key Findings**: Strategic implications of AI integration; pessimistic view
     - **Cited in sections**: 1.1, 4.2
 
-43. **Lowy Institute** (2024). "Deepfakes and nuclear weapons: Why AI regulation can't wait." https://www.lowyinstitute.org/the-interpreter/deepfakes-nuclear-weapons-why-ai-regulation-can-t-wait
+43. **Lowy Institute** (2025). "Deepfakes and nuclear weapons: Why AI regulation can't wait." https://www.lowyinstitute.org/the-interpreter/deepfakes-nuclear-weapons-why-ai-regulation-can-t-wait (Published July 25, 2025)
     - **Institution**: Australian think tank
     - **Key Findings**: Urgency of AI regulation for nuclear security
     - **Cited in sections**: 1.2
 
 44. **Various computer vision conferences** (CVPR, ICCV, NeurIPS 2024-2025). Deepfake detection research.
-    - **Key Findings**: Detection accuracy 70-95%; declining effectiveness over time
-    - **Cited in sections**: 2.3, 5.3.3
-    - **Note**: Aggregated findings from multiple papers; specific citations not provided in web search results
+   - **Key Findings**: Detection accuracy 70-95%; declining effectiveness over time
+   - **Specific Papers Verified:**
+     - Yang et al. (2025). "D3: Scaling Up Deepfake Detection by Learning from Discrepancy." CVPR 2025.
+     - "DF40: Toward Next-Generation Deepfake Detection." NeurIPS 2024 (Datasets & Benchmarks Track).
+     - ACM 2024: Characterizing Photorealism study (detection accuracy declining from 90% to 85%).
+     - IJCAI 2024: "Are Watermarks Bugs for Deepfake Detectors?" (accuracy ranges 70-99%).
+   - **Cited in sections**: 2.3, 5.3.3
+   - **Note**: Multiple papers support the 70-95% range and declining effectiveness claim.
 
 ---
 

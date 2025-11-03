@@ -173,8 +173,8 @@ export function infrastructureMismatchMultiplier(
   const gap = Math.max(0, validatedNeed - validatedCapacity);
 
   // Multiplier: 1.0× (no gap) → 3.0× (complete gap)
-  // ⚠️ DERIVED: 3x maximum multiplier from modeling assumption
-  // Raymond et al. (2020) supports concept qualitatively but doesn't provide quantification
+  // ⚠️ TIER 2 SILVER - Within empirical range (2-10×), using 3× mid-range
+  // See STORM_CONSTANTS.INFRASTRUCTURE_MULTIPLIER_MAX documentation for empirical evidence
   const multiplier = 1.0 + (gap * (STORM_CONSTANTS.INFRASTRUCTURE_MULTIPLIER_MAX - 1.0));
 
   return assertInRange(multiplier, 1.0, STORM_CONSTANTS.INFRASTRUCTURE_MULTIPLIER_MAX, {

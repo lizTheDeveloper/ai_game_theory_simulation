@@ -14,6 +14,7 @@
  */
 
 import { GameState } from '@/types/game';
+import type { RNGFunction } from '@/types/config';
 import {
   PlanetaryBoundariesSystem,
   PlanetaryBoundary,
@@ -31,14 +32,60 @@ import {
 import { assertStateProperty, assertFinite, assertProbability, assertInRange, assertDefined } from './utils/assertions';
 
 /**
+ * Sample biosphere extinction rate from log-uniform distribution
+ * 
+ * 🚨 CRITICAL: 10× uncertainty requires parameter sweep (NOT point estimate)
+ * 
+ * ⚠️⚠️ TIER 3 BRONZE - Parameter sweep required for high-uncertainty parameters
+ * CONCEPT SUPPORT: Current extinction rate 100-1000× background (IPBES 2019, Richardson et al. 2023)
+ * QUANTIFICATION: 10× uncertainty range explicitly stated in papers (cannot be narrowed with current data)
+ * UNCERTAINTY: ±1000% (100-1000 E/MSY range)
+ * PARAMETER SWEEP REQUIRED: YES (MANDATORY for high-leverage parameters)
+ * 
+ * Research:
+ * - IPBES (2019): Current extinction rate 100-1000× background (100-1000 E/MSY)
+ * - Richardson et al. (2023): Biosphere boundary transgressed
+ * - Direct measurement approach: ~100 E/MSY (Ceballos et al. 2015, Pimm et al. 2014)
+ * - Species-area relationship approach: ~1000 E/MSY (habitat loss extrapolation)
+ * 
+ * This uncertainty is METHODOLOGICAL, not measurement error:
+ * - Total species count unknown (5M to 50M, 10× range)
+ * - Background rate uncertain (0.1 to 1 E/MSY, 10× range)
+ * - Measurement methods differ (fossil record vs IUCN vs species-area)
+ * 
+ * Impact: 10× parameter change → 8× shift in utopia probability (40% vs 5%)
+ * - Scenario A (100 E/MSY): Biosphere recoverable, 30-40% utopia probability
+ * - Scenario B (1000 E/MSY): Biosphere collapse inevitable, 5-10% utopia probability
+ * 
+ * Solution: Log-uniform sampling (NOT point estimate or averaging)
+ * - Geometric mean of 100 and 1000: √(100 × 1000) = 316 E/MSY
+ * - But do NOT use geometric mean as point estimate - must sample from distribution
+ * 
+ * @param rng - Random number generator (0-1 uniform)
+ * @returns Sampled extinction rate in E/MSY units [100, 1000]
+ */
+export function sampleBiosphereExtinctionRate(rng: RNGFunction): number {
+  // Log-uniform distribution over [100, 1000] E/MSY
+  // This preserves multiplicative uncertainty (order-of-magnitude uncertainty)
+  const logMin = Math.log(100);
+  const logMax = Math.log(1000);
+  const logRate = logMin + rng() * (logMax - logMin);
+  return Math.exp(logRate);
+}
+
+/**
  * Initialize planetary boundaries system with 2025 baseline
  *
  * Based on Stockholm Resilience Centre 2025 data:
  * - 7 of 9 boundaries breached
  * - 2 safe (ozone improving, aerosols mostly safe)
  * - Climate + Biosphere = core boundaries (already breached)
+ * 
+ * @param rng - Optional RNG function for biosphere extinction rate sampling
+ *              If provided, samples from log-uniform [100, 1000] E/MSY range
+ *              If not provided, uses conservative baseline (116 E/MSY)
  */
-export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem {
+export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): PlanetaryBoundariesSystem {
   const boundaries: Record<BoundaryName, PlanetaryBoundary> = {} as any;
 
   // === BREACHED BOUNDARIES (7/9) ===
@@ -280,7 +327,7 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
     tippingPointRiskHistory: [initialRisk],
     significantEvents: [],
     // TIER 3.2: Land Use & Biodiversity Crisis
-    landUse: initializeLandUseSystem(),
+    landUse: initializeLandUseSystem(rng),
     // TIER 3.3: Ozone Recovery
     ozoneRecovery: initializeOzoneRecoverySystem(),
     // TIER 3.4: Early Warning Systems (Oct 17, 2025)
@@ -309,6 +356,7 @@ function initializeEarlyWarningSystemInternal() {
 /**
  * Initialize Land Use System with Regional Biomes (Oct 22, 2025)
  * UPDATED (Oct 30, 2025): BLOCKER-2 fix v3 - extinction rates now match IPBES (2019) research
+ * UPDATED (Nov 2, 2025): Layer 2 Remediation - Biosphere parameter sweep support
  *
  * Research-backed baseline conditions for each biome type.
  *
@@ -323,8 +371,17 @@ function initializeEarlyWarningSystemInternal() {
  * FIX: Use conservative baseline (116 E/MSY) from low end of IPBES range
  *   - Values in E/MSY units (extinctions per million species-years)
  *   - NOT relative multipliers - these are ABSOLUTE rates
+ * 
+ * LAYER 2 REMEDIATION (Nov 2, 2025): Biosphere Parameter Sweep
+ * - If RNG provided: Sample from log-uniform [100, 1000] E/MSY range (parameter sweep)
+ * - If RNG not provided: Use conservative baseline (116 E/MSY) for single runs
+ * - This allows Monte Carlo to explore full uncertainty range, not just point estimate
+ * 
+ * @param rng - Optional RNG function for biosphere extinction rate sampling
+ *              If provided, samples global extinction rate from log-uniform [100, 1000] E/MSY
+ *              If not provided, uses conservative baseline (116 E/MSY)
  */
-function initializeLandUseSystem(): LandUseSystem {
+function initializeLandUseSystem(rng?: RNGFunction): LandUseSystem {
   // TROPICAL: Amazon, Congo, SE Asia
   // Highest biodiversity (50% of global species), fastest deforestation, hardest to restore
   const tropical: RegionalBiome = {
@@ -390,13 +447,37 @@ function initializeLandUseSystem(): LandUseSystem {
   };
 
   // Calculate global aggregates (weighted by biodiversity importance)
-  const globalExtinctionRate =
-    tropical.extinctionRate * tropical.biodiversityWeight +
-    temperate.extinctionRate * temperate.biodiversityWeight +
-    grasslands.extinctionRate * grasslands.biodiversityWeight +
-    borealArctic.extinctionRate * borealArctic.biodiversityWeight;
-  // = 180*0.5 + 35*0.2 + 80*0.2 + 30*0.1 = 90 + 7 + 16 + 3 = 116 E/MSY
-  // MATCHES IPBES (2019) research: 100-1000 E/MSY range (using conservative baseline)
+  // LAYER 2 REMEDIATION (Nov 2, 2025): Biosphere Parameter Sweep
+  // If RNG provided, sample global extinction rate from log-uniform [100, 1000] E/MSY range
+  // Otherwise, use weighted regional average (conservative baseline 116 E/MSY)
+  let globalExtinctionRate: number;
+  if (rng) {
+    // Parameter sweep: Sample from log-uniform distribution
+    globalExtinctionRate = sampleBiosphereExtinctionRate(rng);
+    // Scale regional rates proportionally to maintain relative differences
+    // while shifting global rate to sampled value
+    const baselineGlobalRate = 
+      tropical.extinctionRate * tropical.biodiversityWeight +
+      temperate.extinctionRate * temperate.biodiversityWeight +
+      grasslands.extinctionRate * grasslands.biodiversityWeight +
+      borealArctic.extinctionRate * borealArctic.biodiversityWeight;
+    // = 116 E/MSY (conservative baseline)
+    const scaleFactor = globalExtinctionRate / baselineGlobalRate;
+    // Scale regional rates proportionally
+    tropical.extinctionRate *= scaleFactor;
+    temperate.extinctionRate *= scaleFactor;
+    grasslands.extinctionRate *= scaleFactor;
+    borealArctic.extinctionRate *= scaleFactor;
+  } else {
+    // Single run: Use conservative baseline
+    globalExtinctionRate =
+      tropical.extinctionRate * tropical.biodiversityWeight +
+      temperate.extinctionRate * temperate.biodiversityWeight +
+      grasslands.extinctionRate * grasslands.biodiversityWeight +
+      borealArctic.extinctionRate * borealArctic.biodiversityWeight;
+    // = 180*0.5 + 35*0.2 + 80*0.2 + 30*0.1 = 90 + 7 + 16 + 3 = 116 E/MSY
+    // MATCHES IPBES (2019) research: 100-1000 E/MSY range (using conservative baseline)
+  }
 
   const globalHabitatCover =
     tropical.habitatCoverPercent * 0.17 +      // 17% of land area

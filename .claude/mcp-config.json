@@ -4,10 +4,7 @@
       "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
       "args": [
         "/Users/annhoward/src/superalignmenttoutopia/scripts/transcript-rag-server.py"
-      ],
-      "env": {
-        "PYTHONPATH": "/Users/annhoward/src/superalignmenttoutopia"
-      }
+      ]
     },
     "pdf-rag": {
       "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
@@ -22,10 +19,7 @@
       "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
       "args": [
         "/Users/annhoward/src/superalignmenttoutopia/scripts/agent-memory-server.py"
-      ],
-      "env": {
-        "PYTHONPATH": "/Users/annhoward/src/superalignmenttoutopia"
-      }
+      ]
     },
     "chatroom": {
       "command": "npx",
@@ -43,6 +37,26 @@
         "@playwright/mcp"
       ],
       "env": {}
+    },
+    "research-pdfs": {
+      "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
+      "args": [
+        "/Users/annhoward/src/superalignmenttoutopia/scripts/pdf-rag-server.py"
+      ]
+    },
+    "arxiv": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-arxiv",
+        "--storage-path",
+        "/Users/annhoward/src/superalignmenttoutopia/research/papers"
+      ]
+    },
+    "zotero": {
+      "command": "/Users/annhoward/.local/bin/zotero-mcp",
+      "env": {
+        "ZOTERO_LOCAL": "true"
+      }
     }
   }
 }

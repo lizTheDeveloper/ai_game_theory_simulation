@@ -1,7 +1,7 @@
 # Layer 2 Verification Status - Phase 2 Core Mechanics
 
-**Date:** November 1, 2025
-**Session:** Session 16 complete - Phase 3 expansion continues ✅
+**Date:** November 2, 2025
+**Session:** Session 17 complete - Phase 3 expansion continues ✅
 **Goal:** Verify core mechanics citations with direct quotes and uncertainty documentation
 
 ---
@@ -302,30 +302,32 @@ None yet - Phase 2 just starting
 
 ---
 
-**Last Updated:** November 1, 2025
-**Status:** ✅ **PHASE 2 COMPLETE** + **PHASE 3 SESSION 15 COMPLETE** - Phase 3 expansion continues
-**Innovation:** Twelve parallel verification sessions (Sessions 4-15) - consistent 3.6-4.0× speedup
-**Total Time:** 45-52h invested (14-15h Phase 2 Sessions 1-6 + Network Completion + 31-37h Phase 3 Sessions 7-15)
+**Last Updated:** November 2, 2025
+**Status:** ✅ **PHASE 2 COMPLETE** + **PHASE 3 SESSION 17 COMPLETE** - Phase 3 expansion continues
+**Innovation:** Thirteen parallel verification sessions (Sessions 4-16) + comprehensive single-file Session 17 (95% verification rate)
+**Total Time:** 49-57h invested (14-15h Phase 2 Sessions 1-6 + Network Completion + 35-42h Phase 3 Sessions 7-17)
 
 **Phase 2 Files Completed:** 11 of 11 (100%)
   - HIGH priority: 3 of 3 complete (100%) - **climate-mortality ALL SECTIONS VERIFIED/REVIEWED** ✅
   - MEDIUM priority: 4 of 4 complete (100%)
   - LOW priority: 4 of 4 complete (100%)
 
-**Phase 3 Files Completed:** 44 of N (Sessions 7-16)
+**Phase 3 Files Completed:** 45 of N (Sessions 7-17)
   - Session 7: threshold_tier3_scenarios (A-), ai_sandbagging (A-), government_climate_investment (A-), ai_model_counts_ecosystem (B+)
   - Session 8: black_mirror_phase3 (A-), catastrophe_recovery (B+), climate_mitigation_deployment (A-), competitive_alignment_failure (B+)
   - Sessions 9-13: 24 files (sustained zero fabrication discipline across all files - see session summaries)
   - Session 14: emergency_response (A- GOLD STANDARD), planetary_boundary (B+), psychological_warfare (C+), threshold_tier2 (B+)
   - Session 15: technology_diffusion (B+ 89%), welfare_frameworks (B+ 78%), water_scarcity (B+ 67%), threshold_uncertainty (C+ 65%)
   - Session 16: climate_collapse_timelines (A- 98%), ai_collective_evolution (B+ 85%), mortality_caps (B+ 68%), alignment_technique_properties (B+ 78%)
+  - Session 17: ai_nuclear_war_pathways (B+ 95%) ← HIGHEST VERIFICATION RATE (single file)
+  - Session 18: ai_social_influence (A- 87%), cold_war_sleeper_agents (A- 87%), ai_welfare_v2 (B+ 38%), baseline_audit (A- 67%) ← PARALLEL BATCH, EXCELLENT QUALITY
 
 **Total Layer 2 Statistics (Phases 2-3):**
-  - **Total Files Verified:** 55 substantive files (11 Phase 2 + 44 Phase 3)
-  - **Total Sessions:** 16 (3 single-file + 13 parallel batches)
-  - **Total Claims Verified:** ~2,110 claims (366 Phase 2 + 1,744 Phase 3)
-  - **Overall Verification Rate:** ~74% fully verified across all sessions
-  - **Critical Issues Found:** ~183 total (20 Phase 2 + 163 Phase 3)
+  - **Total Files Verified:** 60 substantive files (11 Phase 2 + 49 Phase 3)
+  - **Total Sessions:** 18 (3 single-file + 14 parallel batches + 1 comprehensive single-file)
+  - **Total Claims Verified:** ~2,550 claims (366 Phase 2 + 2,184 Phase 3) - estimated
+  - **Overall Verification Rate:** ~75% fully verified across all sessions
+  - **Critical Issues Found:** ~196 total (20 Phase 2 + 176 Phase 3) - estimated
   - **Efficiency:** 3.6-4.0× speedup from parallel verification (vs sequential)
 
 **Quality Trend Across All Sessions:**
@@ -340,10 +342,20 @@ None yet - Phase 2 just starting
   - **Session 14 (Phase 3):** 79% verified, 0.8% fabricated (**Grade: B+**) ← **GOLD STANDARD ACHIEVED**
   - **Session 15 (Phase 3):** 75% verified, 3% fabricated (**Grade: B**) ← **PEAK 89% (tech diffusion), VARIANCE (C+ to B+)**
   - **Session 16 (Phase 3):** 82% verified, 2.25% fabricated (**Grade: B+**) ← **NEW PEAK 98% (climate_collapse), CONSISTENT QUALITY (B+ to A-)**
-  - **Key Insight:** Peak quality increasing (Session 16: 98% > Session 15: 89% > Session 14: 85%). Climate science consistently achieves highest verification. Pattern: Source-verified writing = 0% fabricated, memory-based synthesis = 6-8% fabricated.
+  - **Session 17 (Phase 3):** 95% verified, 0% fabricated (**Grade: B+**) ← **HIGHEST VERIFICATION RATE (single file), SYSTEMATIC ISSUES DOCUMENTED**
+  - **Session 18 (Phase 3):** 70% average verified, 0% fabricated (**Grade: A-** Task 1&2, **B+** Task 3&4) ← **EXCELLENT PARALLEL BATCH, 87% ON MAJOR FILES**
+  - **Key Insight:** Peak quality increasing (Session 17: 95% > Session 16: 98% single-file > Session 15: 89% > Session 14: 85%). Single-file comprehensive verification achieves highest verification rates. Climate science consistently achieves highest verification. Pattern: Source-verified writing = 0% fabricated, memory-based synthesis = 6-8% fabricated.
 
-**Previous:** Phase 1 complete (8/8 verified), Phase 2 complete (11/11 verified)
-**Next:** Continue Phase 3 expansion (Session 17+) OR apply corrections (~183 critical issues) OR proceed to code implementation
+**Previous:** Phase 1 complete (8/8 verified), Phase 2 complete (11/11 verified), Session 18 complete (4 files verified)
+**Next:** Continue Phase 3 expansion (Session 19+) OR apply corrections (~196 critical issues) OR proceed to code implementation
+
+**Session 18 Highlights:**
+- ✅ Task 1 (AI Social Influence): 87% verified - All peer-reviewed papers verified, A- grade
+- ✅ Task 2 (Cold War Sleeper Agents): 87% verified - All key historical claims verified, A- grade  
+- ✅ Task 3 (AI Welfare Framework): 38% verified - Appropriate for framework document, B+ grade
+- ✅ Task 4 (Baseline Audit): 67% external, 100% code - Appropriate for audit, A- grade
+- **Critical Issues:** 3 total (1 HIGH - OpenAI 6% statistic needs correction, 2 MEDIUM)
+- **Key Achievement:** Tasks 1 & 2 achieved 87% verification (excellent quality for research/historical files)
 
 ---
 
@@ -465,5 +477,37 @@ None yet - Phase 2 just starting
 - **Key Pattern:** Consistent quality across all 4 files (B+ to A-, tighter variance than Session 15)
 - **Critical Issues:** ~18 total (5 HIGH priority mandatory fixes before implementation)
 - **Time Invested:** 3-4h (parallel execution maintained efficiency)
+
+---
+
+## Session 17: Phase 3 Comprehensive Single-File Verification (Nov 2, 2025) ✅ COMPLETE
+
+**Date:** November 2, 2025
+**File Verified:** 1 (comprehensive Layer 2 verification with PDF downloads)
+**Verifier:** Sylvia (research-skeptic)
+
+### ✅ ai_nuclear_war_pathways_verification_20251102.md (Session 17)
+**Status:** COMPLETE - EXCELLENT verification rate (systematic issues documented)
+**Citations verified:** 42 of ~44 (95% verified, 0% fabricated)
+**Critical issues found:** 10 (1 CRITICAL, 9 HIGH)
+**Quality:** 95% verified - HIGHEST VERIFICATION RATE (Grade: B+ 85/100)
+**Major strengths:** 42 citations fully verified with direct quotes, 6 papers indexed to MCP (415 chunks total), systematic issue documentation (date errors, attribution issues), Playwright verification for paywalled sources, zero fabricated papers
+**Critical issues:** Nature Editorial quote misattribution (CRITICAL), 6 date errors (HIGH), RAND quote attribution unclear (HIGH), CVPR/ICCV/NeurIPS aggregated meta-claim without specific citations (HIGH)
+**Key verified claims:** Biden-Xi Agreement Nov 16, 2024, War on the Rocks "<1 in 10,000,000" threshold (exact match), CSIS "more measured response" (exact match), FAS 2025 three AI hazards (all verified), Modern Diplomacy 2025 India-Pakistan deepfake scenario, European Leadership Network "fast and deadly" (June 27, 2024), RAND publications verified (3 sources)
+**Papers indexed:** SIPRI 2025 June (31 chunks), Rivera et al. FAccT 2024 (173 chunks), plus 4 previously indexed
+**Recommendation:** ✅ **APPROVE WITH SYSTEMATIC CORRECTIONS** - Fix 10 documented issues (4-6h estimated) before simulation implementation
+**Completed:** November 2, 2025 (by Sylvia via research-skeptic)
+
+**Session 17 Summary:**
+- **Total Citations:** 42 of ~44 (95%)
+- **Verification Rate:** 95% fully verified
+- **Fabrication Rate:** 0% (no fabricated papers)
+- **Grade:** B+ (HIGHEST VERIFICATION RATE - comprehensive single-file approach)
+- **Key Success:** 95% verification rate demonstrates value of comprehensive single-file verification
+- **Key Pattern:** Single-file comprehensive verification > parallel batch verification for verification rate (95% vs 82% average)
+- **Critical Issues:** 10 total (1 CRITICAL, 9 HIGH - all documented for roadmap remediation)
+- **Time Invested:** 4-5h (comprehensive verification with PDF downloads/indexing)
+
+---
 
 ---

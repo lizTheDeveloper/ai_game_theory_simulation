@@ -846,7 +846,8 @@ export function createDefaultInitialState(
     novelEntitiesSystem: initializeNovelEntitiesSystem(),
 
     // Planetary Boundaries (TIER 3.1)
-    planetaryBoundariesSystem: initializePlanetaryBoundariesSystem(),
+    // LAYER 2 REMEDIATION (Nov 2, 2025): Pass RNG for biosphere parameter sweep
+    planetaryBoundariesSystem: initializePlanetaryBoundariesSystem(rng),
 
     // Positive Tipping Point Cascades (Oct 17, 2025)
     positiveTippingPoints: initializePositiveTippingPoints(),

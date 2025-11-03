@@ -85,9 +85,11 @@ export function updateQualityOfLifeSystems(
   const wealthBonus = globalMetrics.wealthDistribution * 0.3;
   let materialAbundance = 0.8 + aiProductionBonus + unemploymentPenalty + wealthBonus;
 
-  // UBI floor
+  // UBI floor (context-dependent model)
   if (hasUBI) {
-    const ubiFloor = calculateUBIFloor(economicStage, hasGenerousUBI);
+    // Calculate baseline material abundance before UBI for context-dependent effectiveness
+    const baselineMaterialAbundance = materialAbundance;
+    const ubiFloor = calculateUBIFloor(baselineMaterialAbundance, economicStage, hasGenerousUBI);
     materialAbundance = Math.max(materialAbundance, ubiFloor);
   }
 

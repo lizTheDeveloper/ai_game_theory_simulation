@@ -1,0 +1,53 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-02 10:00:00] 🤖 Merge Orchestrator - 20251102_100000
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-02 10:00:00] ℹ️  Environment: Mac (frontend + backend)
+[2025-11-02 10:00:00] ℹ️  Dry run: false
+[2025-11-02 10:00:00] ℹ️  Skip frontend: false
+[2025-11-02 10:00:00] ℹ️  Max branches: 10
+[2025-11-02 10:00:00] ℹ️  Agent reviews (Phase 2): true
+[2025-11-02 10:00:00] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-02 10:00:00] ℹ️  Discovering feature branches...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * [new branch]      auto/worker-20251102_170015 -> origin/auto/worker-20251102_170015
+[2025-11-02 10:00:02] ℹ️  Found       23 feature branches
+[2025-11-02 10:00:02] ⚠️  WARNING: Branch count (      23) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-02 10:00:02] Processing: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-02 10:00:02] ℹ️  Creating merge branch: merge/+ phase-0a-design-system_20251102_100000
+fatal: 'merge/+ phase-0a-design-system_20251102_100000' is not a valid branch name
+[2025-11-02 10:00:02] ℹ️  Pulling latest main...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+[2025-11-02 10:00:03] ℹ️  Attempting merge from + phase-0a-design-system...
+merge: origin/+ phase-0a-design-system - not something we can merge
+[2025-11-02 10:00:03] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-02 10:00:03] Quality Gates: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-02 10:00:03] ℹ️  Gate 1: TypeScript compilation...
+./scripts/merge-orchestrator.sh: line 209: npx: command not found
+[2025-11-02 10:00:03] ✅ TypeScript compilation passed
+[2025-11-02 10:00:03] ℹ️  Gate 2: Test suite...
+[2025-11-02 10:00:03] ⚠️  WARNING: No test scripts found, skipping test gate
+[2025-11-02 10:00:03] ℹ️  Gate 3: Architecture review...
+[2025-11-02 10:00:04] 🔍 Spawning architecture-skeptic agent...
+[2025-11-02 10:00:04] ❌ ERROR: Architecture review blocked merge
+[2025-11-02 10:00:04] ❌ ERROR: Quality gates failed
+[2025-11-02 10:00:04] ℹ️  Preserving merge branch for inspection: merge/+ phase-0a-design-system_20251102_100000_FAILED
+Already on 'main'
+M	.claude/mcp-config.json
+M	.mcp.json
+M	logs/merge_orchestrator/cron_20251101.log
+M	research/-aiexplained-official/sync.log
+M	research/-aispecies/sync.log
+M	research/crobertmilesai/sync.log
+M	research/embeddings/index_stats.json
+M	research/youtube-channels/auto-sync.log
+Your branch is up to date with 'origin/main'.
+fatal: Invalid branch name: 'merge/+ phase-0a-design-system_20251102_100000'
