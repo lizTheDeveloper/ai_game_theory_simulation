@@ -2500,7 +2500,7 @@ All major AI labs (OpenAI, Anthropic, Meta, DeepMind) go bankrupt months 70-120 
 - Creates synergies and resilience (don't put all eggs in one basket)
 
 **5. Alternative Policies to Explore** (Research-Backed):
-- **Cooperative AI Ownership**: Mondragon model (4% bankruptcy vs 10% capitalist)
+- **Cooperative AI Ownership**: Worker cooperatives show survival advantages (Québec study: 62% vs 35% at 5 years), but specific bankruptcy rates vary by context
 - **Reduced Work Hours + UBI**: 4-day week insufficient alone, needs comprehensive safety net
 - **Universal Basic Services (UBS)**: Guaranteed housing, healthcare, education, transport
 - **Meaning Economy Expansion**: Fund care work, arts, community building with AI surplus

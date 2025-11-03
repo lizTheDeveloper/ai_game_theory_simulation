@@ -189,9 +189,29 @@ function calculateCropYield(tempAnomaly: number): number {
 /**
  * Calculate monthly starvation rate
  * 
- * Research (Robock & Toon 2012):
+ * ⚠️⚠️ TIER 3 BRONZE - Modeling assumption (calibrated to Xia et al. 2022)
+ * CONCEPT SUPPORT: Nuclear winter causes massive famine (Xia et al. 2022, Robock & Toon 2012)
+ * QUANTIFICATION: Calibrated to Xia's 5-6B deaths, NOT from historical famine rates
+ * UNCERTAINTY: ±50% (could be 5-20% monthly depending on food access, healthcare collapse)
+ * PARAMETER SWEEP REQUIRED: No (this is worst-case calibration, not uncertainty range)
+ * 
+ * CRITICAL CLARIFICATION: Holodomor vs Nuclear Winter Rates
+ * - HOLODOMOR (Wolowyna et al. 2020): "140-200 per 1,000" is CUMULATIVE over 1932-1934
+ *   - Annual average: 5-6.5% per year (~0.4-0.55% per month)
+ *   - Context: Regional famine, agricultural confiscation, 1932-1933, Ukraine
+ *   - Historical context: Comparable to Great Leap Forward (1.5%/year), Bengal 1943 (4%/year)
+ * - NUCLEAR WINTER (calibrated to Xia et al. 2022): "More than 5 billion could die"
+ *   - Calibration: To reach 5B deaths from 6B at risk requires ~80-90% mortality over 30 years
+ *   - Implies: ~10-15% monthly mortality in worst-case scenarios
+ *   - Context: Global crop failure, no external aid, collapsed institutions, climate collapse
+ * - KEY DISTINCTION:
+ *   - Holodomor rate (0.4-0.55% monthly) = HISTORICAL AVERAGE from regional famine
+ *   - Nuclear winter rate (10-15% monthly) = WORST-CASE EXTRAPOLATION calibrated to Xia's projection
+ *   - These are DIFFERENT scenarios with DIFFERENT rates
+ * 
+ * Research (Robock & Toon 2012, Xia et al. 2022):
  * - Peak starvation: Months 6-24 after war
- * - 5% monthly mortality during peak
+ * - 10-15% monthly mortality during peak (calibrated to Xia's 5-6B total)
  * - Gradual decline as crops partially recover
  * 
  * @param cropYield - Crop yield multiplier [0,1]
@@ -217,8 +237,13 @@ function calculateStarvationRate(cropYield: number, monthsSinceWar: number): num
   }
   
   // Base starvation rate scales with shortage severity
-  // Research: 90% crop failure → 5% monthly mortality
-  const baseRate = shortage * 0.055;  // 90% shortage → 5% monthly
+  // ⚠️⚠️ CALIBRATED TO XIA ET AL. 2022, NOT HISTORICAL FAMINE RATES
+  // - 90% crop failure → 12% monthly mortality (calibrated to reach 5-6B deaths)
+  // - This is WORST-CASE nuclear winter scenario, NOT historical famine average
+  // - Holodomor average would be ~1.4% monthly (14% annual / 12), but nuclear winter
+  //   is global collapse, no external aid, collapsed institutions → much higher rate
+  const NUCLEAR_WINTER_MONTHLY_BASE = 0.12;  // 12% monthly at 90% crop failure (calibrated to Xia)
+  const baseRate = shortage * (NUCLEAR_WINTER_MONTHLY_BASE / 0.9);  // Scale linearly: 90% shortage → 12% monthly
   
   return baseRate * rampMultiplier * recoveryMultiplier;
 }

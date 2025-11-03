@@ -160,30 +160,87 @@ export function calculateTraumaInstitutionalErosion(traumaLevel: number): number
 }
 
 /**
- * Calculate UBI floor for material abundance
+ * Calculate UBI effectiveness (context-dependent model)
  *
- * Research: Texas/Illinois 2024 pilots showed 6.4% well-being improvement (Kangas et al.)
- * UBI provides graduated floor at all stages, matching empirical evidence
+ * ⚠️ TIER 2 SILVER - Context-dependent model (empirically bounded extrapolation)
+ * CONCEPT: UBI effectiveness varies by baseline conditions (verified from research)
+ * MAGNITUDE: Derived from Finland + Kenya studies, interpolated for middle-income
+ * EMPIRICAL RANGE: 2.5-30% improvement depending on context
+ * UNCERTAINTY: ±50% per tier
  *
- * Stage-based UBI floors:
- * - Stage 0-2 (pre-transition): Modest safety net (0.55-0.65) - matches pilot data
- * - Stage 3+ (post-scarcity transition): Strong floor (0.75-0.90) - prevents unemployment collapse
+ * Research basis:
+ * - Finland (Kangas et al. 2019): 5% improvement in high baseline QoL (~85)
+ * - Kenya (GiveDirectly): 20-30% consumption increase in extreme poverty (QoL <50)
+ * - Context mismatch: Finland experiment (2 years, 2K unemployed) ≠ global permanent policy
  *
- * @see research/policy-interventions-systemic-inequality-validation_20251016.md
- * @see Kangas et al. (2024) - Texas/Illinois UBI pilots: 6.4% life satisfaction improvement
+ * Context-dependent model:
+ * - Developed world (QoL 70-100): 5% improvement (Finland-based)
+ *   - Rationale: High baseline, UBI adds modest security
+ * - Middle-income (QoL 50-70): 10% improvement (interpolated)
+ *   - Rationale: Moderate baseline, UBI addresses gaps
+ * - Low-income (QoL 30-50): 20% improvement (Kenya GiveDirectly)
+ *   - Rationale: Low baseline, high leverage (food security, asset building)
+ * - Failed states (QoL <30): 0% improvement (conservative)
+ *   - Rationale: Governance collapse, warlord capture risk, distribution failure
+ *
+ * @param baselineQoL - Baseline quality of life (material abundance before UBI) [0, 1]
+ * @param hasGenerousUBI - Whether UBI is generous variant
+ * @returns QoL improvement multiplier (e.g., 1.05 = 5% improvement)
+ */
+export function calculateUBIEffectiveness(baselineQoL: number, hasGenerousUBI: boolean): number {
+  // Context-dependent effectiveness
+  let baseImprovement: number;
+  
+  if (baselineQoL > 70) {
+    // Developed world (Finland-like)
+    baseImprovement = 0.05; // 5% improvement, ±50% uncertainty (could be 2.5-7.5%)
+  } else if (baselineQoL > 50) {
+    // Middle-income (interpolated)
+    baseImprovement = 0.10; // 10% improvement, ±50% uncertainty (could be 5-15%)
+  } else if (baselineQoL > 30) {
+    // Low-income (Kenya-like)
+    baseImprovement = 0.20; // 20% improvement, ±50% uncertainty (could be 10-30%)
+  } else {
+    // Failed states (governance collapse)
+    baseImprovement = 0.00; // 0% improvement (conservative assumption)
+  }
+  
+  // Generous UBI adds 20% bonus to effectiveness
+  const generousMultiplier = hasGenerousUBI ? 1.2 : 1.0;
+  
+  return 1.0 + (baseImprovement * generousMultiplier);
+}
+
+/**
+ * Calculate UBI floor for material abundance (updated to use context-dependent model)
+ *
+ * ⚠️ TIER 2 SILVER - Context-dependent model with documented uncertainty
+ *
+ * Uses context-dependent effectiveness model instead of fixed stage-based floors.
+ * Applies percentage improvement to baseline material abundance rather than
+ * setting absolute floors.
+ *
+ * @param baselineMaterialAbundance - Material abundance before UBI [0, 1]
+ * @param economicStage - Economic transition stage (for backward compatibility)
+ * @param hasGenerousUBI - Whether UBI is generous variant
+ * @returns New material abundance after UBI improvement
  */
 export function calculateUBIFloor(
+  baselineMaterialAbundance: number,
   economicStage: number,
   hasGenerousUBI: boolean
 ): number {
+  // Apply context-dependent effectiveness
+  const ubiEffectiveness = calculateUBIEffectiveness(baselineMaterialAbundance * 100, hasGenerousUBI);
+  const improvedAbundance = baselineMaterialAbundance * ubiEffectiveness;
+  
+  // Set minimum floors (safety net even in failed states)
+  // Post-scarcity: Strong floor even if context model suggests lower improvement
   if (economicStage >= 3) {
-    // Post-scarcity transition: Strong UBI floor (prevents unemployment from destroying QoL)
-    return hasGenerousUBI ? 0.90 : 0.75;
+    return Math.max(improvedAbundance, hasGenerousUBI ? 0.75 : 0.65);
   } else {
-    // Pre-transition: Modest UBI floor (matches pilot program evidence)
-    // Research: Texas/Illinois pilots at $1000/month improved well-being ~6-8%
-    // Starting from baseline material abundance ~0.50-0.60 → floor at 0.55-0.65
-    return hasGenerousUBI ? 0.65 : 0.55;
+    // Pre-transition: Context model dominates, but ensure minimum safety net
+    return Math.max(improvedAbundance, hasGenerousUBI ? 0.55 : 0.50);
   }
 }
 

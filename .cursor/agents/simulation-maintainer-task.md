@@ -1,0 +1,205 @@
+# Unified Outcome Classification System Implementation
+
+**Priority:** HIGH
+**Estimated Time:** 3-4 hours
+**Status:** Ready for implementation
+
+## Task Overview
+
+Implement the Unified Outcome Classification System according to `/plans/unified-outcome-classification-plan.md`.
+
+**Problem:** Currently, outcome classification is fragmented across 5 different systems, causing misleading labels like "extinction" for runs with 4.8B population (40% mortality).
+
+**Solution:** Single unified classification combining all dimensions with proper observational extinction detection.
+
+## Pre-Implementation Checklist
+
+✅ Types complete: `src/types/outcomes.ts` lines 160-205
+✅ Core logic complete: `src/data/aggregators/outcomeClassifier.ts` lines 152-289
+✅ Plan documented: `/plans/unified-outcome-classification-plan.md`
+⏳ Integration pending: Engine + Monte Carlo
+
+## Implementation Phases
+
+### Phase 1: Engine Integration (1.5 hours)
+
+**File:** `src/types/game.ts`
+- Add `unifiedOutcome?: UnifiedOutcomeClassification` to GameState interface
+
+**File:** `src/simulation/engine.ts`
+
+1. **Import function** (top of file):
+   ```typescript
+   import { createUnifiedOutcomeClassification } from '@/data/aggregators/outcomeClassifier';
+   ```
+
+2. **Generate unified classification** (around line 1027, after finalOutcome determination):
+   ```typescript
+   // Extract paradigm scores (use assertion utilities if needed)
+   const paradigmScores = {
+     western: state.multiParadigmDUI?.paradigmScores.western.value ?? 50,
+     development: state.multiParadigmDUI?.paradigmScores.development.value ?? 50,
+     ecological: state.multiParadigmDUI?.paradigmScores.ecological.value ?? 50,
+     indigenous: state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value ?? 50
+   };
+
+   // Generate unified classification
+   state.unifiedOutcome = createUnifiedOutcomeClassification({
+     primaryOutcome: finalOutcome,
+     initialPopulation,
+     finalPopulation,
+     paradigmScores,
+     extinctionClassification: state.extinctionState.classification
+   });
+   ```
+
+3. **Replace fragmented logging** (lines 1036-1072):
+   - Remove: Separate logs for stratified outcome, mortality band, paradigm scores
+   - Replace with: Single unified outcome section (see plan lines 124-146 for exact format)
+
+**Emoji conventions:**
+- 📊 for unified classification header
+- ✓/✗/~ for paradigm outcomes
+- Use emojis from EMOJI_SEMANTIC_MAP.md for outcome types
+
+### Phase 2: Monte Carlo Reporting (1.5 hours)
+
+**File:** `scripts/monteCarloSimulation.ts`
+
+1. **Update RunResult interface** (around line 108):
+   ```typescript
+   interface RunResult {
+     // ... existing fields
+     unifiedOutcome: UnifiedOutcomeClassification;
+
+     // DEPRECATED (keep for backward compatibility):
+     outcome: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none';
+     rawOutcome?: OutcomeType;
+     stratifiedOutcome?: StratifiedOutcomeType;
+     mortalityBand?: MortalityBand;
+   }
+   ```
+
+2. **Capture unified outcome** (around lines 1025, 1535):
+   ```typescript
+   unifiedOutcome: simulationResult.state.unifiedOutcome!,
+   outcome: mapUnifiedToLegacyOutcome(simulationResult.state.unifiedOutcome!),
+   ```
+
+3. **Replace fragmented reporting** (lines 2790-2950):
+   - Remove: 4 separate sections (7-tier, stratified, mortality, legacy)
+   - Replace with: Single unified distribution (see plan lines 182-245 for exact format)
+
+4. **Update per-run reporting** (around line 2877):
+   - Use `unifiedOutcome.shortLabel` and `fullDescription`
+   - Add helper function `getOutcomeEmojiFromUnified()`
+
+### Phase 3: Helper Functions (30 minutes)
+
+**Location:** `scripts/monteCarloSimulation.ts`
+
+Add two helper functions (see plan lines 260-288 for complete implementation):
+1. `mapUnifiedToLegacyOutcome()` - Maps unified to legacy 4-category
+2. `getOutcomeEmojiFromUnified()` - Returns emoji for outcome type
+
+### Phase 4: Testing & Validation (30 minutes)
+
+1. **Run test:**
+   ```bash
+   npx tsx scripts/monteCarloSimulation.ts --runs=10 --max-months=120 > logs/unified_test_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+   ```
+
+2. **Verify:**
+   - ✅ Single unified section (not 4 separate)
+   - ✅ No false extinctions (4.8B population = COLLAPSE, not extinction)
+   - ✅ Mortality bands match primary outcomes
+   - ✅ Paradigm conflicts highlighted (contested flag)
+   - ✅ Backward compatibility (legacy `outcome` field populated)
+
+3. **Check for errors:**
+   ```bash
+   tail -f logs/unified_test_*.log
+   grep "❌\|NaN\|Infinity" logs/unified_test_*.log
+   ```
+
+## Success Criteria
+
+1. ✅ **No false extinctions**: Runs with 4.8B population labeled as COLLAPSE, not extinction
+2. ✅ **Single unified section**: All classification dimensions visible in one place
+3. ✅ **Consistent labels**: No contradictions between primary/stratified/mortality
+4. ✅ **Contested outcomes highlighted**: Multi-paradigm conflicts clearly visible
+5. ✅ **Backward compatible**: Legacy outcome field still populated
+
+## Defensive Coding Requirements
+
+- Use `assertFinite()` if validating any calculated values
+- Use `assertStateProperty()` instead of `??` fallbacks for required state
+- NO silent fallbacks in calculation code (only in initialization/compatibility layers)
+- Follow emoji conventions from EMOJI_SEMANTIC_MAP.md
+- Use console.log for informational output (not console.error)
+
+## Research Backing
+
+- **7-tier system**: Historical mortality precedents (Black Death, Spanish Flu, WWII)
+- **Stratified outcomes**: Wilkinson & Pickett (2009) - >20% mortality causes decades of trauma
+- **Multi-paradigm**: Preserves value conflicts (Singapore vs Norway patterns)
+- **Observational extinction**: Only reports when population < 10K, not predictions
+
+## Files to Modify
+
+- ⏳ `src/types/game.ts` - Add unifiedOutcome to GameState
+- ⏳ `src/simulation/engine.ts` - Generate and log unified classification
+- ⏳ `scripts/monteCarloSimulation.ts` - Update reporting format
+
+## Expected Outcome
+
+**Before (Current):**
+```
+📊 OUTCOME DISTRIBUTION
+  DYSTOPIA: 93 / 100 (93.0%)
+  EXTINCTION: 7 / 100 (7.0%)  ← WRONG! Population is 4.8B
+
+STRATIFIED OUTCOME:
+  pyrrhic-dystopia: 91 / 100 (91.0%)
+  extinction: 7 / 100 (7.0%)  ← Contradictory!
+```
+
+**After (With Unified):**
+```
+📊 UNIFIED OUTCOME DISTRIBUTION
+
+  PRIMARY OUTCOMES (7-Tier):
+    💥 COLLAPSE: 7 / 100 (7.0%)  ← CORRECT!
+    🏛️ DYSTOPIA: 93 / 100 (93.0%)
+
+  MORTALITY BANDS:
+    MODERATE (20-50%): 7 runs (7.0%)  ← Matches collapse
+    HIGH (50-75%): 90 runs (90.0%)
+
+  STRATIFIED OUTCOMES:
+    PYRRHIC-DYSTOPIA: 100 / 100 (100.0%)  ← Consistent!
+
+  MULTI-PARADIGM CONFLICTS:
+    Contested: 7 runs (7.0%)
+```
+
+## Questions to Resolve
+
+1. Should paradigm score extraction use assertion utilities or remain with `??` fallbacks?
+   - **Recommendation**: Use `??` fallbacks since paradigm scores might not be initialized in early steps
+   - Only use assertions for calculated values, not optional state access
+
+2. Should we add validation that `unifiedOutcome` exists before accessing in Monte Carlo?
+   - **Recommendation**: Yes, add assertion or early return if missing
+
+## Timeline
+
+- Phase 1 (Engine integration): 1.5 hours
+- Phase 2 (Monte Carlo reporting): 1.5 hours
+- Phase 3 (Helper functions): 30 minutes
+- Phase 4 (Testing): 30 minutes
+- **Total: 4 hours**
+
+## Ready to Start
+
+All prerequisites complete. Plan is comprehensive. Core logic is tested. Ready for integration.
