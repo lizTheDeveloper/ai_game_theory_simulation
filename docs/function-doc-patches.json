@@ -31,13 +31,13 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 290,
+    "line": 294,
     "name": "updateDefensiveAI",
     "doc": "Updates defensive a i based on current state and modifiers."
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 967,
+    "line": 971,
     "name": "applyDefensiveAIToMAD",
     "doc": "Applies defensive a i to m a d effects to game state."
   },

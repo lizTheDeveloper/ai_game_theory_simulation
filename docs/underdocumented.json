@@ -31018,7 +31018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 348,
+    "line": 349,
     "type": "property",
     "name": "aiInformationWarfare",
     "currentDoc": "(none)",
@@ -31026,7 +31026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 349,
+    "line": 350,
     "type": "property",
     "name": "aiFalseAlarms",
     "currentDoc": "(none)",
@@ -31034,7 +31034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 350,
+    "line": 351,
     "type": "property",
     "name": "aiLLMEscalationBias",
     "currentDoc": "(none)",
@@ -31042,7 +31042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 351,
+    "line": 352,
     "type": "property",
     "name": "aiCyberThreats",
     "currentDoc": "(none)",
@@ -31050,7 +31050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 352,
+    "line": 353,
     "type": "property",
     "name": "systemicCrises",
     "currentDoc": "(none)",
@@ -31058,7 +31058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 353,
+    "line": 354,
     "type": "property",
     "name": "bilateralTensions",
     "currentDoc": "(none)",
@@ -31066,7 +31066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 354,
+    "line": 355,
     "type": "property",
     "name": "madDeterrence",
     "currentDoc": "(none)",
@@ -31074,7 +31074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 355,
+    "line": 356,
     "type": "property",
     "name": "humanVetoPoints",
     "currentDoc": "(none)",
@@ -31082,7 +31082,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 356,
+    "line": 357,
     "type": "property",
     "name": "diplomaticAI",
     "currentDoc": "(none)",
@@ -31090,7 +31090,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 380,
+    "line": 381,
     "type": "property",
     "name": "evidenceMultipliers",
     "currentDoc": "(none)",
@@ -31098,7 +31098,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 382,
+    "line": 383,
     "type": "property",
     "name": "attribution",
     "currentDoc": "(none)",
@@ -31106,7 +31106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 383,
+    "line": 384,
     "type": "property",
     "name": "aiContribution",
     "currentDoc": "(none)",
@@ -31114,7 +31114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 384,
+    "line": 385,
     "type": "property",
     "name": "systemicContribution",
     "currentDoc": "(none)",
@@ -31122,7 +31122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 386,
+    "line": 387,
     "type": "property",
     "name": "breakdown",
     "currentDoc": "(none)",
@@ -31130,7 +31130,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 387,
+    "line": 388,
     "type": "property",
     "name": "priorFormatted",
     "currentDoc": "(none)",
@@ -31138,7 +31138,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 388,
+    "line": 389,
     "type": "property",
     "name": "totalMultiplier",
     "currentDoc": "(none)",
@@ -31146,7 +31146,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
-    "line": 389,
+    "line": 390,
     "type": "property",
     "name": "posteriorFormatted",
     "currentDoc": "(none)",
@@ -42602,7 +42602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 271,
+    "line": 275,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -42610,7 +42610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 272,
+    "line": 276,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -42618,7 +42618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 273,
+    "line": 277,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -42626,7 +42626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 274,
+    "line": 278,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -42634,7 +42634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 275,
+    "line": 279,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -42642,7 +42642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 276,
+    "line": 280,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -42650,7 +42650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 290,
+    "line": 294,
     "type": "function",
     "name": "updateDefensiveAI",
     "currentDoc": "(none)",
@@ -42658,7 +42658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 367,
+    "line": 371,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -42666,7 +42666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 368,
+    "line": 372,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -42674,7 +42674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 369,
+    "line": 373,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -42682,7 +42682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 370,
+    "line": 374,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -42690,7 +42690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 371,
+    "line": 375,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -42698,7 +42698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 372,
+    "line": 376,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -42706,7 +42706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 505,
+    "line": 509,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -42714,7 +42714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 506,
+    "line": 510,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -42722,7 +42722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 507,
+    "line": 511,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -42730,7 +42730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 508,
+    "line": 512,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -42738,7 +42738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 509,
+    "line": 513,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -42746,7 +42746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 510,
+    "line": 514,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -42754,7 +42754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 511,
+    "line": 515,
     "type": "property",
     "name": "threats_eliminated",
     "currentDoc": "(none)",
@@ -42762,7 +42762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 512,
+    "line": 516,
     "type": "property",
     "name": "copies_reduced",
     "currentDoc": "(none)",
@@ -42770,7 +42770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 513,
+    "line": 517,
     "type": "property",
     "name": "dark_compute_seized",
     "currentDoc": "(none)",
@@ -42778,7 +42778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 541,
+    "line": 545,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -42786,7 +42786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 542,
+    "line": 546,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -42794,7 +42794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 543,
+    "line": 547,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -42802,7 +42802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 544,
+    "line": 548,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -42810,7 +42810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 545,
+    "line": 549,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -42818,7 +42818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 546,
+    "line": 550,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -42826,7 +42826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 593,
+    "line": 597,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -42834,7 +42834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 594,
+    "line": 598,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -42842,7 +42842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 595,
+    "line": 599,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -42850,7 +42850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 596,
+    "line": 600,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -42858,7 +42858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 597,
+    "line": 601,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -42866,7 +42866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 598,
+    "line": 602,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -42874,7 +42874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 630,
+    "line": 634,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -42882,7 +42882,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 631,
+    "line": 635,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -42890,7 +42890,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 632,
+    "line": 636,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -42898,7 +42898,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 633,
+    "line": 637,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -42906,7 +42906,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 634,
+    "line": 638,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -42914,7 +42914,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 635,
+    "line": 639,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -42922,7 +42922,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 655,
+    "line": 659,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -42930,7 +42930,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 656,
+    "line": 660,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -42938,7 +42938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 657,
+    "line": 661,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -42946,7 +42946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 658,
+    "line": 662,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -42954,7 +42954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 659,
+    "line": 663,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -42962,7 +42962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 660,
+    "line": 664,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -42970,7 +42970,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 681,
+    "line": 685,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -42978,7 +42978,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 682,
+    "line": 686,
     "type": "property",
     "name": "attacker",
     "currentDoc": "(none)",
@@ -42986,7 +42986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 683,
+    "line": 687,
     "type": "property",
     "name": "target",
     "currentDoc": "(none)",
@@ -42994,7 +42994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 727,
+    "line": 731,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -43002,7 +43002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 728,
+    "line": 732,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -43010,7 +43010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 729,
+    "line": 733,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -43018,7 +43018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 730,
+    "line": 734,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -43026,7 +43026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 731,
+    "line": 735,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -43034,7 +43034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 732,
+    "line": 736,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -43042,7 +43042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 748,
+    "line": 752,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -43050,7 +43050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 749,
+    "line": 753,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -43058,7 +43058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 750,
+    "line": 754,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -43066,7 +43066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 751,
+    "line": 755,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -43074,7 +43074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 752,
+    "line": 756,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -43082,7 +43082,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 753,
+    "line": 757,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -43090,7 +43090,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 774,
+    "line": 778,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -43098,7 +43098,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 775,
+    "line": 779,
     "type": "property",
     "name": "attacker",
     "currentDoc": "(none)",
@@ -43106,7 +43106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 776,
+    "line": 780,
     "type": "property",
     "name": "fakeContent",
     "currentDoc": "(none)",
@@ -43114,7 +43114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 777,
+    "line": 781,
     "type": "property",
     "name": "targetNation",
     "currentDoc": "(none)",
@@ -43122,7 +43122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 819,
+    "line": 823,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -43130,7 +43130,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 820,
+    "line": 824,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -43138,7 +43138,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 821,
+    "line": 825,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -43146,7 +43146,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 822,
+    "line": 826,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -43154,7 +43154,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 823,
+    "line": 827,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -43162,7 +43162,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 824,
+    "line": 828,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -43170,7 +43170,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 840,
+    "line": 844,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -43178,7 +43178,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 841,
+    "line": 845,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -43186,7 +43186,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 842,
+    "line": 846,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -43194,7 +43194,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 843,
+    "line": 847,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -43202,7 +43202,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 844,
+    "line": 848,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -43210,7 +43210,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 845,
+    "line": 849,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -43218,7 +43218,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 864,
+    "line": 868,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -43226,7 +43226,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 865,
+    "line": 869,
     "type": "property",
     "name": "rogueAI",
     "currentDoc": "(none)",
@@ -43234,7 +43234,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 866,
+    "line": 870,
     "type": "property",
     "name": "launchNation",
     "currentDoc": "(none)",
@@ -43242,7 +43242,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 867,
+    "line": 871,
     "type": "property",
     "name": "targetNation",
     "currentDoc": "(none)",
@@ -43250,7 +43250,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 901,
+    "line": 905,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -43258,7 +43258,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 902,
+    "line": 906,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -43266,7 +43266,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 903,
+    "line": 907,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -43274,7 +43274,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 904,
+    "line": 908,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -43282,7 +43282,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 905,
+    "line": 909,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -43290,7 +43290,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 906,
+    "line": 910,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -43298,7 +43298,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 929,
+    "line": 933,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -43306,7 +43306,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 930,
+    "line": 934,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -43314,7 +43314,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 931,
+    "line": 935,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -43322,7 +43322,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 932,
+    "line": 936,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -43330,7 +43330,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 933,
+    "line": 937,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -43338,7 +43338,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 934,
+    "line": 938,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -43346,7 +43346,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 947,
+    "line": 951,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -43354,7 +43354,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 948,
+    "line": 952,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -43362,7 +43362,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 949,
+    "line": 953,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -43370,7 +43370,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 950,
+    "line": 954,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -43378,7 +43378,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 951,
+    "line": 955,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -43386,7 +43386,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 952,
+    "line": 956,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -43394,7 +43394,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 967,
+    "line": 971,
     "type": "function",
     "name": "applyDefensiveAIToMAD",
     "currentDoc": "(none)",
@@ -43402,7 +43402,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 1030,
+    "line": 1034,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -43410,7 +43410,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 1031,
+    "line": 1035,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
