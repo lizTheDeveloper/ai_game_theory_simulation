@@ -1,11 +1,26 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: October 29, 2025
+**Last Updated**: November 4, 2025
 **Total Sources**: 159+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 60% from 2024-2025
 
 This bibliography documents all peer-reviewed research, official datasets, and authoritative sources cited in the simulation wiki and codebase.
+
+## ⚠️ Citation Verification Status (November 2025)
+
+**Phase 2 Layer 2 verification ongoing.** Recent findings reveal systematic attribution errors in codebase citations:
+
+**Critical Issues Identified:**
+- **Wrong years**: Acemoglu & Restrepo cited as 2022 (should be 2019 for "Automation and New Tasks")
+- **False attributions**: Claims attributed to papers that don't contain them (e.g., "meaning crisis" not in Acemoglu)
+- **Inflated effect sizes**: Values 2-3× higher than actual research (e.g., participatory budgeting)
+- **Temporal impossibilities**: 2020 data attributed to 2000 publications
+- **Company misidentification**: Anonymous firms incorrectly named
+
+**Verification Progress:** See `research/CITATION_VERIFICATION_PROGRESS.md` for detailed findings and corrections.
+
+**Note:** All papers cited are REAL and HIGH-QUALITY. Issues are Layer 2 (claim accuracy), not Layer 1 (citation existence).
 
 ---
 
@@ -135,9 +150,19 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 
 ### Technological Unemployment & UBI
 
+**Acemoglu, D., & Restrepo, P. (2019).** Automation and New Tasks: How Technology Displaces and Reinstates Labor. *Journal of Economic Perspectives*, 33(2), 3-30.
+- **Used for**: Displacement vs reinstatement framework, task-based analysis of automation
+- **Key finding**: Automation creates displacement effect; new tasks create reinstatement effect; net effect depends on balance
+- ⚠️ **Verification note**: Code incorrectly cites as "2022". Does NOT discuss "meaning crisis" or "autonomy" (purely economic analysis). See `research/CITATION_VERIFICATION_PROGRESS.md` Session 7.
+
 **Acemoglu, D., & Restrepo, P. (2024).** Tasks, automation, and the rise in US wage inequality. *Econometrica*.
-- **Used for**: Displacement without reinstatement framework
+- **Used for**: Wage inequality from automation (separate paper from 2019 work)
 - **Key finding**: Automation creates inequality when displaced workers cannot retrain
+
+**Brynjolfsson, E., Li, D., & Raymond, L. R. (2023).** Generative AI at Work. *NBER Working Paper* No. 31161 (published in *Quarterly Journal of Economics*, 2025).
+- **Used for**: AI augmentation vs automation effects, productivity impacts by skill level
+- **Key finding**: 14% average productivity increase from AI augmentation; 34% for novice workers, minimal for experienced workers
+- ⚠️ **Verification note**: Code incorrectly identifies as "Microsoft case study" - actual study anonymized company as "Fortune 500 software company" with 5,179 customer support agents. Company identity NOT disclosed. See `research/CITATION_VERIFICATION_PROGRESS.md` Session 7.
 
 **Katz, L. F., & Krueger, A. B. (2019).** The rise and nature of alternative work arrangements in the United States. *ILR Review*, 72(2), 382-416.
 - **Used for**: Gig economy growth, job insecurity effects
@@ -183,8 +208,9 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 ### Social Cohesion & Meaning Crisis
 
 **Putnam, R. D. (2000).** *Bowling Alone: The Collapse and Revival of American Community.* Simon & Schuster.
-- **Used for**: Social capital decline, institutional erosion
-- **Key finding**: USA social trust declined 55% (1960) → 35% (2000) → 31% (2024)
+- **Used for**: Social capital decline diagnosis, institutional erosion documentation
+- **Key finding**: USA social trust declined 55% (1960) → 35% (2000); civic engagement down 60% (1970s-2000)
+- ⚠️ **Verification note**: Book is DIAGNOSTIC, not prescriptive. Does NOT provide quantitative intervention effectiveness data. Code incorrectly attributes AmeriCorps effectiveness (book published 2000, cannot contain 2020 data), community development corps statistics (not found), and participatory budgeting effects (book predates modern PB research). Use Putnam ONLY for social capital decline, NOT intervention evidence. See `research/CITATION_VERIFICATION_PROGRESS.md` Session 7.
 
 **Weiner, B. J. (2009).** A theory of organizational readiness for change. *Implementation Science*, 4(1), 67.
 - **Used for**: Institutional adaptation capacity, change readiness
