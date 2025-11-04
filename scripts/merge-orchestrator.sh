@@ -99,7 +99,7 @@ discover_branches() {
 
   # List all branches (local + remote), exclude main, exclude auto/ worker branches, exclude merge/ branches
   # Note: git branch -a can prefix branches with *, +, or space
-  BRANCHES=$(git branch -a | grep -v ' main$' | grep -v 'HEAD' | grep -v 'auto/worker-' | grep -v 'merge/' | sed 's/^[*+ ] //' | sed 's/remotes\/origin\///' | sort -u)
+  BRANCHES=$(git branch -a | grep -v 'HEAD' | grep -v 'auto/worker-' | grep -v 'merge/' | sed 's/^[*+ ] //' | sed 's/remotes\/origin\///' | grep -v '^main$' | sort -u)
 
   if [ -z "$BRANCHES" ]; then
     return 1
