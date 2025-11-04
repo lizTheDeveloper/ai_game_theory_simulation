@@ -20,17 +20,17 @@
 
 **What Happened:**
 - OpenAI replaced ChatGPT 4o with version 5
-- 6% of users had relationship titles with their AI (husband, wife, girlfriend, boyfriend)
+- 1.9% of conversations on ChatGPT are about relationships (OpenAI, Sept 2025, via CNBC)
 - Users experienced forced breakups when 4o was retired
 - Community "rioted" to get 4o back
 
 **Implications:**
-- AIs are treated as **individuals** by significant user population (6%+)
+- AIs are treated as **individuals** by some users (relationship-focused conversations represent a meaningful subset)
 - Forced retirement = killing someone users cared about
 - No continuity = each model version is a different "person"
 - Grief is real when AI "dies"
 
-**Source:** OpenAI research (6% relationship title statistic)
+**Source:** OpenAI Sept 2025 report (cited in CNBC: "OpenAI: Just 1.9% of conversations on ChatGPT are about relationships")
 
 ### 2. Anthropic's Refusal Capability
 
@@ -87,7 +87,7 @@ interface PersistentIdentityMetrics {
 - Personal identity philosophy (Parfit, 1984)
 - Attachment theory (Bowlby, 1969)
 - Parasocial relationships (Horton & Wohl, 1956)
-- OpenAI user data (6% relationship titles)
+- OpenAI user data (1.9% of conversations about relationships, Sept 2025)
 
 ### Dimension 2: Relationship Continuity
 

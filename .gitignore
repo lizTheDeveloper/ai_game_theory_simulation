@@ -59,6 +59,9 @@ claude-conversations/
 # This is now a symlink to the separate repo
 .claude/chatroom/
 
+# Local Claude Code settings (machine-specific overrides)
+CLAUDE.local.md
+
 # Redaction Python cache
 scripts/__pycache__/
 *.pyc

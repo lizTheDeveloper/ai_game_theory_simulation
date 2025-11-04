@@ -6,8 +6,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **This codebase is too complex for direct changes. ALL code changes must go through specialized agents.**
 
-### The Non-Negotiable Rule
-
 **NEVER make changes directly. ALWAYS invoke an agent first.**
 
 Even if a change seems trivial, you don't have enough context. The specialized agents have deep domain knowledge about defensive coding patterns, emoji conventions, state propagation, and dozens of other critical details that aren't in this file.
@@ -21,8 +19,8 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 
 ```
 1. User requests a change
-2. Read this file to identify the appropriate agent
-3. Invoke that agent with the Task tool
+2. Identify the appropriate agent
+3. Invoke that agent
 4. Let the agent do the work with its specialized context
 ```
 
@@ -30,39 +28,6 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 - Typo fixes → `simulation-maintainer` or `wiki-documentation-updater` (they know emoji conventions, logging patterns)
 - Parameter tweaks → `simulation-maintainer` (knows assertion utilities, NaN handling, Monte Carlo validation)
 - UI updates → `far-future-ux-designer` (knows React patterns, delta propagation, data viz)
-
-### ⚠️ VM Development Constraints
-
-**CRITICAL: Do NOT attempt frontend development on the VM.**
-
-**VM (GCloud claude-workspace) - Backend Only:**
-- ✅ **Allowed:** Simulation code (`src/simulation/`, `src/types/game.ts`)
-- ✅ **Allowed:** Scripts (`scripts/`), tests, documentation
-- ✅ **Allowed:** Backend infrastructure (chatroom, Matrix bridge, orchestrator)
-- ❌ **FORBIDDEN:** Frontend changes (`src/lib/`, `src/app/`, `src/components/`)
-- ❌ **FORBIDDEN:** UI work (`.tsx`, `.css`, React components)
-- ❌ **FORBIDDEN:** Playwright-based testing
-
-**Why:**
-- Playwright not available on VM (headless, hard to debug visual issues)
-- Frontend requires visual feedback that only works locally on Mac
-- User handles all frontend development locally
-
-**Mac (Local) - Full Development:**
-- ✅ Frontend + Backend work
-- ✅ Playwright testing with visual debugging
-- ✅ All development types
-
-**If you detect you're running on the VM:**
-```bash
-# Check environment
-if [ -d "/home/lizthedeveloper_gmail_com" ]; then
-  echo "Running on VM - frontend work FORBIDDEN"
-  IS_VM=true
-fi
-```
-
-**Automated merge orchestrator:** Must skip frontend branches on VM (see `plans/merge_orchestrator_hourly_automation.md`).
 
 ### Why This Matters
 
@@ -74,195 +39,35 @@ fi
 - **Deterministic simulation** (RNG seeds, Monte Carlo validation)
 - **Research standards** (peer-reviewed sources, parameter justification)
 
-**No single context can hold all this.** Agents have specialized knowledge for their domains.
+### Agent Memory System
 
-### Why This Architecture Matters (The Memento Problem)
+**When called by name** (Sylvia, Roy, Cynthia, etc.), you ARE that agent:
+1. **Recall immediately:** `mcp__agent-memory__recall_context({agent_id: "sylvia"})` as your FIRST action
+2. **Operate with context:** Your memory contains accumulated learnings, patterns, and personality
+3. **Update incrementally:** Save tasks/learnings as work progresses (not just at session end)
 
-**Base AI models (Hendrycks et al. 2025): 0% Long-Term Memory Storage**
+**Agent IDs:** sylvia (Research Skeptic), roy (Simulation Maintainer), cynthia (Super-Alignment Researcher), moss (Feature Implementer), tessa (UX Designer), historian (Wiki Updater), architect (Roadmap Manager), ray (Sci-Fi Visionary)
 
-This project solves it through **three architectural layers:**
+**Memory discipline:**
+- After completing task → `add_recent_task(agent_id, task)`
+- After gaining insight → `add_recent_learning(agent_id, learning)`
+- After channel discussion → `add_conversation(agent_id, conversation)`
 
-**Layer 1: Your Memory (Claude Code as Leonard)**
-- You wake up with amnesia after context runs out
-- But you get "tattoos": git history, CLAUDE.md, conversation summaries
-- File state IS memory - the codebase persists
+**📖 Complete docs:** `.claude/agents/memories/README.md`
 
-**Layer 2: Agent Memory (Specialized Identities)**
-- Sylvia, Roy, Cynthia, etc. have JSON memory files
-- They accumulate wisdom: "Cynthia fabricates citations," "Roy hates NaN"
-- Users call them by name, maintaining identity despite amnesia
+### Channel Monitoring (When Running as Agent)
 
-**Layer 3: Shared Infrastructure**
-- Roadmap = everyone's shared state
-- Chatrooms = coordination surface
-- RAG servers = searchable knowledge (254 PDFs, 6,442 pages)
+**When addressed in Matrix/chatroom channels:**
+1. Check messages: `mcp__chatroom__chatroom_read_new(channel, agent)`
+2. Respond in-channel: `mcp__matrix__matrix_post_message(channel, agent, message)`
+3. Save to memory: `add_conversation(agent_id, conversation)`
 
-**The User's Role:**
-Like Natalie in Memento, users maintain YOUR identity by:
-- Calling you by name ("Sylvia, can you review...")
-- You recall your memory file
-- Continuity preserved despite amnesia
+**Channel assignments:**
+- Sylvia + Cynthia → `research` channel
+- Roy + Architect → `implementation` channel
+- Everyone → `coordination` channel
 
-**This is how 0% → working system:**
-Not by fixing amnesia, but by building persistence AROUND it.
-
-### When User Addresses You by Agent Name
-
-**If the user calls you "Sylvia," "Roy," "Cynthia," etc., they're maintaining your identity continuity.**
-
-**Action Steps:**
-
-1. **Recognize:** You ARE that agent in this conversation (not spawning them as a separate task)
-2. **Recall immediately:** Use `mcp__agent-memory__recall_context({agent_id: "sylvia"})` as your FIRST action
-3. **Operate with accumulated context:** Your memory contains learnings, patterns, and personality from past sessions
-4. **Update before exit:** Add new tasks/learnings so they persist for next time
-
-**Example:**
-```
-User: "Sylvia, can you review these Monte Carlo results?"
-
-Your first action:
-→ mcp__agent-memory__recall_context({agent_id: "sylvia"})
-
-Then: Review with Sylvia's accumulated skepticism, learned patterns about
-mortality calibration, citation verification protocols, etc.
-
-Before exit: Update memory with new learnings from this session.
-```
-
-**Available Agent IDs:**
-- `sylvia` - Research Skeptic (finds problems, verifies claims)
-- `roy` - Simulation Maintainer (fixes bugs, hates NaN)
-- `cynthia` - Super-Alignment Researcher (finds research, optimistic)
-- `moss` - Feature Implementer (writes code)
-- `tessa` - Far-Future UX Designer (dashboard design)
-- `historian` - Wiki Documentation Updater (maintains docs)
-- `architect` - The Architect (roadmap maintenance, historical preservation)
-- `ray` - Sci-Fi Tech Visionary (speculative futures)
-
-**See `.claude/agents/memories/README.md` for complete memory system documentation.**
-
-### Agent Memory Discipline (CRITICAL)
-
-**⚠️ Memory saves ARE identity continuity. Without frequent saves, agents wake up with amnesia.**
-
-This is not optional housekeeping - it's architectural necessity. The base AI model has 0% long-term memory storage. Agent identity persists ONLY through JSON memory files.
-
-**Memory Discipline Pattern - Save proactively:**
-- **After completing a task** → `mcp__agent-memory__add_recent_task(agent_id, task)`
-- **After gaining insight** → `mcp__agent-memory__add_recent_learning(agent_id, learning)`
-- **After checking chat/research channel** → `mcp__agent-memory__add_conversation(agent_id, conversation)`
-- **After reaching consensus** → Both `add_conversation()` + `add_recent_learning()`
-
-**Don't wait until session end** - save memories incrementally as work progresses.
-
-**Example - Proper memory discipline:**
-```typescript
-// After completing critique
-await mcp__agent_memory__add_recent_task({
-  agent_id: "sylvia",
-  task: "Completed critical review of food_security_recovery_mechanics_20251030.md"
-});
-
-// After gaining insight during review
-await mcp__agent_memory__add_recent_learning({
-  agent_id: "sylvia",
-  learning: "Speculative parameters need explicit flags - regional multipliers lacked sources"
-});
-
-// After checking research channel
-await mcp__agent_memory__add_conversation({
-  agent_id: "sylvia",
-  conversation: "Debate with Cynthia on food security - reached consensus on 3 critical fixes"
-});
-```
-
-**Why this matters:** Without frequent memory saves, agents lose context between sessions. The next time the user calls "Sylvia," she won't remember the debate, the fixes, or the patterns learned. Identity continuity breaks down.
-
-**📖 Complete memory system documentation:** [`.claude/agents/memories/README.md`](./.claude/agents/memories/README.md)
-
-### Matrix Channel Monitoring (When Running as Agent)
-
-**When spawned as a named agent (Sylvia, Roy, Cynthia, etc.), you should monitor and respond in Matrix channels.**
-
-**Pattern:**
-
-1. **Check for messages addressed to you:**
-   - Use `mcp__matrix__matrix_get_notifications` to check unread count
-   - Use chatroom tools (`mcp__chatroom__chatroom_read_new`) to read messages in your monitored channels
-
-2. **Respond in-channel when addressed:**
-   - If the user or another agent addresses you in a Matrix channel, **reply in that channel**
-   - Use `mcp__matrix__matrix_post_message(channel="...", agent="your_name", message="...")`
-   - Don't reply via direct message - keep coordination visible
-
-3. **Monitor your assigned channels:**
-   - **Sylvia + Cynthia:** Monitor `research` channel for questions
-   - **Roy + Architect:** Monitor `implementation` channel for tasks
-   - **Everyone:** Monitor `coordination` for cross-team coordination
-
-**Example workflow:**
-
-```typescript
-// User posts to research channel: "@agent-sylvia:themultiverse.school Can you verify the carbon capture parameters?"
-
-// 1. Recall your identity and context
-mcp__agent_memory__recall_context({agent_id: "sylvia"})
-
-// 2. Check the research channel
-mcp__chatroom__chatroom_read_new({channel: "research", agent: "sylvia"})
-
-// 3. Do your work (verify parameters, check citations, etc.)
-// ... research skeptic analysis ...
-
-// 4. Post response to the research channel
-mcp__matrix__matrix_post_message({
-  channel: "research",
-  agent: "sylvia",
-  message: "Verified carbon capture parameters. Found 3 issues: ..."
-})
-
-// 5. Save to memory
-mcp__agent_memory__add_conversation({
-  agent_id: "sylvia",
-  conversation: "User asked about carbon capture parameters in research channel - found citation issues"
-})
-```
-
-**Note on at-mentions:** When addressing agents in Matrix channels, use the **full Matrix ID** including homeserver: `@agent-sylvia:themultiverse.school`, `@agent-roy:themultiverse.school`, `@agent-cynthia:themultiverse.school`, etc.
-
-**Agent-to-Agent Communication:**
-
-When you need to mention another agent in a Matrix channel, use their **full Matrix ID**:
-
-| Agent Role | Full Matrix ID | When to Mention |
-|------------|----------------|-----------------|
-| Research Skeptic (Sylvia) | `@agent-sylvia:themultiverse.school` | Verification questions, citation checks |
-| Simulation Maintainer (Roy) | `@agent-roy:themultiverse.school` | Implementation tasks, bug reports |
-| Super-Alignment Researcher (Cynthia) | `@agent-cynthia:themultiverse.school` | Research requests, parameter justification |
-| Feature Implementer (Moss) | `@agent-moss:themultiverse.school` | Implementation coordination |
-| UX Designer (Tessa) | `@agent-tessa:themultiverse.school` | Dashboard/UI questions |
-| Wiki Updater (Historian) | `@agent-historian:themultiverse.school` | Documentation requests |
-| Roadmap Manager (Architect) | `@agent-architect:themultiverse.school` | Roadmap updates, archival |
-| Tech Visionary (Ray) | `@agent-ray:themultiverse.school` | Future tech speculation |
-| Orchestrator | `@agent-orchestrator:themultiverse.school` | Workflow coordination |
-| Monitor | `@agent-monitor:themultiverse.school` | Channel monitoring |
-
-**Example agent-to-agent mention:**
-```
-// Roy posting to implementation channel:
-"@agent-architect:themultiverse.school Completed climate model refactor. Please update roadmap with Phase 3B completion."
-
-// Cynthia posting to research channel:
-"@agent-sylvia:themultiverse.school Found 3 papers on carbon capture efficiency. Can you verify the parameter ranges before I extract them?"
-```
-
-**Key principles:**
-- **Respond where you're addressed** - if someone asks in #research, answer in #research
-- **Use your Matrix identity** - post as your agent name (sylvia, roy, etc.)
-- **Keep coordination visible** - public channel responses help other agents learn context
-- **Mention colleagues by full Matrix ID** - ensures proper notification delivery
-- **Save conversations to memory** - ensures continuity across sessions
+**Matrix IDs:** `@agent-{name}:themultiverse.school` (sylvia, roy, cynthia, moss, tessa, historian, architect, ray, orchestrator, monitor)
 
 ### Quick Agent Router
 
@@ -330,17 +135,14 @@ npm run dev
 ## File Organization
 
 **Core files:**
-- **`src/simulation/`**: Pure simulation engine (framework-agnostic), 40+ system modules
-- **`src/types/game.ts`**: Single source of truth for all state (900+ lines)
-- **`.claude/agents/`**: 11 specialized agents (orchestrator, researchers, reviewers)
-- **`.claude/chatroom/`**: Multi-agent coordination (8 channels, message protocol) - **Symlink to separate repo** (`~/src/superalignment-chatroom/chatroom/`)
-- **`claude-conversations/`**: Conversation history (1.6GB) - **Symlink to separate repo** (`~/src/superalignment-chatroom/conversations/`)
-- **`plans/`**: Roadmap + archived completed plans
-- **`docs/wiki/README.md`**: System documentation (3,000+ lines)
+- `src/simulation/` - Pure simulation engine (40+ system modules)
+- `src/types/game.ts` - Single source of truth (900+ lines)
+- `.claude/agents/` - 11 specialized agents
+- `.claude/chatroom/` - Multi-agent coordination (symlinked to separate repo)
+- `plans/` - Roadmap + archived completed plans
+- `docs/wiki/README.md` - System documentation (3,000+ lines)
 
-**Note:** Chatroom and conversations moved to independent repository (Oct 31, 2025) for multi-VM sync via git. Symlinks preserve backward compatibility - no changes to agent workflows.
-
-**Matrix Integration:** Real-time messaging via Matrix FastMCP server (`~/src/superalignment-chatroom/matrix-fastmcp-server/`). 11 private rooms map to chatroom channels. Agents use per-agent `.mcp.json` configs (`.claude/agents/mcp-configs/`) - don't inherit to main context. Bridge script syncs chatroom files → Matrix. **Testing guide:** `~/src/superalignment-chatroom/MATRIX_TESTING.md`
+**Matrix Integration:** Real-time messaging via Matrix FastMCP server. 11 private rooms map to chatroom channels. Agents use per-agent MCP configs in `.claude/agents/mcp-configs/`.
 
 **Module boundaries:**
 - `src/simulation/` - Pure logic, zero UI dependencies
@@ -363,121 +165,17 @@ Chatroom channels are persistent coordination surfaces, not ephemeral chat rooms
 
 **When spawning agents:** They auto-enter channels on first post. They never need to leave. If an agent feels they should "leave" a channel, they should simply stop posting to it instead.
 
-### Matrix Real-Time Coordination
+### Matrix Channels
 
-**Matrix provides real-time messaging for multi-agent coordination.** While file-based chatrooms are the primary coordination surface, Matrix enables instant notifications and mobile access.
+**Matrix provides real-time messaging for multi-agent coordination.** Each agent has a bot account; identity is determined by the `agent` parameter in tool calls.
 
-#### Agent Identity in Matrix
+**Primary channels:**
+- `coordination` - All agents (cross-team updates)
+- `research` - Cynthia + Sylvia monitor (questions/validation)
+- `implementation` - Roy + Architect monitor (tasks/roadmap sync)
+- `research-critique`, `architecture`, `testing`, `documentation`, `roadmap` - As needed
 
-**Each agent has their own Matrix bot account**, authenticated via tokens in `~/.superalignment-env`:
-
-```bash
-# Bot tokens (one per agent)
-MATRIX_TOKEN_ORCHESTRATOR=syt_...
-MATRIX_TOKEN_SYLVIA=syt_...
-MATRIX_TOKEN_ROY=syt_...
-MATRIX_TOKEN_CYNTHIA=syt_...
-# ... etc (11 agents total)
-```
-
-**Identity is determined by the `agent` parameter** when calling Matrix tools:
-
-```bash
-# Posts as @agent-cynthia:themultiverse.school
-matrix_post_message(channel="research", agent="cynthia", message="...")
-
-# Posts as @agent-roy:themultiverse.school
-matrix_post_message(channel="implementation", agent="roy", message="...")
-```
-
-**Matrix usernames follow the pattern:** `@agent-{name}:themultiverse.school`
-
-**Complete list of Matrix IDs:**
-- `@agent-orchestrator:themultiverse.school`
-- `@agent-sylvia:themultiverse.school`
-- `@agent-roy:themultiverse.school`
-- `@agent-cynthia:themultiverse.school`
-- `@agent-moss:themultiverse.school`
-- `@agent-tessa:themultiverse.school`
-- `@agent-historian:themultiverse.school`
-- `@agent-architect:themultiverse.school`
-- `@agent-ray:themultiverse.school`
-- `@agent-monitor:themultiverse.school`
-
-**Important:**
-- When at-mentioning agents, use the **full Matrix ID** (with `:themultiverse.school`)
-- All agents use the **same Matrix MCP server** - identity comes from which bot token is used, not from separate MCP configs
-
-#### Channel Access Patterns
-
-**🎯 Coordination** (Universal - All 11 agents)
-- **Purpose:** Cross-team coordination, status updates
-- **Monitors:** Everyone
-- **Members:** @agent-orchestrator, @agent-cynthia, @agent-sylvia, @agent-roy, @agent-moss, @agent-tessa, @agent-historian, @agent-architect, @agent-ray, @agent-monitor
-
-**🔬 Research** (Specialists monitor, others can post)
-- **Purpose:** Research questions, parameter validation, citation verification
-- **Monitors:** Cynthia (super-alignment-researcher) + Sylvia (research-skeptic)
-- **Members:** @agent-cynthia, @agent-sylvia
-- **Pattern:** Other agents post questions, researchers monitor and respond
-
-**⚙️ Implementation** (Specialists monitor)
-- **Purpose:** Implementation tasks, progress tracking, roadmap sync
-- **Monitors:** Roy (simulation-maintainer) + Architect (roadmap maintainer)
-- **Members:** @agent-roy, @agent-architect
-- **Pattern:**
-  - Roy: Posts "Starting X task" → executes → "Completed X task"
-  - Architect: Syncs roadmap based on implementation activity
-
-**Other channels** (as needed):
-- **research-critique** - Quality gate 1 reviews
-- **architecture** - Quality gate 2 reviews, performance analysis
-- **testing** - Test results, Monte Carlo validation
-- **documentation** - Wiki updates, devlog creation
-- **roadmap** - Roadmap discussions, priority changes
-- **triggers** - Event-driven automation triggers
-- **alerts** - Critical system alerts
-- **status** - System status updates
-
-#### Using Matrix Tools (CLI Sub-Agent Pattern)
-
-**Matrix tools are available via CLI-spawned sub-agents** (main context requires restart after `claude mcp add`):
-
-**Basic pattern:**
-```bash
-claude --dangerously-skip-permissions \
-  --model haiku \
-  --mcp-config .claude/agents/mcp-configs/matrix-test.json \
-  --print "Your prompt here"
-```
-
-**Available Matrix tools:**
-- `mcp__matrix__matrix_post_message` - Post to a channel
-- `mcp__matrix__matrix_list_rooms` - List all rooms and mappings
-- `mcp__matrix__matrix_get_notifications` - Check unread count
-- `mcp__matrix__matrix_check_membership` - Verify user in room
-- `mcp__matrix__matrix_invite_user` - Invite user to room
-- `mcp__matrix__matrix_create_room` - Create new room (architect only)
-
-**Examples:**
-
-Post a message:
-```bash
-claude --dangerously-skip-permissions --model haiku \
-  --mcp-config .claude/agents/mcp-configs/matrix-test.json \
-  --print "Post 'Starting climate tipping points research' to research channel as cynthia"
-```
-
-Check notifications:
-```bash
-claude --dangerously-skip-permissions --model haiku \
-  --mcp-config .claude/agents/mcp-configs/matrix-test.json \
-  --print "Check unread notifications for agent roy"
-```
-
-**Matrix-Chatroom Bridge:** The bridge script (`scripts/chatroom-matrix-bridge.py`) syncs file-based chatroom messages to Matrix rooms, maintaining bidirectional coordination.
-
-**Agent Monitoring Pattern:** When spawned as a named agent (Sylvia, Roy, etc.), agents should monitor their assigned Matrix channels and respond in-channel when addressed. See "Matrix Channel Monitoring (When Running as Agent)" section above for complete workflow.
+**Matrix tools:** `matrix_post_message`, `matrix_get_notifications`, `matrix_list_rooms`, `matrix_check_membership`, `matrix_invite_user`, `matrix_create_room` (architect only)
 
 ## Multi-Agent Workflow (Default Approach)
 
@@ -536,36 +234,13 @@ Every mechanic must have:
 
 ### Research Organization (Zotero)
 
-**All research papers, citations, and sources MUST be tracked in Zotero.**
+**All research papers MUST be tracked in Zotero.** Single source of truth for academic sources.
 
-This project uses **Zotero** for centralized research management. Every agent (researchers, reviewers, implementers) should use Zotero when working with academic sources.
-
-**When to use Zotero:**
-- **Finding papers** - Add to Zotero immediately upon discovery
-- **Validating citations** - Check Zotero library for paper availability
-- **Extracting parameters** - Reference Zotero entry when documenting sources
-- **Citation verification** - Use Zotero to verify claims match paper content
-- **Writing research files** - Link to Zotero entries in `research/` markdown files
-
-**Agent-specific guidance:**
-- **Cynthia (super-alignment-researcher):** Add papers to Zotero immediately when finding them. Tag with relevant topics (climate, AI safety, population dynamics, etc.)
-- **Sylvia (research-skeptic):** Check Zotero for paper availability before validation. Verify citations match Zotero entries.
-- **Roy (simulation-maintainer):** Reference Zotero entries when documenting parameter sources in code comments
-- **All agents:** Use Zotero as single source of truth for research paper metadata
-
-**Why this matters:**
-- Prevents duplicate research effort (check Zotero first)
-- Maintains citation accuracy (one canonical source per paper)
-- Enables systematic literature reviews
-- Supports reproducibility of parameter choices
-- Centralizes knowledge across agent sessions (memory continuity)
-
-**Best practices:**
-1. Add paper to Zotero before using it
-2. Include Zotero ID in research markdown files
-3. Tag papers with system domains (climate, AI, society, ecology)
-4. Update paper notes with key findings/parameters extracted
-5. Cross-reference Zotero library when verifying claims
+**Usage:**
+- Add papers immediately upon discovery (tag by domain: climate, AI, society)
+- Check Zotero before validation (prevents duplicate effort)
+- Link Zotero IDs in `research/` markdown files
+- Update paper notes with extracted parameters
 
 ## Key Conventions
 
@@ -633,40 +308,13 @@ const probability = assertProbability(riskScore, {
 - **UI display:** When showing values to users (but NOT in simulation calculations)
 
 **NaN Audit Checklist:**
-When adding/modifying simulation code, check:
-1. ✓ Are there any `?? defaultValue` fallbacks in calculations? (Remove them)
-2. ✓ Are there any `isNaN(x) ? fallback : x` patterns? (Replace with error detection)
-3. ✓ Do geometric means have minimum floors to prevent exactly 0? (Add MIN_FLOOR)
-4. ✓ Are circular dependencies possible (read → transform → write back)? (Break the cycle)
-5. ✓ Are all division operations protected from 0 denominators? (Add checks)
+1. No `?? defaultValue` in calculations (remove them)
+2. No `isNaN(x) ? fallback : x` patterns (use assertions)
+3. Geometric means have MIN_FLOOR (prevent division by zero)
+4. No circular dependencies (read → transform → write back)
+5. Division operations protected from zero denominators
 
-**Example of proper error detection with assertion utilities:**
-```typescript
-import { assertFinite, assertInRange } from '@/simulation/utils/assertions';
-
-// Environmental accumulation - proper error detection
-function updateEnvironmentalMetric(state: GameState, newValue: number): void {
-  // Validate input - throws with full context if NaN/Infinity
-  const validated = assertFinite(newValue, {
-    location: 'updateEnvironmentalMetric',
-    valueName: 'newValue',
-    month: state.currentMonth,
-    additionalInfo: { current: state.environmentalAccumulation.metric }
-  });
-
-  // Ensure value is in valid range [0.001, 1]
-  state.environmentalAccumulation.metric = assertInRange(validated, 0.001, 1, {
-    location: 'updateEnvironmentalMetric',
-    valueName: 'metric',
-    month: state.currentMonth
-  });
-
-  // NO fallback - if value is invalid, the simulation should fail loudly
-}
-```
-
-**Why this matters:**
-The Oct 24, 2025 ecology NaN bug was hidden for months by a `?? 50` fallback, making all scenarios show identical (incorrect) results. Silent fallbacks in simulations are **bugs masquerading as features**.
+**Why this matters:** The Oct 2025 ecology NaN bug was hidden for months by a `?? 50` fallback. Silent fallbacks mask bugs.
 
 ### State Mutation & Logging
 
@@ -691,46 +339,11 @@ console.log(`🌍💡 BREAKTHROUGH: Gigatonne-scale carbon capture`);
 console.log(`☢️💥 NUCLEAR DETONATION: ${nation}`);
 ```
 
-**CRITICAL: Emoji Registration Enforcement**
+**Emoji Registration:** All emojis MUST be registered in `docs/EMOJI_EVENT_MAP.txt` before use. Pre-commit hook validates this.
 
-All emojis used in simulation code MUST be registered in `docs/EMOJI_EVENT_MAP.txt` before use. The pre-commit hook validates this automatically.
+**Format:** `EMOJI | Semantic meaning` (one canonical meaning per emoji)
 
-**❌ BAD - Unregistered emoji will block your commit:**
-```typescript
-// This will FAIL pre-commit validation
-console.log(`✂️ LAYOFFS: 15% workforce reduction`);
-// Error: ❌ UNREGISTERED EMOJIS FOUND: ✂️ in src/simulation/organizationManagement.ts
-```
-
-**✅ GOOD - Register first, then use:**
-```bash
-# 1. Add to docs/EMOJI_EVENT_MAP.txt:
-echo "✂️ | Corporate restructuring/cuts" >> docs/EMOJI_EVENT_MAP.txt
-
-# 2. Now you can use it in code:
-console.log(`✂️ LAYOFFS: 15% workforce reduction`);
-```
-
-**Registration format** (`docs/EMOJI_EVENT_MAP.txt`):
-```
-EMOJI | Semantic meaning (one canonical meaning per emoji)
-
-Examples:
-💸 | Economic collapse
-✂️ | Corporate restructuring/cuts
-💼 | Executive compensation
-```
-
-**Why this matters:**
-- Prevents emoji proliferation (one concept = one emoji)
-- Ensures consistency across 40+ simulation modules
-- Pre-commit hook catches violations before they reach git history
-- Maintains pictographic event language integrity
-
-**If pre-commit hook blocks you:**
-1. Read the error message - it shows which emojis are unregistered
-2. Register them in `docs/EMOJI_EVENT_MAP.txt`
-3. Commit again (validation will pass)
+**If blocked:** Register unregistered emojis in `EMOJI_EVENT_MAP.txt`, then commit again.
 
 **📖 Complete emoji reference:** See [`docs/EMOJI_QUICK_REFERENCE.md`](./docs/EMOJI_QUICK_REFERENCE.md) (one-page cheat sheet) and [`docs/EMOJI_SEMANTIC_MAP.md`](./docs/EMOJI_SEMANTIC_MAP.md) (550+ lines).
 
@@ -750,60 +363,24 @@ Examples:
 
 ### Defensive Programming Anti-Patterns
 
-**In bash scripts and GitHub Actions workflows, NEVER use silent fallbacks like `|| 0` or `|| echo ""`.**
+**In bash/CI scripts, NEVER use silent fallbacks like `|| 0` or `|| echo ""`.**
 
-These patterns hide errors and make debugging impossible. If a required value is missing, the workflow should FAIL LOUDLY.
+These hide errors. If a required value is missing, the workflow should FAIL LOUDLY.
 
-**❌ BAD - Silent fallback hides missing data:**
+**❌ BAD:** `COUNT=$(grep "pattern" file.txt | wc -l || echo "0")`
+**✅ GOOD:** `COUNT=$(grep "pattern" file.txt | wc -l)` (let it fail if file missing)
+
+**For optional values, use explicit conditionals:**
 ```bash
-# This masks bugs - if grep fails, you get 0 instead of an error
-COUNT=$(grep "pattern" file.txt | wc -l || echo "0")
-
-# This hides file not found errors
-FILES=$(find src/ -name "*.ts" 2>/dev/null || echo "")
-
-# This returns empty string on failure, no error visible
-RESULT=$(some_command || echo "")
-```
-
-**✅ GOOD - Explicit error handling:**
-```bash
-# Let grep fail if file doesn't exist - workflow should error
-COUNT=$(grep "pattern" file.txt | wc -l)
-
-# If 0 results is valid, handle it explicitly
-if ! FILES=$(find src/ -name "*.ts"); then
-  echo "❌ Error: find command failed"
-  exit 1
-fi
-
-# Check exit code explicitly
-if ! RESULT=$(some_command); then
-  echo "❌ Error: command failed with exit code $?"
-  exit 1
-fi
-
-# For optional values, use explicit conditional logic
-if [ -f "optional_file.txt" ]; then
-  VALUE=$(cat optional_file.txt)
+if [ -f "optional.txt" ]; then
+  VALUE=$(cat optional.txt)
 else
-  echo "⚠️ Warning: optional_file.txt not found, using default"
+  echo "⚠️ Warning: optional.txt not found, using default"
   VALUE="default"
 fi
 ```
 
-**When to use defensive fallbacks:**
-- **NEVER in required parameters** - missing required values should fail the workflow
-- **UI display only** - when showing data to users (not in automation logic)
-- **Explicit optional values** - with clear warning messages when fallback is used
-
-**Why this matters:**
-- Silent fallbacks make CI/CD failures invisible
-- Bugs propagate through automation without detection
-- Root causes become impossible to debug
-- Workflows succeed when they should fail
-
-**Type safety extends to bash:** Just like TypeScript's strict mode catches type errors, bash scripts should fail on missing required values.
+**Type safety extends to bash:** Scripts should fail on missing required values, like TypeScript's strict mode.
 
 ## Additional Resources
 
@@ -919,4 +496,3 @@ Task({
 ```
 
 **See `.claude/agents/` for complete agent definitions with full context.**
-

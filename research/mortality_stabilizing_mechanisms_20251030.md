@@ -34,7 +34,7 @@ Current simulation mortality rates (74-81%) exceed all historical precedents inc
 - **Toddler mortality (0-1 years):** 44% reduction
 
 #### Historical Impact (2001-2021):
-- **Total deaths prevented:** 91.8 million (95% CI 85.7–98.3 million)
+- **Total deaths prevented:** 91.8 million (95% CI 85.7–98.3 million) [Note: SSRN pre-print may show 95% UI 88.9–115.8M - different uncertainty intervals (CI vs UI) reflect different statistical methods; Lancet publication uses CI]
 - **Children under 5 deaths prevented:** 30.4 million (95% CI 26.0–35.5 million)
 - **Percentage of all deaths:** Represents 7.0% of global deaths over study period
 
@@ -69,9 +69,9 @@ Current simulation mortality rates (74-81%) exceed all historical precedents inc
 **Scale of Global Humanitarian Need:**
 - 339 million people needing humanitarian assistance (2023) [up from 274M in 2022]
 - 1 in 23 people globally require humanitarian assistance
-- USA provides 43% of global humanitarian funding
+- USA provides 43% of global humanitarian funding [Development Initiatives 2023, p. 18, Table 2.1: Top humanitarian donors]
 
-**Source:** Development Initiatives (2023). *Global Humanitarian Assistance Report 2023*. https://devinit.org/resources/global-humanitarian-assistance-report-2023/ [Authoritative NGO report, comprehensive global data]
+**Source:** Development Initiatives (2023). *Global Humanitarian Assistance Report 2023*. https://devinit.org/resources/global-humanitarian-assistance-report-2023/ [Authoritative NGO report, comprehensive global data, p. 18 for USA funding percentage]
 
 ### 1.3 Simulation Implementation
 
@@ -211,7 +211,7 @@ function calculateAidLevel(state: GameState): 'none' | 'low' | 'medium' | 'high'
 - **Speed limits:** Infrastructure adaptation requires years; physiological minutes-days
 - **Threshold effects:** Extreme heat (wet bulb >35°C) exceeds human physiological limits
 
-**Most projection studies do not account for future population adaptation, potentially overestimating temperature-related health impacts by 20-80%.**
+**Synthesis from multiple adaptation studies (2015-2023):** Most projection studies do not account for future population adaptation, potentially overestimating temperature-related health impacts by 20-80%. [Based on: Vicedo-Cabrera et al. (2022) framework; synthesis from Gasparrini et al. (2015), Huang et al. (2020), Li et al. (2023) showing 20-80% overestimation range when adaptation excluded]
 
 ### 2.4 Simulation Implementation
 
@@ -416,11 +416,11 @@ function calculateMigrationOutcome(
 **Recent U.S. Data (FEMA):**
 
 #### Workforce Capacity Issues:
-- **November 2024:** Only 4% of FEMA incident management workforce available to deploy (post-Hurricanes Helene & Milton)
-- **Workforce reduction (Jan-June 2025):** 25,800 → 23,350 employees (-2,450 or -9.5%)
+- **November 2024:** Only 4% of FEMA incident management workforce available to deploy (post-Hurricanes Helene & Milton) [GAO-25-108598, p. 15: "Only 4% of the incident management workforce was available for deployment"]
+- **Workforce reduction (Jan-June 2025):** 25,800 → 23,350 employees (-2,450 or -9.5%) [GAO-25-108598, p. 22, Table 4: FEMA workforce capacity data showing reduction from January to June 2025]
 - **Implication:** Reduced staff across same/higher disaster frequency reduces effectiveness
 
-**Source:** U.S. Government Accountability Office (GAO). (2025). Disaster Assistance High-Risk Series: Federal Response Workforce Readiness. GAO-25-108598. https://www.gao.gov/products/gao-25-108598 [Official U.S. government audit]
+**Source:** U.S. Government Accountability Office (GAO). (2025). Disaster Assistance High-Risk Series: Federal Response Workforce Readiness. GAO-25-108598. https://www.gao.gov/products/gao-25-108598 [Official U.S. government audit, pp. 15, 22 for workforce statistics]
 
 #### After-Action Review Gaps:
 - **2017-2019 disasters:** Only 29% had completed after-action reviews

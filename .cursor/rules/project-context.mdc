@@ -3,20 +3,75 @@ alwaysApply: true
 ---
 Be as brief as possible, don't write excessive reviews after writing devlogs, only bring questions to the user.
 This is a research simulation. We are never going for specific outcomes, only trying to figure out the most realistic, defensible model we can- let the model show what it shows.
-cd /Users/annhoward/src/ai_game_theory_simulation && npx tsx scripts/monteCarloSimulation.ts to run the monte carlo sim
-Always redirect stdout to a file in a logs folder with a timestamp and background the process. Use sleep to check it async as it appends logs to the file. Remember it takes time to run.
-Run sims in tmux so you can work on things in-between runs, which take awhile.
-prefer to review logs over re-running the sim as it takes awhile to do
-plans go in /plans and update them as you complete portions of it
-session summaries go in /devlogs
-update the docs in /docs/wiki when you add major features or change calculations
 
-This is a research simulation. We are never going for specific outcomes, only trying to figure out the most realistic, defensible model we can- let the model show what it shows.
-cd /Users/annhoward/src/ai_game_theory_simulation && npx tsx scripts/monteCarloSimulation.ts to run the monte carlo sim
-Always redirect stdout to a file in a logs folder with a timestamp and background the process. Use sleep to check it async as it appends logs to the file. Remember it takes time to run.
-Run sims in tmux so you can work on things in-between runs, which take awhile.
-prefer to review logs over re-running the sim as it takes awhile to do
-plans go in /plans and update them as you complete portions of it
-session summaries go in /devlogs
-update the docs in /docs/wiki when you add major features or change calculations
+## ⚠️ CRITICAL: Always Use Specialized Rules
 
+**This simulation is too complex for any single context file. You must ALWAYS use the appropriate specialized rule for the work you're doing.**
+
+**Never operate without a rule.** Before making any changes:
+1. Identify what type of work you're doing (simulation code, frontend, research, documentation, etc.)
+2. Use the appropriate specialized rule (simulation-maintainer, far-future-ux-designer, super-alignment-researcher, etc.)
+3. The specialized rules contain deep domain knowledge you need
+
+**Examples:**
+- Making changes to simulation code? → Use `simulation-maintainer` rule
+- Working on frontend/dashboard? → Use `far-future-ux-designer` rule
+- Need research sources? → Use `super-alignment-researcher` rule
+- Writing documentation? → Use `wiki-documentation-updater` rule
+- Complex multi-system features? → Use `orchestrator` rule
+
+**This is a multi-agent system.** Each specialized rule has extensive context about its domain. Don't try to operate without it.
+
+## Project Overview
+
+This is a research simulation engine modeling pathways from AI super-alignment to sustainable human flourishing. It explores the question: **What happens after we solve AI alignment?** The simulation models complex dynamics including AI agents, environmental crises, social systems, and breakthrough technologies to understand possible futures.
+
+**Core Philosophy:** Research-backed realism over balance tuning. Every mechanic is grounded in peer-reviewed research (2024-2025). The model is a research tool, not a game - "let the model show what it shows."
+
+## Quick Start Commands
+
+```bash
+# Monte Carlo simulation (ALWAYS run in background with &)
+# Always redirect stdout to a file in logs folder with a timestamp
+# always redirect stderr to a separate file and monitor it for a bit
+npx tsx scripts/monteCarloSimulation.ts > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+
+# Run tests
+npm test
+
+# Type checking
+npx tsc --noEmit
+
+# Development server
+npm run dev
+```
+
+**Important Notes:**
+- **Run sims in background mode** so you can work on things in-between runs (sims take a while)
+- **Prefer to review logs** over re-running the sim as it takes awhile to do
+- **Always background processes** that don't immediately exit (use `&`)
+- **Always redirect stdout and stderr** to separate files in `logs/` folder with a timestamp 
+- **Use sleep** to check progress async as logs append to the file
+
+## File Organization
+
+- **`plans/`**: Roadmap + archived completed plans - **Update plans as you complete portions**
+- **`devlogs/`**: Session summaries - **Save session summaries here**
+- **`docs/wiki/README.md`**: System documentation (3,000+ lines) - **Update when you add major features or change calculations**
+- **`src/simulation/`**: Pure simulation engine (framework-agnostic), 40+ system modules
+- **`src/types/game.ts`**: Single source of truth for all state (900+ lines)
+- **`.claude/rules/`**: Cursor rules for specialized agents (`.mdc` format) - **USE THESE**
+
+## Critical Rules
+
+**Never use `Math.random()` directly.** Always use the RNG function passed to phases for reproducibility.
+
+**Never use silent fallback values for NaN/undefined in simulation calculations.** This is a research simulation, not a production app. Invalid values indicate bugs that must be fixed, not hidden. Use assertion utilities from `src/simulation/utils/assertions.ts`.
+
+**Module boundaries:** `src/simulation/` is pure TypeScript with zero framework dependencies. Never import from UI code. Frontend can import from simulation, but simulation NEVER imports from frontend.
+
+**Always save logs to `/logs/`, NEVER `/tmp/`** (tmp gets cleared).
+
+**Never run long scripts synchronously** - ALWAYS async with `&` and redirect to `/logs/`.
+
+**Don't tune parameters for "fun"** - only research-backed values.

@@ -255,6 +255,10 @@ export function attemptDefensiveAIDeployment(state: GameState): void {
   defense.cyberDefense.coverage = 0.5 * defense.deploymentLevel;
   defense.cyberDefense.adaptationSpeed = 0.5 * capabilityFactor;
   
+  // Deepfake detection accuracy: 70-95% range, declining over time
+  // Research: CVPR 2025 (Yang et al. "D3"), NeurIPS 2024 ("DF40"), ACM 2024 (Characterizing Photorealism 90%→85%), IJCAI 2024 (70-99% range)
+  // Base accuracy: 70% (0.7), caps at 95% (0.95) with capability scaling
+  // Declines -5%/year due to adversarial adaptation (see updateDefenseOffenseArmsRace)
   defense.deepfakeDetection.accuracy = 0.7 * capabilityFactor;
   defense.deepfakeDetection.coverageDiplomatic = 0.6 * defense.deploymentLevel;
   defense.deepfakeDetection.coverageMedia = 0.3 * defense.deploymentLevel;

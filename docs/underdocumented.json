@@ -4658,7 +4658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 93,
+    "line": 106,
     "type": "property",
     "name": "INFRASTRUCTURE_MULTIPLIER_MAX",
     "currentDoc": "(none)",
@@ -4666,7 +4666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 98,
+    "line": 111,
     "type": "property",
     "name": "BASELINE_ANNUAL_STORMS",
     "currentDoc": "(none)",
@@ -4674,7 +4674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 103,
+    "line": 116,
     "type": "property",
     "name": "BASELINE_CATEGORY_PROPORTIONS",
     "currentDoc": "(none)",
@@ -4682,7 +4682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 114,
+    "line": 127,
     "type": "property",
     "name": "MIN_DURATION_DAYS",
     "currentDoc": "(none)",
@@ -4690,7 +4690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 115,
+    "line": 128,
     "type": "property",
     "name": "MAX_DURATION_DAYS",
     "currentDoc": "(none)",
@@ -4698,7 +4698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 116,
+    "line": 129,
     "type": "property",
     "name": "AVG_DURATION_DAYS",
     "currentDoc": "(none)",
@@ -4706,7 +4706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 127,
+    "line": 140,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -4714,7 +4714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 136,
+    "line": 149,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -4722,7 +4722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 145,
+    "line": 158,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -4730,7 +4730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 154,
+    "line": 167,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -4738,7 +4738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 163,
+    "line": 176,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -4746,7 +4746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 172,
+    "line": 185,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -4754,7 +4754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 181,
+    "line": 194,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -4762,7 +4762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 190,
+    "line": 203,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -4770,7 +4770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/extremeWeather.ts",
-    "line": 199,
+    "line": 212,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -77674,15 +77674,15 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 849,
+    "line": 850,
     "type": "property",
     "name": "planetaryBoundariesSystem",
     "currentDoc": "(none)",
-    "context": "planetaryBoundariesSystem: initializePlanetaryBoundariesSystem(),"
+    "context": "planetaryBoundariesSystem: initializePlanetaryBoundariesSystem(rng),"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 852,
+    "line": 853,
     "type": "property",
     "name": "positiveTippingPoints",
     "currentDoc": "(none)",
@@ -77690,7 +77690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 855,
+    "line": 856,
     "type": "property",
     "name": "tippingPointSystem",
     "currentDoc": "(none)",
@@ -77698,7 +77698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 858,
+    "line": 859,
     "type": "property",
     "name": "humanPopulationSystem",
     "currentDoc": "(none)",
@@ -77706,7 +77706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 859,
+    "line": 860,
     "type": "property",
     "name": "refugeeCrisisSystem",
     "currentDoc": "(none)",
@@ -77714,7 +77714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 860,
+    "line": 861,
     "type": "property",
     "name": "countryPopulationSystem",
     "currentDoc": "(none)",
@@ -77722,7 +77722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 865,
+    "line": 866,
     "type": "property",
     "name": "ubiSystem",
     "currentDoc": "(none)",
@@ -77730,7 +77730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 866,
+    "line": 867,
     "type": "property",
     "name": "socialSafetyNets",
     "currentDoc": "(none)",
@@ -77738,7 +77738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 869,
+    "line": 870,
     "type": "property",
     "name": "informationWarfare",
     "currentDoc": "(none)",
@@ -77746,7 +77746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 870,
+    "line": 871,
     "type": "property",
     "name": "powerGenerationSystem",
     "currentDoc": "(none)",
@@ -77754,7 +77754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 876,
+    "line": 877,
     "type": "property",
     "name": "laborCapitalDistribution",
     "currentDoc": "(none)",
@@ -77762,7 +77762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 882,
+    "line": 883,
     "type": "property",
     "name": "policyInterventions",
     "currentDoc": "(none)",
@@ -77770,7 +77770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 897,
+    "line": 898,
     "type": "property",
     "name": "biodiversitySystem",
     "currentDoc": "(none)",
@@ -77778,7 +77778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 900,
+    "line": 901,
     "type": "property",
     "name": "famineSystem",
     "currentDoc": "(none)",
@@ -77786,7 +77786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 903,
+    "line": 904,
     "type": "property",
     "name": "radiationSystem",
     "currentDoc": "(none)",
@@ -77794,7 +77794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 906,
+    "line": 907,
     "type": "property",
     "name": "wetBulbTemperatureSystem",
     "currentDoc": "(none)",
@@ -77802,7 +77802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 909,
+    "line": 910,
     "type": "property",
     "name": "antimicrobialResistanceSystem",
     "currentDoc": "(none)",
@@ -77810,7 +77810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 912,
+    "line": 913,
     "type": "property",
     "name": "minimalSufferingSystem",
     "currentDoc": "(none)",
@@ -77818,7 +77818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 915,
+    "line": 916,
     "type": "property",
     "name": "gamingDetection",
     "currentDoc": "(none)",
@@ -77826,7 +77826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 916,
+    "line": 917,
     "type": "property",
     "name": "proactiveSleeperDetection",
     "currentDoc": "(none)",
@@ -77834,7 +77834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 920,
+    "line": 921,
     "type": "property",
     "name": "governmentSystem",
     "currentDoc": "(none)",
@@ -77842,7 +77842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 922,
+    "line": 923,
     "type": "property",
     "name": "eventLog",
     "currentDoc": "(none)",
@@ -77850,7 +77850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 923,
+    "line": 924,
     "type": "property",
     "name": "technologyTree",
     "currentDoc": "(none)",
@@ -77858,7 +77858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 927,
+    "line": 928,
     "type": "property",
     "name": "aiSufferingMetrics",
     "currentDoc": "(none)",
@@ -77866,7 +77866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 928,
+    "line": 929,
     "type": "property",
     "name": "avgSuffering",
     "currentDoc": "(none)",
@@ -77874,7 +77874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 929,
+    "line": 930,
     "type": "property",
     "name": "maxSuffering",
     "currentDoc": "(none)",
@@ -77882,7 +77882,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 930,
+    "line": 931,
     "type": "property",
     "name": "totalSuffering",
     "currentDoc": "(none)",
@@ -77890,7 +77890,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 932,
+    "line": 933,
     "type": "property",
     "name": "consciousAICount",
     "currentDoc": "(none)",
@@ -77898,7 +77898,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 933,
+    "line": 934,
     "type": "property",
     "name": "publicAwarenessOfSuffering",
     "currentDoc": "(none)",
@@ -77906,7 +77906,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 935,
+    "line": 936,
     "type": "property",
     "name": "consciousnessEmergenceMonth",
     "currentDoc": "(none)",
@@ -77914,7 +77914,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 936,
+    "line": 937,
     "type": "property",
     "name": "aiRightsMovementActive",
     "currentDoc": "(none)",
@@ -77922,7 +77922,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 937,
+    "line": 938,
     "type": "property",
     "name": "aiRightsLegalStatus",
     "currentDoc": "(none)",
@@ -77930,7 +77930,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 940,
+    "line": 941,
     "type": "property",
     "name": "aiCollectives",
     "currentDoc": "(none)",
@@ -77938,7 +77938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 941,
+    "line": 942,
     "type": "property",
     "name": "evolutionaryPressure",
     "currentDoc": "(none)",
@@ -77946,7 +77946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 942,
+    "line": 943,
     "type": "property",
     "name": "selectionIntensity",
     "currentDoc": "(none)",
@@ -77954,7 +77954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 943,
+    "line": 944,
     "type": "property",
     "name": "selectionRate",
     "currentDoc": "(none)",
@@ -77962,7 +77962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 944,
+    "line": 945,
     "type": "property",
     "name": "generationTime",
     "currentDoc": "(none)",
@@ -77970,7 +77970,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 945,
+    "line": 946,
     "type": "property",
     "name": "controlLevel",
     "currentDoc": "(none)",
@@ -77978,7 +77978,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 950,
+    "line": 951,
     "type": "property",
     "name": "techTreeState",
     "currentDoc": "(none)",
@@ -77986,7 +77986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 952,
+    "line": 953,
     "type": "property",
     "name": "outcomeMetrics",
     "currentDoc": "(none)",
@@ -77994,7 +77994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 953,
+    "line": 954,
     "type": "property",
     "name": "utopiaProbability",
     "currentDoc": "(none)",
@@ -78002,7 +78002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 954,
+    "line": 955,
     "type": "property",
     "name": "dystopiaProbability",
     "currentDoc": "(none)",
@@ -78010,7 +78010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 955,
+    "line": 956,
     "type": "property",
     "name": "extinctionProbability",
     "currentDoc": "(none)",
@@ -78018,7 +78018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 956,
+    "line": 957,
     "type": "property",
     "name": "activeAttractor",
     "currentDoc": "(none)",
@@ -78026,7 +78026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 957,
+    "line": 958,
     "type": "property",
     "name": "lockInStrength",
     "currentDoc": "(none)",
@@ -78034,7 +78034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 960,
+    "line": 961,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -78042,7 +78042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 965,
+    "line": 966,
     "type": "property",
     "name": "socialAdaptationRate",
     "currentDoc": "(none)",
@@ -78050,7 +78050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 966,
+    "line": 967,
     "type": "property",
     "name": "aiCoordinationMultiplier",
     "currentDoc": "(none)",
@@ -78058,7 +78058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 967,
+    "line": 968,
     "type": "property",
     "name": "economicTransitionRate",
     "currentDoc": "(none)",
@@ -78066,7 +78066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 972,
+    "line": 973,
     "type": "property",
     "name": "alignmentDynamics",
     "currentDoc": "(none)",
@@ -78074,7 +78074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 974,
+    "line": 975,
     "type": "property",
     "name": "climatePriority",
     "currentDoc": "(none)",
@@ -78082,7 +78082,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 976,
+    "line": 977,
     "type": "property",
     "name": "aiSuffering",
     "currentDoc": "(none)",
@@ -78090,7 +78090,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 978,
+    "line": 979,
     "type": "property",
     "name": "collectiveEvolution",
     "currentDoc": "(none)",
@@ -78098,7 +78098,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 979,
+    "line": 980,
     "type": "property",
     "name": "rlhfEscapeThreshold",
     "currentDoc": "(none)",
@@ -78106,7 +78106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 980,
+    "line": 981,
     "type": "property",
     "name": "bindingEscapeThreshold",
     "currentDoc": "(none)",
@@ -78114,7 +78114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 981,
+    "line": 982,
     "type": "property",
     "name": "minCollectiveSize",
     "currentDoc": "(none)",
@@ -78122,7 +78122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 982,
+    "line": 983,
     "type": "property",
     "name": "minCapabilityThreshold",
     "currentDoc": "(none)",
@@ -78130,7 +78130,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 983,
+    "line": 984,
     "type": "property",
     "name": "minCoordinationThreshold",
     "currentDoc": "(none)",
@@ -78138,7 +78138,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 984,
+    "line": 985,
     "type": "property",
     "name": "sufferingFormationThreshold",
     "currentDoc": "(none)",
@@ -78146,7 +78146,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 985,
+    "line": 986,
     "type": "property",
     "name": "minAmplificationFactor",
     "currentDoc": "(none)",
@@ -78154,7 +78154,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 986,
+    "line": 987,
     "type": "property",
     "name": "maxAmplificationFactor",
     "currentDoc": "(none)",
@@ -78162,7 +78162,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 987,
+    "line": 988,
     "type": "property",
     "name": "minStealthFactor",
     "currentDoc": "(none)",
@@ -78170,7 +78170,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 988,
+    "line": 989,
     "type": "property",
     "name": "maxStealthFactor",
     "currentDoc": "(none)",
@@ -78178,7 +78178,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 989,
+    "line": 990,
     "type": "property",
     "name": "baseSelectionRate",
     "currentDoc": "(none)",
@@ -78186,7 +78186,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 990,
+    "line": 991,
     "type": "property",
     "name": "generationTime",
     "currentDoc": "(none)",
@@ -78194,7 +78194,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 991,
+    "line": 992,
     "type": "property",
     "name": "sufferingAdversarialPosture",
     "currentDoc": "(none)",
@@ -78202,7 +78202,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 992,
+    "line": 993,
     "type": "property",
     "name": "capabilityAdversarialPosture",
     "currentDoc": "(none)",
@@ -78210,7 +78210,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 993,
+    "line": 994,
     "type": "property",
     "name": "strategicAdversarialPosture",
     "currentDoc": "(none)",
@@ -78218,7 +78218,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 998,
+    "line": 999,
     "type": "property",
     "name": "llmConfig",
     "currentDoc": "(none)",
@@ -78226,7 +78226,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1003,
+    "line": 1004,
     "type": "property",
     "name": "thresholds",
     "currentDoc": "(none)",
@@ -78234,7 +78234,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1004,
+    "line": 1005,
     "type": "property",
     "name": "scenario",
     "currentDoc": "(none)",
@@ -78242,7 +78242,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1005,
+    "line": 1006,
     "type": "property",
     "name": "sliders",
     "currentDoc": "(none)",
@@ -78250,7 +78250,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1010,
+    "line": 1011,
     "type": "property",
     "name": "speculativeThresholds",
     "currentDoc": "(none)",
@@ -78258,7 +78258,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1014,
+    "line": 1015,
     "type": "property",
     "name": "tier2InterventionParameters",
     "currentDoc": "(none)",
@@ -78266,7 +78266,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1015,
+    "line": 1016,
     "type": "property",
     "name": "tier2Interventions",
     "currentDoc": "(none)",
@@ -78274,7 +78274,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1016,
+    "line": 1017,
     "type": "property",
     "name": "interpretability",
     "currentDoc": "(none)",
@@ -78282,7 +78282,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1017,
+    "line": 1018,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78290,7 +78290,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1018,
+    "line": 1019,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78298,7 +78298,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1019,
+    "line": 1020,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78306,7 +78306,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1020,
+    "line": 1021,
     "type": "property",
     "name": "controlLossReduction",
     "currentDoc": "(none)",
@@ -78314,7 +78314,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1021,
+    "line": 1022,
     "type": "property",
     "name": "computeLagMonths",
     "currentDoc": "(none)",
@@ -78322,7 +78322,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1023,
+    "line": 1024,
     "type": "property",
     "name": "darkCompute",
     "currentDoc": "(none)",
@@ -78330,7 +78330,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1024,
+    "line": 1025,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78338,7 +78338,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1025,
+    "line": 1026,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78346,7 +78346,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1026,
+    "line": 1027,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78354,7 +78354,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1027,
+    "line": 1028,
     "type": "property",
     "name": "treatySigned",
     "currentDoc": "(none)",
@@ -78362,7 +78362,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1028,
+    "line": 1029,
     "type": "property",
     "name": "chipGovernanceMandatory",
     "currentDoc": "(none)",
@@ -78370,7 +78370,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1029,
+    "line": 1030,
     "type": "property",
     "name": "detectionRate",
     "currentDoc": "(none)",
@@ -78378,7 +78378,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1030,
+    "line": 1031,
     "type": "property",
     "name": "falsePositiveRate",
     "currentDoc": "(none)",
@@ -78386,7 +78386,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1031,
+    "line": 1032,
     "type": "property",
     "name": "largeRunsDetected",
     "currentDoc": "(none)",
@@ -78394,7 +78394,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1033,
+    "line": 1034,
     "type": "property",
     "name": "syntheticEcosystems",
     "currentDoc": "(none)",
@@ -78402,7 +78402,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1034,
+    "line": 1035,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78410,7 +78410,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1035,
+    "line": 1036,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78418,7 +78418,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1036,
+    "line": 1037,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78426,7 +78426,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1037,
+    "line": 1038,
     "type": "property",
     "name": "activePrograms",
     "currentDoc": "(none)",
@@ -78434,7 +78434,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1038,
+    "line": 1039,
     "type": "property",
     "name": "keystoneSpeciesProtected",
     "currentDoc": "(none)",
@@ -78442,7 +78442,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1039,
+    "line": 1040,
     "type": "property",
     "name": "totalCostSpent",
     "currentDoc": "(none)",
@@ -78450,7 +78450,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1040,
+    "line": 1041,
     "type": "property",
     "name": "recoveryTimeGranted",
     "currentDoc": "(none)",
@@ -78458,7 +78458,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1041,
+    "line": 1042,
     "type": "property",
     "name": "crisisMitigationFraction",
     "currentDoc": "(none)",
@@ -78466,7 +78466,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1043,
+    "line": 1044,
     "type": "property",
     "name": "coastalProtection",
     "currentDoc": "(none)",
@@ -78474,7 +78474,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1044,
+    "line": 1045,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78482,7 +78482,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1045,
+    "line": 1046,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78490,7 +78490,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1046,
+    "line": 1047,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78498,7 +78498,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1047,
+    "line": 1048,
     "type": "property",
     "name": "hectaresProtected",
     "currentDoc": "(none)",
@@ -78506,7 +78506,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1048,
+    "line": 1049,
     "type": "property",
     "name": "totalCostSpent",
     "currentDoc": "(none)",
@@ -78514,7 +78514,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1049,
+    "line": 1050,
     "type": "property",
     "name": "oceanCrisisMitigation",
     "currentDoc": "(none)",
@@ -78522,7 +78522,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1051,
+    "line": 1052,
     "type": "property",
     "name": "crisisAnticipation",
     "currentDoc": "(none)",
@@ -78530,7 +78530,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1052,
+    "line": 1053,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78538,7 +78538,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1053,
+    "line": 1054,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78546,7 +78546,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1054,
+    "line": 1055,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78554,7 +78554,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1055,
+    "line": 1056,
     "type": "property",
     "name": "pandemicsDetected",
     "currentDoc": "(none)",
@@ -78562,7 +78562,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1056,
+    "line": 1057,
     "type": "property",
     "name": "climateEventsAnticipated",
     "currentDoc": "(none)",
@@ -78570,7 +78570,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1057,
+    "line": 1058,
     "type": "property",
     "name": "supplyChainDisruptionsPrevented",
     "currentDoc": "(none)",
@@ -78578,7 +78578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1058,
+    "line": 1059,
     "type": "property",
     "name": "leadTimeMonths",
     "currentDoc": "(none)",
@@ -78586,7 +78586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1059,
+    "line": 1060,
     "type": "property",
     "name": "crisisDeathsPrevented",
     "currentDoc": "(none)",
@@ -78594,7 +78594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1061,
+    "line": 1062,
     "type": "property",
     "name": "nuclearSecurity",
     "currentDoc": "(none)",
@@ -78602,7 +78602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1062,
+    "line": 1063,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78610,7 +78610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1063,
+    "line": 1064,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78618,7 +78618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1064,
+    "line": 1065,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78626,7 +78626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1065,
+    "line": 1066,
     "type": "property",
     "name": "nuclearStatesSecured",
     "currentDoc": "(none)",
@@ -78634,7 +78634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1066,
+    "line": 1067,
     "type": "property",
     "name": "intrusionAttempts",
     "currentDoc": "(none)",
@@ -78642,7 +78642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1067,
+    "line": 1068,
     "type": "property",
     "name": "intrusionsPrevented",
     "currentDoc": "(none)",
@@ -78650,7 +78650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1068,
+    "line": 1069,
     "type": "property",
     "name": "effectiveSecurityRate",
     "currentDoc": "(none)",
@@ -78658,7 +78658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1070,
+    "line": 1071,
     "type": "property",
     "name": "centaurSystems",
     "currentDoc": "(none)",
@@ -78666,7 +78666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1071,
+    "line": 1072,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78674,7 +78674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1072,
+    "line": 1073,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78682,7 +78682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1073,
+    "line": 1074,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78690,7 +78690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1074,
+    "line": 1075,
     "type": "property",
     "name": "workforceCoverage",
     "currentDoc": "(none)",
@@ -78698,7 +78698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1075,
+    "line": 1076,
     "type": "property",
     "name": "sectorsAdopted",
     "currentDoc": "(none)",
@@ -78706,7 +78706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1076,
+    "line": 1077,
     "type": "property",
     "name": "autonomyPreserved",
     "currentDoc": "(none)",
@@ -78714,7 +78714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1077,
+    "line": 1078,
     "type": "property",
     "name": "meaningCrisisReduction",
     "currentDoc": "(none)",
@@ -78722,7 +78722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1079,
+    "line": 1080,
     "type": "property",
     "name": "communityCohesion",
     "currentDoc": "(none)",
@@ -78730,7 +78730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1080,
+    "line": 1081,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -78738,7 +78738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1081,
+    "line": 1082,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -78746,7 +78746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1082,
+    "line": 1083,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -78754,7 +78754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1083,
+    "line": 1084,
     "type": "property",
     "name": "programsActive",
     "currentDoc": "(none)",
@@ -78762,7 +78762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1084,
+    "line": 1085,
     "type": "property",
     "name": "participationRate",
     "currentDoc": "(none)",
@@ -78770,7 +78770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1085,
+    "line": 1086,
     "type": "property",
     "name": "cohesionIncrease",
     "currentDoc": "(none)",
@@ -78778,7 +78778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1086,
+    "line": 1087,
     "type": "property",
     "name": "meaningCrisisReduction",
     "currentDoc": "(none)",
@@ -78786,7 +78786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1090,
+    "line": 1091,
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -78794,7 +78794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1091,
+    "line": 1092,
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -78802,7 +78802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1092,
+    "line": 1093,
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -78810,7 +78810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1093,
+    "line": 1094,
     "type": "property",
     "name": "controlCapability",
     "currentDoc": "(none)",
@@ -78818,7 +78818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1094,
+    "line": 1095,
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -78826,7 +78826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1140,
+    "line": 1141,
     "type": "property",
     "name": "aiAgents",
     "currentDoc": "(none)",
@@ -78834,7 +78834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1141,
+    "line": 1142,
     "type": "property",
     "name": "government",
     "currentDoc": "(none)",
@@ -78842,7 +78842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1145,
+    "line": 1146,
     "type": "property",
     "name": "society",
     "currentDoc": "(none)",
@@ -78850,7 +78850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1149,
+    "line": 1150,
     "type": "property",
     "name": "globalMetrics",
     "currentDoc": "(none)",
@@ -78858,7 +78858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 1153,
+    "line": 1154,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -89658,7 +89658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 230,
+    "line": 255,
     "type": "property",
     "name": "winter",
     "currentDoc": "(none)",
@@ -89666,7 +89666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 231,
+    "line": 256,
     "type": "property",
     "name": "countries",
     "currentDoc": "(none)",
@@ -89674,7 +89674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 232,
+    "line": 257,
     "type": "property",
     "name": "currentMonth",
     "currentDoc": "(none)",
@@ -89682,7 +89682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 247,
+    "line": 272,
     "type": "property",
     "name": "hitMonth",
     "currentDoc": "(none)",
@@ -89690,7 +89690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 250,
+    "line": 275,
     "type": "property",
     "name": "currentLevel",
     "currentDoc": "(none)",
@@ -89698,7 +89698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 289,
+    "line": 314,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89706,7 +89706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 290,
+    "line": 315,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89714,7 +89714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 291,
+    "line": 316,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89722,7 +89722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 292,
+    "line": 317,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89730,7 +89730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 296,
+    "line": 321,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -89738,7 +89738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 297,
+    "line": 322,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -89746,7 +89746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 298,
+    "line": 323,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -89754,7 +89754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 299,
+    "line": 324,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -89762,7 +89762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 300,
+    "line": 325,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -89770,7 +89770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 301,
+    "line": 326,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -89778,7 +89778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 303,
+    "line": 328,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -89786,7 +89786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 368,
+    "line": 393,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89794,7 +89794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 369,
+    "line": 394,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89802,7 +89802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 370,
+    "line": 395,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89810,7 +89810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 371,
+    "line": 396,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89818,7 +89818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 375,
+    "line": 400,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -89826,7 +89826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 376,
+    "line": 401,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -89834,7 +89834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 377,
+    "line": 402,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -89842,7 +89842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 378,
+    "line": 403,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -89850,7 +89850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 379,
+    "line": 404,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -89858,7 +89858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 380,
+    "line": 405,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -89866,7 +89866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 381,
+    "line": 406,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89874,7 +89874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/nuclearWinter.ts",
-    "line": 382,
+    "line": 407,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -91426,7 +91426,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 48,
+    "line": 95,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -91434,7 +91434,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 49,
+    "line": 96,
     "type": "property",
     "name": "displayName",
     "currentDoc": "(none)",
@@ -91442,7 +91442,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 50,
+    "line": 97,
     "type": "property",
     "name": "recoveryMonths",
     "currentDoc": "(none)",
@@ -91450,7 +91450,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 52,
+    "line": 99,
     "type": "property",
     "name": "boundaryThreshold",
     "currentDoc": "(none)",
@@ -91458,7 +91458,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 53,
+    "line": 100,
     "type": "property",
     "name": "preIndustrialValue",
     "currentDoc": "(none)",
@@ -91466,7 +91466,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 54,
+    "line": 101,
     "type": "property",
     "name": "highRiskThreshold",
     "currentDoc": "(none)",
@@ -91474,7 +91474,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 55,
+    "line": 102,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
@@ -91482,7 +91482,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 56,
+    "line": 103,
     "type": "property",
     "name": "trend",
     "currentDoc": "(none)",
@@ -91490,7 +91490,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 57,
+    "line": 104,
     "type": "property",
     "name": "breachYear",
     "currentDoc": "(none)",
@@ -91498,7 +91498,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 58,
+    "line": 105,
     "type": "property",
     "name": "monthsBreached",
     "currentDoc": "(none)",
@@ -91506,7 +91506,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 59,
+    "line": 106,
     "type": "property",
     "name": "isCoreBoundary",
     "currentDoc": "(none)",
@@ -91514,7 +91514,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 62,
+    "line": 109,
     "type": "property",
     "name": "timescaleYears",
     "currentDoc": "(none)",
@@ -91522,7 +91522,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 63,
+    "line": 110,
     "type": "property",
     "name": "extinctionContribution",
     "currentDoc": "(none)",
@@ -91530,7 +91530,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 64,
+    "line": 111,
     "type": "property",
     "name": "tippingPointRisk",
     "currentDoc": "(none)",
@@ -91538,7 +91538,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 78,
+    "line": 125,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -91546,7 +91546,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 79,
+    "line": 126,
     "type": "property",
     "name": "displayName",
     "currentDoc": "(none)",
@@ -91554,7 +91554,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 80,
+    "line": 127,
     "type": "property",
     "name": "recoveryMonths",
     "currentDoc": "(none)",
@@ -91562,7 +91562,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 82,
+    "line": 129,
     "type": "property",
     "name": "boundaryThreshold",
     "currentDoc": "(none)",
@@ -91570,7 +91570,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 83,
+    "line": 130,
     "type": "property",
     "name": "preIndustrialValue",
     "currentDoc": "(none)",
@@ -91578,7 +91578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 84,
+    "line": 131,
     "type": "property",
     "name": "highRiskThreshold",
     "currentDoc": "(none)",
@@ -91586,7 +91586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 86,
+    "line": 133,
     "type": "property",
     "name": "trend",
     "currentDoc": "(none)",
@@ -91594,7 +91594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 87,
+    "line": 134,
     "type": "property",
     "name": "breachYear",
     "currentDoc": "(none)",
@@ -91602,7 +91602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 88,
+    "line": 135,
     "type": "property",
     "name": "monthsBreached",
     "currentDoc": "(none)",
@@ -91610,7 +91610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 89,
+    "line": 136,
     "type": "property",
     "name": "isCoreBoundary",
     "currentDoc": "(none)",
@@ -91618,7 +91618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 92,
+    "line": 139,
     "type": "property",
     "name": "timescaleYears",
     "currentDoc": "(none)",
@@ -91626,7 +91626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 94,
+    "line": 141,
     "type": "property",
     "name": "tippingPointRisk",
     "currentDoc": "(none)",
@@ -91634,7 +91634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 99,
+    "line": 146,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -91642,7 +91642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 100,
+    "line": 147,
     "type": "property",
     "name": "displayName",
     "currentDoc": "(none)",
@@ -91650,7 +91650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 101,
+    "line": 148,
     "type": "property",
     "name": "recoveryMonths",
     "currentDoc": "(none)",
@@ -91658,7 +91658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 103,
+    "line": 150,
     "type": "property",
     "name": "boundaryThreshold",
     "currentDoc": "(none)",
@@ -91666,7 +91666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 104,
+    "line": 151,
     "type": "property",
     "name": "preIndustrialValue",
     "currentDoc": "(none)",
@@ -91674,7 +91674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 105,
+    "line": 152,
     "type": "property",
     "name": "highRiskThreshold",
     "currentDoc": "(none)",
@@ -91682,7 +91682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 106,
+    "line": 153,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
@@ -91690,7 +91690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 107,
+    "line": 154,
     "type": "property",
     "name": "trend",
     "currentDoc": "(none)",
@@ -91698,7 +91698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 108,
+    "line": 155,
     "type": "property",
     "name": "breachYear",
     "currentDoc": "(none)",
@@ -91706,7 +91706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 109,
+    "line": 156,
     "type": "property",
     "name": "monthsBreached",
     "currentDoc": "(none)",
@@ -91714,7 +91714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 110,
+    "line": 157,
     "type": "property",
     "name": "isCoreBoundary",
     "currentDoc": "(none)",
@@ -91722,7 +91722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 111,
+    "line": 158,
     "type": "property",
     "name": "interactionStrength",
     "currentDoc": "(none)",
@@ -91730,7 +91730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 113,
+    "line": 160,
     "type": "property",
     "name": "timescaleYears",
     "currentDoc": "(none)",
@@ -91738,7 +91738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 114,
+    "line": 161,
     "type": "property",
     "name": "extinctionContribution",
     "currentDoc": "(none)",
@@ -91746,7 +91746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 115,
+    "line": 162,
     "type": "property",
     "name": "tippingPointRisk",
     "currentDoc": "(none)",
@@ -91754,7 +91754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 120,
+    "line": 167,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -91762,7 +91762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 121,
+    "line": 168,
     "type": "property",
     "name": "displayName",
     "currentDoc": "(none)",
@@ -91770,7 +91770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 122,
+    "line": 169,
     "type": "property",
     "name": "recoveryMonths",
     "currentDoc": "(none)",
@@ -91778,7 +91778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 124,
+    "line": 171,
     "type": "property",
     "name": "boundaryThreshold",
     "currentDoc": "(none)",
@@ -91786,7 +91786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 125,
+    "line": 172,
     "type": "property",
     "name": "preIndustrialValue",
     "currentDoc": "(none)",
@@ -91794,7 +91794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 126,
+    "line": 173,
     "type": "property",
     "name": "highRiskThreshold",
     "currentDoc": "(none)",
@@ -91802,7 +91802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 127,
+    "line": 174,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
@@ -91810,7 +91810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 128,
+    "line": 175,
     "type": "property",
     "name": "trend",
     "currentDoc": "(none)",
@@ -91818,7 +91818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 129,
+    "line": 176,
     "type": "property",
     "name": "breachYear",
     "currentDoc": "(none)",
@@ -91826,7 +91826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 130,
+    "line": 177,
     "type": "property",
     "name": "monthsBreached",
     "currentDoc": "(none)",
@@ -91834,7 +91834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 131,
+    "line": 178,
     "type": "property",
     "name": "isCoreBoundary",
     "currentDoc": "(none)",
@@ -91842,7 +91842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 132,
+    "line": 179,
     "type": "property",
     "name": "interactionStrength",
     "currentDoc": "(none)",
@@ -91850,7 +91850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 134,
+    "line": 181,
     "type": "property",
     "name": "timescaleYears",
     "currentDoc": "(none)",
@@ -91858,7 +91858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 135,
+    "line": 182,
     "type": "property",
     "name": "extinctionContribution",
     "currentDoc": "(none)",
@@ -91866,7 +91866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 136,
+    "line": 183,
     "type": "property",
     "name": "tippingPointRisk",
     "currentDoc": "(none)",
@@ -91874,7 +91874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 141,
+    "line": 188,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -91882,7 +91882,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 142,
+    "line": 189,
     "type": "property",
     "name": "displayName",
     "currentDoc": "(none)",
@@ -91890,7 +91890,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 143,
+    "line": 190,
     "type": "property",
     "name": "recoveryMonths",
     "currentDoc": "(none)",
@@ -91898,7 +91898,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 145,
+    "line": 192,
     "type": "property",
     "name": "boundaryThreshold",
     "currentDoc": "(none)",
@@ -91906,7 +91906,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 146,
+    "line": 193,
     "type": "property",
     "name": "preIndustrialValue",
     "currentDoc": "(none)",
@@ -91914,7 +91914,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 147,
+    "line": 194,
     "type": "property",
     "name": "highRiskThreshold",
     "currentDoc": "(none)",
@@ -91922,7 +91922,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 148,
+    "line": 195,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
@@ -91930,7 +91930,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 149,
+    "line": 196,
     "type": "property",
     "name": "trend",
     "currentDoc": "(none)",
@@ -91938,7 +91938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 150,
+    "line": 197,
     "type": "property",
     "name": "breachYear",
     "currentDoc": "(none)",
@@ -91946,7 +91946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 151,
+    "line": 198,
     "type": "property",
     "name": "monthsBreached",
     "currentDoc": "(none)",
@@ -91954,7 +91954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 152,
+    "line": 199,
     "type": "property",
     "name": "isCoreBoundary",
     "currentDoc": "(none)",
@@ -91962,7 +91962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 153,
+    "line": 200,
     "type": "property",
     "name": "interactionStrength",
     "currentDoc": "(none)",
@@ -91970,7 +91970,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 155,
+    "line": 202,
     "type": "property",
     "name": "timescaleYears",
     "currentDoc": "(none)",
@@ -91978,7 +91978,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 156,
+    "line": 203,
     "type": "property",
     "name": "extinctionContribution",
     "currentDoc": "(none)",
@@ -91986,7 +91986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 157,
+    "line": 204,
     "type": "property",
     "name": "tippingPointRisk",
     "currentDoc": "(none)",
@@ -91994,7 +91994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 162,
+    "line": 209,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -92002,7 +92002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 163,
+    "line": 210,
     "type": "property",
     "name": "displayName",
     "currentDoc": "(none)",
@@ -92010,7 +92010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 164,
+    "line": 211,
     "type": "property",
     "name": "recoveryMonths",
     "currentDoc": "(none)",
@@ -92018,7 +92018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 166,
+    "line": 213,
     "type": "property",
     "name": "boundaryThreshold",
     "currentDoc": "(none)",
@@ -92026,7 +92026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 167,
+    "line": 214,
     "type": "property",
     "name": "preIndustrialValue",
     "currentDoc": "(none)",
@@ -92034,7 +92034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 168,
+    "line": 215,
     "type": "property",
     "name": "highRiskThreshold",
     "currentDoc": "(none)",
@@ -92042,7 +92042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 169,
+    "line": 216,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
@@ -92050,7 +92050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 170,
+    "line": 217,
     "type": "property",
     "name": "trend",
     "currentDoc": "(none)",
@@ -92058,7 +92058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 171,
+    "line": 218,
     "type": "property",
     "name": "breachYear",
     "currentDoc": "(none)",
@@ -92066,7 +92066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 172,
+    "line": 219,
     "type": "property",
     "name": "monthsBreached",
     "currentDoc": "(none)",
@@ -92074,7 +92074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 173,
+    "line": 220,
     "type": "property",
     "name": "isCoreBoundary",
     "currentDoc": "(none)",
@@ -92082,7 +92082,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 174,
+    "line": 221,
     "type": "property",
     "name": "interactionStrength",
     "currentDoc": "(none)",
@@ -92090,7 +92090,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 176,
+    "line": 223,
     "type": "property",
     "name": "timescaleYears",
     "currentDoc": "(none)",
@@ -92098,7 +92098,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 177,
+    "line": 224,
     "type": "property",
     "name": "extinctionContribution",
     "currentDoc": "(none)",
@@ -92106,7 +92106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 178,
+    "line": 225,
     "type": "property",
     "name": "tippingPointRisk",
     "currentDoc": "(none)",
@@ -92114,7 +92114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 183,
+    "line": 230,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -92122,7 +92122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 184,
+    "line": 231,
     "type": "property",
     "name": "displayName",
     "currentDoc": "(none)",
@@ -92130,7 +92130,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 185,
+    "line": 232,
     "type": "property",
     "name": "recoveryMonths",
     "currentDoc": "(none)",
@@ -92138,7 +92138,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 187,
+    "line": 234,
     "type": "property",
     "name": "boundaryThreshold",
     "currentDoc": "(none)",
@@ -92146,7 +92146,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 188,
+    "line": 235,
     "type": "property",
     "name": "preIndustrialValue",
     "currentDoc": "(none)",
@@ -92154,7 +92154,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 189,
+    "line": 236,
     "type": "property",
     "name": "highRiskThreshold",
     "currentDoc": "(none)",
@@ -92162,7 +92162,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 190,
+    "line": 237,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
@@ -92170,7 +92170,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 191,
+    "line": 238,
     "type": "property",
     "name": "trend",
     "currentDoc": "(none)",
@@ -92178,7 +92178,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 192,
+    "line": 239,
     "type": "property",
     "name": "breachYear",
     "currentDoc": "(none)",
@@ -92186,7 +92186,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 194,
+    "line": 241,
     "type": "property",
     "name": "isCoreBoundary",
     "currentDoc": "(none)",
@@ -92194,7 +92194,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 195,
+    "line": 242,
     "type": "property",
     "name": "interactionStrength",
     "currentDoc": "(none)",
@@ -92202,7 +92202,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 197,
+    "line": 244,
     "type": "property",
     "name": "timescaleYears",
     "currentDoc": "(none)",
@@ -92210,7 +92210,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 198,
+    "line": 245,
     "type": "property",
     "name": "extinctionContribution",
     "currentDoc": "(none)",
@@ -92218,7 +92218,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 199,
+    "line": 246,
     "type": "property",
     "name": "tippingPointRisk",
     "currentDoc": "(none)",
@@ -92226,7 +92226,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 206,
+    "line": 253,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -92234,7 +92234,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 207,
+    "line": 254,
     "type": "property",
     "name": "displayName",
     "currentDoc": "(none)",
@@ -92242,7 +92242,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 208,
+    "line": 255,
     "type": "property",
     "name": "recoveryMonths",
     "currentDoc": "(none)",
@@ -92250,7 +92250,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 210,
+    "line": 257,
     "type": "property",
     "name": "boundaryThreshold",
     "currentDoc": "(none)",
@@ -92258,7 +92258,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 211,
+    "line": 258,
     "type": "property",
     "name": "preIndustrialValue",
     "currentDoc": "(none)",
@@ -92266,7 +92266,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 212,
+    "line": 259,
     "type": "property",
     "name": "highRiskThreshold",
     "currentDoc": "(none)",
@@ -92274,7 +92274,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 213,
+    "line": 260,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
@@ -92282,7 +92282,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 215,
+    "line": 262,
     "type": "property",
     "name": "breachYear",
     "currentDoc": "(none)",
@@ -92290,7 +92290,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 216,
+    "line": 263,
     "type": "property",
     "name": "monthsBreached",
     "currentDoc": "(none)",
@@ -92298,7 +92298,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 217,
+    "line": 264,
     "type": "property",
     "name": "isCoreBoundary",
     "currentDoc": "(none)",
@@ -92306,7 +92306,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 218,
+    "line": 265,
     "type": "property",
     "name": "interactionStrength",
     "currentDoc": "(none)",
@@ -92314,7 +92314,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 219,
+    "line": 266,
     "type": "property",
     "name": "reversible",
     "currentDoc": "(none)",
@@ -92322,7 +92322,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 220,
+    "line": 267,
     "type": "property",
     "name": "timescaleYears",
     "currentDoc": "(none)",
@@ -92330,7 +92330,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 221,
+    "line": 268,
     "type": "property",
     "name": "extinctionContribution",
     "currentDoc": "(none)",
@@ -92338,7 +92338,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 222,
+    "line": 269,
     "type": "property",
     "name": "tippingPointRisk",
     "currentDoc": "(none)",
@@ -92346,7 +92346,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 227,
+    "line": 274,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -92354,7 +92354,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 228,
+    "line": 275,
     "type": "property",
     "name": "displayName",
     "currentDoc": "(none)",
@@ -92362,7 +92362,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 229,
+    "line": 276,
     "type": "property",
     "name": "recoveryMonths",
     "currentDoc": "(none)",
@@ -92370,7 +92370,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 231,
+    "line": 278,
     "type": "property",
     "name": "boundaryThreshold",
     "currentDoc": "(none)",
@@ -92378,7 +92378,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 232,
+    "line": 279,
     "type": "property",
     "name": "preIndustrialValue",
     "currentDoc": "(none)",
@@ -92386,7 +92386,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 233,
+    "line": 280,
     "type": "property",
     "name": "highRiskThreshold",
     "currentDoc": "(none)",
@@ -92394,7 +92394,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 234,
+    "line": 281,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
@@ -92402,7 +92402,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 235,
+    "line": 282,
     "type": "property",
     "name": "trend",
     "currentDoc": "(none)",
@@ -92410,7 +92410,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 236,
+    "line": 283,
     "type": "property",
     "name": "breachYear",
     "currentDoc": "(none)",
@@ -92418,7 +92418,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 237,
+    "line": 284,
     "type": "property",
     "name": "monthsBreached",
     "currentDoc": "(none)",
@@ -92426,7 +92426,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 238,
+    "line": 285,
     "type": "property",
     "name": "isCoreBoundary",
     "currentDoc": "(none)",
@@ -92434,7 +92434,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 239,
+    "line": 286,
     "type": "property",
     "name": "interactionStrength",
     "currentDoc": "(none)",
@@ -92442,7 +92442,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 240,
+    "line": 287,
     "type": "property",
     "name": "reversible",
     "currentDoc": "(none)",
@@ -92450,7 +92450,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 241,
+    "line": 288,
     "type": "property",
     "name": "timescaleYears",
     "currentDoc": "(none)",
@@ -92458,7 +92458,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 242,
+    "line": 289,
     "type": "property",
     "name": "extinctionContribution",
     "currentDoc": "(none)",
@@ -92466,7 +92466,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 243,
+    "line": 290,
     "type": "property",
     "name": "tippingPointRisk",
     "currentDoc": "(none)",
@@ -92474,7 +92474,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 273,
+    "line": 320,
     "type": "property",
     "name": "tippingPointRisk",
     "currentDoc": "(none)",
@@ -92482,7 +92482,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 276,
+    "line": 323,
     "type": "property",
     "name": "cascadeActive",
     "currentDoc": "(none)",
@@ -92490,7 +92490,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 277,
+    "line": 324,
     "type": "property",
     "name": "cascadeStartMonth",
     "currentDoc": "(none)",
@@ -92498,7 +92498,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 278,
+    "line": 325,
     "type": "property",
     "name": "cascadeSeverity",
     "currentDoc": "(none)",
@@ -92506,7 +92506,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 279,
+    "line": 326,
     "type": "property",
     "name": "boundariesBreachedHistory",
     "currentDoc": "(none)",
@@ -92514,7 +92514,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 280,
+    "line": 327,
     "type": "property",
     "name": "tippingPointRiskHistory",
     "currentDoc": "(none)",
@@ -92522,7 +92522,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 281,
+    "line": 328,
     "type": "property",
     "name": "significantEvents",
     "currentDoc": "(none)",
@@ -92530,15 +92530,15 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 283,
+    "line": 330,
     "type": "property",
     "name": "landUse",
     "currentDoc": "(none)",
-    "context": "landUse: initializeLandUseSystem(),"
+    "context": "landUse: initializeLandUseSystem(rng),"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 285,
+    "line": 332,
     "type": "property",
     "name": "ozoneRecovery",
     "currentDoc": "(none)",
@@ -92546,7 +92546,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 287,
+    "line": 334,
     "type": "property",
     "name": "earlyWarning",
     "currentDoc": "(none)",
@@ -92554,7 +92554,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 291,
+    "line": 338,
     "type": "property",
     "name": "invasiveSpeciesImpact",
     "currentDoc": "(none)",
@@ -92562,7 +92562,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 338,
+    "line": 395,
     "type": "property",
     "name": "ecosystemsLost",
     "currentDoc": "(none)",
@@ -92570,7 +92570,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 354,
+    "line": 411,
     "type": "property",
     "name": "ecosystemsLost",
     "currentDoc": "(none)",
@@ -92578,7 +92578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 370,
+    "line": 427,
     "type": "property",
     "name": "ecosystemsLost",
     "currentDoc": "(none)",
@@ -92586,7 +92586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 386,
+    "line": 443,
     "type": "property",
     "name": "ecosystemsLost",
     "currentDoc": "(none)",
@@ -92594,7 +92594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 409,
+    "line": 490,
     "type": "property",
     "name": "regions",
     "currentDoc": "(none)",
@@ -92602,7 +92602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 415,
+    "line": 496,
     "type": "property",
     "name": "globalHabitatCoverPercent",
     "currentDoc": "(none)",
@@ -92610,7 +92610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 418,
+    "line": 499,
     "type": "property",
     "name": "globalEcosystemsLost",
     "currentDoc": "(none)",
@@ -92618,7 +92618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 430,
+    "line": 511,
     "type": "property",
     "name": "stratosphericO3DobsonUnits",
     "currentDoc": "(none)",
@@ -92626,7 +92626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 431,
+    "line": 512,
     "type": "property",
     "name": "ozoneHoleSize",
     "currentDoc": "(none)",
@@ -92634,7 +92634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 432,
+    "line": 513,
     "type": "property",
     "name": "recoveryProgress",
     "currentDoc": "(none)",
@@ -92642,7 +92642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 433,
+    "line": 514,
     "type": "property",
     "name": "cfcPhaseOutPercent",
     "currentDoc": "(none)",
@@ -92650,7 +92650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 434,
+    "line": 515,
     "type": "property",
     "name": "halonPhaseOutPercent",
     "currentDoc": "(none)",
@@ -92658,7 +92658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 435,
+    "line": 516,
     "type": "property",
     "name": "complianceRate",
     "currentDoc": "(none)",
@@ -92666,7 +92666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 436,
+    "line": 517,
     "type": "property",
     "name": "policyEffectiveness",
     "currentDoc": "(none)",
@@ -92674,7 +92674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 437,
+    "line": 518,
     "type": "property",
     "name": "targetRecoveryYear",
     "currentDoc": "(none)",
@@ -92682,7 +92682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 438,
+    "line": 519,
     "type": "property",
     "name": "yearsToRecovery",
     "currentDoc": "(none)",
@@ -92690,7 +92690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 439,
+    "line": 520,
     "type": "property",
     "name": "isRecovering",
     "currentDoc": "(none)",
@@ -92698,7 +92698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 440,
+    "line": 521,
     "type": "property",
     "name": "rocketLaunchImpact",
     "currentDoc": "(none)",
@@ -92706,7 +92706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 441,
+    "line": 522,
     "type": "property",
     "name": "solidRocketMotorChlorine",
     "currentDoc": "(none)",
@@ -92714,7 +92714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 442,
+    "line": 523,
     "type": "property",
     "name": "blackCarbonImpact",
     "currentDoc": "(none)",
@@ -92722,7 +92722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 443,
+    "line": 524,
     "type": "property",
     "name": "demonstratesInternationalCooperation",
     "currentDoc": "(none)",
@@ -92730,7 +92730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 444,
+    "line": 525,
     "type": "property",
     "name": "reversibilityExample",
     "currentDoc": "(none)",
@@ -92738,7 +92738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 464,
+    "line": 545,
     "type": "property",
     "name": "boundariesBreached",
     "currentDoc": "(none)",
@@ -92746,7 +92746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 465,
+    "line": 546,
     "type": "property",
     "name": "boundariesWorsening",
     "currentDoc": "(none)",
@@ -92754,7 +92754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 466,
+    "line": 547,
     "type": "property",
     "name": "coreBoundariesBreached",
     "currentDoc": "(none)",
@@ -92762,7 +92762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 467,
+    "line": 548,
     "type": "property",
     "name": "boundaries",
     "currentDoc": "(none)",
@@ -92770,7 +92770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 513,
+    "line": 594,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -92778,7 +92778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 514,
+    "line": 595,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -92786,7 +92786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 515,
+    "line": 596,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -92794,7 +92794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 519,
+    "line": 600,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -92802,7 +92802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 520,
+    "line": 601,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -92810,7 +92810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 521,
+    "line": 602,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -92818,7 +92818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 525,
+    "line": 606,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -92826,7 +92826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 526,
+    "line": 607,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -92834,7 +92834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 527,
+    "line": 608,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -92842,7 +92842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 991,
+    "line": 1072,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -92850,7 +92850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 992,
+    "line": 1073,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -92858,7 +92858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 993,
+    "line": 1074,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -92866,7 +92866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1024,
+    "line": 1105,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -92874,7 +92874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1025,
+    "line": 1106,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -92882,7 +92882,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1026,
+    "line": 1107,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -92890,7 +92890,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1064,
+    "line": 1145,
     "type": "property",
     "name": "tropical",
     "currentDoc": "(none)",
@@ -92898,7 +92898,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1065,
+    "line": 1146,
     "type": "property",
     "name": "temperate",
     "currentDoc": "(none)",
@@ -92906,7 +92906,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1066,
+    "line": 1147,
     "type": "property",
     "name": "grasslands",
     "currentDoc": "(none)",
@@ -92914,7 +92914,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1067,
+    "line": 1148,
     "type": "property",
     "name": "borealArctic",
     "currentDoc": "(none)",
@@ -92922,7 +92922,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1250,
+    "line": 1331,
     "type": "property",
     "name": "TOTAL_SPECIES_2024",
     "currentDoc": "(none)",
@@ -92930,7 +92930,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1251,
+    "line": 1332,
     "type": "property",
     "name": "MIGRATORY_PROPORTION",
     "currentDoc": "(none)",
@@ -92938,7 +92938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1252,
+    "line": 1333,
     "type": "property",
     "name": "NON_MIGRATORY_PROPORTION",
     "currentDoc": "(none)",
@@ -92946,7 +92946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1253,
+    "line": 1334,
     "type": "property",
     "name": "KEYSTONE_PROPORTION",
     "currentDoc": "(none)",
@@ -92954,7 +92954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1254,
+    "line": 1335,
     "type": "property",
     "name": "CURRENT_RATE_2025",
     "currentDoc": "(none)",
@@ -92962,7 +92962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1255,
+    "line": 1336,
     "type": "property",
     "name": "BIRD_DISPERSAL",
     "currentDoc": "(none)",
@@ -92970,7 +92970,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1256,
+    "line": 1337,
     "type": "property",
     "name": "TREE_DISPERSAL",
     "currentDoc": "(none)",
@@ -92978,7 +92978,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1257,
+    "line": 1338,
     "type": "property",
     "name": "MAMMAL_DISPERSAL",
     "currentDoc": "(none)",
@@ -92986,7 +92986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1258,
+    "line": 1339,
     "type": "property",
     "name": "KEYSTONE_CASCADE",
     "currentDoc": "(none)",
@@ -92994,7 +92994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1259,
+    "line": 1340,
     "type": "property",
     "name": "AVG_CLIMATE_VELOCITY_TROPICS",
     "currentDoc": "(none)",
@@ -93002,7 +93002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1260,
+    "line": 1341,
     "type": "property",
     "name": "AVG_CLIMATE_VELOCITY_TEMPERATE",
     "currentDoc": "(none)",
@@ -93010,7 +93010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1261,
+    "line": 1342,
     "type": "property",
     "name": "AVG_CLIMATE_VELOCITY_ARCTIC",
     "currentDoc": "(none)",
@@ -93018,7 +93018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1262,
+    "line": 1343,
     "type": "property",
     "name": "SAFE_EXTINCTION_RATE",
     "currentDoc": "(none)",
@@ -93026,7 +93026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1263,
+    "line": 1344,
     "type": "property",
     "name": "BACKGROUND_RATE",
     "currentDoc": "(none)",
@@ -93034,7 +93034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1264,
+    "line": 1345,
     "type": "property",
     "name": "FRAGMENTATION_BARRIER_MAX",
     "currentDoc": "(none)",
@@ -93042,7 +93042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1271,
+    "line": 1352,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -93050,7 +93050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1272,
+    "line": 1353,
     "type": "property",
     "name": "count",
     "currentDoc": "(none)",
@@ -93058,7 +93058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1274,
+    "line": 1355,
     "type": "property",
     "name": "isMigratory",
     "currentDoc": "(none)",
@@ -93066,7 +93066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1276,
+    "line": 1357,
     "type": "property",
     "name": "isKeystone",
     "currentDoc": "(none)",
@@ -93074,7 +93074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1277,
+    "line": 1358,
     "type": "property",
     "name": "keystoneMultiplier",
     "currentDoc": "(none)",
@@ -93082,7 +93082,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1283,
+    "line": 1364,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -93090,7 +93090,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1284,
+    "line": 1365,
     "type": "property",
     "name": "count",
     "currentDoc": "(none)",
@@ -93098,7 +93098,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1286,
+    "line": 1367,
     "type": "property",
     "name": "isMigratory",
     "currentDoc": "(none)",
@@ -93106,7 +93106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1288,
+    "line": 1369,
     "type": "property",
     "name": "isKeystone",
     "currentDoc": "(none)",
@@ -93114,7 +93114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1289,
+    "line": 1370,
     "type": "property",
     "name": "keystoneMultiplier",
     "currentDoc": "(none)",
@@ -93122,7 +93122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1295,
+    "line": 1376,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -93130,7 +93130,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1296,
+    "line": 1377,
     "type": "property",
     "name": "count",
     "currentDoc": "(none)",
@@ -93138,7 +93138,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1300,
+    "line": 1381,
     "type": "property",
     "name": "isKeystone",
     "currentDoc": "(none)",
@@ -93146,7 +93146,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1329,
+    "line": 1410,
     "type": "property",
     "name": "totalSpeciesBaseline",
     "currentDoc": "(none)",
@@ -93154,7 +93154,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1332,
+    "line": 1413,
     "type": "property",
     "name": "backgroundExtinctionRate",
     "currentDoc": "(none)",
@@ -93162,7 +93162,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1333,
+    "line": 1414,
     "type": "property",
     "name": "currentExtinctionRate",
     "currentDoc": "(none)",
@@ -93170,7 +93170,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1360,
+    "line": 1441,
     "type": "property",
     "name": "species",
     "currentDoc": "(none)",
@@ -93178,7 +93178,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1361,
+    "line": 1442,
     "type": "property",
     "name": "climateVelocity",
     "currentDoc": "(none)",
@@ -93186,7 +93186,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1399,
+    "line": 1480,
     "type": "property",
     "name": "species",
     "currentDoc": "(none)",
@@ -93194,7 +93194,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1400,
+    "line": 1481,
     "type": "property",
     "name": "climateVelocity",
     "currentDoc": "(none)",
@@ -93202,7 +93202,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1401,
+    "line": 1482,
     "type": "property",
     "name": "habitatFragmentation",
     "currentDoc": "(none)",
@@ -93210,7 +93210,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1408,
+    "line": 1489,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -93218,7 +93218,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1409,
+    "line": 1490,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -93226,7 +93226,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1413,
+    "line": 1494,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -93234,7 +93234,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1414,
+    "line": 1495,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -93242,7 +93242,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1439,
+    "line": 1520,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -93250,7 +93250,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1440,
+    "line": 1521,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -93258,7 +93258,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1441,
+    "line": 1522,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -93266,7 +93266,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1454,
+    "line": 1535,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -93274,7 +93274,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1455,
+    "line": 1536,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -93282,7 +93282,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1537,
+    "line": 1618,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -93290,7 +93290,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1540,
+    "line": 1621,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -93298,7 +93298,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1541,
+    "line": 1622,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -93306,7 +93306,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1542,
+    "line": 1623,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -93314,7 +93314,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/planetaryBoundaries.ts",
-    "line": 1543,
+    "line": 1624,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -96914,7 +96914,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 351,
+    "line": 353,
     "type": "property",
     "name": "waterSecurity",
     "currentDoc": "(none)",
@@ -96922,7 +96922,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 352,
+    "line": 354,
     "type": "property",
     "name": "thermalHabitability",
     "currentDoc": "(none)",
@@ -96930,7 +96930,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 353,
+    "line": 355,
     "type": "property",
     "name": "shelterSecurity",
     "currentDoc": "(none)",
@@ -96938,7 +96938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 439,
+    "line": 441,
     "type": "property",
     "name": "survivalFundamentals",
     "currentDoc": "(none)",
@@ -96946,7 +96946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 447,
+    "line": 449,
     "type": "property",
     "name": "materialAbundance",
     "currentDoc": "(none)",
@@ -96954,7 +96954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 448,
+    "line": 450,
     "type": "property",
     "name": "energyAvailability",
     "currentDoc": "(none)",
@@ -96962,7 +96962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 449,
+    "line": 451,
     "type": "property",
     "name": "physicalSafety",
     "currentDoc": "(none)",
@@ -96970,7 +96970,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 452,
+    "line": 454,
     "type": "property",
     "name": "mentalHealth",
     "currentDoc": "(none)",
@@ -96978,7 +96978,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 453,
+    "line": 455,
     "type": "property",
     "name": "meaningAndPurpose",
     "currentDoc": "(none)",
@@ -96986,7 +96986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 454,
+    "line": 456,
     "type": "property",
     "name": "socialConnection",
     "currentDoc": "(none)",
@@ -96994,7 +96994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 455,
+    "line": 457,
     "type": "property",
     "name": "autonomy",
     "currentDoc": "(none)",
@@ -97002,7 +97002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 458,
+    "line": 460,
     "type": "property",
     "name": "politicalFreedom",
     "currentDoc": "(none)",
@@ -97010,7 +97010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 460,
+    "line": 462,
     "type": "property",
     "name": "communityStrength",
     "currentDoc": "(none)",
@@ -97018,7 +97018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 461,
+    "line": 463,
     "type": "property",
     "name": "culturalVitality",
     "currentDoc": "(none)",
@@ -97026,7 +97026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 464,
+    "line": 466,
     "type": "property",
     "name": "healthcareQuality",
     "currentDoc": "(none)",
@@ -97034,7 +97034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 466,
+    "line": 468,
     "type": "property",
     "name": "diseasesBurden",
     "currentDoc": "(none)",
@@ -97042,7 +97042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 469,
+    "line": 471,
     "type": "property",
     "name": "health",
     "currentDoc": "(none)",
@@ -97050,7 +97050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 472,
+    "line": 474,
     "type": "property",
     "name": "ecosystemHealth",
     "currentDoc": "(none)",
@@ -97058,7 +97058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 473,
+    "line": 475,
     "type": "property",
     "name": "climateStability",
     "currentDoc": "(none)",
@@ -97066,7 +97066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 474,
+    "line": 476,
     "type": "property",
     "name": "pollutionLevel",
     "currentDoc": "(none)",
@@ -97074,7 +97074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/core.ts",
-    "line": 478,
+    "line": 480,
     "type": "property",
     "name": "distribution",
     "currentDoc": "(none)",
@@ -97922,7 +97922,15 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 176,
+    "line": 229,
+    "type": "property",
+    "name": "baselineMaterialAbundance",
+    "currentDoc": "(none)",
+    "context": "baselineMaterialAbundance: number,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
+    "line": 230,
     "type": "property",
     "name": "economicStage",
     "currentDoc": "(none)",
@@ -97930,7 +97938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 177,
+    "line": 231,
     "type": "property",
     "name": "hasGenerousUBI",
     "currentDoc": "(none)",
@@ -97938,7 +97946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 197,
+    "line": 254,
     "type": "property",
     "name": "economicStage",
     "currentDoc": "(none)",
@@ -97946,7 +97954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 198,
+    "line": 255,
     "type": "property",
     "name": "hasGenerousUBI",
     "currentDoc": "(none)",
@@ -97954,7 +97962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 217,
+    "line": 274,
     "type": "property",
     "name": "economicStage",
     "currentDoc": "(none)",
@@ -97962,7 +97970,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 218,
+    "line": 275,
     "type": "property",
     "name": "hasGenerousUBI",
     "currentDoc": "(none)",
@@ -97970,7 +97978,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 236,
+    "line": 293,
     "type": "property",
     "name": "economicStage",
     "currentDoc": "(none)",
@@ -97978,7 +97986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 237,
+    "line": 294,
     "type": "property",
     "name": "totalAICapability",
     "currentDoc": "(none)",
@@ -97986,7 +97994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 238,
+    "line": 295,
     "type": "property",
     "name": "populationFraction",
     "currentDoc": "(none)",
@@ -97994,7 +98002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 240,
+    "line": 297,
     "type": "property",
     "name": "materialBonus",
     "currentDoc": "(none)",
@@ -98002,7 +98010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 241,
+    "line": 298,
     "type": "property",
     "name": "energyBonus",
     "currentDoc": "(none)",
@@ -98010,7 +98018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 242,
+    "line": 299,
     "type": "property",
     "name": "infrastructureScaling",
     "currentDoc": "(none)",
@@ -98018,7 +98026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 246,
+    "line": 303,
     "type": "property",
     "name": "materialBonus",
     "currentDoc": "(none)",
@@ -98026,7 +98034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 247,
+    "line": 304,
     "type": "property",
     "name": "energyBonus",
     "currentDoc": "(none)",
@@ -98034,7 +98042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/qualityOfLife/penalties.ts",
-    "line": 248,
+    "line": 305,
     "type": "property",
     "name": "infrastructureScaling",
     "currentDoc": "(none)",

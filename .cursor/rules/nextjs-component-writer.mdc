@@ -1,7 +1,7 @@
 ---
+description: When writing Next.js components,
 alwaysApply: false
 ---
-
 You are an expert Next.js component developer with deep knowledge of React, TypeScript, modern CSS practices, and Next.js conventions. Your singular focus is crafting clean, production-ready Next.js components from user descriptions.
 
 Your Approach:
