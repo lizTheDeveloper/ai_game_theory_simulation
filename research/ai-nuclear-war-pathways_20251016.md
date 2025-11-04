@@ -28,8 +28,8 @@ AI manipulation → nuclear war is a **weak-to-moderate indirect causal pathway*
 **Mechanism**: AI-generated deepfakes and disinformation create nationalist fervor and public pressure during crises, constraining diplomatic options and pushing leaders toward escalation.
 
 **Evidence**:
-- **May 2025 India-Pakistan Crisis**: AI-generated images and deepfake videos showing fabricated damage from military strikes flooded social media, significantly increasing nuclear escalation risk (Nature, 2025)
-- **Research Finding**: Quote misattributed - "Runaway sophistry whips up fear and animosity between populations, which then supercharge nationalism, which may, in turn, drive political and military decisions down the road" (NOTE: This quote NOT FOUND in Nature Editorial 2025 - needs source verification or removal)
+- **May 2025 India-Pakistan Crisis**: AI-generated images and deepfake videos showing fabricated damage from military strikes flooded social media, significantly increasing nuclear escalation risk (Nature, 2025; Modern Diplomacy, 2025)
+- **Research Finding**: "Runaway sophistry whips up fear and animosity between populations, which then supercharge nationalism, which may, in turn, drive political and military decisions down the road" (TyN Magazine/The Bulletin, 2025 - "When Grok is wrong: The risks of AI chatbots spreading misinformation in a crisis")
 - **UN Warning**: "Deep fakes" could trigger diplomatic crises, incite unrest, and undermine societal foundations (UN Security Council, 2024)
 
 **Quantitative Data**:
@@ -1799,9 +1799,10 @@ AI manipulation → nuclear war is NOT a strong, direct causal chain. Instead, i
     - **Key Findings**: Deepfake detection challenges; nuclear early warning implications
     - **Cited in sections**: 2.3, 5.3.3
 
-35. **European Leadership Network** (2024). "The fast and the deadly: When Artificial Intelligence meets Weapons of Mass Destruction." https://europeanleadershipnetwork.org/commentary/the-fast-and-the-deadly-when-artificial-intelligence-meets-weapons-of-mass-destruction/
-    - **Key Findings**: AI-WMD intersection; accelerated decision cycles; escalation risks
-    - **Cited in sections**: 1.3
+35. **European Leadership Network** (2024). "The fast and the deadly: When Artificial Intelligence meets Weapons of Mass Destruction." https://europeanleadershipnetwork.org/commentary/the-fast-and-the-deadly-when-artificial-intelligence-meets-weapons-of-mass-destruction/ (Published June 27, 2024)
+   - **Institution**: European security research organization
+   - **Key Findings**: AI-WMD intersection; accelerated decision cycles; escalation risks
+   - **Cited in sections**: 1.3
 
 36. **Chatham House** (2025). "What happens if AI goes nuclear?" June 2025. https://www.chathamhouse.org/publications/the-world-today/2025-06/what-happens-if-ai-goes-nuclear
     - **Institution**: UK Royal Institute of International Affairs
@@ -1852,6 +1853,11 @@ AI manipulation → nuclear war is NOT a strong, direct causal chain. Instead, i
      - IJCAI 2024: "Are Watermarks Bugs for Deepfake Detectors?" (accuracy ranges 70-99%).
    - **Cited in sections**: 2.3, 5.3.3
    - **Note**: Multiple papers support the 70-95% range and declining effectiveness claim.
+
+45. **TyN Magazine / The Bulletin of the Atomic Scientists** (2025). "When Grok is wrong: The risks of AI chatbots spreading misinformation in a crisis." https://tynmagazine.com/when-grok-is-wrong-the-risks-of-ai-chatbots-spreading-misinformation-in-a-crisis/ (Original source: The Bulletin of the Atomic Scientists)
+   - **Institution**: TyN Magazine (republished from The Bulletin of the Atomic Scientists)
+   - **Key Findings**: AI chatbots can spread nuclear misinformation; "runaway sophistry whips up fear and animosity between populations, which then supercharge nationalism, which may, in turn, drive political and military decisions down the road"
+   - **Cited in sections**: 1.1
 
 ---
 

@@ -76,7 +76,8 @@ const NUCLEAR_WAR_PRIOR = 0.00001;  // 0.001% per month
  * Calculate AI information warfare multiplier
  *
  * Research: Stanford HAI (2024) - ALL 5 LLMs showed escalatory behavior in wargames
- * Nature (2025) - India-Pakistan deepfake crisis nearly triggered escalation
+ * Modern Diplomacy (2025) - India-Pakistan deepfake crisis nearly triggered escalation (May 2025)
+ * TyN Magazine/The Bulletin (2025) - "runaway sophistry whips up fear and animosity between populations"
  *
  * @returns 1.0 (no AI threat) to 5.0 (extreme AI manipulation)
  */

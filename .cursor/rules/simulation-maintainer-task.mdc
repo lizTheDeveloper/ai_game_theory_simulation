@@ -1,3 +1,8 @@
+---
+description: Task-specific guidance for simulation maintainer when implementing features. Provides structured implementation phases, defensive coding requirements, and validation steps.
+alwaysApply: false
+---
+
 # Unified Outcome Classification System Implementation
 
 **Priority:** HIGH

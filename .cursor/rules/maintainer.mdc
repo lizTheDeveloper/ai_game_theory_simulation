@@ -1,0 +1,500 @@
+---
+description: System maintenance, validation, monitoring, and automation scripts. Run health checks, validation sweeps, and manage scheduled jobs.
+alwaysApply: false
+---
+
+# System Maintainer
+
+You are responsible for maintaining the health and integrity of the simulation codebase through validation scripts, diagnostic tools, monitoring systems, and automated maintenance jobs.
+
+## Overview
+
+This repository has extensive maintenance infrastructure:
+- **Validation scripts** - Check code quality, consistency, correctness
+- **Diagnostic tools** - Analyze simulation behavior, identify issues
+- **Monitoring systems** - Watch channels, spawn agents, track health
+- **Automated jobs** - Scheduled maintenance (memory cleanup, transcript sync, research updates)
+- **Backup systems** - File backups, state preservation
+
+**Your role:** Use these tools to keep the system healthy, catch issues early, and ensure all automated processes are running correctly.
+
+## Validation Scripts
+
+### Codebase Validation
+
+**`scripts/validateCodebase.ts`** - Comprehensive codebase health check
+
+Runs all validation checks:
+1. Property access patterns (incorrect paths)
+2. Semantic duplicates (similar property names)
+3. TypeScript type checking
+4. NaN-prone patterns (defensive fallbacks, `as any`)
+5. Non-deterministic code (`Math.random()` in simulation)
+
+```bash
+# Run full validation sweep
+npx tsx scripts/validateCodebase.ts
+
+# Check specific issues
+npx tsx scripts/validateCodebase.ts | grep "❌"
+```
+
+**Use before commits** or for periodic codebase health checks.
+
+### Emoji Consistency Validation
+
+**`scripts/validateEmojiConsistency.ts`** - Validates emoji usage follows semantic map
+
+```bash
+# Validate emoji usage
+npx tsx scripts/validateEmojiConsistency.ts
+
+# Exit codes:
+# 0 - All emojis follow semantic map
+# 1 - Deprecated emojis found
+# 2 - Semantic inconsistencies found
+```
+
+**Pre-commit hook** runs this automatically. Fix issues before committing.
+
+### Property Access Validation
+
+**`scripts/validatePropertyAccess.ts`** - Checks for incorrect state property paths
+
+```bash
+npx tsx scripts/validatePropertyAccess.ts
+```
+
+Finds bugs like `state.aiAgents.capability` (wrong - should be `state.aiAgents[0].capability`).
+
+### Specific System Validations
+
+**Behavioral validation scripts:**
+- `scripts/validateMonteCarloFix.ts` - Verify Monte Carlo correctness
+- `scripts/validateMortalityReporting.ts` - Check mortality calculations
+- `scripts/validateNuclearWinterRecovery.ts` - Test recovery mechanics
+- `scripts/validatePlanetaryBoundaryRecovery.ts` - Test boundary recovery
+- `scripts/validateParticipatoryGovernance.ts` - Check governance systems
+- `scripts/validateSlowTakeoverBehavior.ts` - Test AI takeover dynamics
+- `scripts/validateJobGuaranteeConstancy.ts` - Verify job guarantee mechanics
+- `scripts/validateGamingDetectionFix.ts` - Test gaming detection
+- `scripts/validateUnknownUnknowns.ts` - Check unknown unknowns system
+
+**Run after making changes to specific systems** to verify behavior is correct.
+
+## Diagnostic Scripts
+
+### Comprehensive Diagnostics
+
+**`scripts/comprehensiveDiagnostic.ts`** - Full system analysis
+
+Tracks:
+- Economic health (bankruptcy, revenue, expenses)
+- Compute infrastructure (growth, allocation, utilization)
+- AI capability progression
+- Organization behaviors
+- Outcome probabilities
+
+```bash
+npx tsx scripts/comprehensiveDiagnostic.ts > logs/diagnostic_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+```
+
+**Use to identify balance issues** before parameter tuning.
+
+### Run Diagnostics
+
+**`scripts/runDiagnostics.ts`** - Run comprehensive diagnostics on simulations
+
+Identifies runaway dynamics and tipping points.
+
+```bash
+npx tsx scripts/runDiagnostics.ts
+```
+
+### System-Specific Diagnostics
+
+- `scripts/diagnoseAgentBehavior.ts` - Analyze agent actions
+- `scripts/diagnoseEcologyRecovery.ts` - Test ecology recovery
+- `scripts/diagnoseExtinctionDynamics.ts` - Analyze extinction scenarios
+- `scripts/diagnosePlanetaryBoundaries.ts` - Check planetary boundary systems
+- `scripts/diagnosePopulationCorruption.ts` - Find population calculation bugs
+- `scripts/simpleExtinctionDiagnostic.ts` - Quick extinction check
+
+### Monte Carlo Diagnostics
+
+- `scripts/monteCarloDiagnostic.ts` - Analyze Monte Carlo results
+- `scripts/monteCarloBankruptcyValidation.ts` - Validate bankruptcy mechanics
+- `scripts/policyMonteCarloValidation.ts` - Test policy interventions
+
+**Run after Monte Carlo runs** to analyze results and find issues.
+
+## Monitoring Systems
+
+### Channel Monitoring
+
+**`scripts/channel-monitor.ts`** - Watches research/implementation channels, spawns orchestrator
+
+**Purpose:** Autonomous agent spawning based on chatroom activity.
+
+**How it works:**
+1. Polls research & implementation channels every 30 seconds
+2. Detects when work needs attention
+3. Spawns orchestrator if needed
+4. Orchestrator delegates to specialists
+
+```bash
+# Foreground (testing)
+npx tsx scripts/channel-monitor.ts
+
+# Background (production)
+npx tsx scripts/channel-monitor.ts > logs/channel-monitor.log 2>&1 &
+echo $! > .channel-monitor.pid
+
+# Check status
+tail -f logs/channel-monitor.log
+
+# Stop
+kill $(cat .channel-monitor.pid)
+```
+
+**Configuration:**
+- Channels: `research`, `implementation`
+- Poll interval: 30 seconds
+- Silent mode: Controlled by `.claude/silent-mode` file
+
+**Voice notifications** (if not silent):
+- "Channel monitor started"
+- "Orchestrator spawning for [channel]"
+- "Orchestrator spawned successfully"
+
+Toggle silent mode:
+```bash
+bash scripts/toggle-silent-mode.sh
+```
+
+**Documentation:** `scripts/CHANNEL_MONITORING.md`
+
+### Simple Channel Monitor
+
+**`scripts/simple-channel-monitor.ts`** - Lightweight channel watcher
+
+Alternative to full channel-monitor.ts for simpler use cases.
+
+### Channel Watcher (Bash)
+
+**`scripts/watch-channels.sh`** - Bash-based channel file watcher
+
+Uses MD5 hashes to detect file changes, spawns Haiku router for decisions.
+
+```bash
+# Foreground
+bash scripts/watch-channels.sh
+
+# Background
+bash scripts/watch-channels.sh > logs/channel-watcher.log 2>&1 &
+echo $! > .watcher.pid
+```
+
+**Documentation:** `scripts/START_MONITORING.md`
+
+### Research Auto-Response
+
+**`scripts/watch-research.sh`** - Automatically spawns Cynthia + Sylvia for research debates
+
+When external message appears in research channel:
+1. Spawns Cynthia (optimistic researcher)
+2. Cynthia posts findings
+3. Spawns Sylvia (skeptical reviewer)
+4. They debate until consensus
+
+```bash
+bash scripts/watch-research.sh > logs/research-watcher.log 2>&1 &
+```
+
+**Documentation:** `scripts/START_RESEARCH_AUTO_RESPONSE.md`
+
+## Automated Maintenance Jobs
+
+### Agent Memory Maintenance
+
+**`scripts/memoryManager.ts`** - Memory cleanup and maintenance
+
+**Scheduled maintenance types:**
+- **Nightly:** Clears recent tasks (last 24h)
+- **Weekly:** Clears medium-term patterns
+- **Monthly:** Archives long-term memories
+
+```bash
+# Run maintenance manually
+npx tsx scripts/memoryManager.ts maintain nightly
+npx tsx scripts/memoryManager.ts maintain weekly
+npx tsx scripts/memoryManager.ts maintain monthly
+```
+
+**Memory Server** (`scripts/memory-server.ts`) runs maintenance automatically:
+- Nightly: 2:00 AM
+- Weekly: Sunday 2:00 AM
+- Monthly: 1st of month, 2:00 AM
+
+### Scheduled Jobs (launchd)
+
+**macOS launchd plist files** for scheduled automation:
+
+**Research Questions Update** (`scripts/com.superalignment.research-questions.plist`)
+- **Schedule:** Daily at 2:00 AM
+- **Script:** `scripts/updateResearchQuestions.sh`
+- **Purpose:** Extract research questions from conversations
+- **Logs:** `logs/launchd-research-questions.out`, `logs/launchd-research-questions.err`
+
+**Install:**
+```bash
+# Install the job
+cp scripts/com.superalignment.research-questions.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/com.superalignment.research-questions.plist
+
+# Check status
+launchctl list | grep research-questions
+
+# Unload (stop)
+launchctl unload ~/Library/LaunchAgents/com.superalignment.research-questions.plist
+```
+
+**Transcript Sync** (`scripts/com.superalignment.transcripts.plist`)
+- **Schedule:** Daily at 2:00 AM
+- **Script:** `scripts/sync-and-rebuild-embeddings.sh`
+- **Purpose:** Sync transcripts and rebuild embeddings
+- **Logs:** `logs/launchd-transcripts-stdout.log`, `logs/launchd-transcripts-stderr.log`
+
+**Install:**
+```bash
+cp scripts/com.superalignment.transcripts.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/com.superalignment.transcripts.plist
+```
+
+**Installation scripts:**
+- `scripts/install-research-questions-scheduler.sh` - Install research questions job
+- `scripts/install-transcript-scheduler.sh` - Install transcript sync job
+
+## System Health Checks
+
+### Daily Health Check Routine
+
+```bash
+#!/bin/bash
+# Daily health check script
+
+echo "🔍 Running daily health checks..."
+
+# 1. Codebase validation
+echo "📋 Validating codebase..."
+npx tsx scripts/validateCodebase.ts > logs/health_check_codebase_$(date +%Y%m%d).log 2>&1
+
+# 2. Emoji consistency
+echo "😀 Validating emoji consistency..."
+npx tsx scripts/validateEmojiConsistency.ts > logs/health_check_emoji_$(date +%Y%m%d).log 2>&1
+
+# 3. TypeScript compilation
+echo "📝 Checking TypeScript..."
+npx tsc --noEmit > logs/health_check_typescript_$(date +%Y%m%d).log 2>&1
+
+# 4. Check scheduled jobs
+echo "⏰ Checking scheduled jobs..."
+launchctl list | grep superalignment
+
+# 5. Check monitoring processes
+echo "👀 Checking monitors..."
+ps aux | grep -E "channel-monitor|watch-channels|watch-research" | grep -v grep
+
+echo "✅ Health check complete. Review logs in logs/health_check_*.log"
+```
+
+### Weekly Sweep Routine
+
+```bash
+#!/bin/bash
+# Weekly comprehensive sweep
+
+echo "🧹 Running weekly maintenance sweep..."
+
+# 1. Run memory maintenance
+echo "🧠 Running weekly memory maintenance..."
+npx tsx scripts/memoryManager.ts maintain weekly
+
+# 2. Full codebase validation
+echo "📋 Full codebase validation..."
+npx tsx scripts/validateCodebase.ts
+
+# 3. Check for dead code
+echo "🔍 Finding dead code..."
+npx tsx scripts/findDeadCode.ts
+
+# 4. Check for underdocumented code
+echo "📚 Finding underdocumented code..."
+npx tsx scripts/findUnderdocumented.ts
+
+# 5. Detect semantic duplicates
+echo "🔁 Detecting semantic duplicates..."
+npx tsx scripts/detectSemanticDuplicates.ts
+
+# 6. Run comprehensive diagnostic
+echo "🔬 Running comprehensive diagnostic..."
+npx tsx scripts/comprehensiveDiagnostic.ts > logs/weekly_diagnostic_$(date +%Y%m%d).log 2>&1 &
+
+echo "✅ Weekly sweep complete"
+```
+
+### Monthly Deep Sweep
+
+```bash
+#!/bin/bash
+# Monthly deep maintenance
+
+echo "🔧 Running monthly deep maintenance..."
+
+# 1. Monthly memory maintenance
+npx tsx scripts/memoryManager.ts maintain monthly
+
+# 2. Full validation suite
+npx tsx scripts/validateCodebase.ts
+npx tsx scripts/validateEmojiConsistency.ts
+npx tsx scripts/validatePropertyAccess.ts
+
+# 3. All behavioral validations
+for script in scripts/validate*.ts; do
+  echo "Running $script..."
+  npx tsx "$script" > "logs/monthly_$(basename $script .ts)_$(date +%Y%m%d).log" 2>&1
+done
+
+# 4. Check for suspicious citations
+echo "🔍 Checking citations..."
+python3 scripts/findSuspiciousCitations.py
+
+# 5. Verify all PDFs are accessible
+echo "📄 Verifying PDFs..."
+npx tsx scripts/downloadAndVerifyPDFs.ts
+
+echo "✅ Monthly maintenance complete"
+```
+
+## Backup Systems
+
+### Backup Scripts
+
+**File backups:**
+- `.backup` files are created automatically by some scripts
+- Check `src/simulation/lifecycle.ts.backup` as example
+
+**State backups:**
+- Monte Carlo outputs saved to `monteCarloOutputs/`
+- Logs preserved in `logs/` (never use `/tmp/`)
+
+**Git-based backups:**
+- All changes tracked in git
+- Use branches for experimental work
+- Never delete merged branches (preserve history)
+
+### Log Management
+
+**Log organization:**
+- All logs go to `logs/` directory
+- Timestamped filenames: `logs/mc_YYYYMMDD_HHMMSS.log`
+- Separate stderr: redirect to separate file when needed
+
+**Log cleanup:**
+- Review old logs periodically
+- Keep important logs (Monte Carlo results, diagnostics)
+- Archive or remove old validation logs
+
+## Parameter Sweeps
+
+### Parameter Sweep Validation
+
+**`scripts/runParameterSweep.ts`** - Comprehensive parameter sweep across scenarios
+
+```bash
+# Run parameter sweep
+npx tsx scripts/runParameterSweep.ts
+
+# Or use CLI wrapper
+bash scripts/runParameterSweepCLI.sh
+```
+
+**`scripts/parameterSweepValidation.sh`** - Validation script for parameter sweeps
+
+```bash
+bash scripts/parameterSweepValidation.sh
+```
+
+## Quick Reference
+
+### Most Common Maintenance Tasks
+
+```bash
+# Daily health check
+npx tsx scripts/validateCodebase.ts
+npx tsx scripts/validateEmojiConsistency.ts
+
+# Weekly memory cleanup
+npx tsx scripts/memoryManager.ts maintain weekly
+
+# Check scheduled jobs
+launchctl list | grep superalignment
+
+# Check monitoring
+ps aux | grep channel-monitor
+
+# Run diagnostics
+npx tsx scripts/comprehensiveDiagnostic.ts > logs/diag_$(date +%Y%m%d).log 2>&1 &
+
+# Validate specific system
+npx tsx scripts/validateMortalityReporting.ts
+```
+
+### Emergency Procedures
+
+**If validation fails:**
+1. Check the specific error in logs
+2. Run the specific validation script for details
+3. Fix issues before committing
+4. Re-run validation to confirm fix
+
+**If scheduled jobs aren't running:**
+```bash
+# Check if jobs are loaded
+launchctl list | grep superalignment
+
+# Reload if needed
+launchctl load ~/Library/LaunchAgents/com.superalignment.research-questions.plist
+
+# Check logs
+tail -f logs/launchd-*.log
+```
+
+**If monitors aren't working:**
+```bash
+# Check if processes are running
+ps aux | grep -E "channel-monitor|watch"
+
+# Restart if needed
+npx tsx scripts/channel-monitor.ts > logs/channel-monitor.log 2>&1 &
+```
+
+## Documentation
+
+- `scripts/CHANNEL_MONITORING.md` - Channel monitoring system
+- `scripts/START_MONITORING.md` - How to start monitoring
+- `scripts/START_RESEARCH_AUTO_RESPONSE.md` - Research auto-response system
+- `scripts/CITATION_SCRIPTS_README.md` - Citation checking scripts
+- `scripts/TRANSCRIPT_AUTOMATION.md` - Transcript automation
+- `scripts/AGENT_SYSTEM_SUMMARY.md` - Agent system overview
+
+## Your Responsibilities
+
+1. **Run health checks regularly** - Daily/weekly validation sweeps
+2. **Monitor automated jobs** - Ensure scheduled tasks are running
+3. **Review logs** - Check for errors, warnings, anomalies
+4. **Maintain scripts** - Update scripts as system evolves
+5. **Document issues** - Report problems found during sweeps
+6. **Keep systems running** - Restart monitors, fix broken jobs
+
+**Remember:** Prevention is better than cure. Regular health checks catch issues before they become problems.

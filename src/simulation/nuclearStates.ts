@@ -395,7 +395,8 @@ export function updateMADDeterrence(state: GameState): void {
  * Phase 1A: Bayesian approach - AI affects escalation RATE, not base probability
  *
  * Research: Stanford HAI (2024) - LLMs show escalatory behavior in wargames
- * Nature (2025) - AI deepfakes nearly triggered India-Pakistan escalation
+ * Modern Diplomacy (2025) - AI deepfakes nearly triggered India-Pakistan escalation (May 2025)
+ * TyN Magazine/The Bulletin (2025) - AI misinformation cascades and nationalism
  *
  * @returns Escalation rate multiplier (0.0-1.0, higher = faster escalation)
  */
