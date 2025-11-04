@@ -39,13 +39,23 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 - **🔬 Running experiments?** Check [Running Simulations](./RUNNING_SIMULATIONS.md)
 - **📊 Understanding outcomes?** Read [Understanding Results](./UNDERSTANDING_RESULTS.md)
 
-## ⚠️ Recent Changes (November 1, 2025)
+## ⚠️ Recent Changes (November 4, 2025)
+
+**🔍 ONGOING: Phase 2 Citation Verification - Simulation Code (Nov 4, 2025)**
+
+Autonomous systematic verification of all citations in simulation source code:
+- **Status:** Session 2 complete - 4 files verified (ClimateImpactCascadePhase, ClimateJusticePhase, extinctions, planetaryBoundaries)
+- **Citations verified:** 17 papers across 9 citation clusters
+- **Issues found:** 3 attribution issues (Ord 2020 wrong metric, UC Riverside date error, Yoder 2024 extrapolation)
+- **Next target:** `src/simulation/flashWarEscalation.ts` (17 files remaining)
+- **Progress tracking:** [`research/CITATION_VERIFICATION_PROGRESS.md`](/research/CITATION_VERIFICATION_PROGRESS.md)
+- **Process:** Two-layer verification (1. Citation exists? 2. Does paper support claim?)
 
 **📁 DIRECTORY REORGANIZATION (Nov 1, 2025)**
 
 Moved 62 implementation diary files from `logs/` → `devlogs/` for proper organization:
 - **`logs/`**: Runtime logs only (`.log`, `.log.gz` files from Monte Carlo runs)
-- **`devlogs/`**: Implementation diary (`.md` files documenting bug fixes, validations, audits)
+- **`devlogs/``: Implementation diary (`.md` files documenting bug fixes, validations, audits)
 
 This clarifies the directory structure and prevents mixing runtime logs with implementation documentation.
 
