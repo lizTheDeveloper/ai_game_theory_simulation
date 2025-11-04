@@ -177,9 +177,34 @@ CONFLICT_EOF
     echo ""
     log_stage "CLAUDE CODE EXECUTION"
 
+    # Get current API usage statistics
+    log_info "Fetching current API usage..."
+    if [ -f "$PROJECT_DIR/scripts/get-claude-usage.sh" ]; then
+        USAGE_STATS=$("$PROJECT_DIR/scripts/get-claude-usage.sh" 2>&1 | grep "^SESSION\|^WEEK\|^OPUS")
+        eval "$USAGE_STATS"
+        log_metric "API Usage - Session: ${SESSION_USAGE_PCT}%, Week: ${WEEK_USAGE_PCT}%, Opus: ${OPUS_USAGE_PCT}%"
+    else
+        log_warning "Usage script not found, using default conservative guidance"
+        SESSION_USAGE_PCT=50
+        WEEK_USAGE_PCT=50
+        OPUS_USAGE_PCT=0
+    fi
+
     # Create comprehensive task prompt
     log_info "Preparing orchestrator task..."
-    cat > /tmp/claude_task_$TIMESTAMP.txt << "TASK_EOF"
+    cat > /tmp/claude_task_$TIMESTAMP.txt << TASK_EOF
+## API Usage Context
+
+Current API usage (checked before this session started):
+- **Session**: ${SESSION_USAGE_PCT}% used (resets at 10pm Pacific)
+- **Week**: ${WEEK_USAGE_PCT}% used (resets Nov 10, 3pm Pacific)
+- **Opus**: ${OPUS_USAGE_PCT}% used
+
+**Token Budget Guidance:**
+- Under 50%: Normal operation - prioritize CRITICAL/HIGH items
+- 50-75%: Be cost-conscious - focus on highest-value work only
+- Over 75%: Conservative mode - only CRITICAL items, be concise
+
 Read plans/MASTER_IMPLEMENTATION_ROADMAP.md and identify work to do.
 
 ## STEP 0: Post Research Requests (ALWAYS DO THIS FIRST)

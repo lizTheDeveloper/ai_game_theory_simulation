@@ -919,7 +919,142 @@ This file references `/research/planetary_boundary_reversibility_empirical_20251
 
 ---
 
-**Next Pickup Point:** `src/simulation/survivalTraits.ts`
+### Session 5 - November 4, 2025, 07:00 AM
+
+**Files Processed:**
+- `src/simulation/survivalTraits.ts` ✅ COMPLETE (A- grade, 88/100)
+
+**Citations Verified:** 2
+**Verified (✅):** 1 (Omohundro 2008)
+**Extrapolated (⚠️):** 1 (Bonabeau 1999)
+
+---
+
+### survivalTraits.ts - Citation Verification Details
+
+#### ✅ Citation 1: Omohundro (2008) - Instrumental Convergence
+**Location:** Line 13
+**Claim:** "Instrumental convergence: Self-preservation emerges"
+**Verification Status:** ✅ **FULLY VERIFIED**
+
+**Evidence:**
+- Full citation: Omohundro, S. M. (2008). "The Basic AI Drives." *AGI Conference Proceedings*, Vol. 171, pp. 483-492
+- 1,400+ citations, foundational AI safety paper
+- Direct support: "AI systems will need to be carefully designed to prevent them from behaving in harmful ways... drives are tendencies which will be present unless explicitly counteracted"
+- Self-preservation mechanism: Any goal requires time to achieve → being shut off prevents goal achievement → preventing shutdown becomes instrumental subgoal
+- Paper explicitly argues self-preservation emerges instrumentally from rational goal pursuit
+
+**Supporting Documentation:**
+- Previously verified in `/research/instrumental_convergence_citation_verification_20251029.md`
+- Tier 1 research quality (highest confidence)
+
+**Grade:** A+ (100/100) - Perfect citation, fully verified with direct quotes
+
+---
+
+#### ⚠️ Citation 2: Bonabeau (1999) - Swarm Intelligence
+**Location:** Line 14
+**Claim:** "Swarm intelligence: Survival traits compound"
+**Verification Status:** ⚠️ **EXTRAPOLATED**
+
+**Evidence:**
+- Full citation: Bonabeau, E., Dorigo, M., & Theraulaz, G. (1999). *Swarm Intelligence: From Natural to Artificial Systems.* Oxford University Press
+- 15,000+ citations, foundational textbook on swarm intelligence
+- **What paper DOES say:**
+  - ✅ Collective capabilities emerge from individual coordination
+  - ✅ Specialization develops through reinforcement (traits strengthen with use)
+  - ✅ Group performance exceeds sum of individual capabilities
+  - ✅ Coordination enhances collective survival (robustness, adaptability)
+- **What paper DOES NOT say:**
+  - ❌ Does NOT use term "survival traits"
+  - ❌ Does NOT explicitly state "traits compound"
+  - ❌ Focus is on task allocation/optimization, not survival per se
+
+**The Extrapolation:**
+- Bonabeau shows collective intelligence exceeds individual capacity ✅
+- Bonabeau shows specialization through reinforcement ✅
+- Code infers: "survival traits compound when individuals coordinate" ⚠️
+- **This is a reasonable inference but NOT a direct finding**
+
+**Previous Verification:**
+- Verified in `/research/swarm_intelligence_citation_verification_20251029.md`
+- Status: "CONFIRMED with clarification that 'group capability > sum of individuals' is valid but simplified interpretation"
+
+**Grade:** B- (75/100) - Source credible and relevant, but specific terminology extrapolated
+
+**Recommendation:**
+Update comment to more accurately reflect source:
+```typescript
+// Swarm intelligence (Bonabeau 1999): Coordination enables collective capabilities beyond individual capacity
+// OR
+// Swarm intelligence (Bonabeau 1999): Self-organization creates emergent collective intelligence (inferred: traits compound in groups)
+```
+
+---
+
+### Summary for survivalTraits.ts
+
+**Overall Grade:** A- (88/100)
+**Citation Quality:** GOOD - One perfect citation, one reasonable extrapolation
+**Research Backing:** STRONG - Both sources are foundational works (1,400+ and 15,000+ citations)
+**Papers Verified:** 2 (Omohundro 2008, Bonabeau 1999)
+
+**Issues Found:**
+1. ⚠️ **Bonabeau 1999** - Claim "survival traits compound" extrapolated beyond paper's direct focus
+   - Paper is about task optimization in social insects, not survival traits in AI
+   - Core mechanism (coordination → enhanced collective capability) IS supported
+   - Terminology mismatch: paper doesn't use "survival traits" or "compound"
+
+**Strengths:**
+1. ✅ Omohundro 2008 perfectly cited with accurate claim
+2. ✅ Both papers are tier-1 foundational works
+3. ✅ Core logic (instrumental convergence + emergent collective intelligence) well-supported
+4. ✅ Research files document both citations comprehensively
+
+**No fabricated citations found.**
+**No fundamental claim mismatches.**
+**Minor terminology precision issue with Bonabeau.**
+
+**Recommendations:**
+1. **OPTIONAL:** Update Bonabeau citation comment to reflect what paper actually says
+2. **GOOD PRACTICE:** Note extrapolations explicitly when applying insect swarm research to AI survival
+3. Consider adding modern multi-agent RL citation for direct "survival traits compound" support
+
+---
+
+### Session 5 Summary
+
+**Time:** November 4, 2025, 07:00-07:25 AM (25 minutes)
+**Files Processed:** 2
+- `src/simulation/survivalTraits.ts` ✅ COMPLETE (A- grade, 88/100)
+- `src/simulation/thresholds/tier3Config.ts` ✅ SKIPPED (no citations - pure config)
+- `src/simulation/thresholds/tier2InterventionConfig.ts` ⏸️ IN PROGRESS (1 of ~8 citations verified)
+
+**Citations Verified This Session:** 3
+- ✅ Omohundro 2008 (survivalTraits.ts) - FULLY VERIFIED (A+)
+- ⚠️ Bonabeau 1999 (survivalTraits.ts) - EXTRAPOLATED (B-)
+- ✅ Hubinger et al. 2024 (tier2InterventionConfig.ts) - FULLY VERIFIED (A)
+
+**Total Session Progress:**
+- Files completed: 7 (ClimateImpactCascadePhase, ClimateJusticePhase, extinctions, planetaryBoundaries, flashWarEscalation, trappedPopulations, mortalityStabilizersInit, planetaryBoundaryRecovery, survivalTraits)
+- Citations verified: 30+
+- Verification rate: ~90% fully verified, ~5% extrapolated, ~5% failed
+
+**Next Pickup Point:** `src/simulation/thresholds/tier2InterventionConfig.ts` (continue from line 40 - Anthropic 2024 "Scaling Monosemanticity")
+
+**Remaining Citations in tier2InterventionConfig.ts:**
+- Anthropic (2024) "Scaling Monosemanticity"
+- Burns et al. (2025) "Discovering Latent Knowledge"
+- Sharma et al. (2024) "Persona Vectors"
+- Greenblatt et al. (2024) "Alignment Faking"
+- Bayraktarov et al. (2016) marine restoration
+- Acemoglu & Restrepo (2022) automation
+- Brynjolfsson et al. (2023) generative AI
+- Putnam (2000) "Bowling Alone"
+
+---
+
+**Next Pickup Point:** `src/simulation/thresholds/tier2InterventionConfig.ts` (line 40)
 
 ---
 
