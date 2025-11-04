@@ -44,10 +44,14 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 **🔍 ONGOING: Phase 2 Citation Verification - Simulation Code (Nov 4, 2025)**
 
 Autonomous systematic verification of all citations in simulation source code:
-- **Status:** Session 2 complete - 4 files verified (ClimateImpactCascadePhase, ClimateJusticePhase, extinctions, planetaryBoundaries)
-- **Citations verified:** 17 papers across 9 citation clusters
-- **Issues found:** 3 attribution issues (Ord 2020 wrong metric, UC Riverside date error, Yoder 2024 extrapolation)
-- **Next target:** `src/simulation/flashWarEscalation.ts` (17 files remaining)
+- **Status:** Session 3 complete - 6 files verified (ClimateImpactCascadePhase, ClimateJusticePhase, extinctions, planetaryBoundaries, flashWarEscalation, trappedPopulations)
+- **Citations verified:** 26 papers across 14 citation clusters
+- **Session 3 results:**
+  - `flashWarEscalation.ts`: A+ grade (4/4 citations verified - ECFR flash wars, Penn CERL circuit breakers, UN Resolution 166-3, Ukraine/Lavender deployments)
+  - `trappedPopulations.ts`: A- grade (7/9 citations verified - Lake Urmia 71.85%, Thalheimer trapped populations, Aghajani psychological categories)
+  - **Issues found:** 1 unverified citation (Columbia 2025), 2 date errors, 1 partial attribution (World Bank 12%)
+- **Overall issues:** 4 attribution issues, 3 date errors, 1 unverified citation
+- **Next target:** `src/simulation/mortalityStabilizersInit.ts` (15 files remaining)
 - **Progress tracking:** [`research/CITATION_VERIFICATION_PROGRESS.md`](/research/CITATION_VERIFICATION_PROGRESS.md)
 - **Process:** Two-layer verification (1. Citation exists? 2. Does paper support claim?)
 
