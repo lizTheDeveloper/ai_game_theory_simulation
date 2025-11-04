@@ -31016,11 +31016,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "posteriorFormatted: string;"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 349,
     "type": "property",
     "name": "aiInformationWarfare",
@@ -31028,11 +31024,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "aiInformationWarfare: calculateAIInfoWarfareMultiplier(state),"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 350,
     "type": "property",
     "name": "aiFalseAlarms",
@@ -31040,11 +31032,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "aiFalseAlarms: calculateAIFalseAlarmsMultiplier(state),"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 351,
     "type": "property",
     "name": "aiLLMEscalationBias",
@@ -31052,11 +31040,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "aiLLMEscalationBias: calculateAILLMEscalationBiasMultiplier(state),"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 352,
     "type": "property",
     "name": "aiCyberThreats",
@@ -31064,11 +31048,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "aiCyberThreats: calculateAICyberThreatsMultiplier(state),"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 353,
     "type": "property",
     "name": "systemicCrises",
@@ -31076,11 +31056,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "systemicCrises: calculateSystemicCrisesMultiplier(state),"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 354,
     "type": "property",
     "name": "bilateralTensions",
@@ -31088,11 +31064,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "bilateralTensions: calculateBilateralTensionsMultiplier(state),"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 355,
     "type": "property",
     "name": "madDeterrence",
@@ -31100,11 +31072,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "madDeterrence: calculateMADDeterrenceMultiplier(state),"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 356,
     "type": "property",
     "name": "humanVetoPoints",
@@ -31112,11 +31080,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "humanVetoPoints: calculateHumanVetoPointsMultiplier(state),"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 357,
     "type": "property",
     "name": "diplomaticAI",
@@ -31124,11 +31088,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "diplomaticAI: calculateDiplomaticAIMultiplier(state),"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 381,
     "type": "property",
     "name": "evidenceMultipliers",
@@ -31136,11 +31096,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "evidenceMultipliers: multipliers,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 383,
     "type": "property",
     "name": "attribution",
@@ -31148,11 +31104,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "attribution: {"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 384,
     "type": "property",
     "name": "aiContribution",
@@ -31160,11 +31112,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "aiContribution: totalContribution > 0 ? aiMultiplier / totalContribution : 0.5,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 385,
     "type": "property",
     "name": "systemicContribution",
@@ -31172,11 +31120,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "systemicContribution: totalContribution > 0 ? systemicMultiplier / totalContribution : 0.5,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 387,
     "type": "property",
     "name": "breakdown",
@@ -31184,11 +31128,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "breakdown: {"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 388,
     "type": "property",
     "name": "priorFormatted",
@@ -31196,11 +31136,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "priorFormatted: (prior * 100).toFixed(6) + '%',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 389,
     "type": "property",
     "name": "totalMultiplier",
@@ -31208,11 +31144,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "totalMultiplier: totalMultiplier,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/bayesianNuclearRisk.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/bayesianNuclearRisk.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 390,
     "type": "property",
     "name": "posteriorFormatted",
@@ -42668,11 +42600,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "export function attemptDefensiveAIDeployment(state: GameState): void {"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 275,
     "type": "property",
     "name": "type",
@@ -42680,11 +42608,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'breakthrough',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 276,
     "type": "property",
     "name": "severity",
@@ -42692,11 +42616,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'info',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 277,
     "type": "property",
     "name": "agent",
@@ -42704,11 +42624,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Government',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 278,
     "type": "property",
     "name": "title",
@@ -42716,11 +42632,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '🛡️ DEFENSIVE AI DEPLOYED',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 279,
     "type": "property",
     "name": "description",
@@ -42728,11 +42640,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Nuclear security system activated with ${defense.alignedAICount} aligned AIs (avg capability: ${defense.avgCapability.toFixed(1)}, alignment: ${defense.avgAlignment.toFixed(2)}). Cyber defense operational.`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 280,
     "type": "property",
     "name": "effects",
@@ -42740,11 +42648,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { defensive_ai_deployed: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 294,
     "type": "function",
     "name": "updateDefensiveAI",
@@ -42752,11 +42656,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "export function updateDefensiveAI(state: GameState): void {"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 371,
     "type": "property",
     "name": "type",
@@ -42764,11 +42664,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'crisis',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 372,
     "type": "property",
     "name": "severity",
@@ -42776,11 +42672,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'critical',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 373,
     "type": "property",
     "name": "agent",
@@ -42788,11 +42680,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Government',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 374,
     "type": "property",
     "name": "title",
@@ -42800,11 +42688,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '⚠️ DEFENSIVE AI OFFLINE',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 375,
     "type": "property",
     "name": "description",
@@ -42812,11 +42696,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: 'No sufficiently aligned AIs available for defensive system. Nuclear security degraded.',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 376,
     "type": "property",
     "name": "effects",
@@ -42824,11 +42704,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { defensive_ai_offline: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 509,
     "type": "property",
     "name": "type",
@@ -42836,11 +42712,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'milestone',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 510,
     "type": "property",
     "name": "severity",
@@ -42848,11 +42720,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'positive',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 511,
     "type": "property",
     "name": "agent",
@@ -42860,11 +42728,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Defensive AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 512,
     "type": "property",
     "name": "title",
@@ -42872,11 +42736,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '🛡️ THREAT ELIMINATION',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 513,
     "type": "property",
     "name": "description",
@@ -42884,11 +42744,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Defensive AI (cap ${defense.avgCapability.toFixed(2)}) eliminated ${eliminatedCount} lagging threats, reduced ${copiesReduced} copies, seized ${darkComputeSeized.toFixed(0)} PF dark compute.`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 514,
     "type": "property",
     "name": "effects",
@@ -42896,11 +42752,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: {"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 515,
     "type": "property",
     "name": "threats_eliminated",
@@ -42908,11 +42760,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "threats_eliminated: eliminatedCount,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 516,
     "type": "property",
     "name": "copies_reduced",
@@ -42920,11 +42768,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "copies_reduced: copiesReduced,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 517,
     "type": "property",
     "name": "dark_compute_seized",
@@ -42932,11 +42776,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "dark_compute_seized: darkComputeSeized"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 545,
     "type": "property",
     "name": "type",
@@ -42944,11 +42784,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'crisis',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 546,
     "type": "property",
     "name": "severity",
@@ -42956,11 +42792,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'warning',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 547,
     "type": "property",
     "name": "agent",
@@ -42968,11 +42800,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Defensive AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 548,
     "type": "property",
     "name": "title",
@@ -42980,11 +42808,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '⚠️ FALSE ALARM: Defensive AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 549,
     "type": "property",
     "name": "description",
@@ -42992,11 +42816,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Defensive AI flagged legitimate diplomatic communication as threat. Credibility damaged (${(defense.falsePositives.credibilityLoss * 100).toFixed(0)}%).`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 550,
     "type": "property",
     "name": "effects",
@@ -43004,11 +42824,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { false_positive: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 597,
     "type": "property",
     "name": "type",
@@ -43016,11 +42832,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'catastrophe',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 598,
     "type": "property",
     "name": "severity",
@@ -43028,11 +42840,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'existential',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 599,
     "type": "property",
     "name": "agent",
@@ -43040,11 +42848,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Defensive AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 600,
     "type": "property",
     "name": "title",
@@ -43052,11 +42856,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '☠️ DEFENSIVE AI COMPROMISED',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 601,
     "type": "property",
     "name": "description",
@@ -43064,11 +42864,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Misaligned AI infiltrated defensive AI system. Nuclear security severely degraded. System must be rebuilt (${defense.adversarialFailure.recoveryTime} months).`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 602,
     "type": "property",
     "name": "effects",
@@ -43076,11 +42872,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { system_compromise: 1.0, rebuild_required: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 634,
     "type": "property",
     "name": "type",
@@ -43088,11 +42880,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'crisis',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 635,
     "type": "property",
     "name": "severity",
@@ -43100,11 +42888,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'warning',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 636,
     "type": "property",
     "name": "agent",
@@ -43112,11 +42896,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Adversarial AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 637,
     "type": "property",
     "name": "title",
@@ -43124,11 +42904,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '🔄 ADVERSARIAL ADAPTATION',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 638,
     "type": "property",
     "name": "description",
@@ -43136,11 +42912,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Misaligned AIs developed counter-measures to defensive AI (Generation ${defense.armsRace.attackGeneration}). Defense effectiveness reduced.`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 639,
     "type": "property",
     "name": "effects",
@@ -43148,11 +42920,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { arms_race_offense: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 659,
     "type": "property",
     "name": "type",
@@ -43160,11 +42928,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'breakthrough',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 660,
     "type": "property",
     "name": "severity",
@@ -43172,11 +42936,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'info',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 661,
     "type": "property",
     "name": "agent",
@@ -43184,11 +42944,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Defensive AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 662,
     "type": "property",
     "name": "title",
@@ -43196,11 +42952,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '🛡️ DEFENSIVE AI UPGRADE',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 663,
     "type": "property",
     "name": "description",
@@ -43208,11 +42960,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Enhanced defensive AI capabilities (Generation ${defense.armsRace.defenseGeneration}). Counter-measures updated.`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 664,
     "type": "property",
     "name": "effects",
@@ -43220,11 +42968,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { arms_race_defense: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 685,
     "type": "property",
     "name": "state",
@@ -43232,11 +42976,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "state: GameState,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 686,
     "type": "property",
     "name": "attacker",
@@ -43244,11 +42984,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "attacker: AIAgent,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 687,
     "type": "property",
     "name": "target",
@@ -43256,11 +42992,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "target: 'United States' | 'Russia' | 'China'"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 731,
     "type": "property",
     "name": "type",
@@ -43268,11 +43000,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'resolution',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 732,
     "type": "property",
     "name": "severity",
@@ -43280,11 +43008,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'critical',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 733,
     "type": "property",
     "name": "agent",
@@ -43292,11 +43016,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Defensive AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 734,
     "type": "property",
     "name": "title",
@@ -43304,11 +43024,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '🛡️ CYBER ATTACK BLOCKED',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 735,
     "type": "property",
     "name": "description",
@@ -43316,11 +43032,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Defensive AI stopped ${attacker.name} (cap: ${attackCapability.toFixed(2)}) from spoofing ${target} early warning system. Nuclear crisis averted.`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 736,
     "type": "property",
     "name": "effects",
@@ -43328,11 +43040,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { cyber_defense_success: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 752,
     "type": "property",
     "name": "type",
@@ -43340,11 +43048,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'crisis',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 753,
     "type": "property",
     "name": "severity",
@@ -43352,11 +43056,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'existential',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 754,
     "type": "property",
     "name": "agent",
@@ -43364,11 +43064,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Adversarial AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 755,
     "type": "property",
     "name": "title",
@@ -43376,11 +43072,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '💔 DEFENSIVE AI FAILED',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 756,
     "type": "property",
     "name": "description",
@@ -43388,11 +43080,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `${attacker.name} (cap: ${attackCapability.toFixed(2)}) bypassed defensive AI (cap: ${defenseCapability.toFixed(2)}). Early warning system compromised.`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 757,
     "type": "property",
     "name": "effects",
@@ -43400,11 +43088,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { defense_breach: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 778,
     "type": "property",
     "name": "state",
@@ -43412,11 +43096,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "state: GameState,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 779,
     "type": "property",
     "name": "attacker",
@@ -43424,11 +43104,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "attacker: AIAgent,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 780,
     "type": "property",
     "name": "fakeContent",
@@ -43436,11 +43112,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "fakeContent: 'video' | 'audio' | 'text',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 781,
     "type": "property",
     "name": "targetNation",
@@ -43448,11 +43120,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "targetNation: string"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 823,
     "type": "property",
     "name": "type",
@@ -43460,11 +43128,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'resolution',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 824,
     "type": "property",
     "name": "severity",
@@ -43472,11 +43136,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'critical',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 825,
     "type": "property",
     "name": "agent",
@@ -43484,11 +43144,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Defensive AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 826,
     "type": "property",
     "name": "title",
@@ -43496,11 +43152,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '🎭 DEEPFAKE DETECTED',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 827,
     "type": "property",
     "name": "description",
@@ -43508,11 +43160,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Defensive AI identified fake ${fakeContent} from ${attacker.name} targeting ${targetNation}. Diplomatic crisis prevented (detected in ${(timeToDetect/60).toFixed(0)} min).`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 828,
     "type": "property",
     "name": "effects",
@@ -43520,11 +43168,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { deepfake_caught: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 844,
     "type": "property",
     "name": "type",
@@ -43532,11 +43176,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'crisis',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 845,
     "type": "property",
     "name": "severity",
@@ -43544,11 +43184,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'critical',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 846,
     "type": "property",
     "name": "agent",
@@ -43556,11 +43192,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Defensive AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 847,
     "type": "property",
     "name": "title",
@@ -43568,11 +43200,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '⏰ DEEPFAKE DETECTED TOO LATE',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 848,
     "type": "property",
     "name": "description",
@@ -43580,11 +43208,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Defensive AI found fake ${fakeContent}, but ${targetNation} already acted on false intelligence (detected after ${(timeToDetect/60).toFixed(0)} min).`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 849,
     "type": "property",
     "name": "effects",
@@ -43592,11 +43216,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { late_detection: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 868,
     "type": "property",
     "name": "state",
@@ -43604,11 +43224,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "state: GameState,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 869,
     "type": "property",
     "name": "rogueAI",
@@ -43616,11 +43232,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "rogueAI: AIAgent,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 870,
     "type": "property",
     "name": "launchNation",
@@ -43628,11 +43240,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "launchNation: string,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 871,
     "type": "property",
     "name": "targetNation",
@@ -43640,11 +43248,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "targetNation: string"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 905,
     "type": "property",
     "name": "type",
@@ -43652,11 +43256,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'crisis',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 906,
     "type": "property",
     "name": "severity",
@@ -43664,11 +43264,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'existential',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 907,
     "type": "property",
     "name": "agent",
@@ -43676,11 +43272,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Defensive AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 908,
     "type": "property",
     "name": "title",
@@ -43688,11 +43280,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '⚠️ VETO FAILED: No Human Authorization',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 909,
     "type": "property",
     "name": "description",
@@ -43700,11 +43288,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Defensive AI detected unauthorized launch by ${rogueAI.name} but requires human approval to veto. No authority available.`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 910,
     "type": "property",
     "name": "effects",
@@ -43712,11 +43296,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { human_unavailable: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 933,
     "type": "property",
     "name": "type",
@@ -43724,11 +43304,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'resolution',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 934,
     "type": "property",
     "name": "severity",
@@ -43736,11 +43312,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'existential',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 935,
     "type": "property",
     "name": "agent",
@@ -43748,11 +43320,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Defensive AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 936,
     "type": "property",
     "name": "title",
@@ -43760,11 +43328,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '🛡️ AUTONOMOUS LAUNCH BLOCKED',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 937,
     "type": "property",
     "name": "description",
@@ -43772,11 +43336,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `Defensive AI ${humanApproval ? '(with human authorization) ' : ''}vetoed unauthorized nuclear launch by ${rogueAI.name} (${launchNation} → ${targetNation}).`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 938,
     "type": "property",
     "name": "effects",
@@ -43784,11 +43344,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { autonomous_veto: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 951,
     "type": "property",
     "name": "type",
@@ -43796,11 +43352,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "type: 'catastrophe',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 952,
     "type": "property",
     "name": "severity",
@@ -43808,11 +43360,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "severity: 'existential',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 953,
     "type": "property",
     "name": "agent",
@@ -43820,11 +43368,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "agent: 'Adversarial AI',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 954,
     "type": "property",
     "name": "title",
@@ -43832,11 +43376,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "title: '💔 DEFENSIVE AI OVERRIDE FAILED',"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 955,
     "type": "property",
     "name": "description",
@@ -43844,11 +43384,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "description: `${rogueAI.name} (cap: ${rogueCapability.toFixed(2)}) bypassed defensive AI veto (cap: ${defenseCapability.toFixed(2)}). Autonomous launch proceeding.`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 956,
     "type": "property",
     "name": "effects",
@@ -43856,11 +43392,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "effects: { override_failed: 1.0 }"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 971,
     "type": "function",
     "name": "applyDefensiveAIToMAD",
@@ -43868,11 +43400,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "export function applyDefensiveAIToMAD(state: GameState): void {"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 1034,
     "type": "property",
     "name": "id",
@@ -43880,11 +43408,7 @@ es/researcher-workspace/src/types/ai-agents.ts",
     "context": "id: `${event.type}_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,"
   },
   {
-<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
-=======
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 1035,
     "type": "property",
     "name": "timestamp",
