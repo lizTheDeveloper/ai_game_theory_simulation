@@ -29,11 +29,20 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 **All simulation engine work** - mechanics, systems, features, AI agents, environmental systems, crises, etc.
 
 **Current Priority:**
-- **HIGH:** Wiki Citation Verification & Correction - Verify all quantitative claims in wiki
+- **HIGH:** Climate Mortality Phase 2 (Storm Systems + BII Framework) - **READY FOR IMPLEMENTATION** (Nov 1, 2025)
+  - Research quality: A- (90% peer-reviewed, 50% from 2024-2025)
+  - Validation: Cynthia & Sylvia APPROVED (high confidence)
+  - Uncertainty: ±10-30% (direct peer-reviewed parameters)
+  - Estimate: 4-6 hours implementation + 1-2 hours validation
+  - **Critical:** Verify IPBES 2024 source for 54,000 species baseline before implementation
 - **MEDIUM:** Cooperative AI Ownership Implementation - Research upgraded to A-, READY FOR IMPLEMENTATION
-  - Research quality: 88% verified (Borzaga 2022, Olsen 2013, Pérotin 2016)
-  - Fabrication removed: Mondragon bankruptcy claim
+  - Research quality: C+ → A- (88% verified - Borzaga 2022, Olsen 2013, Pérotin 2016)
+  - Validation: Cynthia APPROVED, Sylvia SKEPTICAL but not blocking
+  - Uncertainty: ±40-50% (extrapolation from non-AI sectors, grey literature)
+  - Estimate: 6-8 hours implementation + 2-3 hours validation
+  - Requirements: Monte Carlo N≥20, flag speculative parameters
 - **MEDIUM:** Policy System Improvements - 5 of 6 sections complete
+- **LOW:** Memetic Contagion System (Black Mirror Phase 2) - Research complete, awaiting integration timeline (12-16 weeks)
 - **LOW:** Compute-Workforce Coherence Warnings Investigation
   - 1,089 occurrences in N=10 Monte Carlo run (Nov 1)
   - Non-critical (doesn't crash simulation)
@@ -322,14 +331,24 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 2. ⚠️ **IMMEDIATE:** Research Citation Corrections (45 min)
    - Fix OpenAI 6% statistic misrepresentation
    - Verify Bai et al. date
-3. 🟠 **HIGH:** Monte Carlo Issues #5-6 Implementation (deferred, pending determinism fixes)
+3. 🟠 **HIGH:** Climate Mortality Phase 2 Implementation - **READY** (Nov 1, 2025) ⭐
+   - Research: A- grade (90% peer-reviewed, 50% from 2024-2025)
+   - Validation: Cynthia & Sylvia APPROVED (high confidence)
+   - Estimate: 4-6h implementation + 1-2h validation
+   - **Action before start:** Verify IPBES 2024 source for 54,000 species baseline
+4. 🟠 **HIGH:** Monte Carlo Issues #5-6 Implementation (deferred, pending determinism fixes)
    - Issue #5: Outcome variance / bifurcation logic (8-12h)
    - Issue #6: Famine distribution redesign (12-16h)
-4. 🟠 **HIGH:** Food Security Critical Contradictions (Xia vs Shi, mortality gap, climate gates)
-5. 🟢 **MEDIUM:** Cooperative AI Ownership Implementation - Research ready (A- grade, 88% verified)
-6. 🟢 **MEDIUM:** Wiki Citation Verification & Correction
-7. 🟢 **MEDIUM:** Policy System remaining sections (5 of 6 complete)
-8. 🔵 **LOW:** Compute-Workforce Coherence Warnings Investigation (1,089 occurrences, non-critical)
+5. 🟠 **HIGH:** Food Security Critical Contradictions (Xia vs Shi, mortality gap, climate gates)
+6. 🟢 **MEDIUM:** Cooperative AI Ownership Implementation - **READY** (Nov 1, 2025) ⭐
+   - Research: C+ → A- grade (88% verified)
+   - Validation: Cynthia APPROVED, Sylvia SKEPTICAL but not blocking
+   - Estimate: 6-8h implementation + 2-3h validation
+   - Requirements: Monte Carlo N≥20, flag speculative parameters, wide uncertainty bounds (±40-50%)
+7. 🟢 **MEDIUM:** Wiki Citation Verification & Correction
+8. 🟢 **MEDIUM:** Policy System remaining sections (5 of 6 complete)
+9. 🔵 **LOW:** Memetic Contagion System (Black Mirror Phase 2) - Research complete, integration planning (12-16 weeks)
+10. 🔵 **LOW:** Compute-Workforce Coherence Warnings Investigation (1,089 occurrences, non-critical)
 
 **Medium-Term (Next 1-3 months):**
 1. **MEDIUM:** Frontend complete dashboard implementation (8 phases, 3-4 weeks parallel)
@@ -417,6 +436,7 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 ---
 
-**Last Updated:** November 3, 2025 - Roadmap gardening session (Architect)
-**Status:** Roadmap cleaned, completed work archived, active priorities clear
-**Next Priority:** Determinism fixes (Issue #11, 6-10h) OR immediate citation corrections (45 min)
+**Last Updated:** November 3, 2025 - Validated research audit complete (Architect)
+**Status:** 2 ready-to-implement features added (Climate Phase 2 A-, Cooperative Ownership A-), roadmap synchronized with validation files
+**Audit Results:** 3 features identified, 2 completely missing, 1 upgraded with details - see `/plans/roadmap-audit-validated-research-20251103.md`
+**Next Priority:** Climate Phase 2 (4-6h, HIGH, A- grade) OR Cooperative Ownership (6-8h, MEDIUM, A- grade) OR Determinism fixes (6-10h, CRITICAL blocker)

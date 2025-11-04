@@ -152,7 +152,11 @@
       "mcp__playwright__browser_type",
       "mcp__playwright__browser_hover",
       "Bash(bash:*)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "mcp__agent-memory__recall_context",
+      "mcp__agent-memory__add_core_memory",
+      "mcp__agent-memory__add_recent_task",
+      "mcp__agent-memory__add_recent_learning"
     ],
     "deny": [],
     "ask": [],
@@ -162,6 +166,12 @@
     "transcript-rag",
     "ai-safety-transcripts",
     "arxiv",
-    "pdf-rag"
+    "pdf-rag",
+    "agent-memory",
+    "research-pdfs",
+    "chatroom",
+    "playwright",
+    "zotero",
+    "matrix"
   ]
 }

@@ -1,7 +1,7 @@
 # Simulation Roadmap
 ## AI Alignment Game Theory Simulation - Core Engine & Mechanics
 
-**Date:** October 30, 2025 (Updated after Oct 30 completions + Monte Carlo validation critique)
+**Date:** November 3, 2025 (Updated after validated research audit - 2 ready-to-implement features added)
 **Purpose:** All simulation engine work (mechanics, systems, features)
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -144,13 +144,76 @@
    - Homeostatic bounds (2.75 pp/year New Deal recovery rate)
    - **Status:** Archived to `/plans/completed/crisis-mitigation-mechanics_20251030.md`
 
-4. **MEDIUM:** Policy System Improvements (10-12h remaining)
+4. **HIGH:** Climate Mortality Phase 2 - Storm Systems + BII Framework ⚠️ **READY FOR IMPLEMENTATION** (Nov 1, 2025)
+   - **Research Quality:** A- (excellent, 90% peer-reviewed sources, 50% from 2024-2025)
+   - **Validation Status:** ✅ GREEN (High Confidence) - Cynthia & Sylvia APPROVED
+   - **Uncertainty:** ±10-30% (direct peer-reviewed parameters with minimal extrapolation)
+   - **Research File:** `/research/climate-mortality-biosphere-multiparadigm-framework_20251028.md`
+   - **Specification:** `/plans/climate-mortality-phase2-implementation-spec.md`
+   - **Validations:**
+     - Cynthia: `/research/climate-mortality-phase2-validation-cynthia-20251101.md` (PROCEED with high confidence)
+     - Sylvia: `/reviews/climate_mortality_phase2_validation_20251101.md` (CONDITIONAL PASS - needs IPBES 2024 sourcing)
+   - **Key Parameters (Research-Backed):**
+     - Storm intensity: 2-11% increase by 2100 (Knutson et al. 2020, 2023 - NOAA GFDL)
+     - Precipitation: 10-15% near-storm increase (Clausius-Clapeyron + storm dynamics)
+     - Frequency: -6% to -34% overall (Jewson 2023 synthesizing Knutson)
+     - BII baseline: 54,000 species (IPBES 2024 - needs verification)
+     - Extinction rate: 10-100× background, using 10 E/MSY conservative (IPBES data)
+   - **Implementation Requirements:**
+     - Add storm category distribution shifts (Cat 4-5 increasing, Cat 1-2 decreasing)
+     - Implement regional vulnerability multipliers (infrastructure mismatch up to 3×)
+     - Integrate BII framework with climate velocity mechanisms
+     - Add Joshua Tree cascade example (43% bird diversity decline → 2.5× keystone multiplier)
+     - Multi-paradigm integration (TEK frameworks, Two-Eyed Seeing methodology)
+   - **Critical Action Before Implementation:** Verify IPBES 2024 source for 54,000 species baseline (currently missing from research)
+   - **Estimate:** 4-6 hours implementation + 1-2 hours Monte Carlo validation (N≥10)
+   - **Expected Impact:** Predictable climate-driven mortality (replaces random shocks), species extinction tracking via climate velocity
+   - **Summary:** `/research/validation-summary-ready-for-implementation-20251101.md` (comprehensive validation report)
+
+5. **MEDIUM:** Policy System Improvements (10-12h remaining)
    - ✅ Zero-variance bug in Combined Interventions - COMPLETE (Roy2, Oct 30) - Fixed hard cap → soft floor
-   - 🔵 Cooperative AI Ownership Model  - LOW priority
+   - 🔵 Cooperative AI Ownership Model - **READY FOR IMPLEMENTATION** (Nov 1, 2025)
+     - **Research Quality:** C+ (adequate but not ideal, 33% peer-reviewed, risk-accepted)
+     - **Validation Status:** ✅ GREEN (Ready with Acknowledged Risks) - Cynthia APPROVED, Sylvia SKEPTICAL but not blocking
+     - **Uncertainty:** ±40-50% (heavy extrapolation from non-AI sectors, grey literature)
+     - **Research File:** `/research/cooperative-ai-ownership-economics_20251028.md` (upgraded to A- on Nov 1)
+     - **Specification:** `/plans/cooperative-ownership-implementation-spec.md`
+     - **Validations:**
+       - Cynthia: `/research/cooperative-ownership-validation-cynthia-20251101.md` (PROCEED with conditions)
+       - Sylvia: `/reviews/cooperative_ownership_critical_review_20251101.md` (LOW CONFIDENCE but not blocking)
+     - **Key Parameters (Risk-Accepted):**
+       - Survival multiplier: 1.5× (conservative vs Québec 1.77×, but unverifiable source)
+       - Crisis resilience: +30% (Borzaga & Galera 2014, qualitative → quantitative)
+       - Cash distribution: 20% minimum (direct from research)
+       - Governance overhead: +20% latency (PURE SPECULATION - flag in code)
+       - Employment stability: 1.3× (Conservative extrapolation)
+     - **Implementation Requirements:**
+       - Wide uncertainty bounds (±40-50% mandatory)
+       - Flag speculative parameters with "PURE SPECULATION" in JSDoc
+       - Monte Carlo sensitivity analysis (N≥20 required, not N≥10)
+       - Note inaccessible Québec Ministry (2010) PDF in code comments
+       - Architecture review after implementation (Quality Gate 2)
+     - **Estimate:** 6-8 hours implementation + 2-3 hours validation
+     - **Expected Impact:** Small but meaningful (+2-4% survival during crises), wide confidence intervals
+     - **Summary:** `/research/validation-summary-ready-for-implementation-20251101.md`
 
-5. **LOW:** P3 Enhancements 
+6. **LOW:** Memetic Contagion System (Black Mirror Phase 2)
+   - **Research Status:** COMPLETE (Oct 28, 2025)
+   - **Research File:** `/research/memetic-contagion-system_20251028.md`
+   - **Integration Plan:** `/reviews/BLACK_MIRROR_INTEGRATION_PLAN.md` (consensus recommendations)
+   - **Key Mechanics (Research-Backed):**
+     - Viral R0: 2-8 (content reproduction rate per sharing event)
+     - Negative amplification: +10-15% engagement vs neutral content
+     - Positive amplification: -5-10% engagement vs neutral content
+     - Online-to-offline conversion: 11-43% (varies by action type, issue salience)
+     - Intervention effectiveness: 25-27% reduction (warning labels, Community Notes)
+   - **Critical Requirement:** Bidirectional modeling (both destructive AND constructive cascades)
+   - **Priority:** LOW (awaiting integration timeline, estimated 12-16 weeks)
+   - **Status:** Research phase complete, awaiting implementation planning
 
-6. **LOW:** TIER 5 Features
+7. **LOW:** P3 Enhancements
+
+8. **LOW:** TIER 5 Features
 
 ---
 
