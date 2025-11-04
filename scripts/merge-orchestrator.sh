@@ -318,8 +318,12 @@ main() {
     # Skip empty lines
     [ -z "$branch" ] && continue
 
+    # Disable errexit temporarily to capture non-zero return codes
+    # (attempt_merge returns 0=success, 1=failure, 2=skipped)
+    set +e
     attempt_merge "$branch"
     RESULT=$?
+    set -e
 
     if [ $RESULT -eq 0 ]; then
       MERGED_COUNT=$((MERGED_COUNT + 1))
