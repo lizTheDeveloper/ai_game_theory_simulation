@@ -30,13 +30,21 @@
     "doc": "attemptDefensiveAIDeployment implementation. See defensiveAI.ts for details."
   },
   {
+<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
+=======
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
+>>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 294,
     "name": "updateDefensiveAI",
     "doc": "Updates defensive a i based on current state and modifiers."
   },
   {
+<<<<<<< HEAD
     "file": "/home/lizthedeveloper_gmail_com/worktrees/researcher-workspace/src/simulation/defensiveAI.ts",
+=======
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
+>>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
     "line": 971,
     "name": "applyDefensiveAIToMAD",
     "doc": "Applies defensive a i to m a d effects to game state."
