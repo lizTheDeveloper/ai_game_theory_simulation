@@ -39,35 +39,29 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 - **🔬 Running experiments?** Check [Running Simulations](./RUNNING_SIMULATIONS.md)
 - **📊 Understanding outcomes?** Read [Understanding Results](./UNDERSTANDING_RESULTS.md)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 ## ⚠️ Recent Changes (November 4, 2025)
 
 **🔍 ONGOING: Phase 2 Citation Verification - Simulation Code (Nov 4, 2025)**
 
 Autonomous systematic verification of all citations in simulation source code:
-- **Status:** Session 3 complete - 6 files verified (ClimateImpactCascadePhase, ClimateJusticePhase, extinctions, planetaryBoundaries, flashWarEscalation, trappedPopulations)
-- **Citations verified:** 26 papers across 20 citation clusters
-- **Overall success rate:** ~85% fully verified across all sessions
-- **Session 3 results (5:30 AM):**
-  - `flashWarEscalation.ts`: **A+ (100/100)** - Perfect verification (ECFR flash wars concept, Penn CERL circuit breakers, UN Resolution 166-3 exact vote count, Ukraine 4M drone capacity + Israel Lavender 37K targets)
-  - `trappedPopulations.ts`: **A- (90/100)** - Strong verification (Lake Urmia 71.85% migration, Thalheimer trapped populations Nature 2025, Aghajani psychological categories)
-  - **Issues found:** 1 unverified citation (Columbia 2025 - recommend removal), 2 date errors (Thalheimer 2025 not 2024, Lake Urmia 2021 not 2024), 1 partial attribution (World Bank 12%)
-- **Cumulative issues:** 1 fabrication (Ord 2020 misattribution in extinctions.ts), 4 attribution issues, 3 date errors, 1 unverified citation
-- **Next target:** `src/simulation/mortalityStabilizersInit.ts` (15 files remaining, ~3-4 hours estimated)
+- **Status:** Session 8 complete - `tier2InterventionConfig.ts` partially verified (Dark Compute, Synthetic Ecosystems, Crisis Anticipation sections)
+- **Citations verified (Session 8):** 4 citation clusters (CTBTO, ferret/condor recovery, BlueDot)
+- **Overall grade:** B- (82/100)
+- **Session 8 results (6:30 PM):**
+  - ✅ **CTBTO monitoring** - A+ (100/100) Perfect verification: all 6 NK tests detected, 90% network coverage verified
+  - ⚠️ **Black-footed ferret recovery** - B+ (88/100) Claims verified BUT **CRITICAL PARAMETER ERROR**: code says 60mo (5 years), reality is 240mo (20 years) = **4× too optimistic**
+  - ❌ **California condor** - C+ (75/100) Starting population wrong: code says 14, should be 22 or 27
+  - ⚠️ **BlueDot COVID-19 detection** - B+ (88/100) 9-day lead time verified, terminology imprecision ("prediction" vs "surveillance")
+- **Critical findings:**
+  - 🚨 **recoveryTimeGranted parameter 4× too optimistic** (60mo mode vs 240mo actual)
+  - ❌ Wrong starting populations and outdated cost figures
+- **Combined Sessions 6-8 (tier2InterventionConfig.ts):** 12 citations verified, 25% fully verified, 33% failed
+- **Next target:** Nuclear security citations (Nunn-Lugar, FAS 2024) in tier2InterventionConfig.ts
 - **Progress tracking:** [`research/CITATION_VERIFICATION_PROGRESS.md`](/research/CITATION_VERIFICATION_PROGRESS.md)
 - **Process:** Two-layer verification (1. Citation exists? 2. Does paper actually support the claim?)
 
-**Key Finding:** flashWarEscalation.ts is exemplary model for research-backed parameters - all claims directly supported by authoritative sources with exact numbers verified.
-=======
-=======
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
-=======
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
-=======
->>>>>>> ec227edf9706d904b6372d40db82be5abc2967f3
+**Critical Issue:** The ecosystem recovery time parameter in tier2InterventionConfig.ts is significantly more optimistic than empirical evidence. This needs immediate correction to maintain research-backed integrity.
+
 ## ⚠️ Recent Changes (November 3, 2025)
 
 **🗺️ ROADMAP AUDIT COMPLETE (Nov 3, 2025)**
