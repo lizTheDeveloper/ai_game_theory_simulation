@@ -39,6 +39,35 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 - **🔬 Running experiments?** Check [Running Simulations](./RUNNING_SIMULATIONS.md)
 - **📊 Understanding outcomes?** Read [Understanding Results](./UNDERSTANDING_RESULTS.md)
 
+## ⚠️ Recent Changes (November 3, 2025)
+
+**🗺️ ROADMAP AUDIT COMPLETE (Nov 3, 2025)**
+
+Completed systematic audit of validated research files against roadmap tracking. Identified 3 features that passed Quality Gate 1 (research validation) but were missing from active roadmap:
+
+1. **Climate Mortality Phase 2** (Storm Systems + BII Framework)
+   - Research grade: A- (90% peer-reviewed, 50% from 2024-2025)
+   - Status: READY FOR IMPLEMENTATION with high confidence
+   - Priority: HIGH (4-6h implementation + 1-2h validation)
+   - Validations: Cynthia (HIGH CONFIDENCE), Sylvia (CONDITIONAL PASS)
+
+2. **Cooperative AI Ownership Model**
+   - Research grade: C+ → A- (88% verified after fabrication removal)
+   - Status: READY with acknowledged risks (±40-50% uncertainty)
+   - Priority: MEDIUM (6-8h implementation + 2-3h validation)
+   - Validations: Cynthia (APPROVED), Sylvia (SKEPTICAL but not blocking)
+
+3. **Memetic Contagion System** (Black Mirror Phase 2)
+   - Research status: COMPLETE (Oct 28)
+   - Status: Integration plan ready, long-term timeline (12-16 weeks)
+   - Priority: LOW (awaiting implementation bandwidth)
+
+**Audit report:** [`plans/roadmap-audit-validated-research-20251103.md`](/plans/roadmap-audit-validated-research-20251103.md)
+
+**Files updated:**
+- `plans/MASTER_IMPLEMENTATION_ROADMAP.md` (updated priorities)
+- `plans/SIMULATION_ROADMAP.md` (added 3 features with full context)
+
 ## ⚠️ Recent Changes (November 1, 2025)
 
 **📁 DIRECTORY REORGANIZATION (Nov 1, 2025)**
