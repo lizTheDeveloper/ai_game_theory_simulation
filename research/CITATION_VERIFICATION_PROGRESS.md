@@ -1385,3 +1385,200 @@ This file exemplifies **Layer 2 contamination** described in CLAIM_VERIFICATION_
 - PDF extraction/verification: ~1-2 hours
 
 **Total:** ~9-12 hours for complete sweep
+
+---
+
+### Session 8 - November 4, 2025, 06:30 PM
+
+**Files Processed:**
+- `src/simulation/thresholds/tier2InterventionConfig.ts` ⚠️ PARTIAL (Dark Compute, Synthetic Ecosystems, Crisis Anticipation sections)
+
+**Citations Verified:** 4 citation clusters
+**Verified (✅):** 2 (CTBTO, BlueDot)
+**Failed (❌):** 2 (Black-footed ferret timeline wrong, California condor starting population wrong)
+**Critical Parameter Errors Found:** 2
+
+---
+
+### tier2InterventionConfig.ts - Session 8 Citation Verification Details
+
+#### ✅ Citation 1: CTBTO Monitoring Network - Nuclear Test Detection
+**Location:** Lines 92-104
+**Claims:**
+- "All 6 North Korean nuclear tests detected"
+- "90% network coverage"
+- "Timeframe 1996-2024"
+
+**Verification Status:** ✅ **FULLY VERIFIED**
+
+**Evidence:**
+- **North Korean tests:** CTBTO officially states "The IMS has demonstrated its effectiveness by quickly and accurately detecting all of the Democratic People's Republic of Korea's (DPRK) declared nuclear tests"
+- **Test count:** 6 tests confirmed (2006, 2009, 2013, 2016, 2016, 2017)
+- **Network coverage:** CTBTO website: "Around 90 percent of these 337 facilities are already up and running" (exact match)
+- **Timeframe:** CTBTO established November 19, 1996; tests occurred 2006-2017; current status 2024 ✅
+- **Detection capability:** Even at 60% operational (2006 test), network detected successfully
+
+**Sources:**
+- https://www.ctbto.org/our-work/detecting-nuclear-tests
+- https://www.ctbto.org/our-work/international-monitoring-system
+
+**Grade:** A+ (100/100) - Perfect citation, all claims verified with official sources
+
+---
+
+#### ⚠️ Citation 2: Black-footed Ferret Recovery
+**Location:** Lines 130-154
+**Claims:**
+- "18 individuals → 500 in 20 years"
+- "Captive breeding by U.S. Fish & Wildlife Service"
+- Code parameter: recoveryTimeGranted 36-120 months (mode: 60 months = 5 years)
+
+**Verification Status:** ⚠️ **VERIFIED but CRITICAL PARAMETER ERROR**
+
+**Evidence:**
+1. **Starting population: 18 individuals ✅ VERIFIED**
+   - USFWS: "By 1986 only 18 individuals were known to exist"
+   - Captured 1985-1987 from Meeteetse, Wyoming
+   - 18 total (7 males, 11 females), but only 7 became genetic founders
+
+2. **Recovery to 500 ✅ VERIFIED**
+   - 2006: ~500 wild + ~350 captive = ~850 total
+   - 2007: ~650 wild + ~250 captive = ~900 total
+   - 2024: 1,000+ total population (captive breeding still ongoing)
+
+3. **Timeframe: 20 years ✅ VERIFIED**
+   - 1987 (18 captive) → 2006-2007 (500+ wild) = **19-20 years** ✅
+
+4. **Captive breeding ✅ VERIFIED**
+   - USFWS coordinated program with 6 facilities
+   - Over 10,500 ferret kits born in captivity since 1986
+   - 4,300+ ferrets released to 30+ sites
+
+**🚨 CRITICAL PARAMETER ERROR:**
+- **Code says:** recoveryTimeGranted mode = 60 months (**5 years**)
+- **Reality:** Black-footed ferret took **240 months (20 years)**
+- **Discrepancy:** Code is **4× too optimistic**
+
+**Recommended Parameter Fix:**
+```typescript
+recoveryTimeGranted: {
+  distribution: 'triangular' as const,
+  min: 120,      // 10 years (fast recovery)
+  mode: 240,     // 20 years (ferret actual)
+  max: 480,      // 40 years (condor actual)
+  unit: 'months',
+  citation: 'Black-footed ferret 18→850+ in 20 years (1987-2007), condor 27→569 in 37 years (1987-2024)'
+}
+```
+
+**Grade:** B+ (88/100) - Claims verified but code parameter doesn't match evidence
+
+---
+
+#### ❌ Citation 3: California Condor Recovery
+**Location:** Lines 131-133, 171
+**Claims:**
+- "14 individuals → 200+"
+- "$35 million program cost (most expensive)"
+
+**Verification Status:** ❌ **STARTING POPULATION WRONG**
+
+**Evidence:**
+1. **Starting population: 14 ❌ WRONG**
+   - **Actual:** 22 individuals (1982 wild population low)
+   - **Or:** 27 individuals (1987 when all captured: 14 wild + 13 captive)
+   - **NOT 14** - this number is incomplete
+
+2. **Recovery to 200+ ✅ VERIFIED but understated**
+   - 2024: **569 individuals** (344 wild, 225 captive)
+   - 200+ mark reached by mid-2000s
+   - **Timeframe:** 27 (1987) → 569 (2024) = **37 years**
+
+3. **$35 million ⚠️ ACCURATE but OUTDATED**
+   - $35M = cumulative cost from **~1945 through early 2000s**
+   - More recent: $45M+ by mid-2000s
+   - Current annual: $5M/year operational
+   - **Estimated total (2024):** $70-120M+
+
+4. **"Most expensive" ❌ MISLEADING**
+   - Should be "**one of the most expensive**"
+   - GAO report: Sea turtle recovery cost $153.8M (higher than condor)
+   - Whooping crane: $48M
+
+**Recommended Corrections:**
+- Line 131: Change "14 → 200+" to "22 → 569 (27 captive start 1987)"
+- Line 154: Change "condor 14→200+ in 40 years" to "condor 27→569 in 37 years (1987-2024)"
+- Line 171: Change "most expensive" to "one of most expensive" and update cost context
+
+**Grade:** C+ (75/100) - Major numerical errors (starting population wrong)
+
+---
+
+#### ⚠️ Citation 4: BlueDot COVID-19 Detection
+**Location:** Line 280
+**Claim:** "BlueDot COVID-19 detection 9 days before WHO announcement"
+
+**Verification Status:** ⚠️ **VERIFIED with TERMINOLOGY CLARIFICATION**
+
+**Evidence:**
+1. **Detection ✅ VERIFIED**
+   - BlueDot alert: December 30, 2019 (some sources: Dec 31)
+   - Alert type: "Unusual pneumonia cases around Wuhan market"
+   - Method: AI-powered NLP analysis of 10,000+ sources in 60+ languages
+
+2. **"9 days before WHO" ✅ VERIFIED**
+   - WHO announcement: January 9, 2020
+   - Time difference: **9-10 days** (depending on Dec 30 vs Dec 31)
+   - Direct quote: "It would be another nine days before the World Health Organization released its statement"
+
+3. **"Pandemic prediction system" ⚠️ IMPRECISE**
+   - **More accurate:** "AI-powered infectious disease **surveillance and early warning system**"
+   - BlueDot does **outbreak detection** (faster than official channels), NOT prediction of future outbreaks
+   - Technology: NLP + ML monitoring of global news, airline data, population density
+   - Monitors 190+ diseases continuously (every 15 minutes, 24/7)
+
+**Recommended Clarification:**
+- Change "pandemic prediction system" → "AI-powered infectious disease surveillance system"
+- OR: "early warning/outbreak detection system"
+
+**Grade:** B+ (88/100) - Facts correct, terminology imprecise
+
+---
+
+### Summary for tier2InterventionConfig.ts - Session 8
+
+**Overall Grade:** B- (82/100)
+**Citations Verified This Session:** 4 citation clusters
+**Issues Found:**
+- ❌ 1 wrong starting population (California condor: 14 should be 22 or 27)
+- 🚨 1 critical parameter error (ferret recovery: 60 months vs 240 months actual)
+- ⚠️ 1 terminology imprecision (BlueDot: "prediction" vs "surveillance/detection")
+- ⚠️ 1 cost figure outdated (condor: $35M is 2000s figure, now $70-120M+)
+
+**Strengths:**
+- ✅ CTBTO citation perfect (A+)
+- ✅ All papers/sources are real and authoritative
+- ✅ Core recovery success stories are accurate
+- ✅ Time comparisons (ferret 20 years, condor 37 years) verified
+
+**Critical Finding:**
+The **recoveryTimeGranted parameter is 4× too optimistic** compared to empirical evidence. This could significantly affect simulation outcomes for ecosystem recovery scenarios.
+
+**Previously Flagged Issues (Session 6):**
+- Bayraktarov coastal protection: $400K should be $80K median
+- AI interpretability citations: Multiple errors (wrong papers, wrong years, wrong authors)
+- Acemoglu & Restrepo: Wrong year, false "meaning crisis" attribution
+- Putnam "Bowling Alone": Temporal impossibility (2020 data in 2000 book)
+
+---
+
+**Combined Sessions 6-8 for tier2InterventionConfig.ts:**
+- **Total citations verified:** 12 (8 in Sessions 6-7, 4 in Session 8)
+- **Fully verified (✅):** 3 (25%)
+- **Partially verified (⚠️):** 5 (42%)
+- **Failed (❌):** 4 (33%)
+- **Critical parameter errors:** 1 (ferret recovery timeline)
+
+**Next Pickup Point:** Verify Nuclear Command Security citations (Nunn-Lugar, FAS 2024) in tier2InterventionConfig.ts lines 293-343, then move to next file
+
+---
