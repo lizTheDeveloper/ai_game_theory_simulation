@@ -1,0 +1,34 @@
+CITATION VERIFICATION SUMMARY - tier2InterventionConfig.ts Groups 1-3
+=====================================================================
+Date: 2025-11-04
+File: src/simulation/thresholds/tier2InterventionConfig.ts (lines 293-446)
+
+CRITICAL FINDINGS:
+==================
+
+🚨 HIGH PRIORITY - Potentially Fabricated Citation:
+   - FAS 2024 "Nuclear security gap analysis" - NOT FOUND
+   - No such document exists in FAS 2024 publications
+   - ACTION REQUIRED: Find actual source or remove
+
+❌ CITATION ERRORS:
+   - Acemoglu & Restrepo: Wrong year (2019, not 2022)
+   - "Microsoft case study": Misleading (company anonymized in paper)
+
+❌ UNVERIFIED STATISTICS (3):
+   - AmeriCorps 15% civic engagement increase (1994-2020)
+   - Community corps 20-30% trust increase
+   - Participatory budgeting 25% civic engagement increase
+   - ACTION: Find specific reports or revise to verified ranges
+
+✅ VERIFIED CLAIMS (8):
+   - Nunn-Lugar $8B (1991-2012)
+   - 7,600 warheads eliminated
+   - 902 ICBMs deactivated (final: 926)
+   - 33 submarines deactivated
+   - No theft/diversion incidents
+   - Acemoglu framework (automation vs augmentation)
+   - Brynjolfsson et al. augmentation benefits (14% avg, 34% novices)
+   - Putnam "Bowling Alone" social capital framework
+
+DETAILED REPORT: logs/citation_verification_tier2_groups1-3_20251104.md
