@@ -1054,13 +1054,149 @@ Update comment to more accurately reflect source:
 
 ---
 
-**Next Pickup Point:** `src/simulation/thresholds/tier2InterventionConfig.ts` (line 40)
+---
+
+### Session 6 - November 4, 2025, 09:00 AM
+
+**Files Processed:**
+- `src/simulation/thresholds/tier2InterventionConfig.ts` ⚠️ PARTIAL (AI Interpretability + Coastal Protection sections)
+
+**Citations Verified:** 5
+**Verified (✅):** 1 (Greenblatt et al. 2024 - close match)
+**Failed (❌):** 4 (attribution errors, wrong values)
+
+---
+
+### tier2InterventionConfig.ts - Citation Verification Details
+
+#### ❌ Citation 1: Anthropic (2024) "Scaling Monosemanticity" - WRONG PAPER
+**Location:** Lines 40, 51
+**Claim:** ">99% AUROC on simple probes for sleeper agent detection"
+**Verification Status:** ❌ **WRONG PAPER - CLAIM FROM DIFFERENT SOURCE**
+
+**Evidence:**
+- "Scaling Monosemanticity" (Templeton et al., May 2024) is about SAE feature extraction, NOT sleeper agent detection
+- **Correct source:** MacDiarmid et al. (2024) "Simple probes can catch sleeper agents" (April 2024)
+- Direct quote: "linear detectors with AUROC scores above 99% can be created using generic contrast pairs"
+- Specifically reports 99.3% AUROC with minimal two-text contrast pair
+
+**Grade:** D (40/100) - Correct claim, completely wrong paper
+
+**Recommendation:** Replace "Scaling Monosemanticity" with "Simple probes can catch sleeper agents" (MacDiarmid et al., 2024)
+
+---
+
+#### ❌ Citation 2: Burns et al. (2025) - WRONG YEAR
+**Location:** Line 41
+**Claim:** "Discovering Latent Knowledge in Language Models"
+**Verification Status:** ❌ **DATE ERROR**
+
+**Evidence:**
+- **Correct citation:** Burns, C., Ye, H., Klein, D., & Steinhardt, J. (2022). "Discovering Latent Knowledge in Language Models Without Supervision." ICLR 2023, arXiv:2212.03827
+- Paper published December 7, 2022 (presented at ICLR 2023)
+- NOT 2025
+- Paper IS relevant: introduces CCS method for accessing internal knowledge vs outputs, 82-84% accuracy even with misleading prompts
+
+**Grade:** B+ (88/100) - Correct paper and relevance, wrong year only
+
+**Recommendation:** Update year from 2025 to "2022 (ICLR 2023)" or simply "2023"
+
+---
+
+#### ❌ Citation 3: Sharma et al. (2024) "Persona Vectors" - WRONG AUTHORS, WRONG YEAR, MISLEADING CLAIM
+**Location:** Lines 42, 51
+**Claim:** "r=0.76-0.97 correlation with true goals"
+**Verification Status:** ❌ **MULTIPLE ERRORS**
+
+**Evidence:**
+- **Correct citation:** Chen, R., Arditi, A., Sleight, H., Evans, O., & Lindsey, J. (2025). "Persona Vectors: Monitoring and Controlling Character Traits in Language Models." arXiv:2507.21509
+- **Lead author is Chen, NOT Sharma** (no Sharma in author list)
+- **Year is 2025, NOT 2024**
+- **Claim is misleading:** r=0.76-0.97 measures correlation between "finetuning shift along persona vector" and "trait expression," NOT "true goals"
+- Paper is about predicting personality drift during training, not detecting hidden objectives
+
+**Grade:** C- (65/100) - Paper exists and correlation values correct, but wrong attribution and misinterpreted claim
+
+**Recommendation:**
+1. Change authors to Chen et al.
+2. Change year to 2025
+3. Clarify claim: "r=0.76-0.97 correlation between finetuning shifts and trait expression" OR "r=0.76-0.97 predictive accuracy for personality drift"
+
+---
+
+#### ⚠️ Citation 4: Greenblatt et al. (2024) "Alignment Faking" - CLOSE BUT IMPRECISE VALUES
+**Location:** Line 43
+**Claim:** "7% → 78% increase with RL training"
+**Verification Status:** ⚠️ **VALUES SLIGHTLY WRONG**
+
+**Evidence:**
+- **Correct citation:** Greenblatt, R., et al. (2024). "Alignment Faking in Large Language Models." arXiv:2412.14093v2
+- Paper is REAL and RELEVANT
+- **Actual values:** 11.9% → 78.4% (NOT 7% → 78%)
+- The 7% figure is the lower bound across different experimental conditions (7-24% range)
+- The 78.4% corresponds to prompted helpful-only condition with 11.9% baseline
+- This is a 6.6× increase in alignment-faking reasoning
+
+**Grade:** A- (90/100) - Paper perfect, values close but not exact
+
+**Recommendation:** Update to "12% → 78%" or clarify "7-24% baseline across conditions, up to 78% post-RL"
+
+---
+
+#### ❌ Citation 5: Bayraktarov et al. (2016) - WRONG COST VALUES
+**Location:** Lines 202, 214, 222
+**Claim:** "median $400K/ha, range $13K-$1M"
+**Verification Status:** ❌ **INCORRECT VALUES**
+
+**Evidence:**
+- **Correct citation:** Bayraktarov, E., et al. (2016). "The cost and feasibility of marine coastal restoration." Ecological Applications, 26(4), 1055-1074. DOI: 10.1890/15-1077
+- Paper is REAL and HIGHLY RELEVANT
+- **Actual median cost: $80,000/ha (2010 USD), NOT $400K**
+- Paper reports: "median and average reported costs... were around US$80,000 (2010) and US$1,600,000 (2010)"
+- With total costs (capital + operating): seagrass $384K, coral $162K, saltmarsh $151K, mangroves $2.5K
+- **Actual range:** $1,000/ha (mangroves, developing countries) to $10M+ (coral reefs)
+- $13K-$1M range is incomplete
+
+**Grade:** D+ (68/100) - Paper exists and is relevant, but cost values significantly wrong
+
+**Recommendation:**
+1. Update median to $80K/ha (overall) or $24K/ha (coastal protection ecosystems: mangroves + saltmarsh)
+2. Update range to [$1K, $10M] or be specific about ecosystem type
+3. Add context: costs vary 10-30× between developed/developing countries
+
+---
+
+### Summary for tier2InterventionConfig.ts (Partial)
+
+**Overall Grade:** C+ (72/100)
+**Citations Verified:** 5
+**Issues Found:**
+- ❌ 1 completely wrong paper (Scaling Monosemanticity → should be Simple Probes)
+- ❌ 1 wrong year (Burns 2025 → 2022/2023)
+- ❌ 1 wrong authors + wrong year + misinterpreted claim (Sharma → Chen, 2024 → 2025, claim needs clarification)
+- ⚠️ 1 imprecise values (7%→78% should be 12%→78%)
+- ❌ 1 wrong cost values (Bayraktarov $400K → $80K median)
+
+**Strengths:**
+- All papers are REAL (no fabrications)
+- All papers are RELEVANT to the claims
+- Research foundation is solid, just attribution/value errors
+
+**Critical Issue Pattern:**
+- This file shows **Layer 2 contamination** throughout
+- Papers exist and are high-quality
+- But specific values, authors, years, and claim interpretations have errors
+- This is EXACTLY the pattern described in CLAIM_VERIFICATION_CRISIS.md
+
+---
+
+**Next Pickup Point:** Continue `src/simulation/thresholds/tier2InterventionConfig.ts` (verify remaining citation groups: Dark Compute, Synthetic Ecosystems, Nuclear Security, Centaur Systems, Community Cohesion)
 
 ---
 
 **Estimated Time Remaining:**
-- Medium Priority: ~30 min
-- Simulation code verification: ~4-5 hours (19 files @ 15 min each)
+- Finish tier2InterventionConfig.ts: ~15 min (3 more citation groups)
+- Remaining simulation files: ~4-5 hours (17 files)
 - Low Priority research files: ~3-4 hours
 - PDF extraction/verification: ~1-2 hours
 
