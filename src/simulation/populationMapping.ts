@@ -61,27 +61,23 @@ export function mapCountryRegionToStandardRegion(countryRegion: string): RegionN
     return 'Europe';
   }
 
-  // Eastern Asia (UN statistical name)
+  // East Asia (standardized name)
   // Match both "East Asia" (common) and "Eastern Asia" (UN statistical)
   if (normalized.includes('eastern asia') || normalized.includes('east asia') || normalized === 'east asia') {
-    return 'Eastern Asia';
+    return 'East Asia';
   }
 
-  // Southern Asia (UN statistical name)
+  // South Asia (standardized name)
   // Match both "South Asia" (common) and "Southern Asia" (UN statistical)
-  if (normalized.includes('southern asia') || normalized.includes('south asia') || normalized === 'south asia') {
-    return 'Southern Asia';
+  // Also includes Southeast Asia mapping
+  if (normalized.includes('southern asia') || normalized.includes('south asia') || normalized === 'south asia' || normalized.includes('southeast asia') || normalized.includes('south-east asia')) {
+    return 'South Asia';
   }
 
-  // South-East Asia (UN statistical name, with hyphen)
-  if (normalized.includes('southeast asia') || normalized.includes('south-east asia') || normalized === 'southeast asia') {
-    return 'South-East Asia';
-  }
-
-  // Northern America (UN statistical name)
+  // North America (standardized name)
   // Match both "North America" (common) and "Northern America" (UN statistical)
   if (normalized.includes('northern america') || normalized.includes('north america') || normalized === 'north america') {
-    return 'Northern America';
+    return 'North America';
   }
 
   // Latin America (South America, Central America)
@@ -99,14 +95,19 @@ export function mapCountryRegionToStandardRegion(countryRegion: string): RegionN
     return 'Sub-Saharan Africa';
   }
 
-  // Oceania (UN statistical name - has its own region in populationDynamics.ts)
+  // Oceania and Central Asia map to closest regional match
+  // (these regions are not tracked separately in our 7-region system)
   if (normalized.includes('oceania') || normalized.includes('pacific')) {
-    return 'Oceania';
+    return 'East Asia';  // Geographic/economic proximity
   }
 
-  // Default to Northern America (most common case)
-  console.warn(`⚠️  Unknown country region "${countryRegion}", defaulting to Northern America`);
-  return 'Northern America';
+  if (normalized.includes('central asia')) {
+    return 'Middle East & North Africa';  // Geographic proximity
+  }
+
+  // Default to North America (most common case)
+  console.warn(`⚠️  Unknown country region "${countryRegion}", defaulting to North America`);
+  return 'North America';
 }
 
 /**
@@ -142,18 +143,15 @@ export function createRegionCountryMaps(countries: Record<CountryName, { region:
   const regionToCountries = new Map<RegionName, Set<CountryName>>();
   const countryToRegion = new Map<CountryName, RegionName>();
 
-  // Initialize region sets (UN statistical names from populationDynamics.ts)
+  // Initialize region sets (standardized 7-region system)
   const regions: RegionName[] = [
-    'Northern America',
+    'North America',
     'Europe',
-    'Eastern Asia',
-    'Southern Asia',
-    'South-East Asia',
-    'Central Asia',
+    'East Asia',
+    'South Asia',
     'Sub-Saharan Africa',
     'Latin America',
-    'Middle East & North Africa',
-    'Oceania'
+    'Middle East & North Africa'
   ];
 
   for (const region of regions) {

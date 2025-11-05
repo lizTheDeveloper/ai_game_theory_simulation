@@ -3582,7 +3582,6 @@ state.history.exogenousShocks?: Array<{
   - Dry-run mode for testing (`--dry-run` flag)
   - Failed merge branches preserved for inspection
   - Comprehensive logging with color output
-  - Robust branch name parsing (handles `*`, `+`, space prefixes from `git branch -a`)
 - **Configuration**:
   - `IS_VM`: Set to "true" on VM to skip frontend branches
   - `MERGE_ORCHESTRATOR_DRY_RUN`: Test mode (no actual merges)

@@ -275,12 +275,7 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
         {
           location: 'ClimateImpactCascade.calculateFamineRisks',
           valueName: 'foodSecurity',
-          month: state.currentMonth,
-          additionalInfo: {
-            currentFoodSecurity,
-            change,
-            region
-          }
+          month: state.currentMonth
         }
       );
 
