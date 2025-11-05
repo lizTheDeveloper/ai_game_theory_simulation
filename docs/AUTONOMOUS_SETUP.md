@@ -172,6 +172,56 @@ sudo journalctl -u claude-worker.service -n 50
 sudo journalctl -u claude-worker.service -f
 ```
 
+### Health Monitoring & Auto-Remediation
+
+**Proactive health checking** (as of Nov 5, 2025):
+
+The autonomous worker system now includes automated health monitoring with self-healing capabilities.
+
+**How it works:**
+- **`autonomous-worker-watcher.sh`** runs at `:15` past each hour (15 minutes after worker runs)
+- Monitors last 90 minutes for worker execution, errors, timeouts
+- Automatically diagnoses and fixes common issues
+- Creates GitHub issues if manual intervention needed
+
+**Recommended Cron Schedule:**
+```bash
+# :00 - Autonomous worker runs (main implementation work)
+0 * * * * cd ~/ai_game_theory_simulation && ./autonomous-worker.sh >> logs/cron_worker.log 2>&1
+
+# :15 - Health check & auto-fix (monitors previous hour's worker)
+15 * * * * cd ~/ai_game_theory_simulation && ./scripts/autonomous-worker-watcher.sh >> logs/cron_watcher.log 2>&1
+
+# :45 - Merge orchestrator (processes pending branches)
+45 * * * * cd ~/ai_game_theory_simulation && ./scripts/merge-orchestrator.sh >> logs/cron_merge.log 2>&1
+```
+
+**What it monitors:**
+- Worker execution frequency (detects stuck/stopped workers)
+- Error patterns in recent logs
+- Timeout detection (25-minute limit)
+- Worker branch accumulation
+- Merge orchestrator health
+- Cron service status (VM only)
+
+**Auto-remediation capabilities:**
+- Restarts cron if stopped
+- Kills hung worker processes
+- Cleans up lock files
+- Diagnoses API key issues
+- Spawns Claude Code to fix complex problems
+
+**View watcher logs:**
+```bash
+# Recent health checks
+ls -lt ~/ai_game_theory_simulation/logs/worker_watcher/
+
+# Latest health report
+tail -100 ~/ai_game_theory_simulation/logs/worker_watcher/watcher_*.log | tail -1
+```
+
+**See:** `scripts/CRON_SETUP.md` for complete cron setup guide and troubleshooting.
+
 ### Pull Request Workflow
 
 **Automatic PR creation** (as of Oct 30, 2025):
