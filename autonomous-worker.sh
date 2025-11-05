@@ -195,15 +195,12 @@ CONFLICT_EOF
     cat > /tmp/claude_task_$TIMESTAMP.txt << TASK_EOF
 ## API Usage Context
 
-Current API usage (checked before this session started):
-- **Session**: ${SESSION_USAGE_PCT}% used (resets at 10pm Pacific)
+Current subscription usage (checked before this session started):
+- **Session**: ${SESSION_USAGE_PCT}% used (few million tokens, exact limit varies by model - likely 30-50M tokens)
 - **Week**: ${WEEK_USAGE_PCT}% used (resets Nov 10, 3pm Pacific)
 - **Opus**: ${OPUS_USAGE_PCT}% used
 
-**Token Budget Guidance:**
-- Under 50%: Normal operation - prioritize CRITICAL/HIGH items
-- 50-75%: Be cost-conscious - focus on highest-value work only
-- Over 75%: Conservative mode - only CRITICAL items, be concise
+**Always be concise and prioritize the highest-priority, highest-value work available.** This usage context is for your awareness - work on what matters most regardless of percentage.
 
 Read plans/MASTER_IMPLEMENTATION_ROADMAP.md and identify work to do.
 
