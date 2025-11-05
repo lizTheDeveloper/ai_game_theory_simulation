@@ -80,8 +80,8 @@ export function ParadigmDashboard() {
     lastUpdate.indigenousIndex
   ]
 
-  const avgScore = scores.reduce((a, b) => (a ?? 0) + (b ?? 0), 0) / scores.length
-  const divergence = Math.sqrt(scores.reduce((sum, s) => (sum ?? 0) + Math.pow((s ?? 0) - avgScore, 2), 0) / scores.length)
+  const avgScore = scores.reduce((a: number, b) => a + (b ?? 0), 0) / scores.length
+  const divergence = Math.sqrt(scores.reduce((sum: number, s) => sum + Math.pow((s ?? 0) - avgScore, 2), 0) / scores.length)
 
   // Detect contested outcome (simultaneous utopia + dystopia)
   const utopiaCount = scores.filter(s => (s ?? 0) >= 80).length
