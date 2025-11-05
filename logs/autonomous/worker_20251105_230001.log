@@ -34,3 +34,91 @@ Your branch is behind 'origin/main' by 2 commits, and can be fast-forwarded.
   (use "git pull" to update your local branch)
 [1;33m⚠️  Uncommitted changes detected on main branch[0m
 [0;34mℹ️  Committing local changes before pull...[0m
+
+🎨 Validating emoji usage...
+  1. Checking emoji map for duplicates...
+[0;32m     ✅ No duplicates in emoji map[0m
+  2. Checking staged files for emoji usage...
+[0;32m     ✅ All emojis registered[0m
+  3. Validating GameState field references...
+[0;32m     ✅ GameState field references look valid[0m
+
+[0;32m✅ Pre-commit validation passed[0m
+
+✅ Docs already updated in commit - skipping historian
+[main a11813473] chore: Auto-commit before pull (worker 20251105_230001)
+ 17 files changed, 1984 insertions(+), 443 deletions(-)
+ create mode 100644 logs/autonomous/metrics_20251105_220001.json
+ create mode 100644 logs/autonomous/status_current.txt
+ create mode 100644 logs/autonomous/worker_20251105_230001.log
+ create mode 100644 logs/determinism_investigation_20251105.md
+ create mode 100644 logs/merge_orchestrator/merge_20251105_220001.log
+ create mode 100644 logs/merge_orchestrator/merge_20251105_223001.log
+ create mode 100644 logs/merge_orchestrator/merge_20251105_230001.log
+ create mode 100644 logs/worker_watcher/watcher_20251105_221501.log
+ create mode 100644 scripts/debugDeterminism.ts
+[0;34mℹ️  Pulling latest from main...[0m
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch                main       -> FETCH_HEAD
+Auto-merging docs/underdocumented.json
+CONFLICT (content): Merge conflict in docs/underdocumented.json
+Auto-merging src/simulation/engine/phases/FreshwaterPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/FreshwaterPhase.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[0;31m❌ Pull failed - likely merge conflict[0m
+[0;34mℹ️  Invoking Claude to resolve merge conflicts...[0m
+Excellent! The merge has been completed successfully. Let me provide a summary:
+
+## Merge Conflict Resolution Complete ✅
+
+Successfully resolved all merge conflicts and completed the merge from `origin/main`.
+
+### Conflicts Resolved:
+
+1. **src/simulation/engine/phases/FreshwaterPhase.ts**
+   - **Issue:** Conflicting changes about `setDeterministicRng` import and function signatures
+   - **Resolution:** Kept HEAD version with:
+     - Added `setDeterministicRng` import (matching PhosphorusPhase pattern)
+     - Called `setDeterministicRng(rng)` before updates
+     - Correct signature: `checkFreshwaterTechUnlocks(state)` (1 param, not 2)
+
+2. **docs/underdocumented.json**
+   - **Issue:** 417 conflict markers due to different file paths (different home directories)
+   - **Resolution:** Used `git checkout --ours` to keep local paths (correct for this environment)
+
+### Merge Result:
+
+- Branch: `main`
+- Status: **3 commits ahead of origin/main** (ready to push)
+- Merge commit: `748f9030f`
+- Recent commits show historian auto-documentation working correctly
+
+### Verification:
+
+All conflicts have been resolved properly:
+- FreshwaterPhase now follows the same pattern as PhosphorusPhase
+- Documentation paths are correct for local environment
+- Pre-commit hooks passed (emoji validation, GameState checks)
+- Historian agent auto-updated docs after merge
+
+The merge is complete and your local branch is ready to push to origin if needed.
+[0;32m✅ Conflicts resolved, continuing...[0m
+[0;36m📊 Current commit: 6d1c6b7e2[0m
+[0;34mℹ️  Creating branch: auto/worker-20251105_230001[0m
+Switched to a new branch 'auto/worker-20251105_230001'
+[0;32m✅ Branch created[0m
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;35m⏱️  [ENVIRONMENT SETUP] +322s[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;34mℹ️  Environment ready (Node.js/TypeScript)[0m
+[0;36m📊 Claude Code version: 2.0.34 (Claude Code)[0m
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;35m⏱️  [CLAUDE CODE EXECUTION] +2s[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;34mℹ️  Fetching current API usage...[0m
+[0;36m📊 API Usage - Session: 6%, Week: 31%, Opus: 17%[0m
+[0;34mℹ️  Preparing orchestrator task...[0m
+[0;32m✅ Task prompt created[0m
+[0;34mℹ️  Starting Claude Code (25-minute timeout)...[0m

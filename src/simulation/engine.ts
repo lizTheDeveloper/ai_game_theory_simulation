@@ -873,7 +873,7 @@ export class SimulationEngine {
       
       // Phase 2: Environmental Accumulation
       // Track environmental debt from production/growth
-      updateEnvironmentalAccumulation(state);
+      updateEnvironmentalAccumulation(state, rng);
       
       // Phase 3: Social Cohesion & Meaning Crisis
       // Track psychological and social costs from automation

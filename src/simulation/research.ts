@@ -449,10 +449,13 @@ export function applyResearchGrowth(
   ai: AIAgent,
   state: GameState,
   selection: ReturnType<typeof selectDimensionToAdvance>,
-  rng?: () => number // Phase 1: Add RNG parameter for Lévy flights
+  rng: () => number // REQUIRED: Deterministic RNG for reproducibility
 ): { newProfile: AICapabilityProfile; growth: number } {
   const newProfile = JSON.parse(JSON.stringify(ai.capabilityProfile)) as AICapabilityProfile;
-  const random = rng || Math.random; // Use provided RNG or fallback
+
+  // DETERMINISM FIX (Nov 5, 2025): RNG is now required, no fallback to Math.random
+  // This ensures Monte Carlo simulations are reproducible with seeds
+  const random = rng;
 
   // Get government investment for this dimension/research
   const govInvestment = state.government.researchInvestments;
