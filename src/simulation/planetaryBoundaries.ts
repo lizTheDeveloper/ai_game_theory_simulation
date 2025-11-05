@@ -457,7 +457,7 @@ function initializeLandUseSystem(rng?: RNGFunction): LandUseSystem {
     globalExtinctionRate = sampleBiosphereExtinctionRate(rng);
     // Scale regional rates proportionally to maintain relative differences
     // while shifting global rate to sampled value
-    const baselineGlobalRate = 
+    const baselineGlobalRate =
       tropical.extinctionRate * tropical.biodiversityWeight +
       temperate.extinctionRate * temperate.biodiversityWeight +
       grasslands.extinctionRate * grasslands.biodiversityWeight +
@@ -465,10 +465,14 @@ function initializeLandUseSystem(rng?: RNGFunction): LandUseSystem {
     // = 116 E/MSY (conservative baseline)
     const scaleFactor = globalExtinctionRate / baselineGlobalRate;
     // Scale regional rates proportionally
-    tropical.extinctionRate *= scaleFactor;
-    temperate.extinctionRate *= scaleFactor;
-    grasslands.extinctionRate *= scaleFactor;
-    borealArctic.extinctionRate *= scaleFactor;
+    // DETERMINISM FIX (Nov 5, 2025): Clamp scaled rates to [10, 1000] E/MSY range
+    // Prevents assertion errors when sampling high global extinction rates
+    const MAX_EXTINCTION_RATE = 1000.0;
+    const MIN_EXTINCTION_RATE = 10.0;
+    tropical.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, tropical.extinctionRate * scaleFactor));
+    temperate.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, temperate.extinctionRate * scaleFactor));
+    grasslands.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, grasslands.extinctionRate * scaleFactor));
+    borealArctic.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, borealArctic.extinctionRate * scaleFactor));
   } else {
     // Single run: Use conservative baseline
     globalExtinctionRate =

@@ -53,14 +53,19 @@ function poissonSample(lambda: number, rng: () => number): number {
  */
 export function calculateCreationRate(state: GameState): number {
   const baseRate = 0.5; // 0.5 new AIs per month on average
-  
+
   // Total AI capability drives more AI creation
   const totalCapability = state.aiAgents
     .filter(ai => ai.lifecycleState !== 'retired')
     .reduce((sum, ai) => sum + ai.capability, 0);
-  
+
+  // DEBUG (Nov 5, 2025): Track capability sum for determinism debugging
+  if (state.currentMonth <= 2) {
+    console.log(`[DETERMINISM DEBUG] Month ${state.currentMonth}: totalCapability=${totalCapability.toFixed(6)} from ${state.aiAgents.filter(ai => ai.lifecycleState !== 'retired').length} active AIs`);
+  }
+
   const technologyMultiplier = 1 + totalCapability * 0.05; // 5% increase per unit of capability
-  
+
   return baseRate * technologyMultiplier;
 }
 
@@ -228,16 +233,20 @@ function createNewAI(state: GameState, index: number, rng: () => number): AIAgen
   agent.capabilityProfile.selfImprovement = Math.max(agent.capabilityProfile.selfImprovement, capabilityFloor.selfImprovement);
   
   // Research dimensions (nested)
-  const researchCategories: Array<keyof typeof agent.capabilityProfile.research> = [
-    'biotech', 'materials', 'climate', 'computerScience'
-  ];
-  
-  for (const category of researchCategories) {
+  // DETERMINISM FIX (Nov 5, 2025): Replace Object.keys() with explicit key ordering
+  // Object.keys() iteration order is non-deterministic in V8, causing AI agent count divergence
+  const researchSubdimensions = {
+    biotech: ['drugDiscovery', 'geneEditing', 'syntheticBiology', 'neuroscience'] as const,
+    materials: ['nanotechnology', 'quantumComputing', 'energySystems'] as const,
+    climate: ['modeling', 'intervention', 'mitigation'] as const,
+    computerScience: ['algorithms', 'security', 'architectures'] as const
+  };
+
+  for (const category of ['biotech', 'materials', 'climate', 'computerScience'] as const) {
     const agentCat = agent.capabilityProfile.research[category];
     const floorCat = capabilityFloor.research[category];
-    
-    const subDimKeys = Object.keys(agentCat) as Array<keyof typeof agentCat>;
-    for (const key of subDimKeys) {
+
+    for (const key of researchSubdimensions[category]) {
       (agentCat[key] as number) = Math.max(agentCat[key] as number, floorCat[key] as number);
     }
   }
@@ -607,6 +616,11 @@ export function updateAIPopulation(state: GameState, rng: () => number): void {
     const creationRate = calculateCreationRate(state);
     const potentialNew = poissonSample(creationRate, rng);
     newAIsToCreate = Math.min(potentialNew, MAX_POPULATION - activeCount);
+
+    // DEBUG (Nov 5, 2025): Track Poisson sampling for determinism debugging
+    if (state.currentMonth <= 2) {
+      console.log(`[DETERMINISM DEBUG] Month ${state.currentMonth}: creationRate=${creationRate.toFixed(4)}, potentialNew=${potentialNew}, newAIsToCreate=${newAIsToCreate}`);
+    }
   }
 
   for (let i = 0; i < newAIsToCreate; i++) {
