@@ -144,26 +144,66 @@ Commit: 0d88e67 (Nov 5, 2025)
 
 ## ⚠️ Recent Changes (November 4, 2025)
 
+**✅ CITATION VERIFICATION PHASE 2 - SESSION 8 MERGED (Nov 5, 2025)**
+
+Merged autonomous citation verification work from Nov 4 research sessions into main branch (commit ad3bb9b):
+
+**What Was Merged:**
+- **11 new research verification files** with detailed two-layer citation verification
+- **Session 8 complete:** `tier2InterventionConfig.ts` citations verified (Dark Compute, Synthetic Ecosystems, Crisis Anticipation sections)
+- **4 citation clusters verified:** CTBTO monitoring, ferret/condor recovery, BlueDot epidemic detection
+- **Bibliography updates** with Phase 2 findings and new PDFs
+
+**Critical Findings Preserved:**
+- 🚨 **recoveryTimeGranted parameter 4× too optimistic** (code: 60mo, reality: 240mo for black-footed ferrets)
+- ❌ **California condor starting population wrong** (code: 14, should be: 22-27)
+- ⚠️ **Outdated cost figures** in ecosystem restoration parameters
+
+**New Research Files (11 files):**
+1. `citation_verification_anthropic_scaling_monosemanticity_20251104.md` - Anthropic scaling research verification
+2. `citation_verification_burns_latent_knowledge_20251104.md` - Burns et al. latent knowledge paper
+3. `citation_verification_greenblatt_alignment_faking_20251104.md` - Greenblatt alignment faking research
+4. `citation_verification_persona_vectors_20251104.md` - Persona vector research verification
+5. `citation_verification_tier2_synthetic_ecosystems_20251104.md` - Tier 2 synthetic ecosystems verification
+6. `tier2_dark_compute_monitoring_citation_verification_20251104.md` - Dark compute monitoring citations
+7. `tier2_config_acemoglu_restrepo_verification.md` - Acemoglu & Restrepo automation research
+8. `verification_5f5df13_20251104.md` - Commit-specific verification file
+9. `tier2_climate_monitoring_citation_verification_20251104.md` - Climate monitoring citations
+10. `bayraktarov_2016_coastal_restoration_costs.md` - Bayraktarov restoration cost extraction
+11. `CITATION_VERIFICATION_TIER2_DARK_COMPUTE_SUMMARY.md` - Dark compute summary
+12. `CITATION_VERIFICATION_TIER2_SYNTHETIC_ECOSYSTEMS_SUMMARY.md` - Synthetic ecosystems summary
+
+**PDFs Added:**
+- `research/pdfs/2507.21509v1.pdf` - Anthropic scaling paper
+- `research/pdfs/Bayraktarov_2016_marine_coastal_restoration.pdf` - Marine restoration research
+- `research/pdfs/greenblatt_alignment_faking_2024.pdf` - Alignment faking paper
+
+**Verification Statistics (Session 8):**
+- **CTBTO monitoring:** A+ (100/100) - All 6 NK tests detected, 90% network coverage verified
+- **Black-footed ferret recovery:** B+ (88/100) - Claims verified but parameter error found
+- **California condor:** C+ (75/100) - Starting population error identified
+- **BlueDot COVID-19 detection:** B+ (88/100) - 9-day lead time verified
+
+**Combined Sessions 6-8 (tier2InterventionConfig.ts):**
+- 12 citations verified total
+- 25% fully verified (A/A+)
+- 33% failed verification (C-/D/F)
+
+**Next Steps:** Nuclear security citations (Nunn-Lugar, FAS 2024) in tier2InterventionConfig.ts
+
+**Progress Tracking:** [`research/CITATION_VERIFICATION_PROGRESS.md`](/research/CITATION_VERIFICATION_PROGRESS.md)
+
+**Process:** Two-layer verification (1. Citation exists? 2. Does paper actually support the claim?)
+
+Commit: ad3bb9b (Nov 5, 2025)
+
+---
+
 **🔍 ONGOING: Phase 2 Citation Verification - Simulation Code (Nov 4, 2025)**
 
-Autonomous systematic verification of all citations in simulation source code:
-- **Status:** Session 8 complete - `tier2InterventionConfig.ts` partially verified (Dark Compute, Synthetic Ecosystems, Crisis Anticipation sections)
-- **Citations verified (Session 8):** 4 citation clusters (CTBTO, ferret/condor recovery, BlueDot)
-- **Overall grade:** B- (82/100)
-- **Session 8 results (6:30 PM):**
-  - ✅ **CTBTO monitoring** - A+ (100/100) Perfect verification: all 6 NK tests detected, 90% network coverage verified
-  - ⚠️ **Black-footed ferret recovery** - B+ (88/100) Claims verified BUT **CRITICAL PARAMETER ERROR**: code says 60mo (5 years), reality is 240mo (20 years) = **4× too optimistic**
-  - ❌ **California condor** - C+ (75/100) Starting population wrong: code says 14, should be 22 or 27
-  - ⚠️ **BlueDot COVID-19 detection** - B+ (88/100) 9-day lead time verified, terminology imprecision ("prediction" vs "surveillance")
-- **Critical findings:**
-  - 🚨 **recoveryTimeGranted parameter 4× too optimistic** (60mo mode vs 240mo actual)
-  - ❌ Wrong starting populations and outdated cost figures
-- **Combined Sessions 6-8 (tier2InterventionConfig.ts):** 12 citations verified, 25% fully verified, 33% failed
-- **Next target:** Nuclear security citations (Nunn-Lugar, FAS 2024) in tier2InterventionConfig.ts
-- **Progress tracking:** [`research/CITATION_VERIFICATION_PROGRESS.md`](/research/CITATION_VERIFICATION_PROGRESS.md)
-- **Process:** Two-layer verification (1. Citation exists? 2. Does paper actually support the claim?)
+Autonomous systematic verification of all citations in simulation source code - work preserved and merged into main.
 
-**Critical Issue:** The ecosystem recovery time parameter in tier2InterventionConfig.ts is significantly more optimistic than empirical evidence. This needs immediate correction to maintain research-backed integrity.
+**Critical Issue Identified:** The ecosystem recovery time parameter in tier2InterventionConfig.ts is significantly more optimistic than empirical evidence (4× too optimistic). This needs correction to maintain research-backed integrity.
 
 ## ⚠️ Recent Changes (November 3, 2025)
 
