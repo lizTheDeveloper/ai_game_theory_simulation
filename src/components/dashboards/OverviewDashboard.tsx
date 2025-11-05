@@ -91,8 +91,8 @@ export function OverviewDashboard() {
   // Determine overall status
   const getOverallStatus = () => {
     if (lastUpdate.extinctionProbability && lastUpdate.extinctionProbability > 0.9) return 'extinction'
-    if (paradigms.ecological.value < 20) return 'critical'
-    if (paradigms.western.value < 30) return 'warning'
+    if ((paradigms.ecological.value ?? 50) < 20) return 'critical'
+    if ((paradigms.western.value ?? 50) < 30) return 'warning'
     return 'normal'
   }
 
@@ -113,22 +113,22 @@ export function OverviewDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
           label="Global Population"
-          value={population.toFixed(2)}
+          value={(population ?? 0).toFixed(2)}
           unit="B"
-          status={population < 2.0 ? 'critical' : 'normal'}
-          trend={population < 7.0 ? 'down' : 'stable'}
+          status={(population ?? 8) < 2.0 ? 'critical' : 'normal'}
+          trend={(population ?? 8) < 7.0 ? 'down' : 'stable'}
         />
         <MetricCard
           label="Quality of Life"
-          value={(qol * 100).toFixed(1)}
-          status={qol < 0.4 ? 'critical' : qol < 0.6 ? 'warning' : 'normal'}
-          trend={qol < 0.5 ? 'down' : 'stable'}
+          value={((qol ?? 0) * 100).toFixed(1)}
+          status={(qol ?? 0.5) < 0.4 ? 'critical' : (qol ?? 0.5) < 0.6 ? 'warning' : 'normal'}
+          trend={(qol ?? 0.5) < 0.5 ? 'down' : 'stable'}
         />
         <MetricCard
           label="AI Capability"
-          value={aiCap.toFixed(2)}
-          status={aiCap > 4.5 ? 'critical' : aiCap > 4.0 ? 'warning' : 'normal'}
-          trend={aiCap > 4.0 ? 'up' : 'stable'}
+          value={(aiCap ?? 0).toFixed(2)}
+          status={(aiCap ?? 0) > 4.5 ? 'critical' : (aiCap ?? 0) > 4.0 ? 'warning' : 'normal'}
+          trend={(aiCap ?? 0) > 4.0 ? 'up' : 'stable'}
         />
         <MetricCard
           label="Alignment Score"
@@ -143,7 +143,7 @@ export function OverviewDashboard() {
         {/* Multi-Paradigm Status */}
         <Panel
           title="Multi-Paradigm DUI"
-          glow={(paradigms.ecological as any).value < 20 ? 'red' : 'cyan'}
+          glow={(paradigms.ecological.value ?? 50) < 20 ? 'red' : 'cyan'}
         >
           <div className="grid grid-cols-2 gap-4">
             <button
@@ -154,7 +154,7 @@ export function OverviewDashboard() {
                 Western Liberal →
               </div>
               <div className="text-3xl font-light">
-                {paradigms.western.value.toFixed(1)}
+                {(paradigms.western.value ?? 0).toFixed(1)}
               </div>
             </button>
             <button
@@ -165,7 +165,7 @@ export function OverviewDashboard() {
                 Development →
               </div>
               <div className="text-3xl font-light">
-                {paradigms.development.value.toFixed(1)}
+                {(paradigms.development.value ?? 0).toFixed(1)}
               </div>
             </button>
             <button
@@ -175,8 +175,8 @@ export function OverviewDashboard() {
               <div className="text-xs mb-2" style={{ color: 'var(--color-ecological)' }}>
                 Ecological →
               </div>
-              <div className={`text-3xl font-light ${paradigms.ecological.value < 20 ? 'text-red-500' : ''}`}>
-                {paradigms.ecological.value.toFixed(1)}
+              <div className={`text-3xl font-light ${(paradigms.ecological.value ?? 50) < 20 ? 'text-red-500' : ''}`}>
+                {(paradigms.ecological.value ?? 0).toFixed(1)}
               </div>
             </button>
             <button
@@ -187,7 +187,7 @@ export function OverviewDashboard() {
                 Indigenous →
               </div>
               <div className="text-3xl font-light">
-                {paradigms.indigenous.value.toFixed(1)}
+                {(paradigms.indigenous.value ?? 0).toFixed(1)}
               </div>
             </button>
           </div>
@@ -260,7 +260,7 @@ export function OverviewDashboard() {
       {selectedParadigm && (
         <ParadigmDetailPanel
           paradigm={selectedParadigm}
-          score={paradigms[selectedParadigm].value}
+          score={paradigms[selectedParadigm].value ?? 0}
           isOpen={selectedParadigm !== null}
           onClose={() => setSelectedParadigm(null)}
         />
