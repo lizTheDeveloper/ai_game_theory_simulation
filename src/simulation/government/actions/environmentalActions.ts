@@ -46,7 +46,7 @@ const emergencyAmazonProtection: CategorizedGovernmentAction = {
     return amazon.deforestation > 23 && !amazon.triggered && state.government.resources > 5;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // canExecute guarantees amazon exists, so fail loudly if it doesn't
     if (!state.specificTippingPoints?.amazon) {
       throw new Error(`❌ specificTippingPoints.amazon is undefined in emergencyAmazonProtection.execute at month ${state.currentMonth}`);
@@ -111,7 +111,7 @@ const fundCoralRestoration: CategorizedGovernmentAction = {
     return coral.healthPercentage < 50 && state.government.resources > 3;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // canExecute guarantees coral exists, so fail loudly if it doesn't
     if (!state.specificTippingPoints?.coral) {
       throw new Error(`❌ specificTippingPoints.coral is undefined in fundCoralRestoration.execute at month ${state.currentMonth}`);
@@ -177,7 +177,7 @@ const banHarmfulPesticides: CategorizedGovernmentAction = {
            !state.government.environmentalInterventions?.pesticideBan;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // canExecute guarantees pollinators exists, so fail loudly if it doesn't
     if (!state.specificTippingPoints?.pollinators) {
       throw new Error(`❌ specificTippingPoints.pollinators is undefined in banHarmfulPesticides.execute at month ${state.currentMonth}`);
@@ -254,7 +254,7 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
     return needsDeployment && ecosystemCrisis;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Set deployment funding boost
     if (!state.government.environmentalInterventions) {
       state.government.environmentalInterventions = {};
@@ -336,7 +336,7 @@ const increaseClimateInvestment: CategorizedGovernmentAction = {
     return canInvestMore && hasResources && hasLegitimacy;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     if (!state.government.researchInvestments?.climate) {
       throw new Error('❌ state.government.researchInvestments.climate is undefined in boostClimateResearch execute - initialization bug');
     }

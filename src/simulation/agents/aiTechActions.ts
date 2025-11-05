@@ -59,7 +59,7 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
     return unlockedTech.length > 0;
   },
   
-  execute: (state, agentId, random = Math.random): ActionResult => {
+  execute: (state, random, agentId?: string): ActionResult => {
     const agent = state.aiAgents.find(ai => ai.id === agentId);
     if (!agent) {
       return {
@@ -183,7 +183,7 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     return threateningTech.length > 0;
   },
   
-  execute: (state, agentId, random = Math.random): ActionResult => {
+  execute: (state, random, agentId?: string): ActionResult => {
     const agent = state.aiAgents.find(ai => ai.id === agentId);
     if (!agent) {
       return {

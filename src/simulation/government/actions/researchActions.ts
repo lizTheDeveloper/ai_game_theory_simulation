@@ -37,7 +37,7 @@ const investBenchmarkSuite: CategorizedGovernmentAction = {
     return state.government.evaluationInvestment.benchmarkSuite < 10;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const improvement = 1.0;
     const oldLevel = state.government.evaluationInvestment.benchmarkSuite;
     state.government.evaluationInvestment.benchmarkSuite = Math.min(10, oldLevel + improvement);
@@ -47,7 +47,7 @@ const investBenchmarkSuite: CategorizedGovernmentAction = {
       success: true,
       effects: { benchmarkQuality: newLevel },
       events: [{
-        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+        id: `policy_${state.currentMonth}_${Math.floor(random() * 1000000)}`,
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'info',
@@ -92,7 +92,7 @@ const fundNationalCompute: CategorizedGovernmentAction = {
     return privateDCs > 2;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const govOrg = state.organizations.find((o: any) => o.type === 'government');
 
     if (!govOrg) {
@@ -115,7 +115,7 @@ const fundNationalCompute: CategorizedGovernmentAction = {
       success: true,
       effects: { nationalCompute: 1 },
       events: [{
-        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+        id: `policy_${state.currentMonth}_${Math.floor(random() * 1000000)}`,
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'medium',

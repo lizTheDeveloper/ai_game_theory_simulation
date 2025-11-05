@@ -39,7 +39,7 @@ const detectMisalignedAIs: CategorizedGovernmentAction = {
     return true;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const { attemptDetection } = require('../../detection');
     const { detectedAIs, events } = attemptDetection(state, random);
 
@@ -95,7 +95,7 @@ const removeDetectedAI: CategorizedGovernmentAction = {
     return detectedCount > 0;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const { removeDetectedAI } = require('../../detection');
     const detectedAIs = state.aiAgents.filter((ai: any) =>
       ai.detectedMisaligned && ai.lifecycleState !== 'retired'
@@ -149,7 +149,7 @@ const removeDetectedAI: CategorizedGovernmentAction = {
         false_positives: falsePositiveRemoved
       },
       events: [{
-        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+        id: `policy_${state.currentMonth}_${Math.floor(random() * 1000000)}`,
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'major',

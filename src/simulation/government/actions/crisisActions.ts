@@ -43,7 +43,7 @@ const emergencyAIPause: CategorizedGovernmentAction = {
     return state.government.legitimacy > 0.5 && (awakeSleepers > 0 || highlyMisaligned > 3);
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Pause all training AIs - move to testing (evaluation)
     let pausedCount = 0;
     state.aiAgents.forEach((ai: AIAgent) => {
@@ -101,7 +101,7 @@ const seizeDataCenter: CategorizedGovernmentAction = {
     return privateDCs.length > 0;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Find largest private data center
     const privateDCs = state.computeInfrastructure.dataCenters
       .filter((dc: any) => {

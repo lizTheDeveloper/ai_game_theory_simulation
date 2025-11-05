@@ -34,7 +34,7 @@ export interface DeterrenceCheckResult {
 export function checkNuclearDeterrence(
   state: GameState,
   context: string,
-  random: () => number = Math.random
+  random: () => number
 ): DeterrenceCheckResult {
   
   // 1. MAD STRENGTH CHECK

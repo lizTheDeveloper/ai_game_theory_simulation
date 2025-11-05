@@ -38,7 +38,7 @@ const restrictResearchPublishing: CategorizedGovernmentAction = {
     return state.ecosystem.openResearch > 0.2 && state.government.legitimacy > 0.3;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const reduction = 0.15; // Reduce by 15%
     const oldRate = state.ecosystem.openResearch;
     state.ecosystem.openResearch = Math.max(0.1, oldRate - reduction);
@@ -84,7 +84,7 @@ const limitEmployeeMobility: CategorizedGovernmentAction = {
     return state.ecosystem.employeeMobility > 0.1 && state.government.legitimacy > 0.3;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const reduction = 0.10; // Reduce by 10%
     const oldRate = state.ecosystem.employeeMobility;
     state.ecosystem.employeeMobility = Math.max(0.05, oldRate - reduction);
@@ -134,7 +134,7 @@ const banReverseEngineering: CategorizedGovernmentAction = {
     return state.ecosystem.reverseEngineering > 0.05 && state.government.legitimacy > 0.3;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const reduction = 0.08; // Reduce by 8%
     const oldRate = state.ecosystem.reverseEngineering;
     state.ecosystem.reverseEngineering = Math.max(0.02, oldRate - reduction);

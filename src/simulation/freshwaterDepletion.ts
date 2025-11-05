@@ -63,7 +63,7 @@ export function initializeFreshwaterSystem(): FreshwaterSystem {
 /**
  * Update freshwater system each month
  */
-export function updateFreshwaterSystem(state: GameState, rng: () => number = Math.random): void {
+export function updateFreshwaterSystem(state: GameState, rng: () => number): void {
   if (!state.freshwaterSystem) return;
 
   const fw = state.freshwaterSystem;

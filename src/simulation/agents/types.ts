@@ -30,7 +30,8 @@ export interface GameAction {
   canExecute: (state: GameState, agentId?: string) => boolean;
   
   // Execute action - returns new state
-  execute: (state: GameState, agentId?: string, random?: () => number) => ActionResult;
+  // random is REQUIRED for deterministic simulation (never use Math.random()!)
+  execute: (state: GameState, random: () => number, agentId?: string) => ActionResult;
 }
 
 /**

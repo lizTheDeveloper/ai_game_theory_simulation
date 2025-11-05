@@ -127,7 +127,7 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
     return unlockedTech.length > 0;
   },
   
-  execute: (state, agentId, random = Math.random): ActionResult => {
+  execute: (state, random, agentId?: string): ActionResult => {
     const techTreeState: TechTreeState = state.techTreeState;
 
     // DEBUG: Log action execution

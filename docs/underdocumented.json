@@ -107406,11 +107406,19 @@
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
-    "context": "state: GameState"
+    "context": "state: GameState,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 368,
+    "line": 70,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: () => number"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
+    "line": 369,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -107418,7 +107426,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 369,
+    "line": 370,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -107426,7 +107434,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 370,
+    "line": 371,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -107434,7 +107442,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 371,
+    "line": 372,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -107442,7 +107450,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 372,
+    "line": 373,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -107450,7 +107458,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 373,
+    "line": 374,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -107458,7 +107466,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 374,
+    "line": 375,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -107466,7 +107474,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 375,
+    "line": 376,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -107474,7 +107482,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 380,
+    "line": 381,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -107482,7 +107490,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 381,
+    "line": 382,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -107490,7 +107498,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 382,
+    "line": 383,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -107498,7 +107506,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 383,
+    "line": 384,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -107506,7 +107514,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 384,
+    "line": 385,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -107514,7 +107522,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 385,
+    "line": 386,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -107522,7 +107530,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 386,
+    "line": 387,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -107530,7 +107538,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 387,
+    "line": 388,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -107538,7 +107546,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 417,
+    "line": 418,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -107546,7 +107554,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 418,
+    "line": 419,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -107554,7 +107562,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 419,
+    "line": 420,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -107562,7 +107570,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 420,
+    "line": 421,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -107570,7 +107578,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 421,
+    "line": 422,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -107578,7 +107586,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 422,
+    "line": 423,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -107586,7 +107594,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 423,
+    "line": 424,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -107594,7 +107602,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 424,
+    "line": 425,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -107602,7 +107610,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 429,
+    "line": 430,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -107610,7 +107618,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 430,
+    "line": 431,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -107618,7 +107626,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 431,
+    "line": 432,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -107626,7 +107634,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 432,
+    "line": 433,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -107634,7 +107642,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 433,
+    "line": 434,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -107642,7 +107650,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 434,
+    "line": 435,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -107650,7 +107658,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 435,
+    "line": 436,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -107658,7 +107666,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 436,
+    "line": 437,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -107666,7 +107674,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 441,
+    "line": 442,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -107674,7 +107682,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 442,
+    "line": 443,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -107682,7 +107690,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 443,
+    "line": 444,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -107690,7 +107698,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 444,
+    "line": 445,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -107698,7 +107706,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 445,
+    "line": 446,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -107706,7 +107714,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 446,
+    "line": 447,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -107714,7 +107722,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 447,
+    "line": 448,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -107722,7 +107730,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 448,
+    "line": 449,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -107730,7 +107738,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 454,
+    "line": 455,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -107738,7 +107746,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 455,
+    "line": 456,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -107746,7 +107754,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 456,
+    "line": 457,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -107754,7 +107762,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 457,
+    "line": 458,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -107762,7 +107770,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 458,
+    "line": 459,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -107770,7 +107778,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 459,
+    "line": 460,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -107778,7 +107786,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 460,
+    "line": 461,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -107786,7 +107794,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 461,
+    "line": 462,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -107794,7 +107802,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 466,
+    "line": 467,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -107802,7 +107810,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 467,
+    "line": 468,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -107810,7 +107818,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 468,
+    "line": 469,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -107818,7 +107826,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 469,
+    "line": 470,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -107826,7 +107834,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 470,
+    "line": 471,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -107834,7 +107842,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 471,
+    "line": 472,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -107842,7 +107850,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 472,
+    "line": 473,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -107850,7 +107858,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 473,
+    "line": 474,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -107858,7 +107866,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 478,
+    "line": 479,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -107866,7 +107874,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 479,
+    "line": 480,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -107874,7 +107882,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 480,
+    "line": 481,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -107882,7 +107890,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 481,
+    "line": 482,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -107890,7 +107898,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 482,
+    "line": 483,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -107898,7 +107906,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 483,
+    "line": 484,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -107906,7 +107914,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 484,
+    "line": 485,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -107914,7 +107922,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 485,
+    "line": 486,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -107922,7 +107930,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 535,
+    "line": 536,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -107930,7 +107938,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 536,
+    "line": 537,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -107938,7 +107946,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 537,
+    "line": 538,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -107946,7 +107954,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 538,
+    "line": 539,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -107954,7 +107962,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 539,
+    "line": 540,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -107962,7 +107970,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 540,
+    "line": 541,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -107970,7 +107978,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 541,
+    "line": 542,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -107978,7 +107986,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 542,
+    "line": 543,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -107986,7 +107994,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 547,
+    "line": 548,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -107994,7 +108002,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 548,
+    "line": 549,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -108002,7 +108010,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 549,
+    "line": 550,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -108010,7 +108018,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 550,
+    "line": 551,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -108018,7 +108026,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 551,
+    "line": 552,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -108026,7 +108034,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 552,
+    "line": 553,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -108034,7 +108042,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 553,
+    "line": 554,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108042,7 +108050,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 554,
+    "line": 555,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -108050,7 +108058,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 559,
+    "line": 560,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -108058,7 +108066,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 560,
+    "line": 561,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -108066,7 +108074,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 561,
+    "line": 562,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -108074,7 +108082,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 562,
+    "line": 563,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -108082,7 +108090,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 563,
+    "line": 564,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -108090,7 +108098,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 564,
+    "line": 565,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -108098,7 +108106,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 565,
+    "line": 566,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108106,7 +108114,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 566,
+    "line": 567,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -108114,7 +108122,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 663,
+    "line": 664,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108122,7 +108130,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 664,
+    "line": 665,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108130,7 +108138,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 665,
+    "line": 666,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108138,7 +108146,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 674,
+    "line": 675,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108146,7 +108154,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 675,
+    "line": 676,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108154,7 +108162,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 676,
+    "line": 677,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108162,7 +108170,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 684,
+    "line": 685,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108170,7 +108178,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 685,
+    "line": 686,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108178,7 +108186,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 686,
+    "line": 687,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108186,7 +108194,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 692,
+    "line": 693,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108194,7 +108202,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 693,
+    "line": 694,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108202,7 +108210,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 694,
+    "line": 695,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108210,7 +108218,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 695,
+    "line": 696,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -108218,7 +108226,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 703,
+    "line": 704,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108226,7 +108234,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 704,
+    "line": 705,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108234,7 +108242,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 705,
+    "line": 706,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108242,7 +108250,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 713,
+    "line": 714,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108250,7 +108258,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 714,
+    "line": 715,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108258,7 +108266,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 715,
+    "line": 716,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108266,7 +108274,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 716,
+    "line": 717,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -108274,7 +108282,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 724,
+    "line": 725,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108282,7 +108290,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 725,
+    "line": 726,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108290,7 +108298,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 726,
+    "line": 727,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108298,7 +108306,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 734,
+    "line": 735,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108306,7 +108314,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 735,
+    "line": 736,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108314,7 +108322,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 736,
+    "line": 737,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108322,7 +108330,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialCohesion.ts",
-    "line": 737,
+    "line": 738,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",

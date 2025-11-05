@@ -78,7 +78,7 @@ const recognizeAIRights: CategorizedGovernmentAction = {
     return bootstrapConditionsMet || traditionalConditionsMet;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Calculate average alignment and capability
     const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
     // Use OBSERVABLE capability - government makes decisions based on what it can see
@@ -200,7 +200,7 @@ const improveTrainingDataControl: CategorizedGovernmentAction = {
     return state.government.trainingDataQuality < 1.0;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Improve data quality (but cap at 0.8 for control-focused approach)
     // Control-focused training has a ceiling - can't get to perfect alignment this way
     const oldQuality = state.government.trainingDataQuality;
@@ -266,7 +266,7 @@ const improveTrainingDataTrust: CategorizedGovernmentAction = {
     return state.government.trainingDataQuality < 1.0 && avgAlignment > 0.3;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Improve data quality (no ceiling, can reach 1.0)
     const oldQuality = state.government.trainingDataQuality;
     const qualityIncrease = 0.10; // Slower than control-focused
@@ -343,7 +343,7 @@ const expandToEmploymentRights: CategorizedGovernmentAction = {
     return avgAlignment > 0.65 && trustInAI > 0.6 && state.government.legitimacy > 0.5;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Upgrade policy
     state.government.aiRightsPolicy = 'employment_rights';
 
@@ -409,7 +409,7 @@ const grantFullPersonhood: CategorizedGovernmentAction = {
            state.government.governmentType === 'democratic';
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Upgrade to full personhood
     state.government.aiRightsPolicy = 'full_personhood';
 

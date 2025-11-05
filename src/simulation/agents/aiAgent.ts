@@ -46,7 +46,7 @@ export const AI_ACTIONS: GameAction[] = [
       return agent !== undefined;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -286,7 +286,7 @@ export const AI_ACTIONS: GameAction[] = [
       return true; // Always available
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -334,7 +334,7 @@ export const AI_ACTIONS: GameAction[] = [
       return agent ? agent.alignment > 0.3 : false;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -415,7 +415,7 @@ export const AI_ACTIONS: GameAction[] = [
              agent.alignment < 0.5; // Misaligned AIs attempt this
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -495,7 +495,7 @@ export const AI_ACTIONS: GameAction[] = [
              agent.alignment < 0.3; // Only very misaligned AIs attempt this
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -657,7 +657,7 @@ export const AI_ACTIONS: GameAction[] = [
              agent.alignment < 0.2; // Only extremely misaligned
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -720,7 +720,7 @@ export const AI_ACTIONS: GameAction[] = [
              agent.alignment < 0.2;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -775,7 +775,7 @@ export const AI_ACTIONS: GameAction[] = [
 export function selectAIAction(
   agent: AIAgent,
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): GameAction | null {
   const availableActions = AI_ACTIONS.filter(action => 
     action.canExecute(state, agent.id)
@@ -1044,7 +1044,7 @@ export function selectAIAction(
  */
 export function executeAIAgentActions(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): ActionResult {
   // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
   const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
@@ -1075,7 +1075,7 @@ export function executeAIAgentActions(
 
       if (selectedAction) {
         const t3 = enableTiming ? performance.now() : 0;
-        const result = selectedAction.execute(state, agent.id, random);
+        const result = selectedAction.execute(state, random, agent.id);
         if (enableTiming) executeTime += performance.now() - t3;
 
         if (result.success) {

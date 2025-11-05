@@ -424,7 +424,7 @@ export const ALL_CRISIS_POINTS: CrisisChoice[] = [
  */
 export function processCrisisPoints(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): {
   newState: GameState;
   events: GameEvent[];

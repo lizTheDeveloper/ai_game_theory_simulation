@@ -250,7 +250,7 @@ export function getAccessibleCompute(
  * Initialize AI agent compute fields
  * Call this when creating or updating existing AIs
  */
-export function initializeAIComputeFields(ai: any, rng: () => number = Math.random): void {
+export function initializeAIComputeFields(ai: any, rng: () => number): void {
   if (ai.allocatedCompute === undefined) {
     ai.allocatedCompute = 0;
   }
@@ -492,7 +492,7 @@ export function allocateComputeEqually(state: GameState): void {
  * - Epoch AI (2024): Training compute doubling every 6-10 months
  * - Sevilla et al. (2022): Compute Trends showing 10x/year since 2020
  */
-export function applyComputeGrowth(state: GameState, random: () => number = Math.random): void {
+export function applyComputeGrowth(state: GameState, rng: () => number): void {
   const infra = state.computeInfrastructure;
 
   // HIGH-4 FIX (Oct 30, 2025): Direct population → compute capacity scaling
@@ -624,7 +624,7 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
   const ALGO_BREAKTHROUGH_CHANCE = 0.08;
   const ALGO_BREAKTHROUGH_SIZE = 0.15; // 15% improvement when it happens
 
-  if (random() < ALGO_BREAKTHROUGH_CHANCE) {
+  if (rng() < ALGO_BREAKTHROUGH_CHANCE) {
     infra.algorithmsEfficiency *= (1 + ALGO_BREAKTHROUGH_SIZE);
 
     // Don't log during normal simulation (too noisy), only in tests

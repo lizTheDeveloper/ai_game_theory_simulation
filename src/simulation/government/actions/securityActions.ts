@@ -40,7 +40,7 @@ const investCyberDefense: CategorizedGovernmentAction = {
     return true;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     if (!state.government.cyberDefense) {
       // Initialize if missing
       state.government.cyberDefense = {
@@ -114,7 +114,7 @@ const deployNuclearHumanInTheLoop: CategorizedGovernmentAction = {
     return !ncc.humanInTheLoop.deployed || ncc.humanInTheLoop.vetoPointsEnforced < 5;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const ncc = state.nuclearCommandControlState;
     if (!ncc) {
       return {
@@ -192,7 +192,7 @@ const deployAIKillSwitches: CategorizedGovernmentAction = {
     return !ncc.aiKillSwitches.deployed || ncc.aiKillSwitches.coverage < 1.0;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const ncc = state.nuclearCommandControlState;
     if (!ncc) {
       return {
@@ -270,7 +270,7 @@ const deployNuclearTimeDelays: CategorizedGovernmentAction = {
     return !ncc.timeDelays.deployed || ncc.timeDelays.delayDuration < 48;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const ncc = state.nuclearCommandControlState;
     if (!ncc) {
       return {

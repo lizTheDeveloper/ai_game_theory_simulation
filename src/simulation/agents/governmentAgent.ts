@@ -51,7 +51,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              canTakeMajorPolicy;
     },
     
-    execute: (state, agentId, random = Math.random) => {
+    execute: (state, random, agentId?: string) => {
       // Track major policy usage
       state.government.lastMajorPolicyMonth = state.currentMonth;
       state.government.majorPoliciesThisYear += 1;
@@ -126,7 +126,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              canTakeMajorPolicy;
     },
     
-    execute: (state, agentId, random = Math.random) => {
+    execute: (state, random, agentId?: string) => {
       // Track major policy usage
       state.government.lastMajorPolicyMonth = state.currentMonth;
       state.government.majorPoliciesThisYear += 1;
@@ -196,7 +196,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              canTakeMajorPolicy;
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       // Track major policy usage
       state.government.lastMajorPolicyMonth = state.currentMonth;
       state.government.majorPoliciesThisYear += 1;
@@ -263,7 +263,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              state.government.structuralChoices.regulationType === 'none';
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       // Set regulation type
       state.government.structuralChoices.regulationType = 'large_companies';
       
@@ -316,7 +316,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              state.government.structuralChoices.regulationType === 'none';
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       // Set regulation type
       state.government.structuralChoices.regulationType = 'compute_threshold';
       
@@ -373,7 +373,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              state.government.structuralChoices.regulationType === 'none';
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       // Set regulation type
       state.government.structuralChoices.regulationType = 'capability_ceiling';
       
@@ -429,7 +429,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.alignmentResearchInvestment < 10;
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       // Increase alignment research investment
       const investmentIncrease = 1 + Math.floor(random() * 2); // 1-2 levels
       state.government.alignmentResearchInvestment = Math.min(10,
@@ -478,7 +478,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return monthsSinceLastMajorPolicy >= 10; // Major policy cooldown
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       // Track major policy
       state.government.lastMajorPolicyMonth = state.currentMonth;
       state.government.majorPoliciesThisYear += 1;
@@ -565,7 +565,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return true;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       // Calculate average alignment and capability
       const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
       // Use OBSERVABLE capability - government makes decisions based on what it can see
@@ -681,7 +681,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.trainingDataQuality < 1.0;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       // Improve data quality (but cap at 0.8 for control-focused approach)
       // Control-focused training has a ceiling - can't get to perfect alignment this way
       const oldQuality = state.government.trainingDataQuality;
@@ -743,7 +743,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.trainingDataQuality < 1.0 && avgAlignment > 0.3;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       // Improve data quality (no ceiling, can reach 1.0)
       const oldQuality = state.government.trainingDataQuality;
       const qualityIncrease = 0.10; // Slower than control-focused
@@ -808,7 +808,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return true;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const { attemptDetection } = require('../detection');
       const { detectedAIs, events } = attemptDetection(state, random);
       // Apply detections to state
@@ -858,7 +858,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return detectedCount > 0;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const { removeDetectedAI } = require('../detection');      
       const detectedAIs = state.aiAgents.filter((ai: any) => 
         ai.detectedMisaligned && ai.lifecycleState !== 'retired'
@@ -946,7 +946,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return true;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       if (!state.government.cyberDefense) {
         // Initialize if missing
         state.government.cyberDefense = {
@@ -1015,7 +1015,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.evaluationInvestment.benchmarkSuite < 10;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       const improvement = 1.0;
       const oldLevel = state.government.evaluationInvestment.benchmarkSuite;
       state.government.evaluationInvestment.benchmarkSuite = Math.min(10, oldLevel + improvement);
@@ -1050,7 +1050,7 @@ timestamp: state.currentMonth,
       return state.government.evaluationInvestment.alignmentTests < 10;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       const improvement = 0.8; // Harder to improve than capability benchmarks
       const oldLevel = state.government.evaluationInvestment.alignmentTests;
       state.government.evaluationInvestment.alignmentTests = Math.min(10, oldLevel + improvement);
@@ -1085,7 +1085,7 @@ timestamp: state.currentMonth,
       return state.government.evaluationInvestment.redTeaming < 10;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       const improvement = 1.0;
       const oldLevel = state.government.evaluationInvestment.redTeaming;
       state.government.evaluationInvestment.redTeaming = Math.min(10, oldLevel + improvement);
@@ -1123,7 +1123,7 @@ timestamp: state.currentMonth,
       return state.government.evaluationInvestment.interpretability < 10;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       const improvement = 0.6; // Slowest to improve - very hard problem
       const oldLevel = state.government.evaluationInvestment.interpretability;
       state.government.evaluationInvestment.interpretability = Math.min(10, oldLevel + improvement);
@@ -1164,7 +1164,7 @@ timestamp: state.currentMonth,
       return state.government.evaluationFrequency < 0.9;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       const increase = 0.1; // Increase by 10%
       const oldFreq = state.government.evaluationFrequency;
       state.government.evaluationFrequency = Math.min(1.0, oldFreq + increase);
@@ -1208,7 +1208,7 @@ timestamp: state.currentMonth,
       return state.government.legitimacy > 0.5 && (awakeSleepers > 0 || highlyMisaligned > 3);
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       // Pause all training AIs - move to testing (evaluation)
       let pausedCount = 0;
       state.aiAgents.forEach((ai: AIAgent) => {
@@ -1254,7 +1254,7 @@ timestamp: state.currentMonth,
       return state.government.oversightLevel > 3 && state.government.legitimacy > 0.4;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       // Move all testing AIs back to testing if they haven't been evaluated recently
       let reviewedCount = 0;
       state.aiAgents.forEach((ai: AIAgent) => {
@@ -1303,7 +1303,7 @@ timestamp: state.currentMonth,
       return state.ecosystem.openResearch > 0.2 && state.government.legitimacy > 0.3;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       const reduction = 0.15; // Reduce by 15%
       const oldRate = state.ecosystem.openResearch;
       state.ecosystem.openResearch = Math.max(0.1, oldRate - reduction);
@@ -1344,7 +1344,7 @@ timestamp: state.currentMonth,
       return state.ecosystem.employeeMobility > 0.1 && state.government.legitimacy > 0.3;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       const reduction = 0.10; // Reduce by 10%
       const oldRate = state.ecosystem.employeeMobility;
       state.ecosystem.employeeMobility = Math.max(0.05, oldRate - reduction);
@@ -1389,7 +1389,7 @@ timestamp: state.currentMonth,
       return state.ecosystem.reverseEngineering > 0.05 && state.government.legitimacy > 0.3;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {      
+    execute: (state, random, agentId?: string): ActionResult => {      
       const reduction = 0.08; // Reduce by 8%
       const oldRate = state.ecosystem.reverseEngineering;
       state.ecosystem.reverseEngineering = Math.max(0.02, oldRate - reduction);
@@ -1446,7 +1446,7 @@ timestamp: state.currentMonth,
       return privateDCs > 2;
     },
     
-    execute: (state, agentId, random = Math.random) => {      const govOrg = state.organizations.find((o: any) => o.type === 'government');
+    execute: (state, random, agentId?: string) => {      const govOrg = state.organizations.find((o: any) => o.type === 'government');
       
       if (!govOrg) {
         return {
@@ -1501,7 +1501,7 @@ timestamp: state.currentMonth,
       return privateDCs.length > 0;
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       // Find largest private data center
       const privateDCs = state.computeInfrastructure.dataCenters
         .filter((dc: any) => {
@@ -1591,7 +1591,7 @@ timestamp: state.currentMonth,
       return safetyOrgs.length > 0 && state.government.resources > 2;
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       // Find org with highest safety focus that's struggling
       const safetyOrgs = state.organizations.filter((o: any) => 
         o.type === 'private' && 
@@ -1668,7 +1668,7 @@ timestamp: state.currentMonth,
       return amazon.deforestation > 23 && !amazon.triggered && state.government.resources > 5;
     },
 
-    execute: (state, agentId, random = Math.random) => {
+    execute: (state, random, agentId?: string) => {
       if (!state.specificTippingPoints?.amazon) {
         throw new Error(`❌ specificTippingPoints.amazon is undefined at month ${state.currentMonth} in emergency_amazon_protection.execute`);
       }
@@ -1731,7 +1731,7 @@ timestamp: state.currentMonth,
       return coral.healthPercentage < 50 && state.government.resources > 3;
     },
 
-    execute: (state, agentId, random = Math.random) => {
+    execute: (state, random, agentId?: string) => {
       if (!state.specificTippingPoints?.coral) {
         throw new Error(`❌ specificTippingPoints.coral is undefined at month ${state.currentMonth} in fund_coral_restoration.execute`);
       }
@@ -1795,7 +1795,7 @@ timestamp: state.currentMonth,
              !state.government.environmentalInterventions?.pesticideBan;
     },
 
-    execute: (state, agentId, random = Math.random) => {
+    execute: (state, random, agentId?: string) => {
       if (!state.specificTippingPoints?.pollinators) {
         throw new Error(`❌ specificTippingPoints.pollinators is undefined at month ${state.currentMonth} in ban_harmful_pesticides.execute`);
       }
@@ -1868,7 +1868,7 @@ timestamp: state.currentMonth,
       return needsDeployment && ecosystemCrisis;
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       // Set deployment funding boost
       if (!state.government.environmentalInterventions) {
         state.government.environmentalInterventions = {};
@@ -1931,7 +1931,7 @@ timestamp: state.currentMonth,
       return amazon.deforestation > 23 && !amazon.triggered;
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       if (!state.government.environmentalInterventions) {
         state.government.environmentalInterventions = {};
       }
@@ -1993,7 +1993,7 @@ timestamp: state.currentMonth,
       return coral.healthPercentage < 50 && !coral.triggered;
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       if (!state.government.environmentalInterventions) {
         state.government.environmentalInterventions = {};
       }
@@ -2056,7 +2056,7 @@ timestamp: state.currentMonth,
       return pollinators.populationPercentage < 50 && !pollinators.triggered;
     },
     
-    execute: (state, agentId, random = Math.random) => {      
+    execute: (state, random, agentId?: string) => {      
       if (!state.government.environmentalInterventions) {
         state.government.environmentalInterventions = {};
       }
@@ -2127,7 +2127,7 @@ timestamp: state.currentMonth,
       return !ncc.humanInTheLoop.deployed || ncc.humanInTheLoop.vetoPointsEnforced < 5;
     },
 
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const ncc = state.nuclearCommandControlState;
       if (!ncc) {
         return {
@@ -2200,7 +2200,7 @@ timestamp: state.currentMonth,
       return !ncc.aiKillSwitches.deployed || ncc.aiKillSwitches.coverage < 1.0;
     },
 
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const ncc = state.nuclearCommandControlState;
       if (!ncc) {
         return {
@@ -2273,7 +2273,7 @@ timestamp: state.currentMonth,
       return !ncc.timeDelays.deployed || ncc.timeDelays.delayDuration < 48;
     },
 
-    execute: (state, agentId, random = Math.random): ActionResult => {
+    execute: (state, random, agentId?: string): ActionResult => {
       const ncc = state.nuclearCommandControlState;
       if (!ncc) {
         return {
@@ -2340,7 +2340,7 @@ timestamp: state.currentMonth,
  */
 export function selectGovernmentAction(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): GameAction | null {
   const availableActions = GOVERNMENT_ACTIONS.filter(action => 
     action.canExecute(state)
@@ -2907,7 +2907,7 @@ function autoInvestInEvaluation(state: GameState): void {
 
 export function executeGovernmentActions(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): ActionResult {
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
@@ -2970,7 +2970,7 @@ export function executeGovernmentActions(
   for (let i = 0; i < totalActions; i++) {
     const selectedAction = selectGovernmentAction(state, random);
     if (selectedAction) {
-      const result = selectedAction.execute(state, undefined, random);
+      const result = selectedAction.execute(state, random, undefined);
       if (result.success) {
         // State is now mutated directly by the action
         allEvents.push(...result.events);
