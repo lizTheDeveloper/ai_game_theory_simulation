@@ -85,31 +85,31 @@ export function EnvironmentalDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <MetricCard
           label="Boundaries Crossed"
-          value={boundariesCrossed}
-          status={boundariesCrossed > 3 ? 'critical' : boundariesCrossed > 1 ? 'warning' : 'normal'}
+          value={boundariesCrossed ?? 0}
+          status={(boundariesCrossed ?? 0) > 3 ? 'critical' : (boundariesCrossed ?? 0) > 1 ? 'warning' : 'normal'}
         />
         <MetricCard
           label="Environmental Debt"
-          value={`${(environmentalDebt * 100).toFixed(0)}%`}
-          status={environmentalDebt > 0.7 ? 'critical' : environmentalDebt > 0.5 ? 'warning' : 'normal'}
+          value={`${((environmentalDebt ?? 0) * 100).toFixed(0)}%`}
+          status={(environmentalDebt ?? 0) > 0.7 ? 'critical' : (environmentalDebt ?? 0) > 0.5 ? 'warning' : 'normal'}
         />
         <MetricCard
           label="Climate Impact"
-          value={`${(climate * 100).toFixed(0)}%`}
-          status={climate > 0.7 ? 'critical' : climate > 0.5 ? 'warning' : 'normal'}
+          value={`${((climate ?? 0) * 100).toFixed(0)}%`}
+          status={(climate ?? 0) > 0.7 ? 'critical' : (climate ?? 0) > 0.5 ? 'warning' : 'normal'}
         />
         <MetricCard
           label="Biodiversity Loss"
-          value={`${(biodiversity * 100).toFixed(0)}%`}
-          status={biodiversity > 0.7 ? 'critical' : biodiversity > 0.5 ? 'warning' : 'normal'}
+          value={`${((biodiversity ?? 0) * 100).toFixed(0)}%`}
+          status={(biodiversity ?? 0) > 0.7 ? 'critical' : (biodiversity ?? 0) > 0.5 ? 'warning' : 'normal'}
         />
       </div>
 
       {/* Breach Alert */}
-      {boundariesCrossed > 0 && (
-        <Panel title="⚠️ Planetary Boundary Breaches Detected" glow={boundariesCrossed > 3 ? 'red' : 'amber'}>
+      {(boundariesCrossed ?? 0) > 0 && (
+        <Panel title="⚠️ Planetary Boundary Breaches Detected" glow={(boundariesCrossed ?? 0) > 3 ? 'red' : 'amber'}>
           <p className="text-sm" style={{ color: 'var(--white-60)' }}>
-            {boundariesCrossed} planetary boundaries have been breached.
+            {boundariesCrossed ?? 0} planetary boundaries have been breached.
             Operating in high-uncertainty zone with increased risk of cascading tipping points.
           </p>
         </Panel>
@@ -120,39 +120,39 @@ export function EnvironmentalDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Climate Change</div>
-            <div className="text-3xl font-light mb-2" style={{ color: climate > 0.7 ? 'var(--color-red)' : climate > 0.5 ? 'var(--color-amber)' : 'var(--color-green)' }}>
-              {(climate * 100).toFixed(0)}%
+            <div className="text-3xl font-light mb-2" style={{ color: (climate ?? 0) > 0.7 ? 'var(--color-red)' : (climate ?? 0) > 0.5 ? 'var(--color-amber)' : 'var(--color-green)' }}>
+              {((climate ?? 0) * 100).toFixed(0)}%
             </div>
             <div className="h-2 rounded mb-2" style={{ backgroundColor: 'var(--white-10)' }}>
               <div
                 className="h-full rounded"
                 style={{
-                  width: `${Math.min(100, climate * 100)}%`,
-                  backgroundColor: climate > 0.7 ? 'var(--color-red)' : climate > 0.5 ? 'var(--color-amber)' : 'var(--color-green)'
+                  width: `${Math.min(100, (climate ?? 0) * 100)}%`,
+                  backgroundColor: (climate ?? 0) > 0.7 ? 'var(--color-red)' : (climate ?? 0) > 0.5 ? 'var(--color-amber)' : 'var(--color-green)'
                 }}
               />
             </div>
             <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-              {climate > 0.7 ? 'CRITICAL' : climate > 0.5 ? 'Warning' : 'Safe'}
+              {(climate ?? 0) > 0.7 ? 'CRITICAL' : (climate ?? 0) > 0.5 ? 'Warning' : 'Safe'}
             </p>
           </div>
 
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Biodiversity Loss</div>
-            <div className="text-3xl font-light mb-2" style={{ color: biodiversity > 0.7 ? 'var(--color-red)' : biodiversity > 0.5 ? 'var(--color-amber)' : 'var(--color-green)' }}>
-              {(biodiversity * 100).toFixed(0)}%
+            <div className="text-3xl font-light mb-2" style={{ color: (biodiversity ?? 0) > 0.7 ? 'var(--color-red)' : (biodiversity ?? 0) > 0.5 ? 'var(--color-amber)' : 'var(--color-green)' }}>
+              {((biodiversity ?? 0) * 100).toFixed(0)}%
             </div>
             <div className="h-2 rounded mb-2" style={{ backgroundColor: 'var(--white-10)' }}>
               <div
                 className="h-full rounded"
                 style={{
-                  width: `${Math.min(100, biodiversity * 100)}%`,
-                  backgroundColor: biodiversity > 0.7 ? 'var(--color-red)' : biodiversity > 0.5 ? 'var(--color-amber)' : 'var(--color-green)'
+                  width: `${Math.min(100, (biodiversity ?? 0) * 100)}%`,
+                  backgroundColor: (biodiversity ?? 0) > 0.7 ? 'var(--color-red)' : (biodiversity ?? 0) > 0.5 ? 'var(--color-amber)' : 'var(--color-green)'
                 }}
               />
             </div>
             <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-              {biodiversity > 0.7 ? 'CRITICAL' : biodiversity > 0.5 ? 'Warning' : 'Safe'}
+              {(biodiversity ?? 0) > 0.7 ? 'CRITICAL' : (biodiversity ?? 0) > 0.5 ? 'Warning' : 'Safe'}
             </p>
           </div>
 
@@ -285,22 +285,22 @@ export function EnvironmentalDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Total Debt Level</div>
-            <div className="text-4xl font-light mb-2" style={{ color: environmentalDebt > 0.7 ? 'var(--color-red)' : environmentalDebt > 0.5 ? 'var(--color-amber)' : 'var(--white-80)' }}>
-              {(environmentalDebt * 100).toFixed(0)}%
+            <div className="text-4xl font-light mb-2" style={{ color: (environmentalDebt ?? 0) > 0.7 ? 'var(--color-red)' : (environmentalDebt ?? 0) > 0.5 ? 'var(--color-amber)' : 'var(--white-80)' }}>
+              {((environmentalDebt ?? 0) * 100).toFixed(0)}%
             </div>
             <p className="text-xs" style={{ color: 'var(--white-40)' }}>Combined environmental stress</p>
           </div>
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Resource Depletion</div>
-            <div className="text-3xl font-light mb-2" style={{ color: resourceDepletion > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
-              {(resourceDepletion * 100).toFixed(0)}%
+            <div className="text-3xl font-light mb-2" style={{ color: (resourceDepletion ?? 0) > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
+              {((resourceDepletion ?? 0) * 100).toFixed(0)}%
             </div>
             <p className="text-xs" style={{ color: 'var(--white-40)' }}>Phosphorus, freshwater</p>
           </div>
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Pollution Load</div>
-            <div className="text-3xl font-light mb-2" style={{ color: pollution > 0.6 ? 'var(--color-red)' : 'var(--white-80)' }}>
-              {(pollution * 100).toFixed(0)}%
+            <div className="text-3xl font-light mb-2" style={{ color: (pollution ?? 0) > 0.6 ? 'var(--color-red)' : 'var(--white-80)' }}>
+              {((pollution ?? 0) * 100).toFixed(0)}%
             </div>
             <p className="text-xs" style={{ color: 'var(--white-40)' }}>PFAS, novel entities</p>
           </div>
@@ -308,17 +308,17 @@ export function EnvironmentalDashboard() {
       </Panel>
 
       {/* Crisis Cascade Warning */}
-      {boundariesCrossed >= 3 && (
+      {(boundariesCrossed ?? 0) >= 3 && (
         <Panel title="Cascade Risk Analysis" glow="amber">
           <div className="space-y-3">
             <p className="text-sm" style={{ color: 'var(--white-60)' }}>
-              Multiple planetary boundaries breached ({boundariesCrossed} active).
+              Multiple planetary boundaries breached ({boundariesCrossed ?? 0} active).
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Cascade Multiplier</div>
                 <div className="text-2xl font-light">
-                  {Math.pow(1.5, boundariesCrossed - 1).toFixed(1)}x
+                  {Math.pow(1.5, (boundariesCrossed ?? 0) - 1).toFixed(1)}x
                 </div>
                 <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
                   Compounding effect (1.5x per boundary)
