@@ -1347,16 +1347,17 @@ function applyRegionalEffects(
 
         // ========== ENERGY SYSTEMS ==========
         case 'energyStorageBonus':
-          // FIX (Oct 27, 2025): Bug #13 - storageCapacity in resources.energy, not powerGenerationSystem
-          // Improve grid energy storage (battery capacity)
-          if (gameState.resources?.energy) {
-            const current = assertStateProperty(
-              gameState.resources.energy,
-              'storageCapacity',
-              { location: 'applyRegionalEffects.energyStorageBonus', month: gameState.currentMonth }
-            );
-            gameState.resources.energy.storageCapacity = current * (1 + value * 0.01);
-          }
+          // NOTE (Nov 5, 2025): resources.energy property doesn't exist in GameState yet
+          // This effect is a placeholder for future energy storage modeling
+          // When resources field is added to GameState, uncomment this code:
+          // if ((gameState as any).resources?.energy) {
+          //   const current = assertStateProperty(
+          //     (gameState as any).resources.energy,
+          //     'storageCapacity',
+          //     { location: 'applyRegionalEffects.energyStorageBonus', month: gameState.currentMonth }
+          //   );
+          //   (gameState as any).resources.energy.storageCapacity = current * (1 + value * 0.01);
+          // }
           break;
           
         case 'renewableReliability':
@@ -1385,22 +1386,19 @@ function applyRegionalEffects(
           break;
 
         case 'gridEfficiency':
-          // FIX (Oct 27, 2025): Bug #7 - gridEfficiency was in wrong object + effectiveDemandReduction doesn't exist
-          // gridEfficiency lives in resources.energy (not powerGenerationSystem)
-          // effectiveDemandReduction was dead code (property doesn't exist anywhere)
-
-          // Improve grid efficiency through AI demand response
-          if (gameState.resources?.energy) {
-            const currentEfficiency = assertStateProperty(
-              gameState.resources.energy,
-              'gridEfficiency',
-              { location: 'applyRegionalEffects.gridEfficiency', month: gameState.currentMonth }
-            );
-            gameState.resources.energy.gridEfficiency = Math.min(0.98, currentEfficiency + value * 0.01);
-
-            // Note: effectiveDemandReduction removed - property didn't exist (dead code)
-            // Grid efficiency already reduces effective power demand via resourceEconomy calculations
-          }
+          // NOTE (Nov 5, 2025): resources.energy property doesn't exist in GameState yet
+          // This effect is a placeholder for future grid efficiency modeling
+          // When resources field is added to GameState, uncomment this code:
+          // if ((gameState as any).resources?.energy) {
+          //   const currentEfficiency = assertStateProperty(
+          //     (gameState as any).resources.energy,
+          //     'gridEfficiency',
+          //     { location: 'applyRegionalEffects.gridEfficiency', month: gameState.currentMonth }
+          //   );
+          //   (gameState as any).resources.energy.gridEfficiency = Math.min(0.98, currentEfficiency + value * 0.01);
+          // }
+          // Note: effectiveDemandReduction was dead code (property doesn't exist anywhere)
+          // Grid efficiency would reduce effective power demand via resourceEconomy calculations
           break;
 
         case 'renewableIntegration':

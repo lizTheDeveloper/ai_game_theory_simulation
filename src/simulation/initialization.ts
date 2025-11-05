@@ -332,7 +332,7 @@ export function createAIAgent(
       const seedHash = seed * 7919;
       const normalized = (seedHash % 100) / 100;
       if (normalized < 0.50) return 'closed';
-      return 'open'; // 50% open models in frontier space (Llama, Mistral, Qwen)
+      return 'open_weights'; // 50% open models in frontier space (Llama, Mistral, Qwen)
     })(),
     spreadCount: 1, // Single instance initially
     darkCompute: 0, // Phase 11: No dark compute initially
