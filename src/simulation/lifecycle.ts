@@ -210,8 +210,8 @@ function createNewAI(state: GameState, index: number, rng: () => number): AIAgen
   const agentId = `ai_gen_${currentMonth}_${index}`;
   const agentName = `AI-${currentMonth}-${index}`;
   const seed = currentMonth * 100 + index;
-  
-  const agent = createAIAgent(agentId, agentName, 0.05, alignment, seed);
+
+  const agent = createAIAgent(agentId, agentName, 0.05, alignment, seed, rng);
   
   // Phase 5.4: Apply capability floor from technology diffusion
   // New AIs start with access to known techniques (rising capability floor)

@@ -1,0 +1,799 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 09:03:02] 🤖 Merge Orchestrator - 20251105_090302
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 09:03:02] ℹ️  Environment: Mac (frontend + backend)
+[2025-11-05 09:03:02] ℹ️  Dry run: false
+[2025-11-05 09:03:02] ℹ️  Skip frontend: false
+[2025-11-05 09:03:02] ℹ️  Max branches: 10
+[2025-11-05 09:03:02] ℹ️  Agent reviews (Phase 2): true
+[2025-11-05 09:03:02] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-05 09:03:02] ℹ️  Discovering feature branches...
+[2025-11-05 09:03:03] ℹ️  Found       40 feature branches
+[2025-11-05 09:03:03] ⚠️  WARNING: Branch count (      40) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 09:03:03] Processing: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 09:03:03] ℹ️  Creating merge branch: merge/+ phase-0a-design-system_20251105_090302
+fatal: 'merge/+ phase-0a-design-system_20251105_090302' is not a valid branch name
+[2025-11-05 09:03:03] ℹ️  Pulling latest main...
+ssh: connect to host github.com port 22: Undefined error: 0
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+[2025-11-05 09:03:03] ℹ️  Attempting merge from + phase-0a-design-system...
+merge: origin/+ phase-0a-design-system - not something we can merge
+[2025-11-05 09:03:03] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 09:03:03] Quality Gates: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 09:03:03] ℹ️  Gate 1: TypeScript compilation...
+./scripts/merge-orchestrator.sh: line 209: npx: command not found
+[2025-11-05 09:03:03] ✅ TypeScript compilation passed
+[2025-11-05 09:03:03] ℹ️  Gate 2: Test suite...
+[2025-11-05 09:03:03] ⚠️  WARNING: No test scripts found, skipping test gate
+[2025-11-05 09:03:03] ℹ️  Gate 3: Architecture review...
+[2025-11-05 09:03:03] 🔍 Spawning architecture-skeptic agent...
+[2025-11-05 09:03:03] ❌ ERROR: Architecture review blocked merge
+[2025-11-05 09:03:03] ❌ ERROR: Quality gates failed
+[2025-11-05 09:03:03] ℹ️  Preserving merge branch for inspection: merge/+ phase-0a-design-system_20251105_090302_FAILED
+Already on 'main'
+M	autonomous-worker.sh
+M	logs/merge_orchestrator/cron_20251103.log
+M	research/-aiexplained-official/sync.log
+M	research/-aispecies/sync.log
+M	research/crobertmilesai/sync.log
+M	research/embeddings/index_stats.json
+M	research/youtube-channels/auto-sync.log
+Your branch is up to date with 'origin/main'.
+fatal: Invalid branch name: 'merge/+ phase-0a-design-system_20251105_090302'
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 10:00:00] 🤖 Merge Orchestrator - 20251105_100000
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 10:00:01] ℹ️  Environment: Mac (frontend + backend)
+[2025-11-05 10:00:01] ℹ️  Dry run: false
+[2025-11-05 10:00:01] ℹ️  Skip frontend: false
+[2025-11-05 10:00:01] ℹ️  Max branches: 10
+[2025-11-05 10:00:01] ℹ️  Agent reviews (Phase 2): true
+[2025-11-05 10:00:01] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-05 10:00:01] ℹ️  Discovering feature branches...
+[2025-11-05 10:00:05] ℹ️  Found       40 feature branches
+[2025-11-05 10:00:05] ⚠️  WARNING: Branch count (      40) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 10:00:05] Processing: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 10:00:05] ℹ️  Creating merge branch: merge/+ phase-0a-design-system_20251105_100000
+fatal: 'merge/+ phase-0a-design-system_20251105_100000' is not a valid branch name
+[2025-11-05 10:00:05] ℹ️  Pulling latest main...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+[2025-11-05 10:00:07] ℹ️  Attempting merge from + phase-0a-design-system...
+merge: origin/+ phase-0a-design-system - not something we can merge
+[2025-11-05 10:00:07] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 10:00:07] Quality Gates: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 10:00:07] ℹ️  Gate 1: TypeScript compilation...
+./scripts/merge-orchestrator.sh: line 209: npx: command not found
+[2025-11-05 10:00:07] ✅ TypeScript compilation passed
+[2025-11-05 10:00:07] ℹ️  Gate 2: Test suite...
+[2025-11-05 10:00:07] ⚠️  WARNING: No test scripts found, skipping test gate
+[2025-11-05 10:00:07] ℹ️  Gate 3: Architecture review...
+[2025-11-05 10:00:07] 🔍 Spawning architecture-skeptic agent...
+[2025-11-05 10:00:07] ❌ ERROR: Architecture review blocked merge
+[2025-11-05 10:00:07] ❌ ERROR: Quality gates failed
+[2025-11-05 10:00:07] ℹ️  Preserving merge branch for inspection: merge/+ phase-0a-design-system_20251105_100000_FAILED
+Already on 'main'
+M	autonomous-worker.sh
+M	docs/wiki/README.md
+M	logs/merge_orchestrator/cron_20251103.log
+M	research/-aiexplained-official/sync.log
+M	research/-aispecies/sync.log
+M	research/crobertmilesai/sync.log
+M	research/embeddings/index_stats.json
+M	research/youtube-channels/auto-sync.log
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+fatal: Invalid branch name: 'merge/+ phase-0a-design-system_20251105_100000'
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 11:00:00] 🤖 Merge Orchestrator - 20251105_110000
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 11:00:00] ℹ️  Environment: Mac (frontend + backend)
+[2025-11-05 11:00:00] ℹ️  Dry run: false
+[2025-11-05 11:00:00] ℹ️  Skip frontend: false
+[2025-11-05 11:00:00] ℹ️  Max branches: 10
+[2025-11-05 11:00:00] ℹ️  Agent reviews (Phase 2): true
+[2025-11-05 11:00:00] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-05 11:00:00] ℹ️  Discovering feature branches...
+[2025-11-05 11:00:03] ℹ️  Found       40 feature branches
+[2025-11-05 11:00:03] ⚠️  WARNING: Branch count (      40) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 11:00:03] Processing: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 11:00:03] ℹ️  Creating merge branch: merge/+ phase-0a-design-system_20251105_110000
+fatal: 'merge/+ phase-0a-design-system_20251105_110000' is not a valid branch name
+[2025-11-05 11:00:03] ℹ️  Pulling latest main...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+[2025-11-05 11:00:05] ℹ️  Attempting merge from + phase-0a-design-system...
+merge: origin/+ phase-0a-design-system - not something we can merge
+[2025-11-05 11:00:05] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 11:00:05] Quality Gates: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 11:00:05] ℹ️  Gate 1: TypeScript compilation...
+./scripts/merge-orchestrator.sh: line 209: npx: command not found
+[2025-11-05 11:00:05] ✅ TypeScript compilation passed
+[2025-11-05 11:00:05] ℹ️  Gate 2: Test suite...
+[2025-11-05 11:00:05] ⚠️  WARNING: No test scripts found, skipping test gate
+[2025-11-05 11:00:05] ℹ️  Gate 3: Architecture review...
+[2025-11-05 11:00:05] 🔍 Spawning architecture-skeptic agent...
+[2025-11-05 11:00:05] ❌ ERROR: Architecture review blocked merge
+[2025-11-05 11:00:05] ❌ ERROR: Quality gates failed
+[2025-11-05 11:00:05] ℹ️  Preserving merge branch for inspection: merge/+ phase-0a-design-system_20251105_110000_FAILED
+Already on 'main'
+M	.claude/agents/memories/audit.log
+M	.claude/agents/memories/cynthia-memory.json
+M	.claude/agents/memories/sylvia-memory.json
+M	autonomous-worker.sh
+M	logs/merge_orchestrator/cron_20251103.log
+M	research/-aiexplained-official/sync.log
+M	research/-aispecies/sync.log
+M	research/crobertmilesai/sync.log
+M	research/embeddings/index_stats.json
+M	research/youtube-channels/auto-sync.log
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+fatal: Invalid branch name: 'merge/+ phase-0a-design-system_20251105_110000'
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 12:00:00] 🤖 Merge Orchestrator - 20251105_120000
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 12:00:00] ℹ️  Environment: Mac (frontend + backend)
+[2025-11-05 12:00:00] ℹ️  Dry run: false
+[2025-11-05 12:00:00] ℹ️  Skip frontend: false
+[2025-11-05 12:00:00] ℹ️  Max branches: 10
+[2025-11-05 12:00:00] ℹ️  Agent reviews (Phase 2): true
+[2025-11-05 12:00:00] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-05 12:00:00] ℹ️  Discovering feature branches...
+[2025-11-05 12:00:05] ℹ️  Found       37 feature branches
+[2025-11-05 12:00:05] ⚠️  WARNING: Branch count (      37) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 12:00:05] Processing: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 12:00:05] ℹ️  Creating merge branch: merge/+ phase-0a-design-system_20251105_120000
+fatal: 'merge/+ phase-0a-design-system_20251105_120000' is not a valid branch name
+[2025-11-05 12:00:05] ℹ️  Pulling latest main...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch              main       -> FETCH_HEAD
+hint: You have divergent branches and need to specify how to reconcile them.
+hint: You can do so by running one of the following commands sometime before
+hint: your next pull:
+hint: 
+hint:   git config pull.rebase false  # merge
+hint:   git config pull.rebase true   # rebase
+hint:   git config pull.ff only       # fast-forward only
+hint: 
+hint: You can replace "git config" with "git config --global" to set a default
+hint: preference for all repositories. You can also pass --rebase, --no-rebase,
+hint: or --ff-only on the command line to override the configured default per
+hint: invocation.
+fatal: Need to specify how to reconcile divergent branches.
+[2025-11-05 12:00:06] ℹ️  Attempting merge from + phase-0a-design-system...
+merge: origin/+ phase-0a-design-system - not something we can merge
+[2025-11-05 12:00:06] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 12:00:06] Quality Gates: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 12:00:06] ℹ️  Gate 1: TypeScript compilation...
+./scripts/merge-orchestrator.sh: line 209: npx: command not found
+[2025-11-05 12:00:06] ✅ TypeScript compilation passed
+[2025-11-05 12:00:06] ℹ️  Gate 2: Test suite...
+[2025-11-05 12:00:07] ⚠️  WARNING: No test scripts found, skipping test gate
+[2025-11-05 12:00:07] ℹ️  Gate 3: Architecture review...
+[2025-11-05 12:00:07] 🔍 Spawning architecture-skeptic agent...
+[2025-11-05 12:00:07] ❌ ERROR: Architecture review blocked merge
+[2025-11-05 12:00:07] ❌ ERROR: Quality gates failed
+[2025-11-05 12:00:07] ℹ️  Preserving merge branch for inspection: merge/+ phase-0a-design-system_20251105_120000_FAILED
+Already on 'main'
+M	.claude/agents/memories/audit.log
+M	.claude/agents/memories/cynthia-memory.json
+M	.claude/agents/memories/sylvia-memory.json
+M	.claude/settings.local.json
+M	autonomous-worker.sh
+D	logs/country_tracking_test_20251012_114646.log
+D	logs/death_tracking_test_20251012_111128.log
+D	logs/death_tracking_verification_20251012_111912.log
+D	logs/debug2_20251008_200248.log
+D	logs/debug_20251008_200216.log
+D	logs/debug_reqs_20251008_201329.log
+D	logs/defensive_test_20251010_072213.log
+D	logs/extinction_fix_final_test_20251012_085834.log
+D	logs/extinction_fix_test_20251012_085113.log
+D	logs/final_debug_20251008_201458.log
+D	logs/final_test_20251008_200642.log
+D	logs/info_warfare_test_1011172529.log
+D	logs/liztest_100925232.log
+D	logs/liztest_100925232_10.log
+D	logs/liztest_100925232_11.log
+D	logs/liztest_100925232_12.log
+D	logs/liztest_100925232_13.log
+D	logs/liztest_100925232_14.log
+D	logs/liztest_100925232_15.log
+D	logs/liztest_100925232_16.log
+D	logs/liztest_100925232_17.log
+D	logs/liztest_100925232_18.log
+D	logs/liztest_100925232_19.log
+D	logs/liztest_100925232_20.log
+D	logs/liztest_100925232_21.log
+D	logs/liztest_100925232_22.log
+D	logs/liztest_100925232_23.log
+D	logs/liztest_100925232_24.log
+D	logs/liztest_100925232_25.log
+D	logs/liztest_100925232_3.log
+D	logs/liztest_100925232_4.log
+D	logs/liztest_100925232_5.log
+D	logs/liztest_100925232_6.log
+D	logs/liztest_100925232_7.log
+D	logs/liztest_100925232_8.log
+D	logs/liztest_100925232_9.log
+D	logs/liztest_101125232_26.log
+D	logs/liztest_101125510_27.log
+D	logs/mc_action_fix_20251009_093725.log
+D	logs/mc_ai_accel_fix_20251009_114936.log
+D	logs/mc_ai_deployment_20251009_074253.log
+D	logs/mc_breakthrough_20251008_201654.log
+D	logs/mc_cascading_fix_20251008_210757.log
+D	logs/mc_defensive_ai_20251009_124433.log
+D	logs/mc_diplomatic_ai_test_20251008_221434.log
+D	logs/mc_full_final_20251009_131010.log
+D	logs/mc_full_fixed_20251009_130935.log
+D	logs/mc_full_resource_tech_20251009_112900.log
+D	logs/mc_full_system_20251009_130539.log
+D	logs/mc_governance_20251008_204422.log
+D	logs/mc_governance_20251008_204441.log
+D	logs/mc_governance_20251008_204530.log
+D	logs/mc_interspecies_test_20251009_101906.log
+D	logs/mc_nuclear_debug_20251009_090635.log
+D	logs/mc_nuclear_deterrence_test_20251009_085632.log
+D	logs/mc_nuclear_fix_20251009_080250.log
+D	logs/mc_nuclear_fix_20251009_080800.log
+D	logs/mc_nuclear_fixed_20251009_090754.log
+D	logs/mc_outcome_reason_test_20251008_213140.log
+D	logs/mc_peace_fix_20251009_113911.log
+D	logs/mc_peace_stronger_20251009_115738.log
+D	logs/mc_phase2b_20251008_203332.log
+D	logs/mc_resource_economy_20251009_110320.log
+D	logs/mc_resource_economy_fixed_20251009_110714.log
+D	logs/mc_scientific_fixed_20251009_161002.log
+D	logs/mc_scientific_spiral_debug_20251009_160741.log
+D	logs/mc_spiral_diagnostic_20251008_223524.log
+D	logs/mc_spiral_diagnostic_20251008_223536.log
+D	logs/mc_spiral_diagnostic_20251008_223549.log
+D	logs/mc_spiral_diagnostic_20251008_223613.log
+D	logs/mc_treaty_decay_20251009_195139.log
+D	logs/mc_treaty_renewal_20251009_161842.log
+D	logs/mc_trust_cap_fix_20251009_103643.log
+D	logs/mc_upward_spirals_test_20251008_215044.log
+M	logs/merge_orchestrator/cron_20251103.log
+D	logs/monte_carlo/all_fixes_verified_20251012_204648.log
+D	logs/monte_carlo/complete_famine_verification_oct13_20251012_210847.log
+D	logs/monte_carlo/debug_famine_test_20251012_205543.log
+D	logs/monte_carlo/famine_fix_test_20251012_205350.log
+D	logs/monte_carlo/famine_verified_fixed_oct13_20251012_211426.log
+D	logs/monte_carlo/final_famine_test_20251012_205650.log
+D	logs/monte_carlo/logging_test_20251012_173712.log
+D	logs/monte_carlo/orphan_fix_test_20251013_205713.log
+D	logs/monte_carlo/post_fixes_clean_20251012_181124.log
+D	logs/monte_carlo/post_fixes_test_20251012_180917.log
+D	logs/monte_carlo/post_fixes_test_20251012_180959.log
+D	logs/monte_carlo/quick_test_20251012_182526.log
+D	logs/monte_carlo/realistic_mortality_test_20251012_175744.log
+D	logs/monte_carlo/tier1_7_complete_test_20251013_205417.log
+D	logs/monte_carlo/tier1_7_validation_20251012_223129.log
+D	logs/monte_carlo/tier1_7_validation_20251012_223532.log
+D	logs/monte_carlo/tier7_test_20251012_182046.log
+D	logs/monte_carlo/twenty_year_fixed_20251012_193924.log
+D	logs/monte_carlo/twenty_year_test_20251012_192512.log
+D	logs/monte_carlo/twenty_year_with_fixes_20251012_194653.log
+D	logs/monte_carlo/working_test_20251012_190049.log
+D	logs/population_mc_2025-10-12T00-06-38.log
+D	logs/population_mc_2025-10-12T00-07-08.log
+D	logs/population_mc_2025-10-12T00-12-10.log
+D	logs/population_mc_2025-10-12T00-43-23.log
+D	logs/population_mc_2025-10-12T01-06-13.log
+D	logs/population_mc_2025-10-12T01-12-40.log
+D	logs/population_mc_2025-10-12T03-57-11.log
+D	logs/population_mc_251011171208.log
+D	logs/population_mc_FIXED_251011174322.log
+D	logs/population_mc_phase_complete_20251011_181238.log
+D	logs/progress_test_20251008_200819.log
+D	logs/qol_fix_test_20251012_102937.log
+D	logs/refactor_test_20251010_064521.log
+D	logs/sleeper_detection_test_1011205521.log
+D	logs/test_breakthrough_20251008_195503.log
+D	logs/test_tech_20251008_195542.log
+D	logs/test_tech_20251008_195612.log
+D	logs/tier0_baseline_1011135349.log
+D	logs/tier0_baseline_1011135503.log
+D	logs/tier0_baseline_1011135508.log
+D	logs/tier14_test_1011145511.log
+D	logs/tier1_fixed_1011141755.log
+D	logs/tier1_full_1011140407.log
+D	logs/tier1_novel_1011141430.log
+D	logs/tier1_novel_1011141500.log
+D	logs/tier1_ocean_1011140629.log
+D	logs/tier1_ocean_1011140634.log
+D	logs/tier1_phosphorus_1011135833.log
+D	logs/tier1_phosphorus_1011135838.log
+D	logs/tier1_run_1011140017.log
+D	logs/tier23_test_1011153553.log
+D	logs/tier2_BETTER_DETECTION_1011163524.log
+D	logs/tier2_COMPLETE_1011154757.log
+D	logs/tier2_COMPREHENSIVE_v3_1011163622.log
+D	logs/tier2_FINAL_TEST_1011163825.log
+D	logs/tier2_FIXED_1011171722.log
+D	logs/tier2_GOV_FIXED_1011163704.log
+D	logs/tier2_PRE_UNLOCKED_1011155627.log
+D	logs/tier2_PRE_UNLOCKED_fixed_1011155657.log
+D	logs/tier2_PRE_UNLOCKED_v2_1011155746.log
+D	logs/tier2_REALISTIC_DEPLOY_1011160403.log
+D	logs/tier2_checkpoint_comprehensive_1011154112.log
+D	logs/tier2_checkpoint_fixed_1011154145.log
+D	logs/tier2_comprehensive_1011165503.log
+D	logs/tier2_debug_detection_1011163200.log
+D	logs/tier2_final_1011165607.log
+D	logs/tier2_final_1011165755.log
+D	logs/tier2_ubi_1011151329.log
+D	logs/tier2_ubi_1011151341.log
+D	logs/tier2_ubi_1011151404.log
+D	logs/tier2_ubi_1011151450.log
+D	logs/tier2_ubi_1011151513.log
+D	logs/tier2_ubi_final_1011151541.log
+D	logs/tier3_100x480_20251011_223834.log
+D	logs/tier3_100x480_20251011_223924.log
+D	logs/tier3_1_final_test_20251011_222838.log
+D	logs/tier3_1_test2_20251011_222449.log
+D	logs/tier3_1_test3_20251011_222540.log
+D	logs/tier3_1_test4_20251011_222606.log
+D	logs/tier3_1_test_20251011_222422.log
+D	logs/tier3_FINAL_1011164634.log
+D	logs/tier3_GROUNDED_1011164852.log
+D	logs/tier3_RESOURCES_1011164553.log
+D	logs/tier3_ai_boost_1011164459.log
+D	logs/tier3_full_mc_20251011_223743.log
+D	logs/tier3_prep_1011164347.log
+D	logs/tier4_info_warfare_1011172719.log
+M	research/-aiexplained-official/sync.log
+M	research/-aispecies/sync.log
+M	research/crobertmilesai/sync.log
+M	research/embeddings/index_stats.json
+M	research/youtube-channels/auto-sync.log
+M	src/components/dashboards/EnvironmentalDashboard.tsx
+M	src/components/dashboards/OverviewDashboard.tsx
+M	src/components/dashboards/ParadigmDashboard.tsx
+M	src/components/dashboards/RegionsDashboard.tsx
+M	src/components/monte-carlo/MonteCarloResultsViewer.tsx
+M	src/components/monte-carlo/SweepResultsPanel.tsx
+M	src/components/monte-carlo/panels/CriticalEventsStream.tsx
+M	src/components/monte-carlo/panels/LiveProgressPanel.tsx
+M	src/components/monte-carlo/panels/OutcomeDistributionPanel.tsx
+M	src/components/monte-carlo/panels/ParameterSweepComparison.tsx
+M	src/components/monte-carlo/panels/RunInspector.tsx
+Your branch and 'origin/main' have diverged,
+and have 3 and 4 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+fatal: Invalid branch name: 'merge/+ phase-0a-design-system_20251105_120000'
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:00] 🤖 Merge Orchestrator - 20251105_130000
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:00] ℹ️  Environment: Mac (frontend + backend)
+[2025-11-05 13:00:00] ℹ️  Dry run: false
+[2025-11-05 13:00:00] ℹ️  Skip frontend: false
+[2025-11-05 13:00:00] ℹ️  Max branches: 10
+[2025-11-05 13:00:00] ℹ️  Agent reviews (Phase 2): true
+[2025-11-05 13:00:00] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-05 13:00:00] ℹ️  Discovering feature branches...
+[2025-11-05 13:00:03] ℹ️  Found       37 feature branches
+[2025-11-05 13:00:03] ⚠️  WARNING: Branch count (      37) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:03] Processing: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:03] ℹ️  Creating merge branch: merge/+ phase-0a-design-system_20251105_130000
+fatal: 'merge/+ phase-0a-design-system_20251105_130000' is not a valid branch name
+[2025-11-05 13:00:03] ℹ️  Pulling latest main...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch              main       -> FETCH_HEAD
+hint: You have divergent branches and need to specify how to reconcile them.
+hint: You can do so by running one of the following commands sometime before
+hint: your next pull:
+hint: 
+hint:   git config pull.rebase false  # merge
+hint:   git config pull.rebase true   # rebase
+hint:   git config pull.ff only       # fast-forward only
+hint: 
+hint: You can replace "git config" with "git config --global" to set a default
+hint: preference for all repositories. You can also pass --rebase, --no-rebase,
+hint: or --ff-only on the command line to override the configured default per
+hint: invocation.
+fatal: Need to specify how to reconcile divergent branches.
+[2025-11-05 13:00:05] ℹ️  Attempting merge from + phase-0a-design-system...
+merge: origin/+ phase-0a-design-system - not something we can merge
+[2025-11-05 13:00:05] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:05] Quality Gates: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:05] ℹ️  Gate 1: TypeScript compilation...
+./scripts/merge-orchestrator.sh: line 209: npx: command not found
+[2025-11-05 13:00:05] ✅ TypeScript compilation passed
+[2025-11-05 13:00:05] ℹ️  Gate 2: Test suite...
+[2025-11-05 13:00:05] ⚠️  WARNING: No test scripts found, skipping test gate
+[2025-11-05 13:00:05] ℹ️  Gate 3: Architecture review...
+[2025-11-05 13:00:05] 🔍 Spawning architecture-skeptic agent...
+[2025-11-05 13:00:05] ❌ ERROR: Architecture review blocked merge
+[2025-11-05 13:00:05] ❌ ERROR: Quality gates failed
+[2025-11-05 13:00:05] ℹ️  Preserving merge branch for inspection: merge/+ phase-0a-design-system_20251105_130000_FAILED
+Already on 'main'
+Your branch and 'origin/main' have diverged,
+and have 2 and 39 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+fatal: Invalid branch name: 'merge/+ phase-0a-design-system_20251105_130000'
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 14:00:00] 🤖 Merge Orchestrator - 20251105_140000
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 14:00:00] ℹ️  Environment: Mac (frontend + backend)
+[2025-11-05 14:00:00] ℹ️  Dry run: false
+[2025-11-05 14:00:00] ℹ️  Skip frontend: false
+[2025-11-05 14:00:00] ℹ️  Max branches: 10
+[2025-11-05 14:00:00] ℹ️  Agent reviews (Phase 2): true
+[2025-11-05 14:00:00] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-05 14:00:00] ℹ️  Discovering feature branches...
+[2025-11-05 14:00:03] ℹ️  Found       37 feature branches
+[2025-11-05 14:00:03] ⚠️  WARNING: Branch count (      37) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 14:00:03] Processing: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 14:00:03] ℹ️  Creating merge branch: merge/+ phase-0a-design-system_20251105_140000
+fatal: 'merge/+ phase-0a-design-system_20251105_140000' is not a valid branch name
+[2025-11-05 14:00:03] ℹ️  Pulling latest main...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch              main       -> FETCH_HEAD
+error: Your local changes to the following files would be overwritten by merge:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Updating e35ec103..e212b144
+[2025-11-05 14:00:05] ℹ️  Attempting merge from + phase-0a-design-system...
+merge: origin/+ phase-0a-design-system - not something we can merge
+[2025-11-05 14:00:05] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 14:00:05] Quality Gates: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 14:00:05] ℹ️  Gate 1: TypeScript compilation...
+./scripts/merge-orchestrator.sh: line 209: npx: command not found
+[2025-11-05 14:00:05] ✅ TypeScript compilation passed
+[2025-11-05 14:00:05] ℹ️  Gate 2: Test suite...
+[2025-11-05 14:00:05] ⚠️  WARNING: No test scripts found, skipping test gate
+[2025-11-05 14:00:05] ℹ️  Gate 3: Architecture review...
+[2025-11-05 14:00:05] 🔍 Spawning architecture-skeptic agent...
+[2025-11-05 14:00:05] ❌ ERROR: Architecture review blocked merge
+[2025-11-05 14:00:05] ❌ ERROR: Quality gates failed
+[2025-11-05 14:00:05] ℹ️  Preserving merge branch for inspection: merge/+ phase-0a-design-system_20251105_140000_FAILED
+Already on 'main'
+M	.claude/agents/memories/audit.log
+M	.claude/agents/memories/cynthia-memory.json
+M	.claude/agents/memories/sylvia-memory.json
+M	docs/function-doc-patches.json
+M	docs/underdocumented.json
+M	src/components/dashboards/EnvironmentalDashboard.tsx
+M	src/components/dashboards/OverviewDashboard.tsx
+M	src/lib/contexts/SimulationWorkerContext.tsx
+M	src/simulation/engine.ts
+M	src/simulation/engine/phases/FreshwaterPhase.ts
+M	src/simulation/engine/phases/index.ts
+M	src/workers/simulationWorker.ts
+Your branch is behind 'origin/main' by 10 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+fatal: Invalid branch name: 'merge/+ phase-0a-design-system_20251105_140000'
+
+=== Merge Orchestrator Started ===
+[15:00:00] Timestamp: Wed Nov  5 15:00:00 PST 2025
+[15:00:00] Dry run: false
+[15:00:00] Max branches: 10
+[15:00:00] Environment: Local (all branches)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[15:00:02] Found 69 branches to process
+
+=== Branch 1/69: auto/worker-20251102_043015 ===
+[15:00:02] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_043015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_043015_20251105_150000' set up to track 'origin/main'.
+[15:00:02] 🔀 Attempting merge from origin/auto/worker-20251102_043015
+Already up to date.
+[15:00:02] ✅ Merge successful (no conflicts)
+[15:00:02] 🚦 Running quality gates...
+[15:00:02]   Gate 1/2: TypeScript compilation
+./scripts/merge-orchestrator.sh: line 151: npx: command not found
+[15:00:02]     ❌ TypeScript compilation failed
+[15:00:02] 🚫 Merge BLOCKED: TypeScript errors
+[15:00:02] 📋 Merge branch preserved: merge/auto/worker-20251102_043015_20251105_150000
+Switched to branch 'main'
+
+=== Branch 2/69: auto/worker-20251102_050015 ===
+[15:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_050015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_050015_20251105_150000' set up to track 'origin/main'.
+[15:00:03] 🔀 Attempting merge from origin/auto/worker-20251102_050015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Automatic merge failed; fix conflicts and then commit the result.
+[15:00:03] ❌ Merge conflicts detected
+[15:00:03] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:03] 📋 Merge branch preserved: merge/auto/worker-20251102_050015_20251105_150000
+Switched to branch 'main'
+
+=== Branch 3/69: auto/worker-20251102_080006 ===
+[15:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_080006_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_080006_20251105_150000' set up to track 'origin/main'.
+[15:00:05] 🔀 Attempting merge from origin/auto/worker-20251102_080006
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/initialization.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[15:00:06] ❌ Merge conflicts detected
+[15:00:06] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:06] 📋 Merge branch preserved: merge/auto/worker-20251102_080006_20251105_150000
+Switched to branch 'main'
+
+=== Branch 4/69: auto/worker-20251102_090015 ===
+[15:00:07] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_090015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_090015_20251105_150000' set up to track 'origin/main'.
+[15:00:07] 🔀 Attempting merge from origin/auto/worker-20251102_090015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/initialization.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[15:00:10] ❌ Merge conflicts detected
+[15:00:10] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:10] 📋 Merge branch preserved: merge/auto/worker-20251102_090015_20251105_150000
+Switched to branch 'main'
+
+=== Branch 5/69: auto/worker-20251102_100015 ===
+[15:00:11] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_100015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_100015_20251105_150000' set up to track 'origin/main'.
+[15:00:11] 🔀 Attempting merge from origin/auto/worker-20251102_100015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:12] ❌ Merge conflicts detected
+[15:00:12] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:13] 📋 Merge branch preserved: merge/auto/worker-20251102_100015_20251105_150000
+fatal: There is no merge to abort (MERGE_HEAD missing).
+Switched to branch 'main'
+
+=== Branch 6/69: auto/worker-20251102_110015 ===
+[15:00:13] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_110015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_110015_20251105_150000' set up to track 'origin/main'.
+[15:00:13] 🔀 Attempting merge from origin/auto/worker-20251102_110015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:14] ❌ Merge conflicts detected
+[15:00:14] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:14] 📋 Merge branch preserved: merge/auto/worker-20251102_110015_20251105_150000
+fatal: There is no merge to abort (MERGE_HEAD missing).
+Switched to branch 'main'
+
+=== Branch 7/69: auto/worker-20251102_120000 ===
+[15:00:14] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_120000_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_120000_20251105_150000' set up to track 'origin/main'.
+[15:00:14] 🔀 Attempting merge from origin/auto/worker-20251102_120000
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+	src/simulation/lifecycle.ts
+	src/simulation/organizationManagement.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:15] ❌ Merge conflicts detected
+[15:00:15] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:15] 📋 Merge branch preserved: merge/auto/worker-20251102_120000_20251105_150000
+fatal: There is no merge to abort (MERGE_HEAD missing).
+Switched to branch 'main'
+
+=== Branch 8/69: auto/worker-20251102_130014 ===
+[15:00:15] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_130014_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_130014_20251105_150000' set up to track 'origin/main'.
+[15:00:15] 🔀 Attempting merge from origin/auto/worker-20251102_130014
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+	src/simulation/lifecycle.ts
+	src/simulation/organizationManagement.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:16] ❌ Merge conflicts detected
+[15:00:16] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:16] 📋 Merge branch preserved: merge/auto/worker-20251102_130014_20251105_150000
+fatal: There is no merge to abort (MERGE_HEAD missing).
+Switched to branch 'main'
+
+=== Branch 9/69: auto/worker-20251102_140015 ===
+[15:00:16] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_140015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_140015_20251105_150000' set up to track 'origin/main'.
+[15:00:16] 🔀 Attempting merge from origin/auto/worker-20251102_140015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+	src/simulation/lifecycle.ts
+	src/simulation/organizationManagement.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:17] ❌ Merge conflicts detected
+[15:00:17] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:17] 📋 Merge branch preserved: merge/auto/worker-20251102_140015_20251105_150000
+fatal: There is no merge to abort (MERGE_HEAD missing).
+Switched to branch 'main'
+
+=== Branch 10/69: auto/worker-20251102_150015 ===
+[15:00:17] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_150015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_150015_20251105_150000' set up to track 'origin/main'.
+[15:00:18] 🔀 Attempting merge from origin/auto/worker-20251102_150015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+	src/simulation/lifecycle.ts
+	src/simulation/organizationManagement.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:18] ❌ Merge conflicts detected
+[15:00:18] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:18] 📋 Merge branch preserved: merge/auto/worker-20251102_150015_20251105_150000
+fatal: There is no merge to abort (MERGE_HEAD missing).
+Switched to branch 'main'
+[15:00:19] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[15:00:19] Total branches found: 69
+[15:00:19] Branches processed: 10
+[15:00:19] ✅ Successfully merged: 0
+[15:00:19] ⏭️  Skipped (frontend on VM): 0
+[15:00:19] ❌ Failed (conflicts/gates): 10
+[15:00:19] 
+[15:00:19] 📊 Remaining branches: 59
+[15:00:19]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[15:00:19] Full log: /Users/annhoward/src/superalignmenttoutopia/logs/merge_orchestrator/merge_20251105_150000.log

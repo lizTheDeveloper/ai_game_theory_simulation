@@ -1,0 +1,57 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:00] 🤖 Merge Orchestrator - 20251105_130000
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:00] ℹ️  Environment: Mac (frontend + backend)
+[2025-11-05 13:00:00] ℹ️  Dry run: false
+[2025-11-05 13:00:00] ℹ️  Skip frontend: false
+[2025-11-05 13:00:00] ℹ️  Max branches: 10
+[2025-11-05 13:00:00] ℹ️  Agent reviews (Phase 2): true
+[2025-11-05 13:00:00] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-05 13:00:00] ℹ️  Discovering feature branches...
+[2025-11-05 13:00:03] ℹ️  Found       37 feature branches
+[2025-11-05 13:00:03] ⚠️  WARNING: Branch count (      37) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:03] Processing: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:03] ℹ️  Creating merge branch: merge/+ phase-0a-design-system_20251105_130000
+fatal: 'merge/+ phase-0a-design-system_20251105_130000' is not a valid branch name
+[2025-11-05 13:00:03] ℹ️  Pulling latest main...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch              main       -> FETCH_HEAD
+hint: You have divergent branches and need to specify how to reconcile them.
+hint: You can do so by running one of the following commands sometime before
+hint: your next pull:
+hint: 
+hint:   git config pull.rebase false  # merge
+hint:   git config pull.rebase true   # rebase
+hint:   git config pull.ff only       # fast-forward only
+hint: 
+hint: You can replace "git config" with "git config --global" to set a default
+hint: preference for all repositories. You can also pass --rebase, --no-rebase,
+hint: or --ff-only on the command line to override the configured default per
+hint: invocation.
+fatal: Need to specify how to reconcile divergent branches.
+[2025-11-05 13:00:05] ℹ️  Attempting merge from + phase-0a-design-system...
+merge: origin/+ phase-0a-design-system - not something we can merge
+[2025-11-05 13:00:05] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:05] Quality Gates: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 13:00:05] ℹ️  Gate 1: TypeScript compilation...
+./scripts/merge-orchestrator.sh: line 209: npx: command not found
+[2025-11-05 13:00:05] ✅ TypeScript compilation passed
+[2025-11-05 13:00:05] ℹ️  Gate 2: Test suite...
+[2025-11-05 13:00:05] ⚠️  WARNING: No test scripts found, skipping test gate
+[2025-11-05 13:00:05] ℹ️  Gate 3: Architecture review...
+[2025-11-05 13:00:05] 🔍 Spawning architecture-skeptic agent...
+[2025-11-05 13:00:05] ❌ ERROR: Architecture review blocked merge
+[2025-11-05 13:00:05] ❌ ERROR: Quality gates failed
+[2025-11-05 13:00:05] ℹ️  Preserving merge branch for inspection: merge/+ phase-0a-design-system_20251105_130000_FAILED
+Already on 'main'
+Your branch and 'origin/main' have diverged,
+and have 2 and 39 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+fatal: Invalid branch name: 'merge/+ phase-0a-design-system_20251105_130000'

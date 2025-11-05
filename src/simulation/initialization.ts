@@ -253,7 +253,7 @@ export function createAIAgent(
   targetCapability: number = 0.7,
   alignment: number = 0.8,
   seed: number = 1.0,
-  rng?: () => number  // Determinism fix (Oct 30, 2025): Optional RNG for reproducibility
+  rng: () => number  // Determinism fix (Oct 30, 2025): Required RNG for reproducibility
 ): AIAgent {
   // BUG #4 FIX (Oct 29, 2025): Honor targetCapability parameter
   // Root cause: capabilityProfile was initialized with frontier values (digital: 5.0, cognitive: 5.0, etc.)
