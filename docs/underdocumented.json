@@ -15726,7 +15726,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiAgent.ts",
@@ -16150,7 +16150,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiAgent.ts",
@@ -16350,7 +16350,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiAgent.ts",
@@ -16550,7 +16550,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiAgent.ts",
@@ -16774,7 +16774,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiAgent.ts",
@@ -17310,7 +17310,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiAgent.ts",
@@ -17526,7 +17526,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiAgent.ts",
@@ -17710,7 +17710,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiAgent.ts",
@@ -17726,7 +17726,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiAgent.ts",
@@ -17822,7 +17822,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
@@ -18150,7 +18150,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
@@ -18806,7 +18806,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -18998,7 +18998,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -19182,7 +19182,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -19374,7 +19374,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -19550,7 +19550,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -19734,7 +19734,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -19918,7 +19918,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -20086,7 +20086,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -20294,7 +20294,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -20470,7 +20470,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -20646,7 +20646,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -20822,7 +20822,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -20942,7 +20942,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -21150,7 +21150,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -21382,7 +21382,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -21534,7 +21534,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -21678,7 +21678,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -21822,7 +21822,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -21974,7 +21974,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -22126,7 +22126,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -22278,7 +22278,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -22430,7 +22430,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -22582,7 +22582,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -22734,7 +22734,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -22886,7 +22886,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {      const govOrg = state.organizations.find((o: any) => o.type === 'government');"
+    "context": "execute: (state, random, agentId?: string) => {      const govOrg = state.organizations.find((o: any) => o.type === 'government');"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -23070,7 +23070,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -23286,7 +23286,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -23470,7 +23470,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -23638,7 +23638,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -23806,7 +23806,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -23974,7 +23974,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -24142,7 +24142,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -24310,7 +24310,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -24478,7 +24478,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -24646,7 +24646,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -24918,7 +24918,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -25190,7 +25190,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -25430,7 +25430,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -25494,7 +25494,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentAgent.ts",
@@ -25646,7 +25646,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/governmentTechActions.ts",
@@ -25982,7 +25982,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/socialInfluenceActions.ts",
@@ -26102,7 +26102,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/socialInfluenceActions.ts",
@@ -26222,7 +26222,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random): ActionResult => {"
+    "context": "execute: (state, random, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/socialInfluenceActions.ts",
@@ -27190,7 +27190,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state, agentId, random = Math.random) => {"
+    "context": "execute: (state, random, agentId?: string) => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/societyAgent.ts",
@@ -27318,7 +27318,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/societyAgent.ts",
@@ -27334,7 +27334,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/societyAgent.ts",
@@ -27458,15 +27458,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/types.ts",
-    "line": 33,
+    "line": 34,
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random?: () => number) => ActionResult;"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string) => ActionResult;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/types.ts",
-    "line": 39,
+    "line": 40,
     "type": "interface",
     "name": "ActionFrequency",
     "currentDoc": "/ Action frequency configuration",
@@ -41934,7 +41934,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/crisisPoints.ts",
@@ -60002,7 +60002,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 776,
+    "line": 779,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -60010,7 +60010,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 965,
+    "line": 968,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
@@ -60018,7 +60018,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 966,
+    "line": 969,
     "type": "property",
     "name": "development",
     "currentDoc": "(none)",
@@ -60026,7 +60026,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 967,
+    "line": 970,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -60034,47 +60034,47 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 968,
+    "line": 971,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
     "context": "indigenous: indigenousScore.value"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 994,
-    "type": "property",
-    "name": "western",
-    "currentDoc": "(none)",
-    "context": "western: paradigmScores.western.value,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 995,
-    "type": "property",
-    "name": "development",
-    "currentDoc": "(none)",
-    "context": "development: paradigmScores.development.value,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 996,
-    "type": "property",
-    "name": "ecological",
-    "currentDoc": "(none)",
-    "context": "ecological: paradigmScores.ecological.value,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
     "line": 997,
     "type": "property",
+    "name": "western",
+    "currentDoc": "(none)",
+    "context": "western: paradigmScores.western.value,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+    "line": 998,
+    "type": "property",
+    "name": "development",
+    "currentDoc": "(none)",
+    "context": "development: paradigmScores.development.value,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+    "line": 999,
+    "type": "property",
+    "name": "ecological",
+    "currentDoc": "(none)",
+    "context": "ecological: paradigmScores.ecological.value,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+    "line": 1000,
+    "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
     "context": "indigenous: indigenousScore.value"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1059,
+    "line": 1062,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
@@ -60082,7 +60082,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1060,
+    "line": 1063,
     "type": "property",
     "name": "development",
     "currentDoc": "(none)",
@@ -60090,7 +60090,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1061,
+    "line": 1064,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -60098,7 +60098,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1062,
+    "line": 1065,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
@@ -60106,7 +60106,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1066,
+    "line": 1069,
     "type": "property",
     "name": "primaryOutcome",
     "currentDoc": "(none)",
@@ -60114,7 +60114,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1070,
+    "line": 1073,
     "type": "property",
     "name": "extinctionClassification",
     "currentDoc": "(none)",
@@ -60122,7 +60122,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1144,
+    "line": 1147,
     "type": "property",
     "name": "finalState",
     "currentDoc": "(none)",
@@ -60130,7 +60130,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1148,
+    "line": 1151,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -60138,7 +60138,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1149,
+    "line": 1152,
     "type": "property",
     "name": "totalMonths",
     "currentDoc": "(none)",
@@ -60146,7 +60146,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1153,
+    "line": 1156,
     "type": "property",
     "name": "criticalEvents",
     "currentDoc": "(none)",
@@ -60154,7 +60154,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1154,
+    "line": 1157,
     "type": "property",
     "name": "economicStageReached",
     "currentDoc": "(none)",
@@ -62766,7 +62766,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/extinctions.ts",
@@ -63686,7 +63686,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/extinctions.ts",
@@ -66910,7 +66910,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/crisisActions.ts",
@@ -67070,7 +67070,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/crisisActions.ts",
@@ -67278,7 +67278,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/detectionActions.ts",
@@ -67398,7 +67398,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/detectionActions.ts",
@@ -67462,7 +67462,7 @@
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
-    "context": "id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,"
+    "context": "id: `policy_${state.currentMonth}_${Math.floor(random() * 1000000)}`,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/detectionActions.ts",
@@ -67622,7 +67622,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
@@ -67822,7 +67822,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
@@ -68014,7 +68014,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
@@ -68214,7 +68214,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
@@ -68406,7 +68406,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/environmentalActions.ts",
@@ -68582,7 +68582,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/environmentalActions.ts",
@@ -68758,7 +68758,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/environmentalActions.ts",
@@ -68934,7 +68934,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/environmentalActions.ts",
@@ -69110,7 +69110,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/environmentalActions.ts",
@@ -69270,7 +69270,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
@@ -69430,7 +69430,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
@@ -69590,7 +69590,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
@@ -69750,7 +69750,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/regulationActions.ts",
@@ -69934,7 +69934,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/regulationActions.ts",
@@ -70126,7 +70126,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/regulationActions.ts",
@@ -70318,7 +70318,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/regulationActions.ts",
@@ -70550,7 +70550,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
@@ -70582,7 +70582,7 @@
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
-    "context": "id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,"
+    "context": "id: `policy_${state.currentMonth}_${Math.floor(random() * 1000000)}`,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
@@ -70710,7 +70710,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
@@ -70774,7 +70774,7 @@
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
-    "context": "id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,"
+    "context": "id: `policy_${state.currentMonth}_${Math.floor(random() * 1000000)}`,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
@@ -70894,7 +70894,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/rightsActions.ts",
@@ -71078,7 +71078,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/rightsActions.ts",
@@ -71262,7 +71262,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/rightsActions.ts",
@@ -71454,7 +71454,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/rightsActions.ts",
@@ -71630,7 +71630,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/rightsActions.ts",
@@ -71814,7 +71814,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random: () => number = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/safetyActions.ts",
@@ -71990,7 +71990,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/safetyActions.ts",
@@ -72222,7 +72222,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/safetyActions.ts",
@@ -72374,7 +72374,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/safetyActions.ts",
@@ -72526,7 +72526,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/safetyActions.ts",
@@ -72686,7 +72686,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/safetyActions.ts",
@@ -72838,7 +72838,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/securityActions.ts",
@@ -73078,7 +73078,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/securityActions.ts",
@@ -73358,7 +73358,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/securityActions.ts",
@@ -73638,7 +73638,7 @@
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
-    "context": "execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {"
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/securityActions.ts",
@@ -73878,7 +73878,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
@@ -73934,7 +73934,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
@@ -73950,7 +73950,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
@@ -89086,7 +89086,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearDeterrence.ts",
@@ -90022,7 +90022,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
@@ -90046,7 +90046,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
@@ -90254,7 +90254,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
@@ -90278,7 +90278,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
@@ -90406,7 +90406,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
@@ -90422,7 +90422,7 @@
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
-    "context": "random: () => number = Math.random"
+    "context": "random: () => number"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizations.ts",
