@@ -8,6 +8,7 @@ Complete command reference for running simulations, tests, and diagnostic script
 - [Building & Development](#building--development)
 - [Research Question Extraction](#research-question-extraction)
 - [Profiling & Performance](#profiling--performance)
+- [Maintenance & Cleanup](#maintenance--cleanup)
 - [Autonomous Worker Monitoring](#autonomous-worker-monitoring)
 
 ## Running Simulations
@@ -335,6 +336,63 @@ npx tsx scripts/monteCarloSimulation.ts > /tmp/output.log 2>&1 &
 - Complete audit trail of all autonomous work
 - Each run commits its log file to feature branch
 - See `AUTONOMOUS_SETUP.md` for details
+
+## Maintenance & Cleanup
+
+Added November 5, 2025 - unified log backup and disk space management.
+
+### GCS Log Backup & Cleanup
+
+**Purpose:** Archive logs to Google Cloud Storage, compress/delete old logs, prune merged git branches, and free disk space.
+
+```bash
+# Run cleanup and backup (works on both Mac and VM)
+./scripts/cleanup-and-backup.sh
+```
+
+**What It Does:**
+
+1. **Archives logs to GCS** (`gs://multiverseschool-logs/archives/`)
+   - Uploads all logs to timestamped GCS archive
+   - Compresses logs >7 days old (gzip)
+   - Deletes logs >30 days old (only after GCS backup)
+   - Safe: No destructive operations without successful GCS backup
+
+2. **Prunes merged git branches**
+   - Deletes local branches already merged to main
+   - Removes stale remote tracking branches
+   - Preserves main/master and current branch
+
+3. **Git garbage collection**
+   - Runs `git gc --aggressive --prune=now`
+   - Removes unreachable objects
+   - Can free ~1GB on VM environments
+
+**Environment Detection:**
+- Auto-detects Mac vs VM environment
+- VM: `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation`
+- Mac: Relative to script location
+
+**GCS Setup:**
+- Bucket: `gs://multiverseschool-logs` (europe-west10)
+- VM service account has `objectAdmin` role
+- Requires `gsutil` CLI (part of Google Cloud SDK)
+
+**Disk Space Freed:**
+- Logs: ~1.3GB archived and optionally deleted
+- Git objects: ~1GB from aggressive gc
+- Old branches: Varies by repository state
+
+**Safety Features:**
+- ✅ Logs only deleted after successful GCS upload
+- ✅ Preserves logs <30 days locally
+- ✅ Never deletes protected branches (main, master)
+- ✅ Comprehensive logging with color output
+
+**When to Run:**
+- Weekly on VM (or add to cron)
+- Before low disk space warnings
+- After major development cycles with many branches
 
 ## Channel Monitoring
 
