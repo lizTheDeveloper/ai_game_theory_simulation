@@ -1791,26 +1791,26 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const developmentComponents = {
     gdpPerCapita: state.globalMetrics.qualityOfLife * 100,  // Proxy from QoL
     infrastructureAccess: (state.qualityOfLifeSystems?.energyAvailability ?? 0.5) * 100,
-    technologyAdoption: (state.techDeployer?.totalDeploymentLevel ?? 0) * 100,
+    technologyAdoption: (state.techTreeState?.unlockedTech?.length ?? 0) / 71 * 100,  // Fraction of 71 total techs
     urbanization: 65,  // Static estimate for now
-    educationQuality: (state.qualityOfLifeSystems?.educationalQuality ?? 0.5) * 100,
+    educationQuality: (state.qualityOfLifeSystems?.healthcareQuality ?? 0.5) * 100,  // Proxy: healthcare as education indicator
   };
 
   const ecologicalComponents = {
-    climate: (1 - (state.environmentalAccumulation?.climateChange ?? 0)) * 100,
-    biodiversity: (1 - (state.environmentalAccumulation?.biodiversityLoss ?? 0)) * 100,
+    climate: (state.environmentalAccumulation?.climateStability ?? 1) * 100,
+    biodiversity: (state.environmentalAccumulation?.biodiversityIndex ?? 1) * 100,
     nitrogen: 50,  // Placeholder - not yet modeled
-    phosphorus: (1 - (state.phosphorusSystem?.depletionLevel ?? 0)) * 100,
-    freshwater: (1 - (state.waterSystem?.globalStressLevel ?? 0)) * 100,
+    phosphorus: (state.phosphorusSystem?.reserves ?? 1) * 100,
+    freshwater: (1 - (state.freshwaterSystem?.waterStress ?? 0)) * 100,
     landUse: 50,  // Placeholder - not yet modeled
-    oceanAcid: (1 - (state.oceanHealth?.acidificationLevel ?? 0)) * 100,
+    oceanAcid: (state.oceanAcidificationSystem?.pHLevel ?? 1) * 100,
   };
 
   const indigenousComponents = {
     localAutonomy: (state.qualityOfLifeSystems?.autonomy ?? 0.5) * 100,
     culturalVitality: (state.qualityOfLifeSystems?.meaningAndPurpose ?? 0.5) * 100,
-    landStewardship: (1 - (state.environmentalAccumulation?.biodiversityLoss ?? 0)) * 100,  // Proxy
-    collectiveWellbeing: (state.socialMetrics?.socialCohesion ?? 0.5) * 100,
+    landStewardship: (state.environmentalAccumulation?.biodiversityIndex ?? 1) * 100,  // Proxy
+    collectiveWellbeing: (state.socialAccumulation?.socialCohesion?.trust ?? 50) / 100 * 100,  // Convert from [0,100] to [0,1] then to percentage
     spiritualConnection: (state.qualityOfLifeSystems?.meaningAndPurpose ?? 0.5) * 100,
   };
 
