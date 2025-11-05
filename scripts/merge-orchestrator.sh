@@ -98,8 +98,7 @@ discover_branches() {
   git fetch --all --prune >> "$LOG_FILE" 2>&1
 
   # List all branches (local + remote), exclude main, exclude auto/ worker branches, exclude merge/ branches
-  # Note: git branch -a can prefix branches with *, +, or space
-  BRANCHES=$(git branch -a | grep -v 'HEAD' | grep -v 'auto/worker-' | grep -v 'merge/' | sed 's/^[*+ ] //' | sed 's/remotes\/origin\///' | grep -v '^main$' | sort -u)
+  BRANCHES=$(git branch -a | grep -v ' main$' | grep -v 'HEAD' | grep -v 'auto/worker-' | grep -v 'merge/' | sed 's/^[* ] //' | sed 's/remotes\/origin\///' | sort -u)
 
   if [ -z "$BRANCHES" ]; then
     return 1
@@ -318,12 +317,8 @@ main() {
     # Skip empty lines
     [ -z "$branch" ] && continue
 
-    # Disable errexit temporarily to capture non-zero return codes
-    # (attempt_merge returns 0=success, 1=failure, 2=skipped)
-    set +e
     attempt_merge "$branch"
     RESULT=$?
-    set -e
 
     if [ $RESULT -eq 0 ]; then
       MERGED_COUNT=$((MERGED_COUNT + 1))
