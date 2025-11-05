@@ -1,0 +1,191 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 19:30:02] 🤖 Merge Orchestrator - 20251105_193002
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 19:30:02] ℹ️  Environment: VM (backend only)
+[2025-11-05 19:30:02] ℹ️  Dry run: false
+[2025-11-05 19:30:02] ℹ️  Skip frontend: true
+[2025-11-05 19:30:02] ℹ️  Max branches: 10
+[2025-11-05 19:30:02] ℹ️  Agent reviews (Phase 2): true
+[2025-11-05 19:30:02] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-05 19:30:02] ℹ️  Discovering feature branches...
+Fetching origin
+[2025-11-05 19:30:03] ℹ️  Found 37 feature branches
+[2025-11-05 19:30:03] ⚠️  WARNING: Branch count (37) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 19:30:03] Processing: + research/citations-phase2-20251104_183001
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 19:30:03] ℹ️  Creating merge branch: merge/+ research/citations-phase2-20251104_183001_20251105_193002
+fatal: 'merge/+ research/citations-phase2-20251104_183001_20251105_193002' is not a valid branch name.
+[2025-11-05 19:30:03] ℹ️  Pulling latest main...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch                main       -> FETCH_HEAD
+Already up to date.
+[2025-11-05 19:30:04] ℹ️  Attempting merge from + research/citations-phase2-20251104_183001...
+merge: origin/+ research/citations-phase2-20251104_183001 - not something we can merge
+[2025-11-05 19:30:04] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 19:30:04] Quality Gates: + research/citations-phase2-20251104_183001
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 19:30:04] ℹ️  Gate 1: TypeScript compilation...
+e2e/fallback-detection.spec.ts(21,30): error TS2307: Cannot find module '@playwright/test' or its corresponding type declarations.
+playwright.config.ts(1,39): error TS2307: Cannot find module '@playwright/test' or its corresponding type declarations.
+src/components/dashboards/EnvironmentalDashboard.tsx(88,11): error TS2322: Type 'number | undefined' is not assignable to type 'string | number'.
+  Type 'undefined' is not assignable to type 'string | number'.
+src/components/dashboards/EnvironmentalDashboard.tsx(89,19): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(89,56): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(93,22): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(94,19): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(94,58): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(98,22): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(99,19): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(99,48): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(103,22): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(104,19): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(104,53): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(109,8): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(110,70): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(123,71): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(123,108): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(124,17): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(130,43): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(131,36): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(131,73): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(136,16): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(136,45): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(142,71): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(142,113): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(143,17): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(149,43): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(150,36): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(150,78): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(155,16): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(155,50): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(288,71): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(288,118): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(289,17): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(295,71): error TS18048: 'resourceDepletion' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(296,17): error TS18048: 'resourceDepletion' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(302,71): error TS18048: 'pollution' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(303,17): error TS18048: 'pollution' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(311,8): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(321,34): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(94,9): error TS18048: 'paradigms.ecological.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(95,9): error TS18048: 'paradigms.western.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(116,18): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(118,19): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(119,18): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(123,19): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(124,19): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(124,44): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(125,18): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(129,18): error TS18048: 'aiCap' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(130,19): error TS18048: 'aiCap' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(130,46): error TS18048: 'aiCap' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(131,18): error TS18048: 'aiCap' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(157,18): error TS18048: 'paradigms.western.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(168,18): error TS18048: 'paradigms.development.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(178,54): error TS18048: 'paradigms.ecological.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(179,18): error TS18048: 'paradigms.ecological.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(190,18): error TS18048: 'paradigms.indigenous.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(263,11): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/components/dashboards/ParadigmDashboard.tsx(83,20): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(83,44): error TS18048: 'a' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(83,48): error TS18048: 'b' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(84,32): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(84,58): error TS18048: 'sum' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(84,73): error TS18048: 's' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(87,42): error TS18048: 's' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(88,44): error TS18048: 's' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(186,17): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(196,20): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(293,17): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(303,20): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(400,17): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(410,26): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(412,20): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(523,20): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(627,11): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/components/dashboards/ParadigmDashboard.tsx(637,12): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(637,31): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(647,12): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(647,31): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(647,50): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(67,28): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/components/dashboards/RegionsDashboard.tsx(84,18): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(86,19): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(95,21): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(97,21): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(97,46): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(102,19): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(104,19): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(104,55): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(108,19): error TS18048: 'institutionalTrust' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(110,19): error TS18048: 'institutionalTrust' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(110,59): error TS18048: 'institutionalTrust' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(129,71): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(130,16): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(133,16): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(145,57): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(151,43): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(152,36): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(152,72): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(152,107): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(161,57): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(167,43): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(177,57): error TS18048: 'institutionalTrust' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(183,43): error TS18048: 'institutionalTrust' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(310,8): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(313,60): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(319,8): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(322,60): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(328,8): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(331,50): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/monte-carlo/MonteCarloResultsViewer.tsx(345,21): error TS18048: 'batchProgress.runningRuns' is possibly 'undefined'.
+src/components/monte-carlo/SweepResultsPanel.tsx(25,7): error TS2322: Type '"green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+src/components/monte-carlo/SweepResultsPanel.tsx(55,20): error TS18048: 'aggregateStats.survivalRate' is possibly 'undefined'.
+src/components/monte-carlo/SweepResultsPanel.tsx(74,61): error TS2339: Property 'length' does not exist on type '{ avgMonthsToOutcome: number; minMonthsToOutcome: number; maxMonthsToOutcome: number; medianMonthsToOutcome: number; }'.
+src/components/monte-carlo/SweepResultsPanel.tsx(160,23): error TS18048: 'breakdown' is possibly 'undefined'.
+src/components/monte-carlo/SweepResultsPanel.tsx(186,27): error TS2339: Property 'slice' does not exist on type '{ avgMonthsToOutcome: number; minMonthsToOutcome: number; maxMonthsToOutcome: number; medianMonthsToOutcome: number; }'.
+src/components/monte-carlo/panels/CriticalEventsStream.tsx(93,7): error TS2322: Type 'Element' is not assignable to type 'string'.
+src/components/monte-carlo/panels/CriticalEventsStream.tsx(103,7): error TS2322: Type '"cyan" | "green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+  Type '"green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+src/components/monte-carlo/panels/LiveProgressPanel.tsx(23,13): error TS7030: Not all code paths return a value.
+src/components/monte-carlo/panels/LiveProgressPanel.tsx(63,7): error TS2322: Type '"cyan" | "green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+  Type '"green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+src/components/monte-carlo/panels/OutcomeDistributionPanel.tsx(247,27): error TS2532: Object is possibly 'undefined'.
+src/components/monte-carlo/panels/ParameterSweepComparison.tsx(80,47): error TS2322: Type '"purple"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+src/components/monte-carlo/panels/ParameterSweepComparison.tsx(168,31): error TS2532: Object is possibly 'undefined'.
+src/components/monte-carlo/panels/ParameterSweepComparison.tsx(230,36): error TS2532: Object is possibly 'undefined'.
+src/components/monte-carlo/panels/RunInspector.tsx(137,13): error TS2322: Type '"green" | "amber"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+  Type '"green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+src/components/paradigms/ParadigmDetailPanel.tsx(608,43): error TS18047: 'lastUpdate' is possibly 'null'.
+src/components/paradigms/ParadigmDetailPanel.tsx(608,77): error TS18047: 'lastUpdate' is possibly 'null'.
+src/workers/simulationWorker.ts(1794,32): error TS2339: Property 'techDeployer' does not exist on type 'GameState'.
+src/workers/simulationWorker.ts(1796,52): error TS2339: Property 'educationalQuality' does not exist on type 'QualityOfLifeSystems'.
+src/workers/simulationWorker.ts(1800,53): error TS2339: Property 'climateChange' does not exist on type 'EnvironmentalAccumulation'.
+src/workers/simulationWorker.ts(1801,58): error TS2339: Property 'biodiversityLoss' does not exist on type 'EnvironmentalAccumulation'.
+src/workers/simulationWorker.ts(1803,47): error TS2339: Property 'depletionLevel' does not exist on type 'PhosphorusSystem'.
+src/workers/simulationWorker.ts(1804,29): error TS2339: Property 'waterSystem' does not exist on type 'GameState'.
+src/workers/simulationWorker.ts(1806,28): error TS2339: Property 'oceanHealth' does not exist on type 'GameState'.
+src/workers/simulationWorker.ts(1812,61): error TS2339: Property 'biodiversityLoss' does not exist on type 'EnvironmentalAccumulation'.
+src/workers/simulationWorker.ts(1813,33): error TS2339: Property 'socialMetrics' does not exist on type 'GameState'.
+[2025-11-05 19:30:13] ✅ TypeScript compilation passed
+[2025-11-05 19:30:13] ℹ️  Gate 2: Test suite...
+[2025-11-05 19:30:13] ⚠️  WARNING: test:backend script not found, skipping tests
+[2025-11-05 19:30:13] ✅ Tests passed (or skipped)
+[2025-11-05 19:30:13] ℹ️  Gate 3: Architecture review...
+[2025-11-05 19:30:13] 🔍 Spawning architecture-skeptic agent...
+[2025-11-05 19:30:13] ❌ ERROR: Architecture review blocked merge
+[2025-11-05 19:30:13] ❌ ERROR: Quality gates failed
+[2025-11-05 19:30:13] ℹ️  Preserving merge branch for inspection: merge/+ research/citations-phase2-20251104_183001_20251105_193002_FAILED
+Already on 'main'
+M	docs/function-doc-patches.json
+M	docs/underdocumented.json
+Your branch is up to date with 'origin/main'.
+fatal: Invalid branch name: 'merge/+ research/citations-phase2-20251104_183001_20251105_193002'

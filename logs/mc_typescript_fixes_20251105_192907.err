@@ -1,0 +1,14 @@
+
+
+❌ UNCAUGHT EXCEPTION: ❌ Region Eastern Asia missing mortalityStabilizers at Month 4. This should be initialized in src/simulation/initialization.ts or regional population creation. Silent skipping would hide this bug.
+Error: ❌ Region Eastern Asia missing mortalityStabilizers at Month 4. This should be initialized in src/simulation/initialization.ts or regional population creation. Silent skipping would hide this bug.
+    at MortalityStabilizersPhase.execute (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts:55:17)
+    at PhaseOrchestrator.executeAll (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:196:30)
+    at SimulationEngine.step (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts:636:38)
+    at SimulationEngine.run (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts:769:31)
+    at runSingleSimulation (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:2000:35)
+    at <anonymous> (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:2935:49)
+    at Array.map (<anonymous>)
+    at <anonymous> (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:2935:24)
+    at i (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:2980:3)
+    at Object.<anonymous> (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:4678:1)

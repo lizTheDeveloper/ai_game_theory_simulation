@@ -485,13 +485,14 @@ function calculateRegionalPopulationDecline(org: Organization, state: GameState)
  * Data centers use short codes (US, EU, China), regional populations use full names
  */
 function mapDataCenterRegionToPopulationRegion(regionCode: string): string {
-  // FIX (Oct 27, 2025): Match actual regional population names
-  // Regional populations use UN statistical names ("Northern America" not "North America")
+  // FIX (Nov 5, 2025): Use canonical RegionName type from populationProvider.ts
+  // Regional populations now use standardized names to match RegionName type
   switch (regionCode.toLowerCase()) {
     case 'us':
     case 'united states':
     case 'north america':
-      return 'Northern America'; // UN statistical name
+    case 'northern america': // Legacy UN statistical name
+      return 'North America'; // Canonical name
 
     case 'eu':
     case 'europe':
@@ -499,11 +500,13 @@ function mapDataCenterRegionToPopulationRegion(regionCode: string): string {
 
     case 'china':
     case 'east asia':
-      return 'Eastern Asia'; // UN statistical name
+    case 'eastern asia': // Legacy UN statistical name
+      return 'East Asia'; // Canonical name
 
     case 'india':
     case 'south asia':
-      return 'Southern Asia'; // UN statistical name
+    case 'southern asia': // Legacy UN statistical name
+      return 'South Asia'; // Canonical name
 
     case 'africa':
     case 'sub-saharan africa':
@@ -523,9 +526,9 @@ function mapDataCenterRegionToPopulationRegion(regionCode: string): string {
       return 'Global'; // Special case handled in calculateRegionalPopulationDecline
 
     default:
-      // Unknown region, default to Northern America (most orgs are US-based)
-      // FIX (Oct 27, 2025): Use UN statistical name to match regional populations
-      return 'Northern America';
+      // Unknown region, default to North America (most orgs are US-based)
+      // FIX (Nov 5, 2025): Use canonical name to match RegionName type
+      return 'North America';
   }
 }
 
