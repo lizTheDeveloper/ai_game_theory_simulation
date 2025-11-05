@@ -6,6 +6,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class FreshwaterPhase implements SimulationPhase {
   readonly id = 'freshwater';
@@ -14,9 +15,10 @@ export class FreshwaterPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateFreshwaterSystem, checkFreshwaterTechUnlocks } = require('../../freshwaterDepletion');
+    setDeterministicRng(rng);
 
     updateFreshwaterSystem(state, rng);
-    checkFreshwaterTechUnlocks(state, rng);
+    checkFreshwaterTechUnlocks(state);
 
     return { events: [] };
   }

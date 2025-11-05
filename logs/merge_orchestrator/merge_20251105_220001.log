@@ -1,0 +1,860 @@
+
+=== Merge Orchestrator Started ===
+[22:00:01] Timestamp: Wed Nov  5 22:00:01 UTC 2025
+[22:00:01] Dry run: false
+[22:00:01] Max branches: 10
+[22:00:01] Environment: VM (backend only)
+[22:00:01] ⚠️  Merge orchestrator already running (lock file exists)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[22:00:02] Found 68 branches to process
+
+=== Branch 1/68: auto/worker-20251102_043015 ===
+[22:00:02] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251105_220001
+Switched to a new branch 'merge/auto/worker-20251102_043015_20251105_220001'
+Branch 'merge/auto/worker-20251102_043015_20251105_220001' set up to track remote branch 'main' from 'origin'.
+[22:00:02] 🔀 Attempting merge from origin/auto/worker-20251102_043015
+Already up to date.
+[22:00:02] ✅ Merge successful (no conflicts)
+[22:00:02] 🚦 Running quality gates...
+[22:00:02]   Gate 1/2: TypeScript compilation
+e2e/fallback-detection.spec.ts(21,30): error TS2307: Cannot find module '@playwright/test' or its corresponding type declarations.
+playwright.config.ts(1,39): error TS2307: Cannot find module '@playwright/test' or its corresponding type declarations.
+src/simulation/initialization.ts(363,30): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/simulation/initialization.ts(376,26): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/simulation/initialization.ts(377,41): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/simulation/initialization.ts(378,42): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/simulation/initialization.ts(380,31): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/simulation/initialization.ts(382,38): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+[22:00:17]     ❌ TypeScript compilation failed
+[22:00:17] 🚫 Merge BLOCKED: TypeScript errors
+[22:00:17] 📋 Merge branch preserved: merge/auto/worker-20251102_043015_20251105_220001
+Your branch is up to date with 'origin/main'.
+
+=== Branch 2/68: auto/worker-20251102_050015 ===
+[22:00:17] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251105_220001
+Switched to a new branch 'merge/auto/worker-20251102_050015_20251105_220001'
+Branch 'merge/auto/worker-20251102_050015_20251105_220001' set up to track remote branch 'main' from 'origin'.
+[22:00:17] 🔀 Attempting merge from origin/auto/worker-20251102_050015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Automatic merge failed; fix conflicts and then commit the result.
+[22:00:17] ❌ Merge conflicts detected
+[22:00:17] 🚫 Merge BLOCKED: Manual conflict resolution required
+[22:00:17] 📋 Merge branch preserved: merge/auto/worker-20251102_050015_20251105_220001
+Your branch is up to date with 'origin/main'.
+
+=== Branch 3/68: auto/worker-20251102_080006 ===
+[22:00:17] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251105_220001
+Switched to a new branch 'merge/auto/worker-20251102_080006_20251105_220001'
+Branch 'merge/auto/worker-20251102_080006_20251105_220001' set up to track remote branch 'main' from 'origin'.
+[22:00:17] 🔀 Attempting merge from origin/auto/worker-20251102_080006
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/initialization.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[22:00:18] ❌ Merge conflicts detected
+[22:00:18] 🚫 Merge BLOCKED: Manual conflict resolution required
+[22:00:18] 📋 Merge branch preserved: merge/auto/worker-20251102_080006_20251105_220001
+Your branch is up to date with 'origin/main'.
+
+=== Branch 4/68: auto/worker-20251102_090015 ===
+[22:00:18] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251105_220001
+Switched to a new branch 'merge/auto/worker-20251102_090015_20251105_220001'
+Branch 'merge/auto/worker-20251102_090015_20251105_220001' set up to track remote branch 'main' from 'origin'.
+[22:00:18] 🔀 Attempting merge from origin/auto/worker-20251102_090015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/initialization.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[22:00:18] ❌ Merge conflicts detected
+[22:00:18] 🚫 Merge BLOCKED: Manual conflict resolution required
+[22:00:18] 📋 Merge branch preserved: merge/auto/worker-20251102_090015_20251105_220001
+Your branch is up to date with 'origin/main'.
+
+=== Branch 5/68: auto/worker-20251102_100015 ===
+[22:00:18] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251105_220001
+Switched to a new branch 'merge/auto/worker-20251102_100015_20251105_220001'
+Branch 'merge/auto/worker-20251102_100015_20251105_220001' set up to track remote branch 'main' from 'origin'.
+[22:00:19] 🔀 Attempting merge from origin/auto/worker-20251102_100015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/GeoengineringPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/GeoengineringPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/MemeticEvolutionPhase.ts
+Auto-merging src/simulation/engine/phases/NationalAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/NationalAIPhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/engine/phases/TechTreePhase.ts
+Auto-merging src/simulation/environmental.ts
+CONFLICT (content): Merge conflict in src/simulation/environmental.ts
+Auto-merging src/simulation/geoengineering.ts
+CONFLICT (content): Merge conflict in src/simulation/geoengineering.ts
+Auto-merging src/simulation/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/initialization.ts
+Auto-merging src/simulation/memetics/memeTransmission.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/memeTransmission.ts
+Auto-merging src/simulation/nationalAI/deployment.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/deployment.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/phosphorusDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/phosphorusDepletion.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/resourceDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/resourceDepletion.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/techTree/engine.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/engine.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[22:00:19] ❌ Merge conflicts detected
+[22:00:19] 🚫 Merge BLOCKED: Manual conflict resolution required
+[22:00:19] 📋 Merge branch preserved: merge/auto/worker-20251102_100015_20251105_220001
+Your branch is up to date with 'origin/main'.
+
+=== Branch 6/68: auto/worker-20251102_110015 ===
+[22:00:19] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251105_220001
+Switched to a new branch 'merge/auto/worker-20251102_110015_20251105_220001'
+Branch 'merge/auto/worker-20251102_110015_20251105_220001' set up to track remote branch 'main' from 'origin'.
+[22:00:20] 🔀 Attempting merge from origin/auto/worker-20251102_110015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/aiTechActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/aiTechActions.ts
+Auto-merging src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/capabilities.ts
+CONFLICT (content): Merge conflict in src/simulation/capabilities.ts
+Auto-merging src/simulation/conflictResolution.ts
+CONFLICT (content): Merge conflict in src/simulation/conflictResolution.ts
+Auto-merging src/simulation/crisisPoints.ts
+CONFLICT (content): Merge conflict in src/simulation/crisisPoints.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/endGame.ts
+CONFLICT (content): Merge conflict in src/simulation/endGame.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/GeoengineringPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/GeoengineringPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/MemeticEvolutionPhase.ts
+Auto-merging src/simulation/engine/phases/NationalAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/NationalAIPhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/engine/phases/TechTreePhase.ts
+Auto-merging src/simulation/environmental.ts
+CONFLICT (content): Merge conflict in src/simulation/environmental.ts
+Auto-merging src/simulation/geoengineering.ts
+CONFLICT (content): Merge conflict in src/simulation/geoengineering.ts
+Auto-merging src/simulation/government/actions/detectionActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/detectionActions.ts
+Auto-merging src/simulation/government/actions/researchActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/researchActions.ts
+Auto-merging src/simulation/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/initialization.ts
+Auto-merging src/simulation/memetics/aiAmplification.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/aiAmplification.ts
+Auto-merging src/simulation/memetics/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/initialization.ts
+Auto-merging src/simulation/memetics/memeTransmission.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/memeTransmission.ts
+Auto-merging src/simulation/nationalAI/cooperation.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/cooperation.ts
+Auto-merging src/simulation/nationalAI/deployment.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/deployment.ts
+Auto-merging src/simulation/nationalAI/regulation.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/regulation.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/phosphorusDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/phosphorusDepletion.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/mortality.ts
+CONFLICT (content): Merge conflict in src/simulation/qualityOfLife/mortality.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+CONFLICT (content): Merge conflict in src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/research.ts
+CONFLICT (content): Merge conflict in src/simulation/research.ts
+Auto-merging src/simulation/resourceDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/resourceDepletion.ts
+Auto-merging src/simulation/sleeperDetection.ts
+CONFLICT (content): Merge conflict in src/simulation/sleeperDetection.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/techTree/engine.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/engine.ts
+Auto-merging src/simulation/techTree/regionalDeployment.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/regionalDeployment.ts
+Auto-merging src/simulation/thresholds/config.ts
+CONFLICT (content): Merge conflict in src/simulation/thresholds/config.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[22:00:20] ❌ Merge conflicts detected
+[22:00:20] 🚫 Merge BLOCKED: Manual conflict resolution required
+[22:00:20] 📋 Merge branch preserved: merge/auto/worker-20251102_110015_20251105_220001
+Your branch is up to date with 'origin/main'.
+
+=== Branch 7/68: auto/worker-20251102_120000 ===
+[22:00:20] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251105_220001
+Switched to a new branch 'merge/auto/worker-20251102_120000_20251105_220001'
+Branch 'merge/auto/worker-20251102_120000_20251105_220001' set up to track remote branch 'main' from 'origin'.
+[22:00:20] 🔀 Attempting merge from origin/auto/worker-20251102_120000
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/aiAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/aiAgent.ts
+Auto-merging src/simulation/agents/aiTechActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/aiTechActions.ts
+Auto-merging src/simulation/agents/governmentAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/agents/governmentTechActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/governmentTechActions.ts
+Auto-merging src/simulation/agents/socialInfluenceActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/socialInfluenceActions.ts
+Auto-merging src/simulation/agents/societyAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/societyAgent.ts
+Auto-merging src/simulation/capabilities.ts
+CONFLICT (content): Merge conflict in src/simulation/capabilities.ts
+Auto-merging src/simulation/computeInfrastructure.ts
+CONFLICT (content): Merge conflict in src/simulation/computeInfrastructure.ts
+Auto-merging src/simulation/conflictResolution.ts
+CONFLICT (content): Merge conflict in src/simulation/conflictResolution.ts
+Auto-merging src/simulation/crisisPoints.ts
+CONFLICT (content): Merge conflict in src/simulation/crisisPoints.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/endGame.ts
+CONFLICT (content): Merge conflict in src/simulation/endGame.ts
+Auto-merging src/simulation/engine.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/FreshwaterPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/FreshwaterPhase.ts
+Auto-merging src/simulation/engine/phases/GeoengineringPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/GeoengineringPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/MemeticEvolutionPhase.ts
+Auto-merging src/simulation/engine/phases/NationalAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/NationalAIPhase.ts
+Auto-merging src/simulation/engine/phases/PhosphorusPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/PhosphorusPhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/engine/phases/ResourceEconomyPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/ResourceEconomyPhase.ts
+Auto-merging src/simulation/engine/phases/TechTreePhase.ts
+Auto-merging src/simulation/engine/phases/TechnologyDiffusionPhase.ts
+Auto-merging src/simulation/environmental.ts
+CONFLICT (content): Merge conflict in src/simulation/environmental.ts
+Auto-merging src/simulation/extinctions.ts
+CONFLICT (content): Merge conflict in src/simulation/extinctions.ts
+Auto-merging src/simulation/geoengineering.ts
+CONFLICT (content): Merge conflict in src/simulation/geoengineering.ts
+Auto-merging src/simulation/government/actions/crisisActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/crisisActions.ts
+Auto-merging src/simulation/government/actions/detectionActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/detectionActions.ts
+Auto-merging src/simulation/government/actions/economicActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/economicActions.ts
+Auto-merging src/simulation/government/actions/environmentalActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/environmentalActions.ts
+Auto-merging src/simulation/government/actions/internationalActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/internationalActions.ts
+Auto-merging src/simulation/government/actions/regulationActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/regulationActions.ts
+Auto-merging src/simulation/government/actions/researchActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/researchActions.ts
+Auto-merging src/simulation/government/actions/rightsActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/rightsActions.ts
+Auto-merging src/simulation/government/actions/safetyActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/safetyActions.ts
+Auto-merging src/simulation/government/actions/securityActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/securityActions.ts
+Auto-merging src/simulation/government/core/governmentCore.ts
+CONFLICT (content): Merge conflict in src/simulation/government/core/governmentCore.ts
+Auto-merging src/simulation/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/initialization.ts
+Auto-merging src/simulation/lifecycle.ts
+Auto-merging src/simulation/memetics/aiAmplification.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/aiAmplification.ts
+Auto-merging src/simulation/memetics/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/initialization.ts
+Auto-merging src/simulation/memetics/memeTransmission.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/memeTransmission.ts
+Auto-merging src/simulation/nationalAI/cooperation.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/cooperation.ts
+Auto-merging src/simulation/nationalAI/deployment.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/deployment.ts
+Auto-merging src/simulation/nationalAI/regulation.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/regulation.ts
+Auto-merging src/simulation/nuclearDeterrence.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearDeterrence.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/organizationManagement.ts
+CONFLICT (content): Merge conflict in src/simulation/organizationManagement.ts
+Auto-merging src/simulation/phosphorusDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/phosphorusDepletion.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/mortality.ts
+CONFLICT (content): Merge conflict in src/simulation/qualityOfLife/mortality.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+CONFLICT (content): Merge conflict in src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/research.ts
+CONFLICT (content): Merge conflict in src/simulation/research.ts
+Auto-merging src/simulation/resourceDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/resourceDepletion.ts
+Auto-merging src/simulation/sleeperDetection.ts
+CONFLICT (content): Merge conflict in src/simulation/sleeperDetection.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/techTree/engine.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/engine.ts
+Auto-merging src/simulation/techTree/regionalDeployment.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/regionalDeployment.ts
+Auto-merging src/simulation/thresholds/config.ts
+CONFLICT (content): Merge conflict in src/simulation/thresholds/config.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[22:00:21] ❌ Merge conflicts detected
+[22:00:21] 🚫 Merge BLOCKED: Manual conflict resolution required
+[22:00:21] 📋 Merge branch preserved: merge/auto/worker-20251102_120000_20251105_220001
+Your branch is up to date with 'origin/main'.
+
+=== Branch 8/68: auto/worker-20251102_130014 ===
+[22:00:21] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251105_220001
+Switched to a new branch 'merge/auto/worker-20251102_130014_20251105_220001'
+Branch 'merge/auto/worker-20251102_130014_20251105_220001' set up to track remote branch 'main' from 'origin'.
+[22:00:21] 🔀 Attempting merge from origin/auto/worker-20251102_130014
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/aiAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/aiAgent.ts
+Auto-merging src/simulation/agents/aiTechActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/aiTechActions.ts
+Auto-merging src/simulation/agents/governmentAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/agents/governmentTechActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/governmentTechActions.ts
+Auto-merging src/simulation/agents/socialInfluenceActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/socialInfluenceActions.ts
+Auto-merging src/simulation/agents/societyAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/societyAgent.ts
+Auto-merging src/simulation/capabilities.ts
+CONFLICT (content): Merge conflict in src/simulation/capabilities.ts
+Auto-merging src/simulation/computeInfrastructure.ts
+CONFLICT (content): Merge conflict in src/simulation/computeInfrastructure.ts
+Auto-merging src/simulation/conflictResolution.ts
+CONFLICT (content): Merge conflict in src/simulation/conflictResolution.ts
+Auto-merging src/simulation/crisisPoints.ts
+CONFLICT (content): Merge conflict in src/simulation/crisisPoints.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/endGame.ts
+CONFLICT (content): Merge conflict in src/simulation/endGame.ts
+Auto-merging src/simulation/engine.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/FreshwaterPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/FreshwaterPhase.ts
+Auto-merging src/simulation/engine/phases/GeoengineringPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/GeoengineringPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/MemeticEvolutionPhase.ts
+Auto-merging src/simulation/engine/phases/NationalAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/NationalAIPhase.ts
+Auto-merging src/simulation/engine/phases/PhosphorusPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/PhosphorusPhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/engine/phases/ResourceEconomyPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/ResourceEconomyPhase.ts
+Auto-merging src/simulation/engine/phases/TechTreePhase.ts
+Auto-merging src/simulation/engine/phases/TechnologyDiffusionPhase.ts
+Auto-merging src/simulation/environmental.ts
+CONFLICT (content): Merge conflict in src/simulation/environmental.ts
+Auto-merging src/simulation/extinctions.ts
+CONFLICT (content): Merge conflict in src/simulation/extinctions.ts
+Auto-merging src/simulation/geoengineering.ts
+CONFLICT (content): Merge conflict in src/simulation/geoengineering.ts
+Auto-merging src/simulation/government/actions/crisisActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/crisisActions.ts
+Auto-merging src/simulation/government/actions/detectionActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/detectionActions.ts
+Auto-merging src/simulation/government/actions/economicActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/economicActions.ts
+Auto-merging src/simulation/government/actions/environmentalActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/environmentalActions.ts
+Auto-merging src/simulation/government/actions/internationalActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/internationalActions.ts
+Auto-merging src/simulation/government/actions/regulationActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/regulationActions.ts
+Auto-merging src/simulation/government/actions/researchActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/researchActions.ts
+Auto-merging src/simulation/government/actions/rightsActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/rightsActions.ts
+Auto-merging src/simulation/government/actions/safetyActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/safetyActions.ts
+Auto-merging src/simulation/government/actions/securityActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/securityActions.ts
+Auto-merging src/simulation/government/core/governmentCore.ts
+CONFLICT (content): Merge conflict in src/simulation/government/core/governmentCore.ts
+Auto-merging src/simulation/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/initialization.ts
+Auto-merging src/simulation/lifecycle.ts
+Auto-merging src/simulation/memetics/aiAmplification.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/aiAmplification.ts
+Auto-merging src/simulation/memetics/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/initialization.ts
+Auto-merging src/simulation/memetics/memeTransmission.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/memeTransmission.ts
+Auto-merging src/simulation/nationalAI/cooperation.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/cooperation.ts
+Auto-merging src/simulation/nationalAI/deployment.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/deployment.ts
+Auto-merging src/simulation/nationalAI/regulation.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/regulation.ts
+Auto-merging src/simulation/nuclearDeterrence.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearDeterrence.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/organizationManagement.ts
+CONFLICT (content): Merge conflict in src/simulation/organizationManagement.ts
+Auto-merging src/simulation/phosphorusDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/phosphorusDepletion.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/mortality.ts
+CONFLICT (content): Merge conflict in src/simulation/qualityOfLife/mortality.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+CONFLICT (content): Merge conflict in src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/research.ts
+CONFLICT (content): Merge conflict in src/simulation/research.ts
+Auto-merging src/simulation/resourceDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/resourceDepletion.ts
+Auto-merging src/simulation/sleeperDetection.ts
+CONFLICT (content): Merge conflict in src/simulation/sleeperDetection.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/techTree/engine.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/engine.ts
+Auto-merging src/simulation/techTree/regionalDeployment.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/regionalDeployment.ts
+Auto-merging src/simulation/thresholds/config.ts
+CONFLICT (content): Merge conflict in src/simulation/thresholds/config.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[22:00:22] ❌ Merge conflicts detected
+[22:00:22] 🚫 Merge BLOCKED: Manual conflict resolution required
+[22:00:22] 📋 Merge branch preserved: merge/auto/worker-20251102_130014_20251105_220001
+Your branch is up to date with 'origin/main'.
+
+=== Branch 9/68: auto/worker-20251102_140015 ===
+[22:00:22] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251105_220001
+Switched to a new branch 'merge/auto/worker-20251102_140015_20251105_220001'
+Branch 'merge/auto/worker-20251102_140015_20251105_220001' set up to track remote branch 'main' from 'origin'.
+[22:00:22] 🔀 Attempting merge from origin/auto/worker-20251102_140015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/aiAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/aiAgent.ts
+Auto-merging src/simulation/agents/aiTechActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/aiTechActions.ts
+Auto-merging src/simulation/agents/governmentAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/agents/governmentTechActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/governmentTechActions.ts
+Auto-merging src/simulation/agents/socialInfluenceActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/socialInfluenceActions.ts
+Auto-merging src/simulation/agents/societyAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/societyAgent.ts
+Auto-merging src/simulation/capabilities.ts
+CONFLICT (content): Merge conflict in src/simulation/capabilities.ts
+Auto-merging src/simulation/computeInfrastructure.ts
+CONFLICT (content): Merge conflict in src/simulation/computeInfrastructure.ts
+Auto-merging src/simulation/conflictResolution.ts
+CONFLICT (content): Merge conflict in src/simulation/conflictResolution.ts
+Auto-merging src/simulation/crisisPoints.ts
+CONFLICT (content): Merge conflict in src/simulation/crisisPoints.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/endGame.ts
+CONFLICT (content): Merge conflict in src/simulation/endGame.ts
+Auto-merging src/simulation/engine.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/FreshwaterPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/FreshwaterPhase.ts
+Auto-merging src/simulation/engine/phases/GeoengineringPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/GeoengineringPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/MemeticEvolutionPhase.ts
+Auto-merging src/simulation/engine/phases/NationalAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/NationalAIPhase.ts
+Auto-merging src/simulation/engine/phases/PhosphorusPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/PhosphorusPhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/engine/phases/ResourceEconomyPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/ResourceEconomyPhase.ts
+Auto-merging src/simulation/engine/phases/TechTreePhase.ts
+Auto-merging src/simulation/engine/phases/TechnologyDiffusionPhase.ts
+Auto-merging src/simulation/environmental.ts
+CONFLICT (content): Merge conflict in src/simulation/environmental.ts
+Auto-merging src/simulation/extinctions.ts
+CONFLICT (content): Merge conflict in src/simulation/extinctions.ts
+Auto-merging src/simulation/geoengineering.ts
+CONFLICT (content): Merge conflict in src/simulation/geoengineering.ts
+Auto-merging src/simulation/government/actions/crisisActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/crisisActions.ts
+Auto-merging src/simulation/government/actions/detectionActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/detectionActions.ts
+Auto-merging src/simulation/government/actions/economicActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/economicActions.ts
+Auto-merging src/simulation/government/actions/environmentalActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/environmentalActions.ts
+Auto-merging src/simulation/government/actions/internationalActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/internationalActions.ts
+Auto-merging src/simulation/government/actions/regulationActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/regulationActions.ts
+Auto-merging src/simulation/government/actions/researchActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/researchActions.ts
+Auto-merging src/simulation/government/actions/rightsActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/rightsActions.ts
+Auto-merging src/simulation/government/actions/safetyActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/safetyActions.ts
+Auto-merging src/simulation/government/actions/securityActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/securityActions.ts
+Auto-merging src/simulation/government/core/governmentCore.ts
+CONFLICT (content): Merge conflict in src/simulation/government/core/governmentCore.ts
+Auto-merging src/simulation/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/initialization.ts
+Auto-merging src/simulation/lifecycle.ts
+Auto-merging src/simulation/memetics/aiAmplification.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/aiAmplification.ts
+Auto-merging src/simulation/memetics/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/initialization.ts
+Auto-merging src/simulation/memetics/memeTransmission.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/memeTransmission.ts
+Auto-merging src/simulation/nationalAI/cooperation.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/cooperation.ts
+Auto-merging src/simulation/nationalAI/deployment.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/deployment.ts
+Auto-merging src/simulation/nationalAI/regulation.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/regulation.ts
+Auto-merging src/simulation/nuclearDeterrence.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearDeterrence.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/organizationManagement.ts
+CONFLICT (content): Merge conflict in src/simulation/organizationManagement.ts
+Auto-merging src/simulation/phosphorusDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/phosphorusDepletion.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/mortality.ts
+CONFLICT (content): Merge conflict in src/simulation/qualityOfLife/mortality.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+CONFLICT (content): Merge conflict in src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/research.ts
+CONFLICT (content): Merge conflict in src/simulation/research.ts
+Auto-merging src/simulation/resourceDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/resourceDepletion.ts
+Auto-merging src/simulation/sleeperDetection.ts
+CONFLICT (content): Merge conflict in src/simulation/sleeperDetection.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/techTree/engine.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/engine.ts
+Auto-merging src/simulation/techTree/regionalDeployment.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/regionalDeployment.ts
+Auto-merging src/simulation/thresholds/config.ts
+CONFLICT (content): Merge conflict in src/simulation/thresholds/config.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[22:00:22] ❌ Merge conflicts detected
+[22:00:22] 🚫 Merge BLOCKED: Manual conflict resolution required
+[22:00:22] 📋 Merge branch preserved: merge/auto/worker-20251102_140015_20251105_220001
+Your branch is up to date with 'origin/main'.
+
+=== Branch 10/68: auto/worker-20251102_150015 ===
+[22:00:23] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251105_220001
+Switched to a new branch 'merge/auto/worker-20251102_150015_20251105_220001'
+Branch 'merge/auto/worker-20251102_150015_20251105_220001' set up to track remote branch 'main' from 'origin'.
+[22:00:23] 🔀 Attempting merge from origin/auto/worker-20251102_150015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/aiAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/aiAgent.ts
+Auto-merging src/simulation/agents/aiTechActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/aiTechActions.ts
+Auto-merging src/simulation/agents/governmentAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/agents/governmentTechActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/governmentTechActions.ts
+Auto-merging src/simulation/agents/socialInfluenceActions.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/socialInfluenceActions.ts
+Auto-merging src/simulation/agents/societyAgent.ts
+CONFLICT (content): Merge conflict in src/simulation/agents/societyAgent.ts
+Auto-merging src/simulation/capabilities.ts
+CONFLICT (content): Merge conflict in src/simulation/capabilities.ts
+Auto-merging src/simulation/computeInfrastructure.ts
+CONFLICT (content): Merge conflict in src/simulation/computeInfrastructure.ts
+Auto-merging src/simulation/conflictResolution.ts
+CONFLICT (content): Merge conflict in src/simulation/conflictResolution.ts
+Auto-merging src/simulation/crisisPoints.ts
+CONFLICT (content): Merge conflict in src/simulation/crisisPoints.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/endGame.ts
+CONFLICT (content): Merge conflict in src/simulation/endGame.ts
+Auto-merging src/simulation/engine.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/FreshwaterPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/FreshwaterPhase.ts
+Auto-merging src/simulation/engine/phases/GeoengineringPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/GeoengineringPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/MemeticEvolutionPhase.ts
+Auto-merging src/simulation/engine/phases/NationalAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/NationalAIPhase.ts
+Auto-merging src/simulation/engine/phases/PhosphorusPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/PhosphorusPhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/engine/phases/ResourceEconomyPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/ResourceEconomyPhase.ts
+Auto-merging src/simulation/engine/phases/TechTreePhase.ts
+Auto-merging src/simulation/engine/phases/TechnologyDiffusionPhase.ts
+Auto-merging src/simulation/environmental.ts
+CONFLICT (content): Merge conflict in src/simulation/environmental.ts
+Auto-merging src/simulation/extinctions.ts
+CONFLICT (content): Merge conflict in src/simulation/extinctions.ts
+Auto-merging src/simulation/geoengineering.ts
+CONFLICT (content): Merge conflict in src/simulation/geoengineering.ts
+Auto-merging src/simulation/government/actions/crisisActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/crisisActions.ts
+Auto-merging src/simulation/government/actions/detectionActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/detectionActions.ts
+Auto-merging src/simulation/government/actions/economicActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/economicActions.ts
+Auto-merging src/simulation/government/actions/environmentalActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/environmentalActions.ts
+Auto-merging src/simulation/government/actions/internationalActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/internationalActions.ts
+Auto-merging src/simulation/government/actions/regulationActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/regulationActions.ts
+Auto-merging src/simulation/government/actions/researchActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/researchActions.ts
+Auto-merging src/simulation/government/actions/rightsActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/rightsActions.ts
+Auto-merging src/simulation/government/actions/safetyActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/safetyActions.ts
+Auto-merging src/simulation/government/actions/securityActions.ts
+CONFLICT (content): Merge conflict in src/simulation/government/actions/securityActions.ts
+Auto-merging src/simulation/government/core/governmentCore.ts
+CONFLICT (content): Merge conflict in src/simulation/government/core/governmentCore.ts
+Auto-merging src/simulation/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/initialization.ts
+Auto-merging src/simulation/lifecycle.ts
+Auto-merging src/simulation/memetics/aiAmplification.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/aiAmplification.ts
+Auto-merging src/simulation/memetics/initialization.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/initialization.ts
+Auto-merging src/simulation/memetics/memeTransmission.ts
+CONFLICT (content): Merge conflict in src/simulation/memetics/memeTransmission.ts
+Auto-merging src/simulation/nationalAI/cooperation.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/cooperation.ts
+Auto-merging src/simulation/nationalAI/deployment.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/deployment.ts
+Auto-merging src/simulation/nationalAI/regulation.ts
+CONFLICT (content): Merge conflict in src/simulation/nationalAI/regulation.ts
+Auto-merging src/simulation/nuclearDeterrence.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearDeterrence.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/nuclearWinter.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearWinter.ts
+Auto-merging src/simulation/organizationManagement.ts
+CONFLICT (content): Merge conflict in src/simulation/organizationManagement.ts
+Auto-merging src/simulation/phosphorusDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/phosphorusDepletion.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/mortality.ts
+CONFLICT (content): Merge conflict in src/simulation/qualityOfLife/mortality.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+CONFLICT (content): Merge conflict in src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/research.ts
+CONFLICT (content): Merge conflict in src/simulation/research.ts
+Auto-merging src/simulation/resourceDepletion.ts
+CONFLICT (content): Merge conflict in src/simulation/resourceDepletion.ts
+Auto-merging src/simulation/sleeperDetection.ts
+CONFLICT (content): Merge conflict in src/simulation/sleeperDetection.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/techTree/engine.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/engine.ts
+Auto-merging src/simulation/techTree/regionalDeployment.ts
+CONFLICT (content): Merge conflict in src/simulation/techTree/regionalDeployment.ts
+Auto-merging src/simulation/thresholds/config.ts
+CONFLICT (content): Merge conflict in src/simulation/thresholds/config.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[22:00:23] ❌ Merge conflicts detected
+[22:00:23] 🚫 Merge BLOCKED: Manual conflict resolution required
+[22:00:23] 📋 Merge branch preserved: merge/auto/worker-20251102_150015_20251105_220001
+Your branch is up to date with 'origin/main'.
+[22:00:24] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[22:00:24] Total branches found: 68
+[22:00:24] Branches processed: 10
+[22:00:24] ✅ Successfully merged: 0
+[22:00:24] ⏭️  Skipped (frontend on VM): 0
+[22:00:24] ❌ Failed (conflicts/gates): 10
+[22:00:24] 
+[22:00:24] 📊 Remaining branches: 58
+[22:00:24]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[22:00:24] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251105_220001.log
