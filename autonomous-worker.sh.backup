@@ -9,7 +9,7 @@ if [ -f "$PROJECT_DIR/.env" ]; then
 fi
 
 # Export API key explicitly
-# export ANTHROPIC_API_KEY  # Not needed - using Claude Code CLI session
+export ANTHROPIC_API_KEY
 
 LOG_DIR="$PROJECT_DIR/logs/autonomous"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
@@ -62,7 +62,11 @@ cd "$PROJECT_DIR"
     log_stage "PRE-FLIGHT CHECKS"
 
     # Check API key
-# Check Claude Code CLI    if ! command -v claude >/dev/null 2>&1; then        log_error "Claude Code CLI not found!"        log_info "Install: curl -fsSL https://claude.ai/install.sh | sh"        exit 1    fi    CLAUDE_VERSION=$(claude --version 2>&1 | head -1)    log_success "Claude Code CLI available: $CLAUDE_VERSION"    log_info "Using authenticated Claude Code session (no API key needed)"
+    if [ -z "$ANTHROPIC_API_KEY" ]; then
+        log_error "ANTHROPIC_API_KEY not set!"
+        exit 1
+    fi
+    log_success "API key loaded (${ANTHROPIC_API_KEY:0:15}...)"
 
     # Check disk space
     DISK_AVAIL=$(df -h "$PROJECT_DIR" | awk 'NR==2 {print $4}')
@@ -191,12 +195,15 @@ CONFLICT_EOF
     cat > /tmp/claude_task_$TIMESTAMP.txt << TASK_EOF
 ## API Usage Context
 
-Current subscription usage (checked before this session started):
-- **Session**: ${SESSION_USAGE_PCT}% used (few million tokens, exact limit varies by model - likely 30-50M tokens)
+Current API usage (checked before this session started):
+- **Session**: ${SESSION_USAGE_PCT}% used (resets at 10pm Pacific)
 - **Week**: ${WEEK_USAGE_PCT}% used (resets Nov 10, 3pm Pacific)
 - **Opus**: ${OPUS_USAGE_PCT}% used
 
-**Always be concise and prioritize the highest-priority, highest-value work available.** This usage context is for your awareness - work on what matters most regardless of percentage.
+**Token Budget Guidance:**
+- Under 50%: Normal operation - prioritize CRITICAL/HIGH items
+- 50-75%: Be cost-conscious - focus on highest-value work only
+- Over 75%: Conservative mode - only CRITICAL items, be concise
 
 Read plans/MASTER_IMPLEMENTATION_ROADMAP.md and identify work to do.
 
