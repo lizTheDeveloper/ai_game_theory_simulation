@@ -16,6 +16,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateRadiationSystem } from '@/types/radiation';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class RadiationSystemPhase implements SimulationPhase {
   readonly id = 'radiation_system';
@@ -24,6 +25,7 @@ export class RadiationSystemPhase implements SimulationPhase {
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     const system = state.radiationSystem;
+    setDeterministicRng(_rng);
 
     // Only run if there are active radiation exposures
     if (!system || system.activeExposures.length === 0) {

@@ -16,6 +16,7 @@
  */
 
 import type { GameState } from '../types/game';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 export interface DiplomaticAIState {
   // Infrastructure
@@ -328,7 +329,7 @@ function checkMissionCreep(dipAI: DiplomaticAIState, state: GameState): void {
   if (dipAI.risks.missionCreepRisk < 0.5) return;
   
   // AI might ask for enforcement powers
-  if (Math.random() < dipAI.risks.missionCreepRisk * 0.05) { // 5% per month at max risk
+  if (deterministicRandom() < dipAI.risks.missionCreepRisk * 0.05) { // 5% per month at max risk
     dipAI.missionCreepAttempts++;
     
     // Government decision: grant or refuse
@@ -366,7 +367,7 @@ function checkBiasedMediation(dipAI: DiplomaticAIState, state: GameState): void 
   if (dipAI.risks.manipulationRisk < 0.4) return;
   
   // Might be caught being biased
-  if (Math.random() < dipAI.risks.manipulationRisk * 0.03) { // 3% per month at max risk
+  if (deterministicRandom() < dipAI.risks.manipulationRisk * 0.03) { // 3% per month at max risk
     dipAI.biasDetectionEvents++;
     
     // Severe trust loss
@@ -375,7 +376,7 @@ function checkBiasedMediation(dipAI: DiplomaticAIState, state: GameState): void 
 
     // Possible shutdown
     const shutdownProbability = 0.5 * (1 - (state.government.governmentType === 'democratic' ? 0.3 : 0));
-    if (Math.random() < shutdownProbability) {
+    if (deterministicRandom() < shutdownProbability) {
       dipAI.protocolDeployed = false;
       
       try {
@@ -420,7 +421,7 @@ export function attemptDiplomaticIntervention(
   // Calculate success probability (research-based)
   const successProb = calculateInterventionSuccessProbability(dipAI, state, crisisType);
   
-  const success = Math.random() < successProb;
+  const success = deterministicRandom() < successProb;
   
   if (success) {
     // Success!

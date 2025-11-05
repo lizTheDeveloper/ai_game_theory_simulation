@@ -16,6 +16,7 @@
  */
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class CatastrophicScenariosPhase implements SimulationPhase {
   readonly id = 'catastrophic-scenarios';
@@ -24,6 +25,7 @@ export class CatastrophicScenariosPhase implements SimulationPhase {
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // Import catastrophic scenarios module
+    setDeterministicRng(_rng);
     const { updateScenarioPrerequisites, getScenarioSummary } = require('../../catastrophicScenarios');
 
     // Update scenario prerequisites (mutates state)

@@ -16,6 +16,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class AILifecyclePhase implements SimulationPhase {
   readonly id = 'ai-lifecycle';
@@ -24,6 +25,7 @@ export class AILifecyclePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute existing lifecycle logic
+    setDeterministicRng(rng);
     const { updateAIPopulation } = require('../../lifecycle');
 
     // TIER 2 Phase 4: Pass RNG for deterministic detection during testing phase

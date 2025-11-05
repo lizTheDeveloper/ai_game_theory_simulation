@@ -7,6 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class BenchmarkEvaluationsPhase implements SimulationPhase {
   readonly id = 'benchmark-evaluations';
@@ -15,6 +16,7 @@ export class BenchmarkEvaluationsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     console.log(`[DEBUG BENCHMARK START month=${state.currentMonth}] socialStability = ${state.globalMetrics.socialStability.toFixed(4)}`);
+    setDeterministicRng(rng);
     const { performMonthlyEvaluations } = require('../../benchmark');
     const benchmarkResult = performMonthlyEvaluations(state, rng);
     console.log(`[DEBUG BENCHMARK END month=${state.currentMonth}] socialStability = ${state.globalMetrics.socialStability.toFixed(4)}`);

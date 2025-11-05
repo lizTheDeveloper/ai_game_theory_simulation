@@ -9,6 +9,7 @@
 
 import { GameState, RNGFunction, SimulationPhase, PhaseResult, PhaseContext } from '@/types/game';
 import { processGamingDetection } from '@/simulation/gamingDetection';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class GamingDetectionPhase implements SimulationPhase {
   id = 'gaming-detection';
@@ -17,6 +18,7 @@ export class GamingDetectionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Only run if gaming detection is enabled
+    setDeterministicRng(rng);
     if (!state.gamingDetection) {
       return {
         events: []

@@ -7,6 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class ConflictResolutionPhase implements SimulationPhase {
   readonly id = 'conflict-resolution';
@@ -15,6 +16,7 @@ export class ConflictResolutionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateConflictResolution } = require('../../conflictResolution');
+    setDeterministicRng(rng);
     updateConflictResolution(state);
 
     return { events: [] };

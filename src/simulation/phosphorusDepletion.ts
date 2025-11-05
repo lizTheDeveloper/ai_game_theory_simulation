@@ -15,6 +15,7 @@
 import { GameState } from '@/types/game';
 import { PhosphorusSystem, PhosphorusSupplyShock } from '@/types/phosphorus';
 import { assertStateProperty } from './utils/assertions';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Initialize phosphorus system state (2025 baseline)
@@ -91,7 +92,7 @@ export function updatePhosphorusSystem(state: GameState): void {
     // Chance of supply shock increases with tension
     const shockProbability = p.geopoliticalTension * 0.15; // Up to 15%/month at max tension
     
-    if (Math.random() < shockProbability) {
+    if (deterministicRandom() < shockProbability) {
       // Trigger supply shock
       const shockTypes: PhosphorusSupplyShock['cause'][] = [
         'geopolitical_weapon',
@@ -99,11 +100,11 @@ export function updatePhosphorusSystem(state: GameState): void {
         'production_failure',
         'market_speculation'
       ];
-      const cause = shockTypes[Math.floor(Math.random() * shockTypes.length)];
+      const cause = shockTypes[Math.floor(deterministicRandom() * shockTypes.length)];
       
       p.supplyShockActive = true;
-      p.supplyShockDuration = 6 + Math.floor(Math.random() * 12); // 6-18 months
-      p.priceIndex *= 2.0 + Math.random() * 3.0; // 2-5x price spike
+      p.supplyShockDuration = 6 + Math.floor(deterministicRandom() * 12); // 6-18 months
+      p.priceIndex *= 2.0 + deterministicRandom() * 3.0; // 2-5x price spike
       
       console.log(`🚨 PHOSPHORUS SUPPLY SHOCK (${cause})`);
       console.log(`   Price: ${p.priceIndex.toFixed(1)}x baseline`);

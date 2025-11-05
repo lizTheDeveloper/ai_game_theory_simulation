@@ -18,6 +18,7 @@ import {
   DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
 } from '@/simulation/alignmentDynamics';
 import { AttractorBasinState, AlignmentMeasurementState } from '@/types/alignment-dynamics';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class AlignmentDynamicsPhase implements SimulationPhase {
   id = 'alignment_dynamics';
@@ -26,6 +27,7 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     // Get config (use defaults if not set)
     const config = state.config.alignmentDynamics ?? DEFAULT_ALIGNMENT_DYNAMICS_CONFIG;

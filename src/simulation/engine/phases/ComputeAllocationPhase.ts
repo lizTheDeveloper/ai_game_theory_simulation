@@ -13,6 +13,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class ComputeAllocationPhase implements SimulationPhase {
   readonly id = 'compute-allocation';
@@ -21,6 +22,7 @@ export class ComputeAllocationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute compute allocation
+    setDeterministicRng(rng);
     const { allocateComputeGlobally } = require('../../computeInfrastructure');
 
     allocateComputeGlobally(state);

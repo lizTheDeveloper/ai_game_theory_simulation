@@ -15,6 +15,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class GovernmentRelocationPhase implements SimulationPhase {
   readonly id = 'government_relocation';
@@ -23,6 +24,7 @@ export class GovernmentRelocationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateGovernmentRelocation } = require('../../governmentRelocation');
+    setDeterministicRng(rng);
 
     // Update government relocation program (if enabled)
     updateGovernmentRelocation(state);

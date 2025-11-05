@@ -9,6 +9,7 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateNuclearCommandControl } from '../../nuclearCommandControl';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class NuclearCommandControlPhase implements SimulationPhase {
   id = 'nuclear_command_control';
@@ -17,6 +18,7 @@ export class NuclearCommandControlPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const ncc = state.nuclearCommandControlState;
+    setDeterministicRng(rng);
 
     if (!ncc) {
       return {

@@ -8,6 +8,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { calculateEconomicTransitionProgress } from '../../economics';
 import { assertFinite } from '../../utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class EconomicTransitionPhase implements SimulationPhase {
   readonly id = 'economic-transition';
@@ -16,6 +17,7 @@ export class EconomicTransitionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const economicProgress = calculateEconomicTransitionProgress(state, rng);
+    setDeterministicRng(rng);
 
     // FIX #4 (Oct 29, 2025): Validate stageChange to prevent NaN propagation
     // Bug: If stageChange is NaN, it propagates to economicTransitionStage,

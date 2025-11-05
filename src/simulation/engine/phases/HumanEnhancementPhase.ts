@@ -23,6 +23,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  */
 
 import { calculateAIAssistedSkillsAggregateMetrics, calculateProductivityMultiplierFromAIAssistedSkills, updateLaborCapitalDistribution, checkCompetenceCrisis, checkWageInequality, applyPolicyInterventions } from '../../aiAssistedSkills';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class HumanEnhancementPhase implements SimulationPhase {
   readonly id = 'ai-assisted-skills-metrics';
@@ -31,6 +32,7 @@ export class HumanEnhancementPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     // Calculate aggregate metrics if we have segments and metrics tracking
     if (state.society.segments && state.society.segments.length > 0) {

@@ -393,8 +393,9 @@ High anthropomorphism → this impact "significantly diminishes"
 
 **Key Findings:**
 
-**Bai et al. (2023):**
+**Bai et al. (2025):**
 - LLM-generated messages on policy issues: **As persuasive as human-generated** messages
+- Published in Nature Communications (Bai, H., Voelkel, J.G., Muldowney, S. et al. 2025)
 
 **Durmus et al. (2024):**
 - Claude 3 Opus persuasiveness score: **Not significantly different** from human-generated arguments

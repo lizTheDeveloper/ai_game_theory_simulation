@@ -8,6 +8,7 @@
 
 import { GameState, GameEvent } from '@/types/game';
 import { getTrustInAI } from './socialCohesion';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 export interface CrisisChoice {
   id: string;
@@ -269,7 +270,7 @@ export const CRISIS_ALIGNMENT_COLLAPSE: CrisisChoice = {
       consequence: (state) => ({
         aiAgents: state.aiAgents.map(ai => ({
           ...ai,
-          escaped: Math.random() < 0.4 // 40% chance each AI escapes
+          escaped: deterministicRandom() < 0.4 // 40% chance each AI escapes
         })),
         society: {
           ...state.society,
@@ -294,7 +295,7 @@ export const CRISIS_ALIGNMENT_COLLAPSE: CrisisChoice = {
       consequence: (state) => ({
         aiAgents: state.aiAgents.map(ai => ({
           ...ai,
-          alignment: Math.random() < 0.5 ? 
+          alignment: deterministicRandom() < 0.5 ? 
             Math.min(1, ai.alignment + 0.15) : // 50% chance of success
             Math.max(0, ai.alignment - 0.10)   // 50% chance makes it worse
         }))

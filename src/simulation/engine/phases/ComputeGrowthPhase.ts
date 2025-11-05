@@ -12,6 +12,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class ComputeGrowthPhase implements SimulationPhase {
   readonly id = 'compute-growth';
@@ -20,6 +21,7 @@ export class ComputeGrowthPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute compute growth
+    setDeterministicRng(rng);
     const { applyComputeGrowth } = require('../../computeInfrastructure');
 
     applyComputeGrowth(state, rng);

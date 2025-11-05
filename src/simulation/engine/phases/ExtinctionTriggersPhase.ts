@@ -17,6 +17,7 @@
  */
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class ExtinctionTriggersPhase implements SimulationPhase {
   readonly id = 'extinction-triggers';
@@ -25,6 +26,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Store previous active status to detect new extinction
+    setDeterministicRng(rng);
     const wasActive = state.extinctionState.active;
 
     // Only check if not already in an extinction scenario

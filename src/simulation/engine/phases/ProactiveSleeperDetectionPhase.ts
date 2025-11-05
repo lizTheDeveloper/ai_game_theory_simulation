@@ -9,6 +9,7 @@
 
 import { GameState, RNGFunction, SimulationPhase, PhaseResult, PhaseContext } from '@/types/game';
 import { processProactiveSleeperDetection } from '@/simulation/proactiveSleeperDetection';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class ProactiveSleeperDetectionPhase implements SimulationPhase {
   id = 'proactive-sleeper-detection';
@@ -17,6 +18,7 @@ export class ProactiveSleeperDetectionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Only run if sleeper detection is enabled
+    setDeterministicRng(rng);
     if (!state.proactiveSleeperDetection) {
       return {
         events: []

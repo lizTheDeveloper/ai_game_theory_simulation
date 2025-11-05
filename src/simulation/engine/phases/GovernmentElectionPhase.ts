@@ -1,5 +1,6 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { assertEconomicStage } from '../../utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 /**
  * Government Election Phase
  *
@@ -24,6 +25,7 @@ export class GovernmentElectionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const defaultContext: PhaseContext = { month: state.currentMonth, data: new Map(), executedPhases: new Set() };
+    setDeterministicRng(rng);
     return executeGovernmentElectionPhase(state, rng, context || defaultContext);
   }
 }

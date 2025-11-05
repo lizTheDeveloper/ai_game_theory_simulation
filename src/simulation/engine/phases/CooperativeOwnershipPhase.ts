@@ -28,6 +28,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, RNGFunction } from '@/types/game';
 import { updateCooperativeOwnership } from '../../cooperativeOwnership';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class CooperativeOwnershipPhase implements SimulationPhase {
   readonly id = 'cooperative-ownership';
@@ -36,6 +37,7 @@ export class CooperativeOwnershipPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Check if there are any cooperatives
+    setDeterministicRng(rng);
     const cooperativeCount = state.organizations.filter(
       org => org.governanceModel === 'worker-cooperative' && !org.bankrupt
     ).length;

@@ -6,6 +6,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class NovelEntitiesPhase implements SimulationPhase {
   readonly id = 'novel-entities';
@@ -14,6 +15,7 @@ export class NovelEntitiesPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateNovelEntitiesSystem, checkNovelEntitiesTechUnlocks } = require('../../novelEntities');
+    setDeterministicRng(rng);
     
     updateNovelEntitiesSystem(state);
     checkNovelEntitiesTechUnlocks(state);

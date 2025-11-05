@@ -1,4 +1,5 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 /**
  * Update Economic Stage Phase (P2.4 Feature 3)
  *
@@ -22,6 +23,7 @@ export class UpdateEconomicStagePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Detect current economic stage using NBER methodology
+    setDeterministicRng(rng);
     const newStage = detectEconomicStage(state);
     const previousStage = state.currentEconomicStage || 'expansion';
 

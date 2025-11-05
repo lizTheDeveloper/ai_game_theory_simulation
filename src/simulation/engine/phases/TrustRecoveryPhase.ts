@@ -14,6 +14,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateTrustRecovery } from '../../socialCohesion';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class TrustRecoveryPhase implements SimulationPhase {
   readonly id = 'trustRecovery';
@@ -22,6 +23,7 @@ export class TrustRecoveryPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Update trust based on recovery factors (education, benefits, safety) and decay factors (incidents, misalignment)
+    setDeterministicRng(rng);
     updateTrustRecovery(state);
 
     return { events: [] };

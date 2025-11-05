@@ -26,6 +26,7 @@
 import { GameState } from '@/types/game';
 import { SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '../PhaseOrchestrator';
 import { TippingElement } from '@/types/tipping-points';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class TippingPointPhase implements SimulationPhase {
   id = 'tipping-point-phase';
@@ -34,6 +35,7 @@ export class TippingPointPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const system = state.tippingPointSystem;
+    setDeterministicRng(rng);
 
     // Get current global mean temperature (degrees C above pre-industrial)
     const currentTempC = state.resourceEconomy.co2.temperatureAnomaly || 1.1; // Default to 2025 baseline (~1.1°C)

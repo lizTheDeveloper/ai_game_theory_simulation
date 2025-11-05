@@ -13,6 +13,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class TimeAdvancementPhase implements SimulationPhase {
   readonly id = 'time-advancement';
@@ -21,6 +22,7 @@ export class TimeAdvancementPhase implements SimulationPhase {
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // Advance time by one month
+    setDeterministicRng(_rng);
     state.currentMonth += 1;
     state.currentYear = Math.floor(state.currentMonth / 12);
 

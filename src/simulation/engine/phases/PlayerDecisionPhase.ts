@@ -19,6 +19,7 @@
  */
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class PlayerDecisionPhase implements SimulationPhase {
   readonly id = 'player-decision';
@@ -27,6 +28,7 @@ export class PlayerDecisionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     // Initialize queue if not present
     if (!state.playerDecisions) {

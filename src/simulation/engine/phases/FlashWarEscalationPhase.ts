@@ -13,6 +13,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
   checkFlashWarRisk,
   applyFlashWarEffects,
@@ -27,6 +28,7 @@ export class FlashWarEscalationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // STEP 1: Attempt AI-mediated de-escalation FIRST (prevents flash wars)
+    setDeterministicRng(rng);
     if (state.conflictResolution.activeConflicts && state.conflictResolution.activeConflicts > 0) {
       attemptAIDeEscalation(state, rng);
       // Note: De-escalation can reduce activeConflicts inside the function

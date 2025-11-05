@@ -16,6 +16,7 @@
 
 import { GameState } from '@/types/game';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Environmental mortality breakdown by cause
@@ -259,11 +260,11 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   const breachedCount = boundaries.boundariesBreached;
   const eventProbability = Math.min(maxProb, baseProb + (breachedCount / 9) * (maxProb - baseProb));
 
-  if (Math.random() < eventProbability) {
+  if (deterministicRandom() < eventProbability) {
     // New shock triggered!
-    const shockType = Math.random();
-    const shockMagnitude = baseMag + Math.random() * (baseMag * 0.75); // baseMag to (baseMag * 1.75)
-    const shockDuration = 3 + Math.floor(Math.random() * 10); // 3-12 months
+    const shockType = deterministicRandom();
+    const shockMagnitude = baseMag + deterministicRandom() * (baseMag * 0.75); // baseMag to (baseMag * 1.75)
+    const shockDuration = 3 + Math.floor(deterministicRandom() * 10); // 3-12 months
 
     // Determine shock type (which mortality category)
     let type: 'climate' | 'famine' | 'disease' | 'ecosystem';

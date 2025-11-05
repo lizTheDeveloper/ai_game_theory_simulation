@@ -15,6 +15,7 @@ import { calculateUnemployment } from '../../calculations';
 import { updateAIAssistedSkills } from '../../aiAssistedSkills';
 import { updateSocietyAggregates } from '../../populationSegments';
 import { assertFinite } from '../../utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class UnemploymentPhase implements SimulationPhase {
   readonly id = 'unemployment';
@@ -23,6 +24,7 @@ export class UnemploymentPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // P2.3: Update AI-assisted skills for all segments (if heterogeneous population is active)
+    setDeterministicRng(rng);
     if (state.society.segments && state.society.segments.length > 0) {
       updateAIAssistedSkills(state);
       // P2.3.5: Update society aggregates (power-weighted trust, polarization)

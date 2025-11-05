@@ -15,6 +15,7 @@
  */
 
 import { GameState, GameEvent } from '../types/game';
+import { deterministicRandom, setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
   IronFertilizationState,
   OceanAlkalinityState,
@@ -27,7 +28,7 @@ import {
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
   const fullEvent: GameEvent = {
     ...event,
-    id: `${event.type}_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+    id: `${event.type}_${state.currentMonth}_${deterministicRandom().toString(36).substr(2, 9)}`,
     timestamp: state.currentMonth,
   };
   state.eventLog.push(fullEvent);
@@ -117,7 +118,7 @@ function updateIronFertilization(state: GameState, tech: IronFertilizationState)
   if (tech.deploymentQuality < 0.7 && !tech.disasterOccurred) {
     const riskProb = (0.7 - tech.deploymentQuality) * 0.6; // Up to 40% risk
     
-    if (Math.random() < riskProb) {
+    if (deterministicRandom() < riskProb) {
       // DISASTER: Bloom dies, consumes oxygen
       tech.disasterOccurred = true;
       tech.bloomCrashes++;
@@ -186,7 +187,7 @@ function updateOceanAlkalinity(state: GameState, tech: OceanAlkalinityState): vo
   if (tech.deploymentQuality < 0.7 && !tech.disasterOccurred) {
     const riskProb = (0.7 - tech.deploymentQuality) * 0.5; // Up to 30% risk
     
-    if (Math.random() < riskProb) {
+    if (deterministicRandom() < riskProb) {
       // DISASTER: pH spike kills marine life
       tech.disasterOccurred = true;
       tech.localPHSpikes++;
@@ -274,7 +275,7 @@ function updateArtificialUpwelling(state: GameState, tech: ArtificialUpwellingSt
   if (tech.deploymentQuality < 0.5 && !tech.disasterOccurred) {
     const riskProb = (0.5 - tech.deploymentQuality) * 0.4; // Up to 20% risk
     
-    if (Math.random() < riskProb) {
+    if (deterministicRandom() < riskProb) {
       // DISASTER: Disrupted ocean currents
       tech.disasterOccurred = true;
       
@@ -341,12 +342,12 @@ function updateBioengineeredCleaners(state: GameState, tech: BioengineeredCleane
   if (tech.deploymentQuality < 0.8 && !tech.invasiveEvent) {
     const riskProb = (0.8 - tech.deploymentQuality) * 0.75; // Up to 60% risk!
     
-    if (Math.random() < riskProb) {
+    if (deterministicRandom() < riskProb) {
       // CATASTROPHIC DISASTER: Invasive species
       tech.invasiveEvent = true;
       tech.disasterOccurred = true;
       
-      const disasterType = Math.random();
+      const disasterType = deterministicRandom();
       
       if (disasterType < 0.4) {
         // 40%: Outcompetes native species
@@ -449,7 +450,7 @@ function updateTerminationShockRisk(state: GameState, tech: GeoengTechnology, te
     
     ocean.terminationShockRisk = Math.max(ocean.terminationShockRisk, shockRisk);
     
-    if (Math.random() < shockRisk) {
+    if (deterministicRandom() < shockRisk) {
       // TERMINATION SHOCK DISASTER!
       triggerTerminationShock(state, techName, adaptationLevel);
     }

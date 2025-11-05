@@ -26,6 +26,7 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updatePositiveTippingPoints } from '@/simulation/positiveTippingPoints';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class PositiveTippingPointsPhase implements SimulationPhase {
   readonly id = 'positive-tipping-points';
@@ -34,6 +35,7 @@ export class PositiveTippingPointsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     // Track initial state for event logging
     const initialActiveCascades = state.positiveTippingPoints.activeCascades;

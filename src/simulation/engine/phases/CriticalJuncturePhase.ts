@@ -1,4 +1,5 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 /**
  * CONTINGENCY & AGENCY PHASE 3: CRITICAL JUNCTURE AGENCY
  *
@@ -387,6 +388,7 @@ export class CriticalJuncturePhase implements SimulationPhase {
 
   execute(state: GameState, rng: () => number, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
     let stateChanges = 0;
 
     // Check if at critical juncture

@@ -22,6 +22,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
 import { updateAMRSystem } from '../../antimicrobialResistance';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class AntimicrobialResistancePhase implements SimulationPhase {
   readonly id = 'antimicrobial_resistance';
@@ -30,6 +31,7 @@ export class AntimicrobialResistancePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Update entire AMR system
+    setDeterministicRng(rng);
     // (includes mitigation, resistance evolution, mortality, medical effectiveness, economic impact)
     updateAMRSystem(state, rng);
 

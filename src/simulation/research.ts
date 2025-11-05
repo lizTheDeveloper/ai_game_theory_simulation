@@ -14,6 +14,7 @@ import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { getEnergyConstraintMultiplier } from './powerGeneration';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { addSimulationEvent } from './utils/eventLogger';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Phase 4: Compute scaling law
@@ -47,7 +48,7 @@ export function calculateComputeScalingMultiplier(
       totalEffectiveCompute += volunteerCompute * 0.1;
       
       // Log significant contributions (probabilistic to avoid spam)
-      if (Math.random() < 0.05 && volunteerCompute > 100) {
+      if (deterministicRandom() < 0.05 && volunteerCompute > 100) {
         const { logVolunteerContribution, applyVolunteerResearchBenefits } = require('./volunteerResearch');
         logVolunteerContribution(state, volunteerCompute, allocatedCompute);
         applyVolunteerResearchBenefits(state, volunteerCompute);

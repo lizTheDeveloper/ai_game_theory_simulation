@@ -12,6 +12,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class ClimateJusticePhase implements SimulationPhase {
   readonly id = 'climate_justice';
@@ -20,6 +21,7 @@ export class ClimateJusticePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateClimateJustice } = require('../../climateJustice');
+    setDeterministicRng(rng);
 
     // Update climate justice dynamics for all countries
     updateClimateJustice(state);

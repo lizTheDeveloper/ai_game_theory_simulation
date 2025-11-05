@@ -19,6 +19,7 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import type { ActivePolicy } from '@/types/government';
 import { updatePolicyImplementation } from '@/simulation/government/policyLifecycle';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class PolicyImplementationPhase implements SimulationPhase {
   readonly id = 'policy-implementation';
@@ -27,6 +28,7 @@ export class PolicyImplementationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const defaultContext: PhaseContext = { month: state.currentMonth, data: new Map(), executedPhases: new Set() };
+    setDeterministicRng(rng);
     return executePolicyImplementationPhase(state, rng, context || defaultContext);
   }
 }

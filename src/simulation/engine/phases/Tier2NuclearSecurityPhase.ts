@@ -27,6 +27,7 @@ import type {
   RNGFunction
 } from '@/types/game';
 import { assertStateProperty } from '@/simulation/utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class Tier2NuclearSecurityPhase implements SimulationPhase {
   id = 'tier2_nuclear_security';
@@ -35,6 +36,7 @@ export class Tier2NuclearSecurityPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     if (!state.tier2Interventions || !state.tier2InterventionParameters) {
       return { events };

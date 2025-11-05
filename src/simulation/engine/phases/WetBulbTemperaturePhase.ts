@@ -10,6 +10,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class WetBulbTemperaturePhase implements SimulationPhase {
   readonly id = 'wet_bulb_temperature';
@@ -18,6 +19,7 @@ export class WetBulbTemperaturePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateWetBulbTemperatureSystem } = require('../../wetBulbEvents');
+    setDeterministicRng(rng);
 
     updateWetBulbTemperatureSystem(state, rng);
 

@@ -15,6 +15,7 @@ import { GameState } from '@/types/game';
 import { RootCause } from '@/types/population';
 import { addMortalityRisk } from './bayesianMortality';
 import { assertFinite } from './utils/assertions';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 // ============================================================================
 // TYPES
@@ -152,7 +153,7 @@ export function triggerPandemic(
   }
 
   const event: PandemicEvent = {
-    id: `pandemic_${Date.now()}`,
+    id: `pandemic_${state.currentMonth}_${state.eventIdCounter++}`,
     type: 'pandemic',
     startMonth: params.startMonth,
     duration: params.duration,
@@ -373,7 +374,7 @@ export function triggerEconomicCrisis(
   }
 
   const event: EconomicCrisisEvent = {
-    id: `economic_crisis_${Date.now()}`,
+    id: `economic_crisis_${state.currentMonth}_${state.eventIdCounter++}`,
     type: 'economic_crisis',
     startMonth: params.startMonth,
     duration: params.duration,
@@ -539,9 +540,9 @@ function applyEconomicCrisisBankruptcies(
     }
 
     // Roll for bankruptcy
-    // Note: Uses Math.random() instead of RNG for historical reproducibility
+    // Note: Uses deterministicRandom() instead of RNG for historical reproducibility
     // Validation scenarios require exact historical outcomes, not seed-based variation
-    if (Math.random() < bankruptcyRate) {
+    if (deterministicRandom() < bankruptcyRate) {
       org.bankrupt = true;
       org.bankruptcyMonth = state.currentMonth;
       org.bankruptcyReason = `Economic crisis bankruptcy`;

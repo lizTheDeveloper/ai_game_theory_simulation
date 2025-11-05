@@ -6,6 +6,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class GovernanceQualityPhase implements SimulationPhase {
   readonly id = 'governance-quality';
@@ -14,6 +15,7 @@ export class GovernanceQualityPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateGovernanceQuality } = require('../../governanceQuality');
+    setDeterministicRng(rng);
     updateGovernanceQuality(state);
 
     return { events: [] };

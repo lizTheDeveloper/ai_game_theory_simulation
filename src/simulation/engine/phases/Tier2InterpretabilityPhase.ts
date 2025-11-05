@@ -28,6 +28,7 @@ import type {
   RNGFunction
 } from '@/types/game';
 import { assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class Tier2InterpretabilityPhase implements SimulationPhase {
   id = 'tier2_interpretability';
@@ -36,6 +37,7 @@ export class Tier2InterpretabilityPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     // Ensure state exists (should be initialized)
     if (!state.tier2Interventions || !state.tier2InterventionParameters) {

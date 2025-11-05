@@ -4,6 +4,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateSocialSafetyNets } from '../../socialSafetyNets';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class SocialSafetyNetsPhase implements SimulationPhase {
   readonly name = 'Social Safety Nets Update';
@@ -12,6 +13,7 @@ export class SocialSafetyNetsPhase implements SimulationPhase {
   
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     updateSocialSafetyNets(state);
+    setDeterministicRng(rng);
     return { events: [] };
   }
 }

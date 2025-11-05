@@ -20,10 +20,11 @@
  */
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
-import { 
-  updateTechTree, 
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import {
+  updateTechTree,
   TechTreeState,
-  initializeTechTreeState 
+  initializeTechTreeState
 } from '../../techTree/engine';
 
 export class TechTreePhase implements SimulationPhase {
@@ -33,11 +34,12 @@ export class TechTreePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // FIX #14 (Oct 2025): techTreeState is now a required GameState property
+    setDeterministicRng(rng);
     // No need for initialization check or type casting - it's always present
     const techTreeState: TechTreeState = state.techTreeState;
 
     // Update tech tree (checks unlocks, applies actions, updates progress)
-    const unlockEvents = updateTechTree(state, techTreeState);
+    const unlockEvents = updateTechTree(state, techTreeState, rng);
 
     // Convert tech unlock events to game events
     const events: GameEvent[] = unlockEvents.map(unlockEvent => ({

@@ -16,6 +16,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
   updateEmergencyResponses,
   deployEmergencyResponse,
@@ -30,6 +31,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     if (!state.emergencyManagement) {
+    setDeterministicRng(rng);
       // Emergency management not initialized - skip
       return { events: [] };
     }

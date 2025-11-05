@@ -16,6 +16,7 @@
 import { GameState, GameEvent } from '@/types/game';
 import { CountryInteractionCache, getCooperationPotential } from './interactionCache';
 import { getTrustInAI } from '../socialCohesion';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 // ============================================================================
 // COOPERATION TRIGGERS
@@ -140,7 +141,7 @@ export function updateCooperationAgreement(state: GameState, cache: CountryInter
   }
 
   // Check for agreement collapse
-  if (Math.random() < agreement.breakRisk) {
+  if (deterministicRandom() < agreement.breakRisk) {
     // AGREEMENT BROKEN
     agreement.active = false;
 
@@ -208,7 +209,7 @@ export function updateInternationalCooperation(state: GameState, cache: CountryI
       const cooperationPotential = getCooperationPotential(cache, 'United States', 'China');
       const cooperationBonus = cooperationPotential * 0.001;
 
-      if (Math.random() < formationProbability + raceBonus + trustBonus + cooperationBonus) {
+      if (deterministicRandom() < formationProbability + raceBonus + trustBonus + cooperationBonus) {
         // Form minimal agreement
         natAI.cooperationAgreement = {
           active: true,
@@ -268,7 +269,7 @@ export function updateInternationalCooperation(state: GameState, cache: CountryI
   coop.breakRisk = Math.min(0.30, coop.breakRisk); // Cap at 30%/month
 
   // Check for agreement collapse
-  if (Math.random() < coop.breakRisk) {
+  if (deterministicRandom() < coop.breakRisk) {
     console.log(`💔 INTERNATIONAL AI AGREEMENT COLLAPSED (Month ${state.currentMonth})`);
     console.log(`   Duration: ${monthsActive} months`);
     console.log(`   Break reason: ${coop.mutualTrust < 0.30 ? 'Trust collapse' : coop.firstMoverIncentive > 0.50 ? 'First-mover temptation' : 'Verification failure'}`);
@@ -317,7 +318,7 @@ export function updateInternationalCooperation(state: GameState, cache: CountryI
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
   const fullEvent: GameEvent = {
     ...event,
-    id: `${event.type}_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+    id: `${event.type}_${state.currentMonth}_${deterministicRandom().toString(36).substr(2, 9)}`,
     timestamp: state.currentMonth,
   };
   state.eventLog.push(fullEvent);

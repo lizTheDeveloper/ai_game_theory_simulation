@@ -25,6 +25,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateEarlyWarningDetection } from '@/simulation/earlyWarningSystems';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class EarlyWarningPhase implements SimulationPhase {
   readonly id = 'early-warning';
@@ -33,6 +34,7 @@ export class EarlyWarningPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Only run if planetary boundaries system exists
+    setDeterministicRng(rng);
     if (!state.planetaryBoundariesSystem || !state.planetaryBoundariesSystem.earlyWarning) {
       return { events: [] };
     }

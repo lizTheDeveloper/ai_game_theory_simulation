@@ -16,6 +16,7 @@ import type { GameState, QualityOfLifeSystems } from '@/types/game';
 import type { RegionalCache } from './cache/regionalCache';
 import { getCachedRegions } from './cache/regionalCache';
 import { assertFinite, assertInRange, assertProbability } from '../utils/assertions';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Calculate QoL inequality across regions
@@ -360,10 +361,10 @@ function calculateFallbackDistribution(
   const numSafeRegions = 10 - numCrisisRegions;
 
   for (let i = 0; i < numCrisisRegions; i++) {
-    regionalQoLs.push(crisisQoL * (0.8 + Math.random() * 0.4)); // Some variation
+    regionalQoLs.push(crisisQoL * (0.8 + deterministicRandom() * 0.4)); // Some variation
   }
   for (let i = 0; i < numSafeRegions; i++) {
-    regionalQoLs.push(safeQoL * (0.8 + Math.random() * 0.4));
+    regionalQoLs.push(safeQoL * (0.8 + deterministicRandom() * 0.4));
   }
 
   return { regionalQoLs, crisisAffectedPopulation };

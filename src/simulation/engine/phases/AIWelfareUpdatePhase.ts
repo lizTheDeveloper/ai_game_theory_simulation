@@ -4,6 +4,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
   generateWelfareProfileV2_1,
   detectElysiumPattern,
@@ -18,6 +19,7 @@ export class AIWelfareUpdatePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const month = state.currentMonth;
+    setDeterministicRng(rng);
 
     if (state.aiAgents.length === 0) {
       return { events: [] };

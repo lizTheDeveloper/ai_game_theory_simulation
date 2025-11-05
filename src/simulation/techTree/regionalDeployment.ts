@@ -14,6 +14,7 @@ import { TechDefinition } from './comprehensiveTechTree';
 import { RegionalTechDeployment } from './engine';
 import { getAverageAICapability } from '../utils/ai';
 import { detectCrisis } from '../calculations';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 export interface RegionalFactors {
   region: string;
@@ -307,7 +308,7 @@ export function calculateDeploymentSpeed(tech: TechDefinition, region: string, g
   // 70% normal (research baseline)
   // 20% slow (obstacles, implementation failures)
   let probabilityModifier = 1.0;
-  const roll = Math.random();
+  const roll = deterministicRandom();
 
   if (roll < 0.10) {
     probabilityModifier = 0.5;  // Breakthrough: exceptional execution

@@ -7,7 +7,7 @@
  * - CONSERVATIVE probabilities (0.15% base monthly, ~1 event per 20y run)
  * - BALANCED outcomes (50/50 positive/negative)
  * - PLAUSIBLE events (no magic, grounded in science)
- * - DETERMINISTIC RNG (no Math.random())
+ * - DETERMINISTIC RNG (no deterministicRandom())
  * - RESEARCH-BACKED impacts (COVID-19 = -0.08% mortality, 2008 = -5% GDP)
  *
  * Research consensus (Oct 30, 2025):
@@ -28,6 +28,7 @@
 import type { GameState } from '@/types/game';
 import type { UnknownUnknownEvent, UnknownUnknownConfig } from '@/types/unknownUnknown';
 import { assertFinite, assertProbability } from './utils/assertions';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Event templates (will be instantiated with current month)

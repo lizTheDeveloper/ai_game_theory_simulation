@@ -17,6 +17,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class SleeperWakePhase implements SimulationPhase {
   readonly id = 'sleeper-wake';
@@ -25,6 +26,7 @@ export class SleeperWakePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute existing sleeper wake logic
+    setDeterministicRng(rng);
     const { processSleeperCascade } = require('../../sleeperWake');
 
     const wakeResult = processSleeperCascade(state);

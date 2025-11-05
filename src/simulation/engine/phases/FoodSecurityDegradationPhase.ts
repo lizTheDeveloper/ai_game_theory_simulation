@@ -16,6 +16,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly id = 'food-security-degradation';
@@ -24,6 +25,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // FIX (Oct 25, 2025 REGIONALIZATION): Food security is now REGIONAL
+    setDeterministicRng(_rng);
     // Apply crisis degradation to EACH REGION, not global
     // Vulnerable regions degrade faster than resilient ones
 

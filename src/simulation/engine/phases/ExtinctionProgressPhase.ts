@@ -16,6 +16,7 @@
  */
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class ExtinctionProgressPhase implements SimulationPhase {
   readonly id = 'extinction-progress';
@@ -24,6 +25,7 @@ export class ExtinctionProgressPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Only progress if there's an active extinction scenario
+    setDeterministicRng(rng);
     if (!state.extinctionState.active) {
       return { events: [] };
     }

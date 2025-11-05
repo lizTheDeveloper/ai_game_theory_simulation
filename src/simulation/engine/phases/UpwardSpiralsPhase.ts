@@ -6,6 +6,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class UpwardSpiralsPhase implements SimulationPhase {
   readonly id = 'upward-spirals';
@@ -14,6 +15,7 @@ export class UpwardSpiralsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const { updateUpwardSpirals } = require('../../upwardSpirals');
+    setDeterministicRng(rng);
     const month = context?.month ?? state.currentMonth;
     updateUpwardSpirals(state, month);
 

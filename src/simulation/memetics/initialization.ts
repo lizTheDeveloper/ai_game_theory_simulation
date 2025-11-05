@@ -9,14 +9,14 @@
  * - Physical Review Research (2025): Depolarization mechanisms
  * - Default parameters calibrated to 2024 US polarization levels
  */
-
-import { 
-  MemeticSystem, 
-  MemeticSegment, 
-  BeliefVector, 
+import { deterministicRandom, setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import {
+  MemeticSystem,
+  MemeticSegment,
+  BeliefVector,
   SocialNetwork,
   PolarizationMetrics,
-  MemeticSystemParams 
+  MemeticSystemParams
 } from '../../types/memetics';
 
 /**
@@ -230,7 +230,7 @@ export function initializeMemeticSystem(params?: Partial<MemeticSystemParams>): 
         const baseStrength = homophily * network.homophilyStrength;
         
         // Add some random connections (cross-cutting ties)
-        const randomness = Math.random() * 0.3;
+        const randomness = deterministicRandom() * 0.3;
         const finalStrength = Math.min(1.0, baseStrength + randomness);
         
         segment.connections.set(other.id, finalStrength);

@@ -21,6 +21,7 @@ import { RootCause } from '@/types/population';
 import { calculateClimatePovertyWeights, calculateEcosystemWeights } from './utils/deathAttribution';
 import { convertClimateSensitivityToRate } from './thresholds/tier1Config';
 import { addMortalityRisk } from './bayesianMortality';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Initialize environmental accumulation state
@@ -36,10 +37,10 @@ import { addMortalityRisk } from './bayesianMortality';
  * Research: IPCC AR6 climate sensitivity range ±30%, GFN overshoot ±13%, ALA air quality ±67%
  *
  * @param rng - Optional deterministic RNG function (for Monte Carlo reproducibility)
- *              Falls back to Math.random() for backward compatibility
+ *              Falls back to deterministicRandom() for backward compatibility
  */
 export function initializeEnvironmentalAccumulation(rng?: () => number): EnvironmentalAccumulation {
-  // Use provided RNG or fallback to Math.random()
+  // Use provided RNG or fallback to deterministicRandom()
   const random = rng || Math.random;
 
   // BUG #3 FIX (Oct 29, 2025): Add stochastic variance to break determinism
@@ -97,7 +98,7 @@ export function initializeEnvironmentalAccumulation(rng?: () => number): Environ
  * @returns Modified rate with stochastic variation
  */
 function applyStochasticVariance(baseRate: number, variance: number = 0.25): number {
-  const multiplier = (1 - variance) + Math.random() * (2 * variance);
+  const multiplier = (1 - variance) + deterministicRandom() * (2 * variance);
   return baseRate * multiplier;
 }
 

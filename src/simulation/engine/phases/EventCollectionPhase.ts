@@ -12,6 +12,7 @@
  */
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class EventCollectionPhase implements SimulationPhase {
   readonly id = 'event-collection';
@@ -20,6 +21,7 @@ export class EventCollectionPhase implements SimulationPhase {
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(_rng);
 
     // Collect events from state.eventLog BEFORE advancing time
     // (crisis events, cascading failures, etc. are logged with current month)

@@ -1,11 +1,12 @@
 /**
  * Deterministic ID Generation (Oct 30, 2025)
  *
- * Replaces Math.random() and Date.now() with counter-based approach.
+ * Replaces deterministicRandom() and Date.now() with counter-based approach.
  * Ensures reproducible IDs across simulation runs with same seed.
  */
 
 import type { GameState } from '@/types/game';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Generate deterministic ID using state counter
@@ -22,7 +23,7 @@ export function generateDeterministicId(state: GameState, prefix: string): strin
 
 /**
  * Generate short deterministic ID (6-character base36)
- * Mimics Math.random().toString(36).substr(2, 9) pattern
+ * Mimics deterministicRandom().toString(36).substr(2, 9) pattern
  *
  * @param state - Game state containing eventIdCounter
  * @returns 6-character base36 string

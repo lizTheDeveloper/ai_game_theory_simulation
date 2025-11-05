@@ -5,6 +5,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  */
 
 import { updatePowerGeneration } from '../../powerGeneration';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class PowerGenerationPhase implements SimulationPhase {
   readonly name = 'Power Generation Update';
@@ -23,6 +24,7 @@ export class PowerGenerationPhase implements SimulationPhase {
    */
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     updatePowerGeneration(state, rng);
+    setDeterministicRng(rng);
 
     return { events: [] };
   }

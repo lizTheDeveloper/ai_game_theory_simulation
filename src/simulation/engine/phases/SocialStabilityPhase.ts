@@ -8,6 +8,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { calculateSocialStability } from '../../calculations';
 import { assertFinite } from '../../utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class SocialStabilityPhase implements SimulationPhase {
   readonly id = 'social-stability';
@@ -15,6 +16,7 @@ export class SocialStabilityPhase implements SimulationPhase {
   readonly order = 33.0;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    setDeterministicRng(rng);
     const newStability = assertFinite(
       calculateSocialStability(state),
       {

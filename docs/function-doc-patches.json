@@ -1,43 +1,43 @@
 [
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/capabilities.ts",
-    "line": 52,
+    "line": 53,
     "name": "initializeCapabilityProfile",
     "doc": "Initializes capability profile with default or specified values."
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/conflictResolution.ts",
-    "line": 49,
+    "line": 50,
     "name": "initializeConflictResolution",
     "doc": "Initializes conflict resolution with default or specified values."
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/defensiveAI.ts",
-    "line": 28,
+    "line": 29,
     "name": "initializeDefensiveAI",
     "doc": "Initializes defensive a i with default or specified values."
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/defensiveAI.ts",
-    "line": 115,
+    "line": 116,
     "name": "checkDefensiveAITriggers",
     "doc": "Detects defensive a i triggers conditions and triggers appropriate responses."
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/defensiveAI.ts",
-    "line": 204,
+    "line": 205,
     "name": "attemptDefensiveAIDeployment",
     "doc": "attemptDefensiveAIDeployment implementation. See defensiveAI.ts for details."
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/defensiveAI.ts",
-    "line": 294,
+    "line": 295,
     "name": "updateDefensiveAI",
     "doc": "Updates defensive a i based on current state and modifiers."
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/defensiveAI.ts",
-    "line": 971,
+    "line": 972,
     "name": "applyDefensiveAIToMAD",
     "doc": "Applies defensive a i to m a d effects to game state."
   },
@@ -49,19 +49,19 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 63,
+    "line": 64,
     "name": "initializeDiplomaticAI",
     "doc": "Initializes diplomatic a i with default or specified values."
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
-    "line": 138,
+    "line": 139,
     "name": "enterEndGame",
     "doc": "enterEndGame implementation. See endGame.ts for details."
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/geoengineering.ts",
-    "line": 40,
+    "line": 41,
     "name": "updateGeoengineering",
     "doc": "Updates geoengineering based on current state and modifiers."
   },
@@ -79,7 +79,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 41,
+    "line": 42,
     "name": "updateResourceEconomy",
     "doc": "Updates resource economy based on current state and modifiers."
   },

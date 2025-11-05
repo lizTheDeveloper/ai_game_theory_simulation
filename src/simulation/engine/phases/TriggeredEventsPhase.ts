@@ -1,4 +1,5 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 /**
  * Triggered Events Phase (P2.5)
  *
@@ -18,6 +19,7 @@ export class TriggeredEventsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Stub implementation - no triggered events yet
+    setDeterministicRng(rng);
     return {
       events: [],
       metadata: {

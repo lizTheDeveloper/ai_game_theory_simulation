@@ -22,6 +22,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { executeGovernmentActions } from '@/simulation/government';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class GovernmentActionsPhase implements SimulationPhase {
   readonly id = 'government-actions';
@@ -30,6 +31,7 @@ export class GovernmentActionsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Execute government actions using new modular structure
+    setDeterministicRng(rng);
     const govResult = executeGovernmentActions(state, rng);
 
     // Update state

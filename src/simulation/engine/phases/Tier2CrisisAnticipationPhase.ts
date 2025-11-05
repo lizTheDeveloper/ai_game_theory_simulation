@@ -26,6 +26,7 @@ import type {
   PhaseContext,
   RNGFunction
 } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class Tier2CrisisAnticipationPhase implements SimulationPhase {
   id = 'tier2_crisis_anticipation';
@@ -34,6 +35,7 @@ export class Tier2CrisisAnticipationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     if (!state.tier2Interventions || !state.tier2InterventionParameters) {
       return { events };

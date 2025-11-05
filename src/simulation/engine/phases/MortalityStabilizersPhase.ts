@@ -28,6 +28,7 @@
 
 import type { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { assertFinite, assertInRange, assertStateProperty } from '@/simulation/utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class MortalityStabilizersPhase implements SimulationPhase {
   readonly id = 'mortality-stabilizers';
@@ -36,6 +37,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const pop = state.humanPopulationSystem;
+    setDeterministicRng(rng);
 
     // Ensure regional populations exist and have stabilizer fields
     if (!pop.regionalPopulations || pop.regionalPopulations.length === 0) {

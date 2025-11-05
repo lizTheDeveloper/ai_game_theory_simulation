@@ -15,6 +15,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  */
 
 import { checkAndUpdateAgentWeights } from '../../llm/integration';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export const LLMWeightUpdatePhase: SimulationPhase = {
   id: 'llm_weight_update',
@@ -23,6 +24,7 @@ export const LLMWeightUpdatePhase: SimulationPhase = {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Note: This phase is synchronous but checkAndUpdateAgentWeights internally handles async LLM calls
+    setDeterministicRng(rng);
     // by queuing them and processing them in the background. The phase doesn't wait for responses.
     const changes: string[] = [];
 

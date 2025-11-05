@@ -8,6 +8,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
 import { detectCrisis } from '../../calculations';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class CrisisDetectionPhase implements SimulationPhase {
   readonly id = 'crisis-detection';
@@ -16,6 +17,7 @@ export class CrisisDetectionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const crisis = detectCrisis(state);
+    setDeterministicRng(rng);
 
     // Store crisis info in context for other phases to use
     if (context) {

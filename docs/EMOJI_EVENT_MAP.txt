@@ -155,3 +155,19 @@
 🔧 | Debug deployment
 📹 | Surveillance state expansion/monitoring increase
 💣 | Nuclear threat/weapons
+
+# Information & Communication
+ℹ️ | Information/status update
+📅 | Calendar/scheduling event
+📞 | Communication/call event
+
+# Resource & Economic Events
+🛢️ | Oil resource event
+🔋 | Battery/energy storage event
+🐋 | Whale/marine resource event
+🍖 | Meat/food production event
+📦 | Package/deployment event
+
+# UI & Status Indicators
+💚 | Positive health/success indicator
+🟡 | Warning/caution indicator
