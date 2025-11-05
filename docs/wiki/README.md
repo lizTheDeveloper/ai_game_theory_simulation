@@ -99,6 +99,28 @@ Commits: 0d88e671b, 5e223dfa8, 91216dd (review)
 
 **Results:** Simulation codebase now fully type-safe (9 remaining errors - 1 blocker in lifecycle.ts, 8 UI/config)
 
+**✅ DEFENSIVE PROGRAMMING MERGE (Nov 5, 2025)**
+
+Merged branch `investigation/defensive-programming-phase-5-1-standardize-error-handling-and-complete-validation` while preserving main's critical fixes:
+
+**Resolution strategy:**
+- **Simulation code**: Kept main's versions (ISSUE-5 fix, determinism fixes, addMortalityRisk integration)
+- **UI code**: Fixed null safety issue in ParadigmDetailPanel.tsx (added optional chaining for `lastUpdate?.regionalPopulations`)
+- **Tooling**: Preserved merge orchestrator automation from branch
+
+**Why main's simulation code takes priority:**
+1. Main has ISSUE-5 fix (delay strategy assignment to avoid month-0 gaming)
+2. Main has determinism fixes (state.eventIdCounter, removed Date.now())
+3. Branch's assertStateProperty work was valuable but based on older code
+
+**UI vs Simulation defensive programming:**
+- **UI components** (`src/components/`): Optional chaining and fallbacks acceptable for loading states
+- **Simulation code** (`src/simulation/`): NEVER use fallbacks in calculations (fail loudly with assertions)
+
+**Next steps:** Re-apply branch's defensive programming work (replacing `??` fallbacks with assertStateProperty) on a NEW branch from current main.
+
+Commit: 38d9535 (Nov 5, 2025)
+
 **🔧 AUTONOMOUS WORKER HEALTH MONITORING & AUTO-REMEDIATION (Nov 5, 2025)**
 
 Added proactive health monitoring and self-healing capabilities to the autonomous worker system:
@@ -3446,8 +3468,10 @@ assertStateProperty(state.planetaryBoundariesSystem, 'boundaries.biosphere_integ
 
 **✅ USE FALLBACKS (only these contexts):**
 - **Initialization**: Default values when creating new state
-- **UI display**: Showing "N/A" when data unavailable
+- **UI display**: Showing "N/A" when data unavailable (e.g., `lastUpdate?.regionalPopulations` in React components)
 - **Compatibility layers**: Interfacing with external systems
+
+**Important distinction**: UI components (`src/components/`, `src/app/`) may use optional chaining and fallbacks to handle loading states and missing data gracefully. Simulation code (`src/simulation/`) must NEVER use these patterns in calculations.
 
 ### Example: Snapshot Exports (Oct 30, 2025)
 
