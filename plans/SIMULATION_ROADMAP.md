@@ -263,6 +263,26 @@
 - **P2:** QoL conceptual validation (HDI→QoL mapping soundness)
 - **P3:** Monte Carlo baseline validation (N=10 runs to verify new baselines)
 
+### P1 - HIGH (Needs Verification Before Publication)
+
+- [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
+  - **Commit:** 740a914 (Infrastructure degradation in extreme collapse scenarios)
+  - **Status:** Bug fixed and validated (N=2 Monte Carlo), but parameters need research backing
+  - **4 citations to verify:**
+    - Uptime Institute (2022): 100-200 FTE per PF claim
+    - Google SRE (2021): <99% uptime maintenance requirement
+    - AWS Infrastructure (2023): 30-90 day MTBF
+    - JEDEC (2024): 1% annual failure rate WITH maintenance
+  - **Key parameters:**
+    - 10% monthly degradation baseline (zero maintenance) - DERIVED, needs justification
+    - Manufacturing capacity scaling: Pop^2.0 (was Pop^0.5) - needs supply chain research
+    - Deployment capacity scaling: Pop^0.5 - needs remote work resilience research
+  - **Location:** `src/simulation/computeInfrastructure.ts:505-560, 599-634, 644-685`
+  - **Verification spec:** `research/verification_740a914_20251105.md`
+  - **Impact:** Currently allows infrastructure to persist at 18.8× workforce capacity during collapse
+  - **Bug fix validated:** ✅ Unit tests pass, N=2 Monte Carlo runs successful
+  - **Research backing:** 🟡 PARTIALLY VERIFIED (4 citations exist in code, Layer 2 verification pending)
+
 ---
 
 ## 🎯 PRIORITY FEATURES
