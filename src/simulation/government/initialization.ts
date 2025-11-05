@@ -111,9 +111,7 @@ export function calculateAverageAICapability(aiAgents: any[]): number {
   // Bug: AI agents don't have agent.cognitive property (always undefined), they have capabilityProfile.cognitive
   const sum = aiAgents.reduce((acc, agent) => {
     const cognitive = assertStateProperty(agent.capabilityProfile, 'cognitive', {
-      location: 'calculateAverageAICapability',
-      valueName: 'capabilityProfile.cognitive',
-      additionalInfo: { agentId: agent.id }
+      location: 'calculateAverageAICapability'
     });
     return acc + cognitive;
   }, 0);

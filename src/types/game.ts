@@ -692,6 +692,15 @@ export interface GameState {
       institutionBoost?: number;
       trigger: string;
     }>;
+    // Cooperative Ownership: Worker-owned AI organizations (Nov 2025)
+    // Research: Québec Cooperatives (2010), Borzaga & Galera (2014), Mannan & Pek (2024)
+    cooperativeOwnershipEvents?: Array<{
+      month: number;
+      orgId: string;
+      eventType: 'conversion' | 'profit-distribution' | 'governance-action' | 'crisis-response';
+      details: string;
+      economicImpact: number;
+    }>;
   };
 
   /**
