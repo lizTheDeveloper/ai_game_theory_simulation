@@ -244,7 +244,7 @@ export function OutcomeDistributionPanel({ stats, outcomeBreakdown }: OutcomeDis
               <div>
                 <span className="text-white/40">Survival Rate:</span>
                 <div className="text-xl font-light text-green-400">
-                  {(100 - outcomeData.find(o => o.key === 'extinction')?.percentage || 0).toFixed(1)}%
+                  {(100 - (outcomeData.find(o => o.key === 'extinction')?.percentage || 0)).toFixed(1)}%
                 </div>
               </div>
               <div>

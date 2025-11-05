@@ -342,7 +342,7 @@ export function MonteCarloResultsViewer() {
         <TabsContent value="events">
           <CriticalEventsStream
             events={criticalEvents}
-            isLive={batchProgress?.runningRuns > 0}
+            isLive={Boolean(batchProgress?.runningRuns && batchProgress.runningRuns > 0)}
           />
         </TabsContent>
 

@@ -27,6 +27,7 @@ export function LiveProgressPanel({ progress, onCancel }: LiveProgressPanelProps
       }, 2000)
       return () => clearInterval(interval)
     }
+    return undefined
   }, [progress.runningRuns])
 
   // Calculate ETA
@@ -60,7 +61,7 @@ export function LiveProgressPanel({ progress, onCancel }: LiveProgressPanelProps
   return (
     <Panel
       title="Monte Carlo Batch Progress"
-      glow={progress.runningRuns > 0 ? 'cyan' : 'green'}
+      glow={progress.runningRuns > 0 ? 'cyan' : 'none'}
     >
       <div className="space-y-6">
         {/* Main Progress Bar */}

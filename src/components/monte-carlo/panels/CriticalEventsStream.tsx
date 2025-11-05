@@ -90,17 +90,15 @@ export function CriticalEventsStream({ events, isLive = false }: CriticalEventsS
 
   return (
     <Panel
-      title={
-        <div className="flex items-center justify-between">
-          <span>Critical Events Stream</span>
-          {isLive && (
-            <span className="text-xs px-2 py-1 bg-green-500/20 border border-green-400/60 rounded text-green-400">
-              LIVE
-            </span>
-          )}
-        </div>
+      title="Critical Events Stream"
+      glow={isLive ? 'cyan' : 'none'}
+      actions={
+        isLive ? (
+          <span className="text-xs px-2 py-1 bg-green-500/20 border border-green-400/60 rounded text-green-400">
+            LIVE
+          </span>
+        ) : null
       }
-      glow={isLive ? 'green' : 'cyan'}
     >
       <div className="space-y-4">
         {/* Filters */}
