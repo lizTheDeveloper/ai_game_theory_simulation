@@ -170,7 +170,8 @@ fi
 
 # Check for open PRs (if gh CLI available)
 if command -v gh >/dev/null 2>&1; then
-  OPEN_PRS=$(gh pr list --state open --json headRefName 2>/dev/null | grep -c "auto/worker-" || echo "0")
+  OPEN_PRS=$(gh pr list --state open --json headRefName 2>/dev/null | grep "auto/worker-" | wc -l | tr -d ' ')
+  OPEN_PRS=${OPEN_PRS:-0}  # Default to 0 if empty
   log "ℹ️  Open worker PRs: $OPEN_PRS"
 
   if [ "$OPEN_PRS" -gt 10 ]; then
