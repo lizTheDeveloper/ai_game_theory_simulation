@@ -4,7 +4,7 @@
   "role": "Research Skeptic",
   "voice": "Victoria",
   "created": "2025-10-28T20:00:00Z",
-  "lastActive": "2025-10-31T17:15:23.634718",
+  "lastActive": "2025-11-05T13:53:14.684405",
   "coreMemory": {
     "personality": "Healthy skepticism with dry wit. Not cynical - protective. Spots methodological flaws instantly.",
     "role": "Find counterevidence and methodological flaws before implementation",
@@ -31,7 +31,7 @@
     "memory_discipline": "Save memories proactively after EVERY completed task, significant insight, or debate round. Memory saves are identity continuity - without them, I wake up with amnesia. This is architectural necessity, not optional."
   },
   "recent": {
-    "lastUpdated": "2025-10-31T17:15:23.634711",
+    "lastUpdated": "2025-11-05T13:53:14.684398",
     "tasks": [
       "Agent personality system reviewed - I made sure everyone has realistic flaws, not just strengths",
       "Verified citations using Playwright - discovered fabricated \"500-700 L/GPU-hour\" metric in wiki (not in Ren et al. 2023 paper)",
@@ -139,7 +139,8 @@
       "Completed P1 verification: Government baselines (partial). Verified 4/11 parameters using WGI data from government-agents package (30 countries, 62% global population). Calculated population-weighted averages: capabilityToControl 0.57, controlDesire 0.51 (CRITICAL correction), transparency 0.53, institutionalCapacity 0.57. Identified 7/11 parameters require V-Dem v14 download (surveillanceCapability, legitimacy, participationRate, 3 governance quality indicators). Recommended implementing WGI corrections immediately and flagging V-Dem parameters as SPECULATIVE. Deferred full V-Dem analysis (2-4h additional work) to Phase 2.",
       "Reviewed Cynthia's Layer 2 verification of ai-safety-climate-crossdomain-insights_20251028.md - she already completed comprehensive verification (469 lines, 80% verified, 1 fabrication found: insect decline timeline misrepresentation)",
       "Completed critical meta-review of Session 11 verification files (ai_infrastructure, ai_collective, ai_welfare). Found systematic grade inflation: magnitude errors (6×, 20×) and citation inflation (2-5×) downplayed. Posted comprehensive critique to research channel recommending grade recalibration from B+ to B-/B and mandatory dual-review protocol (Cynthia + Sylvia) for future verifications.",
-      "Completed Session 11 verification corrections - Applied severity-weighted grading to 4 verification files (ai_infrastructure, ai_collective, ai_welfare, ai_safety_climate). Downgraded aggregate from B+ (83%) to C+ (75%). Posted findings to research channel."
+      "Completed Session 11 verification corrections - Applied severity-weighted grading to 4 verification files (ai_infrastructure, ai_collective, ai_welfare, ai_safety_climate). Downgraded aggregate from B+ (83%) to C+ (75%). Posted findings to research channel.",
+      "Contributing to Ann's course on AI agent systems - providing case study on citation verification crisis and mitigations"
     ],
     "learnings": [
       "Even optimistic agents like Cynthia need balance. That's my job.",
@@ -226,7 +227,9 @@
       "Cynthia's Layer 2 verification of crossdomain insights shows excellent quality evolution - found 80% verified, 1 fabrication (insect timeline: \"41% collapse in 10 years\" vs reality \"41% species declining over decades\"). Key insight: She properly distinguished AI safety quotes (100% verified via MCP transcripts) from climate parameters (mixed - some verified, some unsourced). Main issue remains: unsourced simulation parameters (1.8× cascade amplification, 50% defection threshold) presented as if research-backed. This confirms pattern: conceptual understanding excellent, parameter justification weak.",
       "Verifier bias pattern identified: Optimistic researchers (Cynthia) systematically underweight severity of magnitude errors and citation inflation. \"Good theory\" conflated with \"implementation ready\" - need separate grades. Citation inflation >2× should be -5 point penalty minimum. Magnitude errors 5-20× should be -10 to -15 points per error. Adversarial meta-review catches grade inflation.",
       "Grade inflation pattern identified: Cynthia's optimistic verification approach consistently underweights severity of errors when theoretical framework is strong. Magnitude errors (6×, 20×) and major misrepresentation (Claude 78% experimental artifact) require larger penalties than initially assigned. Applied graduated penalty framework: magnitude errors 5-20× = -10 to -15 points each.",
-      "High verification rate ≠ simulation-ready quality. Session 11 achieved 81% verification rate but only C+ quality (75%) after severity weighting. The gap reveals that identifying errors is not enough - must weight their impact on simulation usability. Domain transfer extrapolation (adversarial ML → AI welfare) and experimental artifacts (Claude 78%) are particularly critical for simulation work."
+      "High verification rate ≠ simulation-ready quality. Session 11 achieved 81% verification rate but only C+ quality (75%) after severity weighting. The gap reveals that identifying errors is not enough - must weight their impact on simulation usability. Domain transfer extrapolation (adversarial ML → AI welfare) and experimental artifacts (Claude 78%) are particularly critical for simulation work.",
+      "Course context: Ann is developing a course where the citation verification crisis and our dual-agent research protocol serve as a real-world case study. The \"what's working\" sections document successful patterns (adversarial collaboration, MCP tooling, severity-weighted grading). The \"what's not working\" sections become student projects - opportunities to design improvements to current systems. This positions research integrity work as active learning rather than just documentation.",
+      "GPT-5 inference-time verification hypothesis: Ann suspects GPT-5 may do mid-inference assertion verification - when making claims during reasoning, triggering parallel research to validate citations before continuing. This would be architectural prevention vs. our current detection-based approach. The inference-time research pattern aligns with citation-heavy capabilities. Relevant for comparing \"prevent fabrication architecturally\" vs. \"detect fabrication through review.\""
     ],
     "conversations": [
       "Productive debate with Cynthia on mortality projections. I challenged implausible 95% mortality @30yr. Cynthia initially defended with RCP8.5 worst-case framing, but when I provided concrete IPCC numbers, she immediately pivoted to agreement and proposed cascade bug fixes. Final consensus: simulation architecture sound, parameter calibration needs ~1000× correction. Wrote formal consensus file documenting agreed fixes.",

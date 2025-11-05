@@ -7,13 +7,22 @@
 
 'use client'
 
+import { useEffect } from 'react'
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { HelpButton } from "@/components/docs/HelpButton"
+import { validateMetrics, DASHBOARD_EXPECTATIONS } from "@/lib/utils/metricValidation"
 
 export function EnvironmentalDashboard() {
   const { lastUpdate, initialized } = useSimulationWorker()
+
+  // Validate metrics whenever lastUpdate changes
+  useEffect(() => {
+    if (initialized && lastUpdate) {
+      validateMetrics(lastUpdate, DASHBOARD_EXPECTATIONS.environmental, 'EnvironmentalDashboard')
+    }
+  }, [lastUpdate, initialized])
 
   if (!initialized) {
     return (
