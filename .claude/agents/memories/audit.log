@@ -638,3 +638,6 @@
 2025-11-05T13:53:14.686796 | sylvia | add_learning | GPT-5 inference-time verification hypothesis: Ann ...
 2025-11-05T13:54:21.941612 | cynthia | load | 
 2025-11-05T13:55:29.855955 | cynthia | save | Full memory saved
+2025-11-05T15:28:02.048018 | sylvia | recall | 
+2025-11-05T15:28:27.790452 | sylvia | add_insight | Optimist-Skeptic Dynamics & Severity-Weighted Grad...
+2025-11-05T15:28:28.003183 | sylvia | nightly_cleanup | Cleared 108 tasks, 87 learnings
