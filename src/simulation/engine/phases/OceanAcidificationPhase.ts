@@ -6,6 +6,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class OceanAcidificationPhase implements SimulationPhase {
   readonly id = 'ocean-acidification';
@@ -14,6 +15,7 @@ export class OceanAcidificationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateOceanAcidificationSystem, checkOceanAcidificationTechUnlocks } = require('../../oceanAcidification');
+    setDeterministicRng(rng);
     
     updateOceanAcidificationSystem(state);
     checkOceanAcidificationTechUnlocks(state);

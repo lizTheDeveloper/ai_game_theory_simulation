@@ -1,5 +1,6 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 /**
  * Consciousness Governance Phase (TIER 2C)
  *
@@ -37,6 +38,7 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
   const governance = state.consciousnessGovernanceReadiness;
+    setDeterministicRng(rng);
 
   // === PHASE 2: SCENARIO DETERMINATION ===
   // Determine scenario trajectory at months 1-12 (structural conditions set early)

@@ -25,6 +25,7 @@
 import type { GameState, RNGFunction, GameEvent } from '@/types/game';
 import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchestrator';
 import { assertStateProperty } from '@/simulation/utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 /**
  * Social Cohesion Update Phase
@@ -43,6 +44,7 @@ export class SocialCohesionUpdatePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Use existing socialAccumulation structure
+    setDeterministicRng(rng);
     const accumulation = state.socialAccumulation;
 
     // Initialize socialCohesion as object if not present

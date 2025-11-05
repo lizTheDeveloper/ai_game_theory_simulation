@@ -11,6 +11,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 import { updateBeliefs } from '../../memetics/beliefEvolution';
 import { updateMemeTransmission } from '../../memetics/memeTransmission';
 import { updateAIAmplification, applyDeepfakeEffects } from '../../memetics/aiAmplification';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class MemeticEvolutionPhase implements SimulationPhase {
   readonly id = 'memetic-evolution';
@@ -19,6 +20,7 @@ export class MemeticEvolutionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Phase 4: Update AI amplification effects (deepfakes, bots, algorithms)
+    setDeterministicRng(rng);
     // Must run BEFORE meme transmission (affects transmission rates)
     updateAIAmplification(state);
     

@@ -10,6 +10,7 @@
 
 import { GameState } from '@/types/game';
 import { CountryInteractionCache } from './interactionCache';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 // ============================================================================
 // REGULATORY ARBITRAGE
@@ -60,7 +61,7 @@ export function updateRegulatoryArbitrage(state: GameState, cache: CountryIntera
   // Companies migrate to lax jurisdictions when spread is high
   const migrationProbability = arb.regulatorySpread * arb.raceToBottomIntensity * 0.02; // Up to 2%/month
 
-  if (Math.random() < migrationProbability && arb.regulatorySpread > 0.30) {
+  if (deterministicRandom() < migrationProbability && arb.regulatorySpread > 0.30) {
     // Find strictest jurisdiction
     const strictestNation = natAI.nations.find(n => n.regulationLevel === strictest);
     // Find laxest jurisdiction

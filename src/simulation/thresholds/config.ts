@@ -12,6 +12,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type { Thresholds, ScenarioName, SliderSettings } from './index';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Threshold configuration metadata
@@ -136,7 +137,7 @@ export function createThresholdConfig(
  */
 function generateConfigId(): string {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
-  const random = Math.random().toString(36).substring(2, 6);
+  const random = deterministicRandom().toString(36).substring(2, 6);
   return `threshold-config-${timestamp}-${random}`;
 }
 

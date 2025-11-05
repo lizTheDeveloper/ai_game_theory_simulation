@@ -14,6 +14,7 @@
 import type { GameState } from '../types/game';
 import { clamp } from './utils';
 import { getTechDeploymentSafe } from './techTree/helpers';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 export interface ConflictResolutionState {
   // AI-Mediated Diplomacy
@@ -285,7 +286,7 @@ export function attemptDiplomaticIntervention(state: GameState): boolean {
   if (govQuality < 0.5) return false;
   
   // Roll for success based on diplomatic success rate
-  const roll = Math.random();
+  const roll = deterministicRandom();
   const success = roll < peace.diplomaticSuccessRate;
   
   if (success) {
@@ -341,7 +342,7 @@ export function canPenetrateMilitarySystems(state: GameState): boolean {
   // Attack difficulty scales with security
   const attackSuccessChance = Math.max(0.1, 1 - peace.militarySystemSecurity);
   
-  const roll = Math.random();
+  const roll = deterministicRandom();
   const attackSucceeds = roll < attackSuccessChance;
   
   if (!attackSucceeds && peace.militarySystemSecurity > 0.7) {

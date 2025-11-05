@@ -9,6 +9,7 @@
 import { GameState } from '../types/game';
 import { NuclearState, MADDeterrence, BilateralTension } from '../types/nuclearStates';
 import { assertEconomicStage } from './utils/assertions';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Initialize nuclear states (2025 starting conditions)
@@ -544,7 +545,7 @@ export function updateBilateralTensions(state: GameState): void {
       // Escalate if AI pushes harder than circuit breakers resist
       if (netEscalation > 0) {
         const escalationProb = netEscalation * 0.2; // 0-20% per month
-        if (Math.random() < escalationProb) {
+        if (deterministicRandom() < escalationProb) {
           tension.escalationLadder = Math.min(7, tension.escalationLadder + 1);
           console.warn(`⚠️ ESCALATION: ${tension.nationA}-${tension.nationB} → ladder step ${tension.escalationLadder} (AI: ${(aiEscalationRate * 100).toFixed(0)}%, breakers: ${(circuitBreakerRate * 100).toFixed(0)}%)`);
         }
@@ -554,7 +555,7 @@ export function updateBilateralTensions(state: GameState): void {
     // De-escalation if circuit breakers are stronger than AI pressure
     if (netEscalation < 0 && tension.escalationLadder > 1) {
       const deEscalationProb = Math.abs(netEscalation) * 0.15; // 0-15% per month
-      if (Math.random() < deEscalationProb) {
+      if (deterministicRandom() < deEscalationProb) {
         tension.escalationLadder = Math.max(1, tension.escalationLadder - 1);
         console.log(`🛡️ CIRCUIT BREAKERS: ${tension.nationA}-${tension.nationB} → ladder step ${tension.escalationLadder} (AI: ${(aiEscalationRate * 100).toFixed(0)}%, breakers: ${(circuitBreakerRate * 100).toFixed(0)}%)`);
       }
@@ -570,7 +571,7 @@ export function updateBilateralTensions(state: GameState): void {
     const dipAI = state.diplomaticAI;
     if (dipAI.deploymentMonth !== -1 && dipAI.stakeholderTrust > 0.6) {
       const deEscalationProb = dipAI.successRate * 0.1;
-      if (Math.random() < deEscalationProb && tension.escalationLadder > 1) {
+      if (deterministicRandom() < deEscalationProb && tension.escalationLadder > 1) {
         tension.escalationLadder = Math.max(1, tension.escalationLadder - 1);
         tension.tensionLevel = Math.max(0.3, tension.tensionLevel - 0.05);
         console.log(`🤝 DIPLOMATIC AI: De-escalated ${tension.nationA}-${tension.nationB} from ladder step ${tension.escalationLadder + 1}`);
@@ -592,7 +593,7 @@ export function updateBilateralTensions(state: GameState): void {
       tension.tensionLevel = Math.max(0.2, tension.tensionLevel - peaceDeeescalation);
       
       // And de-escalates conflicts
-      if (tension.escalationLadder > 1 && Math.random() < conflictRes.globalPeaceLevel * 0.2) {
+      if (tension.escalationLadder > 1 && deterministicRandom() < conflictRes.globalPeaceLevel * 0.2) {
         tension.escalationLadder = Math.max(1, tension.escalationLadder - 1);
         console.log(`🕊️ GLOBAL PEACE: De-escalated ${tension.nationA}-${tension.nationB} from ladder step ${tension.escalationLadder + 1}`);
       }
@@ -601,7 +602,7 @@ export function updateBilateralTensions(state: GameState): void {
     // Crisis stability improves with peace
     if (mad.crisisStability > 0.7 && tension.escalationLadder >= 3) {
       // High stability prevents escalation
-      if (Math.random() < 0.1) {
+      if (deterministicRandom() < 0.1) {
         tension.escalationLadder = Math.max(1, tension.escalationLadder - 1);
       }
     }

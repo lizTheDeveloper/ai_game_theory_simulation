@@ -24,6 +24,7 @@
 import type { GameState, RNGFunction } from '@/types/game';
 import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchestrator';
 import { assertStateProperty } from '@/simulation/utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 /**
  * Democracy Dynamics Phase
@@ -41,6 +42,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Initialize democracy state if not present
+    setDeterministicRng(rng);
     if (!state.government.democracy) {
       state.government.democracy = 0.5; // Global average (V-Dem 2024: ~0.45)
       if (state.currentMonth === 0) {

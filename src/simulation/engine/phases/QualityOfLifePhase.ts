@@ -9,6 +9,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateQualityOfLifeSystems, calculateQualityOfLife, aggregateGlobalQoL } from '../../calculations';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class QualityOfLifePhase implements SimulationPhase {
   readonly id = 'quality-of-life';
@@ -17,6 +18,7 @@ export class QualityOfLifePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Update multi-dimensional quality of life systems
+    setDeterministicRng(rng);
     const updatedQoLSystems = updateQualityOfLifeSystems(state);
     state.qualityOfLifeSystems = updatedQoLSystems;
 

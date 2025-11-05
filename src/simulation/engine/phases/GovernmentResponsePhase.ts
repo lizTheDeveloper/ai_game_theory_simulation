@@ -16,6 +16,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  */
 
 import type { ActivePolicy, Treaty, GovernmentCapacity } from '../../../types/government';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
   calculateDeploymentTime,
   calculateTargetEffectiveness,
@@ -32,6 +33,7 @@ export class GovernmentResponsePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const defaultContext: PhaseContext = { month: state.currentMonth, data: new Map(), executedPhases: new Set() };
+    setDeterministicRng(rng);
     return executeGovernmentResponsePhase(state, rng, context || defaultContext);
   }
 }

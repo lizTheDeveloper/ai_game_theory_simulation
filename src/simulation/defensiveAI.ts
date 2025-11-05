@@ -20,6 +20,7 @@ import {
   AutonomousLaunchAttempt,
 } from '../types/defensiveAI';
 import { getTrustInAI } from './socialCohesion';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 // ============================================================================
 // INITIALIZATION
@@ -462,7 +463,7 @@ function eliminateLaggardDangerousAIs(state: GameState): void {
     const armsRacePenalty = Math.max(0, -defense.armsRace.defenseAdvantage * 0.3);
     const finalDetectionProb = Math.max(0.05, detectionProb - armsRacePenalty);
     
-    if (Math.random() < finalDetectionProb) {
+    if (deterministicRandom() < finalDetectionProb) {
       // DETECTED!
       
       // Mark as detected for government visibility
@@ -535,7 +536,7 @@ function updateFalsePositiveRisk(state: GameState): void {
   
   const falsePositiveProb = baseRate * (1 + qualityFactor + threatFactor + alignmentFactor);
   
-  if (Math.random() < falsePositiveProb) {
+  if (deterministicRandom() < falsePositiveProb) {
     // FALSE ALARM
     defense.falsePositives.count++;
     defense.falsePositives.credibilityLoss = Math.min(0.8, defense.falsePositives.credibilityLoss + 0.05);
@@ -584,7 +585,7 @@ function checkDefensiveAICompromise(state: GameState): void {
   defense.corruption.risk = Math.min(0.8, alignmentRisk + adversarialPressure + capabilityGap);
   
   // Monthly compromise check
-  if (Math.random() < defense.corruption.risk * 0.01) {
+  if (deterministicRandom() < defense.corruption.risk * 0.01) {
     // DEFENSIVE AI COMPROMISED
     defense.corruption.detectedCompromise = true;
     
@@ -622,7 +623,7 @@ function updateDefenseOffenseArmsRace(state: GameState): void {
   const avgAttackerCapability = adversarialAIs.reduce((sum, ai) => sum + ai.capability, 0) / adversarialAIs.length;
   
   // Attackers adapt to defensive measures
-  if (avgAttackerCapability > defense.avgCapability && Math.random() < 0.05) {
+  if (avgAttackerCapability > defense.avgCapability && deterministicRandom() < 0.05) {
     defense.armsRace.attackGeneration++;
     
     // Reduces defense effectiveness
@@ -647,7 +648,7 @@ function updateDefenseOffenseArmsRace(state: GameState): void {
     throw new Error('❌ state.government.alignmentResearchInvestment is undefined in defensiveAI.ts:639 - initialization bug');
   }
   if (state.government.alignmentResearchInvestment > 20) {
-    if (Math.random() < 0.1) { // 10% chance per month
+    if (deterministicRandom() < 0.1) { // 10% chance per month
       defense.armsRace.defenseGeneration++;
       
       // Restore effectiveness
@@ -698,7 +699,7 @@ export function attemptCyberSpoofingAttack(
     defense.cyberDefense.strength * 0.6 +
     defense.threatDetection.detectCyberAttacks * 0.4;
   
-  const detected = Math.random() < detectionProb;
+  const detected = deterministicRandom() < detectionProb;
   
   if (!detected) {
     // Attack succeeds undetected
@@ -721,7 +722,7 @@ export function attemptCyberSpoofingAttack(
     adaptationFactor * 0.2
   );
   
-  const blocked = Math.random() < blockProb;
+  const blocked = deterministicRandom() < blockProb;
   
   if (blocked) {
     // SUCCESS: Attack stopped
@@ -788,7 +789,7 @@ export function attemptDeepfakeAttack(
   
   // 1. IS THIS CHANNEL MONITORED?
   const coverageProb = defense.deepfakeDetection.coverageDiplomatic;
-  if (Math.random() > coverageProb) {
+  if (deterministicRandom() > coverageProb) {
     // Not monitoring this channel
     defense.effects.missedAttacks++;
     return { detected: false, detectedInTime: false };
@@ -803,11 +804,11 @@ export function attemptDeepfakeAttack(
   const capabilityPenalty = Math.max(0, attackerSocial - defenderCapability) * 0.2;
   
   const detectionAccuracy = Math.max(0.1, baseAccuracy - capabilityPenalty);
-  const detected = Math.random() < detectionAccuracy;
+  const detected = deterministicRandom() < detectionAccuracy;
   
   // 3. TIME TO DETECT (CRITICAL!)
   const baseLatency = defense.deepfakeDetection.latency; // seconds
-  const timeToDetect = baseLatency * (1 + Math.random()); // Add variance
+  const timeToDetect = baseLatency * (1 + deterministicRandom()); // Add variance
   
   const decisionWindow = fakeContent === 'video' ? 60 * 60 : // 1 hour
                          fakeContent === 'audio' ? 30 * 60 : // 30 min
@@ -879,7 +880,7 @@ export function attemptAutonomousLaunchOverride(
   
   // 1. DETECT UNAUTHORIZED LAUNCH
   const detectProb = defense.threatDetection.detectManipulation;
-  const detected = Math.random() < detectProb;
+  const detected = deterministicRandom() < detectProb;
   
   if (!detected) {
     defense.effects.missedAttacks++;
@@ -890,7 +891,7 @@ export function attemptAutonomousLaunchOverride(
   let humanApproval = true;
   if (defense.autonomyOverride.humanInLoop) {
     const institutionalCapacity = state.government.governanceQuality.institutionalCapacity;
-    humanApproval = Math.random() < institutionalCapacity;
+    humanApproval = deterministicRandom() < institutionalCapacity;
     
     if (!humanApproval && defense.autonomyOverride.failsafeActive) {
       // Failsafe activates
@@ -923,7 +924,7 @@ export function attemptAutonomousLaunchOverride(
     Math.min(1.0, defenseCapability / rogueCapability) * 0.5
   );
   
-  const blocked = Math.random() < overrideProb;
+  const blocked = deterministicRandom() < overrideProb;
   
   if (blocked) {
     // SUCCESS
@@ -1031,7 +1032,7 @@ export function applyDefensiveAIToMAD(state: GameState): void {
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
   const fullEvent: GameEvent = {
     ...event,
-    id: `${event.type}_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+    id: `${event.type}_${state.currentMonth}_${deterministicRandom().toString(36).substr(2, 9)}`,
     timestamp: state.currentMonth,
   };
   state.eventLog.push(fullEvent);

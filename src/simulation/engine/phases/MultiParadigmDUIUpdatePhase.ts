@@ -16,6 +16,7 @@ import { calculateCorrelations } from '@/data/aggregators/correlationTracker';
 import { classifyOutcome } from '@/data/aggregators/outcomeClassifier';
 import { assertFinite, assertDefined } from '@/simulation/utils/assertions';
 import { calculateProgressiveEcologicalScore } from '@/simulation/planetaryBoundaryRecovery';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 /**
  * Multi-Paradigm DUI Update Phase
@@ -29,6 +30,7 @@ export class MultiParadigmDUIUpdatePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Calculate new paradigm scores from simulation state
+    setDeterministicRng(rng);
     const scores = calculateParadigmScoresFromState(state);
 
     // Debug logging for first month

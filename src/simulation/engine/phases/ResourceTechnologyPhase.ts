@@ -6,6 +6,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class ResourceTechnologyPhase implements SimulationPhase {
   readonly id = 'resource-technology';
@@ -14,6 +15,7 @@ export class ResourceTechnologyPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { applyTechnologyToResources, applyIndustryOppositionToTech } = require('../../resourceTechnology');
+    setDeterministicRng(rng);
     applyTechnologyToResources(state);
     applyIndustryOppositionToTech(state);
 

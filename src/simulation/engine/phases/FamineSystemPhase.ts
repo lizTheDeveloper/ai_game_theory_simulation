@@ -14,6 +14,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class FamineSystemPhase implements SimulationPhase {
   readonly id = 'famine_system';
@@ -22,6 +23,7 @@ export class FamineSystemPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     if (!state.famineSystem) return { events: [] };
+    setDeterministicRng(rng);
 
     // 1. Check regional biodiversity for new famine triggers (ecosystem collapse)
     const { checkRegionalFamineRisk } = require('../../qualityOfLife');

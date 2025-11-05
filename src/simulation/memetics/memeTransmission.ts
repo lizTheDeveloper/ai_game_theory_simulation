@@ -18,6 +18,7 @@
 
 import { GameState } from '../../types/game';
 import { Meme, MemeticSegment, BeliefVector } from '../../types/memetics';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Update meme transmission each month
@@ -54,7 +55,7 @@ function createOrganicMemes(state: GameState): void {
   const currentMonth = state.currentMonth;
   
   // AI control loss → anti-AI memes
-  if (state.technologicalRisk.controlLossActive && Math.random() < 0.3) {
+  if (state.technologicalRisk.controlLossActive && deterministicRandom() < 0.3) {
     const meme: Meme = {
       id: `meme_${memetic.totalMemesCreated++}`,
       contentType: 'anti_ai',
@@ -81,7 +82,7 @@ function createOrganicMemes(state: GameState): void {
   // AI beneficial actions → pro-AI memes
   const beneficialAI = state.aiAgents.filter(ai => ai.beneficialActions > ai.harmfulActions).length;
   const totalAI = Math.max(1, state.aiAgents.length);
-  if (beneficialAI / totalAI > 0.7 && Math.random() < 0.2) {
+  if (beneficialAI / totalAI > 0.7 && deterministicRandom() < 0.2) {
     const meme: Meme = {
       id: `meme_${memetic.totalMemesCreated++}`,
       contentType: 'pro_ai',
@@ -106,7 +107,7 @@ function createOrganicMemes(state: GameState): void {
   }
   
   // Climate crisis → climate action memes
-  if (state.environmentalAccumulation.climateCrisisActive && Math.random() < 0.25) {
+  if (state.environmentalAccumulation.climateCrisisActive && deterministicRandom() < 0.25) {
     const meme: Meme = {
       id: `meme_${memetic.totalMemesCreated++}`,
       contentType: 'climate_action',
@@ -131,7 +132,7 @@ function createOrganicMemes(state: GameState): void {
   }
   
   // Meaning collapse → conspiracy/despair memes
-  if (state.socialAccumulation.meaningCollapseActive && Math.random() < 0.2) {
+  if (state.socialAccumulation.meaningCollapseActive && deterministicRandom() < 0.2) {
     const meme: Meme = {
       id: `meme_${memetic.totalMemesCreated++}`,
       contentType: 'conspiracy',
@@ -156,7 +157,7 @@ function createOrganicMemes(state: GameState): void {
   }
   
   // Government action → propaganda memes (if authoritarian)
-  if (state.government.structuralChoices.surveillanceLevel > 0.6 && Math.random() < 0.15) {
+  if (state.government.structuralChoices.surveillanceLevel > 0.6 && deterministicRandom() < 0.15) {
     const meme: Meme = {
       id: `meme_${memetic.totalMemesCreated++}`,
       contentType: 'propaganda',
@@ -213,9 +214,9 @@ function spreadMemes(state: GameState): void {
         );
         
         // Attempt transmission
-        if (Math.random() < transmissionProb) {
+        if (deterministicRandom() < transmissionProb) {
           // Check if meme mutates during transmission
-          const mutates = Math.random() < 0.05; // 5% mutation rate (from research)
+          const mutates = deterministicRandom() < 0.05; // 5% mutation rate (from research)
           
           if (mutates) {
             // Create mutated version
@@ -336,7 +337,7 @@ function mutateMeme(parent: Meme, state: GameState): Meme {
   
   // Mutate content type (10% chance)
   let newContentType = parent.contentType;
-  if (Math.random() < 0.1) {
+  if (deterministicRandom() < 0.1) {
     // Flip sentiment: pro_ai ↔ anti_ai, climate_action ↔ climate_denial
     const flips: Record<string, string> = {
       'pro_ai': 'anti_ai',
@@ -351,13 +352,13 @@ function mutateMeme(parent: Meme, state: GameState): Meme {
   
   // Mutate emotional valence (±0.2)
   const newValence = clamp(
-    parent.emotionalValence + (Math.random() - 0.5) * 0.4,
+    parent.emotionalValence + (deterministicRandom() - 0.5) * 0.4,
     -1, 1
   );
   
   // Mutate complexity (±0.1)
   const newComplexity = clamp(
-    parent.complexity + (Math.random() - 0.5) * 0.2,
+    parent.complexity + (deterministicRandom() - 0.5) * 0.2,
     0, 1
   );
   
@@ -367,7 +368,7 @@ function mutateMeme(parent: Meme, state: GameState): Meme {
     for (const [key, value] of Object.entries(parent.beliefEffects)) {
       if (value !== undefined) {
         newBeliefEffects[key as keyof BeliefVector] = clamp(
-          value + (Math.random() - 0.5) * 0.1,
+          value + (deterministicRandom() - 0.5) * 0.1,
           -1, 1
         );
       }

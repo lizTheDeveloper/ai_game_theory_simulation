@@ -26,6 +26,7 @@ import {
   computeAlignmentRobustness
 } from '@/types/game';
 import { assertStateProperty } from '@/simulation/utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class AlignmentTechniquePhase implements SimulationPhase {
   id = 'alignment_techniques';
@@ -34,6 +35,7 @@ export class AlignmentTechniquePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     // Update each AI agent's effective alignment based on techniques
     for (const agent of state.aiAgents) {

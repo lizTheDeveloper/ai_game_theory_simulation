@@ -11,6 +11,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly id = 'planetary_boundaries';
@@ -19,6 +20,7 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updatePlanetaryBoundaries } = require('../../planetaryBoundaries');
+    setDeterministicRng(rng);
     const { updateBoundaryRecovery } = require('../../planetaryBoundaryRecovery');
 
     // Update all planetary boundaries (degradation mechanics)

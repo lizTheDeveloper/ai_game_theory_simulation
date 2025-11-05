@@ -1,0 +1,13 @@
+{
+  "timestamp": "20251105_210001",
+  "branch": "auto/worker-20251105_210001",
+  "commit": "2ad27e907",
+  "duration_seconds": 1628,
+  "claude_duration_seconds": 1500,
+  "claude_exit_code": 124,
+  "changed_files": 151,
+  "commits_made": 0,
+  "pr_created": false,
+  "memory_used": "914Mi",
+  "disk_used": "42G"
+}

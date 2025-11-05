@@ -20,6 +20,7 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { getTechDeploymentSafe } from '../../techTree/helpers';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 interface Breakthrough {
   id: string;
@@ -146,6 +147,7 @@ export class StochasticInnovationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     // === 1. CALCULATE BREAKTHROUGH PROBABILITY MODIFIERS ===
 

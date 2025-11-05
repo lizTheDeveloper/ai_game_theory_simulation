@@ -24,6 +24,7 @@
 import type { GameState, RNGFunction, GameEvent } from '@/types/game';
 import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchestrator';
 import { assertStateProperty } from '@/simulation/utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 /**
  * Environmental Feedback Phase
@@ -41,6 +42,7 @@ export class EnvironmentalFeedbackPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Aggregate climate state
+    setDeterministicRng(rng);
     const climateState = aggregateClimateState(state);
 
     // Aggregate pollution level

@@ -28,6 +28,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { resolveMortality } from '@/simulation/bayesianMortality';
 import { assertPhaseNotExecuted } from '@/simulation/utils/assertions';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class BayesianMortalityResolutionPhase implements SimulationPhase {
   readonly id = 'bayesian_mortality_resolution';
@@ -36,6 +37,7 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events = [];
+    setDeterministicRng(rng);
 
     // PHASE DEPENDENCY SAFEGUARD (Oct 28, 2025)
     // This phase is the authoritative source for population after mortality.

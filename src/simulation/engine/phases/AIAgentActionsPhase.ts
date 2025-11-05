@@ -16,6 +16,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class AIAgentActionsPhase implements SimulationPhase {
   readonly id = 'ai-agent-actions';
@@ -24,6 +25,7 @@ export class AIAgentActionsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+    setDeterministicRng(rng);
     const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
     const t1 = enableTiming ? performance.now() : 0;
 

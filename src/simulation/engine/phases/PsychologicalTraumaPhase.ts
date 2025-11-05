@@ -16,6 +16,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class PsychologicalTraumaPhase implements SimulationPhase {
   readonly id = 'psychological_trauma';
@@ -24,6 +25,7 @@ export class PsychologicalTraumaPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     if (!state.psychologicalTrauma) {
+    setDeterministicRng(rng);
       // Initialize if missing (defensive programming)
       state.psychologicalTrauma = {
         traumaLevel: 0.0,

@@ -32,6 +32,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateMinimalSufferingSystem, logSufferingMetrics } from '../../minimalSufferingTracking';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class MinimalSufferingPhase implements SimulationPhase {
   readonly id = 'minimal_suffering';
@@ -40,6 +41,7 @@ export class MinimalSufferingPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Update entire minimal suffering system
+    setDeterministicRng(rng);
     // (includes Tier 1 metrics, Tier 2 indicators, dystopia detection, global aggregates)
     updateMinimalSufferingSystem(state);
 

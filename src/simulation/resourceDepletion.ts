@@ -23,12 +23,13 @@ import {
   CO2System,
 } from '../types/resources';
 import { assertEconomicStage, assertStateProperty, assertFinite } from './utils/assertions';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 // Helper to add events to state
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
   const fullEvent: GameEvent = {
     ...event,
-    id: `${event.type}_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+    id: `${event.type}_${state.currentMonth}_${deterministicRandom().toString(36).substr(2, 9)}`,
     timestamp: state.currentMonth,
   };
   state.eventLog.push(fullEvent);
@@ -89,8 +90,8 @@ function updateFossilFuelDepletion(state: GameState, resources: ResourceEconomy)
   updateFossilFuel(resources.naturalGas, economicMultiplier, resources);
   
   // Oil spills (random events)
-  if (resources.oil.reserves > 0 && Math.random() < resources.oil.spillRisk) {
-    resources.oil.spillSeverity = Math.random() * 0.3 + 0.1; // 10-40% severity
+  if (resources.oil.reserves > 0 && deterministicRandom() < resources.oil.spillRisk) {
+    resources.oil.spillSeverity = deterministicRandom() * 0.3 + 0.1; // 10-40% severity
     resources.ocean.pollutionLoad += resources.oil.spillSeverity * 0.05;
     
     addEvent(state, {
@@ -755,7 +756,7 @@ function updateIndustryOpposition(state: GameState, resources: ResourceEconomy):
   fossil.politicalDonations = fossil.economicShare * 25; // Up to $25B/year
   
   // Sabotage attempts (when desperate)
-  if (fossil.desperation > 0.7 && Math.random() < 0.01) {
+  if (fossil.desperation > 0.7 && deterministicRandom() < 0.01) {
     fossil.sabotageAttempts++;
     
     addEvent(state, {

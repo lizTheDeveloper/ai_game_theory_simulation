@@ -11,6 +11,7 @@ import { getAllTech, getTechById } from './comprehensiveTechTree';
 import { calculateTotalCapabilityFromProfile } from '../capabilities';
 import { assertEconomicStage } from '../utils/assertions';
 import { addSimulationEvent } from '../utils/eventLogger';
+import { deterministicRandom } from '../utils/deterministicRng';
 
 export interface TechUnlockEvent {
   techId: string;
@@ -123,7 +124,8 @@ export function initializeTechTreeState(): TechTreeState {
  */
 export function updateTechTree(
   gameState: GameState,
-  techTreeState: TechTreeState
+  techTreeState: TechTreeState,
+  rng: () => number
 ): TechUnlockEvent[] {
   const unlockEvents: TechUnlockEvent[] = [];
   
@@ -134,7 +136,7 @@ export function updateTechTree(
   );
   
   // Debug logging (probabilistic to avoid spam)
-  if (Math.random() < 0.01 && lockedTech.length > 0) {
+  if (deterministicRandom() < 0.01 && lockedTech.length > 0) {
     const avgCapability = getAverageAICapability(gameState);
     // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
     const economicStage = assertEconomicStage(gameState, 'techTree.unlock (debug)');
@@ -473,7 +475,7 @@ function updateResearchProgress(
     let progress = techTreeState.researchProgress[tech.id];
     
     // Debug: Check if progress is being retrieved correctly
-    if (Math.random() < 0.01 && tech.id === 'struvite_recovery') {
+    if (deterministicRandom() < 0.01 && tech.id === 'struvite_recovery') {
       console.log(`\n🔍 PROGRESS RETRIEVAL DEBUG (Month ${gameState.currentMonth}):`);
       console.log(`   Tech: ${tech.name}`);
       console.log(`   Map has key: ${(tech.id in techTreeState.researchProgress)}`);
@@ -514,7 +516,7 @@ function updateResearchProgress(
     techTreeState.researchProgress[tech.id] = progress;
     
     // Debug logging for first tech (probabilistic)
-    if (Math.random() < 0.1 && tech.id === 'struvite_recovery') {
+    if (deterministicRandom() < 0.1 && tech.id === 'struvite_recovery') {
       console.log(`\n🔬 RESEARCH DEBUG (Month ${gameState.currentMonth}):`);
       console.log(`   Tech: ${tech.name}`);
       console.log(`   Research months required: ${tech.researchMonthsRequired}`);
@@ -702,7 +704,7 @@ function getEnergyMultiplier(gameState: GameState): number {
 
   // Log energy constraints when they're significant (< 0.8)
   // Add event for severe constraints only (< 0.5) to avoid spam
-  if (finalMultiplier < 0.5 && Math.random() < 0.02) {
+  if (finalMultiplier < 0.5 && deterministicRandom() < 0.02) {
     const severity = finalMultiplier < 0.3 ? 'critical' : 'warning';
     const constraintLevel = finalMultiplier < 0.3 ? 'SEVERE' : 'MODERATE';
 
@@ -723,7 +725,7 @@ function getEnergyMultiplier(gameState: GameState): number {
     });
   }
 
-  if (finalMultiplier < 0.8 && Math.random() < 0.05) {
+  if (finalMultiplier < 0.8 && deterministicRandom() < 0.05) {
     console.log(`\n⚡ ENERGY CONSTRAINT (Month ${gameState.currentMonth}):`);
     console.log(`   Total grid capacity: ${totalAvailable.toFixed(1)} TWh/month`);
     console.log(`   Data center consumption: ${dataCenterConsumption.toFixed(1)} TWh/month`);

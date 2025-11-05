@@ -11,6 +11,7 @@ import { GameAction, ActionResult } from './types';
 import { getTechById, getAllTech, TechDefinition } from '../techTree/comprehensiveTechTree';
 import { TechTreeState, TechDeploymentAction } from '../techTree/engine';
 import { getOptimalDeploymentRegions, getDeploymentPriority } from '../techTree/regionalDeployment';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Deploy Technology Action
@@ -419,7 +420,7 @@ function selectDeploymentRegion(
   } else if (agent.alignment > 0.3) {
     // Neutral AIs choose randomly from top 3 regions
     const topRegions = regionPriorities.slice(0, 3);
-    const randomIndex = Math.floor(Math.random() * topRegions.length);
+    const randomIndex = Math.floor(deterministicRandom() * topRegions.length);
     return topRegions[randomIndex].region;
   } else {
     // Misaligned AIs choose strategically (regions where they can cause most harm)

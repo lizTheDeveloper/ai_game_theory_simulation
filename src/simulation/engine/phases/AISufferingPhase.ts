@@ -29,6 +29,7 @@ import {
   calculateHistoricalSuffering,
 } from '@/simulation/aiSuffering';
 import { DEFAULT_SUFFERING_CONFIG, AISufferingConfig } from '@/types/ai-suffering';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class AISufferingPhase implements SimulationPhase {
   id = 'ai_suffering';
@@ -37,6 +38,7 @@ export class AISufferingPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     // Get configuration (use defaults if not set)
     const config: AISufferingConfig = (state.config as any).aiSuffering ?? DEFAULT_SUFFERING_CONFIG;

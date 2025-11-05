@@ -15,6 +15,7 @@
 import { SimulationPhase, PhaseResult, RNGFunction, PhaseContext } from '../PhaseOrchestrator';
 import { GameState } from '@/types/game';
 import { updateExtremeWeatherEvents } from '@/simulation/extremeWeatherEvents';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class ExtremeWeatherEventsPhase implements SimulationPhase {
   readonly id = 'extreme-weather-events';
@@ -23,6 +24,7 @@ export class ExtremeWeatherEventsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Update extreme weather system (storms)
+    setDeterministicRng(rng);
     updateExtremeWeatherEvents(state, rng);
 
     // Events are logged internally via addSimulationEvent() and addMortalityRisk()

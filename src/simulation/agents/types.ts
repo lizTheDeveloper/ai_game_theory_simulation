@@ -3,6 +3,7 @@
  */
 
 import { GameState, GameEvent } from '@/types/game';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Result of executing an action
@@ -30,7 +31,7 @@ export interface GameAction {
   canExecute: (state: GameState, agentId?: string) => boolean;
   
   // Execute action - returns new state
-  // random is REQUIRED for deterministic simulation (never use Math.random()!)
+  // random is REQUIRED for deterministic simulation (never use deterministicRandom()!)
   execute: (state: GameState, random: () => number, agentId?: string) => ActionResult;
 }
 

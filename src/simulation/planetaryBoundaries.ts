@@ -30,6 +30,7 @@ import {
   SpeciesGroup
 } from '@/types/planetaryBoundaries';
 import { assertStateProperty, assertFinite, assertProbability, assertInRange, assertDefined } from './utils/assertions';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Sample biosphere extinction rate from log-uniform distribution
@@ -790,7 +791,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     const gracePeriod = state.currentMonth < 24;
 
     // Stochastic trigger with Bayesian adjustment
-    if (!system.cascadeActive && !gracePeriod && Math.random() < monthlyTriggerChance) {
+    if (!system.cascadeActive && !gracePeriod && deterministicRandom() < monthlyTriggerChance) {
       system.cascadeActive = true;
       system.cascadeStartMonth = state.currentMonth;
       console.log(`\n🌪️ ========== TIPPING POINT CASCADE TRIGGERED ==========`);
@@ -811,7 +812,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Once active, severity scales with blended risk
     if (system.cascadeActive) {
       const baseSeverity = Math.pow(Math.max(0, blendedRisk - 0.5) / 0.5, 1.5);
-      const stochasticMultiplier = 0.8 + Math.random() * 0.4;
+      const stochasticMultiplier = 0.8 + deterministicRandom() * 0.4;
       system.cascadeSeverity = baseSeverity * stochasticMultiplier;
       system.cascadeMultiplier = 1.0 + system.cascadeSeverity;
     }
@@ -893,7 +894,7 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
 
   // === P0.5 (Oct 15, 2025): STOCHASTIC ENVIRONMENTAL COLLAPSE ===
   // Add ±25% random variation to degradation rates (weather, local conditions, random events)
-  const envStochasticFactor = () => 0.75 + Math.random() * 0.5; // 75% to 125%
+  const envStochasticFactor = () => 0.75 + deterministicRandom() * 0.5; // 75% to 125%
 
   // Climate stability drops rapidly (with variation)
   const climateDecay = 0.02 * envStochasticFactor(); // Base 2% ± variation
@@ -1122,7 +1123,7 @@ function updateLandUseSystem(state: GameState): void {
 
       // Check for ecosystem collapse (varies by biodiversity weight)
       const collapseChance = region.biodiversityWeight * 0.05; // Tropical has highest chance
-      if (region.ecosystemCollapseRisk > 0.80 && Math.random() < collapseChance) {
+      if (region.ecosystemCollapseRisk > 0.80 && deterministicRandom() < collapseChance) {
         region.ecosystemsLost++;
         const regionLabel = String(regionName).toUpperCase();
         console.log(`\n🌳💀 ${regionLabel} ECOSYSTEM COLLAPSED (Total: ${region.ecosystemsLost})`);

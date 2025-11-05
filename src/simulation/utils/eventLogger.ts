@@ -20,6 +20,7 @@
  */
 
 import { GameState, GameEvent } from '@/types/game';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Add an event to the simulation timeline
@@ -45,7 +46,7 @@ export function addSimulationEvent(
   state: GameState,
   event: Omit<GameEvent, 'id' | 'timestamp'>
 ): void {
-  // Determinism fix (Oct 30, 2025): Use counter instead of Math.random()
+  // Determinism fix (Oct 30, 2025): Use counter instead of deterministicRandom()
   const shortId = state.eventIdCounter.toString(36).padStart(6, '0').substr(0, 6);
   state.eventIdCounter++;
 

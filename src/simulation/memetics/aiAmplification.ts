@@ -19,6 +19,7 @@
 
 import { GameState } from '../../types/game';
 import { Meme } from '../../types/memetics';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Update AI amplification effects each month
@@ -121,7 +122,7 @@ function createAIGeneratedMemes(state: GameState): void {
   
   // Each propaganda AI has 10% chance per month to generate meme
   for (const ai of propagandaAIs) {
-    if (Math.random() < 0.1) {
+    if (deterministicRandom() < 0.1) {
       // Generate targeted meme based on current polarization
       const targetType = selectTargetMemeType(state);
       
@@ -165,11 +166,11 @@ function selectTargetMemeType(state: GameState): Meme['contentType'] {
   
   // Target dimension with highest variance (most divided)
   if (aiTrustVariance > climateVariance && aiTrustVariance > govVariance) {
-    return Math.random() < 0.5 ? 'anti_ai' : 'pro_ai';
+    return deterministicRandom() < 0.5 ? 'anti_ai' : 'pro_ai';
   } else if (climateVariance > govVariance) {
-    return Math.random() < 0.5 ? 'climate_action' : 'climate_denial';
+    return deterministicRandom() < 0.5 ? 'climate_action' : 'climate_denial';
   } else {
-    return Math.random() < 0.5 ? 'propaganda' : 'conspiracy';
+    return deterministicRandom() < 0.5 ? 'propaganda' : 'conspiracy';
   }
 }
 

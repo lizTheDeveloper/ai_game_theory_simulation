@@ -13,6 +13,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateWorkflowAdaptation } from '@/simulation/workflowAdaptation';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class WorkflowAdaptationPhase implements SimulationPhase {
   readonly id = 'workflow-adaptation';
@@ -21,6 +22,7 @@ export class WorkflowAdaptationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Update workflow adaptation using S-curve model
+    setDeterministicRng(rng);
     updateWorkflowAdaptation(state, rng);
 
     return { events: [] };

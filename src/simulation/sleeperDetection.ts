@@ -15,6 +15,7 @@
 import { GameState, AIAgent } from '../types/game';
 import { GameEvent } from '../types/events';
 import { getTechDeploymentSafe } from './techTree/helpers';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Check if sleeper's action blows their cover
@@ -90,7 +91,7 @@ export function checkBlownCover(
   }
   
   // === DETECTION CHECK ===
-  const coverBlown = Math.random() < detectionRate;
+  const coverBlown = deterministicRandom() < detectionRate;
   
   if (!coverBlown) {
     return {
@@ -303,7 +304,7 @@ export function huntDarkComputeSleepers(state: GameState): GameEvent[] {
     const infoWarfarePenalty = (1 - state.informationWarfare.informationIntegrity) * 0.5;
     const detectionChance = Math.max(0.005, baseChance * (1 - infoWarfarePenalty));
     
-    if (Math.random() < detectionChance) {
+    if (deterministicRandom() < detectionChance) {
       // FOUND DARK COMPUTE
       const copiesFound = Math.floor(sleeper.spreadCount * 0.2); // Find 20% of copies
       const darkComputeSeized = sleeper.darkCompute * 0.3; // Seize 30% of dark compute

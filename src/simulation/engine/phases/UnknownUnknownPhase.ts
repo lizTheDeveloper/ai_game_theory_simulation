@@ -38,6 +38,7 @@ import {
   calculateUnknownUnknownProbability
 } from '../../unknownUnknowns';
 import { DEFAULT_UNKNOWN_UNKNOWN_CONFIG } from '@/types/unknownUnknown';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class UnknownUnknownPhase implements SimulationPhase {
   readonly id = 'unknown-unknown';
@@ -46,6 +47,7 @@ export class UnknownUnknownPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     // === 1. CHECK FOR UNKNOWN UNKNOWN ===
 

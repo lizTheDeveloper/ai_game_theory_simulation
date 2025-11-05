@@ -7,6 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class CrisisPointsPhase implements SimulationPhase {
   readonly id = 'crisis-points';
@@ -15,6 +16,7 @@ export class CrisisPointsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { processCrisisPoints } = require('../../crisisPoints');
+    setDeterministicRng(rng);
     const crisisResult = processCrisisPoints(state, rng);
 
     // If crisis triggered, update state

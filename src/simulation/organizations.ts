@@ -9,6 +9,7 @@ import { Organization, GameState } from '../types/game';
 import { handleBankruptcy } from './organizationManagement';
 import type { RNGFunction } from './engine/PhaseOrchestrator';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Initialize 6 organizations for January 2025
@@ -441,7 +442,7 @@ function updateOrganizationEconomics(
  *
  * Bankruptcy risk = f(weighted population decline, resilience modifiers)
  *
- * P2.4 FIX: Now uses deterministic RNG instead of Math.random()
+ * P2.4 FIX: Now uses deterministic RNG instead of deterministicRandom()
  */
 function calculateOrganizationBankruptcyRisk(
   org: any,

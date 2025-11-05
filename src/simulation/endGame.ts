@@ -14,6 +14,7 @@ import { calculateQualityOfLife } from './qualityOfLife';
 import { getEnvironmentalSustainability, hasEnvironmentalCrisis } from './environmental';
 import { getSocialSustainability, hasSocialCrisis, getTrustInAI } from './socialCohesion';
 import { getTechnologicalSafety, hasTechnologicalCrisis } from './technologicalRisk';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * End-game state interface
@@ -196,7 +197,7 @@ export function processEndGameMonth(state: GameState): void {
     endGame.phase = 'active';
     
     const powerRatio = endGame.alignedAIPower / endGame.misalignedAIPower;
-    const randomness = 0.8 + Math.random() * 0.4; // 0.8-1.2
+    const randomness = 0.8 + deterministicRandom() * 0.4; // 0.8-1.2
     
     if (powerRatio * randomness > 1.2) {
       // Aligned winning this month

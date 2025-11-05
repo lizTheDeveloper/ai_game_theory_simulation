@@ -7,6 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class DystopiaProgressionPhase implements SimulationPhase {
   readonly id = 'dystopia-progression';
@@ -15,6 +16,7 @@ export class DystopiaProgressionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateGovernmentControlResponse } = require('../../dystopiaProgression');
+    setDeterministicRng(rng);
     updateGovernmentControlResponse(state, rng);
 
     return { events: [] };

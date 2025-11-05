@@ -6,6 +6,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
   initializeSocialInfluence,
   calculateOrganicUserGrowth,
@@ -26,7 +27,8 @@ export class SocialInfluenceUpdatePhase implements SimulationPhase {
     rng: RNGFunction,
     context?: PhaseContext
   ): PhaseResult {
-  // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+    setDeterministicRng(rng);
+    // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
   const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
   let time1 = 0, time2 = 0, time3 = 0, time4 = 0, time5 = 0, time6 = 0;
   let totalPotentialIds = 0;

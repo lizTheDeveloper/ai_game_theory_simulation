@@ -16,6 +16,7 @@
 
 import { GameState } from '@/types/game';
 import { PhaseResult, RNGFunction } from '../PhaseOrchestrator';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
   calculateRecoveryContext,
   applyResentmentRecovery,
@@ -28,6 +29,7 @@ export const ResentmentRecoveryPhase = {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     console.log('\n=== Resentment Recovery Phase ===');
+    setDeterministicRng(rng);
 
     // Calculate recovery context
     const context = calculateRecoveryContext(state);

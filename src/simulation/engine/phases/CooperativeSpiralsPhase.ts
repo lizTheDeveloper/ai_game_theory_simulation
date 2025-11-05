@@ -15,6 +15,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class CooperativeSpiralsPhase implements SimulationPhase {
   readonly id = 'cooperative-spirals';
@@ -23,6 +24,7 @@ export class CooperativeSpiralsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const { updateCooperativeSpirals } = require('../../cooperativeSpirals');
+    setDeterministicRng(rng);
     updateCooperativeSpirals(state);
 
     return { events: [] };

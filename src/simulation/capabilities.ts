@@ -6,6 +6,7 @@
  */
 
 import { AICapabilityProfile, AIResearchCapabilities, ResearchInvestments, AIAgent } from '@/types/game';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
  * Initialize a fresh capability profile for a new AI agent
@@ -49,7 +50,7 @@ export function createEmptyCapabilityProfile(): AICapabilityProfile {
   };
 }
 
-export function initializeCapabilityProfile(seed: number = Math.random()): AICapabilityProfile {
+export function initializeCapabilityProfile(seed: number = deterministicRandom()): AICapabilityProfile {
   // Create variation using seed
   const variation = (offset: number) => 0.8 + (Math.sin(seed * 100 + offset) * 0.2);
 

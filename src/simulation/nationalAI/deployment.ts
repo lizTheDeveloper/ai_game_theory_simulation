@@ -12,6 +12,7 @@
 import { GameState, GameEvent } from '@/types/game';
 import { NationName } from '@/types/nationalAI';
 import { CountryInteractionCache } from './interactionCache';
+import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 // ============================================================================
 // DOMESTIC PRESENCE
@@ -205,7 +206,7 @@ export function applyExportControls(state: GameState, cache: CountryInteractionC
 
         // BUT: Circumvention possible (leaks, third parties)
         const circumventionProb = usNation.exportControls.leakProbability;
-        if (Math.random() < circumventionProb) {
+        if (deterministicRandom() < circumventionProb) {
           // Partial access via gray market
           nation.commercialAccess = usNation.indigenousCapability * 0.5;
         }
@@ -271,7 +272,7 @@ export function updateEspionage(state: GameState, cache: CountryInteractionCache
       espionage.modelCountFactor *
       espionage.stateSponsoredMultiplier; // China 10x more effective
 
-    if (Math.random() < theftProb) {
+    if (deterministicRandom() < theftProb) {
       // SUCCESSFUL THEFT
       espionage.chinaSuccessfulThefts++;
 
@@ -315,7 +316,7 @@ export function updateEspionage(state: GameState, cache: CountryInteractionCache
       espionage.modelCountFactor *
       (espionage.stateSponsoredMultiplier * 0.5); // Russia 5x (less capable than China)
 
-    if (Math.random() < theftProb) {
+    if (deterministicRandom() < theftProb) {
       espionage.russiaSuccessfulThefts++;
 
       const stolenCapability = usNation.indigenousCapability * 0.90; // Lower fidelity
@@ -336,11 +337,11 @@ export function updateEspionage(state: GameState, cache: CountryInteractionCache
   // More models = higher leak probability
   const leakProb = (state.aiAgents.length / 100) * 0.01; // 1% at 100 models
 
-  if (Math.random() < leakProb) {
+  if (deterministicRandom() < leakProb) {
     // Random US model leaked
     if (usNation.domesticModels.length > 0) {
       const leakedModelId = usNation.domesticModels[
-        Math.floor(Math.random() * usNation.domesticModels.length)
+        Math.floor(deterministicRandom() * usNation.domesticModels.length)
       ];
 
       const leakedAI = state.aiAgents.find(ai => ai.id === leakedModelId);
@@ -349,7 +350,7 @@ export function updateEspionage(state: GameState, cache: CountryInteractionCache
           modelId: leakedModelId,
           sourceNation: 'United States',
           month: state.currentMonth,
-          method: Math.random() < 0.5 ? 'github_leak' : 'insider_leak',
+          method: deterministicRandom() < 0.5 ? 'github_leak' : 'insider_leak',
         });
 
         // All nations now have access (accidentally open source)
@@ -428,7 +429,7 @@ export function updateStrategicPositions(state: GameState, cache: CountryInterac
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
   const fullEvent: GameEvent = {
     ...event,
-    id: `${event.type}_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+    id: `${event.type}_${state.currentMonth}_${deterministicRandom().toString(36).substr(2, 9)}`,
     timestamp: state.currentMonth,
   };
   state.eventLog.push(fullEvent);

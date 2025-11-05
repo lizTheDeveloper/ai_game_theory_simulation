@@ -6,6 +6,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class PhosphorusPhase implements SimulationPhase {
   readonly id = 'phosphorus';
@@ -14,6 +15,7 @@ export class PhosphorusPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updatePhosphorusSystem, checkPhosphorusTechUnlocks } = require('../../phosphorusDepletion');
+    setDeterministicRng(rng);
     
     updatePhosphorusSystem(state);
     checkPhosphorusTechUnlocks(state);

@@ -11,6 +11,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class HumanPopulationPhase implements SimulationPhase {
   readonly id = 'human_population';
@@ -19,6 +20,7 @@ export class HumanPopulationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Population updates run once per simulation step (once per month)
+    setDeterministicRng(rng);
     // Each engine.step() represents one month advancing
     // Population calculations use monthly rates - no need to gate on day
     const {

@@ -21,6 +21,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 import { getTechDeploymentSafe } from '../../techTree/helpers';
 import { assertStateProperty } from '@/simulation/utils/assertions';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 /**
  * Exogenous Shock Types
@@ -688,6 +689,7 @@ export class ExogenousShockPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
+    setDeterministicRng(rng);
 
     // BLACK SWAN: 0.1% per month (~1% per year)
     if (rng() < 0.001) {

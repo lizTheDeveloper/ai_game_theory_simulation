@@ -6,6 +6,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class GeoengineringPhase implements SimulationPhase {
   readonly id = 'geoengineering';
@@ -14,6 +15,7 @@ export class GeoengineringPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateGeoengineering } = require('../../geoengineering');
+    setDeterministicRng(rng);
     updateGeoengineering(state);
 
     return { events: [] };

@@ -4,6 +4,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateUBISystem } from '../../enhancedUBI';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 
 export class UBIPhase implements SimulationPhase {
@@ -13,6 +14,7 @@ export class UBIPhase implements SimulationPhase {
   
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     updateUBISystem(state);
+    setDeterministicRng(rng);
     return { events: [] };
   }
 }

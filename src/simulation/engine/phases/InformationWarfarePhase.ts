@@ -5,6 +5,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  */
 
 import { updateInformationWarfare } from '../../informationWarfare';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class InformationWarfarePhase implements SimulationPhase {
   readonly name = 'Information Warfare Update';
@@ -20,6 +21,7 @@ export class InformationWarfarePhase implements SimulationPhase {
    */
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events = updateInformationWarfare(state);
+    setDeterministicRng(rng);
 
     return { events };
   }

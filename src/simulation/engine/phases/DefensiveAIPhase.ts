@@ -7,6 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class DefensiveAIPhase implements SimulationPhase {
   readonly id = 'defensive-ai';
@@ -15,6 +16,7 @@ export class DefensiveAIPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateDefensiveAI } = require('../../defensiveAI');
+    setDeterministicRng(rng);
     updateDefensiveAI(state);
 
     return { events: [] };

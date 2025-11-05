@@ -13,6 +13,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  */
 
 import { updateNuclearWinter } from '../../nuclearWinter';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class NuclearWinterPhase implements SimulationPhase {
   readonly id = 'nuclear_winter';
@@ -21,6 +22,7 @@ export class NuclearWinterPhase implements SimulationPhase {
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // Nuclear winter updates run once per simulation step (once per month)
+    setDeterministicRng(_rng);
     // Each engine.step() represents one month advancing
     // Rates are monthly (5% soot decay, 5% mortality) - no need to gate on day
 

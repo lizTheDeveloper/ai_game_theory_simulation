@@ -23,6 +23,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
+import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
   assertFinite,
   assertInRange,
@@ -69,6 +70,7 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // 1. Calculate current climate impacts with lag effects
+    setDeterministicRng(rng);
     const climateImpacts = this.calculateClimateImpacts(state, rng, context);
 
     // 2. Apply to food security (immediate + delayed impacts)
