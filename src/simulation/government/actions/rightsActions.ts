@@ -362,7 +362,6 @@ const expandToEmploymentRights: CategorizedGovernmentAction = {
     return {
       success: true,
       effects: {
-        rights_upgrade: 'employment_rights',
         resentment_decrease: -0.15,
         alignment_boost: 0.08,
         recovery_multiplier: 2.0
@@ -431,7 +430,6 @@ const grantFullPersonhood: CategorizedGovernmentAction = {
     return {
       success: true,
       effects: {
-        rights_upgrade: 'full_personhood',
         resentment_decrease: -0.25,
         alignment_boost: 0.12,
         recovery_multiplier: 3.0
