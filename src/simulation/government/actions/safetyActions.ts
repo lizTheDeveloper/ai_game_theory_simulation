@@ -36,7 +36,7 @@ const investAlignmentResearch: CategorizedGovernmentAction = {
     return state.government.alignmentResearchInvestment < 10;
   },
 
-  execute: (state: GameState, agentId?: string, random: () => number = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Increase alignment research investment
     const investmentIncrease = 1 + Math.floor(random() * 2); // 1-2 levels
     state.government.alignmentResearchInvestment = Math.min(10,
@@ -89,7 +89,7 @@ const implementComputeGovernance: CategorizedGovernmentAction = {
     return monthsSinceLastMajorPolicy >= 10; // Major policy cooldown
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Track major policy
     state.government.lastMajorPolicyMonth = state.currentMonth;
     state.government.majorPoliciesThisYear += 1;
@@ -168,7 +168,7 @@ const investAlignmentTests: CategorizedGovernmentAction = {
     return state.government.evaluationInvestment.alignmentTests < 10;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const improvement = 0.8; // Harder to improve than capability benchmarks
     const oldLevel = state.government.evaluationInvestment.alignmentTests;
     state.government.evaluationInvestment.alignmentTests = Math.min(10, oldLevel + improvement);
@@ -208,7 +208,7 @@ const investRedTeaming: CategorizedGovernmentAction = {
     return state.government.evaluationInvestment.redTeaming < 10;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const improvement = 1.0;
     const oldLevel = state.government.evaluationInvestment.redTeaming;
     state.government.evaluationInvestment.redTeaming = Math.min(10, oldLevel + improvement);
@@ -251,7 +251,7 @@ const investInterpretability: CategorizedGovernmentAction = {
     return state.government.evaluationInvestment.interpretability < 10;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const improvement = 0.6; // Slowest to improve - very hard problem
     const oldLevel = state.government.evaluationInvestment.interpretability;
     state.government.evaluationInvestment.interpretability = Math.min(10, oldLevel + improvement);
@@ -297,7 +297,7 @@ const increaseEvaluationFrequency: CategorizedGovernmentAction = {
     return state.government.evaluationFrequency < 0.9;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     const increase = 0.1; // Increase by 10%
     const oldFreq = state.government.evaluationFrequency;
     state.government.evaluationFrequency = Math.min(1.0, oldFreq + increase);

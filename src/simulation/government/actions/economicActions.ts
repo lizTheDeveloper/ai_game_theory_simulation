@@ -41,7 +41,7 @@ const implementGenerousUBI: CategorizedGovernmentAction = {
            canTakeMajorPolicy;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Track major policy usage
     state.government.lastMajorPolicyMonth = state.currentMonth;
     state.government.majorPoliciesThisYear += 1;
@@ -121,7 +121,7 @@ const implementMeansTestedBenefits: CategorizedGovernmentAction = {
            canTakeMajorPolicy;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Track major policy usage
     state.government.lastMajorPolicyMonth = state.currentMonth;
     state.government.majorPoliciesThisYear += 1;
@@ -196,7 +196,7 @@ const implementJobGuarantee: CategorizedGovernmentAction = {
            canTakeMajorPolicy;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Track major policy usage
     state.government.lastMajorPolicyMonth = state.currentMonth;
     state.government.majorPoliciesThisYear += 1;
@@ -277,7 +277,7 @@ const subsidizeOrganization: CategorizedGovernmentAction = {
     return safetyOrgs.length > 0 && state.government.resources > 2;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Find org with highest safety focus that's struggling
     const safetyOrgs = state.organizations.filter((o: any) =>
       o.type === 'private' &&

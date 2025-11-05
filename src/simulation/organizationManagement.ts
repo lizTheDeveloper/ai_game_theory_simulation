@@ -56,7 +56,7 @@ export function calculateComputeUtilization(org: Organization, state: GameState)
 export function shouldBuildDataCenter(
   org: Organization, 
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): boolean {
   // Government and academic orgs build differently (handled in Phase 9)
   if (org.type === 'government' || org.type === 'academic') {
@@ -114,7 +114,7 @@ export function shouldBuildDataCenter(
 export function startDataCenterConstruction(
   org: Organization, 
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): void {
   // Capacity: 100-200 PF for private orgs
   const baseCapacity = org.priorities.capabilityRace > 0.7 ? 150 : 100;
@@ -303,7 +303,7 @@ export function completeProject(
 export function shouldTrainNewModel(
   org: Organization,
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): boolean {
   // Only private orgs train models for now (government/academic in Phase 9)
   if (org.type !== 'private') {
@@ -365,7 +365,7 @@ export function shouldTrainNewModel(
 export function startModelTraining(
   org: Organization,
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): void {
   // Get capability floor
   const capFloor = getCapabilityFloorForNewAI(state);
@@ -1475,7 +1475,7 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
 export function processOrganizationTurn(
   org: Organization,
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): void {
   // TIER 0D BUG FIX #4: Skip processing for bankrupt organizations
   // Prevents "orphan AI" bug where bankrupt orgs complete training projects
@@ -1558,7 +1558,7 @@ export function processOrganizationTurn(
  */
 export function processAllOrganizations(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): void {
   state.organizations.forEach(org => {
     processOrganizationTurn(org, state, random);

@@ -47,7 +47,7 @@ export function initializeExtinctionState(): ExtinctionState {
  */
 export function checkExtinctionTriggers(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): { newExtinctionState: ExtinctionState; events: GameEvent[] } {
   // If already in an extinction scenario, don't trigger a new one
   if (state.extinctionState.active) {
@@ -808,7 +808,7 @@ function checkUnintendedExtinctionTrigger(state: GameState, random: () => number
  */
 export function progressExtinction(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): { newExtinctionState: ExtinctionState; events: GameEvent[]; isComplete: boolean } {
   if (!state.extinctionState.active || !state.extinctionState.type) {
     return { newExtinctionState: state.extinctionState, events: [], isComplete: false };

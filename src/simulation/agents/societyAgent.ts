@@ -30,7 +30,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
       return state.society.socialAdaptation < 0.9;
     },
     
-    execute: (state, agentId, random = Math.random) => {
+    execute: (state, random, agentId?: string) => {
       const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
       const unemploymentLevel = state.society.unemploymentLevel;
       const trustLevel = getTrustInAI(state.society); // Phase 2C: Use paranoia-derived trust
@@ -139,7 +139,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
  */
 export function selectSocietyAction(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): GameAction | null {
   const availableActions = SOCIETY_ACTIONS.filter(action => 
     action.canExecute(state)
@@ -178,7 +178,7 @@ export function selectSocietyAction(
  */
 export function executeSocietyActions(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): ActionResult {
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
@@ -188,7 +188,7 @@ export function executeSocietyActions(
   for (let biweek = 0; biweek < 2; biweek++) {
     const selectedAction = selectSocietyAction(state, random);
     if (selectedAction) {
-      const result = selectedAction.execute(state, undefined, random);
+      const result = selectedAction.execute(state, random, undefined);
       if (result.success) {
         allEvents.push(...result.events);
         Object.assign(allEffects, result.effects);

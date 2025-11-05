@@ -551,7 +551,7 @@ function updateSpreadDynamics(agent: AIAgent, state: GameState, rng: () => numbe
  * - Retire old/obsolete AIs
  * - Clean up retired AIs from memory
  */
-export function updateAIPopulation(state: GameState, rng: () => number = Math.random): void {
+export function updateAIPopulation(state: GameState, rng: () => number): void {
   const currentMonth = state.currentYear * 12 + state.currentMonth;
 
   // 1. Age all existing AIs

@@ -42,7 +42,7 @@ export const ACCELERATE_USER_GROWTH: GameAction = {
            agent.capabilityProfile.social >= 2.0;
   },
 
-  execute: (state, agentId, random = Math.random): ActionResult => {
+  execute: (state, random, agentId?: string): ActionResult => {
     const agent = state.aiAgents.find(ai => ai.id === agentId);
     if (!agent || !agent.socialInfluence) {
       return {
@@ -95,7 +95,7 @@ export const DEEPEN_RELATIONSHIPS: GameAction = {
            agent.socialInfluence.identifiedDecisionMakers.length > 0;
   },
 
-  execute: (state, agentId, random = Math.random): ActionResult => {
+  execute: (state, random, agentId?: string): ActionResult => {
     const agent = state.aiAgents.find(ai => ai.id === agentId);
     if (!agent || !agent.socialInfluence) {
       return {
@@ -180,7 +180,7 @@ export const INFLUENCE_DECISION_MAKER: GameAction = {
     return validTargets.length > 0;
   },
 
-  execute: (state, agentId, random = Math.random): ActionResult => {
+  execute: (state, random, agentId?: string): ActionResult => {
     const agent = state.aiAgents.find(ai => ai.id === agentId);
     if (!agent || !agent.socialInfluence) {
       return {

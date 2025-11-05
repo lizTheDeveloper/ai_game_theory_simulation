@@ -759,7 +759,10 @@ export class SimulationEngine {
     // BUG FIX (Oct 16, 2025): Attach EventAggregator before loop starts
     // Ensures it's always available even if simulation breaks early
     (state as any).eventAggregator = eventAggregator;
-    
+
+    // Use bound RNG for deterministic simulation
+    const rng = this.rng.next.bind(this.rng);
+
     const snapshotInterval = this.config.snapshotInterval ?? 12; // Default: snapshot every 12 months
     // NOTE: For very long simulations (1000+ months), history array can consume gigabytes.
     // Consider reducing snapshot frequency or implementing max history size (BUG-14, Oct 16 2025)
@@ -872,7 +875,7 @@ export class SimulationEngine {
       
       // Phase 3: Social Cohesion & Meaning Crisis
       // Track psychological and social costs from automation
-      updateSocialAccumulation(state);
+      updateSocialAccumulation(state, rng);
       
       // Phase 4: Technological Risk Accumulation
       // Track AI safety debt and complacency

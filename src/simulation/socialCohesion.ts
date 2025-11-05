@@ -66,7 +66,8 @@ export function initializeSocialAccumulation(): SocialAccumulation {
  * Called each month to track psychological and social debt accumulation.
  */
 export function updateSocialAccumulation(
-  state: GameState
+  state: GameState,
+  rng: () => number
 ): void {
   const social = state.socialAccumulation;
   const economicStage = state.globalMetrics.economicTransitionStage;
@@ -306,7 +307,7 @@ export function updateSocialAccumulation(
   // Critical juncture detection (high grievance + low info integrity)
   if (latentOpposition > state.thresholds.socialCriticalMass && pluralisticIgnorance > 0.5) {
     // Alpha = 1.8: Fat tails (rare cascades like Arab Spring, Leipzig 1989)
-    const cascadePotential = levyFlight(ALPHA_PRESETS.SOCIAL, Math.random);
+    const cascadePotential = levyFlight(ALPHA_PRESETS.SOCIAL, rng);
 
     if (cascadePotential > 15.0) {
       // Information cascade triggered (one defector reveals hidden opposition)

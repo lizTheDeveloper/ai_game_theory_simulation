@@ -37,7 +37,7 @@ export function getAllGovernmentActions(): GameAction[] {
  */
 export function selectGovernmentAction(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): GameAction | null {
   const availableActions = getAllGovernmentActions().filter(action =>
     action.canExecute(state)
@@ -591,7 +591,7 @@ export function selectGovernmentAction(
  */
 function executeEarlyWarningInterventions(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): void {
   const system = state.planetaryBoundariesSystem;
   if (!system || !system.earlyWarning) return;
@@ -722,7 +722,7 @@ function autoInvestInEvaluation(state: GameState): void {
  */
 export function executeGovernmentActions(
   state: GameState,
-  random: () => number = Math.random
+  random: () => number
 ): ActionResult {
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
@@ -789,7 +789,7 @@ export function executeGovernmentActions(
   for (let i = 0; i < totalActions; i++) {
     const selectedAction = selectGovernmentAction(state, random);
     if (selectedAction) {
-      const result = selectedAction.execute(state, undefined, random);
+      const result = selectedAction.execute(state, random, undefined);
       if (result.success) {
         // State is now mutated directly by the action
         allEvents.push(...result.events);

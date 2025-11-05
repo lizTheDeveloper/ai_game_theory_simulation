@@ -39,7 +39,7 @@ const regulateLargeCompanies: CategorizedGovernmentAction = {
            state.government.structuralChoices.regulationType === 'none';
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Set regulation type
     state.government.structuralChoices.regulationType = 'large_companies';
 
@@ -96,7 +96,7 @@ const regulateComputeThreshold: CategorizedGovernmentAction = {
            state.government.structuralChoices.regulationType === 'none';
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Set regulation type
     state.government.structuralChoices.regulationType = 'compute_threshold';
 
@@ -157,7 +157,7 @@ const regulateCapabilityCeiling: CategorizedGovernmentAction = {
            state.government.structuralChoices.regulationType === 'none';
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Set regulation type
     state.government.structuralChoices.regulationType = 'capability_ceiling';
 
@@ -218,7 +218,7 @@ const implementComputeGovernance: CategorizedGovernmentAction = {
     return monthsSinceLastMajorPolicy >= 10; // Major policy cooldown
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
     // Track major policy
     state.government.lastMajorPolicyMonth = state.currentMonth;
     state.government.majorPoliciesThisYear += 1;
