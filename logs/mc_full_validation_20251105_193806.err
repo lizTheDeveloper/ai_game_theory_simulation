@@ -1,0 +1,32 @@
+
+
+❌ UNCAUGHT EXCEPTION: ❌ Non-finite value in applyComputeGrowth
+   CRITICAL_COHERENCE_VIOLATION = NaN
+   Month: 234
+   Context: {
+  "population": 0.011034902362686349,
+  "compute": 23436.62942883004,
+  "maxCoherent": 882.7921890149079,
+  "violation": 26.54829723287715,
+  "message": "Infrastructure degradation formulas are broken - compute exceeds workforce capacity by >2× with <50% population"
+}
+Error: ❌ Non-finite value in applyComputeGrowth
+   CRITICAL_COHERENCE_VIOLATION = NaN
+   Month: 234
+   Context: {
+  "population": 0.011034902362686349,
+  "compute": 23436.62942883004,
+  "maxCoherent": 882.7921890149079,
+  "violation": 26.54829723287715,
+  "message": "Infrastructure degradation formulas are broken - compute exceeds workforce capacity by >2× with <50% population"
+}
+    at assertFinite (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts:35:11)
+    at applyComputeGrowth (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/computeInfrastructure.ts:744:5)
+    at ComputeGrowthPhase.execute (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts:25:5)
+    at PhaseOrchestrator.executeAll (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:196:30)
+    at SimulationEngine.step (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts:636:38)
+    at SimulationEngine.run (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts:769:31)
+    at runSingleSimulation (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:2000:35)
+    at <anonymous> (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:2935:49)
+    at Array.map (<anonymous>)
+    at <anonymous> (/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:2935:24)
