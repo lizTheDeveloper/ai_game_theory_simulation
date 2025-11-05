@@ -41,6 +41,31 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 
 ## ⚠️ Recent Changes (November 5, 2025)
 
+**⏱️ AUTONOMOUS WORKER TIMEOUT INCREASE (Nov 5, 2025)**
+
+Enhanced autonomous worker resilience with increased timeout and post-timeout cleanup:
+
+**Changes:**
+- **45-minute main timeout**: Increased from 25 minutes (2700s vs 1500s)
+  - Worker now runs hourly (not every 30min) → more time available
+  - Reduces incomplete work due to timeout pressure
+- **5-minute cleanup session**: Automatically spawns after timeout to preserve partial work
+  - Reviews changes with `git status`/`git diff`
+  - Commits valuable work with "WIP:" prefix
+  - Prevents loss of progress on complex tasks
+- **Enhanced GitHub alerts**: Timeout issues now include cleanup status
+
+**Why this matters:**
+- Latest 3 worker runs all hit 25-minute timeout
+- Run 22:00 had 11 files changed, 0 commits (work lost)
+- New 45min + 5min cleanup should capture more completed work
+
+**Validation:** Will be tested on next hourly autonomous worker run.
+
+See: [`autonomous-worker.sh`](/autonomous-worker.sh) (lines 290-353), [`docs/AUTONOMOUS_SETUP.md`](/docs/AUTONOMOUS_SETUP.md)
+
+Commit: 43eca3b (Nov 5, 2025)
+
 **🧹 AUTO/WORKER BRANCH CLEANUP (Nov 5, 2025)**
 
 Systematic analysis and cleanup of 37 autonomous worker branches (Nov 2-4, 2025) revealed all work was either superseded or already merged:
@@ -3861,24 +3886,34 @@ state.history.exogenousShocks?: Array<{
 - **Location**: `autonomous-worker.sh` (lines 79-86, in PRE-FLIGHT CHECKS)
 - Commit: 14c8a3e (Oct 31, 2025)
 
-**Autonomous Worker GitHub Issue Alerts** ✅ DOCUMENTED
-- **Automatic failure notifications**: Worker creates GitHub issues when Claude execution fails or times out
-- **Timeout detection**: Creates issue when execution exceeds 25 minutes (exit code 124)
-- **Failure detection**: Creates issue for any non-zero exit code from Claude execution
+**Autonomous Worker Timeout & Cleanup** ✅ DOCUMENTED
+- **45-minute main timeout**: Worker sessions have 45 minutes (2700s) to complete tasks
+  - Increased from 25 minutes (Nov 5, 2025) due to hourly scheduling (more time available)
+  - Reduces incomplete work due to timeout
+- **5-minute post-timeout cleanup**: If main session times out, automatically spawns cleanup session
+  - Reviews changes with `git status` and `git diff`
+  - Commits valuable partial work with "WIP:" prefix
+  - Prevents loss of progress when complex tasks exceed timeout
+  - Cleanup session runs with concise instructions focused on preservation
+- **GitHub issue creation**: Creates issue when timeout occurs (exit code 124)
+  - Includes cleanup status (✅ Completed or ⚠️ Failed)
+  - Links to log files and diagnostic info
 - **Issue metadata**:
-  - Timestamp and duration of run
+  - Timestamp and duration of run (timeout at 2700s)
   - Branch name
-  - Exit code
+  - Exit code (124 for timeout, other non-zero for failures)
+  - Cleanup session result
   - Log file path (`logs/autonomous/worker_TIMESTAMP.log`)
 - **Labels**: `autonomous-worker` + `timeout` or `failure`
 - **Graceful fallback**: If `gh` CLI unavailable, logs warning but continues execution
 - **Benefits**:
-  - Get notified via GitHub when autonomous worker has problems
+  - Captures partial work that would otherwise be lost
+  - Get notified via GitHub when timeouts occur
   - Centralized failure tracking across autonomous runs
   - Easy access to logs and debugging info
   - No silent failures - every problem creates actionable issue
-- **Location**: `autonomous-worker.sh` (lines 264-299, Claude execution error handling)
-- Commit: 9496601 (Oct 31, 2025)
+- **Location**: `autonomous-worker.sh` (lines 290-353, timeout detection and cleanup workflow)
+- Commits: 9496601 (Oct 31, 2025), 43eca3b (Nov 5, 2025)
 
 **Autonomous Worker Chatroom Monitor Check** ✅ DOCUMENTED
 - **Pre-flight monitoring**: Worker ensures chatroom monitors are running before task execution

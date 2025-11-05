@@ -66,9 +66,9 @@ cd ~/ai_game_theory_simulation
 ## How It Works
 
 ### Schedule
-- Runs every 30 minutes automatically
+- Runs hourly automatically (`:00` past each hour)
 - Can be changed in `/etc/systemd/system/claude-worker.timer`
-- Edit `OnCalendar=*:0/30` to adjust frequency
+- Edit `OnCalendar=hourly` to adjust frequency
 
 ### Task Selection Priority
 
@@ -88,7 +88,10 @@ Every autonomous run begins by posting research requests to the research channel
 
 ### Safety Features
 
-- 30-minute timeout per session
+- **45-minute timeout per session** with post-timeout cleanup
+  - Main session: 45 minutes (2700s) for task execution
+  - Cleanup session: 5 minutes (300s) to commit partial work if timeout occurs
+  - Prevents work loss when complex tasks exceed timeout
 - Logs all actions to `logs/autonomous/`
 - **Complete audit trail:** All logs preserved in git history forever (no cleanup)
 - Git operations with full audit trail
@@ -199,7 +202,7 @@ The autonomous worker system now includes automated health monitoring with self-
 **What it monitors:**
 - Worker execution frequency (detects stuck/stopped workers)
 - Error patterns in recent logs
-- Timeout detection (25-minute limit)
+- Timeout detection (45-minute limit with 5-minute cleanup)
 - Worker branch accumulation
 - Merge orchestrator health
 - Cron service status (VM only)
