@@ -605,7 +605,7 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           </div>
 
           {(() => {
-            const regions = Array.isArray(lastUpdate.regionalPopulations) ? lastUpdate.regionalPopulations : []
+            const regions = Array.isArray(lastUpdate?.regionalPopulations) ? lastUpdate.regionalPopulations : []
 
             if (regions.length === 0) {
               return (
