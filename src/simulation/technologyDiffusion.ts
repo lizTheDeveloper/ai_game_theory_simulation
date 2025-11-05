@@ -189,7 +189,7 @@ export function updateFrontierCapabilities(
  * 
  * This creates a rising minimum capability that ALL new AIs start with.
  */
-export function diffuseCapabilities(state: GameState): void {
+export function diffuseCapabilities(state: GameState, rng: () => number): void {
   const floor = state.ecosystem.capabilityFloor;
   const frontier = state.ecosystem.frontierCapabilities;
   const eco = state.ecosystem;
@@ -212,7 +212,7 @@ export function diffuseCapabilities(state: GameState): void {
   // Research: Mantegna & Stanley (1994) - most tech adoption follows S-curves
   // BUT: Rare technologies diffuse explosively (ChatGPT: 100M users in 2 months)
   // Base S-curve already calculated, Lévy adds stochastic fat-tail variation
-  const levyModifiedRate = levyAdoptionCurve(clampedRate, ALPHA_PRESETS.TECHNOLOGY, Math.random);
+  const levyModifiedRate = levyAdoptionCurve(clampedRate, ALPHA_PRESETS.TECHNOLOGY, rng);
 
   // Core dimensions: floor moves toward frontier
   floor.physical += (frontier.physical - floor.physical) * levyModifiedRate;
