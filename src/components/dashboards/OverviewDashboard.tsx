@@ -7,19 +7,27 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { StatusIndicator } from "@/components/core/StatusIndicator"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { ParadigmDetailPanel } from "@/components/paradigms/ParadigmDetailPanel"
 import { HelpButton } from "@/components/docs/HelpButton"
+import { validateMetrics, DASHBOARD_EXPECTATIONS } from "@/lib/utils/metricValidation"
 
 type ParadigmType = 'western' | 'development' | 'ecological' | 'indigenous' | null
 
 export function OverviewDashboard() {
   const { lastUpdate, initialized } = useSimulationWorker()
   const [selectedParadigm, setSelectedParadigm] = useState<ParadigmType>(null)
+
+  // Validate metrics whenever lastUpdate changes (BEFORE hasValidData check!)
+  useEffect(() => {
+    if (initialized && lastUpdate) {
+      validateMetrics(lastUpdate, DASHBOARD_EXPECTATIONS.overview, 'OverviewDashboard')
+    }
+  }, [lastUpdate, initialized])
 
   if (!initialized) {
     return (
@@ -34,7 +42,7 @@ export function OverviewDashboard() {
     )
   }
 
-  // Check for valid simulation data
+  // Check for valid simulation data (validation already ran above in useEffect)
   const hasValidData = lastUpdate &&
     typeof lastUpdate.population === 'number' && !isNaN(lastUpdate.population) &&
     typeof lastUpdate.qualityOfLife === 'number' && !isNaN(lastUpdate.qualityOfLife) &&

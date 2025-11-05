@@ -631,13 +631,7 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, al
   // This populates paradigms, environmental metrics, government, etc.
   const initialDelta = calculateDelta(previousState, state, true); // Force full delta
 
-  // DEBUG: Log what's in the initial delta
-  console.log('[Worker] Initial delta contains:', {
-    population: initialDelta.population,
-    qualityOfLife: initialDelta.qualityOfLife,
-    westernLiberalIndex: initialDelta.westernLiberalIndex,
-    developmentIndex: initialDelta.developmentIndex
-  });
+  // Initial delta will contain all fields including currentMonth
 
   // Test which fields are serializable
   try {
@@ -1061,9 +1055,6 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   // Capture only fields we need for delta calculation
   // Don't deep clone entire 1.78MB state (too expensive)
 
-  // DEBUG: Log what we're reading from state
-  console.log('[Worker] Capturing snapshot - population:', state.humanPopulationSystem.population);
-  console.log('[Worker] Capturing snapshot - qualityOfLife:', state.globalMetrics.qualityOfLife);
 
   // Calculate AI metrics
   const avgAICapability = state.aiAgents.length > 0
@@ -1959,12 +1950,10 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
   }
 
   // Core metrics - always include month and year
-  if (previous.currentMonth !== currentSnapshot.currentMonth) {
-    delta.currentMonth = currentSnapshot.currentMonth;
-  }
-  if (previous.currentYear !== currentSnapshot.currentYear) {
-    delta.currentYear = currentSnapshot.currentYear;
-  }
+  // IMPORTANT: Always include currentMonth and currentYear in delta for UI sync
+  // Even if they haven't changed, the UI needs these for proper display
+  delta.currentMonth = currentSnapshot.currentMonth;
+  delta.currentYear = currentSnapshot.currentYear;
 
   // Quality of Life
   if (Math.abs(previous.qualityOfLife - currentSnapshot.qualityOfLife) > 0.001) {

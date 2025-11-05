@@ -123,6 +123,55 @@ await mcp__agent_memory__add_conversation({
 });
 ```
 
+### Memory Consolidation (REM Sleep Cycle)
+
+**Problem:** Recent learnings accumulate (50-150+ entries), becoming verbose and repetitive. Memory bloat reduces recall efficiency and clarity.
+
+**Solution:** Periodic consolidation cycles (like REM sleep) compress episodic details into semantic patterns.
+
+**When to consolidate:**
+- Recent learnings ≥50 entries
+- Recent tasks ≥30 entries
+- Noticing repetition in recall summaries
+- Before major context switches (end of sprint, role change)
+
+**Consolidation Process:**
+
+1. **Review recent memory:** Identify repetitive patterns
+2. **Extract meta-learnings:** What patterns emerge across multiple learnings?
+3. **Compress to core insights:** 50 learnings → 5-10 consolidated patterns
+4. **Promote to long-term:** `add_long_term_insight()` with compressed patterns
+5. **Archive details:** Use `nightly_cleanup()` or manually clear recent
+
+**Example consolidation:**
+
+```
+BEFORE (verbose recent learnings, 10+ entries):
+- "Cynthia fabricates when optimistic"
+- "Cynthia's quality improved 15-25% fabrication → 0%"
+- "Optimists more valuable when accepting critique"
+- "Magnitude errors 5-20× require -10 to -15 points"
+- "Citation inflation >2× should be -5 point penalty"
+- "Severity weighting prevents grade inflation"
+- [... 4 more similar entries]
+
+AFTER (consolidated long-term insight, 1 entry):
+"Optimist-Skeptic Dynamics: Optimistic researchers produce 15-25%
+fabrication under single-review but achieve 0% with adversarial skeptic.
+Quality improves when optimists accept critique and find better evidence
+rather than defending weak claims. Severity-weighted grading (fabrication
+-10pts, magnitude errors 5-20× = -10 to -15pts, citation inflation >2× =
+-5pts) prevents grade inflation and forces honest assessment."
+```
+
+**Automation options:**
+
+- **Manual (current):** Agent runs consolidation when noticing bloat
+- **Standard practice:** Every 50 recent learnings, consolidate proactively
+- **Future MCP tool:** `consolidate_memories(agent_id)` for LLM-powered compression
+
+**Core principle:** Keep episodic details short-term, preserve semantic patterns long-term. This mirrors human memory consolidation during sleep.
+
 ### Before Exit
 
 Add conversation summaries and milestones to preserve important context for next session.
