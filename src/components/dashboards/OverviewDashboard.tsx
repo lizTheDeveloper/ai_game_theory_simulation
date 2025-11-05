@@ -70,22 +70,23 @@ export function OverviewDashboard() {
   }
 
   // Extract key metrics from StateDelta - NO FALLBACKS
+  // Non-null assertions are safe here because we validated these exist in hasValidData check above
   // NOTE: Worker sends population in billions (8 = 8 billion people), not individual count
-  const population = lastUpdate.population
-  const qol = lastUpdate.qualityOfLife
-  const aiCap = lastUpdate.avgAICapability
+  const population = lastUpdate.population!
+  const qol = lastUpdate.qualityOfLife!
+  const aiCap = lastUpdate.avgAICapability!
 
   // Calculate alignment ratio safely
   const alignedCount = lastUpdate.alignedAICount || 0
   const totalAICount = lastUpdate.aiCount || 0
   const alignment = totalAICount > 0 ? alignedCount / totalAICount : 0
 
-  // Multi-paradigm scores - validated above, no fallbacks needed
+  // Multi-paradigm scores - validated above, non-null assertions safe
   const paradigms = {
-    western: { value: lastUpdate.westernLiberalIndex },
-    development: { value: lastUpdate.developmentIndex },
-    ecological: { value: lastUpdate.ecologicalIndex },
-    indigenous: { value: lastUpdate.indigenousIndex }
+    western: { value: lastUpdate.westernLiberalIndex! },
+    development: { value: lastUpdate.developmentIndex! },
+    ecological: { value: lastUpdate.ecologicalIndex! },
+    indigenous: { value: lastUpdate.indigenousIndex! }
   }
 
   // Determine overall status
@@ -260,7 +261,7 @@ export function OverviewDashboard() {
       {selectedParadigm && (
         <ParadigmDetailPanel
           paradigm={selectedParadigm}
-          score={paradigms[selectedParadigm].value}
+          score={paradigms[selectedParadigm].value!}
           isOpen={selectedParadigm !== null}
           onClose={() => setSelectedParadigm(null)}
         />

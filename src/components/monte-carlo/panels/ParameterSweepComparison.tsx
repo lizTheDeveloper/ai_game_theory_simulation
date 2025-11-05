@@ -77,7 +77,7 @@ export function ParameterSweepComparison({ sweepGroups, runResults }: ParameterS
   const activeGroups = groupedByParameter[activeParameter] || []
 
   return (
-    <Panel title="Parameter Sweep Comparison" glow="purple">
+    <Panel title="Parameter Sweep Comparison" glow="amber">
       <div className="space-y-6">
         {/* Parameter Selector */}
         {parameterNames.length > 1 && (
@@ -165,13 +165,13 @@ export function ParameterSweepComparison({ sweepGroups, runResults }: ParameterS
                   <div>
                     <span className="text-white/40">Survival:</span>
                     <div className="text-green-400">
-                      {(100 - distribution.find(d => d.outcome === 'extinction')?.percentage || 0).toFixed(0)}%
+                      {(100 - (distribution.find(d => d.outcome === 'extinction')?.percentage || 0)).toFixed(0)}%
                     </div>
                   </div>
                   <div>
                     <span className="text-white/40">Utopia:</span>
                     <div className="text-cyan-400">
-                      {distribution.find(d => d.outcome === 'utopia')?.percentage.toFixed(0) || 0}%
+                      {(distribution.find(d => d.outcome === 'utopia')?.percentage || 0).toFixed(0)}%
                     </div>
                   </div>
                 </div>
@@ -226,8 +226,9 @@ export function ParameterSweepComparison({ sweepGroups, runResults }: ParameterS
                   const dist = getOutcomeDistribution(group)
                   const score = (dist.find(d => d.outcome === 'utopia')?.percentage || 0) -
                                (dist.find(d => d.outcome === 'extinction')?.percentage || 0)
-                  const bestScore = getOutcomeDistribution(best).find(d => d.outcome === 'utopia')?.percentage || 0 -
-                                   getOutcomeDistribution(best).find(d => d.outcome === 'extinction')?.percentage || 0
+                  const bestDist = getOutcomeDistribution(best)
+                  const bestScore = (bestDist.find(d => d.outcome === 'utopia')?.percentage || 0) -
+                                   (bestDist.find(d => d.outcome === 'extinction')?.percentage || 0)
                   return score > bestScore ? group : best
                 })
 

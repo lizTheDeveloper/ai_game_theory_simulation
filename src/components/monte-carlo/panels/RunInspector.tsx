@@ -134,7 +134,7 @@ export function RunInspector({ runResults, selectedRunId, onSelectRun }: RunInsp
         {selectedRun ? (
           <Panel
             title={`Run ${selectedRun.seed} Analysis`}
-            glow={getOutcomeColor(selectedRun.outcome).color === '#00FF88' ? 'green' : 'amber'}
+            glow={getOutcomeColor(selectedRun.outcome).color === '#00FF88' ? 'cyan' : 'amber'}
           >
             <div className="space-y-6">
               {/* Outcome Summary */}

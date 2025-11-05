@@ -22,7 +22,7 @@ export function SweepResultsPanel() {
   return (
     <Panel
       title="Sweep Results"
-      glow="green"
+      glow="cyan"
       className="shadow-[0_0_30px_rgba(0,255,136,0.2)]"
     >
       <div className="space-y-6">
@@ -52,7 +52,7 @@ export function SweepResultsPanel() {
               : 'N/A'
             }
             icon={<AlertCircle className="h-4 w-4" />}
-            color={aggregateStats.survivalRate > 0.5 ? "green" : "amber"}
+            color={(aggregateStats.survivalRate !== undefined && aggregateStats.survivalRate > 0.5) ? "green" : "amber"}
           />
           <StatCard
             label="Utopia Rate"
@@ -71,7 +71,7 @@ export function SweepResultsPanel() {
         )}
 
         {/* Timeline Statistics */}
-        {aggregateStats.timeline && aggregateStats.timeline.length > 0 && (
+        {aggregateStats.timeline && (
           <div>
             <h3 className="text-sm font-medium text-white/80 mb-3">Timeline Analysis</h3>
             <TimelineChart timeline={aggregateStats.timeline} />
@@ -144,6 +144,8 @@ function OutcomeDistributionChart({
   breakdown: MonteCarloAggregateStats['outcomeBreakdown']
   totalRuns: number
 }) {
+  if (!breakdown) return null
+
   const outcomes = [
     { key: 'utopia', label: 'Utopia', color: 'bg-emerald-500', glow: 'shadow-[0_0_10px_rgba(16,185,129,0.5)]' },
     { key: 'postScarcity', label: 'Post-Scarcity', color: 'bg-green-500', glow: 'shadow-[0_0_10px_rgba(34,197,94,0.5)]' },
@@ -182,37 +184,28 @@ function OutcomeDistributionChart({
 }
 
 function TimelineChart({ timeline }: { timeline: MonteCarloAggregateStats['timeline'] }) {
-  // For simplicity, show first 10 months
-  const months = timeline.slice(0, 10)
+  // Timeline is an object with summary statistics, not an array
+  if (!timeline) return null
 
   return (
     <div className="space-y-2">
-      <div className="grid grid-cols-10 gap-1 text-xs text-white/40">
-        {months.map((_, i) => (
-          <div key={i} className="text-center">M{i + 1}</div>
-        ))}
-      </div>
-      <div className="grid grid-cols-10 gap-1">
-        {months.map((month, i) => {
-          const survivalPercent = month.totalRuns > 0
-            ? (month.survivingRuns / month.totalRuns) * 100
-            : 0
-
-          const heightPercent = Math.max(10, survivalPercent)
-          const color = survivalPercent > 75 ? 'bg-green-500' :
-                        survivalPercent > 50 ? 'bg-cyan-500' :
-                        survivalPercent > 25 ? 'bg-amber-500' : 'bg-red-500'
-
-          return (
-            <div key={i} className="flex flex-col justify-end h-20">
-              <div
-                className={`${color} rounded-t transition-all duration-500`}
-                style={{ height: `${heightPercent}%` }}
-                title={`Month ${i + 1}: ${survivalPercent.toFixed(1)}% survival`}
-              />
-            </div>
-          )
-        })}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div>
+          <div className="text-xs text-white/40 mb-1">Average</div>
+          <div className="text-xl font-light">{Math.round(timeline.avgMonthsToOutcome)} months</div>
+        </div>
+        <div>
+          <div className="text-xs text-white/40 mb-1">Median</div>
+          <div className="text-xl font-light">{Math.round(timeline.medianMonthsToOutcome)} months</div>
+        </div>
+        <div>
+          <div className="text-xs text-white/40 mb-1">Minimum</div>
+          <div className="text-xl font-light">{Math.round(timeline.minMonthsToOutcome)} months</div>
+        </div>
+        <div>
+          <div className="text-xs text-white/40 mb-1">Maximum</div>
+          <div className="text-xl font-light">{Math.round(timeline.maxMonthsToOutcome)} months</div>
+        </div>
       </div>
       <div className="text-xs text-white/40 text-center">Survival Rate Over Time</div>
     </div>

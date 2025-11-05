@@ -49,10 +49,11 @@ export function RegionsDashboard() {
   }
 
   // NOTE: Worker sends population in billions (8 = 8 billion people), not individual count
-  const population = lastUpdate.population
-  const qol = lastUpdate.qualityOfLife
-  const socialCohesion = lastUpdate.socialCohesion
-  const institutionalTrust = lastUpdate.institutionalTrust
+  // Non-null assertions are safe here because we validated these exist in hasValidData check above
+  const population = lastUpdate.population!
+  const qol = lastUpdate.qualityOfLife!
+  const socialCohesion = lastUpdate.socialCohesion!
+  const institutionalTrust = lastUpdate.institutionalTrust!
   const regions = Array.isArray(lastUpdate.regionalPopulations) ? lastUpdate.regionalPopulations : []
   const hasRegionalData = regions.length > 0
 

@@ -58,10 +58,11 @@ export function EnvironmentalDashboard() {
   }
 
   // Environmental metrics from StateDelta - NO FALLBACKS
-  const climate = lastUpdate.climateChange
-  const biodiversity = lastUpdate.biodiversityLoss
-  const boundariesCrossed = lastUpdate.planetaryBoundariesCrossed
-  const environmentalDebt = lastUpdate.environmentalDebtLevel
+  // Non-null assertions are safe here because we validated these exist in hasValidData check above
+  const climate = lastUpdate.climateChange!
+  const biodiversity = lastUpdate.biodiversityLoss!
+  const boundariesCrossed = lastUpdate.planetaryBoundariesCrossed!
+  const environmentalDebt = lastUpdate.environmentalDebtLevel!
 
   // Optional metrics - show N/A if missing
   const resourceDepletion = lastUpdate.resourceDepletion
@@ -292,17 +293,29 @@ export function EnvironmentalDashboard() {
           </div>
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Resource Depletion</div>
-            <div className="text-3xl font-light mb-2" style={{ color: resourceDepletion > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
-              {(resourceDepletion * 100).toFixed(0)}%
-            </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>Phosphorus, freshwater</p>
+            {typeof resourceDepletion === 'number' ? (
+              <>
+                <div className="text-3xl font-light mb-2" style={{ color: resourceDepletion > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
+                  {(resourceDepletion * 100).toFixed(0)}%
+                </div>
+                <p className="text-xs" style={{ color: 'var(--white-40)' }}>Phosphorus, freshwater</p>
+              </>
+            ) : (
+              <div className="text-xl font-light" style={{ color: 'var(--white-40)' }}>N/A</div>
+            )}
           </div>
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Pollution Load</div>
-            <div className="text-3xl font-light mb-2" style={{ color: pollution > 0.6 ? 'var(--color-red)' : 'var(--white-80)' }}>
-              {(pollution * 100).toFixed(0)}%
-            </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>PFAS, novel entities</p>
+            {typeof pollution === 'number' ? (
+              <>
+                <div className="text-3xl font-light mb-2" style={{ color: pollution > 0.6 ? 'var(--color-red)' : 'var(--white-80)' }}>
+                  {(pollution * 100).toFixed(0)}%
+                </div>
+                <p className="text-xs" style={{ color: 'var(--white-40)' }}>PFAS, novel entities</p>
+              </>
+            ) : (
+              <div className="text-xl font-light" style={{ color: 'var(--white-40)' }}>N/A</div>
+            )}
           </div>
         </div>
       </Panel>

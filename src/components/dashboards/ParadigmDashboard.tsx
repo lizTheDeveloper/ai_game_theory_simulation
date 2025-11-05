@@ -73,11 +73,12 @@ export function ParadigmDashboard() {
   }
 
   // Get scores from StateDelta - data is validated above
+  // Non-null assertions are safe here because we validated these exist in hasValidData check above
   const scores = [
-    lastUpdate.westernLiberalIndex,
-    lastUpdate.developmentIndex,
-    lastUpdate.ecologicalIndex,
-    lastUpdate.indigenousIndex
+    lastUpdate.westernLiberalIndex!,
+    lastUpdate.developmentIndex!,
+    lastUpdate.ecologicalIndex!,
+    lastUpdate.indigenousIndex!
   ]
 
   const avgScore = scores.reduce((a, b) => a + b, 0) / scores.length
