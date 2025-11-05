@@ -1,0 +1,1 @@
+/Users/annhoward/src/superalignmenttoutopia/scripts/merge-gate-architecture.sh: line 76: claude: command not found

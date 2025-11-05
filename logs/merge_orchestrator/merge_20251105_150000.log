@@ -1,0 +1,315 @@
+
+=== Merge Orchestrator Started ===
+[15:00:00] Timestamp: Wed Nov  5 15:00:00 PST 2025
+[15:00:00] Dry run: false
+[15:00:00] Max branches: 10
+[15:00:00] Environment: Local (all branches)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[15:00:02] Found 69 branches to process
+
+=== Branch 1/69: auto/worker-20251102_043015 ===
+[15:00:02] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_043015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_043015_20251105_150000' set up to track 'origin/main'.
+[15:00:02] 🔀 Attempting merge from origin/auto/worker-20251102_043015
+Already up to date.
+[15:00:02] ✅ Merge successful (no conflicts)
+[15:00:02] 🚦 Running quality gates...
+[15:00:02]   Gate 1/2: TypeScript compilation
+./scripts/merge-orchestrator.sh: line 151: npx: command not found
+[15:00:02]     ❌ TypeScript compilation failed
+[15:00:02] 🚫 Merge BLOCKED: TypeScript errors
+[15:00:02] 📋 Merge branch preserved: merge/auto/worker-20251102_043015_20251105_150000
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+Your branch is up to date with 'origin/main'.
+
+=== Branch 2/69: auto/worker-20251102_050015 ===
+[15:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_050015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_050015_20251105_150000' set up to track 'origin/main'.
+[15:00:03] 🔀 Attempting merge from origin/auto/worker-20251102_050015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Automatic merge failed; fix conflicts and then commit the result.
+[15:00:03] ❌ Merge conflicts detected
+[15:00:03] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:03] 📋 Merge branch preserved: merge/auto/worker-20251102_050015_20251105_150000
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+Your branch is up to date with 'origin/main'.
+
+=== Branch 3/69: auto/worker-20251102_080006 ===
+[15:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_080006_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_080006_20251105_150000' set up to track 'origin/main'.
+[15:00:05] 🔀 Attempting merge from origin/auto/worker-20251102_080006
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/initialization.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[15:00:06] ❌ Merge conflicts detected
+[15:00:06] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:06] 📋 Merge branch preserved: merge/auto/worker-20251102_080006_20251105_150000
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+Your branch is up to date with 'origin/main'.
+
+=== Branch 4/69: auto/worker-20251102_090015 ===
+[15:00:07] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_090015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_090015_20251105_150000' set up to track 'origin/main'.
+[15:00:07] 🔀 Attempting merge from origin/auto/worker-20251102_090015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+Auto-merging logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+CONFLICT (add/add): Merge conflict in logs/merge_orchestrator/merge_orchestrator_20251102_060000.log
+Auto-merging plans/MASTER_IMPLEMENTATION_ROADMAP.md
+CONFLICT (content): Merge conflict in plans/MASTER_IMPLEMENTATION_ROADMAP.md
+Auto-merging plans/SIMULATION_ROADMAP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Auto-merging src/simulation/agents/governmentAgent.ts
+Auto-merging src/simulation/defensiveAI.ts
+CONFLICT (content): Merge conflict in src/simulation/defensiveAI.ts
+Auto-merging src/simulation/diplomaticAI.ts
+CONFLICT (content): Merge conflict in src/simulation/diplomaticAI.ts
+Auto-merging src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+Auto-merging src/simulation/engine/phases/DefensiveAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DefensiveAIPhase.ts
+Auto-merging src/simulation/engine/phases/DiplomaticAIPhase.ts
+CONFLICT (content): Merge conflict in src/simulation/engine/phases/DiplomaticAIPhase.ts
+Auto-merging src/simulation/engine/phases/MADDeterrencePhase.ts
+Auto-merging src/simulation/engine/phases/PlanetaryBoundariesPhase.ts
+Auto-merging src/simulation/initialization.ts
+Auto-merging src/simulation/nuclearStates.ts
+CONFLICT (content): Merge conflict in src/simulation/nuclearStates.ts
+Auto-merging src/simulation/planetaryBoundaries.ts
+CONFLICT (content): Merge conflict in src/simulation/planetaryBoundaries.ts
+Auto-merging src/simulation/qualityOfLife/regional.ts
+Auto-merging src/simulation/techTree/effectsEngine.ts
+Auto-merging src/simulation/triggeredEvents.ts
+CONFLICT (content): Merge conflict in src/simulation/triggeredEvents.ts
+Automatic merge failed; fix conflicts and then commit the result.
+[15:00:10] ❌ Merge conflicts detected
+[15:00:10] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:10] 📋 Merge branch preserved: merge/auto/worker-20251102_090015_20251105_150000
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+Your branch is up to date with 'origin/main'.
+
+=== Branch 5/69: auto/worker-20251102_100015 ===
+[15:00:11] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_100015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_100015_20251105_150000' set up to track 'origin/main'.
+[15:00:11] 🔀 Attempting merge from origin/auto/worker-20251102_100015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:12] ❌ Merge conflicts detected
+[15:00:12] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:13] 📋 Merge branch preserved: merge/auto/worker-20251102_100015_20251105_150000
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+Your branch is up to date with 'origin/main'.
+
+=== Branch 6/69: auto/worker-20251102_110015 ===
+[15:00:13] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_110015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_110015_20251105_150000' set up to track 'origin/main'.
+[15:00:13] 🔀 Attempting merge from origin/auto/worker-20251102_110015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:14] ❌ Merge conflicts detected
+[15:00:14] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:14] 📋 Merge branch preserved: merge/auto/worker-20251102_110015_20251105_150000
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+Your branch is up to date with 'origin/main'.
+
+=== Branch 7/69: auto/worker-20251102_120000 ===
+[15:00:14] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_120000_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_120000_20251105_150000' set up to track 'origin/main'.
+[15:00:14] 🔀 Attempting merge from origin/auto/worker-20251102_120000
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+	src/simulation/lifecycle.ts
+	src/simulation/organizationManagement.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:15] ❌ Merge conflicts detected
+[15:00:15] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:15] 📋 Merge branch preserved: merge/auto/worker-20251102_120000_20251105_150000
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+Your branch is up to date with 'origin/main'.
+
+=== Branch 8/69: auto/worker-20251102_130014 ===
+[15:00:15] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_130014_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_130014_20251105_150000' set up to track 'origin/main'.
+[15:00:15] 🔀 Attempting merge from origin/auto/worker-20251102_130014
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+	src/simulation/lifecycle.ts
+	src/simulation/organizationManagement.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:16] ❌ Merge conflicts detected
+[15:00:16] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:16] 📋 Merge branch preserved: merge/auto/worker-20251102_130014_20251105_150000
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+Your branch is up to date with 'origin/main'.
+
+=== Branch 9/69: auto/worker-20251102_140015 ===
+[15:00:16] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_140015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_140015_20251105_150000' set up to track 'origin/main'.
+[15:00:16] 🔀 Attempting merge from origin/auto/worker-20251102_140015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+	src/simulation/lifecycle.ts
+	src/simulation/organizationManagement.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:17] ❌ Merge conflicts detected
+[15:00:17] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:17] 📋 Merge branch preserved: merge/auto/worker-20251102_140015_20251105_150000
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+Your branch is up to date with 'origin/main'.
+
+=== Branch 10/69: auto/worker-20251102_150015 ===
+[15:00:17] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251105_150000
+Switched to a new branch 'merge/auto/worker-20251102_150015_20251105_150000'
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+branch 'merge/auto/worker-20251102_150015_20251105_150000' set up to track 'origin/main'.
+[15:00:18] 🔀 Attempting merge from origin/auto/worker-20251102_150015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/initialization.ts
+	src/simulation/lifecycle.ts
+	src/simulation/organizationManagement.ts
+Please commit your changes or stash them before you merge.
+Aborting
+Merge with strategy ort failed.
+[15:00:18] ❌ Merge conflicts detected
+[15:00:18] 🚫 Merge BLOCKED: Manual conflict resolution required
+[15:00:18] 📋 Merge branch preserved: merge/auto/worker-20251102_150015_20251105_150000
+M	src/simulation/initialization.ts
+M	src/simulation/lifecycle.ts
+M	src/simulation/organizationManagement.ts
+M	tests/tier2-phase2a-noise-injection-validation.test.ts
+Your branch is up to date with 'origin/main'.
+[15:00:19] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[15:00:19] Total branches found: 69
+[15:00:19] Branches processed: 10
+[15:00:19] ✅ Successfully merged: 0
+[15:00:19] ⏭️  Skipped (frontend on VM): 0
+[15:00:19] ❌ Failed (conflicts/gates): 10
+[15:00:19] 
+[15:00:19] 📊 Remaining branches: 59
+[15:00:19]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[15:00:19] Full log: /Users/annhoward/src/superalignmenttoutopia/logs/merge_orchestrator/merge_20251105_150000.log
