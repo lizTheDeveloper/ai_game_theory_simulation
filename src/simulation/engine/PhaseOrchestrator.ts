@@ -224,6 +224,13 @@ export class PhaseOrchestrator {
         // Mark this phase as executed (for dependency tracking)
         ctx.executedPhases.add(phase.id);
 
+        // DETERMINISM DEBUG (Nov 5, 2025): Track AI capability checksum after EACH phase
+        // This helps identify which phase causes divergence in deterministic runs
+        if (state.currentMonth <= 2) { // Only log first few months to avoid spam
+          const aiCapabilityChecksum = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+          console.log(`[DET] Month ${state.currentMonth} After ${phase.name}: AI capability sum = ${aiCapabilityChecksum.toFixed(10)}`);
+        }
+
         // DEBUG (Oct 28, 2025): Check population integrity after each phase
         if (isNaN(state.humanPopulationSystem.population)) {
           console.error(`\n❌ Population became NaN after phase "${phase.name}" (${phase.id})`);
