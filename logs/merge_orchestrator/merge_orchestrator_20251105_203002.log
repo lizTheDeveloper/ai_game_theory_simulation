@@ -1,0 +1,76 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 20:30:02] 🤖 Merge Orchestrator - 20251105_203002
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 20:30:02] ℹ️  Environment: VM (backend only)
+[2025-11-05 20:30:02] ℹ️  Dry run: false
+[2025-11-05 20:30:02] ℹ️  Skip frontend: true
+[2025-11-05 20:30:02] ℹ️  Max branches: 10
+[2025-11-05 20:30:02] ℹ️  Agent reviews (Phase 2): true
+[2025-11-05 20:30:02] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-05 20:30:02] ℹ️  Discovering feature branches...
+Fetching origin
+[2025-11-05 20:30:04] ℹ️  Found 37 feature branches
+[2025-11-05 20:30:04] ⚠️  WARNING: Branch count (37) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 20:30:04] Processing: + research/citations-phase2-20251104_183001
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 20:30:04] ℹ️  Creating merge branch: merge/+ research/citations-phase2-20251104_183001_20251105_203002
+fatal: 'merge/+ research/citations-phase2-20251104_183001_20251105_203002' is not a valid branch name.
+[2025-11-05 20:30:04] ℹ️  Pulling latest main...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch                main       -> FETCH_HEAD
+Already up to date.
+[2025-11-05 20:30:06] ℹ️  Attempting merge from + research/citations-phase2-20251104_183001...
+merge: origin/+ research/citations-phase2-20251104_183001 - not something we can merge
+[2025-11-05 20:30:06] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 20:30:06] Quality Gates: + research/citations-phase2-20251104_183001
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 20:30:06] ℹ️  Gate 1: TypeScript compilation...
+e2e/fallback-detection.spec.ts(21,30): error TS2307: Cannot find module '@playwright/test' or its corresponding type declarations.
+playwright.config.ts(1,39): error TS2307: Cannot find module '@playwright/test' or its corresponding type declarations.
+src/components/paradigms/ParadigmDetailPanel.tsx(608,43): error TS18047: 'lastUpdate' is possibly 'null'.
+src/components/paradigms/ParadigmDetailPanel.tsx(608,77): error TS18047: 'lastUpdate' is possibly 'null'.
+[2025-11-05 20:30:48] ✅ TypeScript compilation passed
+[2025-11-05 20:30:48] ℹ️  Gate 2: Test suite...
+[2025-11-05 20:30:50] ⚠️  WARNING: test:backend script not found, skipping tests
+[2025-11-05 20:30:50] ✅ Tests passed (or skipped)
+[2025-11-05 20:30:50] ℹ️  Gate 3: Architecture review...
+[2025-11-05 20:30:50] 🔍 Spawning architecture-skeptic agent...
+[2025-11-05 20:34:47] ⚠️  WARNING: Could not parse verdict, defaulting to BLOCK
+[2025-11-05 20:34:47] 📊 Architecture Review Results:
+[2025-11-05 20:34:47]    VERDICT: BLOCK
+[2025-11-05 20:34:47]    🚨 CRITICAL: 1
+[2025-11-05 20:34:47]    ⚠️  HIGH: 2
+[2025-11-05 20:34:47]    📋 MEDIUM: 2
+[2025-11-05 20:34:47]    💡 LOW: 2
+[2025-11-05 20:34:47] 📄 Full review: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/architecture_review__20251105_203002.txt
+[2025-11-05 20:34:47] ❌ Architecture review BLOCKED merge (CRITICAL issues found)
+[2025-11-05 20:34:47] 🔧 Triggering auto-remediation for 1 CRITICAL issues...
+[2025-11-05 20:34:47] 🔧 Auto-remediation triggered for architecture review
+[2025-11-05 20:34:47] ℹ️  Remediation attempt 1 of 3
+[2025-11-05 20:34:47] ℹ️  Checking out branch: origin/+ research/citations-phase2-20251104_183001
+fatal: invalid refspec '+ research/citations-phase2-20251104_183001'
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+[2025-11-05 20:34:47] 🤖 Spawning fix agent (architecture)...
+[2025-11-05 20:34:47] ⚠️  Auto-remediation failed or max attempts reached
+[2025-11-05 20:34:47] ❌ ERROR: Architecture review blocked merge
+[2025-11-05 20:34:47] ❌ ERROR: Quality gates failed
+[2025-11-05 20:34:47] ℹ️  Preserving merge branch for inspection: merge/+ research/citations-phase2-20251104_183001_20251105_203002_FAILED
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: Invalid branch name: 'merge/+ research/citations-phase2-20251104_183001_20251105_203002'

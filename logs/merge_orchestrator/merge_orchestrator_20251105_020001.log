@@ -1,0 +1,399 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:01] 🤖 Merge Orchestrator - 20251105_020001
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:01] ℹ️  Environment: VM (backend only)
+[2025-11-05 02:00:01] ℹ️  Dry run: false
+[2025-11-05 02:00:01] ℹ️  Skip frontend: true
+[2025-11-05 02:00:01] ℹ️  Max branches: 10
+[2025-11-05 02:00:01] ℹ️  Agent reviews (Phase 2): true
+[2025-11-05 02:00:01] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-05 02:00:01] ℹ️  Discovering feature branches...
+Fetching origin
+[2025-11-05 02:00:02] ℹ️  Found 35 feature branches
+[2025-11-05 02:00:02] ⚠️  WARNING: Branch count (35) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:02] Processing: consolidated/all-autonomous-work-20251031
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:12] ⏭️  SKIP: Frontend branch on VM: consolidated/all-autonomous-work-20251031
+[2025-11-05 02:00:12] ℹ️     Frontend changes detected, handle locally on Mac
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:12] Processing: feature/nuclear-war-fix-and-dynamics
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:12] ℹ️  Creating merge branch: merge/feature/nuclear-war-fix-and-dynamics_20251105_020001
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+[2025-11-05 02:00:12] ℹ️  Pulling latest main...
+error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:12] ℹ️  Attempting merge from feature/nuclear-war-fix-and-dynamics...
+error: Merging is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:12] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:12] Quality Gates: feature/nuclear-war-fix-and-dynamics
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:12] ℹ️  Gate 1: TypeScript compilation...
+src/simulation/government/core/governmentCore.ts(646,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(648,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(650,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(669,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(671,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(673,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(103,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(105,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(107,1): error TS1185: Merge conflict marker encountered.
+[2025-11-05 02:00:19] ❌ ERROR: TypeScript compilation failed
+[2025-11-05 02:00:19] ❌ ERROR: Quality gates failed
+[2025-11-05 02:00:19] ℹ️  Preserving merge branch for inspection: merge/feature/nuclear-war-fix-and-dynamics_20251105_020001_FAILED
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+error: refname refs/heads/merge/feature/nuclear-war-fix-and-dynamics_20251105_020001 not found
+fatal: Branch rename failed
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:20] Processing: first-utopia-runs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:20] ℹ️  Creating merge branch: merge/first-utopia-runs_20251105_020001
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+[2025-11-05 02:00:20] ℹ️  Pulling latest main...
+error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:20] ℹ️  Attempting merge from first-utopia-runs...
+error: Merging is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:20] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:20] Quality Gates: first-utopia-runs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:20] ℹ️  Gate 1: TypeScript compilation...
+src/simulation/government/core/governmentCore.ts(646,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(648,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(650,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(669,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(671,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(673,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(103,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(105,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(107,1): error TS1185: Merge conflict marker encountered.
+[2025-11-05 02:00:27] ❌ ERROR: TypeScript compilation failed
+[2025-11-05 02:00:27] ❌ ERROR: Quality gates failed
+[2025-11-05 02:00:27] ℹ️  Preserving merge branch for inspection: merge/first-utopia-runs_20251105_020001_FAILED
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+error: refname refs/heads/merge/first-utopia-runs_20251105_020001 not found
+fatal: Branch rename failed
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:27] Processing: integration/autonomous-validated-20251031
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:27] ℹ️  Creating merge branch: merge/integration/autonomous-validated-20251031_20251105_020001
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+[2025-11-05 02:00:27] ℹ️  Pulling latest main...
+error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:27] ℹ️  Attempting merge from integration/autonomous-validated-20251031...
+error: Merging is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:27] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:27] Quality Gates: integration/autonomous-validated-20251031
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:27] ℹ️  Gate 1: TypeScript compilation...
+src/simulation/government/core/governmentCore.ts(646,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(648,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(650,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(669,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(671,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(673,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(103,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(105,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(107,1): error TS1185: Merge conflict marker encountered.
+[2025-11-05 02:00:33] ❌ ERROR: TypeScript compilation failed
+[2025-11-05 02:00:33] ❌ ERROR: Quality gates failed
+[2025-11-05 02:00:33] ℹ️  Preserving merge branch for inspection: merge/integration/autonomous-validated-20251031_20251105_020001_FAILED
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+error: refname refs/heads/merge/integration/autonomous-validated-20251031_20251105_020001 not found
+fatal: Branch rename failed
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:33] Processing: integration/worker-22-25
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:34] ⏭️  SKIP: Frontend branch on VM: integration/worker-22-25
+[2025-11-05 02:00:34] ℹ️     Frontend changes detected, handle locally on Mac
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:34] Processing: investigation/defensive-coding-audit---find-hidden-integration-gaps
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:34] ℹ️  Creating merge branch: merge/investigation/defensive-coding-audit---find-hidden-integration-gaps_20251105_020001
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+[2025-11-05 02:00:34] ℹ️  Pulling latest main...
+error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:34] ℹ️  Attempting merge from investigation/defensive-coding-audit---find-hidden-integration-gaps...
+error: Merging is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:34] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:34] Quality Gates: investigation/defensive-coding-audit---find-hidden-integration-gaps
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:34] ℹ️  Gate 1: TypeScript compilation...
+src/simulation/government/core/governmentCore.ts(646,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(648,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(650,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(669,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(671,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(673,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(103,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(105,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(107,1): error TS1185: Merge conflict marker encountered.
+[2025-11-05 02:00:38] ❌ ERROR: TypeScript compilation failed
+[2025-11-05 02:00:38] ❌ ERROR: Quality gates failed
+[2025-11-05 02:00:38] ℹ️  Preserving merge branch for inspection: merge/investigation/defensive-coding-audit---find-hidden-integration-gaps_20251105_020001_FAILED
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+error: refname refs/heads/merge/investigation/defensive-coding-audit---find-hidden-integration-gaps_20251105_020001 not found
+fatal: Branch rename failed
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:38] Processing: investigation/defensive-programming-phase-5-1-standardize-error-handling-and-complete-validation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:38] ℹ️  Creating merge branch: merge/investigation/defensive-programming-phase-5-1-standardize-error-handling-and-complete-validation_20251105_020001
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+[2025-11-05 02:00:38] ℹ️  Pulling latest main...
+error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:38] ℹ️  Attempting merge from investigation/defensive-programming-phase-5-1-standardize-error-handling-and-complete-validation...
+error: Merging is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:38] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:38] Quality Gates: investigation/defensive-programming-phase-5-1-standardize-error-handling-and-complete-validation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:38] ℹ️  Gate 1: TypeScript compilation...
+src/simulation/government/core/governmentCore.ts(646,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(648,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(650,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(669,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(671,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(673,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(103,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(105,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(107,1): error TS1185: Merge conflict marker encountered.
+[2025-11-05 02:00:42] ❌ ERROR: TypeScript compilation failed
+[2025-11-05 02:00:42] ❌ ERROR: Quality gates failed
+[2025-11-05 02:00:42] ℹ️  Preserving merge branch for inspection: merge/investigation/defensive-programming-phase-5-1-standardize-error-handling-and-complete-validation_20251105_020001_FAILED
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+error: refname refs/heads/merge/investigation/defensive-programming-phase-5-1-standardize-error-handling-and-complete-validation_20251105_020001 not found
+fatal: Branch rename failed
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:42] Processing: new_systems
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:42] ℹ️  Creating merge branch: merge/new_systems_20251105_020001
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+[2025-11-05 02:00:42] ℹ️  Pulling latest main...
+error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:42] ℹ️  Attempting merge from new_systems...
+error: Merging is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:42] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:42] Quality Gates: new_systems
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:42] ℹ️  Gate 1: TypeScript compilation...
+src/simulation/government/core/governmentCore.ts(646,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(648,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(650,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(669,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(671,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(673,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(103,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(105,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(107,1): error TS1185: Merge conflict marker encountered.
+[2025-11-05 02:00:47] ❌ ERROR: TypeScript compilation failed
+[2025-11-05 02:00:47] ❌ ERROR: Quality gates failed
+[2025-11-05 02:00:47] ℹ️  Preserving merge branch for inspection: merge/new_systems_20251105_020001_FAILED
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+error: refname refs/heads/merge/new_systems_20251105_020001 not found
+fatal: Branch rename failed
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:47] Processing: p2-3-heterogeneous-population
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:47] ℹ️  Creating merge branch: merge/p2-3-heterogeneous-population_20251105_020001
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+[2025-11-05 02:00:47] ℹ️  Pulling latest main...
+error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:47] ℹ️  Attempting merge from p2-3-heterogeneous-population...
+error: Merging is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:47] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:47] Quality Gates: p2-3-heterogeneous-population
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:47] ℹ️  Gate 1: TypeScript compilation...
+src/simulation/government/core/governmentCore.ts(646,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(648,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(650,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(669,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(671,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(673,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(103,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(105,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(107,1): error TS1185: Merge conflict marker encountered.
+[2025-11-05 02:00:51] ❌ ERROR: TypeScript compilation failed
+[2025-11-05 02:00:51] ❌ ERROR: Quality gates failed
+[2025-11-05 02:00:51] ℹ️  Preserving merge branch for inspection: merge/p2-3-heterogeneous-population_20251105_020001_FAILED
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+error: refname refs/heads/merge/p2-3-heterogeneous-population_20251105_020001 not found
+fatal: Branch rename failed
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:51] Processing: p2-implementation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:51] ℹ️  Creating merge branch: merge/p2-implementation_20251105_020001
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+[2025-11-05 02:00:51] ℹ️  Pulling latest main...
+error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:51] ℹ️  Attempting merge from p2-implementation...
+error: Merging is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2025-11-05 02:00:51] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:51] Quality Gates: p2-implementation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:51] ℹ️  Gate 1: TypeScript compilation...
+src/simulation/government/core/governmentCore.ts(646,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(648,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(650,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(669,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(671,1): error TS1185: Merge conflict marker encountered.
+src/simulation/government/core/governmentCore.ts(673,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(103,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(105,1): error TS1185: Merge conflict marker encountered.
+src/simulation/governmentRelocation.ts(107,1): error TS1185: Merge conflict marker encountered.
+[2025-11-05 02:00:55] ❌ ERROR: TypeScript compilation failed
+[2025-11-05 02:00:55] ❌ ERROR: Quality gates failed
+[2025-11-05 02:00:55] ℹ️  Preserving merge branch for inspection: merge/p2-implementation_20251105_020001_FAILED
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+error: refname refs/heads/merge/p2-implementation_20251105_020001 not found
+fatal: Branch rename failed
+error: you need to resolve your current index first
+src/simulation/government/core/governmentCore.ts: needs merge
+src/simulation/governmentRelocation.ts: needs merge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:55] Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:55] ℹ️  Total branches processed: 35
+[2025-11-05 02:00:55] ✅ Merged to main: 0
+[2025-11-05 02:00:55] ⚠️  WARNING: Blocked (failed gates): 8
+[2025-11-05 02:00:55] ⚠️  WARNING: Conflicts (manual intervention): 0
+[2025-11-05 02:00:55] ⏭️  SKIP: Skipped (frontend on VM): 2
+[2025-11-05 02:00:55] ℹ️  Notification: Would post summary to coordination channel (not implemented yet)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:55] ✅ Merge Orchestrator Complete
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-05 02:00:55] ℹ️  Log file: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_orchestrator_20251105_020001.log

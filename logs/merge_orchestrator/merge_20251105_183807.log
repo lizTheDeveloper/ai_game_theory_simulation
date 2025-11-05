@@ -1,0 +1,37 @@
+
+=== Merge Orchestrator Started ===
+[18:38:07] Timestamp: Wed Nov  5 18:38:07 UTC 2025
+[18:38:07] Dry run: true
+[18:38:07] Max branches: 3
+[18:38:07] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[18:38:10] Found 66 branches to process
+
+=== Branch 1/66: auto/worker-20251102_043015 ===
+[18:38:10] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251105_183807
+[18:38:10]    (Dry run - skipping actual merge)
+
+=== Branch 2/66: auto/worker-20251102_050015 ===
+[18:38:10] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251105_183807
+[18:38:10]    (Dry run - skipping actual merge)
+
+=== Branch 3/66: auto/worker-20251102_080006 ===
+[18:38:10] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251105_183807
+[18:38:10]    (Dry run - skipping actual merge)
+[18:38:11] ⏸️  Reached max branches limit (3), stopping
+
+=== Summary ===
+[18:38:11] Total branches found: 66
+[18:38:11] Branches processed: 3
+[18:38:11] ✅ Successfully merged: 0
+[18:38:11] ⏭️  Skipped (frontend on VM): 0
+[18:38:11] ❌ Failed (conflicts/gates): 0
+[18:38:11] 
+[18:38:11] 📊 Remaining branches: 63
+[18:38:11]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[18:38:11] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251105_183807.log

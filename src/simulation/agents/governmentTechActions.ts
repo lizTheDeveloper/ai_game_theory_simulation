@@ -15,6 +15,7 @@ import { ActionResult, GameAction } from './types';
 import { getTechById, getAllTech } from '../techTree/comprehensiveTechTree';
 import { TechTreeState, TechDeploymentAction } from '../techTree/engine';
 import { getOptimalDeploymentRegions, getDeploymentPriority } from '../techTree/regionalDeployment';
+import { assertStateProperty } from '../utils/assertions';
 
 /**
  * National tech deployment priorities
@@ -328,6 +329,7 @@ function getCrisisUrgencyMultiplier(tech: any, state: GameState): number {
 
 /**
  * Check if crisis is active for a tech category
+ * Phase 5.1 (Oct 26, 2025): Use assertStateProperty for REQUIRED state properties
  */
 function isCrisisActiveForCategory(category: string, state: GameState): boolean {
   switch (category) {
@@ -341,9 +343,15 @@ function isCrisisActiveForCategory(category: string, state: GameState): boolean 
               state.phosphorusSystem.criticalDepletionActive);
     case 'climate':
     case 'ocean':
+      // LEGITIMATE DEFAULT: ecosystemCollapseActive is optional (backward compat alias for ecosystemCrisisActive)
+      // Default to false if not present
       return state.environmentalAccumulation?.ecosystemCollapseActive || false;
     case 'social':
-      return state.socialAccumulation?.meaningCollapseActive || false;
+      return assertStateProperty(
+        state.socialAccumulation,
+        'meaningCollapseActive',
+        { location: 'governmentTechActions.isCrisisActiveForCategory', month: state.currentMonth }
+      ) as unknown as boolean;
     case 'alignment':
       return (state.aiAgents.filter(ai => ai.alignment < 0.5).length / state.aiAgents.length) > 0.3;
     default:

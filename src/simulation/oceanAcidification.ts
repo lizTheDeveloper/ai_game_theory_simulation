@@ -95,12 +95,18 @@ export function updateOceanAcidificationSystem(state: GameState): void {
   
   const absorptionDecline = (1.0 - oa.aragoniteSaturation) * 0.0005; // Faster as saturation drops
   oa.co2AbsorptionCapacity = Math.max(0.50, oa.co2AbsorptionCapacity - absorptionDecline);
-  
+
   // Feedback to climate: Lower absorption = more atmospheric CO2
-  if (state.environmentalAccumulation && oa.co2AbsorptionCapacity < 0.75) {
+  // Phase 5.1 (Oct 26, 2025): Use assertStateProperty for REQUIRED environmentalAccumulation
+  if (oa.co2AbsorptionCapacity < 0.75) {
     const climateAcceleration = (0.75 - oa.co2AbsorptionCapacity) * 0.0002;
+    const currentClimateStability = assertStateProperty(
+      state.environmentalAccumulation,
+      'climateStability',
+      { location: 'updateOceanAcidificationSystem[climate feedback]', month: state.currentMonth }
+    );
     state.environmentalAccumulation.climateStability = Math.max(0,
-      state.environmentalAccumulation.climateStability - climateAcceleration
+      currentClimateStability - climateAcceleration
     );
   }
   
