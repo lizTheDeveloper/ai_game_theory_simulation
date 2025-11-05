@@ -90,6 +90,7 @@ import {
   WarMeaningFeedbackPhase,  // TIER 2.8 (Oct 14, 2025): War-Meaning Feedback Loop
   ClimateJusticePhase,  // TIER 2.8 (Oct 14, 2025): Climate Justice & Environmental Debt
   OrganizationViabilityPhase,  // TIER 1.7.3 (Oct 13, 2025): Link orgs to country health
+  CooperativeOwnershipPhase,  // Nov 5, 2025: Cooperative organization survival bonus
   NuclearWinterPhase,  // TIER 1.7.4 (Oct 13, 2025): Long-term nuclear war effects
   RadiationSystemPhase,  // TIER 1.7 (Oct 14, 2025): Radiation health effects (cancer, birth defects, contamination)
   WetBulbTemperaturePhase,  // Oct 17, 2025: Wet bulb temperature deadly heat events
@@ -534,6 +535,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new WarMeaningFeedbackPhase());  // TIER 2.8: War-Meaning Feedback Loop
     this.orchestrator.registerPhase(new ClimateJusticePhase());  // TIER 2.8: Climate Justice & Environmental Debt
     this.orchestrator.registerPhase(new OrganizationViabilityPhase());  // TIER 1.7.3: Check org survival vs country health
+    this.orchestrator.registerPhase(new CooperativeOwnershipPhase());  // Nov 5, 2025: Cooperative organization survival bonus (order 15.5)
     this.orchestrator.registerPhase(new NuclearWinterPhase());  // TIER 1.7.4: Update nuclear winter effects
     this.orchestrator.registerPhase(new RadiationSystemPhase());  // TIER 1.7: Radiation health effects (cancer, birth defects, contamination)
     this.orchestrator.registerPhase(new WetBulbTemperaturePhase());  // Oct 17, 2025: Wet bulb temperature deadly heat events

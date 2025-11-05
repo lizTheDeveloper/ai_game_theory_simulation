@@ -86,6 +86,7 @@ export { PsychologicalTraumaPhase } from './PsychologicalTraumaPhase';  // Phase
 export { WarMeaningFeedbackPhase } from './WarMeaningFeedbackPhase';
 export { ClimateJusticePhase } from './ClimateJusticePhase';
 export { OrganizationViabilityPhase } from './OrganizationViabilityPhase';
+export { CooperativeOwnershipPhase } from './CooperativeOwnershipPhase';  // Nov 5, 2025: Cooperative organization survival bonus
 export { NuclearWinterPhase } from './NuclearWinterPhase';
 export { RadiationSystemPhase } from './RadiationSystemPhase';
 export { WetBulbTemperaturePhase } from './WetBulbTemperaturePhase';  // Wet Bulb Temperature Events (Oct 17, 2025)

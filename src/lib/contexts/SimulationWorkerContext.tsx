@@ -96,6 +96,7 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
 
         client.on('update', (delta: StateDelta, currentMonth?: number, currentDay?: number) => {
           setLastUpdate(delta)
+          // Always update simulation month from delta if present
           if (delta.currentMonth !== undefined) {
             setSimulationMonth(delta.currentMonth)
           }
