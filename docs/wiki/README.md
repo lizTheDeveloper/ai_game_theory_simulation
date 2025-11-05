@@ -39,6 +39,48 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 - **🔬 Running experiments?** Check [Running Simulations](./RUNNING_SIMULATIONS.md)
 - **📊 Understanding outcomes?** Read [Understanding Results](./UNDERSTANDING_RESULTS.md)
 
+## ⚠️ Recent Changes (November 5, 2025)
+
+**🔧 AUTONOMOUS WORKER HEALTH MONITORING & AUTO-REMEDIATION (Nov 5, 2025)**
+
+Added proactive health monitoring and self-healing capabilities to the autonomous worker system:
+
+**New Infrastructure:**
+- **`scripts/autonomous-worker-watcher.sh`** - Hourly health check script with auto-remediation
+- **`scripts/CRON_SETUP.md`** - Complete cron configuration guide for VM deployment
+
+**Features:**
+- ✅ **Proactive monitoring**: Checks last 90 minutes for worker execution, errors, timeouts
+- ✅ **Auto-remediation**: Automatically spawns Claude Code to diagnose and fix issues
+- ✅ **Comprehensive diagnostics**: Analyzes worker logs, cron status, branch counts, merge orchestrator health
+- ✅ **Self-healing**: Fixes common problems (cron restart, hung processes, API keys, lock files)
+- ✅ **Graceful degradation**: Provides manual troubleshooting steps if Claude Code unavailable
+
+**Recommended Cron Schedule:**
+- **:00** - Autonomous worker runs (main implementation work)
+- **:15** - Health check & auto-fix (monitors previous hour's worker)
+- **:45** - Merge orchestrator processes branches
+
+**Auto-Remediation Triggers:**
+- Workers haven't run in 2+ hours → Diagnoses cron/scheduling issues
+- Recent runs encountering errors → Investigates common failure patterns
+- Recent runs hitting timeouts → Analyzes task complexity
+- Cron service stopped → Provides restart instructions
+
+**Benefits:**
+- Self-healing system recovers from common failures automatically
+- Early detection of systematic issues (prevents multi-hour downtime)
+- Reduces manual intervention for routine operational issues
+- Comprehensive failure diagnosis with Claude Code integration
+
+**Files Changed:**
+- `scripts/autonomous-worker-watcher.sh` (348 lines - NEW)
+- `scripts/CRON_SETUP.md` (214 lines - NEW)
+
+See: [Autonomous Worker Health Monitoring & Auto-Remediation](#autonomous-worker-health-monitoring--auto-remediation--documented) for complete documentation.
+
+Commit: 4fd9d55 (Nov 5, 2025)
+
 ## ⚠️ Recent Changes (November 3, 2025)
 
 **🗺️ ROADMAP AUDIT COMPLETE (Nov 3, 2025)**
@@ -3660,6 +3702,40 @@ state.history.exogenousShocks?: Array<{
   - 9254e54 (Oct 31, 2025) - Fixed to use active monitor instead of passive monitor
   - 4cd638d (Oct 31, 2025) - Fixed exactly-once semantics (prevent queue backup)
   - ba8dfcb (Oct 31, 2025) - Fixed message processing: only mark processed after successful spawn
+
+**Autonomous Worker Health Monitoring & Auto-Remediation** ✅ DOCUMENTED
+- **Proactive health checking**: Hourly watcher script monitors worker execution and auto-remediates issues
+- **Cron integration**: Recommended schedule at `:15` (after `:00` worker runs, before `:45` merge orchestrator)
+- **Comprehensive monitoring**:
+  - Worker execution frequency (checks last 90 minutes for hourly runs)
+  - Log analysis for errors, timeouts, failures
+  - Worker branch count and merge status
+  - Cron service health (VM only)
+- **Auto-remediation triggers**:
+  - Workers haven't run in 2+ hours → Diagnoses cron/scheduling issues
+  - Recent runs encountering errors → Investigates common failure patterns
+  - Recent runs hitting timeouts → Analyzes task complexity
+  - Cron service stopped → Provides restart instructions
+- **Auto-fix capability**: When issues detected, watcher automatically:
+  1. Creates diagnostic task file with troubleshooting steps
+  2. Spawns Claude Code with 10-minute timeout
+  3. Fixes common problems (cron restart, hung processes, API keys, lock files)
+  4. Documents remediation in logs
+- **Graceful degradation**: If Claude Code unavailable, provides manual troubleshooting steps
+- **Recommended cron schedule** (see `scripts/CRON_SETUP.md`):
+  - `:00` - Autonomous worker runs (main implementation work)
+  - `:15` - Health check & auto-fix (monitors previous hour's worker)
+  - `:45` - Merge orchestrator processes branches
+- **Benefits**:
+  - Self-healing system - recovers from common failures automatically
+  - Early detection of systematic issues (prevents multi-hour downtime)
+  - Comprehensive failure diagnosis with Claude Code integration
+  - Reduces manual intervention for routine operational issues
+- **Files**:
+  - `scripts/autonomous-worker-watcher.sh` (348 lines) - Health check & auto-remediation
+  - `scripts/CRON_SETUP.md` (214 lines) - Complete cron configuration guide
+- **Logs**: `logs/worker_watcher/watcher_TIMESTAMP.log`
+- Commit: 4fd9d55 (Nov 5, 2025)
 
 **GameState Field Editor Agent** ✅ DOCUMENTED
 - **Purpose**: Haiku micro-agent for mechanical GameState field edits with FULL GameState type context (900 lines)

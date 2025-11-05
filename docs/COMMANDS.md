@@ -448,6 +448,53 @@ The autonomous worker executes in 7 stages:
 6. **PR CREATION** - Automatically create pull request with metrics (added Oct 30, 2025)
 7. **METRICS COLLECTION** - Export JSON metrics, update status
 
+### Health Monitoring & Auto-Remediation
+
+Added November 5, 2025 - proactive health checking with self-healing capabilities.
+
+**Run health check manually:**
+```bash
+# Check worker health (analyzes last 90 minutes)
+./scripts/autonomous-worker-watcher.sh
+
+# View watcher logs
+tail -100 logs/worker_watcher/watcher_*.log
+```
+
+**Automated cron schedule (recommended):**
+```bash
+# :00 - Autonomous worker runs
+0 * * * * cd ~/ai_game_theory_simulation && ./autonomous-worker.sh >> logs/cron_worker.log 2>&1
+
+# :15 - Health check & auto-fix
+15 * * * * cd ~/ai_game_theory_simulation && ./scripts/autonomous-worker-watcher.sh >> logs/cron_watcher.log 2>&1
+
+# :45 - Merge orchestrator
+45 * * * * cd ~/ai_game_theory_simulation && ./scripts/merge-orchestrator.sh >> logs/cron_merge.log 2>&1
+```
+
+**What it monitors:**
+- Worker execution frequency (detects workers not running)
+- Error patterns in recent logs (Claude failures, timeouts)
+- Worker branch accumulation (merge backlog)
+- Merge orchestrator health
+- Cron service status (VM only)
+
+**Auto-remediation capabilities:**
+- Spawns Claude Code to diagnose and fix issues (10-minute timeout)
+- Restarts cron if stopped
+- Kills hung worker processes
+- Cleans up lock files
+- Diagnoses API key issues
+
+**Watcher logs** (`logs/worker_watcher/watcher_*.log`):
+- Complete health check report
+- Issue detection and diagnosis
+- Auto-remediation attempts
+- Manual troubleshooting steps (if auto-fix unavailable)
+
+See: `scripts/CRON_SETUP.md` for complete setup guide and troubleshooting.
+
 ### Log Files
 
 **Worker logs** (`logs/autonomous/worker_*.log`):
