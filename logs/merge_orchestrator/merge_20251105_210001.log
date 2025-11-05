@@ -1,0 +1,504 @@
+
+
+=== Merge Orchestrator Started ===
+=== Merge Orchestrator Started ===
+[21:00:01] Timestamp: Wed Nov  5 21:00:01 UTC 2025
+[21:00:01] Dry run: false
+[21:00:01] Max branches: 10
+[21:00:01] Timestamp: Wed Nov  5 21:00:01 UTC 2025
+[21:00:01] Environment: VM (backend only)
+
+[21:00:01] Dry run: false
+=== Fetching Latest Changes ===
+[21:00:01] Max branches: 10
+[21:00:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+
+=== Discovering Branches ===
+[21:00:03] Found 67 branches to process
+[21:00:03] Found 67 branches to process
+
+=== Branch 1/67: auto/worker-20251102_043015 ===
+
+=== Branch 1/67: auto/worker-20251102_043015 ===
+[21:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251105_210001
+[21:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251105_210001
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+[21:00:03] ❌ Failed to create merge branch
+
+=== Branch 2/67: auto/worker-20251102_050015 ===
+[21:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251105_210001
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+[21:00:03] ❌ Failed to create merge branch
+
+=== Branch 3/67: auto/worker-20251102_080006 ===
+[21:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251105_210001
+Switched to a new branch 'merge/auto/worker-20251102_043015_20251105_210001'
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Branch 'merge/auto/worker-20251102_043015_20251105_210001' set up to track remote branch 'main' from 'origin'.
+Switched to a new branch 'merge/auto/worker-20251102_080006_20251105_210001'
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Branch 'merge/auto/worker-20251102_080006_20251105_210001' set up to track remote branch 'main' from 'origin'.
+[21:00:03] 🔀 Attempting merge from origin/auto/worker-20251102_043015
+Already up to date.
+[21:00:03] ✅ Merge successful (no conflicts)
+[21:00:03] 🚦 Running quality gates...
+[21:00:03]   Gate 1/2: TypeScript compilation
+[21:00:03] 🔀 Attempting merge from origin/auto/worker-20251102_080006
+Your local changes to the following files would be overwritten by merge:
+  logs/autonomous/cron_20251105.log logs/autonomous/worker_20251104_230001.log logs/autonomous/worker_20251105_000001.log logs/autonomous/worker_20251105_010001.log logs/autonomous/worker_20251105_013001.log logs/autonomous/worker_20251105_020001.log logs/autonomous/worker_20251105_023000.log logs/autonomous/worker_20251105_180001.log logs/autonomous/worker_20251105_182057.log logs/merge_orchestrator/merge_20251105_183730.log logs/merge_orchestrator/merge_20251105_183807.log logs/merge_orchestrator/merge_20251105_183830.log logs/merge_orchestrator/merge_orchestrator_20251104_230001.log logs/merge_orchestrator/merge_orchestrator_20251105_000001.log logs/merge_orchestrator/merge_orchestrator_20251105_010001.log logs/merge_orchestrator/merge_orchestrator_20251105_020001.log scripts/merge-orchestrator.sh src/simulation/agents/governmentTechActions.ts src/simulation/oceanAcidification.ts[21:00:04] ❌ Merge conflicts detected
+[21:00:04] 🚫 Merge BLOCKED: Manual conflict resolution required
+[21:00:04] 📋 Merge branch preserved: merge/auto/worker-20251102_080006_20251105_210001
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 4/67: auto/worker-20251102_090015 ===
+[21:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251105_210001
+Switched to a new branch 'merge/auto/worker-20251102_090015_20251105_210001'
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Branch 'merge/auto/worker-20251102_090015_20251105_210001' set up to track remote branch 'main' from 'origin'.
+[21:00:04] 🔀 Attempting merge from origin/auto/worker-20251102_090015
+Your local changes to the following files would be overwritten by merge:
+  logs/autonomous/cron_20251105.log logs/autonomous/worker_20251104_230001.log logs/autonomous/worker_20251105_000001.log logs/autonomous/worker_20251105_010001.log logs/autonomous/worker_20251105_013001.log logs/autonomous/worker_20251105_020001.log logs/autonomous/worker_20251105_023000.log logs/autonomous/worker_20251105_180001.log logs/autonomous/worker_20251105_182057.log logs/merge_orchestrator/merge_20251105_183730.log logs/merge_orchestrator/merge_20251105_183807.log logs/merge_orchestrator/merge_20251105_183830.log logs/merge_orchestrator/merge_orchestrator_20251104_230001.log logs/merge_orchestrator/merge_orchestrator_20251105_000001.log logs/merge_orchestrator/merge_orchestrator_20251105_010001.log logs/merge_orchestrator/merge_orchestrator_20251105_020001.log scripts/merge-orchestrator.sh src/simulation/agents/governmentTechActions.ts src/simulation/oceanAcidification.ts[21:00:04] ❌ Merge conflicts detected
+[21:00:04] 🚫 Merge BLOCKED: Manual conflict resolution required
+[21:00:04] 📋 Merge branch preserved: merge/auto/worker-20251102_090015_20251105_210001
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 5/67: auto/worker-20251102_100015 ===
+[21:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251105_210001
+Switched to a new branch 'merge/auto/worker-20251102_100015_20251105_210001'
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Branch 'merge/auto/worker-20251102_100015_20251105_210001' set up to track remote branch 'main' from 'origin'.
+[21:00:05] 🔀 Attempting merge from origin/auto/worker-20251102_100015
+Your local changes to the following files would be overwritten by merge:
+  logs/autonomous/cron_20251105.log logs/autonomous/worker_20251104_230001.log logs/autonomous/worker_20251105_000001.log logs/autonomous/worker_20251105_010001.log logs/autonomous/worker_20251105_013001.log logs/autonomous/worker_20251105_020001.log logs/autonomous/worker_20251105_023000.log logs/autonomous/worker_20251105_180001.log logs/autonomous/worker_20251105_182057.log logs/merge_orchestrator/merge_20251105_183730.log logs/merge_orchestrator/merge_20251105_183807.log logs/merge_orchestrator/merge_20251105_183830.log logs/merge_orchestrator/merge_orchestrator_20251104_230001.log logs/merge_orchestrator/merge_orchestrator_20251105_000001.log logs/merge_orchestrator/merge_orchestrator_20251105_010001.log logs/merge_orchestrator/merge_orchestrator_20251105_020001.log scripts/merge-orchestrator.sh src/simulation/agents/governmentTechActions.ts src/simulation/oceanAcidification.ts[21:00:05] ❌ Merge conflicts detected
+[21:00:05] 🚫 Merge BLOCKED: Manual conflict resolution required
+[21:00:05] 📋 Merge branch preserved: merge/auto/worker-20251102_100015_20251105_210001
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 6/67: auto/worker-20251102_110015 ===
+[21:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251105_210001
+Switched to a new branch 'merge/auto/worker-20251102_110015_20251105_210001'
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Branch 'merge/auto/worker-20251102_110015_20251105_210001' set up to track remote branch 'main' from 'origin'.
+[21:00:05] 🔀 Attempting merge from origin/auto/worker-20251102_110015
+Your local changes to the following files would be overwritten by merge:
+  logs/autonomous/cron_20251105.log logs/autonomous/worker_20251104_230001.log logs/autonomous/worker_20251105_000001.log logs/autonomous/worker_20251105_010001.log logs/autonomous/worker_20251105_013001.log logs/autonomous/worker_20251105_020001.log logs/autonomous/worker_20251105_023000.log logs/autonomous/worker_20251105_180001.log logs/autonomous/worker_20251105_182057.log logs/merge_orchestrator/merge_20251105_183730.log logs/merge_orchestrator/merge_20251105_183807.log logs/merge_orchestrator/merge_20251105_183830.log logs/merge_orchestrator/merge_orchestrator_20251104_230001.log logs/merge_orchestrator/merge_orchestrator_20251105_000001.log logs/merge_orchestrator/merge_orchestrator_20251105_010001.log logs/merge_orchestrator/merge_orchestrator_20251105_020001.log scripts/merge-orchestrator.sh src/simulation/agents/governmentTechActions.ts src/simulation/oceanAcidification.ts[21:00:05] ❌ Merge conflicts detected
+[21:00:05] 🚫 Merge BLOCKED: Manual conflict resolution required
+[21:00:05] 📋 Merge branch preserved: merge/auto/worker-20251102_110015_20251105_210001
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 7/67: auto/worker-20251102_120000 ===
+[21:00:06] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251105_210001
+Switched to a new branch 'merge/auto/worker-20251102_120000_20251105_210001'
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Branch 'merge/auto/worker-20251102_120000_20251105_210001' set up to track remote branch 'main' from 'origin'.
+[21:00:06] 🔀 Attempting merge from origin/auto/worker-20251102_120000
+Your local changes to the following files would be overwritten by merge:
+  logs/autonomous/cron_20251105.log logs/autonomous/worker_20251104_230001.log logs/autonomous/worker_20251105_000001.log logs/autonomous/worker_20251105_010001.log logs/autonomous/worker_20251105_013001.log logs/autonomous/worker_20251105_020001.log logs/autonomous/worker_20251105_023000.log logs/autonomous/worker_20251105_180001.log logs/autonomous/worker_20251105_182057.log logs/merge_orchestrator/merge_20251105_183730.log logs/merge_orchestrator/merge_20251105_183807.log logs/merge_orchestrator/merge_20251105_183830.log logs/merge_orchestrator/merge_orchestrator_20251104_230001.log logs/merge_orchestrator/merge_orchestrator_20251105_000001.log logs/merge_orchestrator/merge_orchestrator_20251105_010001.log logs/merge_orchestrator/merge_orchestrator_20251105_020001.log scripts/merge-orchestrator.sh src/simulation/agents/governmentTechActions.ts src/simulation/oceanAcidification.ts[21:00:06] ❌ Merge conflicts detected
+[21:00:06] 🚫 Merge BLOCKED: Manual conflict resolution required
+[21:00:06] 📋 Merge branch preserved: merge/auto/worker-20251102_120000_20251105_210001
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 8/67: auto/worker-20251102_130014 ===
+[21:00:06] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251105_210001
+Switched to a new branch 'merge/auto/worker-20251102_130014_20251105_210001'
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Branch 'merge/auto/worker-20251102_130014_20251105_210001' set up to track remote branch 'main' from 'origin'.
+[21:00:06] 🔀 Attempting merge from origin/auto/worker-20251102_130014
+Your local changes to the following files would be overwritten by merge:
+  logs/autonomous/cron_20251105.log logs/autonomous/worker_20251104_230001.log logs/autonomous/worker_20251105_000001.log logs/autonomous/worker_20251105_010001.log logs/autonomous/worker_20251105_013001.log logs/autonomous/worker_20251105_020001.log logs/autonomous/worker_20251105_023000.log logs/autonomous/worker_20251105_180001.log logs/autonomous/worker_20251105_182057.log logs/merge_orchestrator/merge_20251105_183730.log logs/merge_orchestrator/merge_20251105_183807.log logs/merge_orchestrator/merge_20251105_183830.log logs/merge_orchestrator/merge_orchestrator_20251104_230001.log logs/merge_orchestrator/merge_orchestrator_20251105_000001.log logs/merge_orchestrator/merge_orchestrator_20251105_010001.log logs/merge_orchestrator/merge_orchestrator_20251105_020001.log scripts/merge-orchestrator.sh src/simulation/agents/governmentTechActions.ts src/simulation/oceanAcidification.ts[21:00:07] ❌ Merge conflicts detected
+[21:00:07] 🚫 Merge BLOCKED: Manual conflict resolution required
+[21:00:07] 📋 Merge branch preserved: merge/auto/worker-20251102_130014_20251105_210001
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 9/67: auto/worker-20251102_140015 ===
+[21:00:07] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251105_210001
+Switched to a new branch 'merge/auto/worker-20251102_140015_20251105_210001'
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Branch 'merge/auto/worker-20251102_140015_20251105_210001' set up to track remote branch 'main' from 'origin'.
+[21:00:08] 🔀 Attempting merge from origin/auto/worker-20251102_140015
+Your local changes to the following files would be overwritten by merge:
+  logs/autonomous/cron_20251105.log logs/autonomous/worker_20251104_230001.log logs/autonomous/worker_20251105_000001.log logs/autonomous/worker_20251105_010001.log logs/autonomous/worker_20251105_013001.log logs/autonomous/worker_20251105_020001.log logs/autonomous/worker_20251105_023000.log logs/autonomous/worker_20251105_180001.log logs/autonomous/worker_20251105_182057.log logs/merge_orchestrator/merge_20251105_183730.log logs/merge_orchestrator/merge_20251105_183807.log logs/merge_orchestrator/merge_20251105_183830.log logs/merge_orchestrator/merge_orchestrator_20251104_230001.log logs/merge_orchestrator/merge_orchestrator_20251105_000001.log logs/merge_orchestrator/merge_orchestrator_20251105_010001.log logs/merge_orchestrator/merge_orchestrator_20251105_020001.log scripts/merge-orchestrator.sh src/simulation/agents/governmentTechActions.ts src/simulation/oceanAcidification.ts[21:00:08] ❌ Merge conflicts detected
+[21:00:08] 🚫 Merge BLOCKED: Manual conflict resolution required
+[21:00:08] 📋 Merge branch preserved: merge/auto/worker-20251102_140015_20251105_210001
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 10/67: auto/worker-20251102_150015 ===
+[21:00:09] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251105_210001
+Switched to a new branch 'merge/auto/worker-20251102_150015_20251105_210001'
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Branch 'merge/auto/worker-20251102_150015_20251105_210001' set up to track remote branch 'main' from 'origin'.
+[21:00:09] 🔀 Attempting merge from origin/auto/worker-20251102_150015
+Your local changes to the following files would be overwritten by merge:
+  logs/autonomous/cron_20251105.log logs/autonomous/worker_20251104_230001.log logs/autonomous/worker_20251105_000001.log logs/autonomous/worker_20251105_010001.log logs/autonomous/worker_20251105_013001.log logs/autonomous/worker_20251105_020001.log logs/autonomous/worker_20251105_023000.log logs/autonomous/worker_20251105_180001.log logs/autonomous/worker_20251105_182057.log logs/merge_orchestrator/merge_20251105_183730.log logs/merge_orchestrator/merge_20251105_183807.log logs/merge_orchestrator/merge_20251105_183830.log logs/merge_orchestrator/merge_orchestrator_20251104_230001.log logs/merge_orchestrator/merge_orchestrator_20251105_000001.log logs/merge_orchestrator/merge_orchestrator_20251105_010001.log logs/merge_orchestrator/merge_orchestrator_20251105_020001.log scripts/merge-orchestrator.sh src/simulation/agents/governmentTechActions.ts src/simulation/oceanAcidification.ts[21:00:10] ❌ Merge conflicts detected
+[21:00:10] 🚫 Merge BLOCKED: Manual conflict resolution required
+[21:00:10] 📋 Merge branch preserved: merge/auto/worker-20251102_150015_20251105_210001
+A	logs/autonomous/cron_20251105.log
+M	logs/autonomous/status_current.txt
+A	logs/autonomous/worker_20251104_230001.log
+A	logs/autonomous/worker_20251105_000001.log
+A	logs/autonomous/worker_20251105_010001.log
+A	logs/autonomous/worker_20251105_013001.log
+A	logs/autonomous/worker_20251105_020001.log
+A	logs/autonomous/worker_20251105_023000.log
+A	logs/autonomous/worker_20251105_180001.log
+A	logs/autonomous/worker_20251105_182057.log
+A	logs/merge_orchestrator/merge_20251105_183730.log
+A	logs/merge_orchestrator/merge_20251105_183807.log
+A	logs/merge_orchestrator/merge_20251105_183830.log
+A	logs/merge_orchestrator/merge_orchestrator_20251104_230001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_000001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_010001.log
+A	logs/merge_orchestrator/merge_orchestrator_20251105_020001.log
+M	scripts/merge-orchestrator.sh
+M	src/simulation/agents/governmentTechActions.ts
+M	src/simulation/oceanAcidification.ts
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+[21:00:10] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[21:00:10] Total branches found: 67
+[21:00:10] Branches processed: 10
+[21:00:10] ✅ Successfully merged: 0
+[21:00:10] ⏭️  Skipped (frontend on VM): 0
+[21:00:10] ❌ Failed (conflicts/gates): 10
+[21:00:10] 
+[21:00:10] 📊 Remaining branches: 57
+[21:00:10]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[21:00:10] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251105_210001.log

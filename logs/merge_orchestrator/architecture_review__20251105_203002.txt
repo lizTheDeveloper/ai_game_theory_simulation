@@ -1,0 +1,115 @@
+This is problematic - a PDF file has been committed as text with 54,266 lines. Let me compile my architecture review findings:
+
+## Architecture Review Report for `research/citations-phase2-20251104_183001`
+
+### Summary
+This branch is primarily a research/citation verification branch with minimal code changes. However, there are several architectural issues that need attention.
+
+---
+
+### 🚨 CRITICAL Issues (1)
+
+#### 1. **Corrupted JSON File**
+- **File:** `docs/underdocumented.json` 
+- **Issue:** JSON file is malformed and unparseable (JSONDecodeError at line 139)
+- **Impact:** Any tool or process that depends on this file will fail
+- **Evidence:** 
+  ```
+  json.decoder.JSONDecodeError: Invalid control character at: line 139 column 27 (char 4224)
+  ```
+- **Root Cause:** The file appears to be corrupted with incomplete content (ends with partial text)
+- **Required Fix:** This file must be regenerated properly before merge
+
+---
+
+### ⚠️ HIGH Issues (2)
+
+#### 1. **PDF Stored as Text in Git**
+- **File:** `research/pdfs/2507.21509v1.pdf`
+- **Issue:** PDF file committed as 54,266 lines of text diffs
+- **Impact:** 
+  - Repository bloat (massive increase in git history size)
+  - Poor performance during cloning/fetching
+  - Inefficient storage of binary data as text
+- **Recommendation:** PDFs should be tracked with Git LFS or stored externally
+
+#### 2. **Dangerous Shell Script Practices**
+- **File:** `scripts/get-claude-usage.sh`
+- **Issue:** Uses `--dangerously-skip-permissions` flag
+- **Security Concern:** Bypasses security permissions
+- **Additional Issues:**
+  - No timeout handling for tmux session
+  - No error handling if tmux is not installed
+  - Hardcoded sleep times (fragile, may fail on slower systems)
+- **Recommendation:** Refactor to avoid dangerous flags and add proper error handling
+
+---
+
+### 📋 MEDIUM Issues (2)
+
+#### 1. **Silent Fallback Pattern in Script**
+- **File:** `autonomous-worker.sh`
+- **Issue:** Uses defensive fallback pattern `|| true` and default values
+- **Code:**
+  ```bash
+  SESSION_USAGE_PCT=50  # Default if script fails
+  WEEK_USAGE_PCT=50
+  OPUS_USAGE_PCT=0
+  ```
+- **Concern:** Violates project's "fail-loudly" philosophy for research simulation
+- **Recommendation:** Should fail explicitly if usage data cannot be obtained
+
+#### 2. **Unvalidated External Command Execution**
+- **File:** `scripts/get-claude-usage.sh`
+- **Issue:** Executes complex tmux commands without validation
+- **Risk:** If tmux behavior changes or is unavailable, script will fail silently
+- **Recommendation:** Add dependency checks and validation
+
+---
+
+### 💡 LOW Issues (2)
+
+#### 1. **Large Binary Files in Repository**
+- **Files:** 
+  - `research/pdfs/greenblatt_alignment_faking_2024.pdf` (3.2MB)
+  - `research/pdfs/Bayraktarov_2016_marine_coastal_restoration.pdf` (338KB)
+- **Issue:** Adding large binary files to git history
+- **Impact:** Repository size growth over time
+- **Recommendation:** Consider using Git LFS for PDFs
+
+#### 2. **Existing TypeScript Errors**
+- **Files:** `src/components/paradigms/ParadigmDetailPanel.tsx`
+- **Issue:** Pre-existing TypeScript errors (not introduced by this branch)
+- **Note:** Should be fixed but not blocking for this merge
+
+---
+
+### Positive Aspects
+- Research documentation appears thorough and well-organized
+- Citation verification work is systematic and documented
+- No changes to core simulation code (good separation of concerns)
+
+---
+
+### Recommendations
+
+1. **MUST FIX before merge:**
+   - Regenerate `docs/underdocumented.json` with valid JSON
+
+2. **STRONGLY RECOMMEND fixing:**
+   - Remove the text-stored PDF or convert to proper binary storage
+   - Refactor `get-claude-usage.sh` to remove dangerous flags
+
+3. **Should address soon:**
+   - Update `autonomous-worker.sh` to fail loudly on missing data
+   - Add Git LFS for PDF storage
+
+---
+
+**VERDICT:** BLOCK
+**CRITICAL_ISSUES:** 1
+**HIGH_ISSUES:** 2
+**MEDIUM_ISSUES:** 2
+**LOW_ISSUES:** 2
+
+**Blocking Reason:** The corrupted `docs/underdocumented.json` file will break any processes that depend on it. This must be fixed before the branch can be safely merged to main.

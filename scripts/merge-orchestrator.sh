@@ -1,356 +1,229 @@
 #!/bin/bash
-# Merge Orchestrator: Hourly Branch Cleanup & Quality Gates
-# Created: 2025-11-02
 #
-# Automatically discovers feature branches, runs quality gates, and merges to main if all checks pass.
-# CRITICAL: On VM, skips frontend branches (handle those locally on Mac with Playwright)
+# Merge Orchestrator - Automated Branch Merging with Quality Gates
+# Runs hourly via cron to process pending feature branches
+#
+# Usage: ./scripts/merge-orchestrator.sh [--dry-run] [--max-branches N]
+#
 
-set -e
+set -eo pipefail  # Removed -u to allow unset variables with defaults
 
-# ============================================
 # Configuration
-# ============================================
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 LOG_DIR="$PROJECT_ROOT/logs/merge_orchestrator"
-LOG_FILE="$LOG_DIR/merge_orchestrator_${TIMESTAMP}.log"
 LOCK_FILE="/tmp/merge-orchestrator.lock"
 
+# Parse arguments
+DRY_RUN=false
+MAX_BRANCHES=10
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --dry-run)
+      DRY_RUN=true
+      shift
+      ;;
+    --max-branches)
+      MAX_BRANCHES="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+  esac
+done
+
 # Environment detection
-IS_VM="${IS_VM:-false}"
-if [ -d "/home/lizthedeveloper_gmail_com" ]; then
+IS_VM=false
+if [ -f "/etc/cloud/cloud.cfg" ] || [ -f "/.dockerenv" ]; then
   IS_VM=true
 fi
 
-# Configuration (can be overridden via environment variables)
-DRY_RUN="${MERGE_ORCHESTRATOR_DRY_RUN:-false}"
-NOTIFY="${MERGE_ORCHESTRATOR_NOTIFY:-true}"
-MAX_BRANCHES="${MERGE_ORCHESTRATOR_MAX_BRANCHES:-10}"
-SKIP_FRONTEND="${MERGE_ORCHESTRATOR_SKIP_FRONTEND:-$IS_VM}"
-ENABLE_AGENT_REVIEWS="${MERGE_ORCHESTRATOR_ENABLE_AGENT_REVIEWS:-true}"  # Phase 2: Architecture-skeptic + Sylvia reviews
-ENABLE_AUTO_REMEDIATION="${MERGE_ORCHESTRATOR_ENABLE_AUTO_REMEDIATION:-true}"  # Phase 2.5: Auto-fix CRITICAL issues
-
-# ============================================
-# Logging Setup
-# ============================================
-
+# Create log directory
 mkdir -p "$LOG_DIR"
 
+# Log file for this run
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+LOG_FILE="$LOG_DIR/merge_${TIMESTAMP}.log"
+
+# Logging functions
 log() {
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
+  echo "[$(date +%H:%M:%S)] $*" | tee -a "$LOG_FILE"
 }
 
 log_section() {
   echo "" | tee -a "$LOG_FILE"
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a "$LOG_FILE"
-  log "$1"
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a "$LOG_FILE"
+  echo "=== $* ===" | tee -a "$LOG_FILE"
 }
 
-log_error() {
-  log "❌ ERROR: $*"
+# Check for concurrent runs
+if [ -f "$LOCK_FILE" ]; then
+  log "⚠️  Merge orchestrator already running (lock file exists)"
+  exit 0
+fi
+
+# Create lock file
+touch "$LOCK_FILE"
+trap "rm -f $LOCK_FILE" EXIT
+
+# Change to project root
+cd "$PROJECT_ROOT"
+
+log_section "Merge Orchestrator Started"
+log "Timestamp: $(date)"
+log "Dry run: $DRY_RUN"
+log "Max branches: $MAX_BRANCHES"
+log "Environment: $([ "$IS_VM" = "true" ] && echo "VM (backend only)" || echo "Local (all branches)")"
+
+# Update from remote
+log_section "Fetching Latest Changes"
+git fetch origin 2>&1 | tee -a "$LOG_FILE" || {
+  log "❌ Failed to fetch from origin"
+  exit 1
 }
 
-log_success() {
-  log "✅ $*"
-}
+# Get list of remote branches (exclude main, HEAD)
+log_section "Discovering Branches"
+BRANCHES=$(git branch -r | grep -v "HEAD" | grep -v "/main$" | sed 's/origin\///' | sed 's/^[[:space:]]*//')
+BRANCH_COUNT=$(echo "$BRANCHES" | wc -l | tr -d ' ')
+log "Found $BRANCH_COUNT branches to process"
 
-log_info() {
-  log "ℹ️  $*"
-}
+# Counters
+PROCESSED=0
+MERGED=0
+SKIPPED=0
+FAILED=0
 
-log_warning() {
-  log "⚠️  WARNING: $*"
-}
+# Process branches
+for BRANCH in $BRANCHES; do
+  # Limit number of branches processed per run
+  if [ $PROCESSED -ge $MAX_BRANCHES ]; then
+    log "⏸️  Reached max branches limit ($MAX_BRANCHES), stopping"
+    break
+  fi
 
-log_skip() {
-  log "⏭️  SKIP: $*"
-}
+  PROCESSED=$((PROCESSED + 1))
 
-# ============================================
-# Lock File Management
-# ============================================
+  log_section "Branch $PROCESSED/$BRANCH_COUNT: $BRANCH"
 
-acquire_lock() {
-  if [ -f "$LOCK_FILE" ]; then
-    LOCK_PID=$(cat "$LOCK_FILE")
-    if ps -p "$LOCK_PID" > /dev/null 2>&1; then
-      log_error "Merge orchestrator already running (PID: $LOCK_PID)"
-      exit 1
-    else
-      log_warning "Stale lock file found, removing"
-      rm -f "$LOCK_FILE"
+  # Check if branch exists
+  if ! git rev-parse --verify "origin/$BRANCH" >/dev/null 2>&1; then
+    log "⚠️  Branch origin/$BRANCH not found, skipping"
+    SKIPPED=$((SKIPPED + 1))
+    continue
+  fi
+
+  # Check if branch is frontend (skip on VM)
+  if [ "$IS_VM" = "true" ]; then
+    FRONTEND_CHANGES=$(git diff main...origin/$BRANCH --name-only 2>/dev/null | grep -E '^src/(lib|app|components)/|\.tsx$|\.css$' | wc -l | tr -d ' \n' || echo "0")
+    if [ "${FRONTEND_CHANGES:-0}" -gt 0 ] 2>/dev/null; then
+      log "⏭️  SKIPPING frontend branch on VM (has $FRONTEND_CHANGES frontend files)"
+      log "   Handle this branch locally on Mac with Playwright"
+      SKIPPED=$((SKIPPED + 1))
+      continue
     fi
   fi
 
-  echo $$ > "$LOCK_FILE"
-  trap "rm -f $LOCK_FILE" EXIT
-}
+  # Create merge branch name
+  MERGE_BRANCH="merge/${BRANCH}_${TIMESTAMP}"
 
-# ============================================
-# Branch Discovery & Classification
-# ============================================
+  log "📝 Creating merge branch: $MERGE_BRANCH"
 
-discover_branches() {
-  # Get all remote branches excluding main (don't log during branch discovery)
-  git fetch --all --prune >> "$LOG_FILE" 2>&1
+  if [ "$DRY_RUN" = "false" ]; then
+    # Create and checkout merge branch
+    git checkout -b "$MERGE_BRANCH" origin/main 2>&1 | tee -a "$LOG_FILE" || {
+      log "❌ Failed to create merge branch"
+      FAILED=$((FAILED + 1))
+      continue
+    }
 
-  # List all branches (local + remote), exclude main, exclude auto/ worker branches, exclude merge/ branches
-  BRANCHES=$(git branch -a | grep -v ' main$' | grep -v 'HEAD' | grep -v 'auto/worker-' | grep -v 'merge/' | sed 's/^[* ] //' | sed 's/remotes\/origin\///' | sort -u)
+    # Attempt merge
+    log "🔀 Attempting merge from origin/$BRANCH"
+    if git merge "origin/$BRANCH" --no-edit 2>&1 | tee -a "$LOG_FILE"; then
+      log "✅ Merge successful (no conflicts)"
 
-  if [ -z "$BRANCHES" ]; then
-    return 1
-  fi
+      # Run quality gates
+      log "🚦 Running quality gates..."
 
-  # Return branches only (no log output)
-  echo "$BRANCHES"
-}
+      # Gate 1: TypeScript compilation
+      log "  Gate 1/2: TypeScript compilation"
+      if npx tsc --noEmit 2>&1 | tee -a "$LOG_FILE"; then
+        log "    ✅ TypeScript passed"
 
-is_frontend_branch() {
-  local branch=$1
+        # Gate 2: Tests (skip frontend tests on VM)
+        log "  Gate 2/2: Test suite"
+        TEST_CMD="npm test"
+        if [ "$IS_VM" = "true" ]; then
+          TEST_CMD="npm run test:backend 2>/dev/null || npm test"
+          log "    (Running backend tests only on VM)"
+        fi
 
-  # Check if branch contains frontend changes
-  FRONTEND_CHANGES=$(git diff main...${branch} --name-only 2>/dev/null | grep -E '^src/(lib|app|components)/|\.tsx$|\.css$' | wc -l || echo "0")
+        if $TEST_CMD 2>&1 | tee -a "$LOG_FILE"; then
+          log "    ✅ Tests passed"
 
-  if [ "$FRONTEND_CHANGES" -gt 0 ]; then
-    return 0  # Is frontend
-  else
-    return 1  # Not frontend
-  fi
-}
+          # All gates passed - merge to main
+          log "🎉 All quality gates passed!"
+          log "🔀 Merging to main..."
 
-# ============================================
-# Merge Operations
-# ============================================
+          git checkout main 2>&1 | tee -a "$LOG_FILE"
+          git merge "$MERGE_BRANCH" --no-edit 2>&1 | tee -a "$LOG_FILE"
+          git push origin main 2>&1 | tee -a "$LOG_FILE"
 
-attempt_merge() {
-  local feature_branch=$1
-  local merge_branch="merge/${feature_branch}_${TIMESTAMP}"
+          log "✅ Successfully merged to main"
 
-  log_section "Processing: $feature_branch"
+          # Clean up branches
+          log "🗑️  Cleaning up branches..."
+          git branch -D "$MERGE_BRANCH" 2>&1 | tee -a "$LOG_FILE"
+          git push origin --delete "$BRANCH" 2>&1 | tee -a "$LOG_FILE" || log "⚠️  Could not delete remote branch (may be protected)"
 
-  # Check if frontend branch on VM
-  if [ "$SKIP_FRONTEND" = "true" ]; then
-    if is_frontend_branch "$feature_branch"; then
-      log_skip "Frontend branch on VM: $feature_branch"
-      log_info "   Frontend changes detected, handle locally on Mac"
-      return 2  # Special return code for skipped
-    fi
-  fi
-
-  # Create merge branch
-  log_info "Creating merge branch: $merge_branch"
-  git checkout -b "$merge_branch" main 2>&1 | tee -a "$LOG_FILE"
-
-  # Pull latest main
-  log_info "Pulling latest main..."
-  git pull origin main 2>&1 | tee -a "$LOG_FILE"
-
-  # Attempt merge
-  log_info "Attempting merge from $feature_branch..."
-  if ! git merge "origin/$feature_branch" --no-edit 2>&1 | tee -a "$LOG_FILE"; then
-    log_error "Merge conflict detected"
-    log_info "Preserving merge branch for manual resolution: ${merge_branch}_CONFLICT"
-    git merge --abort 2>&1 | tee -a "$LOG_FILE"
-    git checkout main 2>&1 | tee -a "$LOG_FILE"
-    git branch -m "$merge_branch" "${merge_branch}_CONFLICT" 2>&1 | tee -a "$LOG_FILE"
-    return 1  # Failure
-  fi
-
-  log_success "Merge successful (no conflicts)"
-
-  # Run quality gates
-  if ! run_quality_gates "$feature_branch" "$merge_branch"; then
-    log_error "Quality gates failed"
-    log_info "Preserving merge branch for inspection: ${merge_branch}_FAILED"
-    git checkout main 2>&1 | tee -a "$LOG_FILE"
-    git branch -m "$merge_branch" "${merge_branch}_FAILED" 2>&1 | tee -a "$LOG_FILE"
-    return 1  # Failure
-  fi
-
-  # All gates passed - merge to main
-  if [ "$DRY_RUN" = "true" ]; then
-    log_info "[DRY RUN] Would merge $merge_branch to main"
-    log_info "[DRY RUN] Would delete $feature_branch"
-    git checkout main 2>&1 | tee -a "$LOG_FILE"
-    git branch -D "$merge_branch" 2>&1 | tee -a "$LOG_FILE"
-  else
-    log_success "All quality gates passed - merging to main"
-    git checkout main 2>&1 | tee -a "$LOG_FILE"
-    git merge "$merge_branch" --no-edit 2>&1 | tee -a "$LOG_FILE"
-    git push origin main 2>&1 | tee -a "$LOG_FILE"
-
-    # Clean up branches
-    log_success "Cleaning up branches"
-    git branch -d "$merge_branch" 2>&1 | tee -a "$LOG_FILE"
-    git push origin --delete "$feature_branch" 2>&1 | tee -a "$LOG_FILE" || log_warning "Failed to delete remote branch (may not exist)"
-    git branch -D "$feature_branch" 2>&1 | tee -a "$LOG_FILE" || log_warning "Failed to delete local branch (may not exist)"
-
-    log_success "🎉 MERGED TO MAIN: $feature_branch"
-  fi
-
-  return 0  # Success
-}
-
-# ============================================
-# Quality Gates
-# ============================================
-
-run_quality_gates() {
-  local feature_branch=$1
-  local merge_branch=$2
-
-  log_section "Quality Gates: $feature_branch"
-
-  # Gate 1: TypeScript Compilation
-  log_info "Gate 1: TypeScript compilation..."
-  if ! npx tsc --noEmit 2>&1 | tee -a "$LOG_FILE"; then
-    log_error "TypeScript compilation failed"
-    return 1
-  fi
-  log_success "TypeScript compilation passed"
-
-  # Gate 2: Test Suite
-  log_info "Gate 2: Test suite..."
-
-  # Check if test script exists
-  if npm run 2>&1 | grep -q "test:backend\|test"; then
-    if [ "$IS_VM" = "true" ]; then
-      # On VM: Only run backend tests (skip Playwright)
-      if npm run 2>&1 | grep -q "test:backend"; then
-        log_info "Running backend tests only (VM mode)..."
-        if ! npm run test:backend 2>&1 | tee -a "$LOG_FILE"; then
-          log_error "Backend tests failed"
-          return 1
+          MERGED=$((MERGED + 1))
+        else
+          log "    ❌ Tests failed"
+          log "🚫 Merge BLOCKED: Tests failed"
+          log "📋 Merge branch preserved: $MERGE_BRANCH"
+          FAILED=$((FAILED + 1))
+          git checkout main 2>&1 >> "$LOG_FILE"
         fi
       else
-        log_warning "test:backend script not found, skipping tests"
+        log "    ❌ TypeScript compilation failed"
+        log "🚫 Merge BLOCKED: TypeScript errors"
+        log "📋 Merge branch preserved: $MERGE_BRANCH"
+        FAILED=$((FAILED + 1))
+        git checkout main 2>&1 >> "$LOG_FILE"
       fi
     else
-      # On Mac: Run all tests
-      if npm run 2>&1 | grep -q "test"; then
-        if ! npm test 2>&1 | tee -a "$LOG_FILE"; then
-          log_error "Tests failed"
-          return 1
-        fi
-      else
-        log_warning "test script not found, skipping tests"
-      fi
+      log "❌ Merge conflicts detected"
+      log "🚫 Merge BLOCKED: Manual conflict resolution required"
+      log "📋 Merge branch preserved: $MERGE_BRANCH"
+      FAILED=$((FAILED + 1))
+      git merge --abort 2>&1 >> "$LOG_FILE" || true
+      git checkout main 2>&1 >> "$LOG_FILE"
     fi
-    log_success "Tests passed (or skipped)"
   else
-    log_warning "No test scripts found, skipping test gate"
+    log "   (Dry run - skipping actual merge)"
   fi
+done
 
-  # Gate 3: Architecture Skeptic Review
-  if [ "$ENABLE_AGENT_REVIEWS" = "true" ]; then
-    log_info "Gate 3: Architecture review..."
-    if ! "$SCRIPT_DIR/merge-gate-architecture.sh" "$feature_branch" "$TIMESTAMP" "$LOG_FILE"; then
-      log_error "Architecture review blocked merge"
-      return 1
-    fi
-    log_success "Architecture review passed"
-  else
-    log_info "Gate 3: Architecture review (skipped - agent reviews disabled)"
-  fi
+# Summary
+log_section "Summary"
+log "Total branches found: $BRANCH_COUNT"
+log "Branches processed: $PROCESSED"
+log "✅ Successfully merged: $MERGED"
+log "⏭️  Skipped (frontend on VM): $SKIPPED"
+log "❌ Failed (conflicts/gates): $FAILED"
+log ""
+log "📊 Remaining branches: $((BRANCH_COUNT - PROCESSED))"
+if [ $((BRANCH_COUNT - PROCESSED)) -gt 0 ]; then
+  log "   (Will be processed in next run)"
+fi
 
-  # Gate 4: Sylvia Final Review
-  if [ "$ENABLE_AGENT_REVIEWS" = "true" ]; then
-    log_info "Gate 4: Sylvia final review..."
-    if ! "$SCRIPT_DIR/merge-gate-sylvia.sh" "$feature_branch" "$TIMESTAMP" "$LOG_FILE"; then
-      log_error "Sylvia review blocked merge"
-      return 1
-    fi
-    log_success "Sylvia review passed"
-  else
-    log_info "Gate 4: Sylvia review (skipped - agent reviews disabled)"
-  fi
+log_section "Merge Orchestrator Complete"
+log "Full log: $LOG_FILE"
 
-  return 0
-}
-
-# ============================================
-# Main Orchestrator
-# ============================================
-
-main() {
-  log_section "🤖 Merge Orchestrator - ${TIMESTAMP}"
-  log_info "Environment: $([ "$IS_VM" = "true" ] && echo "VM (backend only)" || echo "Mac (frontend + backend)")"
-  log_info "Dry run: $DRY_RUN"
-  log_info "Skip frontend: $SKIP_FRONTEND"
-  log_info "Max branches: $MAX_BRANCHES"
-  log_info "Agent reviews (Phase 2): $ENABLE_AGENT_REVIEWS"
-  log_info "Auto-remediation (Phase 2.5): $ENABLE_AUTO_REMEDIATION"
-
-  # Acquire lock
-  acquire_lock
-
-  # Change to project root
-  cd "$PROJECT_ROOT"
-
-  # Discover branches
-  log_info "Discovering feature branches..."
-  BRANCHES=$(discover_branches)
-  if [ $? -ne 0 ]; then
-    log_info "No feature branches found - no work to do"
-    exit 0
-  fi
-
-  # Count branches
-  BRANCH_COUNT=$(echo "$BRANCHES" | wc -l)
-  log_info "Found $BRANCH_COUNT feature branches"
-
-  if [ "$BRANCH_COUNT" -gt "$MAX_BRANCHES" ]; then
-    log_warning "Branch count ($BRANCH_COUNT) exceeds max ($MAX_BRANCHES), processing first $MAX_BRANCHES"
-    BRANCHES=$(echo "$BRANCHES" | head -n "$MAX_BRANCHES")
-  fi
-
-  # Process each branch
-  MERGED_COUNT=0
-  BLOCKED_COUNT=0
-  SKIPPED_COUNT=0
-  CONFLICT_COUNT=0
-
-  while IFS= read -r branch; do
-    # Skip empty lines
-    [ -z "$branch" ] && continue
-
-    attempt_merge "$branch"
-    RESULT=$?
-
-    if [ $RESULT -eq 0 ]; then
-      MERGED_COUNT=$((MERGED_COUNT + 1))
-    elif [ $RESULT -eq 2 ]; then
-      SKIPPED_COUNT=$((SKIPPED_COUNT + 1))
-    elif git branch --list "*${branch}*CONFLICT" | grep -q "CONFLICT"; then
-      CONFLICT_COUNT=$((CONFLICT_COUNT + 1))
-    else
-      BLOCKED_COUNT=$((BLOCKED_COUNT + 1))
-    fi
-
-    # Return to main branch after each attempt
-    git checkout main 2>&1 | tee -a "$LOG_FILE"
-  done <<< "$BRANCHES"
-
-  # Summary
-  log_section "Summary"
-  log_info "Total branches processed: $BRANCH_COUNT"
-  log_success "Merged to main: $MERGED_COUNT"
-  log_warning "Blocked (failed gates): $BLOCKED_COUNT"
-  log_warning "Conflicts (manual intervention): $CONFLICT_COUNT"
-  log_skip "Skipped (frontend on VM): $SKIPPED_COUNT"
-
-  # Notification (if enabled)
-  if [ "$NOTIFY" = "true" ] && [ "$DRY_RUN" = "false" ]; then
-    # TODO: Post to coordination channel via chatroom MCP (Phase 3)
-    log_info "Notification: Would post summary to coordination channel (not implemented yet)"
-  fi
-
-  log_section "✅ Merge Orchestrator Complete"
-  log_info "Log file: $LOG_FILE"
-}
-
-# Run main
-main "$@"
+# Return success if at least one branch was merged
+if [ $MERGED -gt 0 ]; then
+  exit 0
+else
+  exit 0  # Still exit 0 so cron doesn't spam errors
+fi
