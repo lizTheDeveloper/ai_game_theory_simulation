@@ -12,11 +12,10 @@ if [ -z "$BRANCH" ] || [ -z "$TIMESTAMP" ] || [ -z "$LOG_FILE" ]; then
   echo "Usage: $0 <branch_name> <timestamp> <log_file>"
   exit 1
 fi
-# Sanitize branch name for use in file paths (replace special chars with underscores)BRANCH_SAFE="$(echo "$BRANCH" | sed "s|[+ /]|_|g")"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-REVIEW_OUTPUT="$PROJECT_ROOT/logs/merge_orchestrator/architecture_review_${BRANCH_SAFE}_${TIMESTAMP}.txt"
+REVIEW_OUTPUT="$PROJECT_ROOT/logs/merge_orchestrator/architecture_review_${BRANCH}_${TIMESTAMP}.txt"
 
 cd "$PROJECT_ROOT"
 
