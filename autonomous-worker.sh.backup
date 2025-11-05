@@ -9,7 +9,7 @@ if [ -f "$PROJECT_DIR/.env" ]; then
 fi
 
 # Export API key explicitly
-# export ANTHROPIC_API_KEY  # Not needed - using Claude Code CLI session
+export ANTHROPIC_API_KEY
 
 LOG_DIR="$PROJECT_DIR/logs/autonomous"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
@@ -62,7 +62,11 @@ cd "$PROJECT_DIR"
     log_stage "PRE-FLIGHT CHECKS"
 
     # Check API key
-# Check Claude Code CLI    if ! command -v claude >/dev/null 2>&1; then        log_error "Claude Code CLI not found!"        log_info "Install: curl -fsSL https://claude.ai/install.sh | sh"        exit 1    fi    CLAUDE_VERSION=$(claude --version 2>&1 | head -1)    log_success "Claude Code CLI available: $CLAUDE_VERSION"    log_info "Using authenticated Claude Code session (no API key needed)"
+    if [ -z "$ANTHROPIC_API_KEY" ]; then
+        log_error "ANTHROPIC_API_KEY not set!"
+        exit 1
+    fi
+    log_success "API key loaded (${ANTHROPIC_API_KEY:0:15}...)"
 
     # Check disk space
     DISK_AVAIL=$(df -h "$PROJECT_DIR" | awk 'NR==2 {print $4}')
