@@ -142,6 +142,29 @@ Fixed TypeScript errors in `src/workers/simulationWorker.ts` where worker code r
 
 Commit: 0d88e67 (Nov 5, 2025)
 
+## ⚠️ Recent Changes (November 4, 2025)
+
+**🔍 ONGOING: Phase 2 Citation Verification - Simulation Code (Nov 4, 2025)**
+
+Autonomous systematic verification of all citations in simulation source code:
+- **Status:** Session 8 complete - `tier2InterventionConfig.ts` partially verified (Dark Compute, Synthetic Ecosystems, Crisis Anticipation sections)
+- **Citations verified (Session 8):** 4 citation clusters (CTBTO, ferret/condor recovery, BlueDot)
+- **Overall grade:** B- (82/100)
+- **Session 8 results (6:30 PM):**
+  - ✅ **CTBTO monitoring** - A+ (100/100) Perfect verification: all 6 NK tests detected, 90% network coverage verified
+  - ⚠️ **Black-footed ferret recovery** - B+ (88/100) Claims verified BUT **CRITICAL PARAMETER ERROR**: code says 60mo (5 years), reality is 240mo (20 years) = **4× too optimistic**
+  - ❌ **California condor** - C+ (75/100) Starting population wrong: code says 14, should be 22 or 27
+  - ⚠️ **BlueDot COVID-19 detection** - B+ (88/100) 9-day lead time verified, terminology imprecision ("prediction" vs "surveillance")
+- **Critical findings:**
+  - 🚨 **recoveryTimeGranted parameter 4× too optimistic** (60mo mode vs 240mo actual)
+  - ❌ Wrong starting populations and outdated cost figures
+- **Combined Sessions 6-8 (tier2InterventionConfig.ts):** 12 citations verified, 25% fully verified, 33% failed
+- **Next target:** Nuclear security citations (Nunn-Lugar, FAS 2024) in tier2InterventionConfig.ts
+- **Progress tracking:** [`research/CITATION_VERIFICATION_PROGRESS.md`](/research/CITATION_VERIFICATION_PROGRESS.md)
+- **Process:** Two-layer verification (1. Citation exists? 2. Does paper actually support the claim?)
+
+**Critical Issue:** The ecosystem recovery time parameter in tier2InterventionConfig.ts is significantly more optimistic than empirical evidence. This needs immediate correction to maintain research-backed integrity.
+
 ## ⚠️ Recent Changes (November 3, 2025)
 
 **🗺️ ROADMAP AUDIT COMPLETE (Nov 3, 2025)**
@@ -177,7 +200,7 @@ Completed systematic audit of validated research files against roadmap tracking.
 
 Moved 62 implementation diary files from `logs/` → `devlogs/` for proper organization:
 - **`logs/`**: Runtime logs only (`.log`, `.log.gz` files from Monte Carlo runs)
-- **`devlogs/`**: Implementation diary (`.md` files documenting bug fixes, validations, audits)
+- **`devlogs/``: Implementation diary (`.md` files documenting bug fixes, validations, audits)
 
 This clarifies the directory structure and prevents mixing runtime logs with implementation documentation.
 

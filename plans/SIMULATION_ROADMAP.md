@@ -718,6 +718,7 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **CRITICAL:** Fix ecosystem recovery time parameter in tier2InterventionConfig.ts (research/verification_5f5df13_20251104.md) - Parameter 4× too optimistic (60mo vs 240mo actual), affects biodiversity recovery scenarios
 - [ ] **NEW:** Verify proactive data center divestment parameters (commit a0f4785)
 - [ ] **NEW:** Verify population coherence fix parameters (commit baaa33e)
 - [ ] **HIGH PRIORITY:** Verify Richardson et al. biosphere baseline (commit 443ba64)
