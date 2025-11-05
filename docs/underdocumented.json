@@ -39078,7 +39078,7 @@
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
-    "context": "region: 'Northern America',"
+    "context": "region: 'North America',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/countryPopulations.ts",
@@ -39150,7 +39150,7 @@
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
-    "context": "region: 'Eastern Asia',"
+    "context": "region: 'East Asia',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/countryPopulations.ts",
@@ -39294,7 +39294,7 @@
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
-    "context": "region: 'Southern Asia',"
+    "context": "region: 'South Asia',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/countryPopulations.ts",
@@ -39510,7 +39510,7 @@
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
-    "context": "region: 'Southern Asia',"
+    "context": "region: 'South Asia',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/countryPopulations.ts",
@@ -39654,7 +39654,7 @@
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
-    "context": "region: 'Eastern Asia',"
+    "context": "region: 'East Asia',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/countryPopulations.ts",
@@ -39870,7 +39870,7 @@
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
-    "context": "region: 'South-East Asia',"
+    "context": "region: 'East Asia',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/countryPopulations.ts",
@@ -39942,7 +39942,7 @@
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
-    "context": "region: 'Northern America',"
+    "context": "region: 'North America',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/countryPopulations.ts",
@@ -40014,7 +40014,7 @@
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
-    "context": "region: 'Southern Asia',"
+    "context": "region: 'South Asia',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/countryPopulations.ts",
@@ -40222,7 +40222,7 @@
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
-    "context": "region: 'South-East Asia',"
+    "context": "region: 'East Asia',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/countryPopulations.ts",
@@ -90354,7 +90354,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
-    "line": 719,
+    "line": 722,
     "type": "property",
     "name": "baseExpenses",
     "currentDoc": "(none)",
@@ -90362,7 +90362,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
-    "line": 720,
+    "line": 723,
     "type": "property",
     "name": "dcOperational",
     "currentDoc": "(none)",
@@ -90370,7 +90370,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
-    "line": 721,
+    "line": 724,
     "type": "property",
     "name": "projectCosts",
     "currentDoc": "(none)",
@@ -90378,7 +90378,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
-    "line": 722,
+    "line": 725,
     "type": "property",
     "name": "total",
     "currentDoc": "(none)",
@@ -90386,7 +90386,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
-    "line": 1473,
+    "line": 1476,
     "type": "property",
     "name": "org",
     "currentDoc": "(none)",
@@ -90394,7 +90394,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
-    "line": 1474,
+    "line": 1477,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -90402,7 +90402,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
-    "line": 1475,
+    "line": 1478,
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
@@ -90410,7 +90410,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
-    "line": 1557,
+    "line": 1560,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -90418,7 +90418,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/organizationManagement.ts",
-    "line": 1558,
+    "line": 1561,
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
@@ -93570,15 +93570,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 33,
+    "line": 34,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
-    "context": "name: 'Eastern Asia',"
+    "context": "name: 'East Asia',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 35,
+    "line": 36,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -93586,7 +93586,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 36,
+    "line": 37,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -93594,7 +93594,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 38,
+    "line": 39,
     "type": "property",
     "name": "baselineDeathRate",
     "currentDoc": "(none)",
@@ -93602,7 +93602,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 39,
+    "line": 40,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -93610,7 +93610,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 40,
+    "line": 41,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -93618,7 +93618,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 41,
+    "line": 42,
     "type": "property",
     "name": "netGrowthRate",
     "currentDoc": "(none)",
@@ -93626,7 +93626,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 45,
+    "line": 46,
     "type": "property",
     "name": "medianAge",
     "currentDoc": "(none)",
@@ -93634,7 +93634,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 46,
+    "line": 47,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -93642,7 +93642,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 47,
+    "line": 48,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -93650,7 +93650,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 48,
+    "line": 49,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -93658,7 +93658,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 52,
+    "line": 53,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -93666,7 +93666,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 54,
+    "line": 55,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -93674,7 +93674,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 55,
+    "line": 56,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -93682,7 +93682,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 56,
+    "line": 57,
     "type": "property",
     "name": "refugeeBurden",
     "currentDoc": "(none)",
@@ -93690,7 +93690,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 57,
+    "line": 58,
     "type": "property",
     "name": "emigrationPressure",
     "currentDoc": "(none)",
@@ -93698,15 +93698,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 60,
+    "line": 61,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
-    "context": "name: 'Southern Asia',"
+    "context": "name: 'South Asia',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 62,
+    "line": 63,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -93714,7 +93714,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 63,
+    "line": 64,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -93722,7 +93722,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 65,
+    "line": 66,
     "type": "property",
     "name": "baselineDeathRate",
     "currentDoc": "(none)",
@@ -93730,7 +93730,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 66,
+    "line": 67,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -93738,7 +93738,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 67,
+    "line": 68,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -93746,7 +93746,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 68,
+    "line": 69,
     "type": "property",
     "name": "netGrowthRate",
     "currentDoc": "(none)",
@@ -93754,7 +93754,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 72,
+    "line": 73,
     "type": "property",
     "name": "medianAge",
     "currentDoc": "(none)",
@@ -93762,7 +93762,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 73,
+    "line": 74,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -93770,7 +93770,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 74,
+    "line": 75,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -93778,7 +93778,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 75,
+    "line": 76,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -93786,7 +93786,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 79,
+    "line": 80,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -93794,7 +93794,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 81,
+    "line": 82,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -93802,7 +93802,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 82,
+    "line": 83,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -93810,7 +93810,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 83,
+    "line": 84,
     "type": "property",
     "name": "refugeeBurden",
     "currentDoc": "(none)",
@@ -93818,7 +93818,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 84,
+    "line": 85,
     "type": "property",
     "name": "emigrationPressure",
     "currentDoc": "(none)",
@@ -93826,7 +93826,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 87,
+    "line": 88,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -93834,7 +93834,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 89,
+    "line": 90,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -93842,7 +93842,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 90,
+    "line": 91,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -93850,7 +93850,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 92,
+    "line": 93,
     "type": "property",
     "name": "baselineDeathRate",
     "currentDoc": "(none)",
@@ -93858,7 +93858,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 93,
+    "line": 94,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -93866,7 +93866,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 94,
+    "line": 95,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -93874,7 +93874,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 95,
+    "line": 96,
     "type": "property",
     "name": "netGrowthRate",
     "currentDoc": "(none)",
@@ -93882,7 +93882,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 99,
+    "line": 100,
     "type": "property",
     "name": "medianAge",
     "currentDoc": "(none)",
@@ -93890,7 +93890,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 100,
+    "line": 101,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -93898,7 +93898,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 101,
+    "line": 102,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -93906,7 +93906,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 102,
+    "line": 103,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -93914,7 +93914,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 106,
+    "line": 107,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -93922,7 +93922,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 108,
+    "line": 109,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -93930,7 +93930,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 109,
+    "line": 110,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -93938,7 +93938,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 110,
+    "line": 111,
     "type": "property",
     "name": "refugeeBurden",
     "currentDoc": "(none)",
@@ -93946,7 +93946,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 111,
+    "line": 112,
     "type": "property",
     "name": "emigrationPressure",
     "currentDoc": "(none)",
@@ -93954,7 +93954,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 114,
+    "line": 115,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -93962,7 +93962,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 116,
+    "line": 117,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -93970,7 +93970,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 117,
+    "line": 118,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -93978,7 +93978,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 120,
+    "line": 121,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -93986,7 +93986,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 121,
+    "line": 122,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -93994,7 +93994,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 126,
+    "line": 127,
     "type": "property",
     "name": "medianAge",
     "currentDoc": "(none)",
@@ -94002,7 +94002,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 127,
+    "line": 128,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -94010,7 +94010,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 128,
+    "line": 129,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -94018,7 +94018,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 129,
+    "line": 130,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -94026,7 +94026,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 133,
+    "line": 134,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -94034,7 +94034,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 135,
+    "line": 136,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -94042,7 +94042,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 136,
+    "line": 137,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -94050,7 +94050,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 137,
+    "line": 138,
     "type": "property",
     "name": "refugeeBurden",
     "currentDoc": "(none)",
@@ -94058,7 +94058,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 138,
+    "line": 139,
     "type": "property",
     "name": "emigrationPressure",
     "currentDoc": "(none)",
@@ -94066,7 +94066,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 141,
+    "line": 142,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -94074,7 +94074,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 143,
+    "line": 144,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -94082,7 +94082,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 144,
+    "line": 145,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -94090,7 +94090,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 146,
+    "line": 147,
     "type": "property",
     "name": "baselineDeathRate",
     "currentDoc": "(none)",
@@ -94098,7 +94098,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 147,
+    "line": 148,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -94106,7 +94106,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 148,
+    "line": 149,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -94114,7 +94114,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 149,
+    "line": 150,
     "type": "property",
     "name": "netGrowthRate",
     "currentDoc": "(none)",
@@ -94122,7 +94122,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 153,
+    "line": 154,
     "type": "property",
     "name": "medianAge",
     "currentDoc": "(none)",
@@ -94130,7 +94130,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 154,
+    "line": 155,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -94138,7 +94138,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 155,
+    "line": 156,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -94146,7 +94146,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 156,
+    "line": 157,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -94154,7 +94154,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 160,
+    "line": 161,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -94162,7 +94162,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 162,
+    "line": 163,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -94170,7 +94170,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 163,
+    "line": 164,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -94178,7 +94178,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 164,
+    "line": 165,
     "type": "property",
     "name": "refugeeBurden",
     "currentDoc": "(none)",
@@ -94186,7 +94186,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 165,
+    "line": 166,
     "type": "property",
     "name": "emigrationPressure",
     "currentDoc": "(none)",
@@ -94194,15 +94194,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 168,
+    "line": 169,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
-    "context": "name: 'Northern America',"
+    "context": "name: 'North America',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 170,
+    "line": 171,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -94210,7 +94210,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 171,
+    "line": 172,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -94218,7 +94218,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 173,
+    "line": 174,
     "type": "property",
     "name": "baselineDeathRate",
     "currentDoc": "(none)",
@@ -94226,7 +94226,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 174,
+    "line": 175,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -94234,7 +94234,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 175,
+    "line": 176,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -94242,7 +94242,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 176,
+    "line": 177,
     "type": "property",
     "name": "netGrowthRate",
     "currentDoc": "(none)",
@@ -94250,7 +94250,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 180,
+    "line": 181,
     "type": "property",
     "name": "medianAge",
     "currentDoc": "(none)",
@@ -94258,7 +94258,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 181,
+    "line": 182,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -94266,7 +94266,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 182,
+    "line": 183,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -94274,7 +94274,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 183,
+    "line": 184,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -94282,7 +94282,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 187,
+    "line": 188,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -94290,7 +94290,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 189,
+    "line": 190,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -94298,7 +94298,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 190,
+    "line": 191,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -94306,7 +94306,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 191,
+    "line": 192,
     "type": "property",
     "name": "refugeeBurden",
     "currentDoc": "(none)",
@@ -94314,7 +94314,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 192,
+    "line": 193,
     "type": "property",
     "name": "emigrationPressure",
     "currentDoc": "(none)",
@@ -94322,7 +94322,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 195,
+    "line": 196,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -94330,7 +94330,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 197,
+    "line": 198,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -94338,7 +94338,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 198,
+    "line": 199,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -94346,7 +94346,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 200,
+    "line": 201,
     "type": "property",
     "name": "baselineDeathRate",
     "currentDoc": "(none)",
@@ -94354,7 +94354,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 201,
+    "line": 202,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -94362,7 +94362,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 202,
+    "line": 203,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -94370,7 +94370,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 203,
+    "line": 204,
     "type": "property",
     "name": "netGrowthRate",
     "currentDoc": "(none)",
@@ -94378,7 +94378,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 207,
+    "line": 208,
     "type": "property",
     "name": "medianAge",
     "currentDoc": "(none)",
@@ -94386,7 +94386,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 208,
+    "line": 209,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -94394,7 +94394,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 209,
+    "line": 210,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -94402,7 +94402,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 210,
+    "line": 211,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -94410,7 +94410,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 214,
+    "line": 215,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -94418,7 +94418,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 216,
+    "line": 217,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -94426,7 +94426,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 217,
+    "line": 218,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -94434,7 +94434,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 218,
+    "line": 219,
     "type": "property",
     "name": "refugeeBurden",
     "currentDoc": "(none)",
@@ -94442,7 +94442,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 219,
+    "line": 220,
     "type": "property",
     "name": "emigrationPressure",
     "currentDoc": "(none)",
@@ -94450,15 +94450,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 222,
+    "line": 223,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
-    "context": "name: 'South-East Asia',"
+    "context": "name: 'Southeast Asia',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 224,
+    "line": 225,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -94466,7 +94466,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 225,
+    "line": 226,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -94474,7 +94474,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 227,
+    "line": 228,
     "type": "property",
     "name": "baselineDeathRate",
     "currentDoc": "(none)",
@@ -94482,7 +94482,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 228,
+    "line": 229,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -94490,7 +94490,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 229,
+    "line": 230,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -94498,7 +94498,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 230,
+    "line": 231,
     "type": "property",
     "name": "netGrowthRate",
     "currentDoc": "(none)",
@@ -94506,7 +94506,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 234,
+    "line": 235,
     "type": "property",
     "name": "medianAge",
     "currentDoc": "(none)",
@@ -94514,7 +94514,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 235,
+    "line": 236,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -94522,7 +94522,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 236,
+    "line": 237,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -94530,7 +94530,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 237,
+    "line": 238,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -94538,7 +94538,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 241,
+    "line": 242,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -94546,7 +94546,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 243,
+    "line": 244,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -94554,7 +94554,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 244,
+    "line": 245,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -94562,7 +94562,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 245,
+    "line": 246,
     "type": "property",
     "name": "refugeeBurden",
     "currentDoc": "(none)",
@@ -94570,7 +94570,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 246,
+    "line": 247,
     "type": "property",
     "name": "emigrationPressure",
     "currentDoc": "(none)",
@@ -94578,7 +94578,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 249,
+    "line": 250,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -94586,7 +94586,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 251,
+    "line": 252,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -94594,7 +94594,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 252,
+    "line": 253,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -94602,7 +94602,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 254,
+    "line": 255,
     "type": "property",
     "name": "baselineDeathRate",
     "currentDoc": "(none)",
@@ -94610,7 +94610,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 255,
+    "line": 256,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -94618,7 +94618,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 256,
+    "line": 257,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -94626,7 +94626,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 257,
+    "line": 258,
     "type": "property",
     "name": "netGrowthRate",
     "currentDoc": "(none)",
@@ -94634,7 +94634,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 261,
+    "line": 262,
     "type": "property",
     "name": "medianAge",
     "currentDoc": "(none)",
@@ -94642,7 +94642,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 262,
+    "line": 263,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -94650,7 +94650,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 263,
+    "line": 264,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -94658,7 +94658,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 264,
+    "line": 265,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -94666,7 +94666,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 268,
+    "line": 269,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -94674,7 +94674,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 270,
+    "line": 271,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -94682,7 +94682,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 271,
+    "line": 272,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -94690,7 +94690,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 272,
+    "line": 273,
     "type": "property",
     "name": "refugeeBurden",
     "currentDoc": "(none)",
@@ -94698,7 +94698,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 273,
+    "line": 274,
     "type": "property",
     "name": "emigrationPressure",
     "currentDoc": "(none)",
@@ -94706,7 +94706,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 276,
+    "line": 277,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -94714,7 +94714,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 278,
+    "line": 279,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -94722,7 +94722,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 279,
+    "line": 280,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -94730,7 +94730,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 281,
+    "line": 282,
     "type": "property",
     "name": "baselineDeathRate",
     "currentDoc": "(none)",
@@ -94738,7 +94738,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 282,
+    "line": 283,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -94746,7 +94746,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 283,
+    "line": 284,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -94754,7 +94754,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 284,
+    "line": 285,
     "type": "property",
     "name": "netGrowthRate",
     "currentDoc": "(none)",
@@ -94762,7 +94762,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 288,
+    "line": 289,
     "type": "property",
     "name": "medianAge",
     "currentDoc": "(none)",
@@ -94770,7 +94770,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 289,
+    "line": 290,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -94778,7 +94778,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 290,
+    "line": 291,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -94786,7 +94786,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 291,
+    "line": 292,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -94794,7 +94794,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 295,
+    "line": 296,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -94802,7 +94802,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 297,
+    "line": 298,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -94810,7 +94810,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 298,
+    "line": 299,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -94818,7 +94818,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 299,
+    "line": 300,
     "type": "property",
     "name": "refugeeBurden",
     "currentDoc": "(none)",
@@ -94826,7 +94826,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 300,
+    "line": 301,
     "type": "property",
     "name": "emigrationPressure",
     "currentDoc": "(none)",
@@ -94834,7 +94834,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 325,
+    "line": 347,
     "type": "property",
     "name": "baselinePopulation",
     "currentDoc": "(none)",
@@ -94842,7 +94842,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 326,
+    "line": 348,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -94850,7 +94850,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 327,
+    "line": 349,
     "type": "property",
     "name": "peakPopulationMonth",
     "currentDoc": "(none)",
@@ -94858,7 +94858,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 332,
+    "line": 354,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -94866,7 +94866,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 333,
+    "line": 355,
     "type": "property",
     "name": "adjustedDeathRate",
     "currentDoc": "(none)",
@@ -94874,7 +94874,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 337,
+    "line": 359,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -94882,7 +94882,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 338,
+    "line": 360,
     "type": "property",
     "name": "baselineCarryingCapacity",
     "currentDoc": "(none)",
@@ -94890,7 +94890,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 339,
+    "line": 361,
     "type": "property",
     "name": "capacityModifier",
     "currentDoc": "(none)",
@@ -94898,7 +94898,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 340,
+    "line": 362,
     "type": "property",
     "name": "populationPressure",
     "currentDoc": "(none)",
@@ -94906,7 +94906,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 348,
+    "line": 370,
     "type": "property",
     "name": "monthlyExcessDeaths",
     "currentDoc": "(none)",
@@ -94914,7 +94914,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 349,
+    "line": 371,
     "type": "property",
     "name": "cumulativeCrisisDeaths",
     "currentDoc": "(none)",
@@ -94922,7 +94922,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 350,
+    "line": 372,
     "type": "property",
     "name": "geneticBottleneckActive",
     "currentDoc": "(none)",
@@ -94930,7 +94930,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 352,
+    "line": 374,
     "type": "property",
     "name": "monthlyDeathCapReached",
     "currentDoc": "(none)",
@@ -94938,7 +94938,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 357,
+    "line": 379,
     "type": "property",
     "name": "deathsByCategory",
     "currentDoc": "(none)",
@@ -94946,7 +94946,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 358,
+    "line": 380,
     "type": "property",
     "name": "war",
     "currentDoc": "(none)",
@@ -94954,7 +94954,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 359,
+    "line": 381,
     "type": "property",
     "name": "famine",
     "currentDoc": "(none)",
@@ -94962,7 +94962,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 361,
+    "line": 383,
     "type": "property",
     "name": "disease",
     "currentDoc": "(none)",
@@ -94970,7 +94970,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 362,
+    "line": 384,
     "type": "property",
     "name": "ecosystem",
     "currentDoc": "(none)",
@@ -94978,7 +94978,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 363,
+    "line": 385,
     "type": "property",
     "name": "pollution",
     "currentDoc": "(none)",
@@ -94986,7 +94986,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 364,
+    "line": 386,
     "type": "property",
     "name": "ai",
     "currentDoc": "(none)",
@@ -94994,7 +94994,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 366,
+    "line": 388,
     "type": "property",
     "name": "other",
     "currentDoc": "(none)",
@@ -95002,7 +95002,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 370,
+    "line": 392,
     "type": "property",
     "name": "deathsByRootCause",
     "currentDoc": "(none)",
@@ -95010,7 +95010,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 372,
+    "line": 394,
     "type": "property",
     "name": "climate",
     "currentDoc": "(none)",
@@ -95018,7 +95018,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 373,
+    "line": 395,
     "type": "property",
     "name": "resource",
     "currentDoc": "(none)",
@@ -95026,7 +95026,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 374,
+    "line": 396,
     "type": "property",
     "name": "pollution",
     "currentDoc": "(none)",
@@ -95034,7 +95034,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 375,
+    "line": 397,
     "type": "property",
     "name": "ecosystem",
     "currentDoc": "(none)",
@@ -95042,7 +95042,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 378,
+    "line": 400,
     "type": "property",
     "name": "inequality",
     "currentDoc": "(none)",
@@ -95050,7 +95050,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 379,
+    "line": 401,
     "type": "property",
     "name": "demographic",
     "currentDoc": "(none)",
@@ -95058,7 +95058,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 380,
+    "line": 402,
     "type": "property",
     "name": "social",
     "currentDoc": "(none)",
@@ -95066,7 +95066,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 383,
+    "line": 405,
     "type": "property",
     "name": "alignment",
     "currentDoc": "(none)",
@@ -95074,7 +95074,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 384,
+    "line": 406,
     "type": "property",
     "name": "disruption",
     "currentDoc": "(none)",
@@ -95082,7 +95082,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 387,
+    "line": 409,
     "type": "property",
     "name": "conflict",
     "currentDoc": "(none)",
@@ -95090,7 +95090,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 388,
+    "line": 410,
     "type": "property",
     "name": "pandemic",
     "currentDoc": "(none)",
@@ -95098,7 +95098,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 392,
+    "line": 414,
     "type": "property",
     "name": "compound",
     "currentDoc": "(none)",
@@ -95106,7 +95106,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 395,
+    "line": 417,
     "type": "property",
     "name": "confidenceDistribution",
     "currentDoc": "(none)",
@@ -95114,7 +95114,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 396,
+    "line": 418,
     "type": "property",
     "name": "HIGH",
     "currentDoc": "(none)",
@@ -95122,7 +95122,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 397,
+    "line": 419,
     "type": "property",
     "name": "MEDIUM",
     "currentDoc": "(none)",
@@ -95130,7 +95130,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 398,
+    "line": 420,
     "type": "property",
     "name": "LOW",
     "currentDoc": "(none)",
@@ -95138,7 +95138,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 408,
+    "line": 430,
     "type": "property",
     "name": "canRecover",
     "currentDoc": "(none)",
@@ -95146,7 +95146,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 409,
+    "line": 431,
     "type": "property",
     "name": "recoveryRate",
     "currentDoc": "(none)",
@@ -95154,7 +95154,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 410,
+    "line": 432,
     "type": "property",
     "name": "monthsSinceLastCrisis",
     "currentDoc": "(none)",
@@ -95162,7 +95162,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 413,
+    "line": 435,
     "type": "property",
     "name": "regionalPopulations",
     "currentDoc": "(none)",
@@ -95170,7 +95170,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1417,
+    "line": 1439,
     "type": "property",
     "name": "finalPopulation",
     "currentDoc": "(none)",
@@ -95178,7 +95178,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1418,
+    "line": 1440,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -95186,7 +95186,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1419,
+    "line": 1441,
     "type": "property",
     "name": "populationDecline",
     "currentDoc": "(none)",
@@ -95194,7 +95194,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1420,
+    "line": 1442,
     "type": "property",
     "name": "geneticBottleneck",
     "currentDoc": "(none)",
@@ -95202,7 +95202,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1422,
+    "line": 1444,
     "type": "property",
     "name": "outcomeNarrative",
     "currentDoc": "(none)",
@@ -95210,7 +95210,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1451,
+    "line": 1473,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -95218,7 +95218,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1452,
+    "line": 1474,
     "type": "property",
     "name": "baseMortalityRate",
     "currentDoc": "(none)",
@@ -95226,7 +95226,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1453,
+    "line": 1475,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -95234,7 +95234,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1454,
+    "line": 1476,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -95242,7 +95242,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1455,
+    "line": 1477,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -95250,7 +95250,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1456,
+    "line": 1478,
     "type": "property",
     "name": "rootCause",
     "currentDoc": "(none)",
@@ -95258,7 +95258,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1457,
+    "line": 1479,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -95266,7 +95266,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1488,
+    "line": 1510,
     "type": "property",
     "name": "segment",
     "currentDoc": "(none)",
@@ -95274,7 +95274,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1489,
+    "line": 1511,
     "type": "property",
     "name": "deaths",
     "currentDoc": "(none)",
@@ -95282,7 +95282,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1490,
+    "line": 1512,
     "type": "property",
     "name": "mortality",
     "currentDoc": "(none)",
@@ -95290,7 +95290,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1590,
+    "line": 1612,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -95298,7 +95298,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1591,
+    "line": 1613,
     "type": "property",
     "name": "mortalityRate",
     "currentDoc": "(none)",
@@ -95306,7 +95306,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1592,
+    "line": 1614,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -95314,7 +95314,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1593,
+    "line": 1615,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -95322,7 +95322,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1594,
+    "line": 1616,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -95330,7 +95330,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1595,
+    "line": 1617,
     "type": "property",
     "name": "rootCause",
     "currentDoc": "(none)",
@@ -95338,7 +95338,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1596,
+    "line": 1618,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -95346,7 +95346,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1725,
+    "line": 1747,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -95354,7 +95354,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1726,
+    "line": 1748,
     "type": "property",
     "name": "mortalityRate",
     "currentDoc": "(none)",
@@ -95362,7 +95362,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1727,
+    "line": 1749,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -95370,7 +95370,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1728,
+    "line": 1750,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -95378,7 +95378,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1729,
+    "line": 1751,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
