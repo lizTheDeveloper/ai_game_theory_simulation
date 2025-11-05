@@ -103,6 +103,11 @@ See: [Autonomous Worker Health Monitoring & Auto-Remediation](#autonomous-worker
 
 Commit: 4fd9d55 (Nov 5, 2025)
 
+**Bug Fix:** Fixed PR count parsing in watcher (commit ba9dccd):
+- Issue: `grep -c` returned counts with embedded newlines causing "integer expression expected" errors
+- Solution: Changed to `grep | wc -l | tr -d ' '` for clean numeric output, added `${OPEN_PRS:-0}` fallback
+- Impact: Watcher now correctly displays open worker PR counts without parsing errors
+
 **🔧 WORKER STATE SNAPSHOT PROPERTY PATHS FIXED (Nov 5, 2025)**
 
 Fixed TypeScript errors in `src/workers/simulationWorker.ts` where worker code referenced obsolete GameState property names:
