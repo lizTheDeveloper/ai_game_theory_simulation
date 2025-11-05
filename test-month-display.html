@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Month Display Test</title>
+    <style>
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: system-ui;
+            padding: 2rem;
+        }
+        .status {
+            border: 1px solid #333;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .log {
+            font-family: monospace;
+            font-size: 12px;
+            color: #0f0;
+            max-height: 400px;
+            overflow-y: auto;
+            background: #000;
+            padding: 1rem;
+            border: 1px solid #333;
+        }
+        button {
+            background: #00f0ff;
+            color: #000;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #00a0ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Month Display Test</h1>
+
+    <div class="status">
+        <h2>Current Status</h2>
+        <div>Simulation Month: <span id="month">Not initialized</span></div>
+        <div>Simulation Day: <span id="day">Not initialized</span></div>
+        <div>Delta Updates Received: <span id="updates">0</span></div>
+    </div>
+
+    <div>
+        <button onclick="window.location.href='http://localhost:3333/dashboard'">Open Dashboard</button>
+        <button onclick="clearLog()">Clear Log</button>
+    </div>
+
+    <div class="log" id="log"></div>
+
+    <script>
+        let updateCount = 0;
+        const log = document.getElementById('log');
+        const monthSpan = document.getElementById('month');
+        const daySpan = document.getElementById('day');
+        const updatesSpan = document.getElementById('updates');
+
+        function addLog(msg) {
+            const entry = document.createElement('div');
+            const timestamp = new Date().toISOString().substr(11, 8);
+            entry.textContent = `[${timestamp}] ${msg}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function clearLog() {
+            log.innerHTML = '';
+            updateCount = 0;
+            updatesSpan.textContent = '0';
+        }
+
+        // Monitor the dashboard by opening it in an iframe (won't work due to CORS)
+        // Instead, instructions for manual testing:
+        addLog('TEST INSTRUCTIONS:');
+        addLog('1. Click "Open Dashboard" to open in new tab');
+        addLog('2. Open browser DevTools Console (F12)');
+        addLog('3. Click "Configure & Start" in the dashboard');
+        addLog('4. Initialize with any settings');
+        addLog('5. Check the Navigation panel on the left');
+        addLog('6. Verify "Month" shows the current simulation month');
+        addLog('7. Click START to begin simulation');
+        addLog('8. Watch as days increment (1-30)');
+        addLog('9. When day reaches 30, month should increment');
+        addLog('');
+        addLog('EXPECTED BEHAVIOR:');
+        addLog('- Month starts at 0 (not always showing 0)');
+        addLog('- Month increments after every 30 days');
+        addLog('- Day counter cycles 1-30 for each month');
+        addLog('');
+        addLog('WHAT WAS FIXED:');
+        addLog('- Delta updates now always include currentMonth');
+        addLog('- This ensures UI stays synchronized with simulation state');
+    </script>
+</body>
+</html>

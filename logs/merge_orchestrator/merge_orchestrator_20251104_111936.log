@@ -1,0 +1,250 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-04 11:19:36] 🤖 Merge Orchestrator - 20251104_111936
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-04 11:19:36] ℹ️  Environment: Mac (frontend + backend)
+[2025-11-04 11:19:36] ℹ️  Dry run: false
+[2025-11-04 11:19:36] ℹ️  Skip frontend: false
+[2025-11-04 11:19:36] ℹ️  Max branches: 10
+[2025-11-04 11:19:36] ℹ️  Agent reviews (Phase 2): true
+[2025-11-04 11:19:36] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-04 11:19:36] ℹ️  Discovering feature branches...
+[2025-11-04 11:19:37] ℹ️  Found       40 feature branches
+[2025-11-04 11:19:37] ⚠️  WARNING: Branch count (      40) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-04 11:19:37] Processing: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-04 11:19:37] ℹ️  Creating merge branch: merge/+ phase-0a-design-system_20251104_111936
+fatal: 'merge/+ phase-0a-design-system_20251104_111936' is not a valid branch name
+hint: See `man git check-ref-format`
+hint: Disable this message with "git config advice.refSyntax false"
+[2025-11-04 11:19:37] ℹ️  Pulling latest main...
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+[2025-11-04 11:19:39] ℹ️  Attempting merge from + phase-0a-design-system...
+merge: origin/+ phase-0a-design-system - not something we can merge
+[2025-11-04 11:19:39] ✅ Merge successful (no conflicts)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-04 11:19:39] Quality Gates: + phase-0a-design-system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-04 11:19:39] ℹ️  Gate 1: TypeScript compilation...
+e2e/fallback-detection.spec.ts(21,30): error TS2307: Cannot find module '@playwright/test' or its corresponding type declarations.
+playwright.config.ts(1,39): error TS2307: Cannot find module '@playwright/test' or its corresponding type declarations.
+src/components/dashboards/EnvironmentalDashboard.tsx(88,11): error TS2322: Type 'number | undefined' is not assignable to type 'string | number'.
+  Type 'undefined' is not assignable to type 'string | number'.
+src/components/dashboards/EnvironmentalDashboard.tsx(89,19): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(89,56): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(93,22): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(94,19): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(94,58): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(98,22): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(99,19): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(99,48): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(103,22): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(104,19): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(104,53): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(109,8): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(110,70): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(123,71): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(123,108): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(124,17): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(130,43): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(131,36): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(131,73): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(136,16): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(136,45): error TS18048: 'climate' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(142,71): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(142,113): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(143,17): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(149,43): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(150,36): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(150,78): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(155,16): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(155,50): error TS18048: 'biodiversity' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(288,71): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(288,118): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(289,17): error TS18048: 'environmentalDebt' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(295,71): error TS18048: 'resourceDepletion' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(296,17): error TS18048: 'resourceDepletion' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(302,71): error TS18048: 'pollution' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(303,17): error TS18048: 'pollution' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(311,8): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/EnvironmentalDashboard.tsx(321,34): error TS18048: 'boundariesCrossed' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(94,9): error TS18048: 'paradigms.ecological.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(95,9): error TS18048: 'paradigms.western.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(116,18): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(118,19): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(119,18): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(123,19): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(124,19): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(124,44): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(125,18): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(129,18): error TS18048: 'aiCap' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(130,19): error TS18048: 'aiCap' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(130,46): error TS18048: 'aiCap' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(131,18): error TS18048: 'aiCap' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(157,18): error TS18048: 'paradigms.western.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(168,18): error TS18048: 'paradigms.development.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(178,54): error TS18048: 'paradigms.ecological.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(179,18): error TS18048: 'paradigms.ecological.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(190,18): error TS18048: 'paradigms.indigenous.value' is possibly 'undefined'.
+src/components/dashboards/OverviewDashboard.tsx(263,11): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/components/dashboards/ParadigmDashboard.tsx(83,20): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(83,44): error TS18048: 'a' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(83,48): error TS18048: 'b' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(84,32): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(84,58): error TS18048: 'sum' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(84,73): error TS18048: 's' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(87,42): error TS18048: 's' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(88,44): error TS18048: 's' is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(186,17): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(196,20): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(293,17): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(303,20): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(400,17): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(410,26): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(412,20): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(523,20): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(627,11): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/components/dashboards/ParadigmDashboard.tsx(637,12): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(637,31): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(647,12): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(647,31): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/ParadigmDashboard.tsx(647,50): error TS2532: Object is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(67,28): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/components/dashboards/RegionsDashboard.tsx(84,18): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(86,19): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(95,21): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(97,21): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(97,46): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(102,19): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(104,19): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(104,55): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(108,19): error TS18048: 'institutionalTrust' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(110,19): error TS18048: 'institutionalTrust' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(110,59): error TS18048: 'institutionalTrust' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(129,71): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(130,16): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(133,16): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(145,57): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(151,43): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(152,36): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(152,72): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(152,107): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(161,57): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(167,43): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(177,57): error TS18048: 'institutionalTrust' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(183,43): error TS18048: 'institutionalTrust' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(310,8): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(313,60): error TS18048: 'population' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(319,8): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(322,60): error TS18048: 'qol' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(328,8): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/dashboards/RegionsDashboard.tsx(331,50): error TS18048: 'socialCohesion' is possibly 'undefined'.
+src/components/monte-carlo/MonteCarloResultsViewer.tsx(345,21): error TS18048: 'batchProgress.runningRuns' is possibly 'undefined'.
+src/components/monte-carlo/panels/CriticalEventsStream.tsx(93,7): error TS2322: Type 'Element' is not assignable to type 'string'.
+src/components/monte-carlo/panels/CriticalEventsStream.tsx(103,7): error TS2322: Type '"cyan" | "green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+  Type '"green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+src/components/monte-carlo/panels/LiveProgressPanel.tsx(23,13): error TS7030: Not all code paths return a value.
+src/components/monte-carlo/panels/LiveProgressPanel.tsx(63,7): error TS2322: Type '"cyan" | "green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+  Type '"green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+src/components/monte-carlo/panels/OutcomeDistributionPanel.tsx(247,27): error TS2532: Object is possibly 'undefined'.
+src/components/monte-carlo/panels/ParameterSweepComparison.tsx(80,47): error TS2322: Type '"purple"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+src/components/monte-carlo/panels/ParameterSweepComparison.tsx(168,31): error TS2532: Object is possibly 'undefined'.
+src/components/monte-carlo/panels/ParameterSweepComparison.tsx(230,36): error TS2532: Object is possibly 'undefined'.
+src/components/monte-carlo/panels/RunInspector.tsx(137,13): error TS2322: Type '"green" | "amber"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+  Type '"green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+src/components/monte-carlo/SweepResultsPanel.tsx(25,7): error TS2322: Type '"green"' is not assignable to type '"none" | "red" | "cyan" | "amber" | undefined'.
+src/components/monte-carlo/SweepResultsPanel.tsx(55,20): error TS18048: 'aggregateStats.survivalRate' is possibly 'undefined'.
+src/components/monte-carlo/SweepResultsPanel.tsx(74,61): error TS2339: Property 'length' does not exist on type '{ avgMonthsToOutcome: number; minMonthsToOutcome: number; maxMonthsToOutcome: number; medianMonthsToOutcome: number; }'.
+src/components/monte-carlo/SweepResultsPanel.tsx(160,23): error TS18048: 'breakdown' is possibly 'undefined'.
+src/components/monte-carlo/SweepResultsPanel.tsx(186,27): error TS2339: Property 'slice' does not exist on type '{ avgMonthsToOutcome: number; minMonthsToOutcome: number; maxMonthsToOutcome: number; medianMonthsToOutcome: number; }'.
+src/components/paradigms/ParadigmDetailPanel.tsx(608,43): error TS18047: 'lastUpdate' is possibly 'null'.
+src/components/paradigms/ParadigmDetailPanel.tsx(608,77): error TS18047: 'lastUpdate' is possibly 'null'.
+src/simulation/cooperativeOwnership.ts(32,15): error TS2305: Module '"../types/organizations"' has no exported member 'CooperativeOwnershipMetrics'.
+src/simulation/cooperativeOwnership.ts(142,7): error TS2339: Property 'governanceModel' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(143,7): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(160,22): error TS2339: Property 'cooperativeOwnershipEvents' does not exist on type '{ qualityOfLife: { month: number; value: number; }[]; outcomeProbs: { month: number; utopia: number; dystopia: number; extinction: number; }[]; controlCapability: { month: number; effectiveControl: number; totalAICapability: number; }[]; metrics: { ...; }[]; exogenousShocks?: { ...; }[] | undefined; criticalJuncture...'.
+src/simulation/cooperativeOwnership.ts(161,19): error TS2339: Property 'cooperativeOwnershipEvents' does not exist on type '{ qualityOfLife: { month: number; value: number; }[]; outcomeProbs: { month: number; utopia: number; dystopia: number; extinction: number; }[]; controlCapability: { month: number; effectiveControl: number; totalAICapability: number; }[]; metrics: { ...; }[]; exogenousShocks?: { ...; }[] | undefined; criticalJuncture...'.
+src/simulation/cooperativeOwnership.ts(163,17): error TS2339: Property 'cooperativeOwnershipEvents' does not exist on type '{ qualityOfLife: { month: number; value: number; }[]; outcomeProbs: { month: number; utopia: number; dystopia: number; extinction: number; }[]; controlCapability: { month: number; effectiveControl: number; totalAICapability: number; }[]; metrics: { ...; }[]; exogenousShocks?: { ...; }[] | undefined; criticalJuncture...'.
+src/simulation/cooperativeOwnership.ts(193,11): error TS2339: Property 'governanceModel' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(193,60): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(197,23): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(229,22): error TS2339: Property 'cooperativeOwnershipEvents' does not exist on type '{ qualityOfLife: { month: number; value: number; }[]; outcomeProbs: { month: number; utopia: number; dystopia: number; extinction: number; }[]; controlCapability: { month: number; effectiveControl: number; totalAICapability: number; }[]; metrics: { ...; }[]; exogenousShocks?: { ...; }[] | undefined; criticalJuncture...'.
+src/simulation/cooperativeOwnership.ts(230,19): error TS2339: Property 'cooperativeOwnershipEvents' does not exist on type '{ qualityOfLife: { month: number; value: number; }[]; outcomeProbs: { month: number; utopia: number; dystopia: number; extinction: number; }[]; controlCapability: { month: number; effectiveControl: number; totalAICapability: number; }[]; metrics: { ...; }[]; exogenousShocks?: { ...; }[] | undefined; criticalJuncture...'.
+src/simulation/cooperativeOwnership.ts(232,17): error TS2339: Property 'cooperativeOwnershipEvents' does not exist on type '{ qualityOfLife: { month: number; value: number; }[]; outcomeProbs: { month: number; utopia: number; dystopia: number; extinction: number; }[]; controlCapability: { month: number; effectiveControl: number; totalAICapability: number; }[]; metrics: { ...; }[]; exogenousShocks?: { ...; }[] | undefined; criticalJuncture...'.
+src/simulation/cooperativeOwnership.ts(266,11): error TS2339: Property 'governanceModel' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(266,60): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(274,23): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(294,24): error TS2339: Property 'cooperativeOwnershipEvents' does not exist on type '{ qualityOfLife: { month: number; value: number; }[]; outcomeProbs: { month: number; utopia: number; dystopia: number; extinction: number; }[]; controlCapability: { month: number; effectiveControl: number; totalAICapability: number; }[]; metrics: { ...; }[]; exogenousShocks?: { ...; }[] | undefined; criticalJuncture...'.
+src/simulation/cooperativeOwnership.ts(295,21): error TS2339: Property 'cooperativeOwnershipEvents' does not exist on type '{ qualityOfLife: { month: number; value: number; }[]; outcomeProbs: { month: number; utopia: number; dystopia: number; extinction: number; }[]; controlCapability: { month: number; effectiveControl: number; totalAICapability: number; }[]; metrics: { ...; }[]; exogenousShocks?: { ...; }[] | undefined; criticalJuncture...'.
+src/simulation/cooperativeOwnership.ts(297,19): error TS2339: Property 'cooperativeOwnershipEvents' does not exist on type '{ qualityOfLife: { month: number; value: number; }[]; outcomeProbs: { month: number; utopia: number; dystopia: number; extinction: number; }[]; controlCapability: { month: number; effectiveControl: number; totalAICapability: number; }[]; metrics: { ...; }[]; exogenousShocks?: { ...; }[] | undefined; criticalJuncture...'.
+src/simulation/cooperativeOwnership.ts(330,11): error TS2339: Property 'governanceModel' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(372,11): error TS2339: Property 'governanceModel' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(372,60): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(376,23): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(397,11): error TS2339: Property 'governanceModel' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(397,60): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(401,23): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(454,16): error TS2339: Property 'governanceModel' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(468,30): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(471,105): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(481,70): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/cooperativeOwnership.ts(482,70): error TS2339: Property 'cooperativeMetrics' does not exist on type 'Organization'.
+src/simulation/engine/phases/ClimateImpactCascadePhase.ts(279,11): error TS2353: Object literal may only specify known properties, and 'additionalInfo' does not exist in type '{ location: string; valueName: string; month?: number | undefined; }'.
+src/simulation/engine/phases/CooperativeOwnershipPhase.ts(40,18): error TS2339: Property 'governanceModel' does not exist on type 'Organization'.
+src/simulation/engine/phases/HumanPopulationPhase.ts(93,27): error TS18048: 'state.humanPopulationSystem.regionalPopulations' is possibly 'undefined'.
+src/simulation/government/actions/rightsActions.ts(365,9): error TS2322: Type 'string' is not assignable to type 'number'.
+src/simulation/government/actions/rightsActions.ts(434,9): error TS2322: Type 'string' is not assignable to type 'number'.
+src/simulation/government/initialization.ts(115,7): error TS2353: Object literal may only specify known properties, and 'valueName' does not exist in type '{ location: string; month?: number | undefined; expectedSource?: string | undefined; }'.
+src/simulation/initialization.ts(331,5): error TS2322: Type '"closed" | "open"' is not assignable to type '"research" | "closed" | "open_weights" | "enterprise"'.
+  Type '"open"' is not assignable to type '"research" | "closed" | "open_weights" | "enterprise"'.
+src/simulation/populationMapping.ts(67,5): error TS2820: Type '"Eastern Asia"' is not assignable to type 'RegionName'. Did you mean '"East Asia"'?
+src/simulation/populationMapping.ts(73,5): error TS2820: Type '"Southern Asia"' is not assignable to type 'RegionName'. Did you mean '"South Asia"'?
+src/simulation/populationMapping.ts(78,5): error TS2820: Type '"South-East Asia"' is not assignable to type 'RegionName'. Did you mean '"South Asia"'?
+src/simulation/populationMapping.ts(84,5): error TS2820: Type '"Northern America"' is not assignable to type 'RegionName'. Did you mean '"North America"'?
+src/simulation/populationMapping.ts(104,5): error TS2322: Type '"Oceania"' is not assignable to type 'RegionName'.
+src/simulation/populationMapping.ts(109,3): error TS2820: Type '"Northern America"' is not assignable to type 'RegionName'. Did you mean '"North America"'?
+src/simulation/populationMapping.ts(147,5): error TS2820: Type '"Northern America"' is not assignable to type 'RegionName'. Did you mean '"North America"'?
+src/simulation/populationMapping.ts(149,5): error TS2820: Type '"Eastern Asia"' is not assignable to type 'RegionName'. Did you mean '"East Asia"'?
+src/simulation/populationMapping.ts(150,5): error TS2820: Type '"Southern Asia"' is not assignable to type 'RegionName'. Did you mean '"South Asia"'?
+src/simulation/populationMapping.ts(151,5): error TS2820: Type '"South-East Asia"' is not assignable to type 'RegionName'. Did you mean '"South Asia"'?
+src/simulation/populationMapping.ts(152,5): error TS2322: Type '"Central Asia"' is not assignable to type 'RegionName'.
+src/simulation/populationMapping.ts(156,5): error TS2322: Type '"Oceania"' is not assignable to type 'RegionName'.
+src/simulation/positiveTippingPoints.ts(528,5): error TS2353: Object literal may only specify known properties, and 'additionalInfo' does not exist in type '{ location: string; valueName: string; month?: number | undefined; expectedSource?: string | undefined; }'.
+src/simulation/positiveTippingPoints.ts(549,5): error TS2353: Object literal may only specify known properties, and 'additionalInfo' does not exist in type '{ location: string; valueName: string; month?: number | undefined; expectedSource?: string | undefined; }'.
+src/simulation/specificTippingPoints.ts(274,9): error TS2322: Type '"climate"' is not assignable to type 'MortalityRiskType'.
+src/simulation/specificTippingPoints.ts(276,9): error TS2322: Type '"climate"' is not assignable to type 'ProximateCause'.
+src/simulation/specificTippingPoints.ts(286,9): error TS2322: Type '"climate"' is not assignable to type 'MortalityRiskType'.
+src/simulation/specificTippingPoints.ts(288,9): error TS2322: Type '"climate"' is not assignable to type 'ProximateCause'.
+src/simulation/techTree/effectsEngine.ts(1352,25): error TS2339: Property 'resources' does not exist on type 'GameState'.
+src/simulation/techTree/effectsEngine.ts(1354,25): error TS2339: Property 'resources' does not exist on type 'GameState'.
+src/simulation/techTree/effectsEngine.ts(1358,23): error TS2339: Property 'resources' does not exist on type 'GameState'.
+src/simulation/techTree/effectsEngine.ts(1393,25): error TS2339: Property 'resources' does not exist on type 'GameState'.
+src/simulation/techTree/effectsEngine.ts(1395,25): error TS2339: Property 'resources' does not exist on type 'GameState'.
+src/simulation/techTree/effectsEngine.ts(1399,23): error TS2339: Property 'resources' does not exist on type 'GameState'.
+src/workers/simulationWorker.ts(1794,32): error TS2339: Property 'techDeployer' does not exist on type 'GameState'.
+src/workers/simulationWorker.ts(1796,52): error TS2339: Property 'educationalQuality' does not exist on type 'QualityOfLifeSystems'.
+src/workers/simulationWorker.ts(1800,53): error TS2339: Property 'climateChange' does not exist on type 'EnvironmentalAccumulation'.
+src/workers/simulationWorker.ts(1801,58): error TS2339: Property 'biodiversityLoss' does not exist on type 'EnvironmentalAccumulation'.
+src/workers/simulationWorker.ts(1803,47): error TS2339: Property 'depletionLevel' does not exist on type 'PhosphorusSystem'.
+src/workers/simulationWorker.ts(1804,29): error TS2339: Property 'waterSystem' does not exist on type 'GameState'.
+src/workers/simulationWorker.ts(1806,28): error TS2339: Property 'oceanHealth' does not exist on type 'GameState'.
+src/workers/simulationWorker.ts(1812,61): error TS2339: Property 'biodiversityLoss' does not exist on type 'EnvironmentalAccumulation'.
+src/workers/simulationWorker.ts(1813,33): error TS2339: Property 'socialMetrics' does not exist on type 'GameState'.
+[2025-11-04 11:19:44] ✅ TypeScript compilation passed
+[2025-11-04 11:19:44] ℹ️  Gate 2: Test suite...
+npm error Missing script: "test"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/annhoward/.npm/_logs/2025-11-04T19_19_44_565Z-debug-0.log
+[2025-11-04 11:19:44] ✅ Tests passed (or skipped)
+[2025-11-04 11:19:44] ℹ️  Gate 3: Architecture review...
+[2025-11-04 11:19:44] 🔍 Spawning architecture-skeptic agent...

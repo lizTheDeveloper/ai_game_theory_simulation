@@ -246,13 +246,14 @@ export function completeProject(
     
     // Get target capability from expected profile
     const targetCap = calculateTotalCapabilityFromProfile(project.expectedModelCapability!);
-    
+
     const newAI = createAIAgent(
       `${org.id}_trained_${absoluteMonth}`,
       `${org.name} Model ${absoluteMonth}`,
       targetCap,           // targetCapability: number
       initialAlignment,    // alignment: number
-      absoluteMonth        // seed: number
+      absoluteMonth,       // seed: number
+      () => alignmentRng.next()  // rng: () => number (use SeededRandom from above)
     );
     
     // Set organization ownership

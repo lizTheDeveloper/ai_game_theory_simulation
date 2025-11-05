@@ -50,7 +50,10 @@ function createTestAI(
     totalCapability?: number;
   }
 ): AIAgent {
-  const ai = createAIAgent(id, name, options.totalCapability || 1.0, options.alignment || 0.8, Math.random());
+  // Use seeded RNG for determinism (seed from id hash)
+  const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const rng = createSeededRNG(seed);
+  const ai = createAIAgent(id, name, options.totalCapability || 1.0, options.alignment || 0.8, seed, rng);
 
   // Override sleeper state
   if (options.isSleeper !== undefined) {
