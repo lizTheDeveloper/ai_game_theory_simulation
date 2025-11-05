@@ -27,3 +27,41 @@ M	autonomous-worker.sh
 Your branch is up to date with 'origin/main'.
 [1;33m⚠️  Uncommitted changes detected on main branch[0m
 [0;34mℹ️  Committing local changes before pull...[0m
+
+🎨 Validating emoji usage...
+  1. Checking emoji map for duplicates...
+[0;32m     ✅ No duplicates in emoji map[0m
+  2. Checking staged files for emoji usage...
+[0;32m     ✅ No simulation files changed[0m
+
+
+🔄 Running pre-historian scripts...
+
+📦 Backing up Claude conversations...
+  ⚠️  Conversation backup failed (non-critical)
+📋 Checking for underdocumented code...
+  ✅ Underdocumented items indexed
+📚 Generating simulation function docs...
+  ✅ Simulation docs generated
+
+📚 Spawning wiki-documentation-updater (historian)...
+
+This commit is an **autonomous worker infrastructure change** - modifying how the worker authenticates (from API key to Claude Code CLI session). This is **operational/tooling** work, not simulation mechanics.
+
+**Analysis:**
+- Changes authentication method in autonomous-worker.sh
+- Creates backup of old version
+- Adds new log files
+- Shows Monte Carlo error logs (pre-existing bug, not introduced by this commit)
+
+**Documentation Decision:**
+- ✅ No wiki updates needed (no simulation mechanics changed)
+- ✅ No research verification needed (infrastructure tooling, not parameters/mechanics)
+- ❌ Skip this commit - not substantive enough for historian intervention
+
+**Rationale:**
+1. **Infrastructure-only change:** Swapped API key check for Claude CLI check
+2. **No simulation impact:** Doesn't affect game state, phases, parameters, or mechanics
+3. **Error logs are pre-existing:** Monte Carlo error in logs is from a previous run, not caused by this commit
+
+**Conclusion:** This is a trivial operational commit. The historian agent's purpose is to document **simulation mechanics and research-backed systems**, not DevOps infrastructure changes. No action required.

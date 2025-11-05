@@ -80,12 +80,12 @@ export function ParadigmDashboard() {
     lastUpdate.indigenousIndex
   ]
 
-  const avgScore = scores.reduce((a, b) => a + b, 0) / scores.length
-  const divergence = Math.sqrt(scores.reduce((sum, s) => sum + Math.pow(s - avgScore, 2), 0) / scores.length)
+  const avgScore = scores.reduce((a, b) => (a ?? 0) + (b ?? 0), 0) / scores.length
+  const divergence = Math.sqrt(scores.reduce((sum, s) => (sum ?? 0) + Math.pow((s ?? 0) - avgScore, 2), 0) / scores.length)
 
   // Detect contested outcome (simultaneous utopia + dystopia)
-  const utopiaCount = scores.filter(s => s >= 80).length
-  const dystopiaCount = scores.filter(s => s < 30).length
+  const utopiaCount = scores.filter(s => (s ?? 0) >= 80).length
+  const dystopiaCount = scores.filter(s => (s ?? 0) < 30).length
   const isContested = utopiaCount > 0 && dystopiaCount > 0
 
   // Get 12-month sparkline history from state
@@ -183,7 +183,7 @@ export function ParadigmDashboard() {
         {/* Western Liberal */}
         <Panel
           title="Western Liberal"
-          glow={scores[0] < 30 ? 'red' : 'none'}
+          glow={(scores[0] ?? 50) < 30 ? 'red' : 'none'}
         >
           <div>
             <button
@@ -193,7 +193,7 @@ export function ParadigmDashboard() {
             >
               <div className="mb-4">
                 <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-western-liberal)' }}>
-                  {scores[0].toFixed(1)}
+                  {(scores[0] ?? 0).toFixed(1)}
                 </div>
                 <Sparkline data={getSparkline('western')} color="var(--color-western-liberal)" />
               </div>
@@ -290,7 +290,7 @@ export function ParadigmDashboard() {
         {/* Development */}
         <Panel
           title="Development"
-          glow={scores[1] >= 80 ? 'cyan' : 'none'}
+          glow={(scores[1] ?? 0) >= 80 ? 'cyan' : 'none'}
         >
           <div>
             <button
@@ -300,7 +300,7 @@ export function ParadigmDashboard() {
             >
               <div className="mb-4">
                 <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-development)' }}>
-                  {scores[1].toFixed(1)}
+                  {(scores[1] ?? 0).toFixed(1)}
                 </div>
                 <Sparkline data={getSparkline('development')} color="var(--color-development)" />
               </div>
@@ -397,7 +397,7 @@ export function ParadigmDashboard() {
         {/* Ecological */}
         <Panel
           title="Ecological"
-          glow={scores[2] < 20 ? 'red' : 'none'}
+          glow={(scores[2] ?? 50) < 20 ? 'red' : 'none'}
         >
           <div>
             <button
@@ -407,9 +407,9 @@ export function ParadigmDashboard() {
             >
               <div className="mb-4">
                 <div className="text-4xl font-light mb-2" style={{
-                  color: scores[2] < 20 ? 'var(--color-red)' : 'var(--color-ecological)'
+                  color: (scores[2] ?? 50) < 20 ? 'var(--color-red)' : 'var(--color-ecological)'
                 }}>
-                  {scores[2].toFixed(1)}
+                  {(scores[2] ?? 0).toFixed(1)}
                 </div>
                 <Sparkline data={getSparkline('ecological')} color="var(--color-ecological)" />
               </div>
@@ -520,7 +520,7 @@ export function ParadigmDashboard() {
             >
               <div className="mb-4">
                 <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-indigenous)' }}>
-                  {scores[3].toFixed(1)}
+                  {(scores[3] ?? 0).toFixed(1)}
                 </div>
                 <Sparkline data={getSparkline('indigenous')} color="var(--color-indigenous)" />
               </div>
@@ -624,7 +624,7 @@ export function ParadigmDashboard() {
       {selectedParadigm && (
         <ParadigmDetailPanel
           paradigm={selectedParadigm}
-          score={scores[['western', 'development', 'ecological', 'indigenous'].indexOf(selectedParadigm)]}
+          score={scores[['western', 'development', 'ecological', 'indigenous'].indexOf(selectedParadigm)] ?? 0}
           isOpen={selectedParadigm !== null}
           onClose={() => setSelectedParadigm(null)}
         />
@@ -634,7 +634,7 @@ export function ParadigmDashboard() {
       <Panel title="Historical Patterns">
         <div className="space-y-3">
           {/* Singapore Pattern */}
-          {scores[1] >= 80 && scores[0] < 50 && (
+          {(scores[1] ?? 0) >= 80 && (scores[0] ?? 0) < 50 && (
             <div className="p-3" style={{ backgroundColor: 'var(--color-near-black)', borderLeft: '3px solid var(--color-development)' }}>
               <div className="font-semibold mb-1">Singapore Pattern Detected</div>
               <div className="text-sm" style={{ color: 'var(--white-60)' }}>
@@ -644,7 +644,7 @@ export function ParadigmDashboard() {
           )}
 
           {/* Norway Pattern */}
-          {scores[1] >= 80 && scores[0] >= 70 && scores[2] < 30 && (
+          {(scores[1] ?? 0) >= 80 && (scores[0] ?? 0) >= 70 && (scores[2] ?? 0) < 30 && (
             <div className="p-3" style={{ backgroundColor: 'var(--color-near-black)', borderLeft: '3px solid var(--color-development)' }}>
               <div className="font-semibold mb-1">Norway Pattern Detected</div>
               <div className="text-sm" style={{ color: 'var(--white-60)' }}>
