@@ -524,8 +524,7 @@ function estimateEnvironmentalImpact(tech: TechnologyAdoption): number {
 
   const impact = assertDefined(impactMap[tech.technology], {
     location: 'estimateEnvironmentalImpact',
-    valueName: `impactMap[${tech.technology}]`,
-    additionalInfo: { technology: tech.technology }
+    valueName: `impactMap[${tech.technology}]`
   });
   return impact * tech.marketShare;
 }
@@ -545,8 +544,7 @@ function estimateEconomicImpact(tech: TechnologyAdoption): number {
 
   const impact = assertDefined(impactMap[tech.technology], {
     location: 'estimateEconomicImpact',
-    valueName: `impactMap[${tech.technology}]`,
-    additionalInfo: { technology: tech.technology }
+    valueName: `impactMap[${tech.technology}]`
   });
   const costSavings = (1.0 - tech.costPerUnit) * impact;
   return costSavings * tech.marketShare;

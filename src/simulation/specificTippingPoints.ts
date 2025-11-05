@@ -269,11 +269,11 @@ export function updateAmazonRainforest(state: GameState): void {
       // Regional droughts, agricultural disruption
       const pop = state.humanPopulationSystem as any;
 
-      // Climate component: 50%
+      // Climate component: 50% - drought leading to famine
       addMortalityRisk(pop, {
-        type: 'climate',
+        type: 'famine',
         baseRisk: 0.0002 * 0.50,
-        proximate: 'climate',
+        proximate: 'famine',
         root: 'climate',
         confidence: 'MEDIUM',
         description: 'Amazon collapse - regional drought/agriculture (climate component)',
@@ -281,11 +281,11 @@ export function updateAmazonRainforest(state: GameState): void {
         exposedFraction: 0.02
       });
 
-      // Ecosystem component: 50%
+      // Ecosystem component: 50% - ecosystem collapse impacts
       addMortalityRisk(pop, {
-        type: 'climate',
+        type: 'ecosystem',
         baseRisk: 0.0002 * 0.50,
-        proximate: 'climate',
+        proximate: 'ecosystem',
         root: 'ecosystem',
         confidence: 'MEDIUM',
         description: 'Amazon collapse - regional drought/agriculture (ecosystem component)',

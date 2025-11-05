@@ -13,6 +13,37 @@ export interface GeographicPresence {
 }
 
 /**
+ * Cooperative Ownership Metrics
+ *
+ * Research Foundation:
+ * - Québec Cooperatives (2010): 62% vs 35% 5-year survival rate
+ * - Borzaga & Galera (2014): Italian cooperative crisis resilience
+ * - Mannan & Pek (2024): Platform cooperative governance challenges
+ *
+ * Tracks metrics for worker-owned AI organizations with profit-sharing
+ * and democratic governance.
+ */
+export interface CooperativeOwnershipMetrics {
+  // Membership
+  memberCount: number;              // Number of worker-owners
+  participationRate: number;        // [0,1] Fraction actively participating in governance
+  hoursWorkedTotal: number;         // Total hours worked by all members (for patronage)
+
+  // Economics
+  profitSurplus: number;            // Monthly profit available for distribution
+  cashDistributionRatio: number;    // [0,1] Fraction distributed as cash vs retained equity
+  accumulatedWorkerEquity: number;  // Total worker equity stake
+
+  // Governance
+  governanceOverheadHours: number;  // Hours spent on democratic decision-making
+  decisionLatency: number;          // Multiplier for decision speed (>1 = slower)
+
+  // Resilience
+  crisisResilienceBonus: number;    // [0,1] Survival bonus during economic crises
+  employmentStabilityFactor: number; // Multiplier for job preservation tendency
+}
+
+/**
  * Phase 1: Data Center Infrastructure
  *
  * Concrete data centers that provide compute FLOPs.
@@ -122,6 +153,10 @@ export interface Organization {
   rdBudgetMultiplier?: number;   // [0,1] Tracks R&D budget cuts (1.0 = full budget, 0.5 = 50% cut)
   distressMeasuresTaken?: string[]; // Track which measures used (prevent duplicate actions same month)
   lastDistressMonth?: number;    // Last month we took distress actions (for progressive escalation)
+
+  // NEW (Nov 2025): Cooperative ownership model
+  governanceModel?: 'traditional' | 'worker-cooperative'; // Organizational structure
+  cooperativeMetrics?: CooperativeOwnershipMetrics;       // Worker-ownership metrics (if cooperative)
 }
 
 /**

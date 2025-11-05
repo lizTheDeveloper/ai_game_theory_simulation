@@ -20,6 +20,7 @@ import { GameState } from '@/types/game';
 import { HumanPopulationSystem, PopulationStatus, PopulationOutcome, RootCause, CompoundCause, isCompoundCause, RegionalPopulation } from '@/types/population';
 import { validateCompoundCause, getCompoundConfidence } from './utils/deathAttribution';
 import { getTechDeploymentSafe } from './techTree/helpers';
+import { initializeRegionalMortalityStabilizers, initializeRegionalFamineState, initializeRegionalResilienceProfile } from './mortalityStabilizersInit';
 
 /**
  * Initialize regional populations (2025 baseline)
@@ -30,7 +31,7 @@ import { getTechDeploymentSafe } from './techTree/helpers';
 function initializeRegionalPopulations(): RegionalPopulation[] {
   return [
     {
-      name: 'Eastern Asia',
+      name: 'East Asia',
       population: 1677,  // millions (China 1425M + Japan 123M + Koreas 77M + Mongolia 3M) - UN 2024 data
       peakPopulation: 1677,
       baselinePopulation: 1677,
@@ -57,7 +58,7 @@ function initializeRegionalPopulations(): RegionalPopulation[] {
       emigrationPressure: 0
     },
     {
-      name: 'Southern Asia',
+      name: 'South Asia',
       population: 2048,  // millions (India 1428M + Pakistan 240M + Bangladesh 173M + others 207M) - UN 2024 data
       peakPopulation: 2048,
       baselinePopulation: 2048,
@@ -165,7 +166,7 @@ function initializeRegionalPopulations(): RegionalPopulation[] {
       emigrationPressure: 0
     },
     {
-      name: 'Northern America',
+      name: 'North America',
       population: 380,  // millions (USA 339M + Canada 39M + others 2M) - UN 2024 data
       peakPopulation: 380,
       baselinePopulation: 380,
@@ -219,7 +220,7 @@ function initializeRegionalPopulations(): RegionalPopulation[] {
       emigrationPressure: 0
     },
     {
-      name: 'South-East Asia',
+      name: 'Southeast Asia',
       population: 698,  // millions (Indonesia 277M + Philippines 117M + Vietnam 99M + Thailand 71M + Myanmar 54M + others) - UN 2024 data
       peakPopulation: 698,
       baselinePopulation: 698,
@@ -303,13 +304,34 @@ function initializeRegionalPopulations(): RegionalPopulation[] {
 }
 
 /**
+ * Initialize regional populations WITH mortality stabilizers
+ *
+ * FIX (Nov 5, 2025): Initialize mortalityStabilizers, famineState, and resilienceProfile
+ * at region creation time, not lazily on first update. This prevents "missing mortalityStabilizers"
+ * errors during Monte Carlo validation.
+ */
+function initializeRegionalPopulationsWithStabilizers(): RegionalPopulation[] {
+  const regions = initializeRegionalPopulations();
+
+  // Initialize mortality stabilizers, famine state, and resilience for each region
+  for (const region of regions) {
+    region.mortalityStabilizers = initializeRegionalMortalityStabilizers(region);
+    region.famineState = initializeRegionalFamineState(region);
+    region.resilienceProfile = initializeRegionalResilienceProfile(region);
+  }
+
+  return regions;
+}
+
+/**
  * Initialize population system (2025 baseline)
  *
  * NOTE: Global population is DERIVED from regional populations (bottom-up architecture).
  * The hardcoded values below are placeholders that get overwritten by aggregation in first update.
  */
 export function initializeHumanPopulationSystem(): HumanPopulationSystem {
-  const regionalPopulations = initializeRegionalPopulations();
+  // FIX (Nov 5, 2025): Use new function that initializes mortalityStabilizers at region creation
+  const regionalPopulations = initializeRegionalPopulationsWithStabilizers();
 
   // Calculate initial global population from regional data (UN 2024: ~8.136B)
   const initialPopulationMillions = regionalPopulations.reduce((sum, region) => sum + region.population, 0);

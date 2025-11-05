@@ -90,7 +90,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
   const countries: Record<CountryName, CountryPopulation> = {
     'United States': createCountry({
       name: 'United States',
-      region: 'Northern America',
+      region: 'North America',
       population: 335,
       birthRate: 11.0,
       deathRate: 8.9,
@@ -101,7 +101,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'China': createCountry({
       name: 'China',
-      region: 'Eastern Asia',
+      region: 'East Asia',
       population: 1425,
       birthRate: 6.5,
       deathRate: 7.4,
@@ -123,7 +123,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'India': createCountry({
       name: 'India',
-      region: 'Southern Asia',
+      region: 'South Asia',
       population: 1425,
       birthRate: 16.2,
       deathRate: 7.3,
@@ -156,7 +156,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Pakistan': createCountry({
       name: 'Pakistan',
-      region: 'Southern Asia',
+      region: 'South Asia',
       population: 235,
       birthRate: 25.4,
       deathRate: 6.5,
@@ -178,7 +178,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Japan': createCountry({
       name: 'Japan',
-      region: 'Eastern Asia',
+      region: 'East Asia',
       population: 125,
       birthRate: 6.9,
       deathRate: 11.7,
@@ -211,7 +211,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Indonesia': createCountry({
       name: 'Indonesia',
-      region: 'South-East Asia',
+      region: 'East Asia',
       population: 275,
       birthRate: 15.4,
       deathRate: 6.7,
@@ -222,7 +222,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Canada': createCountry({
       name: 'Canada',
-      region: 'Northern America',
+      region: 'North America',
       population: 39,
       birthRate: 10.2,
       deathRate: 8.1,
@@ -233,7 +233,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Bangladesh': createCountry({
       name: 'Bangladesh',
-      region: 'Southern Asia',
+      region: 'South Asia',
       population: 172,
       birthRate: 17.6,
       deathRate: 5.6,
@@ -267,7 +267,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Singapore': createCountry({
       name: 'Singapore',
-      region: 'South-East Asia',
+      region: 'East Asia',
       population: 5.9,
       birthRate: 8.5,
       deathRate: 5.0,

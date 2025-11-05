@@ -232,7 +232,7 @@ export function calculateProfitDistribution(
   state.history.cooperativeOwnershipEvents.push({
     month: state.currentMonth,
     orgId: org.id,
-    eventType: 'dividend_distribution',
+    eventType: 'profit-distribution',
     details: `Distributed $${(cashDistribution / 1e6).toFixed(1)}M to ${metrics.memberCount} workers`,
     economicImpact: cashDistribution
   });
@@ -297,7 +297,7 @@ export function applyCooperativeCrisisResilience(
     state.history.cooperativeOwnershipEvents.push({
       month: state.currentMonth,
       orgId: org.id,
-      eventType: 'crisis_response',
+      eventType: 'crisis-response',
       details: `Workers accepted wage flexibility to preserve employment (risk reduced ${((baselineRisk - validatedRisk) * 100).toFixed(0)}%)`,
       economicImpact: -(baselineRisk - validatedRisk)  // Negative = risk reduction
     });
