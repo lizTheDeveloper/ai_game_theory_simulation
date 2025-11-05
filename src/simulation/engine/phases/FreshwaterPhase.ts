@@ -16,8 +16,8 @@ export class FreshwaterPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateFreshwaterSystem, checkFreshwaterTechUnlocks } = require('../../freshwaterDepletion');
     setDeterministicRng(rng);
-    
-    updateFreshwaterSystem(state);
+
+    updateFreshwaterSystem(state, rng);
     checkFreshwaterTechUnlocks(state);
 
     return { events: [] };

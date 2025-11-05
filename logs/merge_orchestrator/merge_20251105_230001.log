@@ -1,0 +1,118 @@
+
+=== Merge Orchestrator Started ===
+[23:00:01] ⚠️  Merge orchestrator already running (lock file exists)
+[23:00:01] Timestamp: Wed Nov  5 23:00:01 UTC 2025
+[23:00:01] Dry run: false
+[23:00:01] Max branches: 10
+[23:00:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+   72854a12b..4d49eab27  main       -> origin/main
+
+=== Discovering Branches ===
+[23:00:03] Found 69 branches to process
+
+=== Branch 1/69: auto/worker-20251102_043015 ===
+[23:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251105_230001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[23:00:03] ❌ Failed to create merge branch
+
+=== Branch 2/69: auto/worker-20251102_050015 ===
+[23:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251105_230001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[23:00:03] ❌ Failed to create merge branch
+
+=== Branch 3/69: auto/worker-20251102_080006 ===
+[23:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251105_230001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[23:00:03] ❌ Failed to create merge branch
+
+=== Branch 4/69: auto/worker-20251102_090015 ===
+[23:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251105_230001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[23:00:03] ❌ Failed to create merge branch
+
+=== Branch 5/69: auto/worker-20251102_100015 ===
+[23:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251105_230001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[23:00:03] ❌ Failed to create merge branch
+
+=== Branch 6/69: auto/worker-20251102_110015 ===
+[23:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251105_230001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[23:00:04] ❌ Failed to create merge branch
+
+=== Branch 7/69: auto/worker-20251102_120000 ===
+[23:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251105_230001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[23:00:04] ❌ Failed to create merge branch
+
+=== Branch 8/69: auto/worker-20251102_130014 ===
+[23:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251105_230001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[23:00:04] ❌ Failed to create merge branch
+
+=== Branch 9/69: auto/worker-20251102_140015 ===
+[23:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251105_230001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[23:00:04] ❌ Failed to create merge branch
+
+=== Branch 10/69: auto/worker-20251102_150015 ===
+[23:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251105_230001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	src/simulation/engine/phases/FreshwaterPhase.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[23:00:04] ❌ Failed to create merge branch
+[23:00:04] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[23:00:04] Total branches found: 69
+[23:00:04] Branches processed: 10
+[23:00:04] ✅ Successfully merged: 0
+[23:00:04] ⏭️  Skipped (frontend on VM): 0
+[23:00:04] ❌ Failed (conflicts/gates): 10
+[23:00:04] 
+[23:00:04] 📊 Remaining branches: 59
+[23:00:04]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[23:00:04] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251105_230001.log
