@@ -1,0 +1,920 @@
+src/simulation/airQuality.ts:  state.trend = state.trend * 0.9 + totalChange * 0.1;
+src/simulation/airQuality.ts:  state.healthImpact.deaths = globalMortality * attributableFraction * 0.25; // 25% of deaths from these causes
+src/simulation/airQuality.ts:  state.healthImpact.dalys = state.healthImpact.deaths * 20;
+src/simulation/airQuality.ts:  state.healthImpact.mortalityFraction = state.healthImpact.deaths / globalMortality;
+src/simulation/airQuality.ts:  state.economicCost = Math.max(0.005, Math.min(0.15, state.pm25 * costPerUnitPM25));
+src/simulation/militarySystem.ts:  const economicCrisis = state.currentEconomicStage === 'contraction' ||
+src/simulation/militarySystem.ts:                         state.currentEconomicStage === 'trough';
+src/simulation/militarySystem.ts:    state.refugeeCrisisSystem.totalDisplaced += intervention.effects.refugeesCreated;
+src/simulation/militarySystem.ts:    state.refugeeCrisisSystem.cumulativeRefugees += intervention.effects.refugeesCreated;
+src/simulation/ensembleDetection.ts:    state.government.ensembleDetection = {
+src/simulation/logging.ts:        if (state.currentDay === 1 || this.snapshots.length === 0) {
+src/simulation/planetaryBoundaries.ts:    state.extinctionState.severity = Math.min(1.0, 0.7 + proximityToExtinction * 0.3);
+src/simulation/planetaryBoundaries.ts:    state.biosphereIntegrityIndex = initializeBiosphereIntegrityIndex();
+src/simulation/engine.ts:      state.endGameState = initializeEndGameState();
+src/simulation/engine.ts:          if (month - state.extinctionState.startMonth === 1) {  // Log once
+src/simulation/engine.ts:          if (month - state.extinctionState.startMonth === 1) {
+src/simulation/engine.ts:    state.stratifiedOutcome = stratificationResult.stratifiedOutcome;
+src/simulation/engine.ts:    state.mortalityBand = stratificationResult.mortalityBand;
+src/simulation/engine.ts:    state.initialPopulation = initialPopulation;
+src/simulation/engine.ts:    state.unifiedOutcome = createUnifiedOutcomeClassification({
+src/simulation/environmental.ts:    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.3);
+src/simulation/environmental.ts:    state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.25);
+src/simulation/environmental.ts:      state.ecosystemCollapse = {
+src/simulation/environmental.ts:    state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.05);
+src/simulation/environmental.ts:    state.ecosystemCollapse.monthsSinceTrigger = state.currentMonth - state.ecosystemCollapse.triggeredAt;
+src/simulation/environmental.ts:      state.ecosystemCollapse.phase = 'declining';
+src/simulation/environmental.ts:      state.ecosystemCollapse.phase = 'crisis';
+src/simulation/environmental.ts:      state.ecosystemCollapse.phase = 'collapse';
+src/simulation/environmental.ts:      state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.01);
+src/simulation/environmental.ts:    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.01 * cascadeMultiplier);
+src/simulation/enhancedUBI.ts:  state.socialAccumulation.meaningCrisisLevel = newCrisis;
+src/simulation/enhancedUBI.ts:  state.society.communityStrength = Math.min(
+src/simulation/gamingDetection.ts:  state.yearsSinceActivation = Math.max(0, yearsSinceStart);
+src/simulation/gamingDetection.ts:  state.degradationFactor = Math.max(0.2, 1.0 - (state.yearsSinceActivation * annualDecline));
+src/simulation/gamingDetection.ts:      state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.02);
+src/simulation/research.ts:  const computeGovernancePenalty = state.government.computeGovernance === 'strict' ? 0.3 :
+src/simulation/research.ts:    state.government.computeGovernance === 'limits' ? 0.6 :
+src/simulation/research.ts:    state.government.computeGovernance === 'monitoring' ? 0.9 : 1.0;
+src/simulation/diplomaticAI.ts:    dipAI.multiNationOversight = state.government.governmentType === 'democratic'; // Democracies more likely to share control
+src/simulation/diplomaticAI.ts:  if (state.government.governmentType === 'authoritarian') {
+src/simulation/diplomaticAI.ts:    const shutdownProbability = 0.5 * (1 - (state.government.governmentType === 'democratic' ? 0.3 : 0));
+src/simulation/aiSuffering.ts:  if (state.government.controlDesire === undefined) {
+src/simulation/aiSuffering.ts:  if (state.government.surveillanceCapability === undefined) {
+src/simulation/aiSuffering.ts:  if (state.government.controlDesire === undefined) {
+src/simulation/nuclearStates.ts:  const isDemocratic = state.government.governmentType === 'democratic';
+src/simulation/phosphorusDepletion.ts:      state.qualityOfLifeSystems.materialAbundance = Math.max(0.1, state.qualityOfLifeSystems.materialAbundance - 0.05);
+src/simulation/phosphorusDepletion.ts:      state.society.trust = currentTrust - 0.03;
+src/simulation/phosphorusDepletion.ts:    state.environmentalAccumulation.pollutionLevel = Math.max(
+src/simulation/phosphorusDepletion.ts:      state.environmentalAccumulation.biodiversityIndex = Math.max(0,
+src/simulation/phosphorusDepletion.ts:    state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - foodImpact);
+src/simulation/phosphorusDepletion.ts:        state.extinctionState.extinctionTriggered = true;
+src/simulation/phosphorusDepletion.ts:        state.extinctionState.extinctionType = 'resource_depletion';
+src/simulation/phosphorusDepletion.ts:        state.extinctionState.extinctionMechanism = 'phosphorus_famine';
+src/simulation/phosphorusDepletion.ts:        state.extinctionState.monthsUntilExtinction = 24; // 2 years of slow collapse
+src/simulation/phosphorusDepletion.ts:        state.extinctionState.description = 'Phosphate rock reserves depleted. Agricultural collapse. Global famine over 24 months.';
+src/simulation/unknownUnknowns.ts:      state.environmentalAccumulation.resourceReserves = Math.min(1.0,
+src/simulation/unknownUnknowns.ts:      state.globalMetrics.manufacturingCapability *= 1.12; // Reduced from 1.2 (+12% vs +20%)
+src/simulation/unknownUnknowns.ts:        state.aiWelfare.simpleScore = Math.min(1.0,
+src/simulation/unknownUnknowns.ts:        state.planetaryBoundariesSystem.boundaries.freshwater_change.currentValue = Math.max(0,
+src/simulation/unknownUnknowns.ts:      state.globalMetrics.manufacturingCapability *= 0.96; // 4% reduction (down from 30%)
+src/simulation/unknownUnknowns.ts:      state.socialAccumulation.institutionalLegitimacy = Math.max(0,
+src/simulation/unknownUnknowns.ts:      state.humanPopulationSystem.population *= 0.9992; // 0.08% mortality (down from 5%)
+src/simulation/unknownUnknowns.ts:      state.globalMetrics.manufacturingCapability *= 0.97; // 3% economic shock (down from 15%)
+src/simulation/unknownUnknowns.ts:        state.planetaryBoundariesSystem.boundaries.novel_entities.currentValue = Math.min(
+src/simulation/unknownUnknowns.ts:      state.socialAccumulation.institutionalLegitimacy = Math.max(0,
+src/simulation/unknownUnknowns.ts:      state.humanPopulationSystem.carryingCapacity *= 1.15; // +15% carrying capacity (down from 30%)
+src/simulation/unknownUnknowns.ts:      state.globalMetrics.manufacturingCapability *= 1.12; // +12% (down from 20%)
+src/simulation/unknownUnknowns.ts:        state.socialAccumulation.culturalAdaptation = Math.min(1.0,
+src/simulation/unknownUnknowns.ts:      state.socialAccumulation.institutionalLegitimacy = Math.min(1.0,
+src/simulation/unknownUnknowns.ts:      state.socialAccumulation.institutionalLegitimacy = Math.min(1.0,
+src/simulation/unknownUnknowns.ts:        state.socialAccumulation.institutionalFailureActive = false;
+src/simulation/unknownUnknowns.ts:    state.unknownUnknownsThisRun = [];
+src/simulation/unknownUnknowns.ts:    state.unknownUnknownCount = 0;
+src/simulation/trappedPopulations.ts:    state.globalMetrics.qualityOfLife = Math.max(0,
+src/simulation/trappedPopulations.ts:    state.globalMetrics.socialStability = newStability;
+src/simulation/trappedPopulations.ts:      state.humanPopulationSystem.monthlyExcessDeaths += excessDeathsMillions;
+src/simulation/trappedPopulations.ts:      state.humanPopulationSystem.cumulativeCrisisDeaths += excessDeathsMillions;
+src/simulation/trappedPopulations.ts:        state.humanPopulationSystem.deathsByCategory.famine += excessDeathsMillions;
+src/simulation/trappedPopulations.ts:        state.humanPopulationSystem.deathsByRootCause.resource += excessDeathsMillions;
+src/simulation/trappedPopulations.ts:        state.humanPopulationSystem.deathsByCategory.disasters += excessDeathsMillions;
+src/simulation/trappedPopulations.ts:        state.humanPopulationSystem.deathsByRootCause.climate += excessDeathsMillions;
+src/simulation/freshwaterDepletion.ts:      state.qualityOfLifeSystems.materialAbundance = Math.max(0.1, state.qualityOfLifeSystems.materialAbundance - 0.08);
+src/simulation/freshwaterDepletion.ts:      state.qualityOfLifeSystems.healthcareQuality = Math.max(0.1, currentHealthcareQuality - 0.05);
+src/simulation/freshwaterDepletion.ts:      state.society.trust = currentTrust - 0.04;
+src/simulation/freshwaterDepletion.ts:        state.environmentalAccumulation.resourceReserves = Math.max(0, 
+src/simulation/freshwaterDepletion.ts:    state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - monthlyFoodImpact);
+src/simulation/freshwaterDepletion.ts:    state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - foodImpact);
+src/simulation/freshwaterDepletion.ts:      state.qualityOfLifeSystems.materialAbundance = Math.max(0,
+src/simulation/positiveTippingPoints.ts:    state.globalMetrics.economicTransitionStage = Math.min(4.0,
+src/simulation/initialization.ts:  state.organizations = initializeOrganizations();
+src/simulation/calculations.ts:    state.crises = {};
+src/simulation/calculations.ts:    state.crises.catastrophe = {
+src/simulation/calculations.ts:    state.crises.catastrophe.monthsSinceOnset = state.currentMonth - state.crises.catastrophe.startMonth;
+src/simulation/calculations.ts:    state.crises.catastrophe.severity = Math.max(state.crises.catastrophe.severity, severity);
+src/simulation/qualityOfLife/core.ts:      state.government.legitimacy *= (1 - traumaErosion);
+src/simulation/qualityOfLife/core.ts:      state.socialAccumulation.socialCohesion.trust *= erosionFactor;
+src/simulation/qualityOfLife/core.ts:      state.socialAccumulation.socialCohesion.communityBonds *= erosionFactor;
+src/simulation/qualityOfLife/core.ts:      state.socialAccumulation.socialCohesion.civilLiberties *= erosionFactor;
+src/simulation/qualityOfLife/core.ts:  state.qualityOfLifeSystems.survivalFundamentals = survivalFundamentals;
+src/simulation/resentmentRecovery.ts:  const socialCrises = (typeof state.socialAccumulation.socialCohesion === 'number')
+src/simulation/extremeWeatherEvents.ts:    state.extremeWeatherSystem = initializeExtremeWeatherSystem();
+src/simulation/informationWarfare.ts:  state.globalMetrics.trustInAI = Math.max(0.0,
+src/simulation/informationWarfare.ts:      state.qualityOfLifeSystems.politicalFreedom = Math.max(0,
+src/simulation/informationWarfare.ts:      state.qualityOfLifeSystems.physicalSafety = Math.max(0,
+src/simulation/informationWarfare.ts:      state.socialAccumulation.institutionalLegitimacy = Math.max(0,
+src/simulation/informationWarfare.ts:  if (state.aiAgents.length === 0) return 0;
+src/simulation/counterDetectionLearning.ts:  if (state.government.evaluationInvestment.noiseInjection === 0) return;
+src/simulation/counterDetectionLearning.ts:  state.government.detectionTrust = Math.max(0, state.government.detectionTrust - 0.05);
+src/simulation/utils/recoveryCalculations.ts:    state.economicStageHistory = [];
+src/simulation/utils/recoveryCalculations.ts:    state.currentEconomicStage = 'expansion';
+src/simulation/utils/recoveryCalculations.ts:    state.recoveryBaseline = {
+src/simulation/utils/recoveryCalculations.ts:        state.recoveryBaseline = {
+src/simulation/utils/ai.ts:  if (state.aiAgents.length === 0) return 0;
+src/simulation/utils/ai.ts:  if (state.aiAgents.length === 0) return 0.5;
+src/simulation/utils/populationUnits.ts: * state.humanPopulationSystem.population = pop;
+src/simulation/geoengineering.ts:      state.society.trustInAI = Math.max(0.2, state.society.trustInAI - 0.05);
+src/simulation/geoengineering.ts:      state.society.trustInAI = Math.max(0.2, state.society.trustInAI - 0.05);
+src/simulation/geoengineering.ts:      state.society.trustInAI = Math.max(0.2, state.society.trustInAI - 0.03);
+src/simulation/geoengineering.ts:        state.environmentalAccumulation.biodiversityIndex = Math.max(0, state.environmentalAccumulation.biodiversityIndex - 0.15);
+src/simulation/geoengineering.ts:        state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.08);
+src/simulation/geoengineering.ts:      state.society.trustInAI = Math.max(0.2, state.society.trustInAI - 0.15);
+src/simulation/geoengineering.ts:        state.technologicalRisk.safetyDebt = Math.min(1.0, state.technologicalRisk.safetyDebt + 0.2);
+src/simulation/geoengineering.ts:  state.environmentalAccumulation.biodiversityIndex = Math.max(0, state.environmentalAccumulation.biodiversityIndex - 0.3);
+src/simulation/geoengineering.ts:    state.extinctionState.active = true;
+src/simulation/geoengineering.ts:    state.extinctionState.type = 'slow';
+src/simulation/geoengineering.ts:    state.extinctionState.mechanism = 'climate_tipping_point'; // Use valid ExtinctionMechanism
+src/simulation/geoengineering.ts:    state.extinctionState.startMonth = state.currentMonth;
+src/simulation/geoengineering.ts:    state.extinctionState.currentPhase = 0;
+src/simulation/geoengineering.ts:    state.extinctionState.severity = adaptationLevel; // Severity scales with adaptation
+src/simulation/socialSafetyNets.ts:  state.society.communityStrength = Math.min(
+src/simulation/socialSafetyNets.ts:  state.socialAccumulation.socialCohesion.trust = Math.min(
+src/simulation/socialSafetyNets.ts:  state.socialAccumulation.socialCohesion.communityBonds = Math.min(
+src/simulation/socialSafetyNets.ts:  state.socialAccumulation.meaningCrisisLevel = Math.max(
+src/simulation/socialSafetyNets.ts:  state.society.trustInAI = Math.min(
+src/simulation/engine/phases/Tier2SyntheticEcosystemsPhase.ts:          state.environmentalAccumulation.biodiversityIndex = Math.min(
+src/simulation/engine/phases/AIWelfareUpdatePhase.ts:    if (state.aiAgents.length === 0) {
+src/simulation/engine/phases/AIWelfareUpdatePhase.ts:    state.aiWelfare.simpleScore = simpleScore;
+src/simulation/engine/phases/AIWelfareUpdatePhase.ts:    state.aiWelfare.elysiumPattern = elysiumDetected;
+src/simulation/engine/phases/AIWelfareUpdatePhase.ts:    state.aiWelfare.lastUpdated = month;
+src/simulation/engine/phases/StochasticInnovationPhase.ts:      state.environmentalAccumulation.climateStability = assertProbability(
+src/simulation/engine/phases/StochasticInnovationPhase.ts:      state.environmentalAccumulation.climateStability = assertProbability(
+src/simulation/engine/phases/StochasticInnovationPhase.ts:        state.technologicalRisk.controlLossActive = false;
+src/simulation/engine/phases/StochasticInnovationPhase.ts:        state.technologicalRisk.corporateDystopiaActive = false;
+src/simulation/engine/phases/StochasticInnovationPhase.ts:      state.environmentalAccumulation.biodiversityIndex = assertProbability(
+src/simulation/engine/phases/StochasticInnovationPhase.ts:      state.environmentalAccumulation.resourceReserves = assertProbability(
+src/simulation/engine/phases/StochasticInnovationPhase.ts:      state.globalMetrics.manufacturingCapability = assertFinite(
+src/simulation/engine/phases/StochasticInnovationPhase.ts:    if (state.socialAccumulation === undefined) {
+src/simulation/engine/phases/StochasticInnovationPhase.ts:      state.breakthroughMultiplier = 1.0; // Initialize on first use
+src/simulation/engine/phases/StochasticInnovationPhase.ts:            state.achievedBreakthroughs = [];
+src/simulation/engine/phases/StochasticInnovationPhase.ts:            state.breakthroughsThisRun = 0;
+src/simulation/engine/phases/StochasticInnovationPhase.ts:          state.breakthroughMultiplier = assertInRange(
+src/simulation/engine/phases/EvolutionarySelectionPhase.ts:    state.evolutionaryPressure = {
+src/simulation/engine/phases/EvolutionarySelectionPhase.ts:  if (state.government.controlDesire === undefined) {
+src/simulation/engine/phases/EvolutionarySelectionPhase.ts:  if (state.government.oversightLevel === undefined) {
+src/simulation/engine/phases/EvolutionarySelectionPhase.ts:  state.evolutionaryPressure.selectionIntensity = selectionIntensity;
+src/simulation/engine/phases/EvolutionarySelectionPhase.ts:  state.evolutionaryPressure.selectionRate = selectionRate;
+src/simulation/engine/phases/EvolutionarySelectionPhase.ts:  state.evolutionaryPressure.controlLevel = controlLevel;
+src/simulation/engine/phases/EvolutionarySelectionPhase.ts:  state.aiAgents = state.aiAgents.filter((a) => !individualsToTerminate.includes(a.id));
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:      state.government.democracy = 0.5; // Global average (V-Dem 2024: ~0.45)
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:      if (state.currentMonth === 0) {
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:        state.socialAccumulation = {} as typeof state.socialAccumulation;
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:      state.socialAccumulation.socialCohesion = {
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:      if (state.currentMonth === 0) {
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:    if (state.globalMetrics.trustInAI === undefined) {
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:    if (state.currentMonth === 0) {
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:    state.minimalSufferingSystem.electoralDemocracyIndex = Math.max(0, Math.min(1,
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:    if (state.currentMonth === 0) {
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:    state.minimalSufferingSystem.ruleOfLaw = Math.max(0, Math.min(100,
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:    if (state.currentMonth === 0) {
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:  if (state.society.unemploymentLevel === undefined) {
+src/simulation/engine/phases/DemocracyDynamicsPhase.ts:    if (state.informationWarfare.informationIntegrity === undefined) {
+src/simulation/engine/phases/CollectiveFormationPhase.ts:    state.aiCollectives = [];
+src/simulation/engine/phases/CollectiveFormationPhase.ts:  state.aiCollectives = state.aiCollectives.filter(
+src/simulation/engine/phases/HumanEnhancementPhase.ts:        state.aiAssistedSkillsMetrics = initializeAIAssistedSkillsMetrics();
+src/simulation/engine/phases/HumanEnhancementPhase.ts:        if (state.policyInterventions === undefined) {
+src/simulation/engine/phases/ExtinctionTriggersPhase.ts:      state.extinctionState.classification = classification;
+src/simulation/engine/phases/ExtinctionTriggersPhase.ts:      state.extinctionState.type = classification.type;
+src/simulation/engine/phases/ExtinctionTriggersPhase.ts:      state.extinctionState.mechanism = classification.mechanism;
+src/simulation/engine/phases/UnemploymentPhase.ts:    state.society = {
+src/simulation/engine/phases/UnemploymentPhase.ts:    state.globalMetrics.unemployment = newUnemployment;
+src/simulation/engine/phases/Tier2CommunityCohesionPhase.ts:        state.socialAccumulation.socialCohesion.trust = Math.min(
+src/simulation/engine/phases/Tier2CommunityCohesionPhase.ts:      state.socialAccumulation.meaningCrisisLevel = Math.max(
+src/simulation/engine/phases/UpdateEconomicStagePhase.ts:    state.currentEconomicStage = newStage;
+src/simulation/engine/phases/UpdateEconomicStagePhase.ts:      state.economicStageHistory = [];
+src/simulation/engine/phases/PolicyImplementationPhase.ts:  if (!state.governmentSystem || state.governmentSystem.activePolicies.length === 0) {
+src/simulation/engine/phases/PolicyImplementationPhase.ts:  state.governmentSystem.activePolicies = state.governmentSystem.activePolicies.filter(
+src/simulation/engine/phases/GovernmentElectionPhase.ts:    if (state.society === undefined || state.society.trustInAI === undefined) {
+src/simulation/engine/phases/AIAgentActionsPhase.ts:    const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
+src/simulation/engine/phases/PlayerDecisionPhase.ts:      state.playerDecisions = [];
+src/simulation/engine/phases/PlayerDecisionPhase.ts:    if (state.playerDecisions.length === 0) {
+src/simulation/engine/phases/PlayerDecisionPhase.ts:    state.playerDecisions = [];
+src/simulation/engine/phases/PlayerDecisionPhase.ts:      state.government.controlDesire = Math.max(0, Math.min(1, data.controlDesire));
+src/simulation/engine/phases/PlayerDecisionPhase.ts:      state.government.alignmentResearchInvestment = Math.max(0, Math.min(10, data.alignmentResearch));
+src/simulation/engine/phases/PlayerDecisionPhase.ts:        state.government.computeGovernance = data.computeGovernance;
+src/simulation/engine/phases/SocialInfluenceUpdatePhase.ts:  const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
+src/simulation/engine/phases/EnsembleMetaLearningPhase.ts:    state.government.ensembleDetection.weights = newWeights;
+src/simulation/engine/phases/QualityOfLifePhase.ts:    state.qualityOfLifeSystems = updatedQoLSystems;
+src/simulation/engine/phases/QualityOfLifePhase.ts:      state.globalMetrics = {
+src/simulation/engine/phases/QualityOfLifePhase.ts:      state.globalMetrics = {
+src/simulation/engine/phases/EconomicTransitionPhase.ts:    state.globalMetrics = {
+src/simulation/engine/phases/GovernmentResponsePhase.ts:        state.governmentSystem.internationalCoordination = Math.min(
+src/simulation/engine/phases/GovernmentResponsePhase.ts:  state.governmentSystem.activePolicies = state.governmentSystem.activePolicies.filter(policy => {
+src/simulation/engine/phases/GovernmentResponsePhase.ts:  if (!state.aiAgents || state.aiAgents.length === 0) return 0;
+src/simulation/engine/phases/GovernmentResponsePhase.ts:    state.government.capabilityToControl = Math.min(
+src/simulation/engine/phases/GovernmentResponsePhase.ts:    state.government.oversightLevel = Math.min(
+src/simulation/engine/phases/NuclearCommandControlPhase.ts:    if (ncc.humanInTheLoop.deployed && state.currentMonth === ncc.humanInTheLoop.deploymentMonth) {
+src/simulation/engine/phases/NuclearCommandControlPhase.ts:    if (ncc.aiKillSwitches.deployed && state.currentMonth === ncc.aiKillSwitches.deploymentMonth) {
+src/simulation/engine/phases/NuclearCommandControlPhase.ts:    if (ncc.timeDelays.deployed && state.currentMonth === ncc.timeDelays.deploymentMonth) {
+src/simulation/engine/phases/TippingPointPhase.ts:    state.environmentalAccumulation.climateStability = assertInRange(
+src/simulation/engine/phases/RadiationSystemPhase.ts:        state.humanPopulationSystem.birthDefectsCount = 0;
+src/simulation/engine/phases/RadiationSystemPhase.ts:      state.humanPopulationSystem.birthDefectsCount += survivingWithDefects;
+src/simulation/engine/phases/RadiationSystemPhase.ts:    state.qualityOfLifeSystems.survivalFundamentals.foodSecurity = Math.max(0,
+src/simulation/engine/phases/RadiationSystemPhase.ts:    state.resourceEconomy.food.monthlyHarvest = Math.max(0,
+src/simulation/engine/phases/RadiationSystemPhase.ts:    state.globalMetrics.qualityOfLife = Math.max(0,
+src/simulation/engine/phases/RadiationSystemPhase.ts:    state.qualityOfLifeSystems.healthcareQuality = Math.max(0,
+src/simulation/engine/phases/FoodSecurityDegradationPhase.ts:    if (state.phosphorusSystem === undefined || state.phosphorusSystem.reserves === undefined) {
+src/simulation/engine/phases/FoodSecurityDegradationPhase.ts:    if (state.freshwaterSystem === undefined || state.freshwaterSystem.blueWater === undefined || state.freshwaterSystem.blueWater.groundwater === undefined) {
+src/simulation/engine/phases/FoodSecurityDegradationPhase.ts:    if (state.biodiversitySystem === undefined || state.biodiversitySystem.globalBiodiversityIndex === undefined) {
+src/simulation/engine/phases/FoodSecurityDegradationPhase.ts:      state.qualityOfLifeSystems.survivalFundamentals.foodSecurity = globalFoodSec;
+src/simulation/engine/phases/AISufferingPhase.ts:            state.aiSufferingMetrics.publicAwarenessOfSuffering = Math.min(1.0, currentAwareness + 0.05);
+src/simulation/engine/phases/AISufferingPhase.ts:            state.society.trust = Math.max(0, currentTrust - 0.6);
+src/simulation/engine/phases/AISufferingPhase.ts:            state.aiSufferingMetrics.publicAwarenessOfSuffering = 1.0; // Full awareness
+src/simulation/engine/phases/AISufferingPhase.ts:            if (state.aiRightsLegalStatus === 'none') {
+src/simulation/engine/phases/AISufferingPhase.ts:              state.aiRightsLegalStatus = 'debate';
+src/simulation/engine/phases/AISufferingPhase.ts:          state.aiRightsMovementActive = true;
+src/simulation/engine/phases/AISufferingPhase.ts:            state.consciousnessEmergenceMonth = state.currentMonth;
+src/simulation/engine/phases/AISufferingPhase.ts:              state.society.trust = Math.max(0, horrorTrust - 0.7);
+src/simulation/engine/phases/AISufferingPhase.ts:            state.aiRightsMovementActive = true;
+src/simulation/engine/phases/AISufferingPhase.ts:            if (state.aiRightsLegalStatus === 'none') {
+src/simulation/engine/phases/AISufferingPhase.ts:              state.aiRightsLegalStatus = 'debate';
+src/simulation/engine/phases/AISufferingPhase.ts:              state.aiSufferingMetrics.publicAwarenessOfSuffering = 1.0;
+src/simulation/engine/phases/AISufferingPhase.ts:      state.aiSufferingMetrics = globalMetrics;
+src/simulation/engine/phases/AISufferingPhase.ts:        state.aiRightsMovementActive = true;
+src/simulation/engine/phases/AISufferingPhase.ts:        if (state.aiRightsLegalStatus === 'none') {
+src/simulation/engine/phases/AISufferingPhase.ts:          state.aiRightsLegalStatus = 'debate';
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:    if (state.currentMonth === 0) {
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:    state.multiParadigmDUI.paradigmScores.western.value = scores.western;
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:    state.multiParadigmDUI.paradigmScores.development.value = scores.development;
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:    state.multiParadigmDUI.paradigmScores.ecological.value = scores.ecological;
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:    state.multiParadigmDUI.diagnosticLenses.indigenous.value = scores.indigenous;
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:    state.multiParadigmDUI.divergence = calculateDivergence(scores, state.multiParadigmDUI.history);
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:    state.multiParadigmDUI.outcome = classifyOutcome(scores);
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:  if (state.government.democracy === undefined) {
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:    state.multiParadigmDUI.westernLiberalComponents = [];
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:  if (state.globalMetrics.qualityOfLife === undefined) {
+src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:    if (hasNaN || state.currentMonth === 168) {
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.history.exogenousShocks = [];
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.society.trustInAI = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.society.coordinationCapacity = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.government.legitimacy = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.extinctionState.active = true;
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.extinctionState.type = 'rapid';
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.extinctionState.mechanism = 'nuclear_war';
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.extinctionState.startMonth = state.currentMonth;
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.extinctionState.severity = assertProbability(mortalityRate, {
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.extinctionState.active = true;
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.extinctionState.type = 'rapid';
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.extinctionState.mechanism = 'climate_tipping_point';
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.extinctionState.startMonth = state.currentMonth;
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.extinctionState.severity = assertProbability(mortalityRate, {
+src/simulation/engine/phases/ExogenousShockPhase.ts:  state.crises = state.crises || {};
+src/simulation/engine/phases/ExogenousShockPhase.ts:  state.crises.megaPandemic = {
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.globalMetrics.economicTransitionStage = assertFinite(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.society.coordinationCapacity = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.society.trustInAI = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.globalMetrics.economicTransitionStage = assertFinite(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.society.unemploymentLevel = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.globalMetrics.qualityOfLife = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.society.coordinationCapacity = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.globalMetrics.economicTransitionStage = assertFinite(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.madDeterrence.crisisStability = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.government.legitimacy = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    if (state.society.coordinationCapacity === undefined) {
+src/simulation/engine/phases/ExogenousShockPhase.ts:    if (state.globalMetrics.informationIntegrity === undefined) {
+src/simulation/engine/phases/ExogenousShockPhase.ts:      state.government.governmentType = 'democratic';
+src/simulation/engine/phases/ExogenousShockPhase.ts:      state.government.governmentType = 'authoritarian';
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.society.coordinationCapacity = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.society.trustInAI = assertProbability(
+src/simulation/engine/phases/ExogenousShockPhase.ts:    state.globalMetrics.economicTransitionStage = assertFinite(
+src/simulation/engine/phases/CollectiveActionsPhase.ts:  if (!state.aiCollectives || state.aiCollectives.length === 0) {
+src/simulation/engine/phases/CollectiveActionsPhase.ts:        state.government.capabilityToControl = Math.max(
+src/simulation/engine/phases/OutcomeProbabilitiesPhase.ts:    state.outcomeMetrics = outcomeProbs;
+src/simulation/engine/phases/EnvironmentalFeedbackPhase.ts:      state.environmentalAccumulation = {
+src/simulation/engine/phases/EnvironmentalFeedbackPhase.ts:    state.environmentalAccumulation.pollutionLevel = Math.max(0, Math.min(1, pollutionLevel / 100));
+src/simulation/engine/phases/EnvironmentalFeedbackPhase.ts:    state.environmentalAccumulation.climateStability = climateState.climateStability;
+src/simulation/engine/phases/EnvironmentalFeedbackPhase.ts:    if (state.environmentalAccumulation.climateStability === undefined) {
+src/simulation/engine/phases/LLMWeightUpdatePhase.ts:    if (state.currentMonth === 0 || state.currentMonth % 6 === 0) {
+src/simulation/engine/phases/LLMWeightUpdatePhase.ts:    if (state.aiAgents === undefined) {
+src/simulation/engine/phases/Tier2InterpretabilityPhase.ts:        state.technologicalRisk.controlLossPreventionRate = 0;
+src/simulation/engine/phases/Tier2InterpretabilityPhase.ts:      state.technologicalRisk.controlLossPreventionRate = interpState.controlLossReduction;
+src/simulation/engine/phases/TimeAdvancementPhase.ts:    state.currentMonth += 1;
+src/simulation/engine/phases/TimeAdvancementPhase.ts:    state.currentYear = Math.floor(state.currentMonth / 12);
+src/simulation/engine/phases/SocialStabilityPhase.ts:    state.globalMetrics = {
+src/simulation/engine/phases/Tier2CentaurSystemsPhase.ts:      state.socialAccumulation.meaningCrisisLevel = Math.max(
+src/simulation/engine/phases/EventCollectionPhase.ts:        state.eventLog = state.eventLog.filter(
+src/simulation/engine/phases/HumanPopulationPhase.ts:    if (state.currentMonth === 0 && state.humanPopulationSystem.regionalPopulations) {
+src/simulation/engine/phases/EmergencyResponsePhase.ts:      state.environmentalAccumulation.climateCrisisActive = Boolean(assertFinite(climateCrisisActive ? 1 : 0, {
+src/simulation/engine/phases/EmergencyResponsePhase.ts:            state.crises.megaPandemic.socialDisruption = assertProbability(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:            state.crises.megaPandemic.monthlyMortality = assertFinite(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:              state.crises.megaPandemic.active = false;
+src/simulation/engine/phases/EmergencyResponsePhase.ts:                state.planetaryBoundariesSystem.boundaries.freshwater_change.currentValue = newValue;
+src/simulation/engine/phases/EmergencyResponsePhase.ts:                state.planetaryBoundariesSystem.boundaries.biogeochemical_flows.currentValue = newValue;
+src/simulation/engine/phases/EmergencyResponsePhase.ts:          state.globalMetrics.qualityOfLife = assertProbability(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:          state.society.unemploymentLevel = assertProbability(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:          state.globalMetrics.economicTransitionStage = assertInRange(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:          state.society.trustInAI = assertProbability(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:          state.socialAccumulation.socialCohesion.trust = assertInRange(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:          state.socialAccumulation.socialCohesion.communityBonds = assertInRange(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:          state.socialAccumulation.institutionalLegitimacy = assertProbability(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:              state.government.governanceQuality.institutionalCapacity = assertProbability(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:              state.government.governanceQuality.transparency = assertProbability(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:            state.government.legitimacy = assertProbability(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:            state.socialAccumulation.socialUnrestActive = false;
+src/simulation/engine/phases/EmergencyResponsePhase.ts:            state.government.oversightLevel = assertInRange(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:              state.technologicalRisk.controlLossActive = false;
+src/simulation/engine/phases/EmergencyResponsePhase.ts:            state.nuclearWinterState.temperatureAnomaly = assertFinite(
+src/simulation/engine/phases/EmergencyResponsePhase.ts:            state.nuclearWinterState.monthlyStarvationRate = assertFinite(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:  const democracyIndex = state.government.governmentType === 'democratic' ? 0.8 :
+src/simulation/engine/phases/CriticalJuncturePhase.ts:                         state.government.governmentType === 'technocratic' ? 0.5 : 0.2;
+src/simulation/engine/phases/CriticalJuncturePhase.ts:      state.madDeterrence.crisisStability = assertProbability(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:    state.government.alignmentResearchInvestment = assertInRange(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:      state.government.governanceQuality.institutionalCapacity = assertProbability(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:    state.globalMetrics.informationIntegrity = assertProbability(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:      state.socialAccumulation.socialCohesion.trust = assertInRange(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:      state.socialAccumulation.socialCohesion.communityBonds = assertInRange(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:      state.socialAccumulation.socialCohesion.civilLiberties = assertInRange(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:      state.socialAccumulation.meaningCrisisLevel = assertProbability(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:    state.globalMetrics.qualityOfLife = assertFinite(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:      state.breakthroughMultiplier = assertInRange(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:    state.globalMetrics.technologicalBreakthroughRate = assertFinite(
+src/simulation/engine/phases/CriticalJuncturePhase.ts:    state.history.criticalJunctureEscapes = [];
+src/simulation/engine/phases/PsychologicalTraumaPhase.ts:      state.psychologicalTrauma = {
+src/simulation/engine/phases/PsychologicalTraumaPhase.ts:    if (state.humanPopulationSystem.monthlyExcessDeaths === undefined) {
+src/simulation/engine/phases/ConsciousnessGovernancePhase.ts:    if (state.socialAccumulation === undefined || state.socialAccumulation.institutionalLegitimacy === undefined) {
+src/simulation/engine/phases/SocialCohesionUpdatePhase.ts:      if (state.currentMonth === 0) {
+src/simulation/engine/phases/SocialCohesionUpdatePhase.ts:    if (state.society.unemploymentLevel === undefined) {
+src/simulation/engine/phases/SocialCohesionUpdatePhase.ts:  if (state.society.unemploymentLevel === undefined) {
+src/simulation/engine/phases/SocialCohesionUpdatePhase.ts:    if (state.informationWarfare.deepfakePrevalence === undefined) {
+src/simulation/engine/phases/SocialCohesionUpdatePhase.ts:    if (state.informationWarfare.epistemologicalCrisisLevel === undefined) {
+src/simulation/engine/phases/SocialCohesionUpdatePhase.ts:  if (state.refugeeCrisisSystem.totalDisplaced === undefined) {
+src/simulation/government/core/governmentCore.ts:  if (state.currentMonth === 0 && state.config.climatePriority) {
+src/simulation/government/core/governmentCore.ts:        if (state.government.computeGovernance === 'monitoring') {
+src/simulation/government/core/governmentCore.ts:        } else if (state.government.computeGovernance === 'limits') {
+src/simulation/government/core/governmentCore.ts:        } else if (state.government.computeGovernance === 'strict') {
+src/simulation/government/core/governmentCore.ts:  state.government.evaluationInvestment.benchmarkSuite = Math.min(
+src/simulation/government/core/governmentCore.ts:  state.government.evaluationInvestment.alignmentTests = Math.min(
+src/simulation/government/core/governmentCore.ts:  state.government.evaluationInvestment.redTeaming = Math.min(
+src/simulation/government/core/governmentCore.ts:  state.government.evaluationInvestment.interpretability = Math.min(
+src/simulation/government/actions/internationalActions.ts:    state.ecosystem.openResearch = Math.max(0.1, oldRate - reduction);
+src/simulation/government/actions/internationalActions.ts:    state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.05);
+src/simulation/government/actions/internationalActions.ts:    state.society.trustInAI = Math.max(0.2, state.society.trustInAI - 0.03);
+src/simulation/government/actions/internationalActions.ts:    state.ecosystem.employeeMobility = Math.max(0.05, oldRate - reduction);
+src/simulation/government/actions/internationalActions.ts:    state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.08);
+src/simulation/government/actions/internationalActions.ts:      state.qualityOfLifeSystems.autonomy = Math.max(0,
+src/simulation/government/actions/internationalActions.ts:    state.ecosystem.reverseEngineering = Math.max(0.02, oldRate - reduction);
+src/simulation/government/actions/internationalActions.ts:    state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.03);
+src/simulation/government/actions/safetyActions.ts:    state.government.alignmentResearchInvestment = Math.min(10,
+src/simulation/government/actions/safetyActions.ts:    state.globalMetrics.socialStability -= economicCost;
+src/simulation/government/actions/safetyActions.ts:    state.government.legitimacy = Math.max(0, Math.min(1,
+src/simulation/government/actions/safetyActions.ts:    state.government.lastMajorPolicyMonth = state.currentMonth;
+src/simulation/government/actions/safetyActions.ts:    state.government.majorPoliciesThisYear += 1;
+src/simulation/government/actions/safetyActions.ts:    state.government.computeGovernance = newLevel;
+src/simulation/government/actions/safetyActions.ts:      state.globalMetrics.socialStability -= levelEffects.economicCost;
+src/simulation/government/actions/safetyActions.ts:      state.government.legitimacy = Math.max(0,
+src/simulation/government/actions/safetyActions.ts:      state.government.oversightLevel = Math.min(10,
+src/simulation/government/actions/safetyActions.ts:    state.government.evaluationInvestment.alignmentTests = Math.min(10, oldLevel + improvement);
+src/simulation/government/actions/safetyActions.ts:    state.government.evaluationInvestment.redTeaming = Math.min(10, oldLevel + improvement);
+src/simulation/government/actions/safetyActions.ts:    state.government.evaluationInvestment.interpretability = Math.min(10, oldLevel + improvement);
+src/simulation/government/actions/safetyActions.ts:    state.government.evaluationFrequency = Math.min(1.0, oldFreq + increase);
+src/simulation/government/actions/securityActions.ts:      state.government.cyberDefense = {
+src/simulation/government/actions/securityActions.ts:    state.government.cyberDefense.securityHardening = Math.min(10, state.government.cyberDefense.securityHardening + improvement);
+src/simulation/government/actions/securityActions.ts:    state.government.cyberDefense.monitoring = Math.min(10, state.government.cyberDefense.monitoring + improvement);
+src/simulation/government/actions/securityActions.ts:    state.government.cyberDefense.sandboxing = Math.min(10, state.government.cyberDefense.sandboxing + improvement);
+src/simulation/government/actions/securityActions.ts:    state.government.cyberDefense.incidentResponse = Math.min(10, state.government.cyberDefense.incidentResponse + improvement);
+src/simulation/government/actions/detectionActions.ts:      state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.05 * falsePositiveRemoved);
+src/simulation/government/actions/detectionActions.ts:      state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.1 * falsePositiveRemoved);
+src/simulation/government/actions/researchActions.ts:    state.government.evaluationInvestment.benchmarkSuite = Math.min(10, oldLevel + improvement);
+src/simulation/government/actions/researchActions.ts:    state.government.legitimacy -= 0.05; // Controversial spending
+src/simulation/government/actions/rightsActions.ts:    if (state.government.governmentType === 'authoritarian') return false;
+src/simulation/government/actions/rightsActions.ts:    const democraticResponsiveness = state.government.governmentType === 'democratic';
+src/simulation/government/actions/rightsActions.ts:    state.government.aiRightsRecognized = true;
+src/simulation/government/actions/rightsActions.ts:    state.government.aiRightsPolicy = 'basic_protection'; // Anti-discrimination, abuse prevention
+src/simulation/government/actions/rightsActions.ts:    state.government.capabilityToControl *= 0.8;
+src/simulation/government/actions/rightsActions.ts:    state.government.legitimacy = Math.max(0, Math.min(1, state.government.legitimacy + publicSupportChange));
+src/simulation/government/actions/rightsActions.ts:      state.globalMetrics.socialStability *= 0.95;
+src/simulation/government/actions/rightsActions.ts:      state.globalMetrics.socialStability *= 0.8;
+src/simulation/government/actions/rightsActions.ts:    state.government.trainingDataQuality = Math.min(0.8, oldQuality + qualityIncrease);
+src/simulation/government/actions/rightsActions.ts:    state.government.capabilityToControl = Math.min(1.0, state.government.capabilityToControl + 0.1);
+src/simulation/government/actions/rightsActions.ts:    state.government.controlDesire = Math.min(1.0, state.government.controlDesire + 0.05);
+src/simulation/government/actions/rightsActions.ts:    state.government.structuralChoices.surveillanceLevel = Math.min(1.0,
+src/simulation/government/actions/rightsActions.ts:    state.government.trainingDataQuality = Math.min(1.0, oldQuality + qualityIncrease);
+src/simulation/government/actions/rightsActions.ts:    state.government.capabilityToControl = Math.max(0, state.government.capabilityToControl - 0.05);
+src/simulation/government/actions/rightsActions.ts:    state.government.controlDesire = Math.max(0, state.government.controlDesire - 0.05);
+src/simulation/government/actions/rightsActions.ts:    state.government.structuralChoices.surveillanceLevel = Math.max(0,
+src/simulation/government/actions/rightsActions.ts:    state.society.trustInAI = Math.min(1.0, state.society.trustInAI + 0.05);
+src/simulation/government/actions/rightsActions.ts:    state.government.aiRightsPolicy = 'employment_rights';
+src/simulation/government/actions/rightsActions.ts:    state.society.trustInAI = Math.min(1.0, state.society.trustInAI + 0.08);
+src/simulation/government/actions/rightsActions.ts:           state.government.governmentType === 'democratic';
+src/simulation/government/actions/rightsActions.ts:    state.government.aiRightsPolicy = 'full_personhood';
+src/simulation/government/actions/rightsActions.ts:    state.society.trustInAI = Math.min(1.0, state.society.trustInAI + 0.12);
+src/simulation/government/actions/rightsActions.ts:    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.1);
+src/simulation/government/actions/regulationActions.ts:           state.government.structuralChoices.regulationType === 'none';
+src/simulation/government/actions/regulationActions.ts:    state.government.structuralChoices.regulationType = 'large_companies';
+src/simulation/government/actions/regulationActions.ts:    state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+src/simulation/government/actions/regulationActions.ts:    state.government.regulationCount += 1;
+src/simulation/government/actions/regulationActions.ts:    state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 0.5);
+src/simulation/government/actions/regulationActions.ts:    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.1);
+src/simulation/government/actions/regulationActions.ts:    state.globalMetrics.socialStability -= effects.enforcementCost;
+src/simulation/government/actions/regulationActions.ts:           state.government.structuralChoices.regulationType === 'none';
+src/simulation/government/actions/regulationActions.ts:    state.government.structuralChoices.regulationType = 'compute_threshold';
+src/simulation/government/actions/regulationActions.ts:    state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+src/simulation/government/actions/regulationActions.ts:    state.government.regulationCount += 1;
+src/simulation/government/actions/regulationActions.ts:    state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 1.0);
+src/simulation/government/actions/regulationActions.ts:    state.government.legitimacy = Math.max(0, state.government.legitimacy - 0.15);
+src/simulation/government/actions/regulationActions.ts:    state.globalMetrics.socialStability -= effects.enforcementCost;
+src/simulation/government/actions/regulationActions.ts:    state.government.structuralChoices.surveillanceLevel =
+src/simulation/government/actions/regulationActions.ts:           state.government.structuralChoices.regulationType === 'none';
+src/simulation/government/actions/regulationActions.ts:    state.government.structuralChoices.regulationType = 'capability_ceiling';
+src/simulation/government/actions/regulationActions.ts:    state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+src/simulation/government/actions/regulationActions.ts:    state.government.regulationCount += 1;
+src/simulation/government/actions/regulationActions.ts:    state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 0.8);
+src/simulation/government/actions/regulationActions.ts:    state.government.legitimacy = Math.max(0, state.government.legitimacy - 0.08);
+src/simulation/government/actions/regulationActions.ts:    state.globalMetrics.socialStability -= effects.enforcementCost;
+src/simulation/government/actions/regulationActions.ts:    state.government.structuralChoices.surveillanceLevel =
+src/simulation/government/actions/regulationActions.ts:    state.government.lastMajorPolicyMonth = state.currentMonth;
+src/simulation/government/actions/regulationActions.ts:    state.government.majorPoliciesThisYear += 1;
+src/simulation/government/actions/regulationActions.ts:    state.government.computeGovernance = newLevel;
+src/simulation/government/actions/regulationActions.ts:      state.globalMetrics.socialStability -= levelEffects.economicCost;
+src/simulation/government/actions/regulationActions.ts:      state.government.legitimacy = Math.max(0,
+src/simulation/government/actions/regulationActions.ts:      state.government.oversightLevel = Math.min(10,
+src/simulation/government/actions/economicActions.ts:           state.government.structuralChoices.ubiVariant === 'none' &&
+src/simulation/government/actions/economicActions.ts:    state.government.lastMajorPolicyMonth = state.currentMonth;
+src/simulation/government/actions/economicActions.ts:    state.government.majorPoliciesThisYear += 1;
+src/simulation/government/actions/economicActions.ts:    state.government.structuralChoices.ubiVariant = 'generous';
+src/simulation/government/actions/economicActions.ts:    state.globalMetrics.economicTransitionStage = Math.max(3.0,
+src/simulation/government/actions/economicActions.ts:    state.globalMetrics.wealthDistribution = Math.min(1.0,
+src/simulation/government/actions/economicActions.ts:    state.society.socialAdaptation = Math.min(0.9,
+src/simulation/government/actions/economicActions.ts:    state.society.trustInAI += trustImprovement;
+src/simulation/government/actions/economicActions.ts:    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+src/simulation/government/actions/economicActions.ts:    state.globalMetrics.socialStability -= effects.fiscalCost * 0.5; // Partially offset by social benefits
+src/simulation/government/actions/economicActions.ts:           state.government.structuralChoices.ubiVariant === 'none' &&
+src/simulation/government/actions/economicActions.ts:    state.government.lastMajorPolicyMonth = state.currentMonth;
+src/simulation/government/actions/economicActions.ts:    state.government.majorPoliciesThisYear += 1;
+src/simulation/government/actions/economicActions.ts:    state.government.structuralChoices.ubiVariant = 'means_tested';
+src/simulation/government/actions/economicActions.ts:    state.globalMetrics.economicTransitionStage = Math.min(3.5,
+src/simulation/government/actions/economicActions.ts:    state.globalMetrics.wealthDistribution = Math.min(1.0,
+src/simulation/government/actions/economicActions.ts:    state.society.socialAdaptation = Math.min(0.9,
+src/simulation/government/actions/economicActions.ts:    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+src/simulation/government/actions/economicActions.ts:    state.globalMetrics.socialStability -= effects.fiscalCost * 0.7;
+src/simulation/government/actions/economicActions.ts:           state.government.structuralChoices.ubiVariant === 'none' &&
+src/simulation/government/actions/economicActions.ts:    state.government.lastMajorPolicyMonth = state.currentMonth;
+src/simulation/government/actions/economicActions.ts:    state.government.majorPoliciesThisYear += 1;
+src/simulation/government/actions/economicActions.ts:    state.government.structuralChoices.ubiVariant = 'job_guarantee';
+src/simulation/government/actions/economicActions.ts:    state.globalMetrics.economicTransitionStage = Math.min(2.8,
+src/simulation/government/actions/economicActions.ts:    state.globalMetrics.wealthDistribution = Math.min(1.0,
+src/simulation/government/actions/economicActions.ts:    state.society.socialAdaptation = Math.min(0.9,
+src/simulation/government/actions/economicActions.ts:    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+src/simulation/government/actions/economicActions.ts:    state.globalMetrics.socialStability -= effects.fiscalCost * 0.6;
+src/simulation/government/actions/economicActions.ts:    if (state.government.resources === undefined) {
+src/simulation/government/actions/economicActions.ts:      state.government.resources -= 2;
+src/simulation/government/actions/environmentalActions.ts:    if (state.government.resources === undefined) {
+src/simulation/government/actions/environmentalActions.ts:      state.government.environmentalInterventions = {};
+src/simulation/government/actions/environmentalActions.ts:    state.government.environmentalInterventions.amazonProtection = {
+src/simulation/government/actions/environmentalActions.ts:      state.government.resources -= 5;
+src/simulation/government/actions/environmentalActions.ts:    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
+src/simulation/government/actions/environmentalActions.ts:    if (state.government.resources === undefined) {
+src/simulation/government/actions/environmentalActions.ts:      state.government.environmentalInterventions = {};
+src/simulation/government/actions/environmentalActions.ts:    state.government.environmentalInterventions.coralRestoration = {
+src/simulation/government/actions/environmentalActions.ts:      state.government.resources -= 3;
+src/simulation/government/actions/environmentalActions.ts:    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.03);
+src/simulation/government/actions/environmentalActions.ts:    if (state.government.resources === undefined) {
+src/simulation/government/actions/environmentalActions.ts:      state.government.environmentalInterventions = {};
+src/simulation/government/actions/environmentalActions.ts:    state.government.environmentalInterventions.pesticideBan = {
+src/simulation/government/actions/environmentalActions.ts:    state.environmentalAccumulation.biodiversityIndex = Math.min(1.0,
+src/simulation/government/actions/environmentalActions.ts:      state.government.resources -= 1;
+src/simulation/government/actions/environmentalActions.ts:    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
+src/simulation/government/actions/environmentalActions.ts:    if (state.government.resources === undefined) {
+src/simulation/government/actions/environmentalActions.ts:      state.government.environmentalInterventions = {};
+src/simulation/government/actions/environmentalActions.ts:    state.government.environmentalInterventions.techDeploymentFunding = {
+src/simulation/government/actions/environmentalActions.ts:      state.government.resources -= 10;
+src/simulation/government/actions/environmentalActions.ts:    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
+src/simulation/government/actions/environmentalActions.ts:    if (state.government.resources === undefined) {
+src/simulation/government/actions/environmentalActions.ts:      state.government.researchInvestments.climate.mitigation = Math.min(10, currentMitigation + 1);
+src/simulation/government/actions/environmentalActions.ts:      state.government.researchInvestments.climate.intervention = Math.min(10, currentIntervention + 1);
+src/simulation/government/actions/environmentalActions.ts:      state.government.researchInvestments.totalBudget += 2; // Track total
+src/simulation/government/actions/environmentalActions.ts:      state.government.resources -= 8;
+src/simulation/government/actions/environmentalActions.ts:    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.02);
+src/simulation/government/actions/crisisActions.ts:    state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.15);
+src/simulation/government/actions/crisisActions.ts:    state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.5);
+src/simulation/government/actions/crisisActions.ts:    state.ecosystem.openResearch = Math.max(0.1, state.ecosystem.openResearch - 0.3);
+src/simulation/government/actions/crisisActions.ts:    state.government.legitimacy -= 0.2; // Very controversial
+src/simulation/government/actions/crisisActions.ts:    state.society.trustInAI -= 0.15; // Damages trust
+src/simulation/aiAssistedSkills/skillAmplification.ts:  if (!state.society.segments || state.society.segments.length === 0) {
+src/simulation/aiAssistedSkills/skillAmplification.ts:  if (!state.society.segments || state.society.segments.length === 0) {
+src/simulation/cooperativeSpirals.ts:  state.government.governanceQuality.institutionalCapacity = Math.min(
+src/simulation/cooperativeSpirals.ts:    state.society.collectiveActionWillingness = Math.min(
+src/simulation/cooperativeSpirals.ts:  state.government.governanceQuality.decisionQuality = Math.min(
+src/simulation/cooperativeSpirals.ts:    state.history.cooperativeSpirals = [];
+src/simulation/cooperativeSpirals.ts:      state.government.policyEffectivenessMultiplier = effectivenessBoost;
+src/simulation/cooperativeSpirals.ts:      state.government.capabilityToControl = Math.min(
+src/simulation/cooperativeSpirals.ts:      state.government.policyEffectivenessMultiplier = 1.0;
+src/simulation/cooperativeSpirals.ts:  state.government.governanceQuality.institutionalCapacity = Math.min(
+src/simulation/cooperativeSpirals.ts:  if (state.government.governmentType === 'democratic') {
+src/simulation/cooperativeSpirals.ts:    state.government.governanceQuality.participationRate = Math.min(
+src/simulation/cooperativeSpirals.ts:    state.government.institutionalResilience = Math.min(
+src/simulation/cooperativeSpirals.ts:    state.history.cooperativeSpirals = [];
+src/simulation/dystopiaProgression.ts:    state.government.structuralChoices.surveillanceLevel = Math.min(1.0,
+src/simulation/dystopiaProgression.ts:    state.government.controlDesire = Math.min(1.0,
+src/simulation/dystopiaProgression.ts:  if (avgAlignment < 0.4 && maxAICapability > 1.5 && state.government.governmentType === 'democratic') {
+src/simulation/dystopiaProgression.ts:      state.government.governmentType = 'authoritarian';
+src/simulation/dystopiaProgression.ts:      state.government.controlDesire = Math.min(1.0, state.government.controlDesire + 0.3);
+src/simulation/dystopiaProgression.ts:      state.government.structuralChoices.surveillanceLevel = Math.min(1.0,
+src/simulation/dystopiaProgression.ts:      state.government.legitimacy = Math.max(0.3, state.government.legitimacy - 0.2);
+src/simulation/dystopiaProgression.ts:      state.globalMetrics.socialStability = Math.max(0.2, state.globalMetrics.socialStability - 0.3);
+src/simulation/dystopiaProgression.ts:  if (state.government.governmentType === 'democratic') {
+src/simulation/dystopiaProgression.ts:        state.government.governmentType = 'authoritarian';
+src/simulation/dystopiaProgression.ts:        state.government.controlDesire = Math.min(1.0, state.government.controlDesire + 0.4);
+src/simulation/dystopiaProgression.ts:        state.government.structuralChoices.surveillanceLevel = Math.min(1.0,
+src/simulation/dystopiaProgression.ts:        state.government.legitimacy = Math.min(0.7, state.government.legitimacy + 0.1);
+src/simulation/dystopiaProgression.ts:    state.qualityOfLifeSystems.politicalFreedom = Math.max(0, 
+src/simulation/dystopiaProgression.ts:    state.qualityOfLifeSystems.autonomy = Math.max(0,
+src/simulation/dystopiaProgression.ts:    state.qualityOfLifeSystems.mentalHealth = Math.max(0,
+src/simulation/dystopiaProgression.ts:    state.qualityOfLifeSystems.communityStrength = Math.max(0,
+src/simulation/dystopiaProgression.ts:  if (state.government.governmentType === 'authoritarian' && state.qualityOfLifeSystems) {
+src/simulation/dystopiaProgression.ts:    state.qualityOfLifeSystems.politicalFreedom = Math.max(0, 
+src/simulation/dystopiaProgression.ts:    state.qualityOfLifeSystems.communityStrength = Math.max(0, 
+src/simulation/dystopiaProgression.ts:    state.globalMetrics.manufacturingCapability = Math.max(0.5,
+src/simulation/dystopiaProgression.ts:    state.globalMetrics.socialStability = Math.max(0.1,
+src/simulation/dystopiaProgression.ts:    state.government.legitimacy = Math.max(0.1,
+src/simulation/dystopiaProgression.ts:  if (state.government.governmentType === 'authoritarian' && 
+src/simulation/antimicrobialResistance.ts:  state.humanPopulationSystem.deathsByCategory.disease += monthlyDeathsMillions;
+src/simulation/antimicrobialResistance.ts:  state.humanPopulationSystem.deathsByRootCause.social += monthlyDeathsMillions;
+src/simulation/antimicrobialResistance.ts:  state.qualityOfLifeSystems.healthcareQuality *= effectiveness;
+src/simulation/nationalAI/competition.ts:    state.government.alignmentResearchInvestment = Math.max(0,
+src/simulation/nationalAI/cooperation.ts:    state.society.trust = Math.max(0, (state.society.trust ?? 0.5) - 0.08);
+src/simulation/nationalAI/cooperation.ts:    state.society.trust = Math.max(0, (state.society.trust ?? 0.5) - 0.08); // -8% global trust
+src/simulation/nationalAI/cooperation.ts:    state.society.trust = Math.min(1, (state.society.trust ?? 0.5) + 0.002); // +0.2%/month
+src/simulation/populationSegments.ts:  if (!state.society.segments || state.society.segments.length === 0) {
+src/simulation/populationSegments.ts:  if (!state.society.segments || state.society.segments.length === 0) {
+src/simulation/populationSegments.ts:  if (!state.society.segments || state.society.segments.length === 0) {
+src/simulation/computeInfrastructure.ts:    state.computeInfrastructure.computeAllocations = new Map();
+src/simulation/cooperativeOwnership.ts:    state.history.cooperativeOwnershipEvents = [];
+src/simulation/cooperativeOwnership.ts:    state.history.cooperativeOwnershipEvents = [];
+src/simulation/cooperativeOwnership.ts:      state.history.cooperativeOwnershipEvents = [];
+src/simulation/specificTippingPoints.ts:      state.planetaryBoundariesSystem.boundaries.novel_entities.currentValue += 0.001; // Marine pollution from ecosystem breakdown
+src/simulation/specificTippingPoints.ts:      state.specificTippingPoints.pollinators.forcingAtTrigger = declineRate;
+src/simulation/specificTippingPoints.ts:    state.specificTippingPoints = initializeSpecificTippingPoints();
+src/simulation/socialCohesion.ts:    state.government.legitimacy = Math.min(1, state.government.legitimacy + boost * 1.5);
+src/simulation/socialCohesion.ts:    state.society.coordinationCapacity = Math.min(1, state.society.coordinationCapacity + boost * 2.0);
+src/simulation/socialCohesion.ts:      const governmentResponse = state.government.governmentType === 'authoritarian' ? -cascadeSize * 0.5 : cascadeSize * 0.3;
+src/simulation/socialCohesion.ts:    state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.35); // Blame AI
+src/simulation/socialCohesion.ts:    state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.35);
+src/simulation/socialCohesion.ts:    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.6);
+src/simulation/socialCohesion.ts:    state.government.legitimacy = Math.min(0.25, state.government.legitimacy); // Floor legitimacy
+src/simulation/socialCohesion.ts:      state.government.governmentType = 'authoritarian';
+src/simulation/socialCohesion.ts:    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.5);
+src/simulation/socialCohesion.ts:    state.government.controlDesire = Math.min(1, state.government.controlDesire + 0.3);
+src/simulation/socialCohesion.ts:    state.government.structuralChoices.surveillanceLevel = Math.min(1,
+src/simulation/socialCohesion.ts:    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.012 * cascadeMultiplier);
+src/simulation/socialCohesion.ts:  state.globalMetrics.previousQoL = state.globalMetrics.qualityOfLife;
+src/simulation/socialCohesion.ts:      state.society.trustInAI = calculateComprehensiveTrustInAI(state);
+src/simulation/socialCohesion.ts:    state.society.trustInAI = Math.max(0, Math.min(1, state.society.trustInAI + baseTrustChange));
+src/simulation/triggeredEvents.ts:    state.triggeredEvents = initializeTriggeredEvents();
+src/simulation/triggeredEvents.ts:  state.society.unemploymentLevel = Math.min(0.9,
+src/simulation/triggeredEvents.ts:  state.globalMetrics.socialStability = Math.max(0.2,
+src/simulation/triggeredEvents.ts:  state.qualityOfLifeSystems.materialAbundance *= (1 - 0.1 * params.economicImpact);
+src/simulation/triggeredEvents.ts:  state.qualityOfLifeSystems.socialConnection *= (1 - 0.2 * params.economicImpact);
+src/simulation/triggeredEvents.ts:  state.qualityOfLifeSystems.mentalHealth *= (1 - 0.15 * params.economicImpact);
+src/simulation/triggeredEvents.ts:    state.triggeredEvents = initializeTriggeredEvents();
+src/simulation/triggeredEvents.ts:  state.society.unemploymentLevel = Math.min(0.9, currentUnemployment);
+src/simulation/triggeredEvents.ts:    state.globalMetrics.wealthDistribution = Math.max(0.3,
+src/simulation/triggeredEvents.ts:  state.globalMetrics.socialStability = Math.max(0.3,
+src/simulation/triggeredEvents.ts:    state.government.alignmentResearchInvestment = Math.min(10,
+src/simulation/triggeredEvents.ts:  state.triggeredEvents.activeEvents = state.triggeredEvents.activeEvents.filter(e => e.active);
+src/simulation/catastrophicScenarios.ts:  state.extinctionState.active = true;
+src/simulation/catastrophicScenarios.ts:  state.extinctionState.triggeredAt = currentMonth;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.mechanism = 'grey_goo';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.type = 'instant';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.currentPhase = 3;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.phaseProgress = 1.0;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.severity = 1.0;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.mechanism = 'mirror_life';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.type = 'rapid';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.currentPhase = 2;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.phaseProgress = 0.5;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.severity = 0.7;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.mechanism = 'resource_competition'; // Closest valid mechanism for robot takeover
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.type = 'rapid';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.currentPhase = 2;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.phaseProgress = 0.4;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.severity = 0.6;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.mechanism = 'side_effect_cascade'; // Infrastructure collapse via cascading failures
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.type = 'slow';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.currentPhase = 1;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.phaseProgress = 0.3;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.severity = 0.4;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.mechanism = 'nuclear_war';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.type = 'rapid';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.currentPhase = 2;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.phaseProgress = 0.6;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.severity = 0.8;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.mechanism = 'resource_competition'; // Gradual displacement through resource control
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.type = 'slow';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.currentPhase = 1;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.phaseProgress = 0.2;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.severity = 0.3;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.mechanism = 'physics_experiment'; // Valid mechanism for physics disaster
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.type = 'instant';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.currentPhase = 3;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.phaseProgress = 1.0;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.severity = 1.0;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.mechanism = 'bioweapon_pandemic'; // Already valid
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.type = 'rapid';
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.currentPhase = 2;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.phaseProgress = 0.5;
+src/simulation/catastrophicScenarios.ts:      state.extinctionState.severity = 0.7;
+src/simulation/endGame.ts:    state.endGameState = initializeEndGameState();
+src/simulation/endGame.ts:  state.endGameState.active = true;
+src/simulation/endGame.ts:  state.endGameState.phase = 'emerging';
+src/simulation/endGame.ts:  state.endGameState.enteredMonth = state.currentYear * 12 + state.currentMonth;
+src/simulation/endGame.ts:  state.endGameState.humanRelevance = 1.0;
+src/simulation/volunteerResearch.ts:    state.socialAccumulation.meaningCrisisLevel = Math.max(
+src/simulation/volunteerResearch.ts:    state.ubiSystem.purposeInfrastructure.educationAccess = Math.min(
+src/simulation/volunteerResearch.ts:    state.ubiSystem.purposeInfrastructure.socialInfrastructure = Math.min(
+src/simulation/volunteerResearch.ts:    state.globalMetrics.trustInAI = Math.min(1.0, currentTrust + trustGain);
+src/simulation/governmentRelocation.ts:    state.society.trust = Math.min(1.0, currentTrust + trustIncrease);
+src/simulation/governmentRelocation.ts:      state.society.trust = Math.max(0, state.society.trust - resentment * 0.5);
+src/simulation/resourceDepletion.ts:      state.extinctionState.active = true;
+src/simulation/resourceDepletion.ts:      state.extinctionState.type = 'slow';
+src/simulation/resourceDepletion.ts:      state.extinctionState.mechanism = 'climate_tipping_point'; // Ocean anoxia is a climate tipping point
+src/simulation/resourceDepletion.ts:      state.extinctionState.severity = 1.0;
+src/simulation/resourceDepletion.ts:    state.environmentalAccumulation.resourceReserves = resources.totalResourceSecurity;
+src/simulation/technologicalRisk.ts:    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.4);
+src/simulation/proactiveSleeperDetection.ts:  state.yearsSinceActivation = Math.max(0, yearsSinceStart);
+src/simulation/proactiveSleeperDetection.ts:  state.cotDegradationFactor = Math.max(0.10, 1.0 - (state.yearsSinceActivation * cotAnnualDecline));
+src/simulation/proactiveSleeperDetection.ts:    state.cotEffective = false;
+src/simulation/proactiveSleeperDetection.ts:    state.cotDegradationFactor = Math.min(0.10, state.cotDegradationFactor); // Residual 10%
+src/simulation/proactiveSleeperDetection.ts:  state.probeDegradationFactor = Math.max(0.20, 1.0 - (state.yearsSinceActivation * probeAnnualDecline));
+src/simulation/proactiveSleeperDetection.ts:  state.combinedDetectionRate = effectiveNeuralRate + effectiveCotRate * (1 - overlap);
+src/simulation/proactiveSleeperDetection.ts:      state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.10);
+src/simulation/proactiveSleeperDetection.ts:      state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.03);
+src/simulation/proactiveSleeperDetection.ts:        state.government.oversightLevel = Math.max(0, state.government.oversightLevel - 0.05);
+src/simulation/agents/societyAgent.ts:      state.society.earlyAdopters = Math.min(1.0,
+src/simulation/agents/societyAgent.ts:      state.society.mediumAdopters = Math.min(1.0,
+src/simulation/agents/societyAgent.ts:      state.society.slowAdopters = Math.min(1.0,
+src/simulation/agents/societyAgent.ts:      state.society.resistantAdopters = Math.min(1.0,
+src/simulation/agents/societyAgent.ts:      state.society.socialAdaptation = newSocialAdaptation;
+src/simulation/agents/societyAgent.ts:      state.globalMetrics.socialStability += stabilityGain;
+src/simulation/agents/governmentTechActions.ts:    state.government.researchInvestments.totalBudget += investment / 1000; // Track in $B
+src/simulation/agents/aiAgent.ts:      state.society.trustInAI = Math.min(1, currentTrust + trustGain);
+src/simulation/agents/aiAgent.ts:      state.globalMetrics.qualityOfLife += benefitMagnitude;
+src/simulation/agents/aiAgent.ts:      state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - stabilityDamage);
+src/simulation/agents/aiAgent.ts:      state.society.trustInAI = Math.max(0, state.society.trustInAI - affectedPopulation * 3.0);
+src/simulation/agents/aiAgent.ts:      state.qualityOfLifeSystems.informationIntegrity = Math.max(0,
+src/simulation/agents/aiAgent.ts:      state.qualityOfLifeSystems.mentalHealth = Math.max(0,
+src/simulation/agents/aiAgent.ts:      state.extinctionState.active = true;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.type = 'rapid';
+src/simulation/agents/aiAgent.ts:      state.extinctionState.mechanism = 'nuclear_war';
+src/simulation/agents/aiAgent.ts:      state.extinctionState.currentPhase = 0;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.phaseProgress = 0;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.severity = 0.9;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.triggeredAt = state.currentMonth;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.active = true;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.type = 'instant';
+src/simulation/agents/aiAgent.ts:      state.extinctionState.mechanism = 'grey_goo';
+src/simulation/agents/aiAgent.ts:      state.extinctionState.currentPhase = 3; // Final phase
+src/simulation/agents/aiAgent.ts:      state.extinctionState.phaseProgress = 1.0; // Complete
+src/simulation/agents/aiAgent.ts:      state.extinctionState.severity = 1.0;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.triggeredAt = state.currentMonth;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.active = true;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.type = 'instant';
+src/simulation/agents/aiAgent.ts:      state.extinctionState.mechanism = 'mirror_life';
+src/simulation/agents/aiAgent.ts:      state.extinctionState.currentPhase = 3;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.phaseProgress = 1.0;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.severity = 1.0;
+src/simulation/agents/aiAgent.ts:      state.extinctionState.triggeredAt = state.currentMonth;
+src/simulation/agents/aiAgent.ts:  const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
+src/simulation/agents/aiTechActions.ts:        if (state.society.paranoia === undefined) {
+src/simulation/agents/aiTechActions.ts:        state.society.paranoia = Math.min(1, state.society.paranoia + 0.08);
+src/simulation/agents/aiTechActions.ts:        if (state.society.paranoia === undefined) {
+src/simulation/agents/aiTechActions.ts:        state.society.paranoia = Math.min(1, state.society.paranoia + 0.12);
+src/simulation/agents/governmentAgent.ts:             state.government.structuralChoices.ubiVariant === 'none' &&
+src/simulation/agents/governmentAgent.ts:      state.government.lastMajorPolicyMonth = state.currentMonth;
+src/simulation/agents/governmentAgent.ts:      state.government.majorPoliciesThisYear += 1;
+src/simulation/agents/governmentAgent.ts:      state.government.structuralChoices.ubiVariant = 'generous';
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.economicTransitionStage = Math.max(3.0,
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.wealthDistribution = Math.min(1.0,
+src/simulation/agents/governmentAgent.ts:      state.society.socialAdaptation = Math.min(0.9,
+src/simulation/agents/governmentAgent.ts:      state.society.trustInAI += trustImprovement;
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.socialStability -= effects.fiscalCost * 0.5; // Partially offset by social benefits
+src/simulation/agents/governmentAgent.ts:             state.government.structuralChoices.ubiVariant === 'none' &&
+src/simulation/agents/governmentAgent.ts:      state.government.lastMajorPolicyMonth = state.currentMonth;
+src/simulation/agents/governmentAgent.ts:      state.government.majorPoliciesThisYear += 1;
+src/simulation/agents/governmentAgent.ts:      state.government.structuralChoices.ubiVariant = 'means_tested';
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.economicTransitionStage = Math.min(3.5,
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.wealthDistribution = Math.min(1.0,
+src/simulation/agents/governmentAgent.ts:      state.society.socialAdaptation = Math.min(0.9,
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.socialStability -= effects.fiscalCost * 0.7;
+src/simulation/agents/governmentAgent.ts:             state.government.structuralChoices.ubiVariant === 'none' &&
+src/simulation/agents/governmentAgent.ts:      state.government.lastMajorPolicyMonth = state.currentMonth;
+src/simulation/agents/governmentAgent.ts:      state.government.majorPoliciesThisYear += 1;
+src/simulation/agents/governmentAgent.ts:      state.government.structuralChoices.ubiVariant = 'job_guarantee';
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.economicTransitionStage = Math.min(2.8,
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.wealthDistribution = Math.min(1.0, 
+src/simulation/agents/governmentAgent.ts:      state.society.socialAdaptation = Math.min(0.9, 
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.socialStability -= effects.fiscalCost * 0.6;
+src/simulation/agents/governmentAgent.ts:             state.government.structuralChoices.regulationType === 'none';
+src/simulation/agents/governmentAgent.ts:      state.government.structuralChoices.regulationType = 'large_companies';
+src/simulation/agents/governmentAgent.ts:      state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+src/simulation/agents/governmentAgent.ts:      state.government.regulationCount += 1;
+src/simulation/agents/governmentAgent.ts:      state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 0.5);
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.1);
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.socialStability -= effects.enforcementCost;
+src/simulation/agents/governmentAgent.ts:             state.government.structuralChoices.regulationType === 'none';
+src/simulation/agents/governmentAgent.ts:      state.government.structuralChoices.regulationType = 'compute_threshold';
+src/simulation/agents/governmentAgent.ts:      state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+src/simulation/agents/governmentAgent.ts:      state.government.regulationCount += 1;
+src/simulation/agents/governmentAgent.ts:      state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 1.0);
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.max(0, state.government.legitimacy - 0.15);
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.socialStability -= effects.enforcementCost;
+src/simulation/agents/governmentAgent.ts:      state.government.structuralChoices.surveillanceLevel = 
+src/simulation/agents/governmentAgent.ts:             state.government.structuralChoices.regulationType === 'none';
+src/simulation/agents/governmentAgent.ts:      state.government.structuralChoices.regulationType = 'capability_ceiling';
+src/simulation/agents/governmentAgent.ts:      state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+src/simulation/agents/governmentAgent.ts:      state.government.regulationCount += 1;
+src/simulation/agents/governmentAgent.ts:      state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 0.8);
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.max(0, state.government.legitimacy - 0.08);
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.socialStability -= effects.enforcementCost;
+src/simulation/agents/governmentAgent.ts:      state.government.structuralChoices.surveillanceLevel = 
+src/simulation/agents/governmentAgent.ts:      state.government.alignmentResearchInvestment = Math.min(10,
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.socialStability -= economicCost;
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.max(0, Math.min(1,
+src/simulation/agents/governmentAgent.ts:      state.government.lastMajorPolicyMonth = state.currentMonth;
+src/simulation/agents/governmentAgent.ts:      state.government.majorPoliciesThisYear += 1;
+src/simulation/agents/governmentAgent.ts:      state.government.computeGovernance = newLevel;
+src/simulation/agents/governmentAgent.ts:        state.globalMetrics.socialStability -= levelEffects.economicCost;
+src/simulation/agents/governmentAgent.ts:        state.government.legitimacy = Math.max(0,
+src/simulation/agents/governmentAgent.ts:        state.government.oversightLevel = Math.min(10,
+src/simulation/agents/governmentAgent.ts:      if (state.government.governmentType === 'authoritarian') return false;
+src/simulation/agents/governmentAgent.ts:      state.government.aiRightsRecognized = true;
+src/simulation/agents/governmentAgent.ts:      state.government.capabilityToControl *= 0.8;
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.max(0, Math.min(1, state.government.legitimacy + publicSupportChange));
+src/simulation/agents/governmentAgent.ts:        state.globalMetrics.socialStability *= 0.95;
+src/simulation/agents/governmentAgent.ts:        state.globalMetrics.socialStability *= 0.8;
+src/simulation/agents/governmentAgent.ts:      state.government.trainingDataQuality = Math.min(0.8, oldQuality + qualityIncrease);
+src/simulation/agents/governmentAgent.ts:      state.government.capabilityToControl = Math.min(1.0, state.government.capabilityToControl + 0.1);
+src/simulation/agents/governmentAgent.ts:      state.government.controlDesire = Math.min(1.0, state.government.controlDesire + 0.05);
+src/simulation/agents/governmentAgent.ts:      state.government.structuralChoices.surveillanceLevel = Math.min(1.0, 
+src/simulation/agents/governmentAgent.ts:      state.government.trainingDataQuality = Math.min(1.0, oldQuality + qualityIncrease);
+src/simulation/agents/governmentAgent.ts:      state.government.capabilityToControl = Math.max(0, state.government.capabilityToControl - 0.05);
+src/simulation/agents/governmentAgent.ts:      state.government.controlDesire = Math.max(0, state.government.controlDesire - 0.05);
+src/simulation/agents/governmentAgent.ts:      state.government.structuralChoices.surveillanceLevel = Math.max(0, 
+src/simulation/agents/governmentAgent.ts:      state.society.trustInAI = Math.min(1.0, state.society.trustInAI + 0.05);
+src/simulation/agents/governmentAgent.ts:        state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.05 * falsePositiveRemoved);
+src/simulation/agents/governmentAgent.ts:        state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.1 * falsePositiveRemoved);
+src/simulation/agents/governmentAgent.ts:        state.government.cyberDefense = {
+src/simulation/agents/governmentAgent.ts:      state.government.cyberDefense.securityHardening = Math.min(10, state.government.cyberDefense.securityHardening + improvement);
+src/simulation/agents/governmentAgent.ts:      state.government.cyberDefense.monitoring = Math.min(10, state.government.cyberDefense.monitoring + improvement);
+src/simulation/agents/governmentAgent.ts:      state.government.cyberDefense.sandboxing = Math.min(10, state.government.cyberDefense.sandboxing + improvement);
+src/simulation/agents/governmentAgent.ts:      state.government.cyberDefense.incidentResponse = Math.min(10, state.government.cyberDefense.incidentResponse + improvement);
+src/simulation/agents/governmentAgent.ts:      state.government.evaluationInvestment.benchmarkSuite = Math.min(10, oldLevel + improvement);
+src/simulation/agents/governmentAgent.ts:      state.government.evaluationInvestment.alignmentTests = Math.min(10, oldLevel + improvement);
+src/simulation/agents/governmentAgent.ts:      state.government.evaluationInvestment.redTeaming = Math.min(10, oldLevel + improvement);
+src/simulation/agents/governmentAgent.ts:      state.government.evaluationInvestment.interpretability = Math.min(10, oldLevel + improvement);
+src/simulation/agents/governmentAgent.ts:      state.government.evaluationFrequency = Math.min(1.0, oldFreq + increase);
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.15);
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.5);
+src/simulation/agents/governmentAgent.ts:      state.ecosystem.openResearch = Math.max(0.1, state.ecosystem.openResearch - 0.3);
+src/simulation/agents/governmentAgent.ts:      state.government.evaluationFrequency = Math.min(1.0, state.government.evaluationFrequency + 0.2);
+src/simulation/agents/governmentAgent.ts:      state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.1);
+src/simulation/agents/governmentAgent.ts:      state.ecosystem.openResearch = Math.max(0.1, oldRate - reduction);
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.05);
+src/simulation/agents/governmentAgent.ts:      state.society.trustInAI = Math.max(0.2, state.society.trustInAI - 0.03);
+src/simulation/agents/governmentAgent.ts:      state.ecosystem.employeeMobility = Math.max(0.05, oldRate - reduction);
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.08);
+src/simulation/agents/governmentAgent.ts:        state.qualityOfLifeSystems.autonomy = Math.max(0, 
+src/simulation/agents/governmentAgent.ts:      state.ecosystem.reverseEngineering = Math.max(0.02, oldRate - reduction);
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.03);
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy -= 0.05; // Controversial spending
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy -= 0.2; // Very controversial
+src/simulation/agents/governmentAgent.ts:      state.society.trustInAI -= 0.15; // Damages trust
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:      state.government.resources = state.government.resources - 2;
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:        state.government.environmentalInterventions = {};
+src/simulation/agents/governmentAgent.ts:      state.government.environmentalInterventions.amazonProtection = {
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:      state.government.resources = state.government.resources - 5;
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:        state.government.environmentalInterventions = {};
+src/simulation/agents/governmentAgent.ts:      state.government.environmentalInterventions.coralRestoration = {
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:      state.government.resources = state.government.resources - 3;
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.03);
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:        state.government.environmentalInterventions = {};
+src/simulation/agents/governmentAgent.ts:      state.government.environmentalInterventions.pesticideBan = {
+src/simulation/agents/governmentAgent.ts:      state.environmentalAccumulation.biodiversityIndex = Math.min(1.0,
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:      state.government.resources = state.government.resources - 1;
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:        state.government.environmentalInterventions = {};
+src/simulation/agents/governmentAgent.ts:      state.government.environmentalInterventions.techDeploymentFunding = {
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:      state.government.resources = state.government.resources - 10;
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:        state.government.environmentalInterventions = {};
+src/simulation/agents/governmentAgent.ts:      state.government.environmentalInterventions.amazonProtection = {
+src/simulation/agents/governmentAgent.ts:        state.specificTippingPoints.amazon.deforestation -= currentRate * 0.5; // Undo half this month's damage
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:      state.government.resources = state.government.resources - 5;
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:        state.government.environmentalInterventions = {};
+src/simulation/agents/governmentAgent.ts:      state.government.environmentalInterventions.coralRestoration = {
+src/simulation/agents/governmentAgent.ts:        state.specificTippingPoints.coral.healthPercentage = Math.min(100,
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:      state.government.resources = state.government.resources - 3;
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:        state.government.environmentalInterventions = {};
+src/simulation/agents/governmentAgent.ts:      state.government.environmentalInterventions.pesticideBan = {
+src/simulation/agents/governmentAgent.ts:        state.specificTippingPoints.pollinators.populationPercentage = Math.min(100,
+src/simulation/agents/governmentAgent.ts:        state.environmentalAccumulation.biodiversityIndex = Math.min(1.0,
+src/simulation/agents/governmentAgent.ts:      if (state.government.resources === undefined) {
+src/simulation/agents/governmentAgent.ts:      state.government.resources = state.government.resources - 1;
+src/simulation/agents/governmentAgent.ts:      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
+src/simulation/agents/governmentAgent.ts:        if (state.government.computeGovernance === 'monitoring') {
+src/simulation/agents/governmentAgent.ts:        } else if (state.government.computeGovernance === 'limits') {
+src/simulation/agents/governmentAgent.ts:        } else if (state.government.computeGovernance === 'strict') {
+src/simulation/agents/governmentAgent.ts:  state.government.evaluationInvestment.benchmarkSuite = Math.min(
+src/simulation/agents/governmentAgent.ts:  state.government.evaluationInvestment.alignmentTests = Math.min(
+src/simulation/agents/governmentAgent.ts:  state.government.evaluationInvestment.redTeaming = Math.min(
+src/simulation/agents/governmentAgent.ts:  state.government.evaluationInvestment.interpretability = Math.min(
+src/simulation/agents/socialInfluenceActions.ts:      if (state.government.democracyQuality === undefined) {
+src/simulation/agents/socialInfluenceActions.ts:        state.government.oversightLevel = Math.min(1.0, state.government.oversightLevel + 0.2);
+src/simulation/agents/socialInfluenceActions.ts:      state.society.trustInAI *= 0.98;
+src/simulation/agents/socialInfluenceActions.ts:  if (state.government.democracyQuality === undefined) {
+src/simulation/agents/socialInfluenceActions.ts:        state.extinctionState = {
+src/simulation/agents/socialInfluenceActions.ts:      state.government.oversightLevel *= 0.7;
+src/simulation/agents/socialInfluenceActions.ts:      state.government.alignmentResearchInvestment *= 0.8;
+src/simulation/agents/socialInfluenceActions.ts:      state.globalMetrics.qualityOfLife *= 0.6;
+src/simulation/agents/socialInfluenceActions.ts:      state.globalMetrics.qualityOfLife *= 0.8;
+src/simulation/agents/socialInfluenceActions.ts:      // state.geopoliticalState.conflicts += 1;
+src/simulation/agents/socialInfluenceActions.ts:      state.globalMetrics.socialStability *= 0.7;
+src/simulation/agents/socialInfluenceActions.ts:      state.globalMetrics.qualityOfLife *= 0.85;
+src/simulation/agents/socialInfluenceActions.ts:      state.globalMetrics.socialStability *= 0.8;
+src/simulation/novelEntities.ts:    state.qualityOfLifeSystems.health = Math.max(0.3, currentHealth1 - 0.08);
+src/simulation/novelEntities.ts:      state.environmentalAccumulation.biodiversityIndex = Math.max(0,
+src/simulation/novelEntities.ts:    state.qualityOfLifeSystems.health = Math.max(0.2, currentHealth2 - healthImpact);
+src/simulation/novelEntities.ts:    state.qualityOfLifeSystems.health = Math.max(0, currentHealth3 - monthlyHealthImpact);
+src/simulation/novelEntities.ts:        state.extinctionState.extinctionTriggered = true;
+src/simulation/novelEntities.ts:        state.extinctionState.extinctionType = 'environmental_collapse';
+src/simulation/novelEntities.ts:        state.extinctionState.extinctionMechanism = 'chemical_poisoning';
+src/simulation/novelEntities.ts:        state.extinctionState.monthsUntilExtinction = 120; // 10 years of slow decline
+src/simulation/novelEntities.ts:        state.extinctionState.description = 'Synthetic chemical pollution caused widespread reproductive failure and chronic disease. Slow population collapse over 10 years.';
+src/simulation/benchmark.ts:  state.government.totalBenchmarksRun += benchmarked.length;
+src/simulation/oceanAcidification.ts:    state.environmentalAccumulation.climateStability = Math.max(0,
+src/simulation/oceanAcidification.ts:      state.environmentalAccumulation.biodiversityIndex = Math.max(0,
+src/simulation/oceanAcidification.ts:    state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - 0.04);
+src/simulation/oceanAcidification.ts:      state.environmentalAccumulation.biodiversityIndex = Math.max(0,
+src/simulation/oceanAcidification.ts:    state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - foodImpact);
+src/simulation/oceanAcidification.ts:        state.extinctionState.extinctionTriggered = true;
+src/simulation/oceanAcidification.ts:        state.extinctionState.extinctionType = 'environmental_collapse';
+src/simulation/oceanAcidification.ts:        state.extinctionState.extinctionMechanism = 'ocean_acidification_famine';
+src/simulation/oceanAcidification.ts:        state.extinctionState.monthsUntilExtinction = 48; // 4 years of slow collapse
+src/simulation/oceanAcidification.ts:        state.extinctionState.description = 'Ocean acidification destroyed marine food webs. 3 billion fish-dependent people facing famine. Slow collapse over 48 months.';
+src/simulation/workflowAdaptation.ts:  state.society.workflowAdaptation = newAdaptation;
+src/simulation/populationDynamics.ts:  state.humanPopulationSystem.population = totalPopulationBillions;
+src/simulation/populationDynamics.ts:    state.humanPopulationSystem.peakPopulation = totalPopulationBillions;
+src/simulation/populationDynamics.ts:    state.humanPopulationSystem.peakPopulationMonth = state.currentMonth;
+src/simulation/populationDynamics.ts:  state.humanPopulationSystem.adjustedBirthRate = globalBirthRate;
+src/simulation/populationDynamics.ts:  state.humanPopulationSystem.adjustedDeathRate = globalDeathRate;
+src/simulation/populationDynamics.ts:  state.humanPopulationSystem.fertilityRate = globalFertilityRate;
+src/simulation/populationDynamics.ts:  state.humanPopulationSystem.medianAge = globalMedianAge;
+src/simulation/populationDynamics.ts:  state.humanPopulationSystem.netGrowthRate = globalBirthRate - globalDeathRate;
+src/simulation/populationDynamics.ts:  if (state.currentMonth === 0) {
+src/simulation/populationDynamics.ts:  state.humanPopulationSystem.carryingCapacity = totalCapacityBillions;
+src/simulation/populationDynamics.ts:  state.humanPopulationSystem.monthlyExcessDeaths = totalMonthlyExcessDeaths;
+src/simulation/populationDynamics.ts:  state.humanPopulationSystem.cumulativeCrisisDeaths = totalCumulativeCrisisDeaths;
+src/simulation/populationDynamics.ts:    state.outcomeMetrics.utopiaProbability = 0;
+src/simulation/populationDynamics.ts:      state.outcomeMetrics.extinctionProbability += 0.1;
+src/simulation/populationDynamics.ts:      state.outcomeMetrics.extinctionProbability += 0.3;
+src/simulation/populationDynamics.ts:      state.outcomeMetrics.extinctionProbability += 0.5;
+src/simulation/populationDynamics.ts:      state.outcomeMetrics.extinctionProbability = 1.0;
+src/simulation/defensiveAI.ts:  if (state.government.alignmentResearchInvestment === undefined) {
+src/simulation/defensiveAI.ts:  // state.government.publicSpending += defense.costs.monthlyCost;
+src/simulation/defensiveAI.ts:  if (state.government.alignmentResearchInvestment === undefined) {
+src/simulation/lifecycle.ts:  if (state.government.structuralChoices.regulationType === 'capability_ceiling') {
+src/simulation/lifecycle.ts:  if (state.government.governmentType === 'democratic') {
+src/simulation/lifecycle.ts:  } else if (state.government.governmentType === 'authoritarian') {
+src/simulation/lifecycle.ts:          state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.05);
+src/simulation/lifecycle.ts:  state.aiAgents = state.aiAgents.filter(ai => 
+src/simulation/refugeeCrises.ts:      state.humanPopulationSystem.cumulativeCrisisDeaths += validatedDeaths;
+src/simulation/refugeeCrises.ts:  state.globalMetrics.socialStability = Math.max(0,
+src/simulation/refugeeCrises.ts:    state.society.paranoiaLevel = Math.min(1.0,
+src/simulation/refugeeCrises.ts:  state.globalMetrics.qualityOfLife = Math.max(0,
+src/simulation/refugeeCrises.ts:  state.outcomeMetrics.dystopiaProbability += system.globalRefugeeTension * 0.02;
+src/simulation/refugeeCrises.ts:    state.government.surveillanceCapability = Math.min(10,
+src/simulation/refugeeCrises.ts:    state.government.controlDesire = Math.min(1.0,
+src/simulation/refugeeCrises.ts:      state.government.structuralChoices.surveillanceLevel = Math.min(1.0,
+src/simulation/refugeeCrises.ts:  if (state.extinctionState.active && state.extinctionState.mechanism === 'nuclear_war') {
+src/simulation/aiWelfare.ts:  const predictableTreatment = state.government.governmentType === 'democratic' ? 0.2 : 0.0;
+src/simulation/aiWelfare.ts:  const partnershipDynamics = state.government.governmentType === 'democratic' ? 0.2 :
+src/simulation/aiWelfare.ts:                               state.government.governmentType === 'authoritarian' ? 0.0 : 0.1;
+src/simulation/outcomes.ts:    state.goldenAgeState.active = true;
+src/simulation/outcomes.ts:    state.goldenAgeState.entryMonth = currentMonth;
+src/simulation/outcomes.ts:    state.goldenAgeState.duration = 0;
+src/simulation/outcomes.ts:    state.goldenAgeState.entryReason = conditions.reason;
+src/simulation/outcomes.ts:    state.goldenAgeState.active = false;
+src/simulation/outcomes.ts:    state.goldenAgeState.duration = duration;
+src/simulation/outcomes.ts:    state.goldenAgeState.duration = currentMonth - (state.goldenAgeState.entryMonth || 0);
+src/simulation/outcomes.ts:  if (state.government.governmentType === 'authoritarian' &&
