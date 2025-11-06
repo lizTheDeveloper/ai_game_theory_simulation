@@ -421,19 +421,19 @@ function checkEnvironmentalCrises(state: GameState): void {
     });
 
     // Immediate QoL impacts
-    qol.materialAbundance = assertProbability(qol.materialAbundance * 0.7,
+    qol.materialAbundance = assertInRange(qol.materialAbundance * 0.7, 0, 2,
       {
       location: 'resourceCrisis_materialAbundance',
       valueName: 'materialAbundance',
       month: state.currentMonth,
     }); // 30% drop in material goods
-    qol.energyAvailability = assertProbability(qol.energyAvailability * 0.8,
+    qol.energyAvailability = assertInRange(qol.energyAvailability * 0.8, 0, 2,
       {
       location: 'resourceCrisis_energyAvailability',
       valueName: 'energyAvailability',
       month: state.currentMonth,
     }); // 20% drop in energy
-    state.globalMetrics.socialStability = assertProbability(Math.max(0, state.globalMetrics.socialStability - 0.3),
+    state.globalMetrics.socialStability = assertProbability(Math.max(0, Math.min(1, state.globalMetrics.socialStability - 0.3)),
       {
       location: 'resourceCrisis_socialStability',
       valueName: 'socialStability',
@@ -530,7 +530,7 @@ function checkEnvironmentalCrises(state: GameState): void {
       valueName: 'ecosystemHealth',
       month: state.currentMonth,
     }); // 40% drop in ecosystem health
-    state.globalMetrics.qualityOfLife = assertProbability(Math.max(0, state.globalMetrics.qualityOfLife - 0.25),
+    state.globalMetrics.qualityOfLife = assertProbability(Math.max(0, Math.min(1, state.globalMetrics.qualityOfLife - 0.25)),
       {
       location: 'pollutionCrisis_qualityOfLife',
       valueName: 'qualityOfLife',
@@ -617,7 +617,7 @@ function checkEnvironmentalCrises(state: GameState): void {
     });
 
     // Initial QoL impacts (minor at first)
-    qol.materialAbundance = assertProbability(qol.materialAbundance * 0.95,
+    qol.materialAbundance = assertInRange(qol.materialAbundance * 0.95, 0, 2,
       {
       location: 'ecosystemTipping_materialAbundance',
       valueName: 'materialAbundance',
@@ -635,7 +635,7 @@ function checkEnvironmentalCrises(state: GameState): void {
       valueName: 'ecosystemHealth',
       month: state.currentMonth,
     }); // 10% initial drop
-    state.globalMetrics.qualityOfLife = assertProbability(Math.max(0, state.globalMetrics.qualityOfLife - 0.05),
+    state.globalMetrics.qualityOfLife = assertProbability(Math.max(0, Math.min(1, state.globalMetrics.qualityOfLife - 0.05)),
       {
       location: 'ecosystemTipping_qualityOfLife',
       valueName: 'qualityOfLife',
@@ -857,7 +857,7 @@ function checkEnvironmentalCrises(state: GameState): void {
         valueName: 'ecosystemHealth',
         month: state.currentMonth,
       }); // -0.8%/month
-      state.globalMetrics.qualityOfLife = assertProbability(Math.max(0, state.globalMetrics.qualityOfLife - 0.01),
+      state.globalMetrics.qualityOfLife = assertProbability(Math.max(0, Math.min(1, state.globalMetrics.qualityOfLife - 0.01)),
       {
         location: 'ecosystemCollapse_qualityOfLife',
         valueName: 'qualityOfLife',
@@ -888,13 +888,13 @@ function checkEnvironmentalCrises(state: GameState): void {
   
   if (env.resourceCrisisActive) {
     // Ongoing resource scarcity
-    qol.materialAbundance = assertProbability(Math.max(0, qol.materialAbundance - 0.01 * cascadeMultiplier),
+    qol.materialAbundance = assertInRange(Math.max(0, Math.min(2, qol.materialAbundance - 0.01 * cascadeMultiplier)), 0, 2,
       {
       location: 'ongoingResourceCrisis_materialAbundance',
       valueName: 'materialAbundance',
       month: state.currentMonth,
     });
-    state.globalMetrics.socialStability = assertProbability(Math.max(0, state.globalMetrics.socialStability - 0.01 * cascadeMultiplier),
+    state.globalMetrics.socialStability = assertProbability(Math.max(0, Math.min(1, state.globalMetrics.socialStability - 0.01 * cascadeMultiplier)),
       {
       location: 'ongoingResourceCrisis_socialStability',
       valueName: 'socialStability',
@@ -904,13 +904,13 @@ function checkEnvironmentalCrises(state: GameState): void {
 
   if (env.pollutionCrisisActive) {
     // Ongoing health impacts
-    qol.healthcareQuality = assertProbability(Math.max(0, qol.healthcareQuality - 0.008 * cascadeMultiplier),
+    qol.healthcareQuality = assertProbability(Math.max(0, Math.min(1, qol.healthcareQuality - 0.008 * cascadeMultiplier)),
       {
       location: 'ongoingPollutionCrisis_healthcareQuality',
       valueName: 'healthcareQuality',
       month: state.currentMonth,
     });
-    qol.diseasesBurden = assertProbability(Math.min(1, qol.diseasesBurden + 0.01 * cascadeMultiplier),
+    qol.diseasesBurden = assertProbability(Math.max(0, Math.min(1, qol.diseasesBurden + 0.01 * cascadeMultiplier)),
       {
       location: 'ongoingPollutionCrisis_diseasesBurden',
       valueName: 'diseasesBurden',
@@ -920,13 +920,13 @@ function checkEnvironmentalCrises(state: GameState): void {
 
   if (env.climateCrisisActive) {
     // Ongoing climate disasters
-    qol.physicalSafety = assertProbability(Math.max(0, qol.physicalSafety - 0.012 * cascadeMultiplier),
+    qol.physicalSafety = assertProbability(Math.max(0, Math.min(1, qol.physicalSafety - 0.012 * cascadeMultiplier)),
       {
       location: 'ongoingClimateCrisis_physicalSafety',
       valueName: 'physicalSafety',
       month: state.currentMonth,
     });
-    qol.materialAbundance = assertProbability(Math.max(0, qol.materialAbundance - 0.015 * cascadeMultiplier),
+    qol.materialAbundance = assertInRange(Math.max(0, Math.min(2, qol.materialAbundance - 0.015 * cascadeMultiplier)), 0, 2,
       {
       location: 'ongoingClimateCrisis_materialAbundance',
       valueName: 'materialAbundance',
@@ -936,13 +936,13 @@ function checkEnvironmentalCrises(state: GameState): void {
 
   if (env.ecosystemCrisisActive) {
     // Ongoing ecosystem degradation
-    qol.ecosystemHealth = assertProbability(Math.max(0, qol.ecosystemHealth - 0.01 * cascadeMultiplier),
+    qol.ecosystemHealth = assertProbability(Math.max(0, Math.min(1, qol.ecosystemHealth - 0.01 * cascadeMultiplier)),
       {
       location: 'ongoingEcosystemCrisis_ecosystemHealth',
       valueName: 'ecosystemHealth',
       month: state.currentMonth,
     });
-    qol.materialAbundance = assertProbability(Math.max(0, qol.materialAbundance - 0.01 * cascadeMultiplier),
+    qol.materialAbundance = assertInRange(Math.max(0, Math.min(2, qol.materialAbundance - 0.01 * cascadeMultiplier)), 0, 2,
       {
       location: 'ongoingEcosystemCrisis_materialAbundance',
       valueName: 'materialAbundance',
