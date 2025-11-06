@@ -89,7 +89,9 @@ export function updateConflictResolution(state: GameState): void {
   // Count interventions across all countries (simplified - assumes 1 conflict per intervention)
   let totalConflicts = 0;
   if (state.countryPopulationSystem) {
-    for (const country of Object.values(state.countryPopulationSystem.countries)) {
+    // FIX: Sort countries for deterministic iteration order
+    const sortedCountries = Object.values(state.countryPopulationSystem.countries).sort((a, b) => a.name.localeCompare(b.name));
+    for (const country of sortedCountries) {
       const militaryData = (country as any).militaryData;
       if (militaryData?.activeInterventions) {
         totalConflicts += militaryData.activeInterventions.length;

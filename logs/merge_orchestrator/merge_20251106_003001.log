@@ -1,0 +1,364 @@
+
+=== Merge Orchestrator Started ===
+[00:30:01] Timestamp: Thu Nov  6 00:30:01 UTC 2025
+[00:30:01] Dry run: false
+[00:30:01] Max branches: 10
+[00:30:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[00:30:03] Found 70 branches to process
+
+=== Branch 1/70: auto/worker-20251102_043015 ===
+[00:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251106_003001
+Switched to a new branch 'merge/auto/worker-20251102_043015_20251106_003001'
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Branch 'merge/auto/worker-20251102_043015_20251106_003001' set up to track remote branch 'main' from 'origin'.
+[00:30:03] 🔀 Attempting merge from origin/auto/worker-20251102_043015
+Already up to date.
+[00:30:03] ✅ Merge successful (no conflicts)
+[00:30:03] 🚦 Running quality gates...
+[00:30:03]   Gate 1/2: TypeScript compilation
+e2e/fallback-detection.spec.ts(21,30): error TS2307: Cannot find module '@playwright/test' or its corresponding type declarations.
+playwright.config.ts(1,39): error TS2307: Cannot find module '@playwright/test' or its corresponding type declarations.
+[00:30:25]     ❌ TypeScript compilation failed
+[00:30:25] 🚫 Merge BLOCKED: TypeScript errors
+[00:30:25] 📋 Merge branch preserved: merge/auto/worker-20251102_043015_20251106_003001
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 2/70: auto/worker-20251102_050015 ===
+[00:30:25] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251106_003001
+Switched to a new branch 'merge/auto/worker-20251102_050015_20251106_003001'
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Branch 'merge/auto/worker-20251102_050015_20251106_003001' set up to track remote branch 'main' from 'origin'.
+[00:30:25] 🔀 Attempting merge from origin/auto/worker-20251102_050015
+Auto-merging .claude/settings.local.json
+Auto-merging docs/AUTONOMOUS_SETUP.md
+CONFLICT (content): Merge conflict in docs/AUTONOMOUS_SETUP.md
+Auto-merging scripts/merge-orchestrator.sh
+CONFLICT (content): Merge conflict in scripts/merge-orchestrator.sh
+Automatic merge failed; fix conflicts and then commit the result.
+[00:30:25] ❌ Merge conflicts detected
+[00:30:25] 🚫 Merge BLOCKED: Manual conflict resolution required
+[00:30:25] 📋 Merge branch preserved: merge/auto/worker-20251102_050015_20251106_003001
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 3/70: auto/worker-20251102_080006 ===
+[00:30:25] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251106_003001
+Switched to a new branch 'merge/auto/worker-20251102_080006_20251106_003001'
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Branch 'merge/auto/worker-20251102_080006_20251106_003001' set up to track remote branch 'main' from 'origin'.
+[00:30:25] 🔀 Attempting merge from origin/auto/worker-20251102_080006
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/techTree/effectsEngine.ts
+Please commit your changes or stash them before you merge.
+Aborting
+[00:30:26] ❌ Merge conflicts detected
+[00:30:26] 🚫 Merge BLOCKED: Manual conflict resolution required
+[00:30:26] 📋 Merge branch preserved: merge/auto/worker-20251102_080006_20251106_003001
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 4/70: auto/worker-20251102_090015 ===
+[00:30:26] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251106_003001
+Switched to a new branch 'merge/auto/worker-20251102_090015_20251106_003001'
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Branch 'merge/auto/worker-20251102_090015_20251106_003001' set up to track remote branch 'main' from 'origin'.
+[00:30:26] 🔀 Attempting merge from origin/auto/worker-20251102_090015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/techTree/effectsEngine.ts
+Please commit your changes or stash them before you merge.
+Aborting
+[00:30:26] ❌ Merge conflicts detected
+[00:30:26] 🚫 Merge BLOCKED: Manual conflict resolution required
+[00:30:26] 📋 Merge branch preserved: merge/auto/worker-20251102_090015_20251106_003001
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 5/70: auto/worker-20251102_100015 ===
+[00:30:26] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251106_003001
+Switched to a new branch 'merge/auto/worker-20251102_100015_20251106_003001'
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Branch 'merge/auto/worker-20251102_100015_20251106_003001' set up to track remote branch 'main' from 'origin'.
+[00:30:26] 🔀 Attempting merge from origin/auto/worker-20251102_100015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/techTree/effectsEngine.ts
+Please commit your changes or stash them before you merge.
+Aborting
+[00:30:27] ❌ Merge conflicts detected
+[00:30:27] 🚫 Merge BLOCKED: Manual conflict resolution required
+[00:30:27] 📋 Merge branch preserved: merge/auto/worker-20251102_100015_20251106_003001
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 6/70: auto/worker-20251102_110015 ===
+[00:30:27] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251106_003001
+Switched to a new branch 'merge/auto/worker-20251102_110015_20251106_003001'
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Branch 'merge/auto/worker-20251102_110015_20251106_003001' set up to track remote branch 'main' from 'origin'.
+[00:30:27] 🔀 Attempting merge from origin/auto/worker-20251102_110015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/conflictResolution.ts
+	src/simulation/techTree/effectsEngine.ts
+Please commit your changes or stash them before you merge.
+Aborting
+[00:30:27] ❌ Merge conflicts detected
+[00:30:27] 🚫 Merge BLOCKED: Manual conflict resolution required
+[00:30:27] 📋 Merge branch preserved: merge/auto/worker-20251102_110015_20251106_003001
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 7/70: auto/worker-20251102_120000 ===
+[00:30:27] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251106_003001
+Switched to a new branch 'merge/auto/worker-20251102_120000_20251106_003001'
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Branch 'merge/auto/worker-20251102_120000_20251106_003001' set up to track remote branch 'main' from 'origin'.
+[00:30:27] 🔀 Attempting merge from origin/auto/worker-20251102_120000
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/conflictResolution.ts
+	src/simulation/techTree/effectsEngine.ts
+Please commit your changes or stash them before you merge.
+Aborting
+[00:30:27] ❌ Merge conflicts detected
+[00:30:28] 🚫 Merge BLOCKED: Manual conflict resolution required
+[00:30:28] 📋 Merge branch preserved: merge/auto/worker-20251102_120000_20251106_003001
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 8/70: auto/worker-20251102_130014 ===
+[00:30:28] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251106_003001
+Switched to a new branch 'merge/auto/worker-20251102_130014_20251106_003001'
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Branch 'merge/auto/worker-20251102_130014_20251106_003001' set up to track remote branch 'main' from 'origin'.
+[00:30:28] 🔀 Attempting merge from origin/auto/worker-20251102_130014
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/conflictResolution.ts
+	src/simulation/techTree/effectsEngine.ts
+Please commit your changes or stash them before you merge.
+Aborting
+[00:30:28] ❌ Merge conflicts detected
+[00:30:28] 🚫 Merge BLOCKED: Manual conflict resolution required
+[00:30:28] 📋 Merge branch preserved: merge/auto/worker-20251102_130014_20251106_003001
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 9/70: auto/worker-20251102_140015 ===
+[00:30:28] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251106_003001
+Switched to a new branch 'merge/auto/worker-20251102_140015_20251106_003001'
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Branch 'merge/auto/worker-20251102_140015_20251106_003001' set up to track remote branch 'main' from 'origin'.
+[00:30:28] 🔀 Attempting merge from origin/auto/worker-20251102_140015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/conflictResolution.ts
+	src/simulation/techTree/effectsEngine.ts
+Please commit your changes or stash them before you merge.
+Aborting
+[00:30:28] ❌ Merge conflicts detected
+[00:30:28] 🚫 Merge BLOCKED: Manual conflict resolution required
+[00:30:28] 📋 Merge branch preserved: merge/auto/worker-20251102_140015_20251106_003001
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+=== Branch 10/70: auto/worker-20251102_150015 ===
+[00:30:29] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251106_003001
+Switched to a new branch 'merge/auto/worker-20251102_150015_20251106_003001'
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Branch 'merge/auto/worker-20251102_150015_20251106_003001' set up to track remote branch 'main' from 'origin'.
+[00:30:29] 🔀 Attempting merge from origin/auto/worker-20251102_150015
+error: Your local changes to the following files would be overwritten by merge:
+	src/simulation/conflictResolution.ts
+	src/simulation/techTree/effectsEngine.ts
+Please commit your changes or stash them before you merge.
+Aborting
+[00:30:29] ❌ Merge conflicts detected
+[00:30:29] 🚫 Merge BLOCKED: Manual conflict resolution required
+[00:30:29] 📋 Merge branch preserved: merge/auto/worker-20251102_150015_20251106_003001
+M	src/simulation/climateJustice.ts
+M	src/simulation/conflictResolution.ts
+M	src/simulation/earlyWarningSystems.ts
+M	src/simulation/engine/phases/ConsciousnessGovernancePhase.ts
+M	src/simulation/llm/client.ts
+M	src/simulation/llm/integration.ts
+M	src/simulation/populationMapping.ts
+M	src/simulation/techTree/effectsEngine.ts
+M	src/simulation/warMeaningFeedback.ts
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+[00:30:29] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[00:30:29] Total branches found: 70
+[00:30:29] Branches processed: 10
+[00:30:29] ✅ Successfully merged: 0
+[00:30:29] ⏭️  Skipped (frontend on VM): 0
+[00:30:29] ❌ Failed (conflicts/gates): 10
+[00:30:29] 
+[00:30:29] 📊 Remaining branches: 60
+[00:30:29]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[00:30:29] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251106_003001.log

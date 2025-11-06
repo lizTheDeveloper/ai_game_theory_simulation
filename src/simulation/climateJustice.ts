@@ -53,7 +53,9 @@ export interface ClimateReparationsWillingness {
  * Initialize climate justice tracking for all countries
  */
 export function initializeClimateJustice(countries: Record<CountryName, CountryPopulation>): void {
-  for (const country of Object.values(countries)) {
+  // FIX: Sort countries for deterministic iteration order
+  const sortedCountries = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
+  for (const country of sortedCountries) {
     // Climate reparations willingness (varies by country politics)
     country.climateReparationsWillingness = calculateInitialWillingness(country);
 
@@ -138,7 +140,9 @@ function calculateClimateDebt(state: GameState): void {
   const countries = state.countryPopulationSystem.countries;
   const climateSeverity = 1 - state.environmentalAccumulation.climateStability; // [0, 1] - inverted since climateStability is 1=good, 0=bad
 
-  for (const country of Object.values(countries)) {
+  // FIX: Sort countries for deterministic iteration order
+  const sortedCountries = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
+  for (const country of sortedCountries) {
     // Historical emissions contribution (normalized)
     const emissionsShare = country.historicalEmissions! / 1600; // Total ~1600 Gt since 1850
 
@@ -173,7 +177,9 @@ function processReparationsTransfers(state: GameState): void {
   const payers: Array<{country: CountryPopulation, amount: number}> = [];
   const receivers: Array<{country: CountryPopulation, need: number}> = [];
 
-  for (const country of Object.values(countries)) {
+  // FIX: Sort countries for deterministic iteration order
+  const sortedCountries = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
+  for (const country of sortedCountries) {
     if (country.climateReparationsOwed! > 0) {
       // Country owes reparations
       // All fields initialized in createCountry() (Oct 28, 2025)
@@ -232,7 +238,9 @@ function updateClimateMigrationPressure(state: GameState): void {
   const countries = state.countryPopulationSystem.countries;
   const climateSeverity = 1 - state.environmentalAccumulation.climateStability;
 
-  for (const country of Object.values(countries)) {
+  // FIX: Sort countries for deterministic iteration order
+  const sortedCountries = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
+  for (const country of sortedCountries) {
     // Base migration pressure from climate suffering
     const basePressure = country.climateSufferingRatio! * climateSeverity * 0.01;
 
