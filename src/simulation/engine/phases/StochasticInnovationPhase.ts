@@ -21,6 +21,7 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { getTechDeploymentSafe } from '../../techTree/helpers';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions';
 
 interface Breakthrough {
   id: string;
@@ -184,9 +185,19 @@ export class StochasticInnovationPhase implements SimulationPhase {
       state.breakthroughMultiplier = 1.0; // Initialize on first use
     }
 
-    // Total breakthrough probability (with compounding multiplier)
+    // === BIFURCATION VARIANCE AMPLIFICATION ===
+    // Near critical thresholds → 10× variance amplification
+    // Creates path-dependent breakthrough timing (some runs get lucky, others don't)
+    const varianceAmp = assertFinite(state.bifurcationState.varianceAmplification, {
+      location: 'StochasticInnovationPhase.execute',
+      valueName: 'varianceAmplification',
+      month: state.currentMonth,
+      additionalInfo: { expectedSource: 'BifurcationLogicPhase (order 4.5)' }
+    });
+
+    // Total breakthrough probability (with compounding multiplier AND bifurcation amplification)
     const baseProb = baseBreakthroughProb + crisisPressure + aiBoost;
-    const totalBreakthroughProb = baseProb * state.breakthroughMultiplier;
+    const totalBreakthroughProb = baseProb * state.breakthroughMultiplier * varianceAmp;
 
     // === 2. CHECK FOR BREAKTHROUGH ===
 
