@@ -389,9 +389,19 @@ export function selectDimensionToAdvance(
   if (pathChoice < 0.7) {
     // Advance core dimension (use dimensionRoll)
     const totalWeight = Object.values(dimensionWeights).reduce((a, b) => a + b, 0);
+<<<<<<< HEAD
     let roll = dimensionRoll * totalWeight;
 
     for (const [dim, weight] of Object.entries(dimensionWeights)) {
+=======
+    let roll = random() * totalWeight;
+
+    // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
+    // Object.entries() order is not guaranteed across JS engines/runs
+    const sortedDimensions = Object.entries(dimensionWeights).sort((a, b) => a[0].localeCompare(b[0]));
+
+    for (const [dim, weight] of sortedDimensions) {
+>>>>>>> origin/auto/worker-20251106_000001
       roll -= weight;
       if (roll <= 0) {
         const currentValue = capabilityProfile[dim as keyof AICapabilityProfile];
@@ -416,12 +426,24 @@ export function selectDimensionToAdvance(
   };
 
   const totalDomainWeight = Object.values(domainWeights).reduce((a, b) => a + b, 0);
+<<<<<<< HEAD
   let domainRollValue = domainRoll * totalDomainWeight;
 
   let selectedDomain: 'biotech' | 'materials' | 'climate' | 'computerScience' | null = null;
   for (const [domain, weight] of Object.entries(domainWeights)) {
     domainRollValue -= weight;
     if (domainRollValue <= 0) {
+=======
+  let domainRoll = random() * totalDomainWeight;
+
+  // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
+  const sortedDomains = Object.entries(domainWeights).sort((a, b) => a[0].localeCompare(b[0]));
+
+  let selectedDomain: 'biotech' | 'materials' | 'climate' | 'computerScience' | null = null;
+  for (const [domain, weight] of sortedDomains) {
+    domainRoll -= weight;
+    if (domainRoll <= 0) {
+>>>>>>> origin/auto/worker-20251106_000001
       selectedDomain = domain as any;
       break;
     }
