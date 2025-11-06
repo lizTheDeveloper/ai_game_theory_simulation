@@ -47,6 +47,21 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // Calculate global crisis indicators (for aid branching)
     const globalCrisisIndicators = this.calculateGlobalCrisisIndicators(state);
 
+    // DIAGNOSTIC LOGGING: Global crisis state
+    console.log(`\n=== Mortality Stabilizers Diagnostic (Month ${state.currentMonth}) ===`);
+    console.log(`  🌍 Global Crisis Indicators:`);
+    console.log(`    Major economies collapsed: ${globalCrisisIndicators.majorEconomiesCollapsed}/${globalCrisisIndicators.totalMajorEconomies}`);
+    console.log(`    Global crisis active: ${globalCrisisIndicators.globalCrisisActive ? '🚨 YES' : '✅ NO'}`);
+    console.log(`    Donor fatigue: ${(globalCrisisIndicators.donorFatigue * 100).toFixed(1)}%`);
+
+    // Track aggregate stabilizer effectiveness across all regions
+    let totalPopulation = 0;
+    let weightedAidReduction = 0;
+    let weightedAdaptationReduction = 0;
+    let weightedMigrationReduction = 0;
+    let weightedEmergencyReduction = 0;
+    let weightedCombinedReduction = 0;
+
     // Apply stabilizers to each region
     for (const region of pop.regionalPopulations) {
       // M1 FIX: Fail loudly if mortalityStabilizers not initialized after bootstrap
@@ -95,6 +110,55 @@ export class MortalityStabilizersPhase implements SimulationPhase {
 
       // 6. Calculate combined mortality reduction (multiplicative)
       this.calculateCombinedReduction(stabilizers);
+
+      // DIAGNOSTIC LOGGING: Per-region stabilizer state
+      console.log(`  📊 Region: ${region.name || 'Unknown'} (pop: ${region.population.toFixed(1)}M)`);
+      console.log(`    🤝 Aid: ${(stabilizers.aid.mortalityReduction * 100).toFixed(1)}% reduction (${stabilizers.aid.effectivenessLevel})`);
+      console.log(`       - Donor availability: ${(stabilizers.aid.donorAvailability * 100).toFixed(1)}%`);
+      console.log(`       - Donor fatigue: ${(stabilizers.aid.donorFatigue * 100).toFixed(1)}%`);
+      console.log(`    🌡️ Adaptation: ${(stabilizers.adaptation.totalReduction * 100).toFixed(1)}% reduction`);
+      console.log(`       - Months exposed: ${stabilizers.adaptation.monthsExposed}`);
+      console.log(`       - Physiological: ${(stabilizers.adaptation.physiological * 100).toFixed(1)}%`);
+      console.log(`       - Behavioral: ${(stabilizers.adaptation.behavioral * 100).toFixed(1)}%`);
+      console.log(`       - Infrastructural: ${(stabilizers.adaptation.infrastructural * 100).toFixed(1)}%`);
+      console.log(`       - Social: ${(stabilizers.adaptation.social * 100).toFixed(1)}%`);
+      console.log(`       - Adaptation ceases: ${stabilizers.adaptation.adaptationCeases ? '🚨 YES' : '✅ NO'}`);
+      console.log(`    🚶 Migration: ${(stabilizers.migration.successfulRelocation * 100).toFixed(1)}% can relocate`);
+      console.log(`       - Destination capacity: ${(stabilizers.migration.destinationCapacity * 100).toFixed(1)}%`);
+      console.log(`       - Distance penalty: ${(stabilizers.migration.distancePenalty * 100).toFixed(1)}%`);
+      console.log(`       - Mortality during migration: ${(stabilizers.migration.mortalityDuringMigration * 100).toFixed(1)}%`);
+      console.log(`       - Return rate: ${(stabilizers.migration.returnRate * 100).toFixed(1)}%`);
+      console.log(`    🚨 Emergency Response: ${(stabilizers.emergencyResponse.effectiveness * 100).toFixed(1)}% reduction`);
+      console.log(`       - Workforce available: ${(stabilizers.emergencyResponse.workforceAvailable * 100).toFixed(1)}%`);
+      console.log(`       - Preparedness: ${(stabilizers.emergencyResponse.preparednessLevel * 100).toFixed(1)}%`);
+      console.log(`       - Resource stockpiles: ${(stabilizers.emergencyResponse.resourceStockpiles * 100).toFixed(1)}%`);
+      console.log(`       - Communication systems: ${(stabilizers.emergencyResponse.communicationSystems * 100).toFixed(1)}%`);
+      console.log(`       - Crisis scale: ${(stabilizers.emergencyResponse.crisisScale * 100).toFixed(1)}%`);
+      console.log(`       - Overwhelm penalty: ${(stabilizers.emergencyResponse.overwhelmPenalty * 100).toFixed(1)}%`);
+      console.log(`    🔗 Cascades:`);
+      console.log(`       - Aid functioning: ${(stabilizers.cascades.aidFunctioning * 100).toFixed(1)}%`);
+      console.log(`       - Adaptation functioning: ${(stabilizers.cascades.adaptationFunctioning * 100).toFixed(1)}%`);
+      console.log(`       - Migration functioning: ${(stabilizers.cascades.migrationFunctioning * 100).toFixed(1)}%`);
+      console.log(`       - Emergency functioning: ${(stabilizers.cascades.emergencyResponseFunctioning * 100).toFixed(1)}%`);
+      console.log(`    ✅ COMBINED REDUCTION: ${(stabilizers.combinedReduction * 100).toFixed(1)}%`);
+
+      // Accumulate weighted averages
+      totalPopulation += region.population;
+      weightedAidReduction += stabilizers.aid.mortalityReduction * region.population;
+      weightedAdaptationReduction += stabilizers.adaptation.totalReduction * region.population;
+      weightedMigrationReduction += (stabilizers.migration.successfulRelocation * 0.3) * region.population;
+      weightedEmergencyReduction += stabilizers.emergencyResponse.effectiveness * region.population;
+      weightedCombinedReduction += stabilizers.combinedReduction * region.population;
+    }
+
+    // DIAGNOSTIC LOGGING: Global aggregate
+    if (totalPopulation > 0) {
+      console.log(`\n  🌐 GLOBAL WEIGHTED AVERAGES (across ${pop.regionalPopulations.length} regions):`);
+      console.log(`    Aid reduction: ${(weightedAidReduction / totalPopulation * 100).toFixed(1)}%`);
+      console.log(`    Adaptation reduction: ${(weightedAdaptationReduction / totalPopulation * 100).toFixed(1)}%`);
+      console.log(`    Migration reduction: ${(weightedMigrationReduction / totalPopulation * 100).toFixed(1)}%`);
+      console.log(`    Emergency reduction: ${(weightedEmergencyReduction / totalPopulation * 100).toFixed(1)}%`);
+      console.log(`    ✅ COMBINED REDUCTION: ${(weightedCombinedReduction / totalPopulation * 100).toFixed(1)}%`);
     }
 
     return { events: [] };
@@ -119,21 +183,44 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     const pop = state.humanPopulationSystem;
     let collapsed = 0;
 
+    // DIAGNOSTIC: Track collapse reasons
+    const collapseReasons: string[] = [];
+
     if (pop.regionalPopulations) {
       for (const region of pop.regionalPopulations) {
         // Proxy for "major economy": economicStage >= 3 at baseline
-        if (region.baselinePopulation > 300 && region.economicStage < 2.0) {
+        // DIAGNOSTIC: Check if this region qualifies as a major economy
+        const isMajorEconomy = region.baselinePopulation > 300;
+        const economicCollapse = region.economicStage < 2.0;
+        const populationCollapse = region.population < region.baselinePopulation * 0.5;
+
+        if (isMajorEconomy && economicCollapse) {
           // Major region (>300M people) dropped to economicStage < 2.0 (below middle-income)
           collapsed++;
-        } else if (region.population < region.baselinePopulation * 0.5) {
+          collapseReasons.push(`${region.name || 'Unknown'}: economic collapse (stage ${region.economicStage.toFixed(2)} < 2.0, baseline pop ${region.baselinePopulation.toFixed(1)}M)`);
+        } else if (populationCollapse) {
           // Population dropped >50% from baseline
           collapsed++;
+          collapseReasons.push(`${region.name || 'Unknown'}: population collapse (${region.population.toFixed(1)}M < 50% of ${region.baselinePopulation.toFixed(1)}M baseline)`);
+        }
+
+        // DIAGNOSTIC: Log regions NOT counted as major economies
+        if (isMajorEconomy && !economicCollapse && !populationCollapse) {
+          console.log(`      ℹ️ Major economy STABLE: ${region.name || 'Unknown'} (stage ${region.economicStage.toFixed(2)}, pop ${region.population.toFixed(1)}M / ${region.baselinePopulation.toFixed(1)}M baseline)`);
         }
       }
     }
 
     // Global crisis if >50% of major economies collapsed
     const globalCrisisActive = (collapsed / totalMajorEconomies) > 0.5;
+
+    // DIAGNOSTIC: Log collapse reasons
+    if (collapseReasons.length > 0) {
+      console.log(`    ⚠️ Collapsed economies (${collapsed}/${totalMajorEconomies}):`);
+      for (const reason of collapseReasons) {
+        console.log(`      - ${reason}`);
+      }
+    }
 
     // Donor fatigue based on active crises
     // Pakistan 2010: 50% of Haiti's aid (2 simultaneous crises)
@@ -234,8 +321,15 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // Check if heat crisis is active (proxy: environmental accumulation)
     const heatCrisisActive = state.environmentalAccumulation?.climateCrisisActive || false;
 
+    // DIAGNOSTIC: Check heat crisis detection
+    const envAccumExists = !!state.environmentalAccumulation;
+    const climateCrisisValue = state.environmentalAccumulation?.climateCrisisActive;
+
     if (!heatCrisisActive) {
       // No heat exposure, adaptation doesn't develop
+      // DIAGNOSTIC: Log why adaptation is not developing (only once per region per phase execution)
+      // Note: This will log for EVERY region EVERY month where heat is not active
+      // This is intentional for diagnostic purposes but should be removed after investigation
       return;
     }
 

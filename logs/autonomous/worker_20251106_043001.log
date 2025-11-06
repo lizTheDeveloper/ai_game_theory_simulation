@@ -1,12 +1,12 @@
 [0;32m╔═══════════════════════════════════════════════════════╗[0m
-[0;32m║       🤖 AUTONOMOUS WORKER - 20251106_040000        ║[0m
+[0;32m║       🤖 AUTONOMOUS WORKER - 20251106_043001        ║[0m
 [0;32m╚═══════════════════════════════════════════════════════╝[0m
 
 [0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
 [0;35m⏱️  [PRE-FLIGHT CHECKS] +0s[0m
 [0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
 [0;36m📊 Disk available: 58G[0m
-[0;36m📊 Memory available: 3.1Gi[0m
+[0;36m📊 Memory available: 3.2Gi[0m
 [0;34mℹ️  Updating Claude Code to latest version...[0m
 [0;32m✅ Claude Code updated: 2.0.34 (Claude Code)[0m
 [0;34mℹ️  Checking chatroom monitor status...[0m
@@ -18,11 +18,12 @@
 [0;32m✅ claude: installed[0m
 
 [0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
-[0;35m⏱️  [GIT SYNC] +7s[0m
+[0;35m⏱️  [GIT SYNC] +5s[0m
 [0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
 [0;34mℹ️  Switching to main branch...[0m
 error: Your local changes to the following files would be overwritten by checkout:
 	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
 	logs/autonomous/worker_20251106_040000.log
 	logs/autonomous/worker_20251106_040001.log
 Please commit your changes or stash them before you switch branches.
@@ -35,20 +36,22 @@ Aborting
   1. Checking emoji map for duplicates...
 [0;32m     ✅ No duplicates in emoji map[0m
   2. Checking staged files for emoji usage...
-[0;32m     ✅ No simulation files changed[0m
+[0;31m❌ UNREGISTERED EMOJIS FOUND:[0m
 
-✅ Docs already updated in commit - skipping historian
-[auto/worker-20251106_033001 39857ea4b] chore: Auto-commit before pull (worker 20251106_040000)
- 3 files changed, 35 insertions(+), 135371 deletions(-)
- rewrite docs/underdocumented.json (100%)
+  🔗 in src/simulation/engine/phases/MortalityStabilizersPhase.ts
+  🚶 in src/simulation/engine/phases/MortalityStabilizersPhase.ts
+
+Fix: Add these emojis to docs/EMOJI_EVENT_MAP.txt with their event names
+Or remove them if they're not event markers
+Nothing to commit
 [0;34mℹ️  Pulling latest from main...[0m
 From github.com:lizTheDeveloper/ai_game_theory_simulation
  * branch                main       -> FETCH_HEAD
 Already up to date.
 [0;32m✅ Pull successful (2s)[0m
-[0;36m📊 Current commit: 39857ea4b[0m
-[0;34mℹ️  Creating branch: auto/worker-20251106_040000[0m
-Switched to a new branch 'auto/worker-20251106_040000'
+[0;36m📊 Current commit: 325fa2625[0m
+[0;34mℹ️  Creating branch: auto/worker-20251106_043001[0m
+Switched to a new branch 'auto/worker-20251106_043001'
 [0;32m✅ Branch created[0m
 
 [0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
@@ -58,10 +61,10 @@ Switched to a new branch 'auto/worker-20251106_040000'
 [0;36m📊 Claude Code version: 2.0.34 (Claude Code)[0m
 
 [0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
-[0;35m⏱️  [CLAUDE CODE EXECUTION] +2s[0m
+[0;35m⏱️  [CLAUDE CODE EXECUTION] +1s[0m
 [0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
 [0;34mℹ️  Fetching current API usage...[0m
-[0;36m📊 API Usage - Session: 0%, Week: 0%, Opus: 0%[0m
+[0;36m📊 API Usage - Session: 19%, Week: 42%, Opus: 25%[0m
 [0;34mℹ️  Preparing orchestrator task...[0m
 [0;32m✅ Task prompt created[0m
 [0;34mℹ️  Starting Claude Code (45-minute timeout)...[0m

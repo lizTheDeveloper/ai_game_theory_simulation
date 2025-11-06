@@ -565,8 +565,11 @@ function applyWetBulbMortality(state: GameState, event: WetBulbEvent): void {
 
   const population = state.humanPopulationSystem;
 
-  // Calculate mortality rate (event.deaths is in millions, population.population is in millions)
-  const mortalityRate = event.deaths / population.population;
+  // FIX (Nov 6, 2025): Unit mismatch bug - event.deaths is in MILLIONS, population.population is in BILLIONS
+  // Previous calculation: deaths(M) / population(B) = 1000× too high
+  // Correct calculation: deaths(M) / (population(B) × 1000 = population in M)
+  // Research: Ballester et al. (2024) - heat waves cause 0.1-0.5% excess mortality, not 5%
+  const mortalityRate = event.deaths / (population.population * 1000);
 
   // Apply via centralized mortality system
   addMortalityRisk(population, {

@@ -340,12 +340,17 @@ export function checkRegionalFamineRisk(state: GameState, month: number): void {
   // Food security is now fully regional (persistent state modified by degradation phases)
   // Each region has its own foodSecurity value that tracks real regional variation
   //
-  // Phase 1B Refinement (Oct 17, 2025): Famine threshold 0.6
-  // Historical validation: Ukraine Holodomor (0.5-0.6), Bengal Famine (0.6), Somalia (0.5-0.6)
-  // Research: FAO severe food insecurity threshold is 0.7, famines trigger 0.5-0.7
+  // FIX (Nov 6, 2025): Raise threshold to 0.8 (IPC Phase 3 = crisis)
+  // Research: FAO (2023) IPC Phase classification
+  // - 80-100%: Minimal/Stressed (Phase 1-2) - no famine
+  // - 60-80%: Crisis (Phase 3) - hunger, NO mass mortality
+  // - 40-60%: Emergency (Phase 4) - acute malnutrition, LOW mortality
+  // - <40%: Catastrophe/Famine (Phase 5) - starvation, HIGH mortality
+  //
+  // Severity is determined by getFamineSeverity() in famine.ts based on food security level
 
   const env = state.environmentalAccumulation;
-  const FAMINE_THRESHOLD = 0.6;
+  const FAMINE_THRESHOLD = 0.8;  // Trigger at IPC Phase 3 (Crisis) threshold
 
   // Guard against undefined regionalPopulations
   if (!state.humanPopulationSystem.regionalPopulations) {

@@ -176,3 +176,5 @@
 # UI & Status Indicators
 💚 | Positive health/success indicator
 🟡 | Warning/caution indicator
+🔗 | Cascade failure linkage
+🚶 | Migration/relocation

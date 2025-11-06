@@ -187,11 +187,16 @@ export function addMortalityRisk(
   // Add risk to accumulator
   pop.mortalityRisks.push(risk);
 
-  // Optional: Log high-risk events
-  if (risk.baseRisk > 0.01) {
-    console.log(
-      `  ⚠️ High mortality risk added: ${(risk.baseRisk * 100).toFixed(2)}% base (${risk.proximate} from ${risk.root})`
-    );
+  // DIAGNOSTIC LOGGING (Nov 6, 2025 - Week 1 CRITICAL Phase 2)
+  // Track mortality risk contributions to identify excessive base mortality sources
+  // Target: Identify why base mortality = 5% monthly (hits Holodomor cap despite stabilizers)
+  if (risk.baseRisk > 0.001) {  // 0.1% threshold to reduce noise
+    const cumulativeRisk = pop.mortalityRisks.reduce((sum, r) => sum + r.baseRisk, 0);
+    console.log(`💀 MORTALITY RISK: ${risk.description || `${risk.proximate} from ${risk.root}`}`);
+    console.log(`  Base risk added: ${risk.baseRisk.toFixed(4)} (${(risk.baseRisk * 100).toFixed(2)}%)`);
+    console.log(`  Source: ${risk.proximate} (root: ${risk.root})`);
+    console.log(`  Month: ${risk.month}`);
+    console.log(`  Cumulative risk this month: ${cumulativeRisk.toFixed(4)} (${(cumulativeRisk * 100).toFixed(2)}%)`);
   }
 }
 
@@ -241,6 +246,59 @@ export function resolveMortality(
         },
       },
     };
+  }
+
+  // DIAGNOSTIC LOGGING (Nov 6, 2025 - Week 1 CRITICAL Phase 2)
+  // Summarize mortality risk sources BEFORE resolution
+  // This shows what's driving base mortality (target: identify 5% monthly sources)
+  const totalBaseRisk = risks.reduce((sum, r) => sum + r.baseRisk, 0);
+  const risksBySource = new Map<string, { risk: number; count: number }>();
+  const risksByProximate = new Map<string, number>();
+  const risksByRoot = new Map<string, number>();
+
+  for (const risk of risks) {
+    // Group by source (proximate + root)
+    const sourceKey = `${risk.proximate} (${risk.root})`;
+    const existing = risksBySource.get(sourceKey) || { risk: 0, count: 0 };
+    risksBySource.set(sourceKey, { risk: existing.risk + risk.baseRisk, count: existing.count + 1 });
+
+    // Group by proximate cause
+    risksByProximate.set(risk.proximate, (risksByProximate.get(risk.proximate) || 0) + risk.baseRisk);
+
+    // Group by root cause
+    risksByRoot.set(risk.root, (risksByRoot.get(risk.root) || 0) + risk.baseRisk);
+  }
+
+  // Log summary (only if total risk > 0.1% to reduce noise)
+  if (totalBaseRisk > 0.001) {
+    console.log(`\n💀💀💀 MORTALITY RISK SUMMARY (Month ${state.currentMonth}) 💀💀💀`);
+    console.log(`  Total base risk: ${totalBaseRisk.toFixed(4)} (${(totalBaseRisk * 100).toFixed(2)}%)`);
+    console.log(`  Risk events: ${risks.length}`);
+    console.log(`\n  📊 By Proximate Cause:`);
+    Array.from(risksByProximate.entries())
+      .sort((a, b) => b[1] - a[1])
+      .forEach(([cause, risk]) => {
+        const pct = (risk / totalBaseRisk) * 100;
+        console.log(`    ${cause}: ${risk.toFixed(4)} (${pct.toFixed(1)}% of total)`);
+      });
+
+    console.log(`\n  🔍 By Root Cause:`);
+    Array.from(risksByRoot.entries())
+      .sort((a, b) => b[1] - a[1])
+      .forEach(([cause, risk]) => {
+        const pct = (risk / totalBaseRisk) * 100;
+        console.log(`    ${cause}: ${risk.toFixed(4)} (${pct.toFixed(1)}% of total)`);
+      });
+
+    console.log(`\n  🎯 Top 5 Sources (proximate + root):`);
+    Array.from(risksBySource.entries())
+      .sort((a, b) => b[1].risk - a[1].risk)
+      .slice(0, 5)
+      .forEach(([source, data]) => {
+        const pct = (data.risk / totalBaseRisk) * 100;
+        console.log(`    ${source}: ${data.risk.toFixed(4)} (${pct.toFixed(1)}%, ${data.count} events)`);
+      });
+    console.log(``);
   }
 
   // Separate instant vs gradual risks
@@ -305,9 +363,18 @@ export function resolveMortality(
 
       if (totalPop > 0) {
         const avgReduction = weightedReduction / totalPop;
+
+        // DIAGNOSTIC LOGGING: Show stabilizer application
+        const deathProbBefore = deathProb;
+
         // Apply reduction: deathProb × (1 - reduction)
         // Example: 50% death prob, 40% reduction → 50% × 0.6 = 30% final
         deathProb *= (1 - avgReduction);
+
+        // DIAGNOSTIC: Log stabilizer effect for this demographic
+        if (state.currentMonth % 10 === 0 || deathProbBefore > 0.01) {
+          console.log(`    🛡️ Stabilizers applied to ${demo.name}: ${(deathProbBefore * 100).toFixed(2)}% → ${(deathProb * 100).toFixed(2)}% (${(avgReduction * 100).toFixed(1)}% reduction)`);
+        }
       }
     }
 
