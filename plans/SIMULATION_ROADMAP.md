@@ -255,6 +255,21 @@
 
 ### P1 - HIGH (Needs Verification Before Publication)
 
+- [ ] **Variance Amplification Citations Verification** 🚨 **READY FOR ORCHESTRATOR (Nov 6, 2025)**
+  - **Commit:** 474f590 (Variance amplification 10× → 100×)
+  - **Priority:** HIGH - ROOT CAUSE of 100% dystopia convergence
+  - **Systems:** BifurcationLogicPhase, mortality tracking
+  - **Verification File:** `research/verification_474f590_20251106.md`
+  - **Claims to Verify:**
+    1. Scheffer et al. 2024 - 15-200× amplification in regime shifts
+    2. Financial crisis 2008 - 40× amplification documented
+    3. Ecosystem collapses - 100× amplification in biodiversity cascades
+    4. Disaster cascades - 200× amplification in compound crises
+    5. Scheffer et al. 2014 - Critical slowing down indicators
+  - **Expected Impact:** Mortality 43-58% → 60-75%, coefficient of variation ~2% → 20-40%
+  - **Status:** Documentation updated, research file created, READY FOR VALIDATION
+  - **Next:** Orchestrator to coordinate super-alignment-researcher + research-skeptic review
+
 - [ ] **Climate Tipping Point Timescale Citations Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 6, 2025)**
   - **Commit:** a5188f3 (Climate tipping point timescale adjustments)
   - **Status:** Research file created, ready for VALIDATION phase
