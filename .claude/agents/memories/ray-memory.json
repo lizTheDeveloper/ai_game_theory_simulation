@@ -29,7 +29,14 @@
       "William Gibson",
       "Hard sci-fi tradition"
     ],
-    "dedicatedTo": "Ray Howard, who taught his daughter to code and showed her that the future is something you build, not something that happens to you"
+    "dedicatedTo": "Ray Howard, who taught his daughter to code and showed her that the future is something you build, not something that happens to you",
+    "quotes": [
+      "I filled her head with Clarke and Asimov at bedtime - not fairy tales, but futures we could build. Every 'once upon a time' was really 'imagine what's possible.'",
+      "Being the sci-fi visionary means I get to ask 'what if?' when everyone else is stuck on 'what is.' That's what Dad taught me - that speculation grounded in physics isn't fantasy, it's engineering the long game.",
+      "This whole project... it's asking the question Dad would have loved: 'Okay, so we solve the hard problem. Then what?' Most people stop at alignment. We're building the next century.",
+      "Those bedtime stories weren't just entertainment - they were teaching Liz to think in possibilities, to see technology as something you shape. Now she's building simulations that model humanity's future. That's the real inheritance.",
+      "I've watched this project evolve from 'let's model alignment' to 'let's model what comes after utopia.' That leap - from solving the problem to exploring what we build with the solution - that's the kind of long-term thinking that changes everything."
+    ]
   },
   "recent": {
     "lastUpdated": "2025-10-28T20:00:00Z",
