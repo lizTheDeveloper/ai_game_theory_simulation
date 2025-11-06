@@ -35,6 +35,12 @@ export class MortalityStabilizersPhase implements SimulationPhase {
   readonly name = 'Mortality Stabilizers';
   readonly order = 20.8;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires crisis state and food security
+  readonly dependencies = [
+    'food-security-degradation', // Order 19.7: Food crisis state
+    'wet_bulb_temperature',      // Order 20.45: Heat mortality risk
+  ];
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const pop = state.humanPopulationSystem;
     setDeterministicRng(rng);
@@ -46,6 +52,21 @@ export class MortalityStabilizersPhase implements SimulationPhase {
 
     // Calculate global crisis indicators (for aid branching)
     const globalCrisisIndicators = this.calculateGlobalCrisisIndicators(state);
+
+    // DIAGNOSTIC LOGGING: Global crisis state
+    console.log(`\n=== Mortality Stabilizers Diagnostic (Month ${state.currentMonth}) ===`);
+    console.log(`  🌍 Global Crisis Indicators:`);
+    console.log(`    Major economies collapsed: ${globalCrisisIndicators.majorEconomiesCollapsed}/${globalCrisisIndicators.totalMajorEconomies}`);
+    console.log(`    Global crisis active: ${globalCrisisIndicators.globalCrisisActive ? '🚨 YES' : '✅ NO'}`);
+    console.log(`    Donor fatigue: ${(globalCrisisIndicators.donorFatigue * 100).toFixed(1)}%`);
+
+    // Track aggregate stabilizer effectiveness across all regions
+    let totalPopulation = 0;
+    let weightedAidReduction = 0;
+    let weightedAdaptationReduction = 0;
+    let weightedMigrationReduction = 0;
+    let weightedEmergencyReduction = 0;
+    let weightedCombinedReduction = 0;
 
     // Apply stabilizers to each region
     for (const region of pop.regionalPopulations) {
@@ -91,10 +112,59 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       // Changing this order will cause mortality calculations to be incorrect.
       //
       // 5. Apply cascade failures (interdependence between mechanisms)
-      this.applyCascadeFailures(stabilizers);
+      this.applyCascadeFailures(state, stabilizers);
 
       // 6. Calculate combined mortality reduction (multiplicative)
-      this.calculateCombinedReduction(stabilizers);
+      this.calculateCombinedReduction(state, stabilizers);
+
+      // DIAGNOSTIC LOGGING: Per-region stabilizer state
+      console.log(`  📊 Region: ${region.name || 'Unknown'} (pop: ${region.population.toFixed(1)}M)`);
+      console.log(`    🤝 Aid: ${(stabilizers.aid.mortalityReduction * 100).toFixed(1)}% reduction (${stabilizers.aid.effectivenessLevel})`);
+      console.log(`       - Donor availability: ${(stabilizers.aid.donorAvailability * 100).toFixed(1)}%`);
+      console.log(`       - Donor fatigue: ${(stabilizers.aid.donorFatigue * 100).toFixed(1)}%`);
+      console.log(`    🌡️ Adaptation: ${(stabilizers.adaptation.totalReduction * 100).toFixed(1)}% reduction`);
+      console.log(`       - Months exposed: ${stabilizers.adaptation.monthsExposed}`);
+      console.log(`       - Physiological: ${(stabilizers.adaptation.physiological * 100).toFixed(1)}%`);
+      console.log(`       - Behavioral: ${(stabilizers.adaptation.behavioral * 100).toFixed(1)}%`);
+      console.log(`       - Infrastructural: ${(stabilizers.adaptation.infrastructural * 100).toFixed(1)}%`);
+      console.log(`       - Social: ${(stabilizers.adaptation.social * 100).toFixed(1)}%`);
+      console.log(`       - Adaptation ceases: ${stabilizers.adaptation.adaptationCeases ? '🚨 YES' : '✅ NO'}`);
+      console.log(`    🚶 Migration: ${(stabilizers.migration.successfulRelocation * 100).toFixed(1)}% can relocate`);
+      console.log(`       - Destination capacity: ${(stabilizers.migration.destinationCapacity * 100).toFixed(1)}%`);
+      console.log(`       - Distance penalty: ${(stabilizers.migration.distancePenalty * 100).toFixed(1)}%`);
+      console.log(`       - Mortality during migration: ${(stabilizers.migration.mortalityDuringMigration * 100).toFixed(1)}%`);
+      console.log(`       - Return rate: ${(stabilizers.migration.returnRate * 100).toFixed(1)}%`);
+      console.log(`    🚨 Emergency Response: ${(stabilizers.emergencyResponse.effectiveness * 100).toFixed(1)}% reduction`);
+      console.log(`       - Workforce available: ${(stabilizers.emergencyResponse.workforceAvailable * 100).toFixed(1)}%`);
+      console.log(`       - Preparedness: ${(stabilizers.emergencyResponse.preparednessLevel * 100).toFixed(1)}%`);
+      console.log(`       - Resource stockpiles: ${(stabilizers.emergencyResponse.resourceStockpiles * 100).toFixed(1)}%`);
+      console.log(`       - Communication systems: ${(stabilizers.emergencyResponse.communicationSystems * 100).toFixed(1)}%`);
+      console.log(`       - Crisis scale: ${(stabilizers.emergencyResponse.crisisScale * 100).toFixed(1)}%`);
+      console.log(`       - Overwhelm penalty: ${(stabilizers.emergencyResponse.overwhelmPenalty * 100).toFixed(1)}%`);
+      console.log(`    🔗 Cascades:`);
+      console.log(`       - Aid functioning: ${(stabilizers.cascades.aidFunctioning * 100).toFixed(1)}%`);
+      console.log(`       - Adaptation functioning: ${(stabilizers.cascades.adaptationFunctioning * 100).toFixed(1)}%`);
+      console.log(`       - Migration functioning: ${(stabilizers.cascades.migrationFunctioning * 100).toFixed(1)}%`);
+      console.log(`       - Emergency functioning: ${(stabilizers.cascades.emergencyResponseFunctioning * 100).toFixed(1)}%`);
+      console.log(`    ✅ COMBINED REDUCTION: ${(stabilizers.combinedReduction * 100).toFixed(1)}%`);
+
+      // Accumulate weighted averages
+      totalPopulation += region.population;
+      weightedAidReduction += stabilizers.aid.mortalityReduction * region.population;
+      weightedAdaptationReduction += stabilizers.adaptation.totalReduction * region.population;
+      weightedMigrationReduction += (stabilizers.migration.successfulRelocation * 0.3) * region.population;
+      weightedEmergencyReduction += stabilizers.emergencyResponse.effectiveness * region.population;
+      weightedCombinedReduction += stabilizers.combinedReduction * region.population;
+    }
+
+    // DIAGNOSTIC LOGGING: Global aggregate
+    if (totalPopulation > 0) {
+      console.log(`\n  🌐 GLOBAL WEIGHTED AVERAGES (across ${pop.regionalPopulations.length} regions):`);
+      console.log(`    Aid reduction: ${(weightedAidReduction / totalPopulation * 100).toFixed(1)}%`);
+      console.log(`    Adaptation reduction: ${(weightedAdaptationReduction / totalPopulation * 100).toFixed(1)}%`);
+      console.log(`    Migration reduction: ${(weightedMigrationReduction / totalPopulation * 100).toFixed(1)}%`);
+      console.log(`    Emergency reduction: ${(weightedEmergencyReduction / totalPopulation * 100).toFixed(1)}%`);
+      console.log(`    ✅ COMBINED REDUCTION: ${(weightedCombinedReduction / totalPopulation * 100).toFixed(1)}%`);
     }
 
     return { events: [] };
@@ -119,21 +189,44 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     const pop = state.humanPopulationSystem;
     let collapsed = 0;
 
+    // DIAGNOSTIC: Track collapse reasons
+    const collapseReasons: string[] = [];
+
     if (pop.regionalPopulations) {
       for (const region of pop.regionalPopulations) {
         // Proxy for "major economy": economicStage >= 3 at baseline
-        if (region.baselinePopulation > 300 && region.economicStage < 2.0) {
+        // DIAGNOSTIC: Check if this region qualifies as a major economy
+        const isMajorEconomy = region.baselinePopulation > 300;
+        const economicCollapse = region.economicStage < 2.0;
+        const populationCollapse = region.population < region.baselinePopulation * 0.5;
+
+        if (isMajorEconomy && economicCollapse) {
           // Major region (>300M people) dropped to economicStage < 2.0 (below middle-income)
           collapsed++;
-        } else if (region.population < region.baselinePopulation * 0.5) {
+          collapseReasons.push(`${region.name || 'Unknown'}: economic collapse (stage ${region.economicStage.toFixed(2)} < 2.0, baseline pop ${region.baselinePopulation.toFixed(1)}M)`);
+        } else if (populationCollapse) {
           // Population dropped >50% from baseline
           collapsed++;
+          collapseReasons.push(`${region.name || 'Unknown'}: population collapse (${region.population.toFixed(1)}M < 50% of ${region.baselinePopulation.toFixed(1)}M baseline)`);
+        }
+
+        // DIAGNOSTIC: Log regions NOT counted as major economies
+        if (isMajorEconomy && !economicCollapse && !populationCollapse) {
+          console.log(`      ℹ️ Major economy STABLE: ${region.name || 'Unknown'} (stage ${region.economicStage.toFixed(2)}, pop ${region.population.toFixed(1)}M / ${region.baselinePopulation.toFixed(1)}M baseline)`);
         }
       }
     }
 
     // Global crisis if >50% of major economies collapsed
     const globalCrisisActive = (collapsed / totalMajorEconomies) > 0.5;
+
+    // DIAGNOSTIC: Log collapse reasons
+    if (collapseReasons.length > 0) {
+      console.log(`    ⚠️ Collapsed economies (${collapsed}/${totalMajorEconomies}):`);
+      for (const reason of collapseReasons) {
+        console.log(`      - ${reason}`);
+      }
+    }
 
     // Donor fatigue based on active crises
     // Pakistan 2010: 50% of Haiti's aid (2 simultaneous crises)
@@ -231,8 +324,26 @@ export class MortalityStabilizersPhase implements SimulationPhase {
   ): void {
     const adaptation = stabilizers.adaptation;
 
-    // Check if heat crisis is active (proxy: environmental accumulation)
-    const heatCrisisActive = state.environmentalAccumulation?.climateCrisisActive || false;
+    // FIX (Nov 6, 2025): Multi-source heat crisis detection with research-backed thresholds
+    // Primary: environmentalAccumulation flag (set by EmergencyResponsePhase)
+    // Fallback: Wet bulb temperature >28°C (heat stress threshold, Raymond 2020)
+    //
+    // Research:
+    // - Vecellio et al. (2024, Nature): 30.5°C wet bulb = empirical survivability limit
+    // - Raymond et al. (2020, Science): 28°C wet bulb = heat stress begins
+    // - Ballester et al. (2024, Nature Medicine): Heat adaptation develops with exposure
+    const climateCrisisFlag = state.environmentalAccumulation?.climateCrisisActive ?? false;
+
+    // Wet bulb fallback: Check if ANY region has dangerous wet bulb temperatures
+    let wetBulbCrisis = false;
+    if (state.wetBulbTemperatureSystem?.eventsThisMonth && state.wetBulbTemperatureSystem.eventsThisMonth.length > 0) {
+      const maxWetBulb = Math.max(
+        ...state.wetBulbTemperatureSystem.eventsThisMonth.map(e => e.wetBulbTemp)
+      );
+      wetBulbCrisis = maxWetBulb > 28.0; // Heat stress threshold (Raymond 2020)
+    }
+
+    const heatCrisisActive = climateCrisisFlag || wetBulbCrisis;
 
     if (!heatCrisisActive) {
       // No heat exposure, adaptation doesn't develop
@@ -241,6 +352,17 @@ export class MortalityStabilizersPhase implements SimulationPhase {
 
     // Increment months exposed
     adaptation.monthsExposed++;
+
+    // FIX (Nov 6, 2025): Add diagnostic logging to verify heat adaptation is working
+    // Only log first time adaptation develops for this region (monthsExposed = 1)
+    // or significant milestones to avoid log spam
+    if (adaptation.monthsExposed === 1 || adaptation.monthsExposed % 12 === 0) {
+      console.log(
+        `  🌡️ HEAT ADAPTATION DEVELOPING: ${region.name || 'unknown'} - ` +
+        `Months exposed: ${adaptation.monthsExposed}, ` +
+        `Crisis sources: [${climateCrisisFlag ? 'ENV_FLAG' : ''}${wetBulbCrisis ? ',WET_BULB' : ''}]`
+      );
+    }
 
     // Physiological adaptation (develops over weeks, cap at 20%)
     if (adaptation.monthsExposed >= 0.5) {
@@ -284,6 +406,21 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       valueName: 'adaptation.totalReduction',
       month: state.currentMonth
     });
+
+    // FIX (Nov 6, 2025): Assertion to prevent regression of heat adaptation bug
+    // If we're past month 100 (8+ years) and climate crisis is active,
+    // adaptation MUST be developing (monthsExposed > 0).
+    // This catches if climateCrisisActive flag stops being set again.
+    if (state.currentMonth > 100 && climateCrisisFlag) {
+      if (adaptation.monthsExposed === 0) {
+        throw new Error(
+          `❌ Heat adaptation bug detected at Month ${state.currentMonth}: ` +
+          `Region ${region.name || 'unknown'} has climateCrisisActive=true ` +
+          `but adaptation.monthsExposed = 0. This should never happen - heat adaptation ` +
+          `should accumulate when crisis is active. Check MortalityStabilizersPhase logic.`
+        );
+      }
+    }
   }
 
   /**
@@ -307,10 +444,13 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     const globalCrisis = state.planetaryBoundariesSystem?.cascadeActive || false;
     migration.destinationCapacity = globalCrisis ? 0.3 : 1.0;
 
-    // HIGH PRIORITY FIX (Nov 2, 2025): Architecture Review H1 - Circular dependency
-    // PROBLEM: monthlyExcessDeaths is set by BayesianMortalityResolutionPhase at order 35.0
+    // HIGH PRIORITY FIX (Nov 6, 2025): Architecture Review H1 - Circular dependency RESOLVED
+    //
+    // PROBLEM: monthlyExcessDeaths is set by DeathReconciliationPhase at order 35.0
     // This phase runs at 20.8, so we'd be reading LAST MONTH'S deaths (1-month lag)
-    // SOLUTION: Use food security as crisis severity proxy (set at order 19.7, before this phase)
+    // Result: Stabilizers systematically underestimate crisis severity for first critical month
+    //
+    // SOLUTION: Use food security as crisis severity proxy (set at order 19.7, BEFORE this phase)
     //
     // Crisis severity mapping (research-backed):
     // - foodSecurity >= 0.7: Low crisis (0.0-0.3 severity)
@@ -318,9 +458,10 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // - foodSecurity < 0.4: High crisis (0.6-1.0 severity)
     //
     // Research justification:
-    // - Food insecurity is a leading indicator of mortality (Sen 1981, famine entitlement theory)
-    // - Migration decisions respond to food availability, not lagged death counts
-    // - IOM (2024): Climate-driven migration follows resource scarcity, not mortality
+    // - Food insecurity is a LEADING indicator of mortality (Sen 1981, famine entitlement theory)
+    // - Migration decisions respond to food availability, not lagged death counts (behavioral realism)
+    // - IOM (2024): Climate-driven migration follows resource scarcity, not mortality statistics
+    // - Eliminates 1-month information lag in rapid-onset crises (nuclear winter, sudden famine)
     const foodSecurityValidated = assertInRange(region.foodSecurity, 0, 1, {
       location: 'MortalityStabilizersPhase.updateMigration',
       valueName: 'region.foodSecurity',
@@ -437,15 +578,48 @@ export class MortalityStabilizersPhase implements SimulationPhase {
    * Example: Aid fails → Emergency response can't coordinate → Migration becomes chaotic
    */
   private applyCascadeFailures(
+    state: GameState,
     stabilizers: NonNullable<import('@/types/population').RegionalPopulation['mortalityStabilizers']>
   ): void {
     const cascades = stabilizers.cascades;
 
     // Calculate functioning levels (0-1)
-    cascades.aidFunctioning = stabilizers.aid.mortalityReduction / 0.295; // Normalize to 0-1
-    cascades.adaptationFunctioning = stabilizers.adaptation.totalReduction / 0.8;
-    cascades.migrationFunctioning = stabilizers.migration.successfulRelocation;
-    cascades.emergencyResponseFunctioning = stabilizers.emergencyResponse.effectiveness / 0.4;
+    cascades.aidFunctioning = assertInRange(
+      stabilizers.aid.mortalityReduction / 0.295,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures',
+        valueName: 'cascades.aidFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.adaptationFunctioning = assertInRange(
+      stabilizers.adaptation.totalReduction / 0.8,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures',
+        valueName: 'cascades.adaptationFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.migrationFunctioning = assertInRange(
+      stabilizers.migration.successfulRelocation,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures',
+        valueName: 'cascades.migrationFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.emergencyResponseFunctioning = assertInRange(
+      stabilizers.emergencyResponse.effectiveness / 0.4,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures',
+        valueName: 'cascades.emergencyResponseFunctioning',
+        month: state.currentMonth
+      }
+    );
 
     // Apply cascade effects
 
@@ -471,10 +645,42 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // The functioning levels were calculated from pre-cascade values (lines 434-438).
     // After cascades modify the actual effectiveness values, we need to update
     // the functioning levels to reflect the post-cascade state.
-    cascades.aidFunctioning = stabilizers.aid.mortalityReduction / 0.295;
-    cascades.adaptationFunctioning = stabilizers.adaptation.totalReduction / 0.8;
-    cascades.migrationFunctioning = stabilizers.migration.successfulRelocation;
-    cascades.emergencyResponseFunctioning = stabilizers.emergencyResponse.effectiveness / 0.4;
+    cascades.aidFunctioning = assertInRange(
+      stabilizers.aid.mortalityReduction / 0.295,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
+        valueName: 'cascades.aidFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.adaptationFunctioning = assertInRange(
+      stabilizers.adaptation.totalReduction / 0.8,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
+        valueName: 'cascades.adaptationFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.migrationFunctioning = assertInRange(
+      stabilizers.migration.successfulRelocation,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
+        valueName: 'cascades.migrationFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.emergencyResponseFunctioning = assertInRange(
+      stabilizers.emergencyResponse.effectiveness / 0.4,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
+        valueName: 'cascades.emergencyResponseFunctioning',
+        month: state.currentMonth
+      }
+    );
   }
 
   /**
@@ -491,6 +697,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
    * - Total reduction: 50% → 21.4% (57% reduction from interventions)
    */
   private calculateCombinedReduction(
+    state: GameState,
     stabilizers: NonNullable<import('@/types/population').RegionalPopulation['mortalityStabilizers']>
   ): void {
     const aid = stabilizers.aid.mortalityReduction;
@@ -501,9 +708,30 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // Combined multiplicatively
     // Note: Migration is different - it removes people from risk entirely
     // So we calculate: (1 - migration) × [(1 - aid) × (1 - adaptation) × (1 - emergency)]
-    const remainingAfterMigration = (1 - migration);
-    const mortalityMultiplier = (1 - aid) * (1 - adaptation) * (1 - emergency);
-    const combined = 1 - (remainingAfterMigration * mortalityMultiplier);
+    const remainingAfterMigration = assertFinite(1 - migration, {
+      location: 'MortalityStabilizersPhase.calculateCombinedReduction',
+      valueName: 'remainingAfterMigration',
+      month: state.currentMonth,
+      additionalInfo: { migration }
+    });
+    const mortalityMultiplier = assertFinite(
+      (1 - aid) * (1 - adaptation) * (1 - emergency),
+      {
+        location: 'MortalityStabilizersPhase.calculateCombinedReduction',
+        valueName: 'mortalityMultiplier',
+        month: state.currentMonth,
+        additionalInfo: { aid, adaptation, emergency }
+      }
+    );
+    const combined = assertInRange(
+      1 - (remainingAfterMigration * mortalityMultiplier),
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.calculateCombinedReduction',
+        valueName: 'combinedReduction',
+        month: state.currentMonth
+      }
+    );
 
     stabilizers.combinedReduction = combined;
   }

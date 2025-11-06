@@ -7,6 +7,7 @@
 import { GameState } from '@/types/game';
 import { getTrustInAI } from './socialCohesion';
 import { assertFinite } from './utils/assertions';
+import { THRESHOLDS } from './config/centralConfig';
 
 /**
  * Economic stage transitions and triggers
@@ -25,15 +26,15 @@ export const ECONOMIC_STAGES = {
   1: {
     name: 'AI Displacement Beginning',
     description: 'First wave of automation, growing public concern',
-    unemploymentRange: [0.12, 0.25],
+    unemploymentRange: [0.12, THRESHOLDS.UNEMPLOYMENT_CRISIS],
     transitionTrigger: {
-      unemployment: 0.25 // CRITICAL: 25% not 50%!
+      unemployment: THRESHOLDS.UNEMPLOYMENT_CRISIS // CRITICAL: 25% crisis threshold
     }
   },
   2: {
     name: 'Mass Unemployment Crisis',
     description: 'Critical decision point - government must choose pathway',
-    unemploymentRange: [0.25, 0.45],
+    unemploymentRange: [THRESHOLDS.UNEMPLOYMENT_CRISIS, 0.45],
     transitionTrigger: {
       policyImplemented: true, // UBI or other major policy
       unemployment: 'stabilized',
@@ -114,7 +115,7 @@ export function calculateEconomicStageTransition(state: GameState): {
   
   // Stage 1→2: Mass unemployment crisis (CRITICAL THRESHOLD)
   if (currentStage >= 1.0 && currentStage < 2.0) {
-    if (unemploymentLevel > 0.25) {
+    if (unemploymentLevel > THRESHOLDS.UNEMPLOYMENT_CRISIS) {
       // P2.3: Crisis driven by unemployment, not productivity
       // But higher productivity can soften the crisis
       const crisisModifier = Math.max(0.5, 2.0 - productivityMultiplier);

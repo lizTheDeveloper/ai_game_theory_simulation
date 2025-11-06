@@ -15,6 +15,14 @@ export class CrisisDetectionPhase implements SimulationPhase {
   readonly name = 'Crisis Detection';
   readonly order = 36.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Must run after all risk accumulation
+  readonly dependencies = [
+    'bayesian_mortality_resolution',  // Order 35.0: Population effects
+    'climate_impact_cascade',         // Order 34.0: Environmental state
+    'social-stability',               // Order 33.0: Social state
+    'outcome-probabilities',          // Order 35.0: Outcome assessment
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const crisis = detectCrisis(state);
     setDeterministicRng(rng);

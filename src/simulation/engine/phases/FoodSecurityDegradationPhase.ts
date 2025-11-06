@@ -17,11 +17,23 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import {
+  assertFinite,
+  assertProbability,
+  assertInRange,
+  assertStateProperty
+} from '@/simulation/utils/assertions';
 
 export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly id = 'food-security-degradation';
   readonly name = 'Food Security Degradation';
   readonly order = 19.7;  // AFTER QualityOfLifePhase (19.5), BEFORE population (20.5)
+
+  // DEPENDENCIES (Nov 6, 2025): Requires quality of life baseline calculation
+  readonly dependencies = [
+    'quality-of-life',          // Order 19.5: Food baseline calculated
+    'extreme-weather-events',   // Order 15.2: Weather disrupts food production
+  ];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // FIX (Oct 25, 2025 REGIONALIZATION): Food security is now REGIONAL
@@ -35,30 +47,51 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       return { events: [] };
     }
 
-    // Validate required systems
-    if (state.phosphorusSystem === undefined || state.phosphorusSystem.reserves === undefined) {
-      throw new Error('❌ state.phosphorusSystem or state.phosphorusSystem.reserves is undefined in FoodSecurityDegradationPhase:45 - initialization bug');
-    }
-    if (state.freshwaterSystem === undefined || state.freshwaterSystem.blueWater === undefined || state.freshwaterSystem.blueWater.groundwater === undefined) {
-      throw new Error('❌ state.freshwaterSystem or state.freshwaterSystem.blueWater.groundwater is undefined in FoodSecurityDegradationPhase:46 - initialization bug');
-    }
-    if (state.biodiversitySystem === undefined || state.biodiversitySystem.globalBiodiversityIndex === undefined) {
-      throw new Error('❌ state.biodiversitySystem or state.biodiversitySystem.globalBiodiversityIndex is undefined in FoodSecurityDegradationPhase:47 - initialization bug');
-    }
+    // Validate required systems (use assertions for cleaner error messages)
+    const phosphorusReserves = assertStateProperty(state.phosphorusSystem, 'reserves', {
+      location: 'FoodSecurityDegradationPhase.execute',
+      month: state.currentMonth,
+      expectedSource: 'initialization.ts - phosphorusSystem.reserves'
+    });
+
+    const groundwaterLevel = assertStateProperty(state.freshwaterSystem, 'blueWater.groundwater', {
+      location: 'FoodSecurityDegradationPhase.execute',
+      month: state.currentMonth,
+      expectedSource: 'initialization.ts - freshwaterSystem.blueWater.groundwater'
+    });
+
+    const biodiversityIndex = assertStateProperty(state.biodiversitySystem, 'globalBiodiversityIndex', {
+      location: 'FoodSecurityDegradationPhase.execute',
+      month: state.currentMonth,
+      expectedSource: 'initialization.ts - biodiversitySystem.globalBiodiversityIndex'
+    });
 
     // Apply degradation to each region
     for (const region of pop.regionalPopulations) {
       // Count active crises, weighted by regional vulnerability
-      const climateWeight = region.climateVulnerability;
-      const resourceWeight = region.resourceVulnerability;
+      const climateWeight = assertProbability(region.climateVulnerability, {
+        location: 'FoodSecurityDegradationPhase.execute',
+        valueName: `${region.name}.climateVulnerability`,
+        month: state.currentMonth
+      });
 
-      const activeCrises = [
-        state.phosphorusSystem.reserves < 0.3 ? resourceWeight : 0,  // Resource-dependent regions hit harder
-        state.freshwaterSystem.blueWater.groundwater < 0.3 ? climateWeight : 0,  // Climate-vulnerable regions hit harder
-        state.biodiversitySystem.globalBiodiversityIndex < 0.3 ? climateWeight : 0,  // Ecosystem-dependent regions hit harder
+      const resourceWeight = assertProbability(region.resourceVulnerability, {
+        location: 'FoodSecurityDegradationPhase.execute',
+        valueName: `${region.name}.resourceVulnerability`,
+        month: state.currentMonth
+      });
+
+      const activeCrises = assertFinite([
+        phosphorusReserves < 0.3 ? resourceWeight : 0,  // Resource-dependent regions hit harder
+        groundwaterLevel < 0.3 ? climateWeight : 0,  // Climate-vulnerable regions hit harder
+        biodiversityIndex < 0.3 ? climateWeight : 0,  // Ecosystem-dependent regions hit harder
         (state.environmentalAccumulation?.climateCrisisActive || state.environmentalAccumulation?.ecosystemCrisisActive) ? climateWeight : 0,
         state.planetaryBoundariesSystem?.cascadeActive ? 1.0 : 0,  // Cascades affect all regions
-      ].reduce((sum, c) => sum + c, 0);
+      ].reduce((sum, c) => sum + c, 0), {
+        location: 'FoodSecurityDegradationPhase.execute',
+        valueName: `${region.name}.activeCrises`,
+        month: state.currentMonth
+      });
 
       // BUG FIX (Oct 30, 2025): BLOCKER-3 - Reduce food security degradation rate
       // ROOT CAUSE: 1% baseline × 1.5^5 = 7.6% monthly with 5 crises, capped at 15%
@@ -82,8 +115,17 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       // During peak winter: cropYieldMultiplier can drop to 0.05-0.20 (5-20% yield)
       // During recovery (>24 months): gradually improves back to 1.0
       if (state.nuclearWinterState?.active) {
-        const cropYield = state.nuclearWinterState.cropYieldMultiplier;
-        const monthsSinceWar = state.nuclearWinterState.monthsSinceWar;
+        const cropYield = assertProbability(state.nuclearWinterState.cropYieldMultiplier, {
+          location: 'FoodSecurityDegradationPhase.execute',
+          valueName: 'nuclearWinterState.cropYieldMultiplier',
+          month: state.currentMonth
+        });
+
+        const monthsSinceWar = assertFinite(state.nuclearWinterState.monthsSinceWar, {
+          location: 'FoodSecurityDegradationPhase.execute',
+          valueName: 'nuclearWinterState.monthsSinceWar',
+          month: state.currentMonth
+        });
 
         // During active nuclear winter (first 24 months): apply severe degradation
         if (monthsSinceWar <= 24) {
@@ -112,11 +154,25 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       }
 
       // Cap at 5% per month (DOWN from 15%)
-      degradationRate = Math.min(0.05, degradationRate);
+      const degradationRateCapped = assertInRange(Math.min(0.05, degradationRate), 0, 0.05, {
+        location: 'FoodSecurityDegradationPhase.execute',
+        valueName: `${region.name}.degradationRate`,
+        month: state.currentMonth
+      });
 
       // Apply degradation to regional food security
-      const currentFood = region.foodSecurity;
-      const newFood = Math.max(0, currentFood * (1 - degradationRate));
+      const currentFood = assertProbability(region.foodSecurity, {
+        location: 'FoodSecurityDegradationPhase.execute',
+        valueName: `${region.name}.foodSecurity (before)`,
+        month: state.currentMonth
+      });
+
+      const newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
+        location: 'FoodSecurityDegradationPhase.execute',
+        valueName: `${region.name}.foodSecurity (after)`,
+        month: state.currentMonth
+      });
+
       region.foodSecurity = newFood;
 
       // DEBUG: Log for each region annually
@@ -126,9 +182,25 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     }
 
     // Recalculate global food security from regional (population-weighted average)
-    const totalPop = pop.regionalPopulations.reduce((sum, r) => sum + r.population, 0);
+    const totalPop = assertFinite(
+      pop.regionalPopulations.reduce((sum, r) => sum + r.population, 0),
+      {
+        location: 'FoodSecurityDegradationPhase.execute',
+        valueName: 'totalPop',
+        month: state.currentMonth
+      }
+    );
+
     if (totalPop > 0 && state.qualityOfLifeSystems?.survivalFundamentals) {
-      const globalFoodSec = pop.regionalPopulations.reduce((sum, r) => sum + (r.foodSecurity * r.population), 0) / totalPop;
+      const globalFoodSec = assertProbability(
+        pop.regionalPopulations.reduce((sum, r) => sum + (r.foodSecurity * r.population), 0) / totalPop,
+        {
+          location: 'FoodSecurityDegradationPhase.execute',
+          valueName: 'globalFoodSec',
+          month: state.currentMonth
+        }
+      );
+
       state.qualityOfLifeSystems.survivalFundamentals.foodSecurity = globalFoodSec;
 
       // DEBUG: Log global aggregate annually

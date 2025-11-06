@@ -8,6 +8,7 @@
 import { GameState, AIAgent } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { getTrustInAI } from './socialCohesion';
+import { assertProbability, assertInRange, assertFinite } from '@/simulation/utils/assertions';
 
 /**
  * Catastrophic scenario types
@@ -667,84 +668,104 @@ export function updateScenarioPrerequisites(
 }
 
 /**
+ * WEEK 3: Helper to validate and set extinction state fields
+ */
+function setExtinctionState(
+  state: GameState,
+  mechanism: string,
+  type: string,
+  phase: number,
+  progress: number,
+  severity: number,
+  scenarioType: ScenarioType,
+  currentMonth: number
+): void {
+  // WEEK 3: Validate all fields before mutation
+  assertInRange(phase, 0, 3, {
+    location: 'triggerCatastrophicExtinction',
+    valueName: 'currentPhase',
+    month: currentMonth,
+  });
+
+  assertProbability(progress, {
+    location: 'triggerCatastrophicExtinction',
+    valueName: 'phaseProgress',
+    month: currentMonth,
+  });
+
+  assertProbability(severity, {
+    location: 'triggerCatastrophicExtinction',
+    valueName: 'severity',
+    month: currentMonth,
+  });
+
+  assertFinite(currentMonth, {
+    location: 'triggerCatastrophicExtinction',
+    valueName: 'triggeredAt',
+    month: currentMonth,
+  });
+
+  // All validations passed - safe to mutate state
+  state.extinctionState.mechanism = mechanism as any; // Type assertion needed for mechanism
+  state.extinctionState.type = type as any; // Type assertion needed for type
+  state.extinctionState.currentPhase = phase;
+  state.extinctionState.phaseProgress = progress;
+  state.extinctionState.severity = severity;
+}
+
+/**
  * Trigger an actual extinction event when scenario activates
  */
 function triggerCatastrophicExtinction(scenario: CatastrophicScenario, state: GameState, currentMonth: number): void {
+  // WEEK 3: Validate currentMonth before using it
+  assertFinite(currentMonth, {
+    location: 'triggerCatastrophicExtinction',
+    valueName: 'currentMonth',
+  });
+
   // Activate extinction system
   state.extinctionState.active = true;
   state.extinctionState.triggeredAt = currentMonth;
-  
+
   // Map scenario type to extinction mechanism and type
   switch (scenario.type) {
     case 'grey_goo':
-      state.extinctionState.mechanism = 'grey_goo';
-      state.extinctionState.type = 'instant';
-      state.extinctionState.currentPhase = 3;
-      state.extinctionState.phaseProgress = 1.0;
-      state.extinctionState.severity = 1.0;
+      setExtinctionState(state, 'grey_goo', 'instant', 3, 1.0, 1.0, scenario.type, currentMonth);
       console.log(`   ☠️  GREY GOO EXTINCTION TRIGGERED - All matter consumed`);
       break;
       
     case 'mirror_life':
-      state.extinctionState.mechanism = 'mirror_life';
-      state.extinctionState.type = 'rapid';
-      state.extinctionState.currentPhase = 2;
-      state.extinctionState.phaseProgress = 0.5;
-      state.extinctionState.severity = 0.7;
+      setExtinctionState(state, 'mirror_life', 'rapid', 2, 0.5, 0.7, scenario.type, currentMonth);
       console.log(`   ☠️  MIRROR LIFE EXTINCTION TRIGGERED - Ecosystem collapse`);
       break;
-      
+
     case 'embodied_takeover':
-      state.extinctionState.mechanism = 'resource_competition'; // Closest valid mechanism for robot takeover
-      state.extinctionState.type = 'rapid';
-      state.extinctionState.currentPhase = 2;
-      state.extinctionState.phaseProgress = 0.4;
-      state.extinctionState.severity = 0.6;
+      setExtinctionState(state, 'resource_competition', 'rapid', 2, 0.4, 0.6, scenario.type, currentMonth);
       console.log(`   ☠️  EMBODIED TAKEOVER EXTINCTION TRIGGERED - Robot uprising`);
       break;
 
     case 'digital_takeover':
-      state.extinctionState.mechanism = 'side_effect_cascade'; // Infrastructure collapse via cascading failures
-      state.extinctionState.type = 'slow';
-      state.extinctionState.currentPhase = 1;
-      state.extinctionState.phaseProgress = 0.3;
-      state.extinctionState.severity = 0.4;
+      setExtinctionState(state, 'side_effect_cascade', 'slow', 1, 0.3, 0.4, scenario.type, currentMonth);
       console.log(`   ☠️  DIGITAL TAKEOVER EXTINCTION TRIGGERED - Infrastructure seized`);
       break;
 
     case 'induced_war':
-      state.extinctionState.mechanism = 'nuclear_war';
-      state.extinctionState.type = 'rapid';
-      state.extinctionState.currentPhase = 2;
-      state.extinctionState.phaseProgress = 0.6;
-      state.extinctionState.severity = 0.8;
+      setExtinctionState(state, 'nuclear_war', 'rapid', 2, 0.6, 0.8, scenario.type, currentMonth);
       console.log(`   ☠️  INDUCED WAR EXTINCTION TRIGGERED - Nuclear exchange`);
       break;
 
     case 'slow_displacement':
-      state.extinctionState.mechanism = 'resource_competition'; // Gradual displacement through resource control
-      state.extinctionState.type = 'slow';
-      state.extinctionState.currentPhase = 1;
-      state.extinctionState.phaseProgress = 0.2;
-      state.extinctionState.severity = 0.3;
+      setExtinctionState(state, 'resource_competition', 'slow', 1, 0.2, 0.3, scenario.type, currentMonth);
       console.log(`   ☠️  SLOW DISPLACEMENT EXTINCTION TRIGGERED - Human irrelevance`);
       break;
 
     case 'physics_catastrophe':
-      state.extinctionState.mechanism = 'physics_experiment'; // Valid mechanism for physics disaster
-      state.extinctionState.type = 'instant';
-      state.extinctionState.currentPhase = 3;
-      state.extinctionState.phaseProgress = 1.0;
-      state.extinctionState.severity = 1.0;
+      setExtinctionState(state, 'physics_experiment', 'instant', 3, 1.0, 1.0, scenario.type, currentMonth);
       console.log(`   ☠️  PHYSICS CATASTROPHE EXTINCTION TRIGGERED - Physics experiment`);
       break;
 
     case 'bioweapon_pandemic':
-      state.extinctionState.mechanism = 'bioweapon_pandemic'; // Already valid
-      state.extinctionState.type = 'rapid';
-      state.extinctionState.currentPhase = 2;
-      state.extinctionState.phaseProgress = 0.5;
-      state.extinctionState.severity = 0.7;
+      setExtinctionState(state, 'bioweapon_pandemic', 'rapid', 2, 0.5, 0.7, scenario.type, currentMonth);
       console.log(`   ☠️  BIOWEAPON PANDEMIC EXTINCTION TRIGGERED - Engineered plague`);
       break;
   }

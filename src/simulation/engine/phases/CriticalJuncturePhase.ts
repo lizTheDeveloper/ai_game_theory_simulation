@@ -1,5 +1,10 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import {
+  assertFinite,
+  assertProbability,
+  assertInRange,
+} from '@/simulation/utils/assertions';
 /**
  * CONTINGENCY & AGENCY PHASE 3: CRITICAL JUNCTURE AGENCY
  *
@@ -229,13 +234,27 @@ export function attemptEscape(
 
     // Reduce nuclear tensions by improving crisis stability (Arkhipov-style intervention)
     if (state.madDeterrence) {
-      state.madDeterrence.crisisStability = Math.min(0.9, state.madDeterrence.crisisStability + 0.3);
+      state.madDeterrence.crisisStability = assertProbability(
+        Math.min(0.9, state.madDeterrence.crisisStability + 0.3),
+        {
+          location: 'CriticalJuncturePhase.attemptEscape',
+          valueName: 'crisisStability',
+          month: state.currentMonth
+        }
+      );
     }
 
     // Reduce bilateral tensions
     if (state.bilateralTensions) {
       state.bilateralTensions.forEach((tension) => {
-        tension.tensionLevel = Math.max(0.2, tension.tensionLevel * 0.6);
+        tension.tensionLevel = assertProbability(
+          Math.max(0.2, tension.tensionLevel * 0.6),
+          {
+            location: 'CriticalJuncturePhase.attemptEscape',
+            valueName: 'tensionLevel',
+            month: state.currentMonth
+          }
+        );
       });
     }
 
@@ -257,22 +276,36 @@ export function attemptEscape(
 
     // Montreal Protocol-style international cooperation
     // Boost research investment, improve institutional capacity
-    state.government.alignmentResearchInvestment = Math.min(
+    state.government.alignmentResearchInvestment = assertInRange(
+      Math.min(10, state.government.alignmentResearchInvestment + 2),
+      0,
       10,
-      state.government.alignmentResearchInvestment + 2
+      {
+        location: 'CriticalJuncturePhase.attemptEscape',
+        valueName: 'alignmentResearchInvestment',
+        month: state.currentMonth
+      }
     );
 
     if (state.government.governanceQuality) {
-      state.government.governanceQuality.institutionalCapacity = Math.min(
-        1.0,
-        state.government.governanceQuality.institutionalCapacity + 0.2
+      state.government.governanceQuality.institutionalCapacity = assertProbability(
+        Math.min(1.0, state.government.governanceQuality.institutionalCapacity + 0.2),
+        {
+          location: 'CriticalJuncturePhase.attemptEscape',
+          valueName: 'governanceQuality.institutionalCapacity',
+          month: state.currentMonth
+        }
       );
     }
 
     // Improve information integrity (truth wins out)
-    state.globalMetrics.informationIntegrity = Math.min(
-      1.0,
-      state.globalMetrics.informationIntegrity + 0.15
+    state.globalMetrics.informationIntegrity = assertProbability(
+      Math.min(1.0, state.globalMetrics.informationIntegrity + 0.15),
+      {
+        location: 'CriticalJuncturePhase.attemptEscape',
+        valueName: 'informationIntegrity',
+        month: state.currentMonth
+      }
     );
 
     events.push({
@@ -295,28 +328,57 @@ export function attemptEscape(
     // Increase social cohesion components, reduce meaning crisis
     if (state.socialAccumulation) {
       // Boost all three social cohesion components (popular uprising builds solidarity)
-      state.socialAccumulation.socialCohesion.trust = Math.min(
-        100,
-        state.socialAccumulation.socialCohesion.trust + 20
-      );
-      state.socialAccumulation.socialCohesion.communityBonds = Math.min(
-        100,
-        state.socialAccumulation.socialCohesion.communityBonds + 20
-      );
-      state.socialAccumulation.socialCohesion.civilLiberties = Math.min(
-        100,
-        state.socialAccumulation.socialCohesion.civilLiberties + 20
-      );
-      state.socialAccumulation.meaningCrisisLevel = Math.max(
+      state.socialAccumulation.socialCohesion.trust = assertInRange(
+        Math.min(100, state.socialAccumulation.socialCohesion.trust + 20),
         0,
-        state.socialAccumulation.meaningCrisisLevel - 0.15
+        100,
+        {
+          location: 'CriticalJuncturePhase.attemptEscape',
+          valueName: 'socialCohesion.trust',
+          month: state.currentMonth
+        }
+      );
+
+      state.socialAccumulation.socialCohesion.communityBonds = assertInRange(
+        Math.min(100, state.socialAccumulation.socialCohesion.communityBonds + 20),
+        0,
+        100,
+        {
+          location: 'CriticalJuncturePhase.attemptEscape',
+          valueName: 'socialCohesion.communityBonds',
+          month: state.currentMonth
+        }
+      );
+
+      state.socialAccumulation.socialCohesion.civilLiberties = assertInRange(
+        Math.min(100, state.socialAccumulation.socialCohesion.civilLiberties + 20),
+        0,
+        100,
+        {
+          location: 'CriticalJuncturePhase.attemptEscape',
+          valueName: 'socialCohesion.civilLiberties',
+          month: state.currentMonth
+        }
+      );
+
+      state.socialAccumulation.meaningCrisisLevel = assertProbability(
+        Math.max(0, state.socialAccumulation.meaningCrisisLevel - 0.15),
+        {
+          location: 'CriticalJuncturePhase.attemptEscape',
+          valueName: 'meaningCrisisLevel',
+          month: state.currentMonth
+        }
       );
     }
 
     // Improve QoL through renewed social solidarity
-    state.globalMetrics.qualityOfLife = Math.min(
-      2.0,
-      state.globalMetrics.qualityOfLife + 0.3
+    state.globalMetrics.qualityOfLife = assertFinite(
+      Math.min(2.0, state.globalMetrics.qualityOfLife + 0.3),
+      {
+        location: 'CriticalJuncturePhase.attemptEscape',
+        valueName: 'qualityOfLife',
+        month: state.currentMonth
+      }
     );
 
     events.push({
@@ -338,13 +400,26 @@ export function attemptEscape(
     // Trigger research breakthrough under adverse conditions
     // Boost breakthrough multiplier (positive compounding)
     if (state.breakthroughMultiplier !== undefined) {
-      state.breakthroughMultiplier = Math.min(2.0, state.breakthroughMultiplier + 0.3);
+      state.breakthroughMultiplier = assertInRange(
+        Math.min(2.0, state.breakthroughMultiplier + 0.3),
+        0,
+        2.0,
+        {
+          location: 'CriticalJuncturePhase.attemptEscape',
+          valueName: 'breakthroughMultiplier',
+          month: state.currentMonth
+        }
+      );
     }
 
     // Increase technological breakthrough rate
-    state.globalMetrics.technologicalBreakthroughRate = Math.min(
-      10,
-      state.globalMetrics.technologicalBreakthroughRate + 1.5
+    state.globalMetrics.technologicalBreakthroughRate = assertFinite(
+      Math.min(10, state.globalMetrics.technologicalBreakthroughRate + 1.5),
+      {
+        location: 'CriticalJuncturePhase.attemptEscape',
+        valueName: 'technologicalBreakthroughRate',
+        month: state.currentMonth
+      }
     );
 
     events.push({

@@ -16,6 +16,11 @@ export class GamingDetectionPhase implements SimulationPhase {
   name = 'Gaming Detection';
   order = 27; // After benchmark evaluation, before crisis detection
 
+  // DEPENDENCIES (Nov 6, 2025): Requires AI agent actions to detect gaming
+  readonly dependencies = [
+    'ai-agent-actions',          // Order 7.0: AI actions produce behavior to analyze
+  ];
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Only run if gaming detection is enabled
     setDeterministicRng(rng);

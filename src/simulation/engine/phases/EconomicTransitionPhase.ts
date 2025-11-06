@@ -15,6 +15,11 @@ export class EconomicTransitionPhase implements SimulationPhase {
   readonly name = 'Economic Transition';
   readonly order = 31.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires unemployment for transition progress
+  readonly dependencies = [
+    'unemployment',              // Order 30.0: Unemployment affects wealth distribution
+  ];
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const economicProgress = calculateEconomicTransitionProgress(state, rng);
     setDeterministicRng(rng);

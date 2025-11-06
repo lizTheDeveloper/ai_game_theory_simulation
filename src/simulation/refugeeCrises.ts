@@ -29,7 +29,12 @@ import {
 import { updateTrappedPopulations } from './trappedPopulations';
 import { updateGovernmentRelocation } from './governmentRelocation';
 import { addSimulationEvent } from './utils/eventLogger';
-import { assertFinite } from './utils/assertions';
+import {
+  assertFinite,
+  assertProbability,
+  assertInRange,
+  assertPopulationMillion,
+} from './utils/assertions';
 
 /**
  * Initialize refugee crisis system (2025 baseline)
@@ -210,8 +215,23 @@ export function updateRefugeeCrises(state: GameState): void {
                        crisis.cause === 'famine' ? 'famine' :
                        crisis.cause === 'climate' ? 'disasters' :
                        crisis.cause === 'ecosystem' ? 'ecosystem' : 'other';
-      state.humanPopulationSystem.deathsByCategory[category] += validatedDeaths;
-      state.humanPopulationSystem.cumulativeCrisisDeaths += validatedDeaths;
+
+      // WEEK 3: Validate deaths before mutation
+      const newDeathsByCategory = (state.humanPopulationSystem.deathsByCategory[category] || 0) + validatedDeaths;
+      assertPopulationMillion(newDeathsByCategory, {
+        location: 'updateRefugeeCrises.transitDeaths',
+        valueName: `deathsByCategory.${category}`,
+        month: state.currentMonth,
+      });
+      state.humanPopulationSystem.deathsByCategory[category] = newDeathsByCategory;
+
+      const newCumulativeDeaths = state.humanPopulationSystem.cumulativeCrisisDeaths + validatedDeaths;
+      assertPopulationMillion(newCumulativeDeaths, {
+        location: 'updateRefugeeCrises.transitDeaths',
+        valueName: 'cumulativeCrisisDeaths',
+        month: state.currentMonth,
+      });
+      state.humanPopulationSystem.cumulativeCrisisDeaths = newCumulativeDeaths;
 
       // Track peak displacement
       crisis.peakDisplacement = Math.max(crisis.peakDisplacement, crisis.currentlyDisplaced);
@@ -336,39 +356,87 @@ export function updateRefugeeCrises(state: GameState): void {
 
   // === 5. APPLY GLOBAL EFFECTS ===
   // High refugee tension reduces social stability and trust
-  state.globalMetrics.socialStability = Math.max(0,
+  // WEEK 3: Validate social stability before mutation (clamp to [0, 1])
+  const newSocialStability = Math.max(0, Math.min(1,
     state.globalMetrics.socialStability * (1 - system.globalRefugeeTension * 0.1)
-  );
+  ));
+  assertProbability(newSocialStability, {
+    location: 'updateRefugeeCrises.globalEffects',
+    valueName: 'socialStability',
+    month: state.currentMonth,
+  });
+  state.globalMetrics.socialStability = newSocialStability;
 
   // Refugees increase paranoia
   if (state.society.paranoiaLevel !== undefined) {
-    state.society.paranoiaLevel = Math.min(1.0,
+    const newParanoiaLevel = Math.min(1.0,
       state.society.paranoiaLevel + system.globalRefugeeTension * 0.05
     );
+    assertProbability(newParanoiaLevel, {
+      location: 'updateRefugeeCrises.globalEffects',
+      valueName: 'paranoiaLevel',
+      month: state.currentMonth,
+    });
+    state.society.paranoiaLevel = newParanoiaLevel;
   }
 
   // Economic strain reduces QoL
-  state.globalMetrics.qualityOfLife = Math.max(0,
+  // WEEK 3: Clamp to [0, 1] before assertion (QoL can start >1.0 from other phases)
+  const newQualityOfLife = Math.max(0, Math.min(1,
     state.globalMetrics.qualityOfLife * (1 - system.economicStrain * 0.05)
-  );
+  ));
+  assertProbability(newQualityOfLife, {
+    location: 'updateRefugeeCrises.globalEffects',
+    valueName: 'qualityOfLife',
+    month: state.currentMonth,
+  });
+  state.globalMetrics.qualityOfLife = newQualityOfLife;
 
   // Political instability increases dystopia risk
-  state.outcomeMetrics.dystopiaProbability += system.globalRefugeeTension * 0.02;
+  // WEEK 3: Clamp to [0, 1] before assertion (dystopiaProbability accumulates)
+  const newDystopiaProbability = Math.max(0, Math.min(1,
+    state.outcomeMetrics.dystopiaProbability + system.globalRefugeeTension * 0.02
+  ));
+  assertProbability(newDystopiaProbability, {
+    location: 'updateRefugeeCrises.globalEffects',
+    valueName: 'dystopiaProbability',
+    month: state.currentMonth,
+  });
+  state.outcomeMetrics.dystopiaProbability = newDystopiaProbability;
 
   // Very high refugee crises can trigger dystopian "fortress world" outcome
   if (system.globalRefugeeTension > 0.8 && !system.bordersOpen) {
     // Militarized borders + surveillance = dystopia path
-    state.government.surveillanceCapability = Math.min(10,
+    const newSurveillanceCapability = Math.min(10,
       state.government.surveillanceCapability + 0.05
     );
-    state.government.controlDesire = Math.min(1.0,
+    assertInRange(newSurveillanceCapability, 0, 10, {
+      location: 'updateRefugeeCrises.fortressWorld',
+      valueName: 'surveillanceCapability',
+      month: state.currentMonth,
+    });
+    state.government.surveillanceCapability = newSurveillanceCapability;
+
+    const newControlDesire = Math.min(1.0,
       state.government.controlDesire + 0.02
     );
+    assertProbability(newControlDesire, {
+      location: 'updateRefugeeCrises.fortressWorld',
+      valueName: 'controlDesire',
+      month: state.currentMonth,
+    });
+    state.government.controlDesire = newControlDesire;
 
     if (state.government.structuralChoices) {
-      state.government.structuralChoices.surveillanceLevel = Math.min(1.0,
+      const newSurveillanceLevel = Math.min(1.0,
         state.government.structuralChoices.surveillanceLevel + 0.03
       );
+      assertProbability(newSurveillanceLevel, {
+        location: 'updateRefugeeCrises.fortressWorld',
+        valueName: 'structuralChoices.surveillanceLevel',
+        month: state.currentMonth,
+      });
+      state.government.structuralChoices.surveillanceLevel = newSurveillanceLevel;
     }
   }
 

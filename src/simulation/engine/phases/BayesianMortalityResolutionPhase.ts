@@ -35,6 +35,12 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
   readonly name = 'Bayesian Mortality Resolution';
   readonly order = 35.0;
 
+  // DEPENDENCIES (Nov 6, 2025): CRITICAL - All mortality risks must be accumulated BEFORE this phase
+  readonly dependencies = [
+    'mortality-stabilizers',     // Order 20.8: Aid/adaptation/migration reductions applied
+    'climate_impact_cascade',    // Order 34.0: Climate mortality risks accumulated
+  ];
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events = [];
     setDeterministicRng(rng);

@@ -268,6 +268,23 @@ export interface GameState {
   technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
 
   /**
+   * Bifurcation Logic System (Nov 6, 2025 - Monte Carlo Issue #5)
+   *
+   * Tracks threshold-based branching points that create outcome variance.
+   * Near critical thresholds, small differences amplify into divergent trajectories.
+   *
+   * Research: Scheffer et al. (2014) - Critical slowing down, regime shifts
+   *           Richardson et al. (2023) - Planetary boundaries, tipping points
+   *           Keller et al. (2024) - Resilience heterogeneity
+   *
+   * Expected impact: Introduces 20-70% coefficient of variation (fixes 100% dystopia convergence)
+   *
+   * @see /research/outcome_variance_mechanisms_20251030.md
+   * @see /plans/bifurcation_logic_implementation_spec.md
+   */
+  bifurcationState: import('../types/bifurcation').BifurcationState;
+
+  /**
    * Technology Tree System (Oct 2025 - Modular Architecture)
    *
    * Comprehensive tech tree with 71 technologies across 5 tiers (TIER 0-4).
@@ -534,11 +551,39 @@ export interface GameState {
   // Key finding: FEWER storms overall (-6% to -34%), but MORE Cat 4-5 (+10%/°C), LESS Cat 1-2 (-5%/°C)
   extremeWeatherSystem?: import('../types/extremeWeather').ExtremeWeatherSystem; // Tropical cyclones, storm surge, infrastructure mismatch as primary mortality driver
 
-  // Biosphere Integrity Index (TIER 3.5 - Oct 28, 2025)
-  // Species extinction tracking with climate velocity modeling
-  // Research: Natural History Museum PREDICTS (2024) 54,000-58,000 species baseline, Yoder et al. (2024) Joshua Tree climate tracking failure (TRL 7-8)
-  // Key finding: Non-migratory species CANNOT track climate velocity (1.5°C/year) → extinction trajectory
-  biosphereIntegrityIndex?: import('../types/planetaryBoundaries').BiosphereIntegrityIndex; // 54,000-58,000 species, E/MSY extinction rates, climate tracking failure
+  /**
+   * Biosphere Integrity Index (BII) - ecosystem abundance and composition metric (TIER 3.5 - Oct 28, 2025)
+   *
+   * Source: De Palma et al. (2024), Natural History Museum PREDICTS v2.1.1
+   * DOI: https://doi.org/10.5519/k33reyb6
+   * Database: 58,000 species (terrestrial plants, fungi, vertebrates, invertebrates)
+   * Coverage: 48,000+ sites, 4.9M observations globally
+   *
+   * BII measures: Combined abundance + compositional similarity vs undisturbed baseline
+   * BII = 100%: Pre-industrial biodiversity (near-undisturbed sites)
+   * BII = 90%: Planetary boundary threshold (Richardson et al. 2023)
+   * BII < 30%: Severe ecosystem function loss
+   *
+   * Climate tracking: Yoder et al. (2024) Joshua Tree - non-migratory species CANNOT track climate velocity (1.5°C/year)
+   *
+   * CRITICAL LIMITATIONS (Martin et al. 2019, Nature Ecol Evol):
+   * - May OVERESTIMATE intactness by 20-70% in tropical regions (space-for-time substitution)
+   * - Shows >90% BII in heavily deforested Southeast Asia/Madagascar (clearly incorrect)
+   * - Assumes equilibrium (ignores extinction debt - species persist 50-100 years before vanishing)
+   * - Geographic bias: 30× more data in Europe than tropics (extrapolation issues)
+   * - Alternative metrics (GLOBIO MSA) show 30-40% lower intactness
+   *
+   * UNCERTAINTY:
+   * - Species baseline: 58,000 ±5,000 (2% of described species)
+   * - Current BII: 84.6% ±15% (global average, NHM 2024)
+   * - Urban areas have highest uncertainty (±30% confidence intervals)
+   * - Terrestrial only (no marine/freshwater ecosystems)
+   * - Sampling bias toward vertebrates, temperate regions
+   * - Land-use classification struggles (plantations vs natural forests, rangelands vs pasture)
+   *
+   * See: docs/wiki/README.md#biosphere-integrity-index, research/predicts-database-verification_20251106.md
+   */
+  biosphereIntegrityIndex?: import('../types/planetaryBoundaries').BiosphereIntegrityIndex;
 
   // Antimicrobial Resistance Crisis (TIER 1.8 - Oct 17, 2025)
   // Progressive loss of antibiotic effectiveness over time
