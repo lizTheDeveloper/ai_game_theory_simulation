@@ -91,6 +91,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Next Session 5:** AISufferingPhase (21 mutations), BiosphereIntegrityPhase, AIAgentActionsPhase (quick win)
 
 **RECENT ACHIEVEMENTS:**
+- ✅ **QoL Bounds Bug Fixed: Post-Scarcity Metrics Corrected** (commit 57227f0, Nov 6, 2025)
+  - **Bug:** `materialAbundance = 1.037` exceeded [0,1] probability bound (Month 1, first run)
+  - **Root cause:** Design inconsistency - type definitions allow [0,2] for post-scarcity metrics, but environmental crisis handlers used `assertProbability` ([0,1]) instead of `assertInRange` ([0,2])
+  - **Fixed:** 11 locations in environmental.ts across resource/pollution/ecosystem/climate crisis handlers
+    - Changed `assertProbability` → `assertInRange(value, 0, 2)` for materialAbundance/energyAvailability (6 instances)
+    - Changed upper bound `Math.min(1)` → `Math.min(2)` for post-scarcity metrics (3 instances)
+    - Added missing upper bounds `Math.min(1)` for standard QoL metrics (5 instances)
+  - **Caught by:** WEEK 3 assertion framework on first Monte Carlo run
+  - **Validation:** Monte Carlo N=5, 12 months - ZERO assertion errors
+  - **Impact:** Bug caught immediately instead of silent corruption for months (compare to Oct 2025 ecology NaN bug)
+  - **Design note:** `materialAbundance` and `energyAvailability` intentionally exceed 1.0 (up to 2.0) for post-scarcity economies (upwardSpirals.ts:495)
 - ✅ **AGI Breakthrough Shock Magnitude Bug Fixed** (commit 141712b, Nov 6, 2025)
   - **Bug:** ExogenousShockPhase AGI breakthrough had typo'd parameter values (500%/300% boosts vs intended 50%/30%)
   - **Root cause:** Missing decimal points (5.0/3.0 vs 0.5/0.3)
