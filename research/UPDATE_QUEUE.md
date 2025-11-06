@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/6/2025, 6:02:31 PM
-**Files Scanned:** 315
+**Generated:** 11/6/2025, 7:30:11 PM
+**Files Scanned:** 316
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 128 (40.6%)
+**Count:** 129 (40.8%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -619,6 +619,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/verification_a5188f3_20251106.md`
 
+### `verification_d6e80e8_20251106.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_d6e80e8_20251106.md`
+
 ### `visionary_ideas_research_validation_2025-10-16.md`
 - **Oldest source:** 2014 (11 years old)
 - **Status:** Not used in simulation
@@ -682,7 +687,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 170 (54.0%)
+**Count:** 170 (53.8%)
 
 All sources <3 years old. No action required.
 
@@ -692,11 +697,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 315 |
+| Total files | 316 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 128 (40.6%) |
+| HIGH | 129 (40.8%) |
 | MEDIUM | 17 (5.4%) |
-| LOW | 170 (54.0%) |
+| LOW | 170 (53.8%) |
 | Average age | 9.1 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -704,21 +709,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 170 | 54.0% |
+| Current (<3yr) | 170 | 53.8% |
 | Warning (3-5yr) | 17 | 5.4% |
-| Critical (>5yr) | 128 | 40.6% |
+| Critical (>5yr) | 129 | 40.8% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 40.6% critical (>5yr)
+- **Current:** 40.8% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 128 HIGH priority file(s) within 1 month
+1. Update 129 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 

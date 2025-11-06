@@ -30,3 +30,79 @@ and have 146 and 4 different commits each, respectively.
   (use "git pull" to merge the remote branch into yours)
 [1;33m⚠️  Uncommitted changes detected on main branch[0m
 [0;34mℹ️  Committing local changes before pull...[0m
+
+🎨 Validating emoji usage...
+  1. Checking emoji map for duplicates...
+[0;32m     ✅ No duplicates in emoji map[0m
+  2. Checking staged files for emoji usage...
+[0;32m     ✅ No simulation files changed[0m
+
+✅ Docs already updated in commit - skipping historian
+[main 0f92e4e80] chore: Auto-commit before pull (worker 20251106_190001)
+ 5 files changed, 15834 insertions(+), 4049 deletions(-)
+ create mode 100644 logs/autonomous/worker_20251106_190001.log
+ create mode 100644 logs/merge_orchestrator/merge_20251106_190001.log
+[0;34mℹ️  Pulling latest from main...[0m
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch                main       -> FETCH_HEAD
+Auto-merging docs/wiki/README.md
+CONFLICT (content): Merge conflict in docs/wiki/README.md
+Auto-merging docs/wiki/RECENT_CHANGES.md
+Automatic merge failed; fix conflicts and then commit the result.
+[0;31m❌ Pull failed - likely merge conflict[0m
+[0;34mℹ️  Invoking Claude to resolve merge conflicts...[0m
+Excellent! The merge is complete and successful. Here's a summary of what was done:
+
+## Merge Conflict Resolution - Complete ✅
+
+**Conflict Location:** `docs/wiki/README.md` (November 6, 2025 section)
+
+**Resolution Strategy:** Combined both update sets by preserving all content from both branches in chronological order.
+
+**Changes Merged:**
+1. **Local (HEAD) - 4-Week Critical Path Updates:**
+   - Research update pipeline operational
+   - Defensive fallback audit (15 CRITICAL/HIGH fixes)
+   - Critical bug discoveries (double-counting mortality, heat adaptation)
+   - Architecture assessments and research quality trilogy
+   - Climate mortality phase 2 completion
+   - Issue #11 determinism fixes
+
+2. **Remote (origin/main) - Autonomous Infrastructure:**
+   - Enhanced autonomous infrastructure monitoring
+   - Merge orchestrator auto-remediation
+   - Watcher script improvements
+
+**Verification:**
+- ✅ All conflicts resolved
+- ✅ File properly staged and committed
+- ✅ TypeScript type checking passes (no regressions)
+- ✅ Pre-commit hooks validated (emoji map, documentation)
+- ✅ Merge commit created: `30d06ce23`
+
+**Current Status:**
+- Branch is 148 commits ahead of origin/main
+- No unmerged paths remaining
+- Only unstaged change is a log file (`logs/autonomous/worker_20251106_190001.log`)
+
+The merge successfully combined parallel work streams while preserving all documentation updates from both branches.
+[0;32m✅ Conflicts resolved, continuing...[0m
+[0;36m📊 Current commit: 30d06ce23[0m
+[0;34mℹ️  Creating branch: auto/worker-20251106_190001[0m
+Switched to a new branch 'auto/worker-20251106_190001'
+[0;32m✅ Branch created[0m
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;35m⏱️  [ENVIRONMENT SETUP] +403s[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;34mℹ️  Environment ready (Node.js/TypeScript)[0m
+[0;36m📊 Claude Code version: 2.0.34 (Claude Code)[0m
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;35m⏱️  [CLAUDE CODE EXECUTION] +2s[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;34mℹ️  Fetching current API usage...[0m
+[0;36m📊 API Usage - Session: 5%, Week: 57%, Opus: 26%[0m
+[0;34mℹ️  Preparing orchestrator task...[0m
+[0;32m✅ Task prompt created[0m
+[0;34mℹ️  Starting Claude Code (45-minute timeout)...[0m

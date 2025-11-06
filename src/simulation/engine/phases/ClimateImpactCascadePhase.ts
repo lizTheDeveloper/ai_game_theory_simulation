@@ -6,6 +6,7 @@
  * - Seasonal lean season concentration (3-4 month periods)
  * - Infrastructure mismatch multipliers
  * - Fail-loudly assertions for data integrity
+ * - Bifurcation-aware variance amplification (Nov 6, 2025)
  *
  * Research:
  * - /research/climate-mortality-biosphere-multiparadigm-framework_20251028.md
@@ -19,6 +20,15 @@
  * - Queue-based lag modeling for delayed impacts
  * - Seasonal pattern modeling for lean season mortality spikes
  * - Integration with Bayesian mortality system for demographic targeting
+ *
+ * Bifurcation Integration (Nov 6, 2025):
+ * - Climate impact intensities are multiplied by varianceAmplification (1× to 10×)
+ * - Near tipping points: 10× amplification → extreme variance in impact severity
+ * - Far from thresholds: 1× amplification → deterministic impacts
+ * - Uses capWithBifurcationAwareness() to prevent assertion failures when amplified
+ *   intensities exceed baseline bounds (0-1)
+ * - Research: Scheffer et al. (2014), Richardson et al. (2023) - critical slowing down
+ * - Fixes HIGH-1 in architecture-post-week4-integration-review_20251106.md
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
@@ -29,6 +39,7 @@ import {
   assertInRange,
   assertStateProperty,
   assertDefined,
+  capWithBifurcationAwareness,
 } from '@/simulation/utils/assertions';
 
 /**
@@ -142,7 +153,15 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
       // Apply bifurcation variance amplification to intensity
       // Near collapse: 10× amplification → some runs get devastating heat waves, others moderate
       const normalizedBase = baseIntensity / 0.3; // Normalize to [0, 1]
-      const amplifiedIntensity = Math.min(1.0, normalizedBase * varianceAmp / 5.0); // Scale down by 5× to keep in [0, 1]
+      const amplifiedIntensity = capWithBifurcationAwareness(
+        normalizedBase * varianceAmp / 5.0,
+        1.0,
+        {
+          location: 'ClimateImpactCascade.calculateClimateImpacts',
+          valueName: 'heatWaveIntensity',
+          month: state.currentMonth
+        }
+      );
 
       impacts.push({
         type: 'heat_wave',
@@ -174,7 +193,15 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
 
       // Apply bifurcation variance amplification to drought intensity
       const normalizedBase = baseIntensity / 0.4; // Normalize to [0, 1]
-      const amplifiedIntensity = Math.min(1.0, normalizedBase * varianceAmp / 5.0); // Scale down by 5× to keep in [0, 1]
+      const amplifiedIntensity = capWithBifurcationAwareness(
+        normalizedBase * varianceAmp / 5.0,
+        1.0,
+        {
+          location: 'ClimateImpactCascade.calculateClimateImpacts',
+          valueName: 'droughtIntensity',
+          month: state.currentMonth
+        }
+      );
 
       impacts.push({
         type: 'drought',
@@ -209,7 +236,15 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
 
       // Apply bifurcation variance amplification to ecosystem collapse intensity
       const normalizedBase = baseIntensity / 0.5; // Normalize to [0, 1]
-      const amplifiedIntensity = Math.min(1.0, normalizedBase * varianceAmp / 5.0); // Scale down by 5× to keep in [0, 1]
+      const amplifiedIntensity = capWithBifurcationAwareness(
+        normalizedBase * varianceAmp / 5.0,
+        1.0,
+        {
+          location: 'ClimateImpactCascade.calculateClimateImpacts',
+          valueName: 'ecosystemCollapseIntensity',
+          month: state.currentMonth
+        }
+      );
 
       impacts.push({
         type: 'ecosystem_collapse',
