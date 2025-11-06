@@ -187,3 +187,5 @@ The issue was that the autonomous worker log file (`logs/autonomous/worker_20251
 [0;36m📊 Current commit: 7838c93ce[0m
 [0;34mℹ️  Creating branch: auto/worker-20251106_100001[0m
 fatal: A branch named 'auto/worker-20251106_100001' already exists.
+[1;33m⚠️  Claude execution timed out after 2700s[0m
+[0;34mℹ️  Running post-timeout cleanup to commit partial work...[0m
