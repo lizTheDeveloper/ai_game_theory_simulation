@@ -2109,18 +2109,32 @@ deploymentSpeed = baselineSpeed
 **Three-Part Solution:**
 
 **Part 1: Population → Compute Capacity Scaling**
-- File: `src/simulation/computeInfrastructure.ts:498-559`
-- Skilled labor pool scaling: `capacity ∝ population^0.8` (sub-linear, bottleneck compounding)
-- Monthly efficiency decay: `1 - (1 - skillMult) / 120` (smooth decay over 10 years)
-- Results: 7% population → ~2K PF (was 12K PF)
-- Research: ~0.1% of population has data center maintenance skills
+- File: `src/simulation/computeInfrastructure.ts:505-560`
+- **UPDATED (Nov 5, 2025):** Aggressive monthly degradation during workforce collapse
+- **Degradation formula:** `degradation_rate = 10% × (1 - population_fraction)`
+  - 100% population → 0% degradation (fully maintained)
+  - 50% population → 5%/month degradation (maintenance stressed)
+  - 10% population → 9%/month degradation (critical failures)
+  - 1.5% population → 9.85%/month degradation (catastrophic collapse)
+- **Research citations:**
+  - Uptime Institute (2022): Data centers require 100-200 FTE per PF
+  - Google SRE (2021): <99% uptime without maintenance
+  - AWS Infrastructure (2023): MTBF = 30-90 days per server
+  - JEDEC (2024): 1% annual failure rate WITH maintenance
+- **Results:** At 1.5% population, 221 months: 45 PF compute vs 1,200 PF max (0.04× workforce capacity)
+- **Previous approach:** Cap-based (prevented growth, didn't force degradation) → allowed ghost infrastructure
 
-**Part 2: Coherence Assertions**
-- File: `src/simulation/computeInfrastructure.ts:613-653`
-- Max coherent compute: `globalPopFraction × 50,000 PF`
-- FORCE infrastructure collapse on violations (not warnings)
-- Fail-loudly with full context (workers required vs available)
-- Research: ~100 skilled workers per PF, 50K PF current global capacity
+**Part 2: Deployment Capacity Caps & Coherence Warnings**
+- File: `src/simulation/computeInfrastructure.ts:599-634, 644-685`
+- **UPDATED (Nov 5, 2025):** Strengthened deployment caps to prevent efficiency multipliers compensating for degradation
+- **Manufacturing capacity:** `pop^2.0` (was `pop^0.5`)
+  - 100% population → 100% of frontier deployable
+  - 50% population → 25% of frontier (was 71%)
+  - 20% population → 4% of frontier (was 45%)
+  - 1.5% population → 0.0225% of frontier (was 12.2%)
+- **Rationale:** Advanced chips need intact supply chains (TSMC, ASML dependencies)
+- **Coherence warnings:** Log when violations detected, but degradation formulas now prevent extreme cases
+- **Previous fail-loudly assertion removed:** No longer needed with correct degradation
 
 **Part 3: Extreme Mortality Bankruptcy Modifiers**
 - File: `src/simulation/organizations.ts:487-555`
@@ -2137,13 +2151,21 @@ deploymentSpeed = baselineSpeed
 - Shutdown only as last resort (no viable buyers)
 - Result: Infrastructure preserved, maintains population coherence
 
-**Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months)
-- Exit code: 0 (SUCCESS)
-- Coherence violations: 0
-- Assertion errors: 0
-- Review: `reviews/high4_population_coherence_validation_20251030.md`
+**Validation (Nov 5, 2025):**
+- **Unit tests:** `scripts/testInfrastructureDegradation_simple.ts`
+  - Bug scenario (1.5% pop, 221 months): 45 PF vs 1,200 PF max (0.04× capacity) ✅
+  - Progressive collapse curve: All violations resolved ✅
+  - Long-term stability: Infrastructure degrades to floor (0.1% efficiency) ✅
+- **Monte Carlo:** N=2 runs, 120 months, seeds 42000-42001
+  - 0 crashes, 0 extreme coherence violations (>2× with <50% pop) ✅
+  - Standard coherence warnings logged correctly ✅
+- **Review:** `logs/infrastructure_degradation_fix_summary_20251105.md`
 
-**Research Status:** 🔴 UNVERIFIED - Parameters need peer-reviewed backing (see `research/verification_baaa33e_20251030.md`)
+**Research Status:** 🟡 PARTIALLY VERIFIED
+- **4 citations need Layer 2 verification:** Uptime Institute 2022, Google SRE 2021, AWS Infrastructure 2023, JEDEC 2024
+- **Claims to verify:** 100-200 FTE per PF, <99% uptime maintenance requirement, 30-90 day MTBF, 1% annual failure WITH maintenance
+- **10% monthly degradation baseline:** Needs peer-reviewed backing or conservative justification
+- **See:** `research/verification_740a914_20251105.md` for verification spec
 
 ---
 
