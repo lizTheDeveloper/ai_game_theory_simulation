@@ -32,3 +32,95 @@ Aborting
 [1;33m⚠️  Already on main[0m
 [1;33m⚠️  Uncommitted changes detected on main branch[0m
 [0;34mℹ️  Committing local changes before pull...[0m
+
+🎨 Validating emoji usage...
+  1. Checking emoji map for duplicates...
+[0;32m     ✅ No duplicates in emoji map[0m
+  2. Checking staged files for emoji usage...
+[0;32m     ✅ All emojis registered[0m
+  3. Validating GameState field references...
+[0;32m     ✅ GameState field references look valid[0m
+
+[0;32m✅ Pre-commit validation passed[0m
+
+
+🔄 Running pre-historian scripts...
+
+📦 Backing up Claude conversations...
+  ⚠️  Conversation backup failed (non-critical)
+📋 Checking for underdocumented code...
+  ✅ Underdocumented items indexed
+📚 Generating simulation function docs...
+  ✅ Simulation docs generated
+
+📚 Spawning wiki-documentation-updater (historian)...
+
+Perfect! The commit has been completed successfully. The pre-commit hook correctly detected this as a historian commit and skipped re-triggering. 
+
+## Summary
+
+I've successfully completed the documentation update for commit c749079:
+
+### Documentation Updates Made:
+
+1. **docs/wiki/README.md**
+   - Updated "Current Status" section to reflect heat adaptation bug fix
+   - Added detailed entry in "Recent Changes" section explaining:
+     - The bug (climateCrisisActive flag never written to state)
+     - The fix (EmergencyResponsePhase now writes flag + MortalityStabilizersPhase enhanced)
+     - Validation results (98.8% → 97.8% mortality, N=10 runs)
+     - Why improvement is modest (1% = heat deaths <5% of total, famine dominates)
+     - Key insight: Root cause is climate timescales compressed 5-10×, not missing stabilizers
+
+2. **docs/wiki/MORTALITY_STABILIZERS.md**
+   - Added bug fix section at top with full technical details
+   - Documented root cause, fix location (file:line), validation metrics
+   - Cross-referenced devlog and results files
+
+### Decision: No Research Verification File Needed
+
+This commit is a **bug fix** using existing research (Ballester 2024, Raymond 2020, Vecellio 2024). No new mechanics or parameters introduced - just fixing state propagation so existing heat adaptation code works correctly. The research backing these systems was already validated in October 2025.
+
+### Loop Prevention
+
+The commit message includes "historian commit:" which triggers the pre-commit hook to skip re-processing, preventing infinite loops.
+
+📝 Documentation was updated by historian agent
+✅ Agent should have auto-committed with 'historian' in message
+
+[auto/worker-20251106_050001 c74907943] chore: Auto-commit before pull (worker 20251106_053001)
+ 16 files changed, 2183 insertions(+), 19 deletions(-)
+ create mode 100644 devlogs/heat_adaptation_fix_20251106.md
+ create mode 100644 logs/autonomous/monte_carlo_post_fix_results_20251106.md
+ create mode 100644 logs/autonomous/mortality_stabilizers_status_20251106.md
+ create mode 100644 logs/autonomous/week1_mortality_stabilizers_complete_20251106.md
+ create mode 100644 logs/autonomous/worker_20251106_053001.log
+ create mode 100644 logs/merge_orchestrator/merge_20251106_053001.log
+ create mode 100644 logs/worker_watcher/watcher_20251106_051501.log
+ create mode 100644 scripts/checkPopulationCrash.js
+ create mode 100644 scripts/checkRegionalPops.js
+ create mode 100644 scripts/findPopulationCrashMonth.js
+[0;34mℹ️  Pulling latest from main...[0m
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * branch                main       -> FETCH_HEAD
+Already up to date.
+[0;32m✅ Pull successful (1s)[0m
+[0;36m📊 Current commit: b5fa210fa[0m
+[0;34mℹ️  Creating branch: auto/worker-20251106_053001[0m
+Switched to a new branch 'auto/worker-20251106_053001'
+[0;32m✅ Branch created[0m
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;35m⏱️  [ENVIRONMENT SETUP] +133s[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;34mℹ️  Environment ready (Node.js/TypeScript)[0m
+[0;36m📊 Claude Code version: 2.0.34 (Claude Code)[0m
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;35m⏱️  [CLAUDE CODE EXECUTION] +2s[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;34mℹ️  Fetching current API usage...[0m
+[0;36m📊 API Usage - Session: 23%, Week: 43%, Opus: 25%[0m
+[0;34mℹ️  Preparing orchestrator task...[0m
+[0;32m✅ Task prompt created[0m
+[0;34mℹ️  Starting Claude Code (45-minute timeout)...[0m
