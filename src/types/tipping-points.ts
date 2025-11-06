@@ -101,7 +101,7 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     name: 'Atlantic Meridional Overturning Circulation (AMOC)',
     triggerTempC: 1.7, // Armstrong McKay: 1.4-2.0°C, using midpoint
     transitionMinMonths: 600,    // 50 years (Caesar et al. 2021)
-    transitionMaxMonths: 1800,   // 150 years
+    transitionMaxMonths: 3600,   // 300 years - 50-300yr range per Armstrong McKay et al. (2022), Science - captures deep uncertainty about AMOC collapse timeline
     impactClimateStability: -0.15,
     impactHabitability: -0.08,
     impactFoodSecurity: -0.12,
@@ -154,7 +154,7 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
       'Asia': 1.1,
       'Oceania': 0.4
     },
-    cascades: true
+    cascades: false // Armstrong McKay et al. (2022) - Arctic summer sea ice is a "seasonal event" not a tipping point with irreversible threshold
   },
   {
     id: 'permafrost',
@@ -180,7 +180,7 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     id: 'wais',
     name: 'West Antarctic Ice Sheet (WAIS) Collapse',
     triggerTempC: 2.0, // Armstrong McKay: 1.5-3.0°C
-    transitionMinMonths: 6000,   // 500 years (DeConto & Pollard 2016)
+    transitionMinMonths: 24000,  // 2,000 years - lower bound adjusted from 500yr per Edwards et al. (2019) MICI revision (60% reduction in sea level projections)
     transitionMaxMonths: 156000, // 13,000 years (very slow)
     impactClimateStability: -0.08,
     impactHabitability: -0.12,   // Sea level rise
