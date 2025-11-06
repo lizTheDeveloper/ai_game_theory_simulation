@@ -203,6 +203,70 @@ else
   log "⚠️  WARNING: Merge orchestrator log directory not found"
 fi
 
+# Check if autonomous researcher ran recently
+log_section "🔬 Autonomous Researcher Status"
+
+RESEARCHER_LOG_DIR="$PROJECT_ROOT/logs/autonomous/researcher"
+if [ -d "$RESEARCHER_LOG_DIR" ]; then
+  RECENT_RESEARCHER=$(find "$RESEARCHER_LOG_DIR" -name "*.log" -mmin -${CHECK_WINDOW_MINUTES} -type f 2>/dev/null | wc -l | tr -d ' ')
+  RECENT_RESEARCHER=${RECENT_RESEARCHER:-0}
+
+  if [ "$RECENT_RESEARCHER" -gt 0 ]; then
+    log "✅ Researcher ran in last ${CHECK_WINDOW_MINUTES} minutes"
+
+    # Analyze recent researcher logs for errors
+    RECENT_RESEARCHER_LOGS=$(find "$RESEARCHER_LOG_DIR" -name "*.log" -mmin -${CHECK_WINDOW_MINUTES} -type f 2>/dev/null | sort -r)
+
+    RESEARCHER_ERRORS=false
+    for logfile in $RECENT_RESEARCHER_LOGS; do
+      log "📄 Analyzing: $(basename "$logfile")"
+
+      # Check for script not found errors
+      if grep -q "not found" "$logfile" 2>/dev/null; then
+        log "  ❌ Script execution failed (script not found)"
+        RESEARCHER_ERRORS=true
+      fi
+
+      # Check for timeout/errors
+      if grep -q "ERROR\|FAILED\|timed out" "$logfile" 2>/dev/null; then
+        log "  ❌ Researcher encountered errors"
+        RESEARCHER_ERRORS=true
+      fi
+
+      # Check for successful completion
+      if grep -q "COMPLETE\|SUCCESS" "$logfile" 2>/dev/null; then
+        log "  ✅ Completed successfully"
+      fi
+    done
+
+    if [ "$RESEARCHER_ERRORS" = "true" ]; then
+      log ""
+      log "⚠️  WARNING: Researcher runs encountered errors"
+      ISSUE_DETECTED=true
+    fi
+  else
+    LAST_RESEARCHER=$(find "$RESEARCHER_LOG_DIR" -name "*.log" -type f 2>/dev/null | sort -r | head -1)
+    if [ -n "$LAST_RESEARCHER" ]; then
+      LAST_RESEARCHER_TIME=$(stat -c %Y "$LAST_RESEARCHER" 2>/dev/null || stat -f %m "$LAST_RESEARCHER" 2>/dev/null)
+      NOW=$(date +%s)
+      AGE_MINUTES=$(( (NOW - LAST_RESEARCHER_TIME) / 60 ))
+      log "ℹ️  Last researcher run: ${AGE_MINUTES} minutes ago"
+
+      if [ "$AGE_MINUTES" -gt 120 ]; then
+        log "🚨 CRITICAL: Researcher hasn't run in over 2 hours!"
+        ISSUE_DETECTED=true
+      fi
+    else
+      log "⚠️  WARNING: No researcher logs found"
+      ISSUE_DETECTED=true
+    fi
+  fi
+else
+  log "⚠️  WARNING: Researcher log directory not found"
+  log "ℹ️  Expected: $RESEARCHER_LOG_DIR"
+  ISSUE_DETECTED=true
+fi
+
 # Final summary
 log_section "📊 Summary"
 
@@ -227,7 +291,19 @@ The autonomous-worker-watcher detected issues with the autonomous worker system.
    tail -50 logs/autonomous/worker_*.log | head -100
    ```
 
-2. **Check cron configuration (VM only):**
+2. **Check researcher logs:**
+   ```bash
+   ls -lth logs/autonomous/researcher/ | head -20
+   cat logs/autonomous/researcher/cron_*.log | tail -50
+   ```
+
+3. **Check merge orchestrator logs:**
+   ```bash
+   ls -lth logs/merge_orchestrator/ | head -20
+   tail -50 logs/merge_orchestrator/merge_*.log | head -100
+   ```
+
+4. **Check cron configuration (VM only):**
    ```bash
    # Is cron running?
    pgrep cron || ps aux | grep cron
@@ -284,6 +360,22 @@ rm -f /tmp/autonomous-worker.lock
 **Issue: Merge conflicts blocking workers**
 - Workers should auto-resolve, but check if git is in weird state
 - Reset to clean state if needed
+
+**Issue: Researcher script not found**
+```bash
+# Check if researcher script exists
+ls -la scripts/researcher-worker.sh
+
+# If missing, check what researcher infrastructure exists
+find . -name "*researcher*" -type f
+
+# May need to create or fix researcher worker script
+```
+
+**Issue: Merge orchestrator failing**
+- Check logs/merge_orchestrator/ for recent runs
+- Verify it spawns Claude Code on conflicts (post-Nov 6 fix)
+- Check for accumulated worker branches: git branch -r | grep auto/worker
 
 ### After Fixing
 
