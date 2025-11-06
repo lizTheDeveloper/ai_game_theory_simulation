@@ -1,0 +1,33 @@
+[0;32m╔═══════════════════════════════════════════════════════╗[0m
+[0;32m║       🤖 AUTONOMOUS WORKER - 20251106_040001        ║[0m
+[0;32m╚═══════════════════════════════════════════════════════╝[0m
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;35m⏱️  [PRE-FLIGHT CHECKS] +0s[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;36m📊 Disk available: 58G[0m
+[0;36m📊 Memory available: 3.1Gi[0m
+[0;34mℹ️  Updating Claude Code to latest version...[0m
+[0;32m✅ Claude Code updated: ./autonomous-worker.sh: /usr/bin/claude: /usr/bin/env: bad interpreter: Text file busy
+unknown[0m
+[0;34mℹ️  Checking chatroom monitor status...[0m
+[0;32m✅ Chatroom monitor already running[0m
+[0;34mℹ️  Checking dependencies...[0m
+[0;32m✅ git: git version 2.34.1[0m
+[0;32m✅ node: v24.11.0[0m
+[0;32m✅ python: Python 3.11.14[0m
+[0;32m✅ claude: installed[0m
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;35m⏱️  [GIT SYNC] +3s[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;34mℹ️  Switching to main branch...[0m
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+	logs/autonomous/worker_20251106_030001.log
+	logs/autonomous/worker_20251106_033001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[1;33m⚠️  Already on main[0m
+[1;33m⚠️  Uncommitted changes detected on main branch[0m
+[0;34mℹ️  Committing local changes before pull...[0m
