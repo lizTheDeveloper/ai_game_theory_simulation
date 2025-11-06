@@ -18,7 +18,9 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 REMEDIATION_DIR="$PROJECT_ROOT/logs/merge_orchestrator/remediations"
-REMEDIATION_LOG="$REMEDIATION_DIR/${BRANCH}_${TIMESTAMP}_${REVIEW_TYPE}.txt"
+# Sanitize branch name for use in file paths (replace special chars with underscores)
+BRANCH_SAFE="$(echo "$BRANCH" | sed "s|[+ /]|_|g")"
+REMEDIATION_LOG="$REMEDIATION_DIR/${BRANCH_SAFE}_${TIMESTAMP}_${REVIEW_TYPE}.txt"
 REMEDIATION_TRACKER="$PROJECT_ROOT/.merge_orchestrator_remediation_attempts"
 
 mkdir -p "$REMEDIATION_DIR"
