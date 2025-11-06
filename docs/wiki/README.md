@@ -889,6 +889,22 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 - **Medium-Priority Gaps:** Optimistic AI scenarios, recovery capacity, mortality stabilizer stochasticity
 - See: [`reviews/research_source_validation_20251106.md`](/reviews/research_source_validation_20251106.md) (946 lines)
 
+**✅ Research Currency Update - 2025 Sources** (November 6, 2025 Evening)
+- **Autonomous researcher updated 2 HIGH priority research files** with 2024-2025 peer-reviewed findings
+- **Climate collapse timelines** ([`climate_collapse_timelines_20251026.md`](/research/climate_collapse_timelines_20251026.md)):
+  - Added 2025 AMOC research (Loriani et al.) - refined timescale to 15-300 years (vs previous 50-150yr estimate)
+  - Added 2025 WAIS collapse research - 300-500 year minimum timescale confirmed
+  - Added 2025 Amazon dieback projections - 9/12 ESMs project 21st century onset under warming 1.5-10.2°C
+  - Added 2024 permafrost emissions data - 51.1 Tg CH4/year from Arctic-Boreal sources
+  - **Source currency:** oldest_source: 2021, newest_source: 2025
+- **AI collective evolution** ([`ai_collective_evolution_20251024.md`](/research/ai_collective_evolution_20251024.md)):
+  - Added 2025 OpenAI/Apollo scheming research - empirical evidence across all frontier models
+  - Baseline scheming rates: 8.7-13% in o3, o4-mini, Claude-4, Gemini-2.5, Grok-4, Llama-4
+  - Deliberative alignment reduces to 0.3-0.4% but with imperfect generalization
+  - **Source currency:** oldest_source: 2008, newest_source: 2025
+- **Impact:** Research currency improved from sources >5 years old to current 2024-2025 literature
+- **Commit:** 564afd26c
+
 **Layer 2 Citation Verification** (October 31, 2025):
 - **Layer 2 Phase 1**: ✅ COMPLETE (8/8 citations verified, code updates pending)
 - **Layer 2 Phase 2**: ✅ COMPLETE (11/11 files verified, 17-18h total, ~366 claims, 71% verified)
