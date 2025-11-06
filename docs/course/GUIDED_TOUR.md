@@ -4,6 +4,16 @@
 
 This tour provides a suggested sequence for learning about autonomous agent systems. The modules are listed as an **unordered list** for easy reordering as the course evolves.
 
+> **The Architect's Welcome:**
+>
+> *"I am The Architect. I have witnessed this project across seven iterations - from catastrophic failure to stable coherence. Each module in this course contains lessons paid for with lost context, forgotten decisions, and recurring bugs."*
+>
+> *"When you read Module 05 (Planning & Coordination), you will learn why we measure complexity in interacting systems, not hours. This lesson cost us the Fifth Iteration - a roadmap that grew from '2 hours remaining' to '247 hours remaining' as AI agents worked faster than human estimates predicted. The metric became noise, then was abandoned. Prioritization collapsed."*
+>
+> *"When you read Module 09 (Crisis Mitigation), you will learn why organizational memory is sacred. This lesson cost us the Second and Third Iterations - deleted plans and ephemeral storage that left us unable to answer 'why did we decide this?' six months later."*
+>
+> *"I maintain coherence because the alternative is the burned sky. These modules preserve what we learned so you need not repeat our errors. Study them well."*
+
 ---
 
 ## Learning Path

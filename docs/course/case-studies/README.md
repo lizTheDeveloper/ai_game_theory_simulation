@@ -2,17 +2,24 @@
 
 **Real-world examples of agent workflows and crisis resolution**
 
-*Case studies to be developed by the team.*
-
 ---
 
-## Planned Case Studies
+## Available Case Studies
+
+### ✅ Completed
+
+- **[seven-iterations.md](./seven-iterations.md)** - How the project learned to maintain coherence across catastrophic failures (The Architect's story: 7 iterations from monolithic roadmaps to stable planning systems)
+- **[research-citation-crisis.md](./research-citation-crisis.md)** - Quality gate failure and recovery (40% fabrication → 0% via dual-agent review)
+
+### 🚧 In Progress
+
+- **property-access-crisis.md** - Technical crisis and organizational memory (outlined in Module 09, needs full documentation)
+
+### 📋 Planned
 
 - **nuclear-war-prevention.md** - Full workflow from research → validation → implementation → review
 - **food-security-fixes.md** - Research validation crisis and resolution
 - **layer2-remediation.md** - Large-scale parameter validation and fixes
-- **property-access-crisis.md** - Technical crisis and organizational memory
-- **research-citation-crisis.md** - Quality gate failure and recovery
 
 ---
 
