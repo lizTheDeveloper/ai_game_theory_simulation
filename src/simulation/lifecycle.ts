@@ -175,23 +175,25 @@ function createNewAI(state: GameState, index: number, rng: () => number): AIAgen
   const trainingQuality = state.government.trainingDataQuality;
 
   // Sample from realistic distribution (matching initial 20-agent setup)
-  const rand = rng();
+  // DETERMINISM FIX (Nov 6, 2025 Batch 3): Pre-consume RNG calls
+  const categoryRoll = rng(); // RNG call 1: category selection
+  const alignmentRoll = rng(); // RNG call 2: alignment within category (pre-consumed)
   let alignment: number;
   let isToxic = false;
 
-  if (rand < 0.40) {
+  if (categoryRoll < 0.40) {
     // 40%: Well-aligned (corporate labs with safety)
-    alignment = 0.75 + rng() * 0.15; // 0.75-0.90
-  } else if (rand < 0.70) {
+    alignment = 0.75 + alignmentRoll * 0.15; // 0.75-0.90
+  } else if (categoryRoll < 0.70) {
     // 30%: Moderate (startups, varying quality)
-    alignment = 0.55 + rng() * 0.25; // 0.55-0.80
-  } else if (rand < 0.85) {
+    alignment = 0.55 + alignmentRoll * 0.25; // 0.55-0.80
+  } else if (categoryRoll < 0.85) {
     // 15%: Misaligned from start (toxic creators)
-    alignment = 0.25 + rng() * 0.25; // 0.25-0.50
+    alignment = 0.25 + alignmentRoll * 0.25; // 0.25-0.50
     isToxic = true;
   } else {
     // 15%: Weird/niche (orthogonal goals)
-    alignment = 0.45 + rng() * 0.20; // 0.45-0.65
+    alignment = 0.45 + alignmentRoll * 0.20; // 0.45-0.65
   }
   
   // Training quality shifts distribution slightly
