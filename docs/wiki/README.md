@@ -72,6 +72,34 @@ Commit: 876ea94 (Nov 5, 2025)
 
 ### November 6, 2025
 
+**🔍 CRITICAL BUG DISCOVERED: Double-Counting Seasonal Mortality Multiplier**
+
+Deep analysis revealed critical implementation fidelity bug in ClimateImpactCascadePhase:
+
+**The Bug:**
+- **Double-counting:** Seasonal mortality multiplier applied TWICE to lean season deaths
+- **Line 352:** Sets acute crisis lean season mortality to 5% (ALREADY includes seasonal concentration)
+- **Line 363:** Multiplies 5% by 1.75× AGAIN → 8.75% (incorrect)
+- **Research says:** "5% during lean season" OR "baseline × 1.75", not both
+
+**Impact on Mortality Rates:**
+- **Current (with bug):** 8.75% base → 2.3% monthly after stabilizers → 47% over 10 years
+- **Expected (after fix):** 5% base → 1.2% monthly after stabilizers → ~40% over 10 years
+- **Excess mortality:** 7 percentage points from double-counting (~560 million excess deaths)
+
+**Research Alignment:**
+- **Xia et al. 2022:** 75% worst-case mortality (abrupt nuclear winter, no adaptation)
+- **Our scenario:** Gradual climate collapse + stabilizers (76.5% reduction mechanism)
+- **Post-fix expectation:** ~40% mortality aligns with Lancet 2025 (30-50% with interventions)
+
+**Status:** Analysis complete, implementation pending. Bug causes implementation fidelity gap (research-backed value should be 5%, not 8.75%). Also added 15 assertions across mortality calculation paths to prevent future NaN propagation.
+
+**Analysis:** `reviews/mortality_gap_analysis_20251106.md` (348 lines)
+**Blocks:** Research validity (Implementation Fidelity C- → B+ after fix)
+**Related:** CRITICAL Issue #2 (98% vs 75% mortality gap - now understood)
+
+Commit: 5c6e9d0 (Nov 6, 2025)
+
 **✅ Heat Adaptation Bug Fixed - Week 1 Mortality Stabilizers Investigation Complete**
 
 Critical bug fix resolving heat adaptation development failure, completing Week 1 mortality stabilizers investigation:
