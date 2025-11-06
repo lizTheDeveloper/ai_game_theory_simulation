@@ -1,7 +1,13 @@
+---
+oldest_source: 2021
+newest_source: 2025
+last_verified: 2025-11-06
+---
+
 # Climate System Collapse Timelines After Crossing Tipping Points
 
-**Research Date:** October 26, 2025
-**Researcher:** super-alignment-researcher-1
+**Research Date:** October 26, 2025 (Updated: November 6, 2025)
+**Researcher:** super-alignment-researcher-1 / autonomous-researcher (update)
 **Purpose:** Validate simulation's climate catastrophe timeline (Month 0 → Month 1 drop from 0.75 → 0 climateStability)
 
 ## Executive Summary
@@ -29,8 +35,10 @@
 
 ### Transition Timescale
 - **Onset to shutdown:** Decades to ~100 years
-- **Full transition:** 50-150 years (Armstrong McKay et al. 2022)
-- **Categorization:** **Fast tipping element** (relative to ice sheets, but still decadal-scale)
+- **Full transition:** 15-300 years (Loriani et al. 2025, refining Armstrong McKay et al. 2022's 50-150 year estimate)
+- **Regional feedback speeds:** Basin-wide salt-advection feedback (~100 years), regional salt feedback between gyres (few decades)
+- **Categorization:** **Fast tipping element** (relative to ice sheets, but still decadal-to-century-scale)
+- **2025 Update:** Timescale range expanded due to freshwater forcing rate uncertainty; rate of forcing matters as much as magnitude
 
 ### Impact Timeline
 
@@ -78,8 +86,10 @@
 
 ### Transition Timescale
 - **Most likely:** ~2,000 years for complete disintegration (Armstrong McKay et al. 2022)
-- **Fastest scenario (RCP8.5):** ~500 years minimum
+- **Fastest scenario (RCP8.5):** ~500 years minimum, though some models show 300-500 years (2025 studies)
 - **Slowest scenario:** ~13,000 years
+- **2025 Update:** Present-day mass loss rates are precursors for collapse; gradual retreat over several centuries followed by rapid collapse over ~2 centuries
+- **Recent findings:** Collapse contributes >4m sea-level rise even with minimal (0.25°C) or no additional ocean warming above present
 - **Categorization:** **Slow tipping element** (centuries to millennia)
 
 ### Impact Timeline
@@ -124,13 +134,16 @@
 ### Transition Timescale
 - **Onset of dieback:** Rainfall drops 30-50% over **a few years** once threshold crossed
 - **Full transition:** Decades for large-scale forest-to-savanna conversion
+- **2025 Update:** Nine of twelve Earth System Models project dieback onset within 21st century under warming 1.5-10.2°C
+- **Threshold conditions:** Local surface air temperatures above 32.2 ± 4.8°C and precipitation below 1394 ± 306 mm/year
 - **Categorization:** **Fast-to-intermediate tipping element** (years to decades, possibly accelerating)
 
 ### Impact Timeline
 
 **Near-Term (2024-2050):**
 - **2024 Research:** 10-47% of Amazon exposed to compounding disturbances by 2050
-- Loss of resilience already observed since early 2000s
+- **2023-2024 Crisis:** Record drought and fires brought Amazon "closest to tipping point ever" (Carlos Nobre)
+- **Resilience loss:** >75% of Amazon losing resilience since early 2000s, accelerating in regions with less rainfall
 - Timeline: **5-10 years** to cross 20-25% deforestation threshold if current trends continue
 
 **Mid-Term (2050-2100):**
@@ -240,6 +253,8 @@
 - High-latitude ecosystems take **several centuries** to fully adjust to 1.5°C warming
 - Even with immediate emission cessation, **several centuries** until full impact observable
 - Release will be **gradual but prolonged**
+- **2024-2025 Update:** Permafrost emissions will continue for 1-2 centuries after peak temperature; by 2100 emissions could equal those of major industrial countries
+- **Recent estimates:** 51.1 (29.1–71.2) Tg CH4/year from all Arctic-Boreal natural sources
 
 **Feedback Mechanism:**
 - Warming → permafrost thaw → CO2/CH4 release → more warming → more thaw
@@ -719,11 +734,15 @@ A realistic climate tipping point implementation should show:
 
 4. Naughten, K. A., et al. (2023). Unavoidable future increase in West Antarctic ice-shelf melting over the twenty-first century. *Nature Climate Change*, 13, 1222–1228. https://doi.org/10.1038/s41558-023-01818-x
 
+4a. Multiple Authors (2025). Present-day mass loss rates are a precursor for West Antarctic Ice Sheet collapse. *The Cryosphere*, 19, 283-299. https://doi.org/10.5194/tc-19-283-2025
+
 5. DeConto, R. M., & Pollard, D. (2016). Contribution of Antarctica to past and future sea-level rise. *Nature*, 531, 591–597. https://doi.org/10.1038/nature17145
 
 ### Amazon Rainforest
 
 6. Flores, B. M., et al. (2024). Critical transitions in the Amazon forest system. *Nature*, 626, 555–564. https://doi.org/10.1038/s41586-023-06970-0
+
+6a. Multiple Authors (2025). Amazon dieback beyond the 21st century under high-emission scenarios by Earth System models. *Communications Earth & Environment*, s43247-025-02606-5. https://doi.org/10.1038/s43247-025-02606-5
 
 7. Boulton, C. A., et al. (2022). Pronounced loss of Amazon rainforest resilience since the early 2000s. *Nature Climate Change*, 12, 271–278. https://doi.org/10.1038/s41558-022-01287-8
 
@@ -739,9 +758,15 @@ A realistic climate tipping point implementation should show:
 
 12. Schuur, E. A. G., et al. (2022). Permafrost and Climate Change: Carbon Cycle Feedbacks From the Warming Arctic. *Annual Review of Environment and Resources*, 47, 343–371. https://doi.org/10.1146/annurev-environ-012220-011847
 
+12a. Ramage, J. L., et al. (2024). Vulnerability of Arctic-Boreal methane emissions to climate change. *Frontiers in Environmental Science*, 12. https://doi.org/10.3389/fenvs.2024.1460155
+
 ### Comprehensive Tipping Point Assessments
 
 13. Armstrong McKay, D. I., et al. (2022). Exceeding 1.5°C global warming could trigger multiple climate tipping points. *Science*, 377(6611), eabn7950. https://doi.org/10.1126/science.abn7950
+
+13a. Armstrong McKay, D. I. (2024). Two decades of climate tipping points research: Progress and outlook. *Dialogues on Climate Change*. https://doi.org/10.1177/29768659241293272
+
+13b. Loriani, S., et al. (2025). Tipping points in ocean and atmosphere circulations. *Earth System Dynamics*, 16, 1611-1651. https://doi.org/10.5194/esd-16-1611-2025
 
 14. Global Tipping Points Report (2025). University of Exeter. https://global-tipping-points.org/
 
