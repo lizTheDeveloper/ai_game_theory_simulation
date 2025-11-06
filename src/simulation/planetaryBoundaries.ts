@@ -1674,22 +1674,47 @@ export function updateBiosphereIntegrityIndex(
   // === 1. UPDATE CLIMATE VELOCITY ===
   // Climate velocity increases with warming rate
   // Use getter function to decouple from internal planetary boundaries structure
-  const globalTempIncrease = getGlobalTemperatureIncrease(state);
-  const warmingRate = globalTempIncrease / ((state.currentMonth || 1) / 12); // °C per year
+  const globalTempIncrease = assertFinite(getGlobalTemperatureIncrease(state), {
+    location: 'updateBiosphereIntegrityIndex:climateVelocity',
+    valueName: 'globalTempIncrease',
+    month: state.currentMonth
+  });
+
+  const monthsElapsed = state.currentMonth || 1;
+  const warmingRate = assertFinite(globalTempIncrease / (monthsElapsed / 12), {
+    location: 'updateBiosphereIntegrityIndex:climateVelocity',
+    valueName: 'warmingRate',
+    month: state.currentMonth,
+    additionalInfo: { globalTempIncrease, monthsElapsed }
+  }); // °C per year
 
   // Climate velocity scales with warming rate
   // Faster warming = faster zone movement = higher velocity
   const baseVelocity = 0.8; // °C/year baseline (temperate)
-  bii.avgClimateVelocity = baseVelocity * (1 + warmingRate * 0.5);
+  const newClimateVelocity = assertFinite(baseVelocity * (1 + warmingRate * 0.5), {
+    location: 'updateBiosphereIntegrityIndex:climateVelocity',
+    valueName: 'avgClimateVelocity',
+    month: state.currentMonth,
+    additionalInfo: { baseVelocity, warmingRate }
+  });
+
+  bii.avgClimateVelocity = newClimateVelocity;
 
   // === 2. UPDATE TRACKING FAILURE RATE ===
-  bii.trackingFailureRate = calculateTrackingFailureRate(
+  const trackingFailureRate = assertProbability(calculateTrackingFailureRate(
     bii.nonMigratorySpecies,
     bii.avgClimateVelocity
-  );
+  ), {
+    location: 'updateBiosphereIntegrityIndex:trackingFailure',
+    valueName: 'trackingFailureRate',
+    month: state.currentMonth,
+    additionalInfo: { avgClimateVelocity: bii.avgClimateVelocity }
+  });
+
+  bii.trackingFailureRate = trackingFailureRate;
 
   // === 3. CALCULATE SPECIES MORTALITY ===
-  // Non-migratory mortality
+  // Non-migratory mortality (already validated in calculateNonMigratoryMortality)
   const nonMigratoryMortalityRate = calculateNonMigratoryMortality(
     bii.nonMigratorySpecies,
     bii.avgClimateVelocity,
@@ -1697,24 +1722,78 @@ export function updateBiosphereIntegrityIndex(
   );
 
   // Annual extinctions (monthly rate)
-  const monthlyExtinctions = (nonMigratoryMortalityRate / 12) * bii.nonMigratorySpecies.count;
+  const monthlyExtinctions = assertFinite((nonMigratoryMortalityRate / 12) * bii.nonMigratorySpecies.count, {
+    location: 'updateBiosphereIntegrityIndex:extinction',
+    valueName: 'monthlyExtinctions',
+    month: state.currentMonth,
+    additionalInfo: {
+      nonMigratoryMortalityRate,
+      nonMigratoryCount: bii.nonMigratorySpecies.count
+    }
+  });
 
   // Update species count
-  bii.currentSpeciesCount = Math.max(1000, bii.currentSpeciesCount - monthlyExtinctions);
+  const newSpeciesCount = assertFinite(Math.max(1000, bii.currentSpeciesCount - monthlyExtinctions), {
+    location: 'updateBiosphereIntegrityIndex:speciesCount',
+    valueName: 'currentSpeciesCount',
+    month: state.currentMonth,
+    additionalInfo: {
+      previousCount: bii.currentSpeciesCount,
+      monthlyExtinctions
+    }
+  });
+
+  bii.currentSpeciesCount = newSpeciesCount;
 
   // === 4. UPDATE EXTINCTION RATE (E/MSY) ===
   // Calculate current extinction rate from species loss
-  const speciesLost = bii.totalSpeciesBaseline - bii.currentSpeciesCount;
+  const speciesLost = assertFinite(bii.totalSpeciesBaseline - bii.currentSpeciesCount, {
+    location: 'updateBiosphereIntegrityIndex:extinctionRate',
+    valueName: 'speciesLost',
+    month: state.currentMonth,
+    additionalInfo: {
+      totalSpeciesBaseline: bii.totalSpeciesBaseline,
+      currentSpeciesCount: bii.currentSpeciesCount
+    }
+  });
+
   const yearsElapsed = (state.currentMonth || 1) / 12;
-  const extinctionsPerYear = speciesLost / Math.max(1, yearsElapsed);
+  const extinctionsPerYear = assertFinite(speciesLost / Math.max(1, yearsElapsed), {
+    location: 'updateBiosphereIntegrityIndex:extinctionRate',
+    valueName: 'extinctionsPerYear',
+    month: state.currentMonth,
+    additionalInfo: { speciesLost, yearsElapsed }
+  });
 
   // Convert to E/MSY (extinctions per million species-years)
-  bii.currentExtinctionRate = (extinctionsPerYear / bii.totalSpeciesBaseline) * 1_000_000;
+  const newExtinctionRate = assertFinite((extinctionsPerYear / bii.totalSpeciesBaseline) * 1_000_000, {
+    location: 'updateBiosphereIntegrityIndex:extinctionRate',
+    valueName: 'currentExtinctionRate (E/MSY)',
+    month: state.currentMonth,
+    additionalInfo: { extinctionsPerYear, totalSpeciesBaseline: bii.totalSpeciesBaseline }
+  });
+
+  bii.currentExtinctionRate = newExtinctionRate;
 
   // === 5. UPDATE PLANETARY BOUNDARY ===
   // Boundary value: current rate / safe rate
-  bii.boundaryValue = bii.currentExtinctionRate / 1.0; // SAFE_EXTINCTION_RATE = 1.0
-  bii.tippingPointRisk = Math.min(1.0, bii.boundaryValue / 10.0);
+  const SAFE_EXTINCTION_RATE = 1.0;
+  const newBoundaryValue = assertFinite(bii.currentExtinctionRate / SAFE_EXTINCTION_RATE, {
+    location: 'updateBiosphereIntegrityIndex:boundary',
+    valueName: 'boundaryValue',
+    month: state.currentMonth,
+    additionalInfo: { currentExtinctionRate: bii.currentExtinctionRate }
+  });
+
+  const newTippingPointRisk = assertProbability(Math.min(1.0, newBoundaryValue / 10.0), {
+    location: 'updateBiosphereIntegrityIndex:boundary',
+    valueName: 'tippingPointRisk',
+    month: state.currentMonth,
+    additionalInfo: { boundaryValue: newBoundaryValue }
+  });
+
+  bii.boundaryValue = newBoundaryValue;
+  bii.tippingPointRisk = newTippingPointRisk;
 
   // Update planetary boundary in main system
   if (state.planetaryBoundariesSystem) {
