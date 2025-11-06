@@ -42,6 +42,8 @@ This tour provides a suggested sequence for learning about autonomous agent syst
 
 - [ ] **09_CRISIS_MITIGATION.md** - Learn from real crises: property access, research citation, organizational memory
 
+- [ ] **10_AUTONOMOUS_INFRASTRUCTURE.md** - 24/7 code quality: Senior dev checklist, autonomous worker, worker monitor, merge orchestrator
+
 ### Phase 4: Advanced Topics
 
 - [ ] **07_TESTING_VALIDATION.md** - Monte Carlo validation, agent behavior testing, integration strategies
