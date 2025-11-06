@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 RESEARCH UPDATE TASK
+=======
+GIT OPERATIONS
+>>>>>>> origin/auto/researcher-20251106_213001
