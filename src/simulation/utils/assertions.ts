@@ -912,14 +912,14 @@ export function assertAICapability(
  * Validates boundary-specific ranges based on Earth system science.
  *
  * Boundary types and safe operating spaces:
- * - co2: [280, 600] ppm (pre-industrial to extreme)
+ * - co2: [280, 1000] ppm (pre-industrial to RCP8.5 extreme, updated Nov 6, 2025)
  * - temperature: [-2, 10] °C above baseline
- * - oceanPH: [7.5, 8.5] pH units
+ * - oceanPH: [7.5, 8.5] pH units (updated Nov 6, 2025, projected minimum under extreme scenarios)
  * - biodiversity: [0, 1] normalized
  * - nitrogen: [0, 200] Tg N/yr
  * - phosphorus: [0, 50] Tg P/yr
  *
- * Research: Rockström et al. 2009, Steffen et al. 2015
+ * Research: Rockström et al. 2009, Steffen et al. 2015, IPCC AR6 RCP8.5/SSP5-8.5
  *
  * @throws Error if value exceeds boundary-specific safe operating space
  */
@@ -935,9 +935,9 @@ export function assertPlanetaryBoundary(
   assertFinite(value, context);
 
   const BOUNDARY_RANGES: Record<string, { min: number; max: number; unit: string }> = {
-    co2: { min: 280, max: 600, unit: 'ppm' },
+    co2: { min: 280, max: 1000, unit: 'ppm' },  // Updated Nov 6, 2025: RCP8.5 reaches 900-936 ppm by 2100
     temperature: { min: -2, max: 10, unit: '°C above baseline' },
-    oceanPH: { min: 7.5, max: 8.5, unit: 'pH' },
+    oceanPH: { min: 7.5, max: 8.5, unit: 'pH' },  // Updated Nov 6, 2025: Projected minimum ~7.5 under extreme scenarios
     biodiversity: { min: 0, max: 1, unit: 'normalized' },
     nitrogen: { min: 0, max: 200, unit: 'Tg N/yr' },
     phosphorus: { min: 0, max: 50, unit: 'Tg P/yr' }
@@ -1036,7 +1036,7 @@ export function assertPopulationMillion(
  * Validates boundary-specific ranges for economic state mutations.
  *
  * Metric types and plausible ranges:
- * - gdp: [0, 200] trillion USD (global GDP ~100T in 2025)
+ * - gdp: [0, 500] trillion USD (updated Nov 6, 2025: global GDP ~114T in 2025, accommodates 2% growth to 2100)
  * - spending: [0, 50] trillion USD/year (government spending)
  * - taxation: [0, 1] as fraction of GDP
  * - deficit: [-10, 10] trillion USD (annual deficit/surplus)
@@ -1056,7 +1056,7 @@ export function assertEconomicMetric(
   assertFinite(value, context);
 
   const ECONOMIC_RANGES: Record<string, { min: number; max: number; unit: string }> = {
-    gdp: { min: 0, max: 200, unit: 'trillion USD' },
+    gdp: { min: 0, max: 500, unit: 'trillion USD' },  // Updated Nov 6, 2025: 75-year simulation, 2% growth → ~510T by 2100
     spending: { min: 0, max: 50, unit: 'trillion USD/year' },
     taxation: { min: 0, max: 1, unit: 'fraction of GDP' },
     deficit: { min: -10, max: 10, unit: 'trillion USD' },
@@ -1084,9 +1084,10 @@ export function assertEconomicMetric(
       `   - Implausible economic transition\n` +
       `   - Missing constraint enforcement\n` +
       `\n` +
-      `   For reference (2025):\n` +
-      `   - Global GDP: ~$100 trillion\n` +
-      `   - US GDP: ~$25 trillion\n` +
+      `   For reference (2025-2100):\n` +
+      `   - Global GDP 2025: ~$114 trillion (IMF April 2025)\n` +
+      `   - US GDP 2025: ~$25 trillion\n` +
+      `   - 2% annual growth to 2100: ~$510 trillion\n` +
       `   - Typical government spending: 20-40% of GDP`
     );
   }

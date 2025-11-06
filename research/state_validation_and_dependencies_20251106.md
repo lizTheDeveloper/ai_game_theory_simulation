@@ -2,8 +2,9 @@
 
 **Date:** November 6, 2025
 **Researcher:** Orchestrator (Initial Research Phase)
-**Status:** READY FOR VALIDATION
+**Status:** LAYER 2 VERIFIED - CONDITIONAL PASS (3 verified, 2 adjusted, 1 removed)
 **Target:** WEEK 3 Implementation (Tasks 7 & 8)
+**Verification:** See `research/layer2_verification_state_validation_20251106.md`
 
 ## Executive Summary
 
@@ -141,21 +142,24 @@ Based on climate model literature and physical constraints:
 #### Climate Systems
 **Temperature Deltas:**
 - Valid range: [-20, +10] °C per month
-- Max warming: ~5°C over decades (PETM historical record)
-- Max cooling: ~15°C (nuclear winter, Xia 2022)
+- Max warming: ~5-8°C over 15-20 thousand years (PETM historical record)
+- Max cooling: ~15°C peak magnitude (nuclear winter, Xia 2022)
+- Note: PETM warming was over millennia, not months. Monthly bounds are generous to accommodate rapid climate shifts (volcanic eruptions, nuclear winter onset)
 - Values outside [-20, +10]: Calculation errors
 
 **CO2 Levels:**
-- Valid range: [280, 600] ppm
+- Valid range: [280, 1000] ppm
 - Pre-industrial: 280 ppm
 - Current (2025): ~420 ppm
-- Extreme scenarios: <600 ppm (RCP8.5 equivalent)
+- Extreme scenarios: 900-936 ppm by 2100 (RCP8.5/SSP5-8.5)
+- Upper bound rationale: Accommodates RCP8.5 (936 ppm) plus model variations (>1000 ppm)
 
 **Ocean pH:**
 - Valid range: [7.5, 8.5]
 - Pre-industrial: ~8.2
-- Current: ~8.1
-- Acidification limit: ~7.8 (ecosystem collapse threshold)
+- Current: ~8.1 (down to 8.04 in 2024)
+- Projected minimum: ~7.5-7.9 by 2100 (extreme scenarios, 0.3-0.5 pH unit decline)
+- Note: No specific "ecosystem collapse threshold" found in peer-reviewed literature; impacts occur across range
 
 #### AI Capabilities
 **Capability Levels:**
@@ -165,9 +169,10 @@ Based on climate model literature and physical constraints:
 
 #### Economic Metrics
 **GDP:**
-- Valid range: [0, 200] trillion USD
-- Current global: ~$100 trillion
-- 2× current: Plausible upper bound
+- Valid range: [0, 500] trillion USD
+- Current global: ~$114 trillion (IMF April 2025)
+- Upper bound rationale: 75-year simulation (2025-2100), 2% annual growth → ~510T by 2100
+- Conservative bound accommodates AI-driven growth scenarios
 
 **Growth Rates:**
 - Valid range: [-0.5, +0.5] monthly change (±50%)
