@@ -3318,6 +3318,26 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 - Added **BayesianMortalityResolutionPhase** (35.0): Bayesian mortality resolution system integrating multiple mortality sources
 - **Bug Fix (Oct 29):** Fixed negative food security in ClimateImpactCascadePhase - added `MIN_FOOD_SECURITY = 0.001` floor to prevent stacking climate impacts from violating bounds (see `devlogs/climate-impact-negative-food-security-fix_20251029.md`)
 
+**Key Changes (Nov 6, 2025):**
+- **✅ WEEK 3 TASK 8 COMPLETE (Nov 6):** Phase Dependency System - Explicit dependency declarations prevent race conditions and ordering bugs
+  - **Problem:** 117 phases, only 22 had dependencies (19.1% coverage), fragile decimal ordering
+  - **Solution:** Added dependencies to 10 additional critical phases (27.8% coverage = 32/115 phases)
+  - **Circular dependency detection:** Added validation to PhaseOrchestrator - catches cycles at startup
+  - **Order validation:** Dependencies must have lower order numbers than dependent phases
+  - **Critical phases updated:**
+    - ExtinctionTriggersPhase → bayesian_mortality_resolution, climate_impact_cascade, crisis-detection, nuclear_winter
+    - ExtinctionProgressPhase → extinction-triggers
+    - CrisisDetectionPhase → bayesian_mortality_resolution, climate_impact_cascade, social-stability, outcome-probabilities
+    - OutcomeProbabilitiesPhase → quality-of-life, bayesian_mortality_resolution, social-stability, environmental_feedback
+    - AILifecyclePhase → compute-growth, compute-allocation, alignment_dynamics
+    - ClimateJusticePhase → war_meaning_feedback
+    - FamineSystemPhase → food-security-degradation, planetary_boundaries
+    - DystopiaProgressionPhase → defensive-ai
+    - TechnologyDiffusionPhase → tech-tree, extinction-progress
+    - PositiveTippingPointsPhase → tech-tree
+  - **Validation:** All dependencies validated at engine startup - throws detailed errors if circular dependencies or invalid ordering detected
+  - **See:** Phase Dependency System section below for complete documentation
+
 **Key Changes (Oct 30):**
 - **✅ P3.2 COMPLETE (Oct 30):** Unknown Unknowns (black swan events) implemented with 10 event templates (3 breakthroughs, 4 crises, 3 paradigm shifts). Base probability: **0.15% per month (1.8% per year)** - recalibrated from 0.1% after research consensus validation. Expected: ~1 simulation-affecting event per 20-year run. Research-backed impact magnitudes: COVID-19 (-0.08% mortality, -3.5% GDP), 2008 crisis (-5% GDP over 24mo). Impact threshold: ≥1% GDP OR ≥0.01% mortality. Framework: Ord (2020) "The Precipice" for quantifiable low-probability events. Deterministic RNG, emoji conventions (☄️ for exogenous shocks). Phase order: 30.5 (after crises, before outcomes). See research consensus: `.claude/chatroom/research-consensus-20251030_p3_2_unknown_unknowns.txt` (commit c63561d).
 - **✅ NEW PHASE (Oct 30):** PolicyImplementationPhase (order 25.5) - Tracks ongoing policy evolution with sigmoid ramp-up, political will decay, and abandonment risk. Research basis: Pressman & Wildavsky (1973) implementation delays, Sabatier (1988) political will decay, Stigler (1971) regulatory capture. Logs milestones at 25%, 50%, 75%, 90% effectiveness. Integrates with government response system (commit c63561d).
@@ -3328,6 +3348,148 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 - **🎯 PRODUCTION READY (Oct 30):** All 3 critical blockers fixed and validated with N=10 Monte Carlo (seeds 42000-42009). **Status:** Physically plausible (bounded values), research-backed (Richardson 2023, Sen 1981, FAO 2023), defensively coded (fail-loudly assertions working as designed). Performance: ~9-11s/run (0.04s/month). Exit code: 0 (SUCCESS). See `reviews/blocker_fixes_final_validation_20251030.md`.
 
 **Total Phases**: 71 registered phases (69 + UnknownUnknownPhase + PolicyImplementationPhase)
+
+---
+
+## 🔗 Phase Dependency System (November 6, 2025)
+
+**Status**: ✅ IMPLEMENTED - Explicit dependency declarations with runtime validation
+
+### Problem Statement
+
+With 117 phases executing each simulation step, phase ordering bugs create **race conditions** that are:
+- **Hard to detect**: Non-deterministic failures that appear sporadically
+- **Hard to debug**: "Which phase corrupted this value?" requires binary search
+- **Fragile to maintain**: Decimal ordering (1.0, 2.5, 34.0) requires manual coordination
+
+**Historical example (Oct 28, 2025):**
+- `CountryPopulationPhase` (order 27.3) ran AFTER `BayesianMortalityResolutionPhase` (order 35.0)
+- It overwrote the mortality-adjusted population values with stale data
+- Bug was silent for months - caught only when assertion utilities added
+- Solution: Delete CountryPopulationPhase entirely
+
+### Solution: Explicit Dependencies
+
+Instead of relying on fragile decimal ordering, phases now declare explicit dependencies:
+
+```typescript
+export class ExtinctionTriggersPhase implements SimulationPhase {
+  readonly id = 'extinction-triggers';
+  readonly name = 'Extinction Triggers Check';
+  readonly order = 37.0;
+
+  // DEPENDENCIES (Nov 6, 2025): Must run after all risk accumulation
+  readonly dependencies = [
+    'bayesian_mortality_resolution',  // Order 35.0: Population mortality resolved
+    'climate_impact_cascade',         // Order 34.0: Climate collapse detection
+    'crisis-detection',               // Order 36.0: Crisis state assessed
+    'nuclear_winter',                 // Order 252: Nuclear winter effects calculated
+  ] as const;
+
+  execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // Phase logic here...
+  }
+}
+```
+
+### Runtime Validation
+
+`PhaseOrchestrator` validates dependencies at engine startup (in `sortPhases()` method):
+
+**1. Circular Dependency Detection:**
+```
+❌ CIRCULAR DEPENDENCY DETECTED
+
+   Cycle: Phase A (phase-a, order 10) → Phase B (phase-b, order 20) → Phase A (phase-a, order 10)
+
+   This creates an impossible ordering constraint. Phase dependencies must form
+   a directed acyclic graph (DAG). Review the dependency declarations in these
+   phases and remove the circular reference.
+```
+
+**2. Order Validation:**
+```
+❌ PHASE DEPENDENCY ORDER VIOLATION
+
+   Phase: ExtinctionTriggersPhase (extinction-triggers)
+   Order: 37.0
+   Depends on: CrisisDetectionPhase (crisis-detection)
+   Dependency order: 36.0
+
+   Dependencies must have LOWER order numbers than the dependent phase.
+   Either:
+   1. Change order numbers: extinction-triggers order must be > 36.0
+   2. Remove the dependency if it's not needed
+```
+
+**3. Missing Phase Detection:**
+```
+❌ INVALID PHASE DEPENDENCY
+
+   Phase: ExtinctionTriggersPhase (extinction-triggers, order 37.0)
+   Missing dependency: invalid-phase-id
+
+   This phase declares a dependency on 'invalid-phase-id' but no phase with that
+   ID is registered. Check for typos or remove the dependency.
+```
+
+### Coverage Status (Nov 6, 2025)
+
+**32 of 115 phases (27.8%)** now have explicit dependencies.
+
+**Critical phases with dependencies:**
+- **Mortality chain:** BayesianMortalityResolutionPhase, MortalityStabilizersPhase, ClimateImpactCascadePhase
+- **Extinction chain:** ExtinctionTriggersPhase → ExtinctionProgressPhase → TechnologyDiffusionPhase
+- **Crisis detection:** CrisisDetectionPhase (depends on mortality, climate, social stability, outcomes)
+- **Outcomes:** OutcomeProbabilitiesPhase (depends on QoL, mortality, social, environmental)
+- **AI lifecycle:** AILifecyclePhase (depends on compute growth, allocation, alignment)
+- **Quality of Life:** QualityOfLifePhase (depends on UBI, extreme weather)
+- **Social systems:** UnemploymentPhase, SocialStabilityPhase, SocialCohesionUpdatePhase
+- **Environmental:** PlanetaryBoundariesPhase, TippingPointPhase, EnvironmentalFeedbackPhase
+- **Food security:** FoodSecurityDegradationPhase, FamineSystemPhase
+
+**Remaining phases (83):** Use decimal ordering only (lower risk, fewer interdependencies)
+
+### Benefits
+
+**1. Early error detection:** Circular dependencies caught at engine startup, not during Monte Carlo runs
+
+**2. Self-documenting:** Dependencies make execution requirements explicit
+```typescript
+// OLD (implicit): "Why does this phase run at order 35.0? Who knows!"
+readonly order = 35.0;
+
+// NEW (explicit): "This phase MUST run after these specific phases"
+readonly dependencies = [
+  'bayesian_mortality_resolution',  // Order 35.0
+  'climate_impact_cascade',         // Order 34.0
+] as const;
+```
+
+**3. Refactoring safety:** Changing phase order numbers triggers validation if dependencies violated
+
+**4. Debugging aid:** When race conditions occur, dependency graph shows data flow
+
+### Implementation Files
+
+- **`src/simulation/engine/PhaseOrchestrator.ts`**: Validation logic (lines 292-398)
+  - `sortPhases()`: Calls `validateDependencies()` before sorting
+  - `validateDependencies()`: DFS cycle detection + order validation
+- **Phase files**: 32 phases in `src/simulation/engine/phases/` with `readonly dependencies = []`
+- **Audit script**: `scripts/auditPhaseDependencies.ts` (generates coverage reports)
+
+### Future Work
+
+**Target: 50% coverage (58 phases)** - Focus on:
+- All crisis phases (nuclear, climate, food, refugee)
+- All outcome calculation phases
+- All resource system phases (water, phosphorus, ocean)
+- All AI evaluation phases (sandbagging, gaming, benchmarks)
+
+**Not needed:**
+- Simple metrics calculations with no dependencies
+- Initialization phases (run first by definition)
+- Logging/finalization phases (run last by definition)
 
 ---
 
