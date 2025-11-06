@@ -15826,14 +15826,6 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 157,
-    "type": "property",
-    "name": "cascades",
-    "currentDoc": "(none)",
-    "context": "cascades: true"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
     "line": 160,
     "type": "property",
     "name": "id",
@@ -60514,7 +60506,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 261,
+    "line": 276,
     "type": "property",
     "name": "climateStability",
     "currentDoc": "(none)",
@@ -60522,7 +60514,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 262,
+    "line": 277,
     "type": "property",
     "name": "habitability",
     "currentDoc": "(none)",
@@ -60530,7 +60522,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 263,
+    "line": 278,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -60538,7 +60530,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 264,
+    "line": 279,
     "type": "property",
     "name": "freshwater",
     "currentDoc": "(none)",
