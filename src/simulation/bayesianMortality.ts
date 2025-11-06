@@ -37,6 +37,7 @@ import {
   assertFinite,
   assertPopulationMillion,
   assertMortalityRate,
+  assertInRange,
 } from '@/simulation/utils/assertions';
 
 /**
@@ -588,14 +589,11 @@ export function resolveMortality(
 
       // Update proximate cause (stored in millions)
       const newProximateCategoryTotal = (pop.deathsByCategory[cause.proximate] || 0) + attributedDeathsMillions;
-      assertFinite(newProximateCategoryTotal, {
+      // deathsByCategory tracks GLOBAL cumulative deaths by cause - use 10B cap
+      assertInRange(newProximateCategoryTotal, 0, 10000, {
         location: 'resolveMortality.deathsByCategory',
         valueName: `deathsByCategory.${cause.proximate}`,
         month: state.currentMonth,
-        additionalInfo: {
-          previous: pop.deathsByCategory[cause.proximate] || 0,
-          adding: attributedDeathsMillions,
-        }
       });
       pop.deathsByCategory[cause.proximate] = newProximateCategoryTotal;
 

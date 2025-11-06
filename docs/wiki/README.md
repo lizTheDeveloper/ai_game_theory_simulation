@@ -34,9 +34,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **System Trajectory:** Sustainable - preventive infrastructure operational, complexity controlled, Layer 2 remediation needed
 >>>>>>> origin/auto/researcher-20251106_193001
 
-**🔬 PRIMARY DISCOVERY - Variance Amplification (Nov 6 Evening):**
-Research debate session (Sylvia vs Cynthia) identified variance amplification as ROOT CAUSE of 100% dystopia convergence. Current 10× cap is 5-10× too conservative vs empirical evidence (financial crises: 40×, ecosystems: 100×, disasters: 200×, Scheffer et al. 2024: 15-200×). Research-backed fix: increase to 50-100× cap. Expected impact: Mortality 43-58% → 60-75%, outcome diversity should improve. This is NOT a quality issue with 4-week sprint (which achieved all goals) - this is a MODELING ASSUMPTION that predates the sprint. See: [`reviews/research-debate-synthesis_nov6_evening.md`](/reviews/research-debate-synthesis_nov6_evening.md) (372 lines, comprehensive analysis + action plan)
+**✅ RESOLVED (Nov 6, Commit 474f590) - Variance Amplification Fix:**
+Variance amplification increased from 10× → 100× based on empirical evidence (financial crises: 40×, ecosystems: 100×, disasters: 200×, Scheffer et al. 2024: 15-200×). This was identified as ROOT CAUSE of 100% dystopia convergence. Implementation includes:
+- **BifurcationLogicPhase.ts:** Cap increased to 100×, formula divisor changed from 0.1 → 0.01
+- **Assertion bug fix:** `assertPopulationMillion` → `assertInRange` for global cumulative death tracking (10B cap)
+- **Expected impact:** Mortality 43-58% → 60-75%, coefficient of variation ~2% → 20-40%
+- **Research basis:** Scheffer et al. 2024, financial crisis 2008 data, ecosystem collapse studies
 
+<<<<<<< HEAD
 **WEEK 5 PRIORITIES (HIGH - 2-3 days):**
 1. **Fix variance amplification** (10× → 50-100×) - ROOT CAUSE of outcome convergence
 2. **Monte Carlo validation** (N=20) - Verify outcome diversity or confirm research-backed convergence
@@ -52,6 +57,12 @@ Research debate session (Sylvia vs Cynthia) identified variance amplification as
 **⚠️ CRITICAL METHODOLOGICAL REVIEW (Nov 6, 2025):**
 Research Skeptic (Sylvia) challenges foundational assumptions in comprehensive critique. Key concerns: 14% assertion coverage (86% unvalidated), 19 unresearched parameters, missing critical systems (supply chains, financial contagion, pollinators), 100% dystopia convergence suggesting systematic pessimism bias. Recommends FULL STOP on features, validation sprint, parameter audit, variance investigation. See: `reviews/research-debate-session_20251106_followup.md` (264 lines)
 >>>>>>> origin/auto/worker-20251106_200001
+=======
+See: [`reviews/research-debate-synthesis_nov6_evening.md`](/reviews/research-debate-synthesis_nov6_evening.md) (comprehensive analysis + action plan)
+
+**WEEK 5 NEXT PRIORITY:**
+- **Monte Carlo validation** (N=20) - Verify outcome diversity improvement with 100× cap
+>>>>>>> origin/auto/worker-20251106_220001
 
 **⚠️ WEEK 3 TASK 7 PARTIAL: State Validation Framework** (7 hours vs 3 days target - framework created but adoption incomplete)
 - **Status:** Framework created and validated, but only 14% phase adoption (16/117 phases)
@@ -540,7 +551,7 @@ Commit: 5c6e9d0 (Nov 6, 2025)
 
 Addressed **HIGH-1** from architecture review (architecture-post-week4-integration-review_20251106.md):
 
-**Problem Solved:** State validation enforced hard bounds (e.g., mortality 0-100%) but bifurcation logic can amplify variance by 1×-10× near tipping points, causing false positive validation errors.
+**Problem Solved:** State validation enforced hard bounds (e.g., mortality 0-100%) but bifurcation logic can amplify variance by 1×-100× near tipping points, causing false positive validation errors. (Updated Nov 6: variance cap increased from 10× → 100×)
 
 **Implementation:** `ClimateImpactCascadePhase.ts` (commit ec4f3fb)
 
@@ -559,7 +570,9 @@ Addressed **HIGH-1** from architecture review (architecture-post-week4-integrati
 
 3. **Research foundation:**
    - Scheffer et al. (2014): Critical slowing down near tipping points
+   - Scheffer et al. (2024): 15-200× variance amplification in real regime shifts
    - Richardson et al. (2023): Variance amplification in bifurcating systems
+   - Empirical evidence: Financial crises (40×), ecosystem collapses (100×), disaster cascades (200×)
 
 **Integration Status:**
 - ✅ State validation ↔ Bifurcation: Conflict resolved (was HIGH-1)
@@ -767,7 +780,7 @@ Three comprehensive assessments completed, revealing dual existential threats:
   - **State capacity collapse:** Sylvia's 2.5°C threshold NOT consensus (Hansen says 2-3°C range)
   - **Expected mortality shift:** 43-58% → 60-75% with variance fix
 - **Priority Recommendations:**
-  - HIGH: Fix variance amplification (BifurcationLogicPhase.ts: 10× → 50-100×)
+  - ✅ COMPLETE (Commit 474f590): Fixed variance amplification (BifurcationLogicPhase.ts: 10× → 100×)
   - MEDIUM-HIGH: Add Arctic abrupt thaw events + 3× regional amplification
   - MEDIUM: Irreversibility mechanics (topsoil, committed warming, recovery impossibility)
 - **Consensus:** 60-75% mortality is research-backed middle ground (not 43-58% optimism, not 75%+ floor)
@@ -3839,9 +3852,15 @@ The simulation runs via a **phase-based architecture** with **116 phases** execu
   - **Problem:** 100% dystopia convergence in Monte Carlo runs - no variance despite stochastic events
   - **Root Cause:** Bifurcation variance calculation was orphaned (computed but not used by any phases)
   - **Solution:** Integrated variance amplification into 3 critical phases (ExogenousShock, StochasticInnovation, TippingPoint)
-  - **Mechanism:** Distance from thresholds → variance multiplier (0.2-2.0×) - near tipping points amplify small differences into divergent trajectories
+  - **Mechanism:** Distance from thresholds → variance multiplier - near tipping points amplify small differences into divergent trajectories
+  - **✅ UPDATED (Nov 6, Commit 474f590):** Variance cap increased from 10× → 100×
+    - **Formula:** `1.0 / (0.01 + normalizedDistance)` (was `1.0 / (0.1 + normalizedDistance)`)
+    - **Range:** At threshold: 100× amplification (was 10×), far from threshold: 1.1× (was 1×)
+    - **Research basis:** Scheffer et al. 2024 (15-200× observed), financial crises (40×), ecosystems (100×), disasters (200×)
+    - **Expected impact:** Mortality 43-58% → 60-75%, coefficient of variation ~2% → 20-40%
   - **Research Backing:**
     - Scheffer et al. (2014) - Critical slowing down, bifurcation points (foundational theory)
+    - Scheffer et al. (2024) - 15-200× variance amplification in real regime shifts
     - Richardson et al. (2023) - Planetary boundaries, tipping points
     - Keller et al. (2024) - Resilience heterogeneity creates differential outcomes
     - Forster et al. (2025) - Climate variance indicators (Earth Energy Imbalance doubled, accelerating warming)
