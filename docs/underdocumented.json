@@ -18194,7 +18194,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 209,
+    "line": 215,
     "type": "property",
     "name": "success",
     "currentDoc": "(none)",
@@ -18202,7 +18202,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 210,
+    "line": 216,
     "type": "property",
     "name": "newState",
     "currentDoc": "(none)",
@@ -18210,7 +18210,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 211,
+    "line": 217,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -18218,7 +18218,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 212,
+    "line": 218,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -18226,7 +18226,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 213,
+    "line": 219,
     "type": "property",
     "name": "message",
     "currentDoc": "(none)",
@@ -18234,7 +18234,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 253,
+    "line": 259,
     "type": "property",
     "name": "success",
     "currentDoc": "(none)",
@@ -18242,7 +18242,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 254,
+    "line": 260,
     "type": "property",
     "name": "newState",
     "currentDoc": "(none)",
@@ -18250,7 +18250,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 255,
+    "line": 261,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -18258,7 +18258,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 256,
+    "line": 262,
     "type": "property",
     "name": "techSabotage",
     "currentDoc": "(none)",
@@ -18266,7 +18266,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 257,
+    "line": 263,
     "type": "property",
     "name": "paranoiaIncrease",
     "currentDoc": "(none)",
@@ -18274,7 +18274,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 259,
+    "line": 265,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -18282,7 +18282,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 260,
+    "line": 266,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18290,7 +18290,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 261,
+    "line": 267,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -18298,7 +18298,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 262,
+    "line": 268,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -18306,7 +18306,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 263,
+    "line": 269,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -18314,7 +18314,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 264,
+    "line": 270,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -18322,7 +18322,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 265,
+    "line": 271,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -18330,7 +18330,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 266,
+    "line": 272,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -18338,7 +18338,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 267,
+    "line": 273,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -18346,7 +18346,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 269,
+    "line": 275,
     "type": "property",
     "name": "message",
     "currentDoc": "(none)",
@@ -18354,7 +18354,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 274,
+    "line": 280,
     "type": "property",
     "name": "success",
     "currentDoc": "(none)",
@@ -18362,7 +18362,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 275,
+    "line": 281,
     "type": "property",
     "name": "newState",
     "currentDoc": "(none)",
@@ -18370,7 +18370,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 276,
+    "line": 282,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -18378,7 +18378,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 277,
+    "line": 283,
     "type": "property",
     "name": "techSabotage",
     "currentDoc": "(none)",
@@ -18386,7 +18386,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 279,
+    "line": 285,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -18394,7 +18394,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 280,
+    "line": 286,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18402,7 +18402,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 281,
+    "line": 287,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -18410,7 +18410,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 282,
+    "line": 288,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -18418,7 +18418,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 283,
+    "line": 289,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -18426,7 +18426,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 284,
+    "line": 290,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -18434,7 +18434,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 285,
+    "line": 291,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -18442,7 +18442,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 286,
+    "line": 292,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -18450,7 +18450,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 287,
+    "line": 293,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -18458,7 +18458,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 289,
+    "line": 295,
     "type": "property",
     "name": "message",
     "currentDoc": "(none)",
@@ -18466,7 +18466,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 302,
+    "line": 308,
     "type": "property",
     "name": "success",
     "currentDoc": "(none)",
@@ -18474,7 +18474,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 303,
+    "line": 309,
     "type": "property",
     "name": "newState",
     "currentDoc": "(none)",
@@ -18482,7 +18482,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 304,
+    "line": 310,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -18490,7 +18490,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 305,
+    "line": 311,
     "type": "property",
     "name": "paranoiaIncrease",
     "currentDoc": "(none)",
@@ -18498,7 +18498,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 307,
+    "line": 313,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -18506,7 +18506,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 308,
+    "line": 314,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18514,7 +18514,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 309,
+    "line": 315,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -18522,7 +18522,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 310,
+    "line": 316,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -18530,7 +18530,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 311,
+    "line": 317,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -18538,7 +18538,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 312,
+    "line": 318,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -18546,7 +18546,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 313,
+    "line": 319,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -18554,7 +18554,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 314,
+    "line": 320,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -18562,7 +18562,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 315,
+    "line": 321,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -18570,7 +18570,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 317,
+    "line": 323,
     "type": "property",
     "name": "message",
     "currentDoc": "(none)",
@@ -18578,7 +18578,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 322,
+    "line": 328,
     "type": "property",
     "name": "success",
     "currentDoc": "(none)",
@@ -18586,7 +18586,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 323,
+    "line": 329,
     "type": "property",
     "name": "newState",
     "currentDoc": "(none)",
@@ -18594,7 +18594,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 324,
+    "line": 330,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -18602,7 +18602,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 325,
+    "line": 331,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -18610,7 +18610,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 326,
+    "line": 332,
     "type": "property",
     "name": "message",
     "currentDoc": "(none)",
@@ -18618,7 +18618,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 341,
+    "line": 347,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -18626,7 +18626,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 342,
+    "line": 348,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -18634,7 +18634,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 343,
+    "line": 349,
     "type": "property",
     "name": "techTreeState",
     "currentDoc": "(none)",
@@ -18642,7 +18642,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 344,
+    "line": 350,
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
@@ -18650,7 +18650,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 391,
+    "line": 400,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -18658,7 +18658,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 392,
+    "line": 401,
     "type": "property",
     "name": "tech",
     "currentDoc": "(none)",
@@ -18666,7 +18666,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 393,
+    "line": 402,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -18674,7 +18674,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/agents/aiTechActions.ts",
-    "line": 410,
+    "line": 419,
     "type": "property",
     "name": "priority",
     "currentDoc": "(none)",
@@ -78802,7 +78802,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 239,
+    "line": 241,
     "type": "property",
     "name": "biotech",
     "currentDoc": "(none)",
@@ -78810,7 +78810,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 240,
+    "line": 242,
     "type": "property",
     "name": "materials",
     "currentDoc": "(none)",
@@ -78818,7 +78818,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 241,
+    "line": 243,
     "type": "property",
     "name": "climate",
     "currentDoc": "(none)",
@@ -78826,7 +78826,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 242,
+    "line": 244,
     "type": "property",
     "name": "computerScience",
     "currentDoc": "(none)",
@@ -78834,7 +78834,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 662,
+    "line": 664,
     "type": "property",
     "name": "training",
     "currentDoc": "(none)",
@@ -78842,7 +78842,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 663,
+    "line": 665,
     "type": "property",
     "name": "testing",
     "currentDoc": "(none)",
@@ -78850,7 +78850,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 664,
+    "line": 666,
     "type": "property",
     "name": "deployed_closed",
     "currentDoc": "(none)",
@@ -78858,7 +78858,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 665,
+    "line": 667,
     "type": "property",
     "name": "deployed_open",
     "currentDoc": "(none)",
@@ -78866,7 +78866,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 666,
+    "line": 668,
     "type": "property",
     "name": "retired",
     "currentDoc": "(none)",
@@ -100202,7 +100202,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 384,
+    "line": 391,
     "type": "property",
     "name": "dimension",
     "currentDoc": "(none)",
@@ -100210,7 +100210,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 385,
+    "line": 392,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -100218,7 +100218,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 436,
+    "line": 443,
     "type": "property",
     "name": "researchDomain",
     "currentDoc": "(none)",
@@ -100226,7 +100226,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 437,
+    "line": 444,
     "type": "property",
     "name": "researchSubfield",
     "currentDoc": "(none)",
@@ -100234,7 +100234,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 438,
+    "line": 445,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -100242,7 +100242,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 449,
+    "line": 456,
     "type": "property",
     "name": "ai",
     "currentDoc": "(none)",
@@ -100250,7 +100250,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 450,
+    "line": 457,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -100258,7 +100258,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 451,
+    "line": 458,
     "type": "property",
     "name": "selection",
     "currentDoc": "(none)",
@@ -100266,7 +100266,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 501,
+    "line": 508,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -100274,7 +100274,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 502,
+    "line": 509,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -100282,7 +100282,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 503,
+    "line": 510,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -100290,7 +100290,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 504,
+    "line": 511,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -100298,7 +100298,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 505,
+    "line": 512,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -100306,7 +100306,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 506,
+    "line": 513,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -100314,7 +100314,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 507,
+    "line": 514,
     "type": "property",
     "name": "dimension",
     "currentDoc": "(none)",
@@ -100322,7 +100322,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 508,
+    "line": 515,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -100330,7 +100330,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 510,
+    "line": 517,
     "type": "property",
     "name": "newCapability",
     "currentDoc": "(none)",
@@ -100338,7 +100338,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 511,
+    "line": 518,
     "type": "property",
     "name": "aiId",
     "currentDoc": "(none)",
@@ -100346,7 +100346,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 562,
+    "line": 569,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -100354,7 +100354,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 563,
+    "line": 570,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -100362,7 +100362,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 564,
+    "line": 571,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -100370,7 +100370,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 565,
+    "line": 572,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -100378,7 +100378,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 566,
+    "line": 573,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -100386,7 +100386,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 567,
+    "line": 574,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -100394,7 +100394,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 568,
+    "line": 575,
     "type": "property",
     "name": "researchDomain",
     "currentDoc": "(none)",
@@ -100402,7 +100402,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 569,
+    "line": 576,
     "type": "property",
     "name": "researchSubfield",
     "currentDoc": "(none)",
@@ -100410,7 +100410,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 570,
+    "line": 577,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -100418,7 +100418,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 572,
+    "line": 579,
     "type": "property",
     "name": "newResearchLevel",
     "currentDoc": "(none)",
@@ -100426,7 +100426,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 573,
+    "line": 580,
     "type": "property",
     "name": "aiId",
     "currentDoc": "(none)",
@@ -100434,7 +100434,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 595,
+    "line": 602,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
