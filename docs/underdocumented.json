@@ -108544,7 +108544,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 40,
+    "line": 45,
     "type": "property",
     "name": "activeRefugeeCrises",
     "currentDoc": "(none)",
@@ -108552,7 +108552,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 41,
+    "line": 46,
     "type": "property",
     "name": "totalDisplaced",
     "currentDoc": "(none)",
@@ -108560,7 +108560,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 42,
+    "line": 47,
     "type": "property",
     "name": "totalResettled",
     "currentDoc": "(none)",
@@ -108568,7 +108568,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 43,
+    "line": 48,
     "type": "property",
     "name": "cumulativeRefugees",
     "currentDoc": "(none)",
@@ -108576,7 +108576,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 44,
+    "line": 49,
     "type": "property",
     "name": "globalRefugeeTension",
     "currentDoc": "(none)",
@@ -108584,7 +108584,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 45,
+    "line": 50,
     "type": "property",
     "name": "regionalTensions",
     "currentDoc": "(none)",
@@ -108592,7 +108592,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 46,
+    "line": 51,
     "type": "property",
     "name": "resettlementCost",
     "currentDoc": "(none)",
@@ -108600,7 +108600,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 47,
+    "line": 52,
     "type": "property",
     "name": "economicStrain",
     "currentDoc": "(none)",
@@ -108608,7 +108608,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 53,
+    "line": 58,
     "type": "property",
     "name": "governmentRelocation",
     "currentDoc": "(none)",
@@ -108616,7 +108616,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 56,
+    "line": 61,
     "type": "property",
     "name": "trappedPopulations",
     "currentDoc": "(none)",
@@ -108624,7 +108624,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 67,
+    "line": 72,
     "type": "property",
     "name": "enabled",
     "currentDoc": "(none)",
@@ -108632,7 +108632,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 68,
+    "line": 73,
     "type": "property",
     "name": "monthActivated",
     "currentDoc": "(none)",
@@ -108640,7 +108640,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 72,
+    "line": 77,
     "type": "property",
     "name": "monthlyBudget",
     "currentDoc": "(none)",
@@ -108648,7 +108648,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 73,
+    "line": 78,
     "type": "property",
     "name": "cumulativeSpending",
     "currentDoc": "(none)",
@@ -108656,7 +108656,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 76,
+    "line": 81,
     "type": "property",
     "name": "totalRelocated",
     "currentDoc": "(none)",
@@ -108664,7 +108664,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 77,
+    "line": 82,
     "type": "property",
     "name": "monthlyRelocated",
     "currentDoc": "(none)",
@@ -108672,7 +108672,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 78,
+    "line": 83,
     "type": "property",
     "name": "eligiblePopulation",
     "currentDoc": "(none)",
@@ -108680,7 +108680,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 79,
+    "line": 84,
     "type": "property",
     "name": "coverageRate",
     "currentDoc": "(none)",
@@ -108688,7 +108688,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 82,
+    "line": 87,
     "type": "property",
     "name": "costPerCapita",
     "currentDoc": "(none)",
@@ -108696,7 +108696,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 91,
+    "line": 96,
     "type": "property",
     "name": "politicalWillModifiers",
     "currentDoc": "(none)",
@@ -108704,7 +108704,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 103,
+    "line": 108,
     "type": "property",
     "name": "trustBonus",
     "currentDoc": "(none)",
@@ -108712,7 +108712,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 104,
+    "line": 109,
     "type": "property",
     "name": "resentmentPenalty",
     "currentDoc": "(none)",
@@ -108720,7 +108720,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 114,
+    "line": 119,
     "type": "property",
     "name": "totalTrapped",
     "currentDoc": "(none)",
@@ -108728,7 +108728,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 115,
+    "line": 120,
     "type": "property",
     "name": "trappedByWater",
     "currentDoc": "(none)",
@@ -108736,7 +108736,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 116,
+    "line": 121,
     "type": "property",
     "name": "trappedByClimate",
     "currentDoc": "(none)",
@@ -108744,7 +108744,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 117,
+    "line": 122,
     "type": "property",
     "name": "trappedByEcosystem",
     "currentDoc": "(none)",
@@ -108752,7 +108752,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 118,
+    "line": 123,
     "type": "property",
     "name": "trappedByConflict",
     "currentDoc": "(none)",
@@ -108760,7 +108760,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 121,
+    "line": 126,
     "type": "property",
     "name": "wealthDistribution",
     "currentDoc": "(none)",
@@ -108768,7 +108768,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 128,
+    "line": 133,
     "type": "property",
     "name": "regionalTrapped",
     "currentDoc": "(none)",
@@ -108776,7 +108776,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 131,
+    "line": 136,
     "type": "property",
     "name": "typeBreakdown",
     "currentDoc": "(none)",
@@ -108784,7 +108784,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 139,
+    "line": 144,
     "type": "property",
     "name": "socialCohesionImpact",
     "currentDoc": "(none)",
@@ -108792,7 +108792,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 143,
+    "line": 148,
     "type": "property",
     "name": "aspiringToMigrate",
     "currentDoc": "(none)",
@@ -108800,7 +108800,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 144,
+    "line": 149,
     "type": "property",
     "name": "ableToMigrate",
     "currentDoc": "(none)",
@@ -108808,7 +108808,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 145,
+    "line": 150,
     "type": "property",
     "name": "mobilityGap",
     "currentDoc": "(none)",
@@ -108816,7 +108816,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 191,
+    "line": 196,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108824,7 +108824,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 192,
+    "line": 197,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108832,7 +108832,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 193,
+    "line": 198,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108840,7 +108840,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 194,
+    "line": 199,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -108848,7 +108848,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 195,
+    "line": 200,
     "type": "property",
     "name": "crisis",
     "currentDoc": "(none)",
@@ -108856,7 +108856,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 196,
+    "line": 201,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -108864,7 +108864,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 198,
+    "line": 203,
     "type": "property",
     "name": "transitDeathRate",
     "currentDoc": "(none)",
@@ -108872,7 +108872,55 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 222,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRefugeeCrises.transitDeaths',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 223,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: `deathsByCategory.${category}`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 224,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 230,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRefugeeCrises.transitDeaths',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
     "line": 231,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'cumulativeCrisisDeaths',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 232,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 251,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -108880,7 +108928,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 232,
+    "line": 252,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -108888,7 +108936,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 233,
+    "line": 253,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -108896,7 +108944,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 234,
+    "line": 254,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -108904,7 +108952,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 235,
+    "line": 255,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -108912,7 +108960,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 239,
+    "line": 259,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -108920,7 +108968,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 240,
+    "line": 260,
     "type": "property",
     "name": "totalFled",
     "currentDoc": "(none)",
@@ -108928,7 +108976,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 241,
+    "line": 261,
     "type": "property",
     "name": "stillInSource",
     "currentDoc": "(none)",
@@ -108936,7 +108984,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 242,
+    "line": 262,
     "type": "property",
     "name": "deaths",
     "currentDoc": "(none)",
@@ -108944,7 +108992,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 243,
+    "line": 263,
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -108952,7 +109000,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 244,
+    "line": 264,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -108960,7 +109008,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 245,
+    "line": 265,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -108968,7 +109016,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 290,
+    "line": 310,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -108976,7 +109024,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 291,
+    "line": 311,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -108984,7 +109032,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 292,
+    "line": 312,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -108992,7 +109040,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 293,
+    "line": 313,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -109000,7 +109048,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 294,
+    "line": 314,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -109008,7 +109056,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 297,
+    "line": 317,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -109016,7 +109064,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 298,
+    "line": 318,
     "type": "property",
     "name": "totalDisplaced",
     "currentDoc": "(none)",
@@ -109024,7 +109072,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 299,
+    "line": 319,
     "type": "property",
     "name": "resettled",
     "currentDoc": "(none)",
@@ -109032,7 +109080,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 300,
+    "line": 320,
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -109040,7 +109088,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 302,
+    "line": 322,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109048,7 +109096,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 303,
+    "line": 323,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -109056,7 +109104,175 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 364,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRefugeeCrises.globalEffects',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 365,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'socialStability',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 366,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 376,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRefugeeCrises.globalEffects',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 377,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'paranoiaLevel',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 378,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 389,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRefugeeCrises.globalEffects',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 390,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'qualityOfLife',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 391,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 401,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRefugeeCrises.globalEffects',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 402,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'dystopiaProbability',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
     "line": 403,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 414,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRefugeeCrises.fortressWorld',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 415,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'surveillanceCapability',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 416,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 424,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRefugeeCrises.fortressWorld',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 425,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'controlDesire',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 426,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 435,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRefugeeCrises.fortressWorld',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 436,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'structuralChoices.surveillanceLevel',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 437,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 471,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109064,7 +109280,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 404,
+    "line": 472,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109072,7 +109288,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 405,
+    "line": 473,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109080,7 +109296,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 440,
+    "line": 508,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109088,7 +109304,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 441,
+    "line": 509,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109096,7 +109312,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 442,
+    "line": 510,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109104,7 +109320,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 443,
+    "line": 511,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109112,7 +109328,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 456,
+    "line": 524,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109120,7 +109336,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 457,
+    "line": 525,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109128,7 +109344,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 458,
+    "line": 526,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109136,7 +109352,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 459,
+    "line": 527,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109144,7 +109360,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 480,
+    "line": 548,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109152,7 +109368,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 481,
+    "line": 549,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109160,7 +109376,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 482,
+    "line": 550,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109168,7 +109384,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 502,
+    "line": 570,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109176,7 +109392,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 503,
+    "line": 571,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109184,7 +109400,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 504,
+    "line": 572,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109192,7 +109408,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 543,
+    "line": 611,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109200,7 +109416,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 544,
+    "line": 612,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109208,7 +109424,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 545,
+    "line": 613,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109216,7 +109432,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 570,
+    "line": 638,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -109224,7 +109440,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 571,
+    "line": 639,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109232,7 +109448,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 572,
+    "line": 640,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -109240,7 +109456,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 573,
+    "line": 641,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -109248,7 +109464,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 574,
+    "line": 642,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -109256,7 +109472,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 578,
+    "line": 646,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -109264,7 +109480,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 579,
+    "line": 647,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109272,7 +109488,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 580,
+    "line": 648,
     "type": "property",
     "name": "potentialDisplaced",
     "currentDoc": "(none)",
@@ -109280,7 +109496,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 581,
+    "line": 649,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -109288,7 +109504,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 582,
+    "line": 650,
     "type": "property",
     "name": "displacementDuration",
     "currentDoc": "(none)",
@@ -109296,7 +109512,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 583,
+    "line": 651,
     "type": "property",
     "name": "monthsToComplete",
     "currentDoc": "(none)",
@@ -109304,7 +109520,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 595,
+    "line": 663,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109312,7 +109528,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 596,
+    "line": 664,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109320,7 +109536,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 597,
+    "line": 665,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109328,7 +109544,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 598,
+    "line": 666,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109336,7 +109552,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 599,
+    "line": 667,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -109344,7 +109560,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 615,
+    "line": 683,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -109352,7 +109568,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 617,
+    "line": 685,
     "type": "property",
     "name": "startMonth",
     "currentDoc": "(none)",
@@ -109360,7 +109576,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 626,
+    "line": 694,
     "type": "property",
     "name": "resettledCount",
     "currentDoc": "(none)",
@@ -109368,7 +109584,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 627,
+    "line": 695,
     "type": "property",
     "name": "deathsInTransit",
     "currentDoc": "(none)",
@@ -109376,7 +109592,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 632,
+    "line": 700,
     "type": "property",
     "name": "displacementComplete",
     "currentDoc": "(none)",
@@ -109384,7 +109600,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 636,
+    "line": 704,
     "type": "property",
     "name": "monthsActive",
     "currentDoc": "(none)",
@@ -109392,7 +109608,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 637,
+    "line": 705,
     "type": "property",
     "name": "resettlementProgress",
     "currentDoc": "(none)",
@@ -109400,7 +109616,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 640,
+    "line": 708,
     "type": "property",
     "name": "socialTension",
     "currentDoc": "(none)",
@@ -109408,7 +109624,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 641,
+    "line": 709,
     "type": "property",
     "name": "economicStrain",
     "currentDoc": "(none)",
@@ -109416,7 +109632,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 642,
+    "line": 710,
     "type": "property",
     "name": "politicalInstability",
     "currentDoc": "(none)",
@@ -109424,7 +109640,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 645,
+    "line": 713,
     "type": "property",
     "name": "resettlementRate",
     "currentDoc": "(none)",
@@ -109432,7 +109648,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 647,
+    "line": 715,
     "type": "property",
     "name": "acceleratedResettlement",
     "currentDoc": "(none)",
@@ -109440,7 +109656,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 648,
+    "line": 716,
     "type": "property",
     "name": "resolved",
     "currentDoc": "(none)",
@@ -109448,7 +109664,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 652,
+    "line": 720,
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -142320,27 +142536,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-    "line": 938,
-    "type": "property",
-    "name": "co2",
-    "currentDoc": "(none)",
-    "context": "co2: { min: 280, max: 600, unit: 'ppm' },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
     "line": 939,
     "type": "property",
     "name": "temperature",
     "currentDoc": "(none)",
     "context": "temperature: { min: -2, max: 10, unit: '°C above baseline' },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-    "line": 940,
-    "type": "property",
-    "name": "oceanPH",
-    "currentDoc": "(none)",
-    "context": "oceanPH: { min: 7.5, max: 8.5, unit: 'pH' },"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
@@ -142461,14 +142661,6 @@
     "name": "month",
     "currentDoc": "(none)",
     "context": "month?: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-    "line": 1059,
-    "type": "property",
-    "name": "gdp",
-    "currentDoc": "(none)",
-    "context": "gdp: { min: 0, max: 200, unit: 'trillion USD' },"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
