@@ -191,8 +191,9 @@ for BRANCH in $BRANCHES; do
 
           git checkout main 2>&1 >> "$LOG_FILE"
 
-          # Create remediation task file
-          REMEDIATION_TASK="$LOG_DIR/remediation_tests_${BRANCH}_${TIMESTAMP}.md"
+          # Create remediation task file (sanitize branch name for filesystem)
+          SAFE_BRANCH=$(echo "$BRANCH" | sed "s|[+ /]|_|g")
+          REMEDIATION_TASK="$LOG_DIR/remediation_tests_${SAFE_BRANCH}_${TIMESTAMP}.md"
           cat > "$REMEDIATION_TASK" <<EOFT
 # Test Failure Remediation Task
 
@@ -256,8 +257,9 @@ EOFT
       # Don't abort yet - keep conflict state for Claude Code
       git checkout main 2>&1 >> "$LOG_FILE"
 
-      # Create remediation task file
-      REMEDIATION_TASK="$LOG_DIR/remediation_${BRANCH}_${TIMESTAMP}.md"
+      # Create remediation task file (sanitize branch name for filesystem)
+      SAFE_BRANCH=$(echo "$BRANCH" | sed "s|[+ /]|_|g")
+      REMEDIATION_TASK="$LOG_DIR/remediation_${SAFE_BRANCH}_${TIMESTAMP}.md"
       cat > "$REMEDIATION_TASK" <<EOF
 # Merge Conflict Remediation Task
 
