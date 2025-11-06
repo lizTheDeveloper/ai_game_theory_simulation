@@ -118,12 +118,21 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 - **Details:** See [workflow completion summary](/plans/completed/workflow_completion_summary_issues_4_5_6_20251031.md)
 
 **5. 100% Dystopia Outcome - Insufficient Variance**
-- **Status:** 🔄 RESEARCH COMPLETE, implementation deferred
+- **Status:** 🔄 PARTIALLY RESOLVED - Bifurcation integrated (Nov 6), empirical validation pending
 - **Problem:** All 3 runs show near-identical outcomes (no variance)
-- **Research:** 20+ papers on resilience, bifurcation, Monte Carlo best practices
-- **Implementation Plan:** Requires bifurcation logic (8-12h estimated)
-- **Rationale for Deferral:** Should address AFTER Issue #11 (determinism) is resolved
-- **Details:** See [workflow completion summary](/plans/completed/workflow_completion_summary_issues_4_5_6_20251031.md)
+- **Solution Implemented:**
+  - Bifurcation variance amplification (1-10×) integrated into 3 priority phases (ExogenousShockPhase, StochasticInnovationPhase, ClimateImpactCascadePhase)
+  - Fixed BifurcationLogicPhase accessing non-existent state properties
+  - Expected impact: 20-70% coefficient of variation (vs previous 0%)
+  - Integration report: `/logs/bifurcation_integration_20251106.md`
+- **Research Critique (Sylvia):**
+  - Formula `1/(0.1 + distance)` lacks empirical calibration
+  - Suggests power law `(1/distance)^2` with 100× cap (vs current 10× cap)
+  - Historical data: 2008 crisis 40× variance, Permian-Triassic 100× variance
+- **Next Steps:**
+  - HIGH: Validate bifurcation formula against empirical data (2008 crisis, extinction events)
+  - MEDIUM: Monte Carlo N=10 to verify outcome variance improvement
+- **Details:** See [workflow completion summary](/plans/completed/workflow_completion_summary_issues_4_5_6_20251031.md) and [bifurcation integration report](/logs/bifurcation_integration_20251106.md)
 
 **6. Famine Mechanism Doesn't Reflect Distributional Reality**
 - **Status:** 🔄 RESEARCH COMPLETE, implementation deferred
@@ -217,20 +226,33 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 #### 🔴 CRITICAL Research Issues (Must Resolve Before Implementation)
 
 **1. Xia vs Shi Contradiction on US Corn Belt**
-- **Priority:** CRITICAL
+- **Priority:** CRITICAL - Escalated (Nov 6, 2025)
 - **Problem:** Xia et al. 2022 says "impossible for 2+ years", Shi et al. 2025 says "largely unaffected"
 - **Impact:** Determines whether 200M+ North Americans starve or survive
+- **Research Critique (Sylvia):** "This single contradiction determines if 200M Americans starve. Highest priority unresolved research gap."
 - **Action Required:** Read both papers directly, resolve contradiction, run sensitivity analysis
+- **Status:** BLOCKING research validity - must resolve before frontend implementation
 
 **2. Simulation 98% Mortality vs Research 75% Mortality**
-- **Priority:** CRITICAL
+- **Priority:** CRITICAL - Escalated (Nov 6, 2025)
 - **Problem:** Simulation 23% MORE catastrophic than worst-case peer-reviewed research
-- **Action Required:** Reconcile Xia's 75% with simulation's 98%, audit mortality accumulation
+- **Research Critique (Sylvia):** "17-24% unexplained mortality gap. Possible causes: cascade amplification (correct if modeled), double-counting bugs, or missing stabilizers (black markets, subsistence transition)."
+- **Action Required:**
+  1. Trace mortality accumulation path through all phases
+  2. Identify amplification points
+  3. Check for double-counting (same deaths attributed to multiple causes)
+  4. Validate cascade logic against research
+- **Status:** BLOCKING research validity
 
 **3. Food Security 0.04 vs Climate Gate Zero**
-- **Priority:** CRITICAL
+- **Priority:** CRITICAL - Escalated (Nov 6, 2025)
 - **Problem:** Simulation shows 4% food security, but research proposes agriculture should be ZERO until thresholds met
-- **Action Required:** Verify hard climate gates vs gradual degradation
+- **Research Critique (Sylvia):** "Nuclear winter + famine destroys topsoil. Recovery literature cites 7-15 years, but Pimentel et al. (1995, Science) shows topsoil formation takes 500-1,000 years. Some collapses should be permanent within simulation timescales."
+- **Action Required:**
+  1. Verify hard climate gates vs gradual degradation
+  2. Model irreversible transitions (permanent regime shifts)
+  3. Distinguish "threshold crossing" (month X) from "impact manifestation" (decades later)
+- **Status:** BLOCKING research validity
 
 ---
 
@@ -254,6 +276,8 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 **Summary (Food Security):**
 - **Total Issues:** 10 (3 CRITICAL, 3 HIGH, 4 MEDIUM)
 - **Recommendation:** Address critical contradictions first, then implement recovery mechanics
+- **Research Critique (Sylvia):** "Frontend prioritized over resolving these contradictions. UI for incorrect simulations is worthless. Fix research, THEN build UI."
+- **Roadmap Impact:** Food Security resolution elevated to IMMEDIATE priority (blocks all frontend work)
 
 ---
 
@@ -272,6 +296,77 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 4. MEDIUM/LOW issues as bandwidth allows
 
 **Overall Project Status:** Research validity improving - Layer 2 fixes complete (65-80% validity), mortality stabilizers implemented, awaiting determinism fixes for comprehensive validation
+
+---
+
+### 3.4 🔬 Research Quality Debate (Nov 6, 2025)
+
+**Source:** Research validation audits by Cynthia + Sylvia
+**Status:** CONTRADICTORY VERDICTS - both correct in their domains
+
+#### Cynthia's Assessment: A- (Excellent with Minor Gaps)
+
+**Audit Report:** `/reviews/research_source_validation_20251106.md` (946 lines)
+
+**Findings:**
+- ✅ 100% of research files <30 days old (no outdated sources)
+- ✅ Strong peer-reviewed citations (Nature, Science, The Lancet)
+- ✅ Multiple verification layers (primary + verification files)
+- ✅ Critical fixes applied (wet bulb 30.5°C, biosphere direction)
+- ✅ Weak evidence acknowledged in code comments
+
+**Priority Gaps:**
+- HIGH: Climate tipping timescales (decades-centuries in research, may be months in code)
+- MEDIUM: Optimistic AI alignment scenarios (recursive alignment progress)
+- MEDIUM: Recovery capacity validation (2025 resilience research)
+- LOW: Tech deployment rates (monitor vs industry projections)
+
+**Verdict:** Research foundation STRONG, citations EXCELLENT, minor calibration gaps
+
+#### Sylvia's Assessment: C- (Not Research-Ready)
+
+**Critique Report:** `/reviews/research_debate_session_20251106.md` (8,500+ words, 35 issues)
+
+**Critical Issues:**
+1. **Climate Timescales:** TippingPointPhase uses 10-15,000yr (Robinson 2012), IPCC AR6 says centuries. Off by 5-10×.
+2. **Mortality Stabilizers:** International aid assumes external donors during global collapse (logical impossibility when all regions collapsing simultaneously).
+3. **Missing Deceptive AI Alignment:** Claude 3 faked alignment 78% of cases (2024 research), not modeled.
+4. **Bifurcation Formula Arbitrary:** `1/(0.1 + distance)` = 1-10× cap, but 2008 crisis showed 40× variance, extinction events 100×.
+5. **Food Security Contradictions Unresolved:** Xia vs Shi determines if 200M Americans survive.
+
+**Roadmap Critique:**
+- "UI for incorrect simulations is worthless."
+- "Spending weeks on dashboards while core assumptions contradict research."
+- "Fix the foundations before building the house."
+
+**Verdict:** Implementation MISCALIBRATED, parameters OFF by orders of magnitude, roadmap priorities BACKWARDS
+
+#### Reconciliation Analysis (The Architect)
+
+**Both are correct:**
+- **Citations ARE excellent (A-)** - Cynthia's audit verified sources, dates, verification layers
+- **Implementation MAY be wrong (C-)** - Sylvia's critique identified parameter mismatches, logical contradictions, missing dynamics
+
+**The bifurcated reality:**
+- Research QUALITY: A- (peer-reviewed, recent, well-cited)
+- Research-to-CODE FIDELITY: C- (timescales off 5-10×, key contradictions unresolved)
+
+**Critical Finding:**
+Monte Carlo 100% dystopia convergence is NOT just a variance problem. It's a symptom of:
+1. Climate collapse too fast (overrides other dynamics)
+2. Mortality stabilizers assume impossible conditions (aid during global collapse)
+3. Recovery mechanics ignore permanent regime shifts
+4. Missing transformative adaptation pathways
+5. Regional homogeneity (violates all historical precedent)
+
+**Action Required:**
+1. **IMMEDIATE:** Validate TippingPointPhase timescales vs IPCC AR6 (HIGH priority)
+2. **IMMEDIATE:** Resolve Xia vs Shi food security contradiction (CRITICAL priority)
+3. **IMMEDIATE:** Trace mortality accumulation for double-counting (CRITICAL priority)
+4. **HIGH:** Validate bifurcation formula against empirical data (2008 crisis, extinctions)
+5. **DEFER:** All frontend work until research validity restored
+
+**Status:** Research validity CRISIS - excellent citations, questionable implementation fidelity
 
 ---
 
@@ -295,6 +390,13 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - Memory-intensive operations (deep cloning in hot paths)
   - O(n²) array operations (505+ across 70 files)
   - Sequential phase execution (no parallelization)
+
+**Architecture Review Findings (Nov 6):**
+- **CRITICAL (RESOLVED):** Orphaned bifurcation state (varianceAmplification calculated but never used) - FIXED via integration into 3 phases
+- **HIGH:** Phase count explosion (117 files, needs consolidation planning)
+- **HIGH:** Deep clone performance (O(n) memory per clone, 20+ instances)
+- **MEDIUM:** Inconsistent state mutation patterns (some phases mutate, others return)
+- **Review:** `/reviews/architecture-integration-review_20251106.md`
 
 **Process:**
 - Track in `reviews/architecture-*` files
@@ -349,27 +451,51 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
    - ✅ Batch 2.2: Fixed 21 hot-path Object iteration sites (AI count stable)
    - ✅ Batch 3: Fixed conditional RNG consumption (5 files, deterministic through Month 2+)
    - ⏳ Next: Re-validate all Monte Carlo analyses with fixed determinism
-2. ✅ **HIGH:** Climate Mortality Phase 2 Implementation - **COMPLETE** (Nov 6, 2025) ⭐
+2. ✅ **CRITICAL:** Bifurcation Variance Integration (Issue #5 partial) - **COMPLETE** (Nov 6, 2025) ⭐
+   - Problem: BifurcationLogicPhase calculated varianceAmplification (1-10×) but NO phases used it
+   - Solution: Integrated into 3 priority phases (ExogenousShockPhase, StochasticInnovationPhase, ClimateImpactCascadePhase)
+   - Bonus Fix: BifurcationLogicPhase was accessing non-existent globalMetrics properties (now fixed)
+   - Expected Impact: 20-70% coefficient of variation (vs previous 0%)
+   - Report: `/logs/bifurcation_integration_20251106.md`
+   - **Sylvia's Critique:** Formula `1/(0.1 + distance)` lacks empirical grounding (suggests power law with 100× cap)
+   - **Next:** Validate formula against empirical bifurcation data (HIGH priority)
+3. ✅ **HIGH:** Climate Mortality Phase 2 Implementation - **COMPLETE** (Nov 6, 2025) ⭐
    - Research: A- grade (90% peer-reviewed, 50% from 2024-2025)
    - Validation: Cynthia & Sylvia APPROVED (high confidence)
    - Implementation: Storm systems + BII framework already existed, integration verified
    - Monte Carlo: N=10 validation passed (no NaN errors)
    - Architecture: B+ grade (APPROVED WITH CONDITIONS)
    - Status: COMPLETE - all quality gates passed, plans archived
-4. 🟠 **HIGH:** Monte Carlo Issues #5-6 Implementation (deferred, pending determinism fixes)
-   - Issue #5: Outcome variance / bifurcation logic (8-12h)
-   - Issue #6: Famine distribution redesign (12-16h)
-5. 🟠 **HIGH:** Food Security Critical Contradictions (Xia vs Shi, mortality gap, climate gates)
-6. ✅ **MEDIUM:** Cooperative AI Ownership Implementation - **COMPLETE** (Nov 5, 2025) ⭐
+4. 🔴 **CRITICAL:** Food Security Critical Contradictions - **ESCALATED TO BLOCKER** (Nov 6, 2025)
+   - **Issue #1 (Xia vs Shi):** Determines if 200M Americans survive - HIGHEST PRIORITY UNRESOLVED GAP (Sylvia)
+   - **Issue #2 (98% vs 75% mortality):** 17-24% unexplained gap - trace accumulation paths, check double-counting
+   - **Issue #3 (Climate gates):** Model irreversible transitions (permanent regime shifts, 500-1,000yr soil recovery)
+   - **Sylvia's Verdict:** "UI for incorrect simulations is worthless. Fix research, THEN build UI."
+   - **Status:** BLOCKS all frontend work until resolved
+5. 🟠 **HIGH:** Monte Carlo Issue #6 - Famine Distribution Redesign (deferred, 12-16h)
+   - Sen's entitlement theory: Famines are distributional, not absolute shortages
+   - Current: 94.3% famine deaths affect all regions homogeneously (incorrect)
+   - Required: Hoarding behavior, regional heterogeneity, distributional mechanics
+6. 🟠 **HIGH:** TippingPointPhase Timescale Validation (NEW - Nov 6, 2025)
+   - **Sylvia's Critique:** Current code uses 10-15,000yr (Robinson 2012), IPCC AR6 says centuries for Greenland
+   - **Impact:** Off by 5-10×, may explain 100% dystopia convergence (collapse too fast)
+   - **Action:** Compare TippingPointPhase.ts against IPCC AR6 Chapter 9, Armstrong McKay et al. (2022)
+   - **Expected:** Compress timescales 5-10× to match consensus
+7. 🟠 **HIGH:** Validate Bifurcation Formula Against Empirical Data (NEW - Nov 6, 2025)
+   - Current: `1/(0.1 + distance)` = 1-10× cap
+   - Empirical: 2008 crisis 40× variance (VIX 20→80), Permian-Triassic 100× variance
+   - Action: Compare against historical regime shift data, validate cap
+8. ✅ **MEDIUM:** Cooperative AI Ownership Implementation - **COMPLETE** (Nov 5, 2025) ⭐
    - Status: Phase ACTIVE (registered in engine at order 15.5)
    - Implementation: 2 of 4 medium issues resolved (bootstrap + survival multiplier)
    - Remaining: Storm mortality coordination + infrastructure multiplier uncertainty (4-7h)
    - Research: C+ grade (adequate but not ideal, conservative parameters)
    - Validation: Cynthia APPROVED, Sylvia SKEPTICAL but not blocking
-7. 🟢 **MEDIUM:** Wiki Citation Verification & Correction
-8. 🟢 **MEDIUM:** Policy System remaining sections (5 of 6 complete)
-9. 🔵 **LOW:** Memetic Contagion System (Black Mirror Phase 2) - Research complete, integration planning (12-16 weeks)
-10. 🔵 **LOW:** Compute-Workforce Coherence Warnings Investigation (1,089 occurrences, non-critical)
+9. 🟢 **MEDIUM:** Wiki Citation Verification & Correction
+10. 🟢 **MEDIUM (DEPRIORITIZED):** Policy System remaining sections (5 of 6 complete)
+    - **Sylvia's Critique:** "At 74-81% mortality, what government remains to implement policy? Deprioritize until mortality rates realistic (<60%)."
+11. 🔵 **LOW:** Memetic Contagion System (Black Mirror Phase 2) - Research complete, integration planning (12-16 weeks)
+12. 🔵 **LOW:** Compute-Workforce Coherence Warnings Investigation (1,089 occurrences, non-critical)
 
 **Medium-Term (Next 1-3 months):**
 1. **MEDIUM:** Frontend complete dashboard implementation (8 phases, 3-4 weeks parallel)
@@ -386,14 +512,21 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 ## 🎯 Progress Summary
 
 **Simulation Status:**
-- 🟢 **VALIDITY IMPROVED:** 45-65% → 65-80% (Layer 2 Remediation complete)
+- ⚠️ **VALIDITY STATUS: UNCERTAIN** - Research quality A- (citations excellent), implementation fidelity C- (parameters off 5-10×)
+- ✅ **Bifurcation Variance Integration COMPLETE** (Nov 6) - varianceAmplification now used by 3 phases, expected 20-70% outcome variance
 - ✅ **Climate Mortality Phase 2 COMPLETE** (Nov 6) - Storm systems + BII framework validated (N=10 Monte Carlo)
 - ✅ **Determinism Issue #11 COMPLETE** (Nov 6) - 29 non-deterministic bugs fixed across 3 batches
 - ✅ **Mortality Stabilizers Implemented** (Issue #4 complete) - Expected impact: 30-50% regional, 60-80% global catastrophic
 - ✅ **All 3 CRITICAL Monte Carlo blockers FIXED** (Oct 31) - Biosphere, mortality attribution, population coherence
 - ✅ **Cooperative AI Ownership Phase ACTIVE** (Nov 5) - Registered in engine, executing monthly updates
 - ✅ **Research Citations:** OpenAI 6% statistic corrected, Bai et al. date verified (Nov 6)
-- 🔍 **Active Issues:** 20 total bugs (3 CRITICAL Food Security, 3 HIGH Monte Carlo)
+- 🔴 **CRITICAL ISSUES (ESCALATED Nov 6):**
+  - Xia vs Shi contradiction (determines if 200M Americans survive)
+  - 98% vs 75% mortality gap (17-24% unexplained)
+  - Climate timescales off 5-10× (TippingPointPhase vs IPCC AR6)
+  - Bifurcation formula lacks empirical grounding (10× cap vs 100× observed)
+  - Mortality stabilizers assume impossible conditions (aid during global collapse)
+- 🔍 **Active Issues:** 25+ total (3 CRITICAL Food Security escalated, 5 HIGH new findings from research debate)
 
 **Frontend Status:**
 - **Timeline:** 3-4 weeks with multi-agent parallelization
@@ -458,7 +591,17 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 ---
 
-**Last Updated:** November 6, 2025 - Climate Mortality Phase 2 COMPLETE (Orchestrator)
-**Status:** Determinism Issue #11 COMPLETE (29 bugs fixed), Climate Phase 2 COMPLETE (Storm + BII validated)
-**Session Summary:** Climate Phase 2 implementation validated through full orchestrator workflow (research → implementation → testing → architecture review → documentation)
-**Next Priority:** Monte Carlo Issues #5-6 (bifurcation logic + famine distribution, 20-28h total) OR Food Security Critical Contradictions (3 CRITICAL issues, research-intensive)
+**Last Updated:** November 6, 2025 - Autonomous Worker Session 20251106_030001 COMPLETE
+**Status:** Research validity CRISIS - citations A-, implementation fidelity C-
+**Session Summary:**
+- ✅ Bifurcation variance integration complete (Issue #5 partially resolved)
+- ✅ Architecture integration review complete (7/10 health, 1 CRITICAL fixed)
+- ✅ Research source validation complete (Cynthia: A-, 946-line audit)
+- ✅ Research debate session complete (Sylvia: C-, 8,500-word critique, 35 issues)
+**Critical Finding:** Monte Carlo 100% dystopia convergence is NOT just variance problem - symptom of climate collapse too fast, mortality stabilizers assuming impossible conditions, missing transformative adaptation, regional homogeneity violations
+**Next Priority (BLOCKING ALL OTHER WORK):**
+1. Resolve Xia vs Shi food security contradiction (CRITICAL - determines 200M survival)
+2. Validate TippingPointPhase timescales vs IPCC AR6 (HIGH - off by 5-10×)
+3. Trace mortality accumulation paths for double-counting (CRITICAL - 17-24% unexplained gap)
+4. Validate bifurcation formula against empirical data (HIGH - current cap 10×, observed 100×)
+**Defer Until Research Fixed:** All frontend work (dashboard, UI/UX, God Mode)
