@@ -6,6 +6,35 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 6, 2025)
 
+**🐛 Dashboard Data Flow Fix - Paradigm Trajectory Delta Bug** (Nov 6, 2025)
+
+**Issue:** The `paradigmTrajectory` array (and other critical arrays) were missing from delta calculations after the first simulation step, causing dashboard visualizations to lose data.
+
+**Root Cause:** `calculateDelta` in `simulationWorker.ts` returned full snapshot on first step but subsequent deltas only included changed scalar values. Arrays needed by dashboards were never explicitly included.
+
+**Fix Applied:** (commit 3e85031)
+- Extract `paradigmTrajectory` from `state.multiParadigmDUI?.history` in `captureStateSnapshot`
+- Always include critical dashboard arrays in every delta:
+  - `paradigmTrajectory` - Full paradigm score history for DUIFlowChart
+  - `aiAgents` - AI agent state for agent visualizations
+  - `regionalPopulations` - Population breakdown by region
+  - `qualityOfLifeBreakdown` - QoL metrics for tier visualizations
+  - `aiSufferingMetrics` - Digital welfare metrics
+  - `aiCollectives` - Collective agent state (if present)
+
+**Impact:** Dashboard visualizations (DUIFlowChart, population charts, QoL breakdowns) now receive complete data on every simulation step, not just initial render.
+
+**Technical Context:** The simulation worker uses delta-based state updates to minimize data transfer between worker thread and UI. This fix ensures arrays required by dashboard components are always included in deltas, even though array references are regenerated each step.
+
+**Files Changed:**
+- `src/workers/simulationWorker.ts` - `captureStateSnapshot` and `calculateDelta` functions
+
+**Commit:** 3e85031 - "fix: Include paradigmTrajectory and other arrays in delta after first step"
+
+---
+
+
+
 **✅ WEEK 3 TASK 7 COMPLETE: State Validation Framework** (Nov 6, 2025)
 
 **Summary:** Task 7 complete in 7 hours vs 3 days target (90% faster). All 3 phases delivered, passed both quality gates, caught one real bug, zero false positives in Monte Carlo validation.

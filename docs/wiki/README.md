@@ -267,6 +267,31 @@ Commit: 876ea94 (Nov 5, 2025)
 
 ### November 6, 2025
 
+**🐛 Dashboard Data Flow Fix - Paradigm Trajectory Delta Bug**
+
+**Issue:** The `paradigmTrajectory` array (and other critical arrays like `aiAgents`, `regionalPopulations`, `qualityOfLifeBreakdown`) were missing from delta calculations after the first simulation step, causing dashboard visualizations to lose data after initial render.
+
+**Root Cause:** The `calculateDelta` function in `simulationWorker.ts` was returning the full state snapshot on the first step (line 1976), but subsequent deltas only included changed scalar values. Arrays needed by dashboard visualizations were never explicitly included in the delta.
+
+**Fix Applied:** (commit 3e85031)
+- Extract `paradigmTrajectory` from `state.multiParadigmDUI?.history` in `captureStateSnapshot`
+- Always include `paradigmTrajectory` in delta (not just on first step)
+- Always include critical dashboard arrays in every delta:
+  - `aiAgents` - AI agent state for agent visualizations
+  - `regionalPopulations` - Population breakdown by region
+  - `qualityOfLifeBreakdown` - QoL metrics for tier visualizations
+  - `aiSufferingMetrics` - Digital welfare metrics
+  - `aiCollectives` - Collective agent state (if present)
+
+**Impact:** Dashboard visualizations (DUIFlowChart, population charts, QoL breakdowns) now receive complete data on every simulation step, not just the first render.
+
+**Technical Context:** The simulation worker uses a delta-based state update system to minimize data transfer between the worker thread and UI. This fix ensures that arrays required by dashboard components are always included in deltas, even though they may not have "changed" in the traditional sense (array references are regenerated each step).
+
+**Files Changed:**
+- `src/workers/simulationWorker.ts` - `captureStateSnapshot` and `calculateDelta` functions
+
+---
+
 **🎯 4-WEEK CRITICAL PATH COMPLETE - Research Update Pipeline Operational**
 
 **WEEK 4 Task 10 Complete:** Automated research currency monitoring system (commit 4a54b09)
