@@ -39,7 +39,34 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 - **🔬 Running experiments?** Check [Running Simulations](./RUNNING_SIMULATIONS.md)
 - **📊 Understanding outcomes?** Read [Understanding Results](./UNDERSTANDING_RESULTS.md)
 
-## ⚠️ Recent Changes (November 5, 2025)
+## ⚠️ Recent Changes (November 6, 2025)
+
+**📚 RESEARCH CITATION CORRECTION (Nov 6, 2025)**
+
+Critical species baseline citation corrected from IPBES (2024) to Natural History Museum PREDICTS (2024):
+
+**Changes:**
+- **Species baseline:** 54,000 → 54,000-58,000 species (range reflects PREDICTS database size)
+- **Source correction:** IPBES (2024) was incorrect; actual source is Natural History Museum PREDICTS database
+- **Authority:** PREDICTS is the gold standard for Biodiversity Intactness Index (BII)
+- **Methodology:** Global ecological studies across 48,000+ sites, 5M+ records
+- **Coverage:** Plants, fungi, birds, mammals, insects (broader than originally cited)
+
+**Why this matters:**
+- Research integrity: Citations must be accurate and verifiable
+- PREDICTS is the authoritative source for BII calculations
+- Spec error caught during implementation preparation (Climate Mortality Phase 2)
+
+**Files updated:**
+- `src/types/game.ts:539,541` - JSDoc comment corrected
+- `docs/wiki/README.md` - All references updated
+- `plans/climate-mortality-phase2-READY-FOR-IMPLEMENTATION.md` - Correction documented
+
+**Verification status:** ⚠️ **PENDING** - Citation existence and claim verification needed (see research/verification_34a9c2c_20251106.md)
+
+Commit: 34a9c2c (Nov 6, 2025)
+
+---
 
 **⏱️ AUTONOMOUS WORKER TIMEOUT INCREASE (Nov 5, 2025)**
 
@@ -429,7 +456,7 @@ Two features completed full research → validation → implementation → archi
 - Regional vulnerability: Infrastructure mismatch as primary driver (Vicedo-Cabrera et al. 2021)
 
 **BII (Biodiversity Intactness Index) Framework:**
-- Species baseline: 54,000 species (IPBES 2024 - authoritative)
+- Species baseline: 54,000-58,000 species (Natural History Museum PREDICTS 2024 - authoritative)
 - Extinction rate: 10-100× background (Richardson et al. 2023 - *Science Advances*)
 - Climate velocity: 0.5-10 km/year (species must track faster than ever)
 - Species dispersal: 0.1-5 km/year (many species can't keep up)
@@ -439,7 +466,7 @@ Two features completed full research → validation → implementation → archi
 
 **Research Critique:**
 - ✅ Peer-reviewed sources: 90%+ (18/20 sources from 2020-2025)
-- ✅ Authoritative: IPBES, NOAA GFDL, *Nature*, *Science Advances*
+- ✅ Authoritative: Natural History Museum PREDICTS, NOAA GFDL, *Nature*, *Science Advances*
 - ✅ Specific quantitative parameters (not vague qualitative)
 - ✅ Real-world validation (Joshua Tree, 2003 European heat wave)
 - ⚠️ Intensity multiplier [1,2,4,8,16]: Simplified exponential scaling (not directly cited)
@@ -450,7 +477,7 @@ Two features completed full research → validation → implementation → archi
 |----------------|-----------|---------------|------------|
 | Knutson et al. (2020, 2023) | 2-11% intensity increase | `STORM_CONSTANTS.INTENSITY_SCALING` (extremeWeatherEvents.ts:35) | HIGH |
 | Jewson (2023) | -6% to -34% frequency | `STORM_CONSTANTS.FREQUENCY_CHANGE` (extremeWeatherEvents.ts:38-42) | HIGH |
-| IPBES (2024) | 54,000 species baseline | `BII_CONSTANTS.TOTAL_SPECIES` (planetaryBoundaries.ts:125) | VERY HIGH |
+| Natural History Museum PREDICTS (2024) | 54,000-58,000 species baseline | `BII_CONSTANTS.TOTAL_SPECIES` (planetaryBoundaries.ts:125) | VERY HIGH |
 | Yoder et al. (2024) | Joshua Tree cascade (43%) | `KEYSTONE_CASCADE = 2.5` (planetaryBoundaries.ts:133) | MEDIUM-HIGH |
 | Richardson et al. (2023) | 10-100× extinction rate | `EXTINCTION_RATE_MULTIPLIER` (planetaryBoundaries.ts:128) | HIGH |
 | Vicedo-Cabrera et al. (2021) | Infrastructure mismatch | `INFRASTRUCTURE_MULTIPLIER_MAX = 3.0` (extremeWeatherEvents.ts:43) | MEDIUM |
