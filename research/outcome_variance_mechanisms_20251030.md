@@ -189,6 +189,32 @@ function calculateOutcomeProbabilities(
 
 **Implication for Simulation:** Systems near tipping points show **extreme sensitivity to initial conditions**. Small differences in timing or magnitude of interventions → vastly different outcomes.
 
+### 2.1b Updated Climate System Variance Indicators (2025)
+
+**Citation:** Forster, P. M., Smith, C., Walsh, T., et al. (2025). "Indicators of Global Climate Change 2024: annual update of key indicators of the state of the climate system and human influence." *Earth System Science Data*, 17, 2641–2680. https://doi.org/10.5194/essd-17-2641-2025
+
+**Publication:** June 19, 2025 (most recent comprehensive assessment)
+
+**Key Variance and Bifurcation Indicators:**
+
+1. **Accelerating warming trajectory:** Human-induced warming rate at 0.27 [0.2–0.4] °C per decade (2015–2024) — substantially higher than historical baselines, indicating potential proximity to bifurcation
+
+2. **Energy imbalance doubling:** Earth Energy Imbalance (EEI) doubled from 0.43 [0.03–0.83] W m⁻² (1975–1994) to 0.89 [0.7–1.09] W m⁻² (2005–2024) — systemic acceleration characteristic of approaching tipping points
+
+3. **Deepening ocean warming:** "Robust increase in ocean warming in the 700–2000 m depth layer since the 1990s" — warming signal propagating to deeper layers suggests potential stability loss
+
+4. **Internal variability masking:** 2024 warming (1.52 °C observed) exceeds human-forced component (1.36 °C) by 0.16 °C — demonstrates role of natural variability in short-term extremes, critical for detecting proximity to tipping points
+
+5. **Aerosol forcing instability:** Declining aerosol cooling (via shipping regulations) adds ~+0.1 W m⁻² positive feedback since 2020, reducing cooling buffer
+
+**Quantitative Thresholds (2024 data):**
+- **Current warming:** 1.52 °C (2024), 1.24 [1.11–1.35] °C (2015–2024 avg) relative to 1850–1900
+- **Human-induced component:** 1.36 °C (2024 best estimate), 1.22 [1.0–1.5] °C (2015–2024)
+- **1.5°C threshold:** Already exceeded in 2024 (1.52 °C observed), within uncertainty range for multi-year average
+- **Emissions plateau:** "Rate of increase in CO₂ emissions over the last decade has slowed compared to the 2000s" — potential bifurcation window for policy intervention
+
+**Implication for Simulation:** These 2025 data show the climate system is displaying classic pre-bifurcation signatures (accelerating change, deepening penetration, doubled energy imbalance). Small perturbations near current state (1.5°C) likely to produce highly divergent outcomes.
+
 ### 2.2 Tipping Points and Regime Shifts (2024 Research)
 
 **Recent Research Synthesis:**
