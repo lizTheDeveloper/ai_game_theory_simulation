@@ -43,11 +43,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Coverage: ~10% → 100% for Lévy-flight driven breakthroughs (varianceAmplification already validated)
   - Validated: Fusion breakthrough (1), carbon capture (1), AI alignment (1 per agent), synthetic food (2), superconductors (2), breakthrough multiplier (1)
   - Uses: assertFinite, assertProbability, assertInRange
+- **MortalityStabilizersPhase:** 11 assertions added to critical mortality reduction calculations ✅ COMPLETE
+  - Coverage: 7 assertions → 18 assertions (Priority 1: Mortality Paths - Phase 2/4)
+  - Validated: Cascade functioning levels (8 assertions: pre/post-cascade), combined mortality reduction (3 assertions)
+  - Pattern: Validate final computed values with assertFinite/assertInRange
+  - Eliminates risk of silent NaN propagation in mortality calculations (related to Oct 2025 ecology NaN bug)
 - **Target:** 180 unvalidated mutations → 100% critical path coverage (Days 1-2)
-- **Progress:** 111 mutations validated (ExogenousShock 62 + EmergencyResponse 27 + CriticalJuncture 11 + StochasticInnovation 11)
-- **Next:** Additional critical phases (mortality, climate, resource systems)
+- **Progress:** 122 mutations validated (ExogenousShock 62 + EmergencyResponse 27 + CriticalJuncture 11 + StochasticInnovation 11 + MortalityStabilizers 11)
+- **Next:** Additional critical phases (BayesianMortalityResolution, ClimateImpactCascade, HumanPopulation, TippingPoint)
 
 **RECENT ACHIEVEMENTS:**
+- ✅ **MortalityStabilizersPhase state validation complete** (commit ae8515e, Nov 6, 2025)
+  - 11 assertions added to critical mortality reduction calculations (7 → 18 total)
+  - Cascade functioning levels: 8 assertions (pre/post-cascade validation)
+  - Combined mortality reduction: 3 assertions (remainingAfterMigration, mortalityMultiplier, combinedReduction)
+  - 100% mutation coverage for cascade failures and mortality stabilizer interactions
+  - Priority 1: Mortality Paths - Phase 2/4 complete
 - ✅ **StochasticInnovationPhase state validation complete** (commit b6eab95, Nov 6, 2025)
   - 11 mutations validated across 5 breakthrough types: fusion (1), carbon capture (1), AI alignment (1 per agent), synthetic food (2), superconductors (2), breakthrough multiplier (1)
   - 100% coverage for Lévy-flight driven breakthroughs (~10% → 100%)
