@@ -41,6 +41,22 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 
 ## ⚠️ Recent Changes (November 5, 2025)
 
+**🧠 AGENT MEMORY SYSTEM ACTIVE (Nov 5, 2025)**
+
+Agent memory system is actively consolidating learnings from research verification sessions:
+
+**Updates:**
+- **Ray (Architect)**: Enhanced with seven iterations narrative and personal reflections
+- **Cynthia (Super-Alignment Researcher)**: Research collaboration patterns documented
+- **Sylvia (Research Skeptic)**: Adversarial review methodology captured
+- **Agent profiles**: Enhanced with personal narratives and "in their own words" sections
+
+**Context:** Following collaborative course material enhancement work, agent memories were updated to capture patterns from research verification sessions (60+ files, 18 sessions, 5-round debates). This preserves institutional knowledge and demonstrates the agent memory lifecycle in practice.
+
+See: [`.claude/agents/memories/`](../../.claude/agents/memories/) for agent memory files, [`.claude/agents/characters/AGENT_PROFILES.md`](../../.claude/agents/characters/AGENT_PROFILES.md) for enhanced profiles.
+
+Commit: 876ea94 (Nov 5, 2025)
+
 **⏱️ AUTONOMOUS WORKER TIMEOUT INCREASE (Nov 5, 2025)**
 
 Enhanced autonomous worker resilience with increased timeout and post-timeout cleanup:
