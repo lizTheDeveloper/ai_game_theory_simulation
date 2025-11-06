@@ -6,6 +6,29 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 6, 2025)
 
+**🔧 Autonomous Worker Status Files - Added to .gitignore** (Nov 6, 2025 23:20 UTC)
+
+**Fix:** Added gitignore rules for transient autonomous worker status files to prevent merge conflicts.
+
+**Problem:** Autonomous workers create status files (`logs/autonomous/status_current.txt`, `logs/autonomous/researcher/status_current.txt`, `logs/autonomous/metrics_*.json`) that change rapidly during execution, causing "untracked working tree files would be overwritten by merge" errors in merge orchestrator.
+
+**Solution:**
+- Ignore `logs/autonomous/status_current.txt`
+- Ignore `logs/autonomous/researcher/status_current.txt`
+- Ignore `logs/autonomous/metrics_*.json` (transient metrics)
+
+**Impact:**
+- ✅ Eliminates merge conflicts from ephemeral status files
+- ✅ Cleaner git status during autonomous operations
+- ✅ Status files still created/used by workers, just not tracked in git
+
+**Files Changed:**
+- `.gitignore` (+3 lines)
+
+**Commit:** 9e7cde015 - "chore: Add autonomous worker status files to .gitignore"
+
+---
+
 **🔒 Merge Orchestrator - Git Lock Detection Added** (Nov 6, 2025 23:18 UTC)
 
 **Fix:** Added git lock detection to merge orchestrator to prevent "Unable to create .git/index.lock" errors when autonomous worker git operations overlap with merge operations.
