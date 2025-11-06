@@ -536,9 +536,9 @@ export interface GameState {
 
   // Biosphere Integrity Index (TIER 3.5 - Oct 28, 2025)
   // Species extinction tracking with climate velocity modeling
-  // Research: IPBES (2024) 54,000 species baseline, Yoder et al. (2024) Joshua Tree climate tracking failure (TRL 7-8)
+  // Research: Natural History Museum PREDICTS (2024) 54,000-58,000 species baseline, Yoder et al. (2024) Joshua Tree climate tracking failure (TRL 7-8)
   // Key finding: Non-migratory species CANNOT track climate velocity (1.5°C/year) → extinction trajectory
-  biosphereIntegrityIndex?: import('../types/planetaryBoundaries').BiosphereIntegrityIndex; // 54,000 species, E/MSY extinction rates, climate tracking failure
+  biosphereIntegrityIndex?: import('../types/planetaryBoundaries').BiosphereIntegrityIndex; // 54,000-58,000 species, E/MSY extinction rates, climate tracking failure
 
   // Antimicrobial Resistance Crisis (TIER 1.8 - Oct 17, 2025)
   // Progressive loss of antibiotic effectiveness over time
