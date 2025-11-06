@@ -321,14 +321,14 @@ function applyAGIBreakthroughShock(state: GameState, rng: RNGFunction): GameEven
   }
 
   // Boost AI capabilities dramatically
-  const selfImprovementBoost = assertShockMagnitude(5.0, {
+  const selfImprovementBoost = assertShockMagnitude(0.5, {
     location: 'applyAGIBreakthroughShock',
     valueName: 'selfImprovementBoost',
     month: state.currentMonth,
     shockType: 'agi_breakthrough'
   });
 
-  const algorithmBoost = assertShockMagnitude(3.0, {
+  const algorithmBoost = assertShockMagnitude(0.3, {
     location: 'applyAGIBreakthroughShock',
     valueName: 'algorithmBoost',
     month: state.currentMonth,
