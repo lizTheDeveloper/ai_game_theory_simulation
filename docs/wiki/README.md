@@ -111,6 +111,29 @@ See: `devlogs/heat_adaptation_fix_20251106.md` (206 lines), `logs/autonomous/mon
 
 Commit: c749079 (Nov 6, 2025)
 
+**✅ ARCH-HIGH-1 Resolved: Mortality Stabilizers Circular Dependency Fixed**
+
+Architecture review issue ARCH-HIGH-1 identified and resolved:
+
+**The Problem:**
+- **Circular dependency:** MortalityStabilizersPhase (order 20.8) was reading `monthlyExcessDeaths`
+- **Set too late:** DeathReconciliationPhase sets `monthlyExcessDeaths` at order 35.0
+- **1-month lag:** Stabilizers using PREVIOUS month's deaths, systematically underestimating crisis severity in rapid-onset events
+
+**The Fix:**
+- **Use food security as crisis proxy:** Food security set at order 19.7 (BEFORE stabilizers at 20.8)
+- **No lag:** Responds to current-step crisis indicators
+- **Research-backed:** Sen 1981 (famine entitlement theory - food insecurity is LEADING indicator of mortality), IOM 2024 (migration follows resource scarcity, not mortality statistics)
+
+**Impact:**
+- Stabilizers now respond correctly in rapid-onset crises (nuclear winter, sudden famine, wet bulb temperature spikes)
+- Eliminates 1-month information lag for migration capacity calculations
+- Behavioral realism: People respond to food availability, not lagged death statistics
+
+**File:** `src/simulation/engine/phases/MortalityStabilizersPhase.ts:438-467`
+
+Commit: 58fc1f0 (Nov 6, 2025)
+
 ---
 
 **🔥 November 6 Assessment Trilogy - Research & Architecture Crisis**
