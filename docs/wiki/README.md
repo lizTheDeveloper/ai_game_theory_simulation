@@ -4925,6 +4925,10 @@ state.history.exogenousShocks?: Array<{
 **Location**: `reviews/` directory
 
 Recent critical evaluations:
+- `reviews/research-source-validation-audit_20251106.md` - Comprehensive research quality audit (Nov 6, 2025)
+  - **Status:** EXCELLENT - 0 CRITICAL items, all simulation sources <3yr old
+  - **Findings:** Strong citation culture, automated pipeline working, 19 placeholders (4 HIGH priority)
+  - **Cross-reference:** `reviews/tipping_threshold_verification_20251106.md` (Armstrong McKay 2022 verified)
 - `reviews/black-mirror-phase3-research-critique_20251016.md` (skeptical review)
 - Additional reviews in `research/` alongside research docs
 
