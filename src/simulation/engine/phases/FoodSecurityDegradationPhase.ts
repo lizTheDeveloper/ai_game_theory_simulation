@@ -29,13 +29,11 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly name = 'Food Security Degradation';
   readonly order = 19.7;  // AFTER QualityOfLifePhase (19.5), BEFORE population (20.5)
 
-  // DEPENDENCY (Nov 6, 2025): Currently no explicit dependencies declared
-  // Phase reads state produced by phosphorus/water/biodiversity phases (order <19.7)
-  // TODO: Declare dependencies once phase IDs confirmed for:
-  //   - PhosphorusPhase
-  //   - FreshwaterPhase
-  //   - BiodiversityPhase (if exists)
-  // readonly dependencies = [];
+  // DEPENDENCIES (Nov 6, 2025): Requires quality of life baseline calculation
+  readonly dependencies = [
+    'quality-of-life',          // Order 19.5: Food baseline calculated
+    'extreme-weather-events',   // Order 15.2: Weather disrupts food production
+  ];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // FIX (Oct 25, 2025 REGIONALIZATION): Food security is now REGIONAL

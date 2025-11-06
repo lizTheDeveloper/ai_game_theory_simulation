@@ -1194,6 +1194,11 @@ export class ExogenousShockPhase implements SimulationPhase {
   readonly name = 'Exogenous Shock Detection';
   readonly order = 27.5;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires environmental state for shock probability
+  readonly dependencies = [
+    'planetary_boundaries',     // Order 21.0: Environmental fragility increases shock risk
+  ];
+
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);

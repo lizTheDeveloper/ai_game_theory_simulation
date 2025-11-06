@@ -18,6 +18,12 @@ export class RefugeeCrisisPhase implements SimulationPhase {
   readonly name = 'Refugee Crisis System';
   readonly order = 20.6;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires population state for displacement calculations
+  readonly dependencies = [
+    'human_population',          // Order 20.5: Population baseline for displacement
+    'wet_bulb_temperature',      // Order 20.45: Heat events trigger displacement
+  ];
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateRefugeeCrises } = require('../../refugeeCrises');
     setDeterministicRng(rng);

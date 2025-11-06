@@ -15,6 +15,12 @@ export class SocialStabilityPhase implements SimulationPhase {
   readonly name = 'Social Stability Calculation';
   readonly order = 33.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires economic and social state
+  readonly dependencies = [
+    'unemployment',              // Order 30.0: Unemployment drives instability
+    'economic-transition',       // Order 31.0: Wealth inequality affects stability
+  ];
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     setDeterministicRng(rng);
     const newStability = assertFinite(

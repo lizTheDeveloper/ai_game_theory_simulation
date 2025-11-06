@@ -37,6 +37,11 @@ export class TippingPointPhase implements SimulationPhase {
   name = 'Tipping Point Phase';
   order = 21.6;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires planetary boundary state for tipping trigger detection
+  readonly dependencies = [
+    'planetary_boundaries',     // Order 21.0: Boundary transgression detection
+  ];
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const system = state.tippingPointSystem;
     setDeterministicRng(rng);

@@ -18,6 +18,11 @@ export class HumanPopulationPhase implements SimulationPhase {
   readonly name = 'Human Population Dynamics';
   readonly order = 20.5;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires quality of life for birth rate calculation
+  readonly dependencies = [
+    'quality-of-life',           // Order 19.5: QoL affects demographic decisions
+  ];
+
   // DEPENDENCY NOTE (Nov 6, 2025): This phase runs BEFORE BayesianMortalityResolutionPhase
   // HumanPopulation order: 20.5, BayesianMortality order: 35.0
   // No dependency needed - phases that run AFTER Bayesian should not overwrite population

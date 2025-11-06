@@ -18,6 +18,13 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly name = 'Planetary Boundaries System';
   readonly order = 21.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires environmental state from earlier phases
+  readonly dependencies = [
+    'ocean-acidification',      // Order 20.3: Ocean chemistry
+    'novel-entities',           // Order 20.4: Chemical pollution
+    'wet_bulb_temperature',     // Order 20.45: Heat stress events
+  ];
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } = require('../../planetaryBoundaries');
     setDeterministicRng(rng);
