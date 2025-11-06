@@ -1,0 +1,139 @@
+
+=== Merge Orchestrator Started ===
+[19:00:01] Timestamp: Thu Nov  6 19:00:01 UTC 2025
+[19:00:01] Dry run: false
+[19:00:01] Max branches: 10
+[19:00:01] Environment: VM (backend only)
+
+
+=== Fetching Latest Changes ===
+=== Merge Orchestrator Started ===
+[19:00:01] Timestamp: Thu Nov  6 19:00:01 UTC 2025
+[19:00:01] Dry run: false
+[19:00:01] Max branches: 10
+[19:00:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+   dd9d9c9b4..33361dfd0  claude/explore-roadmap-next-011CUqrUjwFYUULpvgfCNvQm -> origin/claude/explore-roadmap-next-011CUqrUjwFYUULpvgfCNvQm
+
+=== Discovering Branches ===
+error: cannot lock ref 'refs/remotes/origin/claude/explore-roadmap-next-011CUqrUjwFYUULpvgfCNvQm': is at 33361dfd0a67c3ddc00caa773e9d2d6e0eea6983 but expected dd9d9c9b4efb522e145996de991febe4a2d440a8
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ ! dd9d9c9b4..33361dfd0  claude/explore-roadmap-next-011CUqrUjwFYUULpvgfCNvQm -> origin/claude/explore-roadmap-next-011CUqrUjwFYUULpvgfCNvQm  (unable to update local ref)
+[19:00:04] ❌ Failed to fetch from origin
+[19:00:04] Found 93 branches to process
+
+=== Branch 1/93: auto/worker-20251102_043015 ===
+[19:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251106_190001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[19:00:04] ❌ Failed to create merge branch
+
+=== Branch 2/93: auto/worker-20251102_050015 ===
+[19:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251106_190001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[19:00:04] ❌ Failed to create merge branch
+
+=== Branch 3/93: auto/worker-20251102_080006 ===
+[19:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251106_190001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[19:00:04] ❌ Failed to create merge branch
+
+=== Branch 4/93: auto/worker-20251102_090015 ===
+[19:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251106_190001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[19:00:05] ❌ Failed to create merge branch
+
+=== Branch 5/93: auto/worker-20251102_100015 ===
+[19:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251106_190001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[19:00:05] ❌ Failed to create merge branch
+
+=== Branch 6/93: auto/worker-20251102_110015 ===
+[19:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251106_190001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[19:00:05] ❌ Failed to create merge branch
+
+=== Branch 7/93: auto/worker-20251102_120000 ===
+[19:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251106_190001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[19:00:05] ❌ Failed to create merge branch
+
+=== Branch 8/93: auto/worker-20251102_130014 ===
+[19:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251106_190001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[19:00:05] ❌ Failed to create merge branch
+
+=== Branch 9/93: auto/worker-20251102_140015 ===
+[19:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251106_190001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[19:00:05] ❌ Failed to create merge branch
+
+=== Branch 10/93: auto/worker-20251102_150015 ===
+[19:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251106_190001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/function-doc-patches.json
+	docs/underdocumented.json
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[19:00:05] ❌ Failed to create merge branch
+[19:00:05] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[19:00:05] Total branches found: 93
+[19:00:05] Branches processed: 10
+[19:00:05] ✅ Successfully merged: 0
+[19:00:05] ⏭️  Skipped (frontend on VM): 0
+[19:00:05] ❌ Failed (conflicts/gates): 10
+[19:00:05] 
+[19:00:05] 📊 Remaining branches: 83
+[19:00:05]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[19:00:06] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251106_190001.log
