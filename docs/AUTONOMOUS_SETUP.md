@@ -138,7 +138,7 @@ Every autonomous run begins by posting research requests to the research channel
 
 ### Log Retention Policy
 
-**All autonomous worker logs are preserved in git history forever.**
+**All autonomous worker logs are backed up to Google Cloud Storage.**
 
 **Benefits:**
 - Complete audit trail of all autonomous work
@@ -146,27 +146,35 @@ Every autonomous run begins by posting research requests to the research channel
 - Historical tracking of roadmap progress
 - Accountability and transparency
 - Reproducibility of past autonomous runs
+- No git merge conflicts from log files
 
 **Storage:**
-- Logs live in `logs/autonomous/` directory
+- Logs live in `logs/autonomous/` directory locally
 - Each run creates a timestamped log file (e.g., `worker_20251030_210000.log`)
-- Worker commits log file to feature branch before merging
-- All logs tracked in git history (`.gitignore` allows `logs/autonomous/*.log`)
+- **All logs backed up to GCS:** `gs://multiverseschool-logs/archives/`
+- **Logs NOT committed to git** (prevents merge conflicts)
+- Local logs compressed after 7 days, deleted after 30 days (GCS backup retained)
 
 **Access historical logs:**
 ```bash
-# View all autonomous logs in current branch
+# View current local logs
 ls -lt logs/autonomous/
 
-# Search for specific autonomous runs
-git log --all --source --grep="autonomous"
+# Access GCS backups (requires gsutil)
+gsutil ls gs://multiverseschool-logs/archives/
 
-# Extract log from specific commit
-git show <commit>:logs/autonomous/worker_<timestamp>.log
+# Download specific backup
+gsutil -m rsync -r gs://multiverseschool-logs/archives/20251106_224900/ ./logs/restore/
 
-# View log history for a specific file
-git log --follow -- logs/autonomous/worker_20251030_210000.log
+# Run cleanup/backup manually
+./scripts/cleanup-and-backup.sh
 ```
+
+**GCS Backup Details:**
+- Automatic upload via `scripts/cleanup-and-backup.sh`
+- Timestamped archives preserve all logs
+- Local compression (>7 days) and deletion (>30 days) after GCS backup
+- All logs accessible indefinitely in cloud storage
 
 ### Monitoring
 
