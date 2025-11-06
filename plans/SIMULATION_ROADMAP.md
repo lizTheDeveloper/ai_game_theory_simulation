@@ -744,6 +744,11 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
+  - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
+  - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)
+  - **100+ parameters** in central config need systematic audit
+  - **Priority:** HIGH (new phase + central config are core infrastructure)
 - [ ] 🚨 **CRITICAL:** Verify seasonal mortality parameters for ClimateImpactCascadePhase double-counting bug fix (research/verification_5c6e9d0_20251106.md) - Core claim: "5% monthly lean season mortality" needs validation. Bug causes 7% excess mortality (47% vs 40%), blocks research validity (Implementation Fidelity C- → B+). **12 research claims across 7 citations need verification** before implementation.
 - [ ] 🚨 **CRITICAL:** Fix ecosystem recovery time parameter in tier2InterventionConfig.ts (research/verification_5f5df13_20251104.md) - Parameter 4× too optimistic (60mo vs 240mo actual), affects biodiversity recovery scenarios
 - [ ] **NEW:** Verify proactive data center divestment parameters (commit a0f4785)

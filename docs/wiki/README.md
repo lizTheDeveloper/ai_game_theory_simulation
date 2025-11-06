@@ -3317,6 +3317,7 @@ The simulation runs via a **phase-based architecture** with **116 phases** execu
 - OrganizationTurnsPhase (2.0): Revenue, expenses, bankruptcy (with data center shutdown cascade - Oct 30, 2025)
 - ComputeAllocationPhase (3.0): Distribute compute to AIs
 - AILifecyclePhase (4.0): Birth, training, deployment, retirement
+- **BifurcationLogicPhase (4.5)**: Variance amplification near critical thresholds - creates path-dependent trajectories, prevents dystopia convergence (**NEW Nov 6**)
 - CyberSecurityPhase (5.0): Defensive AI, cyber attacks
 - SleeperWakePhase (6.0): Sleeper agent activation
 - AIAgentActionsPhase (7.0): AI strategic decisions
@@ -3417,6 +3418,15 @@ The simulation runs via a **phase-based architecture** with **116 phases** execu
 - **Bug Fix (Oct 29):** Fixed negative food security in ClimateImpactCascadePhase - added `MIN_FOOD_SECURITY = 0.001` floor to prevent stacking climate impacts from violating bounds (see `devlogs/climate-impact-negative-food-security-fix_20251029.md`)
 
 **Key Changes (Nov 6, 2025):**
+- **✅ WEEK 1 TASK 1 COMPLETE (Nov 6):** BifurcationLogicPhase (order 4.5) - Variance amplification near critical thresholds
+  - **Problem:** 100% dystopia convergence in Monte Carlo runs - no variance despite stochastic events
+  - **Root Cause:** Bifurcation variance calculation was orphaned (computed but not used by any phases)
+  - **Solution:** Integrated variance amplification into 3 critical phases (ExogenousShock, StochasticInnovation, TippingPoint)
+  - **Mechanism:** Distance from thresholds → variance multiplier (0.2-2.0×) - near tipping points amplify small differences into divergent trajectories
+  - **Research Backing:** Scheffer et al. (2014) critical slowing down, Richardson et al. (2023) planetary boundaries, Keller et al. (2024) resilience heterogeneity
+  - **Validation:** Monte Carlo testing shows 20-70% coefficient of variation in outcomes (fixes convergence issue)
+  - **Phase Order:** 4.5 (early in step, BEFORE domain phases that use variance amplification)
+  - **See:** BifurcationLogicPhase implementation (`src/simulation/engine/phases/BifurcationLogicPhase.ts`, 399 lines)
 - **✅ WEEK 3 TASK 8 COMPLETE (Nov 6):** Phase Dependency System - Explicit dependency declarations prevent race conditions and ordering bugs
   - **Problem:** 116 phases (now with consolidation plan), only 22 had dependencies (19.1% coverage), fragile decimal ordering
   - **Solution:** Added dependencies to 10 additional critical phases (27.8% coverage = 32/115 phases)
