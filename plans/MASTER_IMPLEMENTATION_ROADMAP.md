@@ -346,17 +346,17 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 ### High-Level Priorities (Cross-Roadmap)
 
 **Immediate (Next 2-4 weeks):**
-1. 🔴 **CRITICAL:** Determinism Fixes Batch 3 (Issue #11) - **99% complete, final fixes pending** (2-4h)
+1. ✅ **CRITICAL:** Determinism Fixes Batch 3 (Issue #11) - **COMPLETE** (Nov 6, 2025)
    - ✅ Phase 1: Fixed 3 seeding bugs (hashString implementation)
    - ✅ Batch 2.1: Fixed 5 Object.entries() bugs (sorted iteration)
    - ✅ Batch 2.2: Fixed 21 hot-path Object iteration sites (AI count stable)
-   - ❌ Batch 3 remaining: RNG consumption order, Set/Map iteration, async race conditions
-   - Re-validate all Monte Carlo analyses after 100% determinism achieved
-3. 🟠 **HIGH:** Climate Mortality Phase 2 Implementation - **READY** (Nov 1, 2025) ⭐
+   - ✅ Batch 3: Fixed conditional RNG consumption (5 files, deterministic through Month 2+)
+   - ⏳ Next: Re-validate all Monte Carlo analyses with fixed determinism
+2. 🟠 **HIGH:** Climate Mortality Phase 2 Implementation - **READY** (Nov 1, 2025) ⭐
    - Research: A- grade (90% peer-reviewed, 50% from 2024-2025)
    - Validation: Cynthia & Sylvia APPROVED (high confidence)
+   - ✅ PREDICTS verification COMPLETE (Nov 6) - source confirmed with limitations documented
    - Estimate: 4-6h implementation + 1-2h validation
-   - **Action before start:** Verify IPBES 2024 source for 54,000 species baseline
 4. 🟠 **HIGH:** Monte Carlo Issues #5-6 Implementation (deferred, pending determinism fixes)
    - Issue #5: Outcome variance / bifurcation logic (8-12h)
    - Issue #6: Famine distribution redesign (12-16h)
