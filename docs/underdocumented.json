@@ -64808,7 +64808,55 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 71,
+    "line": 68,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'TippingPointPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 69,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'totalElementProgress',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 70,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 77,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'TippingPointPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 78,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'system.totalProgress',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 79,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 91,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -64816,7 +64864,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 93,
+    "line": 113,
     "type": "property",
     "name": "elementId",
     "currentDoc": "(none)",
@@ -64824,7 +64872,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 94,
+    "line": 114,
     "type": "property",
     "name": "monthTriggered",
     "currentDoc": "(none)",
@@ -64832,7 +64880,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 95,
+    "line": 115,
     "type": "property",
     "name": "tempAtTrigger",
     "currentDoc": "(none)",
@@ -64840,7 +64888,135 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 276,
+    "line": 171,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'TippingPointPhase.updateTransitions',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 172,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'newProgress',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 173,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 174,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { elementId: element.id, t, k, t_mid }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 183,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'TippingPointPhase.updateTransitions',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 184,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: `element[${element.id}].progress`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 185,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 237,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'TippingPointPhase.calculateCascades',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 238,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'system.cascadeMultiplier',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 239,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 309,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'TippingPointPhase.applyImpacts',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 310,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'environmentalAccumulation.climateStability (before)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 311,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 318,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'TippingPointPhase.applyImpacts',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 319,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'environmentalAccumulation.climateStability (after)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 320,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
+    "line": 339,
     "type": "property",
     "name": "climateStability",
     "currentDoc": "(none)",
@@ -64848,7 +65024,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 277,
+    "line": 340,
     "type": "property",
     "name": "habitability",
     "currentDoc": "(none)",
@@ -64856,7 +65032,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 278,
+    "line": 341,
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -64864,7 +65040,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TippingPointPhase.ts",
-    "line": 279,
+    "line": 342,
     "type": "property",
     "name": "freshwater",
     "currentDoc": "(none)",
