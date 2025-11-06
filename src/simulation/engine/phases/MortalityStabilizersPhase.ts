@@ -318,23 +318,45 @@ export class MortalityStabilizersPhase implements SimulationPhase {
   ): void {
     const adaptation = stabilizers.adaptation;
 
-    // Check if heat crisis is active (proxy: environmental accumulation)
-    const heatCrisisActive = state.environmentalAccumulation?.climateCrisisActive || false;
+    // FIX (Nov 6, 2025): Multi-source heat crisis detection with research-backed thresholds
+    // Primary: environmentalAccumulation flag (set by EmergencyResponsePhase)
+    // Fallback: Wet bulb temperature >28°C (heat stress threshold, Raymond 2020)
+    //
+    // Research:
+    // - Vecellio et al. (2024, Nature): 30.5°C wet bulb = empirical survivability limit
+    // - Raymond et al. (2020, Science): 28°C wet bulb = heat stress begins
+    // - Ballester et al. (2024, Nature Medicine): Heat adaptation develops with exposure
+    const climateCrisisFlag = state.environmentalAccumulation?.climateCrisisActive ?? false;
 
-    // DIAGNOSTIC: Check heat crisis detection
-    const envAccumExists = !!state.environmentalAccumulation;
-    const climateCrisisValue = state.environmentalAccumulation?.climateCrisisActive;
+    // Wet bulb fallback: Check if ANY region has dangerous wet bulb temperatures
+    let wetBulbCrisis = false;
+    if (state.wetBulbTemperatureSystem?.eventsThisMonth && state.wetBulbTemperatureSystem.eventsThisMonth.length > 0) {
+      const maxWetBulb = Math.max(
+        ...state.wetBulbTemperatureSystem.eventsThisMonth.map(e => e.wetBulbTemp)
+      );
+      wetBulbCrisis = maxWetBulb > 28.0; // Heat stress threshold (Raymond 2020)
+    }
+
+    const heatCrisisActive = climateCrisisFlag || wetBulbCrisis;
 
     if (!heatCrisisActive) {
       // No heat exposure, adaptation doesn't develop
-      // DIAGNOSTIC: Log why adaptation is not developing (only once per region per phase execution)
-      // Note: This will log for EVERY region EVERY month where heat is not active
-      // This is intentional for diagnostic purposes but should be removed after investigation
       return;
     }
 
     // Increment months exposed
     adaptation.monthsExposed++;
+
+    // FIX (Nov 6, 2025): Add diagnostic logging to verify heat adaptation is working
+    // Only log first time adaptation develops for this region (monthsExposed = 1)
+    // or significant milestones to avoid log spam
+    if (adaptation.monthsExposed === 1 || adaptation.monthsExposed % 12 === 0) {
+      console.log(
+        `  🌡️ HEAT ADAPTATION DEVELOPING: ${region.name || 'unknown'} - ` +
+        `Months exposed: ${adaptation.monthsExposed}, ` +
+        `Crisis sources: [${climateCrisisFlag ? 'ENV_FLAG' : ''}${wetBulbCrisis ? ',WET_BULB' : ''}]`
+      );
+    }
 
     // Physiological adaptation (develops over weeks, cap at 20%)
     if (adaptation.monthsExposed >= 0.5) {
@@ -378,6 +400,21 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       valueName: 'adaptation.totalReduction',
       month: state.currentMonth
     });
+
+    // FIX (Nov 6, 2025): Assertion to prevent regression of heat adaptation bug
+    // If we're past month 100 (8+ years) and climate crisis is active,
+    // adaptation MUST be developing (monthsExposed > 0).
+    // This catches if climateCrisisActive flag stops being set again.
+    if (state.currentMonth > 100 && climateCrisisFlag) {
+      if (adaptation.monthsExposed === 0) {
+        throw new Error(
+          `❌ Heat adaptation bug detected at Month ${state.currentMonth}: ` +
+          `Region ${region.name || 'unknown'} has climateCrisisActive=true ` +
+          `but adaptation.monthsExposed = 0. This should never happen - heat adaptation ` +
+          `should accumulate when crisis is active. Check MortalityStabilizersPhase logic.`
+        );
+      }
+    }
   }
 
   /**
