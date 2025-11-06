@@ -292,14 +292,14 @@ function applyClimateFeedback(power: PowerGenerationSystem, env: any): void {
     return;
   }
 
-  const tempAnomaly = assertStateProperty(
-    env,
-    'globalTemperatureAnomaly',
-    {
-      location: 'applyClimateFeedback',
-      expectedSource: 'environmental/initialization.ts'
-    }
-  );
+  // Temperature anomaly is calculated from climate stability
+  // Formula: 1.0 + (1 - climateStability) * 2.0 maps [0.65-0.85] to [1.3-1.7]°C warming
+  // This derived value is also calculated in EnvironmentalFeedbackPhase:aggregateClimateState()
+  const climateStability = assertStateProperty(env, 'climateStability', {
+    location: 'applyClimateFeedback',
+    expectedSource: 'environmental/initialization.ts:initializeEnvironmentalAccumulation'
+  });
+  const tempAnomaly = 1.0 + (1 - climateStability) * 2.0;
 
   // Base cooling multiplier
   power.coolingDemandMultiplier = 1 + (tempAnomaly * 0.05);
