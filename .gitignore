@@ -44,9 +44,9 @@ yarn-error.log*
 next-env.d.ts
 monteCarloOutputs/
 
-# Log files (but keep autonomous worker logs in repo)
+# Log files - all logs backed up to GCS, not committed to repo
 logs/*.log
-!logs/autonomous/*.log
+logs/**/*.log
 
 # Heap profiles
 profiles/
