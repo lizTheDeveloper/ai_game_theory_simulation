@@ -19,9 +19,13 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly order = 21.0;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const { updatePlanetaryBoundaries } = require('../../planetaryBoundaries');
+    const { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } = require('../../planetaryBoundaries');
     setDeterministicRng(rng);
     const { updateBoundaryRecovery } = require('../../planetaryBoundaryRecovery');
+
+    // Update Biosphere Integrity Index (BII) - Climate Mortality Phase 2 (Nov 6, 2025)
+    // Species tracking with climate velocity modeling
+    updateBiosphereIntegrityIndex(state, rng);
 
     // Update all planetary boundaries (degradation mechanics)
     updatePlanetaryBoundaries(state);
