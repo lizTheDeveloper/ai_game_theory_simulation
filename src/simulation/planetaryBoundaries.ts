@@ -1321,14 +1321,22 @@ function updateOzoneRecoverySystem(state: GameState): void {
  * Comprehensive species tracking with climate velocity modeling.
  *
  * Research backing:
- * - IPBES (2024): 54,000 species baseline
+ * - Natural History Museum (2024): Biodiversity Intactness Index v2.1.1
+ *   - PREDICTS project data: 54,000+ species (plants, fungi, animals, insects)
+ *   - https://www.nhm.ac.uk/our-science/services/data/biodiversity-intactness-index.html
  * - Richardson et al. (2024): Current extinction rates
  * - Yoder et al. (2024): Joshua Tree climate tracking failure
  * - U.S. National Park Service (2024): Climate velocity impacts
  *
+ * CITATION CORRECTION (Nov 6, 2025):
+ * - Previous citation to "IPBES (2024)" for 54,000 species was INCORRECT
+ * - IPBES 2024 reports do NOT contain biodiversity baseline statistics
+ * - Correct source: Natural History Museum BII v2.1.1 (PREDICTS project)
+ *
  * Key insight: Non-migratory species CANNOT track climate velocity → extinction
  *
  * @see research/climate-mortality-biosphere-multiparadigm-framework_20251028.md (Section 2)
+ * @see research/climate-phase2-source-verification-20251106.md
  */
 export function initializeBiosphereIntegrityIndex(): BiosphereIntegrityIndex {
   // Import BII_CONSTANTS from types
