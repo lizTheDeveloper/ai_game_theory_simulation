@@ -17,6 +17,7 @@
 import { GameState } from '@/types/game';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { THRESHOLDS, RATES } from '@/simulation/config/centralConfig';
 
 /**
  * Environmental mortality breakdown by cause
@@ -92,11 +93,11 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   // No global food security threshold needed here
 
   // === WATER SECURITY ===
-  // Water < 0.4 = crisis (leads to cholera, dysentery, other waterborne disease)
+  // Water < WATER_SECURITY_CRISIS_THRESHOLD = crisis (leads to cholera, dysentery, other waterborne disease)
   // Note: waterSecurity not in EnvironmentalAccumulation, use QoL system
   const waterSecurity = state.qualityOfLifeSystems.survivalFundamentals?.waterSecurity || 0.7;
-  if (waterSecurity < 0.4) {
-    const waterSeverity = (0.4 - waterSecurity) / 0.4;
+  if (waterSecurity < THRESHOLDS.WATER_SECURITY_CRISIS_THRESHOLD) {
+    const waterSeverity = (THRESHOLDS.WATER_SECURITY_CRISIS_THRESHOLD - waterSecurity) / THRESHOLDS.WATER_SECURITY_CRISIS_THRESHOLD;
     const waterDiseaseRisk = 0.00008 * Math.pow(waterSeverity, 1.5); // Slightly less immediate than food
     addMortalityRisk(pop, {
       type: 'disease',
