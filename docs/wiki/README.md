@@ -281,6 +281,8 @@ Deep analysis revealed critical implementation fidelity bug in ClimateImpactCasc
 
 **Status:** Analysis complete, implementation pending. Bug causes implementation fidelity gap (research-backed value should be 5%, not 8.75%). Also added 15 assertions across mortality calculation paths to prevent future NaN propagation.
 
+**WEEK 3 Update (Nov 6, 2025):** State validation framework expanded - bayesianMortality.ts now has 100% assertion coverage (all ~15 mutations validated), uses new assertMortalityRate validator to prevent silent bugs.
+
 **Analysis:** `reviews/mortality_gap_analysis_20251106.md` (348 lines)
 **Blocks:** Research validity (Implementation Fidelity C- → B+ after fix)
 **Related:** CRITICAL Issue #2 (98% vs 75% mortality gap - now understood)
@@ -3364,8 +3366,46 @@ When adding/modifying simulation code:
   - Maximum plausible decrease: -50% per month (catastrophic scenario)
   - Maximum plausible increase: +5% per month (high birth rate + immigration)
   - Prevents mortality calculation bugs
+- **assertMortalityRate(rate, context)** - Validates monthly mortality rates [0, 0.5] ✅ NEW
+  - Used for: All mortality calculation phases
+  - Range rationale: Max 50% per month (catastrophic), based on Black Death (~0.5% monthly), Xia et al. 2022 nuclear winter (75% over decades)
+  - Prevents mortality calculation bugs
+- **assertTemperatureDelta(delta, context)** - Validates temperature changes [-20, +10]°C per month ✅ NEW
+  - Used for: Climate impact phases, nuclear winter, volcanic events
+  - Range rationale: Physical plausibility, reject >10°C/month warming or <-20°C/month cooling
+  - Prevents climate cascade NaN propagation
+- **assertAICapability(capability, context)** - Validates AI capability levels [0, 5] (integers) ✅ NEW
+  - Used for: AI capability mutation phases
+  - Range rationale: Discrete capability levels (0=none, 5=superintelligence)
+  - Prevents invalid capability states
+- **assertPlanetaryBoundary(value, boundaryType, context)** - Validates boundary-specific ranges ✅ NEW
+  - CO2: [280, 600] ppm, Temperature: [-2, +10]°C above baseline, Ocean pH: [7.5, 8.5]
+  - Used for: Planetary boundary update phases
+  - Range rationale: Physical constraints, research-backed safe operating spaces
+  - Prevents biosphere/climate invalid states
+- **assertPopulationMillion(value, context)** - Validates regional populations [0, 1000] million ✅ NEW
+  - Used for: Population update phases, regional demographics
+  - Range rationale: Non-negative, regional maximum plausibility
+  - Prevents population overflow bugs
+- **assertEconomicMetric(value, metricType, context)** - Validates economic metrics by type ✅ NEW
+  - GDP: [0, 500] trillion USD, Spending/taxation: [0, 1] as fraction of GDP, Deficit: [-0.5, 0.5] as fraction
+  - Used for: Economic policy phases, government agent actions
+  - Range rationale: Historical ranges, prevents economic state corruption
+  - Prevents silent GDP/deficit calculation bugs
 
 **Coverage Improvements:**
+- **Days 1-2 (Nov 6, 2025) - WEEK 3 State Validation Framework**: 59 mutations validated, 2 CRITICAL files → 100% ✅
+  - **State Mutation Audit:** 920 mutations, 713 assertions, 207 gap (worse than estimated 180)
+  - **6 New Domain-Specific Validators:** +330 lines in assertions.ts (766 → 1096 lines)
+    - assertMortalityRate, assertTemperatureDelta, assertAICapability, assertPlanetaryBoundary, assertPopulationMillion, assertEconomicMetric
+  - **bayesianMortality.ts:** 0% → 100% coverage (all ~15 mutations validated)
+    - Eliminated 4 ad-hoc NaN checks, replaced manual mortality checks with assertMortalityRate
+    - Death count validation, cumulative overflow protection, attribution tracking validation
+  - **catastrophicScenarios.ts:** 0% → 100% coverage (all 42 mutations validated)
+    - Created setExtinctionState() helper (single validation point)
+    - Validates phase [0, 3], progress [0, 1], severity [0, 1]
+  - **Progress:** 59 of 207 unvalidated mutations fixed (29% complete)
+  - **Next:** populationDynamics.ts (17 mutations), governmentAgent.ts (160 mutations - BIG)
 - **Session 2 (Nov 6, 2025)**: 18 assertions added across 2 phases
   - **TippingPointPhase**: 7 assertions (sigmoid transitions, cascade multipliers, climate stability)
   - **MortalityStabilizersPhase**: 11 assertions (cascade functioning, mortality reduction)
@@ -3380,6 +3420,11 @@ When adding/modifying simulation code:
   - Philosophy: Fail-loudly for invalid state in existential risk scenarios
 
 **Commits:**
+- `61b0d2c` - "feat: WEEK 3 Day 1-2 - State validation framework (29% complete)" (Nov 6, 2025) ✅ NEW
+  - State mutation audit: 920 mutations, 713 assertions, 207 gap
+  - 6 new domain-specific validators (+330 lines)
+  - bayesianMortality.ts: 0% → 100% coverage
+  - catastrophicScenarios.ts: 0% → 100% coverage
 - `5b2448b` - "docs: Session 2 summary for state validation work (ARCH-CRITICAL-3)" (Nov 6, 2025)
 - `0777f5c` - "feat: Add state validation to TippingPointPhase (ARCH-CRITICAL-3)" (Nov 6, 2025)
 - `ae8515e` - "feat: Add comprehensive state validation to MortalityStabilizersPhase (ARCH-CRITICAL-3)" (Nov 6, 2025)
@@ -3389,7 +3434,10 @@ When adding/modifying simulation code:
 - Previous refactors applying assertion utilities across simulation codebase
 
 **Related:**
-- `/src/simulation/utils/assertions.ts` - Assertion utilities implementation (includes new domain-specific validators)
+- `/src/simulation/utils/assertions.ts` - Assertion utilities implementation (1096 lines, includes 6 new domain-specific validators)
+- `/reviews/state_mutation_audit_20251106.md` - Comprehensive audit report (920 mutations, 713 assertions, 207 gap) ✅ NEW
+- `/src/simulation/bayesianMortality.ts` - 100% assertion coverage (all ~15 mutations validated) ✅ NEW
+- `/src/simulation/catastrophicScenarios.ts` - 100% assertion coverage (all 42 mutations validated) ✅ NEW
 - `/src/simulation/engine/phases/TippingPointPhase.ts` - 7 assertions for climate tipping points (sigmoid transitions, cascade multipliers, climate stability)
 - `/src/simulation/engine/phases/MortalityStabilizersPhase.ts` - 11 assertions for mortality reduction (cascade functioning, combined reductions)
 - `/src/simulation/engine/phases/EmergencyResponsePhase.ts:75-640` - 27 validated mutations across 7 emergency types
