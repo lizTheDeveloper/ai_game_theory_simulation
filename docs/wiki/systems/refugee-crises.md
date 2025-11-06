@@ -239,6 +239,7 @@ state.humanPopulationSystem.population -= (transitDeaths / 1000); // Convert to 
 - Transit deaths counted in appropriate category (war, climate, famine, ecosystem)
 - Separate from other crisis deaths
 - Contributes to overall death toll
+- **Global cumulative caps**: 10B max plausible deaths across all regions and time (validation bounds, not hard limits)
 
 **Outcome Impact**:
 - Large displacements reduce civilization viability
