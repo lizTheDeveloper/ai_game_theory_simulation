@@ -564,3 +564,202 @@ export function assertStateFieldNotModified(
     );
   }
 }
+
+/**
+ * Assert Shock Magnitude (Nov 6, 2025)
+ *
+ * Validates exogenous shock delta values are within plausible ranges.
+ * Used by ExogenousShockPhase for black/gray swan event impacts.
+ *
+ * Shock magnitudes represent delta changes (typically negative for damage):
+ * - Negative values: Damage/reduction (nuclear war reduces social stability)
+ * - Positive values: Benefit/increase (rare, like AGI breakthrough)
+ *
+ * Plausible range: [-1.0, 0.5]
+ * - Lower bound: -1.0 (complete destruction, 100% reduction)
+ * - Upper bound: 0.5 (50% improvement, generous for positive shocks)
+ *
+ * @example
+ * // Nuclear war social stability impact
+ * const delta = assertShockMagnitude(-0.3, {
+ *   location: 'applyNuclearWarShock',
+ *   valueName: 'socialStabilityDelta',
+ *   month: state.currentMonth,
+ *   shockType: 'nuclear_war'
+ * });
+ *
+ * @param value - The shock magnitude delta
+ * @param context - Validation context with optional shockType
+ * @returns The validated value
+ * @throws Error if value is non-finite or outside [-1.0, 0.5]
+ */
+export function assertShockMagnitude(
+  value: number,
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+    shockType?: string;
+  }
+): number {
+  if (!Number.isFinite(value)) {
+    throw new Error(
+      `❌ Non-finite shock magnitude in ${context.location}\n` +
+      `   ${context.valueName} = ${value}\n` +
+      (context.shockType ? `   Shock type: ${context.shockType}\n` : '') +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '')
+    );
+  }
+
+  if (value < -1.0 || value > 0.5) {
+    throw new Error(
+      `❌ Shock magnitude out of plausible range in ${context.location}\n` +
+      `   ${context.valueName} = ${value}\n` +
+      `   Valid range: [-1.0, 0.5]\n` +
+      (context.shockType ? `   Shock type: ${context.shockType}\n` : '') +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Shock magnitudes represent delta changes:\n` +
+      `   - Negative: Damage/reduction (e.g., -0.3 = 30% reduction)\n` +
+      `   - Positive: Benefit/increase (rare, e.g., 0.2 = 20% improvement)\n` +
+      `   Values outside this range indicate a bug in shock calculation.`
+    );
+  }
+
+  return value;
+}
+
+/**
+ * Assert Resource Allocation (Nov 6, 2025)
+ *
+ * Validates resource allocation fractions are in valid [0, 1] range.
+ * Used for budget allocations, capacity utilization, effort distribution.
+ *
+ * @example
+ * const allocation = assertResourceAllocation(budgetFraction, {
+ *   location: 'allocateEmergencyBudget',
+ *   valueName: 'defenseBudgetFraction',
+ *   month: state.currentMonth
+ * });
+ *
+ * @param value - The resource allocation fraction
+ * @param context - Validation context
+ * @returns The validated value
+ * @throws Error if value is non-finite or outside [0, 1]
+ */
+export function assertResourceAllocation(
+  value: number,
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+  }
+): number {
+  if (!Number.isFinite(value)) {
+    throw new Error(
+      `❌ Non-finite resource allocation in ${context.location}\n` +
+      `   ${context.valueName} = ${value}\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '')
+    );
+  }
+
+  if (value < 0 || value > 1) {
+    throw new Error(
+      `❌ Resource allocation out of range in ${context.location}\n` +
+      `   ${context.valueName} = ${value}\n` +
+      `   Valid range: [0, 1]\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Resource allocations must be fractions:\n` +
+      `   - 0.0 = 0% allocated\n` +
+      `   - 1.0 = 100% allocated\n` +
+      `   Values outside [0, 1] indicate a calculation error.`
+    );
+  }
+
+  return value;
+}
+
+/**
+ * Assert Population Change (Nov 6, 2025)
+ *
+ * Validates population changes are physically plausible.
+ * Prevents bugs where population deltas exceed biological/mortality limits.
+ *
+ * Maximum plausible single-month changes:
+ * - Decrease: -50% (catastrophic mortality, like nuclear war)
+ * - Increase: +10% (already generous for birth rates)
+ *
+ * @example
+ * const newPop = calculatePopulationAfterMortality(oldPop, mortalityRate);
+ * const validatedPop = assertPopulationChange(newPop, oldPop, {
+ *   location: 'applyMegaPandemicShock',
+ *   valueName: 'population',
+ *   month: state.currentMonth
+ * });
+ *
+ * @param newValue - New population value
+ * @param oldValue - Previous population value
+ * @param context - Validation context
+ * @returns The validated new value
+ * @throws Error if change exceeds plausible limits
+ */
+export function assertPopulationChange(
+  newValue: number,
+  oldValue: number,
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+  }
+): number {
+  if (!Number.isFinite(newValue)) {
+    throw new Error(
+      `❌ Non-finite population value in ${context.location}\n` +
+      `   ${context.valueName} = ${newValue}\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '')
+    );
+  }
+
+  if (newValue < 0) {
+    throw new Error(
+      `❌ Negative population in ${context.location}\n` +
+      `   ${context.valueName} = ${newValue}\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Population cannot be negative. This indicates a mortality calculation bug.`
+    );
+  }
+
+  // Maximum plausible population decrease: -50% in single month (catastrophic)
+  const maxDecrease = oldValue * 0.5;
+  if (newValue < oldValue - maxDecrease) {
+    throw new Error(
+      `❌ Implausible population decrease in ${context.location}\n` +
+      `   ${context.valueName}: ${oldValue} → ${newValue}\n` +
+      `   Change: ${(newValue - oldValue).toFixed(3)} (${((newValue - oldValue) / oldValue * 100).toFixed(1)}%)\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Maximum plausible decrease: -50% per month (catastrophic mortality)\n` +
+      `   This exceeds historical worst-case scenarios (e.g., Black Death: -40% over 7 years).\n` +
+      `   Check mortality rate calculations for bugs.`
+    );
+  }
+
+  // Maximum plausible population increase: +10% in single month (generous)
+  const maxIncrease = oldValue * 0.1;
+  if (newValue > oldValue + maxIncrease) {
+    throw new Error(
+      `❌ Implausible population increase in ${context.location}\n` +
+      `   ${context.valueName}: ${oldValue} → ${newValue}\n` +
+      `   Change: ${(newValue - oldValue).toFixed(3)} (${((newValue - oldValue) / oldValue * 100).toFixed(1)}%)\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Maximum plausible increase: +10% per month (already very generous)\n` +
+      `   Typical human population growth: ~1.1% per year globally.\n` +
+      `   Check population calculation for bugs (double-counting births?).`
+    );
+  }
+
+  return newValue;
+}

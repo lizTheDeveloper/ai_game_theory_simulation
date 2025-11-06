@@ -19,7 +19,14 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { getTechDeploymentSafe } from '../../techTree/helpers';
-import { assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
+import {
+  assertStateProperty,
+  assertFinite,
+  assertProbability,
+  assertInRange,
+  assertShockMagnitude,
+  assertResourceAllocation
+} from '@/simulation/utils/assertions';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
@@ -114,7 +121,11 @@ function applyExogenousShock(
  * Historical: 0 occurrences, 6 near-misses (Cuban Missile, 1983 false alarm, etc.)
  */
 function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
-  const mortalityRate = 0.5 + rng() * 0.49; // 50-99%
+  const mortalityRate = assertProbability(0.5 + rng() * 0.49, {
+    location: 'applyNuclearWarShock',
+    valueName: 'mortalityRate',
+    month: state.currentMonth
+  }); // 50-99%
 
   console.log(`   💥 Full-scale nuclear exchange`);
   console.log(`   Estimated mortality: ${(mortalityRate * 100).toFixed(1)}%`);
@@ -137,22 +148,67 @@ function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
   if (state.planetaryBoundariesSystem?.boundaries) {
     const boundaries = state.planetaryBoundariesSystem.boundaries;
     if (boundaries.climate_change) {
-      boundaries.climate_change.currentValue = Math.min(1.0, boundaries.climate_change.currentValue + 0.5);
+      const climateDelta = assertShockMagnitude(0.5, {
+        location: 'applyNuclearWarShock',
+        valueName: 'climateDelta',
+        month: state.currentMonth,
+        shockType: 'nuclear_war'
+      });
+
+      boundaries.climate_change.currentValue = assertProbability(
+        Math.min(1.0, boundaries.climate_change.currentValue + climateDelta),
+        {
+          location: 'applyNuclearWarShock',
+          valueName: 'climate_change.currentValue',
+          month: state.currentMonth
+        }
+      );
     }
     if (boundaries.biosphere_integrity) {
       // BUG FIX (Oct 30, 2025): Nuclear war INCREASES extinction rate (higher = worse)
       // Before: Subtracted 0.6 (incorrectly made biosphere BETTER)
       // After: Add 0.6 (correctly makes biosphere WORSE via mass extinctions)
-      boundaries.biosphere_integrity.currentValue = boundaries.biosphere_integrity.currentValue + 0.6;
+      const biosphereDelta = assertShockMagnitude(0.6, {
+        location: 'applyNuclearWarShock',
+        valueName: 'biosphereDelta',
+        month: state.currentMonth,
+        shockType: 'nuclear_war'
+      });
+
+      boundaries.biosphere_integrity.currentValue = assertFinite(
+        boundaries.biosphere_integrity.currentValue + biosphereDelta,
+        {
+          location: 'applyNuclearWarShock',
+          valueName: 'biosphere_integrity.currentValue',
+          month: state.currentMonth
+        }
+      );
     }
   }
 
   // Infrastructure destruction
   if (state.computeInfrastructure && state.computeInfrastructure.dataCenters) {
+    const destructionMultiplier = assertResourceAllocation(0.1, {
+      location: 'applyNuclearWarShock',
+      valueName: 'infrastructureDestructionMultiplier',
+      month: state.currentMonth
+    }); // 90% destroyed (0.1 = 10% remains)
+
+    const survivalThreshold = assertProbability(0.1, {
+      location: 'applyNuclearWarShock',
+      valueName: 'dataCenterSurvivalThreshold',
+      month: state.currentMonth
+    });
+
     state.computeInfrastructure.dataCenters.forEach(dc => {
       if (dc.operational) {
-        dc.capacity *= 0.1; // 90% destroyed
-        if (rng() > 0.1) {
+        dc.capacity = assertFinite(dc.capacity * destructionMultiplier, {
+          location: 'applyNuclearWarShock',
+          valueName: `dataCenters[].capacity`,
+          month: state.currentMonth
+        });
+
+        if (rng() > survivalThreshold) {
           dc.operational = false;
         }
       }
@@ -161,21 +217,71 @@ function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
 
   // Social collapse
   if (state.society) {
-    state.society.trustInAI = Math.max(0, state.society.trustInAI * 0.2);
-    state.society.coordinationCapacity = Math.max(0, state.society.coordinationCapacity * 0.2);
+    const trustMultiplier = assertResourceAllocation(0.2, {
+      location: 'applyNuclearWarShock',
+      valueName: 'trustMultiplier',
+      month: state.currentMonth
+    }); // 80% loss of trust
+
+    const coordinationMultiplier = assertResourceAllocation(0.2, {
+      location: 'applyNuclearWarShock',
+      valueName: 'coordinationMultiplier',
+      month: state.currentMonth
+    }); // 80% loss of coordination
+
+    state.society.trustInAI = assertProbability(
+      Math.max(0, state.society.trustInAI * trustMultiplier),
+      {
+        location: 'applyNuclearWarShock',
+        valueName: 'society.trustInAI',
+        month: state.currentMonth
+      }
+    );
+
+    state.society.coordinationCapacity = assertProbability(
+      Math.max(0, state.society.coordinationCapacity * coordinationMultiplier),
+      {
+        location: 'applyNuclearWarShock',
+        valueName: 'society.coordinationCapacity',
+        month: state.currentMonth
+      }
+    );
   }
 
   if (state.government) {
-    state.government.legitimacy = Math.min(0.1, state.government.legitimacy);
+    const legitimacyCeiling = assertResourceAllocation(0.1, {
+      location: 'applyNuclearWarShock',
+      valueName: 'governmentLegitimacyCeiling',
+      month: state.currentMonth
+    });
+
+    state.government.legitimacy = assertProbability(
+      Math.min(legitimacyCeiling, state.government.legitimacy),
+      {
+        location: 'applyNuclearWarShock',
+        valueName: 'government.legitimacy',
+        month: state.currentMonth
+      }
+    );
   }
 
   // Set extinction scenario
-  if (mortalityRate > 0.875) {
+  const extinctionThreshold = assertProbability(0.875, {
+    location: 'applyNuclearWarShock',
+    valueName: 'extinctionThreshold',
+    month: state.currentMonth
+  });
+
+  if (mortalityRate > extinctionThreshold) {
     state.extinctionState.active = true;
     state.extinctionState.type = 'rapid';
     state.extinctionState.mechanism = 'nuclear_war';
     state.extinctionState.startMonth = state.currentMonth;
-    state.extinctionState.severity = mortalityRate;
+    state.extinctionState.severity = assertProbability(mortalityRate, {
+      location: 'applyNuclearWarShock',
+      valueName: 'extinctionState.severity',
+      month: state.currentMonth
+    });
   }
 
   return [{
@@ -215,12 +321,60 @@ function applyAGIBreakthroughShock(state: GameState, rng: RNGFunction): GameEven
   }
 
   // Boost AI capabilities dramatically
+  const selfImprovementBoost = assertShockMagnitude(5.0, {
+    location: 'applyAGIBreakthroughShock',
+    valueName: 'selfImprovementBoost',
+    month: state.currentMonth,
+    shockType: 'agi_breakthrough'
+  });
+
+  const algorithmBoost = assertShockMagnitude(3.0, {
+    location: 'applyAGIBreakthroughShock',
+    valueName: 'algorithmBoost',
+    month: state.currentMonth,
+    shockType: 'agi_breakthrough'
+  });
+
+  const capabilityCeiling = assertFinite(10.0, {
+    location: 'applyAGIBreakthroughShock',
+    valueName: 'selfImprovementCeiling',
+    month: state.currentMonth
+  });
+
+  const algorithmCeiling = assertFinite(5.0, {
+    location: 'applyAGIBreakthroughShock',
+    valueName: 'algorithmCeiling',
+    month: state.currentMonth
+  });
+
   state.aiAgents.forEach(agent => {
-    agent.capabilityProfile.selfImprovement = Math.min(10.0, agent.capabilityProfile.selfImprovement + 5.0);
-    agent.capabilityProfile.research.computerScience.algorithms = Math.min(5.0, agent.capabilityProfile.research.computerScience.algorithms + 3.0);
+    agent.capabilityProfile.selfImprovement = assertFinite(
+      Math.min(capabilityCeiling, agent.capabilityProfile.selfImprovement + selfImprovementBoost),
+      {
+        location: 'applyAGIBreakthroughShock',
+        valueName: 'agent.capabilityProfile.selfImprovement',
+        month: state.currentMonth
+      }
+    );
+
+    agent.capabilityProfile.research.computerScience.algorithms = assertFinite(
+      Math.min(algorithmCeiling, agent.capabilityProfile.research.computerScience.algorithms + algorithmBoost),
+      {
+        location: 'applyAGIBreakthroughShock',
+        valueName: 'agent.capabilityProfile.research.computerScience.algorithms',
+        month: state.currentMonth
+      }
+    );
 
     // Recalculate total capability
-    agent.capability = calculateTotalCapability(agent.capabilityProfile);
+    agent.capability = assertFinite(
+      calculateTotalCapability(agent.capabilityProfile),
+      {
+        location: 'applyAGIBreakthroughShock',
+        valueName: 'agent.capability',
+        month: state.currentMonth
+      }
+    );
   });
 
   return [{
@@ -241,8 +395,17 @@ function applyAGIBreakthroughShock(state: GameState, rng: RNGFunction): GameEven
  * Historical: 0 major impacts since 1908 (Tunguska)
  */
 function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent[] {
-  const impactSize = rng(); // 0-1 scale
-  const mortalityRate = impactSize * 0.8; // 0-80% mortality
+  const impactSize = assertProbability(rng(), {
+    location: 'applyAsteroidImpactShock',
+    valueName: 'impactSize',
+    month: state.currentMonth
+  }); // 0-1 scale
+
+  const mortalityRate = assertProbability(impactSize * 0.8, {
+    location: 'applyAsteroidImpactShock',
+    valueName: 'mortalityRate',
+    month: state.currentMonth
+  }); // 0-80% mortality
 
   console.log(`   ☄️  Asteroid impact`);
   console.log(`   Impact size: ${(impactSize * 100).toFixed(1)}%`);
@@ -266,30 +429,77 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
   if (state.planetaryBoundariesSystem?.boundaries) {
     const boundaries = state.planetaryBoundariesSystem.boundaries;
     if (boundaries.climate_change) {
-      boundaries.climate_change.currentValue = Math.min(1.0, boundaries.climate_change.currentValue + impactSize * 0.4);
+      const climateDelta = assertShockMagnitude(impactSize * 0.4, {
+        location: 'applyAsteroidImpactShock',
+        valueName: 'climateDelta',
+        month: state.currentMonth,
+        shockType: 'asteroid_impact'
+      });
+
+      boundaries.climate_change.currentValue = assertProbability(
+        Math.min(1.0, boundaries.climate_change.currentValue + climateDelta),
+        {
+          location: 'applyAsteroidImpactShock',
+          valueName: 'climate_change.currentValue',
+          month: state.currentMonth
+        }
+      );
     }
     if (boundaries.biosphere_integrity) {
       // BUG FIX (Oct 30, 2025): Asteroid impact INCREASES extinction rate (higher = worse)
       // Before: Subtracted impactSize * 0.5 (incorrectly made biosphere BETTER)
       // After: Add impactSize * 0.5 (correctly makes biosphere WORSE via mass extinctions)
-      boundaries.biosphere_integrity.currentValue = boundaries.biosphere_integrity.currentValue + impactSize * 0.5;
+      const biosphereDelta = assertShockMagnitude(impactSize * 0.5, {
+        location: 'applyAsteroidImpactShock',
+        valueName: 'biosphereDelta',
+        month: state.currentMonth,
+        shockType: 'asteroid_impact'
+      });
+
+      boundaries.biosphere_integrity.currentValue = assertFinite(
+        boundaries.biosphere_integrity.currentValue + biosphereDelta,
+        {
+          location: 'applyAsteroidImpactShock',
+          valueName: 'biosphere_integrity.currentValue',
+          month: state.currentMonth
+        }
+      );
     }
   }
 
   // Infrastructure damage
   if (state.computeInfrastructure && state.computeInfrastructure.dataCenters) {
-    const infrastructureDamage = impactSize * 0.3;
+    const infrastructureDamage = assertResourceAllocation(impactSize * 0.3, {
+      location: 'applyAsteroidImpactShock',
+      valueName: 'infrastructureDamage',
+      month: state.currentMonth
+    });
+
     state.computeInfrastructure.dataCenters.forEach(dc => {
-      dc.capacity *= (1 - infrastructureDamage);
+      dc.capacity = assertFinite(dc.capacity * (1 - infrastructureDamage), {
+        location: 'applyAsteroidImpactShock',
+        valueName: 'dataCenters[].capacity',
+        month: state.currentMonth
+      });
     });
   }
 
-  if (mortalityRate > 0.5) {
+  const extinctionThreshold = assertProbability(0.5, {
+    location: 'applyAsteroidImpactShock',
+    valueName: 'extinctionThreshold',
+    month: state.currentMonth
+  });
+
+  if (mortalityRate > extinctionThreshold) {
     state.extinctionState.active = true;
     state.extinctionState.type = 'rapid';
     state.extinctionState.mechanism = 'climate_tipping_point';
     state.extinctionState.startMonth = state.currentMonth;
-    state.extinctionState.severity = mortalityRate;
+    state.extinctionState.severity = assertProbability(mortalityRate, {
+      location: 'applyAsteroidImpactShock',
+      valueName: 'extinctionState.severity',
+      month: state.currentMonth
+    });
   }
 
   return [{
@@ -310,8 +520,17 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
  * Historical: 0 occurrences (COVID was ~0.1% mortality)
  */
 function applyMegaPandemicShock(state: GameState, rng: RNGFunction): GameEvent[] {
-  const totalMortality = 0.2 + rng() * 0.2; // 20-40% mortality
-  const duration = 24; // months
+  const totalMortality = assertProbability(0.2 + rng() * 0.2, {
+    location: 'applyMegaPandemicShock',
+    valueName: 'totalMortality',
+    month: state.currentMonth
+  }); // 20-40% mortality
+
+  const duration = assertFinite(24, {
+    location: 'applyMegaPandemicShock',
+    valueName: 'duration',
+    month: state.currentMonth
+  }); // months
 
   console.log(`   🦠 Mega-pandemic outbreak`);
   console.log(`   Expected mortality: ${(totalMortality * 100).toFixed(1)}% over ${duration} months`);
@@ -321,20 +540,72 @@ function applyMegaPandemicShock(state: GameState, rng: RNGFunction): GameEvent[]
   state.crises.megaPandemic = {
     active: true,
     startMonth: state.currentMonth,
-    totalMortality,
-    monthlyMortality: totalMortality / duration,
-    socialDisruption: 0.6,
+    totalMortality: assertProbability(totalMortality, {
+      location: 'applyMegaPandemicShock',
+      valueName: 'crises.megaPandemic.totalMortality',
+      month: state.currentMonth
+    }),
+    monthlyMortality: assertProbability(totalMortality / duration, {
+      location: 'applyMegaPandemicShock',
+      valueName: 'crises.megaPandemic.monthlyMortality',
+      month: state.currentMonth
+    }),
+    socialDisruption: assertProbability(0.6, {
+      location: 'applyMegaPandemicShock',
+      valueName: 'crises.megaPandemic.socialDisruption',
+      month: state.currentMonth
+    }),
   };
 
   // Immediate economic shock
   if (state.globalMetrics) {
-    state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 1);
+    const economicStageDecline = assertFinite(1, {
+      location: 'applyMegaPandemicShock',
+      valueName: 'economicStageDecline',
+      month: state.currentMonth
+    });
+
+    state.globalMetrics.economicTransitionStage = assertFinite(
+      Math.max(0, state.globalMetrics.economicTransitionStage - economicStageDecline),
+      {
+        location: 'applyMegaPandemicShock',
+        valueName: 'globalMetrics.economicTransitionStage',
+        month: state.currentMonth
+      }
+    );
   }
 
   // Social cohesion decline
   if (state.society) {
-    state.society.coordinationCapacity *= 0.7;
-    state.society.trustInAI *= 0.8;
+    const coordinationMultiplier = assertResourceAllocation(0.7, {
+      location: 'applyMegaPandemicShock',
+      valueName: 'coordinationMultiplier',
+      month: state.currentMonth
+    });
+
+    const trustMultiplier = assertResourceAllocation(0.8, {
+      location: 'applyMegaPandemicShock',
+      valueName: 'trustMultiplier',
+      month: state.currentMonth
+    });
+
+    state.society.coordinationCapacity = assertProbability(
+      state.society.coordinationCapacity * coordinationMultiplier,
+      {
+        location: 'applyMegaPandemicShock',
+        valueName: 'society.coordinationCapacity',
+        month: state.currentMonth
+      }
+    );
+
+    state.society.trustInAI = assertProbability(
+      state.society.trustInAI * trustMultiplier,
+      {
+        location: 'applyMegaPandemicShock',
+        valueName: 'society.trustInAI',
+        month: state.currentMonth
+      }
+    );
   }
 
   return [{
@@ -355,37 +626,125 @@ function applyMegaPandemicShock(state: GameState, rng: RNGFunction): GameEvent[]
  * Historical: 3 occurrences (1987, 2008, 2020)
  */
 function applyFinancialCrashShock(state: GameState, rng: RNGFunction): GameEvent[] {
-  const gdpLoss = 0.1 + rng() * 0.1; // 10-20% GDP loss
+  const gdpLoss = assertProbability(0.1 + rng() * 0.1, {
+    location: 'applyFinancialCrashShock',
+    valueName: 'gdpLoss',
+    month: state.currentMonth
+  }); // 10-20% GDP loss
 
   console.log(`   📉 Global financial crash`);
   console.log(`   GDP loss: ${(gdpLoss * 100).toFixed(1)}%`);
 
   // Economic contraction
   if (state.globalMetrics) {
-    state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 1);
+    const economicStageDecline = assertFinite(1, {
+      location: 'applyFinancialCrashShock',
+      valueName: 'economicStageDecline',
+      month: state.currentMonth
+    });
+
+    state.globalMetrics.economicTransitionStage = assertFinite(
+      Math.max(0, state.globalMetrics.economicTransitionStage - economicStageDecline),
+      {
+        location: 'applyFinancialCrashShock',
+        valueName: 'globalMetrics.economicTransitionStage',
+        month: state.currentMonth
+      }
+    );
   }
 
   // Unemployment spike (Okun's law: 1% GDP loss ≈ 1.5% unemployment increase)
   if (state.society) {
-    const unemploymentIncrease = gdpLoss * 1.5;
-    state.society.unemploymentLevel = Math.min(0.8, state.society.unemploymentLevel + unemploymentIncrease);
+    const okunMultiplier = assertFinite(1.5, {
+      location: 'applyFinancialCrashShock',
+      valueName: 'okunMultiplier',
+      month: state.currentMonth
+    });
+
+    const unemploymentIncrease = assertProbability(gdpLoss * okunMultiplier, {
+      location: 'applyFinancialCrashShock',
+      valueName: 'unemploymentIncrease',
+      month: state.currentMonth
+    });
+
+    const unemploymentCeiling = assertProbability(0.8, {
+      location: 'applyFinancialCrashShock',
+      valueName: 'unemploymentCeiling',
+      month: state.currentMonth
+    });
+
+    state.society.unemploymentLevel = assertProbability(
+      Math.min(unemploymentCeiling, state.society.unemploymentLevel + unemploymentIncrease),
+      {
+        location: 'applyFinancialCrashShock',
+        valueName: 'society.unemploymentLevel',
+        month: state.currentMonth
+      }
+    );
   }
 
   // QoL decline
   if (state.globalMetrics) {
-    state.globalMetrics.qualityOfLife *= (1 - gdpLoss * 0.5);
+    const qolMultiplier = assertResourceAllocation(1 - gdpLoss * 0.5, {
+      location: 'applyFinancialCrashShock',
+      valueName: 'qolMultiplier',
+      month: state.currentMonth
+    });
+
+    state.globalMetrics.qualityOfLife = assertProbability(
+      state.globalMetrics.qualityOfLife * qolMultiplier,
+      {
+        location: 'applyFinancialCrashShock',
+        valueName: 'globalMetrics.qualityOfLife',
+        month: state.currentMonth
+      }
+    );
   }
 
   // Social unrest
   if (state.society) {
-    state.society.coordinationCapacity *= 0.85;
+    const coordinationMultiplier = assertResourceAllocation(0.85, {
+      location: 'applyFinancialCrashShock',
+      valueName: 'coordinationMultiplier',
+      month: state.currentMonth
+    });
+
+    state.society.coordinationCapacity = assertProbability(
+      state.society.coordinationCapacity * coordinationMultiplier,
+      {
+        location: 'applyFinancialCrashShock',
+        valueName: 'society.coordinationCapacity',
+        month: state.currentMonth
+      }
+    );
   }
 
   // AI organization funding crisis
   state.organizations.forEach(org => {
     if (org.type === 'private') {
-      org.capital *= (1 - gdpLoss * 2); // AI funding hit harder (VC dries up)
-      org.monthlyRevenue *= (1 - gdpLoss);
+      const fundingHitMultiplier = assertResourceAllocation(1 - gdpLoss * 2, {
+        location: 'applyFinancialCrashShock',
+        valueName: 'fundingHitMultiplier',
+        month: state.currentMonth
+      }); // AI funding hit harder (VC dries up)
+
+      const revenueMultiplier = assertResourceAllocation(1 - gdpLoss, {
+        location: 'applyFinancialCrashShock',
+        valueName: 'revenueMultiplier',
+        month: state.currentMonth
+      });
+
+      org.capital = assertFinite(org.capital * fundingHitMultiplier, {
+        location: 'applyFinancialCrashShock',
+        valueName: 'organizations[].capital',
+        month: state.currentMonth
+      });
+
+      org.monthlyRevenue = assertFinite(org.monthlyRevenue * revenueMultiplier, {
+        location: 'applyFinancialCrashShock',
+        valueName: 'organizations[].monthlyRevenue',
+        month: state.currentMonth
+      });
     }
   });
 
@@ -449,7 +808,20 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
 
   // Economic disruption
   if (state.globalMetrics) {
-    state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 1);
+    const economicStageDecline = assertFinite(1, {
+      location: 'applyRegionalWarShock',
+      valueName: 'economicStageDecline',
+      month: state.currentMonth
+    });
+
+    state.globalMetrics.economicTransitionStage = assertFinite(
+      Math.max(0, state.globalMetrics.economicTransitionStage - economicStageDecline),
+      {
+        location: 'applyRegionalWarShock',
+        valueName: 'globalMetrics.economicTransitionStage',
+        month: state.currentMonth
+      }
+    );
   }
 
   // Refugee crisis
@@ -457,7 +829,27 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
     if (state.humanPopulationSystem?.population === undefined) {
       throw new Error('❌ state.humanPopulationSystem.population is undefined in applyRegionalWarShock:422 - initialization bug');
     }
-    const refugees = state.humanPopulationSystem.population * mortalityRate * 2; // 2x mortality in displacement
+
+    const displacementMultiplier = assertFinite(2, {
+      location: 'applyRegionalWarShock',
+      valueName: 'displacementMultiplier',
+      month: state.currentMonth
+    }); // 2x mortality in displacement
+
+    const refugees = assertFinite(
+      state.humanPopulationSystem.population * mortalityRate * displacementMultiplier,
+      {
+        location: 'applyRegionalWarShock',
+        valueName: 'refugees',
+        month: state.currentMonth
+      }
+    );
+
+    const refugeesMillions = assertFinite(refugees / 1000000, {
+      location: 'applyRegionalWarShock',
+      valueName: 'refugeesMillions',
+      month: state.currentMonth
+    });
 
     state.refugeeCrisisSystem.activeRefugeeCrises.push({
       id: `war_${state.currentMonth}`,
@@ -465,33 +857,75 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
       startMonth: state.currentMonth,
       sourceRegion: 'conflict_zone',
       hostRegions: [],
-      potentialDisplaced: refugees / 1000000,
+      potentialDisplaced: refugeesMillions,
       remainingInSource: 0,
-      displacedPopulation: refugees / 1000000,
-      currentlyDisplaced: refugees / 1000000,
+      displacedPopulation: refugeesMillions,
+      currentlyDisplaced: refugeesMillions,
       resettledCount: 0,
       deathsInTransit: 0,
-      displacementRate: 0.1,
-      displacementDuration: 48,
+      displacementRate: assertProbability(0.1, {
+        location: 'applyRegionalWarShock',
+        valueName: 'refugeeCrisis.displacementRate',
+        month: state.currentMonth
+      }),
+      displacementDuration: assertFinite(48, {
+        location: 'applyRegionalWarShock',
+        valueName: 'refugeeCrisis.displacementDuration',
+        month: state.currentMonth
+      }),
       displacementComplete: false,
-      generationLength: 300,
+      generationLength: assertFinite(300, {
+        location: 'applyRegionalWarShock',
+        valueName: 'refugeeCrisis.generationLength',
+        month: state.currentMonth
+      }),
       monthsActive: 0,
       resettlementProgress: 0,
-      socialTension: 0.6,
-      economicStrain: 0.6,
-      politicalInstability: 0.5,
+      socialTension: assertProbability(0.6, {
+        location: 'applyRegionalWarShock',
+        valueName: 'refugeeCrisis.socialTension',
+        month: state.currentMonth
+      }),
+      economicStrain: assertProbability(0.6, {
+        location: 'applyRegionalWarShock',
+        valueName: 'refugeeCrisis.economicStrain',
+        month: state.currentMonth
+      }),
+      politicalInstability: assertProbability(0.5, {
+        location: 'applyRegionalWarShock',
+        valueName: 'refugeeCrisis.politicalInstability',
+        month: state.currentMonth
+      }),
       resettlementRate: 0.0,
-      baselineResettlementRate: 0.005,
+      baselineResettlementRate: assertProbability(0.005, {
+        location: 'applyRegionalWarShock',
+        valueName: 'refugeeCrisis.baselineResettlementRate',
+        month: state.currentMonth
+      }),
       acceleratedResettlement: false,
       resolved: false,
-      peakDisplacement: refugees / 1000000,
+      peakDisplacement: refugeesMillions,
       duration: 0
     });
   }
 
   // Nuclear risk increase (decrease crisis stability)
   if (state.madDeterrence) {
-    state.madDeterrence.crisisStability = Math.max(0.0, state.madDeterrence.crisisStability - 0.2);
+    const crisisStabilityDelta = assertShockMagnitude(-0.2, {
+      location: 'applyRegionalWarShock',
+      valueName: 'crisisStabilityDelta',
+      month: state.currentMonth,
+      shockType: 'regional_war'
+    });
+
+    state.madDeterrence.crisisStability = assertProbability(
+      Math.max(0.0, state.madDeterrence.crisisStability + crisisStabilityDelta),
+      {
+        location: 'applyRegionalWarShock',
+        valueName: 'madDeterrence.crisisStability',
+        month: state.currentMonth
+      }
+    );
   }
 
   return [{
@@ -529,7 +963,11 @@ function applyTechBreakthroughShock(state: GameState, rng: RNGFunction): GameEve
   const index = Math.floor(rng() * candidateTechs.length);
   const selectedTech = candidateTechs[index];
   selectedTech.completed = true;
-  selectedTech.progress = 1.0; // 100% complete
+  selectedTech.progress = assertProbability(1.0, {
+    location: 'applyTechBreakthroughShock',
+    valueName: 'selectedTech.progress',
+    month: state.currentMonth
+  }); // 100% complete
 
   console.log(`   🔬 Breakthrough: ${selectedTech.name} unlocked`);
   console.log(`   High-difficulty technology ahead of schedule`);
@@ -556,7 +994,20 @@ function applyPoliticalUpheavalShock(state: GameState, rng: RNGFunction): GameEv
 
   // Institutional collapse
   if (state.government) {
-    state.government.legitimacy *= 0.5;
+    const legitimacyMultiplier = assertResourceAllocation(0.5, {
+      location: 'applyPoliticalUpheavalShock',
+      valueName: 'legitimacyMultiplier',
+      month: state.currentMonth
+    });
+
+    state.government.legitimacy = assertProbability(
+      state.government.legitimacy * legitimacyMultiplier,
+      {
+        location: 'applyPoliticalUpheavalShock',
+        valueName: 'government.legitimacy',
+        month: state.currentMonth
+      }
+    );
 
     // Determine outcome (democracy or autocracy)
     // society and globalMetrics are always initialized
@@ -566,7 +1017,11 @@ function applyPoliticalUpheavalShock(state: GameState, rng: RNGFunction): GameEv
     if (state.society.coordinationCapacity === undefined) {
       throw new Error(`❌ state.society.coordinationCapacity is undefined at month ${state.currentMonth} in ExogenousShockPhase.applyPoliticalUpheaval`);
     }
-    const coordinationCapacity = state.society.coordinationCapacity;
+    const coordinationCapacity = assertProbability(state.society.coordinationCapacity, {
+      location: 'applyPoliticalUpheavalShock',
+      valueName: 'coordinationCapacity',
+      month: state.currentMonth
+    });
 
     if (!state.globalMetrics) {
       throw new Error(`❌ state.globalMetrics is undefined at month ${state.currentMonth} in ExogenousShockPhase.applyPoliticalUpheaval`);
@@ -574,9 +1029,21 @@ function applyPoliticalUpheavalShock(state: GameState, rng: RNGFunction): GameEv
     if (state.globalMetrics.informationIntegrity === undefined) {
       throw new Error(`❌ state.globalMetrics.informationIntegrity is undefined at month ${state.currentMonth} in ExogenousShockPhase.applyPoliticalUpheaval`);
     }
-    const informationIntegrity = state.globalMetrics.informationIntegrity;
+    const informationIntegrity = assertProbability(state.globalMetrics.informationIntegrity, {
+      location: 'applyPoliticalUpheavalShock',
+      valueName: 'informationIntegrity',
+      month: state.currentMonth
+    });
 
-    const democratizationChance = coordinationCapacity * informationIntegrity;
+    const democratizationChance = assertProbability(
+      coordinationCapacity * informationIntegrity,
+      {
+        location: 'applyPoliticalUpheavalShock',
+        valueName: 'democratizationChance',
+        month: state.currentMonth
+      }
+    );
+
     const democratizes = rng() < democratizationChance;
 
     if (democratizes) {
@@ -590,13 +1057,53 @@ function applyPoliticalUpheavalShock(state: GameState, rng: RNGFunction): GameEv
 
   // Social cohesion shock
   if (state.society) {
-    state.society.coordinationCapacity *= 0.7;
-    state.society.trustInAI *= 0.8;
+    const coordinationMultiplier = assertResourceAllocation(0.7, {
+      location: 'applyPoliticalUpheavalShock',
+      valueName: 'coordinationMultiplier',
+      month: state.currentMonth
+    });
+
+    const trustMultiplier = assertResourceAllocation(0.8, {
+      location: 'applyPoliticalUpheavalShock',
+      valueName: 'trustMultiplier',
+      month: state.currentMonth
+    });
+
+    state.society.coordinationCapacity = assertProbability(
+      state.society.coordinationCapacity * coordinationMultiplier,
+      {
+        location: 'applyPoliticalUpheavalShock',
+        valueName: 'society.coordinationCapacity',
+        month: state.currentMonth
+      }
+    );
+
+    state.society.trustInAI = assertProbability(
+      state.society.trustInAI * trustMultiplier,
+      {
+        location: 'applyPoliticalUpheavalShock',
+        valueName: 'society.trustInAI',
+        month: state.currentMonth
+      }
+    );
   }
 
   // Economic disruption
   if (state.globalMetrics) {
-    state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 1);
+    const economicStageDecline = assertFinite(1, {
+      location: 'applyPoliticalUpheavalShock',
+      valueName: 'economicStageDecline',
+      month: state.currentMonth
+    });
+
+    state.globalMetrics.economicTransitionStage = assertFinite(
+      Math.max(0, state.globalMetrics.economicTransitionStage - economicStageDecline),
+      {
+        location: 'applyPoliticalUpheavalShock',
+        valueName: 'globalMetrics.economicTransitionStage',
+        month: state.currentMonth
+      }
+    );
   }
 
   return [{
