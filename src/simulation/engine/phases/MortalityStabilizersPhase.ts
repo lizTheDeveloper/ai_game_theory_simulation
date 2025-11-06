@@ -29,6 +29,7 @@
 import type { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { assertFinite, assertInRange, assertStateProperty } from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { THRESHOLDS, RATES, MULTIPLIERS, BASELINES } from '@/simulation/config/centralConfig';
 
 export class MortalityStabilizersPhase implements SimulationPhase {
   readonly id = 'mortality-stabilizers';
@@ -196,9 +197,9 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       for (const region of pop.regionalPopulations) {
         // Proxy for "major economy": economicStage >= 3 at baseline
         // DIAGNOSTIC: Check if this region qualifies as a major economy
-        const isMajorEconomy = region.baselinePopulation > 300;
-        const economicCollapse = region.economicStage < 2.0;
-        const populationCollapse = region.population < region.baselinePopulation * 0.5;
+        const isMajorEconomy = region.baselinePopulation > RATES.MAJOR_ECONOMY_POPULATION_THRESHOLD;
+        const economicCollapse = region.economicStage < RATES.MAJOR_ECONOMY_COLLAPSE_ECONOMIC_THRESHOLD;
+        const populationCollapse = region.population < region.baselinePopulation * RATES.MAJOR_ECONOMY_POPULATION_COLLAPSE_FRACTION;
 
         if (isMajorEconomy && economicCollapse) {
           // Major region (>300M people) dropped to economicStage < 2.0 (below middle-income)
@@ -218,7 +219,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     }
 
     // Global crisis if >50% of major economies collapsed
-    const globalCrisisActive = (collapsed / totalMajorEconomies) > 0.5;
+    const globalCrisisActive = (collapsed / totalMajorEconomies) > RATES.MAJOR_ECONOMY_GLOBAL_CRISIS_THRESHOLD;
 
     // DIAGNOSTIC: Log collapse reasons
     if (collapseReasons.length > 0) {
@@ -231,7 +232,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // Donor fatigue based on active crises
     // Pakistan 2010: 50% of Haiti's aid (2 simultaneous crises)
     const activeCrises = state.planetaryBoundariesSystem?.cascadeActive ? 3 : 1;
-    const donorFatigue = Math.min(0.8, (activeCrises - 1) * 0.25); // 25% fatigue per additional crisis
+    const donorFatigue = Math.min(RATES.DONOR_FATIGUE_MAX, (activeCrises - 1) * RATES.DONOR_FATIGUE_PER_CRISIS);
 
     return {
       majorEconomiesCollapsed: collapsed,
@@ -282,22 +283,22 @@ export class MortalityStabilizersPhase implements SimulationPhase {
 
     // Determine aid level based on donor capacity
     // (In full implementation, this would consider international cooperation, logistics, etc.)
-    if (aid.donorAvailability > 0.8) {
+    if (aid.donorAvailability > RATES.AID_DONOR_AVAILABILITY_HIGH) {
       aid.effectivenessLevel = 'high';
-      aid.mortalityReduction = 0.295 * aid.donorAvailability; // 29.5% max (midpoint of 15-44%)
-    } else if (aid.donorAvailability > 0.5) {
+      aid.mortalityReduction = BASELINES.AID_EFFECTIVENESS_HIGH * aid.donorAvailability;
+    } else if (aid.donorAvailability > RATES.AID_DONOR_AVAILABILITY_MEDIUM) {
       aid.effectivenessLevel = 'medium';
-      aid.mortalityReduction = 0.185 * aid.donorAvailability; // 18.5% max (midpoint of 9-28%)
-    } else if (aid.donorAvailability > 0.2) {
+      aid.mortalityReduction = BASELINES.AID_EFFECTIVENESS_MEDIUM * aid.donorAvailability;
+    } else if (aid.donorAvailability > RATES.AID_DONOR_AVAILABILITY_LOW) {
       aid.effectivenessLevel = 'low';
-      aid.mortalityReduction = 0.08 * aid.donorAvailability; // 8% max (midpoint of 6-10%)
+      aid.mortalityReduction = BASELINES.AID_EFFECTIVENESS_LOW * aid.donorAvailability;
     } else {
       aid.effectivenessLevel = 'none';
       aid.mortalityReduction = 0.0;
     }
 
     // Validate
-    aid.mortalityReduction = assertInRange(aid.mortalityReduction, 0, 0.44, {
+    aid.mortalityReduction = assertInRange(aid.mortalityReduction, 0, BASELINES.AID_EFFECTIVENESS_MAX, {
       location: 'MortalityStabilizersPhase.updateInternationalAid',
       valueName: 'aid.mortalityReduction',
       month: state.currentMonth
@@ -340,7 +341,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       const maxWetBulb = Math.max(
         ...state.wetBulbTemperatureSystem.eventsThisMonth.map(e => e.wetBulbTemp)
       );
-      wetBulbCrisis = maxWetBulb > 28.0; // Heat stress threshold (Raymond 2020)
+      wetBulbCrisis = maxWetBulb > THRESHOLDS.WET_BULB_STRESS_THRESHOLD; // Heat stress threshold (Raymond 2020)
     }
 
     const heatCrisisActive = climateCrisisFlag || wetBulbCrisis;
@@ -365,34 +366,52 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     }
 
     // Physiological adaptation (develops over weeks, cap at 20%)
-    if (adaptation.monthsExposed >= 0.5) {
-      adaptation.physiological = Math.min(0.2, adaptation.monthsExposed * 0.05);
+    if (adaptation.monthsExposed >= RATES.HEAT_ADAPTATION_PHYSIOLOGICAL_MIN_EXPOSURE) {
+      adaptation.physiological = Math.min(
+        BASELINES.HEAT_ADAPTATION_PHYSIOLOGICAL_MAX,
+        adaptation.monthsExposed * RATES.HEAT_ADAPTATION_PHYSIOLOGICAL_RATE
+      );
     }
 
     // Behavioral adaptation (develops quickly, cap at 30%)
-    if (adaptation.monthsExposed >= 0.25) {
-      adaptation.behavioral = Math.min(0.3, adaptation.monthsExposed * 0.1);
+    if (adaptation.monthsExposed >= RATES.HEAT_ADAPTATION_BEHAVIORAL_MIN_EXPOSURE) {
+      adaptation.behavioral = Math.min(
+        BASELINES.HEAT_ADAPTATION_BEHAVIORAL_MAX,
+        adaptation.monthsExposed * RATES.HEAT_ADAPTATION_BEHAVIORAL_RATE
+      );
     }
 
     // Infrastructural adaptation (requires time + money, cap at 50%)
     // Only develops if economic capacity is sufficient
     const gdpPerCapita = region.economicStage >= 3 ? 40000 : (region.economicStage >= 2 ? 15000 : 5000);
-    if (gdpPerCapita > 10000 && adaptation.monthsExposed > 12) {
-      const infraRate = gdpPerCapita / 50000; // Scales with wealth
-      adaptation.infrastructural = Math.min(0.5, (adaptation.monthsExposed - 12) * 0.02 * infraRate);
+    if (gdpPerCapita > RATES.HEAT_ADAPTATION_INFRASTRUCTURE_GDP_THRESHOLD &&
+        adaptation.monthsExposed > RATES.HEAT_ADAPTATION_INFRASTRUCTURAL_MIN_EXPOSURE) {
+      const infraRate = gdpPerCapita / RATES.HEAT_ADAPTATION_INFRASTRUCTURE_GDP_SCALE; // Scales with wealth
+      adaptation.infrastructural = Math.min(
+        BASELINES.HEAT_ADAPTATION_INFRASTRUCTURAL_MAX,
+        (adaptation.monthsExposed - RATES.HEAT_ADAPTATION_INFRASTRUCTURAL_MIN_EXPOSURE) *
+        RATES.HEAT_ADAPTATION_INFRASTRUCTURAL_RATE *
+        infraRate
+      );
     }
 
     // Social/policy adaptation (requires governance, cap at 40%)
     const governance = region.healthcareQuality; // Proxy for governance effectiveness
-    if (governance > 0.5 && adaptation.monthsExposed > 6) {
+    if (governance > RATES.HEAT_ADAPTATION_SOCIAL_GOVERNANCE_THRESHOLD &&
+        adaptation.monthsExposed > RATES.HEAT_ADAPTATION_SOCIAL_MIN_EXPOSURE) {
       const policyRate = governance;
-      adaptation.social = Math.min(0.4, (adaptation.monthsExposed - 6) * 0.03 * policyRate);
+      adaptation.social = Math.min(
+        BASELINES.HEAT_ADAPTATION_SOCIAL_MAX,
+        (adaptation.monthsExposed - RATES.HEAT_ADAPTATION_SOCIAL_MIN_EXPOSURE) *
+        RATES.HEAT_ADAPTATION_SOCIAL_RATE *
+        policyRate
+      );
     }
 
     // Combined effect (empirical max 80%)
     const totalReduction = adaptation.physiological + adaptation.behavioral +
                            adaptation.infrastructural + adaptation.social;
-    adaptation.totalReduction = Math.min(0.8, totalReduction);
+    adaptation.totalReduction = Math.min(BASELINES.HEAT_ADAPTATION_TOTAL_MAX, totalReduction);
 
     // CRITICAL FIX (Sylvia): Check wet bulb limits (30.5°C, not 35°C)
     // If temperature exceeds physiological limits, adaptation ceases
@@ -401,7 +420,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     adaptation.adaptationCeases = false;
 
     // Validate
-    adaptation.totalReduction = assertInRange(adaptation.totalReduction, 0, 0.8, {
+    adaptation.totalReduction = assertInRange(adaptation.totalReduction, 0, BASELINES.HEAT_ADAPTATION_TOTAL_MAX, {
       location: 'MortalityStabilizersPhase.updateHeatAdaptation',
       valueName: 'adaptation.totalReduction',
       month: state.currentMonth
@@ -442,7 +461,9 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // In regional crisis: high capacity (people can move to safe regions)
     // In global crisis: low capacity (nowhere safe to go)
     const globalCrisis = state.planetaryBoundariesSystem?.cascadeActive || false;
-    migration.destinationCapacity = globalCrisis ? 0.3 : 1.0;
+    migration.destinationCapacity = globalCrisis ?
+      RATES.MIGRATION_GLOBAL_CRISIS_CAPACITY :
+      RATES.MIGRATION_REGIONAL_CRISIS_CAPACITY;
 
     // HIGH PRIORITY FIX (Nov 6, 2025): Architecture Review H1 - Circular dependency RESOLVED
     //
@@ -480,13 +501,16 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     });
 
     // Base successful relocation rate: 85%
-    let successRate = 0.85;
+    let successRate = BASELINES.MIGRATION_SUCCESS_RATE_BASELINE;
 
     // Reduced by crisis severity (people trapped)
-    successRate *= (1 - crisisSeverity * 0.3);
+    successRate *= (1 - crisisSeverity * RATES.MIGRATION_CRISIS_PENALTY);
 
     // Reduced by distance (longer journeys harder)
-    const distancePenalty = Math.min(0.4, migration.averageDistance / 5000);
+    const distancePenalty = Math.min(
+      RATES.MIGRATION_MAX_DISTANCE_PENALTY,
+      migration.averageDistance / RATES.MIGRATION_DISTANCE_SCALE
+    );
     migration.distancePenalty = distancePenalty;
     successRate *= (1 - distancePenalty);
 
@@ -496,19 +520,19 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     migration.successfulRelocation = Math.max(0, successRate);
 
     // Mortality during migration: baseline 0.1%
-    let mortalityRate = 0.001;
+    let mortalityRate = BASELINES.MIGRATION_MORTALITY_BASELINE;
 
     // Increases with crisis severity
-    mortalityRate += crisisSeverity * 0.02; // Up to 2% in extreme crises
+    mortalityRate += crisisSeverity * RATES.MIGRATION_CRISIS_MORTALITY_INCREASE;
 
     // Increases with distance
-    mortalityRate += distancePenalty * 0.01; // Up to 1% for very long journeys
+    mortalityRate += distancePenalty * RATES.MIGRATION_DISTANCE_MORTALITY_INCREASE;
 
-    migration.mortalityDuringMigration = Math.min(0.03, mortalityRate); // Cap at 3%
+    migration.mortalityDuringMigration = Math.min(BASELINES.MIGRATION_MORTALITY_MAX, mortalityRate);
 
     // Return rate: baseline 85%, reduced if origin remains uninhabitable
-    let returnRate = 0.85;
-    returnRate *= (1 - crisisSeverity * 0.8);
+    let returnRate = BASELINES.MIGRATION_RETURN_RATE_BASELINE;
+    returnRate *= (1 - crisisSeverity * RATES.MIGRATION_RETURN_CRISIS_PENALTY);
     migration.returnRate = Math.max(0, returnRate);
 
     // Validate
@@ -537,32 +561,40 @@ export class MortalityStabilizersPhase implements SimulationPhase {
 
     // Calculate crisis scale (0.1 = local, 1.0 = global)
     const globalCrisis = state.planetaryBoundariesSystem?.cascadeActive || false;
-    response.crisisScale = globalCrisis ? 1.0 : 0.3;
+    response.crisisScale = globalCrisis ?
+      RATES.EMERGENCY_RESPONSE_GLOBAL_CRISIS_SCALE :
+      RATES.EMERGENCY_RESPONSE_LOCAL_CRISIS_SCALE;
 
     // Base effectiveness: 30% mortality reduction (midpoint of 20-40% estimate)
-    let effectiveness = 0.30;
+    let effectiveness = BASELINES.EMERGENCY_RESPONSE_BASELINE;
 
     // Scaled by workforce availability
-    effectiveness *= response.workforceAvailable;
+    effectiveness *= response.workforceAvailable * RATES.EMERGENCY_RESPONSE_WORKFORCE_SCALE;
 
     // Scaled by preparedness
-    effectiveness *= (0.5 + 0.5 * response.preparednessLevel);
+    effectiveness *= (RATES.EMERGENCY_RESPONSE_PREPAREDNESS_MIN +
+                     (1 - RATES.EMERGENCY_RESPONSE_PREPAREDNESS_MIN) * response.preparednessLevel);
 
     // Scaled by resource availability
-    effectiveness *= (0.3 + 0.7 * response.resourceStockpiles);
+    effectiveness *= (RATES.EMERGENCY_RESPONSE_RESOURCE_MIN +
+                     (1 - RATES.EMERGENCY_RESPONSE_RESOURCE_MIN) * response.resourceStockpiles);
 
     // Scaled by communication
-    effectiveness *= (0.3 + 0.7 * response.communicationSystems);
+    effectiveness *= (RATES.EMERGENCY_RESPONSE_COMMUNICATION_MIN +
+                     (1 - RATES.EMERGENCY_RESPONSE_COMMUNICATION_MIN) * response.communicationSystems);
 
     // Overwhelmed by large-scale crises
-    response.overwhelmPenalty = Math.max(0.2, 1 - response.crisisScale * 0.8);
+    response.overwhelmPenalty = Math.max(
+      RATES.EMERGENCY_RESPONSE_OVERWHELM_MIN,
+      1 - response.crisisScale * RATES.EMERGENCY_RESPONSE_CRISIS_SCALE_PENALTY
+    );
     effectiveness *= response.overwhelmPenalty;
 
     // Cap at 40% (empirical upper bound estimate)
-    response.effectiveness = Math.min(0.4, effectiveness);
+    response.effectiveness = Math.min(BASELINES.EMERGENCY_RESPONSE_MAX, effectiveness);
 
     // Validate
-    response.effectiveness = assertInRange(response.effectiveness, 0, 0.4, {
+    response.effectiveness = assertInRange(response.effectiveness, 0, BASELINES.EMERGENCY_RESPONSE_MAX, {
       location: 'MortalityStabilizersPhase.updateEmergencyResponse',
       valueName: 'response.effectiveness',
       month: state.currentMonth
@@ -585,7 +617,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
 
     // Calculate functioning levels (0-1)
     cascades.aidFunctioning = assertInRange(
-      stabilizers.aid.mortalityReduction / 0.295,
+      stabilizers.aid.mortalityReduction / BASELINES.AID_EFFECTIVENESS_HIGH,
       0, 1,
       {
         location: 'MortalityStabilizersPhase.applyCascadeFailures',
@@ -594,7 +626,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       }
     );
     cascades.adaptationFunctioning = assertInRange(
-      stabilizers.adaptation.totalReduction / 0.8,
+      stabilizers.adaptation.totalReduction / BASELINES.HEAT_ADAPTATION_TOTAL_MAX,
       0, 1,
       {
         location: 'MortalityStabilizersPhase.applyCascadeFailures',
@@ -612,7 +644,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       }
     );
     cascades.emergencyResponseFunctioning = assertInRange(
-      stabilizers.emergencyResponse.effectiveness / 0.4,
+      stabilizers.emergencyResponse.effectiveness / BASELINES.EMERGENCY_RESPONSE_MAX,
       0, 1,
       {
         location: 'MortalityStabilizersPhase.applyCascadeFailures',
@@ -624,19 +656,19 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // Apply cascade effects
 
     // Aid failure → Emergency response degraded by 50%
-    if (cascades.aidFunctioning < 0.3) {
+    if (cascades.aidFunctioning < MULTIPLIERS.CASCADE_FAILURE_THRESHOLD) {
       const degradation = cascades.cascadeMultipliers.aidToEmergencyResponse;
       stabilizers.emergencyResponse.effectiveness *= (1 - degradation);
     }
 
     // Aid failure → Migration degraded by 30%
-    if (cascades.aidFunctioning < 0.3) {
+    if (cascades.aidFunctioning < MULTIPLIERS.CASCADE_FAILURE_THRESHOLD) {
       const degradation = cascades.cascadeMultipliers.aidToMigration;
       stabilizers.migration.successfulRelocation *= (1 - degradation);
     }
 
     // Emergency failure → Migration degraded by 50%
-    if (cascades.emergencyResponseFunctioning < 0.3) {
+    if (cascades.emergencyResponseFunctioning < MULTIPLIERS.CASCADE_FAILURE_THRESHOLD) {
       const degradation = cascades.cascadeMultipliers.emergencyToMigration;
       stabilizers.migration.successfulRelocation *= (1 - degradation);
     }
@@ -646,7 +678,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // After cascades modify the actual effectiveness values, we need to update
     // the functioning levels to reflect the post-cascade state.
     cascades.aidFunctioning = assertInRange(
-      stabilizers.aid.mortalityReduction / 0.295,
+      stabilizers.aid.mortalityReduction / BASELINES.AID_EFFECTIVENESS_HIGH,
       0, 1,
       {
         location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
@@ -655,7 +687,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       }
     );
     cascades.adaptationFunctioning = assertInRange(
-      stabilizers.adaptation.totalReduction / 0.8,
+      stabilizers.adaptation.totalReduction / BASELINES.HEAT_ADAPTATION_TOTAL_MAX,
       0, 1,
       {
         location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
@@ -673,7 +705,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       }
     );
     cascades.emergencyResponseFunctioning = assertInRange(
-      stabilizers.emergencyResponse.effectiveness / 0.4,
+      stabilizers.emergencyResponse.effectiveness / BASELINES.EMERGENCY_RESPONSE_MAX,
       0, 1,
       {
         location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
@@ -702,7 +734,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
   ): void {
     const aid = stabilizers.aid.mortalityReduction;
     const adaptation = stabilizers.adaptation.totalReduction;
-    const migration = stabilizers.migration.successfulRelocation * 0.3; // Assume 30% can migrate if needed
+    const migration = stabilizers.migration.successfulRelocation * RATES.MIGRATION_EVACUATION_FRACTION; // Assume 30% can migrate if needed
     const emergency = stabilizers.emergencyResponse.effectiveness;
 
     // Combined multiplicatively

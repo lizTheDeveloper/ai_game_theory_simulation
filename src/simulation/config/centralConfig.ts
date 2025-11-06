@@ -86,9 +86,24 @@ export const THRESHOLDS = {
   /**
    * Wet bulb temperature threshold for human survival (°C)
    * @research Raymond et al. (2020) - 35°C WBT = 6-hour lethality
-   * @value 35 - Absolute physiological limit
+   * @value 35 - Absolute physiological limit (THEORETICAL)
    */
   WET_BULB_LETHAL_THRESHOLD: 35,
+
+  /**
+   * Wet bulb temperature threshold for empirical survivability limit (°C)
+   * @research Vecellio et al. (2024), Nature - 30.5°C WBT = empirical limit
+   * @value 30.5 - Empirical survivability limit where heat adaptation ceases
+   * @note This is LOWER than theoretical 35°C - use this for mortality stabilizers
+   */
+  WET_BULB_EMPIRICAL_LIMIT: 30.5,
+
+  /**
+   * Wet bulb temperature threshold for heat stress onset (°C)
+   * @research Raymond et al. (2020), Science - 28°C WBT = heat stress begins
+   * @value 28 - Heat stress threshold where heat adaptation begins developing
+   */
+  WET_BULB_STRESS_THRESHOLD: 28,
 
   /**
    * Wet bulb temperature threshold for dangerous conditions (°C)
@@ -450,6 +465,266 @@ export const RATES = {
    * @value 0.05 - 5% monthly under crisis conditions
    */
   REFUGEE_CRISIS_PROBABILITY: 0.05,
+
+  // === MORTALITY STABILIZER DEVELOPMENT RATES ===
+  /**
+   * Heat adaptation - physiological development rate (per month)
+   * @research Ballester et al. (2024), Nature Medicine - Adaptation develops over weeks
+   * @value 0.05 - 5% per month (reaches 20% max in ~4 months)
+   */
+  HEAT_ADAPTATION_PHYSIOLOGICAL_RATE: 0.05,
+
+  /**
+   * Heat adaptation - behavioral development rate (per month)
+   * @research Ballester et al. (2024), Nature Medicine - Rapid behavioral change
+   * @value 0.1 - 10% per month (reaches 30% max in ~3 months)
+   */
+  HEAT_ADAPTATION_BEHAVIORAL_RATE: 0.1,
+
+  /**
+   * Heat adaptation - infrastructural development rate (per month, wealth-scaled)
+   * @research Ballester et al. (2024), Nature Medicine - Years to build infrastructure
+   * @value 0.02 - 2% per month (reaches 50% max in ~25 months after 12-month delay)
+   */
+  HEAT_ADAPTATION_INFRASTRUCTURAL_RATE: 0.02,
+
+  /**
+   * Heat adaptation - social/policy development rate (per month, governance-scaled)
+   * @research Ballester et al. (2024), Nature Medicine - Months to years for policy
+   * @value 0.03 - 3% per month (reaches 40% max in ~13 months after 6-month delay)
+   */
+  HEAT_ADAPTATION_SOCIAL_RATE: 0.03,
+
+  /**
+   * Heat adaptation - physiological minimum exposure (months before development)
+   * @research Ballester et al. (2024), Nature Medicine - Weeks to develop
+   * @value 0.5 - 2 weeks minimum exposure
+   */
+  HEAT_ADAPTATION_PHYSIOLOGICAL_MIN_EXPOSURE: 0.5,
+
+  /**
+   * Heat adaptation - behavioral minimum exposure (months before development)
+   * @research Ballester et al. (2024), Nature Medicine - Immediate to rapid response
+   * @value 0.25 - ~1 week minimum exposure
+   */
+  HEAT_ADAPTATION_BEHAVIORAL_MIN_EXPOSURE: 0.25,
+
+  /**
+   * Heat adaptation - infrastructural minimum exposure (months before development)
+   * @research Ballester et al. (2024), Nature Medicine - Requires sustained crisis
+   * @value 12 - 1 year before infrastructure investment begins
+   */
+  HEAT_ADAPTATION_INFRASTRUCTURAL_MIN_EXPOSURE: 12,
+
+  /**
+   * Heat adaptation - social minimum exposure (months before development)
+   * @research Ballester et al. (2024), Nature Medicine - Policy response lags
+   * @value 6 - 6 months before policy adaptation begins
+   */
+  HEAT_ADAPTATION_SOCIAL_MIN_EXPOSURE: 6,
+
+  /**
+   * Migration - crisis severity impact on success rate
+   * @research IOM (2024), World Migration Report - Crisis trapping effects
+   * @value 0.3 - 30% reduction in success rate at maximum crisis severity
+   */
+  MIGRATION_CRISIS_PENALTY: 0.3,
+
+  /**
+   * Migration - maximum distance penalty
+   * @research IOM (2024), World Migration Report - Distance-mortality relationship
+   * @value 0.4 - 40% reduction for very long journeys (>5000 km)
+   */
+  MIGRATION_MAX_DISTANCE_PENALTY: 0.4,
+
+  /**
+   * Migration - distance scale (km)
+   * @research IOM (2024), World Migration Report - Average displacement distances
+   * @value 5000 - Distance that produces maximum penalty
+   */
+  MIGRATION_DISTANCE_SCALE: 5000,
+
+  /**
+   * Migration - crisis mortality increase (per crisis severity)
+   * @research IOM (2024), World Migration Report - Crisis-related mortality
+   * @value 0.02 - Up to 2% additional mortality in extreme crises
+   */
+  MIGRATION_CRISIS_MORTALITY_INCREASE: 0.02,
+
+  /**
+   * Migration - distance mortality increase
+   * @research IOM (2024), World Migration Report - Distance-mortality relationship
+   * @value 0.01 - Up to 1% additional mortality for very long journeys
+   */
+  MIGRATION_DISTANCE_MORTALITY_INCREASE: 0.01,
+
+  /**
+   * Migration - return rate crisis penalty
+   * @research IOM (2024), World Migration Report - Permanent displacement
+   * @value 0.8 - 80% reduction in return rate at maximum crisis severity
+   */
+  MIGRATION_RETURN_CRISIS_PENALTY: 0.8,
+
+  /**
+   * Migration - assumed evacuation fraction (of successful relocations)
+   * @research [RESEARCH NEEDED] - Fraction of population that can evacuate
+   * @value 0.3 - Assume 30% of population can migrate if needed
+   */
+  MIGRATION_EVACUATION_FRACTION: 0.3,
+
+  /**
+   * Emergency response - workforce availability scale factor
+   * @research GAO (2025), FEMA data - Workforce availability impact
+   * @value 1.0 - Linear scaling with workforce availability
+   */
+  EMERGENCY_RESPONSE_WORKFORCE_SCALE: 1.0,
+
+  /**
+   * Emergency response - preparedness minimum multiplier
+   * @research GAO (2025), FEMA data - Minimum effectiveness with zero preparedness
+   * @value 0.5 - 50% minimum effectiveness
+   */
+  EMERGENCY_RESPONSE_PREPAREDNESS_MIN: 0.5,
+
+  /**
+   * Emergency response - resource stockpile minimum multiplier
+   * @research GAO (2025), FEMA data - Minimum effectiveness with zero resources
+   * @value 0.3 - 30% minimum effectiveness
+   */
+  EMERGENCY_RESPONSE_RESOURCE_MIN: 0.3,
+
+  /**
+   * Emergency response - communication minimum multiplier
+   * @research GAO (2025), FEMA data - Minimum effectiveness without communications
+   * @value 0.3 - 30% minimum effectiveness
+   */
+  EMERGENCY_RESPONSE_COMMUNICATION_MIN: 0.3,
+
+  /**
+   * Emergency response - overwhelm penalty minimum
+   * @research GAO (2025), FEMA data - Nov 2024 hurricanes: 4% workforce available
+   * @value 0.2 - 20% minimum effectiveness when overwhelmed
+   */
+  EMERGENCY_RESPONSE_OVERWHELM_MIN: 0.2,
+
+  /**
+   * Emergency response - crisis scale penalty factor
+   * @research GAO (2025), FEMA data - Large-scale crisis degradation
+   * @value 0.8 - 80% reduction at maximum crisis scale
+   */
+  EMERGENCY_RESPONSE_CRISIS_SCALE_PENALTY: 0.8,
+
+  /**
+   * Donor fatigue - rate per additional simultaneous crisis
+   * @research Pakistan 2010: 50% of Haiti's aid (2 simultaneous crises)
+   * @value 0.25 - 25% fatigue per additional crisis
+   */
+  DONOR_FATIGUE_PER_CRISIS: 0.25,
+
+  /**
+   * Donor fatigue - maximum
+   * @research [RESEARCH NEEDED] - Maximum donor exhaustion
+   * @value 0.8 - 80% maximum fatigue (20% minimum availability)
+   */
+  DONOR_FATIGUE_MAX: 0.8,
+
+  /**
+   * Aid donor availability - high threshold
+   * @research Cavalcanti et al. (2025), The Lancet - Aid effectiveness tiers
+   * @value 0.8 - Above 80% availability = high effectiveness
+   */
+  AID_DONOR_AVAILABILITY_HIGH: 0.8,
+
+  /**
+   * Aid donor availability - medium threshold
+   * @research Cavalcanti et al. (2025), The Lancet
+   * @value 0.5 - Above 50% availability = medium effectiveness
+   */
+  AID_DONOR_AVAILABILITY_MEDIUM: 0.5,
+
+  /**
+   * Aid donor availability - low threshold
+   * @research Cavalcanti et al. (2025), The Lancet
+   * @value 0.2 - Above 20% availability = low effectiveness
+   */
+  AID_DONOR_AVAILABILITY_LOW: 0.2,
+
+  /**
+   * Major economy collapse - economic stage threshold
+   * @research [RESEARCH NEEDED] - Economic collapse definition
+   * @value 2.0 - Below stage 2.0 (middle-income) = collapsed economy
+   */
+  MAJOR_ECONOMY_COLLAPSE_ECONOMIC_THRESHOLD: 2.0,
+
+  /**
+   * Major economy collapse - population threshold
+   * @research [RESEARCH NEEDED] - Major economy definition
+   * @value 300 - 300M+ baseline population = major economy
+   */
+  MAJOR_ECONOMY_POPULATION_THRESHOLD: 300,
+
+  /**
+   * Major economy collapse - population fraction threshold
+   * @research Historical population crashes (Black Death: 30-60%)
+   * @value 0.5 - Below 50% of baseline = population collapse
+   */
+  MAJOR_ECONOMY_POPULATION_COLLAPSE_FRACTION: 0.5,
+
+  /**
+   * Major economy collapse - global crisis threshold
+   * @research [RESEARCH NEEDED] - Global vs regional crisis definition
+   * @value 0.5 - >50% of major economies collapsed = global crisis (aid fails)
+   */
+  MAJOR_ECONOMY_GLOBAL_CRISIS_THRESHOLD: 0.5,
+
+  /**
+   * Heat adaptation - GDP per capita threshold for infrastructure
+   * @research Ballester et al. (2024), Nature Medicine - Wealth-dependent adaptation
+   * @value 10000 - $10k+ GDP per capita required for infrastructure investment
+   */
+  HEAT_ADAPTATION_INFRASTRUCTURE_GDP_THRESHOLD: 10000,
+
+  /**
+   * Heat adaptation - GDP per capita scale factor
+   * @research Ballester et al. (2024), Nature Medicine - Wealth scaling
+   * @value 50000 - $50k GDP per capita = 100% infrastructure development rate
+   */
+  HEAT_ADAPTATION_INFRASTRUCTURE_GDP_SCALE: 50000,
+
+  /**
+   * Heat adaptation - governance threshold for social/policy adaptation
+   * @research Ballester et al. (2024), Nature Medicine - Governance-dependent adaptation
+   * @value 0.5 - 50%+ governance quality required for social adaptation
+   */
+  HEAT_ADAPTATION_SOCIAL_GOVERNANCE_THRESHOLD: 0.5,
+
+  /**
+   * Migration - global crisis destination capacity
+   * @research IOM (2024), World Migration Report - Global crisis scenario
+   * @value 0.3 - 30% capacity when nowhere is safe (global crisis)
+   */
+  MIGRATION_GLOBAL_CRISIS_CAPACITY: 0.3,
+
+  /**
+   * Migration - regional crisis destination capacity
+   * @research IOM (2024), World Migration Report - Regional crisis scenario
+   * @value 1.0 - 100% capacity when safe destinations available
+   */
+  MIGRATION_REGIONAL_CRISIS_CAPACITY: 1.0,
+
+  /**
+   * Emergency response - local crisis scale
+   * @research GAO (2025), FEMA data - Crisis scale classification
+   * @value 0.3 - Local crisis = 0.3 scale (30% of system stressed)
+   */
+  EMERGENCY_RESPONSE_LOCAL_CRISIS_SCALE: 0.3,
+
+  /**
+   * Emergency response - global crisis scale
+   * @research GAO (2025), FEMA data - Crisis scale classification
+   * @value 1.0 - Global crisis = 1.0 scale (100% of system stressed)
+   */
+  EMERGENCY_RESPONSE_GLOBAL_CRISIS_SCALE: 1.0,
 } as const;
 
 // ============================================================================
@@ -625,6 +900,35 @@ export const MULTIPLIERS = {
    * @value 3.0 - Max 3× force multiplication, not unlimited
    */
   AI_FORCE_MULTIPLICATION_MAX: 3.0,
+
+  // === MORTALITY STABILIZER CASCADE MULTIPLIERS ===
+  /**
+   * Cascade multiplier: Aid failure → Emergency response degradation
+   * @research [RESEARCH NEEDED] - Interdependence of humanitarian systems
+   * @value 0.5 - 50% degradation when aid fails (coordination collapse)
+   */
+  CASCADE_AID_TO_EMERGENCY_RESPONSE: 0.5,
+
+  /**
+   * Cascade multiplier: Aid failure → Migration degradation
+   * @research [RESEARCH NEEDED] - Humanitarian logistics impact
+   * @value 0.3 - 30% degradation when aid fails (routes disrupted)
+   */
+  CASCADE_AID_TO_MIGRATION: 0.3,
+
+  /**
+   * Cascade multiplier: Emergency failure → Migration degradation
+   * @research [RESEARCH NEEDED] - Emergency system collapse impact
+   * @value 0.5 - 50% degradation when emergency response fails
+   */
+  CASCADE_EMERGENCY_TO_MIGRATION: 0.5,
+
+  /**
+   * Cascade threshold: Mechanism functioning level for "failed" status
+   * @research [RESEARCH NEEDED] - Functional system thresholds
+   * @value 0.3 - Below 30% functioning = failed mechanism
+   */
+  CASCADE_FAILURE_THRESHOLD: 0.3,
 } as const;
 
 // ============================================================================
@@ -806,6 +1110,114 @@ export const BASELINES = {
    * @value 0.7 - 70% trust in science
    */
   TRUST_IN_SCIENCE_2025: 0.7,
+
+  // === MORTALITY STABILIZER BASELINES ===
+  /**
+   * International aid effectiveness - high level (donor availability > 80%)
+   * @research Cavalcanti et al. (2025), The Lancet - USAID aid effectiveness
+   * @value 0.295 - 29.5% mortality reduction (midpoint of 15-44% range)
+   */
+  AID_EFFECTIVENESS_HIGH: 0.295,
+
+  /**
+   * International aid effectiveness - medium level (donor availability > 50%)
+   * @research Cavalcanti et al. (2025), The Lancet
+   * @value 0.185 - 18.5% mortality reduction (midpoint of 9-28% range)
+   */
+  AID_EFFECTIVENESS_MEDIUM: 0.185,
+
+  /**
+   * International aid effectiveness - low level (donor availability > 20%)
+   * @research Cavalcanti et al. (2025), The Lancet
+   * @value 0.08 - 8% mortality reduction (midpoint of 6-10% range)
+   */
+  AID_EFFECTIVENESS_LOW: 0.08,
+
+  /**
+   * International aid effectiveness - maximum possible
+   * @research Cavalcanti et al. (2025), The Lancet
+   * @value 0.44 - 44% mortality reduction (upper bound of observed range)
+   */
+  AID_EFFECTIVENESS_MAX: 0.44,
+
+  /**
+   * Heat adaptation - physiological maximum (weeks to develop)
+   * @research Ballester et al. (2024), Nature Medicine - European heat adaptation
+   * @value 0.2 - 20% mortality reduction from physiological adaptation
+   */
+  HEAT_ADAPTATION_PHYSIOLOGICAL_MAX: 0.2,
+
+  /**
+   * Heat adaptation - behavioral maximum (immediate to months)
+   * @research Ballester et al. (2024), Nature Medicine
+   * @value 0.3 - 30% mortality reduction from behavioral adaptation
+   */
+  HEAT_ADAPTATION_BEHAVIORAL_MAX: 0.3,
+
+  /**
+   * Heat adaptation - infrastructural maximum (years, income-dependent)
+   * @research Ballester et al. (2024), Nature Medicine
+   * @value 0.5 - 50% mortality reduction from infrastructural adaptation
+   */
+  HEAT_ADAPTATION_INFRASTRUCTURAL_MAX: 0.5,
+
+  /**
+   * Heat adaptation - social/policy maximum (months to years)
+   * @research Ballester et al. (2024), Nature Medicine
+   * @value 0.4 - 40% mortality reduction from social adaptation
+   */
+  HEAT_ADAPTATION_SOCIAL_MAX: 0.4,
+
+  /**
+   * Heat adaptation - total maximum (empirical)
+   * @research Ballester et al. (2024), Nature Medicine
+   * @value 0.8 - 80% total mortality reduction (empirical maximum observed)
+   */
+  HEAT_ADAPTATION_TOTAL_MAX: 0.8,
+
+  /**
+   * Migration successful relocation baseline
+   * @research IOM (2024), World Migration Report - Climate migration patterns
+   * @value 0.85 - 85% successful relocation rate
+   */
+  MIGRATION_SUCCESS_RATE_BASELINE: 0.85,
+
+  /**
+   * Migration mortality during displacement - baseline
+   * @research IOM (2024), World Migration Report
+   * @value 0.001 - 0.1% baseline mortality during migration (<1% observed)
+   */
+  MIGRATION_MORTALITY_BASELINE: 0.001,
+
+  /**
+   * Migration mortality during displacement - maximum
+   * @research IOM (2024), World Migration Report
+   * @value 0.03 - 3% cap for extreme crisis conditions
+   */
+  MIGRATION_MORTALITY_MAX: 0.03,
+
+  /**
+   * Migration return rate baseline
+   * @research IOM (2024), World Migration Report
+   * @value 0.85 - 85% return rate within 1 year
+   */
+  MIGRATION_RETURN_RATE_BASELINE: 0.85,
+
+  /**
+   * Emergency response effectiveness - baseline
+   * @research GAO (2025), FEMA data - Federal emergency response audit
+   * @value 0.30 - 30% mortality reduction (midpoint of 20-40% estimate)
+   * @note WEAK EVIDENCE - estimate, not empirical
+   */
+  EMERGENCY_RESPONSE_BASELINE: 0.30,
+
+  /**
+   * Emergency response effectiveness - maximum
+   * @research GAO (2025), FEMA data
+   * @value 0.40 - 40% mortality reduction (upper bound estimate)
+   * @note WEAK EVIDENCE - estimate, not empirical
+   */
+  EMERGENCY_RESPONSE_MAX: 0.40,
 
   // === NUCLEAR BASELINES ===
   /**

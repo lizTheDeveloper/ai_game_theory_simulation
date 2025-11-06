@@ -1094,3 +1094,29 @@ export function assertEconomicMetric(
 
   return value;
 }
+
+export function capWithBifurcationAwareness(
+  value: number,
+  baselineBound: number,
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+  }
+): number {
+  const validValue = assertFinite(value, {
+    ...context,
+    valueName: context.valueName + '_beforeBifurcationCap'
+  });
+
+  const capped = Math.min(baselineBound, validValue);
+
+  if (capped < validValue) {
+    console.log(
+      '🔀 BIFURCATION CAP: ' + context.valueName + ' ' + validValue.toFixed(3) + ' → ' + capped.toFixed(3) + ' ' +
+      '(Month ' + context.month + ', ' + context.location + ')'
+    );
+  }
+
+  return capped;
+}
