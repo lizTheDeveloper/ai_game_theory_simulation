@@ -50,7 +50,12 @@
 🌍 | Planetary/global scale
 🌀 | Cyclone/hurricane
 🌪️ | Extreme weather event
+🌧️ | Extreme precipitation
 🌳 | Forest ecosystem
+🌿 | Ecosystem collapse
+🏔️ | Alpine species (trapped)
+🏝️ | Island endemics (isolated)
+🏚️ | Abandonment/collapse
 🏜️ | Desertification
 ☄️ | Exogenous shock
 ☀️ | Solar event/solar flare
@@ -126,7 +131,6 @@
 🔒 | Hostile value lock-in
 ☠️ | Extinction complete
 ⚰️ | Death/mortality
-🏚️ | Abandonment/collapse
 
 # Population & Demographics
 👶 | Birth/population growth
