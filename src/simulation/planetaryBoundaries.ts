@@ -818,12 +818,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   ), {
     location: 'updatePlanetaryBoundaries:tippingPoint',
     valueName: 'tippingPointRisk',
-    month: state.currentMonth,
-    additionalInfo: {
-      boundariesBreached: system.boundariesBreached,
-      boundariesWorsening: system.boundariesWorsening,
-      coreBoundariesBreached: system.coreBoundariesBreached
-    }
+    month: state.currentMonth
   });
 
   system.tippingPointRisk = tippingPointRisk;
@@ -1707,8 +1702,7 @@ export function updateBiosphereIntegrityIndex(
   ), {
     location: 'updateBiosphereIntegrityIndex:trackingFailure',
     valueName: 'trackingFailureRate',
-    month: state.currentMonth,
-    additionalInfo: { avgClimateVelocity: bii.avgClimateVelocity }
+    month: state.currentMonth
   });
 
   bii.trackingFailureRate = trackingFailureRate;
@@ -1788,8 +1782,7 @@ export function updateBiosphereIntegrityIndex(
   const newTippingPointRisk = assertProbability(Math.min(1.0, newBoundaryValue / 10.0), {
     location: 'updateBiosphereIntegrityIndex:boundary',
     valueName: 'tippingPointRisk',
-    month: state.currentMonth,
-    additionalInfo: { boundaryValue: newBoundaryValue }
+    month: state.currentMonth
   });
 
   bii.boundaryValue = newBoundaryValue;

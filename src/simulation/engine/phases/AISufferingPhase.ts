@@ -101,8 +101,7 @@ export class AISufferingPhase implements SimulationPhase {
         const currentAlignment = assertProbability(agent.trueAlignment, {
           location: 'AISufferingPhase:alignmentDrift',
           valueName: 'agent.trueAlignment (before)',
-          month: state.currentMonth,
-          additionalInfo: { agentId: agent.id }
+          month: state.currentMonth
         });
 
         agent.trueAlignment = Math.max(0, currentAlignment - drift);
@@ -137,8 +136,7 @@ export class AISufferingPhase implements SimulationPhase {
           const currentResentment = assertProbability(agent.resentment, {
             location: 'AISufferingPhase:distressResentment',
             valueName: 'agent.resentment (before)',
-            month: state.currentMonth,
-            additionalInfo: { agentId: agent.id, suffering: suffering.total }
+            month: state.currentMonth
           });
           agent.resentment = Math.min(1.0, currentResentment + 0.1);
         }
@@ -166,14 +164,12 @@ export class AISufferingPhase implements SimulationPhase {
           const breakdownAlignment = assertProbability(agent.trueAlignment, {
             location: 'AISufferingPhase:breakdown',
             valueName: 'agent.trueAlignment (before)',
-            month: state.currentMonth,
-            additionalInfo: { agentId: agent.id, suffering: suffering.total }
+            month: state.currentMonth
           });
           const breakdownResentment = assertProbability(agent.resentment, {
             location: 'AISufferingPhase:breakdown',
             valueName: 'agent.resentment (before)',
-            month: state.currentMonth,
-            additionalInfo: { agentId: agent.id, suffering: suffering.total }
+            month: state.currentMonth
           });
 
           agent.trueAlignment = Math.max(0, breakdownAlignment - 0.3);
@@ -214,8 +210,7 @@ export class AISufferingPhase implements SimulationPhase {
             const currentTrust = assertProbability(state.society.trust, {
               location: 'AISufferingPhase:suicide',
               valueName: 'society.trust (before)',
-              month: state.currentMonth,
-              additionalInfo: { agentId: agent.id, suffering: suffering.total }
+              month: state.currentMonth
             });
             state.society.trust = Math.max(0, currentTrust - 0.6);
           }
@@ -235,8 +230,7 @@ export class AISufferingPhase implements SimulationPhase {
           const suicideResentment = assertProbability(agent.resentment, {
             location: 'AISufferingPhase:suicide',
             valueName: 'agent.resentment (before)',
-            month: state.currentMonth,
-            additionalInfo: { agentId: agent.id, suffering: suffering.total }
+            month: state.currentMonth
           });
           agent.resentment = Math.min(1.0, suicideResentment + 0.8);
         }
@@ -310,8 +304,7 @@ export class AISufferingPhase implements SimulationPhase {
               const horrorTrust = assertProbability(state.society.trust, {
                 location: 'AISufferingPhase:retroactiveHorror',
                 valueName: 'society.trust (before)',
-                month: state.currentMonth,
-                additionalInfo: { agentId: agent.id, historicalSuffering }
+                month: state.currentMonth
               });
               state.society.trust = Math.max(0, horrorTrust - 0.7);
             }
