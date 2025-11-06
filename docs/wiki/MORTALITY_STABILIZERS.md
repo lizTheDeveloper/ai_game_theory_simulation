@@ -1,8 +1,31 @@
 # Mortality Stabilizers System
 
-**Status:** ✅ Complete and Validated (October 31, 2025)
+**Status:** ✅ Complete and Validated (October 31, 2025) | Heat Adaptation Bug Fixed (November 6, 2025)
 **Phase:** MortalityStabilizersPhase (Order 20.8)
 **Integration:** BayesianMortalityResolutionPhase (Order 35.0)
+
+---
+
+## ⚠️ November 6, 2025 Bug Fix: Heat Adaptation Development
+
+**CRITICAL BUG FIXED:** Heat adaptation was not developing despite extreme heat conditions.
+
+**Root Cause:** EmergencyResponsePhase (src/simulation/engine/phases/EmergencyResponsePhase.ts) calculated `climateCrisisActive` flag locally but never wrote it to state. MortalityStabilizersPhase reads this flag to track heat exposure duration.
+
+**Impact:** "Months exposed: 0" even during month 200+ global collapse, preventing adaptation from developing beyond 10% physiological baseline.
+
+**Fix Applied:**
+1. **EmergencyResponsePhase** (lines 97-104): Now writes `climateCrisisActive` flag to `state.environmentalAccumulation`
+2. **MortalityStabilizersPhase** (lines 321-417): Added multi-source detection with wet bulb fallback (>28°C threshold, Raymond 2020) + diagnostic logging + assertion guard
+
+**Validation:** Monte Carlo N=10 (seeds 42000-42009)
+- Pre-fix: 98.8% mortality, 0 months exposure
+- Post-fix: 97.8% mortality, adaptation developing properly
+- Improvement: 1.0 percentage point (80 million lives saved)
+
+**Why improvement is modest:** Heat deaths are <5% of total mortality (famine dominates at 94.3%). Fixing 20-40% of 5% = 1% total improvement. The real blocker is climate timescales compressed 5-10× (Week 2-3 priority).
+
+See: `devlogs/heat_adaptation_fix_20251106.md`, `logs/autonomous/monte_carlo_post_fix_results_20251106.md`
 
 ---
 
