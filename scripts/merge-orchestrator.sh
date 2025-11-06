@@ -70,6 +70,13 @@ trap "rm -f $LOCK_FILE" EXIT
 # Change to project root
 cd "$PROJECT_ROOT"
 
+# Check for git index lock (indicates another git process is running)
+if [ -f ".git/index.lock" ]; then
+  log "⚠️  Git index locked - another git process is running"
+  log "ℹ️  Skipping this run to avoid conflicts"
+  exit 0
+fi
+
 log_section "Merge Orchestrator Started"
 log "Timestamp: $(date)"
 log "Dry run: $DRY_RUN"
