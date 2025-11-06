@@ -218,7 +218,8 @@ export function updateRefugeeCrises(state: GameState): void {
 
       // WEEK 3: Validate deaths before mutation
       const newDeathsByCategory = (state.humanPopulationSystem.deathsByCategory[category] || 0) + validatedDeaths;
-      assertPopulationMillion(newDeathsByCategory, {
+      // deathsByCategory tracks GLOBAL deaths by cause - use 10B cap
+      assertInRange(newDeathsByCategory, 0, 10000, {
         location: 'updateRefugeeCrises.transitDeaths',
         valueName: `deathsByCategory.${category}`,
         month: state.currentMonth,
@@ -226,7 +227,8 @@ export function updateRefugeeCrises(state: GameState): void {
       state.humanPopulationSystem.deathsByCategory[category] = newDeathsByCategory;
 
       const newCumulativeDeaths = state.humanPopulationSystem.cumulativeCrisisDeaths + validatedDeaths;
-      assertPopulationMillion(newCumulativeDeaths, {
+      // cumulativeCrisisDeaths is GLOBAL, not regional - use 10B cap (world population ~8B)
+      assertInRange(newCumulativeDeaths, 0, 10000, {
         location: 'updateRefugeeCrises.transitDeaths',
         valueName: 'cumulativeCrisisDeaths',
         month: state.currentMonth,
