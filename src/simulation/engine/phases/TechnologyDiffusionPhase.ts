@@ -19,6 +19,7 @@ export class TechnologyDiffusionPhase implements SimulationPhase {
   readonly name = 'Technology Diffusion';
   readonly order = 39.0;
 
+<<<<<<< HEAD
   // DEPENDENCIES (Nov 6, 2025): Must run after tech tree and extinction progress
   readonly dependencies = [
     'tech-tree',           // Order 12.5: Technology breakthroughs
@@ -26,11 +27,14 @@ export class TechnologyDiffusionPhase implements SimulationPhase {
   ] as const;
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
+=======
+  execute(state: GameState, rng: RNGFunction): PhaseResult {
+>>>>>>> origin/auto/worker-20251105_230001
     // Import and execute technology diffusion
-    setDeterministicRng(_rng);
+    setDeterministicRng(rng);
     const { diffuseCapabilities } = require('../../technologyDiffusion');
 
-    diffuseCapabilities(state);
+    diffuseCapabilities(state, rng);
 
     return { events: [] };
   }

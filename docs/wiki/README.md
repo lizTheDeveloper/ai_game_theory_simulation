@@ -247,7 +247,29 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 ## Recent Changes
 
+<<<<<<< HEAD
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
+=======
+**⏱️ AUTONOMOUS WORKER TIMEOUT IMPROVEMENTS (Nov 5, 2025)**
+
+Enhanced autonomous worker reliability with extended timeouts and post-timeout cleanup:
+
+**Changes:**
+- ✅ **Timeout increased:** 25 minutes → 45 minutes (worker runs hourly now)
+- ✅ **Post-timeout cleanup:** 5-minute session to commit partial work after timeout
+- ✅ **Work preservation:** Prevents loss of valuable progress from timeout events
+- ✅ **Enhanced GitHub issues:** Timeout issues now include cleanup status
+
+**Impact:**
+- Latest 3 worker runs all hit 25-minute timeout (work lost)
+- Run 22:00 had 11 files changed, 0 commits (lost without cleanup)
+- With 45min timeout + 5min cleanup, expect more completed work captured
+
+**Commit:** 9437a66 (Nov 5, 2025)
+**See:** [`docs/AUTONOMOUS_SETUP.md`](/docs/AUTONOMOUS_SETUP.md) for updated autonomous worker documentation
+
+**🧹 AUTO/WORKER BRANCH CLEANUP (Nov 5, 2025)**
+>>>>>>> origin/auto/worker-20251105_230001
 
 **🧠 AGENT MEMORY SYSTEM ACTIVE (Nov 5, 2025)**
 

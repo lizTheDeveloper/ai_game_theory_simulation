@@ -169,7 +169,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/upwardSpirals.ts",
+<<<<<<< HEAD
     "line": 50,
+=======
+    "line": 49,
+>>>>>>> origin/auto/worker-20251105_230001
     "name": "initializeUpwardSpirals",
     "doc": "Initializes upward spirals with default or specified values."
   },
