@@ -299,6 +299,27 @@ Commit: d1cfcdf (Nov 6, 2025)
 
 ---
 
+**🔒 MERGE ORCHESTRATOR - Git Lock Detection Added**
+
+**Problem Solved:** Merge orchestrator was occasionally failing with "Unable to create .git/index.lock" errors when autonomous worker git operations overlapped with merge operations.
+
+**Solution Implemented:**
+- **Git lock detection:** Check for `.git/index.lock` before processing branches
+- **Graceful exit:** Skip run if another git process holds the lock (prevents conflicts)
+- **Cron timing update:** Merge orchestrator at :45, autonomous workers at :00/:30 (reduced overlap)
+
+**Benefits:**
+- ✅ No more git lock contention errors
+- ✅ Improved merge orchestrator reliability
+- ✅ Better separation of autonomous worker operations
+
+**Files Changed:**
+- `scripts/merge-orchestrator.sh` - Added lock detection guard
+
+Commit: fe6a387 (Nov 6, 2025)
+
+---
+
 **🎯 4-WEEK CRITICAL PATH COMPLETE - Research Update Pipeline Operational**
 
 **WEEK 4 Task 10 Complete:** Automated research currency monitoring system (commit 4a54b09)
