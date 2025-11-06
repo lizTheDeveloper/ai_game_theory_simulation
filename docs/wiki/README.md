@@ -43,7 +43,38 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+**🧠 AGENT MEMORY SYSTEM ACTIVE (Nov 5, 2025)**
+
+Agent memory system is actively consolidating learnings from research verification sessions:
+
+**Updates:**
+- **Ray (Architect)**: Enhanced with seven iterations narrative and personal reflections
+- **Cynthia (Super-Alignment Researcher)**: Research collaboration patterns documented
+- **Sylvia (Research Skeptic)**: Adversarial review methodology captured
+- **Agent profiles**: Enhanced with personal narratives and "in their own words" sections
+
+**Context:** Following collaborative course material enhancement work, agent memories were updated to capture patterns from research verification sessions (60+ files, 18 sessions, 5-round debates). This preserves institutional knowledge and demonstrates the agent memory lifecycle in practice.
+
+See: [`.claude/agents/memories/`](../../.claude/agents/memories/) for agent memory files, [`.claude/agents/characters/AGENT_PROFILES.md`](../../.claude/agents/characters/AGENT_PROFILES.md) for enhanced profiles.
+
+Commit: 876ea94 (Nov 5, 2025)
+
 ### November 6, 2025
+
+**Course Material Enhancement - Integration & Case Studies**
+
+Major expansion of agent coordination course materials:
+- **New chapter**: [Integration (Module 10)](../course/10_INTEGRATION.md) - How all course modules connect into a cohesive system
+- **Three case studies**: [Seven Iterations](../course/case-studies/seven-iterations.md), [Property Access Crisis](../course/case-studies/property-access-crisis.md), [Research Citation Crisis](../course/case-studies/research-citation-crisis.md)
+- **Enhanced course modules**: Planning & Coordination (+569 lines), Quality Gates (+449 lines), Crisis Mitigation (+560 lines)
+- **Agent profiles**: Enhanced with personal narratives for Ray, Cynthia, Sylvia
+- **Conversation examples**: Research debate patterns documented
+
+Total course expansion: 4,400+ lines documenting real workflows, crisis responses, and system integration patterns.
+
+See: [`docs/course/`](../course/README.md), Commit: 1fccaf7
+
+---
 
 **Roadmap Update - Determinism & Research Citations**
 
