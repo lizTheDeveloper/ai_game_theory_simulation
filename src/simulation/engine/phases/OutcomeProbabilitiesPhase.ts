@@ -14,6 +14,13 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
   readonly name = 'Outcome Probabilities Calculation';
   readonly order = 35.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Must run after all systems update
+  readonly dependencies = [
+    'quality-of-life',         // Order 19.5: QoL baseline
+    'social-stability',        // Order 33.0: Social state
+    'environmental_feedback',  // Order 33.5: Environmental state
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const outcomeProbs = calculateOutcomeProbabilities(state);
     setDeterministicRng(rng);

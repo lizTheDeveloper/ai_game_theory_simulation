@@ -19,6 +19,11 @@ export class ClimateJusticePhase implements SimulationPhase {
   readonly name = 'Climate Justice';
   readonly order = 6.7;
 
+  // DEPENDENCIES (Nov 6, 2025): Needs war/meaning feedback
+  readonly dependencies = [
+    'war_meaning_feedback',  // Order 6.5: War state before climate justice
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateClimateJustice } = require('../../climateJustice');
     setDeterministicRng(rng);

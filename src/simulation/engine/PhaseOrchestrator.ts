@@ -289,6 +289,10 @@ export class PhaseOrchestrator {
    * Sort phases by order
    */
   private sortPhases(): void {
+    // CIRCULAR DEPENDENCY DETECTION (Nov 6, 2025)
+    // Validate dependencies before sorting to catch configuration errors early
+    this.validateDependencies();
+
     this.phases.sort((a, b) => {
       // Primary sort: by order
       if (a.order !== b.order) {
@@ -298,6 +302,99 @@ export class PhaseOrchestrator {
       return a.name.localeCompare(b.name);
     });
     this.sorted = true;
+  }
+
+  /**
+   * Validate phase dependencies for circular references and ordering constraints
+   *
+   * Detects:
+   * 1. Circular dependencies (A → B → C → A)
+   * 2. Invalid order numbers (dependency has higher order than dependent)
+   * 3. Missing phase references
+   *
+   * @throws {Error} If circular dependency or invalid ordering detected
+   */
+  private validateDependencies(): void {
+    // Build phase lookup map
+    const phaseMap = new Map<string, SimulationPhase>();
+    for (const phase of this.phases) {
+      phaseMap.set(phase.id, phase);
+    }
+
+    // Detect circular dependencies using depth-first search
+    const visited = new Set<string>();
+    const recursionStack = new Set<string>();
+
+    const detectCycle = (phaseId: string, path: string[]): void => {
+      if (recursionStack.has(phaseId)) {
+        // Found a cycle - build error message with full path
+        const cycleStart = path.indexOf(phaseId);
+        const cyclePath = [...path.slice(cycleStart), phaseId];
+        const cycleDescription = cyclePath.map(id => {
+          const p = phaseMap.get(id);
+          return p ? `${p.name} (${id}, order ${p.order})` : id;
+        }).join(' → ');
+
+        throw new Error(
+          `❌ CIRCULAR DEPENDENCY DETECTED\n\n` +
+          `   Cycle: ${cycleDescription}\n\n` +
+          `   This creates an impossible ordering constraint. Phase dependencies must form\n` +
+          `   a directed acyclic graph (DAG). Review the dependency declarations in these\n` +
+          `   phases and remove the circular reference.\n`
+        );
+      }
+
+      if (visited.has(phaseId)) {
+        return; // Already processed this branch
+      }
+
+      visited.add(phaseId);
+      recursionStack.add(phaseId);
+      path.push(phaseId);
+
+      const phase = phaseMap.get(phaseId);
+      if (phase?.dependencies) {
+        for (const depId of phase.dependencies) {
+          // Check if dependency phase exists
+          if (!phaseMap.has(depId)) {
+            throw new Error(
+              `❌ INVALID PHASE DEPENDENCY\n\n` +
+              `   Phase: ${phase.name} (${phase.id}, order ${phase.order})\n` +
+              `   Missing dependency: ${depId}\n\n` +
+              `   This phase declares a dependency on '${depId}' but no phase with that\n` +
+              `   ID is registered. Check for typos or remove the dependency.\n`
+            );
+          }
+
+          // Check ordering constraint (dependency must have lower order number)
+          const depPhase = phaseMap.get(depId)!;
+          if (depPhase.order >= phase.order) {
+            throw new Error(
+              `❌ PHASE DEPENDENCY ORDER VIOLATION\n\n` +
+              `   Phase: ${phase.name} (${phase.id})\n` +
+              `   Order: ${phase.order}\n` +
+              `   Depends on: ${depPhase.name} (${depId})\n` +
+              `   Dependency order: ${depPhase.order}\n\n` +
+              `   Dependencies must have LOWER order numbers than the dependent phase.\n` +
+              `   Either:\n` +
+              `   1. Change order numbers: ${phase.id} order must be > ${depPhase.order}\n` +
+              `   2. Remove the dependency if it's not needed\n`
+            );
+          }
+
+          detectCycle(depId, [...path]);
+        }
+      }
+
+      recursionStack.delete(phaseId);
+    };
+
+    // Check each phase for cycles
+    for (const phase of this.phases) {
+      if (!visited.has(phase.id)) {
+        detectCycle(phase.id, []);
+      }
+    }
   }
 
   // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
