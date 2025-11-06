@@ -632,12 +632,26 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   // === 1. UPDATE BOUNDARY VALUES ===
 
   // Climate change (from environmental system)
-  const climateBoundary = system.boundaries.climate_change;
-  if (!climateBoundary) {
-    console.warn('⚠️  Planetary Boundaries: climate_change boundary not found');
-    return;
-  }
-  climateBoundary.currentValue = Math.max(0, 1.21 - (env.climateStability * 0.21));
+  const climateBoundary = assertDefined(system.boundaries.climate_change, {
+    location: 'updatePlanetaryBoundaries:climate',
+    valueName: 'boundaries.climate_change',
+    month: state.currentMonth
+  });
+
+  const climateStability = assertProbability(env.climateStability, {
+    location: 'updatePlanetaryBoundaries:climate',
+    valueName: 'climateStability',
+    month: state.currentMonth
+  });
+
+  const newClimateValue = assertFinite(Math.max(0, 1.21 - (climateStability * 0.21)), {
+    location: 'updatePlanetaryBoundaries:climate',
+    valueName: 'climate_change.currentValue',
+    month: state.currentMonth,
+    additionalInfo: { climateStability }
+  });
+
+  climateBoundary.currentValue = newClimateValue;
   updateBoundaryStatus(climateBoundary);
 
   // Biosphere integrity (from regional extinction rates)
@@ -648,12 +662,21 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   if (system.landUse) {
     // Regional rates are NOW in absolute E/MSY units (180, 35, 80, 30 E/MSY)
     // Global weighted rate: 116 E/MSY (conservative, low end of 100-1000 E/MSY range)
-    const baseExtinctionRateEMSY = system.landUse.globalExtinctionRate; // Already in E/MSY units
+    const baseExtinctionRateEMSY = assertFinite(system.landUse.globalExtinctionRate, {
+      location: 'updatePlanetaryBoundaries:biosphere',
+      valueName: 'landUse.globalExtinctionRate',
+      month: state.currentMonth
+    });
 
     // Invasive species amplify extinction rate
     // Research: IPBES (2019) - Invasive species responsible for ~40% of modern extinctions
     // Multiplier: 1.0 (no invasives) to 1.5 (catastrophic invasives at 1.0 impact)
-    const invasiveMultiplier = 1.0 + (system.invasiveSpeciesImpact * 0.5);
+    const invasiveImpact = assertProbability(system.invasiveSpeciesImpact, {
+      location: 'updatePlanetaryBoundaries:biosphere',
+      valueName: 'invasiveSpeciesImpact',
+      month: state.currentMonth
+    });
+    const invasiveMultiplier = 1.0 + (invasiveImpact * 0.5);
 
     // BUG FIX v3 (Oct 30, 2025): Use absolute E/MSY values directly
     // Before (v2): Divided relative ratios (2.2×) by safe threshold (10) → 0.22× (WRONG!)
@@ -661,11 +684,24 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Research: IPBES (2019) - Safe threshold is 10 E/MSY
     const SAFE_EXTINCTION_RATE = 10.0; // 10 E/MSY (IPBES planetary boundary)
     const totalExtinctionRateEMSY = baseExtinctionRateEMSY * invasiveMultiplier; // In E/MSY units
-    system.boundaries.biosphere_integrity.currentValue = totalExtinctionRateEMSY / SAFE_EXTINCTION_RATE;
+
+    const biosphereBoundaryValue = assertFinite(totalExtinctionRateEMSY / SAFE_EXTINCTION_RATE, {
+      location: 'updatePlanetaryBoundaries:biosphere',
+      valueName: 'biosphere_integrity.currentValue',
+      month: state.currentMonth,
+      additionalInfo: { baseExtinctionRateEMSY, invasiveMultiplier, totalExtinctionRateEMSY }
+    });
+
+    system.boundaries.biosphere_integrity.currentValue = biosphereBoundaryValue;
     // = (116 * 1.225) / 10 = 142 / 10 = 14.2× safe threshold (deep overshoot)
   } else {
     // Fallback to biodiversity index if land use system not initialized
-    system.boundaries.biosphere_integrity.currentValue = Math.max(0, 10.0 * (1 - env.biodiversityIndex));
+    const biodiversityIndex = assertProbability(env.biodiversityIndex, {
+      location: 'updatePlanetaryBoundaries:biosphere_fallback',
+      valueName: 'biodiversityIndex',
+      month: state.currentMonth
+    });
+    system.boundaries.biosphere_integrity.currentValue = Math.max(0, 10.0 * (1 - biodiversityIndex));
   }
   updateBoundaryStatus(system.boundaries.biosphere_integrity);
 
@@ -674,29 +710,80 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   // Research: UC Riverside (2024), RAND (2024) - AI data centers consume massive water
   if (state.freshwaterSystem) {
     const { calculateAIResourceConsumption, getWaterStressContribution } = require('./aiInfrastructureResources');
-    const aiWaterStress = getWaterStressContribution(state);
-    const baseStress = state.freshwaterSystem.waterStress;
-    const totalStress = baseStress + aiWaterStress;
+    const aiWaterStress = assertFinite(getWaterStressContribution(state), {
+      location: 'updatePlanetaryBoundaries:freshwater',
+      valueName: 'aiWaterStress',
+      month: state.currentMonth
+    });
+    const baseStress = assertProbability(state.freshwaterSystem.waterStress, {
+      location: 'updatePlanetaryBoundaries:freshwater',
+      valueName: 'waterStress',
+      month: state.currentMonth
+    });
+    const totalStress = assertFinite(baseStress + aiWaterStress, {
+      location: 'updatePlanetaryBoundaries:freshwater',
+      valueName: 'totalStress',
+      month: state.currentMonth,
+      additionalInfo: { baseStress, aiWaterStress }
+    });
 
-    system.boundaries.freshwater_change.currentValue = Math.max(0, 1.15 + (totalStress - 0.5) * 0.7);
+    const freshwaterValue = assertFinite(Math.max(0, 1.15 + (totalStress - 0.5) * 0.7), {
+      location: 'updatePlanetaryBoundaries:freshwater',
+      valueName: 'freshwater_change.currentValue',
+      month: state.currentMonth,
+      additionalInfo: { totalStress }
+    });
+    system.boundaries.freshwater_change.currentValue = freshwaterValue;
   }
   updateBoundaryStatus(system.boundaries.freshwater_change);
 
   // Biogeochemical flows (from phosphorus system if available)
   if (state.phosphorusSystem) {
-    const depletion = 1 - state.phosphorusSystem.reserves; // reserves is already 0-1 scale
-    system.boundaries.biogeochemical_flows.currentValue = Math.max(0, 2.94 + depletion * 0.5);
+    const reserves = assertProbability(state.phosphorusSystem.reserves, {
+      location: 'updatePlanetaryBoundaries:biogeochemical',
+      valueName: 'phosphorusSystem.reserves',
+      month: state.currentMonth
+    });
+    const depletion = 1 - reserves; // reserves is already 0-1 scale
+    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 + depletion * 0.5), {
+      location: 'updatePlanetaryBoundaries:biogeochemical',
+      valueName: 'biogeochemical_flows.currentValue',
+      month: state.currentMonth,
+      additionalInfo: { reserves, depletion }
+    });
+    system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
 
   // Novel entities (from environmental pollution)
-  system.boundaries.novel_entities.currentValue = Math.max(0, 1.5 + (env.pollutionLevel - 0.3) * 0.5);
+  const pollutionLevel = assertProbability(env.pollutionLevel, {
+    location: 'updatePlanetaryBoundaries:novelEntities',
+    valueName: 'pollutionLevel',
+    month: state.currentMonth
+  });
+  const novelEntitiesValue = assertFinite(Math.max(0, 1.5 + (pollutionLevel - 0.3) * 0.5), {
+    location: 'updatePlanetaryBoundaries:novelEntities',
+    valueName: 'novel_entities.currentValue',
+    month: state.currentMonth,
+    additionalInfo: { pollutionLevel }
+  });
+  system.boundaries.novel_entities.currentValue = novelEntitiesValue;
   updateBoundaryStatus(system.boundaries.novel_entities);
 
   // Ocean acidification (from ocean system if available)
   if (state.oceanAcidificationSystem) {
-    const aragonite = state.oceanAcidificationSystem.aragoniteSaturation;
-    system.boundaries.ocean_acidification.currentValue = Math.max(0, 1.05 + (0.8 - aragonite) * 1.25);
+    const aragonite = assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+      location: 'updatePlanetaryBoundaries:ocean',
+      valueName: 'aragoniteSaturation',
+      month: state.currentMonth
+    });
+    const oceanValue = assertFinite(Math.max(0, 1.05 + (0.8 - aragonite) * 1.25), {
+      location: 'updatePlanetaryBoundaries:ocean',
+      valueName: 'ocean_acidification.currentValue',
+      month: state.currentMonth,
+      additionalInfo: { aragonite }
+    });
+    system.boundaries.ocean_acidification.currentValue = oceanValue;
   }
   updateBoundaryStatus(system.boundaries.ocean_acidification);
 
@@ -723,16 +810,27 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     system.boundaries.biosphere_integrity.status !== 'safe';
 
   // === 3. CALCULATE TIPPING POINT RISK ===
-  system.tippingPointRisk = calculateTippingPointRisk(
+  const tippingPointRisk = assertProbability(calculateTippingPointRisk(
     system.boundariesBreached,
     system.boundariesWorsening,
     system.coreBoundariesBreached,
     system.boundaries
-  );
+  ), {
+    location: 'updatePlanetaryBoundaries:tippingPoint',
+    valueName: 'tippingPointRisk',
+    month: state.currentMonth,
+    additionalInfo: {
+      boundariesBreached: system.boundariesBreached,
+      boundariesWorsening: system.boundariesWorsening,
+      coreBoundariesBreached: system.coreBoundariesBreached
+    }
+  });
+
+  system.tippingPointRisk = tippingPointRisk;
 
   // Track history
   system.boundariesBreachedHistory.push(system.boundariesBreached);
-  system.tippingPointRiskHistory.push(system.tippingPointRisk);
+  system.tippingPointRiskHistory.push(tippingPointRisk);
 
   // === 4. BAYESIAN CASCADE TRIGGER (Oct 16, 2025) ===
   // Blended model with 3 elements:
