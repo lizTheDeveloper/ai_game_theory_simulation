@@ -700,7 +700,7 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
       
       // Gradual QoL degradation
-      qol.materialAbundance = assertInRange(Math.max(0.3, qol.materialAbundance - 0.002), 0, 1,
+      qol.materialAbundance = assertInRange(Math.max(0.3, qol.materialAbundance - 0.002), 0, 2,
       {
         location: 'ecosystemDeclining_materialAbundance',
         valueName: 'materialAbundance',
@@ -762,7 +762,7 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
       
       // Accelerating QoL degradation
-      qol.materialAbundance = assertInRange(Math.max(0.2, qol.materialAbundance - 0.005), 0, 1,
+      qol.materialAbundance = assertInRange(Math.max(0.2, qol.materialAbundance - 0.005), 0, 2,
       {
         location: 'ecosystemCrisis_materialAbundance',
         valueName: 'materialAbundance',
@@ -839,7 +839,7 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
       
       // Severe ongoing degradation
-      qol.materialAbundance = assertInRange(Math.max(0.1, qol.materialAbundance - 0.01), 0, 1,
+      qol.materialAbundance = assertInRange(Math.max(0.1, qol.materialAbundance - 0.01), 0, 2,
       {
         location: 'ecosystemCollapse_materialAbundance',
         valueName: 'materialAbundance',
