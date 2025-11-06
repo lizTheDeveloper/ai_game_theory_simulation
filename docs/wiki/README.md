@@ -61,6 +61,31 @@ Commit: 876ea94 (Nov 5, 2025)
 
 ### November 6, 2025
 
+**Merge Orchestrator Auto-Remediation**
+
+Autonomous infrastructure upgrade: Merge orchestrator now spawns Claude Code to automatically fix conflicts and test failures.
+
+**Problem solved**: 93 stale branches accumulated because orchestrator detected issues but didn't fix them.
+
+**New behavior**:
+- **Merge conflicts** → Claude Code spawned (15 min timeout)
+- **Test failures** → Claude Code spawned (15 min timeout)
+- **TypeScript errors** → Claude Code spawned (15 min timeout)
+
+**How it works**:
+1. Orchestrator detects failure
+2. Creates detailed remediation task file (`logs/merge_orchestrator/remediation_*.md`)
+3. Spawns: `timeout 900 claude-code --task-file <task>`
+4. Claude Code resolves issue and completes merge
+5. On success: Merges to main, deletes worker branch (no stale branches)
+6. On timeout/failure: Preserves branch for manual review
+
+**Impact**: Autonomous workflow now truly self-healing. No manual intervention needed for routine merge conflicts or test failures.
+
+See: [`docs/course/10_AUTONOMOUS_INFRASTRUCTURE.md`](../course/10_AUTONOMOUS_INFRASTRUCTURE.md#auto-remediation-new---nov-6-2025), Commit: d0f85ff
+
+---
+
 **Course Material Enhancement - Integration & Case Studies**
 
 Major expansion of agent coordination course materials:
