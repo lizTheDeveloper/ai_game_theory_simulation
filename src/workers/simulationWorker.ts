@@ -1805,6 +1805,9 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     spiritualConnection: (state.qualityOfLifeSystems?.meaningAndPurpose ?? 0.5) * 100,
   };
 
+  // Extract paradigm trajectory from multiParadigmDUI history
+  const paradigmTrajectory = state.multiParadigmDUI?.history || [];
+
   const snapshot = {
     currentMonth: state.currentMonth,
     currentYear: state.currentYear,
@@ -1852,6 +1855,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     developmentComponents,    // Oct 29, 2025 - added for Goodhart's Law avoidance
     ecologicalComponents,     // Oct 29, 2025 - added for Goodhart's Law avoidance
     indigenousComponents,     // Oct 29, 2025 - added for Goodhart's Law avoidance
+    paradigmTrajectory,        // Full history of paradigm scores for DUIFlowChart
     regionalPopulations,
     aiAgents,
     aiSufferingMetrics,
@@ -2356,6 +2360,22 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
     } else {
       delta.outcomeType = 'In Progress';
     }
+  }
+
+  // Always include critical arrays for dashboards (they need full data, not just counts)
+  // These arrays are essential for visualizations and must be sent every time
+  delta.aiAgents = currentSnapshot.aiAgents;
+  delta.regionalPopulations = currentSnapshot.regionalPopulations;
+  delta.qualityOfLifeBreakdown = currentSnapshot.qualityOfLifeBreakdown;
+  delta.aiSufferingMetrics = currentSnapshot.aiSufferingMetrics;
+  if (currentSnapshot.aiCollectives && currentSnapshot.aiCollectives.length > 0) {
+    delta.aiCollectives = currentSnapshot.aiCollectives;
+  }
+
+  // Paradigm trajectory - always send full history for DUIFlowChart
+  // This was missing and causing the visualization to only work on first step
+  if (currentSnapshot.paradigmTrajectory) {
+    delta.paradigmTrajectory = currentSnapshot.paradigmTrajectory;
   }
 
   // TODO: Events are not currently tracked in StateSnapshot
