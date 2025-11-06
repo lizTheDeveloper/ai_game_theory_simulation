@@ -121,6 +121,7 @@ import {
   OrganizationTurnsPhase,
   ComputeAllocationPhase,
   AILifecyclePhase,
+  BifurcationLogicPhase,  // Nov 6, 2025: Monte Carlo Issue #5 - Outcome variance mechanisms
   CyberSecurityPhase,
   SleeperWakePhase,
   SocialInfluenceUpdatePhase,  // Phase X (Oct 21, 2025): Social influence accumulation
@@ -569,6 +570,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new OrganizationTurnsPhase());
     this.orchestrator.registerPhase(new ComputeAllocationPhase());
     this.orchestrator.registerPhase(new AILifecyclePhase());
+    this.orchestrator.registerPhase(new BifurcationLogicPhase());  // Nov 6, 2025: Monte Carlo Issue #5 - Outcome variance
     this.orchestrator.registerPhase(new CyberSecurityPhase());
     this.orchestrator.registerPhase(new SleeperWakePhase());
     this.orchestrator.registerPhase(new SocialInfluenceUpdatePhase());

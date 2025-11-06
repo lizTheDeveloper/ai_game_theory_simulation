@@ -1,0 +1,369 @@
+/**
+ * Bifurcation Logic Phase
+ *
+ * Identifies when simulation crosses critical thresholds and applies variance amplification
+ * to create path-dependent trajectories. Near tipping points, small differences → large effects.
+ *
+ * CRITICAL MECHANISM FOR MONTE CARLO VARIANCE:
+ * - Far from thresholds → variance damped (outcomes converge)
+ * - Near thresholds → variance amplified (small differences → regime shifts)
+ *
+ * Research:
+ * - Scheffer et al. (2014) Phil. Trans. R. Soc. B 370: 20130263 - Critical slowing down, regime shifts
+ * - Richardson et al. (2023) Science Advances - Planetary boundaries, tipping points
+ * - Keller et al. (2024) Nat. Comm. Psych. - Resilience heterogeneity creates differential outcomes
+ *
+ * Order: 4.5 (early in step, BEFORE domain-specific updates that use variance amplification)
+ * Dependencies: None (calculates proximity to thresholds, doesn't mutate systems)
+ *
+ * Expected impact: Introduces 20-70% coefficient of variation (fixes 100% dystopia convergence)
+ *
+ * @see /research/outcome_variance_mechanisms_20251030.md
+ * @see /plans/bifurcation_logic_implementation_spec.md
+ */
+
+import type { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import type { BifurcationThreshold, RegimeType } from '@/types/bifurcation';
+import { assertFinite, assertInRange, assertStateProperty, assertDefined } from '@/simulation/utils/assertions';
+
+export class BifurcationLogicPhase implements SimulationPhase {
+  readonly id = 'bifurcation-logic';
+  readonly name = 'Bifurcation Logic';
+  readonly order = 4.5;
+
+  execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
+    // Ensure bifurcationState exists (should be initialized)
+    const bifState = assertDefined(state.bifurcationState, {
+      location: 'BifurcationLogicPhase.execute',
+      valueName: 'bifurcationState',
+      month: state.currentMonth,
+      expectedSource: 'initialization.ts - bifurcationState should be initialized'
+    });
+
+    // Calculate proximity to all thresholds
+    const proximities = this.calculateProximities(state, bifState);
+
+    // Update variance amplification based on nearest threshold
+    this.updateVarianceAmplification(bifState, proximities);
+
+    // Check for threshold crossings and update regime
+    this.checkThresholdCrossings(state, bifState, proximities);
+
+    // Log bifurcation events if regime shifted
+    const events = this.logRegimeShifts(state, bifState);
+
+    return { events };
+  }
+
+  /**
+   * Calculate proximity to all thresholds
+   *
+   * Returns normalized distances (0 = at threshold, 1 = far from threshold)
+   */
+  private calculateProximities(
+    state: GameState,
+    bifState: import('@/types/bifurcation').BifurcationState
+  ): Map<string, { distance: number; currentValue: number; threshold: import('@/types/bifurcation').BifurcationThreshold }> {
+    const proximities = new Map();
+
+    // Environmental collapse threshold
+    const envHealth = assertStateProperty(state, 'globalMetrics.environmentalHealth', {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      month: state.currentMonth,
+    });
+    const envHealthFinite = assertFinite(envHealth, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'environmentalHealth',
+      month: state.currentMonth,
+    });
+    const envDistance = Math.abs(envHealthFinite - bifState.environmentalCollapseThreshold.location);
+    proximities.set('environmental', {
+      distance: envDistance,
+      currentValue: envHealthFinite,
+      threshold: bifState.environmentalCollapseThreshold,
+    });
+
+    // Social breakdown threshold
+    const socialCohesion = assertStateProperty(state, 'globalMetrics.socialCohesion', {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      month: state.currentMonth,
+    });
+    const socialCohesionFinite = assertFinite(socialCohesion, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'socialCohesion',
+      month: state.currentMonth,
+    });
+    const socialDistance = Math.abs(socialCohesionFinite - bifState.socialBreakdownThreshold.location);
+    proximities.set('social', {
+      distance: socialDistance,
+      currentValue: socialCohesionFinite,
+      threshold: bifState.socialBreakdownThreshold,
+    });
+
+    // Economic collapse threshold
+    const economicStability = assertStateProperty(state, 'globalMetrics.economicStability', {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      month: state.currentMonth,
+    });
+    const economicStabilityFinite = assertFinite(economicStability, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'economicStability',
+      month: state.currentMonth,
+    });
+    const economicDistance = Math.abs(economicStabilityFinite - bifState.economicCollapseThreshold.location);
+    proximities.set('economic', {
+      distance: economicDistance,
+      currentValue: economicStabilityFinite,
+      threshold: bifState.economicCollapseThreshold,
+    });
+
+    // Governance failure threshold
+    const governanceEffectiveness = assertStateProperty(state, 'globalMetrics.governanceEffectiveness', {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      month: state.currentMonth,
+    });
+    const governanceEffectivenessFinite = assertFinite(governanceEffectiveness, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'governanceEffectiveness',
+      month: state.currentMonth,
+    });
+    const governanceDistance = Math.abs(governanceEffectivenessFinite - bifState.governanceFailureThreshold.location);
+    proximities.set('governance', {
+      distance: governanceDistance,
+      currentValue: governanceEffectivenessFinite,
+      threshold: bifState.governanceFailureThreshold,
+    });
+
+    // Flourishing threshold (QoL overall)
+    // Calculate aggregate QoL from all dimensions
+    const qol = state.qualityOfLifeSystems;
+    const qolOverall = (
+      (qol.survivalFundamentals.foodSecurity + qol.survivalFundamentals.waterSecurity +
+       qol.survivalFundamentals.thermalHabitability + qol.survivalFundamentals.shelterSecurity) / 4 +
+      qol.materialAbundance + qol.energyAvailability + qol.physicalSafety +
+      qol.mentalHealth + qol.meaningAndPurpose + qol.socialConnection
+    ) / 9;
+    const qolOverallFinite = assertFinite(qolOverall, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'qolOverall',
+      month: state.currentMonth,
+    });
+    const flourishingDistance = Math.abs(qolOverallFinite - bifState.flourishingThreshold.location);
+    proximities.set('flourishing', {
+      distance: flourishingDistance,
+      currentValue: qolOverallFinite,
+      threshold: bifState.flourishingThreshold,
+    });
+
+    // Technology breakthrough threshold (tech unlock progress)
+    // This is a proxy - we calculate fraction of technologies unlocked
+    const techState = state.techTreeState;
+    // Count unlocked techs out of total 71 techs
+    const avgDeployment = techState.unlockedTech ? techState.unlockedTech.length / 71 : 0.0;
+    const avgDeploymentFinite = assertFinite(avgDeployment, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'avgDeployment',
+      month: state.currentMonth,
+    });
+    const techDistance = Math.abs(avgDeploymentFinite - bifState.technologyBreakthroughThreshold.location);
+    proximities.set('technology', {
+      distance: techDistance,
+      currentValue: avgDeploymentFinite,
+      threshold: bifState.technologyBreakthroughThreshold,
+    });
+
+    return proximities;
+  }
+
+  /**
+   * Update variance amplification based on nearest threshold
+   *
+   * CRITICAL: Variance amplification affects other systems that use it as a multiplier.
+   * Near thresholds (distance → 0), amplification → 10×
+   * Far from thresholds (distance → 1), amplification → 1× (no effect)
+   *
+   * @see Scheffer et al. (2014) - Critical slowing down indicators
+   */
+  private updateVarianceAmplification(
+    bifState: import('@/types/bifurcation').BifurcationState,
+    proximities: Map<string, { distance: number; currentValue: number; threshold: import('@/types/bifurcation').BifurcationThreshold }>
+  ): void {
+    // Find minimum distance across all thresholds
+    let minDistance = 1.0; // Start at max (far from all thresholds)
+
+    for (const [name, { distance }] of proximities.entries()) {
+      if (distance < minDistance) {
+        minDistance = distance;
+      }
+    }
+
+    // Validate distance is in valid range
+    const minDistanceValidated = assertInRange(minDistance, 0, 1, {
+      location: 'BifurcationLogicPhase.updateVarianceAmplification',
+      valueName: 'minDistance',
+      month: bifState.currentRegime === 'status-quo' ? undefined : 0, // Can't access state.currentMonth here
+    });
+
+    // Calculate variance amplification factor
+    // Formula: 1 / (0.1 + normalizedDistance)
+    // - Distance = 0.0 (at threshold): amplification = 1 / 0.1 = 10×
+    // - Distance = 0.4 (near threshold): amplification = 1 / 0.5 = 2×
+    // - Distance = 0.9 (far from threshold): amplification = 1 / 1.0 = 1× (no effect)
+    const amplification = 1.0 / (0.1 + minDistanceValidated);
+
+    // Cap at 10× to prevent infinite amplification at exact threshold
+    const amplificationCapped = Math.min(10.0, amplification);
+
+    // Validate final amplification
+    const amplificationValidated = assertFinite(amplificationCapped, {
+      location: 'BifurcationLogicPhase.updateVarianceAmplification',
+      valueName: 'amplification',
+      month: undefined,
+    });
+
+    // Update bifurcation state (mutation)
+    bifState.varianceAmplification = amplificationValidated;
+    bifState.distanceToNearestThreshold = minDistanceValidated;
+  }
+
+  /**
+   * Check for threshold crossings and update current regime
+   *
+   * When a metric crosses its threshold:
+   * - Mark threshold as crossed
+   * - Update current regime
+   * - Record regime shift in history
+   */
+  private checkThresholdCrossings(
+    state: GameState,
+    bifState: import('@/types/bifurcation').BifurcationState,
+    proximities: Map<string, { distance: number; currentValue: number; threshold: import('@/types/bifurcation').BifurcationThreshold }>
+  ): void {
+    // Save previous regime for comparison
+    bifState.previousRegime = bifState.currentRegime;
+
+    // Check each threshold
+    for (const [name, { currentValue, threshold }] of proximities.entries()) {
+      const crossed = this.hasThresholdBeenCrossed(currentValue, threshold);
+
+      if (crossed && !threshold.crossed) {
+        // First time crossing this threshold
+        threshold.crossed = true;
+        threshold.crossedAt = state.currentMonth;
+
+        // Update current regime to threshold's regime
+        bifState.currentRegime = threshold.regime;
+
+        console.log(
+          `🔀 BIFURCATION: ${name} threshold crossed at Month ${state.currentMonth} ` +
+          `(value: ${currentValue.toFixed(3)}, threshold: ${threshold.location.toFixed(3)}, ` +
+          `regime: ${threshold.regime})`
+        );
+      }
+    }
+
+    // If no thresholds crossed, determine regime based on current state
+    if (bifState.currentRegime === bifState.previousRegime && bifState.currentRegime === 'status-quo') {
+      // Re-evaluate regime based on all metrics
+      bifState.currentRegime = this.determineCurrentRegime(state, bifState, proximities);
+    }
+  }
+
+  /**
+   * Check if a threshold has been crossed
+   *
+   * @param value - Current metric value
+   * @param threshold - Threshold configuration
+   * @returns True if threshold has been crossed
+   */
+  private hasThresholdBeenCrossed(value: number, threshold: import('@/types/bifurcation').BifurcationThreshold): boolean {
+    if (threshold.direction === 'below') {
+      // Collapse thresholds: trigger when value drops below threshold
+      return value < threshold.location;
+    } else {
+      // Flourishing thresholds: trigger when value rises above threshold
+      return value > threshold.location;
+    }
+  }
+
+  /**
+   * Determine current regime based on all metrics
+   *
+   * Checks all thresholds to classify current state into a regime type
+   */
+  private determineCurrentRegime(
+    state: GameState,
+    bifState: import('@/types/bifurcation').BifurcationState,
+    proximities: Map<string, { distance: number; currentValue: number; threshold: import('@/types/bifurcation').BifurcationThreshold }>
+  ): RegimeType {
+    // Priority order: Collapse regimes first, then flourishing, then status quo
+
+    // Check collapse thresholds (environmental, social, economic, governance)
+    for (const [name, { currentValue, threshold }] of proximities.entries()) {
+      if (threshold.direction === 'below' && currentValue < threshold.location) {
+        // Crossed a collapse threshold → return that regime
+        return threshold.regime;
+      }
+    }
+
+    // Check flourishing thresholds
+    const { currentValue: qolValue, threshold: flourishingThreshold } = proximities.get('flourishing')!;
+    if (qolValue > flourishingThreshold.location) {
+      return 'flourishing';
+    }
+
+    // Check sustainable threshold (tech deployment > threshold)
+    const { currentValue: techValue, threshold: techThreshold } = proximities.get('technology')!;
+    if (techValue > techThreshold.location) {
+      return 'sustainable';
+    }
+
+    // Default: status quo (between thresholds)
+    return 'status-quo';
+  }
+
+  /**
+   * Log regime shifts to event log
+   *
+   * Records transitions between regimes for debugging and analysis
+   */
+  private logRegimeShifts(
+    state: GameState,
+    bifState: import('@/types/bifurcation').BifurcationState
+  ): import('@/types/game').GameEvent[] {
+    const events: import('@/types/game').GameEvent[] = [];
+
+    if (bifState.currentRegime !== bifState.previousRegime) {
+      // Regime shift occurred
+      bifState.regimeShiftHistory.push({
+        month: state.currentMonth,
+        fromRegime: bifState.previousRegime,
+        toRegime: bifState.currentRegime,
+        trigger: `Regime shift: ${bifState.previousRegime} → ${bifState.currentRegime}`,
+      });
+
+      console.log(
+        `🌀 REGIME SHIFT at Month ${state.currentMonth}: ${bifState.previousRegime} → ${bifState.currentRegime} ` +
+        `(variance amplification: ${bifState.varianceAmplification.toFixed(2)}×)`
+      );
+
+      // Create event for regime shift
+      events.push({
+        id: `regime-shift-${state.currentMonth}-${state.eventIdCounter++}`,
+        timestamp: state.currentMonth,
+        type: 'info',
+        severity: bifState.currentRegime.includes('collapse') || bifState.currentRegime.includes('failure') ? 'critical' : 'major',
+        agent: 'system',
+        title: '🌀 Regime Shift',
+        description: `Regime shift: ${bifState.previousRegime} → ${bifState.currentRegime} (variance amplification: ${bifState.varianceAmplification.toFixed(2)}×)`,
+        effects: {
+          previousRegime: bifState.previousRegime,
+          currentRegime: bifState.currentRegime,
+          varianceAmplification: bifState.varianceAmplification,
+        },
+      });
+    }
+
+    return events;
+  }
+}

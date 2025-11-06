@@ -60,6 +60,7 @@ import { initializePositiveTippingPoints } from './positiveTippingPoints';
 import { initializeTippingPointSystem } from './tippingPoints';
 import { initializeConsciousnessGovernance } from './consciousnessGovernance';
 import { initializeGamingDetection } from './gamingDetection';
+import { initializeBifurcationState } from '@/types/bifurcation';
 import { initializeProactiveSleeperDetection } from './proactiveSleeperDetection';
 import { initializeGovernmentSystem } from './government/initialization';
 import { initializeTechTreeState } from './techTree/engine';
@@ -795,6 +796,9 @@ export function createDefaultInitialState(
     
     // Phase 4: Technological Risk Accumulation
     technologicalRisk: initializeTechnologicalRisk(),
+
+    // Monte Carlo Issue #5 (Nov 6, 2025): Bifurcation Logic - Outcome variance mechanisms
+    bifurcationState: initializeBifurcationState(rng),
 
     // Phase 1B Refinement (Oct 17, 2025): Psychological Trauma
     psychologicalTrauma: {
