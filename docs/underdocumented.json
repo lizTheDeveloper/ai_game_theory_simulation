@@ -55074,7 +55074,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 456,
+    "line": 460,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -55082,7 +55082,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 457,
+    "line": 461,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -55090,7 +55090,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 458,
+    "line": 462,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -55098,7 +55098,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 466,
+    "line": 470,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -55106,7 +55106,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 467,
+    "line": 471,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -55114,7 +55114,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 468,
+    "line": 472,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -55122,7 +55122,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 469,
+    "line": 473,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -55130,7 +55130,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 506,
+    "line": 510,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -55138,7 +55138,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 507,
+    "line": 511,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -55146,7 +55146,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 508,
+    "line": 512,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -55154,7 +55154,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 522,
+    "line": 526,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -55162,7 +55162,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 523,
+    "line": 527,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -55170,7 +55170,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 524,
+    "line": 528,
     "type": "property",
     "name": "stabilizers",
     "currentDoc": "(none)",
@@ -55178,7 +55178,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 556,
+    "line": 560,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -55186,7 +55186,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 557,
+    "line": 561,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -55194,7 +55194,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 558,
+    "line": 562,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -55202,7 +55202,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 571,
+    "line": 575,
     "type": "property",
     "name": "stabilizers",
     "currentDoc": "(none)",
@@ -55210,7 +55210,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 625,
+    "line": 629,
     "type": "property",
     "name": "stabilizers",
     "currentDoc": "(none)",
