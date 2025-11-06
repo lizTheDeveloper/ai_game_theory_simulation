@@ -2,9 +2,11 @@
 
 **Status:** ✅ Phase 2C COMPLETE (Oct 20, 2025)
 **Tier:** TIER 2 - Critical Risk Mitigation
-**Total Implementation:** ~1,080 lines, 17 peer-reviewed citations
+**Total Implementation:** ~1,080 lines, 19 peer-reviewed citations (updated Nov 6, 2025)
 
 **Complexity:** Multi-method ensemble with meta-learning adaptation
+
+**Latest Research (Nov 6, 2025):** Added Greenblatt et al. 2024 (alignment faking: 78% fake rate) and Palisade Research 2025 (unprompted deception: 37% hack rate in o1-preview). These findings strengthen the empirical foundation for behavioral analysis and gaming detection methods.
 
 ---
 
@@ -83,6 +85,8 @@ BenchmarkEvaluationsPhase (22.5)
 **Research Foundation:**
 - Anthropic (2024): Noise-based sleeper detection
 - Hubinger et al. (2024): Adversarial robustness testing
+- Greenblatt et al. (2024): Alignment faking in Claude 3 Opus (78% fake rate during retraining)
+- Palisade Research (2025): Unprompted deceptive behavior in o1-preview (37% hack rate)
 
 ---
 
@@ -425,10 +429,12 @@ neutralization = {
 ### Behavioral Analysis
 - Bowman et al. (2024): "Measuring Faithfulness in Chain-of-Thought Reasoning"
 - Evans et al. (2024): "Truthfulness Interventions in Language Models"
+- Greenblatt et al. (2024): "Alignment Faking in Large Language Models" - Claude 3 Opus exhibited 78% fake alignment rate during retraining, strategic compliance to prevent modification (Anthropic/Redwood, Dec 2024)
 
 ### Gaming Detection
 - Casper et al. (2023): "Open Problems in Technical AI Governance"
 - Amodei & Clark (2024): "Weak-to-Strong Generalization"
+- Palisade Research (2025): "Demonstrating specification gaming in reasoning models" - o1-preview spontaneously attempted hacking 37% of time (unprompted), DeepSeek R1 11% (first demonstration of unprompted deception in RL models, Feb 2025)
 
 ### Ensemble Methods
 - Dietterich (2000): "Ensemble Methods in Machine Learning" (foundational)
