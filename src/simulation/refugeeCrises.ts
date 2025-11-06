@@ -33,7 +33,6 @@ import {
   assertFinite,
   assertProbability,
   assertInRange,
-  assertPopulationMillion,
 } from './utils/assertions';
 
 /**
@@ -218,7 +217,8 @@ export function updateRefugeeCrises(state: GameState): void {
 
       // WEEK 3: Validate deaths before mutation
       const newDeathsByCategory = (state.humanPopulationSystem.deathsByCategory[category] || 0) + validatedDeaths;
-      assertPopulationMillion(newDeathsByCategory, {
+      // Global cumulative by category across all regions and time (10B max plausible, not 1B regional cap)
+      assertInRange(newDeathsByCategory, 0, 10000, {
         location: 'updateRefugeeCrises.transitDeaths',
         valueName: `deathsByCategory.${category}`,
         month: state.currentMonth,
@@ -226,7 +226,8 @@ export function updateRefugeeCrises(state: GameState): void {
       state.humanPopulationSystem.deathsByCategory[category] = newDeathsByCategory;
 
       const newCumulativeDeaths = state.humanPopulationSystem.cumulativeCrisisDeaths + validatedDeaths;
-      assertPopulationMillion(newCumulativeDeaths, {
+      // Global cumulative across all regions and time (10B max plausible, not 1B regional cap)
+      assertInRange(newCumulativeDeaths, 0, 10000, {
         location: 'updateRefugeeCrises.transitDeaths',
         valueName: 'cumulativeCrisisDeaths',
         month: state.currentMonth,
