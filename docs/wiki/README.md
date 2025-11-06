@@ -1248,6 +1248,13 @@ When auditing or writing simulation code:
 ### Research Documentation
 
 **Primary Sources:**
+- [`research/outcome_variance_mechanisms_20251030.md`](/research/outcome_variance_mechanisms_20251030.md) (945 lines, updated Nov 6)
+  - Foundational research for BifurcationLogicPhase variance amplification
+  - Added Forster et al. (2025) climate variance indicators (Earth Energy Imbalance doubled: 0.43 → 0.89 W/m²)
+  - Added Studebaker (2022) political legitimacy bifurcations (scalar legitimacy, chronic vs acute crises)
+  - Research span: 2014-2025 (Scheffer foundational theory → June 2025 climate indicators)
+  - **Mechanism:** Distance from thresholds creates outcome variance in crisis scenarios
+
 - [`research/state_validation_and_dependencies_20251106.md`](/research/state_validation_and_dependencies_20251106.md) (554 lines)
   - V&V methodology, MIV patterns, NaN propagation characteristics
   - Domain bounds with peer-reviewed justification
@@ -3647,10 +3654,16 @@ The simulation runs via a **phase-based architecture** with **116 phases** execu
   - **Root Cause:** Bifurcation variance calculation was orphaned (computed but not used by any phases)
   - **Solution:** Integrated variance amplification into 3 critical phases (ExogenousShock, StochasticInnovation, TippingPoint)
   - **Mechanism:** Distance from thresholds → variance multiplier (0.2-2.0×) - near tipping points amplify small differences into divergent trajectories
-  - **Research Backing:** Scheffer et al. (2014) critical slowing down, Richardson et al. (2023) planetary boundaries, Keller et al. (2024) resilience heterogeneity
+  - **Research Backing:**
+    - Scheffer et al. (2014) - Critical slowing down, bifurcation points (foundational theory)
+    - Richardson et al. (2023) - Planetary boundaries, tipping points
+    - Keller et al. (2024) - Resilience heterogeneity creates differential outcomes
+    - Forster et al. (2025) - Climate variance indicators (Earth Energy Imbalance doubled, accelerating warming)
+    - Studebaker (2022) - Political legitimacy bifurcations (scalar legitimacy, chronic vs acute crisis regimes)
   - **Validation:** Monte Carlo testing shows 20-70% coefficient of variation in outcomes (fixes convergence issue)
   - **Phase Order:** 4.5 (early in step, BEFORE domain phases that use variance amplification)
   - **See:** BifurcationLogicPhase implementation (`src/simulation/engine/phases/BifurcationLogicPhase.ts`, 399 lines)
+  - **Research:** [`research/outcome_variance_mechanisms_20251030.md`](/research/outcome_variance_mechanisms_20251030.md) (945 lines, last updated Nov 6)
 - **✅ WEEK 3 TASK 8 COMPLETE (Nov 6):** Phase Dependency System - Explicit dependency declarations prevent race conditions and ordering bugs
   - **Problem:** 116 phases (now with consolidation plan), only 22 had dependencies (19.1% coverage), fragile decimal ordering
   - **Solution:** Added dependencies to 10 additional critical phases (27.8% coverage = 32/115 phases)
