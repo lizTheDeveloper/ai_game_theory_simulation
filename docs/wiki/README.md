@@ -21,10 +21,10 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **🟢 4-WEEK CRITICAL PATH COMPLETE ✅** (November 6, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A (100% peer-reviewed, automated currency pipeline, 0 CRITICAL items) ✅ IMPROVED from A-
+- **Research Quality:** A- (100% peer-reviewed, automated currency pipeline, 3 CRITICAL Layer 2 issues in mortality stabilizers) ⚠️ DEGRADED from A
 - **Implementation Fidelity:** A- (stable, research-backed, defensive) ✅ IMPROVED from B+
 - **Architecture Health:** 8.5/10 ✅ IMPROVED from 8.0/10
-- **System Trajectory:** Sustainable - preventive infrastructure operational, complexity controlled
+- **System Trajectory:** Sustainable - preventive infrastructure operational, complexity controlled, Layer 2 remediation needed
 
 **✅ WEEK 3 TASK 7 COMPLETE: State Validation Framework** (7 hours vs 3 days target - 90% faster)
 - **Status:** All 3 phases complete, passed both quality gates
@@ -871,6 +871,21 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
   - 🚨 **Critical Issues**: ~183 total (20 Phase 2 + 163 Phase 3)
   - **Next Steps**: Apply ~183 critical corrections, code implementation integration
   - See: Session summaries (8, 9, 11-16), remediation files (nuclear_decision_realism, ai_social_influence)
+
+**🔴 Mortality Stabilizer Layer 2 Verification** (November 6, 2025):
+- **Status**: ❌ **CRITICAL DISCREPANCIES FOUND** in centralized parameters (commit ec4f3fb)
+- **Parameters Verified**: 42 mortality stabilizer parameters (Ballester 2024, Cavalcanti 2025, GAO 2025, IOM 2024)
+- **Layer 1 (Citation Existence)**: ✅ PASSED - All 4 papers exist and are relevant
+- **Layer 2 (Claim Verification)**: ❌ **FAILED** - Major issues found:
+  - 🔴 **Cavalcanti 2025 Misinterpretation** (CRITICAL): Code models "donor availability tiers" but paper measures "USAID funding levels" - fundamentally different concepts
+  - 🔴 **Ballester 2024 Total Max Too High** (CRITICAL): Code claims 80% reduction, paper shows ~44% overall (simulation MORE optimistic than empirical data)
+  - 🔴 **IOM 2024 Values Not Found** (CRITICAL): 10 of 11 migration parameters NOT in World Migration Report 2024 (qualitative report, not quantitative)
+  - ⚠️ **GAO 2025 Weak Evidence** (correctly marked): 4% workforce verified, but mortality effectiveness estimates not in report
+- **Verified Parameters**: GAO 4% FEMA workforce (Nov 2024), Ballester ~44% heat adaptation general finding
+- **Action Items**: 8 items in UPDATE_QUEUE.md (3 CRITICAL, 3 HIGH, 2 MEDIUM)
+- **Files Created**: `research/mortality_stabilizers_layer2_verification_20251106.md` (8.7KB), `research/UPDATE_QUEUE.md` (updated)
+- **Impact**: Fundamental modeling errors identified requiring parameter corrections and additional research sources
+- See: [`research/mortality_stabilizers_layer2_verification_20251106.md`](/research/mortality_stabilizers_layer2_verification_20251106.md), [`research/UPDATE_QUEUE.md`](/research/UPDATE_QUEUE.md)
 
 ### Core Systems
 
