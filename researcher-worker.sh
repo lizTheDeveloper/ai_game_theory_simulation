@@ -116,7 +116,11 @@ cd "$PROJECT_DIR"
 
     # Ensure we are on main
     log_info "Switching to main branch..."
+    # Stash any uncommitted changes before switching
+    git stash --include-untracked 2>&1 || true
     git checkout main 2>&1 || log_warning "Already on main"
+    # Restore stashed changes
+    git stash pop 2>&1 || true
 
     # Check for uncommitted changes
     if ! git diff-index --quiet HEAD -- 2>/dev/null; then
@@ -253,7 +257,10 @@ TASK_EOF
     if git diff-index --quiet HEAD -- 2>/dev/null; then
         log_info "No changes made during session"
         log_info "Switching back to main and cleaning up..."
+        # Stash any uncommitted log files before switching branches
+        git stash --include-untracked 2>&1 || true
         git checkout main 2>&1
+        git stash pop 2>&1 || true
         git branch -D "$BRANCH_NAME" 2>&1 || true
     else
         log_info "Changes detected, creating commit..."
@@ -315,7 +322,11 @@ See \`research/UPDATE_QUEUE.md\` for current research status.
 
         # Return to main
         log_info "Returning to main branch..."
+        # Stash any uncommitted log files (from cron output) before switching
+        git stash --include-untracked 2>&1 || true
         git checkout main 2>&1
+        # Restore stashed log files
+        git stash pop 2>&1 || true
     fi
 
     echo ""
