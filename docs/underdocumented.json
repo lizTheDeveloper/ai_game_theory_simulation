@@ -49016,7 +49016,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 338,
+    "line": 435,
     "type": "property",
     "name": "phaseName",
     "currentDoc": "(none)",
@@ -49024,7 +49024,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 339,
+    "line": 436,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -49032,7 +49032,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 340,
+    "line": 437,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -49040,7 +49040,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 341,
+    "line": 438,
     "type": "property",
     "name": "avgMs",
     "currentDoc": "(none)",
@@ -52512,7 +52512,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CrisisDetectionPhase.ts",
-    "line": 28,
+    "line": 36,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -52520,7 +52520,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CrisisDetectionPhase.ts",
-    "line": 29,
+    "line": 37,
     "type": "property",
     "name": "metadata",
     "currentDoc": "(none)",
@@ -58952,7 +58952,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 46,
+    "line": 51,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -58960,7 +58960,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 47,
+    "line": 52,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -58968,7 +58968,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 48,
+    "line": 53,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -58976,7 +58976,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 49,
+    "line": 54,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -58984,7 +58984,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 50,
+    "line": 55,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -58992,7 +58992,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 51,
+    "line": 56,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -59000,7 +59000,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 52,
+    "line": 57,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -59008,7 +59008,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 53,
+    "line": 58,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -59016,7 +59016,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 58,
+    "line": 66,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -59024,7 +59024,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 59,
+    "line": 67,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -59032,7 +59032,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 60,
+    "line": 68,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -59040,7 +59040,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 61,
+    "line": 69,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -59048,7 +59048,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 62,
+    "line": 70,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -59056,7 +59056,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 63,
+    "line": 71,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -59064,7 +59064,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 64,
+    "line": 72,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -59072,7 +59072,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 65,
+    "line": 73,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -59080,7 +59080,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 66,
+    "line": 74,
     "type": "property",
     "name": "extinctionType",
     "currentDoc": "(none)",
@@ -59088,7 +59088,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 67,
+    "line": 75,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -59096,7 +59096,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 68,
+    "line": 76,
     "type": "property",
     "name": "timelineMonths",
     "currentDoc": "(none)",
@@ -59104,7 +59104,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ExtinctionTriggersPhase.ts",
-    "line": 69,
+    "line": 77,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -59112,7 +59112,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 76,
+    "line": 82,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -59120,7 +59120,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 77,
+    "line": 83,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -59128,7 +59128,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 78,
+    "line": 84,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -59136,7 +59136,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 79,
+    "line": 85,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -59144,7 +59144,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 82,
+    "line": 88,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -59152,7 +59152,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 83,
+    "line": 89,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -59160,7 +59160,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 84,
+    "line": 90,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -59168,7 +59168,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 91,
+    "line": 97,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -59176,7 +59176,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 92,
+    "line": 98,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -59184,7 +59184,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 93,
+    "line": 99,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -59192,7 +59192,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 96,
+    "line": 102,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -59200,7 +59200,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 97,
+    "line": 103,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -59208,7 +59208,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 98,
+    "line": 104,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61736,7 +61736,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 54,
+    "line": 59,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -61744,7 +61744,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 55,
+    "line": 60,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -61752,7 +61752,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 56,
+    "line": 61,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61760,7 +61760,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 57,
+    "line": 62,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61768,7 +61768,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 58,
+    "line": 63,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61776,7 +61776,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 59,
+    "line": 64,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61784,7 +61784,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 60,
+    "line": 65,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61792,7 +61792,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 61,
+    "line": 66,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61800,7 +61800,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 62,
+    "line": 67,
     "type": "property",
     "name": "technology",
     "currentDoc": "(none)",
@@ -61808,7 +61808,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 63,
+    "line": 68,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -61816,7 +61816,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 64,
+    "line": 69,
     "type": "property",
     "name": "marketShare",
     "currentDoc": "(none)",
@@ -61824,7 +61824,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 65,
+    "line": 70,
     "type": "property",
     "name": "cascadeStrength",
     "currentDoc": "(none)",
@@ -61832,7 +61832,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 78,
+    "line": 83,
     "type": "property",
     "name": "expectedDuration",
     "currentDoc": "(none)",
@@ -61840,7 +61840,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 79,
+    "line": 84,
     "type": "property",
     "name": "environmentalImpact",
     "currentDoc": "(none)",
@@ -61848,7 +61848,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 91,
+    "line": 96,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -61856,7 +61856,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 92,
+    "line": 97,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -61864,7 +61864,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 93,
+    "line": 98,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61872,7 +61872,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 94,
+    "line": 99,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61880,7 +61880,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 95,
+    "line": 100,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61888,7 +61888,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 96,
+    "line": 101,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61896,7 +61896,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 97,
+    "line": 102,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61904,7 +61904,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 98,
+    "line": 103,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61912,7 +61912,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 99,
+    "line": 104,
     "type": "property",
     "name": "technology",
     "currentDoc": "(none)",
@@ -61920,7 +61920,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 100,
+    "line": 105,
     "type": "property",
     "name": "marketShare",
     "currentDoc": "(none)",
@@ -61928,7 +61928,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 107,
+    "line": 112,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -61936,7 +61936,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 108,
+    "line": 113,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -61944,7 +61944,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 109,
+    "line": 114,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61952,7 +61952,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 110,
+    "line": 115,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61960,7 +61960,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 111,
+    "line": 116,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61968,7 +61968,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 112,
+    "line": 117,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61976,7 +61976,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 113,
+    "line": 118,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61984,7 +61984,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 114,
+    "line": 119,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61992,7 +61992,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 115,
+    "line": 120,
     "type": "property",
     "name": "technology",
     "currentDoc": "(none)",
@@ -62000,7 +62000,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 116,
+    "line": 121,
     "type": "property",
     "name": "marketShare",
     "currentDoc": "(none)",
@@ -62008,7 +62008,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 124,
+    "line": 129,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -62016,7 +62016,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 125,
+    "line": 130,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -62024,7 +62024,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 126,
+    "line": 131,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -62032,7 +62032,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 127,
+    "line": 132,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -62040,7 +62040,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 128,
+    "line": 133,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -62048,7 +62048,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 129,
+    "line": 134,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -62056,7 +62056,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 130,
+    "line": 135,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -62064,7 +62064,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 131,
+    "line": 136,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -62072,7 +62072,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 132,
+    "line": 137,
     "type": "property",
     "name": "cumulativeEmissionsReduction",
     "currentDoc": "(none)",
@@ -62080,7 +62080,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
-    "line": 133,
+    "line": 138,
     "type": "property",
     "name": "activeCascades",
     "currentDoc": "(none)",
