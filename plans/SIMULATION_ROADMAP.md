@@ -255,6 +255,22 @@
 
 ### P1 - HIGH (Needs Verification Before Publication)
 
+- [ ] **Climate Tipping Point Timescale Citations Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 6, 2025)**
+  - **Commit:** a5188f3 (Climate tipping point timescale adjustments)
+  - **Status:** Research file created, ready for VALIDATION phase
+  - **Files Changed:** `src/types/tipping-points.ts` (3 parameters), `src/simulation/engine/phases/TippingPointPhase.ts` (debug logging)
+  - **Verification File:** `research/verification_a5188f3_20251106.md`
+  - **Citations to Verify:**
+    1. Armstrong McKay et al. (2022) *Science* - Arctic ice NOT a tipping element
+    2. Armstrong McKay et al. (2022) *Science* - AMOC 50-300yr range (code uses 50-300yr, research file claims 15-300yr - mismatch)
+    3. Edwards et al. (2019) *Nature* - WAIS lower bound 2,000yr (60% MICI revision)
+  - **Verification Tasks:**
+    - Layer 1: Confirm papers exist, obtain DOIs
+    - Layer 2: Quote specific passages supporting each claim
+    - Layer 3: Resolve research file vs code mismatches (AMOC 15yr vs 50yr)
+  - **Quality Gate 1:** APPROVE WITH CONDITIONS (research-skeptic review complete)
+  - **Priority:** MEDIUM (parameters conservative, but citation accuracy critical)
+
 - [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
   - **Commit:** 740a914 (Infrastructure degradation in extreme collapse scenarios)
   - **Status:** Bug fixed and validated (N=2 Monte Carlo), but parameters need research backing

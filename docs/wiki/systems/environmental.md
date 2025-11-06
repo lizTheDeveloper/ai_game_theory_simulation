@@ -157,21 +157,29 @@ The Environmental Accumulation System tracks four metrics that slowly degrade du
 
 **Six Major Tipping Elements:**
 
-| Element | Transition Duration | Threshold | Impact |
-|---------|-------------------|-----------|---------|
-| **Arctic Sea Ice Loss** | 10-30 years | climateStability < 0.65 | -0.10 climate (albedo feedback) |
-| **Amazon Dieback** | 30-80 years | climateStability < 0.55 | -0.15 biodiversity, -0.08 climate |
-| **AMOC Collapse** | 50-150 years | climateStability < 0.60 | -0.25 climate (Europe -40%) |
-| **Permafrost Carbon** | 50-300 years | climateStability < 0.60 | -0.15 climate (carbon feedback) |
-| **West Antarctic Ice** | 500-13,000 years | climateStability < 0.65 | -0.20 climate (coastal -50%) |
-| **Greenland Ice Sheet** | 1,000-15,000 years | climateStability < 0.65 | -0.25 climate (coastal -60%) |
+| Element | Transition Duration | Threshold | Impact | Cascades |
+|---------|-------------------|-----------|---------|----------|
+| **Arctic Sea Ice Loss** | 10-30 years | climateStability < 0.65 | -0.10 climate (albedo feedback) | ❌ No |
+| **Amazon Dieback** | 30-80 years | climateStability < 0.55 | -0.15 biodiversity, -0.08 climate | ✅ Yes |
+| **AMOC Collapse** | 50-300 years | climateStability < 0.60 | -0.25 climate (Europe -40%) | ✅ Yes |
+| **Permafrost Carbon** | 50-300 years | climateStability < 0.60 | -0.15 climate (carbon feedback) | ✅ Yes |
+| **West Antarctic Ice** | 2,000-13,000 years | climateStability < 0.65 | -0.20 climate (coastal -50%) | ✅ Yes |
+| **Greenland Ice Sheet** | 1,000-15,000 years | climateStability < 0.65 | -0.25 climate (coastal -60%) | ✅ Yes |
+
+**Recent Updates (November 6, 2025):**
+- **Arctic Sea Ice:** No longer cascades (Armstrong McKay et al. 2022 - not a true tipping element)
+- **AMOC:** Upper bound expanded 150yr → 300yr (captures deep uncertainty)
+- **WAIS:** Lower bound adjusted 500yr → 2,000yr (Edwards et al. 2019 MICI revision)
+- **Debug logging:** Added to track tipping point progress over time
+
+See `research/climate_tipping_timescales_20251106.md` and `reviews/climate_timescale_critique_20251106.md` for full research documentation.
 
 **How It Works:**
 
 1. **Threshold Detection:** Each element monitors climate stability (proxy for temperature)
 2. **Transition Progress:** Once triggered, element transitions gradually over research-backed duration
 3. **Sigmoid Curves:** S-curve progression (slow start → rapid middle → slow end)
-4. **Cascade Amplification:** Multiple active tipping points amplify each other (+5% per additional element)
+4. **Cascade Amplification:** Multiple active tipping points amplify each other (only cascading elements)
 5. **Regional Impacts:** Europe hit harder by AMOC, Latin America by Amazon, coastal regions by ice sheets
 
 **Example Timeline:**
