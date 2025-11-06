@@ -61,6 +61,21 @@ Commit: 876ea94 (Nov 5, 2025)
 
 ### November 6, 2025
 
+**Enhanced Autonomous Infrastructure Monitoring**
+
+Watcher script now monitors all three autonomous systems (worker + researcher + merge orchestrator):
+
+**New coverage:**
+- **Autonomous researcher** monitoring (lines 206-268): Checks for recent runs, script errors, timeouts, 2+ hour staleness
+- **Merge orchestrator** validation documented in remediation task (already existed at lines 183-204)
+- **Enhanced remediation** task covers all three systems with specific troubleshooting (script not found, branch accumulation, cron issues)
+
+**Complete infrastructure visibility:** No blind spots in autonomous operations. Watcher validates worker execution, research coordination, and branch merging with auto-remediation for all three systems.
+
+See: `scripts/autonomous-worker-watcher.sh` (424 lines), Commit: 418c9c4
+
+---
+
 **Merge Orchestrator Auto-Remediation**
 
 Autonomous infrastructure upgrade: Merge orchestrator now spawns Claude Code to automatically fix conflicts and test failures.
@@ -3314,39 +3329,47 @@ state.history.exogenousShocks?: Array<{
   - 4cd638d (Oct 31, 2025) - Fixed exactly-once semantics (prevent queue backup)
   - ba8dfcb (Oct 31, 2025) - Fixed message processing: only mark processed after successful spawn
 
-**Autonomous Worker Health Monitoring & Auto-Remediation** ✅ DOCUMENTED
-- **Proactive health checking**: Hourly watcher script monitors worker execution and auto-remediates issues
+**Autonomous Infrastructure Health Monitoring & Auto-Remediation** ✅ DOCUMENTED
+- **Proactive health checking**: Hourly watcher script monitors all three autonomous systems and auto-remediates issues
 - **Cron integration**: Recommended schedule at `:15` (after `:00` worker runs, before `:45` merge orchestrator)
-- **Comprehensive monitoring**:
-  - Worker execution frequency (checks last 90 minutes for hourly runs)
-  - Log analysis for errors, timeouts, failures
-  - Worker branch count and merge status
-  - Cron service health (VM only)
+- **Complete system coverage** (as of Nov 6, 2025):
+  - **Autonomous worker** (lines 128-182): Execution frequency, log analysis for errors/timeouts/failures, branch count/merge status
+  - **Merge orchestrator** (lines 183-204): Recent run validation, branch accumulation detection, conflict/test failure tracking
+  - **Autonomous researcher** (lines 206-268): Run frequency (90 min window), script existence checks, error detection (not found, timeout, failures), 2-hour staleness alerts
+  - **Cron service health** (VM only): Service status and restart instructions
 - **Auto-remediation triggers**:
   - Workers haven't run in 2+ hours → Diagnoses cron/scheduling issues
   - Recent runs encountering errors → Investigates common failure patterns
   - Recent runs hitting timeouts → Analyzes task complexity
+  - Researcher not running → Checks for missing scripts, permission issues
+  - Merge orchestrator failing → Verifies Claude Code spawning, checks branch accumulation
   - Cron service stopped → Provides restart instructions
 - **Auto-fix capability**: When issues detected, watcher automatically:
-  1. Creates diagnostic task file with troubleshooting steps
+  1. Creates diagnostic task file with troubleshooting steps (covers all three systems)
   2. Spawns Claude Code with 10-minute timeout
-  3. Fixes common problems (cron restart, hung processes, API keys, lock files)
+  3. Fixes common problems (cron restart, hung processes, API keys, lock files, missing scripts)
   4. Documents remediation in logs
+- **Enhanced remediation task** (Nov 6): Investigation steps now include:
+  - Worker logs: `logs/autonomous/worker_*.log`
+  - Researcher logs: `logs/autonomous/researcher/cron_*.log`
+  - Merge orchestrator logs: `logs/merge_orchestrator/merge_*.log`
+  - System-specific troubleshooting (script not found, branch accumulation, git state issues)
 - **Graceful degradation**: If Claude Code unavailable, provides manual troubleshooting steps
 - **Recommended cron schedule** (see `scripts/CRON_SETUP.md`):
   - `:00` - Autonomous worker runs (main implementation work)
-  - `:15` - Health check & auto-fix (monitors previous hour's worker)
+  - `:15` - Health check & auto-fix (monitors all three systems from previous hour)
   - `:45` - Merge orchestrator processes branches
 - **Benefits**:
-  - Self-healing system - recovers from common failures automatically
+  - Self-healing system - recovers from common failures automatically across all autonomous infrastructure
   - Early detection of systematic issues (prevents multi-hour downtime)
+  - Complete visibility: worker execution + research coordination + merge automation
   - Comprehensive failure diagnosis with Claude Code integration
   - Reduces manual intervention for routine operational issues
 - **Files**:
-  - `scripts/autonomous-worker-watcher.sh` (348 lines) - Health check & auto-remediation
+  - `scripts/autonomous-worker-watcher.sh` (424 lines) - Health check & auto-remediation
   - `scripts/CRON_SETUP.md` (214 lines) - Complete cron configuration guide
 - **Logs**: `logs/worker_watcher/watcher_TIMESTAMP.log`
-- Commit: 4fd9d55 (Nov 5, 2025)
+- Commits: 4fd9d55 (Nov 5, 2025 - initial), 418c9c4 (Nov 6, 2025 - researcher + merge orchestrator monitoring)
 
 **GameState Field Editor Agent** ✅ DOCUMENTED
 - **Purpose**: Haiku micro-agent for mechanical GameState field edits with FULL GameState type context (900 lines)
