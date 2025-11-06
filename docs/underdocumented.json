@@ -30912,7 +30912,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 61,
+    "line": 60,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -30920,7 +30920,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 62,
+    "line": 61,
     "type": "property",
     "name": "fraction",
     "currentDoc": "(none)",
@@ -30928,7 +30928,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 64,
+    "line": 63,
     "type": "property",
     "name": "vulnerability",
     "currentDoc": "(none)",
@@ -30936,7 +30936,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 76,
+    "line": 75,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -30944,7 +30944,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 77,
+    "line": 76,
     "type": "property",
     "name": "fraction",
     "currentDoc": "(none)",
@@ -30952,7 +30952,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 79,
+    "line": 78,
     "type": "property",
     "name": "vulnerability",
     "currentDoc": "(none)",
@@ -30960,7 +30960,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 80,
+    "line": 79,
     "type": "property",
     "name": "famine",
     "currentDoc": "(none)",
@@ -30968,7 +30968,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 81,
+    "line": 80,
     "type": "property",
     "name": "disease",
     "currentDoc": "(none)",
@@ -30976,7 +30976,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 82,
+    "line": 81,
     "type": "property",
     "name": "disaster",
     "currentDoc": "(none)",
@@ -30984,7 +30984,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 83,
+    "line": 82,
     "type": "property",
     "name": "war",
     "currentDoc": "(none)",
@@ -30992,7 +30992,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 84,
+    "line": 83,
     "type": "property",
     "name": "pollution",
     "currentDoc": "(none)",
@@ -31000,7 +31000,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 85,
+    "line": 84,
     "type": "property",
     "name": "ecosystem",
     "currentDoc": "(none)",
@@ -31008,7 +31008,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 91,
+    "line": 90,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -31016,7 +31016,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 92,
+    "line": 91,
     "type": "property",
     "name": "fraction",
     "currentDoc": "(none)",
@@ -31024,7 +31024,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 94,
+    "line": 93,
     "type": "property",
     "name": "vulnerability",
     "currentDoc": "(none)",
@@ -31032,7 +31032,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 96,
+    "line": 95,
     "type": "property",
     "name": "disease",
     "currentDoc": "(none)",
@@ -31040,7 +31040,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 97,
+    "line": 96,
     "type": "property",
     "name": "disaster",
     "currentDoc": "(none)",
@@ -31048,7 +31048,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 98,
+    "line": 97,
     "type": "property",
     "name": "war",
     "currentDoc": "(none)",
@@ -31056,7 +31056,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 99,
+    "line": 98,
     "type": "property",
     "name": "pollution",
     "currentDoc": "(none)",
@@ -31064,7 +31064,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 100,
+    "line": 99,
     "type": "property",
     "name": "ecosystem",
     "currentDoc": "(none)",
@@ -31072,7 +31072,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 106,
+    "line": 105,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -31080,7 +31080,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 107,
+    "line": 106,
     "type": "property",
     "name": "fraction",
     "currentDoc": "(none)",
@@ -31088,7 +31088,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 109,
+    "line": 108,
     "type": "property",
     "name": "vulnerability",
     "currentDoc": "(none)",
@@ -31096,7 +31096,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 121,
+    "line": 120,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -31104,7 +31104,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 122,
+    "line": 121,
     "type": "property",
     "name": "fraction",
     "currentDoc": "(none)",
@@ -31112,7 +31112,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 124,
+    "line": 123,
     "type": "property",
     "name": "vulnerability",
     "currentDoc": "(none)",
@@ -31120,7 +31120,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 159,
+    "line": 158,
     "type": "property",
     "name": "monthlyMaxMortalityRate",
     "currentDoc": "(none)",
@@ -31128,7 +31128,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 162,
+    "line": 161,
     "type": "property",
     "name": "instantMaxMortalityRate",
     "currentDoc": "(none)",
@@ -31136,7 +31136,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 165,
+    "line": 164,
     "type": "property",
     "name": "extremeCrisisThreshold",
     "currentDoc": "(none)",
@@ -31144,7 +31144,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 179,
+    "line": 178,
     "type": "property",
     "name": "pop",
     "currentDoc": "(none)",
@@ -31152,7 +31152,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 180,
+    "line": 179,
     "type": "property",
     "name": "risk",
     "currentDoc": "(none)",
@@ -31160,7 +31160,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 222,
+    "line": 221,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -31168,7 +31168,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 223,
+    "line": 222,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -31176,7 +31176,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 226,
+    "line": 225,
     "type": "property",
     "name": "mortalityRisks",
     "currentDoc": "(none)",
@@ -31184,7 +31184,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 241,
+    "line": 240,
     "type": "property",
     "name": "totalDeaths",
     "currentDoc": "(none)",
@@ -31192,7 +31192,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 242,
+    "line": 241,
     "type": "property",
     "name": "deaths",
     "currentDoc": "(none)",
@@ -31200,7 +31200,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 243,
+    "line": 242,
     "type": "property",
     "name": "remainingPopulation",
     "currentDoc": "(none)",
@@ -31208,7 +31208,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 244,
+    "line": 243,
     "type": "property",
     "name": "cappedByMonthlyLimit",
     "currentDoc": "(none)",
@@ -31216,7 +31216,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 245,
+    "line": 244,
     "type": "property",
     "name": "cappedByInstantLimit",
     "currentDoc": "(none)",
@@ -31224,7 +31224,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 246,
+    "line": 245,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -31232,7 +31232,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 247,
+    "line": 246,
     "type": "property",
     "name": "avgDeathProbability",
     "currentDoc": "(none)",
@@ -31240,7 +31240,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 248,
+    "line": 247,
     "type": "property",
     "name": "compoundedRisks",
     "currentDoc": "(none)",
@@ -31248,7 +31248,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 249,
+    "line": 248,
     "type": "property",
     "name": "peakSegmentMortality",
     "currentDoc": "(none)",
@@ -31256,7 +31256,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 250,
+    "line": 249,
     "type": "property",
     "name": "segment",
     "currentDoc": "(none)",
@@ -31264,7 +31264,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 251,
+    "line": 250,
     "type": "property",
     "name": "mortality",
     "currentDoc": "(none)",
@@ -31272,7 +31272,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 440,
+    "line": 439,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31280,7 +31280,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 441,
+    "line": 440,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31288,7 +31288,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 442,
+    "line": 441,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31296,7 +31296,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 443,
+    "line": 442,
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -31304,7 +31304,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 453,
+    "line": 452,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31312,7 +31312,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 454,
+    "line": 453,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31320,7 +31320,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 455,
+    "line": 454,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31328,7 +31328,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 456,
+    "line": 455,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -31336,7 +31336,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 457,
+    "line": 456,
     "type": "property",
     "name": "totalPopulation",
     "currentDoc": "(none)",
@@ -31344,7 +31344,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 458,
+    "line": 457,
     "type": "property",
     "name": "demographicFraction",
     "currentDoc": "(none)",
@@ -31352,7 +31352,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 459,
+    "line": 458,
     "type": "property",
     "name": "demographic",
     "currentDoc": "(none)",
@@ -31360,7 +31360,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 467,
+    "line": 466,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31368,7 +31368,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 468,
+    "line": 467,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31376,7 +31376,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 469,
+    "line": 468,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31384,7 +31384,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 470,
+    "line": 469,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -31392,7 +31392,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 471,
+    "line": 470,
     "type": "property",
     "name": "segmentPopulation",
     "currentDoc": "(none)",
@@ -31400,7 +31400,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 472,
+    "line": 471,
     "type": "property",
     "name": "mortality",
     "currentDoc": "(none)",
@@ -31408,7 +31408,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 473,
+    "line": 472,
     "type": "property",
     "name": "demographic",
     "currentDoc": "(none)",
@@ -31416,7 +31416,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 482,
+    "line": 481,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -31424,7 +31424,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 483,
+    "line": 482,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -31432,7 +31432,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 484,
+    "line": 483,
     "type": "property",
     "name": "contributionFraction",
     "currentDoc": "(none)",
@@ -31440,7 +31440,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 485,
+    "line": 484,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -31448,7 +31448,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 490,
+    "line": 489,
     "type": "property",
     "name": "demographic",
     "currentDoc": "(none)",
@@ -31456,7 +31456,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 492,
+    "line": 491,
     "type": "property",
     "name": "probability",
     "currentDoc": "(none)",
@@ -31464,7 +31464,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 505,
+    "line": 504,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31472,7 +31472,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 506,
+    "line": 505,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31480,7 +31480,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 507,
+    "line": 506,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31488,7 +31488,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 508,
+    "line": 507,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -31496,7 +31496,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 509,
+    "line": 508,
     "type": "property",
     "name": "segmentCount",
     "currentDoc": "(none)",
@@ -31504,7 +31504,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 510,
+    "line": 509,
     "type": "property",
     "name": "segmentDeaths",
     "currentDoc": "(none)",
@@ -31512,7 +31512,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 519,
+    "line": 518,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31520,7 +31520,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 520,
+    "line": 519,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31528,7 +31528,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 521,
+    "line": 520,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31536,7 +31536,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 548,
+    "line": 547,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31544,7 +31544,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 549,
+    "line": 548,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31552,7 +31552,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 550,
+    "line": 549,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31560,7 +31560,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 555,
+    "line": 554,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31568,7 +31568,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 556,
+    "line": 555,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31576,7 +31576,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 557,
+    "line": 556,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31584,7 +31584,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 563,
+    "line": 562,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31592,7 +31592,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 564,
+    "line": 563,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31600,7 +31600,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 565,
+    "line": 564,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31608,7 +31608,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 566,
+    "line": 565,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -31616,7 +31616,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 567,
+    "line": 566,
     "type": "property",
     "name": "previous",
     "currentDoc": "(none)",
@@ -31624,7 +31624,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 568,
+    "line": 567,
     "type": "property",
     "name": "adding",
     "currentDoc": "(none)",
@@ -31632,7 +31632,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 585,
+    "line": 584,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31640,7 +31640,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 586,
+    "line": 585,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31648,7 +31648,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 587,
+    "line": 586,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31656,7 +31656,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 594,
+    "line": 592,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31664,7 +31664,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 595,
+    "line": 593,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31672,7 +31672,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 596,
+    "line": 594,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31680,7 +31680,31 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 606,
+    "line": 595,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
+    "line": 596,
+    "type": "property",
+    "name": "previous",
+    "currentDoc": "(none)",
+    "context": "previous: pop.deathsByCategory[cause.proximate] || 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
+    "line": 597,
+    "type": "property",
+    "name": "adding",
+    "currentDoc": "(none)",
+    "context": "adding: attributedDeathsMillions,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
+    "line": 608,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31688,7 +31712,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 607,
+    "line": 609,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31696,7 +31720,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 608,
+    "line": 610,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31704,7 +31728,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 609,
+    "line": 611,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -31712,7 +31736,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 610,
+    "line": 612,
     "type": "property",
     "name": "previous",
     "currentDoc": "(none)",
@@ -31720,7 +31744,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 611,
+    "line": 613,
     "type": "property",
     "name": "adding",
     "currentDoc": "(none)",
@@ -31728,7 +31752,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 619,
+    "line": 621,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31736,7 +31760,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 620,
+    "line": 622,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31744,7 +31768,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 621,
+    "line": 623,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31752,7 +31776,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 622,
+    "line": 624,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -31760,7 +31784,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 623,
+    "line": 625,
     "type": "property",
     "name": "previous",
     "currentDoc": "(none)",
@@ -31768,7 +31792,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 624,
+    "line": 626,
     "type": "property",
     "name": "adding",
     "currentDoc": "(none)",
@@ -31776,7 +31800,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 636,
+    "line": 638,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -31784,7 +31808,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 637,
+    "line": 639,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -31792,7 +31816,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 638,
+    "line": 640,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31800,7 +31824,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 639,
+    "line": 641,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -31808,7 +31832,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 640,
+    "line": 642,
     "type": "property",
     "name": "previous",
     "currentDoc": "(none)",
@@ -31816,7 +31840,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 641,
+    "line": 643,
     "type": "property",
     "name": "adding",
     "currentDoc": "(none)",
@@ -31824,7 +31848,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 642,
+    "line": 644,
     "type": "property",
     "name": "riskCount",
     "currentDoc": "(none)",
@@ -31832,7 +31856,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 673,
+    "line": 675,
     "type": "property",
     "name": "deaths",
     "currentDoc": "(none)",
@@ -31840,7 +31864,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 674,
+    "line": 676,
     "type": "property",
     "name": "remainingPopulation",
     "currentDoc": "(none)",
@@ -31848,7 +31872,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 675,
+    "line": 677,
     "type": "property",
     "name": "cappedByMonthlyLimit",
     "currentDoc": "(none)",
@@ -31856,7 +31880,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 676,
+    "line": 678,
     "type": "property",
     "name": "cappedByInstantLimit",
     "currentDoc": "(none)",
@@ -31864,7 +31888,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 677,
+    "line": 679,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -31872,7 +31896,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 679,
+    "line": 681,
     "type": "property",
     "name": "compoundedRisks",
     "currentDoc": "(none)",
@@ -31880,7 +31904,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 680,
+    "line": 682,
     "type": "property",
     "name": "peakSegmentMortality",
     "currentDoc": "(none)",
@@ -31888,7 +31912,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 681,
+    "line": 683,
     "type": "property",
     "name": "segment",
     "currentDoc": "(none)",
@@ -31896,7 +31920,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 682,
+    "line": 684,
     "type": "property",
     "name": "mortality",
     "currentDoc": "(none)",
@@ -31904,7 +31928,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 694,
+    "line": 696,
     "type": "property",
     "name": "pop",
     "currentDoc": "(none)",
@@ -31912,7 +31936,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 705,
+    "line": 707,
     "type": "property",
     "name": "pop",
     "currentDoc": "(none)",
@@ -50920,7 +50944,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 225,
+    "line": 218,
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -50928,7 +50952,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 226,
+    "line": 219,
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -50936,7 +50960,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 239,
+    "line": 232,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -50944,7 +50968,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 240,
+    "line": 233,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -50952,7 +50976,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 261,
+    "line": 249,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -50960,7 +50984,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 262,
+    "line": 250,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -50968,7 +50992,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 263,
+    "line": 251,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -50976,7 +51000,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 280,
+    "line": 268,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -50984,7 +51008,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 281,
+    "line": 269,
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -50992,7 +51016,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 282,
+    "line": 270,
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -51000,7 +51024,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 337,
+    "line": 325,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -51008,7 +51032,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 338,
+    "line": 326,
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -51016,7 +51040,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 339,
+    "line": 327,
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -51024,7 +51048,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 373,
+    "line": 361,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -51032,7 +51056,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 374,
+    "line": 362,
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -51040,7 +51064,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 381,
+    "line": 369,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -51048,7 +51072,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 382,
+    "line": 370,
     "type": "property",
     "name": "fromRegime",
     "currentDoc": "(none)",
@@ -51056,7 +51080,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 383,
+    "line": 371,
     "type": "property",
     "name": "toRegime",
     "currentDoc": "(none)",
@@ -51064,7 +51088,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 384,
+    "line": 372,
     "type": "property",
     "name": "trigger",
     "currentDoc": "(none)",
@@ -51072,7 +51096,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 394,
+    "line": 382,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -51080,7 +51104,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 395,
+    "line": 383,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -51088,7 +51112,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 396,
+    "line": 384,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -51096,7 +51120,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 397,
+    "line": 385,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -51104,7 +51128,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 398,
+    "line": 386,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -51112,7 +51136,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 399,
+    "line": 387,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -51120,7 +51144,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 400,
+    "line": 388,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -51128,7 +51152,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 401,
+    "line": 389,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -51136,7 +51160,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 402,
+    "line": 390,
     "type": "property",
     "name": "previousRegime",
     "currentDoc": "(none)",
@@ -51144,7 +51168,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 403,
+    "line": 391,
     "type": "property",
     "name": "currentRegime",
     "currentDoc": "(none)",
@@ -51152,7 +51176,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 404,
+    "line": 392,
     "type": "property",
     "name": "varianceAmplification",
     "currentDoc": "(none)",
@@ -108592,7 +108616,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 45,
+    "line": 44,
     "type": "property",
     "name": "activeRefugeeCrises",
     "currentDoc": "(none)",
@@ -108600,7 +108624,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 46,
+    "line": 45,
     "type": "property",
     "name": "totalDisplaced",
     "currentDoc": "(none)",
@@ -108608,7 +108632,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 47,
+    "line": 46,
     "type": "property",
     "name": "totalResettled",
     "currentDoc": "(none)",
@@ -108616,7 +108640,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 48,
+    "line": 47,
     "type": "property",
     "name": "cumulativeRefugees",
     "currentDoc": "(none)",
@@ -108624,7 +108648,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 49,
+    "line": 48,
     "type": "property",
     "name": "globalRefugeeTension",
     "currentDoc": "(none)",
@@ -108632,7 +108656,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 50,
+    "line": 49,
     "type": "property",
     "name": "regionalTensions",
     "currentDoc": "(none)",
@@ -108640,7 +108664,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 51,
+    "line": 50,
     "type": "property",
     "name": "resettlementCost",
     "currentDoc": "(none)",
@@ -108648,7 +108672,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 52,
+    "line": 51,
     "type": "property",
     "name": "economicStrain",
     "currentDoc": "(none)",
@@ -108656,7 +108680,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 58,
+    "line": 57,
     "type": "property",
     "name": "governmentRelocation",
     "currentDoc": "(none)",
@@ -108664,7 +108688,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 61,
+    "line": 60,
     "type": "property",
     "name": "trappedPopulations",
     "currentDoc": "(none)",
@@ -108672,7 +108696,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 72,
+    "line": 71,
     "type": "property",
     "name": "enabled",
     "currentDoc": "(none)",
@@ -108680,7 +108704,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 73,
+    "line": 72,
     "type": "property",
     "name": "monthActivated",
     "currentDoc": "(none)",
@@ -108688,7 +108712,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 77,
+    "line": 76,
     "type": "property",
     "name": "monthlyBudget",
     "currentDoc": "(none)",
@@ -108696,7 +108720,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 78,
+    "line": 77,
     "type": "property",
     "name": "cumulativeSpending",
     "currentDoc": "(none)",
@@ -108704,7 +108728,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 81,
+    "line": 80,
     "type": "property",
     "name": "totalRelocated",
     "currentDoc": "(none)",
@@ -108712,7 +108736,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 82,
+    "line": 81,
     "type": "property",
     "name": "monthlyRelocated",
     "currentDoc": "(none)",
@@ -108720,7 +108744,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 83,
+    "line": 82,
     "type": "property",
     "name": "eligiblePopulation",
     "currentDoc": "(none)",
@@ -108728,7 +108752,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 84,
+    "line": 83,
     "type": "property",
     "name": "coverageRate",
     "currentDoc": "(none)",
@@ -108736,7 +108760,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 87,
+    "line": 86,
     "type": "property",
     "name": "costPerCapita",
     "currentDoc": "(none)",
@@ -108744,7 +108768,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 96,
+    "line": 95,
     "type": "property",
     "name": "politicalWillModifiers",
     "currentDoc": "(none)",
@@ -108752,7 +108776,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 108,
+    "line": 107,
     "type": "property",
     "name": "trustBonus",
     "currentDoc": "(none)",
@@ -108760,7 +108784,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 109,
+    "line": 108,
     "type": "property",
     "name": "resentmentPenalty",
     "currentDoc": "(none)",
@@ -108768,7 +108792,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 119,
+    "line": 118,
     "type": "property",
     "name": "totalTrapped",
     "currentDoc": "(none)",
@@ -108776,7 +108800,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 120,
+    "line": 119,
     "type": "property",
     "name": "trappedByWater",
     "currentDoc": "(none)",
@@ -108784,7 +108808,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 121,
+    "line": 120,
     "type": "property",
     "name": "trappedByClimate",
     "currentDoc": "(none)",
@@ -108792,7 +108816,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 122,
+    "line": 121,
     "type": "property",
     "name": "trappedByEcosystem",
     "currentDoc": "(none)",
@@ -108800,7 +108824,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 123,
+    "line": 122,
     "type": "property",
     "name": "trappedByConflict",
     "currentDoc": "(none)",
@@ -108808,7 +108832,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 126,
+    "line": 125,
     "type": "property",
     "name": "wealthDistribution",
     "currentDoc": "(none)",
@@ -108816,7 +108840,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 133,
+    "line": 132,
     "type": "property",
     "name": "regionalTrapped",
     "currentDoc": "(none)",
@@ -108824,7 +108848,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 136,
+    "line": 135,
     "type": "property",
     "name": "typeBreakdown",
     "currentDoc": "(none)",
@@ -108832,7 +108856,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 144,
+    "line": 143,
     "type": "property",
     "name": "socialCohesionImpact",
     "currentDoc": "(none)",
@@ -108840,7 +108864,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 148,
+    "line": 147,
     "type": "property",
     "name": "aspiringToMigrate",
     "currentDoc": "(none)",
@@ -108848,7 +108872,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 149,
+    "line": 148,
     "type": "property",
     "name": "ableToMigrate",
     "currentDoc": "(none)",
@@ -108856,7 +108880,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 150,
+    "line": 149,
     "type": "property",
     "name": "mobilityGap",
     "currentDoc": "(none)",
@@ -108864,7 +108888,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 196,
+    "line": 195,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108872,7 +108896,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 197,
+    "line": 196,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108880,7 +108904,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 198,
+    "line": 197,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108888,7 +108912,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 199,
+    "line": 198,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -108896,7 +108920,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 200,
+    "line": 199,
     "type": "property",
     "name": "crisis",
     "currentDoc": "(none)",
@@ -108904,7 +108928,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 201,
+    "line": 200,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -108912,7 +108936,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 203,
+    "line": 202,
     "type": "property",
     "name": "transitDeathRate",
     "currentDoc": "(none)",
@@ -108920,7 +108944,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 223,
+    "line": 226,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108928,7 +108952,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 224,
+    "line": 227,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108936,7 +108960,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 225,
+    "line": 228,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108944,7 +108968,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 232,
+    "line": 244,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -108952,7 +108976,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 233,
+    "line": 245,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -108960,7 +108984,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 234,
+    "line": 246,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -108968,7 +108992,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 253,
+    "line": 265,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -108976,7 +109000,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 254,
+    "line": 266,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -108984,7 +109008,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 255,
+    "line": 267,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -108992,7 +109016,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 256,
+    "line": 268,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -109000,7 +109024,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 257,
+    "line": 269,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -109008,7 +109032,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 261,
+    "line": 273,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -109016,7 +109040,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 262,
+    "line": 274,
     "type": "property",
     "name": "totalFled",
     "currentDoc": "(none)",
@@ -109024,7 +109048,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 263,
+    "line": 275,
     "type": "property",
     "name": "stillInSource",
     "currentDoc": "(none)",
@@ -109032,7 +109056,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 264,
+    "line": 276,
     "type": "property",
     "name": "deaths",
     "currentDoc": "(none)",
@@ -109040,7 +109064,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 265,
+    "line": 277,
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -109048,7 +109072,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 266,
+    "line": 278,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109056,7 +109080,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 267,
+    "line": 279,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -109064,7 +109088,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 312,
+    "line": 324,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -109072,7 +109096,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 313,
+    "line": 325,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109080,7 +109104,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 314,
+    "line": 326,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -109088,7 +109112,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 315,
+    "line": 327,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -109096,7 +109120,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 316,
+    "line": 328,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -109104,7 +109128,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 319,
+    "line": 331,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -109112,7 +109136,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 320,
+    "line": 332,
     "type": "property",
     "name": "totalDisplaced",
     "currentDoc": "(none)",
@@ -109120,7 +109144,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 321,
+    "line": 333,
     "type": "property",
     "name": "resettled",
     "currentDoc": "(none)",
@@ -109128,7 +109152,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 322,
+    "line": 334,
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -109136,7 +109160,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 324,
+    "line": 336,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109144,35 +109168,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 325,
+    "line": 337,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
     "context": "region: crisis.sourceRegion"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 366,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'updateRefugeeCrises.globalEffects',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 367,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'socialStability',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 368,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
@@ -109188,7 +109188,7 @@
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'paranoiaLevel',"
+    "context": "valueName: 'socialStability',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
@@ -109200,7 +109200,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 391,
+    "line": 390,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -109208,15 +109208,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 392,
+    "line": 391,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'qualityOfLife',"
+    "context": "valueName: 'paranoiaLevel',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 393,
+    "line": 392,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -109236,7 +109236,7 @@
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'dystopiaProbability',"
+    "context": "valueName: 'qualityOfLife',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
@@ -109248,7 +109248,31 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 415,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRefugeeCrises.globalEffects',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
     "line": 416,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'dystopiaProbability',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 417,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+    "line": 428,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -109256,7 +109280,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 417,
+    "line": 429,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -109264,7 +109288,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 418,
+    "line": 430,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -109272,7 +109296,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 426,
+    "line": 438,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -109280,7 +109304,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 427,
+    "line": 439,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -109288,7 +109312,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 428,
+    "line": 440,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -109296,7 +109320,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 437,
+    "line": 449,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -109304,7 +109328,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 438,
+    "line": 450,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -109312,7 +109336,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 439,
+    "line": 451,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -109320,7 +109344,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 473,
+    "line": 485,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109328,7 +109352,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 474,
+    "line": 486,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109336,7 +109360,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 475,
+    "line": 487,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109344,7 +109368,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 510,
+    "line": 522,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109352,7 +109376,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 511,
+    "line": 523,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109360,7 +109384,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 512,
+    "line": 524,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109368,7 +109392,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 513,
+    "line": 525,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109376,7 +109400,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 526,
+    "line": 538,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109384,7 +109408,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 527,
+    "line": 539,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109392,7 +109416,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 528,
+    "line": 540,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109400,7 +109424,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 529,
+    "line": 541,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109408,7 +109432,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 550,
+    "line": 562,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109416,7 +109440,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 551,
+    "line": 563,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109424,7 +109448,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 552,
+    "line": 564,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109432,7 +109456,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 572,
+    "line": 584,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109440,7 +109464,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 573,
+    "line": 585,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109448,7 +109472,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 574,
+    "line": 586,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109456,7 +109480,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 613,
+    "line": 625,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109464,7 +109488,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 614,
+    "line": 626,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109472,7 +109496,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 615,
+    "line": 627,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109480,7 +109504,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 640,
+    "line": 652,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -109488,7 +109512,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 641,
+    "line": 653,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109496,7 +109520,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 642,
+    "line": 654,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -109504,7 +109528,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 643,
+    "line": 655,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -109512,7 +109536,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 644,
+    "line": 656,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -109520,7 +109544,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 648,
+    "line": 660,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -109528,7 +109552,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 649,
+    "line": 661,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109536,7 +109560,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 650,
+    "line": 662,
     "type": "property",
     "name": "potentialDisplaced",
     "currentDoc": "(none)",
@@ -109544,7 +109568,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 651,
+    "line": 663,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -109552,7 +109576,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 652,
+    "line": 664,
     "type": "property",
     "name": "displacementDuration",
     "currentDoc": "(none)",
@@ -109560,7 +109584,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 653,
+    "line": 665,
     "type": "property",
     "name": "monthsToComplete",
     "currentDoc": "(none)",
@@ -109568,7 +109592,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 665,
+    "line": 677,
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -109576,7 +109600,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 666,
+    "line": 678,
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -109584,7 +109608,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 667,
+    "line": 679,
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -109592,7 +109616,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 668,
+    "line": 680,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -109600,7 +109624,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 669,
+    "line": 681,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -109608,7 +109632,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 685,
+    "line": 697,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -109616,7 +109640,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 687,
+    "line": 699,
     "type": "property",
     "name": "startMonth",
     "currentDoc": "(none)",
@@ -109624,7 +109648,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 696,
+    "line": 708,
     "type": "property",
     "name": "resettledCount",
     "currentDoc": "(none)",
@@ -109632,7 +109656,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 697,
+    "line": 709,
     "type": "property",
     "name": "deathsInTransit",
     "currentDoc": "(none)",
@@ -109640,7 +109664,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 702,
+    "line": 714,
     "type": "property",
     "name": "displacementComplete",
     "currentDoc": "(none)",
@@ -109648,7 +109672,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 706,
+    "line": 718,
     "type": "property",
     "name": "monthsActive",
     "currentDoc": "(none)",
@@ -109656,7 +109680,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 707,
+    "line": 719,
     "type": "property",
     "name": "resettlementProgress",
     "currentDoc": "(none)",
@@ -109664,7 +109688,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 710,
+    "line": 722,
     "type": "property",
     "name": "socialTension",
     "currentDoc": "(none)",
@@ -109672,7 +109696,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 711,
+    "line": 723,
     "type": "property",
     "name": "economicStrain",
     "currentDoc": "(none)",
@@ -109680,7 +109704,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 712,
+    "line": 724,
     "type": "property",
     "name": "politicalInstability",
     "currentDoc": "(none)",
@@ -109688,7 +109712,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 715,
+    "line": 727,
     "type": "property",
     "name": "resettlementRate",
     "currentDoc": "(none)",
@@ -109696,7 +109720,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 717,
+    "line": 729,
     "type": "property",
     "name": "acceleratedResettlement",
     "currentDoc": "(none)",
@@ -109704,7 +109728,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 718,
+    "line": 730,
     "type": "property",
     "name": "resolved",
     "currentDoc": "(none)",
@@ -109712,7 +109736,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
-    "line": 722,
+    "line": 734,
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
