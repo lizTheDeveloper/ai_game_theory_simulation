@@ -1,0 +1,285 @@
+💀💀💀 MORTALITY RISK SUMMARY (Month 2) 💀💀💀
+[Run   1/1]    Total base risk: 0.0477 (4.77%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 3) 💀💀💀
+[Run   1/1]    Total base risk: 0.0011 (0.11%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 5) 💀💀💀
+[Run   1/1]    Total base risk: 0.0011 (0.11%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 6) 💀💀💀
+[Run   1/1]    Total base risk: 0.0011 (0.11%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 7) 💀💀💀
+[Run   1/1]    Total base risk: 0.0011 (0.11%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 8) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 9) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 10) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 11) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 12) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 13) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 14) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 15) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 16) 💀💀💀
+[Run   1/1]    Total base risk: 0.0073 (0.73%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 17) 💀💀💀
+[Run   1/1]    Total base risk: 0.0090 (0.90%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 18) 💀💀💀
+[Run   1/1]    Total base risk: 0.0072 (0.72%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 19) 💀💀💀
+[Run   1/1]    Total base risk: 0.0071 (0.71%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 20) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 21) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 22) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 23) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 24) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 25) 💀💀💀
+[Run   1/1]    Total base risk: 0.0062 (0.62%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 26) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 27) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 28) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 29) 💀💀💀
+[Run   1/1]    Total base risk: 0.0073 (0.73%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 30) 💀💀💀
+[Run   1/1]    Total base risk: 0.0073 (0.73%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 31) 💀💀💀
+[Run   1/1]    Total base risk: 0.0080 (0.80%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 32) 💀💀💀
+[Run   1/1]    Total base risk: 0.0575 (5.75%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 33) 💀💀💀
+[Run   1/1]    Total base risk: 0.0074 (0.74%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 34) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 35) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 36) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 37) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 38) 💀💀💀
+[Run   1/1]    Total base risk: 0.0074 (0.74%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 39) 💀💀💀
+[Run   1/1]    Total base risk: 0.0074 (0.74%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 40) 💀💀💀
+[Run   1/1]    Total base risk: 0.0124 (1.24%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 41) 💀💀💀
+[Run   1/1]    Total base risk: 0.0081 (0.81%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 42) 💀💀💀
+[Run   1/1]    Total base risk: 0.0072 (0.72%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 43) 💀💀💀
+[Run   1/1]    Total base risk: 0.0072 (0.72%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 44) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 45) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 46) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 47) 💀💀💀
+[Run   1/1]    Total base risk: 0.0066 (0.66%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 48) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 49) 💀💀💀
+[Run   1/1]    Total base risk: 0.0065 (0.65%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 50) 💀💀💀
+[Run   1/1]    Total base risk: 0.0074 (0.74%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 51) 💀💀💀
+[Run   1/1]    Total base risk: 0.0074 (0.74%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 52) 💀💀💀
+[Run   1/1]    Total base risk: 0.0474 (4.74%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 53) 💀💀💀
+[Run   1/1]    Total base risk: 0.0081 (0.81%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 54) 💀💀💀
+[Run   1/1]    Total base risk: 0.0073 (0.73%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 55) 💀💀💀
+[Run   1/1]    Total base risk: 0.0073 (0.73%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 56) 💀💀💀
+[Run   1/1]    Total base risk: 0.0068 (0.68%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 57) 💀💀💀
+[Run   1/1]    Total base risk: 0.0077 (0.77%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 58) 💀💀💀
+[Run   1/1]    Total base risk: 0.0087 (0.87%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):
+💀💀💀 MORTALITY RISK SUMMARY (Month 59) 💀💀💀
+[Run   1/1]    Total base risk: 0.0079 (0.79%)
+  📊 By Proximate Cause:
+  🔍 By Root Cause:
+  🎯 Top 5 Sources (proximate + root):

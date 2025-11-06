@@ -27,6 +27,7 @@ export interface FamineEvent {
 
   // Context determines if tech can help
   cause: FamineCause;
+  severity: FamineSeverity;         // IPC Phase classification (crisis/emergency/catastrophe)
   isGenocide: boolean;              // If true, tech CANNOT help (aid blocked)
   canDeployTech: boolean;           // Can deploy hydroponics, emergency food?
   resourceExtraction: boolean;      // Land grab scenario
@@ -46,6 +47,18 @@ export type FamineCause =
   | 'resource_extraction' // Land grab (tech CANNOT help)
   | 'economic_collapse' // Systemic (tech can help)
   | 'nuclear_winter';   // Post-nuclear (tech limited)
+
+/**
+ * FIX (Nov 6, 2025): Famine severity tiers (IPC Phase classification)
+ * Research: FAO (2023) IPC Phase 5 = famine (rare, exceptional crisis)
+ * - Phase 3 (Crisis): 60-80% food security - hunger, NO mortality
+ * - Phase 4 (Emergency): 40-60% food security - acute malnutrition, LOW mortality
+ * - Phase 5 (Catastrophe/Famine): <40% food security - starvation, HIGH mortality
+ */
+export type FamineSeverity =
+  | 'crisis'        // IPC Phase 3: Hunger, no deaths (60-80% food security)
+  | 'emergency'     // IPC Phase 4: Acute malnutrition, some deaths (40-60% food security)
+  | 'catastrophe';  // IPC Phase 5: Famine, mass starvation (<40% food security)
 
 export interface FamineSystem {
   activeFamines: FamineEvent[];
@@ -82,6 +95,21 @@ export function initializeFamineSystem(): FamineSystem {
 }
 
 /**
+ * Determine famine severity from food security level
+ * FIX (Nov 6, 2025): IPC Phase classification
+ * Research: FAO (2023) IPC Phase tiers
+ */
+export function getFamineSeverity(foodSecurityLevel: number): FamineSeverity {
+  if (foodSecurityLevel >= 0.60) {
+    return 'crisis';        // IPC Phase 3: Hunger, no mass mortality
+  } else if (foodSecurityLevel >= 0.40) {
+    return 'emergency';     // IPC Phase 4: Acute malnutrition, some deaths
+  } else {
+    return 'catastrophe';   // IPC Phase 5: Famine, mass starvation
+  }
+}
+
+/**
  * Create a new famine event
  */
 export function createFamineEvent(
@@ -96,6 +124,9 @@ export function createFamineEvent(
   const aidBlocked = cause === 'aid_blockade';
   const resourceExtraction = cause === 'resource_extraction';
 
+  // FIX (Nov 6, 2025): Determine severity from food security level
+  const severity = getFamineSeverity(foodSecurityLevel);
+
   return {
     id: `famine-${region}-${month}`,
     startMonth: month,
@@ -106,6 +137,7 @@ export function createFamineEvent(
     cumulativeDeaths: 0,
     monthlyMortalityRate: 0,
     cause,
+    severity,
     isGenocide,
     canDeployTech: !isGenocide, // Can only deploy tech if NOT genocide
     resourceExtraction,
@@ -119,7 +151,12 @@ export function createFamineEvent(
 /**
  * Realistic death curve based on medical research
  *
- * Timeline (severe acute malnutrition → death):
+ * FIX (Nov 6, 2025): Scale by severity (IPC Phase)
+ * - Crisis (Phase 3): 0× mortality (hunger, no deaths)
+ * - Emergency (Phase 4): 0.15× mortality multiplier (acute malnutrition)
+ * - Catastrophe (Phase 5): 1.0× mortality multiplier (famine, mass starvation)
+ *
+ * Base timeline for CATASTROPHE (severe acute malnutrition → death):
  * - Month 0: 0% deaths (onset)
  * - Month 1: 2% deaths (weakest die first: elderly, children, sick)
  * - Month 2: 8% deaths (severe malnutrition sets in)
@@ -127,15 +164,35 @@ export function createFamineEvent(
  * - Month 4: 10% deaths (remaining weak die)
  * - Month 5+: 2% deaths (sustained low-level mortality)
  *
- * Source: Clinical nutrition research, Gaza/Yemen/Sudan data
+ * Source: Clinical nutrition research, Gaza/Yemen/Sudan data, FAO (2023) IPC
  */
-export function calculateMonthlyMortalityRate(monthsSinceOnset: number): number {
-  if (monthsSinceOnset === 0) return 0.00;  // Onset
-  if (monthsSinceOnset === 1) return 0.02;  // 2% - weakest die first
-  if (monthsSinceOnset === 2) return 0.08;  // 8% - severe malnutrition
-  if (monthsSinceOnset === 3) return 0.15;  // 15% - peak starvation
-  if (monthsSinceOnset === 4) return 0.10;  // 10% - remaining weak
-  return 0.02; // 2% sustained mortality (months 5+)
+export function calculateMonthlyMortalityRate(
+  monthsSinceOnset: number,
+  severity: FamineSeverity
+): number {
+  // Get base mortality rate for catastrophe-level famine
+  let baseMortality = 0;
+  if (monthsSinceOnset === 0) baseMortality = 0.00;  // Onset
+  else if (monthsSinceOnset === 1) baseMortality = 0.02;  // 2% - weakest die first
+  else if (monthsSinceOnset === 2) baseMortality = 0.08;  // 8% - severe malnutrition
+  else if (monthsSinceOnset === 3) baseMortality = 0.15;  // 15% - peak starvation
+  else if (monthsSinceOnset === 4) baseMortality = 0.10;  // 10% - remaining weak
+  else baseMortality = 0.02; // 2% sustained mortality (months 5+)
+
+  // FIX (Nov 6, 2025): Apply severity multiplier
+  // Research: FAO (2023) IPC Phase 3 = crisis (NO mass mortality)
+  //           FAO (2023) IPC Phase 4 = emergency (LOW mortality, ~15% of catastrophe)
+  //           FAO (2023) IPC Phase 5 = famine/catastrophe (HIGH mortality, 100%)
+  let severityMultiplier = 1.0;
+  if (severity === 'crisis') {
+    severityMultiplier = 0.0;   // No mass mortality (hunger, not famine)
+  } else if (severity === 'emergency') {
+    severityMultiplier = 0.15;  // 15% of catastrophe rate (acute malnutrition)
+  } else {
+    severityMultiplier = 1.0;   // Full mortality (famine/catastrophe)
+  }
+
+  return baseMortality * severityMultiplier;
 }
 
 /**
@@ -205,8 +262,8 @@ export function progressFamine(
   // FIX (Oct 26, 2025): Check if we're in lean season for this region
   const inLeanSeason = isLeanSeason(currentMonth, famine.affectedRegion);
 
-  // Get base mortality rate from death curve
-  let baseMortalityRate = calculateMonthlyMortalityRate(famine.monthsSinceOnset);
+  // Get base mortality rate from death curve (scaled by severity)
+  let baseMortalityRate = calculateMonthlyMortalityRate(famine.monthsSinceOnset, famine.severity);
 
   // Apply seasonal adjustment
   // Research: 1.5-2x severity during lean season (using 1.75x midpoint)
@@ -278,7 +335,7 @@ export function updateFamineSystem(
 
     // Track tech-prevented deaths
     if (famine.techDeployed && famine.techEffectiveness > 0) {
-      const baseRate = calculateMonthlyMortalityRate(famine.monthsSinceOnset);
+      const baseRate = calculateMonthlyMortalityRate(famine.monthsSinceOnset, famine.severity);
       const preventedDeaths = (famine.populationAtRisk - famine.cumulativeDeaths) * baseRate * famine.techEffectiveness;
       system.techPreventedDeaths += preventedDeaths;
     }
