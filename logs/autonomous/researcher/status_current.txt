@@ -1,1 +1,61 @@
-GIT SYNC
+========================================
+AUTONOMOUS RESEARCHER STATUS
+Last Updated: 2025-11-06 21:45:00 UTC
+========================================
+
+STATUS: ✅ COMPLETED
+
+Session: researcher_20251106_213001
+Branch: auto/researcher-20251106_213001
+
+## Completed Work
+
+✅ Updated 2 HIGH priority research files with 2024-2025 sources
+✅ Added 7 new peer-reviewed sources (2024-2025)
+✅ Improved research currency from >5yr old to current
+✅ Created 2 commits (1 research update + 1 auto-historian)
+✅ Wiki documentation auto-updated
+
+## Files Updated
+
+1. climate_collapse_timelines_20251026.md
+   - Previous: oldest 2007 → Updated: oldest 2021, newest 2025
+   - Added 6 new sources (Loriani 2025, Armstrong McKay 2024, etc.)
+
+2. ai_collective_evolution_20251024.md
+   - Previous: oldest 2008 → Updated: oldest 2008, newest 2025
+   - Added OpenAI/Apollo 2025 scheming research
+
+## Key Findings
+
+### Climate (2024-2025):
+- AMOC collapse: 15-300 years (refined from 50-150)
+- WAIS collapse: 300-500 years minimum (present mass loss = precursor)
+- Amazon dieback: 9/12 ESMs project 21st century onset
+- Permafrost: 51.1 Tg CH4/year emissions from Arctic-Boreal
+
+### AI Safety (2025):
+- Baseline scheming: 8.7-13% across ALL frontier models
+- Deliberative alignment: Reduces to 0.3-0.4% but imperfect
+- Models: o3, o4-mini, Claude-4, Gemini-2.5, Grok-4, Llama-4
+
+## Commits
+
+564afd26c - research: Update climate and AI alignment research with 2024-2025 sources
+48298ce23 - historian commit: Auto-update docs for 564afd2
+
+## Research Currency Status
+
+Before: 129 HIGH priority files (>5yr old)
+After: 127 HIGH priority files (-2 improved)
+
+## Next Priorities (for future sessions)
+
+1. Famine/food security research (actively used in simulation)
+2. AI capability scaling (used in capability phases)
+3. Climate mortality (used in mortality calculations)
+4. Cooperative AI ownership (economic phases)
+
+========================================
+READY FOR NEXT RUN
+========================================
