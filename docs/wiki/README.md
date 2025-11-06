@@ -580,6 +580,7 @@ Measures outcomes through four distinct philosophical lenses, showing fundamenta
 - **Indicators (13):** 9 planetary boundaries (climate change, biodiversity loss, land-system change, freshwater use, biogeochemical flows, ocean acidification, atmospheric aerosol loading, stratospheric ozone depletion, novel entities), ecological footprint, GHG emissions per capita, renewable energy %, air quality (PM2.5)
 - **Utopia threshold:** All 9 boundaries safe, footprint ≤1.5 gha (ZERO countries currently)
 - **Dystopia threshold:** 6+ boundaries breached (current global state: 7/9 breached as of Sep 2024)
+- **Biodiversity Loss Metric:** Biosphere Integrity Index (BII) from PREDICTS database (Natural History Museum 2024, De Palma et al. v2.1.1). BII measures ecosystem abundance + composition (58,000 species, 48,000+ sites, 4.9M observations). **Methodological limitations:** May underestimate losses in some regions, terrestrial-only coverage, sampling bias toward vertebrates/temperate zones. See: research/predicts-database-verification_20251106.md, reviews/predicts-citation-critique_20251106.md
 
 **Key Addition (Fix #2):** **Air Quality Indicator (PM2.5)**
 - **Source:** WHO Global Air Quality Database 2024 (180+ countries)
