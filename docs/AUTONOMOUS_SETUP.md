@@ -104,10 +104,20 @@ Every autonomous run begins by posting research requests to the research channel
 
 ### Safety Features
 
+<<<<<<< HEAD
 - **45-minute timeout per session** with post-timeout cleanup
   - Main session: 45 minutes (2700s) for task execution
   - Cleanup session: 5 minutes (300s) to commit partial work if timeout occurs
   - Prevents work loss when complex tasks exceed timeout
+=======
+- **45-minute timeout per session** (increased from 25min as of Nov 5, 2025)
+  - Worker now runs hourly (not every 30min) so we have more time
+  - Reduces incomplete work due to timeout
+- **Post-timeout cleanup workflow** (new as of Nov 5, 2025)
+  - After timeout, spawns a 5-minute Claude session to review and commit partial work
+  - Prevents loss of valuable progress when tasks exceed timeout
+  - Cleanup session reviews changes and commits with "WIP" prefix if needed
+>>>>>>> origin/auto/worker-20251105_230001
 - Logs all actions to `logs/autonomous/`
 - **Complete audit trail:** All logs preserved in git history forever (no cleanup)
 - Git operations with full audit trail
@@ -129,7 +139,7 @@ Every autonomous run begins by posting research requests to the research channel
 - **GitHub issue alerts:** Automatic issue creation when Claude execution fails
   - Timeout detection (exit 124) creates issue with `timeout` label
   - Any non-zero exit code creates issue with `failure` label
-  - Issues include timestamp, duration, branch, exit code, and log path
+  - Issues include timestamp, duration, branch, exit code, log path, and cleanup status
   - Graceful fallback if `gh` CLI unavailable
   - No silent failures - every problem creates actionable GitHub issue
   - PR includes run metrics, timing, and commit history
@@ -229,7 +239,11 @@ The autonomous worker system now includes automated health monitoring with self-
 **What it monitors:**
 - Worker execution frequency (detects stuck/stopped workers)
 - Error patterns in recent logs
+<<<<<<< HEAD
 - Timeout detection (45-minute limit with 5-minute cleanup)
+=======
+- Timeout detection (45-minute limit, with 5-minute cleanup)
+>>>>>>> origin/auto/worker-20251105_230001
 - Worker branch accumulation
 - **Researcher worker health** (script existence, execution, cron job status)
 - Merge orchestrator health
@@ -276,8 +290,8 @@ When the worker completes a task and pushes a feature branch, it automatically c
 
 **Run:** 20251030_210000
 **Branch:** `autonomous/20251030_210000`
-**Duration:** 25m 12s
-**Claude Time:** 22m 45s
+**Duration:** 42m 15s
+**Claude Time:** 39m 30s
 
 ### Changes
 - **Files Changed:** 8
