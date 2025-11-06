@@ -93,6 +93,16 @@ export class EmergencyResponsePhase implements SimulationPhase {
       (state.phosphorusSystem?.reserves || 1.0) < 0.35 ||
       climateChangeCurrent > 0.6
     );
+
+    // FIX (Nov 6, 2025): WRITE climateCrisisActive flag to state
+    // Bug: MortalityStabilizersPhase reads this flag for heat adaptation,
+    // but it was never being set. This caused "Months exposed: 0" even
+    // during month 239 global collapse.
+    // Research: This flag drives heat adaptation development (Ballester 2024)
+    if (state.environmentalAccumulation) {
+      state.environmentalAccumulation.climateCrisisActive = climateCrisisActive;
+    }
+
     if (climateCrisisActive) {
       const existing = getActiveResponse(state, 'climate');
       if (!existing) {
