@@ -18,7 +18,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 WEEK 2 COMPLETE - SYSTEM HEALTHY** (November 6, 2025)
+**🟢 WEEK 3 IN PROGRESS - STATE VALIDATION** (November 6, 2025)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** A/A+ (90-95% peer-reviewed, 0% >5yr old) ✅ IMPROVED from A-
@@ -26,13 +26,21 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Architecture Health:** 8.0/10 ✅ IMPROVED from 7.5/10
 - **System Trajectory:** Stabilized - critical technical debt addressed
 
-**WEEK 2 SUCCESS METRICS (200% Target Achievement):**
-- **Central Configuration:** 100+ parameters centralized (target: 50+, achieved 200%)
-- **Defensive Fallbacks:** 5/5 CRITICAL eliminated (100% complete, 10/17 HIGH also fixed)
-- **Research Updates:** 0% parameters >5yr old (target: <10%, exceeded by 10 percentage points)
-- **Citation Coverage:** 80% JSDoc citations (target: 80%, achieved exactly)
+**WEEK 3 STATE VALIDATION FRAMEWORK (Day 1-2):**
+- **ExogenousShockPhase:** 62 mutations validated across 8 shock types ✅ COMPLETE
+  - Coverage: 5.9% → 100% for BLACK SWAN events (nuclear war, AGI, asteroid, pandemic, etc.)
+  - New validators: assertShockMagnitude, assertResourceAllocation, assertPopulationChange
+  - Philosophy: Fail-loudly for invalid state in civilization-altering events
+- **Target:** 180 unvalidated mutations → 100% critical path coverage (Days 1-2)
+- **Next:** Additional critical phases (mortality, climate, resource systems)
 
-**KEY ACHIEVEMENTS:**
+**RECENT ACHIEVEMENT:**
+- ✅ **ExogenousShockPhase state validation complete** (commit 8b960aa, Nov 6, 2025)
+  - 62 mutations across 8 shock types: nuclear war (15), AGI breakthrough (4), asteroid (7), mega-pandemic (6), financial crash (9), regional war (12), tech breakthrough (1), political upheaval (8)
+  - 100% coverage for civilization-altering BLACK SWAN events
+  - Part of WEEK 3 Item 7: State Validation Framework (Day 1-2 of 3)
+
+**KEY ACHIEVEMENTS (WEEK 2):**
 - ✅ **Oct 2025 ecology NaN bug pattern ELIMINATED** (planetaryBoundaries.ts:969 - the silent `?? 0.005` fallback that masked corruption for months)
 - ✅ **Fail-loudly philosophy restored** (silent bugs now fail immediately with full context via assertion utilities)
 - ✅ **Research quality elevated:** A- → A/A+ grade (100% current, 90-95% peer-reviewed)
@@ -74,7 +82,7 @@ All three critical items delivered:
 **4-Week Critical Path Progress:**
 - ✅ **Week 1 COMPLETE:** Mortality stabilizers + Critical research contradictions + Monte Carlo validation (3/3 items, C- → B+ fidelity)
 - ✅ **Week 2 COMPLETE:** Central config (100+ params) + Defensive fallback audit (15 CRITICAL/HIGH fixes) + Research updates (UBI + AI energy/water) (3/3 items, 200% metrics)
-- ⏩ **Week 3 READY:** State validation framework (180 unvalidated mutations → 100% critical path coverage) + Phase dependency system (top 30 phases)
+- ⏩ **Week 3 IN PROGRESS (Day 1-2):** State validation framework - ExogenousShockPhase complete (62 mutations), additional critical phases next
 - **Week 4:** Consolidation planning + Research pipeline
 - **PAUSED:** Layer 2 Remediation, new features, UI updates
 
@@ -3263,12 +3271,31 @@ When adding/modifying simulation code:
 - ✅ Root cause immediately visible (not hidden by fallbacks)
 - ✅ Clear distinction: assertions (calculations) vs fallbacks (UI/init only)
 
+**Domain-Specific Assertions (Nov 6, 2025):**
+- **assertShockMagnitude(value, context)** - Validates shock deltas in [-1.0, 0.5] range
+  - Used for: Nuclear war, asteroid impact, regional war climate/biosphere deltas
+  - Range rationale: -1.0 = 100% reduction, 0.5 = 50% improvement (rare)
+- **assertResourceAllocation(value, context)** - Validates fractions in [0, 1] range
+  - Used for: Budget allocations, survival fractions, multipliers
+  - Range rationale: Must represent valid percentages
+- **assertPopulationChange(newValue, oldValue, context)** - Validates plausible population deltas
+  - Maximum plausible decrease: -50% per month (catastrophic scenario)
+  - Maximum plausible increase: +5% per month (high birth rate + immigration)
+  - Prevents mortality calculation bugs
+
+**Coverage Improvements:**
+- **ExogenousShockPhase (Nov 6, 2025)**: 62 mutations validated (nuclear war, AGI breakthrough, asteroid, pandemic, financial crash, regional war, tech breakthrough, political upheaval)
+  - Coverage: 5.9% → 100% for civilization-altering BLACK SWAN events
+  - Philosophy: Fail-loudly for invalid state in existential risk scenarios
+
 **Commits:**
+- `8b960aa` - "feat: Add state validation to ExogenousShockPhase (ARCH-CRITICAL-3)" (Nov 6, 2025)
 - `43a9b22` - "refactor: senior dev review fixes - fail loudly, cap edge cases, extract constants"
 - Previous refactors applying assertion utilities across simulation codebase
 
 **Related:**
-- `/src/simulation/utils/assertions.ts` - Assertion utilities implementation
+- `/src/simulation/utils/assertions.ts` - Assertion utilities implementation (includes new domain-specific validators)
+- `/src/simulation/engine/phases/ExogenousShockPhase.ts:19-1076` - 62 validated mutations across 8 shock types
 - `/src/simulation/logging.ts:202-226` - Snapshot export assertions
 - `/src/simulation/refugeeCrises.ts:389-509` - Regional refugee scoping
 - `/src/simulation/planetaryBoundaries.ts:941-983` - Biosphere growth edge cases
