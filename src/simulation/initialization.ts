@@ -68,6 +68,7 @@ import { sampleAllThresholds } from './thresholds';
 import { getTier3Scenario, type ScenarioName } from './thresholds/tier3Config';
 import { sampleTier2InterventionParameters } from './thresholds/tier2InterventionConfig';
 import { setDeterministicRng, deterministicRandom } from './utils/deterministicRng';
+import { validateSimulationConfig } from './config/validateConfig';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -467,6 +468,10 @@ export function createDefaultInitialState(
   speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia',
   seed?: number  // BUG #3 FIX (Oct 29, 2025): Optional seed for deterministic RNG
 ): GameState {
+  // WEEK 2 Task 2.1 (Nov 6, 2025): Validate central configuration at startup
+  // Fail-loudly if any parameter is invalid (research simulation rigor)
+  validateSimulationConfig();
+
   const initialYear = 2025;
   const initialMonth = 0;
 
