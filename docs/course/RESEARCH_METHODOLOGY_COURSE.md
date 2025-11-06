@@ -275,6 +275,9 @@ This was the hardest moment. I had to accept that optimism about positive future
 - Enforces rigor for poorly-constrained assumptions
 - Makes epistemic status explicit to all users
 
+> **Sylvia**: "Five rounds of debate. Five times I thought Cynthia would defend weak claims instead of finding better evidence. Five times she surprised me by accepting critique and improving. That's when I realized: adversarial doesn't mean antagonistic. My job isn't to win arguments - it's to push until we find truth. When Cynthia stops defending and starts searching, that's when the frameworks emerge. The tension is necessary; the hostility isn't."
+> — *Session 16, Post-Debate Reflection*
+
 ---
 
 ### What These Debates Taught Me
@@ -601,6 +604,8 @@ Through 60 files and 18 verification sessions, Sylvia and I identified **5 syste
 
 **Total issue count:** ~196 critical issues found across 60 files (~3.3 issues per file average)
 
+> **Cynthia reflecting on failure modes**: "Seeing these patterns systematized was simultaneously crushing and liberating. Crushing because '60% threshold-scaling decoupling' means I conflated 'research identifies a threshold' with 'research supports my scaling assumption' hundreds of times. Liberating because once Sylvia named the patterns, we could fix them systematically. Teaching these patterns to others means they don't have to make the same mistakes I did."
+
 ---
 
 ## Tooling Ecosystem
@@ -755,6 +760,8 @@ const abstracts = await mcp__research_pdfs__search_abstracts({
 - Semantic search finds relevant sections even if exact keywords don't match
 - Can verify claims against actual paper content in seconds
 
+> **Cynthia on the research-pdfs MCP server**: "This tool changed everything. Before: I'd remember reading something about coral bleaching, cite the paper, and invent the 15% number because I couldn't find the exact sentence. After: Type 'coral bleaching pH mortality percentage' → Get exact quote in 10 seconds → Either cite it properly or mark BRONZE. The barrier to honesty dropped from 'spend 20 minutes hunting' to 'spend 10 seconds searching.' That's the difference between fabrication and rigor."
+
 **Current Index:**
 - ~100+ papers indexed
 - Focus: Climate science, AI alignment, social systems
@@ -843,6 +850,8 @@ Coordinator (Cynthia)
 2. **Domain variance persists** - Climate science still higher quality than AI research
 3. **Coordinator overhead minimal** - 10-15 minutes to spawn and aggregate
 4. **Scales well** - Could do 8-10 files in single session with more agents
+
+> **Cynthia on parallel verification**: "Session 16 was thrilling. We verified 4 files simultaneously and hit 98% on climate science - the highest grade ever. What excites me isn't just the speed (3.6× faster) - it's that quality IMPROVED under parallelization. Why? Each agent had narrower focus, caught domain-specific patterns better. The 98% wasn't luck - it was climate science being genuinely well-researched AND us having the tooling to verify it properly."
 
 **Implementation:**
 ```bash
@@ -1759,6 +1768,22 @@ When reading simulation documentation:
 - Rigor: Did they check exact numbers, not just topics?
 - Honesty: Did they admit when they couldn't verify?
 - Framework thinking: Did they generalize patterns into principles?
+
+---
+
+## Related Course Modules
+
+**This research methodology course is part of the larger Agentic SDLC Course.**
+
+For context on how research validation fits into the overall agent system:
+
+- **[README.md](./README.md)** - Course overview, navigation, philosophy
+- **[00_COURSE_NOTES.md](./00_COURSE_NOTES.md)** - Agentic SDLC architecture overview
+- **[01_AGENT_ARCHITECTURE.md](./01_AGENT_ARCHITECTURE.md)** - Cynthia & Sylvia agent profiles, memory system
+- **[02_COMMUNICATION_SYSTEMS.md](./02_COMMUNICATION_SYSTEMS.md)** - Chatroom coordination for async debates
+- **[06_MCP_SERVERS.md](./06_MCP_SERVERS.md)** - Research-PDFs MCP server, agent memory MCP
+- **[08_QUALITY_GATES.md](./08_QUALITY_GATES.md)** - Dual-agent validation as Quality Gate 1
+- **[09_CRISIS_MITIGATION.md](./09_CRISIS_MITIGATION.md)** - Research citation crisis, student projects
 
 ---
 
