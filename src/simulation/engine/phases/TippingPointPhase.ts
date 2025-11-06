@@ -231,6 +231,19 @@ export class TippingPointPhase implements SimulationPhase {
       totalHabitabilityImpact += element.impactHabitability * scaledProgress;
       totalFoodSecurityImpact += element.impactFoodSecurity * scaledProgress;
       totalFreshwaterImpact += element.impactFreshwater * scaledProgress;
+
+      // Debug logging: Track tipping point progress over time
+      // Log every 12 months OR when progress crosses 0.1 threshold
+      const shouldLog = (element.monthsSinceTrigger % 12 === 0) ||
+                        (element.progress > 0.1 && element.progress < 0.11);
+
+      if (shouldLog) {
+        console.log(`  🌍 ${element.name} Progress:`);
+        console.log(`     progress: ${element.progress.toFixed(4)} (0.0-1.0)`);
+        console.log(`     impactClimateStability: ${element.impactClimateStability.toFixed(4)} (raw)`);
+        console.log(`     scaledProgress: ${scaledProgress.toFixed(4)} (after cascade ${system.cascadeMultiplier.toFixed(2)}x)`);
+        console.log(`     contribution: ${(element.impactClimateStability * scaledProgress).toFixed(4)}`);
+      }
     }
 
     // Cap total degradation at 95% (leave 5% baseline)
@@ -246,7 +259,9 @@ export class TippingPointPhase implements SimulationPhase {
     state.environmentalAccumulation.climateStability = Math.max(0.05, oldStability * (1 - totalClimateStabilityImpact * 0.01));
 
     if (totalClimateStabilityImpact > 0.1) {
-      console.log(`  Climate Stability: ${oldStability.toFixed(3)} → ${state.environmentalAccumulation.climateStability.toFixed(3)}`);
+      console.log(`  🌍 Climate Stability Impact:`);
+      console.log(`     totalClimateStabilityImpact: ${totalClimateStabilityImpact.toFixed(4)} (cumulative)`);
+      console.log(`     Climate Stability: ${oldStability.toFixed(3)} → ${state.environmentalAccumulation.climateStability.toFixed(3)}`);
     }
 
     // Apply to habitability (if tracked separately from QoL)
