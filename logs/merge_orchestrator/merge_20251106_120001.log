@@ -1,0 +1,126 @@
+
+=== Merge Orchestrator Started ===
+[12:00:01] ⚠️  Merge orchestrator already running (lock file exists)
+[12:00:01] Timestamp: Thu Nov  6 12:00:01 UTC 2025
+[12:00:01] Dry run: false
+[12:00:01] Max branches: 10
+[12:00:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[12:00:03] Found 86 branches to process
+
+=== Branch 1/86: auto/worker-20251102_043015 ===
+[12:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251106_120001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_110001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[12:00:03] ❌ Failed to create merge branch
+
+=== Branch 2/86: auto/worker-20251102_050015 ===
+[12:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251106_120001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_110001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[12:00:03] ❌ Failed to create merge branch
+
+=== Branch 3/86: auto/worker-20251102_080006 ===
+[12:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251106_120001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_110001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[12:00:03] ❌ Failed to create merge branch
+
+=== Branch 4/86: auto/worker-20251102_090015 ===
+[12:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251106_120001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_110001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[12:00:03] ❌ Failed to create merge branch
+
+=== Branch 5/86: auto/worker-20251102_100015 ===
+[12:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251106_120001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_110001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[12:00:04] ❌ Failed to create merge branch
+
+=== Branch 6/86: auto/worker-20251102_110015 ===
+[12:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251106_120001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_110001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[12:00:04] ❌ Failed to create merge branch
+
+=== Branch 7/86: auto/worker-20251102_120000 ===
+[12:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251106_120001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_110001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[12:00:04] ❌ Failed to create merge branch
+
+=== Branch 8/86: auto/worker-20251102_130014 ===
+[12:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251106_120001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_110001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[12:00:04] ❌ Failed to create merge branch
+
+=== Branch 9/86: auto/worker-20251102_140015 ===
+[12:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251106_120001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_110001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[12:00:05] ❌ Failed to create merge branch
+
+=== Branch 10/86: auto/worker-20251102_150015 ===
+[12:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251106_120001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_110001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[12:00:05] ❌ Failed to create merge branch
+[12:00:05] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[12:00:05] Total branches found: 86
+[12:00:05] Branches processed: 10
+[12:00:05] ✅ Successfully merged: 0
+[12:00:05] ⏭️  Skipped (frontend on VM): 0
+[12:00:05] ❌ Failed (conflicts/gates): 10
+[12:00:05] 
+[12:00:05] 📊 Remaining branches: 76
+[12:00:05]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[12:00:05] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251106_120001.log
