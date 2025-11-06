@@ -3252,9 +3252,12 @@ assertInRange(conflictSeverity, 0, 1.0, {
 });
 
 // Validate probabilities [0, 1]
+// Note: assertProbability only accepts core context (location, valueName, month)
+// It does NOT support additionalInfo - use assertFinite for detailed context
 assertProbability(riskScore, {
   location: 'calculateRisk',
-  valueName: 'riskScore'
+  valueName: 'riskScore',
+  month: state.currentMonth
 });
 
 // Replace obj?.path?.to?.value ?? fallback patterns
