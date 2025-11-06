@@ -438,10 +438,13 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     const globalCrisis = state.planetaryBoundariesSystem?.cascadeActive || false;
     migration.destinationCapacity = globalCrisis ? 0.3 : 1.0;
 
-    // HIGH PRIORITY FIX (Nov 2, 2025): Architecture Review H1 - Circular dependency
-    // PROBLEM: monthlyExcessDeaths is set by BayesianMortalityResolutionPhase at order 35.0
+    // HIGH PRIORITY FIX (Nov 6, 2025): Architecture Review H1 - Circular dependency RESOLVED
+    //
+    // PROBLEM: monthlyExcessDeaths is set by DeathReconciliationPhase at order 35.0
     // This phase runs at 20.8, so we'd be reading LAST MONTH'S deaths (1-month lag)
-    // SOLUTION: Use food security as crisis severity proxy (set at order 19.7, before this phase)
+    // Result: Stabilizers systematically underestimate crisis severity for first critical month
+    //
+    // SOLUTION: Use food security as crisis severity proxy (set at order 19.7, BEFORE this phase)
     //
     // Crisis severity mapping (research-backed):
     // - foodSecurity >= 0.7: Low crisis (0.0-0.3 severity)
@@ -449,9 +452,10 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // - foodSecurity < 0.4: High crisis (0.6-1.0 severity)
     //
     // Research justification:
-    // - Food insecurity is a leading indicator of mortality (Sen 1981, famine entitlement theory)
-    // - Migration decisions respond to food availability, not lagged death counts
-    // - IOM (2024): Climate-driven migration follows resource scarcity, not mortality
+    // - Food insecurity is a LEADING indicator of mortality (Sen 1981, famine entitlement theory)
+    // - Migration decisions respond to food availability, not lagged death counts (behavioral realism)
+    // - IOM (2024): Climate-driven migration follows resource scarcity, not mortality statistics
+    // - Eliminates 1-month information lag in rapid-onset crises (nuclear winter, sudden famine)
     const foodSecurityValidated = assertInRange(region.foodSecurity, 0, 1, {
       location: 'MortalityStabilizersPhase.updateMigration',
       valueName: 'region.foodSecurity',
