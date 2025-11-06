@@ -373,10 +373,11 @@ export function updateExtremeWeatherEvents(
   const globalTempIncrease = getGlobalTemperatureIncrease(state);
 
   // Update annual storm count and category distribution
-  // Overall frequency decreases slightly with warming: -10% to -20%
-  const frequencyScaling = 1.0 - (globalTempIncrease * 0.05); // -5% per degree
+  // CONSERVATIVE PARAMETER (Nov 6, 2025): -20% per °C (middle of -6% to -34% range)
+  // Research: Knutson et al. (2020, 2023) - FEWER storms overall, MORE Cat 4-5
+  const frequencyScaling = 1.0 + (STORM_CONSTANTS.OVERALL_FREQUENCY_CHANGE * globalTempIncrease);
   const adjustedStormCount = Math.round(
-    STORM_CONSTANTS.BASELINE_ANNUAL_STORMS * Math.max(0.7, frequencyScaling)
+    STORM_CONSTANTS.BASELINE_ANNUAL_STORMS * Math.max(0.5, frequencyScaling) // Floor at 50% of baseline
   );
 
   system.annualStormCount = adjustedStormCount;
