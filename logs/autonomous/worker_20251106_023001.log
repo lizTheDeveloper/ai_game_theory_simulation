@@ -1,0 +1,32 @@
+[0;32m╔═══════════════════════════════════════════════════════╗[0m
+[0;32m║       🤖 AUTONOMOUS WORKER - 20251106_023001        ║[0m
+[0;32m╚═══════════════════════════════════════════════════════╝[0m
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;35m⏱️  [PRE-FLIGHT CHECKS] +0s[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;36m📊 Disk available: 58G[0m
+[0;36m📊 Memory available: 2.6Gi[0m
+[0;34mℹ️  Updating Claude Code to latest version...[0m
+[0;32m✅ Claude Code updated: 2.0.34 (Claude Code)[0m
+[0;34mℹ️  Checking chatroom monitor status...[0m
+[0;32m✅ Chatroom monitor already running[0m
+[0;34mℹ️  Checking dependencies...[0m
+[0;32m✅ git: git version 2.34.1[0m
+[0;32m✅ node: v24.11.0[0m
+[0;32m✅ python: Python 3.11.14[0m
+[0;32m✅ claude: installed[0m
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;35m⏱️  [GIT SYNC] +5s[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;34mℹ️  Switching to main branch...[0m
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[1;33m⚠️  Already on main[0m
+[1;33m⚠️  Uncommitted changes detected on main branch[0m
+[0;34mℹ️  Committing local changes before pull...[0m
