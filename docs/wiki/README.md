@@ -655,6 +655,22 @@ Three comprehensive assessments completed, revealing dual existential threats:
   - Implementation FIDELITY: C- (parameters off 5-10×) - Sylvia correct
   - **Both assessments correct, addressing different dimensions**
 
+**Assessment 4: Evening Research Debate (Round 2)**
+- **Sylvia's Critique:** `reviews/research-debate-session_nov6_evening.md` (264 lines)
+- **Cynthia's Response:** `reviews/research-debate-cynthia-response_nov6_evening.md` (896 lines)
+- **Focus:** Mortality parameters (43-58% defensibility), variance amplification, Arctic feedbacks
+- **Key Findings:**
+  - **Variance amplification:** Current 10× cap empirically too low (should be 50-100×)
+  - **Arctic acceleration:** 3× warming consensus (Sylvia overstated 4×, but still undermodeled)
+  - **Irreversibility:** Topsoil/AMOC correctly flagged as undermodeled
+  - **State capacity collapse:** Sylvia's 2.5°C threshold NOT consensus (Hansen says 2-3°C range)
+  - **Expected mortality shift:** 43-58% → 60-75% with variance fix
+- **Priority Recommendations:**
+  - HIGH: Fix variance amplification (BifurcationLogicPhase.ts: 10× → 50-100×)
+  - MEDIUM-HIGH: Add Arctic abrupt thaw events + 3× regional amplification
+  - MEDIUM: Irreversibility mechanics (topsoil, committed warming, recovery impossibility)
+- **Consensus:** 60-75% mortality is research-backed middle ground (not 43-58% optimism, not 75%+ floor)
+
 **4-Week Consensus Plan (APPROVED):**
 - **Week 1:** Mortality stabilizers (HIGHEST PRIORITY) + Bifurcation fix + Critical tests
 - **Week 2:** Central config + Defensive fallback audit + Research parameter updates
