@@ -240,7 +240,9 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     
     if (sabotageSuccess) {
       // Reduce deployment level of tech in all regions
-      for (const [region, deployments] of Object.entries(techTreeState.regionalDeployment)) {
+      // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
+      const sortedRegions = Object.entries(techTreeState.regionalDeployment).sort((a, b) => a[0].localeCompare(b[0]));
+      for (const [region, deployments] of sortedRegions) {
         const deployment = deployments.find(d => d.techId === targetTech.id);
         if (deployment) {
           deployment.deploymentLevel = Math.max(0, deployment.deploymentLevel - 0.15);
