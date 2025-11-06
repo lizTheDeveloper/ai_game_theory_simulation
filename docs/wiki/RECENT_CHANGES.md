@@ -6,6 +6,39 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 6, 2025)
 
+**🔧 Merge Utility Script - Log Cleanup Automation** (Nov 6, 2025 23:26 UTC)
+
+**Feature:** Added `scripts/merge-with-log-cleanup.sh` for automated merging with intelligent log conflict resolution.
+
+**Purpose:** Simplify merging autonomous worker branches by automatically resolving common log file conflicts.
+
+**What it does:**
+1. Attempts merge from origin/<branch>
+2. On conflict, automatically resolves:
+   - Deleted log files (`*.log`) → keeps them deleted (status: DU)
+   - Log file conflicts → prefers current branch (--ours)
+   - `research/UPDATE_QUEUE.md` → keeps current branch (auto-generated)
+3. Commits merge with auto-resolved notation
+
+**Usage:**
+```bash
+./scripts/merge-with-log-cleanup.sh <branch-name>
+```
+
+**Impact:**
+- ✅ Reduces manual conflict resolution for worker branches
+- ✅ Prevents log file accumulation from autonomous runs
+- ✅ Safer than force-push (preserves merge history)
+
+**Files Added:**
+- `scripts/merge-with-log-cleanup.sh` (43 lines, executable)
+
+**Documented in:** `docs/COMMANDS.md` - "Git Operations > Merge Utilities"
+
+**Commit:** f7237db021 - "chore: Add merge script with log cleanup"
+
+---
+
 **🔧 Autonomous Worker Status Files - Added to .gitignore** (Nov 6, 2025 23:20 UTC)
 
 **Fix:** Added gitignore rules for transient autonomous worker status files to prevent merge conflicts.
