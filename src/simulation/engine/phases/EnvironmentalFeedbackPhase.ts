@@ -40,6 +40,13 @@ export class EnvironmentalFeedbackPhase implements SimulationPhase {
   readonly name = 'Environmental Feedback';
   readonly order = 33.5;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires environmental state from earlier phases
+  readonly dependencies = [
+    'ocean-acidification',      // Order 20.3: Ocean pH state
+    'novel-entities',           // Order 20.4: Chemical pollution state
+    'planetary_boundaries',     // Order 21.0: Boundary transgression state
+  ];
+
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Aggregate climate state
     setDeterministicRng(rng);

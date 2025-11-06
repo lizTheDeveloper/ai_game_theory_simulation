@@ -35,6 +35,12 @@ export class MortalityStabilizersPhase implements SimulationPhase {
   readonly name = 'Mortality Stabilizers';
   readonly order = 20.8;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires crisis state and food security
+  readonly dependencies = [
+    'food-security-degradation', // Order 19.7: Food crisis state
+    'wet_bulb_temperature',      // Order 20.45: Heat mortality risk
+  ];
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const pop = state.humanPopulationSystem;
     setDeterministicRng(rng);

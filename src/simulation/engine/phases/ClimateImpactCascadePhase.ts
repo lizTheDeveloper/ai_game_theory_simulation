@@ -65,6 +65,12 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
   readonly name = 'Climate Impact Cascade';
   readonly order = 34.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires climate tipping point state
+  readonly dependencies = [
+    'tipping-point-phase',      // Order 21.6: Climate tipping points activated
+    'environmental_feedback',   // Order 33.5: Aggregated environmental state
+  ];
+
   // Minimum floor for food security to prevent exactly zero
   private static readonly MIN_FOOD_SECURITY = 0.001;
 
