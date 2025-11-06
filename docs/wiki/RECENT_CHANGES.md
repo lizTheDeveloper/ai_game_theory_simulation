@@ -6,6 +6,29 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 6, 2025)
 
+**🔒 Merge Orchestrator - Git Lock Detection Added** (Nov 6, 2025 23:18 UTC)
+
+**Fix:** Added git lock detection to merge orchestrator to prevent "Unable to create .git/index.lock" errors when autonomous worker git operations overlap with merge operations.
+
+**Problem:** Merge orchestrator occasionally failed when another git process (autonomous worker) held the index lock, causing workflow failures.
+
+**Solution:**
+1. **Lock detection:** Check for `.git/index.lock` before processing branches
+2. **Graceful exit:** Skip merge run if lock detected (prevents conflict)
+3. **Cron timing adjustment:** Merge at :45, workers at :00/:30 (reduced overlap window)
+
+**Impact:**
+- ✅ Improved merge orchestrator reliability
+- ✅ Eliminated git lock contention errors
+- ✅ Better temporal separation of autonomous operations
+
+**Files Changed:**
+- `scripts/merge-orchestrator.sh` - Added lock detection guard (7 lines)
+
+**Commit:** fe6a387a2 - "fix: Add git lock detection to merge orchestrator"
+
+---
+
 **🔧 Cumulative Death Tracking Cap - 20B Raised for High-Mortality Scenarios** (Nov 6, 2025 22:39 UTC)
 
 **Fix:** Raised cumulative death tracking cap from 10B to 20B to accommodate extreme high-mortality scenarios with partial recovery cycles.
