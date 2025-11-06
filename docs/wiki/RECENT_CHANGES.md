@@ -6,6 +6,25 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 6, 2025)
 
+**🔧 Refugee Crisis Death Tracking - Semantic Correction** (Nov 6, 2025 22:30 UTC)
+
+**Fix:** Corrected death tracking validation from regional caps to global cumulative caps in refugee crisis system.
+
+**Change:** Replaced `assertPopulationMillion` (1B regional cap) with `assertInRange(..., 0, 10000)` (10B global cumulative cap) for:
+- `deathsByCategory[category]` - Cumulative deaths by cause across all regions and time
+- `cumulativeCrisisDeaths` - Global total crisis deaths across all time
+
+**Rationale:** These are **global cumulative totals** (spanning all regions, all time), not regional snapshots. The 1B cap was semantically incorrect - a global extinction event could plausibly reach multi-billion deaths.
+
+**Files Changed:**
+- `src/simulation/refugeeCrises.ts` - Death validation logic corrected
+
+**Research Verification Needed:** 10B upper bound needs peer-reviewed justification (see `research/verification_ed597d4_20251106.md`).
+
+**Commit:** ed597d481 - "chore: Auto-commit before pull (researcher 20251106_223001)"
+
+---
+
 **✅ WEEK 3 TASK 7 COMPLETE: State Validation Framework** (Nov 6, 2025)
 
 **Summary:** Task 7 complete in 7 hours vs 3 days target (90% faster). All 3 phases delivered, passed both quality gates, caught one real bug, zero false positives in Monte Carlo validation.

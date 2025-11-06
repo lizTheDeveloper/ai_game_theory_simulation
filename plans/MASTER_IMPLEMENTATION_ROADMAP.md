@@ -604,6 +604,14 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
    - **Result:** Date already correct (Nature Communications 2025)
    - **Action:** Verified, no changes needed
 
+**Pending Verification Queue:**
+- [ ] **Refugee Crisis Death Bounds Verification** (Nov 6, 2025)
+  - **File:** `research/verification_ed597d4_20251106.md`
+  - **Parameter:** 10B upper bound for global cumulative deaths
+  - **Status:** Awaiting peer-reviewed justification
+  - **Priority:** MEDIUM (validation bound, not production-critical)
+  - **Next Step:** super-alignment-researcher + research-skeptic review
+
 **Recent Completions:**
 - ✅ **Layer 2 Remediation COMPLETE** (Nov 2) - All CRITICAL and HIGH priority fixes applied
 - ✅ **Layer 2 Phase 3 Sessions 17-19 COMPLETE** (Nov 2) - 8 files verified, 25 HIGH priority issues fixed
