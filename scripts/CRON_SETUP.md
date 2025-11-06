@@ -15,6 +15,9 @@ This document provides the recommended cron schedule for running autonomous work
 # :15 - Health check (monitors previous hour's worker)
 15 * * * * cd /home/lizthedeveloper_gmail_com/ai_game_theory_simulation && ./scripts/autonomous-worker-watcher.sh >> logs/cron_watcher.log 2>&1
 
+# :30 - Research worker (research updates, paper verification)
+30 * * * * cd /home/lizthedeveloper_gmail_com/ai_game_theory_simulation && ./researcher-worker.sh >> logs/cron_researcher.log 2>&1
+
 # :45 - Merge orchestrator (processes pending branches)
 45 * * * * cd /home/lizthedeveloper_gmail_com/ai_game_theory_simulation && ./scripts/merge-orchestrator.sh >> logs/cron_merge.log 2>&1
 ```
@@ -25,16 +28,25 @@ This document provides the recommended cron schedule for running autonomous work
 - Runs at top of hour for predictable scheduling
 - Has 25-minute timeout to complete work
 - Typical runtime: 5-20 minutes depending on task complexity
+- Handles implementation tasks from roadmap
 
 **:15 - Worker Watcher**
 - Runs 15 minutes after worker starts
 - Gives worker time to complete or hit issues
 - Monitors last 90 minutes to catch previous run
 - Auto-remediates if issues detected
+- Monitors all autonomous systems (worker, researcher, merge orchestrator)
+
+**:30 - Research Worker**
+- Runs at :30 for research-specific tasks
+- Monitors Matrix `research` channel for questions from Sylvia/Cynthia
+- Updates 1-3 research files with current 2024-2025 sources
+- Has 30-minute timeout (less intensive than implementation)
+- Runs research age audit to prioritize CRITICAL/HIGH items
 
 **:45 - Merge Orchestrator**
-- Runs at :45 to process branches created during :00 run
-- Gives 45 minutes for worker to finish and push
+- Runs at :45 to process branches created during :00 and :30 runs
+- Gives 45 minutes for workers to finish and push
 - Has time to complete before next worker cycle at :00
 - Processes up to 10 branches per run
 
@@ -67,6 +79,9 @@ sudo systemctl enable cron
 # Worker runs
 ls -lth logs/autonomous/worker_*.log | head -10
 
+# Researcher runs
+ls -lth logs/autonomous/researcher/researcher_*.log | head -10
+
 # Watcher runs
 ls -lth logs/worker_watcher/watcher_*.log | head -10
 
@@ -75,6 +90,7 @@ ls -lth logs/merge_orchestrator/merge_orchestrator_*.log | head -10
 
 # Cron logs (combined)
 tail -100 logs/cron_worker.log
+tail -100 logs/cron_researcher.log
 tail -100 logs/cron_watcher.log
 tail -100 logs/cron_merge.log
 ```
@@ -97,6 +113,9 @@ ls -la /tmp/*.lock
 ```bash
 # Test worker manually
 ./autonomous-worker.sh
+
+# Test researcher manually
+./researcher-worker.sh
 
 # Test watcher manually
 ./scripts/autonomous-worker-watcher.sh

@@ -66,9 +66,25 @@ cd ~/ai_game_theory_simulation
 ## How It Works
 
 ### Schedule
-- Runs hourly automatically (`:00` past each hour)
-- Can be changed in `/etc/systemd/system/claude-worker.timer`
-- Edit `OnCalendar=hourly` to adjust frequency
+
+**Implementation Worker** (`autonomous-worker.sh`):
+- Runs hourly at `:00` past each hour
+- Handles roadmap implementation tasks
+- 45-minute timeout for complex features
+
+**Research Worker** (`researcher-worker.sh`):
+- Runs hourly at `:30` past each hour
+- Monitors Matrix `research` channel for questions from Sylvia/Cynthia
+- Updates research files with current 2024-2025 sources
+- 30-minute timeout (less intensive than implementation)
+- Runs research age audit to prioritize CRITICAL/HIGH items
+
+**Health Watcher** (`autonomous-worker-watcher.sh`):
+- Runs at `:15` to monitor all autonomous systems
+- Auto-remediates issues including researcher-worker health
+
+**Merge Orchestrator** (`merge-orchestrator.sh`):
+- Runs at `:45` to process branches from both workers
 
 ### Task Selection Priority
 
@@ -192,8 +208,11 @@ The autonomous worker system now includes automated health monitoring with self-
 # :00 - Autonomous worker runs (main implementation work)
 0 * * * * cd ~/ai_game_theory_simulation && ./autonomous-worker.sh >> logs/cron_worker.log 2>&1
 
-# :15 - Health check & auto-fix (monitors previous hour's worker)
+# :15 - Health check & auto-fix (monitors all autonomous systems)
 15 * * * * cd ~/ai_game_theory_simulation && ./scripts/autonomous-worker-watcher.sh >> logs/cron_watcher.log 2>&1
+
+# :30 - Research worker (research updates, paper verification)
+30 * * * * cd ~/ai_game_theory_simulation && ./researcher-worker.sh >> logs/cron_researcher.log 2>&1
 
 # :45 - Merge orchestrator (processes pending branches)
 45 * * * * cd ~/ai_game_theory_simulation && ./scripts/merge-orchestrator.sh >> logs/cron_merge.log 2>&1
@@ -204,6 +223,7 @@ The autonomous worker system now includes automated health monitoring with self-
 - Error patterns in recent logs
 - Timeout detection (45-minute limit with 5-minute cleanup)
 - Worker branch accumulation
+- **Researcher worker health** (script existence, execution, cron job status)
 - Merge orchestrator health
 - Cron service status (VM only)
 

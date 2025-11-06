@@ -575,6 +575,43 @@ See: `plans/MASTER_IMPLEMENTATION_ROADMAP.md`, Commit: a311930
 
 ---
 
+**Autonomous Researcher Worker** ✅ OPERATIONAL
+
+New autonomous worker specialized for research maintenance, fixing cron job failures:
+
+**Problem solved:**
+- Cron job `30 * * * * ./researcher-worker.sh` was failing with "script not found"
+- Autonomous worker watcher detected the issue but script didn't exist
+
+**Solution:**
+- Created `researcher-worker.sh` following same pattern as `autonomous-worker.sh`
+- Specialized for research updates: monitors Matrix `research` channel, updates 1-3 research files per run
+- 30-minute timeout (less intensive than implementation work)
+- Runs research age audit to prioritize CRITICAL → HIGH → MEDIUM items
+- Creates PRs with research updates
+
+**Features:**
+- Matrix channel integration (reads/posts to `research` channel as @researcher)
+- Research audit integration (`npm run audit:research`)
+- Priority-based workflow (addresses CRITICAL/HIGH items first)
+- Auto-PR creation if gh CLI available
+- Comprehensive logging to `logs/autonomous/researcher/`
+
+**Cron schedule:**
+- `:00` - Autonomous worker (implementation)
+- `:15` - Health watcher (monitors all systems)
+- `:30` - **Researcher worker (research updates)** ← NEW
+- `:45` - Merge orchestrator (processes branches)
+
+**Files:**
+- Script: `researcher-worker.sh` (333 lines)
+- Documentation: Updated `docs/AUTONOMOUS_SETUP.md`, `scripts/CRON_SETUP.md`
+- Logs: `logs/autonomous/researcher/researcher_TIMESTAMP.log`
+
+See: Commit 05ea749
+
+---
+
 **Enhanced Autonomous Infrastructure Monitoring**
 
 Watcher script now monitors all three autonomous systems (worker + researcher + merge orchestrator):
