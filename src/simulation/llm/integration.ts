@@ -226,7 +226,9 @@ export function getActionWeights(agent: AIAgent): Record<string, number> {
   if (agent.llmWeights) {
     // Convert UtilityWeights to plain object
     const weights: Record<string, number> = {};
-    for (const [action, weight] of Object.entries(agent.llmWeights)) {
+    // FIX: Sort entries for deterministic iteration order
+    const sortedEntries = Object.entries(agent.llmWeights).sort((a, b) => a[0].localeCompare(b[0]));
+    for (const [action, weight] of sortedEntries) {
       if (weight !== undefined && weight > 0) {
         weights[action] = weight;
       }
@@ -237,7 +239,9 @@ export function getActionWeights(agent: AIAgent): Record<string, number> {
   // Fallback to hardcoded weights
   const fallback = getFallbackWeights(agent);
   const weights: Record<string, number> = {};
-  for (const [action, weight] of Object.entries(fallback.weights)) {
+  // FIX: Sort entries for deterministic iteration order
+  const sortedEntries = Object.entries(fallback.weights).sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [action, weight] of sortedEntries) {
     if (weight !== undefined && weight > 0) {
       weights[action] = weight;
     }

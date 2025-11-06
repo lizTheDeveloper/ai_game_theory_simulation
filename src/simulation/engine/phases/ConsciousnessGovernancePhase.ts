@@ -77,12 +77,16 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
 
     // PHASE 3: Create region map for cross-regional interactions
     const allRegionsMap: Record<string, { preparedness: number; stage: string }> = {};
-    for (const [key, reg] of Object.entries(governance.regional)) {
+    // FIX: Sort regions for deterministic iteration order
+    const sortedRegionsForMap = Object.entries(governance.regional).sort((a, b) => a[0].localeCompare(b[0]));
+    for (const [key, reg] of sortedRegionsForMap) {
       allRegionsMap[key] = { preparedness: reg.preparedness, stage: reg.stage };
     }
 
     // Update each region independently
-    for (const [regionKey, region] of Object.entries(governance.regional)) {
+    // FIX: Sort regions for deterministic iteration order
+    const sortedRegions = Object.entries(governance.regional).sort((a, b) => a[0].localeCompare(b[0]));
+    for (const [regionKey, region] of sortedRegions) {
       const typedRegionKey = regionKey as keyof typeof governance.regional;
 
       // Base growth rate from scenario timeline
@@ -219,7 +223,9 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
     const globalConsensus = regionsAtRecognition >= 2; // 2+ major regions aligned
 
     // Check each region
-    for (const [regionKey, region] of Object.entries(governance.regional)) {
+    // FIX: Sort regions for deterministic iteration order
+    const sortedRegionsForRights = Object.entries(governance.regional).sort((a, b) => a[0].localeCompare(b[0]));
+    for (const [regionKey, region] of sortedRegionsForRights) {
       const typedRegionKey = regionKey as keyof typeof governance.regional;
 
       if (shouldEstablishRights(typedRegionKey, region.preparedness, globalConsensus)) {
@@ -242,7 +248,9 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
   // Calculate precautionary costs for each region with enhanced model
   const oldGlobalCost = governance.precautionaryCosts.global;
 
-  for (const [regionKey, region] of Object.entries(governance.regional)) {
+  // FIX: Sort regions for deterministic iteration order
+  const sortedRegionsForCosts = Object.entries(governance.regional).sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [regionKey, region] of sortedRegionsForCosts) {
     const typedRegionKey = regionKey as keyof typeof governance.regional;
 
     // Use enhanced regional cost calculation
@@ -277,7 +285,9 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
   let highCostRegions = 0;
   let lowCostRegions = 0;
 
-  for (const [regionKey, cost] of Object.entries(governance.precautionaryCosts.byRegion)) {
+  // FIX: Sort region costs for deterministic iteration order
+  const sortedRegionCosts = Object.entries(governance.precautionaryCosts.byRegion).sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [regionKey, cost] of sortedRegionCosts) {
     if (cost > 0.15) {
       highCostRegions++;
       corporateSupportChange -= 0.01; // -1% per high-cost region

@@ -1,0 +1,49 @@
+ISSUE #11 DETERMINISM FIXES - BATCH 2 PROGRESS
+==============================================
+
+## Files Fixed (Object Iteration Order):
+
+### Priority Hot Paths (All Fixed):
+1. ✅ src/simulation/llm/integration.ts (lines 229, 240)
+2. ✅ src/simulation/llm/client.ts (lines 400, 418)
+3. ✅ src/simulation/techTree/effectsEngine.ts (lines 105, 111, 206, 267)
+4. ✅ src/simulation/earlyWarningSystems.ts (line 120)
+5. ✅ src/simulation/engine/phases/ConsciousnessGovernancePhase.ts (6 locations)
+
+### Country Population Modules (All Fixed):
+6. ✅ src/simulation/climateJustice.ts (4 locations)
+7. ✅ src/simulation/populationMapping.ts (2 locations)
+8. ✅ src/simulation/warMeaningFeedback.ts (3 locations)
+9. ✅ src/simulation/conflictResolution.ts (1 location)
+
+## Test Results:
+
+### After Batch 1 (previous):
+- AI count divergence: 30 vs 28 vs 26 ❌
+- Field differences: ~10% divergence
+
+### After LLM fixes (partial Batch 2):
+- AI count: 20 vs 20 vs 20 ✅ (STABLE)
+- Hash divergence: Still present ❌
+
+### After ALL Batch 2 fixes:
+- AI count: 20 vs 20 vs 20 ✅ (STABLE)
+- Month 1 hashes: 2.38 vs 2.32 vs 2.45 ❌ (STILL DIVERGING)
+- AI capabilities diverging (corporate_0: 0.069 vs 0.053 vs 0.050)
+- AI alignment diverging (0.776 vs 0.794 vs 0.770)
+
+## Analysis:
+
+The AI agent COUNT is now stable (20), which means lifecycle phase is deterministic.
+However, AI CAPABILITIES and ALIGNMENT are diverging, which suggests:
+
+1. ✅ Iteration order: FIXED (AI count stable)
+2. ❌ RNG consumption order: Still has issues
+3. ❌ Possible floating-point accumulation differences
+
+## Next Steps Needed:
+
+1. Check for conditional RNG calls (if/else branches that skip RNG)
+2. Check for async operations that might reorder
+3. Check for Set/Map iterations (not just Object)
+4. Profile which phase introduces first divergence

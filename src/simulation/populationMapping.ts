@@ -123,7 +123,9 @@ export function getCountriesInRegion(
 ): CountryName[] {
   const result: CountryName[] = [];
 
-  for (const [countryName, country] of Object.entries(countries)) {
+  // FIX: Sort countries for deterministic iteration order
+  const sortedCountries = Object.entries(countries).sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [countryName, country] of sortedCountries) {
     const mappedRegion = mapCountryRegionToStandardRegion(country.region);
     if (mappedRegion === regionName) {
       result.push(countryName as CountryName);
@@ -159,7 +161,9 @@ export function createRegionCountryMaps(countries: Record<CountryName, { region:
   }
 
   // Populate mappings
-  for (const [countryName, country] of Object.entries(countries)) {
+  // FIX: Sort countries for deterministic iteration order
+  const sortedCountries = Object.entries(countries).sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [countryName, country] of sortedCountries) {
     const regionName = mapCountryRegionToStandardRegion(country.region);
     const cn = countryName as CountryName;
 
