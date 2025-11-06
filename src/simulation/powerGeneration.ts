@@ -15,6 +15,7 @@
 
 import { GameState } from '../types/game';
 import { PowerGenerationSystem, DataCenterConstruction, TrainingEvent } from '../types/powerGeneration';
+import { assertStateProperty } from './utils/assertions';
 
 /**
  * Update power generation system for one month
@@ -291,7 +292,14 @@ function applyClimateFeedback(power: PowerGenerationSystem, env: any): void {
     return;
   }
 
-  const tempAnomaly = env.globalTemperatureAnomaly || 0;
+  const tempAnomaly = assertStateProperty(
+    env,
+    'globalTemperatureAnomaly',
+    {
+      location: 'applyClimateFeedback',
+      expectedSource: 'environmental/initialization.ts'
+    }
+  );
 
   // Base cooling multiplier
   power.coolingDemandMultiplier = 1 + (tempAnomaly * 0.05);

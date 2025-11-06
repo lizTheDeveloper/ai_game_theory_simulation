@@ -18,6 +18,7 @@ import { GameState } from '@/types/game';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { THRESHOLDS, RATES } from '@/simulation/config/centralConfig';
+import { assertStateProperty } from '@/simulation/utils/assertions';
 
 /**
  * Environmental mortality breakdown by cause
@@ -95,7 +96,15 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   // === WATER SECURITY ===
   // Water < WATER_SECURITY_CRISIS_THRESHOLD = crisis (leads to cholera, dysentery, other waterborne disease)
   // Note: waterSecurity not in EnvironmentalAccumulation, use QoL system
-  const waterSecurity = state.qualityOfLifeSystems.survivalFundamentals?.waterSecurity || 0.7;
+  const waterSecurity = assertStateProperty(
+    state.qualityOfLifeSystems.survivalFundamentals,
+    'waterSecurity',
+    {
+      location: 'calculateEnvironmentalMortality',
+      month: state.currentMonth,
+      expectedSource: 'qualityOfLife/initialization.ts'
+    }
+  );
   if (waterSecurity < THRESHOLDS.WATER_SECURITY_CRISIS_THRESHOLD) {
     const waterSeverity = (THRESHOLDS.WATER_SECURITY_CRISIS_THRESHOLD - waterSecurity) / THRESHOLDS.WATER_SECURITY_CRISIS_THRESHOLD;
     const waterDiseaseRisk = 0.00008 * Math.pow(waterSeverity, 1.5); // Slightly less immediate than food
@@ -120,7 +129,15 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   // - Tropical regions: Monsoon season (varies, typically 3-4 months)
   //
   // Apply 2.0x multiplier during peak climate disaster months, 0.5x during off-season
-  const climateStability = env.climateStability || 0.75;
+  const climateStability = assertStateProperty(
+    env,
+    'climateStability',
+    {
+      location: 'calculateEnvironmentalMortality',
+      month: state.currentMonth,
+      expectedSource: 'environmental/initialization.ts'
+    }
+  );
   if (climateStability < 0.6) {
     const climateSeverity = (0.6 - climateStability) / 0.6;
     let baseClimateMortality = 0.00005 * Math.pow(climateSeverity, 2); // Non-linear escalation
@@ -156,7 +173,15 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   // === BIODIVERSITY LOSS (Ecosystem services collapse) ===
   // Biodiversity < 0.3 = critical, < 0.2 = collapse
   // Loss of pollination, disease regulation, etc.
-  const biodiversity = env.biodiversityIndex || 0.35;
+  const biodiversity = assertStateProperty(
+    env,
+    'biodiversityIndex',
+    {
+      location: 'calculateEnvironmentalMortality',
+      month: state.currentMonth,
+      expectedSource: 'environmental/initialization.ts'
+    }
+  );
   if (biodiversity < 0.3) {
     const bioSeverity = (0.3 - biodiversity) / 0.3;
     const ecosystemRisk = 0.00003 * Math.pow(bioSeverity, 1.5); // Pollination, disease regulation lost

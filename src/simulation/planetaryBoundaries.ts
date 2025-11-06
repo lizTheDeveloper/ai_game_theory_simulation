@@ -894,7 +894,15 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   const env = state.environmentalAccumulation;
   const qol = state.qualityOfLifeSystems;
   const resources = state.resourceEconomy;
-  const monthsSinceCascade = state.currentMonth - (system.cascadeStartMonth || 0);
+  const monthsSinceCascade = state.currentMonth - assertStateProperty(
+    system,
+    'cascadeStartMonth',
+    {
+      location: 'applyTippingPointCascadeEffects',
+      month: state.currentMonth,
+      expectedSource: 'planetaryBoundaries:detectTippingPoint'
+    }
+  );
 
   // === P0.5 (Oct 15, 2025): STOCHASTIC ENVIRONMENTAL COLLAPSE ===
   // Add ±25% random variation to degradation rates (weather, local conditions, random events)
@@ -966,7 +974,15 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   // === LOG PROGRESS ===
   if (monthsSinceCascade % 6 === 0) { // Log every 6 months
     const population = state.humanPopulationSystem.population;
-    const baseMortalityRate = state.config.scenarioParameters?.cascadeMortalityRate ?? 0.005;
+    const baseMortalityRate = assertStateProperty(
+      state.config.scenarioParameters,
+      'cascadeMortalityRate',
+      {
+        location: 'applyTippingPointCascade',
+        month: state.currentMonth,
+        expectedSource: 'centralConfig.ts'
+      }
+    );
 
     // BUG FIX (Oct 30, 2025): BLOCKER-1 - Cap displayed mortality at 100% (physical constraint)
     // ROOT CAUSE: Unbounded exponential 1.05^N produces >100% mortality at long timescales
