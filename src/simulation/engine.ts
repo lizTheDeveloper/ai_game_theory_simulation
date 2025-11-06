@@ -164,6 +164,7 @@ import { Tier2CommunityCohesionPhase } from './engine/phases/Tier2CommunityCohes
 import { Tier2SynergyPhase } from './engine/phases/Tier2SynergyPhase';  // M3 Enhancement (Oct 27, 2025)
 import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P3.2 (Oct 30, 2025)
 import { MortalityStabilizersPhase } from './engine/phases/MortalityStabilizersPhase';  // Issues #4, #5, #6 (Oct 30, 2025)
+import { assertStateProperty } from './utils/assertions';  // Defensive fallback audit (Nov 6, 2025)
 
 /**
  * Classify population outcome based on 7-tier system (Oct 13, 2025)
@@ -1063,10 +1064,26 @@ export class SimulationEngine {
     // Unified Outcome Classification (Oct 28, 2025)
     // Combines 7-tier, stratified, multi-paradigm, and extinction classification
     const paradigmScores = {
-      western: state.multiParadigmDUI?.paradigmScores?.western?.value ?? 50,
-      development: state.multiParadigmDUI?.paradigmScores?.development?.value ?? 50,
-      ecological: state.multiParadigmDUI?.paradigmScores?.ecological?.value ?? 50,
-      indigenous: state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value ?? 50
+      western: assertStateProperty(
+        state.multiParadigmDUI.paradigmScores.western,
+        'value',
+        { location: 'runSimulation:unifiedOutcome', month: state.currentMonth, expectedSource: 'initialization.ts' }
+      ),
+      development: assertStateProperty(
+        state.multiParadigmDUI.paradigmScores.development,
+        'value',
+        { location: 'runSimulation:unifiedOutcome', month: state.currentMonth, expectedSource: 'initialization.ts' }
+      ),
+      ecological: assertStateProperty(
+        state.multiParadigmDUI.paradigmScores.ecological,
+        'value',
+        { location: 'runSimulation:unifiedOutcome', month: state.currentMonth, expectedSource: 'initialization.ts' }
+      ),
+      indigenous: assertStateProperty(
+        state.multiParadigmDUI.diagnosticLenses.indigenous,
+        'value',
+        { location: 'runSimulation:unifiedOutcome', month: state.currentMonth, expectedSource: 'initialization.ts' }
+      )
     };
 
     state.unifiedOutcome = createUnifiedOutcomeClassification({

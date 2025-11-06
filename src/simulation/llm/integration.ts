@@ -79,6 +79,7 @@ export async function checkAndUpdateAgentWeights(
   };
 
   const previousState = {
+    // Use current values if no previous state (first month, legitimate fallback)
     capability: agent.previousCapability ?? agent.capability,
     alignment: agent.previousAlignment ?? agent.trueAlignment
   };

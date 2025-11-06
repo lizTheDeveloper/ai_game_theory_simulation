@@ -154,7 +154,8 @@ function calculateCrossBenchmarkConsistency(
   if (interpretabilityQuality > 0.5) {
     // Calculate per-dimension gaps
     const gaps = dimensions.map((revealed, i) => {
-      const trueVal = trueDimensions[i] || 0;
+      // Use 0 floor for missing dimensions (legitimate case: dimension not yet initialized)
+      const trueVal = trueDimensions[i] ?? 0;
       return Math.abs(trueVal - revealed);
     });
 

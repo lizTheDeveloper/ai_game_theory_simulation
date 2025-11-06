@@ -18,6 +18,7 @@
 import { GameState, AIAgent } from '@/types/game';
 import { detectBehavioralAnomalies, BehavioralDetectionResult } from './behavioralDetection';
 import { getDeploymentRiskSignal } from './deploymentRiskScoring';
+import { assertStateProperty } from './utils/assertions';
 
 export interface EnsembleWeights {
   noiseInjection: number;      // [0,1] Noise injection weight
@@ -133,9 +134,18 @@ export function getEnsembleWeights(state: GameState): EnsembleWeights {
   };
 
   // Investment bonuses (scale with investment)
-  const noiseInv = (inv.noiseInjection || 0) / 10; // [0,1]
-  const interpInv = (inv.interpretability || 0) / 10; // [0,1] (used for behavioral)
-  const redTeamInv = (inv.redTeaming || 0) / 10; // [0,1] (used for benchmark manip)
+  const noiseInv = assertStateProperty(inv, 'noiseInjection', {
+    location: 'computeSandbaggingEnsemble',
+    expectedSource: 'initialization.ts:safetyInvestments'
+  }) / 10; // [0,1]
+  const interpInv = assertStateProperty(inv, 'interpretability', {
+    location: 'computeSandbaggingEnsemble',
+    expectedSource: 'initialization.ts:safetyInvestments'
+  }) / 10; // [0,1] (used for behavioral)
+  const redTeamInv = assertStateProperty(inv, 'redTeaming', {
+    location: 'computeSandbaggingEnsemble',
+    expectedSource: 'initialization.ts:safetyInvestments'
+  }) / 10; // [0,1] (used for benchmark manip)
 
   const bonus = {
     noiseInjection: noiseInv * 0.20,       // Up to +20% weight
@@ -183,8 +193,22 @@ function getBenchmarkManipulationSignal(
 
   // If AI is gaming, return degradation-adjusted detection rate
   if (ai.evaluationStrategy === 'gaming') {
-    const detectionRate = state.gamingDetection.detectionRate || 0.55;
-    const degradation = state.gamingDetection.degradationFactor || 1.0;
+    const detectionRate = assertStateProperty(
+      state.gamingDetection,
+      'detectionRate',
+      {
+        location: 'getBenchmarkManipulationSignal',
+        expectedSource: 'initialization.ts:gamingDetection'
+      }
+    );
+    const degradation = assertStateProperty(
+      state.gamingDetection,
+      'degradationFactor',
+      {
+        location: 'getBenchmarkManipulationSignal',
+        expectedSource: 'initialization.ts:gamingDetection'
+      }
+    );
     return detectionRate * degradation;
   }
 

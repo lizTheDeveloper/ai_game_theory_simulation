@@ -200,7 +200,7 @@ export function calculateDimensionGrowth(
   if (state && dimension === 'selfImprovement') {
     // Get total AI capability to determine if we're in recursive improvement territory
     const totalCapability = state.aiAgents.reduce((max, ai) =>
-      Math.max(max, ai.capability || 0), 0);
+      Math.max(max, ai.capability ?? 0), 0);  // Use 0 floor for uninitialized agents
 
     if (totalCapability > 2.0) {
       // Exponential takeoff: capability above 2.0 accelerates self-improvement
