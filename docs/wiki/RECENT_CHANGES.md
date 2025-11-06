@@ -6,6 +6,43 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ⚠️ Recent Changes (November 6, 2025)
 
+**🔬 ENHANCED AUTONOMOUS INFRASTRUCTURE MONITORING (Nov 6, 2025)**
+
+Watcher script expanded to monitor all three autonomous systems (previously only monitored worker):
+
+**New Monitoring Coverage:**
+- **Autonomous researcher** (lines 206-268):
+  - Verifies researcher ran in last 90 minutes
+  - Analyzes logs for "not found" errors (missing script detection)
+  - Checks for timeouts/failures
+  - Alerts if researcher hasn't run in 2+ hours
+- **Merge orchestrator** (lines 183-204):
+  - Already existed but now documented in remediation task
+  - Validates recent runs, detects branch accumulation
+  - Tracks conflict/test failure patterns
+
+**Enhanced Remediation Task:**
+- Investigation steps now cover all three systems:
+  - Worker logs: `logs/autonomous/worker_*.log`
+  - Researcher logs: `logs/autonomous/researcher/cron_*.log`
+  - Merge orchestrator logs: `logs/merge_orchestrator/merge_*.log`
+- System-specific troubleshooting:
+  - Researcher: Script not found, permission issues
+  - Merge orchestrator: Claude Code spawning, branch accumulation
+  - Worker: Cron status, hung processes, lock files
+
+**Complete Autonomous Infrastructure Visibility:**
+- **Autonomous worker** - Hourly implementation work (runs at :00)
+- **Autonomous researcher** - Research coordination (parallel with worker)
+- **Merge orchestrator** - Branch processing (runs at :45)
+- **Watcher** - Health monitoring & auto-remediation (runs at :15)
+
+**Impact:** No blind spots in autonomous infrastructure - watcher validates all three systems and auto-remediates issues.
+
+See: `scripts/autonomous-worker-watcher.sh` (424 lines), Commit: 418c9c4 (Nov 6, 2025)
+
+---
+
 **📊 ROADMAP UPDATE - DETERMINISM & RESEARCH CITATIONS (Nov 6, 2025)**
 
 Master roadmap synchronized with latest determinism progress and research corrections:
