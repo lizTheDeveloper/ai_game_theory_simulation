@@ -369,12 +369,19 @@ export function selectDimensionToAdvance(
     dimensionWeights.selfImprovement *= 0.7;
   }
   
+  // DETERMINISM FIX (Nov 6, 2025 Batch 3): Consume ALL RNG calls first to ensure determinism
+  // Each action must consume the SAME number of RNG calls regardless of code path
+  const pathChoice = random(); // RNG call 1: path selection
+  const dimensionRoll = random(); // RNG call 2: dimension selection (pre-consumed)
+  const domainRoll = random(); // RNG call 3: domain selection (pre-consumed)
+  const subfieldRoll = random(); // RNG call 4: subfield selection (pre-consumed)
+
   // 70% chance to advance core dimension, 30% chance to advance research
-  if (random() < 0.7) {
-    // Advance core dimension
+  if (pathChoice < 0.7) {
+    // Advance core dimension (use dimensionRoll)
     const totalWeight = Object.values(dimensionWeights).reduce((a, b) => a + b, 0);
-    let roll = random() * totalWeight;
-    
+    let roll = dimensionRoll * totalWeight;
+
     for (const [dim, weight] of Object.entries(dimensionWeights)) {
       roll -= weight;
       if (roll <= 0) {
@@ -387,10 +394,10 @@ export function selectDimensionToAdvance(
       }
     }
   }
-  
-  // Advance research subfield
+
+  // Advance research subfield (use domainRoll and subfieldRoll)
   const research = capabilityProfile.research;
-  
+
   // Weight research domains
   const domainWeights = {
     computerScience: 2.0, // Always valuable
@@ -398,35 +405,35 @@ export function selectDimensionToAdvance(
     materials: alignment < 0.5 ? 1.5 : 0.8, // Misaligned AIs want nanotech
     climate: alignment > 0.7 ? 1.2 : 0.5  // Aligned AIs care about climate
   };
-  
+
   const totalDomainWeight = Object.values(domainWeights).reduce((a, b) => a + b, 0);
-  let domainRoll = random() * totalDomainWeight;
-  
+  let domainRollValue = domainRoll * totalDomainWeight;
+
   let selectedDomain: 'biotech' | 'materials' | 'climate' | 'computerScience' | null = null;
   for (const [domain, weight] of Object.entries(domainWeights)) {
-    domainRoll -= weight;
-    if (domainRoll <= 0) {
+    domainRollValue -= weight;
+    if (domainRollValue <= 0) {
       selectedDomain = domain as any;
       break;
     }
   }
-  
+
   if (!selectedDomain) selectedDomain = 'computerScience';
-  
+
   // Select subfield within domain (prefer lowest)
   const subfields = research[selectedDomain];
   const subfieldEntries = Object.entries(subfields);
   subfieldEntries.sort((a, b) => a[1] - b[1]); // Sort by current value (lowest first)
-  
+
   // Weight toward lowest subfield, but with randomness
   const weights = subfieldEntries.map((_, i) => subfieldEntries.length - i);
   const totalWeight = weights.reduce((a, b) => a + b, 0);
-  let subfieldRoll = random() * totalWeight;
+  let subfieldRollValue = subfieldRoll * totalWeight; // Use pre-consumed RNG call
   
   let selectedSubfield = subfieldEntries[0][0];
   for (let i = 0; i < subfieldEntries.length; i++) {
-    subfieldRoll -= weights[i];
-    if (subfieldRoll <= 0) {
+    subfieldRollValue -= weights[i];
+    if (subfieldRollValue <= 0) {
       selectedSubfield = subfieldEntries[i][0];
       break;
     }
