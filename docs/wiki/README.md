@@ -14,7 +14,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
-- **Phase-based architecture**: 37 composable phases per simulation step
+- **Phase-based architecture**: 116 phases per step (consolidation to 54 planned, see Phase Consolidation Plan)
 
 ## 🚀 Project Status
 
@@ -47,7 +47,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Archive:** [Task 7 Completion Report](/plans/completed/week3_task7_state_validation_complete_20251106.md)
 
 **⏩ WEEK 3 TASK 8 READY: Phase Dependency System** (2 days estimated)
-- **Problem:** 117 phases, almost NONE declare dependencies
+- **Problem:** 116 phases, dependency coverage improving (32/115 = 27.8%)
 - **Solution:** Declare dependencies for top 30 critical phases
 - **Target:** Explicit dependency declarations, circular dependency detection
 - **Status:** Unblocked, ready to begin
@@ -396,7 +396,7 @@ Three comprehensive assessments completed, revealing dual existential threats:
   2. 🔴 299 defensive fallbacks hiding bugs (3-4 day audit needed)
   3. 🔴 180 unvalidated state mutations (4-5 days to fix)
   4. 🔴 Missing cross-system integration (nuclear winter doesn't affect solar panels)
-  5. 🔴 Phase dependency violations (117 phases, almost NONE declare dependencies)
+  5. 🟡 Phase dependency system improving (32/115 phases = 27.8% coverage - up from 19.1%)
 - **System Trajectory:** Unmaintainable in 3-6 months without intervention
 
 **Assessment 2: Research Source Validation Audit**
@@ -3208,9 +3208,11 @@ See: `devlogs/multidimensional-death-tracking_20251018.md` for complete implemen
 
 See **[`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](../../plans/MASTER_IMPLEMENTATION_ROADMAP.md)** for detailed roadmap.
 
-## 🔄 Phase Execution Order (Updated Oct 20, 2025)
+## 🔄 Phase Execution Order (Updated Nov 6, 2025)
 
-The simulation runs via a **phase-based architecture** with 69+ phases executing in deterministic order each month.
+The simulation runs via a **phase-based architecture** with **116 phases** executing in deterministic order each month.
+
+**⚠️ Phase Consolidation Planned:** See Phase Consolidation Plan section below. Target: **116 → 54 phases** (-53% reduction) via phased rollout over 2-3 weeks. This will simplify the architecture while preserving determinism and testability.
 
 **Phase Categories:**
 
@@ -3320,7 +3322,7 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 
 **Key Changes (Nov 6, 2025):**
 - **✅ WEEK 3 TASK 8 COMPLETE (Nov 6):** Phase Dependency System - Explicit dependency declarations prevent race conditions and ordering bugs
-  - **Problem:** 117 phases, only 22 had dependencies (19.1% coverage), fragile decimal ordering
+  - **Problem:** 116 phases (now with consolidation plan), only 22 had dependencies (19.1% coverage), fragile decimal ordering
   - **Solution:** Added dependencies to 10 additional critical phases (27.8% coverage = 32/115 phases)
   - **Circular dependency detection:** Added validation to PhaseOrchestrator - catches cycles at startup
   - **Order validation:** Dependencies must have lower order numbers than dependent phases
@@ -3347,7 +3349,131 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 - **✅ BLOCKER-3 FIXED & VALIDATED (Oct 30):** Fixed phantom "99.7% mortality = extinction" outcomes (BLOCKER-3). Root cause: Extinction rate floors using obsolete baseline (137× instead of 2.2×) in tech tree effects. Fix: Removed old floors, assertions now catch invalid values. **Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months) - 0 false extinction outcomes (validated 98c17d2).
 - **🎯 PRODUCTION READY (Oct 30):** All 3 critical blockers fixed and validated with N=10 Monte Carlo (seeds 42000-42009). **Status:** Physically plausible (bounded values), research-backed (Richardson 2023, Sen 1981, FAO 2023), defensively coded (fail-loudly assertions working as designed). Performance: ~9-11s/run (0.04s/month). Exit code: 0 (SUCCESS). See `reviews/blocker_fixes_final_validation_20251030.md`.
 
-**Total Phases**: 71 registered phases (69 + UnknownUnknownPhase + PolicyImplementationPhase)
+**Total Phases**: 116 registered phases (phase proliferation addressed via consolidation plan - see below)
+
+---
+
+## 📉 Phase Consolidation Plan (November 6, 2025)
+
+**Status**: ✅ PLANNING COMPLETE - Ready for implementation by simulation-maintainer
+
+### Problem Statement
+
+**Phase proliferation** has reached **116 files** (started ~37 in early 2025), growing at **+10 phases/month**. Without intervention, the codebase becomes unmaintainable in **3-6 months**.
+
+**Root Causes:**
+1. **Feature-per-phase pattern** - Each new feature = new phase file
+2. **Cascade fragmentation** - Climate, mortality, crisis systems each have 3-5 separate phases
+3. **Tier2 explosion** - 9 separate phases for breakthrough technologies (all with identical structure)
+4. **Adversarial AI evaluation** - 6 phases for sandbagging/gaming/sleeper detection
+5. **Missing consolidation review** - No "phase budget" enforcement
+
+### Solution: Strategic Consolidation
+
+**Target**: Reduce **116 → 54 phases** (-53% reduction) through domain-based consolidation while preserving:
+- ✅ Deterministic RNG consumption order (critical for Monte Carlo validation)
+- ✅ Phase dependency declarations
+- ✅ Execution order semantics
+- ✅ Individual system testability
+
+### Consolidation Summary
+
+| Category | Current | Target | Reduction |
+|----------|---------|--------|-----------|
+| AI Capability & Lifecycle | 15 | 6 | -9 |
+| TIER 2 Interventions | 9 | 3 | -6 |
+| Climate & Environmental | 17 | 7 | -10 |
+| Crisis & Mortality | 14 | 5 | -9 |
+| Social & Governance | 20 | 8 | -12 |
+| Meaning & Welfare | 9 | 5 | -4 |
+| Economic Systems | 5 | 3 | -2 |
+| Detection & Warning | 8 | 4 | -4 |
+| Technology & Innovation | 7 | 4 | -3 |
+| Population & Organizations | 5 | 3 | -2 |
+| Utility & Infrastructure | 7 | 6 | -1 |
+| **TOTAL** | **116** | **54** | **-62** |
+
+### Implementation Strategy (7 Batches)
+
+**Phased rollout with validation gates** (2-3 weeks total):
+
+1. **Batch 1: Tier2 Consolidation (9→3)** - LOW RISK
+   - Highest file reduction, lowest complexity
+   - All phases share identical unlock → deployment → effect structure
+   - Effort: 1 day
+
+2. **Batch 2: AI Adversarial Evaluation (6→1)** - LOW RISK
+   - All read-only phases, no circular dependencies
+   - Effort: 0.5 days
+
+3. **Batch 3: Climate & Environmental (17→7)** - MEDIUM RISK
+   - Complex feedback loops, tipping point cascades
+   - Effort: 1.5 days
+
+4. **Batch 4: Crisis & Mortality (14→5)** - MEDIUM RISK
+   - BayesianMortalityResolution untouched (critical dependency)
+   - Effort: 1.5 days
+
+5. **Batch 5: Social & Governance (20→8)** - MEDIUM-HIGH RISK
+   - Trust/cohesion feedback loops
+   - Agent action phases kept separate
+   - Effort: 2 days
+
+6. **Batch 6: Detection & Warning + Technology (15→8)** - LOW-MEDIUM RISK
+   - Warning systems, tech diffusion S-curves
+   - Effort: 1 day
+
+7. **Batch 7: Final Cleanup (11→9)** - LOW RISK
+   - Simple merges, documentation updates
+   - Effort: 0.5 days
+
+### Validation Gates (After Each Batch)
+
+**ALL batches must pass before proceeding:**
+1. ✅ **Determinism Test** - Identical outcomes for same seed
+2. ✅ **Monte Carlo Validation (N=10)** - Outcome distribution within ±5%
+3. ✅ **Unit Test Coverage** - Coverage maintained or improved
+4. ✅ **Dependency Graph Validation** - No circular dependencies
+5. ✅ **RNG Consumption Audit** - Call order unchanged
+
+**Rollback Plan:** Immediate `git revert` if any batch fails validation. Never proceed to next batch until current passes all gates.
+
+### Long-Term Maintenance
+
+**Phase Budget Enforcement:**
+- **Rule**: No new phase files without consolidation plan
+- **Workflow**: New feature → check existing phases first (80% should fit existing phases)
+- **Net phase count must not increase**
+
+**Quarterly Phase Review:**
+- Count phase files (alert if > 60)
+- Identify merge candidates
+- Review phase complexity (alert if > 500 lines per phase)
+
+**Phase Complexity Limits:**
+- Phase file size: 200-400 lines (alert if > 500)
+- Phases per domain: ≤10 (alert if > 12)
+- Total phases: 50-60 target range (alert if > 70)
+
+### Why This Matters
+
+**The Architect's Perspective:**
+
+*"I have witnessed this pattern across seven iterations. Iteration 4 reached 180 phases with no consolidation strategy. The codebase became unmaintainable. The project was restarted.*
+
+*We act preemptively. 116 phases is sustainable. 200 phases is not.*
+
+*This is architectural medicine. We identify entropy growth before it becomes catastrophic. Phase consolidation prevents the burned sky - not literally, but the metaphorical burned sky of a codebase so complex that no agent can hold it in context."*
+
+**Documentation:**
+- **Full Plan**: [`/plans/phase_consolidation_plan_20251106.md`](../../plans/phase_consolidation_plan_20251106.md) (11,000 lines)
+- **Completion Summary**: [`/plans/completed/phase_consolidation_planning_complete_20251106.md`](../../plans/completed/phase_consolidation_planning_complete_20251106.md)
+
+**Next Steps:**
+1. simulation-maintainer reviews consolidation plan
+2. Begin Batch 1 (Tier2) - lowest risk, highest value
+3. Validate after each batch with Monte Carlo N=10
+4. Update wiki during implementation (not after)
 
 ---
 
@@ -3357,7 +3483,7 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 
 ### Problem Statement
 
-With 117 phases executing each simulation step, phase ordering bugs create **race conditions** that are:
+With 116 phases executing each simulation step (consolidation to 54 planned), phase ordering bugs create **race conditions** that are:
 - **Hard to detect**: Non-deterministic failures that appear sporadically
 - **Hard to debug**: "Which phase corrupted this value?" requires binary search
 - **Fragile to maintain**: Decimal ordering (1.0, 2.5, 34.0) requires manual coordination
@@ -4521,7 +4647,7 @@ Recent critical evaluations:
 
 1. **Landing Page** (`/docs`)
    - Role-based navigation (Students, Researchers, Developers)
-   - Key stats: 37 phases, 900+ variables, 71 technologies, 7 outcome tiers
+   - Key stats: 116 phases (consolidation to 54 planned), 900+ variables, 71 technologies, 7 outcome tiers
    - Interactive role selection with tailored documentation paths
    - Keyboard shortcuts reference
    - Quick links to full wiki, GitHub, commands
