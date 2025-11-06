@@ -1,0 +1,75 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:01] 🔍 Autonomous Worker Health Check - 20251106_211501
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:01] ℹ️  Environment: VM
+[2025-11-06 21:15:01] ℹ️  Check window: last 90 minutes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:01] 📋 Recent Worker Activity
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:01] ℹ️  Found 27 worker log(s) in last 90 minutes
+[2025-11-06 21:15:01] ✅ Workers are running
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:01] 🔍 Analyzing Recent Logs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_210001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_200001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_190001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_180001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_170001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_160001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_150001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_140001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_130001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_120001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_110001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_100001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_090001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_080002.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_070001.log
+[2025-11-06 21:15:01] 📄 Analyzing: worker_20251106_063001.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_060001.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_053001.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_050001.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_043001.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_040001.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_040000.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_033001.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_030001.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_023001.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_020001.log
+[2025-11-06 21:15:02] 📄 Analyzing: worker_20251106_013001.log
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:02] 🌿 Worker Branch Status
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:02] ℹ️  Remote worker branches: 64
+[2025-11-06 21:15:02] ⚠️  WARNING: Large number of worker branches (64)
+[2025-11-06 21:15:02] 💡 Consider running merge orchestrator to clean up
+[2025-11-06 21:15:02] ℹ️  Open worker PRs: 0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:02] 🔄 Merge Orchestrator Status
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:02] ℹ️  Last merge orchestrator run: 1480 minutes ago
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:02] 🔬 Autonomous Researcher Status
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:02] ✅ Researcher ran in last 90 minutes
+[2025-11-06 21:15:02] 📄 Analyzing: researcher_20251106_203001.log
+[2025-11-06 21:15:02] 📄 Analyzing: researcher_20251106_193001.log
+[2025-11-06 21:15:02] 📄 Analyzing: cron_20251106.log
+[2025-11-06 21:15:02]   ❌ Script execution failed (script not found)
+[2025-11-06 21:15:02] 
+[2025-11-06 21:15:02] ⚠️  WARNING: Researcher runs encountered errors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:02] 📊 Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-06 21:15:02] ⚠️  ISSUES DETECTED - Attempting auto-remediation...
+[2025-11-06 21:15:02] 
+[2025-11-06 21:15:02] 🤖 Spawning Claude Code for auto-remediation...
+[2025-11-06 21:15:02] ℹ️  Task file: /tmp/worker_remediation_20251106_211501.txt
