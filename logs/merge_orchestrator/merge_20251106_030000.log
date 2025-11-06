@@ -1,0 +1,107 @@
+
+=== Merge Orchestrator Started ===
+[03:00:00] Timestamp: Thu Nov  6 03:00:00 UTC 2025
+[03:00:00] Dry run: false
+[03:00:00] Max branches: 10
+[03:00:00] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ * [new branch]          claude/explore-roadmap-next-011CUqrUjwFYUULpvgfCNvQm -> origin/claude/explore-roadmap-next-011CUqrUjwFYUULpvgfCNvQm
+
+=== Discovering Branches ===
+[03:00:01] Found 74 branches to process
+
+=== Branch 1/74: auto/worker-20251102_043015 ===
+[03:00:01] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251106_030000
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[03:00:02] ❌ Failed to create merge branch
+
+=== Branch 2/74: auto/worker-20251102_050015 ===
+[03:00:02] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251106_030000
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[03:00:02] ❌ Failed to create merge branch
+
+=== Branch 3/74: auto/worker-20251102_080006 ===
+[03:00:02] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251106_030000
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[03:00:02] ❌ Failed to create merge branch
+
+=== Branch 4/74: auto/worker-20251102_090015 ===
+[03:00:02] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251106_030000
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[03:00:02] ❌ Failed to create merge branch
+
+=== Branch 5/74: auto/worker-20251102_100015 ===
+[03:00:02] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251106_030000
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[03:00:02] ❌ Failed to create merge branch
+
+=== Branch 6/74: auto/worker-20251102_110015 ===
+[03:00:02] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251106_030000
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[03:00:02] ❌ Failed to create merge branch
+
+=== Branch 7/74: auto/worker-20251102_120000 ===
+[03:00:02] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251106_030000
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[03:00:02] ❌ Failed to create merge branch
+
+=== Branch 8/74: auto/worker-20251102_130014 ===
+[03:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251106_030000
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[03:00:03] ❌ Failed to create merge branch
+
+=== Branch 9/74: auto/worker-20251102_140015 ===
+[03:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251106_030000
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[03:00:03] ❌ Failed to create merge branch
+
+=== Branch 10/74: auto/worker-20251102_150015 ===
+[03:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251106_030000
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/status_current.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+[03:00:03] ❌ Failed to create merge branch
+[03:00:03] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[03:00:03] Total branches found: 74
+[03:00:03] Branches processed: 10
+[03:00:03] ✅ Successfully merged: 0
+[03:00:03] ⏭️  Skipped (frontend on VM): 0
+[03:00:03] ❌ Failed (conflicts/gates): 10
+[03:00:03] 
+[03:00:03] 📊 Remaining branches: 64
+[03:00:03]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[03:00:03] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251106_030000.log

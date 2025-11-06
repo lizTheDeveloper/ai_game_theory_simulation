@@ -27,11 +27,20 @@ import { GameState } from '@/types/game';
 import { SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '../PhaseOrchestrator';
 import { TippingElement } from '@/types/tipping-points';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import {
+  assertFinite,
+  assertInRange
+} from '@/simulation/utils/assertions';
 
 export class TippingPointPhase implements SimulationPhase {
   id = 'tipping-point-phase';
   name = 'Tipping Point Phase';
   order = 21.6;
+
+  // DEPENDENCIES (Nov 6, 2025): Requires planetary boundary state for tipping trigger detection
+  readonly dependencies = [
+    'planetary_boundaries',     // Order 21.0: Boundary transgression detection
+  ];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const system = state.tippingPointSystem;
@@ -55,10 +64,26 @@ export class TippingPointPhase implements SimulationPhase {
     // Step 4: Apply impacts with regional variation
     this.applyImpacts(state);
 
-    // Update aggregate metrics
+    // Update aggregate metrics (counts are inherently non-negative)
     system.triggeredCount = system.elements.filter(e => e.triggered).length;
     system.completedCount = system.elements.filter(e => e.progress >= 1.0).length;
-    system.totalProgress = system.elements.reduce((sum, e) => sum + e.progress, 0) / system.elements.length;
+    const totalElementProgress = assertFinite(
+      system.elements.reduce((sum, e) => sum + e.progress, 0),
+      {
+        location: 'TippingPointPhase.execute',
+        valueName: 'totalElementProgress',
+        month: state.currentMonth
+      }
+    );
+    system.totalProgress = assertInRange(
+      totalElementProgress / system.elements.length,
+      0, 1,
+      {
+        location: 'TippingPointPhase.execute',
+        valueName: 'system.totalProgress',
+        month: state.currentMonth
+      }
+    );
 
     if (newlyTriggered.length > 0 || system.triggeredCount > 0) {
       console.log(`  Triggered Elements: ${system.triggeredCount}/${system.elements.length}`);
@@ -145,10 +170,26 @@ export class TippingPointPhase implements SimulationPhase {
       const t_mid = transitionTime / 2;
 
       // Sigmoid formula: 1 / (1 + exp(-k * (t - t_mid)))
-      const newProgress = 1 / (1 + Math.exp(-k * (t - t_mid)));
+      const newProgress = assertFinite(
+        1 / (1 + Math.exp(-k * (t - t_mid))),
+        {
+          location: 'TippingPointPhase.updateTransitions',
+          valueName: 'newProgress',
+          month: state.currentMonth,
+          additionalInfo: { elementId: element.id, t, k, t_mid }
+        }
+      );
 
       // Update progress (clamped to [0, 1])
-      element.progress = Math.min(1.0, Math.max(0.0, newProgress));
+      element.progress = assertInRange(
+        Math.min(1.0, Math.max(0.0, newProgress)),
+        0, 1,
+        {
+          location: 'TippingPointPhase.updateTransitions',
+          valueName: `element[${element.id}].progress`,
+          month: state.currentMonth
+        }
+      );
 
       // Log significant milestones
       if (element.monthsSinceTrigger % 120 === 0 || element.progress >= 0.99) {
@@ -181,17 +222,28 @@ export class TippingPointPhase implements SimulationPhase {
     const cascadeCount = activeCascadingElements.length;
 
     // Cascade amplification formula (research-backed, conservative)
+    let cascadeMultiplier: number;
     if (cascadeCount === 0) {
-      system.cascadeMultiplier = 1.0;
+      cascadeMultiplier = 1.0;
     } else if (cascadeCount === 1) {
-      system.cascadeMultiplier = 1.0; // Single element, no cascade
+      cascadeMultiplier = 1.0; // Single element, no cascade
     } else if (cascadeCount === 2) {
-      system.cascadeMultiplier = 1.15; // Synergy between two elements
+      cascadeMultiplier = 1.15; // Synergy between two elements
     } else if (cascadeCount === 3) {
-      system.cascadeMultiplier = 1.35; // Significant positive feedback
+      cascadeMultiplier = 1.35; // Significant positive feedback
     } else {
-      system.cascadeMultiplier = 1.60; // Full cascade scenario (4+ elements)
+      cascadeMultiplier = 1.60; // Full cascade scenario (4+ elements)
     }
+
+    system.cascadeMultiplier = assertInRange(
+      cascadeMultiplier,
+      1.0, 2.0,
+      {
+        location: 'TippingPointPhase.calculateCascades',
+        valueName: 'system.cascadeMultiplier',
+        month: state.currentMonth
+      }
+    );
 
     if (cascadeCount >= 2) {
       console.log(`  Cascade amplification: ${cascadeCount} active elements → ${system.cascadeMultiplier.toFixed(2)}x multiplier`);
@@ -231,6 +283,19 @@ export class TippingPointPhase implements SimulationPhase {
       totalHabitabilityImpact += element.impactHabitability * scaledProgress;
       totalFoodSecurityImpact += element.impactFoodSecurity * scaledProgress;
       totalFreshwaterImpact += element.impactFreshwater * scaledProgress;
+
+      // Debug logging: Track tipping point progress over time
+      // Log every 12 months OR when progress crosses 0.1 threshold
+      const shouldLog = (element.monthsSinceTrigger % 12 === 0) ||
+                        (element.progress > 0.1 && element.progress < 0.11);
+
+      if (shouldLog) {
+        console.log(`  🌍 ${element.name} Progress:`);
+        console.log(`     progress: ${element.progress.toFixed(4)} (0.0-1.0)`);
+        console.log(`     impactClimateStability: ${element.impactClimateStability.toFixed(4)} (raw)`);
+        console.log(`     scaledProgress: ${scaledProgress.toFixed(4)} (after cascade ${system.cascadeMultiplier.toFixed(2)}x)`);
+        console.log(`     contribution: ${(element.impactClimateStability * scaledProgress).toFixed(4)}`);
+      }
     }
 
     // Cap total degradation at 95% (leave 5% baseline)
@@ -242,11 +307,29 @@ export class TippingPointPhase implements SimulationPhase {
 
     // Apply to global metrics
     // Note: These are REDUCTIONS, so we apply as (1 - impact)
-    const oldStability = state.environmentalAccumulation.climateStability;
-    state.environmentalAccumulation.climateStability = Math.max(0.05, oldStability * (1 - totalClimateStabilityImpact * 0.01));
+    const oldStability = assertInRange(
+      state.environmentalAccumulation.climateStability,
+      0, 1,
+      {
+        location: 'TippingPointPhase.applyImpacts',
+        valueName: 'environmentalAccumulation.climateStability (before)',
+        month: state.currentMonth
+      }
+    );
+    state.environmentalAccumulation.climateStability = assertInRange(
+      Math.max(0.05, oldStability * (1 - totalClimateStabilityImpact * 0.01)),
+      0, 1,
+      {
+        location: 'TippingPointPhase.applyImpacts',
+        valueName: 'environmentalAccumulation.climateStability (after)',
+        month: state.currentMonth
+      }
+    );
 
     if (totalClimateStabilityImpact > 0.1) {
-      console.log(`  Climate Stability: ${oldStability.toFixed(3)} → ${state.environmentalAccumulation.climateStability.toFixed(3)}`);
+      console.log(`  🌍 Climate Stability Impact:`);
+      console.log(`     totalClimateStabilityImpact: ${totalClimateStabilityImpact.toFixed(4)} (cumulative)`);
+      console.log(`     Climate Stability: ${oldStability.toFixed(3)} → ${state.environmentalAccumulation.climateStability.toFixed(3)}`);
     }
 
     // Apply to habitability (if tracked separately from QoL)

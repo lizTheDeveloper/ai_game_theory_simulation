@@ -186,7 +186,7 @@ async function runSimulationWithSnapshots(runNumber: number): Promise<StateSnaps
     logLevel: 'none'  // Suppress simulation logs
   });
 
-  const initialState = createDefaultInitialState();
+  const initialState = createDefaultInitialState('balanced', undefined, undefined, undefined, undefined, SEED);
   const snapshots: StateSnapshot[] = [];
 
   // Capture snapshot of initial state

@@ -35,11 +35,19 @@
 **Spec claimed:** IPBES (2024) - 54,000 species baseline
 
 ### Corrected Source
-**Actual source:** Natural History Museum (2024) - PREDICTS database
-- **Species count:** 54,000-58,000 species (updated 2024)
-- **Authority:** PREDICTS project is the gold standard for BII
-- **Methodology:** Global ecological studies across 48,000+ sites, 5 million+ records
-- **Coverage:** Plants, fungi, birds, mammals, insects (not just birds/mammals)
+**Actual source:** Natural History Museum (2024) - PREDICTS database v2.1.1
+- **Species count:** 58,000 species (De Palma et al. 2024)
+- **Authority:** PREDICTS project produces widely-used BII for CBD Framework
+- **Methodology:** Global ecological studies across 48,000+ sites, 4.9M observations
+- **Coverage:** Plants, fungi, birds, mammals, insects (terrestrial ecosystems)
+- **DOI:** https://doi.org/10.5519/k33reyb6
+
+**CRITICAL LIMITATIONS (Sylvia review - Nov 6, 2025):**
+- ⚠️ May OVERESTIMATE intactness by 20-70% in tropical regions (Martin et al. 2019, Nature Ecol Evol)
+- Space-for-time substitution assumes equilibrium (ignores extinction debt)
+- Geographic bias: 30× more European than tropical data
+- Alternative metric (GLOBIO MSA) shows 30-40% lower intactness
+- Uncertainty: ±15% confidence interval on global BII
 
 ### Action Required
 **Update all JSDoc citations** in implementation to reference:
@@ -80,11 +88,48 @@ Two integrated systems extending climate mortality framework:
 - Infrastructure mismatch: PRIMARY mortality driver (up to 3× multiplier)
 
 **BII Framework (Natural History Museum 2024; Richardson et al. 2023):**
-- Species baseline: 54,000-58,000 (PREDICTS database)
+- Species baseline: 58,000 species (PREDICTS v2.1.1, De Palma et al. 2024)
+- Database coverage: 48,000+ sites, 4.9M observations globally
 - Extinction rate: 10-100× background (currently ~10 E/MSY)
 - Background rate: 0.1 E/MSY (natural baseline)
 - Climate velocity: 0.5-10 km/year (species must track)
 - Keystone cascade: 2.5× multiplier (Joshua Tree example - Yoder et al. 2024)
+
+### BII Methodology Limitations
+
+**Verified sources with documented caveats** (see: research/predicts-database-verification_20251106.md, reviews/predicts-citation-critique_20251106.md)
+
+**Known biases to account for (Martin et al. 2019, Nature Ecol Evol):**
+
+1. **Regional accuracy varies** - BII more reliable in well-studied regions (temperate zones, Europe/North America) than data-poor regions (tropical forests, Central Asia, Africa)
+
+2. **Compositional focus** - BII measures abundance + composition, NOT species richness directly. May miss rare species losses while abundant generalists thrive. Can show "improvement" even with biodiversity decline.
+
+3. **Land-use sensitivity** - Classification struggles with:
+   - Plantations vs natural forests (may underestimate impacts in Southeast Asia)
+   - Rangelands vs managed pasture (may overestimate impacts in arid zones like Australia)
+
+4. **Terrestrial only** - No ocean/freshwater biodiversity tracked (PREDICTS database is terrestrial ecosystems)
+
+5. **Sampling bias** - Better coverage of:
+   - Vertebrates (birds/mammals) than invertebrates
+   - Temperate ecosystems than tropical
+   - Near roads/cities/research centers than remote areas
+   - Plants better sampled than fungi/insects
+
+**Mitigation in simulation:**
+- Use BII as abundance/composition proxy, not species richness directly
+- Complement with extinction rate calculations (E/MSY) for species-level tracking
+- Document that BII 90% threshold is conservative estimate (may miss earlier degradation)
+- Consider regional confidence modifiers based on data quality in future versions
+- Acknowledge terrestrial-only scope (marine biodiversity requires separate metrics)
+
+**Why BII despite limitations:**
+- Largest terrestrial biodiversity database globally (58,000 species)
+- Spatially explicit (10km resolution)
+- Actively maintained (2024 update)
+- Policy-relevant (CBD Global Biodiversity Framework indicator)
+- Best available option for spatial ecosystem modeling
 
 ---
 

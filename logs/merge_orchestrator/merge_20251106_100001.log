@@ -1,0 +1,257 @@
+
+=== Merge Orchestrator Started ===
+[10:00:01] Timestamp: Thu Nov  6 10:00:01 UTC 2025
+
+[10:00:01] Dry run: false
+=== Merge Orchestrator Started ===
+[10:00:01] Max branches: 10
+[10:00:01] Environment: VM (backend only)
+
+[10:00:01] Timestamp: Thu Nov  6 10:00:01 UTC 2025
+=== Fetching Latest Changes ===
+[10:00:01] Dry run: false
+[10:00:01] Max branches: 10
+[10:00:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+
+=== Discovering Branches ===
+[10:00:03] Found 84 branches to process
+
+=== Branch 1/84: auto/worker-20251102_043015 ===
+[10:00:03] Found 84 branches to process
+
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251106_100001
+=== Branch 1/84: auto/worker-20251102_043015 ===
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251106_100001
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+[10:00:03] ❌ Failed to create merge branch
+
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+=== Branch 2/84: auto/worker-20251102_050015 ===
+[10:00:03] ❌ Failed to create merge branch
+
+=== Branch 2/84: auto/worker-20251102_050015 ===
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251106_100001
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251106_100001
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+[10:00:03] ❌ Failed to create merge branch
+
+=== Branch 3/84: auto/worker-20251102_080006 ===
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251106_100001
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+[10:00:03] ❌ Failed to create merge branch
+
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+=== Branch 4/84: auto/worker-20251102_090015 ===
+[10:00:03] ❌ Failed to create merge branch
+
+=== Branch 3/84: auto/worker-20251102_080006 ===
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251106_100001
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251106_100001
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+[10:00:03] ❌ Failed to create merge branch
+
+=== Branch 4/84: auto/worker-20251102_090015 ===
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:03] ❌ Failed to create merge branch
+
+=== Branch 5/84: auto/worker-20251102_100015 ===
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251106_100001
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251106_100001
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+[10:00:03] ❌ Failed to create merge branch
+
+=== Branch 6/84: auto/worker-20251102_110015 ===
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:03] ❌ Failed to create merge branch
+
+=== Branch 5/84: auto/worker-20251102_100015 ===
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251106_100001
+[10:00:03] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251106_100001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:04] ❌ Failed to create merge branch
+
+=== Branch 7/84: auto/worker-20251102_120000 ===
+[10:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251106_100001
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+[10:00:04] ❌ Failed to create merge branch
+
+=== Branch 8/84: auto/worker-20251102_130014 ===
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:04] ❌ Failed to create merge branch
+
+=== Branch 6/84: auto/worker-20251102_110015 ===
+[10:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251106_100001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:04] ❌ Failed to create merge branch
+
+=== Branch 9/84: auto/worker-20251102_140015 ===
+[10:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251106_100001
+[10:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251106_100001
+fatal: Unable to create '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+[10:00:04] ❌ Failed to create merge branch
+
+=== Branch 10/84: auto/worker-20251102_150015 ===
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:04] ❌ Failed to create merge branch
+[10:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251106_100001
+
+=== Branch 7/84: auto/worker-20251102_120000 ===
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:04] ❌ Failed to create merge branch
+[10:00:04] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251106_100001
+[10:00:04] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[10:00:04] Total branches found: 84
+[10:00:04] Branches processed: 10
+[10:00:04] ✅ Successfully merged: 0
+[10:00:04] ⏭️  Skipped (frontend on VM): 0
+[10:00:04] ❌ Failed (conflicts/gates): 10
+[10:00:04] 
+[10:00:04] 📊 Remaining branches: 74
+[10:00:04]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:04] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251106_100001.log
+[10:00:04] ❌ Failed to create merge branch
+
+=== Branch 8/84: auto/worker-20251102_130014 ===
+[10:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251106_100001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:05] ❌ Failed to create merge branch
+
+=== Branch 9/84: auto/worker-20251102_140015 ===
+[10:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251106_100001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:05] ❌ Failed to create merge branch
+
+=== Branch 10/84: auto/worker-20251102_150015 ===
+[10:00:05] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251106_100001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/underdocumented.json
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_090001.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[10:00:05] ❌ Failed to create merge branch
+[10:00:05] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[10:00:05] Total branches found: 84
+[10:00:05] Branches processed: 10
+[10:00:05] ✅ Successfully merged: 0
+[10:00:05] ⏭️  Skipped (frontend on VM): 0
+[10:00:05] ❌ Failed (conflicts/gates): 10
+[10:00:05] 
+[10:00:05] 📊 Remaining branches: 74
+[10:00:05]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[10:00:05] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251106_100001.log

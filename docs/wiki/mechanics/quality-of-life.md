@@ -71,7 +71,9 @@ materialAbundance =
   wealthConcentration * 0.15;          // Inequality hurts
 ```
 
-**Range:** 0-2+ (can exceed 1 in post-scarcity)
+**Range:** 0-2 (can exceed 1 in post-scarcity economies)
+
+**Note:** Both `materialAbundance` and `energyAvailability` use [0,2] bounds (not [0,1]) to allow for post-scarcity abundance. Environmental crisis handlers and upward spirals systems intentionally push these metrics >1.0 when technological breakthroughs enable superabundance. Use `assertInRange(value, 0, 2)` for validation, not `assertProbability` ([0,1]).
 
 ### Healthcare Access
 

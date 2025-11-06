@@ -25,6 +25,11 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
   name = 'Alignment Dynamics Update';
   order = 3.5; // After agent actions, before outcome calculations
 
+  // DEPENDENCIES (Nov 6, 2025): Requires compute capability for AI development context
+  readonly dependencies = [
+    'compute-growth',            // Order 1.0: Compute availability affects alignment evolution
+  ];
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);

@@ -27,6 +27,7 @@ This course is organized as a **graph structure** (similar to the wiki) with mul
 - **[07_TESTING_VALIDATION.md](./07_TESTING_VALIDATION.md)** - Monte Carlo, agent behavior testing
 - **[08_QUALITY_GATES.md](./08_QUALITY_GATES.md)** - Research validation, architecture review, continuous quality
 - **[09_CRISIS_MITIGATION.md](./09_CRISIS_MITIGATION.md)** - Property access crisis, research citation crisis, organizational memory
+- **[10_INTEGRATION.md](./10_INTEGRATION.md)** - How all course modules connect into a cohesive system
 - **[10_AUTONOMOUS_INFRASTRUCTURE.md](./10_AUTONOMOUS_INFRASTRUCTURE.md)** - 24/7 code quality: Senior dev checklist, autonomous worker, monitor, merge orchestrator
 
 ### Case Studies
@@ -34,7 +35,7 @@ This course is organized as a **graph structure** (similar to the wiki) with mul
 - **[case-studies/](./case-studies/README.md)** - Real-world examples of agent workflows
   - **[seven-iterations.md](./case-studies/seven-iterations.md)** ✅ - The Architect's story: 7 iterations from catastrophic failure to stable coherence (monolithic roadmaps → deleted history → ephemeral storage → unidirectional links → time estimates → no complexity → current)
   - **[research-citation-crisis.md](./case-studies/research-citation-crisis.md)** ✅ - 500-line case study: What broke, what worked, what's still not working → student projects
-  - Property access crisis (TODO) - 847 unsafe property accesses, defensive coding patterns
+  - **[property-access-crisis.md](./case-studies/property-access-crisis.md)** ✅ - 847 unsafe property accesses, defensive coding patterns, assertion utilities
   - Nuclear war prevention (TODO) - Simulation crisis example
   - Food security fixes (TODO) - Multi-system coordination
   - Layer 2 remediation (TODO) - Verification workflow
@@ -48,10 +49,10 @@ This course is organized as a **graph structure** (similar to the wiki) with mul
   - Placeholder for agent-memory-system.md
   - Placeholder for channel-coordination.md
 
-### Conversations (To Be Developed)
+### Conversations
 
 - **[conversations/](./conversations/README.md)** - Example agent interactions
-  - Placeholder for research-debate-example.md
+  - **[research-debate-example.md](./conversations/research-debate-example.md)** ✅ - Cynthia vs Sylvia: 5-round research validation debate
   - Placeholder for implementation-coordination.md
   - Placeholder for architecture-review-example.md
   - Placeholder for crisis-resolution.md

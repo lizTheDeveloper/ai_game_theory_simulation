@@ -24,6 +24,14 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
   readonly name = 'Extinction Triggers Check';
   readonly order = 37.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Must run after all risk accumulation
+  readonly dependencies = [
+    'bayesian_mortality_resolution',  // Order 35.0: Population mortality resolved
+    'climate_impact_cascade',         // Order 34.0: Climate collapse detection
+    'crisis-detection',               // Order 36.0: Crisis state assessed
+    // NOTE: nuclear_winter order is 252 (AFTER this phase) - not a dependency
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Store previous active status to detect new extinction
     setDeterministicRng(rng);

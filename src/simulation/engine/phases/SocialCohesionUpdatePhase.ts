@@ -42,6 +42,11 @@ export class SocialCohesionUpdatePhase implements SimulationPhase {
   readonly name = 'Social Cohesion Update';
   readonly order = 26.1;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires refugee and population state for displacement effects
+  readonly dependencies = [
+    'refugee_crisis',            // Order 20.6: Displacement affects community bonds
+  ];
+
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Use existing socialAccumulation structure
     setDeterministicRng(rng);

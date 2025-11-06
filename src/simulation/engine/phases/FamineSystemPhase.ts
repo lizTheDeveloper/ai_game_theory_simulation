@@ -21,6 +21,12 @@ export class FamineSystemPhase implements SimulationPhase {
   readonly name = 'Famine System';
   readonly order = 21.5;
 
+  // DEPENDENCIES (Nov 6, 2025): Must run after food security and planetary boundaries
+  readonly dependencies = [
+    'food-security-degradation',  // Order 19.7: Food security baseline
+    'planetary_boundaries',       // Order 21.0: Ecosystem health assessment
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     if (!state.famineSystem) return { events: [] };
     setDeterministicRng(rng);

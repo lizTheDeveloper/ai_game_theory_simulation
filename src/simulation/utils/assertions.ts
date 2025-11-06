@@ -564,3 +564,533 @@ export function assertStateFieldNotModified(
     );
   }
 }
+
+/**
+ * Assert Shock Magnitude (Nov 6, 2025)
+ *
+ * Validates exogenous shock delta values are within plausible ranges.
+ * Used by ExogenousShockPhase for black/gray swan event impacts.
+ *
+ * Shock magnitudes represent delta changes (typically negative for damage):
+ * - Negative values: Damage/reduction (nuclear war reduces social stability)
+ * - Positive values: Benefit/increase (rare, like AGI breakthrough)
+ *
+ * Plausible range: [-1.0, 0.5]
+ * - Lower bound: -1.0 (complete destruction, 100% reduction)
+ * - Upper bound: 0.5 (50% improvement, generous for positive shocks)
+ *
+ * @example
+ * // Nuclear war social stability impact
+ * const delta = assertShockMagnitude(-0.3, {
+ *   location: 'applyNuclearWarShock',
+ *   valueName: 'socialStabilityDelta',
+ *   month: state.currentMonth,
+ *   shockType: 'nuclear_war'
+ * });
+ *
+ * @param value - The shock magnitude delta
+ * @param context - Validation context with optional shockType
+ * @returns The validated value
+ * @throws Error if value is non-finite or outside [-1.0, 0.5]
+ */
+export function assertShockMagnitude(
+  value: number,
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+    shockType?: string;
+  }
+): number {
+  if (!Number.isFinite(value)) {
+    throw new Error(
+      `❌ Non-finite shock magnitude in ${context.location}\n` +
+      `   ${context.valueName} = ${value}\n` +
+      (context.shockType ? `   Shock type: ${context.shockType}\n` : '') +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '')
+    );
+  }
+
+  if (value < -1.0 || value > 0.5) {
+    throw new Error(
+      `❌ Shock magnitude out of plausible range in ${context.location}\n` +
+      `   ${context.valueName} = ${value}\n` +
+      `   Valid range: [-1.0, 0.5]\n` +
+      (context.shockType ? `   Shock type: ${context.shockType}\n` : '') +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Shock magnitudes represent delta changes:\n` +
+      `   - Negative: Damage/reduction (e.g., -0.3 = 30% reduction)\n` +
+      `   - Positive: Benefit/increase (rare, e.g., 0.2 = 20% improvement)\n` +
+      `   Values outside this range indicate a bug in shock calculation.`
+    );
+  }
+
+  return value;
+}
+
+/**
+ * Assert Resource Allocation (Nov 6, 2025)
+ *
+ * Validates resource allocation fractions are in valid [0, 1] range.
+ * Used for budget allocations, capacity utilization, effort distribution.
+ *
+ * @example
+ * const allocation = assertResourceAllocation(budgetFraction, {
+ *   location: 'allocateEmergencyBudget',
+ *   valueName: 'defenseBudgetFraction',
+ *   month: state.currentMonth
+ * });
+ *
+ * @param value - The resource allocation fraction
+ * @param context - Validation context
+ * @returns The validated value
+ * @throws Error if value is non-finite or outside [0, 1]
+ */
+export function assertResourceAllocation(
+  value: number,
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+  }
+): number {
+  if (!Number.isFinite(value)) {
+    throw new Error(
+      `❌ Non-finite resource allocation in ${context.location}\n` +
+      `   ${context.valueName} = ${value}\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '')
+    );
+  }
+
+  if (value < 0 || value > 1) {
+    throw new Error(
+      `❌ Resource allocation out of range in ${context.location}\n` +
+      `   ${context.valueName} = ${value}\n` +
+      `   Valid range: [0, 1]\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Resource allocations must be fractions:\n` +
+      `   - 0.0 = 0% allocated\n` +
+      `   - 1.0 = 100% allocated\n` +
+      `   Values outside [0, 1] indicate a calculation error.`
+    );
+  }
+
+  return value;
+}
+
+/**
+ * Assert Population Change (Nov 6, 2025)
+ *
+ * Validates population changes are physically plausible.
+ * Prevents bugs where population deltas exceed biological/mortality limits.
+ *
+ * Maximum plausible single-month changes:
+ * - Decrease: -50% (catastrophic mortality, like nuclear war)
+ * - Increase: +10% (already generous for birth rates)
+ *
+ * @example
+ * const newPop = calculatePopulationAfterMortality(oldPop, mortalityRate);
+ * const validatedPop = assertPopulationChange(newPop, oldPop, {
+ *   location: 'applyMegaPandemicShock',
+ *   valueName: 'population',
+ *   month: state.currentMonth
+ * });
+ *
+ * @param newValue - New population value
+ * @param oldValue - Previous population value
+ * @param context - Validation context
+ * @returns The validated new value
+ * @throws Error if change exceeds plausible limits
+ */
+export function assertPopulationChange(
+  newValue: number,
+  oldValue: number,
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+  }
+): number {
+  if (!Number.isFinite(newValue)) {
+    throw new Error(
+      `❌ Non-finite population value in ${context.location}\n` +
+      `   ${context.valueName} = ${newValue}\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '')
+    );
+  }
+
+  if (newValue < 0) {
+    throw new Error(
+      `❌ Negative population in ${context.location}\n` +
+      `   ${context.valueName} = ${newValue}\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Population cannot be negative. This indicates a mortality calculation bug.`
+    );
+  }
+
+  // Maximum plausible population decrease: -50% in single month (catastrophic)
+  const maxDecrease = oldValue * 0.5;
+  if (newValue < oldValue - maxDecrease) {
+    throw new Error(
+      `❌ Implausible population decrease in ${context.location}\n` +
+      `   ${context.valueName}: ${oldValue} → ${newValue}\n` +
+      `   Change: ${(newValue - oldValue).toFixed(3)} (${((newValue - oldValue) / oldValue * 100).toFixed(1)}%)\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Maximum plausible decrease: -50% per month (catastrophic mortality)\n` +
+      `   This exceeds historical worst-case scenarios (e.g., Black Death: -40% over 7 years).\n` +
+      `   Check mortality rate calculations for bugs.`
+    );
+  }
+
+  // Maximum plausible population increase: +10% in single month (generous)
+  const maxIncrease = oldValue * 0.1;
+  if (newValue > oldValue + maxIncrease) {
+    throw new Error(
+      `❌ Implausible population increase in ${context.location}\n` +
+      `   ${context.valueName}: ${oldValue} → ${newValue}\n` +
+      `   Change: ${(newValue - oldValue).toFixed(3)} (${((newValue - oldValue) / oldValue * 100).toFixed(1)}%)\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Maximum plausible increase: +10% per month (already very generous)\n` +
+      `   Typical human population growth: ~1.1% per year globally.\n` +
+      `   Check population calculation for bugs (double-counting births?).`
+    );
+  }
+
+  return newValue;
+}
+
+/**
+ * Assert mortality rate is physically plausible
+ *
+ * Validates:
+ * 1. Valid probability range [0, 1]
+ * 2. Physical plausibility: max 50% monthly rate (catastrophic threshold)
+ *
+ * Research: Historical worst cases:
+ * - Black Death: ~40% over 7 years
+ * - Xia et al. 2022 nuclear winter: 75% over decades
+ * - Monthly rate >50% indicates calculation bug
+ *
+ * @throws Error if rate exceeds plausible bounds
+ */
+export function assertMortalityRate(
+  rate: number,
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+    population?: number;
+  }
+): number {
+  // First: Validate it's a probability
+  assertProbability(rate, context);
+
+  // Second: Check physical plausibility
+  if (rate > 0.5) {
+    throw new Error(
+      `❌ Implausible monthly mortality rate in ${context.location}\n` +
+      `   ${context.valueName} = ${(rate * 100).toFixed(2)}%\n` +
+      `   Maximum plausible: 50% per month (catastrophic)\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      (context.population !== undefined ? `   Population: ${context.population}M\n` : '') +
+      `\n` +
+      `   Historical worst cases:\n` +
+      `   - Black Death: ~40% over 7 years (~0.5% monthly average)\n` +
+      `   - Xia et al. 2022 nuclear winter: 75% over decades\n` +
+      `   A single-month rate >50% indicates a calculation bug.`
+    );
+  }
+
+  return rate;
+}
+
+/**
+ * Assert temperature delta is physically plausible
+ *
+ * Validates:
+ * 1. Finite value (not NaN/Infinity)
+ * 2. Physical bounds: [-20°C, +10°C] per month
+ *
+ * Research:
+ * - Max observed warming: ~5°C over decades (PETM)
+ * - Max plausible cooling: ~15°C (nuclear winter, Xia 2022)
+ * - Monthly changes >10°C warming or >20°C cooling indicate bugs
+ *
+ * @throws Error if delta exceeds plausible bounds
+ */
+export function assertTemperatureDelta(
+  delta: number,
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+    cause?: string;
+  }
+): number {
+  assertFinite(delta, context);
+
+  if (delta < -20 || delta > 10) {
+    throw new Error(
+      `❌ Implausible temperature delta in ${context.location}\n` +
+      `   ${context.valueName} = ${delta.toFixed(2)}°C\n` +
+      `   Plausible range: [-20°C, +10°C] per month\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      (context.cause ? `   Cause: ${context.cause}\n` : '') +
+      `\n` +
+      `   Physical plausibility:\n` +
+      `   - Max warming: ~5°C over decades (PETM)\n` +
+      `   - Max cooling: ~15°C (nuclear winter, Xia 2022)\n` +
+      `   Values outside [-20, +10]°C/month indicate calculation bugs.`
+    );
+  }
+
+  return delta;
+}
+
+/**
+ * Assert AI capability level is valid
+ *
+ * Validates:
+ * 1. Finite value
+ * 2. Range: [0, 5] (discrete capability levels)
+ * 3. Integer check (capabilities are discrete, not continuous)
+ *
+ * Capability levels:
+ * 0 = Non-existent, 1 = Basic, 2 = Intermediate, 3 = Advanced,
+ * 4 = Superhuman, 5 = Transformative
+ *
+ * @throws Error if capability is invalid or non-integer
+ */
+export function assertAICapability(
+  capability: number,
+  context: {
+    location: string;
+    valueName: string;
+    agentId?: string;
+    dimension?: string;
+  }
+): number {
+  assertFinite(capability, context);
+
+  if (capability < 0 || capability > 5) {
+    throw new Error(
+      `❌ AI capability out of range in ${context.location}\n` +
+      `   ${context.valueName} = ${capability}\n` +
+      `   Valid range: [0, 5]\n` +
+      (context.agentId ? `   Agent: ${context.agentId}\n` : '') +
+      (context.dimension ? `   Dimension: ${context.dimension}\n` : '') +
+      `\n` +
+      `   Capability levels: 0=None, 1=Basic, 2=Intermediate,\n` +
+      `   3=Advanced, 4=Superhuman, 5=Transformative`
+    );
+  }
+
+  // Capabilities are discrete levels (0, 1, 2, 3, 4, 5)
+  if (!Number.isInteger(capability)) {
+    throw new Error(
+      `❌ AI capability must be integer in ${context.location}\n` +
+      `   ${context.valueName} = ${capability}\n` +
+      `   Expected: Integer in [0, 5]\n` +
+      (context.agentId ? `   Agent: ${context.agentId}\n` : '') +
+      (context.dimension ? `   Dimension: ${context.dimension}\n` : '') +
+      `\n` +
+      `   Capabilities use discrete levels, not continuous values.`
+    );
+  }
+
+  return capability;
+}
+
+/**
+ * Assert planetary boundary value is within safe operating space
+ *
+ * Validates boundary-specific ranges based on Earth system science.
+ *
+ * Boundary types and safe operating spaces:
+ * - co2: [280, 1000] ppm (pre-industrial to RCP8.5 extreme, updated Nov 6, 2025)
+ * - temperature: [-2, 10] °C above baseline
+ * - oceanPH: [7.5, 8.5] pH units (updated Nov 6, 2025, projected minimum under extreme scenarios)
+ * - biodiversity: [0, 1] normalized
+ * - nitrogen: [0, 200] Tg N/yr
+ * - phosphorus: [0, 50] Tg P/yr
+ *
+ * Research: Rockström et al. 2009, Steffen et al. 2015, IPCC AR6 RCP8.5/SSP5-8.5
+ *
+ * @throws Error if value exceeds boundary-specific safe operating space
+ */
+export function assertPlanetaryBoundary(
+  value: number,
+  boundaryType: 'co2' | 'temperature' | 'oceanPH' | 'biodiversity' | 'nitrogen' | 'phosphorus',
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+  }
+): number {
+  assertFinite(value, context);
+
+  const BOUNDARY_RANGES: Record<string, { min: number; max: number; unit: string }> = {
+    co2: { min: 280, max: 1000, unit: 'ppm' },  // Updated Nov 6, 2025: RCP8.5 reaches 900-936 ppm by 2100
+    temperature: { min: -2, max: 10, unit: '°C above baseline' },
+    oceanPH: { min: 7.5, max: 8.5, unit: 'pH' },  // Updated Nov 6, 2025: Projected minimum ~7.5 under extreme scenarios
+    biodiversity: { min: 0, max: 1, unit: 'normalized' },
+    nitrogen: { min: 0, max: 200, unit: 'Tg N/yr' },
+    phosphorus: { min: 0, max: 50, unit: 'Tg P/yr' }
+  };
+
+  const range = BOUNDARY_RANGES[boundaryType];
+  if (!range) {
+    throw new Error(
+      `❌ Unknown planetary boundary type: ${boundaryType}\n` +
+      `   Valid types: co2, temperature, oceanPH, biodiversity, nitrogen, phosphorus`
+    );
+  }
+
+  if (value < range.min || value > range.max) {
+    throw new Error(
+      `❌ Planetary boundary out of range in ${context.location}\n` +
+      `   ${context.valueName} = ${value} ${range.unit}\n` +
+      `   Safe operating space: [${range.min}, ${range.max}] ${range.unit}\n` +
+      `   Boundary type: ${boundaryType}\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Values outside safe operating space indicate:\n` +
+      `   - Calculation bug (NaN propagation)\n` +
+      `   - Implausible state transition\n` +
+      `   - Missing boundary enforcement logic\n` +
+      `\n` +
+      `   Research: Rockström et al. 2009, Steffen et al. 2015`
+    );
+  }
+
+  return value;
+}
+
+/**
+ * Assert population value is physically plausible
+ *
+ * Validates:
+ * 1. Finite value
+ * 2. Non-negative (populations cannot be negative)
+ * 3. Regional maximum: 1000 million (1 billion per region)
+ *
+ * Note: For global population, use assertInRange with higher bounds.
+ * This validator is for regional/demographic segment populations.
+ *
+ * @throws Error if population is invalid or implausible
+ */
+export function assertPopulationMillion(
+  value: number,
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+    region?: string;
+  }
+): number {
+  assertFinite(value, context);
+
+  if (value < 0) {
+    throw new Error(
+      `❌ Negative population in ${context.location}\n` +
+      `   ${context.valueName} = ${value} million\n` +
+      `   Populations cannot be negative.\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      (context.region ? `   Region: ${context.region}\n` : '') +
+      `\n` +
+      `   This indicates a mortality or migration calculation bug.`
+    );
+  }
+
+  // Sanity check: No single region should exceed 1 billion (1000 million)
+  // (For global population, use assertInRange with higher bounds)
+  if (value > 1000) {
+    throw new Error(
+      `❌ Implausible regional population in ${context.location}\n` +
+      `   ${context.valueName} = ${value} million (${(value / 1000).toFixed(1)} billion)\n` +
+      `   Maximum plausible per region: 1000 million (1 billion)\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      (context.region ? `   Region: ${context.region}\n` : '') +
+      `\n` +
+      `   Current world regions (2025):\n` +
+      `   - Asia: ~4.7 billion\n` +
+      `   - Africa: ~1.4 billion\n` +
+      `   - Europe: ~750 million\n` +
+      `\n` +
+      `   If modeling global population, use assertInRange(value, 0, 10000, context).\n` +
+      `   If this is a sub-region, check population calculation for bugs.`
+    );
+  }
+
+  return value;
+}
+
+/**
+ * Assert economic metric value is plausible
+ *
+ * Validates boundary-specific ranges for economic state mutations.
+ *
+ * Metric types and plausible ranges:
+ * - gdp: [0, 500] trillion USD (updated Nov 6, 2025: global GDP ~114T in 2025, accommodates 2% growth to 2100)
+ * - spending: [0, 50] trillion USD/year (government spending)
+ * - taxation: [0, 1] as fraction of GDP
+ * - deficit: [-10, 10] trillion USD (annual deficit/surplus)
+ * - growthRate: [-0.5, 0.5] monthly change (±50% is catastrophic)
+ *
+ * @throws Error if economic metric exceeds plausible bounds
+ */
+export function assertEconomicMetric(
+  value: number,
+  metricType: 'gdp' | 'spending' | 'taxation' | 'deficit' | 'growthRate',
+  context: {
+    location: string;
+    valueName: string;
+    month?: number;
+  }
+): number {
+  assertFinite(value, context);
+
+  const ECONOMIC_RANGES: Record<string, { min: number; max: number; unit: string }> = {
+    gdp: { min: 0, max: 500, unit: 'trillion USD' },  // Updated Nov 6, 2025: 75-year simulation, 2% growth → ~510T by 2100
+    spending: { min: 0, max: 50, unit: 'trillion USD/year' },
+    taxation: { min: 0, max: 1, unit: 'fraction of GDP' },
+    deficit: { min: -10, max: 10, unit: 'trillion USD' },
+    growthRate: { min: -0.5, max: 0.5, unit: 'monthly change' }
+  };
+
+  const range = ECONOMIC_RANGES[metricType];
+  if (!range) {
+    throw new Error(
+      `❌ Unknown economic metric type: ${metricType}\n` +
+      `   Valid types: gdp, spending, taxation, deficit, growthRate`
+    );
+  }
+
+  if (value < range.min || value > range.max) {
+    throw new Error(
+      `❌ Economic metric out of range in ${context.location}\n` +
+      `   ${context.valueName} = ${value} ${range.unit}\n` +
+      `   Plausible range: [${range.min}, ${range.max}] ${range.unit}\n` +
+      `   Metric type: ${metricType}\n` +
+      (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
+      `\n` +
+      `   Values outside plausible range indicate:\n` +
+      `   - Calculation bug (NaN propagation, unit mismatch)\n` +
+      `   - Implausible economic transition\n` +
+      `   - Missing constraint enforcement\n` +
+      `\n` +
+      `   For reference (2025-2100):\n` +
+      `   - Global GDP 2025: ~$114 trillion (IMF April 2025)\n` +
+      `   - US GDP 2025: ~$25 trillion\n` +
+      `   - 2% annual growth to 2100: ~$510 trillion\n` +
+      `   - Typical government spending: 20-40% of GDP`
+    );
+  }
+
+  return value;
+}

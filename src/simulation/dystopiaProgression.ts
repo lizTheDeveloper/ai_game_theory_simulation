@@ -10,6 +10,7 @@
 import { GameState } from '@/types/game';
 import type { RNGFunction } from '@/types/config';
 import { calculateAverageAlignment } from './utils/ai';
+import { assertProbability, assertInRange } from './utils/assertions';
 
 /**
  * Update government control response based on AI threat level
@@ -31,13 +32,23 @@ export function updateGovernmentControlResponse(state: GameState, rng: RNGFuncti
     // Significant control gap → emergency surveillance measures
     const surveillanceIncrease = Math.min(0.05, controlGap * 0.02); // Up to +0.05/month
     const oldSurveillance = state.government.structuralChoices.surveillanceLevel;
-    state.government.structuralChoices.surveillanceLevel = Math.min(1.0,
-      oldSurveillance + surveillanceIncrease
+    state.government.structuralChoices.surveillanceLevel = assertProbability(
+      Math.min(1.0, oldSurveillance + surveillanceIncrease),
+      {
+        location: 'surveillanceEscalation',
+        valueName: 'surveillanceLevel',
+        month: state.currentMonth
+      }
     );
-    
+
     // Control desire also increases (fear-driven)
-    state.government.controlDesire = Math.min(1.0,
-      state.government.controlDesire + surveillanceIncrease * 0.5
+    state.government.controlDesire = assertProbability(
+      Math.min(1.0, state.government.controlDesire + surveillanceIncrease * 0.5),
+      {
+        location: 'surveillanceEscalation_controlDesire',
+        valueName: 'controlDesire',
+        month: state.currentMonth
+      }
     );
     
     // Log significant surveillance increases
@@ -57,18 +68,44 @@ export function updateGovernmentControlResponse(state: GameState, rng: RNGFuncti
       console.log(`   🏛️  AUTHORITARIAN TRANSITION (AI Threat): Government shifts to authoritarian control (AI capability: ${maxAICapability.toFixed(2)}, alignment: ${avgAlignment.toFixed(2)})`);
       
       state.government.governmentType = 'authoritarian';
-      
+
       // Immediate control escalation
-      state.government.controlDesire = Math.min(1.0, state.government.controlDesire + 0.3);
-      state.government.structuralChoices.surveillanceLevel = Math.min(1.0,
-        state.government.structuralChoices.surveillanceLevel + 0.3
+      state.government.controlDesire = assertProbability(
+        Math.min(1.0, state.government.controlDesire + 0.3),
+        {
+          location: 'authTransition_controlDesire',
+          valueName: 'controlDesire',
+          month: state.currentMonth
+        }
       );
-      
+      state.government.structuralChoices.surveillanceLevel = assertProbability(
+        Math.min(1.0, state.government.structuralChoices.surveillanceLevel + 0.3),
+        {
+          location: 'authTransition_surveillance',
+          valueName: 'surveillanceLevel',
+          month: state.currentMonth
+        }
+      );
+
       // Legitimacy hit (controversial transition)
-      state.government.legitimacy = Math.max(0.3, state.government.legitimacy - 0.2);
-      
+      state.government.legitimacy = assertProbability(
+        Math.max(0.3, state.government.legitimacy - 0.2),
+        {
+          location: 'authTransition_legitimacy',
+          valueName: 'legitimacy',
+          month: state.currentMonth
+        }
+      );
+
       // Social stability crisis
-      state.globalMetrics.socialStability = Math.max(0.2, state.globalMetrics.socialStability - 0.3);
+      state.globalMetrics.socialStability = assertProbability(
+        Math.max(0.2, state.globalMetrics.socialStability - 0.3),
+        {
+          location: 'authTransition_stability',
+          valueName: 'socialStability',
+          month: state.currentMonth
+        }
+      );
     }
   }
   
@@ -105,14 +142,21 @@ export function updateGovernmentControlResponse(state: GameState, rng: RNGFuncti
         state.government.governmentType = 'authoritarian';
         
         // Emergency powers: Immediate surveillance + control
-        state.government.controlDesire = Math.min(1.0, state.government.controlDesire + 0.4);
-        state.government.structuralChoices.surveillanceLevel = Math.min(1.0,
-          state.government.structuralChoices.surveillanceLevel + 0.4
+        state.government.controlDesire = assertProbability(
+          Math.min(1.0, state.government.controlDesire + 0.4),
+          { location: 'crisisAuth_controlDesire', valueName: 'controlDesire', month: state.currentMonth }
         );
-        
+        state.government.structuralChoices.surveillanceLevel = assertProbability(
+          Math.min(1.0, state.government.structuralChoices.surveillanceLevel + 0.4),
+          { location: 'crisisAuth_surveillance', valueName: 'surveillanceLevel', month: state.currentMonth }
+        );
+
         // Paradox: Legitimacy may INCREASE initially (crisis response)
         // but long-term it decays
-        state.government.legitimacy = Math.min(0.7, state.government.legitimacy + 0.1);
+        state.government.legitimacy = assertProbability(
+          Math.min(0.7, state.government.legitimacy + 0.1),
+          { location: 'crisisAuth_legitimacy', valueName: 'legitimacy', month: state.currentMonth }
+        );
         
         // DYSTOPIA LOCK-IN: Now can't research social tech to resolve crises!
         console.warn(`      ⚠️  DYSTOPIA LOCK-IN: Authoritarian regime will struggle to resolve social crises`);
@@ -130,23 +174,27 @@ export function updateGovernmentControlResponse(state: GameState, rng: RNGFuncti
     const decayRate = surveillance * 0.02; // Up to 2%/month at max surveillance
     
     // Direct impact on political freedom
-    state.qualityOfLifeSystems.politicalFreedom = Math.max(0, 
-      state.qualityOfLifeSystems.politicalFreedom - decayRate
+    state.qualityOfLifeSystems.politicalFreedom = assertProbability(
+      Math.max(0, state.qualityOfLifeSystems.politicalFreedom - decayRate),
+      { location: 'surveillance_politicalFreedom', valueName: 'politicalFreedom', month: state.currentMonth }
     );
-    
+
     // Direct impact on autonomy
-    state.qualityOfLifeSystems.autonomy = Math.max(0,
-      state.qualityOfLifeSystems.autonomy - decayRate * 0.8
+    state.qualityOfLifeSystems.autonomy = assertProbability(
+      Math.max(0, state.qualityOfLifeSystems.autonomy - decayRate * 0.8),
+      { location: 'surveillance_autonomy', valueName: 'autonomy', month: state.currentMonth }
     );
-    
+
     // Privacy concerns reduce psychological well-being
-    state.qualityOfLifeSystems.mentalHealth = Math.max(0,
-      state.qualityOfLifeSystems.mentalHealth - decayRate * 0.5
+    state.qualityOfLifeSystems.mentalHealth = assertProbability(
+      Math.max(0, state.qualityOfLifeSystems.mentalHealth - decayRate * 0.5),
+      { location: 'surveillance_mentalHealth', valueName: 'mentalHealth', month: state.currentMonth }
     );
-    
+
     // Community strength erodes (surveillance breeds paranoia)
-    state.qualityOfLifeSystems.communityStrength = Math.max(0,
-      state.qualityOfLifeSystems.communityStrength - decayRate * 0.6
+    state.qualityOfLifeSystems.communityStrength = assertProbability(
+      Math.max(0, state.qualityOfLifeSystems.communityStrength - decayRate * 0.6),
+      { location: 'surveillance_communityStrength', valueName: 'communityStrength', month: state.currentMonth }
     );
   }
   
@@ -154,31 +202,37 @@ export function updateGovernmentControlResponse(state: GameState, rng: RNGFuncti
   
   if (state.government.governmentType === 'authoritarian' && state.qualityOfLifeSystems) {
     // Persistent erosion of freedom and trust
-    state.qualityOfLifeSystems.politicalFreedom = Math.max(0, 
-      state.qualityOfLifeSystems.politicalFreedom * 0.995 // -0.5%/month
+    state.qualityOfLifeSystems.politicalFreedom = assertProbability(
+      Math.max(0, state.qualityOfLifeSystems.politicalFreedom * 0.995), // -0.5%/month
+      { location: 'authRegime_politicalFreedom', valueName: 'politicalFreedom', month: state.currentMonth }
     );
-    state.qualityOfLifeSystems.communityStrength = Math.max(0, 
-      state.qualityOfLifeSystems.communityStrength * 0.998 // -0.2%/month
+    state.qualityOfLifeSystems.communityStrength = assertProbability(
+      Math.max(0, state.qualityOfLifeSystems.communityStrength * 0.998), // -0.2%/month
+      { location: 'authRegime_communityStrength', valueName: 'communityStrength', month: state.currentMonth }
     );
     
     // Economic efficiency decline (authoritarianism → corruption, inefficiency)
-    state.globalMetrics.manufacturingCapability = Math.max(0.5,
-      state.globalMetrics.manufacturingCapability * 0.999 // -0.1%/month
+    state.globalMetrics.manufacturingCapability = assertInRange(
+      Math.max(0.5, state.globalMetrics.manufacturingCapability * 0.999), // -0.1%/month
+      0, 10,
+      { location: 'authRegime_manufacturing', valueName: 'manufacturingCapability', month: state.currentMonth }
     );
   }
-  
+
   // === CONTROL BACKLASH ===
-  
+
   // Very high control + low legitimacy → instability (oppression breeds resistance)
   if (state.government.controlDesire > 0.8 && state.government.legitimacy < 0.4) {
     // Public resentment of oppressive government
-    state.globalMetrics.socialStability = Math.max(0.1,
-      state.globalMetrics.socialStability - 0.01
+    state.globalMetrics.socialStability = assertProbability(
+      Math.max(0.1, state.globalMetrics.socialStability - 0.01),
+      { location: 'controlBacklash_stability', valueName: 'socialStability', month: state.currentMonth }
     );
-    
+
     // Further legitimacy erosion
-    state.government.legitimacy = Math.max(0.1,
-      state.government.legitimacy - 0.005
+    state.government.legitimacy = assertProbability(
+      Math.max(0.1, state.government.legitimacy - 0.005),
+      { location: 'controlBacklash_legitimacy', valueName: 'legitimacy', month: state.currentMonth }
     );
   }
 }

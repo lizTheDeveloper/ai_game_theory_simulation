@@ -1,0 +1,145 @@
+
+=== Merge Orchestrator Started ===
+[16:30:01] Timestamp: Thu Nov  6 16:30:01 UTC 2025
+[16:30:01] Dry run: false
+[16:30:01] Max branches: 10
+[16:30:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[16:30:02] Found 90 branches to process
+
+=== Branch 1/90: auto/worker-20251102_043015 ===
+[16:30:02] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251106_163001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_160001.log
+	plans/MASTER_IMPLEMENTATION_ROADMAP.md
+	research/state_validation_and_dependencies_20251106.md
+	src/simulation/utils/assertions.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[16:30:02] ❌ Failed to create merge branch
+
+=== Branch 2/90: auto/worker-20251102_050015 ===
+[16:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251106_163001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_160001.log
+	plans/MASTER_IMPLEMENTATION_ROADMAP.md
+	research/state_validation_and_dependencies_20251106.md
+	src/simulation/utils/assertions.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[16:30:03] ❌ Failed to create merge branch
+
+=== Branch 3/90: auto/worker-20251102_080006 ===
+[16:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251106_163001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_160001.log
+	plans/MASTER_IMPLEMENTATION_ROADMAP.md
+	research/state_validation_and_dependencies_20251106.md
+	src/simulation/utils/assertions.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[16:30:03] ❌ Failed to create merge branch
+
+=== Branch 4/90: auto/worker-20251102_090015 ===
+[16:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251106_163001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_160001.log
+	plans/MASTER_IMPLEMENTATION_ROADMAP.md
+	research/state_validation_and_dependencies_20251106.md
+	src/simulation/utils/assertions.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[16:30:03] ❌ Failed to create merge branch
+
+=== Branch 5/90: auto/worker-20251102_100015 ===
+[16:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251106_163001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_160001.log
+	plans/MASTER_IMPLEMENTATION_ROADMAP.md
+	research/state_validation_and_dependencies_20251106.md
+	src/simulation/utils/assertions.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[16:30:03] ❌ Failed to create merge branch
+
+=== Branch 6/90: auto/worker-20251102_110015 ===
+[16:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251106_163001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_160001.log
+	plans/MASTER_IMPLEMENTATION_ROADMAP.md
+	research/state_validation_and_dependencies_20251106.md
+	src/simulation/utils/assertions.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[16:30:03] ❌ Failed to create merge branch
+
+=== Branch 7/90: auto/worker-20251102_120000 ===
+[16:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251106_163001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_160001.log
+	plans/MASTER_IMPLEMENTATION_ROADMAP.md
+	research/state_validation_and_dependencies_20251106.md
+	src/simulation/utils/assertions.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[16:30:03] ❌ Failed to create merge branch
+
+=== Branch 8/90: auto/worker-20251102_130014 ===
+[16:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251106_163001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_160001.log
+	plans/MASTER_IMPLEMENTATION_ROADMAP.md
+	research/state_validation_and_dependencies_20251106.md
+	src/simulation/utils/assertions.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[16:30:03] ❌ Failed to create merge branch
+
+=== Branch 9/90: auto/worker-20251102_140015 ===
+[16:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251106_163001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_160001.log
+	plans/MASTER_IMPLEMENTATION_ROADMAP.md
+	research/state_validation_and_dependencies_20251106.md
+	src/simulation/utils/assertions.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[16:30:03] ❌ Failed to create merge branch
+
+=== Branch 10/90: auto/worker-20251102_150015 ===
+[16:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_150015_20251106_163001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/worker_20251106_160001.log
+	plans/MASTER_IMPLEMENTATION_ROADMAP.md
+	research/state_validation_and_dependencies_20251106.md
+	src/simulation/utils/assertions.ts
+Please commit your changes or stash them before you switch branches.
+Aborting
+[16:30:03] ❌ Failed to create merge branch
+[16:30:03] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[16:30:03] Total branches found: 90
+[16:30:03] Branches processed: 10
+[16:30:03] ✅ Successfully merged: 0
+[16:30:03] ⏭️  Skipped (frontend on VM): 0
+[16:30:03] ❌ Failed (conflicts/gates): 10
+[16:30:03] 
+[16:30:03] 📊 Remaining branches: 80
+[16:30:03]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[16:30:03] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251106_163001.log

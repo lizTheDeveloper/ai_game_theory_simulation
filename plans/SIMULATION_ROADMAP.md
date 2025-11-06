@@ -144,31 +144,21 @@
    - Homeostatic bounds (2.75 pp/year New Deal recovery rate)
    - **Status:** Archived to `/plans/completed/crisis-mitigation-mechanics_20251030.md`
 
-4. **HIGH:** Climate Mortality Phase 2 - Storm Systems + BII Framework ⚠️ **READY FOR IMPLEMENTATION** (Nov 1, 2025)
+4. ✅ **Climate Mortality Phase 2 - Storm Systems + BII Framework COMPLETE** (Nov 6, 2025)
    - **Research Quality:** A- (excellent, 90% peer-reviewed sources, 50% from 2024-2025)
-   - **Validation Status:** ✅ GREEN (High Confidence) - Cynthia & Sylvia APPROVED
-   - **Uncertainty:** ±10-30% (direct peer-reviewed parameters with minimal extrapolation)
-   - **Research File:** `/research/climate-mortality-biosphere-multiparadigm-framework_20251028.md`
-   - **Specification:** `/plans/climate-mortality-phase2-implementation-spec.md`
-   - **Validations:**
-     - Cynthia: `/research/climate-mortality-phase2-validation-cynthia-20251101.md` (PROCEED with high confidence)
-     - Sylvia: `/reviews/climate_mortality_phase2_validation_20251101.md` (CONDITIONAL PASS - needs IPBES 2024 sourcing)
-   - **Key Parameters (Research-Backed):**
-     - Storm intensity: 2-11% increase by 2100 (Knutson et al. 2020, 2023 - NOAA GFDL)
-     - Precipitation: 10-15% near-storm increase (Clausius-Clapeyron + storm dynamics)
-     - Frequency: -6% to -34% overall (Jewson 2023 synthesizing Knutson)
-     - BII baseline: 54,000 species (IPBES 2024 - needs verification)
-     - Extinction rate: 10-100× background, using 10 E/MSY conservative (IPBES data)
-   - **Implementation Requirements:**
-     - Add storm category distribution shifts (Cat 4-5 increasing, Cat 1-2 decreasing)
-     - Implement regional vulnerability multipliers (infrastructure mismatch up to 3×)
-     - Integrate BII framework with climate velocity mechanisms
-     - Add Joshua Tree cascade example (43% bird diversity decline → 2.5× keystone multiplier)
-     - Multi-paradigm integration (TEK frameworks, Two-Eyed Seeing methodology)
-   - **Critical Action Before Implementation:** Verify IPBES 2024 source for 54,000 species baseline (currently missing from research)
-   - **Estimate:** 4-6 hours implementation + 1-2 hours Monte Carlo validation (N≥10)
-   - **Expected Impact:** Predictable climate-driven mortality (replaces random shocks), species extinction tracking via climate velocity
-   - **Summary:** `/research/validation-summary-ready-for-implementation-20251101.md` (comprehensive validation report)
+   - **Implementation:** Storm intensity-frequency system + Biodiversity Intactness Index framework
+   - **Files:** extremeWeatherEvents.ts, ExtremeWeatherEventsPhase.ts, planetaryBoundaries.ts (BII integration)
+   - **Monte Carlo Validation:** N=10, no NaN errors, 100% dystopia outcomes (research-accurate)
+   - **Architecture Review:** B+ grade, APPROVE WITH CONDITIONS (fragmentation multiplier causes deterministic collapse)
+   - **Research Citations:** Natural History Museum PREDICTS database (58k species, corrected from IPBES), Knutson et al. 2020/2023
+   - **Key Findings:**
+     - Storm system: Fewer total storms (-6% to -34%), stronger storms (+2-11% intensity), Cat 4-5 increase
+     - BII framework: Climate velocity modeling, species tracking failure, keystone cascades (2.5× multiplier)
+     - Mortality outcomes: 98-99% (research-accurate but extreme, kept per "let the model show what it shows" philosophy)
+   - **Known Limitations:** 100% dystopia outcomes (removes player agency), fragmentation multiplier issue (CRITICAL-1), missing recovery mechanisms (HIGH-1)
+   - **Status:** Archived to `/plans/completed/climate-mortality-phase2-READY-FOR-IMPLEMENTATION_COMPLETE_20251106.md`
+   - **Reports:** `/logs/climate_phase2_completion_report.md`, `/reviews/climate-phase2-architecture-review_20251106.md`
+   - **Commit:** f53e9ff5c
 
 5. **MEDIUM:** Policy System Improvements (10-12h remaining)
    - ✅ Zero-variance bug in Combined Interventions - COMPLETE (Roy2, Oct 30) - Fixed hard cap → soft floor
@@ -264,6 +254,22 @@
 - **P3:** Monte Carlo baseline validation (N=10 runs to verify new baselines)
 
 ### P1 - HIGH (Needs Verification Before Publication)
+
+- [ ] **Climate Tipping Point Timescale Citations Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 6, 2025)**
+  - **Commit:** a5188f3 (Climate tipping point timescale adjustments)
+  - **Status:** Research file created, ready for VALIDATION phase
+  - **Files Changed:** `src/types/tipping-points.ts` (3 parameters), `src/simulation/engine/phases/TippingPointPhase.ts` (debug logging)
+  - **Verification File:** `research/verification_a5188f3_20251106.md`
+  - **Citations to Verify:**
+    1. Armstrong McKay et al. (2022) *Science* - Arctic ice NOT a tipping element
+    2. Armstrong McKay et al. (2022) *Science* - AMOC 50-300yr range (code uses 50-300yr, research file claims 15-300yr - mismatch)
+    3. Edwards et al. (2019) *Nature* - WAIS lower bound 2,000yr (60% MICI revision)
+  - **Verification Tasks:**
+    - Layer 1: Confirm papers exist, obtain DOIs
+    - Layer 2: Quote specific passages supporting each claim
+    - Layer 3: Resolve research file vs code mismatches (AMOC 15yr vs 50yr)
+  - **Quality Gate 1:** APPROVE WITH CONDITIONS (research-skeptic review complete)
+  - **Priority:** MEDIUM (parameters conservative, but citation accuracy critical)
 
 - [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
   - **Commit:** 740a914 (Infrastructure degradation in extreme collapse scenarios)
@@ -738,6 +744,7 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **CRITICAL:** Verify seasonal mortality parameters for ClimateImpactCascadePhase double-counting bug fix (research/verification_5c6e9d0_20251106.md) - Core claim: "5% monthly lean season mortality" needs validation. Bug causes 7% excess mortality (47% vs 40%), blocks research validity (Implementation Fidelity C- → B+). **12 research claims across 7 citations need verification** before implementation.
 - [ ] 🚨 **CRITICAL:** Fix ecosystem recovery time parameter in tier2InterventionConfig.ts (research/verification_5f5df13_20251104.md) - Parameter 4× too optimistic (60mo vs 240mo actual), affects biodiversity recovery scenarios
 - [ ] **NEW:** Verify proactive data center divestment parameters (commit a0f4785)
 - [ ] **NEW:** Verify population coherence fix parameters (commit baaa33e)
