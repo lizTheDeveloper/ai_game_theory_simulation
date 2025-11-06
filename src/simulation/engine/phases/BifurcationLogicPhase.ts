@@ -67,10 +67,28 @@ export class BifurcationLogicPhase implements SimulationPhase {
     const proximities = new Map();
 
     // Environmental collapse threshold
-    const envHealth = assertStateProperty(state, 'globalMetrics.environmentalHealth', {
+    // Calculate environmental health from environmentalAccumulation metrics
+    // (geometric mean of positive metrics: climateStability, biodiversityIndex, resourceReserves)
+    const climateStability = assertStateProperty(state.environmentalAccumulation, 'climateStability', {
       location: 'BifurcationLogicPhase.calculateProximities',
       month: state.currentMonth,
     });
+    const biodiversityIndex = assertStateProperty(state.environmentalAccumulation, 'biodiversityIndex', {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      month: state.currentMonth,
+    });
+    const resourceReserves = assertStateProperty(state.environmentalAccumulation, 'resourceReserves', {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      month: state.currentMonth,
+    });
+    const pollutionLevel = assertStateProperty(state.environmentalAccumulation, 'pollutionLevel', {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      month: state.currentMonth,
+    });
+
+    // Environmental health: geometric mean of positive metrics × (1 - pollution)
+    // Higher = healthier environment
+    const envHealth = Math.pow(climateStability * biodiversityIndex * resourceReserves * (1 - pollutionLevel), 0.25);
     const envHealthFinite = assertFinite(envHealth, {
       location: 'BifurcationLogicPhase.calculateProximities',
       valueName: 'environmentalHealth',
@@ -84,7 +102,9 @@ export class BifurcationLogicPhase implements SimulationPhase {
     });
 
     // Social breakdown threshold
-    const socialCohesion = assertStateProperty(state, 'globalMetrics.socialCohesion', {
+    // Use society.coordinationCapacity as proxy for social cohesion
+    // (Higher coordination = stronger social bonds)
+    const socialCohesion = assertStateProperty(state.society, 'coordinationCapacity', {
       location: 'BifurcationLogicPhase.calculateProximities',
       month: state.currentMonth,
     });
@@ -101,10 +121,18 @@ export class BifurcationLogicPhase implements SimulationPhase {
     });
 
     // Economic collapse threshold
-    const economicStability = assertStateProperty(state, 'globalMetrics.economicStability', {
+    // Use combination of economicTransitionStage (progress) and wealthDistribution (equity)
+    // Higher stage + higher equity = more stable economy
+    const economicStage = assertStateProperty(state.globalMetrics, 'economicTransitionStage', {
       location: 'BifurcationLogicPhase.calculateProximities',
       month: state.currentMonth,
     });
+    const wealthDist = assertStateProperty(state.globalMetrics, 'wealthDistribution', {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      month: state.currentMonth,
+    });
+    // Normalize economicStage to [0,1] (from [0,4]) and average with wealthDistribution
+    const economicStability = (economicStage / 4.0 + wealthDist) / 2.0;
     const economicStabilityFinite = assertFinite(economicStability, {
       location: 'BifurcationLogicPhase.calculateProximities',
       valueName: 'economicStability',
@@ -118,7 +146,9 @@ export class BifurcationLogicPhase implements SimulationPhase {
     });
 
     // Governance failure threshold
-    const governanceEffectiveness = assertStateProperty(state, 'globalMetrics.governanceEffectiveness', {
+    // Use government.legitimacy as proxy for governance effectiveness
+    // (Higher legitimacy = more effective governance)
+    const governanceEffectiveness = assertStateProperty(state.government, 'legitimacy', {
       location: 'BifurcationLogicPhase.calculateProximities',
       month: state.currentMonth,
     });

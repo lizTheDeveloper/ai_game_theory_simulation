@@ -19,7 +19,7 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { getTechDeploymentSafe } from '../../techTree/helpers';
-import { assertStateProperty } from '@/simulation/utils/assertions';
+import { assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
@@ -691,8 +691,21 @@ export class ExogenousShockPhase implements SimulationPhase {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
 
-    // BLACK SWAN: 0.1% per month (~1% per year)
-    if (rng() < 0.001) {
+    // === BIFURCATION VARIANCE AMPLIFICATION ===
+    // Near critical thresholds → 10× variance amplification
+    // Far from thresholds → 1× (no effect)
+    // This creates path-dependent Monte Carlo trajectories
+    const varianceAmp = assertFinite(state.bifurcationState.varianceAmplification, {
+      location: 'ExogenousShockPhase.execute',
+      valueName: 'varianceAmplification',
+      month: state.currentMonth,
+      additionalInfo: { expectedSource: 'BifurcationLogicPhase (order 4.5)' }
+    });
+
+    // BLACK SWAN: 0.1% per month (~1% per year) × bifurcation amplification
+    // Near collapse thresholds: 10× more likely (models critical instability)
+    const blackSwanProb = 0.001 * varianceAmp;
+    if (rng() < blackSwanProb) {
       const blackSwans = [
         ShockType.NUCLEAR_WAR,
         ShockType.AGI_BREAKTHROUGH,
@@ -713,8 +726,10 @@ export class ExogenousShockPhase implements SimulationPhase {
       };
     }
 
-    // GRAY SWAN: 1% per month (~10% per year)
-    if (rng() < 0.01) {
+    // GRAY SWAN: 1% per month (~10% per year) × bifurcation amplification
+    // Near thresholds: higher probability of major disruptions
+    const graySwanProb = 0.01 * varianceAmp;
+    if (rng() < graySwanProb) {
       const graySwans = [
         ShockType.FINANCIAL_CRASH,
         ShockType.REGIONAL_WAR,
