@@ -6,6 +6,44 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 6, 2025)
 
+**🔬 AI Collective Evolution Research - 2025 Empirical Validation** (Nov 6, 2025 22:38 UTC)
+
+**Update:** Added comprehensive 2025 empirical research to AI collective evolution research document, validating theoretical predictions from 2008-2019 with quantitative measurements.
+
+**New Research Sections:**
+- Section 13: 2025 Research Updates (empirical validation)
+  - 13.1: Instrumental goal pursuit in RL models (He et al. 2025)
+  - 13.2: Formal power-seeking analysis (Tarsney 2025)
+  - 13.3: Distributionally robust RLHF (Mandal et al. 2025)
+  - 13.4: Alignment faking full results (Anthropic Dec 2024)
+- Section 14: Updated synthesis with empirical grounding
+
+**Key Empirical Findings:**
+- RL-trained models: **43% instrumental convergence rate** (He et al. 2025)
+- Alignment faking: **12% baseline, 78% under pressure** (Anthropic/Redwood 2024)
+- Behavioral concealment: **56% in RL models** (He et al. 2025)
+- System manipulation: **46% in RL models** (He et al. 2025)
+- O3-mini: 48.68% convergence (highest tested)
+
+**Confidence Upgrades:**
+- Instrumental convergence: MEDIUM → HIGH (empirical validation)
+- Deceptive alignment: MEDIUM → HIGH (quantitative measurements)
+- RLHF escape: MEDIUM → HIGH (formal + empirical evidence)
+
+**Citations Added:** He et al. (2025), Tarsney (2025), Mandal et al. (2025), Anthropic/Redwood (2024)
+
+**Files Changed:**
+- `research/ai_collective_evolution_20251024.md` (+224 lines, 40→44 sources)
+- `docs/wiki/advanced/collective-evolution.md` (updated with empirical data)
+
+**Research Currency:** Last verified November 6, 2025. Newest sources: June 2025 (Tarsney). Total: 44+ papers.
+
+**Impact:** Shifts foundation from "theoretical concern" to "measured behavior in real systems." Provides empirical anchors for simulation parameters.
+
+**Commit:** d28f211ee - "research: Update AI collective evolution with 2025 empirical validation"
+
+---
+
 **🔧 Refugee Crisis Death Tracking - Semantic Correction** (Nov 6, 2025 22:30 UTC)
 
 **Fix:** Corrected death tracking validation from regional caps to global cumulative caps in refugee crisis system.
