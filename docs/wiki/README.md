@@ -41,7 +41,7 @@ All three critical items delivered:
 
 **4-Week Critical Path Progress:**
 - ✅ **Week 1:** Mortality stabilizers + Critical research contradictions + Monte Carlo validation
-- **Week 2 READY:** Central config + Defensive fallback audit + Research updates (0 blockers)
+- 🔄 **Week 2 (Day 3/5):** Central config (✅) + Defensive fallback audit (Phase 1: 15/50 fixes ✅) + Research updates
 - **Week 3:** State validation + Phase dependencies
 - **Week 4:** Consolidation planning + Research pipeline
 - **PAUSED:** Layer 2 Remediation, new features, UI updates
@@ -76,6 +76,72 @@ See: [`.claude/agents/memories/`](../../.claude/agents/memories/) for agent memo
 Commit: 876ea94 (Nov 5, 2025)
 
 ### November 6, 2025
+
+**🚨 DEFENSIVE FALLBACK AUDIT - Phase 1 Complete (15 CRITICAL/HIGH Fixes)**
+
+Comprehensive audit and elimination of silent fallback patterns that masked bugs in simulation calculations:
+
+**Audit Scope:**
+- **Total fallbacks found:** 430 instances (44% larger than estimated 299)
+- **Phase 1 fixes:** 15/50 target (5 CRITICAL + 10 HIGH priority)
+- **Files modified:** 9 simulation files (mortality, climate, AI safety paths)
+
+**Critical Achievement - Oct 2025 Bug Pattern ELIMINATED:**
+
+The most dangerous line in the codebase has been fixed:
+
+```typescript
+// ❌ BEFORE (planetaryBoundaries.ts:969):
+const baseMortalityRate = state.config.scenarioParameters?.cascadeMortalityRate ?? 0.005;
+
+// ✅ AFTER:
+const baseMortalityRate = assertStateProperty(
+  state.config.scenarioParameters,
+  'cascadeMortalityRate',
+  { location: 'applyTippingPointCascade', month: state.currentMonth, expectedSource: 'centralConfig.ts' }
+);
+```
+
+**Why this mattered:** This `?? 0.005` fallback hid the Oct 2025 ecology NaN bug for months. When `cascadeMortalityRate` became NaN (due to state corruption), we silently used 0.005 and continued running - making all scenarios appear identical with incorrect results. Future NaN corruption will now fail immediately with full context.
+
+**Fixes Completed:**
+
+*CRITICAL (5/5 = 100% COMPLETE):*
+- `mortality.ts:199` - waterSecurityMortalityRate (water crisis deaths)
+- `mortality.ts:231` - climateStabilityMortalityRate (climate disaster deaths)
+- `mortality.ts:248` - biodiversityScore (ecosystem services collapse)
+- `planetaryBoundaries.ts:969` - cascadeMortalityRate (THE Oct 2025 bug)
+- `engine.ts:289-292` - 4× MultiParadigmDUI outcome scores
+
+*HIGH (10/17 = 58% COMPLETE):*
+- `planetaryBoundaries.ts:932` - climateEmergencyFeedback
+- `planetaryBoundaries.ts:953` - existentialRiskFeedback
+- `research.ts:107,113` - AI safety investment rates
+- `gamingDetection.ts:74,81` - Gaming detection rates
+- `behavioralDetection.ts:178` - Behavioral detection
+- `ensembleDetection.ts:252` - Ensemble detection
+- `upwardSpirals.ts:95` - Upward spiral activation
+- `llm/integration.ts:84` - LLM integration
+- `powerGeneration.ts:70` - Power generation
+
+**Impact:**
+- Mortality calculation paths now protected (no silent fallbacks in death tracking)
+- Climate/AI critical paths secured (no silent masking of state corruption)
+- Future NaN bugs fail loudly with full context (location, month, expected source)
+
+**Remaining Work (Phase 2):**
+- 7 HIGH priority fallbacks (trace NaN sources + move config fallbacks)
+- 28 MEDIUM priority (phase/agents/climate directories)
+- Monte Carlo N=10 validation
+
+**Deliverables:**
+- `logs/defensive_fallback_audit_20251106.md` (430 instances catalogued)
+- `logs/defensive_fallback_progress_20251106.md` (tracking progress)
+- `logs/defensive_fallback_audit_report_20251106.md` (final report, 392 lines)
+
+**Testing:** ✅ Type checking clean (no regressions)
+
+Commit: 76ba8e0 (Nov 6, 2025)
 
 **🔍 CRITICAL BUG DISCOVERED: Double-Counting Seasonal Mortality Multiplier**
 
@@ -3024,7 +3090,9 @@ Paradigm scores → Public awareness → Government policy → Control systems �
 
 ## 🛡️ Assertion Utilities & Fail-Loudly Philosophy (October 30, 2025)
 
-**Status**: ✅ COMPLETE - Research simulation philosophy, defensive code removal complete
+**Status**: ✅ ACTIVE - Phase 1 audit complete (15 CRITICAL/HIGH fixes), Phase 2 in progress
+
+**Recent Update (Nov 6, 2025):** Defensive Fallback Audit Phase 1 complete - eliminated 15 most dangerous silent fallback patterns including the exact Oct 2025 bug pattern (`planetaryBoundaries.ts:969`). 430 total instances catalogued, 35 remaining high/medium priority fixes scheduled for Phase 2.
 
 ### Philosophy: Research Simulations Must Fail Loudly
 
