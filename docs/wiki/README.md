@@ -62,6 +62,19 @@ Commit: 876ea94 (Nov 5, 2025)
 
 ### November 6, 2025
 
+**Climate Mortality Phase 2 - ✅ COMPLETE**
+
+Storm Systems + BII Framework implementation complete and validated:
+- **Storm Intensity-Frequency System:** Category distribution shifts (fewer total storms, more Cat 4-5), infrastructure mismatch mechanics, exponential intensity multipliers [1, 2, 4, 8, 16], Bayesian mortality integration
+- **Biosphere Integrity Index (BII):** Natural History Museum PREDICTS database (58,000 species baseline), climate velocity modeling (0.5-10 km/year), species tracking failure calculation, keystone cascade effects (2.5× multiplier), E/MSY extinction rates
+- **Research Citations:** 15+ peer-reviewed sources (2019-2025), PREDICTS citation corrected from IPBES
+- **Technical Validation:** ✅ PASSED (N=10 runs, no NaN errors, deterministic)
+- **Known Limitations:** 100% dystopia outcomes (research-accurate but removes player agency), fragmentation multiplier issue (CRITICAL-1), missing recovery mechanisms (HIGH-1)
+
+See: `docs/wiki/systems/environmental.md` (Climate Mortality Phase 2 section), `logs/climate_phase2_completion_report.md`, `reviews/climate-phase2-architecture-review_20251106.md`, Commit: f53e9ff5c
+
+---
+
 **Issue #11 Determinism - ✅ COMPLETE**
 
 Determinism Batch 3 fixes completed - simulation now fully deterministic:
@@ -174,7 +187,7 @@ The fundamental building blocks of the simulation:
 | [🧠 Alignment Dynamics](./systems/alignment-dynamics.md) | ✅ | Multi-theory alignment evolution (Oct 23, 2025) |
 | [🏛️ Government](./systems/government.md) | ✅ | Regulations, control, policies |
 | [👥 Society](./systems/society.md) | ✅ | Trust, unemployment, adaptation |
-| [🌍 Environmental](./systems/environmental.md) | ✅ | Resources (65%), pollution (30%), climate, biodiversity (35%); **Multi-timescale tipping points** (Oct 26, 2025) |
+| [🌍 Environmental](./systems/environmental.md) | ✅ | Resources (65%), pollution (30%), climate, biodiversity (35%); **Multi-timescale tipping points** (Oct 26, 2025); **Climate Mortality Phase 2: Storm Systems + BII Framework** (Nov 6, 2025) |
 | [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis (22%), institutional erosion, social bonds, **crisis mitigation mechanics** (Oct 30, 2025) |
 | [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
 | [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | **71 technologies** in comprehensive tech tree (TIER 0-4) |
