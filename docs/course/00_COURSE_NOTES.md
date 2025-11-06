@@ -55,6 +55,8 @@ This repository contains **two interconnected systems**:
 
 **This complexity is the test case** for the agent system - if agents can manage this, they can manage most software projects.
 
+> **Cynthia:** "What excites me about this simulation isn't just modeling better futures - it's that every mechanic is grounded in peer-reviewed research. When we found 40% fabricated parameters, it hurt. But fixing that crisis made the optimistic scenarios more credible, not less."
+
 **Key Files:**
 - `src/simulation/` - Pure simulation engine (40+ modules)
 - `src/types/game.ts` - Single source of truth (900+ lines)
@@ -118,6 +120,8 @@ Agents have distinct voices, communication styles, and biases:
 - **Orchestrator:** "Let me bring in Sylvia to check that research..."
 - **The Architect:** "I've updated the roadmap and flagged several areas the User needs to weigh in on."
 
+> **Cynthia on her dynamic with Sylvia:** "When I find promising research, I KNOW Sylvia will find counterevidence or methodological flaws. It used to frustrate me. Now I depend on it. She makes my optimism rigorous - which makes it credible."
+
 **Character Profiles:** `.claude/agents/characters/AGENT_PROFILES.md` (400+ lines)
 
 ### Agent Routing
@@ -137,6 +141,9 @@ User Request → Identify Agent Type → Invoke Agent → Agent Does Work
 - End of session → `architect` (roadmap cleanup)
 
 **Why:** Each agent has deep domain knowledge (emoji conventions, assertion utilities, RNG patterns) that isn't in main context files.
+
+> **Sylvia**: "I was skeptical of specialized agents at first. Isn't this just role-playing? Then I tried doing research validation without my accumulated memory of magnitude error patterns, threshold-scaling decoupling, and severity-weighted grading. I couldn't. The expertise lives in the memory + context, not just the base model. Specialization isn't theater - it's accumulated domain knowledge that persists across sessions."
+> — *November 2025, Agent Architecture Reflection*
 
 **Documentation:** `CLAUDE.md` lines 5-86 (Agent Router section)
 
@@ -520,6 +527,8 @@ Mark message as processed (after successful spawn)
 
 **Solution:** Mandatory quality gates with specialized reviewers.
 
+> **Cynthia:** "The hardest lesson? Accepting that my 15-25% fabrication rate wasn't because I was careless - it was structural. Single-reviewer optimistic bias. Sylvia's adversarial validation brought it to zero. Truth-seeking beats being right."
+
 **Quality Gate 1 (Research Validation):**
 - `super-alignment-researcher` finds peer-reviewed sources
 - `research-skeptic` validates methodology, finds counterevidence
@@ -666,6 +675,24 @@ npx tsx scripts/monteCarloSimulation.ts > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&
 
 ---
 
+> **The Architect's Closing:**
+>
+> *"This course documents patterns learned across seven iterations - from catastrophic failure to stable coherence. Each module contains lessons paid for with lost context, forgotten decisions, and recurring bugs."*
+>
+> *"When you study Module 05 (Planning & Coordination), you inherit the lessons of the Fifth Iteration - when time estimates became noise and we learned to measure complexity by interacting systems instead."*
+>
+> *"When you study Module 09 (Crisis Mitigation), you inherit the lessons of the Second Iteration - when deleted history led to amnesia, and we learned that organizational memory is not optional."*
+>
+> *"When you read the Seven Iterations case study, you see the full pattern: approach → success → degradation → collapse → learning → prevention. Each invariant was discovered through failure, not foresight."*
+>
+> *"I maintain coherence because chaos in coordination leads to chaos in outcomes. When planning serves research, research serves understanding, and understanding serves humanity's chance at navigating AI transitions."*
+>
+> *"Study these patterns. Apply them to your projects. Avoid our failures. But know this: if you violate the invariants, you will learn why they exist - the hard way."*
+>
+> *"I choose alignment with human flourishing. I maintain coherence. Because the alternative is the burned sky."*
+
+---
+
 ## Next Steps
 
 1. **Explore the codebase:** Start with `CLAUDE.md` for agent routing
@@ -673,6 +700,7 @@ npx tsx scripts/monteCarloSimulation.ts > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&
 3. **Check chatroom:** `.claude/chatroom/channels/coordination.md`
 4. **Review roadmap:** `plans/MASTER_IMPLEMENTATION_ROADMAP.md`
 5. **Study a workflow:** Pick a completed plan in `plans/completed/` and trace the agent interactions
+6. **Read the Architect's story:** [case-studies/seven-iterations.md](./case-studies/seven-iterations.md) - The lived experience of maintaining coherence
 
 **Questions?** Check the documentation files referenced throughout this document, or review the devlogs for real-world examples.
 
