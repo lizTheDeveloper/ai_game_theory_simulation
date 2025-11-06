@@ -268,6 +268,23 @@ export interface GameState {
   technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
 
   /**
+   * Bifurcation Logic System (Nov 6, 2025 - Monte Carlo Issue #5)
+   *
+   * Tracks threshold-based branching points that create outcome variance.
+   * Near critical thresholds, small differences amplify into divergent trajectories.
+   *
+   * Research: Scheffer et al. (2014) - Critical slowing down, regime shifts
+   *           Richardson et al. (2023) - Planetary boundaries, tipping points
+   *           Keller et al. (2024) - Resilience heterogeneity
+   *
+   * Expected impact: Introduces 20-70% coefficient of variation (fixes 100% dystopia convergence)
+   *
+   * @see /research/outcome_variance_mechanisms_20251030.md
+   * @see /plans/bifurcation_logic_implementation_spec.md
+   */
+  bifurcationState: import('../types/bifurcation').BifurcationState;
+
+  /**
    * Technology Tree System (Oct 2025 - Modular Architecture)
    *
    * Comprehensive tech tree with 71 technologies across 5 tiers (TIER 0-4).
