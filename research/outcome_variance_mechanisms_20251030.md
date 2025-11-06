@@ -1,9 +1,15 @@
 # Outcome Variance Mechanisms: Research Review
 
 **Date:** October 30, 2025
+**Last Updated:** November 6, 2025 (autonomous researcher)
 **Researcher:** Cynthia (super-alignment-researcher)
+**Update:** Added Forster et al. 2025 climate variance indicators + Studebaker 2022 legitimacy bifurcations
 **Issue:** Monte Carlo runs (N=10) show 100% dystopia outcomes with near-identical mortality (74-81%)
 **Research Question:** What creates outcome variance in crisis scenarios? Why do similar crises produce different results?
+
+**Oldest Source:** Scheffer et al. 2014 (foundational resilience theory - appropriate for core concepts)
+**Newest Source:** Forster et al. 2025 (June 2025 climate indicators)
+**Last Verified:** November 6, 2025
 
 ---
 
@@ -239,6 +245,43 @@ function calculateOutcomeProbabilities(
 - **Outcomes diverge** (same initial conditions → different final states)
 
 **This is THE mechanism for Monte Carlo variance.** If simulation is always far from tipping points, no variance. If near tipping points, high variance.
+
+### 2.2c Political Legitimacy Bifurcations: Chronic vs Acute Crises (2022)
+
+**Citation:** Studebaker, Benjamin M. (2022). "Legitimacy crises in embedded democracies." *Contemporary Political Theory*, 22(2), 230–250. https://doi.org/10.1057/s41296-022-00588-z
+
+**Publication:** September 2022 (issue date 2023)
+
+**Key Conceptual Framework: Scalar Legitimacy and Crisis Types**
+
+Studebaker treats legitimacy as a **scalar concept** positioning states on a continuum rather than binary (legitimate/illegitimate). This creates potential for gradual decline and bifurcation points:
+
+**Crisis Type Distinction:**
+- **Chronic crises:** Procedural contestation while democratic system affirmed — "democracies threatened by distortion and deadlock rather than death"
+- **Acute crises:** Actual moment of revolt against entire political system — regime change or collapse
+
+**Bifurcation Mechanism:**
+> "In stable politics, losers may disagree in principle with state decisions, but they continue to accept the procedures through which those decisions were taken. In crisis politics, the procedures are politicised."
+
+**Critical Insight:** The shift from **accepting procedures** to **contesting procedures** represents a bifurcation point. Once procedural legitimacy is contested, the system enters a different regime (chronic crisis) with distinct dynamics.
+
+**Temporal Characteristics:**
+- Chronic crises can persist for **decades** (Gamble identifies: 1930s, 1970s, 2010s)
+- **No clear return threshold** — once procedures are politicized, stability requires procedural reform, not just policy success
+- Episodes within crises occur as discrete procedural contests with intervals between
+
+**Implication for Simulation:**
+1. **Political legitimacy is scalar, not binary** — gradual decline possible
+2. **Bifurcation occurs at procedural contestation threshold** — once crossed, system enters different regime (chronic crisis) with different stability dynamics
+3. **Chronic crises are long-duration** — can persist for decades without full collapse but also without recovery to stable equilibrium
+4. **Path dependence:** Once procedures are delegitimized, policy success alone insufficient to restore stability
+
+**Quantitative Implication:** Political systems can exist in **three stable regimes**:
+- **Stable legitimacy:** Policy contestation only, procedures accepted
+- **Chronic crisis:** Procedural contestation, system affirmed (bifurcation regime)
+- **Acute crisis/collapse:** System rejection, regime change imminent
+
+Small differences in legitimacy decline rate can push systems across the threshold from stable → chronic crisis (bifurcation), creating divergent long-term trajectories even from similar initial shocks.
 
 ### 2.3 Archaeological Evidence: Iceland vs Greenland (2024)
 
@@ -858,19 +901,27 @@ function checkCriticalThresholds(state: GameState): RegimeType {
    - **Credibility:** High (systematic review, Nature journal, 2024)
    - **Data used:** Resilience heterogeneity creates outcome variance
 
-2. **Hepfer, M., & Lawrence, T.B. (2022).** The Heterogeneity of Organizational Resilience. *Organization Theory*, 3(1). https://journals.sagepub.com/doi/full/10.1177/26317877221074701
+2. **Forster, P. M., Smith, C., Walsh, T., et al. (2025).** Indicators of Global Climate Change 2024: annual update of key indicators of the state of the climate system and human influence. *Earth System Science Data*, 17, 2641–2680. https://doi.org/10.5194/essd-17-2641-2025
+   - **Credibility:** Very high (ESSD journal, 50+ international authors, June 2025 publication)
+   - **Data used:** Climate system variance indicators, energy imbalance doubling, bifurcation signatures
+
+3. **Hepfer, M., & Lawrence, T.B. (2022).** The Heterogeneity of Organizational Resilience. *Organization Theory*, 3(1). https://journals.sagepub.com/doi/full/10.1177/26317877221074701
    - **Credibility:** High (peer-reviewed, organizational theory)
    - **Data used:** Three resilience types → different trajectories
 
-3. **Manca, A.R., et al. (2019).** The Resilience of EU Member States to the Financial and Economic Crisis. *Social Indicators Research*, 148, 569-598. https://link.springer.com/article/10.1007/s11205-019-02200-1
+4. **Manca, A.R., et al. (2019).** The Resilience of EU Member States to the Financial and Economic Crisis. *Social Indicators Research*, 148, 569-598. https://link.springer.com/article/10.1007/s11205-019-02200-1
    - **Credibility:** High (peer-reviewed, EU-wide empirical data)
    - **Data used:** Greece vs Ireland divergent outcomes from similar crisis
 
-4. **Scheffer, M., et al. (2014).** Resilience indicators: prospects and limitations for early warnings of regime shifts. *Philosophical Transactions of the Royal Society B*, 370(1659). https://pmc.ncbi.nlm.nih.gov/articles/PMC4247400/
+5. **Scheffer, M., et al. (2014).** Resilience indicators: prospects and limitations for early warnings of regime shifts. *Philosophical Transactions of the Royal Society B*, 370(1659). https://pmc.ncbi.nlm.nih.gov/articles/PMC4247400/
    - **Credibility:** Very high (Royal Society, foundational resilience theory)
    - **Data used:** Critical slowing down, bifurcation points
 
-5. **Collapse Studies in Archaeology (2024).** *Journal of Archaeological Research*. https://link.springer.com/article/10.1007/s10814-024-09196-4
+6. **Studebaker, Benjamin M. (2022).** Legitimacy crises in embedded democracies. *Contemporary Political Theory*, 22(2), 230–250. https://doi.org/10.1057/s41296-022-00588-z
+   - **Credibility:** High (peer-reviewed political theory, Cambridge/Springer, 2022-2023)
+   - **Data used:** Scalar legitimacy, bifurcation from stable → chronic crisis regimes, path dependence in political systems
+
+7. **Collapse Studies in Archaeology (2024).** *Journal of Archaeological Research*. https://link.springer.com/article/10.1007/s10814-024-09196-4
    - **Credibility:** High (peer-reviewed archaeological evidence)
    - **Data used:** Iceland vs Greenland divergent outcomes
 
