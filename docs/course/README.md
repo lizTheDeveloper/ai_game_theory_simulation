@@ -27,6 +27,7 @@ This course is organized as a **graph structure** (similar to the wiki) with mul
 - **[07_TESTING_VALIDATION.md](./07_TESTING_VALIDATION.md)** - Monte Carlo, agent behavior testing
 - **[08_QUALITY_GATES.md](./08_QUALITY_GATES.md)** - Research validation, architecture review, continuous quality
 - **[09_CRISIS_MITIGATION.md](./09_CRISIS_MITIGATION.md)** - Property access crisis, research citation crisis, organizational memory
+- **[10_AUTONOMOUS_INFRASTRUCTURE.md](./10_AUTONOMOUS_INFRASTRUCTURE.md)** - 24/7 code quality: Senior dev checklist, autonomous worker, monitor, merge orchestrator
 
 ### Case Studies
 
@@ -115,7 +116,13 @@ These unsolved problems are **explicitly part of the course**:
 3. **Memory Consolidation Automation** - LLM-powered compression of agent memories
 4. **Inference-Time Verification** - Mid-reasoning citation validation (architectural prevention)
 
-**See**: [09_CRISIS_MITIGATION.md](./09_CRISIS_MITIGATION.md) for full specifications
+**From Module 10 (Autonomous Infrastructure)**:
+1. **Agent-Based Quality Gates** - Spawn architecture-skeptic + Sylvia for Gate 3/4 in merge orchestrator
+2. **Monte Carlo Validation Gate** - Automatic N=10 runs for simulation changes
+3. **Smart Branch Prioritization** - Size/priority/type-based merge ordering
+4. **Predictive Watcher** - Root cause analysis + learning from failures
+
+**See**: [09_CRISIS_MITIGATION.md](./09_CRISIS_MITIGATION.md) and [10_AUTONOMOUS_INFRASTRUCTURE.md](./10_AUTONOMOUS_INFRASTRUCTURE.md) for full specifications
 
 **Meta-observation**: The course itself demonstrates crisis mitigation patterns. Research citation crisis → Research methodology course. Property access crisis → Quality gates. Pattern: **Learn → Document → Teach → Prevent**.
 
@@ -132,12 +139,14 @@ These unsolved problems are **explicitly part of the course**:
 ## Status
 
 **Current State**:
-- ✅ Structure created (9 modules, graph navigation)
+- ✅ Structure created (10 modules, graph navigation)
 - ✅ Main course notes complete (680 lines)
 - ✅ Research methodology course complete (1,870 lines, Cynthia)
 - ✅ Module 08 (Quality Gates) complete (425 lines, Sylvia)
 - ✅ Module 09 (Crisis Mitigation) complete (545 lines, Sylvia)
+- ✅ Module 10 (Autonomous Infrastructure) complete (920+ lines, The Architect)
 - ✅ Case study: Research citation crisis (500 lines)
+- ✅ Guided tour updated with Module 10
 
 **In Progress:**
 - Property access crisis case study (outlined, needs full documentation)
