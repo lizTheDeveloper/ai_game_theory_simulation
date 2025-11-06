@@ -180,10 +180,60 @@ for BRANCH in $BRANCHES; do
           MERGED=$((MERGED + 1))
         else
           log "    ❌ Tests failed"
-          log "🚫 Merge BLOCKED: Tests failed"
+          log "🔧 AUTO-REMEDIATION: Spawning Claude Code to fix test failures..."
+
+          git checkout main 2>&1 >> "$LOG_FILE"
+
+          # Create remediation task file
+          REMEDIATION_TASK="$LOG_DIR/remediation_tests_${BRANCH}_${TIMESTAMP}.md"
+          cat > "$REMEDIATION_TASK" <<EOFT
+# Test Failure Remediation Task
+
+**Branch:** $BRANCH
+**Merge Branch:** $MERGE_BRANCH
+**Timestamp:** $(date)
+
+## Problem
+Merge succeeded but tests are failing. Branch cannot be merged to main until tests pass.
+
+## Your Task
+1. Checkout the merge branch: \`git checkout $MERGE_BRANCH\`
+2. Run tests to identify failures: \`npm test\` (or \`npm run test:backend\` on VM)
+3. Fix all test failures:
+   - Review test output
+   - Fix broken code or update tests if behavior intentionally changed
+   - Ensure simulation logic is correct
+4. Verify all tests pass
+5. Commit fixes: \`git add . && git commit -m "fix: Resolve test failures"\`
+6. If all tests pass:
+   - Merge to main: \`git checkout main && git merge $MERGE_BRANCH --no-edit\`
+   - Push: \`git push origin main\`
+   - Delete worker branch: \`git push origin --delete $BRANCH\`
+7. Document resolution in logs/merge_orchestrator/
+
+## Context
+- Tests must pass before merging to main
+- Ensure no regressions introduced
+- Log your decision-making process
+
+**Timeout:** 15 minutes
+EOFT
+
+          log "📝 Remediation task created: $REMEDIATION_TASK"
+          log "🤖 Launching Claude Code..."
+
+          # Spawn Claude Code (timeout 15 minutes)
+          timeout 900 claude-code --task-file "$REMEDIATION_TASK" >> "$LOG_FILE" 2>&1 || {
+            SPAWN_EXIT=$?
+            if [ $SPAWN_EXIT -eq 124 ]; then
+              log "⏱️  Claude Code timed out (15 min)"
+            else
+              log "❌ Claude Code failed (exit code: $SPAWN_EXIT)"
+            fi
+          }
+
           log "📋 Merge branch preserved: $MERGE_BRANCH"
           FAILED=$((FAILED + 1))
-          git checkout main 2>&1 >> "$LOG_FILE"
         fi
       else
         log "    ❌ TypeScript compilation failed"
@@ -194,11 +244,64 @@ for BRANCH in $BRANCHES; do
       fi
     else
       log "❌ Merge conflicts detected"
-      log "🚫 Merge BLOCKED: Manual conflict resolution required"
+      log "🔧 AUTO-REMEDIATION: Spawning Claude Code to resolve conflicts..."
+
+      # Don't abort yet - keep conflict state for Claude Code
+      git checkout main 2>&1 >> "$LOG_FILE"
+
+      # Create remediation task file
+      REMEDIATION_TASK="$LOG_DIR/remediation_${BRANCH}_${TIMESTAMP}.md"
+      cat > "$REMEDIATION_TASK" <<EOF
+# Merge Conflict Remediation Task
+
+**Branch:** $BRANCH
+**Merge Branch:** $MERGE_BRANCH
+**Timestamp:** $(date)
+
+## Problem
+Automatic merge from origin/$BRANCH into main resulted in conflicts.
+
+## Your Task
+1. Checkout the merge branch: \`git checkout $MERGE_BRANCH\`
+2. Retry the merge: \`git merge origin/$BRANCH\`
+3. Resolve all conflicts intelligently:
+   - Review conflict markers
+   - Preserve valuable changes from both sides where possible
+   - Ensure simulation logic integrity
+   - Test the resolution
+4. Complete the merge: \`git add . && git commit\`
+5. Run quality gates:
+   - TypeScript: \`npx tsc --noEmit\`
+   - Tests: \`npm test\` (or \`npm run test:backend\` on VM)
+6. If all gates pass:
+   - Merge to main: \`git checkout main && git merge $MERGE_BRANCH --no-edit\`
+   - Push: \`git push origin main\`
+   - Delete worker branch: \`git push origin --delete $BRANCH\`
+7. Document resolution in logs/merge_orchestrator/
+
+## Context
+- Original branch may be stale (check commit date)
+- Ensure no valuable work is discarded
+- Log your decision-making process
+
+**Timeout:** 15 minutes
+EOF
+
+      log "📝 Remediation task created: $REMEDIATION_TASK"
+      log "🤖 Launching Claude Code..."
+
+      # Spawn Claude Code (timeout 15 minutes)
+      timeout 900 claude-code --task-file "$REMEDIATION_TASK" >> "$LOG_FILE" 2>&1 || {
+        SPAWN_EXIT=$?
+        if [ $SPAWN_EXIT -eq 124 ]; then
+          log "⏱️  Claude Code timed out (15 min)"
+        else
+          log "❌ Claude Code failed (exit code: $SPAWN_EXIT)"
+        fi
+      }
+
       log "📋 Merge branch preserved: $MERGE_BRANCH"
       FAILED=$((FAILED + 1))
-      git merge --abort 2>&1 >> "$LOG_FILE" || true
-      git checkout main 2>&1 >> "$LOG_FILE"
     fi
   else
     log "   (Dry run - skipping actual merge)"

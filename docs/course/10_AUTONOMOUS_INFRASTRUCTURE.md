@@ -440,11 +440,13 @@ For each pending worker branch:
    - Create merge branch: `merge/{branch}_{timestamp}`
    - Checkout from origin/main
    - Attempt merge from feature branch
-   - If conflicts → Report, skip, preserve merge branch
+   - If conflicts → **Auto-remediation** (see below)
 
 4. **Quality gates** (sequential):
    - **Gate 1/2**: TypeScript compilation (`npx tsc --noEmit`)
+     - If fails → **Auto-remediation** (see below)
    - **Gate 2/2**: Test suite (`npm test` or `npm run test:backend` on VM)
+     - If fails → **Auto-remediation** (see below)
    - **Gate 3**: Architecture-skeptic review (future - spawn agent)
    - **Gate 4**: Sylvia final review (future - spawn agent)
 
@@ -455,21 +457,123 @@ For each pending worker branch:
    - Delete merge branch
    - Log success
 
-6. **If any fail**:
+6. **If any fail** (without auto-remediation success):
    - Keep merge branch for inspection
    - Log failure with details
    - Optional: Post to coordination channel
 
+### Auto-Remediation (NEW - Nov 6, 2025)
+
+**Problem solved**: Merge orchestrator was detecting conflicts and test failures but not fixing them. This led to 93 stale branches accumulating.
+
+**Solution**: When failures occur, spawn Claude Code to resolve them automatically.
+
+**Triggers** (auto-remediation spawns when):
+1. **Merge conflicts** detected
+2. **TypeScript compilation** fails
+3. **Test failures** occur
+
+**How it works**:
+
+1. **Detect failure** (conflict, tsc error, test failure)
+
+2. **Create remediation task file**:
+   - Location: `logs/merge_orchestrator/remediation_*.md`
+   - Contains:
+     - Problem description (specific failure type)
+     - Step-by-step resolution instructions
+     - Context about the branch and merge state
+     - Quality gate requirements
+     - 15-minute timeout
+
+3. **Spawn Claude Code**:
+   ```bash
+   timeout 900 claude-code --task-file "$REMEDIATION_TASK"
+   ```
+   - 15-minute timeout per remediation attempt
+   - Claude Code has full codebase access
+   - Uses Read/Edit/Write/Bash tools to fix issue
+   - Follows resolution steps from task file
+
+4. **Claude Code resolves**:
+   - Checks out merge branch
+   - Fixes conflicts or broken code
+   - Runs quality gates (tsc, tests)
+   - If all pass: Merges to main, pushes, deletes worker branch
+   - If fails: Logs attempts, preserves branch for manual review
+
+5. **Log remediation attempt**:
+   - Success/failure logged
+   - Timeout tracked (exit code 124)
+   - Full output captured in merge orchestrator log
+
+**Example remediation task** (merge conflicts):
+```markdown
+# Merge Conflict Remediation Task
+
+**Branch:** auto/worker-20251105_110000
+**Merge Branch:** merge/auto_worker-20251105_110000_20251105_124500
+**Timestamp:** 2025-11-05 12:45:00
+
+## Problem
+Automatic merge from origin/auto/worker-20251105_110000 into main resulted in conflicts.
+
+## Your Task
+1. Checkout the merge branch: `git checkout merge/auto_worker-...`
+2. Retry the merge: `git merge origin/auto/worker-...`
+3. Resolve all conflicts intelligently
+4. Complete the merge: `git add . && git commit`
+5. Run quality gates (tsc, tests)
+6. If all pass: Merge to main, push, delete worker branch
+7. Document resolution in logs/
+
+**Timeout:** 15 minutes
+```
+
+**Example remediation task** (test failures):
+```markdown
+# Test Failure Remediation Task
+
+**Branch:** auto/worker-20251105_120000
+**Merge Branch:** merge/auto_worker-20251105_120000_20251105_124500
+
+## Problem
+Merge succeeded but tests are failing. Branch cannot be merged until tests pass.
+
+## Your Task
+1. Checkout the merge branch
+2. Run tests to identify failures
+3. Fix all test failures
+4. Verify all tests pass
+5. If all pass: Merge to main, push, delete worker branch
+
+**Timeout:** 15 minutes
+```
+
+**Why this works**:
+- **No work lost**: Worker branches preserved during remediation
+- **No stale branches**: Successful remediation completes merge + cleanup
+- **Bounded risk**: 15-minute timeout prevents runaway sessions
+- **Full logging**: Every remediation attempt logged for review
+- **Self-healing**: System resolves its own issues without human intervention
+
+**What can go wrong**:
+- **Timeout** (exit 124): Claude Code unable to resolve in 15 minutes → Manual review needed
+- **Remediation fails**: Issues too complex for auto-fix → Branch preserved for human debugging
+- **Claude Code unavailable**: System falls back to preserving branch for manual merge
+
 ### Code
 
-**Script**: [`/scripts/merge-orchestrator.sh`](../../scripts/merge-orchestrator.sh) (230 lines)
+**Script**: [`/scripts/merge-orchestrator.sh`](../../scripts/merge-orchestrator.sh) (332 lines, +102 for auto-remediation)
 
 **Key features**:
+- **Auto-remediation** (NEW): Spawns Claude Code to fix conflicts/test failures
 - Dry-run mode (`--dry-run` flag)
 - Max branches limit (`--max-branches N`)
 - Environment detection (VM vs Mac)
 - Lock file (prevent concurrent runs)
 - Comprehensive logging
+- Remediation task file generation
 
 **Frontend detection logic**:
 ```bash
@@ -486,36 +590,63 @@ fi
 
 ### Example Log Output
 
+**Before auto-remediation** (old behavior):
 ```
-=== Merge Orchestrator Run: 2025-11-05 12:45:00 ===
+--- Branch: auto/worker-20251105_120000 ---
+❌ Merge conflicts detected
+🚫 MERGE BLOCKED: Manual conflict resolution required
+📋 Merge branch preserved: merge/auto_worker-...
+```
+
+**After auto-remediation** (new behavior):
+```
+=== Merge Orchestrator Run: 2025-11-06 10:45:00 ===
 
 Discovered branches:
-- auto/worker-20251105_110000
-- auto/worker-20251105_120000
+- auto/worker-20251106_100000
+- auto/worker-20251106_090000
 
---- Branch: auto/worker-20251105_110000 ---
+--- Branch: auto/worker-20251106_100000 ---
 ✅ Merge successful (no conflicts)
 ✅ TypeScript compilation passed
 ✅ Tests passed (42 tests, 0 failures)
-⏳ Architecture-skeptic review in progress...
-✅ Architecture review: No CRITICAL issues (2 MEDIUM issues logged)
 
-🎉 MERGE TO MAIN: auto/worker-20251105_110000
-🗑️  DELETED: auto/worker-20251105_110000 (local + remote)
+🎉 MERGE TO MAIN: auto/worker-20251106_100000
+🗑️  DELETED: auto/worker-20251106_100000 (local + remote)
 
---- Branch: auto/worker-20251105_120000 ---
-✅ Merge successful (no conflicts)
+--- Branch: auto/worker-20251106_090000 ---
+❌ Merge conflicts detected
+🔧 AUTO-REMEDIATION: Spawning Claude Code to resolve conflicts...
+📝 Remediation task created: logs/merge_orchestrator/remediation_20251106_104500.md
+🤖 Launching Claude Code...
+   [15 minutes later...]
+✅ Claude Code successfully resolved conflicts
 ✅ TypeScript compilation passed
-❌ Tests failed (3 failures)
+✅ Tests passed
 
-🚫 MERGE BLOCKED: Tests failed
-📋 Merge branch preserved: merge/auto_worker-20251105_120000_20251105_124500
+🎉 MERGE TO MAIN: auto/worker-20251106_090000
+🗑️  DELETED: auto/worker-20251106_090000 (local + remote)
 
 --- Summary ---
 Total branches: 2
-Merged to main: 1
-Blocked (failed gates): 1
-Conflicts (manual intervention): 0
+Merged to main: 2 (1 via auto-remediation)
+Blocked (failed gates): 0
+Auto-remediations attempted: 1
+Auto-remediations successful: 1
+```
+
+**Remediation timeout example**:
+```
+--- Branch: auto/worker-20251106_110000 ---
+✅ Merge successful (no conflicts)
+❌ Tests failed (3 failures)
+🔧 AUTO-REMEDIATION: Spawning Claude Code to fix test failures...
+📝 Remediation task created: logs/merge_orchestrator/remediation_tests_20251106_114500.md
+🤖 Launching Claude Code...
+⏱️  Claude Code timed out (15 min)
+
+🚫 MERGE BLOCKED: Tests failed, auto-remediation timed out
+📋 Merge branch preserved: merge/auto_worker-20251106_110000_20251106_114500
 ```
 
 ### Why Quality Gates Matter
@@ -573,6 +704,7 @@ Conflicts (manual intervention): 0
 - Gives 45 minutes for worker to finish and push
 - Has time to complete before next worker cycle at :00
 - Processes up to 10 branches per run
+- **Auto-remediates** conflicts/test failures (spawns Claude Code with 15 min timeout)
 
 ### Expected Behavior
 
@@ -580,17 +712,21 @@ Conflicts (manual intervention): 0
 - Worker runs hourly, completes in 5-20 minutes
 - Watcher runs at :15, reports "All systems operational"
 - Merge orchestrator runs at :45, processes 0-10 branches
+- **Auto-remediation** resolves conflicts/test failures automatically
 - 10-20 worker branches created per day
-- Most branches merged automatically if they pass quality gates
+- Most branches merged automatically (quality gates + auto-remediation)
+- **No stale branches accumulate** (auto-remediation completes merges)
 
 **System under load**:
 - Worker may timeout at 25 minutes if roadmap has complex tasks
 - Watcher may trigger auto-remediation to split tasks
 - Merge orchestrator may queue branches if >10 pending
-- Branch count grows if workers produce faster than merges process
+- **Auto-remediation** may timeout (15 min) on complex conflicts
+- Branch count grows if workers produce faster than merges process OR if auto-remediation times out repeatedly
 
 **System needs attention**:
 - Worker hasn't run in 2+ hours → Check cron
+- **Stale branches accumulating** → Check auto-remediation timeout logs (may need manual conflict resolution)
 - Watcher reporting issues repeatedly → Manual investigation needed
 - Merge orchestrator blocking all branches → Address quality gate issues
 - 50+ pending worker branches → Review and bulk-merge or archive
@@ -622,7 +758,9 @@ Conflicts (manual intervention): 0
 │       ├─ For each branch:                               │
 │       │   ├─ Check if frontend (skip on VM)             │
 │       │   ├─ Attempt merge                              │
+│       │   ├─ If conflicts → AUTO-REMEDIATE              │
 │       │   ├─ Run quality gates (TS, tests)              │
+│       │   ├─ If gate fails → AUTO-REMEDIATE             │
 │       │   └─ Merge to main or preserve for review       │
 │       └─ Clean up successful merges                     │
 │                                                         │
@@ -702,32 +840,57 @@ Conflicts (manual intervention): 0
 - If that fails, logs instructions for manual fix
 - Human reviews logs and fixes root cause
 
-**3. Merge conflicts**:
+**3. Merge conflicts (Auto-Remediation NEW)**:
 
-**Symptom**: Worker log shows "❌ Pull failed - likely merge conflict"
+**Symptom**: Orchestrator log shows "❌ Merge conflicts detected"
 
-**Cause**: Main diverged while worker was running
+**Cause**: Worker branch diverged from main
 
-**Recovery**:
-- Worker auto-invokes Claude Code to resolve
-- Claude analyzes conflicts, chooses resolution
-- If successful, worker continues
-- If fails, branch preserved for manual resolution
+**Recovery** (NEW behavior as of Nov 6, 2025):
+- **Orchestrator spawns Claude Code** (15 min timeout)
+- Creates remediation task file with step-by-step instructions
+- Claude Code checks out merge branch, resolves conflicts
+- If successful: Merges to main, deletes worker branch
+- If timeout/failure: Merge branch preserved for manual review
 
-**4. Quality gates fail**:
+**Old behavior**: Conflicts blocked merge, stale branches accumulated
 
-**Symptom**: Orchestrator log shows "❌ Tests failed"
+**4. Quality gates fail (Auto-Remediation NEW)**:
+
+**Symptom**: Orchestrator log shows "❌ Tests failed" or "❌ TypeScript compilation failed"
 
 **Cause**: Worker introduced breaking changes
 
-**Recovery**:
-- Orchestrator preserves merge branch
-- Branch not merged to main
-- Human reviews merge branch, fixes issues
-- Can manually merge after fixes
-- Or delete branch if changes not needed
+**Recovery** (NEW behavior as of Nov 6, 2025):
+- **Orchestrator spawns Claude Code** (15 min timeout)
+- Creates remediation task file with test/tsc output
+- Claude Code fixes broken code, ensures gates pass
+- If successful: Merges to main, deletes worker branch
+- If timeout/failure: Merge branch preserved for manual review
 
-**5. API key missing**:
+**Old behavior**: Quality gate failures blocked merge, stale branches accumulated
+
+**5. Auto-remediation timeout (NEW)**:
+
+**Symptom**: Orchestrator log shows "⏱️ Claude Code timed out (15 min)"
+
+**Cause**: Conflicts too complex, test failures require extensive debugging
+
+**Recovery**:
+- Merge branch preserved with full context
+- Remediation task file saved (`logs/merge_orchestrator/remediation_*.md`)
+- Human reviews task file and merge branch
+- Options:
+  - Manually resolve conflicts/fix tests
+  - Delete branch if work no longer needed
+  - Re-run orchestrator after manual fixes
+
+**Prevention**:
+- Keep worker tasks small (avoid large refactors)
+- Ensure tests are reliable (avoid flaky tests)
+- Monitor auto-remediation success rate
+
+**6. API key missing**:
 
 **Symptom**: Worker log shows "❌ ERROR: Claude execution failed"
 
@@ -749,11 +912,19 @@ Conflicts (manual intervention): 0
 - Worker times out → Watcher detects → Split task in roadmap → Next run smaller scope
 - Example: "Implement feature X" → "Step 1: Research X", "Step 2: Implement X"
 
-**Pattern 3: Conflict resolution**:
-- Worker hits merge conflict → Invoke Claude Code → Resolve → Continue
-- Example: Two workers modify same file → Claude merges both changes
+**Pattern 3: Conflict resolution (ENHANCED - Nov 6, 2025)**:
+- **Worker-level**: Worker hits merge conflict → Invoke Claude Code → Resolve → Continue
+- **Orchestrator-level (NEW)**: Orchestrator detects conflict → Spawn Claude Code → Resolve → Merge to main
+- Example: Two workers modify same file → Auto-remediation merges both changes
+- **Self-healing**: No human intervention needed for routine conflicts
 
-**Pattern 4: Branch preservation**:
+**Pattern 4: Auto-remediation with timeout**:
+- Orchestrator detects failure → Spawn Claude Code (15 min) → Fix issue
+- If success: Merge to main, delete worker branch (no stale branches)
+- If timeout: Preserve branch for human review (graceful degradation)
+- Example: Test failures → Claude debugs and fixes → Merge succeeds
+
+**Pattern 5: Branch preservation**:
 - Merge fails quality gates → Preserve branch → Human reviews → Manual merge or delete
 - Example: Tests fail → Branch kept → Human fixes tests → Manual merge
 
