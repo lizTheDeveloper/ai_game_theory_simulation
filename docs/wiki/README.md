@@ -35,10 +35,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Coverage: ~20% → 100% for emergency response mechanics
   - Validated: Tech acceleration (5), climate crisis flag (1), pandemic response (2), climate recovery (4), economic recovery (3), social recovery (9), technological recovery (2), nuclear recovery (2)
   - Uses: assertFinite, assertProbability, assertResourceAllocation, assertInRange
+- **CriticalJuncturePhase:** 11 mutations validated across 4 escape types ✅ COMPLETE
+  - Coverage: ~25% → 100% for agency moments (prevent war, enable cooperation, recover crisis, unlock breakthrough)
+  - Nuclear tension reduction (2), international cooperation boost (3), social recovery cascade (5), research breakthrough unlock (2)
+  - Uses: assertFinite, assertProbability, assertInRange
 - **Target:** 180 unvalidated mutations → 100% critical path coverage (Days 1-2)
+- **Progress:** 100 mutations validated (ExogenousShock 62 + EmergencyResponse 27 + CriticalJuncture 11)
 - **Next:** Additional critical phases (mortality, climate, resource systems)
 
 **RECENT ACHIEVEMENTS:**
+- ✅ **CriticalJuncturePhase state validation complete** (commit 8472f03, Nov 6, 2025)
+  - 11 mutations across 4 escape types: prevent war (2), enable cooperation (3), recover crisis (5), unlock breakthrough (2)
+  - 100% coverage for agency moments (~25% → 100%)
+  - Part of WEEK 3 Item 7: State Validation Framework (Day 1-2 of 3)
 - ✅ **EmergencyResponsePhase state validation complete** (commit 4eae7dd, Nov 6, 2025)
   - 27 mutations across 7 emergency response types (pandemic, climate, economic, social, technological, nuclear)
   - 100% coverage for emergency response mechanics (tech acceleration, crisis mitigation, recovery dynamics)
@@ -1952,6 +1961,11 @@ Models rare unprecedented events **outside normal state space evolution**.
 #### Phase 3: Critical Juncture Agency (Oct 17, 2025)
 
 **Implementation**: `src/simulation/engine/phases/CriticalJuncturePhase.ts` (419 lines, order 29)
+
+**State Validation**: ✅ **100% COMPLETE** (commit 8472f03, Nov 6, 2025)
+- All 11 mutations validated with assertion utilities (assertFinite, assertProbability, assertInRange)
+- Coverage: ~25% → 100% for agency moment mechanics
+- Nuclear tension reduction (2), international cooperation boost (3), social recovery cascade (5), research breakthrough unlock (2)
 
 Models the 10% of history where **individual/collective agency can alter structural trajectories**.
 
