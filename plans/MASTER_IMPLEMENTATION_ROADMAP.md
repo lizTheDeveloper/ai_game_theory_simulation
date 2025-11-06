@@ -36,7 +36,11 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - Validation: Cynthia & Sylvia APPROVED (high confidence)
   - Uncertainty: ±10-30% (direct peer-reviewed parameters)
   - Estimate: 4-6 hours implementation + 1-2 hours validation
-  - ⚠️ **VERIFICATION NEEDED (Nov 6):** Species baseline citation corrected IPBES→NHM PREDICTS, needs validation (research/verification_34a9c2c_20251106.md)
+  - ⏳ **VERIFICATION IN PROGRESS (Nov 6):** Species baseline citation corrected IPBES→NHM PREDICTS
+    - Workflow: research/PREDICTS_VERIFICATION_WORKFLOW.md
+    - Phase 1 (Cynthia): Source verification READY TO START
+    - Phase 2 (Sylvia): Critical review PENDING
+    - Estimate: 2.5-3.5 hours total
 - ✅ **COMPLETE:** Cooperative AI Ownership Implementation (Nov 5, 2025)
   - Status: Phase ACTIVE in simulation engine (order 15.5)
   - Implementation: 2 of 4 medium issues resolved (bootstrap + survival multiplier integration)
