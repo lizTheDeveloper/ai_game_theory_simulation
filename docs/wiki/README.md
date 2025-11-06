@@ -113,7 +113,7 @@ const baseMortalityRate = assertStateProperty(
 - `planetaryBoundaries.ts:969` - cascadeMortalityRate (THE Oct 2025 bug)
 - `engine.ts:289-292` - 4× MultiParadigmDUI outcome scores
 
-*HIGH (10/17 = 58% COMPLETE):*
+*HIGH (11/17 = 64% COMPLETE):*
 - `planetaryBoundaries.ts:932` - climateEmergencyFeedback
 - `planetaryBoundaries.ts:953` - existentialRiskFeedback
 - `research.ts:107,113` - AI safety investment rates
@@ -123,14 +123,16 @@ const baseMortalityRate = assertStateProperty(
 - `upwardSpirals.ts:95` - Upward spiral activation
 - `llm/integration.ts:84` - LLM integration
 - `powerGeneration.ts:70` - Power generation
+- `powerGeneration.ts:295` - Climate feedback (globalTemperatureAnomaly assertion)
 
 **Impact:**
 - Mortality calculation paths now protected (no silent fallbacks in death tracking)
 - Climate/AI critical paths secured (no silent masking of state corruption)
 - Future NaN bugs fail loudly with full context (location, month, expected source)
+- Derived vs. stored state distinction clarified (globalTemperatureAnomaly is calculated from climateStability, not stored)
 
 **Remaining Work (Phase 2):**
-- 7 HIGH priority fallbacks (trace NaN sources + move config fallbacks)
+- 6 HIGH priority fallbacks (trace NaN sources + move config fallbacks)
 - 28 MEDIUM priority (phase/agents/climate directories)
 - Monte Carlo N=10 validation
 
@@ -141,7 +143,7 @@ const baseMortalityRate = assertStateProperty(
 
 **Testing:** ✅ Type checking clean (no regressions)
 
-Commit: 76ba8e0 (Nov 6, 2025)
+Commits: 76ba8e0 (Phase 1), b105b64 (powerGeneration.ts climate feedback fix - Nov 6, 2025)
 
 **🔍 CRITICAL BUG DISCOVERED: Double-Counting Seasonal Mortality Multiplier**
 
