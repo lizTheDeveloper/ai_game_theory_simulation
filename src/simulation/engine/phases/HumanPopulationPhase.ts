@@ -18,6 +18,11 @@ export class HumanPopulationPhase implements SimulationPhase {
   readonly name = 'Human Population Dynamics';
   readonly order = 20.5;
 
+  // DEPENDENCY NOTE (Nov 6, 2025): This phase runs BEFORE BayesianMortalityResolutionPhase
+  // HumanPopulation order: 20.5, BayesianMortality order: 35.0
+  // No dependency needed - phases that run AFTER Bayesian should not overwrite population
+  // See Oct 28, 2025 bug fix: CountryPopulation phase was DELETED to prevent overwrites
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Population updates run once per simulation step (once per month)
     setDeterministicRng(rng);
