@@ -61,6 +61,18 @@ Commit: 876ea94 (Nov 5, 2025)
 
 ### November 6, 2025
 
+**TypeScript Dependency Fix - @playwright/test**
+
+Fixed TypeScript compilation errors in e2e tests by adding missing `@playwright/test` devDependency:
+- **Issue**: TypeScript gate failing on e2e test files due to missing type definitions
+- **Impact**: Blocked merge orchestrator from processing 93 branches
+- **Resolution**: Added `@playwright/test@^1.56.1` to devDependencies
+- **Result**: TypeScript compilation now passes, merge orchestrator unblocked
+
+See: `package.json`, Commit: 60bc09f
+
+---
+
 **Course Material Enhancement - Integration & Case Studies**
 
 Major expansion of agent coordination course materials:
