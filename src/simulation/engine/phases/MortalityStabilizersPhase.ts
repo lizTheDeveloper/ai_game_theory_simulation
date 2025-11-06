@@ -106,10 +106,10 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       // Changing this order will cause mortality calculations to be incorrect.
       //
       // 5. Apply cascade failures (interdependence between mechanisms)
-      this.applyCascadeFailures(stabilizers);
+      this.applyCascadeFailures(state, stabilizers);
 
       // 6. Calculate combined mortality reduction (multiplicative)
-      this.calculateCombinedReduction(stabilizers);
+      this.calculateCombinedReduction(state, stabilizers);
 
       // DIAGNOSTIC LOGGING: Per-region stabilizer state
       console.log(`  📊 Region: ${region.name || 'Unknown'} (pop: ${region.population.toFixed(1)}M)`);
@@ -572,15 +572,48 @@ export class MortalityStabilizersPhase implements SimulationPhase {
    * Example: Aid fails → Emergency response can't coordinate → Migration becomes chaotic
    */
   private applyCascadeFailures(
+    state: GameState,
     stabilizers: NonNullable<import('@/types/population').RegionalPopulation['mortalityStabilizers']>
   ): void {
     const cascades = stabilizers.cascades;
 
     // Calculate functioning levels (0-1)
-    cascades.aidFunctioning = stabilizers.aid.mortalityReduction / 0.295; // Normalize to 0-1
-    cascades.adaptationFunctioning = stabilizers.adaptation.totalReduction / 0.8;
-    cascades.migrationFunctioning = stabilizers.migration.successfulRelocation;
-    cascades.emergencyResponseFunctioning = stabilizers.emergencyResponse.effectiveness / 0.4;
+    cascades.aidFunctioning = assertInRange(
+      stabilizers.aid.mortalityReduction / 0.295,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures',
+        valueName: 'cascades.aidFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.adaptationFunctioning = assertInRange(
+      stabilizers.adaptation.totalReduction / 0.8,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures',
+        valueName: 'cascades.adaptationFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.migrationFunctioning = assertInRange(
+      stabilizers.migration.successfulRelocation,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures',
+        valueName: 'cascades.migrationFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.emergencyResponseFunctioning = assertInRange(
+      stabilizers.emergencyResponse.effectiveness / 0.4,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures',
+        valueName: 'cascades.emergencyResponseFunctioning',
+        month: state.currentMonth
+      }
+    );
 
     // Apply cascade effects
 
@@ -606,10 +639,42 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // The functioning levels were calculated from pre-cascade values (lines 434-438).
     // After cascades modify the actual effectiveness values, we need to update
     // the functioning levels to reflect the post-cascade state.
-    cascades.aidFunctioning = stabilizers.aid.mortalityReduction / 0.295;
-    cascades.adaptationFunctioning = stabilizers.adaptation.totalReduction / 0.8;
-    cascades.migrationFunctioning = stabilizers.migration.successfulRelocation;
-    cascades.emergencyResponseFunctioning = stabilizers.emergencyResponse.effectiveness / 0.4;
+    cascades.aidFunctioning = assertInRange(
+      stabilizers.aid.mortalityReduction / 0.295,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
+        valueName: 'cascades.aidFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.adaptationFunctioning = assertInRange(
+      stabilizers.adaptation.totalReduction / 0.8,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
+        valueName: 'cascades.adaptationFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.migrationFunctioning = assertInRange(
+      stabilizers.migration.successfulRelocation,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
+        valueName: 'cascades.migrationFunctioning',
+        month: state.currentMonth
+      }
+    );
+    cascades.emergencyResponseFunctioning = assertInRange(
+      stabilizers.emergencyResponse.effectiveness / 0.4,
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.applyCascadeFailures (post-cascade)',
+        valueName: 'cascades.emergencyResponseFunctioning',
+        month: state.currentMonth
+      }
+    );
   }
 
   /**
@@ -626,6 +691,7 @@ export class MortalityStabilizersPhase implements SimulationPhase {
    * - Total reduction: 50% → 21.4% (57% reduction from interventions)
    */
   private calculateCombinedReduction(
+    state: GameState,
     stabilizers: NonNullable<import('@/types/population').RegionalPopulation['mortalityStabilizers']>
   ): void {
     const aid = stabilizers.aid.mortalityReduction;
@@ -636,9 +702,30 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // Combined multiplicatively
     // Note: Migration is different - it removes people from risk entirely
     // So we calculate: (1 - migration) × [(1 - aid) × (1 - adaptation) × (1 - emergency)]
-    const remainingAfterMigration = (1 - migration);
-    const mortalityMultiplier = (1 - aid) * (1 - adaptation) * (1 - emergency);
-    const combined = 1 - (remainingAfterMigration * mortalityMultiplier);
+    const remainingAfterMigration = assertFinite(1 - migration, {
+      location: 'MortalityStabilizersPhase.calculateCombinedReduction',
+      valueName: 'remainingAfterMigration',
+      month: state.currentMonth,
+      additionalInfo: { migration }
+    });
+    const mortalityMultiplier = assertFinite(
+      (1 - aid) * (1 - adaptation) * (1 - emergency),
+      {
+        location: 'MortalityStabilizersPhase.calculateCombinedReduction',
+        valueName: 'mortalityMultiplier',
+        month: state.currentMonth,
+        additionalInfo: { aid, adaptation, emergency }
+      }
+    );
+    const combined = assertInRange(
+      1 - (remainingAfterMigration * mortalityMultiplier),
+      0, 1,
+      {
+        location: 'MortalityStabilizersPhase.calculateCombinedReduction',
+        valueName: 'combinedReduction',
+        month: state.currentMonth
+      }
+    );
 
     stabilizers.combinedReduction = combined;
   }
