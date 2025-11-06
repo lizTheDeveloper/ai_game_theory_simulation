@@ -6,6 +6,30 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ⚠️ Recent Changes (November 6, 2025)
 
+**🌍 CLIMATE TIPPING TIMESCALE ADJUSTMENTS (Nov 6, 2025)**
+
+Research-backed parameter updates approved by research-skeptic with conditions:
+
+**Changes Implemented:**
+1. **Arctic Sea Ice:** `cascades = false` (Armstrong McKay et al. 2022 - not a true tipping element)
+2. **AMOC:** Upper bound expanded 150yr → 300yr (captures deep uncertainty per Armstrong McKay 2022)
+3. **WAIS:** Lower bound adjusted 500yr → 2,000yr (Edwards et al. 2019 MICI revision)
+4. **Debug Logging:** Track tipping point progress over time
+
+**Changes Rejected** (zero empirical basis):
+- Exponential impact scaling (no paleoclimate validation)
+- Impact vs melt timescale distinction (needs further research)
+
+**Quality Gate 1:** APPROVE WITH CONDITIONS ✅
+- **Research Quality:** A- → B- (after critical review)
+- **Expected Impact:** 2-5% mortality reduction (conservative corrections)
+- **Files:** `src/types/tipping-points.ts`, `src/simulation/engine/phases/TippingPointPhase.ts`
+- **Documentation:** `research/climate_tipping_timescales_20251106.md`, `reviews/climate_timescale_critique_20251106.md`
+
+Commit: a5188f3
+
+---
+
 **🔴 RESEARCH SKEPTIC CRITIQUE - CRITICAL CALIBRATION ISSUES (Nov 6, 2025)**
 
 Sylvia (research-skeptic) conducted adversarial review - **Overall Grade: C- (Not Research-Ready)**
