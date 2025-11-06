@@ -15,6 +15,7 @@ import { getEnergyConstraintMultiplier } from './powerGeneration';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { addSimulationEvent } from './utils/eventLogger';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Phase 4: Compute scaling law
@@ -199,8 +200,16 @@ export function calculateDimensionGrowth(
   let recursiveMultiplier = 1.0;
   if (state && dimension === 'selfImprovement') {
     // Get total AI capability to determine if we're in recursive improvement territory
-    const totalCapability = state.aiAgents.reduce((max, ai) =>
-      Math.max(max, ai.capability ?? 0), 0);  // Use 0 floor for uninitialized agents
+    // FIXED: Use Math.max with 0 floor for uninitialized agents, then assertFinite to catch NaN/Infinity
+    const totalCapability = assertFinite(
+      state.aiAgents.reduce((max, ai) =>
+        Math.max(max, ai.capability ?? 0), 0),
+      {
+        location: 'calculateResearchGrowthRateMultiplier',
+        valueName: 'totalCapability',
+        additionalInfo: { dimension, agentCount: state.aiAgents.length }
+      }
+    );
 
     if (totalCapability > 2.0) {
       // Exponential takeoff: capability above 2.0 accelerates self-improvement

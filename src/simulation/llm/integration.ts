@@ -10,6 +10,7 @@ import type { RNGFunction } from '../../types/config';
 import type { LLMWeightUpdate, WeightUpdateHistory } from '../../types/llm';
 import { shouldUpdateWeights } from './config';
 import { updateWeightsWithLLM, getFallbackWeights } from './client';
+import { assertDefined } from '../utils/assertions';
 
 /**
  * Check and update AI agent weights if needed
@@ -79,9 +80,20 @@ export async function checkAndUpdateAgentWeights(
   };
 
   const previousState = {
-    // Use current values if no previous state (first month, legitimate fallback)
-    capability: agent.previousCapability ?? agent.capability,
-    alignment: agent.previousAlignment ?? agent.trueAlignment
+    // FIXED: Use assertDefined to ensure previousCapability/previousAlignment exist
+    // On first month, these should be initialized to current values (not missing)
+    capability: assertDefined(agent.previousCapability ?? agent.capability, {
+      location: 'checkAndUpdateAgentWeights',
+      valueName: 'previousCapability',
+      month: currentMonth,
+      expectedSource: 'agent initialization or previous month update'
+    }),
+    alignment: assertDefined(agent.previousAlignment ?? agent.trueAlignment, {
+      location: 'checkAndUpdateAgentWeights',
+      valueName: 'previousAlignment',
+      month: currentMonth,
+      expectedSource: 'agent initialization or previous month update'
+    })
   };
 
   const check = shouldUpdateWeights(
