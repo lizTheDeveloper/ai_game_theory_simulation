@@ -21,7 +21,11 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { getTechDeploymentSafe } from '../../techTree/helpers';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertFinite } from '@/simulation/utils/assertions';
+import {
+  assertFinite,
+  assertProbability,
+  assertInRange,
+} from '@/simulation/utils/assertions';
 
 interface Breakthrough {
   id: string;
@@ -49,8 +53,14 @@ const BREAKTHROUGHS: Breakthrough[] = [
       }
 
       // Climate benefit: Huge emissions reduction
-      state.environmentalAccumulation.climateStability = Math.min(1.0, 
-        state.environmentalAccumulation.climateStability + 0.10); // +10% recovery
+      state.environmentalAccumulation.climateStability = assertProbability(
+        Math.min(1.0, state.environmentalAccumulation.climateStability + 0.10),
+        {
+          location: 'StochasticInnovationPhase.fusion_breakthrough',
+          valueName: 'climateStability',
+          month: state.currentMonth
+        }
+      );
 
       console.log(`⚡💡 BREAKTHROUGH: Commercial fusion power achieved!`);
       console.log(`   Immediate 5% grid deployment, unlimited clean energy available`);
@@ -66,8 +76,14 @@ const BREAKTHROUGHS: Breakthrough[] = [
     prerequisites: ['cleanEnergy'],
     effects: (state) => {
       // Simulate active carbon removal (not just slowing emissions)
-      state.environmentalAccumulation.climateStability = Math.min(1.0,
-        state.environmentalAccumulation.climateStability + 0.15); // +15% recovery
+      state.environmentalAccumulation.climateStability = assertProbability(
+        Math.min(1.0, state.environmentalAccumulation.climateStability + 0.15),
+        {
+          location: 'StochasticInnovationPhase.carbon_capture_breakthrough',
+          valueName: 'climateStability',
+          month: state.currentMonth
+        }
+      );
 
       console.log(`🌍💡 BREAKTHROUGH: Gigatonne-scale carbon capture!`);
       console.log(`   Direct air capture now economically viable`);
@@ -84,7 +100,14 @@ const BREAKTHROUGHS: Breakthrough[] = [
     effects: (state) => {
       // Boost alignment of all existing AIs
       state.aiAgents.forEach(ai => {
-        ai.trueAlignment = Math.min(1.0, ai.trueAlignment + 0.30); // +30% alignment
+        ai.trueAlignment = assertProbability(
+          Math.min(1.0, ai.trueAlignment + 0.30),
+          {
+            location: 'StochasticInnovationPhase.ai_alignment_solution',
+            valueName: `trueAlignment_${ai.id}`,
+            month: state.currentMonth
+          }
+        );
       });
 
       // Reduce AI risk
@@ -108,11 +131,24 @@ const BREAKTHROUGHS: Breakthrough[] = [
     effects: (state) => {
       // Increase carrying capacity dramatically
       const pop = state.humanPopulationSystem;
-      pop.carryingCapacity *= 1.5; // +50% carrying capacity
+      pop.carryingCapacity = assertFinite(
+        pop.carryingCapacity * 1.5,
+        {
+          location: 'StochasticInnovationPhase.synthetic_food',
+          valueName: 'carryingCapacity',
+          month: state.currentMonth
+        }
+      );
 
       // Reduce biodiversity pressure (less agricultural land needed)
-      state.environmentalAccumulation.biodiversityIndex = Math.min(1.0,
-        state.environmentalAccumulation.biodiversityIndex + 0.08); // +8% recovery
+      state.environmentalAccumulation.biodiversityIndex = assertProbability(
+        Math.min(1.0, state.environmentalAccumulation.biodiversityIndex + 0.08),
+        {
+          location: 'StochasticInnovationPhase.synthetic_food',
+          valueName: 'biodiversityIndex',
+          month: state.currentMonth
+        }
+      );
 
       console.log(`🍖💡 BREAKTHROUGH: Scalable synthetic food production!`);
       console.log(`   Carrying capacity: +50% (lab-grown food at scale)`);
@@ -128,11 +164,24 @@ const BREAKTHROUGHS: Breakthrough[] = [
     prerequisites: ['advancedMaterials'],
     effects: (state) => {
       // Energy efficiency boost (lossless transmission)
-      state.environmentalAccumulation.resourceReserves = Math.min(1.0,
-        state.environmentalAccumulation.resourceReserves + 0.10); // +10% (energy savings)
+      state.environmentalAccumulation.resourceReserves = assertProbability(
+        Math.min(1.0, state.environmentalAccumulation.resourceReserves + 0.10),
+        {
+          location: 'StochasticInnovationPhase.room_temperature_superconductors',
+          valueName: 'resourceReserves',
+          month: state.currentMonth
+        }
+      );
 
       // Manufacturing capability boost
-      state.globalMetrics.manufacturingCapability *= 1.3; // +30% efficiency
+      state.globalMetrics.manufacturingCapability = assertFinite(
+        state.globalMetrics.manufacturingCapability * 1.3,
+        {
+          location: 'StochasticInnovationPhase.room_temperature_superconductors',
+          valueName: 'manufacturingCapability',
+          month: state.currentMonth
+        }
+      );
 
       console.log(`⚡💡 BREAKTHROUGH: Room-temperature superconductors!`);
       console.log(`   Energy transmission losses eliminated`);
@@ -267,7 +316,16 @@ export class StochasticInnovationPhase implements SimulationPhase {
 
           // Phase 1B Fix 3: Increment compounding multiplier (Oct 17, 2025)
           // Each breakthrough makes next 5% easier (virtuous cycle)
-          state.breakthroughMultiplier = Math.min(2.0, state.breakthroughMultiplier + 0.05);
+          state.breakthroughMultiplier = assertInRange(
+            Math.min(2.0, state.breakthroughMultiplier + 0.05),
+            0,
+            2.0,
+            {
+              location: 'StochasticInnovationPhase.execute',
+              valueName: 'breakthroughMultiplier',
+              month: state.currentMonth
+            }
+          );
 
           console.log(`   📈 Breakthrough compounding: multiplier now ${state.breakthroughMultiplier.toFixed(2)}× (max 2.0)`);
 
