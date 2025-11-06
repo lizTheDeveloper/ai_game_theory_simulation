@@ -91,6 +91,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Next Session 5:** AISufferingPhase (21 mutations), BiosphereIntegrityPhase, AIAgentActionsPhase (quick win)
 
 **RECENT ACHIEVEMENTS:**
+- ✅ **AGI Breakthrough Shock Magnitude Bug Fixed** (commit 141712b, Nov 6, 2025)
+  - **Bug:** ExogenousShockPhase AGI breakthrough had typo'd parameter values (500%/300% boosts vs intended 50%/30%)
+  - **Root cause:** Missing decimal points (5.0/3.0 vs 0.5/0.3)
+  - **Caught by:** assertShockMagnitude rejected values outside plausible range [-1.0, 0.5]
+  - **Validation:** Monte Carlo N=3 runs, zero assertion errors, capability increases now plausible
+  - **Impact:** Demonstrates assertion utilities catching physically implausible values before silent propagation
+  - A 500% self-improvement boost was god-mode; 50% is transformative but plausible for recursive improvement
 - ✅ **Session 4 State Validation: FoodSecurityDegradationPhase + Dependencies** (commit e213c2e, Nov 6, 2025)
   - **11 assertions added to food security degradation calculations** (0 → 100% coverage)
   - Replaced defensive throw patterns with assertion utilities (assertStateProperty for phosphorus/water/biodiversity)
