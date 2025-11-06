@@ -18,7 +18,7 @@ import { GameState, SocialAccumulation } from '@/types/game';
 import { HumanSocietyAgent } from '@/types/society';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { RootCause } from '@/types/population';
-import { assertStateProperty } from './utils/assertions';
+import { assertStateProperty, assertFinite, assertProbability, assertInRange } from './utils/assertions';
 import { addMortalityRisk } from './bayesianMortality';
 import {
   TRUST_THRESHOLD_ACCEPTANCE,
@@ -120,14 +120,15 @@ export function updateSocialAccumulation(
     meaningCrisisRate *= 0.5; // 50% reduction (new frameworks emerging)
   }
   
-  // Apply meaning crisis accumulation (detect NaN - fail loudly)
-  if (isNaN(social.meaningCrisisLevel)) {
-    console.error(`❌ NaN in meaningCrisisLevel at month ${state.currentMonth}`);
-    console.error(`   meaningCrisisRate: ${meaningCrisisRate}`);
-    console.error(`   social state: ${JSON.stringify(social)}`);
-    throw new Error(`NaN in meaningCrisisLevel - trace source of social accumulation corruption`);
-  }
-  social.meaningCrisisLevel = Math.max(0, Math.min(1, social.meaningCrisisLevel + meaningCrisisRate));
+  // Apply meaning crisis accumulation with assertion
+  social.meaningCrisisLevel = assertProbability(
+    Math.max(0, Math.min(1, social.meaningCrisisLevel + meaningCrisisRate)),
+    {
+      location: 'updateSocialAccumulation_meaningCrisis',
+      valueName: 'meaningCrisisLevel',
+      month: state.currentMonth
+    }
+  );
   
   // === INSTITUTIONAL LEGITIMACY EROSION ===
   // Governments lag behind technological change
@@ -164,16 +165,15 @@ export function updateSocialAccumulation(
     legitimacyRecoveryRate += 0.003; // Balanced regulation works
   }
   
-  // Apply legitimacy change (detect NaN - fail loudly)
-  if (isNaN(social.institutionalLegitimacy)) {
-    console.error(`❌ NaN in institutionalLegitimacy at month ${state.currentMonth}`);
-    console.error(`   legitimacyErosionRate: ${legitimacyErosionRate}, legitimacyRecoveryRate: ${legitimacyRecoveryRate}`);
-    console.error(`   social state: ${JSON.stringify(social)}`);
-    throw new Error(`NaN in institutionalLegitimacy - trace source of social accumulation corruption`);
-  }
-  social.institutionalLegitimacy = Math.max(0, Math.min(1,
-    social.institutionalLegitimacy - legitimacyErosionRate + legitimacyRecoveryRate
-  ));
+  // Apply legitimacy change with assertion
+  social.institutionalLegitimacy = assertProbability(
+    Math.max(0, Math.min(1, social.institutionalLegitimacy - legitimacyErosionRate + legitimacyRecoveryRate)),
+    {
+      location: 'updateSocialAccumulation_legitimacy',
+      valueName: 'institutionalLegitimacy',
+      month: state.currentMonth
+    }
+  );
   
   // === SOCIAL COHESION DEPLETION ===
   // Inequality erodes solidarity
@@ -209,12 +209,24 @@ export function updateSocialAccumulation(
   
   // Apply cohesion change (to trust and community bonds, on 0-100 scale)
   const cohesionChange = (cohesionRecoveryRate - cohesionLossRate) * 100; // Convert to 0-100 scale
-  social.socialCohesion.trust = Math.max(0, Math.min(100,
-    social.socialCohesion.trust + cohesionChange
-  ));
-  social.socialCohesion.communityBonds = Math.max(0, Math.min(100,
-    social.socialCohesion.communityBonds + cohesionChange
-  ));
+  social.socialCohesion.trust = assertInRange(
+    Math.max(0, Math.min(100, social.socialCohesion.trust + cohesionChange)),
+    0, 100,
+    {
+      location: 'updateSocialAccumulation_trust',
+      valueName: 'trust',
+      month: state.currentMonth
+    }
+  );
+  social.socialCohesion.communityBonds = assertInRange(
+    Math.max(0, Math.min(100, social.socialCohesion.communityBonds + cohesionChange)),
+    0, 100,
+    {
+      location: 'updateSocialAccumulation_communityBonds',
+      valueName: 'communityBonds',
+      month: state.currentMonth
+    }
+  );
 
   // === DISASTER COOPERATION BOOST (Evidence-Based Recovery, Oct 17, 2025) ===
   // Research: Wei et al. (2025), Drury et al. (2019), Zaki & Cikara (2020)
@@ -228,14 +240,44 @@ export function updateSocialAccumulation(
 
     // Apply cooperation boost to social cohesion components (disasters build solidarity)
     const cohesionBoost = boost * 100; // Convert to 0-100 scale
-    social.socialCohesion.trust = Math.min(100, social.socialCohesion.trust + cohesionBoost);
-    social.socialCohesion.communityBonds = Math.min(100, social.socialCohesion.communityBonds + cohesionBoost);
+    social.socialCohesion.trust = assertInRange(
+      Math.min(100, social.socialCohesion.trust + cohesionBoost),
+      0, 100,
+      {
+        location: 'disasterCooperation_trust',
+        valueName: 'trust',
+        month: state.currentMonth
+      }
+    );
+    social.socialCohesion.communityBonds = assertInRange(
+      Math.min(100, social.socialCohesion.communityBonds + cohesionBoost),
+      0, 100,
+      {
+        location: 'disasterCooperation_communityBonds',
+        valueName: 'communityBonds',
+        month: state.currentMonth
+      }
+    );
 
     // Apply emergency mobilization boost to government effectiveness
-    state.government.legitimacy = Math.min(1, state.government.legitimacy + boost * 1.5);
+    state.government.legitimacy = assertProbability(
+      Math.min(1, state.government.legitimacy + boost * 1.5),
+      {
+        location: 'disasterCooperation_legitimacy',
+        valueName: 'government.legitimacy',
+        month: state.currentMonth
+      }
+    );
 
     // Boost collective action willingness (creates window for breakthrough deployment)
-    state.society.coordinationCapacity = Math.min(1, state.society.coordinationCapacity + boost * 2.0);
+    state.society.coordinationCapacity = assertProbability(
+      Math.min(1, state.society.coordinationCapacity + boost * 2.0),
+      {
+        location: 'disasterCooperation_coordination',
+        valueName: 'coordinationCapacity',
+        month: state.currentMonth
+      }
+    );
 
     // Log cooperation boost (only during first month for clarity)
     if (monthsSince === 0) {
@@ -282,16 +324,15 @@ export function updateSocialAccumulation(
     adaptationRate *= 0.5; // Hard to coordinate without institutions
   }
   
-  // Apply cultural adaptation (detect NaN - fail loudly)
-  if (isNaN(social.culturalAdaptation)) {
-    console.error(`❌ NaN in culturalAdaptation at month ${state.currentMonth}`);
-    console.error(`   adaptationRate: ${adaptationRate}`);
-    console.error(`   social state: ${JSON.stringify(social)}`);
-    throw new Error(`NaN in culturalAdaptation - trace source of social accumulation corruption`);
-  }
-  social.culturalAdaptation = Math.max(0, Math.min(1,
-    social.culturalAdaptation + adaptationRate
-  ));
+  // Apply cultural adaptation with assertion
+  social.culturalAdaptation = assertProbability(
+    Math.max(0, Math.min(1, social.culturalAdaptation + adaptationRate)),
+    {
+      location: 'updateSocialAccumulation_culturalAdaptation',
+      valueName: 'culturalAdaptation',
+      month: state.currentMonth
+    }
+  );
   
   // === PHASE 1: LÉVY FLIGHT CASCADE CHECKS (Preference Falsification Cascades) ===
   // Research: Kuran (1991) - "Now out of Never" - preference falsification hides dissent
@@ -315,13 +356,44 @@ export function updateSocialAccumulation(
 
       // Rapid social cohesion increase (people discover they're not alone)
       const cascadeBoost = cascadeSize * 100; // Convert to 0-100 scale
-      social.socialCohesion.trust = Math.min(100, social.socialCohesion.trust + cascadeBoost);
-      social.socialCohesion.communityBonds = Math.min(100, social.socialCohesion.communityBonds + cascadeBoost);
-      social.socialCohesion.civilLiberties = Math.min(100, social.socialCohesion.civilLiberties + cascadeBoost);
+      social.socialCohesion.trust = assertInRange(
+        Math.min(100, social.socialCohesion.trust + cascadeBoost),
+        0, 100,
+        {
+          location: 'levyCascade_trust',
+          valueName: 'trust',
+          month: state.currentMonth
+        }
+      );
+      social.socialCohesion.communityBonds = assertInRange(
+        Math.min(100, social.socialCohesion.communityBonds + cascadeBoost),
+        0, 100,
+        {
+          location: 'levyCascade_communityBonds',
+          valueName: 'communityBonds',
+          month: state.currentMonth
+        }
+      );
+      social.socialCohesion.civilLiberties = assertInRange(
+        Math.min(100, social.socialCohesion.civilLiberties + cascadeBoost),
+        0, 100,
+        {
+          location: 'levyCascade_civilLiberties',
+          valueName: 'civilLiberties',
+          month: state.currentMonth
+        }
+      );
 
       // Institutional legitimacy shifts based on government response
       const governmentResponse = state.government.governmentType === 'authoritarian' ? -cascadeSize * 0.5 : cascadeSize * 0.3;
-      social.institutionalLegitimacy = Math.max(0, Math.min(1.0, social.institutionalLegitimacy + governmentResponse));
+      social.institutionalLegitimacy = assertProbability(
+        Math.max(0, Math.min(1.0, social.institutionalLegitimacy + governmentResponse)),
+        {
+          location: 'levyCascade_legitimacy',
+          valueName: 'institutionalLegitimacy',
+          month: state.currentMonth
+        }
+      );
 
       console.log(`\n  📢 PREFERENCE FALSIFICATION CASCADE: Kuran mechanism triggered`);
       console.log(`     Latent opposition: ${(latentOpposition * 100).toFixed(1)}%, Pluralistic ignorance: ${(pluralisticIgnorance * 100).toFixed(1)}%`);
