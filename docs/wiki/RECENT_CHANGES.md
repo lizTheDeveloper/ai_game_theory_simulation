@@ -4,6 +4,39 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 7, 2025)
+
+**🤖 AUTONOMOUS WORKER: EXHAUSTIVE BACKLOG PROCESSING** (Nov 7, 2025, commit 6ca187c)
+
+**Summary:** Updated autonomous worker to exhaust entire roadmap backlog (CRITICAL → HIGH → MEDIUM → LOW) instead of stopping after high-priority items.
+
+**Rationale:** Previous behavior was too conservative - worker would complete CRITICAL/HIGH items and stop, leaving MEDIUM/LOW work untouched indefinitely. New strategy: use all available tokens to clear as much backlog as possible.
+
+**Token Budget Guidance (Updated):**
+- **Under 75%:** Aggressive mode - work through entire backlog (CRITICAL → HIGH → MEDIUM → LOW)
+- **75-90%:** Normal operation - focus on CRITICAL/HIGH/MEDIUM items
+- **Over 90%:** Conservative mode - CRITICAL/HIGH items only
+
+**Previous Guidance (Removed):**
+- ~~Under 50%: Normal operation - prioritize CRITICAL/HIGH items~~
+- ~~50-75%: Be cost-conscious - focus on highest-value work only~~
+- ~~Over 75%: Conservative mode - only CRITICAL items, be concise~~
+
+**Impact:**
+- ✅ Worker now clears MEDIUM/LOW priority tasks when token budget allows
+- ✅ Roadmap backlog drains faster (fewer orphaned tasks)
+- ✅ Better token utilization (full 45-minute sessions)
+- ⚠️ May increase token usage per session (by design - that's the goal)
+
+**Files Modified:**
+- `autonomous-worker.sh` (lines 197-244): Updated token budget guidance and prioritization workflow
+- `docs/AUTONOMOUS_SETUP.md` (lines 93-114): Updated task selection priority documentation
+- `docs/COMMANDS.md` (lines 550-561): Updated worker stages documentation
+
+**Documentation:** See `docs/AUTONOMOUS_SETUP.md` § "Task Selection Priority" and `docs/COMMANDS.md` § "Autonomous Worker Monitoring"
+
+---
+
 ## ✅ Recent Changes (November 6, 2025)
 
 **⚙️ GITHUB ACTIONS WORKFLOWS TEMPORARILY DISABLED** (Nov 6, 2025, commit 4378525)
