@@ -796,6 +796,8 @@ Autonomous infrastructure upgrade: Merge orchestrator now spawns Claude Code to 
 
 **Impact**: Autonomous workflow now truly self-healing. No manual intervention needed for routine merge conflicts or test failures.
 
+**Working Tree Cleanup Fix (Nov 7, 2025)**: Orchestrator was failing on all 10 branches with "Your local changes would be overwritten by checkout" error. Root cause: Script didn't check/clean working tree before checkout operations. Fix (commit 2c32f0e): Added pre-flight check for uncommitted changes, auto-stash with timestamped recovery name if dirty, ensure on main branch before processing. Also resolved merge conflict markers in script itself (lines 43-71). This unblocked the hourly cron job. Script location: `scripts/merge-orchestrator.sh`
+
 **Incident resolution (Nov 7, 2025)**: Manual fix required when parallel worker updates created merge conflict in `docs/underdocumented.json`, blocking orchestrator from switching branches. Fix: Resolved conflict using `git checkout --theirs` (auto-generated file), cleaned working tree, committed resolution. Orchestrator unblocked, resumed normal operation. Monitoring: 73 accumulated branches cleaned at ~15/hour (~5 hours to clear backlog). Root cause: Expected pattern with parallel auto-generated file updates; automation handles most cases, manual intervention needed when automation fails. See: `logs/autonomous/fix_summary_20251107_021716.md`, Commit: bb48ef4
 
 See: [`docs/course/10_AUTONOMOUS_INFRASTRUCTURE.md`](../course/10_AUTONOMOUS_INFRASTRUCTURE.md#auto-remediation-new---nov-6-2025), Commit: d0f85ff
