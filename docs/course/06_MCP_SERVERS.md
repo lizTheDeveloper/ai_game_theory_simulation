@@ -898,59 +898,81 @@ print("Server started")  # Goes to stdout by default
 
 ## Section 07: Exercises
 
-### Exercise 1: Build a Simple MCP Server
+### Exercise 1: Set Up Your First Autonomous Agent
 
-**Goal:** Create a "todo list" MCP server with 3 tools
+**Goal:** Clone this repo and configure a specialized agent to run autonomously
 
-**Requirements:**
-1. `todo_add(task: str)` - Add a task to `todos.txt`
-2. `todo_list()` - List all tasks
-3. `todo_complete(task_number: int)` - Mark task as complete
+**What you'll learn:** The process of setting up your own autonomous swarm starts with understanding how ONE agent works. You'll configure an agent, give it access to MCP servers, and watch it operate.
 
-**Starter code (TypeScript):**
-```typescript
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
-import * as fs from 'fs';
+**Steps:**
 
-const TODOS_FILE = 'todos.txt';
-
-const server = new Server({ name: 'todo', version: '1.0.0' }, { capabilities: { tools: {} } });
-
-const tools = [
-  // TODO: Define tool schemas
-];
-
-server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
-
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
-
-  // TODO: Implement tool handlers
-});
-
-async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error('Todo MCP Server running');
-}
-
-main();
+1. **Clone the repository:**
+```bash
+git clone https://github.com/yourusername/superalignmenttoutopia
+cd superalignmenttoutopia
+npm install
 ```
 
-**Test:**
+2. **Study an existing agent configuration:**
 ```bash
-# Test manually
-echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | node todo-server.js
-echo '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"todo_add","arguments":{"task":"Build MCP server"}},"id":2}' | node todo-server.js
+# Read Roy's agent definition
+cat .claude/agents/roy.md
+
+# Read Roy's MCP config
+cat .claude/agents/mcp-configs/roy.json
+```
+
+3. **Create your own agent:**
+```bash
+# Copy Roy's configuration as a template
+cp .claude/agents/roy.md .claude/agents/your-agent.md
+cp .claude/agents/mcp-configs/roy.json .claude/agents/mcp-configs/your-agent.json
+
+# Edit the agent definition
+code .claude/agents/your-agent.md
+```
+
+4. **Configure MCP server access:**
+
+Your agent needs:
+- Chatroom access (coordination channel)
+- Agent memory (recall context)
+- Research PDFs (for validation)
+
+Edit `.claude/agents/mcp-configs/your-agent.json`:
+```json
+{
+  "mcpServers": {
+    "chatroom": {
+      "command": "node",
+      "args": ["/absolute/path/.claude/mcp-chatroom/dist/index.js"]
+    },
+    "agent-memory": {
+      "command": "python3",
+      "args": ["/absolute/path/scripts/agent-memory-server.py"]
+    }
+  }
+}
+```
+
+5. **Test your agent:**
+
+Spawn your agent in Claude Code:
+```
+Task({
+  subagent_type: "your-agent",
+  description: "Test autonomous agent setup",
+  prompt: "Please recall your context, check the coordination channel for new messages, and report your status."
+})
 ```
 
 **Success criteria:**
-- Server responds to `tools/list` with 3 tools
-- `todo_add` appends to `todos.txt`
-- `todo_list` returns file contents
-- `todo_complete` marks task with `[DONE]` prefix
+- Agent recalls its memory successfully
+- Agent reads coordination channel
+- Agent posts status update
+- You understand the 3 components: agent definition, MCP config, memory file
+
+**Key insight:** This is the foundation. Every autonomous swarm starts with configuring individual agents. Once you understand this pattern, you can spawn multiple agents with different specializations.
 
 ### Exercise 2: Add Per-User Read Tracking
 
