@@ -18,7 +18,12 @@
 
 import { GameState } from '@/types/game';
 import { UBISystem } from '@/types/ubi';
-import { assertStateProperty } from './utils/assertions';
+import {
+  assertStateProperty,
+  assertFinite,
+  assertProbability,
+  assertInRange
+} from './utils/assertions';
 
 /**
  * Initialize UBI system (not active by default)
@@ -90,14 +95,32 @@ export function activateUBI(
   ubi.monthsActive = 0;
   
   // Set basic income parameters
-  ubi.basicIncome.amount = amount;
-  ubi.basicIncome.coverage = coverage;
-  ubi.basicIncome.adequacy = Math.min(1.0, amount / 1800); // $1800 = full adequacy (rent + food + healthcare)
+  ubi.basicIncome.amount = assertFinite(amount, {
+    location: 'activateUBI',
+    valueName: 'amount',
+    month: state.currentMonth
+  });
+  ubi.basicIncome.coverage = assertProbability(coverage, {
+    location: 'activateUBI',
+    valueName: 'coverage',
+    month: state.currentMonth
+  });
+  ubi.basicIncome.adequacy = assertProbability(Math.min(1.0, amount / 1800), {
+    location: 'activateUBI',
+    valueName: 'adequacy',
+    month: state.currentMonth,
+    additionalInfo: { amount }
+  });
   ubi.basicIncome.fundingSource = fundingSource;
-  
+
   // Calculate monthly cost (US-scale: $1500 x 330M people = ~$500B/month)
   // Scale by coverage
-  ubi.basicIncome.monthlyCost = (amount * 330 * coverage) / 1000; // $B per month
+  ubi.basicIncome.monthlyCost = assertFinite((amount * 330 * coverage) / 1000, {
+    location: 'activateUBI',
+    valueName: 'monthlyCost',
+    month: state.currentMonth,
+    additionalInfo: { amount, coverage }
+  });
   
   // Initial effects (from research)
   ubi.effects.economicSecurity = 0.5; // Immediate security boost (Roosevelt Institute)
@@ -159,22 +182,59 @@ export function updateUBISystem(state: GameState): void {
   ubi.effects.economicSecurity = Math.min(1.0, ubi.effects.economicSecurity + economicSecurityEffect);
   
   // 2. Purpose infrastructure enables meaning beyond work (Danaher 2019, Harvard 2024)
-  const avgInfrastructure = (
-    ubi.purposeInfrastructure.educationAccess +
-    ubi.purposeInfrastructure.creativeSpaces +
-    ubi.purposeInfrastructure.volunteerPrograms +
-    ubi.purposeInfrastructure.socialInfrastructure
-  ) / 4;
-  
-  const purposeInfrastructureEffect = avgInfrastructure * 0.02; // +2%/month at full deployment (Harvard)
-  
+  const avgInfrastructure = assertProbability(
+    (
+      ubi.purposeInfrastructure.educationAccess +
+      ubi.purposeInfrastructure.creativeSpaces +
+      ubi.purposeInfrastructure.volunteerPrograms +
+      ubi.purposeInfrastructure.socialInfrastructure
+    ) / 4,
+    {
+      location: 'updateUBISystem',
+      valueName: 'avgInfrastructure',
+      month: state.currentMonth
+    }
+  );
+
+  const purposeInfrastructureEffect = assertFinite(avgInfrastructure * 0.02, {
+    location: 'updateUBISystem',
+    valueName: 'purposeInfrastructureEffect',
+    month: state.currentMonth,
+    additionalInfo: { avgInfrastructure }
+  });
+
   // 3. Combined meaning crisis reduction (from research plan: -0.03 to -0.05/month)
-  const meaningCrisisReductionRate = economicSecurityEffect + purposeInfrastructureEffect;
-  ubi.meaningCrisisReduction += meaningCrisisReductionRate;
-  
+  const meaningCrisisReductionRate = assertFinite(
+    economicSecurityEffect + purposeInfrastructureEffect,
+    {
+      location: 'updateUBISystem',
+      valueName: 'meaningCrisisReductionRate',
+      month: state.currentMonth,
+      additionalInfo: { economicSecurityEffect, purposeInfrastructureEffect }
+    }
+  );
+  ubi.meaningCrisisReduction = assertFinite(
+    ubi.meaningCrisisReduction + meaningCrisisReductionRate,
+    {
+      location: 'updateUBISystem',
+      valueName: 'meaningCrisisReduction',
+      month: state.currentMonth,
+      additionalInfo: { meaningCrisisReductionRate }
+    }
+  );
+
   // Apply to actual meaning crisis
-  const currentCrisis = state.socialAccumulation.meaningCrisisLevel;
-  const newCrisis = Math.max(0, currentCrisis - meaningCrisisReductionRate);
+  const currentCrisis = assertStateProperty(
+    state.socialAccumulation,
+    'meaningCrisisLevel',
+    { location: 'updateUBISystem', month: state.currentMonth }
+  );
+  const newCrisis = assertInRange(Math.max(0, currentCrisis - meaningCrisisReductionRate), 0, 1, {
+    location: 'updateUBISystem',
+    valueName: 'newCrisis',
+    month: state.currentMonth,
+    additionalInfo: { currentCrisis, meaningCrisisReductionRate }
+  });
   state.socialAccumulation.meaningCrisisLevel = newCrisis;
   
   // === WORK TRANSITION ===
@@ -217,13 +277,20 @@ export function updateUBISystem(state: GameState): void {
   );
   
   // Population adapted = average of all transition metrics
-  ubi.populationAdapted = (
-    ubi.workTransition.educationPursuit +
-    ubi.workTransition.voluntaryWork +
-    ubi.workTransition.collectiveService +
-    ubi.workTransition.entrepreneurship +
-    ubi.workTransition.leisureAdaptation
-  ) / 5;
+  ubi.populationAdapted = assertProbability(
+    (
+      ubi.workTransition.educationPursuit +
+      ubi.workTransition.voluntaryWork +
+      ubi.workTransition.collectiveService +
+      ubi.workTransition.entrepreneurship +
+      ubi.workTransition.leisureAdaptation
+    ) / 5,
+    {
+      location: 'updateUBISystem',
+      valueName: 'populationAdapted',
+      month: state.currentMonth
+    }
+  );
   
   // === RISKS ===
   
@@ -280,9 +347,16 @@ export function updateUBISystem(state: GameState): void {
   
   // === ECONOMIC EFFECTS ===
   // GDP impact (McKinsey: Stimulus from consumption)
-  ubi.effects.gdpImpact = Math.min(
-    0.15, // Max +15% GDP (McKinsey $2.5T / $20T US GDP ≈ 12.5%)
-    0.05 + ubi.basicIncome.coverage * 0.10
+  ubi.effects.gdpImpact = assertInRange(
+    Math.min(0.15, 0.05 + ubi.basicIncome.coverage * 0.10),
+    0,
+    0.15,
+    {
+      location: 'updateUBISystem',
+      valueName: 'gdpImpact',
+      month: state.currentMonth,
+      additionalInfo: { coverage: ubi.basicIncome.coverage }
+    }
   );
   
   // Autonomy increases with low inflation and full coverage
