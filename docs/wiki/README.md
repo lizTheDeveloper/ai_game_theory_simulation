@@ -74,11 +74,13 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
 - **Status:** Batch 1 implementation STARTED (1/18 CRITICAL phases complete)
 - **Current Coverage:** 39.7% (46/116 phases) → **Target: 95%+** (111+ phases)
 - **Progress:** HumanEnhancementPhase complete with 4 assertion groups, type checking passes
+- **Module Layer Progress:** climateJustice and governanceQuality modules now protected (commit a52ac55)
 - **Timeline:** 10-13 hours for Batch 1 (phase layer + module layer), 25-30 hours total for 95% coverage
 - **Implementation Logs:**
   - Audit: `logs/assertion_batch1_summary_20251107.md`
   - Findings: `logs/assertion_batch1_findings_20251107.md` (0 bugs found yet, validation pending)
   - Plan: `logs/assertion_batch1_plan_20251107.md`
+  - Progress: `scripts/checkAssertionCoverage.ts` (tracking tool)
 - **Strategy:** Manual phase-by-phase implementation (18 CRITICAL → 11 HIGH → 3 MEDIUM)
 - **Next Steps:** Complete remaining 17 CRITICAL phases, then validate with Monte Carlo N=10+
 
@@ -5280,6 +5282,8 @@ When adding/modifying simulation code:
 - `/reviews/state_mutation_audit_20251106.md` - Comprehensive audit report (920 mutations, 713 assertions, 207 gap) ✅ NEW
 - `/src/simulation/bayesianMortality.ts` - 100% assertion coverage (all ~15 mutations validated) ✅ NEW
 - `/src/simulation/catastrophicScenarios.ts` - 100% assertion coverage (all 42 mutations validated) ✅ NEW
+- `/src/simulation/climateJustice.ts` - Assertion coverage added (debt calculations, reparations, migration, tech transfer) ✅ NEW
+- `/src/simulation/governanceQuality.ts` - Assertion coverage added (all 6 governance metrics: decision quality, transparency, participation, capacity, consensus, minority protection) ✅ NEW
 - `/src/simulation/engine/phases/TippingPointPhase.ts` - 7 assertions for climate tipping points (sigmoid transitions, cascade multipliers, climate stability)
 - `/src/simulation/engine/phases/MortalityStabilizersPhase.ts` - 11 assertions for mortality reduction (cascade functioning, combined reductions)
 - `/src/simulation/engine/phases/EmergencyResponsePhase.ts:75-640` - 27 validated mutations across 7 emergency types
