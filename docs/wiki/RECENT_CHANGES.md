@@ -58,6 +58,24 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
+**🔧 WATCHER FIX: Ignore Benign "claude not found" in Health Checks** (Nov 7, 2025, commit 56ea3e9)
+
+**Problem:** Autonomous worker watcher was flagging researcher runs as failed due to false positive error detection.
+
+**Root Cause:** The researcher script checks for `claude` CLI availability with `command -v claude`, which outputs "❌ claude not found" when the CLI isn't installed. This is informational only - the script works correctly using Claude Code via full path or npm.
+
+**Solution:** Updated watcher error detection pattern to ignore the benign "claude not found" message while still catching actual script execution failures.
+
+**Impact:**
+- ✅ Eliminates false positive alerts for healthy researcher runs
+- ✅ Watcher correctly identifies actual script failures
+- ✅ Improved monitoring accuracy
+
+**Files Modified:**
+- `scripts/autonomous-worker-watcher.sh` - Updated grep pattern to exclude benign dependency check
+
+---
+
 **🔧 CRITICAL REGRESSIONS FIXED: RNG Fallback + Defensive Fallbacks (CRITICAL-3, CRITICAL-4)** (Nov 7, 2025, commit 004884e)
 
 **Summary:** Eliminated two critical anti-patterns that broke Monte Carlo determinism and masked bugs for months.
