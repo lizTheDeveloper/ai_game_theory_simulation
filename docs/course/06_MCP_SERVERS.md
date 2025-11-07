@@ -150,102 +150,46 @@ This project uses **5 MCP servers**:
 
 #### Minimal Server Structure
 
+**Core pattern** (4 components):
+
 ```typescript
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-  Tool,
-} from '@modelcontextprotocol/sdk/types.js';
 
-// Create server
-const server = new Server(
-  {
-    name: 'chatroom',
-    version: '1.0.0',
-  },
-  {
-    capabilities: {
-      tools: {},
-    },
+// 1. Create server with capabilities
+const server = new Server({ name: 'chatroom', version: '1.0.0' }, { capabilities: { tools: {} } });
+
+// 2. Define tool schemas (JSON Schema)
+const tools: Tool[] = [{
+  name: 'chatroom_post',
+  inputSchema: {
+    type: 'object',
+    properties: { channel: { type: 'string' }, agent: { type: 'string' }, /* ... */ },
+    required: ['channel', 'agent', 'status', 'message']
   }
-);
+}];
 
-// Define tools
-const tools: Tool[] = [
-  {
-    name: 'chatroom_post',
-    description: 'Post a message to a channel',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        channel: { type: 'string', description: 'Channel name' },
-        agent: { type: 'string', description: 'Agent username' },
-        status: {
-          type: 'string',
-          description: 'Message status',
-          enum: ['ENTERED', 'STARTED', 'IN-PROGRESS', 'COMPLETED', 'BLOCKED']
-        },
-        message: { type: 'string', description: 'Message content' },
-      },
-      required: ['channel', 'agent', 'status', 'message'],
-    },
-  },
-];
-
-// List tools handler
-server.setRequestHandler(ListToolsRequestSchema, async () => ({
-  tools,
-}));
-
-// Tool execution handler
+// 3. Register handlers
+server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
-
-  switch (name) {
-    case 'chatroom_post': {
-      const { channel, agent, status, message } = args as {
-        channel: string;
-        agent: string;
-        status: string;
-        message: string;
-      };
-
-      // Server-side file operation
-      const channelFile = `${CHANNELS_DIR}/${channel}.md`;
-      const messageBlock = `\n---\n**${agent}** | ${timestamp()} | [${status}]\n\n${message}\n---\n`;
-      fs.appendFileSync(channelFile, messageBlock);
-
-      // Minimal response (no content needed)
-      return {
-        content: [{ type: 'text', text: `✓ Posted to ${channel}` }],
-      };
-    }
-
-    default:
-      throw new Error(`Unknown tool: ${name}`);
-  }
+  // Server-side file operations, return results to Claude
+  const channelFile = `${CHANNELS_DIR}/${channel}.md`;
+  fs.appendFileSync(channelFile, messageBlock);
+  return { content: [{ type: 'text', text: `✓ Posted to ${channel}` }] };
 });
 
-// Start server with stdio transport
-async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error('MCP Chatroom Server running on stdio');
-}
-
-main().catch((error) => {
-  console.error('Fatal error:', error);
-  process.exit(1);
-});
+// 4. Start with stdio transport
+const transport = new StdioServerTransport();
+await server.connect(transport);
 ```
+
+**See full implementation:** `.claude/chatroom/src/index.ts` (250 lines)
 
 **Key patterns:**
 
 1. **Tool schema definition:** JSON Schema for typed inputs (IDE autocomplete, validation)
 2. **Request handlers:** `ListToolsRequestSchema` (discovery) and `CallToolRequestSchema` (execution)
-3. **Server-side state:** Server maintains `.${channel}_${agent}_lastread` files
+3. **Server-side state:** Server maintains `.${channel}_${agent}_lastread` files for read tracking
 4. **Error handling:** Wrap tool logic in try/catch, return `isError: true` on failure
 5. **Stdio transport:** All communication via stdin/stdout (no HTTP server needed)
 
@@ -980,60 +924,102 @@ Task({
 
 **Key insight:** This is the foundation. Every autonomous swarm starts with configuring individual agents. Once you understand this pattern, you can spawn multiple agents with different specializations.
 
-### Exercise 2: Add Per-User Read Tracking
+### Exercise 2: Add Per-User Read Tracking (CHALLENGE)
 
-**Goal:** Extend Exercise 1 to track read positions (like chatroom server)
+**Format:** Challenge - Figure out the implementation yourself
 
-**New requirements:**
-1. `todo_read_new(user: str)` - Show only new tasks since last read
+**Goal:** Extend your MCP server to track read positions per user (like chatroom server does)
+
+**Requirements:**
+1. Add `todo_read_new(user: str)` tool - Show only new tasks since user's last read
 2. Track read position per user in `.todos_{user}_lastread` files
 3. Return "No new tasks" if user is caught up
+4. Multiple users have independent read positions
+
+**Expected behavior:**
+```bash
+# User alice adds 3 tasks
+# User alice reads → sees all 3 tasks
+# User bob reads → sees all 3 tasks (bob's first read)
+# User alice reads again → sees "No new tasks"
+# User alice adds 1 more task
+# User bob reads → sees task 4 only (bob already read 1-3)
+```
+
+**Hints:** Look at chatroom server's `getLastReadLine()` pattern in `.claude/chatroom/src/index.ts` (lines 80-90)
+
+**Success criteria:**
+- Each user maintains separate read position
+- Read positions persist across server restarts
+- "No new tasks" message when caught up
+- Type-safe implementation with proper error handling
+
+### Exercise 3: Debug a Broken MCP Server (DEBUGGING)
+
+**Format:** Debugging challenge - Find and fix 3 bugs
+
+**Scenario:** This chatroom server has 3 bugs. Your tools will appear in Claude Desktop, but they won't work correctly.
+
+**Buggy code:**
+```typescript
+// BUGGY: This code has 3 bugs - find and fix them
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import fs from 'fs';
+
+const server = new Server({ name: 'buggy-chatroom', version: '1.0.0' });
+
+const tools = [{
+  name: 'chatroom_post',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      channel: { type: 'string' },
+      message: { type: 'string' }
+    }
+    // BUG 1: Missing required fields specification
+  }
+}];
+
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  const { channel, message } = request.params.arguments;
+
+  // BUG 2: No CWD specified - will fail in Claude Desktop
+  const file = `channels/${channel}.md`;
+  fs.appendFileSync(file, message);
+
+  // BUG 3: Missing return value - violates MCP protocol
+  console.log(`Posted to ${channel}`);
+});
+```
 
 **Hints:**
-```typescript
-function getLastReadLine(user: string): number {
-  const file = `.todos_${user}_lastread`;
-  try {
-    return parseInt(fs.readFileSync(file, 'utf-8').trim()) || 0;
-  } catch {
-    return 0;
-  }
-}
+1. **Bug 1:** Tool schemas need `required: [...]` to enforce mandatory parameters
+2. **Bug 2:** Claude Desktop runs servers from different CWD - use absolute paths or specify `cwd` in config
+3. **Bug 3:** MCP protocol requires tools to return `{ content: [...] }`, not undefined
 
-function writeLastReadLine(user: string, line: number): void {
-  fs.writeFileSync(`.todos_${user}_lastread`, line.toString());
-}
-```
-
-**Test:**
+**Expected behavior after fixes:**
 ```bash
-# User 1 adds 3 tasks
-echo '...' | node todo-server.js  # todo_add "Task 1"
-echo '...' | node todo-server.js  # todo_add "Task 2"
-echo '...' | node todo-server.js  # todo_add "Task 3"
-
-# User 1 reads (should see all 3)
-echo '...' | node todo-server.js  # todo_read_new(user: "alice")
-
-# User 2 reads (should also see all 3, different read position)
-echo '...' | node todo-server.js  # todo_read_new(user: "bob")
-
-# User 1 reads again (should see "No new tasks")
-echo '...' | node todo-server.js  # todo_read_new(user: "alice")
+# Should create file at correct location
+# Should enforce required parameters
+# Should return proper MCP response
 ```
 
-### Exercise 3: Build Agent Memory Tools
+**Success criteria:**
+- Tool calls succeed in Claude Desktop
+- Files created in correct directory
+- Missing parameters are caught before execution
+- Proper error messages on failures
+
+### Exercise 4: Build Agent Memory Tools (TUTORIAL)
+
+**Format:** Tutorial - Step-by-step implementation
 
 **Goal:** Create a simplified agent memory server in Python using fastMCP
 
-**Requirements:**
-1. Store agent memories in JSON files (`.memories/{agent_id}.json`)
-2. Implement 3 tools:
-   - `add_task(agent_id: str, task: str)` - Add to recent tasks
-   - `recall_tasks(agent_id: str)` - Get last 5 tasks
-   - `clear_recent(agent_id: str)` - Clear recent tasks (nightly cleanup)
+**Steps:**
 
-**Starter code:**
+1. **Create memory server file:**
 ```python
 #!/usr/bin/env python3
 from pathlib import Path
@@ -1044,38 +1030,58 @@ MEMORY_DIR = Path(".memories")
 MEMORY_DIR.mkdir(exist_ok=True)
 
 mcp = FastMCP("Simple Agent Memory")
+```
 
+2. **Add helper functions:**
+```python
 def load_memory(agent_id: str) -> dict:
-    """Load agent memory from disk"""
     file = MEMORY_DIR / f"{agent_id}.json"
     if not file.exists():
         return {"recent": {"tasks": []}}
     return json.loads(file.read_text())
 
 def save_memory(agent_id: str, memory: dict) -> None:
-    """Save agent memory to disk"""
     file = MEMORY_DIR / f"{agent_id}.json"
     file.write_text(json.dumps(memory, indent=2))
+```
 
-# TODO: Implement tools
+3. **Implement add_task tool:**
+```python
+@mcp.tool()
+def add_task(agent_id: str, task: str) -> str:
+    memory = load_memory(agent_id)
+    memory["recent"]["tasks"].append(task)
+    save_memory(agent_id, memory)
+    return f"Added task for {agent_id}"
+```
 
+4. **Implement recall_tasks tool:**
+```python
+@mcp.tool()
+def recall_tasks(agent_id: str) -> list:
+    memory = load_memory(agent_id)
+    return memory["recent"]["tasks"][-5:]  # Last 5 tasks
+```
+
+5. **Start server:**
+```python
 if __name__ == "__main__":
     mcp.run(transport="stdio")
 ```
 
 **Test:**
 ```bash
-# Test with Python
 python3 simple-memory-server.py <<EOF
 {"jsonrpc":"2.0","method":"tools/call","params":{"name":"add_task","arguments":{"agent_id":"test","task":"Learn MCP"}},"id":1}
 EOF
-
-python3 simple-memory-server.py <<EOF
-{"jsonrpc":"2.0","method":"tools/call","params":{"name":"recall_tasks","arguments":{"agent_id":"test"}},"id":2}
-EOF
 ```
 
-### Exercise 4: Integrate with Claude Desktop
+**Success criteria:**
+- Server runs without errors
+- Tasks persist across calls
+- Memory files created in `.memories/` directory
+
+### Exercise 5: Integrate with Claude Desktop
 
 **Goal:** Configure your MCP server to work with Claude Desktop
 
