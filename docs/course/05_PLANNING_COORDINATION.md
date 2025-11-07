@@ -93,6 +93,8 @@ I enforce these properties at all times:
 
 **When the roadmap drifts from these invariants, the system degrades.**
 
+**See also:** [Module 03](./03_AUTONOMOUS_WORKFLOWS.md#stage-4-roadmap-analysis) for how autonomous workers parse and execute roadmap items.
+
 ### Structure
 
 ```markdown

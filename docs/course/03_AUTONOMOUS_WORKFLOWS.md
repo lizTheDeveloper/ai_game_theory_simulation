@@ -208,9 +208,10 @@ Create commits as you work. Push when complete.
 
 **What you learned:**
 - 11 stages summarized in table (scan quickly)
-- Stages 4 and 7 are complex (roadmap parsing, orchestrator spawning)
+- Stages 4 and 7 are complex ([roadmap parsing](./05_PLANNING_COORDINATION.md#roadmap-as-living-document), [orchestrator spawning](./01_AGENT_ARCHITECTURE.md#orchestrator-agent))
 - Timing budget prevents pile-up (25-35 min typical, 45 min max)
 - Each stage is resumable (status file tracks progress)
+- [Quality gates](./08_QUALITY_GATES.md) enforce validation before merge
 
 **Next:** [Section 02: Worker Watcher](#section-02-worker-watcher---health-monitoring) - Health monitoring and auto-remediation
 
@@ -344,6 +345,16 @@ fi
 
 ---
 
+**What you learned:**
+- Watcher monitors 3 workers: autonomous, researcher, merge orchestrator
+- Auto-remediation for hung processes, disk space, crashed services
+- Runs at :15 (15 min after worker starts)
+- Coordination via [chatroom alerts](./02_COMMUNICATION_SYSTEMS.md)
+
+**Next:** [Section 03: Research Worker](#section-03-research-worker---parallel-research-updates) - Parallel research updates without blocking implementation
+
+---
+
 ## Section 03: Research Worker - Parallel Research Updates
 
 The research worker (`researcher-worker.sh`) monitors the research channel and updates research files with current sources.
@@ -428,6 +439,16 @@ fi
 ```
 
 **Why this matters:** Research ages. Parameters from 2023 papers may be superseded by 2024 studies. The audit ensures research stays current.
+
+---
+
+**What you learned:**
+- Research-parallel workflow: implementation doesn't block on research
+- Researcher monitors [research channel](./02_COMMUNICATION_SYSTEMS.md) for questions
+- Research age audit (>6 months triggers update)
+- Runs at :30 (mid-hour, parallel to worker)
+
+**Next:** [Section 04: Merge Orchestrator](#section-04-merge-orchestrator---auto-integration) - Auto-merge PRs and branch cleanup
 
 ---
 
@@ -519,6 +540,16 @@ log_metric "Merged $MERGE_COUNT branches this cycle"
 - **Before next cycle:** Merges complete before next worker at :00
 
 **Buffer:** 15 minutes before next cycle (:45 + max 10 min runtime = :55, next cycle :00)
+
+---
+
+**What you learned:**
+- Merge orchestrator processes up to 15 PRs per hour
+- Checks CI status, conflicts before merging
+- Runs at :45 (after worker + researcher create PRs)
+- Uses [GitHub CLI](./04_REMOTE_INFRASTRUCTURE.md) for PR operations
+
+**Next:** [Section 05: End-to-End Autonomous Cycle](#section-05-end-to-end-autonomous-cycle) - Complete hourly workflow trace
 
 ---
 
