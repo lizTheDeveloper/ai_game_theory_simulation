@@ -241,7 +241,7 @@ export class DiagnosticLogger {
     // P0.4 (Oct 15, 2025): Track deterministic systems
     this.captureSystemSnapshots(state, month);
 
-    this.previousState = JSON.parse(JSON.stringify(state));
+    this.previousState = structuredClone(state);
   }
 
   /**

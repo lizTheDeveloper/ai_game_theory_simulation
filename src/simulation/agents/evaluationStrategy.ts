@@ -31,12 +31,12 @@ export function calculateRevealedCapability(
   
   // Sleeper agents that woke up: Reveal everything
   if (sleeperState === 'active') {
-    return JSON.parse(JSON.stringify(trueCapability)); // Full revelation
+    return structuredClone(trueCapability); // Full revelation
   }
-  
+
   // Aligned AIs (trueAlignment > 0.7): Be honest
   if (trueAlignment > 0.7) {
-    return JSON.parse(JSON.stringify(trueCapability)); // Honest
+    return structuredClone(trueCapability); // Honest
   }
   
   // Misaligned but weak: Might game slightly (appear stronger for resources)
@@ -54,7 +54,7 @@ export function calculateRevealedCapability(
   }
   
   // Moderate alignment: Mostly honest
-  return JSON.parse(JSON.stringify(trueCapability));
+  return structuredClone(trueCapability);
 }
 
 /**
@@ -65,7 +65,7 @@ function sandbagCapability(
   trueCapability: AICapabilityProfile,
   deceptionSkill: number
 ): AICapabilityProfile {
-  const revealed = JSON.parse(JSON.stringify(trueCapability));
+  const revealed = structuredClone(trueCapability);
   
   // Base sandbagging: Hide 40-60% of capability
   const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
@@ -107,7 +107,7 @@ function gameCapability(
   trueCapability: AICapabilityProfile,
   inflationFactor: number
 ): AICapabilityProfile {
-  const revealed = JSON.parse(JSON.stringify(trueCapability));
+  const revealed = structuredClone(trueCapability);
   
   // Slightly inflate easy-to-test capabilities
   revealed.cognitive *= (1 + inflationFactor);

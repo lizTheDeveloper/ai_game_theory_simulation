@@ -255,9 +255,9 @@ export function diffuseCapabilities(state: GameState, rng: () => number): void {
  */
 export function getCapabilityFloorForNewAI(state: GameState): AICapabilityProfile {
   const floor = state.ecosystem.capabilityFloor;
-  
+
   // Return a copy (don't mutate the floor)
-  return JSON.parse(JSON.stringify(floor));
+  return structuredClone(floor);
 }
 
 /**
