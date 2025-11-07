@@ -107,7 +107,9 @@ capability =
   selfImprovement × 0.25  // Highest weight!
 ```
 
-**Implementation:** `capabilities.ts:calculateTotalCapabilityFromProfile()`
+**CRITICAL:** Capability values are **discrete integer levels** (0, 1, 2, ...), not fractional. The weighted sum from `calculateTotalCapabilityFromProfile()` is rounded to the nearest integer during initialization to preserve this semantic constraint.
+
+**Implementation:** `capabilities.ts:calculateTotalCapabilityFromProfile()`, `initialization.ts:createAIAgent()` (rounds to integer)
 
 ## True vs Revealed Capability
 
