@@ -4,7 +4,7 @@
 
 ## What This Simulation Does
 
-This project models the complex interplay between advancing AI systems, human institutions, environmental crises, and breakthrough technologies to explore possible futures for humanity. Unlike traditional games focused on balance and fun, this is a **research tool** grounded in peer-reviewed science (156+ sources across 11 disciplines).
+This project models the complex interplay between advancing AI systems, human institutions, environmental crises, and breakthrough technologies to explore possible futures for humanity. Unlike traditional games focused on balance and fun, this is a **research tool** grounded in peer-reviewed science (160+ sources across 11 disciplines).
 
 The simulation asks: **What happens after we solve AI alignment?** Will we achieve a flourishing solarpunk utopia, slide into cyberpunk dystopia, or face extinction? The answer depends on how AI capabilities, social cohesion, environmental boundaries, and technological breakthroughs interact over decades.
 
@@ -3158,6 +3158,11 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 - Sen (1981): Entitlement theory - famines are distribution failures, not production failures
 - WHO social determinants framework: Root causes vs immediate causes
 - ICD-10 classification: Medical cause of death
+- GBD 2023 (IHME 2024): 292 causes of death with CODEm ensemble modeling - validates compound attribution approach
+- Lancet Countdown 2025: 546,000 heat deaths/year (+23% since 1990s), 70% global deaths climate-sensitive
+- Nature Medicine 2025: 62,775 European heat deaths (2024) - demonstrates income/infrastructure amplification even in wealthy regions
+
+**Detailed methodology:** See [`research/death_attribution_methodology_20251018.md`](../../research/death_attribution_methodology_20251018.md) (25 sources, updated Nov 2025 with 2024-2025 empirical data)
 
 **Validation Results (N=100, 120 months):**
 - **Proximate:** Famine 97.3%, Disease 1.4%, Ecosystem 0.5%, Disasters 0.3%
