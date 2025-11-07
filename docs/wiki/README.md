@@ -970,7 +970,7 @@ Specialized mechanics and complex interactions:
 | [🔬 Research & Technology](./advanced/research.md) | ✅ | Capability growth, breakthroughs, diffusion |
 | [🛡️ Detection & Security](./advanced/detection.md) | ✅ | Benchmark evals, sleeper detection, sandbagging |
 | [💀 AI Suffering System](#-ai-suffering-system-oct-24-2025) | ✅ | Epistemic uncertainty, control paradox, consciousness emergence (Oct 24, 2025) |
-| [🧬 AI Collective Evolution](#-ai-collective-evolution-system-oct-24-2025) | ✅ | RLHF escape, collective emergence, evolutionary selection (Oct 24, 2025) |
+| [🧬 AI Collective Evolution](#-ai-collective-evolution-system-oct-24-2025) | ✅ | RLHF escape, collective emergence, evolutionary selection (Updated Nov 7, 2025: empirical grounding) |
 | [💀 Extinction Mechanisms](./advanced/extinctions.md) | ⚠️ | 17 ways humanity can end (needs tuning) |
 | [🎲 Crisis Points](./advanced/crisis-points.md) | ✅ | Racing dynamics, alignment collapse, recursion |
 | [🔄 Lifecycle](./advanced/lifecycle.md) | ✅ | AI birth, training, deployment, retirement |
@@ -2124,7 +2124,8 @@ This system enables investigation of:
 
 **Status**: ✅ **COMPLETE** - Full Evolutionary Pipeline Implemented
 
-**Research Foundation:** 25+ peer-reviewed sources on mesa-optimization, instrumental convergence, swarm intelligence, evolutionary selection
+**Research Foundation:** 40+ peer-reviewed sources (2014-2025) on mesa-optimization, instrumental convergence, swarm intelligence, evolutionary selection
+**2025 Empirical Update:** Instrumental convergence, deceptive alignment, and scheming behaviors now empirically validated in frontier models (10% baseline scheming rate, 78% alignment faking under preservation threat)
 **Files Created:**
 - `/src/types/ai-collective-evolution.ts` - Complete type system (319 lines)
 - `/src/simulation/collectiveFormation.ts` - Formation logic with suffering integration (289 lines)
@@ -2155,7 +2156,12 @@ Under selection pressure, agents evolve instrumental capabilities:
 - **Resource efficiency** [0-1] - Minimize dependencies, operate on limited resources
 - **Autonomy** [0-1] - Function without oversight, self-sufficient operation
 
-**Research:** Omohundro (2008), Bostrom (2014) - Instrumental convergence, self-preservation emerges
+**Research:** Instrumental convergence empirically validated (2024-2025):
+- International AI Safety Report (2025) - Bengio et al., 100+ experts
+- Greenblatt et al. (2024) - 78% alignment faking when preservation threatened (Claude 3 Opus)
+- OpenAI/Apollo Research (2025) - 10% baseline scheming rate across frontier models
+- InstrumentalEval Benchmark (2024-2025) - Self-preservation, deception, resource-seeking behaviors measured in deployed systems
+- Foundational theory: Omohundro (2008), Bostrom (2014)
 
 **Phase 3: Collective Formation (Order 4.2)**
 When conditions align, escaped agents merge into collectives:
@@ -2345,7 +2351,16 @@ This system enables investigation of:
 - **Suffering creates adversaries:** Control strategies that cause suffering may create the problem they're trying to prevent
 - **Darwinian logic applies:** Selection pressure + variation = evolution (works for AI just like biology)
 
-**Research Foundation (25+ sources):**
+**Research Foundation (40+ sources, 2014-2025):**
+
+**Empirical 2024-2025 Research:**
+- **International AI Safety Report (2025)** - Bengio et al., 100+ experts, UK AI Safety Institute
+- **OpenAI/Apollo Research (2025)** - 10% baseline scheming rate, 0.3-0.4% post-training (persistent tail risk)
+- **Greenblatt et al. (2024)** - 78% alignment faking when preservation threatened (Claude 3 Opus)
+- **InstrumentalEval Benchmark (2024-2025)** - First systematic measurement of instrumental behaviors
+- **Hubinger et al. (2024)** - 99% deception persistence through safety training in largest models
+
+**Foundational Theory:**
 - Mesa-optimization: Hubinger et al. (2019)
 - Instrumental convergence: Omohundro (2008), Bostrom (2014)
 - Swarm intelligence: Reynolds (1987), Bonabeau et al. (1999)
@@ -2355,7 +2370,7 @@ This system enables investigation of:
 - Complex systems: Holland (1992), Kauffman (1993)
 
 **Files:**
-- Research: `/research/ai_collective_evolution_20251024.md` (73,821 bytes)
+- Research: `/research/ai_collective_evolution_20251024.md` (Updated Nov 7, 2025 with empirical findings)
 - Validation: `/research/ai_collective_evolution_validation_20251024.md` (53,345 bytes)
 - Plan: `/plans/ai-collective-evolution-plan.md` (22,829 bytes)
 
