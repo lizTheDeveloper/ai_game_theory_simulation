@@ -1590,6 +1590,18 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 - **Medium-Priority Gaps:** Optimistic AI scenarios, recovery capacity, mortality stabilizer stochasticity
 - See: [`reviews/research_source_validation_20251106.md`](/reviews/research_source_validation_20251106.md) (946 lines)
 
+**🔬 Tier 2 Threshold Research Update** (November 7, 2025):
+- **File:** `research/threshold_tier2_historical_ranges_20251026.md` → Updated with **25+ peer-reviewed 2024-2025 sources**
+- **Impact:** Oldest source: 1970 → 2022 (52-year improvement)
+- **5 Threshold Categories Updated:**
+  - **Government Legitimacy Crisis:** Added Georgia 2024-2025 crisis (~0.25 legitimacy), France hung parliament (~0.35-0.40), Contemporary Political Theory (2022) chronic crisis framework. Confidence: Medium → Medium-High (7 cases, theory-backed)
+  - **Surveillance Dystopia:** Added Surveillance & Society (2024) digital authoritarianism framework, U.S. DHS/DOJ AI surveillance case (2024-2025, ~0.50-0.60 intensity), China export model research (ECPS 2024, Taylor & Francis 2025). Democratic warning zone identified: 0.50-0.60 intensity range
+  - **Automation Displacement Crisis:** Added PNAS Nexus 2025 empirical study (AI unemployment correlation), expert predictions (Amodei, Lee: 50% displacement threshold), Goldman Sachs/St. Louis Fed/Yale Budget Lab analyses. Mode (0.50) confirmed with current real-world data
+  - **AI Recursive Improvement:** Added STOP Framework (2024), Meta Self-Rewarding LLMs (2024), Google DeepMind AlphaEvolve (May 2025), AI progress doubling time (4 months) acceleration data, Anthropic alignment faking research (2024). Confidence: LOW → LOW-MEDIUM (building blocks emerging)
+  - **Resentment Revolt Trigger:** Added PNAS Dec 2024 (inequality → democratic backsliding), Argentina/Peru protests + UK riots 2024, ScienceDirect 2024 group mobilization framework, Gurr framework with social media acceleration factor. Confidence: Medium → Medium-High (8 cases, refined theory)
+- **Code File:** `src/simulation/thresholds/tier2Config.ts` (unchanged - research backing improved, parameters validated)
+- **Commit:** d821e39
+
 **Layer 2 Citation Verification** (October 31, 2025):
 - **Layer 2 Phase 1**: ✅ COMPLETE (8/8 citations verified, code updates pending)
 - **Layer 2 Phase 2**: ✅ COMPLETE (11/11 files verified, 17-18h total, ~366 claims, 71% verified)
