@@ -37,12 +37,15 @@ import { deterministicRandom } from '@/simulation/utils/deterministicRng';
  * Adds variance to reflect scientific uncertainty in baseline measurements.
  * Research: IPCC AR6 climate sensitivity range ±30%, GFN overshoot ±13%, ALA air quality ±67%
  *
- * @param rng - Optional deterministic RNG function (for Monte Carlo reproducibility)
- *              Falls back to deterministicRandom() for backward compatibility
+ * @param rng - REQUIRED deterministic RNG function (for Monte Carlo reproducibility)
+ *              NEVER falls back to Math.random (breaks determinism)
  */
-export function initializeEnvironmentalAccumulation(rng?: () => number): EnvironmentalAccumulation {
-  // Use provided RNG or fallback to deterministicRandom()
-  const random = rng || Math.random;
+export function initializeEnvironmentalAccumulation(rng: () => number): EnvironmentalAccumulation {
+  // CRITICAL FIX (Nov 7, 2025): Removed Math.random fallback (CRITICAL-3 regression)
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG function required for deterministic simulation. NEVER use Math.random.');
+  }
+  const random = rng;
 
   // BUG #3 FIX (Oct 29, 2025): Add stochastic variance to break determinism
   // Research-justified uncertainty ranges:

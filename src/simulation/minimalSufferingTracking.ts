@@ -30,6 +30,11 @@ import {
   DystopiaType,
   DystopiaDetection
 } from '@/types/minimalSuffering';
+import {
+  assertFinite,
+  assertProbability,
+  assertInRange
+} from '@/simulation/utils/assertions';
 
 /**
  * 15 key countries for Tier 2 tracking (70% global population, 80% GDP, 75% emissions)
@@ -256,31 +261,135 @@ function updateCountryMetrics(state: GameState, system: MinimalSufferingSystem):
 function updateTier1Metrics(state: GameState, metrics: CountrySufferingMetrics): void {
   const { tier1Metrics } = metrics;
 
+  // Validate population is positive (required for all per-capita calculations)
+  const populationBillions = assertFinite(metrics.population, {
+    location: 'updateTier1Metrics',
+    valueName: 'metrics.population',
+    month: state.currentMonth,
+    additionalInfo: { countryCode: metrics.countryCode }
+  });
+
+  if (populationBillions <= 0) {
+    // Population is 0 or negative - skip calculations (country doesn't exist)
+    tier1Metrics.excessMortalityRate = 0;
+    tier1Metrics.monthlyExcessDeaths = 0;
+    tier1Metrics.conflictDeathsAbsolute = 0;
+    tier1Metrics.conflictDeathsPer100K = 0;
+    tier1Metrics.ipcPhase3Plus = 0;
+    tier1Metrics.acuteMalnutritionPrevalence = 0;
+    tier1Metrics.ipcPhase5Catastrophic = 0;
+    tier1Metrics.forciblyDisplaced = 0;
+    tier1Metrics.displacementRate = 0;
+    tier1Metrics.newDisplacementsThisMonth = 0;
+    return;
+  }
+
   // Excess mortality (from population system)
-  const currentMortality = state.humanPopulationSystem.adjustedDeathRate;
-  tier1Metrics.excessMortalityRate = Math.max(0, currentMortality - tier1Metrics.baselineMortalityRate);
-  tier1Metrics.monthlyExcessDeaths = tier1Metrics.excessMortalityRate * metrics.population * 1_000_000_000 / 12;
+  const currentMortality = assertFinite(state.humanPopulationSystem.adjustedDeathRate, {
+    location: 'updateTier1Metrics',
+    valueName: 'adjustedDeathRate',
+    month: state.currentMonth,
+    additionalInfo: { countryCode: metrics.countryCode }
+  });
+
+  const excessMortalityRate = assertFinite(Math.max(0, currentMortality - tier1Metrics.baselineMortalityRate), {
+    location: 'updateTier1Metrics',
+    valueName: 'excessMortalityRate',
+    month: state.currentMonth,
+    additionalInfo: { currentMortality, baselineMortalityRate: tier1Metrics.baselineMortalityRate }
+  });
+  tier1Metrics.excessMortalityRate = excessMortalityRate;
+
+  tier1Metrics.monthlyExcessDeaths = assertFinite(
+    excessMortalityRate * populationBillions * 1_000_000_000 / 12,
+    {
+      location: 'updateTier1Metrics',
+      valueName: 'monthlyExcessDeaths',
+      month: state.currentMonth,
+      additionalInfo: { excessMortalityRate, populationBillions }
+    }
+  );
 
   // Conflict deaths (from nuclear states, wars, etc.)
-  // Use population system's war deaths
-  const warDeaths = state.humanPopulationSystem.deathsByCategory.war;
+  const warDeaths = assertFinite(state.humanPopulationSystem.deathsByCategory.war, {
+    location: 'updateTier1Metrics',
+    valueName: 'deathsByCategory.war',
+    month: state.currentMonth,
+    additionalInfo: { countryCode: metrics.countryCode }
+  });
+
   tier1Metrics.conflictDeathsAbsolute = warDeaths;
-  tier1Metrics.conflictDeathsPer100K = (warDeaths / (metrics.population * 1_000_000_000)) * 100_000;
+  tier1Metrics.conflictDeathsPer100K = assertFinite(
+    (warDeaths / (populationBillions * 1_000_000_000)) * 100_000,
+    {
+      location: 'updateTier1Metrics',
+      valueName: 'conflictDeathsPer100K',
+      month: state.currentMonth,
+      additionalInfo: { warDeaths, populationBillions }
+    }
+  );
 
   // Acute malnutrition (from famine system)
-  const famineAffected = state.famineSystem?.activeFamines.reduce((sum, f) => sum + f.populationAtRisk, 0) || 0;
+  const famineAffected = assertFinite(
+    state.famineSystem?.activeFamines.reduce((sum, f) => sum + f.populationAtRisk, 0) || 0,
+    {
+      location: 'updateTier1Metrics',
+      valueName: 'famineAffected',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    }
+  );
+
   tier1Metrics.ipcPhase3Plus = famineAffected;
-  tier1Metrics.acuteMalnutritionPrevalence = famineAffected / (metrics.population * 1_000_000_000);
+  tier1Metrics.acuteMalnutritionPrevalence = assertFinite(
+    famineAffected / (populationBillions * 1_000_000_000),
+    {
+      location: 'updateTier1Metrics',
+      valueName: 'acuteMalnutritionPrevalence',
+      month: state.currentMonth,
+      additionalInfo: { famineAffected, populationBillions }
+    }
+  );
 
   // Check for catastrophic famine (IPC Phase 5)
   const isFamineActive = (state.famineSystem?.activeFamines.length || 0) > 0;
-  tier1Metrics.ipcPhase5Catastrophic = isFamineActive ? famineAffected * 0.2 : 0; // ~20% in Phase 5 during famine
+  tier1Metrics.ipcPhase5Catastrophic = isFamineActive ? famineAffected * 0.2 : 0;
 
   // Forced displacement (from refugee crisis system)
-  const displaced = state.refugeeCrisisSystem?.totalDisplaced || BASELINE_2025.globalDisplacement;
-  const countryShare = metrics.population / 8.0; // Share of global population
-  tier1Metrics.forciblyDisplaced = displaced * countryShare;
-  tier1Metrics.displacementRate = tier1Metrics.forciblyDisplaced / (metrics.population * 1_000_000_000);
+  const displaced = assertFinite(
+    state.refugeeCrisisSystem?.totalDisplaced || BASELINE_2025.globalDisplacement,
+    {
+      location: 'updateTier1Metrics',
+      valueName: 'refugeeCrisisSystem.totalDisplaced',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    }
+  );
+
+  const countryShare = assertFinite(populationBillions / 8.0, {
+    location: 'updateTier1Metrics',
+    valueName: 'countryShare',
+    month: state.currentMonth,
+    additionalInfo: { populationBillions }
+  });
+
+  tier1Metrics.forciblyDisplaced = assertFinite(displaced * countryShare, {
+    location: 'updateTier1Metrics',
+    valueName: 'forciblyDisplaced',
+    month: state.currentMonth,
+    additionalInfo: { displaced, countryShare }
+  });
+
+  tier1Metrics.displacementRate = assertFinite(
+    tier1Metrics.forciblyDisplaced / (populationBillions * 1_000_000_000),
+    {
+      location: 'updateTier1Metrics',
+      valueName: 'displacementRate',
+      month: state.currentMonth,
+      additionalInfo: { forciblyDisplaced: tier1Metrics.forciblyDisplaced, populationBillions }
+    }
+  );
+
   tier1Metrics.newDisplacementsThisMonth = 0; // Could track from refugee system if available
 }
 
