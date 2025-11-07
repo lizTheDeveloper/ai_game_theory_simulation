@@ -830,6 +830,8 @@ Watcher script now monitors all three autonomous systems (worker + researcher + 
 
 **Complete infrastructure visibility:** No blind spots in autonomous operations. Watcher validates worker execution, research coordination, and branch merging with auto-remediation for all three systems.
 
+**Health Check Bug Fix (Nov 7, 2025)**: Watcher was failing with "integer expression expected" errors due to bash scripting anti-pattern. Root cause: `grep -c "pattern" || echo "0"` fallback was producing multi-line output (e.g., "0\n0") when grep found zero matches. Fix (commit a7103fd): Replaced with proper bash idiom `grep "pattern" | wc -l` + `${VAR:-0}` fallback at lines 74 and 163. This implements defensive programming guidance from CLAUDE.md:366-371. Impact: Watcher now runs without errors, prevents multi-instance contention, eliminates git lock conflicts. See: RECENT_CHANGES.md for full incident details.
+
 See: `scripts/autonomous-worker-watcher.sh` (424 lines), Commit: 418c9c4
 
 ---
