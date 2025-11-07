@@ -1,6 +1,12 @@
 # Module 07: Testing & Validation
 
-**Learning Objectives:**
+*Module 7 of 9 | Prerequisites: [Module 03](./03_AUTONOMOUS_WORKFLOWS.md), [Module 05](./05_PLANNING_COORDINATION.md)*
+
+**Monte Carlo simulation, integration tests, historical validation**
+
+---
+
+## Learning Objectives
 1. Understand why Monte Carlo simulation is critical for research-backed projects
 2. Learn how to run deterministic simulations with RNG seeds
 3. Write unit tests for individual systems and utilities
