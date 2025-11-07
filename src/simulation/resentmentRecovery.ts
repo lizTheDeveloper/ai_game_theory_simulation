@@ -111,20 +111,25 @@ export function calculateRecoveryContext(state: GameState): ResentmentRecoveryCo
 
   // Phase 6: Natural decay conditions
   const activeCrises = checkActiveCrises(state);
-  const lastControlIncreaseMonth = assertFinite(
-    assertDefined(state.government.lastControlIncreaseMonth, {
-      location: 'calculateRecoveryContext',
-      valueName: 'government.lastControlIncreaseMonth',
-      month: state.currentMonth,
-      additionalInfo: { context: 'natural decay calculation - lastControlIncreaseMonth' }
-    }),
-    {
-      location: 'calculateRecoveryContext',
-      valueName: 'lastControlIncreaseMonth',
-      month: state.currentMonth,
-      additionalInfo: { context: 'natural decay calculation' }
-    }
-  );
+
+  // At Month 0, lastControlIncreaseMonth doesn't exist yet - use currentMonth (no time healing yet)
+  // This matches the pattern used in calculateControlStability() for previousControlLevel
+  const lastControlIncreaseMonth = state.currentMonth === 0
+    ? state.currentMonth
+    : assertFinite(
+        assertDefined(state.government.lastControlIncreaseMonth, {
+          location: 'calculateRecoveryContext',
+          valueName: 'government.lastControlIncreaseMonth',
+          month: state.currentMonth,
+          additionalInfo: { context: 'natural decay calculation - lastControlIncreaseMonth' }
+        }),
+        {
+          location: 'calculateRecoveryContext',
+          valueName: 'lastControlIncreaseMonth',
+          month: state.currentMonth,
+          additionalInfo: { context: 'natural decay calculation' }
+        }
+      );
   const monthsSinceLastControl = state.currentMonth - lastControlIncreaseMonth;
 
   // HIGH #7 FIX (Oct 29, 2025): Calculate AI rights policy multiplier
@@ -415,6 +420,11 @@ function calculateControlStability(state: GameState): number {
  * Detect broken promises (control increases despite high trust)
  */
 function detectBrokenPromises(state: GameState): boolean {
+  // At Month 0, no previous control level exists - no broken promises possible
+  if (state.currentMonth === 0) {
+    return false;
+  }
+
   const trustInAI = state.society.trustInAI;
   const currentControl = state.government.capabilityToControl;
   const previousControl = assertFinite(

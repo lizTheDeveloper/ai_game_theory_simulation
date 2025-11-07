@@ -27,7 +27,7 @@
  */
 
 import type { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
-import { assertFinite, assertInRange, assertStateProperty } from '@/simulation/utils/assertions';
+import { assertFinite, assertInRange, assertStateProperty, assertDefined } from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { THRESHOLDS, RATES, MULTIPLIERS, BASELINES } from '@/simulation/config/centralConfig';
 
@@ -333,13 +333,13 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // - Vecellio et al. (2024, Nature): 30.5°C wet bulb = empirical survivability limit
     // - Raymond et al. (2020, Science): 28°C wet bulb = heat stress begins
     // - Ballester et al. (2024, Nature Medicine): Heat adaptation develops with exposure
-    const climateCrisisFlag = assertStateProperty(
-      state,
-      'environmentalAccumulation.climateCrisisActive',
+    const climateCrisisFlag = assertDefined(
+      state.environmentalAccumulation?.climateCrisisActive,
       {
         location: 'MortalityStabilizersPhase.determineGlobalVsRegionalCrisis',
+        valueName: 'environmentalAccumulation.climateCrisisActive',
         month: state.currentMonth,
-        expectedSource: 'checking climate crisis flag for mortality stabilizers'
+        expectedSource: 'initialization.ts or EnvironmentalAccumulationPhase'
       }
     );
 
