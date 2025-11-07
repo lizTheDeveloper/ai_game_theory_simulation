@@ -40,7 +40,35 @@ if [ -f "/etc/cloud/cloud.cfg" ] || [ -f "/.dockerenv" ]; then
   IS_VM=true
 fi
 
+<<<<<<< HEAD
 # Create log directory
+=======
+# Configuration (can be overridden via environment variables)
+DRY_RUN="${MERGE_ORCHESTRATOR_DRY_RUN:-false}"
+NOTIFY="${MERGE_ORCHESTRATOR_NOTIFY:-true}"
+MAX_BRANCHES="${MERGE_ORCHESTRATOR_MAX_BRANCHES:-10}"
+SKIP_FRONTEND="${MERGE_ORCHESTRATOR_SKIP_FRONTEND:-$IS_VM}"
+ENABLE_AGENT_REVIEWS="${MERGE_ORCHESTRATOR_ENABLE_AGENT_REVIEWS:-true}"  # Phase 2: Architecture-skeptic + Sylvia reviews
+ENABLE_AUTO_REMEDIATION="${MERGE_ORCHESTRATOR_ENABLE_AUTO_REMEDIATION:-true}"  # Phase 2.5: Auto-fix CRITICAL issues
+AGENT_REVIEW_HOUR="${MERGE_ORCHESTRATOR_AGENT_REVIEW_HOUR:-6}"  # Hour (UTC) to run Opus reviews (cost optimization)
+
+# Time-based agent review gating (cost optimization)
+# Only run expensive Opus reviews once per day at specified hour
+CURRENT_HOUR=$(date +%H | sed 's/^0//')  # Remove leading zero
+if [ "$ENABLE_AGENT_REVIEWS" = "true" ]; then
+  if [ "$CURRENT_HOUR" -ne "$AGENT_REVIEW_HOUR" ]; then
+    ENABLE_AGENT_REVIEWS="false"
+    AGENT_REVIEWS_SKIPPED_REASON="outside daily review window (runs at ${AGENT_REVIEW_HOUR}:00 UTC)"
+  else
+    AGENT_REVIEWS_SKIPPED_REASON="in daily review window (${AGENT_REVIEW_HOUR}:00 UTC)"
+  fi
+fi
+
+# ============================================
+# Logging Setup
+# ============================================
+
+>>>>>>> origin/auto/worker-20251102_050015
 mkdir -p "$LOG_DIR"
 
 # Log file for this run
@@ -333,9 +361,103 @@ fi
 log_section "Merge Orchestrator Complete"
 log "Full log: $LOG_FILE"
 
+<<<<<<< HEAD
 # Return success if at least one branch was merged
 if [ $MERGED -gt 0 ]; then
   exit 0
 else
   exit 0  # Still exit 0 so cron doesn't spam errors
 fi
+=======
+  return 0
+}
+
+# ============================================
+# Main Orchestrator
+# ============================================
+
+main() {
+  log_section "🤖 Merge Orchestrator - ${TIMESTAMP}"
+  log_info "Environment: $([ "$IS_VM" = "true" ] && echo "VM (backend only)" || echo "Mac (frontend + backend)")"
+  log_info "Dry run: $DRY_RUN"
+  log_info "Skip frontend: $SKIP_FRONTEND"
+  log_info "Max branches: $MAX_BRANCHES"
+  log_info "Current hour (UTC): ${CURRENT_HOUR}:00"
+  if [ "$ENABLE_AGENT_REVIEWS" = "true" ]; then
+    log_info "Agent reviews (Opus): ENABLED - $AGENT_REVIEWS_SKIPPED_REASON"
+  else
+    log_info "Agent reviews (Opus): DISABLED - $AGENT_REVIEWS_SKIPPED_REASON"
+  fi
+  log_info "Auto-remediation (Phase 2.5): $ENABLE_AUTO_REMEDIATION"
+
+  # Acquire lock
+  acquire_lock
+
+  # Change to project root
+  cd "$PROJECT_ROOT"
+
+  # Discover branches
+  log_info "Discovering feature branches..."
+  BRANCHES=$(discover_branches)
+  if [ $? -ne 0 ]; then
+    log_info "No feature branches found - no work to do"
+    exit 0
+  fi
+
+  # Count branches
+  BRANCH_COUNT=$(echo "$BRANCHES" | wc -l)
+  log_info "Found $BRANCH_COUNT feature branches"
+
+  if [ "$BRANCH_COUNT" -gt "$MAX_BRANCHES" ]; then
+    log_warning "Branch count ($BRANCH_COUNT) exceeds max ($MAX_BRANCHES), processing first $MAX_BRANCHES"
+    BRANCHES=$(echo "$BRANCHES" | head -n "$MAX_BRANCHES")
+  fi
+
+  # Process each branch
+  MERGED_COUNT=0
+  BLOCKED_COUNT=0
+  SKIPPED_COUNT=0
+  CONFLICT_COUNT=0
+
+  while IFS= read -r branch; do
+    # Skip empty lines
+    [ -z "$branch" ] && continue
+
+    attempt_merge "$branch"
+    RESULT=$?
+
+    if [ $RESULT -eq 0 ]; then
+      MERGED_COUNT=$((MERGED_COUNT + 1))
+    elif [ $RESULT -eq 2 ]; then
+      SKIPPED_COUNT=$((SKIPPED_COUNT + 1))
+    elif git branch --list "*${branch}*CONFLICT" | grep -q "CONFLICT"; then
+      CONFLICT_COUNT=$((CONFLICT_COUNT + 1))
+    else
+      BLOCKED_COUNT=$((BLOCKED_COUNT + 1))
+    fi
+
+    # Return to main branch after each attempt
+    git checkout main 2>&1 | tee -a "$LOG_FILE"
+  done <<< "$BRANCHES"
+
+  # Summary
+  log_section "Summary"
+  log_info "Total branches processed: $BRANCH_COUNT"
+  log_success "Merged to main: $MERGED_COUNT"
+  log_warning "Blocked (failed gates): $BLOCKED_COUNT"
+  log_warning "Conflicts (manual intervention): $CONFLICT_COUNT"
+  log_skip "Skipped (frontend on VM): $SKIPPED_COUNT"
+
+  # Notification (if enabled)
+  if [ "$NOTIFY" = "true" ] && [ "$DRY_RUN" = "false" ]; then
+    # TODO: Post to coordination channel via chatroom MCP (Phase 3)
+    log_info "Notification: Would post summary to coordination channel (not implemented yet)"
+  fi
+
+  log_section "✅ Merge Orchestrator Complete"
+  log_info "Log file: $LOG_FILE"
+}
+
+# Run main
+main "$@"
+>>>>>>> origin/auto/worker-20251102_050015

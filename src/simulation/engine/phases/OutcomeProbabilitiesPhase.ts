@@ -8,11 +8,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { calculateOutcomeProbabilities } from '../../calculations';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-<<<<<<< HEAD
 import { assertProbability, assertDefined } from '@/simulation/utils/assertions';
-=======
-import { assertFinite, assertProbability } from '@/simulation/utils/assertions';
->>>>>>> origin/auto/researcher-20251107_013000
 
 export class OutcomeProbabilitiesPhase implements SimulationPhase {
   readonly id = 'outcome-probabilities';
