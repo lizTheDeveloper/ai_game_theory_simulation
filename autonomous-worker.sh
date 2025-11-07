@@ -197,11 +197,11 @@ Current subscription usage (checked before this session started):
 - **Opus**: ${OPUS_USAGE_PCT}% used
 
 **Token Budget Guidance:**
-- Under 50%: Normal operation - prioritize CRITICAL/HIGH items
-- 50-75%: Be cost-conscious - focus on highest-value work only
-- Over 75%: Conservative mode - only CRITICAL items, be concise
+- Under 75%: Aggressive mode - work through entire backlog (CRITICAL → HIGH → MEDIUM → LOW)
+- 75-90%: Normal operation - focus on CRITICAL/HIGH/MEDIUM items
+- Over 90%: Conservative mode - CRITICAL/HIGH items only
 
-**Always be concise and prioritize the highest-priority, highest-value work available.** This usage context is for your awareness - work on what matters most regardless of percentage.
+**Work through as much of the roadmap as possible. Exhaust all tokens clearing the backlog.**
 
 Read plans/MASTER_IMPLEMENTATION_ROADMAP.md and identify work to do.
 
@@ -227,9 +227,18 @@ Example research request message format:
 
 ## PRIMARY WORKFLOW: Roadmap Implementation
 
-If there are CRITICAL or HIGH priority items not yet complete:
+Work through ALL roadmap items systematically (CRITICAL → HIGH → MEDIUM → LOW):
 
 Use the orchestrator agent to coordinate the full workflow:
+
+**Prioritization:**
+1. CRITICAL items first (always)
+2. Then HIGH items
+3. Then MEDIUM items
+4. Then LOW items
+5. Work through entire backlog - do not stop at high priority
+
+**Goal: Exhaust all available work, using all available tokens to clear the backlog.**
 1. Research & Validation (Quality Gate 1): super-alignment-researcher + research-skeptic review
 2. Implementation & Testing: feature-implementer + test writers + Monte Carlo validation
 3. Architecture Review (Quality Gate 2): architecture-skeptic review (MUST address CRITICAL/HIGH issues)
