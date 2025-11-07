@@ -58,6 +58,51 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
+**📋 CRITICAL-1 PLANNING: Assertion Coverage Expansion (35.9% → 95%)** (Nov 7, 2025, commit 87f9954)
+
+**Summary:** Comprehensive audit and implementation plan for systematic assertion coverage across all 117 simulation phases.
+
+**Current State:**
+- 42 phases (35.9%) have defensive assertions
+- 75 phases (64.1%) lack validation
+- Target: 111 phases (95%+ coverage)
+
+**Key Findings:**
+- Refined estimate: 60 phases need assertions (down from 98)
+- Many phases delegate to validated system modules
+- Focus on direct calculations + unvalidated modules
+- Phase dependency declarations: 30/117 (25.6%) → target 94+ (80%)
+
+**Implementation Strategy:**
+- **Batch 1:** 10 CRITICAL phase-level + 3 CRITICAL module-level (1-2 days)
+- **Batch 2:** 8 HIGH risk phases (1 day)
+- **Batch 3:** 17 MEDIUM risk phases (1-2 days)
+- **Batch 4:** Phase dependency declarations (2-3 days)
+- **Timeline:** 5-8 days with Monte Carlo N=3 validation after each batch
+
+**Prioritization:**
+- **CRITICAL (13 phases):** ConsciousnessGovernance, DemocracyDynamics, SocialInfluenceUpdate, UnknownUnknown, Tier2 systems
+- **HIGH (8 phases):** Climate justice, early warning, power generation, resource economy
+- **MEDIUM (17 phases):** Social cohesion, governance, organization actions
+- **LOW (18 phases):** Mostly read-only analysis, defer
+
+**Validation Gates:**
+- Monte Carlo N=3 after each batch
+- Final Monte Carlo N=10 integration test
+- Performance overhead target: <1%
+- Zero false positives
+
+**Files Created:**
+- `/logs/assertion_implementation_plan_20251107.md` - Full implementation plan (245 lines)
+- `/logs/assertion_audit_20251107.log` - Phase-by-phase analysis
+- `/logs/simulation_maintainer_progress_20251107.log` - Progress tracking
+
+**Context:** This addresses the Oct 2025 ecology NaN bug root cause - systematic defensive coding to prevent silent value corruption across all phases.
+
+**Related:** CRITICAL-3 (RNG fallback), CRITICAL-4 (defensive fallbacks), planetary boundaries validation, tipping point validation
+
+---
+
 **🔧 WATCHER FIX: Ignore Benign "claude not found" in Health Checks** (Nov 7, 2025, commit 56ea3e9)
 
 **Problem:** Autonomous worker watcher was flagging researcher runs as failed due to false positive error detection.
