@@ -297,7 +297,7 @@ EOFT
           log "🤖 Launching Claude Code..."
 
           # Spawn Claude Code (timeout 15 minutes)
-          timeout 900 claude --task-file "$REMEDIATION_TASK" >> "$LOG_FILE" 2>&1 || {
+          timeout 900 claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
             SPAWN_EXIT=$?
             if [ $SPAWN_EXIT -eq 124 ]; then
               log "⏱️  Claude Code timed out (15 min)"
@@ -366,7 +366,7 @@ EOF
       log "🤖 Launching Claude Code..."
 
       # Spawn Claude Code (timeout 15 minutes)
-      timeout 900 claude --task-file "$REMEDIATION_TASK" >> "$LOG_FILE" 2>&1 || {
+      timeout 900 claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
         SPAWN_EXIT=$?
         if [ $SPAWN_EXIT -eq 124 ]; then
           log "⏱️  Claude Code timed out (15 min)"
