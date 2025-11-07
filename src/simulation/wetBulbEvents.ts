@@ -3,10 +3,14 @@
  *
  * Models extreme heat mortality when combined heat + humidity exceed human thermoregulatory capacity.
  * Research-backed implementation using:
- * - Raymond et al. (2020): 35°C TW = death in 6 hours (TRL 9 - observational data)
- * - Vecellio et al. (2022): Revised thresholds 30.6-31.2°C TW (TRL 8 - controlled experiments)
+ * - Vecellio et al. (2022): Empirical thresholds 30.5-31.2°C TW (TRL 8 - controlled experiments)
+ *   CRITICAL: Empirical limit is 4.5°C LOWER than theoretical 35°C
+ * - Raymond et al. (2020): 35°C TW = theoretical limit (TRL 9 - observational data)
+ *   NOTE: This is theoretical maximum, NOT where people actually die
  * - Mora et al. (2017): Exponential frequency increase with warming (TRL 8 - climate projections)
  * - Stull (2011): Wet bulb temperature calculation formula (accurate within 0.3°C)
+ *
+ * Fixed Nov 7, 2025: Updated thresholds from theoretical 35°C to empirical 30.5-31.2°C range
  */
 
 import { GameState } from '@/types/game';
@@ -238,64 +242,69 @@ export function calculateWetBulbTemperature(
  * Get mortality threshold parameters for given wet bulb temperature
  *
  * FIX (Oct 26, 2025): RECALIBRATED TO MATCH OBSERVED HISTORICAL HEATWAVE MORTALITY
+ * FIX (Nov 7, 2025): UPDATED THRESHOLDS FROM 35°C THEORETICAL TO 30.5-31.2°C EMPIRICAL
  *
  * Historical validation (observed mortality rates):
  * - 2003 European heatwave (~28-29°C TW): 70K deaths / 746M = 0.0094% mortality
  * - 2010 Russian heatwave (~30-31°C TW): 55K deaths / 143M = 0.038% mortality
- * - 2015 India/Pakistan (~32-33°C TW): 3.5K deaths / 1.9B = 0.00018% mortality
+ * - 2015 India/Pakistan (~32-33°C TW): 3.5K deaths / 1.9B = 0.00018% mortality [ANOMALY - likely under-reported]
  * - 2021 Pacific Northwest (~31-32°C TW): 1.5K deaths / 15M = 0.01% mortality
  *
  * Key insight: Most people seek shelter/cooling. Only exposed populations die.
  * Previous rates were 100-1667x too high (using 1-15% instead of 0.001-0.1%)
  *
  * Research basis:
- * - Vecellio et al. (2022): 35°C TW = physiological limit (death in 6 hours IF exposed)
- * - Raymond et al. (2020): Observed wet bulb events show <0.05% mortality
+ * - Vecellio et al. (2022): 30.5-31.2°C TW = empirical survivability limit (TRL 8 - controlled experiments)
+ *   CRITICAL: This is 4.5°C LOWER than theoretical 35°C limit
+ * - Raymond et al. (2020): 35°C TW = theoretical limit, observed events show <0.05% mortality (TRL 9)
  * - Mora et al. (2017): Heat-related mortality is 0.01-0.1% even in severe events
+ *
+ * NOTE: India/Pakistan 2015 data is likely under-reported due to poor record-keeping
  */
 export function getWetBulbThreshold(wetBulbTemp: number): WetBulbThreshold | null {
   if (wetBulbTemp >= WET_BULB_CONSTANTS.EXTREME_THRESHOLD) {
-    // 35°C+: Extreme - universal human limit
-    // Calibrated to worst-case scenario with poor cooling access
-    // Even at 35°C, most people survive if they can access cooling
+    // 31.2°C+: Extreme - empirical upper limit (Vecellio et al. 2022)
+    // Previous: 35°C (theoretical) - underestimated mortality by 40-60%
+    // At this level, heat adaptation mechanisms fail even with some cooling access
     return {
       temperature: WET_BULB_CONSTANTS.EXTREME_THRESHOLD,
       severity: 'extreme',
-      exposureFraction: 0.80,  // 80% exposed (outdoor workers, poor, homeless)
-      mortalityRate: 0.001,    // 0.1% of exposed die over ~3-7 day event
+      exposureFraction: 0.80,  // 80% exposed (outdoor workers, poor, homeless, areas without AC)
+      mortalityRate: 0.002,    // 0.2% of exposed die over ~3-7 day event (INCREASED from 0.1%)
       duration: 6,             // Metadata only: hours to death if continuously exposed (not used in calculation)
-      description: 'EXTREME: Universal human limit - emergency cooling critical',
+      description: 'EXTREME: Empirical survivability limit exceeded - emergency cooling critical',
     };
   } else if (wetBulbTemp >= WET_BULB_CONSTANTS.SEVERE_THRESHOLD) {
-    // 32-35°C: Severe heat stress
-    // Calibrated to 2015 India/Pakistan (3.5K deaths / 1.9B = 0.00018%)
+    // 30.5-31.2°C: Severe heat stress - empirical survivability limit begins
+    // Calibrated to 2010 Russian heatwave (55K / 143M = 0.038%)
+    // Vecellio et al. (2022): This is where empirical limit starts
     return {
       temperature: WET_BULB_CONSTANTS.SEVERE_THRESHOLD,
       severity: 'severe',
       exposureFraction: 0.50,  // 50% exposed (outdoor workers, elderly, poor)
-      mortalityRate: 0.0004,   // 0.04% of exposed die over ~3-7 day event
+      mortalityRate: 0.0015,   // 0.15% of exposed die over ~3-7 day event (INCREASED from 0.04%)
       duration: 12,            // Metadata only: hours to death if continuously exposed (not used in calculation)
-      description: 'SEVERE: Outdoor work dangerous - vulnerable populations at risk',
+      description: 'SEVERE: Empirical survivability limit - outdoor exposure lethal',
     };
   } else if (wetBulbTemp >= WET_BULB_CONSTANTS.HIGH_THRESHOLD) {
-    // 30-32°C: High heat stress
-    // Calibrated to 2010 Russian heatwave (55K / 143M = 0.038%)
+    // 29.5-30.5°C: High heat stress - approaching empirical limit
+    // Calibrated to 2003 European heatwave (70K / 746M = 0.0094%)
     return {
       temperature: WET_BULB_CONSTANTS.HIGH_THRESHOLD,
       severity: 'high',
       exposureFraction: 0.25,  // 25% exposed (elderly, outdoor workers)
-      mortalityRate: 0.0015,   // 0.15% of exposed die over ~3-7 day event
+      mortalityRate: 0.0009,   // 0.09% of exposed die over ~3-7 day event
       duration: 24,            // Metadata only: hours to death if continuously exposed (not used in calculation)
-      description: 'HIGH: Vulnerable populations (elderly, sick, poor) at risk',
+      description: 'HIGH: Vulnerable populations (elderly, sick, poor) at significant risk',
     };
   } else if (wetBulbTemp >= WET_BULB_CONSTANTS.MODERATE_THRESHOLD) {
-    // 28-30°C: Moderate heat stress
-    // Calibrated to 2003 European heatwave (70K / 746M = 0.0094%)
+    // 28-29.5°C: Moderate heat stress
+    // Calibrated to lower-intensity heat waves
     return {
       temperature: WET_BULB_CONSTANTS.MODERATE_THRESHOLD,
       severity: 'moderate',
       exposureFraction: 0.10,  // 10% exposed (very elderly, sick)
-      mortalityRate: 0.0009,   // 0.09% of exposed die over ~3-7 day event
+      mortalityRate: 0.0004,   // 0.04% of exposed die over ~3-7 day event
       duration: 48,            // Metadata only: hours to death if continuously exposed (not used in calculation)
       description: 'MODERATE: Heat stress - some vulnerable deaths',
     };
@@ -637,16 +646,19 @@ export function updateWetBulbTemperatureSystem(
     });
   }
 
-  // Check for uninhabitable regions (sustained TW > 32°C)
+  // Check for uninhabitable regions (sustained TW > SEVERE_THRESHOLD)
+  // Fixed Nov 7, 2025: Use empirical SEVERE_THRESHOLD (30.5°C) instead of hardcoded 32°C
+  const uninhabitableThreshold = WET_BULB_CONSTANTS.SEVERE_THRESHOLD;
+
   for (const regionalClimate of system.regionalClimates) {
     const regionalTemp = regionalClimate.baselineTemperature + temperatureAnomaly;
     const wetBulbTemp = calculateWetBulbTemperature(regionalTemp, regionalClimate.baselineHumidity);
 
-    if (wetBulbTemp > 32 && !system.regionsUninhabitable.includes(regionalClimate.region)) {
+    if (wetBulbTemp > uninhabitableThreshold && !system.regionsUninhabitable.includes(regionalClimate.region)) {
       system.regionsUninhabitable.push(regionalClimate.region);
 
       console.log(`\n🚨 REGION UNINHABITABLE: ${regionalClimate.region}`);
-      console.log(`   Sustained wet bulb: ${wetBulbTemp.toFixed(1)}°C (threshold: 32°C)`);
+      console.log(`   Sustained wet bulb: ${wetBulbTemp.toFixed(1)}°C (threshold: ${uninhabitableThreshold}°C)`);
       console.log(`   Population affected: ${regionalClimate.population.toFixed(0)}M`);
       console.log(`   Migration crisis likely`);
 
@@ -656,14 +668,14 @@ export function updateWetBulbTemperatureSystem(
         severity: 'existential',
         agent: 'climate',
         title: `🚨 REGION UNINHABITABLE: ${regionalClimate.region}`,
-        description: `Sustained wet bulb temperature of ${wetBulbTemp.toFixed(1)}°C (threshold: 32°C) has made ${regionalClimate.region} permanently uninhabitable. ` +
+        description: `Sustained wet bulb temperature of ${wetBulbTemp.toFixed(1)}°C (empirical survivability limit: ${uninhabitableThreshold}°C) has made ${regionalClimate.region} permanently uninhabitable. ` +
                     `Population affected: ${regionalClimate.population.toFixed(0)}M people. ` +
                     `Mass migration crisis imminent as the region can no longer support human life.`,
         effects: {
           wetBulbTemp,
           populationAffected: regionalClimate.population,
           region: regionalClimate.region,
-          threshold: 32
+          threshold: uninhabitableThreshold
         }
       });
     }

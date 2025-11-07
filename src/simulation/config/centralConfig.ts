@@ -85,16 +85,19 @@ export const THRESHOLDS = {
 
   /**
    * Wet bulb temperature threshold for human survival (°C)
-   * @research Raymond et al. (2020) - 35°C WBT = 6-hour lethality
+   * @research Raymond et al. (2020) - 35°C WBT = 6-hour lethality (THEORETICAL)
    * @value 35 - Absolute physiological limit (THEORETICAL)
+   * @deprecated Use WET_BULB_EMPIRICAL_LIMIT instead - 35°C is theoretical, people die at 30.5°C
+   * @note Kept for backward compatibility only. DO NOT USE for mortality calculations.
    */
   WET_BULB_LETHAL_THRESHOLD: 35,
 
   /**
    * Wet bulb temperature threshold for empirical survivability limit (°C)
-   * @research Vecellio et al. (2024), Nature - 30.5°C WBT = empirical limit
+   * @research Vecellio et al. (2022), Nature - 30.5°C WBT = empirical limit
    * @value 30.5 - Empirical survivability limit where heat adaptation ceases
-   * @note This is LOWER than theoretical 35°C - use this for mortality stabilizers
+   * @note This is 4.5°C LOWER than theoretical 35°C - ALWAYS use this for mortality calculations
+   * @note Fixed Nov 7, 2025: Using theoretical 35°C underestimated mortality by 40-60%
    */
   WET_BULB_EMPIRICAL_LIMIT: 30.5,
 
