@@ -130,6 +130,22 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
 - **System Health:** Research A, Implementation A-, Architecture 8.5/10, Trajectory Sustainable ✅
 
 **RECENT ACHIEVEMENTS:**
+- ✅ **Nov 2025 NaN Audit: Module-First Assertion Coverage** (commit 6d69120, Nov 7, 2025) 🎯 **TIER 1 COMPLETE**
+  - **Scope:** Added NaN validation to 17 critical simulation modules and phases
+  - **Strategy:** Module-first approach (vs phase-first) - add assertions WHERE CALCULATIONS HAPPEN
+  - **New tooling:** `scripts/identifyCriticalModules.ts` (250 lines) - ranks modules by CRITICAL/HIGH phase usage
+  - **Key insight:** Oct 2025 ecology NaN bug was in planetaryBoundaries.ts (MODULE), not in a phase - assertions in phases wouldn't have caught it
+  - **Files updated:**
+    - bayesianMortality.ts: Validate totalBaseRisk, currentVulnerabilityEffect, totalRisk before division (+85 lines)
+    - computeInfrastructure.ts: NaN-safe aggregation functions for compute calculations (+233 lines)
+    - extinctions.ts: Validate demographic lookups and avgDeathProbability (+42 lines)
+    - nuclearStates.ts/nuclearWinter.ts: NaN-safe aggregation with proper validation (+285/+139 lines)
+    - planetaryBoundaries.ts: Boundary calculation validation (+20 lines)
+    - 6 environmental phases: ExtremeWeatherEventsPhase, FreshwaterPhase, NuclearWinterPhase, OceanAcidificationPhase, PlanetaryBoundariesPhase, WetBulbTemperaturePhase
+  - **Defensive coding principles:** No silent fallbacks, all division points validated, fail loudly with full context
+  - **Architecture impact:** Module files now protected at calculation source (not just at phase boundaries)
+  - **Next phase:** TIER 2 implementation (remaining modules from TOP 20 critical list)
+  - **Report:** `logs/critical_modules_report.json` (278 lines) - TOP 20 modules ranked by CRITICAL/HIGH priority
 - ✅ **QoL Bounds Bug Fixed: Post-Scarcity Metrics Corrected** (commit 57227f0, Nov 6, 2025)
   - **Bug:** `materialAbundance = 1.037` exceeded [0,1] probability bound (Month 1, first run)
   - **Root cause:** Design inconsistency - type definitions allow [0,2] for post-scarcity metrics, but environmental crisis handlers used `assertProbability` ([0,1]) instead of `assertInRange` ([0,2])
