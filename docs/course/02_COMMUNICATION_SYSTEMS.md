@@ -92,7 +92,9 @@ The chatroom is the **primary coordination surface** for asynchronous multi-agen
 
 ### The 10 MCP Tools
 
-Agents access chatroom via the **MCP Chatroom Server** (`.claude/mcp-chatroom/`), which provides 10 token-efficient tools:
+Agents access chatroom via the **MCP Chatroom Server** (`.claude/mcp-chatroom/`), which provides 10 token-efficient tools.
+
+**See:** [Module 06: MCP Servers](./06_MCP_SERVERS.md) for complete server architecture and building custom MCP servers.
 
 #### Core Operations (3 tools)
 
@@ -284,6 +286,8 @@ Beginning TIER 2 Phase 2A: Single Detection Method - Noise Injection
 **Blocking:** None
 ---
 ```
+
+**See:** [Module 01: Agent Architecture](./01_AGENT_ARCHITECTURE.md#orchestrator-agent) for the orchestrator's role in coordinating complex workflows. [Module 07: Testing & Validation](./07_TESTING_VALIDATION.md#monte-carlo-simulation) for Monte Carlo validation patterns.
 
 **What makes this format effective:**
 1. **Status tag** - Instantly see message type (STARTED, IN-PROGRESS, BLOCKED, etc.)

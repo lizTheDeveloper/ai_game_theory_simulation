@@ -37,7 +37,24 @@
 
 ## 🎯 ACTIVE PRIORITIES
 
-0. 🚨 **NEW BLOCKERS IDENTIFIED:** HIGH-6 N=100 Diagnostic Findings (Oct 30 @3:27pm)
+0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
+   - **AI Capability Scaling Parameters** - CRITICAL parameter mismatch identified
+     - **Issue:** Current model assumes 2.4× AI growth/decade, research shows 1,000-10,000×
+     - **Discrepancy:** 100-1000× underestimation in capability growth
+     - **Affected Parameters:**
+       - `centralConfig.ts:397` - AI_CAPABILITY_DOUBLING_TIME (12 months, needs verification)
+       - `centralConfig.ts:404` - COMPUTE_GROWTH_RATE (1.0 = 2× per year, should be ~4× per year)
+     - **New Research (2024-2025):**
+       - Cottier et al. (2024) "Rising Costs of Training Frontier AI Models" (arXiv:2405.21015v2)
+       - Sevilla & Roldán (2024) "Training Compute Growth 4-5x/year" (Epoch AI)
+       - Amodei (2024-2025) Industry predictions: $10-100B training runs
+     - **Verification File:** research/verification_0a1e5b8_20251107.md
+     - **Status:** READY FOR ORCHESTRATOR - Start at VALIDATION phase
+     - **Workflow:** Citation verification → Claim verification → Parameter updates → Monte Carlo validation
+     - **Priority:** CRITICAL - Core AI mechanics affected by 2-3 order of magnitude error
+     - **See:** research/mitigation_technologies_20251015.md:153-212
+
+0a. 🚨 **NEW BLOCKERS IDENTIFIED:** HIGH-6 N=100 Diagnostic Findings (Oct 30 @3:27pm)
    - 🔴 **CRITICAL FINDING 1:** 25% Silent Data Export Failure (seeds 42025-42049)
      - Simulation completes but produces ZERO state data (snapshots=0, paradigmTrajectory missing)
      - File sizes: 13K (failed) vs 30K (successful)

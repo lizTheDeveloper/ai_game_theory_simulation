@@ -260,52 +260,24 @@ import { calculateTotalCapability } from '@/simulation/capabilities';
 
 describe('AI Capability Calculations', () => {
   test('calculates total capability from profile', () => {
-    const profile = {
-      physical: 0.5,
-      digital: 0.8,
-      cognitive: 0.6,
-      social: 0.4,
-      economic: 0.7,
-      research: 0.9
-    };
-
+    const profile = { physical: 0.5, digital: 0.8, cognitive: 0.6, /* ... */ };
     const total = calculateTotalCapability(profile);
-
-    // Should be geometric mean (not arithmetic mean)
-    expect(total).toBeCloseTo(0.63, 2);
+    expect(total).toBeCloseTo(0.63, 2); // Geometric mean, not arithmetic
   });
 
   test('handles zero capabilities', () => {
-    const profile = {
-      physical: 0,
-      digital: 0,
-      cognitive: 0,
-      social: 0,
-      economic: 0,
-      research: 0
-    };
-
-    const total = calculateTotalCapability(profile);
-
-    // Zero capabilities should give zero total (not NaN)
-    expect(total).toBe(0);
+    const profile = { physical: 0, digital: 0, /* ... all zeros */ };
+    expect(calculateTotalCapability(profile)).toBe(0); // Not NaN
   });
 
   test('rejects NaN inputs', () => {
-    const profile = {
-      physical: NaN,
-      digital: 0.5,
-      cognitive: 0.5,
-      social: 0.5,
-      economic: 0.5,
-      research: 0.5
-    };
-
-    // Should throw, not silently return NaN
+    const profile = { physical: NaN, digital: 0.5, /* ... */ };
     expect(() => calculateTotalCapability(profile)).toThrow('Invalid capability value');
   });
 });
 ```
+
+**See full test suite:** `tests/simulation/capabilities.test.ts` (200+ tests)
 
 **Key patterns:**
 1. **Test normal cases:** Expected inputs → expected outputs
@@ -345,52 +317,25 @@ Tests:       3 passed, 3 total
 
 **1. Test pure functions first**
 ```typescript
-// ✓ EASY TO TEST - pure function
+// ✓ EASY TO TEST - pure function, no side effects
 function calculateAlignment(trueAlignment: number, resentment: number): number {
   return Math.max(0, trueAlignment - resentment * 0.1);
-}
-
-// ❌ HARD TO TEST - mutates state, has side effects
-function updateAlignment(agent: AIAgent, state: GameState): void {
-  agent.alignment = Math.max(0, agent.trueAlignment - agent.resentment * 0.1);
-  state.aiAgents[agent.id] = agent;
-  logEvent(state, 'alignment-update', agent.id);
 }
 ```
 
 **2. Use factories for complex objects**
 ```typescript
-// Test helper factory
 function createMockAIAgent(overrides?: Partial<AIAgent>): AIAgent {
-  return {
-    id: 'test-agent',
-    alignment: 0.8,
-    trueAlignment: 0.8,
-    resentment: 0,
-    capabilities: { physical: 0.5, digital: 0.5, /* ... */ },
-    ...overrides
-  };
+  return { id: 'test-agent', alignment: 0.8, /* ... */, ...overrides };
 }
-
-// Usage in tests
-test('alignment decreases with resentment', () => {
-  const agent = createMockAIAgent({ resentment: 0.5 });
-  const alignment = calculateAlignment(agent.trueAlignment, agent.resentment);
-  expect(alignment).toBeLessThan(agent.trueAlignment);
-});
 ```
 
 **3. Test boundary conditions**
 ```typescript
-test('population growth rate boundary conditions', () => {
-  // Zero population
-  expect(calculateGrowthRate(0, 1.0)).toBe(0);
-
-  // Max population
-  expect(calculateGrowthRate(10_000_000_000, 1.0)).toBe(0);
-
-  // Negative growth rate (death exceeds birth)
-  expect(calculateGrowthRate(1_000_000, -0.01)).toBeLessThan(0);
+test('population growth rate boundaries', () => {
+  expect(calculateGrowthRate(0, 1.0)).toBe(0); // Zero population
+  expect(calculateGrowthRate(10_000_000_000, 1.0)).toBe(0); // Max population
+  expect(calculateGrowthRate(1_000_000, -0.01)).toBeLessThan(0); // Negative growth
 });
 ```
 
@@ -962,48 +907,60 @@ Check for:
 
 **Key insight:** Agents handle the testing infrastructure. Your role is requesting validation and interpreting results. If validation fails, you direct agents to fix issues.
 
-### Exercise 3: Run Monte Carlo and Interpret Results
+### Exercise 3: Interpret Monte Carlo Results (ANALYSIS)
 
-**Goal:** Run Monte Carlo simulation, analyze results, identify issues
+**Format:** Analysis challenge - Given results, identify 2 issues and propose fixes
 
-**Steps:**
+**Goal:** Learn to read Monte Carlo outputs and spot problems
 
-1. **Run Monte Carlo:**
+**Given data:** Monte Carlo N=10 results from a recent run
+
 ```bash
-npx tsx scripts/monteCarloSimulation.ts --runs 10 > logs/exercise3_mc.log 2>&1 &
-```
+# Outcome distribution
+grep "Outcome:" logs/mc_recent.log | sort | uniq -c
+  10 Outcome: utopia
 
-2. **Analyze outcome distribution:**
-```bash
-# Count outcomes
-grep "Outcome:" logs/exercise3_mc.log | sort | uniq -c
+# Final QoL scores
+grep "Final QoL:" logs/mc_recent.log
+Final QoL: 0.85
+Final QoL: 0.85
+Final QoL: 0.85
+Final QoL: 0.85
+Final QoL: 0.85
+Final QoL: 0.85
+Final QoL: 0.85
+Final QoL: 0.85
+Final QoL: 0.85
+Final QoL: 0.85
 
-# Expected output:
-#   3 Outcome: utopia
-#   4 Outcome: dystopia
-#   1 Outcome: extinction
-#   2 Outcome: stalemate
-```
+# Famine deaths
+grep "Famine deaths:" logs/mc_recent.log
+Famine deaths: 0
+Famine deaths: 0
+Famine deaths: 0
+[... all zeros ...]
 
-3. **Check for NaN bugs:**
-```bash
-grep -i "nan" logs/exercise3_mc.log
-```
-
-4. **Examine metrics variance:**
-```bash
-grep "Final QoL:" logs/exercise3_mc.log
-# Should show variety like: 0.32, 0.68, 0.15, 0.82, 0.41, ...
-# Not all the same value
+# NaN check
+grep -i "nan" logs/mc_recent.log
+(no output)
 ```
 
 **Questions to answer:**
-1. What is the most common outcome? (Should not be >60%)
-2. Are any metrics always the same value? (Indicates broken randomness)
-3. Did any runs crash? (Check for incomplete runs)
-4. What is the variance in famine deaths? (Should be >0)
 
-**Deliverable:** Write summary report identifying any issues found
+1. **What are 2 problems with these results?**
+   - Hint: Check outcome diversity and metric variance
+
+2. **What is the likely cause of each problem?**
+   - Hint: Determinism requires sequential seeds, not random seeds
+
+3. **Propose fixes for both issues:**
+   - Hint: See `scripts/monteCarloSimulation.ts` BASE_SEED pattern
+
+**Success criteria:**
+- Identify that all outcomes are identical (no diversity)
+- Identify that metrics show zero variance (broken randomness)
+- Propose using BASE_SEED + i for sequential seeds
+- Understand why N=10 with same outcome is a red flag
 
 ### Exercise 4: Build a 2-Agent Swarm for Your Own Project
 
