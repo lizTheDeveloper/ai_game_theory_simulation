@@ -61,14 +61,15 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
 - **Strategy:** Manual phase-by-phase implementation (18 CRITICAL → 11 HIGH → 3 MEDIUM)
 - **Next Steps:** Complete remaining 17 CRITICAL phases, then validate with Monte Carlo N=10+
 
-**✅ CRITICAL-4: DEFENSIVE FALLBACK ELIMINATION - COMPLETE** (Nov 7, 2025 - commit 0e2a7e9)
-- **Status:** ✅ ALL 17 DANGEROUS FALLBACKS ELIMINATED (4 hours work)
+**✅ CRITICAL-4: DEFENSIVE FALLBACK ELIMINATION - COMPLETE** (Nov 7, 2025 - commits 0e2a7e9 + 80c83a8)
+- **Status:** ✅ ALL 17 DANGEROUS FALLBACKS ELIMINATED + Field initialization cleanup complete (4 hours work)
 - **Before:** 31 DANGEROUS + 85 SUSPICIOUS = 116 total fallbacks
 - **After:** 0 DANGEROUS + 85 SUSPICIOUS = 85 total (63% reduction)
 - **Pattern:** All `?? defaultValue` in calculations replaced with assertion utilities
 - **Files Modified:** 17 core simulation files (6 phases, 5 nuclear/calculation modules, 6 misc modules)
+- **Follow-up:** Resentment recovery field initialization (socialCohesionInvestment, lastControlIncreaseMonth) added to prevent assertion failures
 - **Impact:** Bugs now fail loudly with full context (location, month, inputs) instead of silently producing NaN
-- **Validation:** TypeScript compiles cleanly, Monte Carlo N=3 in progress
+- **Validation:** TypeScript compiles cleanly, Monte Carlo N=10 pending
 - **Documentation:** `logs/CRITICAL4_COMPLETION_SUMMARY.md` (221 lines)
 - **Philosophy:** Research simulations MUST fail loudly. Silent fallbacks hide bugs (see Oct 2025 NaN ecology bug).
 
@@ -199,12 +200,16 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
   - **Validation:** Monte Carlo N=5, 12 months - ZERO assertion errors
   - **Impact:** Bug caught immediately instead of silent corruption for months (compare to Oct 2025 ecology NaN bug)
   - **Design note:** `materialAbundance` and `energyAvailability` intentionally exceed 1.0 (up to 2.0) for post-scarcity economies (upwardSpirals.ts:495)
-- ✅ **Government socialCohesionInvestment Initialization Added** (commit 1f81c9c, Nov 7, 2025)
-  - **Bug:** `socialCohesionInvestment` field used by resentmentRecovery.ts was missing from government initialization
-  - **Impact:** Would cause assertion failures in calculateRecoveryContext (lines 74-87) when accessing undefined field
-  - **Fix:** Added baseline value (50) to government state initialization
+- ✅ **Resentment Recovery Field Initialization Complete** (commits 1f81c9c + 80c83a8, Nov 7, 2025)
   - **Part of:** CRITICAL-4 remediation (defensive coding cleanup, proper initialization vs silent fallbacks)
-  - **Validation:** Field already defined in src/types/government.ts:72, properly used with assertions in resentmentRecovery.ts
+  - **Bug 1:** `socialCohesionInvestment` field used by resentmentRecovery.ts was missing from government initialization
+    - **Fix:** Added baseline value (50) to government state initialization (commit 1f81c9c)
+  - **Bug 2:** `lastControlIncreaseMonth` field was undefined at Month 0+, causing assertion errors in calculateRecoveryContext
+    - **Fix:** Initialize to 0 in initialization.ts, track in TimeAdvancementPhase.ts (commit 80c83a8)
+    - **Tracking logic:** TimeAdvancementPhase (order 99.0) now tracks previousControlLevel and lastControlIncreaseMonth before time advances
+    - **Used by:** Natural decay calculation in resentmentRecovery.ts
+  - **Impact:** Would cause "Undefined value in calculateRecoveryContext" assertion failures
+  - **Validation:** Field definitions in src/types/government.ts:72, assertions in resentmentRecovery.ts, TypeScript compiles cleanly
 - ✅ **AGI Breakthrough Shock Magnitude Bug Fixed** (commit 141712b, Nov 6, 2025)
   - **Bug:** ExogenousShockPhase AGI breakthrough had typo'd parameter values (500%/300% boosts vs intended 50%/30%)
   - **Root cause:** Missing decimal points (5.0/3.0 vs 0.5/0.3)
@@ -4413,7 +4418,7 @@ The simulation runs via a **phase-based architecture** with **116 phases** execu
 
 **98.0-99.0: Finalization**
 - EventCollectionPhase (98.0): Aggregate events for logging
-- TimeAdvancementPhase (99.0): Increment month counter
+- TimeAdvancementPhase (99.0): Track resentment recovery fields (previousControlLevel, lastControlIncreaseMonth), then increment month counter
 
 **Key Changes (Oct 16-17):**
 - Added **NuclearCommandControlPhase** (20.0): Circuit breakers to prevent 0% war rate bug
