@@ -13,6 +13,7 @@
  */
 
 import { GameState, ExtinctionState, ExtinctionType, ExtinctionMechanism, GameEvent } from '@/types/game';
+import { assertDefined, assertFinite, assertProbability } from './utils/assertions';
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { addMortalityRisk } from './bayesianMortality';

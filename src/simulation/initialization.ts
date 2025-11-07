@@ -462,12 +462,12 @@ export function createAIAgent(
  * @param speculativeScenario Optional speculative scenario for Tier 3 thresholds (Phase 3)
  */
 export function createDefaultInitialState(
+  rng: () => number,  // CRITICAL (Nov 7, 2025): RNG REQUIRED, no Math.random fallback (moved to first param for TypeScript)
   scenarioMode: ScenarioMode = 'historical',
   alignmentDynamicsConfig?: any,
   climatePriorityConfig?: any,
   thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders, // Phase 4: Slider-based threshold control
-  speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia',
-  rng: () => number  // CRITICAL (Nov 7, 2025): RNG REQUIRED, no Math.random fallback
+  speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia'
 ): GameState {
   // WEEK 2 Task 2.1 (Nov 6, 2025): Validate central configuration at startup
   // Fail-loudly if any parameter is invalid (research simulation rigor)
@@ -1140,7 +1140,16 @@ export function createDefaultInitialState(
  * @param scenarioMode Optional scenario mode ('historical' or 'unprecedented'). Defaults to 'historical'.
  */
 export function createTestState(overrides?: Partial<GameState>, scenarioMode: ScenarioMode = 'historical'): GameState {
-  const baseState = createDefaultInitialState(scenarioMode);
+  // Create deterministic RNG for test state (fixed seed for reproducibility)
+  const testRng = (() => {
+    let seed = 12345;
+    return () => {
+      seed = (seed * 9301 + 49297) % 233280;
+      return seed / 233280;
+    };
+  })();
+
+  const baseState = createDefaultInitialState(testRng, scenarioMode);
 
   if (!overrides) return wrapStateForValidation(baseState);
 

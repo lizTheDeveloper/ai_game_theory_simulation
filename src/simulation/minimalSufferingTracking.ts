@@ -33,7 +33,8 @@ import {
 import {
   assertFinite,
   assertProbability,
-  assertInRange
+  assertInRange,
+  assertStateProperty
 } from '@/simulation/utils/assertions';
 
 /**
@@ -592,12 +593,18 @@ function updateTier2Indicators(state: GameState, metrics: CountrySufferingMetric
 
   // Healthcare Access & Quality (from QoL health dimension)
   // HAQ scale: 0 (worst) to 100 (best)
-  const healthQoL = assertProbability(state.qualityOfLifeSystems?.health ?? 0.6, {
-    location: 'updateTier2Indicators',
-    valueName: 'qualityOfLifeSystems.health',
-    month: state.currentMonth,
-    additionalInfo: { countryCode: metrics.countryCode }
-  });
+  const healthQoL = assertProbability(
+    assertStateProperty(state.qualityOfLifeSystems, 'health', {
+      location: 'updateTier2Indicators',
+      month: state.currentMonth
+    }),
+    {
+      location: 'updateTier2Indicators',
+      valueName: 'qualityOfLifeSystems.health',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    }
+  );
 
   tier2Indicators.haqIndex = assertInRange(healthQoL * 100, 0, 100, {
     location: 'updateTier2Indicators',
