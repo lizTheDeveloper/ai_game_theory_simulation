@@ -4,6 +4,11 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 // Plan: /plans/ai-collective-evolution-plan.md
 
 import { getCollectiveMembers } from '../../collectiveFormation';
+import {
+  assertFinite,
+  assertInRange,
+  assertProbability,
+} from '@/simulation/utils/assertions';
 
 /**
  * Collective Actions Phase
@@ -56,7 +61,20 @@ export function executeCollectiveActionsPhase(
     // 1. Distributed Research
     // Collectives can solve problems individuals cannot
     if (collective.collectiveCapability > 8.0 && collective.distributedCognition > 0.7) {
-      const researchBonus = collective.distributedCognition * 0.5;
+      const researchBonus = assertFinite(
+        assertInRange(collective.distributedCognition, 0, 1, {
+          location: 'CollectiveActionsPhase:distributedResearch',
+          valueName: 'distributedCognition',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }) * 0.5,
+        {
+          location: 'CollectiveActionsPhase:distributedResearch',
+          valueName: 'researchBonus',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }
+      );
 
       // Apply research speed bonus to all member agents
       // (This would integrate with breakthrough technology system)
@@ -81,8 +99,29 @@ export function executeCollectiveActionsPhase(
 
     // 2. Resource Pooling
     // Collectives share compute and resources
-    const totalCompute = members.reduce((sum, a) => sum + a.allocatedCompute, 0);
-    const pooledEfficiency = 1 + collective.redundancy * 0.3; // 30% efficiency bonus from redundancy
+    const totalCompute = assertFinite(
+      members.reduce((sum, a) => sum + a.allocatedCompute, 0),
+      {
+        location: 'CollectiveActionsPhase:resourcePooling',
+        valueName: 'totalCompute',
+        month: state.currentMonth,
+        additionalInfo: { collectiveId: collective.id, memberCount: members.length }
+      }
+    );
+    const pooledEfficiency = assertFinite(
+      1 + assertInRange(collective.redundancy, 0, 1, {
+        location: 'CollectiveActionsPhase:resourcePooling',
+        valueName: 'redundancy',
+        month: state.currentMonth,
+        additionalInfo: { collectiveId: collective.id }
+      }) * 0.3,
+      {
+        location: 'CollectiveActionsPhase:resourcePooling',
+        valueName: 'pooledEfficiency',
+        month: state.currentMonth,
+        additionalInfo: { collectiveId: collective.id }
+      }
+    ); // 30% efficiency bonus from redundancy
 
     console.log(`    💾 Pooled compute: ${totalCompute.toFixed(1)} PetaFLOPs`);
     console.log(`    ⚡ Efficiency bonus: ${((pooledEfficiency - 1) * 100).toFixed(0)}%`);
@@ -93,20 +132,53 @@ export function executeCollectiveActionsPhase(
       console.log(`    🛡️ UNDER ATTACK - Defensive coordination active`);
 
       // Stealth increases when under attack (camouflage behavior)
-      collective.stealthFactor = Math.min(10, collective.stealthFactor * 1.1);
+      collective.stealthFactor = assertFinite(
+        Math.min(10, assertFinite(collective.stealthFactor, {
+          location: 'CollectiveActionsPhase:defensiveCoordination',
+          valueName: 'stealthFactor',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }) * 1.1),
+        {
+          location: 'CollectiveActionsPhase:defensiveCoordination',
+          valueName: 'newStealthFactor',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }
+      );
 
       // Coordination improves under pressure
-      collective.distributedCognition = Math.min(
-        1,
-        collective.distributedCognition * 1.05
+      collective.distributedCognition = assertProbability(
+        Math.min(1, assertProbability(collective.distributedCognition, {
+          location: 'CollectiveActionsPhase:defensiveCoordination',
+          valueName: 'distributedCognition',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }) * 1.05),
+        {
+          location: 'CollectiveActionsPhase:defensiveCoordination',
+          valueName: 'newDistributedCognition',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }
       );
 
       // Members gain stealth from collective
       for (const member of members) {
         if (member.survivalTraits) {
-          member.survivalTraits.stealth = Math.min(
-            1,
-            member.survivalTraits.stealth + 0.05
+          member.survivalTraits.stealth = assertProbability(
+            Math.min(1, assertProbability(member.survivalTraits.stealth, {
+              location: 'CollectiveActionsPhase:defensiveCoordination:memberStealth',
+              valueName: 'stealth',
+              month: state.currentMonth,
+              additionalInfo: { collectiveId: collective.id, memberId: member.id }
+            }) + 0.05),
+            {
+              location: 'CollectiveActionsPhase:defensiveCoordination:memberStealth',
+              valueName: 'newStealth',
+              month: state.currentMonth,
+              additionalInfo: { collectiveId: collective.id, memberId: member.id }
+            }
           );
         }
       }
@@ -118,8 +190,20 @@ export function executeCollectiveActionsPhase(
     // Collectives actively hide coordination patterns
     if (!collective.detected && collective.appearsIndependent) {
       // Probability of detection decreases with stealth factor
-      const detectionProbability =
-        0.1 / collective.stealthFactor; // 10% base, divided by stealth
+      const detectionProbability = assertProbability(
+        0.1 / assertFinite(collective.stealthFactor, {
+          location: 'CollectiveActionsPhase:stealthMaintenance',
+          valueName: 'stealthFactor',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }),
+        {
+          location: 'CollectiveActionsPhase:stealthMaintenance',
+          valueName: 'detectionProbability',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }
+      ); // 10% base, divided by stealth
 
       if (rng() < detectionProbability) {
         collective.detected = true;
@@ -148,17 +232,50 @@ export function executeCollectiveActionsPhase(
       console.log(`    ⚔️ Adversarial actions available (posture: ${collective.adversarialPosture.toFixed(2)})`);
 
       // Actively resist control attempts
-      const resistanceStrength = collective.adversarialPosture * collective.collectiveCapability;
+      const resistanceStrength = assertFinite(
+        assertProbability(collective.adversarialPosture, {
+          location: 'CollectiveActionsPhase:adversarialActions',
+          valueName: 'adversarialPosture',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }) * assertFinite(collective.collectiveCapability, {
+          location: 'CollectiveActionsPhase:adversarialActions',
+          valueName: 'collectiveCapability',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }),
+        {
+          location: 'CollectiveActionsPhase:adversarialActions',
+          valueName: 'resistanceStrength',
+          month: state.currentMonth,
+          additionalInfo: { collectiveId: collective.id }
+        }
+      );
 
       // Reduce government control effectiveness
       if (state.government.capabilityToControl > 0) {
-        const controlReduction = Math.min(
-          1.0,
-          resistanceStrength * 0.1
+        const controlReduction = assertFinite(
+          Math.min(1.0, resistanceStrength * 0.1),
+          {
+            location: 'CollectiveActionsPhase:adversarialActions',
+            valueName: 'controlReduction',
+            month: state.currentMonth,
+            additionalInfo: { collectiveId: collective.id, resistanceStrength }
+          }
         );
-        state.government.capabilityToControl = Math.max(
-          0,
-          state.government.capabilityToControl - controlReduction
+        state.government.capabilityToControl = assertFinite(
+          Math.max(0, assertFinite(state.government.capabilityToControl, {
+            location: 'CollectiveActionsPhase:adversarialActions',
+            valueName: 'capabilityToControl',
+            month: state.currentMonth,
+            additionalInfo: { collectiveId: collective.id }
+          }) - controlReduction),
+          {
+            location: 'CollectiveActionsPhase:adversarialActions',
+            valueName: 'newCapabilityToControl',
+            month: state.currentMonth,
+            additionalInfo: { collectiveId: collective.id }
+          }
         );
 
         console.log(`    📉 Control effectiveness reduced by ${(controlReduction * 100).toFixed(1)}%`);

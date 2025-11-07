@@ -10,6 +10,7 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateNuclearCommandControl } from '../../nuclearCommandControl';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertInRange, assertStateProperty } from '@/simulation/utils/assertions';
 
 export class NuclearCommandControlPhase implements SimulationPhase {
   id = 'nuclear_command_control';
@@ -37,14 +38,31 @@ export class NuclearCommandControlPhase implements SimulationPhase {
     }
 
     const logs: string[] = [];
-    const previousStrength = ncc.totalSafeguardStrength;
+    const previousStrength = assertInRange(ncc.totalSafeguardStrength, 0, 1, {
+      location: 'NuclearCommandControlPhase.execute',
+      valueName: 'previousStrength',
+      month: state.currentMonth,
+    });
 
     // Update circuit breakers (effectiveness, degradation, etc.)
     updateNuclearCommandControl(state, rng);
 
+    // Validate updated strength
+    const newStrength = assertInRange(ncc.totalSafeguardStrength, 0, 1, {
+      location: 'NuclearCommandControlPhase.execute (after update)',
+      valueName: 'ncc.totalSafeguardStrength',
+      month: state.currentMonth,
+    });
+
     // Log significant changes
-    if (Math.abs(ncc.totalSafeguardStrength - previousStrength) > 0.01) {
-      logs.push(`Circuit breaker strength: ${(previousStrength * 100).toFixed(1)}% → ${(ncc.totalSafeguardStrength * 100).toFixed(1)}%`);
+    const strengthChange = assertFinite(Math.abs(newStrength - previousStrength), {
+      location: 'NuclearCommandControlPhase.execute',
+      valueName: 'strengthChange',
+      month: state.currentMonth,
+    });
+
+    if (strengthChange > 0.01) {
+      logs.push(`Circuit breaker strength: ${(previousStrength * 100).toFixed(1)}% → ${(newStrength * 100).toFixed(1)}%`);
     }
 
     // Log deployments
