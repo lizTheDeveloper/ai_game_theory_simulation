@@ -903,4 +903,70 @@ All implementations follow `/designs/00_design_system.md` and `docs/design/dashb
 **Phase -1 Priority (Week 1):**
 Start with API infrastructure (blocks all other work)
 
-**Last Updated:** October 22, 2025 (Post-Architecture Review)
+---
+
+## 🚨 INCOMPLETE WORKER FIXES (Nov 7, 2025)
+
+**Status:** ❌ BLOCKED - Dashboard State Contract enforcement incomplete
+**Validation:** 14 critical issues detected (manual run: `logs/manual_validation_20251106_195740.log`)
+
+### TypeScript Compilation Errors
+
+Worker attempted to implement full `FrontendStateContract` compliance but hit type errors in `src/workers/simulationWorker.ts`:
+
+```
+src/workers/simulationWorker.ts(1867,24): error TS2339: Property 'environment' does not exist on type 'GameState'.
+src/workers/simulationWorker.ts(2381,9): error TS2339: Property 'technologies' does not exist on type 'StateDelta'.
+src/workers/simulationWorker.ts(2384,9): error TS2339: Property 'environment' does not exist on type 'StateDelta'.
+src/workers/simulationWorker.ts(2385,9): error TS2339: Property 'society' does not exist on type 'StateDelta'.
+src/workers/simulationWorker.ts(2386,9): error TS2339: Property 'multiParadigmDUI' does not exist on type 'StateDelta'.
+```
+
+### Root Causes
+
+1. **StateDelta type missing fields** - Need to add `technologies`, `environment`, `society`, `multiParadigmDUI` to `StateDelta` interface
+2. **Environment object construction** - `state.environment` doesn't exist; must construct from distributed fields:
+   - `state.resourceEconomy.co2.temperatureAnomaly`
+   - `state.resourceEconomy.co2.ppm`
+   - Climate change, resource depletion, biodiversity loss, pollution level metrics
+3. **FrontendStateContract type imports** - May import non-existent types from `game.ts`
+
+### Current Dashboard Failures
+
+**Validation results (3 checkpoints: 30s, 2min, 5min):**
+
+- ❌ **Tech Tree:** 0/71 technologies rendered (expected all 71 breakthrough technologies)
+- ❌ **Regions:** 0/7 regions rendered (expected Africa, Asia, Europe, Latin America, Middle East, North America, Oceania)
+- ❌ **Paradigm:** 0/4 paradigms rendered (expected Western, Development, Ecological, Indigenous)
+- ❌ **AI Agents:** 0 agents after 2 minutes (data disappears, was present at 30s checkpoint)
+- ⚠️ **QoL Dimensions:** Only 1/17 dimensions visible
+
+### Required Fixes
+
+**To complete worker contract enforcement:**
+
+1. Update `StateDelta` type definition to include:
+   - `technologies: Technology[]`
+   - `environment: { temperature: number, co2ppm: number, [key: string]: any }`
+   - `society: { globalCooperation: number, institutionalTrust: number, [key: string]: any }`
+   - `multiParadigmDUI: { history: ParadigmState[] }`
+
+2. Complete environment object construction in snapshot:
+   ```typescript
+   environment: {
+     temperature: state.resourceEconomy.co2.temperatureAnomaly,
+     co2ppm: state.resourceEconomy.co2.ppm,
+     climateChange: state.climateChangeProgress,
+     resourceDepletion: state.resourceDepletionProgress,
+     biodiversityLoss: state.biodiversityLossProgress,
+     pollutionLevel: state.pollutionLevel,
+   }
+   ```
+
+3. Ensure all fields included in delta (lines 2372-2393)
+
+4. Validate with headless Playwright: `npx tsx scripts/validateDashboardSemantics.ts`
+
+**See also:** Simulation roadmap for worker-side perspective, `docs/DASHBOARD_CRISIS_SUMMARY_20251107.md` for full crisis context
+
+**Last Updated:** November 7, 2025 (Dashboard State Divergence Crisis - Worker fixes incomplete)
