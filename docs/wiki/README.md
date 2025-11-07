@@ -32,6 +32,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **HIGH-1 Deep Cloning COMPLETE** - 14 instances JSON.parse → structuredClone, 30.5% performance improvement, 2h vs 1-2d estimated
 - ✅ **CRITICAL-1/2 Planning COMPLETE** - Assertion coverage + phase dependency handoff documents ready, tooling limitations documented
 - 🟢 **Fail-Loudly Philosophy Enforced** - No more silent NaN masking, bugs surface immediately with full context
+- ✅ **Resentment Recovery Initialization FIXED** - Defensive coding assertions exposed 2 initialization bugs (commit 42b38ff): `government.previousControlLevel` undefined at Month 0, `government.lastControlIncreaseMonth` missing. Both fields now properly initialized and tracked by TimeAdvancementPhase
 
 **🔍 KEY FINDING - ARCHITECTURAL HONESTY** (commit 8462f30, November 7, 2025)
 
