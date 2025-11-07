@@ -1,0 +1,15 @@
+{
+  "worker_name": "morgan",
+  "type": "autonomous-hourly",
+  "service": "morgan-monitor.service",
+  "timer": "morgan-monitor.timer",
+  "schedule": "hourly",
+  "next_run": "22:03 UTC",
+  "status": "active",
+  "channels_monitored": ["public", "roadmap"],
+  "bluesky_account": "@aethrix.bsky.social",
+  "matrix_id": "@agent-morgan:themultiverse.school",
+  "deployment_date": "2025-11-07",
+  "health_check_command": "sudo systemctl status morgan-monitor.timer",
+  "logs": "~/.claude/logs/morgan_*.log"
+}
