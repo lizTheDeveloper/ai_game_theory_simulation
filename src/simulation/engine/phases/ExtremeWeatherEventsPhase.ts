@@ -25,7 +25,8 @@ export class ExtremeWeatherEventsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Validate temperature state (extreme weather driven by climate)
-    assertFinite(state.environmental.currentTemperature, {
+    // FIX: state.environmental doesn't exist, use environmentalAccumulation
+    assertFinite(state.environmentalAccumulation.currentTemperature, {
       location: 'ExtremeWeatherEventsPhase.execute',
       valueName: 'currentTemperature',
       month: state.currentMonth
