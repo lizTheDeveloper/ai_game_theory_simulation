@@ -16,6 +16,7 @@
 import { GameState } from '@/types/game';
 import { calculateQualityOfLife as _calculateQualityOfLife } from './qualityOfLife';
 import { getTrustInAI } from './socialCohesion';
+import { assertStateProperty } from './utils/assertions';
 
 // ============================================================================
 // Re-exports from specialized modules (backward compatibility)
@@ -581,7 +582,12 @@ export function updateParanoia(state: GameState): void {
   const totalAICapability = aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
   const control = state.government.capabilityToControl;
 
-  let paranoiaLevel = society.paranoiaLevel ?? 0.15;
+  // paranoiaLevel is REQUIRED field - no fallback
+  // If undefined, this indicates initialization bug
+  let paranoiaLevel = assertStateProperty(society, 'paranoiaLevel', {
+    location: 'updateParanoia',
+    month: state.currentMonth
+  });
   
   // === 1. PARANOIA DECAYS NATURALLY (0.5%/month) ===
   // Without reinforcement, fear fades (availability heuristic decay)
