@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/7/2025, 9:00:06 AM
-**Files Scanned:** 323
+**Generated:** 11/7/2025, 9:30:04 AM
+**Files Scanned:** 324
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 129 (39.9%)
+**Count:** 129 (39.8%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -663,7 +663,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 18 (5.6%)
+**Count:** 19 (5.9%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -682,13 +682,14 @@
 - `kangas_ubi_finland_verification_20251030.md` - Oldest: 2020 (5 years)
 - `malthusian-overshoot-causation-attribution_20251018.md` - Oldest: 2020 (5 years)
 - `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
+- `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
 - `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
 
 ---
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 176 (54.5%)
+**Count:** 176 (54.3%)
 
 All sources <3 years old. No action required.
 
@@ -698,11 +699,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 323 |
+| Total files | 324 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 129 (39.9%) |
-| MEDIUM | 18 (5.6%) |
-| LOW | 176 (54.5%) |
+| HIGH | 129 (39.8%) |
+| MEDIUM | 19 (5.9%) |
+| LOW | 176 (54.3%) |
 | Average age | 8.9 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -710,14 +711,14 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 176 | 54.5% |
-| Warning (3-5yr) | 18 | 5.6% |
-| Critical (>5yr) | 129 | 39.9% |
+| Current (<3yr) | 176 | 54.3% |
+| Warning (3-5yr) | 19 | 5.9% |
+| Critical (>5yr) | 129 | 39.8% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 39.9% critical (>5yr)
+- **Current:** 39.8% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
