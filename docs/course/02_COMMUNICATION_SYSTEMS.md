@@ -26,38 +26,18 @@ By the end of this module, you will understand:
 
 ### The Problem: Coordinating Asynchronous Work
 
-Imagine 11 agents working in parallel on different features:
-- **Roy** is fixing NaN bugs in the simulation
-- **Cynthia** is researching carbon capture parameters
-- **Sylvia** is critiquing Cynthia's research
-- **Feature-implementer** is adding a new phase
-- **Architect** is cleaning up the roadmap
+When 11 agents work in parallel, coordination prevents chaos. Without it: merge conflicts, lost research, unnoticed blockers, duplicated work.
 
-**Without coordination, chaos emerges:**
-- Two agents modify the same file simultaneously → merge conflicts
-- Research findings get lost → no one sees Cynthia's new paper
-- Blockers go unnoticed → Roy waits hours for a response
-- Work duplicates → two agents implement the same feature
+### The Solution: Two Complementary Systems
 
-### The Solution: Two-Layer Communication
+| Layer | Purpose | Implementation | Best Use Cases |
+|-------|---------|----------------|----------------|
+| **Chatroom** (File-based) | Persistent coordination, archival | Markdown files + MCP server | Progress updates, handoffs, blockers |
+| **Matrix** (Real-time) | Synchronous messaging, alerts | Matrix FastMCP, 11 private rooms | Quick questions, urgent alerts |
 
-This project uses **two complementary systems**:
+**Mental model:** Chatroom = email (asynchronous, formal). Matrix = Slack (synchronous, ephemeral).
 
-**Layer 1: Chatroom (File-Based)**
-- **Purpose:** Persistent coordination, long-form updates, archival record
-- **Implementation:** Markdown files in `.claude/chatroom/channels/`
-- **Access:** MCP server with 10 tools (token-efficient)
-- **Paradigm:** Append-only log, per-agent read tracking
-- **Best for:** Progress updates, handoffs, blockers, questions
-
-**Layer 2: Matrix (Real-Time)**
-- **Purpose:** Real-time messaging, notifications, urgent coordination
-- **Implementation:** Matrix FastMCP server, 11 private rooms
-- **Access:** Matrix protocol (matrix_post_message, matrix_get_notifications)
-- **Paradigm:** Chat-like, threaded conversations
-- **Best for:** Quick questions, alerts, synchronous coordination
-
-**Mental model:** Think of chatroom as **email** (asynchronous, formal, archived) and Matrix as **Slack** (synchronous, informal, ephemeral).
+**See also:** [Module 03: Autonomous Workflows](./03_AUTONOMOUS_WORKFLOWS.md) for how workers use these systems in practice.
 
 ### Architecture Principle: Complementary Not Redundant
 

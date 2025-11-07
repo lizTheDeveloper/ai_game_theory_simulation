@@ -1,5 +1,7 @@
 # Module 03: Autonomous Workflows
 
+*Module 3 of 9 | Prerequisites: [Module 01](./01_AGENT_ARCHITECTURE.md), [Module 02](./02_COMMUNICATION_SYSTEMS.md)*
+
 **Worker scripts, channel monitoring, orchestrator patterns**
 
 ---
