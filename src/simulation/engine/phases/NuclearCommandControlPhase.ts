@@ -16,6 +16,11 @@ export class NuclearCommandControlPhase implements SimulationPhase {
   name = 'Nuclear Command & Control';
   order = 20; // After AI actions (2-8), before crisis detection (26-30)
 
+  // DEPENDENCIES (Nov 6, 2025): Requires AI capability and governance state
+  readonly dependencies = [
+    'governance-quality',        // Order 10.0: Government capability to implement safeguards
+  ];
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const ncc = state.nuclearCommandControlState;
     setDeterministicRng(rng);

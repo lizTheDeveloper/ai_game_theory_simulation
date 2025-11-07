@@ -117,7 +117,9 @@ export function updateEarlyWarningDetection(state: GameState, rng: RNGFunction):
   // === 2. SCAN BOUNDARIES FOR WARNINGS ===
   const newWarnings: TippingPointEarlyWarning[] = [];
 
-  for (const boundaryName of Object.keys(boundaries) as BoundaryName[]) {
+  // FIX: Sort boundary keys for deterministic iteration order
+  const sortedBoundaryNames = (Object.keys(boundaries) as BoundaryName[]).sort((a, b) => a.localeCompare(b));
+  for (const boundaryName of sortedBoundaryNames) {
     const boundary = boundaries[boundaryName];
     if (!boundary) continue;
 

@@ -22,6 +22,13 @@ import {
 } from '@/types/wetBulbTemperature';
 import { addSimulationEvent } from './utils/eventLogger';
 import { addMortalityRisk } from './bayesianMortality';
+import {
+  assertFinite,
+  assertInRange,
+  assertProbability,
+  assertMortalityRate,
+  assertTemperatureDelta,
+} from './utils/assertions';
 
 /**
  * Initialize wet bulb temperature system with 2025 baseline
@@ -197,6 +204,18 @@ export function calculateWetBulbTemperature(
   dryBulbTemp: number,
   relativeHumidity: number
 ): number {
+  // Validate inputs
+  assertFinite(dryBulbTemp, {
+    location: 'calculateWetBulbTemperature',
+    valueName: 'dryBulbTemp',
+    additionalInfo: { relativeHumidity }
+  });
+
+  assertInRange(relativeHumidity, 0, 100, {
+    location: 'calculateWetBulbTemperature',
+    valueName: 'relativeHumidity',
+  });
+
   const T = dryBulbTemp;
   const RH = relativeHumidity;
 
@@ -208,7 +227,11 @@ export function calculateWetBulbTemperature(
 
   const TW = term1 + term2 - term3 + term4 - term5;
 
-  return TW;
+  // Validate output (wet bulb should be between -20°C and +60°C physically plausible)
+  return assertInRange(TW, -20, 60, {
+    location: 'calculateWetBulbTemperature',
+    valueName: 'wetBulbTemp',
+  });
 }
 
 /**
@@ -348,13 +371,38 @@ export function updateWetBulbTemperatureSystem(
   const resources = state.resourceEconomy;
 
   // Get global temperature anomaly from CO2 system
-  const temperatureAnomaly = resources?.co2?.temperatureAnomaly ?? 0;
+  const temperatureAnomaly = assertFinite(resources?.co2?.temperatureAnomaly ?? 0, {
+    location: 'updateWetBulbTemperatureSystem',
+    valueName: 'temperatureAnomaly',
+    month: state.currentMonth,
+  });
+
+  // Validate temperature anomaly is within plausible range (-2°C to +10°C)
+  assertTemperatureDelta(temperatureAnomaly, {
+    location: 'updateWetBulbTemperatureSystem',
+    valueName: 'temperatureAnomaly',
+    month: state.currentMonth,
+    cause: 'CO2 emissions'
+  });
 
   // Update global warming effect (for habitability calculations)
-  system.globalWarmingEffect = 1.0 + (temperatureAnomaly / 2.0); // 1.0 → 3.0 at +4°C
+  system.globalWarmingEffect = assertInRange(1.0 + (temperatureAnomaly / 2.0), 0, 10, {
+    location: 'updateWetBulbTemperatureSystem',
+    valueName: 'globalWarmingEffect',
+    month: state.currentMonth
+  }); // 1.0 → 3.0 at +4°C
 
   // Update event frequency multiplier (exponential with warming)
-  system.eventFrequencyMultiplier = calculateEventFrequencyMultiplier(temperatureAnomaly);
+  system.eventFrequencyMultiplier = assertInRange(
+    calculateEventFrequencyMultiplier(temperatureAnomaly),
+    1.0,
+    15.0,
+    {
+      location: 'updateWetBulbTemperatureSystem',
+      valueName: 'eventFrequencyMultiplier',
+      month: state.currentMonth
+    }
+  );
 
   // Clear this month's events
   system.eventsThisMonth = [];
@@ -380,7 +428,7 @@ export function updateWetBulbTemperatureSystem(
         regionalClimate.baselineHumidity + humidityVariation
       ));
 
-      // Calculate wet bulb temperature
+      // Calculate wet bulb temperature (already validated in calculateWetBulbTemperature)
       const wetBulbTemp = calculateWetBulbTemperature(dryBulbTemp, relativeHumidity);
 
       // Get threshold parameters
@@ -389,21 +437,64 @@ export function updateWetBulbTemperatureSystem(
       if (threshold) {
         // Event duration: 3-7 days typical (Im et al. 2017)
         const durationDays = Math.floor(3 + rng() * 5); // 3-7 days
-        const durationHours = durationDays * 24;
+        const durationHours = assertFinite(durationDays * 24, {
+          location: 'updateWetBulbTemperatureSystem.heatEvent',
+          valueName: 'durationHours',
+          month: state.currentMonth,
+          additionalInfo: { durationDays }
+        });
 
         // Calculate socioeconomic vulnerability
-        const socioeconomicVulnerability = calculateSocioeconomicVulnerability(regionalClimate);
+        const socioeconomicVulnerability = assertInRange(
+          calculateSocioeconomicVulnerability(regionalClimate),
+          1.0,
+          3.0,
+          {
+            location: 'updateWetBulbTemperatureSystem.heatEvent',
+            valueName: 'socioeconomicVulnerability',
+            month: state.currentMonth,
+          }
+        );
 
         // Apply regional vulnerability multiplier
-        const adjustedMortalityRate = threshold.mortalityRate *
-          regionalClimate.vulnerabilityMultiplier *
-          socioeconomicVulnerability;
+        const adjustedMortalityRate = assertMortalityRate(
+          threshold.mortalityRate *
+            regionalClimate.vulnerabilityMultiplier *
+            socioeconomicVulnerability,
+          {
+            location: 'updateWetBulbTemperatureSystem.heatEvent',
+            valueName: 'adjustedMortalityRate',
+            month: state.currentMonth,
+          }
+        );
 
         // Calculate exposed population
-        const exposedPopulation = regionalClimate.population * threshold.exposureFraction;
+        const exposedPopulation = assertFinite(
+          regionalClimate.population * threshold.exposureFraction,
+          {
+            location: 'updateWetBulbTemperatureSystem.heatEvent',
+            valueName: 'exposedPopulation',
+            month: state.currentMonth,
+            additionalInfo: {
+              totalPopulation: regionalClimate.population,
+              exposureFraction: threshold.exposureFraction
+            }
+          }
+        );
 
         // Calculate deaths
-        const deaths = exposedPopulation * adjustedMortalityRate; // Millions
+        const deaths = assertFinite(
+          exposedPopulation * adjustedMortalityRate,
+          {
+            location: 'updateWetBulbTemperatureSystem.heatEvent',
+            valueName: 'deaths',
+            month: state.currentMonth,
+            additionalInfo: {
+              exposedPopulation,
+              mortalityRate: adjustedMortalityRate
+            }
+          }
+        ); // Millions
 
         // Create event
         const event: WetBulbEvent = {
@@ -465,9 +556,33 @@ export function updateWetBulbTemperatureSystem(
 
   // Update annual totals
   system.totalEventsThisYear += system.eventsThisMonth.length;
-  const monthlyDeaths = system.eventsThisMonth.reduce((sum, e) => sum + e.deaths, 0);
-  system.totalDeathsThisYear += monthlyDeaths;
-  system.cumulativeDeaths += monthlyDeaths;
+  const monthlyDeaths = assertFinite(
+    system.eventsThisMonth.reduce((sum, e) => sum + e.deaths, 0),
+    {
+      location: 'updateWetBulbTemperatureSystem',
+      valueName: 'monthlyDeaths',
+      month: state.currentMonth,
+      additionalInfo: { eventCount: system.eventsThisMonth.length }
+    }
+  );
+  system.totalDeathsThisYear = assertFinite(
+    system.totalDeathsThisYear + monthlyDeaths,
+    {
+      location: 'updateWetBulbTemperatureSystem',
+      valueName: 'totalDeathsThisYear',
+      month: state.currentMonth,
+      additionalInfo: { previous: system.totalDeathsThisYear, adding: monthlyDeaths }
+    }
+  );
+  system.cumulativeDeaths = assertFinite(
+    system.cumulativeDeaths + monthlyDeaths,
+    {
+      location: 'updateWetBulbTemperatureSystem',
+      valueName: 'cumulativeDeaths',
+      month: state.currentMonth,
+      additionalInfo: { previous: system.cumulativeDeaths, adding: monthlyDeaths }
+    }
+  );
 
   // Reset annual counters at year end
   if (state.currentMonth % 12 === 0 && state.currentMonth > 0) {
@@ -565,8 +680,43 @@ function applyWetBulbMortality(state: GameState, event: WetBulbEvent): void {
 
   const population = state.humanPopulationSystem;
 
-  // Calculate mortality rate (event.deaths is in millions, population.population is in millions)
-  const mortalityRate = event.deaths / population.population;
+  // FIX (Nov 6, 2025): Unit mismatch bug - event.deaths is in MILLIONS, population.population is in BILLIONS
+  // Previous calculation: deaths(M) / population(B) = 1000× too high
+  // Correct calculation: deaths(M) / (population(B) × 1000 = population in M)
+  // Research: Ballester et al. (2024) - heat waves cause 0.1-0.5% excess mortality, not 5%
+
+  // Validate population before division
+  const populationBillions = assertFinite(population.population, {
+    location: 'applyWetBulbMortality',
+    valueName: 'population.population',
+    month: state.currentMonth,
+  });
+
+  // Convert to millions for mortality rate calculation
+  const populationMillions = assertFinite(populationBillions * 1000, {
+    location: 'applyWetBulbMortality',
+    valueName: 'populationMillions',
+    month: state.currentMonth,
+    additionalInfo: { populationBillions }
+  });
+
+  // Validate deaths before division
+  const deathsMillions = assertFinite(event.deaths, {
+    location: 'applyWetBulbMortality',
+    valueName: 'event.deaths',
+    month: state.currentMonth,
+    additionalInfo: { region: event.region }
+  });
+
+  // Calculate mortality rate and validate it's a probability
+  const mortalityRate = assertProbability(
+    deathsMillions / populationMillions,
+    {
+      location: 'applyWetBulbMortality',
+      valueName: 'mortalityRate',
+      month: state.currentMonth,
+    }
+  );
 
   // Apply via centralized mortality system
   addMortalityRisk(population, {

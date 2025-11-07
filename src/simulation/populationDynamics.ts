@@ -21,6 +21,7 @@ import { HumanPopulationSystem, PopulationStatus, PopulationOutcome, RootCause, 
 import { validateCompoundCause, getCompoundConfidence } from './utils/deathAttribution';
 import { getTechDeploymentSafe } from './techTree/helpers';
 import { initializeRegionalMortalityStabilizers, initializeRegionalFamineState, initializeRegionalResilienceProfile } from './mortalityStabilizersInit';
+import { assertFinite, assertStateProperty, assertInRange, assertProbability } from './utils/assertions';
 
 /**
  * Initialize regional populations (2025 baseline)
@@ -461,61 +462,51 @@ export function aggregateGlobalPopulation(state: GameState): void {
   let totalPopulation = 0;
 
   for (const region of regions) {
-    // Validate regional data - fail loudly on invalid values
-    if (!isFinite(region.population) || isNaN(region.population) || region.population < 0) {
-      throw new Error(
-        `aggregateGlobalPopulation: Invalid population for region "${region.name}": ${region.population} ` +
-        `(month ${state.currentMonth})`
-      );
-    }
+    // FIX (Nov 6, 2025): Use assertion utilities
+    const validatedPopulation = assertInRange(region.population, 0, 10000, {
+      location: 'aggregateGlobalPopulation (regional population)',
+      valueName: `${region.name}.population`,
+      month: state.currentMonth
+    });
 
-    totalPopulation += region.population;
+    totalPopulation += validatedPopulation;
   }
 
-  // Final validation - fail loudly on NaN
-  if (!isFinite(totalPopulation) || isNaN(totalPopulation) || totalPopulation < 0) {
-    throw new Error(
-      `aggregateGlobalPopulation: Calculation produced invalid value: ${totalPopulation} ` +
-      `(month ${state.currentMonth})`
-    );
-  }
+  // Final validation
+  totalPopulation = assertInRange(totalPopulation, 0, 50000, {
+    location: 'aggregateGlobalPopulation (total population)',
+    valueName: 'totalPopulation',
+    month: state.currentMonth
+  });
 
   // Convert from millions to billions for global population storage
   // Regional: millions (1677), Global: billions (8.137)
-  const totalPopulationBillions = totalPopulation / 1000;
+  const totalPopulationBillions = assertInRange(totalPopulation / 1000, 0.001, 100, {
+    location: 'aggregateGlobalPopulation (billions conversion)',
+    valueName: 'totalPopulationBillions',
+    month: state.currentMonth
+  });
 
   // DEBUG: Log conversion
   console.log(`🔍 aggregateGlobalPopulation: ${totalPopulation}M → ${totalPopulationBillions}B (month ${state.currentMonth})`);
 
-  // Validate reasonable range (must be between 0.001B and 100B)
-  if (totalPopulationBillions < 0.001 || totalPopulationBillions > 100) {
-    throw new Error(
-      `aggregateGlobalPopulation: Population out of reasonable range: ${totalPopulationBillions}B ` +
-      `(regional sum: ${totalPopulation}M, month ${state.currentMonth})`
-    );
-  }
-
   // Update global population
-  state.humanPopulationSystem.population = totalPopulationBillions;
-
-  // DEBUG (Oct 28, 2025): Verify population immediately after setting in aggregateGlobalPopulation
-  if (isNaN(state.humanPopulationSystem.population)) {
-    console.error(`❌ population is NaN immediately after setting in aggregateGlobalPopulation`);
-    console.error(`   totalPopulationBillions: ${totalPopulationBillions}`);
-    console.error(`   totalPopulation: ${totalPopulation}M`);
-    throw new Error(`Population became NaN in aggregateGlobalPopulation`);
-  }
+  state.humanPopulationSystem.population = assertFinite(totalPopulationBillions, {
+    location: 'aggregateGlobalPopulation (population assignment)',
+    valueName: 'state.humanPopulationSystem.population',
+    month: state.currentMonth,
+    additionalInfo: { totalPopulationBillions }
+  });
 
   // Track peak population
   if (totalPopulationBillions > state.humanPopulationSystem.peakPopulation) {
-    state.humanPopulationSystem.peakPopulation = totalPopulationBillions;
+    state.humanPopulationSystem.peakPopulation = assertFinite(totalPopulationBillions, {
+      location: 'aggregateGlobalPopulation (peak population update)',
+      valueName: 'peakPopulation',
+      month: state.currentMonth,
+      additionalInfo: { totalPopulationBillions }
+    });
     state.humanPopulationSystem.peakPopulationMonth = state.currentMonth;
-  }
-
-  // DEBUG (Oct 28, 2025): Final verification before leaving aggregateGlobalPopulation
-  if (isNaN(state.humanPopulationSystem.population)) {
-    console.error(`❌ population became NaN after peak tracking in aggregateGlobalPopulation`);
-    throw new Error(`Population corrupted during peak tracking`);
   }
 }
 
@@ -601,20 +592,34 @@ export function aggregateGlobalDemographics(state: GameState): void {
   }
 
   // Calculate population-weighted averages
-  const globalBirthRate = weightedBirthRate / totalPopulation;
-  const globalDeathRate = weightedDeathRate / totalPopulation;
-  const globalFertilityRate = weightedFertilityRate / totalPopulation;
-  const globalMedianAge = weightedMedianAge / totalPopulation;
+  const globalBirthRate = assertProbability(weightedBirthRate / totalPopulation, {
+    location: 'aggregateGlobalDemographics (global birth rate)',
+    valueName: 'globalBirthRate',
+    month: state.currentMonth
+  });
 
-  // Final validation - fail loudly on NaN
-  if (!isFinite(globalBirthRate) || isNaN(globalBirthRate)) {
-    throw new Error(
-      `aggregateGlobalDemographics: Birth rate calculation produced NaN/Infinity ` +
-      `(weightedBirthRate=${weightedBirthRate}, totalPopulation=${totalPopulation}, month=${state.currentMonth})`
-    );
-  }
+  const globalDeathRate = assertProbability(weightedDeathRate / totalPopulation, {
+    location: 'aggregateGlobalDemographics (global death rate)',
+    valueName: 'globalDeathRate',
+    month: state.currentMonth
+  });
 
-  if (!isFinite(globalDeathRate) || isNaN(globalDeathRate)) {
+  const globalFertilityRate = assertFinite(weightedFertilityRate / totalPopulation, {
+    location: 'aggregateGlobalDemographics (global fertility rate)',
+    valueName: 'globalFertilityRate',
+    month: state.currentMonth,
+    additionalInfo: { weightedFertilityRate, totalPopulation }
+  });
+
+  const globalMedianAge = assertFinite(weightedMedianAge / totalPopulation, {
+    location: 'aggregateGlobalDemographics (global median age)',
+    valueName: 'globalMedianAge',
+    month: state.currentMonth,
+    additionalInfo: { weightedMedianAge, totalPopulation }
+  });
+
+  // REMOVED: Manual NaN checks replaced by assertion utilities above
+  if (false && (!isFinite(globalDeathRate) || isNaN(globalDeathRate))) {
     throw new Error(
       `aggregateGlobalDemographics: Death rate calculation produced NaN/Infinity ` +
       `(weightedDeathRate=${weightedDeathRate}, totalPopulation=${totalPopulation}, month=${state.currentMonth})`
@@ -802,50 +807,42 @@ export function updateHumanPopulation(state: GameState, rng: () => number): void
   // === PHASE 5: AGGREGATE REGIONAL POPULATIONS TO GLOBAL ===
   // Global population is DERIVED from regional populations (bottom-up architecture)
   if (pop.regionalPopulations && pop.regionalPopulations.length > 0) {
-    // FIX (Oct 28, 2025): Validate regional populations before summing (fail loudly on NaN)
+    // FIX (Nov 6, 2025): Use assertion utilities instead of manual NaN checks
     for (const region of pop.regionalPopulations) {
-      if (isNaN(region.population)) {
-        console.error(`❌ NaN detected in regional population at month ${state.currentMonth}`);
-        console.error(`   Region: ${region.name}`);
-        console.error(`   Population: ${region.population}`);
-        console.error(`   Full region data: ${JSON.stringify(region, null, 2)}`);
-        throw new Error(`NaN in regional population for ${region.name} - trace source of population corruption`);
-      }
+      assertFinite(region.population, {
+        location: 'updateHumanPopulation (regional population)',
+        valueName: `${region.name}.population`,
+        month: state.currentMonth,
+        additionalInfo: { regionName: region.name }
+      });
     }
 
     // Sum regional populations (already in millions)
-    const totalPopulationMillions = pop.regionalPopulations.reduce((sum, region) => sum + region.population, 0);
-
-    // DEBUG (Oct 28, 2025): Check if sum produced NaN
-    if (isNaN(totalPopulationMillions)) {
-      console.error(`❌ totalPopulationMillions is NaN at month ${state.currentMonth}`);
-      console.error(`   Number of regions: ${pop.regionalPopulations.length}`);
-      console.error(`   Regional populations: ${pop.regionalPopulations.map(r => `${r.name}:${r.population}`).join(', ')}`);
-      throw new Error(`totalPopulationMillions is NaN despite individual region validation passing`);
-    }
+    const totalPopulationMillions = assertFinite(
+      pop.regionalPopulations.reduce((sum, region) => sum + region.population, 0),
+      {
+        location: 'updateHumanPopulation (regional sum)',
+        valueName: 'totalPopulationMillions',
+        month: state.currentMonth,
+        additionalInfo: { regionCount: pop.regionalPopulations.length }
+      }
+    );
 
     // FIX (Oct 28, 2025): Convert to billions to match global population convention
     // Regional populations are in millions, global population is in billions
-    // This function was overwriting the correct billions value from aggregateGlobalPopulation()
-    // with millions, causing outcome classification to read "4888B" and declare extinction
-    const totalPopulationBillions = totalPopulationMillions / 1000;
+    const totalPopulationBillions = assertFinite(totalPopulationMillions / 1000, {
+      location: 'updateHumanPopulation (billions conversion)',
+      valueName: 'totalPopulationBillions',
+      month: state.currentMonth,
+      additionalInfo: { totalPopulationMillions }
+    });
 
-    // DEBUG (Oct 28, 2025): Check if billion conversion produced NaN
-    if (isNaN(totalPopulationBillions)) {
-      console.error(`❌ totalPopulationBillions is NaN at month ${state.currentMonth}`);
-      console.error(`   totalPopulationMillions: ${totalPopulationMillions}`);
-      throw new Error(`totalPopulationBillions is NaN after division by 1000`);
-    }
-
-    pop.population = totalPopulationBillions; // Store in billions (global convention)
-
-    // DEBUG (Oct 28, 2025): Verify population is not NaN after setting
-    if (isNaN(pop.population)) {
-      console.error(`❌ pop.population is NaN immediately after setting from totalPopulationBillions`);
-      console.error(`   totalPopulationBillions: ${totalPopulationBillions}`);
-      console.error(`   totalPopulationMillions: ${totalPopulationMillions}`);
-      throw new Error(`Population became NaN in regional aggregation path`);
-    }
+    pop.population = assertFinite(totalPopulationBillions, {
+      location: 'updateHumanPopulation (population assignment)',
+      valueName: 'pop.population',
+      month: state.currentMonth,
+      additionalInfo: { totalPopulationBillions }
+    });
 
     // Update peak if current exceeds it
     if (pop.population > pop.peakPopulation) {
@@ -856,13 +853,13 @@ export function updateHumanPopulation(state: GameState, rng: () => number): void
     // Regional system handles all population dynamics, skip legacy global update
     updateDemographics(state); // Still update global demographics
 
-    // DEBUG (Oct 28, 2025): Verify population is still valid after updateDemographics
-    if (isNaN(pop.population)) {
-      const msg = `❌ pop.population became NaN after updateDemographics at month ${state.currentMonth}\n   Was ${totalPopulationBillions}B before updateDemographics\n`;
-      console.error(msg);
-      // Removed fs.appendFileSync - not available in Next.js client builds
-      throw new Error(`Population became NaN in updateDemographics`);
-    }
+    // FIX (Nov 6, 2025): Validate population after demographics update
+    assertFinite(pop.population, {
+      location: 'updateHumanPopulation (after updateDemographics)',
+      valueName: 'pop.population',
+      month: state.currentMonth,
+      additionalInfo: { expectedValue: totalPopulationBillions }
+    });
 
     return;
   }
@@ -875,27 +872,24 @@ export function updateHumanPopulation(state: GameState, rng: () => number): void
   // === 1. CALCULATE CARRYING CAPACITY ===
   // Base capacity affected by: climate, resources, ecosystem, technology
 
-  // Climate modifier: stable climate = high capacity (detect NaN - fail loudly)
-  if (isNaN(env.climateStability)) {
-    console.error(`❌ NaN in climateStability at month ${state.currentMonth}`);
-    console.error(`   env state: ${JSON.stringify(env)}`);
-    throw new Error(`NaN in climateStability - trace source of environmental corruption`);
-  }
-  const climateModifier = env.climateStability; // 1.0 = normal, 0 = uninhabitable
+  // Climate modifier: stable climate = high capacity
+  const climateModifier = assertProbability(env.climateStability, {
+    location: 'updateHumanPopulation (climate modifier)',
+    valueName: 'climateStability',
+    month: state.currentMonth
+  });
 
-  // Resource modifier: need food AND water (detect NaN - fail loudly)
-  if (isNaN(resources.food.reserves)) {
-    console.error(`❌ NaN in food.reserves at month ${state.currentMonth}`);
-    console.error(`   resources state: ${JSON.stringify(resources)}`);
-    throw new Error(`NaN in food.reserves - trace source of resource corruption`);
-  }
-  if (isNaN(resources.water.reserves)) {
-    console.error(`❌ NaN in water.reserves at month ${state.currentMonth}`);
-    console.error(`   resources state: ${JSON.stringify(resources)}`);
-    throw new Error(`NaN in water.reserves - trace source of resource corruption`);
-  }
-  const foodStock = resources.food.reserves;
-  const waterStock = resources.water.reserves;
+  // Resource modifier: need food AND water
+  const foodStock = assertFinite(resources.food.reserves, {
+    location: 'updateHumanPopulation (food reserves)',
+    valueName: 'food.reserves',
+    month: state.currentMonth
+  });
+  const waterStock = assertFinite(resources.water.reserves, {
+    location: 'updateHumanPopulation (water reserves)',
+    valueName: 'water.reserves',
+    month: state.currentMonth
+  });
   const foodAvailability = Math.min(1.0, foodStock);
   const waterAvailability = Math.min(1.0, waterStock);
   const resourceModifier = Math.min(foodAvailability, waterAvailability);
@@ -905,31 +899,50 @@ export function updateHumanPopulation(state: GameState, rng: () => number): void
   // NOT immediate carrying capacity. Industrial agriculture feeds 8B despite 65% biodiversity loss.
   // Research: No evidence that 35% biodiversity = 35% capacity in 2025.
   // Only catastrophic collapse (<20%) immediately constrains food production.
-  if (isNaN(env.biodiversityIndex)) {
-    console.error(`❌ NaN in biodiversityIndex at month ${state.currentMonth}`);
-    console.error(`   env state: ${JSON.stringify(env)}`);
-    throw new Error(`NaN in biodiversityIndex - trace source of environmental corruption`);
-  }
-  const biodiversity = env.biodiversityIndex;
-  const ecosystemModifier = biodiversity < 0.20 
+  const biodiversity = assertProbability(env.biodiversityIndex, {
+    location: 'updateHumanPopulation (biodiversity)',
+    valueName: 'biodiversityIndex',
+    month: state.currentMonth
+  });
+  const ecosystemModifier = biodiversity < 0.20
     ? biodiversity * 2.5  // Catastrophic: 20% biodiv → 50% capacity, 10% → 25%, 0% → 0%
     : Math.max(0.8, 0.8 + (biodiversity - 0.2) * 0.5); // 20-100% biodiv → 80-120% capacity
 
-  // Tech modifier: advancement increases capacity (detect NaN - fail loudly)
-  if (isNaN(state.globalMetrics.economicTransitionStage)) {
-    console.error(`❌ NaN in economicTransitionStage at month ${state.currentMonth}`);
-    console.error(`   globalMetrics: ${JSON.stringify(state.globalMetrics)}`);
-    throw new Error(`NaN in economicTransitionStage - trace source of globalMetrics corruption`);
-  }
-  const economicStage = state.globalMetrics.economicTransitionStage;
+  // Tech modifier: advancement increases capacity
+  const economicStage = assertFinite(state.globalMetrics.economicTransitionStage, {
+    location: 'updateHumanPopulation (economic stage)',
+    valueName: 'economicTransitionStage',
+    month: state.currentMonth
+  });
   const techModifier = 1.0 +
     (economicStage * 0.2) + // Tech advancement
     (getTechDeploymentSafe(state, 'fusionPower')) * 1.0 + // Energy abundance
     (getTechDeploymentSafe(state, 'sustainableAgriculture')) * 0.5; // Food efficiency
 
-  pop.capacityModifier = climateModifier * resourceModifier * ecosystemModifier * techModifier;
-  pop.carryingCapacity = Math.max(1.0, pop.baselineCarryingCapacity * pop.capacityModifier); // Ensure non-zero
-  pop.populationPressure = pop.population / pop.carryingCapacity;
+  pop.capacityModifier = assertFinite(
+    climateModifier * resourceModifier * ecosystemModifier * techModifier,
+    {
+      location: 'updateHumanPopulation (capacity modifier)',
+      valueName: 'capacityModifier',
+      month: state.currentMonth,
+      additionalInfo: { climateModifier, resourceModifier, ecosystemModifier, techModifier }
+    }
+  );
+  pop.carryingCapacity = assertFinite(
+    Math.max(1.0, pop.baselineCarryingCapacity * pop.capacityModifier),
+    {
+      location: 'updateHumanPopulation (carrying capacity)',
+      valueName: 'carryingCapacity',
+      month: state.currentMonth,
+      additionalInfo: { baselineCarryingCapacity: pop.baselineCarryingCapacity, capacityModifier: pop.capacityModifier }
+    }
+  );
+  pop.populationPressure = assertFinite(pop.population / pop.carryingCapacity, {
+    location: 'updateHumanPopulation (population pressure)',
+    valueName: 'populationPressure',
+    month: state.currentMonth,
+    additionalInfo: { population: pop.population, carryingCapacity: pop.carryingCapacity }
+  });
 
   // === 2. CALCULATE BIRTH RATE ===
   // Affected by: meaning/purpose, economic security, healthcare, social stability
@@ -962,14 +975,21 @@ export function updateHumanPopulation(state: GameState, rng: () => number): void
   const seasonalBirthCycle = 1 + 0.08 * Math.sin((2 * Math.PI * monthInYear / 12) + Math.PI/2); // 8% amplitude, spring peak
   const monthlyBirthNoise = 0.98 + rng() * 0.04; // ±2% monthly variation
 
-  pop.adjustedBirthRate = pop.baselineBirthRate *
+  pop.adjustedBirthRate = assertProbability(
+    pop.baselineBirthRate *
     meaningModifier *
     economicModifier *
     healthcareModifier *
     stabilityModifier *
     pressureModifier *
     seasonalBirthCycle *
-    monthlyBirthNoise;
+    monthlyBirthNoise,
+    {
+      location: 'updateHumanPopulation (adjusted birth rate)',
+      valueName: 'adjustedBirthRate',
+      month: state.currentMonth
+    }
+  );
 
   // P1.5: POST-CRISIS BABY BOOM EFFECT
   // Historical evidence: Population rebounds after EVERY major crisis
@@ -1061,7 +1081,14 @@ export function updateHumanPopulation(state: GameState, rng: () => number): void
   const warMultiplier = Math.min(uncappedMultiplier, MAX_WAR_MULTIPLIER);
 
   // Base death rate applies seasonal pattern and monthly noise
-  const baselineDeaths = pop.baselineDeathRate * healthcareBase * warMultiplier * seasonalDeathCycle * monthlyDeathNoise;
+  const baselineDeaths = assertProbability(
+    pop.baselineDeathRate * healthcareBase * warMultiplier * seasonalDeathCycle * monthlyDeathNoise,
+    {
+      location: 'updateHumanPopulation (baseline deaths)',
+      valueName: 'baselineDeaths',
+      month: state.currentMonth
+    }
+  );
 
   // MIGRATION (Oct 28, 2025): Environmental mortality now handled by Bayesian system
   // calculateEnvironmentalMortality() adds risks directly via addMortalityRisk()
@@ -1100,7 +1127,14 @@ export function updateHumanPopulation(state: GameState, rng: () => number): void
   const adjustedAdditionalMortality = proposedAdditionalMortality * resilienceFloor;
 
   // Combine baseline + resilience-adjusted extinction mortality
-  pop.adjustedDeathRate = baselineDeaths + adjustedAdditionalMortality;
+  pop.adjustedDeathRate = assertProbability(
+    baselineDeaths + adjustedAdditionalMortality,
+    {
+      location: 'updateHumanPopulation (adjusted death rate)',
+      valueName: 'adjustedDeathRate',
+      month: state.currentMonth
+    }
+  );
 
   // Log resilience floor activation (when significant)
   if (resilienceFloor < 0.9 && state.currentMonth % 12 === 0 && adjustedAdditionalMortality > 0.01) {
@@ -1110,20 +1144,40 @@ export function updateHumanPopulation(state: GameState, rng: () => number): void
   }
 
   // === 5. CALCULATE NET GROWTH ===
-  pop.netGrowthRate = pop.adjustedBirthRate - pop.adjustedDeathRate;
-  const monthlyGrowthRate = pop.netGrowthRate / 12;
+  pop.netGrowthRate = assertFinite(pop.adjustedBirthRate - pop.adjustedDeathRate, {
+    location: 'updateHumanPopulation (net growth rate)',
+    valueName: 'netGrowthRate',
+    month: state.currentMonth,
+    additionalInfo: {
+      adjustedBirthRate: pop.adjustedBirthRate,
+      adjustedDeathRate: pop.adjustedDeathRate
+    }
+  });
+  const monthlyGrowthRate = assertFinite(pop.netGrowthRate / 12, {
+    location: 'updateHumanPopulation (monthly growth rate)',
+    valueName: 'monthlyGrowthRate',
+    month: state.currentMonth,
+    additionalInfo: { netGrowthRate: pop.netGrowthRate }
+  });
 
   // === 6. APPLY POPULATION CHANGE ===
   const previousPopulation = pop.population;
-  const newPopulation = pop.population * (1 + monthlyGrowthRate);
+  const newPopulation = assertFinite(pop.population * (1 + monthlyGrowthRate), {
+    location: 'updateHumanPopulation (new population)',
+    valueName: 'newPopulation',
+    month: state.currentMonth,
+    additionalInfo: {
+      previousPopulation: pop.population,
+      monthlyGrowthRate
+    }
+  });
 
-  // Guard against NaN
-  if (isNaN(newPopulation) || newPopulation < 0) {
-    console.warn(`⚠️  Population calculation produced ${newPopulation}, using previous value`);
-    pop.population = Math.max(0, previousPopulation * 0.99); // Small decline as fallback
-  } else {
-    pop.population = Math.max(0, newPopulation);
-  }
+  pop.population = assertFinite(Math.max(0, newPopulation), {
+    location: 'updateHumanPopulation (population after update)',
+    valueName: 'pop.population',
+    month: state.currentMonth,
+    additionalInfo: { newPopulation, previousPopulation }
+  });
 
   // === 7. CARRYING CAPACITY CONSTRAINT ===
   // FIX (Oct 26, 2025): REMOVED instant 5% per month overshoot death mechanic

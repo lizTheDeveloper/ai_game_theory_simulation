@@ -6,6 +6,7 @@
  * - Seasonal lean season concentration (3-4 month periods)
  * - Infrastructure mismatch multipliers
  * - Fail-loudly assertions for data integrity
+ * - Bifurcation-aware variance amplification (Nov 6, 2025)
  *
  * Research:
  * - /research/climate-mortality-biosphere-multiparadigm-framework_20251028.md
@@ -19,6 +20,15 @@
  * - Queue-based lag modeling for delayed impacts
  * - Seasonal pattern modeling for lean season mortality spikes
  * - Integration with Bayesian mortality system for demographic targeting
+ *
+ * Bifurcation Integration (Nov 6, 2025):
+ * - Climate impact intensities are multiplied by varianceAmplification (1× to 10×)
+ * - Near tipping points: 10× amplification → extreme variance in impact severity
+ * - Far from thresholds: 1× amplification → deterministic impacts
+ * - Uses capWithBifurcationAwareness() to prevent assertion failures when amplified
+ *   intensities exceed baseline bounds (0-1)
+ * - Research: Scheffer et al. (2014), Richardson et al. (2023) - critical slowing down
+ * - Fixes HIGH-1 in architecture-post-week4-integration-review_20251106.md
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
@@ -29,6 +39,7 @@ import {
   assertInRange,
   assertStateProperty,
   assertDefined,
+  capWithBifurcationAwareness,
 } from '@/simulation/utils/assertions';
 
 /**
@@ -65,13 +76,30 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
   readonly name = 'Climate Impact Cascade';
   readonly order = 34.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Requires climate tipping point state
+  readonly dependencies = [
+    'tipping-point-phase',      // Order 21.6: Climate tipping points activated
+    'environmental_feedback',   // Order 33.5: Aggregated environmental state
+  ];
+
   // Minimum floor for food security to prevent exactly zero
   private static readonly MIN_FOOD_SECURITY = 0.001;
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // 1. Calculate current climate impacts with lag effects
     setDeterministicRng(rng);
-    const climateImpacts = this.calculateClimateImpacts(state, rng, context);
+
+    // === BIFURCATION VARIANCE AMPLIFICATION ===
+    // Near collapse thresholds → 10× variance amplification on impact intensity
+    // Creates differential mortality trajectories near tipping points
+    const varianceAmp = assertFinite(state.bifurcationState.varianceAmplification, {
+      location: 'ClimateImpactCascadePhase.execute',
+      valueName: 'varianceAmplification',
+      month: state.currentMonth,
+      additionalInfo: { expectedSource: 'BifurcationLogicPhase (order 4.5)' }
+    });
+
+    const climateImpacts = this.calculateClimateImpacts(state, rng, context, varianceAmp);
 
     // 2. Apply to food security (immediate + delayed impacts)
     const foodSecurityChanges = this.applyFoodSecurityImpacts(state, climateImpacts, context);
@@ -93,11 +121,16 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
    * - Drought: 1-3 month lag for soil moisture depletion
    * - Extreme weather: Immediate for direct damage, 1-6 months for secondary effects
    * - Ecosystem collapse: 6-12 month lag for biodiversity loss → agricultural failure
+   *
+   * @param varianceAmp - Bifurcation variance amplification (1× to 10×)
+   *   Near thresholds: 10× amplification → more severe/variable impacts
+   *   Far from thresholds: 1× amplification → deterministic impacts
    */
   private calculateClimateImpacts(
     state: GameState,
     rng: RNGFunction,
-    context: PhaseContext
+    context: PhaseContext,
+    varianceAmp: number
   ): ClimateImpact[] {
     const impacts: ClimateImpact[] = [];
 
@@ -108,18 +141,31 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
     });
 
     // Heat waves trigger when climate stability drops below 0.7 (30% degradation)
-    // Intensity scales with degradation severity
+    // Intensity scales with degradation severity × bifurcation amplification
     if (avgTemp < 0.7) {
-      const intensity = assertFinite(1.0 - avgTemp, {
+      const baseIntensity = assertFinite(1.0 - avgTemp, {
         location: 'ClimateImpactCascade.heatWaveIntensity',
-        valueName: 'intensity',
+        valueName: 'baseIntensity',
         month: state.currentMonth,
         additionalInfo: { climateStability: avgTemp }
       });
 
+      // Apply bifurcation variance amplification to intensity
+      // Near collapse: 10× amplification → some runs get devastating heat waves, others moderate
+      const normalizedBase = baseIntensity / 0.3; // Normalize to [0, 1]
+      const amplifiedIntensity = capWithBifurcationAwareness(
+        normalizedBase * varianceAmp / 5.0,
+        1.0,
+        {
+          location: 'ClimateImpactCascade.calculateClimateImpacts',
+          valueName: 'heatWaveIntensity',
+          month: state.currentMonth
+        }
+      );
+
       impacts.push({
         type: 'heat_wave',
-        intensity: Math.min(1.0, intensity / 0.3), // Normalize to [0, 1]
+        intensity: amplifiedIntensity,
         lagMonths: 0,  // Immediate crop impact
         affectedRegions: this.getHeatVulnerableRegions(state),
         month: state.currentMonth
@@ -138,16 +184,28 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
     );
 
     if (climateStability < 0.6) {
-      const intensity = assertFinite(1.0 - climateStability, {
+      const baseIntensity = assertFinite(1.0 - climateStability, {
         location: 'ClimateImpactCascade.droughtIntensity',
-        valueName: 'intensity',
+        valueName: 'baseIntensity',
         month: state.currentMonth,
         additionalInfo: { climateStability }
       });
 
+      // Apply bifurcation variance amplification to drought intensity
+      const normalizedBase = baseIntensity / 0.4; // Normalize to [0, 1]
+      const amplifiedIntensity = capWithBifurcationAwareness(
+        normalizedBase * varianceAmp / 5.0,
+        1.0,
+        {
+          location: 'ClimateImpactCascade.calculateClimateImpacts',
+          valueName: 'droughtIntensity',
+          month: state.currentMonth
+        }
+      );
+
       impacts.push({
         type: 'drought',
-        intensity: Math.min(1.0, intensity / 0.4), // Normalize to [0, 1]
+        intensity: amplifiedIntensity,
         lagMonths: Math.floor(rng() * 2) + 1,  // 1-3 month lag
         affectedRegions: this.getDroughtVulnerableRegions(state),
         month: state.currentMonth
@@ -169,16 +227,28 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
 
     // Biosphere integrity below 1.0 (boundary threshold) triggers ecosystem impacts
     if (biosphereIntegrity > 1.0) {  // currentValue > 1.0 means breach (worse than boundary)
-      const intensity = assertFinite(biosphereIntegrity - 1.0, {
+      const baseIntensity = assertFinite(biosphereIntegrity - 1.0, {
         location: 'ClimateImpactCascade.ecosystemCollapseIntensity',
-        valueName: 'intensity',
+        valueName: 'baseIntensity',
         month: state.currentMonth,
         additionalInfo: { biosphereIntegrity }
       });
 
+      // Apply bifurcation variance amplification to ecosystem collapse intensity
+      const normalizedBase = baseIntensity / 0.5; // Normalize to [0, 1]
+      const amplifiedIntensity = capWithBifurcationAwareness(
+        normalizedBase * varianceAmp / 5.0,
+        1.0,
+        {
+          location: 'ClimateImpactCascade.calculateClimateImpacts',
+          valueName: 'ecosystemCollapseIntensity',
+          month: state.currentMonth
+        }
+      );
+
       impacts.push({
         type: 'ecosystem_collapse',
-        intensity: Math.min(1.0, intensity / 0.5), // Normalize to [0, 1]
+        intensity: amplifiedIntensity,
         lagMonths: Math.floor(rng() * 6) + 6,  // 6-12 month lag
         affectedRegions: ['GLOBAL'],
         month: state.currentMonth

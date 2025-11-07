@@ -8,6 +8,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext } from
 // Batch 4: Agent/Infrastructure phases (0.x, 4.x-6.x - high risk)
 export { LLMWeightUpdatePhase } from './LLMWeightUpdatePhase';  // Oct 21, 2025: LLM policy optimization
 export { AILifecyclePhase } from './AILifecyclePhase';
+export { BifurcationLogicPhase } from './BifurcationLogicPhase';  // Nov 6, 2025: Monte Carlo Issue #5 - Outcome variance
 export { CyberSecurityPhase } from './CyberSecurityPhase';
 export { SleeperWakePhase } from './SleeperWakePhase';
 export { SocialInfluenceUpdatePhase } from './SocialInfluenceUpdatePhase';  // Oct 21, 2025: Social influence accumulation

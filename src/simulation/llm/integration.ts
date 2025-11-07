@@ -10,6 +10,7 @@ import type { RNGFunction } from '../../types/config';
 import type { LLMWeightUpdate, WeightUpdateHistory } from '../../types/llm';
 import { shouldUpdateWeights } from './config';
 import { updateWeightsWithLLM, getFallbackWeights } from './client';
+import { assertDefined } from '../utils/assertions';
 
 /**
  * Check and update AI agent weights if needed
@@ -79,8 +80,20 @@ export async function checkAndUpdateAgentWeights(
   };
 
   const previousState = {
-    capability: agent.previousCapability ?? agent.capability,
-    alignment: agent.previousAlignment ?? agent.trueAlignment
+    // FIXED: Use assertDefined to ensure previousCapability/previousAlignment exist
+    // On first month, these should be initialized to current values (not missing)
+    capability: assertDefined(agent.previousCapability ?? agent.capability, {
+      location: 'checkAndUpdateAgentWeights',
+      valueName: 'previousCapability',
+      month: currentMonth,
+      expectedSource: 'agent initialization or previous month update'
+    }),
+    alignment: assertDefined(agent.previousAlignment ?? agent.trueAlignment, {
+      location: 'checkAndUpdateAgentWeights',
+      valueName: 'previousAlignment',
+      month: currentMonth,
+      expectedSource: 'agent initialization or previous month update'
+    })
   };
 
   const check = shouldUpdateWeights(
@@ -226,7 +239,9 @@ export function getActionWeights(agent: AIAgent): Record<string, number> {
   if (agent.llmWeights) {
     // Convert UtilityWeights to plain object
     const weights: Record<string, number> = {};
-    for (const [action, weight] of Object.entries(agent.llmWeights)) {
+    // FIX: Sort entries for deterministic iteration order
+    const sortedEntries = Object.entries(agent.llmWeights).sort((a, b) => a[0].localeCompare(b[0]));
+    for (const [action, weight] of sortedEntries) {
       if (weight !== undefined && weight > 0) {
         weights[action] = weight;
       }
@@ -237,7 +252,9 @@ export function getActionWeights(agent: AIAgent): Record<string, number> {
   // Fallback to hardcoded weights
   const fallback = getFallbackWeights(agent);
   const weights: Record<string, number> = {};
-  for (const [action, weight] of Object.entries(fallback.weights)) {
+  // FIX: Sort entries for deterministic iteration order
+  const sortedEntries = Object.entries(fallback.weights).sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [action, weight] of sortedEntries) {
     if (weight !== undefined && weight > 0) {
       weights[action] = weight;
     }

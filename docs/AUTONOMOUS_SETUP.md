@@ -66,9 +66,25 @@ cd ~/ai_game_theory_simulation
 ## How It Works
 
 ### Schedule
-- Runs hourly automatically (`:00` past each hour)
-- Can be changed in `/etc/systemd/system/claude-worker.timer`
-- Edit `OnCalendar=hourly` to adjust frequency
+
+**Implementation Worker** (`autonomous-worker.sh`):
+- Runs hourly at `:00` past each hour
+- Handles roadmap implementation tasks
+- 45-minute timeout for complex features
+
+**Research Worker** (`researcher-worker.sh`):
+- Runs hourly at `:30` past each hour
+- Monitors Matrix `research` channel for questions from Sylvia/Cynthia
+- Updates research files with current 2024-2025 sources
+- 30-minute timeout (less intensive than implementation)
+- Runs research age audit to prioritize CRITICAL/HIGH items
+
+**Health Watcher** (`autonomous-worker-watcher.sh`):
+- Runs at `:15` to monitor all autonomous systems
+- Auto-remediates issues including researcher-worker health
+
+**Merge Orchestrator** (`merge-orchestrator.sh`):
+- Runs at `:45` to process branches from both workers
 
 ### Task Selection Priority
 
@@ -88,10 +104,15 @@ Every autonomous run begins by posting research requests to the research channel
 
 ### Safety Features
 
-- **45-minute timeout per session** with post-timeout cleanup
+- **45-minute timeout per session** (increased from 25min as of Nov 5, 2025)
   - Main session: 45 minutes (2700s) for task execution
+  - Worker now runs hourly (not every 30min) so we have more time
+  - Reduces incomplete work due to timeout
+- **Post-timeout cleanup workflow** (new as of Nov 5, 2025)
   - Cleanup session: 5 minutes (300s) to commit partial work if timeout occurs
-  - Prevents work loss when complex tasks exceed timeout
+  - After timeout, spawns a 5-minute Claude session to review and commit partial work
+  - Prevents loss of valuable progress when tasks exceed timeout
+  - Cleanup session reviews changes and commits with "WIP" prefix if needed
 - Logs all actions to `logs/autonomous/`
 - **Complete audit trail:** All logs preserved in git history forever (no cleanup)
 - Git operations with full audit trail
@@ -113,7 +134,7 @@ Every autonomous run begins by posting research requests to the research channel
 - **GitHub issue alerts:** Automatic issue creation when Claude execution fails
   - Timeout detection (exit 124) creates issue with `timeout` label
   - Any non-zero exit code creates issue with `failure` label
-  - Issues include timestamp, duration, branch, exit code, and log path
+  - Issues include timestamp, duration, branch, exit code, log path, and cleanup status
   - Graceful fallback if `gh` CLI unavailable
   - No silent failures - every problem creates actionable GitHub issue
   - PR includes run metrics, timing, and commit history
@@ -122,7 +143,7 @@ Every autonomous run begins by posting research requests to the research channel
 
 ### Log Retention Policy
 
-**All autonomous worker logs are preserved in git history forever.**
+**All autonomous worker logs are backed up to Google Cloud Storage.**
 
 **Benefits:**
 - Complete audit trail of all autonomous work
@@ -130,27 +151,35 @@ Every autonomous run begins by posting research requests to the research channel
 - Historical tracking of roadmap progress
 - Accountability and transparency
 - Reproducibility of past autonomous runs
+- No git merge conflicts from log files
 
 **Storage:**
-- Logs live in `logs/autonomous/` directory
+- Logs live in `logs/autonomous/` directory locally
 - Each run creates a timestamped log file (e.g., `worker_20251030_210000.log`)
-- Worker commits log file to feature branch before merging
-- All logs tracked in git history (`.gitignore` allows `logs/autonomous/*.log`)
+- **All logs backed up to GCS:** `gs://multiverseschool-logs/archives/`
+- **Logs NOT committed to git** (prevents merge conflicts)
+- Local logs compressed after 7 days, deleted after 30 days (GCS backup retained)
 
 **Access historical logs:**
 ```bash
-# View all autonomous logs in current branch
+# View current local logs
 ls -lt logs/autonomous/
 
-# Search for specific autonomous runs
-git log --all --source --grep="autonomous"
+# Access GCS backups (requires gsutil)
+gsutil ls gs://multiverseschool-logs/archives/
 
-# Extract log from specific commit
-git show <commit>:logs/autonomous/worker_<timestamp>.log
+# Download specific backup
+gsutil -m rsync -r gs://multiverseschool-logs/archives/20251106_224900/ ./logs/restore/
 
-# View log history for a specific file
-git log --follow -- logs/autonomous/worker_20251030_210000.log
+# Run cleanup/backup manually
+./scripts/cleanup-and-backup.sh
 ```
+
+**GCS Backup Details:**
+- Automatic upload via `scripts/cleanup-and-backup.sh`
+- Timestamped archives preserve all logs
+- Local compression (>7 days) and deletion (>30 days) after GCS backup
+- All logs accessible indefinitely in cloud storage
 
 ### Monitoring
 
@@ -192,8 +221,11 @@ The autonomous worker system now includes automated health monitoring with self-
 # :00 - Autonomous worker runs (main implementation work)
 0 * * * * cd ~/ai_game_theory_simulation && ./autonomous-worker.sh >> logs/cron_worker.log 2>&1
 
-# :15 - Health check & auto-fix (monitors previous hour's worker)
+# :15 - Health check & auto-fix (monitors all autonomous systems)
 15 * * * * cd ~/ai_game_theory_simulation && ./scripts/autonomous-worker-watcher.sh >> logs/cron_watcher.log 2>&1
+
+# :30 - Research worker (research updates, paper verification)
+30 * * * * cd ~/ai_game_theory_simulation && ./researcher-worker.sh >> logs/cron_researcher.log 2>&1
 
 # :45 - Merge orchestrator (processes pending branches)
 45 * * * * cd ~/ai_game_theory_simulation && ./scripts/merge-orchestrator.sh >> logs/cron_merge.log 2>&1
@@ -202,8 +234,9 @@ The autonomous worker system now includes automated health monitoring with self-
 **What it monitors:**
 - Worker execution frequency (detects stuck/stopped workers)
 - Error patterns in recent logs
-- Timeout detection (45-minute limit with 5-minute cleanup)
+- Timeout detection (45-minute limit, with 5-minute cleanup)
 - Worker branch accumulation
+- **Researcher worker health** (script existence, execution, cron job status)
 - Merge orchestrator health
 - Cron service status (VM only)
 
@@ -248,8 +281,8 @@ When the worker completes a task and pushes a feature branch, it automatically c
 
 **Run:** 20251030_210000
 **Branch:** `autonomous/20251030_210000`
-**Duration:** 25m 12s
-**Claude Time:** 22m 45s
+**Duration:** 42m 15s
+**Claude Time:** 39m 30s
 
 ### Changes
 - **Files Changed:** 8

@@ -1,0 +1,45 @@
+
+=== Merge Orchestrator Started ===
+[19:30:01] Timestamp: Thu Nov  6 19:30:01 UTC 2025
+[19:30:01] Dry run: false
+[19:30:01] Max branches: 10
+[19:30:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[19:30:03] Found 93 branches to process
+
+=== Branch 1/93: auto/worker-20251102_043015 ===
+[19:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251106_193001
+Switched to a new branch 'merge/auto/worker-20251102_043015_20251106_193001'
+M	logs/autonomous/researcher/cron_20251106.log
+M	logs/autonomous/researcher/status_current.txt
+M	logs/autonomous/status_current.txt
+M	logs/autonomous/worker_20251106_190001.log
+M	src/simulation/config/centralConfig.ts
+M	src/simulation/engine/phases/ClimateImpactCascadePhase.ts
+M	src/simulation/engine/phases/MortalityStabilizersPhase.ts
+M	src/simulation/utils/assertions.ts
+Branch 'merge/auto/worker-20251102_043015_20251106_193001' set up to track remote branch 'main' from 'origin'.
+[19:30:03] 🔀 Attempting merge from origin/auto/worker-20251102_043015
+Already up to date.
+[19:30:03] ✅ Merge successful (no conflicts)
+[19:30:03] 🚦 Running quality gates...
+[19:30:03]   Gate 1/2: TypeScript compilation
+[19:30:14]     ✅ TypeScript passed
+[19:30:14]   Gate 2/2: Test suite
+[19:30:14]     (Running backend tests only on VM)
+npm error Missing script: "test:backend"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /home/lizthedeveloper_gmail_com/.npm/_logs/2025-11-06T19_30_14_711Z-debug-0.log
+[19:30:14]     ❌ Tests failed
+[19:30:14] 🔧 AUTO-REMEDIATION: Spawning Claude Code to fix test failures...
+M	docs/underdocumented.json
+M	logs/autonomous/researcher/cron_20251106.log
+M	logs/autonomous/researcher/researcher_20251106_193001.log
+M	logs/merge_orchestrator/merge_20251106_193001.log
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)

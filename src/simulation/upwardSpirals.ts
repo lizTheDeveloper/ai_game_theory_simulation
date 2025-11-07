@@ -22,6 +22,7 @@ import type { GameState } from '../types/game';
 import { getTrustInAI, calculateComprehensiveTrustInAI } from './socialCohesion';
 import { TRUST_THRESHOLD_ACCEPTANCE, TRUST_THRESHOLD_EMBRACE } from './trustThresholds';
 import { getUnlockedTechCount, getDeployedTechCount } from './techTree/helpers';
+import { assertStateProperty } from './utils/assertions';
 
 export interface UpwardSpiral {
   active: boolean;           // Is this spiral currently active?
@@ -248,7 +249,15 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
   // Benefits require organizational change, not just AI deployment
   // Research: MDPI (2024) - Only 21% redesigned workflows, those who did saw tangible benefits
   // FIX #4A (Oct 19): Updated to 25% threshold (critical mass from Rogers diffusion theory)
-  const workflowAdaptation = state.society.workflowAdaptation || 0.21;  // Default 21% baseline
+  const workflowAdaptation = assertStateProperty(
+    state.society,
+    'workflowAdaptation',
+    {
+      location: 'updateResearchProductivitySpiral',
+      month,
+      expectedSource: 'initialization.ts:society'
+    }
+  );
   const workflowAdapted = workflowAdaptation >= 0.25;  // 25% critical mass threshold (NOT arbitrary 40%)
 
   const wasActive = spiral.active;

@@ -33,6 +33,12 @@ import {
   assertBillionsToMillions,
   billionsToMillions,
 } from '@/simulation/utils/populationUnits';
+import {
+  assertFinite,
+  assertPopulationMillion,
+  assertMortalityRate,
+  assertInRange,
+} from '@/simulation/utils/assertions';
 
 /**
  * Default demographic segments (research-backed)
@@ -187,11 +193,16 @@ export function addMortalityRisk(
   // Add risk to accumulator
   pop.mortalityRisks.push(risk);
 
-  // Optional: Log high-risk events
-  if (risk.baseRisk > 0.01) {
-    console.log(
-      `  ⚠️ High mortality risk added: ${(risk.baseRisk * 100).toFixed(2)}% base (${risk.proximate} from ${risk.root})`
-    );
+  // DIAGNOSTIC LOGGING (Nov 6, 2025 - Week 1 CRITICAL Phase 2)
+  // Track mortality risk contributions to identify excessive base mortality sources
+  // Target: Identify why base mortality = 5% monthly (hits Holodomor cap despite stabilizers)
+  if (risk.baseRisk > 0.001) {  // 0.1% threshold to reduce noise
+    const cumulativeRisk = pop.mortalityRisks.reduce((sum, r) => sum + r.baseRisk, 0);
+    console.log(`💀 MORTALITY RISK: ${risk.description || `${risk.proximate} from ${risk.root}`}`);
+    console.log(`  Base risk added: ${risk.baseRisk.toFixed(4)} (${(risk.baseRisk * 100).toFixed(2)}%)`);
+    console.log(`  Source: ${risk.proximate} (root: ${risk.root})`);
+    console.log(`  Month: ${risk.month}`);
+    console.log(`  Cumulative risk this month: ${cumulativeRisk.toFixed(4)} (${(cumulativeRisk * 100).toFixed(2)}%)`);
   }
 }
 
@@ -241,6 +252,59 @@ export function resolveMortality(
         },
       },
     };
+  }
+
+  // DIAGNOSTIC LOGGING (Nov 6, 2025 - Week 1 CRITICAL Phase 2)
+  // Summarize mortality risk sources BEFORE resolution
+  // This shows what's driving base mortality (target: identify 5% monthly sources)
+  const totalBaseRisk = risks.reduce((sum, r) => sum + r.baseRisk, 0);
+  const risksBySource = new Map<string, { risk: number; count: number }>();
+  const risksByProximate = new Map<string, number>();
+  const risksByRoot = new Map<string, number>();
+
+  for (const risk of risks) {
+    // Group by source (proximate + root)
+    const sourceKey = `${risk.proximate} (${risk.root})`;
+    const existing = risksBySource.get(sourceKey) || { risk: 0, count: 0 };
+    risksBySource.set(sourceKey, { risk: existing.risk + risk.baseRisk, count: existing.count + 1 });
+
+    // Group by proximate cause
+    risksByProximate.set(risk.proximate, (risksByProximate.get(risk.proximate) || 0) + risk.baseRisk);
+
+    // Group by root cause
+    risksByRoot.set(risk.root, (risksByRoot.get(risk.root) || 0) + risk.baseRisk);
+  }
+
+  // Log summary (only if total risk > 0.1% to reduce noise)
+  if (totalBaseRisk > 0.001) {
+    console.log(`\n💀💀💀 MORTALITY RISK SUMMARY (Month ${state.currentMonth}) 💀💀💀`);
+    console.log(`  Total base risk: ${totalBaseRisk.toFixed(4)} (${(totalBaseRisk * 100).toFixed(2)}%)`);
+    console.log(`  Risk events: ${risks.length}`);
+    console.log(`\n  📊 By Proximate Cause:`);
+    Array.from(risksByProximate.entries())
+      .sort((a, b) => b[1] - a[1])
+      .forEach(([cause, risk]) => {
+        const pct = (risk / totalBaseRisk) * 100;
+        console.log(`    ${cause}: ${risk.toFixed(4)} (${pct.toFixed(1)}% of total)`);
+      });
+
+    console.log(`\n  🔍 By Root Cause:`);
+    Array.from(risksByRoot.entries())
+      .sort((a, b) => b[1] - a[1])
+      .forEach(([cause, risk]) => {
+        const pct = (risk / totalBaseRisk) * 100;
+        console.log(`    ${cause}: ${risk.toFixed(4)} (${pct.toFixed(1)}% of total)`);
+      });
+
+    console.log(`\n  🎯 Top 5 Sources (proximate + root):`);
+    Array.from(risksBySource.entries())
+      .sort((a, b) => b[1].risk - a[1].risk)
+      .slice(0, 5)
+      .forEach(([source, data]) => {
+        const pct = (data.risk / totalBaseRisk) * 100;
+        console.log(`    ${source}: ${data.risk.toFixed(4)} (${pct.toFixed(1)}%, ${data.count} events)`);
+      });
+    console.log(``);
   }
 
   // Separate instant vs gradual risks
@@ -305,9 +369,18 @@ export function resolveMortality(
 
       if (totalPop > 0) {
         const avgReduction = weightedReduction / totalPop;
+
+        // DIAGNOSTIC LOGGING: Show stabilizer application
+        const deathProbBefore = deathProb;
+
         // Apply reduction: deathProb × (1 - reduction)
         // Example: 50% death prob, 40% reduction → 50% × 0.6 = 30% final
         deathProb *= (1 - avgReduction);
+
+        // DIAGNOSTIC: Log stabilizer effect for this demographic
+        if (state.currentMonth % 10 === 0 || deathProbBefore > 0.01) {
+          console.log(`    🛡️ Stabilizers applied to ${demo.name}: ${(deathProbBefore * 100).toFixed(2)}% → ${(deathProb * 100).toFixed(2)}% (${(avgReduction * 100).toFixed(1)}% reduction)`);
+        }
       }
     }
 
@@ -361,35 +434,45 @@ export function resolveMortality(
       cappedByInstant = true;
     }
 
-    // FINAL ASSERTION: finalDeathProb must NEVER exceed 1.0 (100%)
-    // This is a physical constraint - you cannot have >100% mortality
-    if (finalDeathProb > 1.0) {
-      throw new Error(
-        `❌ BLOCKER-1: finalDeathProb=${(finalDeathProb * 100).toFixed(1)}% exceeds 100%! ` +
-        `Physical impossibility. demographic=${demo.name}, month=${state.currentMonth}, ` +
-        `deathProb=${deathProb.toFixed(4)}, cappedByMonthly=${cappedByMonthly}, cappedByInstant=${cappedByInstant}`
-      );
-    }
+    // WEEK 3: Validate mortality rate with assertMortalityRate
+    // (Replaces ad-hoc >1.0 check with proper assertion)
+    assertMortalityRate(finalDeathProb, {
+      location: 'resolveMortality.demographicLoop',
+      valueName: 'finalDeathProb',
+      month: state.currentMonth,
+      population: pop.population,
+    });
 
     // Calculate deaths for this segment
     // FIX (Oct 29, 2025): Use type-safe population units (billions)
     // pop.population is in BILLIONS, segmentPopulation is also BILLIONS
     const segmentPopulationBillions: Billions = toBillions(pop.population * demo.fraction);
 
-    // FIX (Oct 28, 2025): Add NaN detection for segmentDeaths calculation
-    if (isNaN(segmentPopulationBillions)) {
-      throw new Error(`segmentPopulation is NaN: pop.population=${pop.population}, demo.fraction=${demo.fraction}, demo=${demo.name}`);
-    }
-    if (isNaN(finalDeathProb)) {
-      throw new Error(`finalDeathProb is NaN for demographic ${demo.name}. deathProb=${deathProb}, riskCount=${risks.length}`);
-    }
+    // WEEK 3: Replace defensive NaN checks with assertions
+    assertFinite(segmentPopulationBillions, {
+      location: 'resolveMortality.segmentPopulation',
+      valueName: 'segmentPopulationBillions',
+      month: state.currentMonth,
+      additionalInfo: {
+        totalPopulation: pop.population,
+        demographicFraction: demo.fraction,
+        demographic: demo.name,
+      }
+    });
 
     // segmentDeaths is also in BILLIONS (deaths calculated from billions of people)
     const segmentDeathsBillions: Billions = toBillions(segmentPopulationBillions * finalDeathProb);
 
-    if (isNaN(segmentDeathsBillions)) {
-      throw new Error(`segmentDeaths is NaN: segmentPopulation=${segmentPopulationBillions}, finalDeathProb=${finalDeathProb}, demo=${demo.name}`);
-    }
+    assertFinite(segmentDeathsBillions, {
+      location: 'resolveMortality.segmentDeaths',
+      valueName: 'segmentDeathsBillions',
+      month: state.currentMonth,
+      additionalInfo: {
+        segmentPopulation: segmentPopulationBillions,
+        mortality: finalDeathProb,
+        demographic: demo.name,
+      }
+    });
 
     // Multi-causal attribution (distribute deaths across causes by risk weight)
     const totalRisk = risks.reduce((sum, r) => sum + r.baseRisk * demo.vulnerability[r.type], 0);
@@ -417,13 +500,16 @@ export function resolveMortality(
   // FIX (Oct 28, 2025): Apply deaths to regions, then HumanPopulationPhase aggregates → global
   // This prevents aggregation from overwriting our mortality
 
-  // DEBUG: Validate totalDeaths
-  if (isNaN(totalDeaths) || !isFinite(totalDeaths)) {
-    console.error(`❌ totalDeaths is invalid: ${totalDeaths}`);
-    console.error(`   Segments: ${deathSegments.length}`);
-    console.error(`   Segment deaths: ${deathSegments.map(s => s.count).join(', ')}`);
-    throw new Error(`totalDeaths is NaN or Infinity: ${totalDeaths}`);
-  }
+  // WEEK 3: Replace defensive NaN check with proper assertion
+  assertFinite(totalDeaths, {
+    location: 'resolveMortality.totalDeaths',
+    valueName: 'totalDeaths',
+    month: state.currentMonth,
+    additionalInfo: {
+      segmentCount: deathSegments.length,
+      segmentDeaths: deathSegments.map(s => s.count),
+    }
+  });
 
   // Apply deaths proportionally to each region
   if (pop.regionalPopulations && pop.regionalPopulations.length > 0) {
@@ -463,6 +549,26 @@ export function resolveMortality(
     valueName: 'totalDeathsGlobal',
     month: state.currentMonth,
   });
+
+  // WEEK 3: Validate death counts before state mutation
+  assertPopulationMillion(totalDeathsMillionsGlobal, {
+    location: 'resolveMortality',
+    valueName: 'totalDeathsMillionsGlobal',
+    month: state.currentMonth,
+  });
+
+  // WEEK 3: Validate cumulative deaths won't overflow
+  const newCumulativeDeaths = pop.cumulativeCrisisDeaths + totalDeathsMillionsGlobal;
+  assertFinite(newCumulativeDeaths, {
+    location: 'resolveMortality',
+    valueName: 'cumulativeCrisisDeaths',
+    month: state.currentMonth,
+    additionalInfo: {
+      previous: pop.cumulativeCrisisDeaths,
+      adding: totalDeathsMillionsGlobal,
+    }
+  });
+
   pop.cumulativeCrisisDeaths += totalDeathsMillionsGlobal;
   pop.monthlyExcessDeaths = totalDeathsMillionsGlobal;
 
@@ -474,25 +580,69 @@ export function resolveMortality(
       const segmentDeathsMillions: Millions = billionsToMillions(segment.count as Billions);
       const attributedDeathsMillions = segmentDeathsMillions * cause.contributionFraction;
 
+      // WEEK 3: Validate attributed deaths before mutation
+      assertPopulationMillion(attributedDeathsMillions, {
+        location: 'resolveMortality.deathAttribution',
+        valueName: 'attributedDeathsMillions',
+        month: state.currentMonth,
+      });
+
       // Update proximate cause (stored in millions)
-      pop.deathsByCategory[cause.proximate] = (pop.deathsByCategory[cause.proximate] || 0) + attributedDeathsMillions;
+      const newProximateCategoryTotal = (pop.deathsByCategory[cause.proximate] || 0) + attributedDeathsMillions;
+      // deathsByCategory tracks GLOBAL cumulative deaths by cause - use 10B cap
+      assertInRange(newProximateCategoryTotal, 0, 10000, {
+        location: 'resolveMortality.deathsByCategory',
+        valueName: `deathsByCategory.${cause.proximate}`,
+        month: state.currentMonth,
+      });
+      pop.deathsByCategory[cause.proximate] = newProximateCategoryTotal;
 
       // FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch (730× error)
       // ROOT CAUSE: deathsByRootCause was stored in BILLIONS while deathsByCategory was in MILLIONS
       // SOLUTION: Both are now stored in MILLIONS (per types/population.ts line 74)
       // Update root cause (stored in millions)
-      pop.deathsByRootCause[cause.root] = (pop.deathsByRootCause[cause.root] || 0) + attributedDeathsMillions;
+      const newRootCauseTotal = (pop.deathsByRootCause[cause.root] || 0) + attributedDeathsMillions;
+      assertFinite(newRootCauseTotal, {
+        location: 'resolveMortality.deathsByRootCause',
+        valueName: `deathsByRootCause.${cause.root}`,
+        month: state.currentMonth,
+        additionalInfo: {
+          previous: pop.deathsByRootCause[cause.root] || 0,
+          adding: attributedDeathsMillions,
+        }
+      });
+      pop.deathsByRootCause[cause.root] = newRootCauseTotal;
 
       // Update confidence distribution (stored in millions)
-      pop.deathsByRootCause.confidenceDistribution[cause.confidence] =
-        (pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0) + attributedDeathsMillions;
+      const newConfidenceTotal = (pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0) + attributedDeathsMillions;
+      assertFinite(newConfidenceTotal, {
+        location: 'resolveMortality.confidenceDistribution',
+        valueName: `confidenceDistribution.${cause.confidence}`,
+        month: state.currentMonth,
+        additionalInfo: {
+          previous: pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0,
+          adding: attributedDeathsMillions,
+        }
+      });
+      pop.deathsByRootCause.confidenceDistribution[cause.confidence] = newConfidenceTotal;
     }
   }
 
   // Track compound attribution if multiple risks (stored in millions)
   if (risks.length > 1) {
     // FIX (Oct 29, 2025): Use the type-safe millions variable
-    pop.deathsByRootCause.compound = (pop.deathsByRootCause.compound || 0) + totalDeathsMillionsGlobal;
+    const newCompoundTotal = (pop.deathsByRootCause.compound || 0) + totalDeathsMillionsGlobal;
+    assertFinite(newCompoundTotal, {
+      location: 'resolveMortality.compoundDeaths',
+      valueName: 'deathsByRootCause.compound',
+      month: state.currentMonth,
+      additionalInfo: {
+        previous: pop.deathsByRootCause.compound || 0,
+        adding: totalDeathsMillionsGlobal,
+        riskCount: risks.length,
+      }
+    });
+    pop.deathsByRootCause.compound = newCompoundTotal;
   }
 
   // Calculate summary statistics

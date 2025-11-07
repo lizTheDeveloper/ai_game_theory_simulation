@@ -254,8 +254,11 @@ function selectDecisionMakerRole(rng: RNGFunction): DecisionMakerRole | null {
   const params = SOCIAL_INFLUENCE_PARAMS;
   const roll = rng();
 
+  // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
+  const sortedRoles = Object.entries(params.roleProbabilities).sort((a, b) => a[0].localeCompare(b[0]));
+
   let cumulative = 0;
-  for (const [role, probability] of Object.entries(params.roleProbabilities)) {
+  for (const [role, probability] of sortedRoles) {
     cumulative += probability;
     if (roll < cumulative) {
       return role as DecisionMakerRole;

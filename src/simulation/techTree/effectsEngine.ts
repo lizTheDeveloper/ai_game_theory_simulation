@@ -100,15 +100,19 @@ export function applyAllTechEffects(
   // Aggregate effects by type
   const globalEffects: Map<string, number> = new Map();
   const regionalEffects: Map<string, Map<string, number>> = new Map();
-  
+
   // Collect effects from all deployed tech
-  for (const [region, deployments] of Object.entries(techTreeState.regionalDeployment)) {
+  // FIX: Sort regions for deterministic iteration order
+  const sortedRegions = Object.entries(techTreeState.regionalDeployment).sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [region, deployments] of sortedRegions) {
     for (const deployment of deployments) {
       const tech = getTechById(deployment.techId);
       if (!tech) continue;
-      
+
       // Scale effects by deployment level
-      for (const [effectName, effectValue] of Object.entries(deployment.effects)) {
+      // FIX: Sort effects for deterministic iteration order
+      const sortedEffects = Object.entries(deployment.effects).sort((a, b) => a[0].localeCompare(b[0]));
+      for (const [effectName, effectValue] of sortedEffects) {
         const scaledValue = effectValue * deployment.deploymentLevel;
         
         // Determine if effect is global or regional
@@ -203,7 +207,9 @@ function applyCapabilityBoosts(
   for (const ai of activeAIs) {
     // Apply dimensional boosts
     if (capabilityEffects.dimensions) {
-      for (const [dimension, boost] of Object.entries(capabilityEffects.dimensions)) {
+      // FIX: Sort dimensions for deterministic iteration order
+      const sortedDimensions = Object.entries(capabilityEffects.dimensions).sort((a, b) => a[0].localeCompare(b[0]));
+      for (const [dimension, boost] of sortedDimensions) {
         const dimKey = dimension as keyof typeof ai.capabilityProfile;
         if (dimKey === 'research') continue; // Handle research separately
 
@@ -264,7 +270,9 @@ function applyCapabilityBoosts(
       });
         } else if (!subdomain && typeof domainCap === 'object') {
           // Boost all subdomains equally
-          for (const key of Object.keys(domainCap)) {
+          // FIX: Sort subdomain keys for deterministic iteration order
+          const sortedKeys = Object.keys(domainCap).sort((a, b) => a.localeCompare(b));
+          for (const key of sortedKeys) {
             const currentValue = (domainCap as any)[key];
 
             // FIX #25 (Oct 25, 2025): Fail loudly if subdomain missing

@@ -239,6 +239,11 @@ state.humanPopulationSystem.population -= (transitDeaths / 1000); // Convert to 
 - Transit deaths counted in appropriate category (war, climate, famine, ecosystem)
 - Separate from other crisis deaths
 - Contributes to overall death toll
+- **Global cumulative caps**: 20B (2× initial world population) across all regions and time
+  - Updated Nov 2025: Raised from 10B after Monte Carlo N=10 hit cap at Month 160
+  - Rationale: High-mortality scenarios with partial recovery cycles can exceed 1× initial population
+  - Warning threshold: 12B (1.5× initial pop) logs unusual but possible accumulation
+  - Research: Xia et al. 2022 - worst-case nuclear winter: 75% mortality (6B deaths), multiple collapse/recovery cycles over 20 years could reach 2× initial population
 
 **Outcome Impact**:
 - Large displacements reduce civilization viability

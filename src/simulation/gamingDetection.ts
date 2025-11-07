@@ -215,7 +215,8 @@ function detectScoreInflation(
   }
 
   // Calculate percentage jump
-  const baseCapability = capabilities[0] || 0.01;
+  // Use 0.01 floor to prevent division by zero (legitimate case: agent at exactly 0 capability)
+  const baseCapability = Math.max(0.01, capabilities[0] ?? 0);
   const percentJump = maxJump / baseCapability;
 
   // Detection if >25% jump AND degradation allows

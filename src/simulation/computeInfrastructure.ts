@@ -255,7 +255,7 @@ export function initializeAIComputeFields(ai: any, rng: () => number): void {
     ai.allocatedCompute = 0;
   }
   if (ai.computeEfficiency === undefined) {
-    ai.computeEfficiency = 0.9 + rng() * 0.3; // Random 0.9-1.2
+    ai.computeEfficiency = 0.9 + rng() * 0.3; // Deterministic 0.9-1.2 using seeded RNG
   }
   // organizationId will be set in Phase 2
 }

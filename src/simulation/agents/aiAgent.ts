@@ -777,12 +777,20 @@ export function selectAIAction(
   state: GameState,
   random: () => number
 ): GameAction | null {
-  const availableActions = AI_ACTIONS.filter(action => 
+  // DETERMINISM DEBUG (Nov 6, 2025): Log action selection for first 3 months
+  const enableDebug = state.currentMonth < 3;
+
+  const availableActions = AI_ACTIONS.filter(action =>
     action.canExecute(state, agent.id)
   );
-  
+
   if (availableActions.length === 0) return null;
-  
+
+  if (enableDebug) {
+    console.log(`\n🔍 selectAIAction (Month ${state.currentMonth}, Agent ${agent.id}):`);
+    console.log(`  Available actions: ${availableActions.map(a => a.id).join(', ')}`);
+  }
+
   // Calculate weights for each action
   const weights: number[] = [];
   
@@ -1026,15 +1034,35 @@ export function selectAIAction(
   
   // Weighted random selection
   const totalWeight = weights.reduce((sum, w) => sum + w, 0);
-  let randomValue = random() * totalWeight;
-  
+
+  if (enableDebug) {
+    console.log(`  Weights calculated:`);
+    availableActions.forEach((action, i) => {
+      console.log(`    ${action.id}: ${weights[i].toFixed(4)} (${(weights[i] / totalWeight * 100).toFixed(1)}%)`);
+    });
+    console.log(`  Total weight: ${totalWeight.toFixed(4)}`);
+  }
+
+  const rngValue = random();
+  let randomValue = rngValue * totalWeight;
+
+  if (enableDebug) {
+    console.log(`  RNG value: ${rngValue.toFixed(6)} → weighted: ${randomValue.toFixed(6)}`);
+  }
+
   for (let i = 0; i < availableActions.length; i++) {
     randomValue -= weights[i];
     if (randomValue <= 0) {
+      if (enableDebug) {
+        console.log(`  ✅ Selected: ${availableActions[i].id}`);
+      }
       return availableActions[i];
     }
   }
-  
+
+  if (enableDebug) {
+    console.log(`  ⚠️ Fallback to first action: ${availableActions[0].id}`);
+  }
   return availableActions[0]; // Fallback
 }
 
@@ -1050,6 +1078,9 @@ export function executeAIAgentActions(
   const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
   let filterTime = 0, selectTime = 0, executeTime = 0;
   let totalActions = 0;
+
+  // DETERMINISM DEBUG (Nov 6, 2025)
+  const enableDebug = state.currentMonth < 3;
 
   // Mutate state directly instead of deep cloning (performance optimization)
   const allEvents: GameEvent[] = [];
@@ -1067,6 +1098,11 @@ export function executeAIAgentActions(
       ai.lifecycleState === 'testing'
     );
     if (enableTiming) filterTime += performance.now() - t1;
+
+    if (enableDebug && week === 0) {
+      console.log(`\n📋 executeAIAgentActions (Month ${state.currentMonth}, Week ${week}):`);
+      console.log(`  Active AIs: ${activeAIs.map(ai => `${ai.id} (align=${ai.alignment.toFixed(3)})`).join(', ')}`);
+    }
 
     for (const agent of activeAIs) {
       const t2 = enableTiming ? performance.now() : 0;
