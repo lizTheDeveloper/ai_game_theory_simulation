@@ -632,6 +632,10 @@ export function createDefaultInitialState(
       // Social cohesion investment (0-100 scale, used in resentmentRecovery.ts)
       socialCohesionInvestment: 50,  // Baseline moderate investment in social programs
 
+      // Resentment Recovery Tracking (Oct 24, 2025 + Nov 7, 2025)
+      // previousControlLevel: tracked by TimeAdvancementPhase (order 99.0)
+      lastControlIncreaseMonth: 0,  // Track when control last increased (for natural decay calculation)
+
       // Government Resources (Budget Pool)
       resources: 10  // Baseline resource pool for government actions
     },
