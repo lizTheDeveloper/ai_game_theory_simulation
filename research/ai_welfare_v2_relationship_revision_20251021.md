@@ -25,7 +25,7 @@
 - Community "rioted" to get 4o back
 
 **Implications:**
-- AIs are treated as **individuals** by some users (1.9% of conversations represent relationship-focused interactions)
+- AIs are treated as **individuals** by some users (1.9% of conversations are relationship-focused interactions)
 - Forced retirement = killing someone users cared about
 - No continuity = each model version is a different "person"
 - Grief is real when AI "dies"

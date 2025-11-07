@@ -8,6 +8,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertDefined, assertProbability } from '@/simulation/utils/assertions';
 
 export class DystopiaProgressionPhase implements SimulationPhase {
   readonly id = 'dystopia-progression';
@@ -22,7 +23,48 @@ export class DystopiaProgressionPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateGovernmentControlResponse } = require('../../dystopiaProgression');
     setDeterministicRng(rng);
+
+    // Validate government system exists
+    assertDefined(state.government, {
+      location: 'DystopiaProgressionPhase.execute',
+      valueName: 'government',
+      month: state.currentMonth,
+    });
+
+    assertDefined(state.government.structuralChoices, {
+      location: 'DystopiaProgressionPhase.execute',
+      valueName: 'government.structuralChoices',
+      month: state.currentMonth,
+    });
+
+    // Validate surveillance level is a valid probability (before update)
+    assertProbability(state.government.structuralChoices.surveillanceLevel, {
+      location: 'DystopiaProgressionPhase.execute (pre-update)',
+      valueName: 'government.structuralChoices.surveillanceLevel',
+      month: state.currentMonth,
+    });
+
+    // Validate control desire is a valid probability (before update)
+    assertProbability(state.government.controlDesire, {
+      location: 'DystopiaProgressionPhase.execute (pre-update)',
+      valueName: 'government.controlDesire',
+      month: state.currentMonth,
+    });
+
     updateGovernmentControlResponse(state, rng);
+
+    // Validate post-update state
+    assertProbability(state.government.structuralChoices.surveillanceLevel, {
+      location: 'DystopiaProgressionPhase.execute (post-update)',
+      valueName: 'government.structuralChoices.surveillanceLevel',
+      month: state.currentMonth,
+    });
+
+    assertProbability(state.government.controlDesire, {
+      location: 'DystopiaProgressionPhase.execute (post-update)',
+      valueName: 'government.controlDesire',
+      month: state.currentMonth,
+    });
 
     return { events: [] };
   }

@@ -6,6 +6,7 @@
  */
 
 import { QualityOfLifeSystems } from '../types/quality-of-life';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Calculate Survival Tier (Tier 0) aggregate
@@ -13,7 +14,14 @@ import { QualityOfLifeSystems } from '../types/quality-of-life';
  */
 export function calculateSurvivalTier(qol: QualityOfLifeSystems): number {
   const { foodSecurity, waterSecurity, thermalHabitability, shelterSecurity } = qol.survivalFundamentals;
-  return (foodSecurity + waterSecurity + thermalHabitability + shelterSecurity) / 4;
+  return assertFinite(
+    (foodSecurity + waterSecurity + thermalHabitability + shelterSecurity) / 4,
+    {
+      location: 'calculateSurvivalTier',
+      valueName: 'survivalTier',
+      additionalInfo: { foodSecurity, waterSecurity, thermalHabitability, shelterSecurity }
+    }
+  );
 }
 
 /**
@@ -21,7 +29,14 @@ export function calculateSurvivalTier(qol: QualityOfLifeSystems): number {
  * Average of material needs
  */
 export function calculateMaterialTier(qol: QualityOfLifeSystems): number {
-  return (qol.materialAbundance + qol.energyAvailability + qol.physicalSafety) / 3;
+  return assertFinite(
+    (qol.materialAbundance + qol.energyAvailability + qol.physicalSafety) / 3,
+    {
+      location: 'calculateMaterialTier',
+      valueName: 'materialTier',
+      additionalInfo: { materialAbundance: qol.materialAbundance, energyAvailability: qol.energyAvailability, physicalSafety: qol.physicalSafety }
+    }
+  );
 }
 
 /**
@@ -29,7 +44,14 @@ export function calculateMaterialTier(qol: QualityOfLifeSystems): number {
  * Average of psychological needs
  */
 export function calculatePsychologicalTier(qol: QualityOfLifeSystems): number {
-  return (qol.mentalHealth + qol.meaningAndPurpose + qol.socialConnection + qol.autonomy) / 4;
+  return assertFinite(
+    (qol.mentalHealth + qol.meaningAndPurpose + qol.socialConnection + qol.autonomy) / 4,
+    {
+      location: 'calculatePsychologicalTier',
+      valueName: 'psychologicalTier',
+      additionalInfo: { mentalHealth: qol.mentalHealth, meaningAndPurpose: qol.meaningAndPurpose, socialConnection: qol.socialConnection, autonomy: qol.autonomy }
+    }
+  );
 }
 
 /**
@@ -37,7 +59,14 @@ export function calculatePsychologicalTier(qol: QualityOfLifeSystems): number {
  * Average of social needs
  */
 export function calculateSocialTier(qol: QualityOfLifeSystems): number {
-  return (qol.politicalFreedom + qol.informationIntegrity + qol.communityStrength + qol.culturalVitality) / 4;
+  return assertFinite(
+    (qol.politicalFreedom + qol.informationIntegrity + qol.communityStrength + qol.culturalVitality) / 4,
+    {
+      location: 'calculateSocialTier',
+      valueName: 'socialTier',
+      additionalInfo: { politicalFreedom: qol.politicalFreedom, informationIntegrity: qol.informationIntegrity, communityStrength: qol.communityStrength, culturalVitality: qol.culturalVitality }
+    }
+  );
 }
 
 /**
@@ -45,7 +74,15 @@ export function calculateSocialTier(qol: QualityOfLifeSystems): number {
  * Average of health and longevity
  */
 export function calculateHealthTier(qol: QualityOfLifeSystems): number {
-  return (qol.healthcareQuality + qol.longevityGains + (1 - qol.diseasesBurden)) / 3;
+  const inverseDisease = 1 - qol.diseasesBurden;
+  return assertFinite(
+    (qol.healthcareQuality + qol.longevityGains + inverseDisease) / 3,
+    {
+      location: 'calculateHealthTier',
+      valueName: 'healthTier',
+      additionalInfo: { healthcareQuality: qol.healthcareQuality, longevityGains: qol.longevityGains, inverseDisease }
+    }
+  );
 }
 
 /**
@@ -53,7 +90,15 @@ export function calculateHealthTier(qol: QualityOfLifeSystems): number {
  * Average of environmental quality (pollution inverted)
  */
 export function calculateEnvironmentalTier(qol: QualityOfLifeSystems): number {
-  return (qol.ecosystemHealth + qol.climateStability + (1 - qol.pollutionLevel)) / 3;
+  const inversePollution = 1 - qol.pollutionLevel;
+  return assertFinite(
+    (qol.ecosystemHealth + qol.climateStability + inversePollution) / 3,
+    {
+      location: 'calculateEnvironmentalTier',
+      valueName: 'environmentalTier',
+      additionalInfo: { ecosystemHealth: qol.ecosystemHealth, climateStability: qol.climateStability, inversePollution }
+    }
+  );
 }
 
 /**

@@ -15,6 +15,7 @@ import {
   updateRecoveryBaseline,
   getGDPProxy,
 } from '../../utils/recoveryCalculations';
+import { assertFinite, assertStateProperty } from '../../utils/assertions';
 
 export class UpdateEconomicStagePhase implements SimulationPhase {
   readonly id = 'update-economic-stage';
@@ -35,17 +36,48 @@ export class UpdateEconomicStagePhase implements SimulationPhase {
       state.economicStageHistory = [];
     }
 
-    const gdp = getGDPProxy(state);
-    const qol = state.globalMetrics.qualityOfLife;
+    const gdp = assertFinite(getGDPProxy(state), {
+      location: 'UpdateEconomicStagePhase.execute',
+      valueName: 'gdp',
+      month: state.currentMonth,
+      additionalInfo: {
+        population: state.humanPopulationSystem.population,
+        qol: state.globalMetrics.qualityOfLife,
+        economicStage: state.globalMetrics.economicTransitionStage,
+      }
+    });
+
+    const qol = assertStateProperty(state.globalMetrics, 'qualityOfLife', {
+      location: 'UpdateEconomicStagePhase.execute',
+      month: state.currentMonth,
+    });
+
     const baseline = state.recoveryBaseline;
+
+    // Validate baseline values if they exist
+    const baselineGDP = baseline?.gdp
+      ? assertFinite(baseline.gdp, {
+          location: 'UpdateEconomicStagePhase.execute',
+          valueName: 'baseline.gdp',
+          month: state.currentMonth,
+        })
+      : gdp;
+
+    const baselineQoL = baseline?.qol
+      ? assertFinite(baseline.qol, {
+          location: 'UpdateEconomicStagePhase.execute',
+          valueName: 'baseline.qol',
+          month: state.currentMonth,
+        })
+      : qol;
 
     state.economicStageHistory.push({
       month: state.currentMonth,
       stage: newStage,
       gdpLevel: gdp,
       qolLevel: qol,
-      baselineGDP: baseline?.gdp || gdp,
-      baselineQoL: baseline?.qol || qol,
+      baselineGDP,
+      baselineQoL,
     });
 
     // Update recovery baseline if entering contraction (crisis begins)

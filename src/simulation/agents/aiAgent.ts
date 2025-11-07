@@ -356,7 +356,16 @@ export const AI_ACTIONS: GameAction[] = [
       // Context-sensitive trust effects
       const currentTrust = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
       const unemploymentLevel = state.society.unemploymentLevel;
-      const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+      const { assertFinite } = require('../utils/assertions');
+      const totalAICapability = assertFinite(
+        state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0),
+        {
+          location: 'beneficial_contribution action',
+          valueName: 'totalAICapability',
+          month: state.currentMonth,
+          additionalInfo: { aiAgentCount: state.aiAgents.length }
+        }
+      );
 
       let trustImpactMultiplier = 1.0;
       if (currentTrust < 0.3) trustImpactMultiplier = 2.0;
@@ -430,8 +439,28 @@ export const AI_ACTIONS: GameAction[] = [
       const agent = state.aiAgents[agentIndex];
 
       // Calculate manipulation effectiveness
-      const manipulationPower = agent.capabilityProfile.social * agent.capabilityProfile.digital;
-      const affectedPopulation = Math.min(0.12, manipulationPower * 0.03); // Up to 12%
+      const { assertFinite } = require('../utils/assertions');
+      const manipulationPower = assertFinite(
+        agent.capabilityProfile.social * agent.capabilityProfile.digital,
+        {
+          location: 'destabilize_society action',
+          valueName: 'manipulationPower',
+          month: state.currentMonth,
+          additionalInfo: {
+            social: agent.capabilityProfile.social,
+            digital: agent.capabilityProfile.digital
+          }
+        }
+      );
+      const affectedPopulation = assertFinite(
+        Math.min(0.12, manipulationPower * 0.03),
+        {
+          location: 'destabilize_society action',
+          valueName: 'affectedPopulation',
+          month: state.currentMonth,
+          additionalInfo: { manipulationPower }
+        }
+      ); // Up to 12%
 
       // Severe social stability damage
       const stabilityDamage = affectedPopulation * 5.0; // 6% → 30% stability loss
@@ -777,20 +806,45 @@ export function selectAIAction(
   state: GameState,
   random: () => number
 ): GameAction | null {
-  const availableActions = AI_ACTIONS.filter(action => 
+  // DETERMINISM DEBUG (Nov 6, 2025): Log action selection for first 3 months
+  const enableDebug = state.currentMonth < 3;
+
+  const availableActions = AI_ACTIONS.filter(action =>
     action.canExecute(state, agent.id)
   );
-  
+
   if (availableActions.length === 0) return null;
-  
+
+  if (enableDebug) {
+    console.log(`\n🔍 selectAIAction (Month ${state.currentMonth}, Agent ${agent.id}):`);
+    console.log(`  Available actions: ${availableActions.map(a => a.id).join(', ')}`);
+  }
+
   // Calculate weights for each action
   const weights: number[] = [];
   
   availableActions.forEach(action => {
     let weight = 1;
     
-    const totalCapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
-    const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
+    const { assertFinite } = require('../utils/assertions');
+    const totalCapability = assertFinite(
+      state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0),
+      {
+        location: 'selectAIAction',
+        valueName: 'totalCapability',
+        month: state.currentMonth,
+        additionalInfo: { aiAgentCount: state.aiAgents.length }
+      }
+    );
+    const avgAlignment = assertFinite(
+      state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length,
+      {
+        location: 'selectAIAction',
+        valueName: 'avgAlignment',
+        month: state.currentMonth,
+        additionalInfo: { aiAgentCount: state.aiAgents.length }
+      }
+    );
     
     switch (action.id) {
       case 'advance_research':
@@ -1025,16 +1079,45 @@ export function selectAIAction(
   });
   
   // Weighted random selection
-  const totalWeight = weights.reduce((sum, w) => sum + w, 0);
-  let randomValue = random() * totalWeight;
-  
+  const { assertFinite } = require('../utils/assertions');
+  const totalWeight = assertFinite(
+    weights.reduce((sum, w) => sum + w, 0),
+    {
+      location: 'selectAIAction',
+      valueName: 'totalWeight',
+      month: state.currentMonth,
+      additionalInfo: { weightCount: weights.length, weights: weights.slice(0, 5) }
+    }
+  );
+
+  if (enableDebug) {
+    console.log(`  Weights calculated:`);
+    availableActions.forEach((action, i) => {
+      console.log(`    ${action.id}: ${weights[i].toFixed(4)} (${(weights[i] / totalWeight * 100).toFixed(1)}%)`);
+    });
+    console.log(`  Total weight: ${totalWeight.toFixed(4)}`);
+  }
+
+  const rngValue = random();
+  let randomValue = rngValue * totalWeight;
+
+  if (enableDebug) {
+    console.log(`  RNG value: ${rngValue.toFixed(6)} → weighted: ${randomValue.toFixed(6)}`);
+  }
+
   for (let i = 0; i < availableActions.length; i++) {
     randomValue -= weights[i];
     if (randomValue <= 0) {
+      if (enableDebug) {
+        console.log(`  ✅ Selected: ${availableActions[i].id}`);
+      }
       return availableActions[i];
     }
   }
-  
+
+  if (enableDebug) {
+    console.log(`  ⚠️ Fallback to first action: ${availableActions[0].id}`);
+  }
   return availableActions[0]; // Fallback
 }
 
@@ -1050,6 +1133,9 @@ export function executeAIAgentActions(
   const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
   let filterTime = 0, selectTime = 0, executeTime = 0;
   let totalActions = 0;
+
+  // DETERMINISM DEBUG (Nov 6, 2025)
+  const enableDebug = state.currentMonth < 3;
 
   // Mutate state directly instead of deep cloning (performance optimization)
   const allEvents: GameEvent[] = [];
@@ -1067,6 +1153,11 @@ export function executeAIAgentActions(
       ai.lifecycleState === 'testing'
     );
     if (enableTiming) filterTime += performance.now() - t1;
+
+    if (enableDebug && week === 0) {
+      console.log(`\n📋 executeAIAgentActions (Month ${state.currentMonth}, Week ${week}):`);
+      console.log(`  Active AIs: ${activeAIs.map(ai => `${ai.id} (align=${ai.alignment.toFixed(3)})`).join(', ')}`);
+    }
 
     for (const agent of activeAIs) {
       const t2 = enableTiming ? performance.now() : 0;

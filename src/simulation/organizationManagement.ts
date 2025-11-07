@@ -232,8 +232,11 @@ export function completeProject(
     
     // Determine alignment based on org type and priorities
     // FIX #23 (Oct 22, 2025): Use deterministic RNG from state for reproducibility
+    // DETERMINISM FIX (Nov 6, 2025): Replace org.id.length with hashString(org.id)
+    // Issue #11: org.id.length is non-deterministic (varies across runs)
     const { SeededRandom } = require('./engine');
-    const alignmentRng = new SeededRandom(state.currentYear * 12 + state.currentMonth + org.id.length);
+    const { hashString } = require('./utils/idGenerator');
+    const alignmentRng = new SeededRandom(state.currentYear * 12 + state.currentMonth + hashString(org.id));
 
     let initialAlignment: number;
     if (org.type === 'private' && org.priorities.safetyResearch > 0.6) {
@@ -270,8 +273,10 @@ export function completeProject(
     const { runBenchmark } = require('./benchmark');
     // SeededRandom already imported above at line 235
     // calculateTotalCapabilityFromProfile already imported above
+    // hashString already imported above
 
-    const rng = new SeededRandom(state.currentYear * 12 + state.currentMonth + newAI.id.length);
+    // DETERMINISM FIX (Nov 6, 2025): Replace newAI.id.length with hashString(newAI.id)
+    const rng = new SeededRandom(state.currentYear * 12 + state.currentMonth + hashString(newAI.id));
     const evalResult = runBenchmark(newAI, state, rng.next.bind(rng));
     newAI.lastBenchmark = evalResult;
     
@@ -1184,8 +1189,10 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
  */
 export function handleBankruptcy(org: Organization, state: GameState): void {
   // FIX #23: Create deterministic RNG from state for reproducibility
+  // DETERMINISM FIX (Nov 6, 2025): Replace org.id.length with hashString(org.id)
   const { SeededRandom } = require('./engine');
-  const bankruptcyRng = new SeededRandom(state.currentYear * 12 + state.currentMonth + org.id.length);
+  const { hashString } = require('./utils/idGenerator');
+  const bankruptcyRng = new SeededRandom(state.currentYear * 12 + state.currentMonth + hashString(org.id));
 
   console.log(`${logPrefix(state, "💥", `[Month ${state.currentMonth}]`)} ${org.name} declared bankruptcy (capital: $${org.capital.toFixed(1)}M)`);
 

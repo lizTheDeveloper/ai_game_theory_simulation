@@ -15,7 +15,7 @@
 
 import { GameState } from '@/types/game';
 import { FreshwaterSystem, DayZeroEvent } from '@/types/freshwater';
-import { assertStateProperty } from './utils/assertions';
+import { assertStateProperty, assertProbability, assertInRange, assertFinite } from './utils/assertions';
 
 /**
  * Initialize freshwater system state (2025 baseline)
@@ -79,23 +79,44 @@ export function updateFreshwaterSystem(state: GameState, rng: () => number): voi
   // Research: 68% of water loss is groundwater, >0.5 m/year in dry croplands
   
   // Base depletion rate scales with economic activity
-  let groundwaterDepletion = economicStage * 0.006; // 0.6%/month at Stage 1, 2.4%/month at Stage 4
-  
-  // Agricultural demand drives depletion (70% of use)
-  const agriculturalMultiplier = fw.demand.agricultural * 1.5;
-  groundwaterDepletion *= agriculturalMultiplier;
-  
-  // Climate stress accelerates depletion (droughts = more pumping)
-  const climateStress = 1.0 - climateStability;
-  groundwaterDepletion *= (1.0 + climateStress * 0.5);
-  
-  // Technology reduces depletion
-  const techEfficiency = 1.0 - (
-    fw.precisionIrrigationDeployment * 0.3 +  // 30% reduction at full deployment
-    fw.recyclingDeployment * 0.2 +            // 20% reduction
-    fw.desalinationDeployment * 0.15          // 15% offset (coastal)
+  let groundwaterDepletion = assertFinite(
+    economicStage * 0.006, // 0.6%/month at Stage 1, 2.4%/month at Stage 4
+    { location: 'updateFreshwaterSystem_groundwater', valueName: 'groundwaterDepletion_base', month: state.currentMonth }
   );
-  groundwaterDepletion *= techEfficiency;
+
+  // Agricultural demand drives depletion (70% of use)
+  const agriculturalMultiplier = assertFinite(
+    fw.demand.agricultural * 1.5,
+    { location: 'updateFreshwaterSystem_groundwater', valueName: 'agriculturalMultiplier', month: state.currentMonth }
+  );
+  groundwaterDepletion = assertFinite(
+    groundwaterDepletion * agriculturalMultiplier,
+    { location: 'updateFreshwaterSystem_groundwater', valueName: 'groundwaterDepletion_agri', month: state.currentMonth }
+  );
+
+  // Climate stress accelerates depletion (droughts = more pumping)
+  const climateStress = assertProbability(
+    1.0 - climateStability,
+    { location: 'updateFreshwaterSystem_groundwater', valueName: 'climateStress', month: state.currentMonth }
+  );
+  groundwaterDepletion = assertFinite(
+    groundwaterDepletion * (1.0 + climateStress * 0.5),
+    { location: 'updateFreshwaterSystem_groundwater', valueName: 'groundwaterDepletion_climate', month: state.currentMonth }
+  );
+
+  // Technology reduces depletion
+  const techEfficiency = assertProbability(
+    1.0 - (
+      fw.precisionIrrigationDeployment * 0.3 +  // 30% reduction at full deployment
+      fw.recyclingDeployment * 0.2 +            // 20% reduction
+      fw.desalinationDeployment * 0.15          // 15% offset (coastal)
+    ),
+    { location: 'updateFreshwaterSystem_groundwater', valueName: 'techEfficiency', month: state.currentMonth }
+  );
+  groundwaterDepletion = assertFinite(
+    groundwaterDepletion * techEfficiency,
+    { location: 'updateFreshwaterSystem_groundwater', valueName: 'groundwaterDepletion_final', month: state.currentMonth }
+  );
   
   // Apply depletion
   fw.blueWater.groundwater = Math.max(0, fw.blueWater.groundwater - groundwaterDepletion);
@@ -128,10 +149,24 @@ export function updateFreshwaterSystem(state: GameState, rng: () => number): voi
   
   // === WATER STRESS CALCULATION ===
   // Stress = (demand - supply) / demand
-  const totalSupply = (fw.blueWater.groundwater + fw.blueWater.surfaceWater + fw.greenWater.soilMoisture) / 3;
-  const totalDemand = 1.0 + (economicStage * 0.2); // Demand increases with development
-  
-  fw.waterStress = Math.max(0, Math.min(1.0, 1.0 - (totalSupply / totalDemand)));
+  const totalSupply = assertProbability(
+    (fw.blueWater.groundwater + fw.blueWater.surfaceWater + fw.greenWater.soilMoisture) / 3,
+    { location: 'updateFreshwaterSystem_stress', valueName: 'totalSupply', month: state.currentMonth }
+  );
+  const totalDemand = assertFinite(
+    1.0 + (economicStage * 0.2), // Demand increases with development
+    { location: 'updateFreshwaterSystem_stress', valueName: 'totalDemand', month: state.currentMonth }
+  );
+
+  // Protect against division by zero
+  if (totalDemand === 0) {
+    throw new Error(`❌ [updateFreshwaterSystem_stress] totalDemand is zero (Month ${state.currentMonth})`);
+  }
+
+  fw.waterStress = assertProbability(
+    Math.max(0, Math.min(1.0, 1.0 - (totalSupply / totalDemand))),
+    { location: 'updateFreshwaterSystem_stress', valueName: 'waterStress', month: state.currentMonth }
+  );
   
   // Population under stress increases with water stress
   // Oct 16, 2025: Cap at 60% per WRI Aqueduct/IPCC research
@@ -140,18 +175,30 @@ export function updateFreshwaterSystem(state: GameState, rng: () => number): voi
   
   // === REGIONAL DYNAMICS ===
   // Different regions collapse at different rates
-  
+
   // Middle East: Highly stressed, fast depletion
-  fw.regions.middleEast = Math.max(0, fw.regions.middleEast - 0.008 * (1.0 - fw.desalinationDeployment * 0.5));
-  
+  fw.regions.middleEast = assertProbability(
+    Math.max(0, fw.regions.middleEast - 0.008 * (1.0 - fw.desalinationDeployment * 0.5)),
+    { location: 'updateFreshwaterSystem_regional', valueName: 'middleEast', month: state.currentMonth }
+  );
+
   // North Africa: Very stressed, moderate depletion
-  fw.regions.northAfrica = Math.max(0, fw.regions.northAfrica - 0.006 * (1.0 - fw.recyclingDeployment * 0.3));
-  
+  fw.regions.northAfrica = assertProbability(
+    Math.max(0, fw.regions.northAfrica - 0.006 * (1.0 - fw.recyclingDeployment * 0.3)),
+    { location: 'updateFreshwaterSystem_regional', valueName: 'northAfrica', month: state.currentMonth }
+  );
+
   // South Asia: Moderately stressed, agriculture-driven
-  fw.regions.southAsia = Math.max(0, fw.regions.southAsia - 0.005 * (1.0 - fw.precisionIrrigationDeployment * 0.4));
-  
+  fw.regions.southAsia = assertProbability(
+    Math.max(0, fw.regions.southAsia - 0.005 * (1.0 - fw.precisionIrrigationDeployment * 0.4)),
+    { location: 'updateFreshwaterSystem_regional', valueName: 'southAsia', month: state.currentMonth }
+  );
+
   // Global average
-  fw.regions.global = (fw.regions.middleEast + fw.regions.northAfrica + fw.regions.southAsia + fw.blueWater.groundwater) / 4;
+  fw.regions.global = assertProbability(
+    (fw.regions.middleEast + fw.regions.northAfrica + fw.regions.southAsia + fw.blueWater.groundwater) / 4,
+    { location: 'updateFreshwaterSystem_regional', valueName: 'global', month: state.currentMonth }
+  );
   
   // === DAY ZERO DROUGHT ===
   // Compound extremes: Low rainfall + reduced flow + high consumption
@@ -170,6 +217,10 @@ export function updateFreshwaterSystem(state: GameState, rng: () => number): voi
     } else if ((lowRainfall && reducedRiverFlow) || (reducedRiverFlow && highConsumption)) {
       dayZeroProbability = 0.03; // 3%/month with two conditions
     }
+    dayZeroProbability = assertProbability(
+      dayZeroProbability,
+      { location: 'updateFreshwaterSystem_dayZero', valueName: 'dayZeroProbability', month: state.currentMonth }
+    );
     
     if (rng() < dayZeroProbability) {
       // Trigger Day Zero Drought
@@ -180,8 +231,14 @@ export function updateFreshwaterSystem(state: GameState, rng: () => number): voi
       fw.dayZeroDrought = {
         active: true,
         region: regions[mostStressedIndex],
-        duration: 12 + Math.floor(rng() * 24), // 12-36 months
-        severity: 0.7 + rng() * 0.3, // 0.7-1.0
+        duration: assertFinite(
+          12 + Math.floor(rng() * 24), // 12-36 months
+          { location: 'updateFreshwaterSystem_dayZero', valueName: 'duration', month: state.currentMonth }
+        ),
+        severity: assertProbability(
+          0.7 + rng() * 0.3, // 0.7-1.0
+          { location: 'updateFreshwaterSystem_dayZero', valueName: 'severity', month: state.currentMonth }
+        ),
       };
       
       console.log(`🚨 DAY ZERO DROUGHT: ${fw.dayZeroDrought.region}`);
@@ -215,7 +272,10 @@ export function updateFreshwaterSystem(state: GameState, rng: () => number): voi
     }
   } else {
     // Day Zero drought is active - ongoing impacts
-    const monthlyFoodImpact = fw.dayZeroDrought.severity * 0.015; // Up to 1.5%/month
+    const monthlyFoodImpact = assertProbability(
+      fw.dayZeroDrought.severity * 0.015, // Up to 1.5%/month
+      { location: 'updateFreshwaterSystem_dayZero_active', valueName: 'monthlyFoodImpact', month: state.currentMonth }
+    );
     state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - monthlyFoodImpact);
     
     fw.dayZeroDrought.duration--;
@@ -230,7 +290,10 @@ export function updateFreshwaterSystem(state: GameState, rng: () => number): voi
   // === FOOD SYSTEM IMPACT ===
   // Agriculture uses 70% of water - stress directly impacts food/material abundance
   if (fw.waterStress > 0.50) {
-    const foodImpact = (fw.waterStress - 0.50) * 0.012; // Up to 0.6%/month at max stress
+    const foodImpact = assertProbability(
+      (fw.waterStress - 0.50) * 0.012, // Up to 0.6%/month at max stress
+      { location: 'updateFreshwaterSystem_foodImpact', valueName: 'foodImpact', month: state.currentMonth }
+    );
     state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - foodImpact);
   }
   
@@ -257,8 +320,14 @@ export function updateFreshwaterSystem(state: GameState, rng: () => number): voi
 
     if (!hasAlternatives) {
       // Gradual agricultural decline (not instant collapse)
-      const agriculturalStress = (0.70 - fw.blueWater.groundwater) / 0.70; // 0 at 70%, 1.0 at 0%
-      const monthlyProductivityLoss = agriculturalStress * 0.01; // Up to 1%/month at total depletion
+      const agriculturalStress = assertProbability(
+        (0.70 - fw.blueWater.groundwater) / 0.70, // 0 at 70%, 1.0 at 0%
+        { location: 'updateFreshwaterSystem_collapse', valueName: 'agriculturalStress', month: state.currentMonth }
+      );
+      const monthlyProductivityLoss = assertProbability(
+        agriculturalStress * 0.01, // Up to 1%/month at total depletion
+        { location: 'updateFreshwaterSystem_collapse', valueName: 'monthlyProductivityLoss', month: state.currentMonth }
+      );
 
       state.qualityOfLifeSystems.materialAbundance = Math.max(0,
         state.qualityOfLifeSystems.materialAbundance - monthlyProductivityLoss

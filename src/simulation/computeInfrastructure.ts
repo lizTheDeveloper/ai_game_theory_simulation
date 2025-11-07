@@ -1,11 +1,12 @@
 /**
  * Compute Infrastructure Module
  * Phase 1: Data Center Infrastructure
- * 
+ *
  * Manages data centers, compute allocation, and related utilities.
  */
 
 import { ComputeInfrastructure, DataCenter, GameState } from '../types/game';
+import * as Assertions from './utils/assertions';
 
 /**
  * Initialize compute infrastructure for January 2025
@@ -255,7 +256,7 @@ export function initializeAIComputeFields(ai: any, rng: () => number): void {
     ai.allocatedCompute = 0;
   }
   if (ai.computeEfficiency === undefined) {
-    ai.computeEfficiency = 0.9 + rng() * 0.3; // Random 0.9-1.2
+    ai.computeEfficiency = 0.9 + rng() * 0.3; // Deterministic 0.9-1.2 using seeded RNG
   }
   // organizationId will be set in Phase 2
 }
@@ -499,8 +500,20 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   // Research: Data centers require skilled labor (electrical engineers, network engineers, cooling techs)
   // ~0.1% of population has skills to maintain advanced compute infrastructure
   // Can't maintain 12 PF data centers with no people
-  const globalPopFraction = state.humanPopulationSystem.population /
-                            state.humanPopulationSystem.baselinePopulation;
+
+  // Protect against division by zero
+  if (state.humanPopulationSystem.baselinePopulation === 0) {
+    throw new Error(`❌ [applyComputeGrowth] baselinePopulation is zero (Month ${state.currentMonth})`);
+  }
+
+  // FIX (Nov 7, 2025): Population can grow ABOVE baseline (births exceed deaths)
+  // Clamp to [0, 1] - when population exceeds baseline, treat as 100% maintained (no degradation)
+  // This metric is ONLY for degradation during collapse, not growth scenarios
+  const rawPopFraction = state.humanPopulationSystem.population / state.humanPopulationSystem.baselinePopulation;
+  const globalPopFraction = Assertions.assertProbability(
+    Math.min(1.0, rawPopFraction),
+    { location: 'applyComputeGrowth', valueName: 'globalPopFraction', month: state.currentMonth }
+  );
 
   // FIX (Nov 5, 2025): AGGRESSIVE degradation during population collapse
   // Research-backed infrastructure failure rates without maintenance:
@@ -528,7 +541,10 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   // - 1% population → 9.9% monthly degradation (catastrophic collapse)
 
   const MONTHLY_DEGRADATION_NO_MAINTENANCE = 0.10; // 10%/month with zero maintenance
-  const degradationRate = MONTHLY_DEGRADATION_NO_MAINTENANCE * (1 - globalPopFraction);
+  const degradationRate = Assertions.assertProbability(
+    MONTHLY_DEGRADATION_NO_MAINTENANCE * (1 - globalPopFraction),
+    { location: 'applyComputeGrowth_degradation', valueName: 'degradationRate', month: state.currentMonth }
+  );
 
   // Apply degradation to ALL data centers
   if (globalPopFraction < 0.99 && degradationRate > 0) {
@@ -563,7 +579,15 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   // Organizations provide funding, coordination, parts procurement
   const totalOrgs = state.organizations.length;
   const bankruptOrgs = state.organizations.filter(o => o.bankrupt).length;
-  const bankruptcyRate = bankruptOrgs / totalOrgs;
+
+  // Protect against division by zero
+  let bankruptcyRate = 0;
+  if (totalOrgs > 0) {
+    bankruptcyRate = Assertions.assertProbability(
+      bankruptOrgs / totalOrgs,
+      { location: 'applyComputeGrowth_bankruptcy', valueName: 'bankruptcyRate', month: state.currentMonth }
+    );
+  }
 
   if (bankruptcyRate > 0.8) {
     // >80% of orgs bankrupt = infrastructure collapse
@@ -595,10 +619,22 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   // - 80% population → 64% manufacturing capacity (supply chain stress)
   // - 50% population → 25% manufacturing capacity (critical shortages)
   // - 20% population → 4% manufacturing capacity (near-total collapse)
-  const MOORES_LAW_RATE = Math.pow(2, 1/8) - 1; // 9.05% per month (doubles every 8 months)
-  const manufacturingCapacity = Math.pow(globalPopFraction, 2.0); // Highly non-linear (fabs need EVERYTHING)
-  const effectiveMooresLaw = MOORES_LAW_RATE * manufacturingCapacity; // Gate by manufacturing
-  infra.hardwareEfficiency *= (1 + effectiveMooresLaw);
+  const MOORES_LAW_RATE = Assertions.assertFinite(
+    Math.pow(2, 1/8) - 1, // 9.05% per month (doubles every 8 months)
+    { location: 'applyComputeGrowth_moores', valueName: 'MOORES_LAW_RATE', month: state.currentMonth }
+  );
+  const manufacturingCapacity = Assertions.assertProbability(
+    Math.pow(globalPopFraction, 2.0), // Highly non-linear (fabs need EVERYTHING)
+    { location: 'applyComputeGrowth_moores', valueName: 'manufacturingCapacity', month: state.currentMonth }
+  );
+  const effectiveMooresLaw = Assertions.assertFinite(
+    MOORES_LAW_RATE * manufacturingCapacity, // Gate by manufacturing
+    { location: 'applyComputeGrowth_moores', valueName: 'effectiveMooresLaw', month: state.currentMonth }
+  );
+  infra.hardwareEfficiency = Assertions.assertFinite(
+    infra.hardwareEfficiency * (1 + effectiveMooresLaw),
+    { location: 'applyComputeGrowth_moores', valueName: 'hardwareEfficiency', month: state.currentMonth }
+  );
 
   // === PHASE 5: CONSCIOUSNESS GOVERNANCE R&D DRAG ===
   // Get global precautionary cost (% of AI R&D budget)
@@ -607,7 +643,10 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   // Calculate R&D drag (cost × 0.5)
   // Example: 10% precautionary cost → 5% slower growth
   // Example: 20% precautionary cost → 10% slower growth
-  const rdDrag = globalPrecautionaryCost * 0.5;
+  const rdDrag = Assertions.assertProbability(
+    globalPrecautionaryCost * 0.5,
+    { location: 'applyComputeGrowth_rdDrag', valueName: 'rdDrag', month: state.currentMonth }
+  );
 
   // AI Capability Baseline Recalibration (Oct 17, 2025)
   // Research skeptic 2025 reality check: Add CONTINUOUS algorithmic improvement (not just random breakthroughs)
@@ -621,17 +660,29 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   let CONTINUOUS_ALGO_RATE = Math.pow(1.10, 1/12) - 1; // 10% annual → 0.797% monthly
 
   // Apply R&D drag to continuous algorithmic improvement (policy effect, not population)
-  CONTINUOUS_ALGO_RATE = CONTINUOUS_ALGO_RATE * (1 - rdDrag);
+  CONTINUOUS_ALGO_RATE = Assertions.assertFinite(
+    CONTINUOUS_ALGO_RATE * (1 - rdDrag),
+    { location: 'applyComputeGrowth_algo', valueName: 'CONTINUOUS_ALGO_RATE_after_drag', month: state.currentMonth }
+  );
 
   // Gate by deployment capacity (software updates need engineers)
   // Less non-linear than hardware manufacturing (can deploy remotely)
   // - 100% population → 100% deployment capacity
   // - 50% population → 71% deployment capacity (sqrt relationship)
   // - 20% population → 45% deployment capacity
-  const deploymentCapacity = Math.pow(globalPopFraction, 0.5);
-  CONTINUOUS_ALGO_RATE = CONTINUOUS_ALGO_RATE * deploymentCapacity;
+  const deploymentCapacity = Assertions.assertProbability(
+    Math.pow(globalPopFraction, 0.5),
+    { location: 'applyComputeGrowth_algo', valueName: 'deploymentCapacity', month: state.currentMonth }
+  );
+  CONTINUOUS_ALGO_RATE = Assertions.assertFinite(
+    CONTINUOUS_ALGO_RATE * deploymentCapacity,
+    { location: 'applyComputeGrowth_algo', valueName: 'CONTINUOUS_ALGO_RATE_final', month: state.currentMonth }
+  );
 
-  infra.algorithmsEfficiency *= (1 + CONTINUOUS_ALGO_RATE);
+  infra.algorithmsEfficiency = Assertions.assertFinite(
+    infra.algorithmsEfficiency * (1 + CONTINUOUS_ALGO_RATE),
+    { location: 'applyComputeGrowth_algo', valueName: 'algorithmsEfficiency', month: state.currentMonth }
+  );
 
   // PLUS occasional breakthroughs (FlashAttention, new architectures, etc.)
   // These are BONUS improvements on top of continuous progress
@@ -701,13 +752,12 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
 
   // HIGH-4 FIX (Oct 30, 2025): Coherence assertions
   // Can't have massive compute infrastructure with no population to maintain it
-  const { assertFinite, assertInRange } = require('./utils/assertions');
 
   const totalCompute = getTotalEffectiveCompute(infra);
   const totalCapacity = getTotalCapacity(infra);
 
   // Validate compute is finite (no NaN/Infinity from calculations)
-  assertFinite(totalCompute, {
+  Assertions.assertFinite(totalCompute, {
     location: 'applyComputeGrowth',
     valueName: 'totalCompute',
     month: state.currentMonth,

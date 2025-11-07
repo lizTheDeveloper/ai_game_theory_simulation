@@ -40,6 +40,28 @@ if [ -f "/etc/cloud/cloud.cfg" ] || [ -f "/.dockerenv" ]; then
   IS_VM=true
 fi
 
+# Configuration (can be overridden via environment variables)
+SKIP_FRONTEND="${MERGE_ORCHESTRATOR_SKIP_FRONTEND:-$IS_VM}"
+ENABLE_AGENT_REVIEWS="${MERGE_ORCHESTRATOR_ENABLE_AGENT_REVIEWS:-true}"  # Phase 2: Architecture-skeptic + Sylvia reviews
+ENABLE_AUTO_REMEDIATION="${MERGE_ORCHESTRATOR_ENABLE_AUTO_REMEDIATION:-true}"  # Phase 2.5: Auto-fix CRITICAL issues
+AGENT_REVIEW_HOUR="${MERGE_ORCHESTRATOR_AGENT_REVIEW_HOUR:-6}"  # Hour (UTC) to run Opus reviews (cost optimization)
+
+# Time-based agent review gating (cost optimization)
+# Only run expensive Opus reviews once per day at specified hour
+CURRENT_HOUR=$(date +%H | sed 's/^0//')  # Remove leading zero
+if [ "$ENABLE_AGENT_REVIEWS" = "true" ]; then
+  if [ "$CURRENT_HOUR" -ne "$AGENT_REVIEW_HOUR" ]; then
+    ENABLE_AGENT_REVIEWS="false"
+    AGENT_REVIEWS_SKIPPED_REASON="outside daily review window (runs at ${AGENT_REVIEW_HOUR}:00 UTC)"
+  else
+    AGENT_REVIEWS_SKIPPED_REASON="in daily review window (${AGENT_REVIEW_HOUR}:00 UTC)"
+  fi
+fi
+
+# ============================================
+# Logging Setup
+# ============================================
+
 # Create log directory
 mkdir -p "$LOG_DIR"
 
@@ -70,6 +92,13 @@ trap "rm -f $LOCK_FILE" EXIT
 # Change to project root
 cd "$PROJECT_ROOT"
 
+# Check for git index lock (indicates another git process is running)
+if [ -f ".git/index.lock" ]; then
+  log "⚠️  Git index locked - another git process is running"
+  log "ℹ️  Skipping this run to avoid conflicts"
+  exit 0
+fi
+
 log_section "Merge Orchestrator Started"
 log "Timestamp: $(date)"
 log "Dry run: $DRY_RUN"
@@ -82,6 +111,39 @@ git fetch origin 2>&1 | tee -a "$LOG_FILE" || {
   log "❌ Failed to fetch from origin"
   exit 1
 }
+
+# Clean working tree before processing branches
+log_section "Ensuring Clean Working Tree"
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  log "⚠️  Working tree has uncommitted changes"
+  log "📦 Stashing changes to prevent checkout conflicts..."
+
+  # Create a timestamped stash
+  STASH_NAME="merge-orchestrator-autostash-${TIMESTAMP}"
+  if git stash push -u -m "$STASH_NAME" 2>&1 | tee -a "$LOG_FILE"; then
+    log "✅ Changes stashed as: $STASH_NAME"
+    log "ℹ️  To recover: git stash list | grep '$STASH_NAME'"
+  else
+    log "❌ Failed to stash changes"
+    log "⚠️  Manual cleanup required before merge orchestrator can run"
+    exit 1
+  fi
+fi
+
+# Ensure we're on main branch
+CURRENT_BRANCH=$(git branch --show-current)
+if [ "$CURRENT_BRANCH" != "main" ]; then
+  log "⚠️  Not on main branch (currently on: $CURRENT_BRANCH)"
+  log "📍 Switching to main..."
+  if git checkout main 2>&1 | tee -a "$LOG_FILE"; then
+    log "✅ Switched to main"
+  else
+    log "❌ Failed to switch to main - manual intervention required"
+    exit 1
+  fi
+fi
+
+log "✅ Working tree clean and on main branch"
 
 # Get list of remote branches (exclude main, HEAD)
 log_section "Discovering Branches"
@@ -184,8 +246,9 @@ for BRANCH in $BRANCHES; do
 
           git checkout main 2>&1 >> "$LOG_FILE"
 
-          # Create remediation task file
-          REMEDIATION_TASK="$LOG_DIR/remediation_tests_${BRANCH}_${TIMESTAMP}.md"
+          # Create remediation task file (sanitize branch name for filesystem)
+          SAFE_BRANCH=$(echo "$BRANCH" | sed "s|[+ /]|_|g")
+          REMEDIATION_TASK="$LOG_DIR/remediation_tests_${SAFE_BRANCH}_${TIMESTAMP}.md"
           cat > "$REMEDIATION_TASK" <<EOFT
 # Test Failure Remediation Task
 
@@ -249,8 +312,9 @@ EOFT
       # Don't abort yet - keep conflict state for Claude Code
       git checkout main 2>&1 >> "$LOG_FILE"
 
-      # Create remediation task file
-      REMEDIATION_TASK="$LOG_DIR/remediation_${BRANCH}_${TIMESTAMP}.md"
+      # Create remediation task file (sanitize branch name for filesystem)
+      SAFE_BRANCH=$(echo "$BRANCH" | sed "s|[+ /]|_|g")
+      REMEDIATION_TASK="$LOG_DIR/remediation_${SAFE_BRANCH}_${TIMESTAMP}.md"
       cat > "$REMEDIATION_TASK" <<EOF
 # Merge Conflict Remediation Task
 

@@ -79,6 +79,7 @@ export function assertInRange(
     location: string;
     valueName: string;
     month?: number;
+    additionalInfo?: Record<string, any>;
   }
 ): number {
   assertFinite(value, context);
@@ -107,6 +108,7 @@ export function assertProbability(
     location: string;
     valueName: string;
     month?: number;
+    additionalInfo?: Record<string, any>;
   }
 ): number {
   return assertInRange(value, 0, 1, {

@@ -1,9 +1,15 @@
 # Outcome Variance Mechanisms: Research Review
 
 **Date:** October 30, 2025
+**Last Updated:** November 6, 2025 (autonomous researcher)
 **Researcher:** Cynthia (super-alignment-researcher)
+**Update:** Added Forster et al. 2025 climate variance indicators + Studebaker 2022 legitimacy bifurcations
 **Issue:** Monte Carlo runs (N=10) show 100% dystopia outcomes with near-identical mortality (74-81%)
 **Research Question:** What creates outcome variance in crisis scenarios? Why do similar crises produce different results?
+
+**Oldest Source:** Scheffer et al. 2014 (foundational resilience theory - appropriate for core concepts)
+**Newest Source:** Forster et al. 2025 (June 2025 climate indicators)
+**Last Verified:** November 6, 2025
 
 ---
 
@@ -189,6 +195,32 @@ function calculateOutcomeProbabilities(
 
 **Implication for Simulation:** Systems near tipping points show **extreme sensitivity to initial conditions**. Small differences in timing or magnitude of interventions → vastly different outcomes.
 
+### 2.1b Updated Climate System Variance Indicators (2025)
+
+**Citation:** Forster, P. M., Smith, C., Walsh, T., et al. (2025). "Indicators of Global Climate Change 2024: annual update of key indicators of the state of the climate system and human influence." *Earth System Science Data*, 17, 2641–2680. https://doi.org/10.5194/essd-17-2641-2025
+
+**Publication:** June 19, 2025 (most recent comprehensive assessment)
+
+**Key Variance and Bifurcation Indicators:**
+
+1. **Accelerating warming trajectory:** Human-induced warming rate at 0.27 [0.2–0.4] °C per decade (2015–2024) — substantially higher than historical baselines, indicating potential proximity to bifurcation
+
+2. **Energy imbalance doubling:** Earth Energy Imbalance (EEI) doubled from 0.43 [0.03–0.83] W m⁻² (1975–1994) to 0.89 [0.7–1.09] W m⁻² (2005–2024) — systemic acceleration characteristic of approaching tipping points
+
+3. **Deepening ocean warming:** "Robust increase in ocean warming in the 700–2000 m depth layer since the 1990s" — warming signal propagating to deeper layers suggests potential stability loss
+
+4. **Internal variability masking:** 2024 warming (1.52 °C observed) exceeds human-forced component (1.36 °C) by 0.16 °C — demonstrates role of natural variability in short-term extremes, critical for detecting proximity to tipping points
+
+5. **Aerosol forcing instability:** Declining aerosol cooling (via shipping regulations) adds ~+0.1 W m⁻² positive feedback since 2020, reducing cooling buffer
+
+**Quantitative Thresholds (2024 data):**
+- **Current warming:** 1.52 °C (2024), 1.24 [1.11–1.35] °C (2015–2024 avg) relative to 1850–1900
+- **Human-induced component:** 1.36 °C (2024 best estimate), 1.22 [1.0–1.5] °C (2015–2024)
+- **1.5°C threshold:** Already exceeded in 2024 (1.52 °C observed), within uncertainty range for multi-year average
+- **Emissions plateau:** "Rate of increase in CO₂ emissions over the last decade has slowed compared to the 2000s" — potential bifurcation window for policy intervention
+
+**Implication for Simulation:** These 2025 data show the climate system is displaying classic pre-bifurcation signatures (accelerating change, deepening penetration, doubled energy imbalance). Small perturbations near current state (1.5°C) likely to produce highly divergent outcomes.
+
 ### 2.2 Tipping Points and Regime Shifts (2024 Research)
 
 **Recent Research Synthesis:**
@@ -213,6 +245,43 @@ function calculateOutcomeProbabilities(
 - **Outcomes diverge** (same initial conditions → different final states)
 
 **This is THE mechanism for Monte Carlo variance.** If simulation is always far from tipping points, no variance. If near tipping points, high variance.
+
+### 2.2c Political Legitimacy Bifurcations: Chronic vs Acute Crises (2022)
+
+**Citation:** Studebaker, Benjamin M. (2022). "Legitimacy crises in embedded democracies." *Contemporary Political Theory*, 22(2), 230–250. https://doi.org/10.1057/s41296-022-00588-z
+
+**Publication:** September 2022 (issue date 2023)
+
+**Key Conceptual Framework: Scalar Legitimacy and Crisis Types**
+
+Studebaker treats legitimacy as a **scalar concept** positioning states on a continuum rather than binary (legitimate/illegitimate). This creates potential for gradual decline and bifurcation points:
+
+**Crisis Type Distinction:**
+- **Chronic crises:** Procedural contestation while democratic system affirmed — "democracies threatened by distortion and deadlock rather than death"
+- **Acute crises:** Actual moment of revolt against entire political system — regime change or collapse
+
+**Bifurcation Mechanism:**
+> "In stable politics, losers may disagree in principle with state decisions, but they continue to accept the procedures through which those decisions were taken. In crisis politics, the procedures are politicised."
+
+**Critical Insight:** The shift from **accepting procedures** to **contesting procedures** represents a bifurcation point. Once procedural legitimacy is contested, the system enters a different regime (chronic crisis) with distinct dynamics.
+
+**Temporal Characteristics:**
+- Chronic crises can persist for **decades** (Gamble identifies: 1930s, 1970s, 2010s)
+- **No clear return threshold** — once procedures are politicized, stability requires procedural reform, not just policy success
+- Episodes within crises occur as discrete procedural contests with intervals between
+
+**Implication for Simulation:**
+1. **Political legitimacy is scalar, not binary** — gradual decline possible
+2. **Bifurcation occurs at procedural contestation threshold** — once crossed, system enters different regime (chronic crisis) with different stability dynamics
+3. **Chronic crises are long-duration** — can persist for decades without full collapse but also without recovery to stable equilibrium
+4. **Path dependence:** Once procedures are delegitimized, policy success alone insufficient to restore stability
+
+**Quantitative Implication:** Political systems can exist in **three stable regimes**:
+- **Stable legitimacy:** Policy contestation only, procedures accepted
+- **Chronic crisis:** Procedural contestation, system affirmed (bifurcation regime)
+- **Acute crisis/collapse:** System rejection, regime change imminent
+
+Small differences in legitimacy decline rate can push systems across the threshold from stable → chronic crisis (bifurcation), creating divergent long-term trajectories even from similar initial shocks.
 
 ### 2.3 Archaeological Evidence: Iceland vs Greenland (2024)
 
@@ -832,19 +901,27 @@ function checkCriticalThresholds(state: GameState): RegimeType {
    - **Credibility:** High (systematic review, Nature journal, 2024)
    - **Data used:** Resilience heterogeneity creates outcome variance
 
-2. **Hepfer, M., & Lawrence, T.B. (2022).** The Heterogeneity of Organizational Resilience. *Organization Theory*, 3(1). https://journals.sagepub.com/doi/full/10.1177/26317877221074701
+2. **Forster, P. M., Smith, C., Walsh, T., et al. (2025).** Indicators of Global Climate Change 2024: annual update of key indicators of the state of the climate system and human influence. *Earth System Science Data*, 17, 2641–2680. https://doi.org/10.5194/essd-17-2641-2025
+   - **Credibility:** Very high (ESSD journal, 50+ international authors, June 2025 publication)
+   - **Data used:** Climate system variance indicators, energy imbalance doubling, bifurcation signatures
+
+3. **Hepfer, M., & Lawrence, T.B. (2022).** The Heterogeneity of Organizational Resilience. *Organization Theory*, 3(1). https://journals.sagepub.com/doi/full/10.1177/26317877221074701
    - **Credibility:** High (peer-reviewed, organizational theory)
    - **Data used:** Three resilience types → different trajectories
 
-3. **Manca, A.R., et al. (2019).** The Resilience of EU Member States to the Financial and Economic Crisis. *Social Indicators Research*, 148, 569-598. https://link.springer.com/article/10.1007/s11205-019-02200-1
+4. **Manca, A.R., et al. (2019).** The Resilience of EU Member States to the Financial and Economic Crisis. *Social Indicators Research*, 148, 569-598. https://link.springer.com/article/10.1007/s11205-019-02200-1
    - **Credibility:** High (peer-reviewed, EU-wide empirical data)
    - **Data used:** Greece vs Ireland divergent outcomes from similar crisis
 
-4. **Scheffer, M., et al. (2014).** Resilience indicators: prospects and limitations for early warnings of regime shifts. *Philosophical Transactions of the Royal Society B*, 370(1659). https://pmc.ncbi.nlm.nih.gov/articles/PMC4247400/
+5. **Scheffer, M., et al. (2014).** Resilience indicators: prospects and limitations for early warnings of regime shifts. *Philosophical Transactions of the Royal Society B*, 370(1659). https://pmc.ncbi.nlm.nih.gov/articles/PMC4247400/
    - **Credibility:** Very high (Royal Society, foundational resilience theory)
    - **Data used:** Critical slowing down, bifurcation points
 
-5. **Collapse Studies in Archaeology (2024).** *Journal of Archaeological Research*. https://link.springer.com/article/10.1007/s10814-024-09196-4
+6. **Studebaker, Benjamin M. (2022).** Legitimacy crises in embedded democracies. *Contemporary Political Theory*, 22(2), 230–250. https://doi.org/10.1057/s41296-022-00588-z
+   - **Credibility:** High (peer-reviewed political theory, Cambridge/Springer, 2022-2023)
+   - **Data used:** Scalar legitimacy, bifurcation from stable → chronic crisis regimes, path dependence in political systems
+
+7. **Collapse Studies in Archaeology (2024).** *Journal of Archaeological Research*. https://link.springer.com/article/10.1007/s10814-024-09196-4
    - **Credibility:** High (peer-reviewed archaeological evidence)
    - **Data used:** Iceland vs Greenland divergent outcomes
 

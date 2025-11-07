@@ -28,6 +28,12 @@ if [ ! -f "$CITATION_CHECKER" ]; then
     exit 1
 fi
 
+# Activate virtual environment if it exists
+VENV_PATH="$REPO_ROOT/.venv"
+if [ -d "$VENV_PATH" ]; then
+    source "$VENV_PATH/bin/activate"
+fi
+
 # Check if spaCy is installed
 if ! python3 -c "import spacy" 2>/dev/null; then
     echo -e "${YELLOW}⚠️  WARNING: spaCy not installed. Citation checking disabled.${NC}" >&2

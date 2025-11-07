@@ -28,7 +28,9 @@ export class EnvironmentalSystem implements AccumulationSystem<EnvironmentalAccu
   }
 
   update(globalState: GameState): void {
-    updateEnvironmentalAccumulation(globalState);
+    // Use Math.random for system wrapper (tests only, not used in phase-based sim)
+    // Phase-based simulation uses deterministic RNG passed to phases
+    updateEnvironmentalAccumulation(globalState, Math.random);
   }
 
   getSustainability(globalState: GameState): number {

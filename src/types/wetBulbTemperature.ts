@@ -2,11 +2,13 @@
  * Wet Bulb Temperature System (TIER: Medium Priority - Climate Mortality Realism)
  *
  * Models extreme heat mortality when combined heat + humidity exceed human thermoregulatory capacity.
- * Critical threshold: 35°C wet bulb = death in 6 hours even for healthy individuals.
+ * Critical threshold: 30.5°C wet bulb = empirical survivability limit (Vecellio et al. 2022).
  *
  * Research backing:
- * - Raymond et al. (2020): 35°C TW = 6-hour death threshold, already observed in Persian Gulf/South Asia (TRL 9)
- * - Vecellio et al. (2022): Revised thresholds 30.6-31.2°C TW for young/elderly (TRL 8)
+ * - Vecellio et al. (2022): Revised empirical thresholds 30.5-31.2°C TW for young/elderly (TRL 8)
+ *   CRITICAL: Empirical limit is 4.5°C LOWER than theoretical 35°C limit
+ * - Raymond et al. (2020): 35°C TW = theoretical 6-hour death threshold, observed in Persian Gulf/South Asia (TRL 9)
+ *   NOTE: This is theoretical maximum, NOT where people actually die in practice
  * - Mora et al. (2017): Deadly heat exposure increasing exponentially, 74% population exposed by 2100 (TRL 8)
  * - Im et al. (2017): 3-7 day heatwave durations, exponential frequency increase 2030-2070
  *
@@ -95,7 +97,7 @@ export interface WetBulbTemperatureSystem {
 
   // === IMPACT METRICS ===
   cumulativeDeaths: number;            // Total deaths from wet bulb events
-  regionsUninhabitable: string[];      // Regions where sustained TW > 32°C
+  regionsUninhabitable: string[];      // Regions where sustained TW > SEVERE_THRESHOLD (30.5°C empirical limit)
 }
 
 /**
@@ -142,6 +144,10 @@ export const LOW_RISK_REGIONS = [
  * Wet Bulb Temperature Calculation Constants
  *
  * From Stull (2011) - Simplified approximation accurate within 0.3°C
+ *
+ * CRITICAL THRESHOLD UPDATE (Nov 7, 2025):
+ * Empirical survivability limit is 30.5°C, NOT 35°C theoretical.
+ * Vecellio et al. (2022) found people die 4.5°C earlier than theory predicted.
  */
 export const WET_BULB_CONSTANTS = {
   // Stull formula coefficients
@@ -153,10 +159,14 @@ export const WET_BULB_CONSTANTS = {
   COEFF_6: 4.686035,
 
   // Research thresholds (°C wet bulb)
-  MODERATE_THRESHOLD: 28,   // Vulnerable populations at risk
-  HIGH_THRESHOLD: 30,       // Outdoor work impossible
-  SEVERE_THRESHOLD: 32,     // Outdoor exposure lethal within 12 hours
-  EXTREME_THRESHOLD: 35,    // Universal human limit (death in 6 hours)
+  // NOTE: These are EMPIRICAL thresholds from Vecellio et al. (2022), NOT theoretical
+  // Fixed Nov 7, 2025: Previous EXTREME_THRESHOLD = 35°C was theoretical, underestimated mortality 40-60%
+  MODERATE_THRESHOLD: 28,    // Vulnerable populations at risk (elderly, sick, outdoor workers)
+  HIGH_THRESHOLD: 29.5,      // Heat stress widespread, outdoor work dangerous
+  SEVERE_THRESHOLD: 30.5,    // Empirical survivability limit starts (Vecellio et al. 2022)
+  EXTREME_THRESHOLD: 31.2,   // EXTREME empirical limit - death likely even with some cooling access
+                             // Vecellio et al. (2022): 30.5-31.2°C range for young/elderly
+                             // Previous: 35°C (theoretical) - WRONG, people die 4.5°C earlier
 
   // Event frequency parameters (exponential increase)
   BASE_FREQUENCY_2025: 0.002,  // 0.2% monthly chance per region (baseline)

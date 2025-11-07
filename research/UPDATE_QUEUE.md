@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/6/2025, 8:30:07 PM
-**Files Scanned:** 317
+**Generated:** 11/7/2025, 4:00:06 AM
+**Files Scanned:** 323
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 129 (40.7%)
+**Count:** 129 (39.9%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -663,13 +663,14 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 17 (5.4%)
+**Count:** 18 (5.6%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
 - `PHASE1_LAYER2_COMPLETION_REPORT.md` - Oldest: 2020 (5 years)
 - `RESEARCH_TRIAGE_FABRICATED_CITATIONS.md` - Oldest: 2020 (5 years)
 - `ai_infrastructure_resources_verification_20251031.md` - Oldest: 2021 (4 years)
+- `ai_scaling_laws_paradigm_shift_20251107.md` - Oldest: 2020 (5 years)
 - `citation_verification_tier2_synthetic_ecosystems_20251104.md` - Oldest: 2020 (5 years)
 - `climate_mortality_parameter_derivation_verification_20251030.md` - Oldest: 2020 (5 years)
 - `crisis_cascade_multipliers_20251020.md` - Oldest: 2021 (4 years)
@@ -687,7 +688,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 171 (53.9%)
+**Count:** 176 (54.5%)
 
 All sources <3 years old. No action required.
 
@@ -697,26 +698,26 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 317 |
+| Total files | 323 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 129 (40.7%) |
-| MEDIUM | 17 (5.4%) |
-| LOW | 171 (53.9%) |
-| Average age | 9.1 years |
+| HIGH | 129 (39.9%) |
+| MEDIUM | 18 (5.6%) |
+| LOW | 176 (54.5%) |
+| Average age | 8.9 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 171 | 53.9% |
-| Warning (3-5yr) | 17 | 5.4% |
-| Critical (>5yr) | 129 | 40.7% |
+| Current (<3yr) | 176 | 54.5% |
+| Warning (3-5yr) | 18 | 5.6% |
+| Critical (>5yr) | 129 | 39.9% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 40.7% critical (>5yr)
+- **Current:** 39.9% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
