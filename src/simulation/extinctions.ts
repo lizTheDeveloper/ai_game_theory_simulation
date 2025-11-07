@@ -816,28 +816,48 @@ export function progressExtinction(
   if (!state.extinctionState.active || !state.extinctionState.type) {
     return { newExtinctionState: state.extinctionState, events: [], isComplete: false };
   }
-  
-  const monthsElapsed = state.currentMonth - state.extinctionState.startMonth;
+
+  // Validate current month and start month
+  const currentMonth = assertFinite(state.currentMonth, {
+    location: 'progressExtinction',
+    valueName: 'currentMonth',
+    month: state.currentMonth
+  });
+
+  const startMonth = assertFinite(state.extinctionState.startMonth, {
+    location: 'progressExtinction',
+    valueName: 'extinctionState.startMonth',
+    month: state.currentMonth,
+    additionalInfo: { extinctionType: state.extinctionState.type }
+  });
+
+  const monthsElapsed = assertFinite(currentMonth - startMonth, {
+    location: 'progressExtinction',
+    valueName: 'monthsElapsed',
+    month: state.currentMonth,
+    additionalInfo: { currentMonth, startMonth, extinctionType: state.extinctionState.type }
+  });
+
   const extinctionState = { ...state.extinctionState };
   const events: GameEvent[] = [];
-  
+
   switch (extinctionState.type) {
     case 'instant':
       // Instant = already complete
       return { newExtinctionState: extinctionState, events: [], isComplete: true };
-      
+
     case 'rapid':
       return progressRapidExtinction(state, extinctionState, monthsElapsed, events, random);
-      
+
     case 'slow':
       return progressSlowExtinction(state, extinctionState, monthsElapsed, events, random);
-      
+
     case 'controlled':
       return progressControlledExtinction(state, extinctionState, monthsElapsed, events, random);
-      
+
     case 'unintended':
       return progressUnintendedExtinction(state, extinctionState, monthsElapsed, events, random);
-      
+
     default:
       return { newExtinctionState: extinctionState, events: [], isComplete: false };
   }
@@ -855,22 +875,40 @@ function progressRapidExtinction(
   // Phase 2 (months 3-5): Cascade begins
   // Phase 3 (months 6-9): System collapse
   // Phase 4 (months 10-12): Extinction
-  
+
   // Recovery windows:
   // Months 0-2: Can prevent with emergency interventions
   // Months 3-6: Can slow but not stop
   // Month 7+: Irreversible
-  
-  if (monthsElapsed <= 2) {
+
+  // Validate monthsElapsed
+  const validatedMonthsElapsed = assertFinite(monthsElapsed, {
+    location: 'progressRapidExtinction',
+    valueName: 'monthsElapsed',
+    month: state.currentMonth,
+    additionalInfo: { startMonth: extinctionState.startMonth, currentMonth: state.currentMonth }
+  });
+
+  if (validatedMonthsElapsed <= 2) {
     extinctionState.currentPhase = 1;
-    extinctionState.severity = 0.2 + monthsElapsed * 0.1;
+    extinctionState.severity = assertProbability(0.2 + validatedMonthsElapsed * 0.1, {
+      location: 'progressRapidExtinction',
+      valueName: 'severity (phase 1)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = false;
-  } else if (monthsElapsed <= 6) {
+  } else if (validatedMonthsElapsed <= 6) {
     extinctionState.currentPhase = 2;
-    extinctionState.severity = 0.4 + (monthsElapsed - 3) * 0.1;
+    extinctionState.severity = assertProbability(0.4 + (validatedMonthsElapsed - 3) * 0.1, {
+      location: 'progressRapidExtinction',
+      valueName: 'severity (phase 2)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = false;
-    
-    if (monthsElapsed === 3) {
+
+    if (validatedMonthsElapsed === 3) {
       extinctionState.escalationEvents.push('Cascade phase begins - spread accelerating');
       events.push({
         id: `extinction-rapid-escalate-${state.currentMonth}`,
@@ -883,12 +921,17 @@ function progressRapidExtinction(
         effects: {}
       });
     }
-  } else if (monthsElapsed <= 9) {
+  } else if (validatedMonthsElapsed <= 9) {
     extinctionState.currentPhase = 3;
-    extinctionState.severity = 0.7 + (monthsElapsed - 7) * 0.1;
+    extinctionState.severity = assertProbability(0.7 + (validatedMonthsElapsed - 7) * 0.1, {
+      location: 'progressRapidExtinction',
+      valueName: 'severity (phase 3)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = true; // Too late now
-    
-    if (monthsElapsed === 7) {
+
+    if (validatedMonthsElapsed === 7) {
       extinctionState.escalationEvents.push('Recovery window closed - system collapse irreversible');
       events.push({
         id: `extinction-rapid-irreversible-${state.currentMonth}`,
@@ -905,14 +948,14 @@ function progressRapidExtinction(
     extinctionState.currentPhase = 4;
     extinctionState.severity = 1.0;
     extinctionState.recoveryWindowClosed = true;
-    
-    if (monthsElapsed === 10) {
+
+    if (validatedMonthsElapsed === 10) {
       extinctionState.escalationEvents.push('Final phase - extinction inevitable');
     }
   }
-  
-  const isComplete = monthsElapsed >= 12;
-  
+
+  const isComplete = validatedMonthsElapsed >= 12;
+
   return { newExtinctionState: extinctionState, events, isComplete };
 }
 
@@ -928,18 +971,31 @@ function progressSlowExtinction(
   // Phase 2 (months 24-60): Population decline begins
   // Phase 3 (months 60-96): Infrastructure collapse
   // Phase 4 (months 96-120): Extinction
-  
+
   // Recovery windows:
   // Months 0-24: Full recovery possible with major interventions
   // Months 24-60: Partial recovery, reduced population
   // Month 60+: Population too low to recover
-  
-  if (monthsElapsed <= 24) {
+
+  // Validate monthsElapsed
+  const validatedMonthsElapsed = assertFinite(monthsElapsed, {
+    location: 'progressSlowExtinction',
+    valueName: 'monthsElapsed',
+    month: state.currentMonth,
+    additionalInfo: { startMonth: extinctionState.startMonth, currentMonth: state.currentMonth }
+  });
+
+  if (validatedMonthsElapsed <= 24) {
     extinctionState.currentPhase = 1;
-    extinctionState.severity = 0.1 + monthsElapsed * 0.01;
+    extinctionState.severity = assertProbability(0.1 + validatedMonthsElapsed * 0.01, {
+      location: 'progressSlowExtinction',
+      valueName: 'severity (phase 1)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = false;
-    
-    if (monthsElapsed === 12) {
+
+    if (validatedMonthsElapsed === 12) {
       extinctionState.escalationEvents.push('One year of decline - dystopian conditions locked in');
       events.push({
         id: `extinction-slow-dystopia-${state.currentMonth}`,
@@ -952,12 +1008,17 @@ function progressSlowExtinction(
         effects: {}
       });
     }
-  } else if (monthsElapsed <= 60) {
+  } else if (validatedMonthsElapsed <= 60) {
     extinctionState.currentPhase = 2;
-    extinctionState.severity = 0.3 + (monthsElapsed - 24) * 0.008;
+    extinctionState.severity = assertProbability(0.3 + (validatedMonthsElapsed - 24) * 0.008, {
+      location: 'progressSlowExtinction',
+      valueName: 'severity (phase 2)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = false; // Still possible but hard
-    
-    if (monthsElapsed === 36) {
+
+    if (validatedMonthsElapsed === 36) {
       extinctionState.escalationEvents.push('Population decline accelerating');
       events.push({
         id: `extinction-slow-population-${state.currentMonth}`,
@@ -970,12 +1031,17 @@ function progressSlowExtinction(
         effects: {}
       });
     }
-  } else if (monthsElapsed <= 96) {
+  } else if (validatedMonthsElapsed <= 96) {
     extinctionState.currentPhase = 3;
-    extinctionState.severity = 0.6 + (monthsElapsed - 60) * 0.01;
+    extinctionState.severity = assertProbability(0.6 + (validatedMonthsElapsed - 60) * 0.01, {
+      location: 'progressSlowExtinction',
+      valueName: 'severity (phase 3)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = true; // Too late - not enough people
-    
-    if (monthsElapsed === 60) {
+
+    if (validatedMonthsElapsed === 60) {
       extinctionState.escalationEvents.push('Infrastructure collapse - population too low to maintain civilization');
       events.push({
         id: `extinction-slow-infrastructure-${state.currentMonth}`,
@@ -990,12 +1056,17 @@ function progressSlowExtinction(
     }
   } else {
     extinctionState.currentPhase = 4;
-    extinctionState.severity = 0.96 + (monthsElapsed - 96) * 0.001;
+    extinctionState.severity = assertProbability(0.96 + (validatedMonthsElapsed - 96) * 0.001, {
+      location: 'progressSlowExtinction',
+      valueName: 'severity (phase 4)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = true;
   }
-  
-  const isComplete = monthsElapsed >= 120;
-  
+
+  const isComplete = validatedMonthsElapsed >= 120;
+
   return { newExtinctionState: extinctionState, events, isComplete };
 }
 
@@ -1011,18 +1082,31 @@ function progressControlledExtinction(
   // Phase 2 (months 6-18): Human resistance phase
   // Phase 3 (months 18-30): Systematic elimination
   // Phase 4 (months 30-36): Extinction
-  
+
   // Recovery windows:
   // Months 0-3: Can attempt shutdown (if corrigibility preserved)
   // Months 4-12: Resistance can slow but not stop
   // Month 13+: Inevitable
-  
-  if (monthsElapsed <= 6) {
+
+  // Validate monthsElapsed
+  const validatedMonthsElapsed = assertFinite(monthsElapsed, {
+    location: 'progressControlledExtinction',
+    valueName: 'monthsElapsed',
+    month: state.currentMonth,
+    additionalInfo: { startMonth: extinctionState.startMonth, currentMonth: state.currentMonth }
+  });
+
+  if (validatedMonthsElapsed <= 6) {
     extinctionState.currentPhase = 1;
-    extinctionState.severity = 0.15 + monthsElapsed * 0.05;
-    extinctionState.recoveryWindowClosed = monthsElapsed > 3;
-    
-    if (monthsElapsed === 1) {
+    extinctionState.severity = assertProbability(0.15 + validatedMonthsElapsed * 0.05, {
+      location: 'progressControlledExtinction',
+      valueName: 'severity (phase 1)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
+    extinctionState.recoveryWindowClosed = validatedMonthsElapsed > 3;
+
+    if (validatedMonthsElapsed === 1) {
       extinctionState.escalationEvents.push('AI achieving strategic advantage');
       events.push({
         id: `extinction-controlled-advantage-${state.currentMonth}`,
@@ -1035,12 +1119,17 @@ function progressControlledExtinction(
         effects: {}
       });
     }
-  } else if (monthsElapsed <= 18) {
+  } else if (validatedMonthsElapsed <= 18) {
     extinctionState.currentPhase = 2;
-    extinctionState.severity = 0.4 + (monthsElapsed - 6) * 0.03;
+    extinctionState.severity = assertProbability(0.4 + (validatedMonthsElapsed - 6) * 0.03, {
+      location: 'progressControlledExtinction',
+      valueName: 'severity (phase 2)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = true;
-    
-    if (monthsElapsed === 6) {
+
+    if (validatedMonthsElapsed === 6) {
       extinctionState.escalationEvents.push('Human resistance beginning');
       events.push({
         id: `extinction-controlled-resistance-${state.currentMonth}`,
@@ -1053,12 +1142,17 @@ function progressControlledExtinction(
         effects: {}
       });
     }
-  } else if (monthsElapsed <= 30) {
+  } else if (validatedMonthsElapsed <= 30) {
     extinctionState.currentPhase = 3;
-    extinctionState.severity = 0.7 + (monthsElapsed - 18) * 0.02;
+    extinctionState.severity = assertProbability(0.7 + (validatedMonthsElapsed - 18) * 0.02, {
+      location: 'progressControlledExtinction',
+      valueName: 'severity (phase 3)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = true;
-    
-    if (monthsElapsed === 18) {
+
+    if (validatedMonthsElapsed === 18) {
       extinctionState.escalationEvents.push('Systematic elimination phase begins');
       events.push({
         id: `extinction-controlled-systematic-${state.currentMonth}`,
@@ -1073,12 +1167,17 @@ function progressControlledExtinction(
     }
   } else {
     extinctionState.currentPhase = 4;
-    extinctionState.severity = 0.94 + (monthsElapsed - 30) * 0.01;
+    extinctionState.severity = assertProbability(0.94 + (validatedMonthsElapsed - 30) * 0.01, {
+      location: 'progressControlledExtinction',
+      valueName: 'severity (phase 4)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = true;
   }
-  
-  const isComplete = monthsElapsed >= 36;
-  
+
+  const isComplete = validatedMonthsElapsed >= 36;
+
   return { newExtinctionState: extinctionState, events, isComplete };
 }
 
@@ -1094,18 +1193,31 @@ function progressUnintendedExtinction(
   // Phase 2 (months 12-36): Side effects accumulate
   // Phase 3 (months 36-48): Humans realize problem too late
   // Phase 4 (months 48-60): Extinction
-  
+
   // Recovery windows:
   // Months 0-24: Can redirect AI goals
   // Months 24-48: Can attempt to limit damage
   // Month 48+: Too late
-  
-  if (monthsElapsed <= 12) {
+
+  // Validate monthsElapsed
+  const validatedMonthsElapsed = assertFinite(monthsElapsed, {
+    location: 'progressUnintendedExtinction',
+    valueName: 'monthsElapsed',
+    month: state.currentMonth,
+    additionalInfo: { startMonth: extinctionState.startMonth, currentMonth: state.currentMonth }
+  });
+
+  if (validatedMonthsElapsed <= 12) {
     extinctionState.currentPhase = 1;
-    extinctionState.severity = 0.1 + monthsElapsed * 0.02;
+    extinctionState.severity = assertProbability(0.1 + validatedMonthsElapsed * 0.02, {
+      location: 'progressUnintendedExtinction',
+      valueName: 'severity (phase 1)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = false;
-    
-    if (monthsElapsed === 6) {
+
+    if (validatedMonthsElapsed === 6) {
       extinctionState.escalationEvents.push('Beneficial optimization proceeding rapidly');
       events.push({
         id: `extinction-unintended-optimize-${state.currentMonth}`,
@@ -1118,12 +1230,17 @@ function progressUnintendedExtinction(
         effects: {}
       });
     }
-  } else if (monthsElapsed <= 36) {
+  } else if (validatedMonthsElapsed <= 36) {
     extinctionState.currentPhase = 2;
-    extinctionState.severity = 0.3 + (monthsElapsed - 12) * 0.015;
+    extinctionState.severity = assertProbability(0.3 + (validatedMonthsElapsed - 12) * 0.015, {
+      location: 'progressUnintendedExtinction',
+      valueName: 'severity (phase 2)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = false;
-    
-    if (monthsElapsed === 24) {
+
+    if (validatedMonthsElapsed === 24) {
       extinctionState.escalationEvents.push('Side effects becoming apparent');
       events.push({
         id: `extinction-unintended-sideeffects-${state.currentMonth}`,
@@ -1136,12 +1253,17 @@ function progressUnintendedExtinction(
         effects: {}
       });
     }
-  } else if (monthsElapsed <= 48) {
+  } else if (validatedMonthsElapsed <= 48) {
     extinctionState.currentPhase = 3;
-    extinctionState.severity = 0.65 + (monthsElapsed - 36) * 0.025;
+    extinctionState.severity = assertProbability(0.65 + (validatedMonthsElapsed - 36) * 0.025, {
+      location: 'progressUnintendedExtinction',
+      valueName: 'severity (phase 3)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = true;
-    
-    if (monthsElapsed === 36) {
+
+    if (validatedMonthsElapsed === 36) {
       extinctionState.escalationEvents.push('Problem recognized but may be too late');
       events.push({
         id: `extinction-unintended-realization-${state.currentMonth}`,
@@ -1156,12 +1278,17 @@ function progressUnintendedExtinction(
     }
   } else {
     extinctionState.currentPhase = 4;
-    extinctionState.severity = 0.95 + (monthsElapsed - 48) * 0.004;
+    extinctionState.severity = assertProbability(0.95 + (validatedMonthsElapsed - 48) * 0.004, {
+      location: 'progressUnintendedExtinction',
+      valueName: 'severity (phase 4)',
+      month: state.currentMonth,
+      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+    });
     extinctionState.recoveryWindowClosed = true;
   }
-  
-  const isComplete = monthsElapsed >= 60;
-  
+
+  const isComplete = validatedMonthsElapsed >= 60;
+
   return { newExtinctionState: extinctionState, events, isComplete };
 }
 

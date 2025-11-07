@@ -290,44 +290,221 @@ function updateTier1Metrics(state: GameState, metrics: CountrySufferingMetrics):
 function updateTier2Indicators(state: GameState, metrics: CountrySufferingMetrics, system: MinimalSufferingSystem): void {
   const { tier2Indicators } = metrics;
 
+  // Validate population is positive (required for per-capita calculations)
+  const populationBillions = assertFinite(metrics.population, {
+    location: 'updateTier2Indicators',
+    valueName: 'metrics.population',
+    month: state.currentMonth,
+    additionalInfo: { countryCode: metrics.countryCode }
+  });
+
+  if (populationBillions <= 0) {
+    // Population is 0 or negative - set defaults and skip calculations
+    tier2Indicators.fragileStateIndex = 50;
+    tier2Indicators.stateFailureActive = false;
+    tier2Indicators.planetaryBoundariesBreached = BASELINE_2025.planetaryBoundaries;
+    tier2Indicators.environmentalCollapseActive = true;
+    tier2Indicators.foodCrisisActive = false;
+    tier2Indicators.foodCrisisPopulation = 0;
+    tier2Indicators.electoralDemocracyIndex = 0.5;
+    tier2Indicators.authoritarianActive = false;
+    tier2Indicators.haqIndex = 60;
+    tier2Indicators.healthcareCollapseActive = false;
+    return;
+  }
+
   // Fragile State Index (estimate from trust + violence + economic factors)
   // Research: FSI = Security + Economy + Politics + Social (12 indicators)
   // Simplified: Map simulation trust, violence, GDP to FSI scale
-  const trust = state.society.trustInGovernment || 0.5;
-  const violence = state.humanPopulationSystem.deathsByCategory.war / (metrics.population * 1_000_000_000);
-  const gdpLevel = state.globalMetrics.qualityOfLife; // Use QoL as proxy for economic output
+  const trust = assertProbability(state.society.trustInGovernment ?? 0.5, {
+    location: 'updateTier2Indicators',
+    valueName: 'society.trustInGovernment',
+    month: state.currentMonth,
+    additionalInfo: { countryCode: metrics.countryCode }
+  });
+
+  const warDeaths = assertFinite(state.humanPopulationSystem.deathsByCategory.war, {
+    location: 'updateTier2Indicators',
+    valueName: 'deathsByCategory.war',
+    month: state.currentMonth,
+    additionalInfo: { countryCode: metrics.countryCode }
+  });
+
+  const violence = assertFinite(warDeaths / (populationBillions * 1_000_000_000), {
+    location: 'updateTier2Indicators',
+    valueName: 'violence',
+    month: state.currentMonth,
+    additionalInfo: { warDeaths, populationBillions }
+  });
+
+  const gdpLevel = assertFinite(state.globalMetrics.qualityOfLife, {
+    location: 'updateTier2Indicators',
+    valueName: 'globalMetrics.qualityOfLife',
+    month: state.currentMonth,
+    additionalInfo: { countryCode: metrics.countryCode }
+  });
 
   // FSI scale: 0 (stable) to 120 (failed)
   // Low trust → high FSI, high violence → high FSI, low GDP → high FSI
-  tier2Indicators.fragileStateIndex = Math.min(120,
-    (1 - trust) * 40 + // Trust component (0-40)
-    Math.min(40, violence * 100_000) + // Violence component (0-40)
-    (1 - Math.min(1, gdpLevel / 100)) * 40 // Economic component (0-40)
+  const trustComponent = assertFinite((1 - trust) * 40, {
+    location: 'updateTier2Indicators',
+    valueName: 'trustComponent',
+    month: state.currentMonth,
+    additionalInfo: { trust }
+  });
+
+  const violenceComponent = assertFinite(Math.min(40, violence * 100_000), {
+    location: 'updateTier2Indicators',
+    valueName: 'violenceComponent',
+    month: state.currentMonth,
+    additionalInfo: { violence }
+  });
+
+  const economicComponent = assertFinite((1 - Math.min(1, gdpLevel / 100)) * 40, {
+    location: 'updateTier2Indicators',
+    valueName: 'economicComponent',
+    month: state.currentMonth,
+    additionalInfo: { gdpLevel }
+  });
+
+  tier2Indicators.fragileStateIndex = assertInRange(
+    Math.min(120, trustComponent + violenceComponent + economicComponent),
+    0,
+    120,
+    {
+      location: 'updateTier2Indicators',
+      valueName: 'fragileStateIndex',
+      month: state.currentMonth,
+      additionalInfo: { trustComponent, violenceComponent, economicComponent }
+    }
   );
-  tier2Indicators.stateFailureActive = tier2Indicators.fragileStateIndex >= system.thresholds.fsiThreshold;
+
+  const fsiThreshold = assertFinite(system.thresholds.fsiThreshold, {
+    location: 'updateTier2Indicators',
+    valueName: 'thresholds.fsiThreshold',
+    month: state.currentMonth,
+    additionalInfo: { fsi: tier2Indicators.fragileStateIndex }
+  });
+
+  tier2Indicators.stateFailureActive = tier2Indicators.fragileStateIndex >= fsiThreshold;
 
   // Planetary boundaries (from planetary boundaries system)
-  const boundaries = state.planetaryBoundariesSystem?.boundariesBreached || BASELINE_2025.planetaryBoundaries;
+  const boundaries = assertInRange(
+    state.planetaryBoundariesSystem?.boundariesBreached ?? BASELINE_2025.planetaryBoundaries,
+    0,
+    9,
+    {
+      location: 'updateTier2Indicators',
+      valueName: 'planetaryBoundariesBreached',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    }
+  );
+
   tier2Indicators.planetaryBoundariesBreached = boundaries;
-  tier2Indicators.environmentalCollapseActive = boundaries >= system.thresholds.planetaryBoundariesThreshold;
+
+  const pbThreshold = assertInRange(system.thresholds.planetaryBoundariesThreshold, 0, 9, {
+    location: 'updateTier2Indicators',
+    valueName: 'thresholds.planetaryBoundariesThreshold',
+    month: state.currentMonth,
+    additionalInfo: { boundaries }
+  });
+
+  tier2Indicators.environmentalCollapseActive = boundaries >= pbThreshold;
 
   // Food crisis (from famine system)
-  const famineAffectedTier2 = state.famineSystem?.activeFamines.reduce((sum, f) => sum + f.populationAtRisk, 0) || 0;
+  const famineAffectedTier2 = assertFinite(
+    state.famineSystem?.activeFamines.reduce((sum, f) => {
+      const risk = assertFinite(f.populationAtRisk, {
+        location: 'updateTier2Indicators',
+        valueName: 'famine.populationAtRisk',
+        month: state.currentMonth,
+        additionalInfo: { countryCode: metrics.countryCode }
+      });
+      return sum + risk;
+    }, 0) || 0,
+    {
+      location: 'updateTier2Indicators',
+      valueName: 'famineAffectedTier2',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    }
+  );
+
   tier2Indicators.foodCrisisPopulation = famineAffectedTier2;
-  tier2Indicators.foodCrisisActive = (famineAffectedTier2 / (metrics.population * 1_000_000_000)) >= system.thresholds.foodCrisisThreshold;
+
+  const foodCrisisRate = assertFinite(
+    famineAffectedTier2 / (populationBillions * 1_000_000_000),
+    {
+      location: 'updateTier2Indicators',
+      valueName: 'foodCrisisRate',
+      month: state.currentMonth,
+      additionalInfo: { famineAffectedTier2, populationBillions }
+    }
+  );
+
+  const foodCrisisThreshold = assertProbability(system.thresholds.foodCrisisThreshold, {
+    location: 'updateTier2Indicators',
+    valueName: 'thresholds.foodCrisisThreshold',
+    month: state.currentMonth,
+    additionalInfo: { foodCrisisRate }
+  });
+
+  tier2Indicators.foodCrisisActive = foodCrisisRate >= foodCrisisThreshold;
 
   // Electoral democracy (estimate from government trust + freedom)
   // V-Dem EDI scale: 0 (autocracy) to 1 (democracy)
   // Simplified: Map from government trust + civil liberties
-  const civilLiberties = state.globalMetrics.qualityOfLife; // Proxy for freedoms
-  tier2Indicators.electoralDemocracyIndex = Math.max(0, Math.min(1, trust * 0.5 + civilLiberties * 0.005));
-  tier2Indicators.authoritarianActive = tier2Indicators.electoralDemocracyIndex < system.thresholds.autocracyThreshold;
+  const civilLiberties = assertFinite(state.globalMetrics.qualityOfLife, {
+    location: 'updateTier2Indicators',
+    valueName: 'globalMetrics.qualityOfLife (civilLiberties)',
+    month: state.currentMonth,
+    additionalInfo: { countryCode: metrics.countryCode }
+  });
+
+  tier2Indicators.electoralDemocracyIndex = assertProbability(
+    Math.max(0, Math.min(1, trust * 0.5 + civilLiberties * 0.005)),
+    {
+      location: 'updateTier2Indicators',
+      valueName: 'electoralDemocracyIndex',
+      month: state.currentMonth,
+      additionalInfo: { trust, civilLiberties }
+    }
+  );
+
+  const autocracyThreshold = assertProbability(system.thresholds.autocracyThreshold, {
+    location: 'updateTier2Indicators',
+    valueName: 'thresholds.autocracyThreshold',
+    month: state.currentMonth,
+    additionalInfo: { edi: tier2Indicators.electoralDemocracyIndex }
+  });
+
+  tier2Indicators.authoritarianActive = tier2Indicators.electoralDemocracyIndex < autocracyThreshold;
 
   // Healthcare Access & Quality (from QoL health dimension)
   // HAQ scale: 0 (worst) to 100 (best)
-  const healthQoL = (state.qualityOfLifeSystems?.health || 0.6) * 100; // Convert [0,1] to [0,100]
-  tier2Indicators.haqIndex = healthQoL;
-  tier2Indicators.healthcareCollapseActive = tier2Indicators.haqIndex < system.thresholds.haqThreshold;
+  const healthQoL = assertProbability(state.qualityOfLifeSystems?.health ?? 0.6, {
+    location: 'updateTier2Indicators',
+    valueName: 'qualityOfLifeSystems.health',
+    month: state.currentMonth,
+    additionalInfo: { countryCode: metrics.countryCode }
+  });
+
+  tier2Indicators.haqIndex = assertInRange(healthQoL * 100, 0, 100, {
+    location: 'updateTier2Indicators',
+    valueName: 'haqIndex',
+    month: state.currentMonth,
+    additionalInfo: { healthQoL }
+  });
+
+  const haqThreshold = assertInRange(system.thresholds.haqThreshold, 0, 100, {
+    location: 'updateTier2Indicators',
+    valueName: 'thresholds.haqThreshold',
+    month: state.currentMonth,
+    additionalInfo: { haqIndex: tier2Indicators.haqIndex }
+  });
+
+  tier2Indicators.healthcareCollapseActive = tier2Indicators.haqIndex < haqThreshold;
 }
 
 /**
@@ -395,7 +572,7 @@ function updateDystopiaFlags(metrics: CountrySufferingMetrics): void {
 function updateGlobalMetrics(state: GameState, system: MinimalSufferingSystem): void {
   const { globalMetrics, countryMetrics } = system;
 
-  // Reset aggregates
+  // Reset aggregates (initialize to 0)
   let totalPop = 0;
   let weightedExcessMortality = 0;
   let weightedConflictDeaths = 0;
@@ -414,20 +591,157 @@ function updateGlobalMetrics(state: GameState, system: MinimalSufferingSystem): 
 
   // Aggregate across countries
   for (const metrics of countryMetrics.values()) {
-    const pop = metrics.population;
-    totalPop += pop;
+    const pop = assertFinite(metrics.population, {
+      location: 'updateGlobalMetrics',
+      valueName: 'metrics.population',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    });
+
+    totalPop = assertFinite(totalPop + pop, {
+      location: 'updateGlobalMetrics',
+      valueName: 'totalPop',
+      month: state.currentMonth,
+      additionalInfo: { currentTotal: totalPop, adding: pop }
+    });
 
     // Population-weighted averages
-    weightedExcessMortality += metrics.tier1Metrics.excessMortalityRate * pop;
-    weightedConflictDeaths += metrics.tier1Metrics.conflictDeathsPer100K * pop;
-    weightedMalnutrition += metrics.tier1Metrics.acuteMalnutritionPrevalence * pop;
-    weightedDisplacement += metrics.tier1Metrics.displacementRate * pop;
+    const excessMortalityRate = assertFinite(metrics.tier1Metrics.excessMortalityRate, {
+      location: 'updateGlobalMetrics',
+      valueName: 'tier1Metrics.excessMortalityRate',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    });
+
+    weightedExcessMortality = assertFinite(
+      weightedExcessMortality + excessMortalityRate * pop,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'weightedExcessMortality',
+        month: state.currentMonth,
+        additionalInfo: { excessMortalityRate, pop }
+      }
+    );
+
+    const conflictDeathsPer100K = assertFinite(metrics.tier1Metrics.conflictDeathsPer100K, {
+      location: 'updateGlobalMetrics',
+      valueName: 'tier1Metrics.conflictDeathsPer100K',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    });
+
+    weightedConflictDeaths = assertFinite(
+      weightedConflictDeaths + conflictDeathsPer100K * pop,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'weightedConflictDeaths',
+        month: state.currentMonth,
+        additionalInfo: { conflictDeathsPer100K, pop }
+      }
+    );
+
+    const malnutritionPrevalence = assertFinite(metrics.tier1Metrics.acuteMalnutritionPrevalence, {
+      location: 'updateGlobalMetrics',
+      valueName: 'tier1Metrics.acuteMalnutritionPrevalence',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    });
+
+    weightedMalnutrition = assertFinite(
+      weightedMalnutrition + malnutritionPrevalence * pop,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'weightedMalnutrition',
+        month: state.currentMonth,
+        additionalInfo: { malnutritionPrevalence, pop }
+      }
+    );
+
+    const displacementRate = assertFinite(metrics.tier1Metrics.displacementRate, {
+      location: 'updateGlobalMetrics',
+      valueName: 'tier1Metrics.displacementRate',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    });
+
+    weightedDisplacement = assertFinite(
+      weightedDisplacement + displacementRate * pop,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'weightedDisplacement',
+        month: state.currentMonth,
+        additionalInfo: { displacementRate, pop }
+      }
+    );
 
     // Absolute totals
-    globalMetrics.totalExcessDeaths += metrics.tier1Metrics.monthlyExcessDeaths;
-    globalMetrics.totalConflictDeaths += metrics.tier1Metrics.conflictDeathsAbsolute;
-    globalMetrics.totalMalnourished += metrics.tier1Metrics.ipcPhase3Plus;
-    globalMetrics.totalDisplaced += metrics.tier1Metrics.forciblyDisplaced;
+    const monthlyExcessDeaths = assertFinite(metrics.tier1Metrics.monthlyExcessDeaths, {
+      location: 'updateGlobalMetrics',
+      valueName: 'tier1Metrics.monthlyExcessDeaths',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    });
+
+    globalMetrics.totalExcessDeaths = assertFinite(
+      globalMetrics.totalExcessDeaths + monthlyExcessDeaths,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'totalExcessDeaths',
+        month: state.currentMonth,
+        additionalInfo: { currentTotal: globalMetrics.totalExcessDeaths, adding: monthlyExcessDeaths }
+      }
+    );
+
+    const conflictDeathsAbsolute = assertFinite(metrics.tier1Metrics.conflictDeathsAbsolute, {
+      location: 'updateGlobalMetrics',
+      valueName: 'tier1Metrics.conflictDeathsAbsolute',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    });
+
+    globalMetrics.totalConflictDeaths = assertFinite(
+      globalMetrics.totalConflictDeaths + conflictDeathsAbsolute,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'totalConflictDeaths',
+        month: state.currentMonth,
+        additionalInfo: { currentTotal: globalMetrics.totalConflictDeaths, adding: conflictDeathsAbsolute }
+      }
+    );
+
+    const ipcPhase3Plus = assertFinite(metrics.tier1Metrics.ipcPhase3Plus, {
+      location: 'updateGlobalMetrics',
+      valueName: 'tier1Metrics.ipcPhase3Plus',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    });
+
+    globalMetrics.totalMalnourished = assertFinite(
+      globalMetrics.totalMalnourished + ipcPhase3Plus,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'totalMalnourished',
+        month: state.currentMonth,
+        additionalInfo: { currentTotal: globalMetrics.totalMalnourished, adding: ipcPhase3Plus }
+      }
+    );
+
+    const forciblyDisplaced = assertFinite(metrics.tier1Metrics.forciblyDisplaced, {
+      location: 'updateGlobalMetrics',
+      valueName: 'tier1Metrics.forciblyDisplaced',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    });
+
+    globalMetrics.totalDisplaced = assertFinite(
+      globalMetrics.totalDisplaced + forciblyDisplaced,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'totalDisplaced',
+        month: state.currentMonth,
+        additionalInfo: { currentTotal: globalMetrics.totalDisplaced, adding: forciblyDisplaced }
+      }
+    );
 
     // Count countries in dystopian conditions
     if (metrics.tier2Indicators.stateFailureActive) globalMetrics.countriesInStateFailure++;
@@ -438,14 +752,59 @@ function updateGlobalMetrics(state: GameState, system: MinimalSufferingSystem): 
 
   // Calculate weighted averages
   if (totalPop > 0) {
-    globalMetrics.globalExcessMortalityRate = weightedExcessMortality / totalPop;
-    globalMetrics.globalConflictDeathRate = weightedConflictDeaths / totalPop;
-    globalMetrics.globalMalnutritionRate = weightedMalnutrition / totalPop;
-    globalMetrics.globalDisplacementRate = weightedDisplacement / totalPop;
+    globalMetrics.globalExcessMortalityRate = assertFinite(
+      weightedExcessMortality / totalPop,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'globalExcessMortalityRate',
+        month: state.currentMonth,
+        additionalInfo: { weightedExcessMortality, totalPop }
+      }
+    );
+
+    globalMetrics.globalConflictDeathRate = assertFinite(
+      weightedConflictDeaths / totalPop,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'globalConflictDeathRate',
+        month: state.currentMonth,
+        additionalInfo: { weightedConflictDeaths, totalPop }
+      }
+    );
+
+    globalMetrics.globalMalnutritionRate = assertFinite(
+      weightedMalnutrition / totalPop,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'globalMalnutritionRate',
+        month: state.currentMonth,
+        additionalInfo: { weightedMalnutrition, totalPop }
+      }
+    );
+
+    globalMetrics.globalDisplacementRate = assertFinite(
+      weightedDisplacement / totalPop,
+      {
+        location: 'updateGlobalMetrics',
+        valueName: 'globalDisplacementRate',
+        month: state.currentMonth,
+        additionalInfo: { weightedDisplacement, totalPop }
+      }
+    );
   }
 
   // Update planetary boundaries from simulation state
-  const boundaries = state.planetaryBoundariesSystem?.boundariesBreached || BASELINE_2025.planetaryBoundaries;
+  const boundaries = assertInRange(
+    state.planetaryBoundariesSystem?.boundariesBreached ?? BASELINE_2025.planetaryBoundaries,
+    0,
+    9,
+    {
+      location: 'updateGlobalMetrics',
+      valueName: 'planetaryBoundariesBreached',
+      month: state.currentMonth
+    }
+  );
+
   globalMetrics.planetaryBoundariesBreached = boundaries;
 
   // Record boundary changes
@@ -467,41 +826,105 @@ function detectDystopiaConditions(state: GameState, system: MinimalSufferingSyst
   const globalPopulationAffected = new Map<DystopiaType, number>();
   const firstTriggeredMonth = new Map<DystopiaType, number>();
 
+  // Validate thresholds before use
+  const excessMortalityThreshold = assertProbability(system.thresholds.excessMortalityThreshold, {
+    location: 'detectDystopiaConditions',
+    valueName: 'thresholds.excessMortalityThreshold',
+    month: state.currentMonth
+  });
+
+  const conflictDeathsThreshold = assertFinite(system.thresholds.conflictDeathsThreshold, {
+    location: 'detectDystopiaConditions',
+    valueName: 'thresholds.conflictDeathsThreshold',
+    month: state.currentMonth
+  });
+
+  const malnutritionThreshold = assertProbability(system.thresholds.malnutritionThreshold, {
+    location: 'detectDystopiaConditions',
+    valueName: 'thresholds.malnutritionThreshold',
+    month: state.currentMonth
+  });
+
+  const displacementThreshold = assertProbability(system.thresholds.displacementThreshold, {
+    location: 'detectDystopiaConditions',
+    valueName: 'thresholds.displacementThreshold',
+    month: state.currentMonth
+  });
+
   // Check each dystopia type across all countries
   for (const [countryCode, metrics] of system.countryMetrics) {
     const { tier1Metrics, tier2Indicators } = metrics;
 
+    // Validate population for affected calculations
+    const population = assertFinite(metrics.population, {
+      location: 'detectDystopiaConditions',
+      valueName: 'metrics.population',
+      month: state.currentMonth,
+      additionalInfo: { countryCode }
+    });
+
     // Tier 1: Acute dystopias
-    if (tier1Metrics.excessMortalityRate > system.thresholds.excessMortalityThreshold) {
-      addDystopia(DystopiaType.ACUTE_MASS_DEATH, countryCode, metrics.population);
+    const excessMortalityRate = assertFinite(tier1Metrics.excessMortalityRate, {
+      location: 'detectDystopiaConditions',
+      valueName: 'tier1Metrics.excessMortalityRate',
+      month: state.currentMonth,
+      additionalInfo: { countryCode }
+    });
+
+    if (excessMortalityRate > excessMortalityThreshold) {
+      addDystopia(DystopiaType.ACUTE_MASS_DEATH, countryCode, population);
     }
-    if (tier1Metrics.conflictDeathsPer100K > system.thresholds.conflictDeathsThreshold) {
-      addDystopia(DystopiaType.ACUTE_CONFLICT, countryCode, metrics.population);
+
+    const conflictDeathsPer100K = assertFinite(tier1Metrics.conflictDeathsPer100K, {
+      location: 'detectDystopiaConditions',
+      valueName: 'tier1Metrics.conflictDeathsPer100K',
+      month: state.currentMonth,
+      additionalInfo: { countryCode }
+    });
+
+    if (conflictDeathsPer100K > conflictDeathsThreshold) {
+      addDystopia(DystopiaType.ACUTE_CONFLICT, countryCode, population);
     }
-    if (tier1Metrics.acuteMalnutritionPrevalence > system.thresholds.malnutritionThreshold) {
-      addDystopia(DystopiaType.ACUTE_FAMINE, countryCode, metrics.population);
+
+    const malnutritionPrevalence = assertFinite(tier1Metrics.acuteMalnutritionPrevalence, {
+      location: 'detectDystopiaConditions',
+      valueName: 'tier1Metrics.acuteMalnutritionPrevalence',
+      month: state.currentMonth,
+      additionalInfo: { countryCode }
+    });
+
+    if (malnutritionPrevalence > malnutritionThreshold) {
+      addDystopia(DystopiaType.ACUTE_FAMINE, countryCode, population);
     }
-    if (tier1Metrics.displacementRate > system.thresholds.displacementThreshold) {
-      addDystopia(DystopiaType.ACUTE_DISPLACEMENT, countryCode, metrics.population);
+
+    const displacementRate = assertFinite(tier1Metrics.displacementRate, {
+      location: 'detectDystopiaConditions',
+      valueName: 'tier1Metrics.displacementRate',
+      month: state.currentMonth,
+      additionalInfo: { countryCode }
+    });
+
+    if (displacementRate > displacementThreshold) {
+      addDystopia(DystopiaType.ACUTE_DISPLACEMENT, countryCode, population);
     }
 
     // Tier 2: Chronic dystopias
     if (tier2Indicators.stateFailureActive) {
-      addDystopia(DystopiaType.CHRONIC_STATE_FAILURE, countryCode, metrics.population);
+      addDystopia(DystopiaType.CHRONIC_STATE_FAILURE, countryCode, population);
     }
     if (tier2Indicators.healthcareCollapseActive) {
-      addDystopia(DystopiaType.CHRONIC_HEALTHCARE_COLLAPSE, countryCode, metrics.population);
+      addDystopia(DystopiaType.CHRONIC_HEALTHCARE_COLLAPSE, countryCode, population);
     }
     if (tier2Indicators.authoritarianActive) {
-      addDystopia(DystopiaType.CHRONIC_AUTOCRACY, countryCode, metrics.population);
+      addDystopia(DystopiaType.CHRONIC_AUTOCRACY, countryCode, population);
     }
 
     // Tier 3: Existential dystopias (global, not country-specific)
     if (tier2Indicators.environmentalCollapseActive) {
-      addDystopia(DystopiaType.EXISTENTIAL_ENVIRONMENTAL, countryCode, metrics.population);
+      addDystopia(DystopiaType.EXISTENTIAL_ENVIRONMENTAL, countryCode, population);
     }
     if (tier2Indicators.foodCrisisActive) {
-      addDystopia(DystopiaType.EXISTENTIAL_FOOD_SYSTEM, countryCode, metrics.population);
+      addDystopia(DystopiaType.EXISTENTIAL_FOOD_SYSTEM, countryCode, population);
     }
   }
 
@@ -516,7 +939,21 @@ function detectDystopiaConditions(state: GameState, system: MinimalSufferingSyst
     affectedCountries.get(type)!.push(country);
 
     const currentAffected = globalPopulationAffected.get(type) || 0;
-    globalPopulationAffected.set(type, currentAffected + population * 1_000_000_000);
+    const populationAbsolute = assertFinite(population * 1_000_000_000, {
+      location: 'detectDystopiaConditions.addDystopia',
+      valueName: 'populationAbsolute',
+      month: state.currentMonth,
+      additionalInfo: { country, population }
+    });
+
+    const newAffected = assertFinite(currentAffected + populationAbsolute, {
+      location: 'detectDystopiaConditions.addDystopia',
+      valueName: 'newAffected',
+      month: state.currentMonth,
+      additionalInfo: { currentAffected, adding: populationAbsolute }
+    });
+
+    globalPopulationAffected.set(type, newAffected);
 
     if (!firstTriggeredMonth.has(type)) {
       firstTriggeredMonth.set(type, state.currentMonth);
