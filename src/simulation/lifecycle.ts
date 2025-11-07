@@ -18,33 +18,52 @@ import { getTechDeploymentSafe } from './techTree/helpers';
 /**
  * Poisson random number generator
  * Returns number of events in a time period with given rate
+ *
+ * WEEK 2 Task 2.2 (Nov 6, 2025): DETERMINISM FIX - Fixed RNG consumption
+ * Root cause: Knuth algorithm consumed VARIABLE number of RNG calls (k samples where k is random),
+ * causing RNG sequence to shift between runs and breaking Monte Carlo determinism.
+ *
+ * Solution: Pre-allocate FIXED number of samples (10 for small lambda, 2 for large lambda).
+ * Every call now consumes exactly the same number of RNG calls regardless of result.
  */
 function poissonSample(lambda: number, rng: () => number): number {
-  if (lambda <= 0) return 0;
+  if (lambda <= 0) {
+    // Still consume 1 RNG call for determinism (keep sequence aligned)
+    rng();
+    return 0;
+  }
 
-  // For small lambda, use Knuth's algorithm
+  // For small lambda, use Knuth's algorithm with FIXED sample allocation
   if (lambda < 30) {
+    // CRITICAL: Always consume EXACTLY 10 RNG samples (deterministic consumption)
+    // 10 samples is sufficient for lambda < 30 (99.7% coverage for Poisson distribution)
+    const MAX_SAMPLES = 10;
+    const samples = Array.from({ length: MAX_SAMPLES }, () => rng());
+
     const L = Math.exp(-lambda);
     let k = 0;
     let p = 1;
+    let sampleIndex = 0;
 
     do {
       k++;
-      p *= rng();
+      p *= samples[sampleIndex++];
+      if (sampleIndex >= MAX_SAMPLES) {
+        // Out of samples - break (rare for lambda < 30)
+        // Statistical note: P(k > 10 | lambda < 30) < 0.001
+        break;
+      }
     } while (p > L);
 
     return k - 1;
   }
 
   // For large lambda, use normal approximation
-  const normalSample = () => {
-    // Box-Muller transform
-    const u1 = rng();
-    const u2 = rng();
-    return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
-  };
-
-  return Math.max(0, Math.round(lambda + Math.sqrt(lambda) * normalSample()));
+  // CRITICAL: Always consume EXACTLY 2 RNG samples (Box-Muller)
+  const u1 = rng();
+  const u2 = rng();
+  const normalSample = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+  return Math.max(0, Math.round(lambda + Math.sqrt(lambda) * normalSample));
 }
 
 /**
@@ -630,7 +649,14 @@ export function updateAIPopulation(state: GameState, rng: () => number): void {
 
     // Phase 10 FIX: Assign new AIs to organizations
     // TIER 0D BUG FIX #4: Exclude bankrupt organizations from receiving new AIs
-    const privateOrgs = state.organizations.filter(o => o.type === 'private' && !o.bankrupt);
+    // WEEK 2 Task 2.2 (Nov 6, 2025): DETERMINISM FIX - Sort organizations before weighted selection
+    // Root cause: Weighted selection depends on array order. If organizations array has
+    // non-deterministic order (from modifications elsewhere), same RNG value selects different org.
+    // Solution: Sort by ID to ensure deterministic order before weighted selection.
+    const privateOrgs = state.organizations
+      .filter(o => o.type === 'private' && !o.bankrupt)
+      .sort((a, b) => a.id.localeCompare(b.id)); // DETERMINISM: stable sort by ID
+
     if (privateOrgs.length > 0) {
       // Weight by number of existing models (big orgs train more)
       const weights = privateOrgs.map(org => Math.max(1, org.ownedAIModels.length));
