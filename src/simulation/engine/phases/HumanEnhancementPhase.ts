@@ -24,6 +24,12 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 
 import { calculateAIAssistedSkillsAggregateMetrics, calculateProductivityMultiplierFromAIAssistedSkills, updateLaborCapitalDistribution, checkCompetenceCrisis, checkWageInequality, applyPolicyInterventions } from '../../aiAssistedSkills';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import {
+  assertFinite,
+  assertNonEmpty,
+  assertInRange,
+  assertDefined
+} from '@/simulation/utils/assertions';
 
 export class HumanEnhancementPhase implements SimulationPhase {
   readonly id = 'ai-assisted-skills-metrics';
@@ -45,7 +51,23 @@ export class HumanEnhancementPhase implements SimulationPhase {
 
       // Get average AI capability for phase detection
       const avgAICapability = state.aiAgents && state.aiAgents.length > 0
-        ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
+        ? assertFinite(
+            state.aiAgents.reduce((sum, ai) => {
+              const capability = assertFinite(ai.capability, {
+                location: 'HumanEnhancementPhase.execute',
+                valueName: `aiAgent[${ai.id}].capability`,
+                month: state.currentMonth,
+                additionalInfo: { agentId: ai.id, expectedSource: 'AILifecyclePhase or initialization' }
+              });
+              return sum + capability;
+            }, 0) / state.aiAgents.length,
+            {
+              location: 'HumanEnhancementPhase.execute',
+              valueName: 'avgAICapability',
+              month: state.currentMonth,
+              additionalInfo: { agentCount: state.aiAgents.length }
+            }
+          )
         : 0;
 
       // Calculate aggregate metrics from segment data
@@ -78,8 +100,26 @@ export class HumanEnhancementPhase implements SimulationPhase {
 
       // Phase 4: Update labor-capital distribution based on AI-driven productivity gains
       if (state.laborCapitalDistribution) {
-        const productivityMultiplier = calculateProductivityMultiplierFromAIAssistedSkills(state);
-        const ubiLevel = state.ubiSystem?.basicIncome?.amount || 0;
+        const productivityMultiplier = assertFinite(
+          calculateProductivityMultiplierFromAIAssistedSkills(state),
+          {
+            location: 'HumanEnhancementPhase.execute',
+            valueName: 'productivityMultiplier',
+            month: state.currentMonth,
+            additionalInfo: { expectedSource: 'aiAssistedSkills.ts calculation' }
+          }
+        );
+
+        // UBI level from UBIPhase (order 15.3)
+        const ubiLevel = assertFinite(
+          state.ubiSystem?.basicIncome?.amount ?? 0,
+          {
+            location: 'HumanEnhancementPhase.execute',
+            valueName: 'ubiLevel',
+            month: state.currentMonth,
+            additionalInfo: { expectedSource: 'UBIPhase (order 15.3)' }
+          }
+        );
 
         // Phase 6: Apply policy interventions if configured
         if (state.policyInterventions === undefined) {
@@ -127,12 +167,32 @@ export class HumanEnhancementPhase implements SimulationPhase {
         }
 
         // Log productivity-wage decoupling when gap becomes significant
-        if (state.laborCapitalDistribution.productivityWageGap > 0.20) {
-          console.warn(`\n⚠️  Productivity-Wage Gap: ${(state.laborCapitalDistribution.productivityWageGap * 100).toFixed(1)}%`);
+        const productivityWageGap = assertInRange(
+          state.laborCapitalDistribution.productivityWageGap,
+          -1, 1, // Allow negative gaps (wages outpacing productivity is possible but rare)
+          {
+            location: 'HumanEnhancementPhase.execute',
+            valueName: 'productivityWageGap',
+            month: state.currentMonth
+          }
+        );
+
+        if (productivityWageGap > 0.20) {
+          const laborShare = assertInRange(
+            state.laborCapitalDistribution.laborShare,
+            0, 1,
+            {
+              location: 'HumanEnhancementPhase.execute',
+              valueName: 'laborShare',
+              month: state.currentMonth
+            }
+          );
+
+          console.warn(`\n⚠️  Productivity-Wage Gap: ${(productivityWageGap * 100).toFixed(1)}%`);
           console.log(`  Productivity Growth: +${(state.laborCapitalDistribution.productivityGrowth * 100).toFixed(1)}%`);
           console.log(`  Wage Growth: +${(state.laborCapitalDistribution.wageGrowth * 100).toFixed(1)}%`);
           console.log(`  Gains to Capital: ${(state.laborCapitalDistribution.gainsToCapital * 100).toFixed(0)}%`);
-          console.log(`  Labor Share: ${(state.laborCapitalDistribution.laborShare * 100).toFixed(1)}%`);
+          console.log(`  Labor Share: ${(laborShare * 100).toFixed(1)}%`);
         }
       }
     }
