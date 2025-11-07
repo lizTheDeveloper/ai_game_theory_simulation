@@ -4,6 +4,58 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 6, 2025)
+
+**⚙️ GITHUB ACTIONS WORKFLOWS TEMPORARILY DISABLED** (Nov 6, 2025, commit 4378525)
+
+**Summary:** Temporarily disabled 3 auto-running GitHub Actions workflows to conserve Claude API tokens during high-usage period.
+
+**Context:** Autonomous worker reached 79% of weekly Claude API token usage with reset not until November 10th (Monday). To prioritize critical work and avoid hitting usage limits, disabled workflows that consume tokens on every push.
+
+**Workflows Disabled:**
+1. **determinism-validation.yml** → **determinism-validation.yml.disabled**
+   - Runs on: Every simulation file change (`src/simulation/**`, `src/types/game.ts`)
+   - Purpose: Validates deterministic RNG (10 runs × 12 months with seed=42)
+   - Token consumption: ~10-15 minutes of Claude API calls per run
+
+2. **research-age-audit.yml** → **research-age-audit.yml.disabled**
+   - Runs on: Research file changes + weekly schedule (every Monday 8am UTC)
+   - Purpose: Auto-generates research currency report (`research/UPDATE_QUEUE.md`)
+   - Token consumption: Weekly automated runs
+
+3. **sync-wiki.yml** → **sync-wiki.yml.disabled**
+   - Runs on: Wiki file changes (`docs/wiki/**`)
+   - Purpose: Syncs documentation updates across systems
+   - Token consumption: Runs on every wiki update
+
+**Workflows Kept Active:**
+- ✅ **architecture-review.yml** - PR quality gate (critical for code quality)
+- ✅ **feature-implementer.yml** - Issue-triggered only (manual control)
+- ✅ **deploy-production.yml** - Production branch only (infrequent)
+
+**Re-enabling:** Remove `.disabled` extension from workflow files to restore functionality after token reset on November 10th.
+
+**Workarounds:**
+- Manual determinism validation: `npx tsx scripts/comprehensiveDeterminismValidation.ts`
+- Manual research age audit: `npm run audit:research`
+- Wiki sync: No impact (documentation updates still manual)
+
+**Impact:**
+- ✅ Conserves ~30-40% of weekly Claude API token usage
+- ✅ Preserves tokens for critical orchestrator work
+- ⚠️ Requires manual validation until workflows re-enabled
+- ⚠️ Research age audit now manual-only (no weekly automation)
+
+**Files Modified:**
+- `.github/workflows/determinism-validation.yml` → `.github/workflows/determinism-validation.yml.disabled`
+- `.github/workflows/research-age-audit.yml` → `.github/workflows/research-age-audit.yml.disabled`
+- `.github/workflows/sync-wiki.yml` → `.github/workflows/sync-wiki.yml.disabled`
+
+**Documentation Updated:**
+- `docs/wiki/README.md` - Updated 3 references to `.yml.disabled` with status notices
+
+---
+
 ## ✅ Recent Changes (November 7, 2025)
 
 **🔧 AUTONOMOUS WORKER HEALTH CHECK FIX** (Nov 7, 2025, commit a7103fd)

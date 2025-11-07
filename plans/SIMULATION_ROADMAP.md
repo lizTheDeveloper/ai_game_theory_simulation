@@ -812,6 +812,147 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 
 ---
 
+#### Real-World Resource Constraints for Government Actions
+**Priority:** CRITICAL
+**Status:** NEW - Ready for autonomous worker pickup (Nov 7, 2025)
+**Complexity:** 7+ systems (government, economy, resources, actions, policy, infrastructure, crisis)
+**Autonomous Worker Target:** Overnight execution (research → validation → implementation → testing → documentation)
+
+**Current State:**
+- 97% of government actions (33/34) have NO budget costs defined
+- Implementation timelines are generic (36 months for everything)
+- No legislative bandwidth limits (unlimited policy spam possible)
+- No physical constraints modeled (supply chains, labor scarcity)
+- Analysis documents already created in root directory:
+  - `GOVERNMENT_RESOURCE_CONSTRAINTS_ANALYSIS.md` (comprehensive analysis)
+  - `GOVERNMENT_COSTS_SUMMARY.txt` (cost breakdown by action)
+  - `GOVERNMENT_ANALYSIS_INDEX.md` (index of all analysis)
+
+**Problem:** Abstract "energy system" game mechanics instead of ACTUAL real-world constraints (budget costs, implementation timelines, legislative bandwidth, physical bottlenecks) for 44+ government player actions.
+
+**Initiative Structure (5 phases):**
+
+**Phase 1: Research (Cynthia + Sylvia) - PRIORITY: CRITICAL**
+**Deliverable:** `research/government_action_resource_constraints_YYYYMMDD.md`
+**Timeline:** 6-10 hours
+
+Find peer-reviewed sources (2024-2025 preferred) for:
+
+1. **Government Budget Costs** (for each action category):
+   - UBI programs (real-world: ~$1.5-2.5T/year)
+   - AI regulation enforcement ($100M-1B/year)
+   - Alignment research investments ($100M-10B/year)
+   - Cybersecurity infrastructure ($10M-100B)
+   - Nuclear security upgrades ($1-50B)
+   - Environmental programs (Amazon ~$50B, coral ~$30B, climate ~$350B/year)
+   - Crisis responses (nationalization, emergency pause costs)
+   - International cooperation costs
+   - AI rights implementation costs
+
+2. **Implementation Timelines** (domain-specific):
+   - Policy/regulation rollout (6-18 months typical)
+   - Infrastructure construction (24-72 months)
+   - Research programs (12-60 months)
+   - Crisis responses (immediate to 12 months)
+   - Environmental programs (12-120 months)
+
+3. **Legislative Bandwidth**:
+   - Major policies per year capacity (historical data)
+   - Cooldowns between major reforms (political science)
+   - Legislative queue theory (competing priorities)
+
+4. **Physical Constraints**:
+   - Supply chain limits (semiconductors, construction materials)
+   - Labor scarcity (AI safety researchers, construction workers)
+   - Geographic constraints (datacenter locations, logistics)
+
+5. **Government Resource Pool**:
+   - Realistic "AI governance" budget (% of GDP)
+   - Replenishment mechanics (annual budgets, emergency spending)
+   - Caps (deficit limits, political will)
+
+**Quality standards:** 2+ peer-reviewed sources per constraint type
+
+**Phase 2: Validation (Sylvia) - PRIORITY: CRITICAL**
+**Deliverable:** `research/government_constraints_validation_YYYYMMDD.md`
+**Timeline:** 2-4 hours
+
+Review for:
+- Contradictory evidence
+- Methodological issues
+- Missing considerations
+- Overconfidence warnings
+
+**Phase 3: Implementation (Roy/simulation-maintainer) - PRIORITY: HIGH**
+**Deliverable:** Code changes in `src/simulation/systems/`
+**Timeline:** 8-12 hours
+
+Implement validated constraints:
+
+1. Define `government.resources` pool fully (budget, political capital, legislative slots)
+2. Add numeric costs to all 34 actions ($ amounts from research)
+3. Add implementation timelines to all actions (months from research)
+4. Add legislative bandwidth system (annual policy slots, cooldowns)
+5. Add physical constraints (supply chains, labor pools, geographic limits)
+6. Update GameState interface (`src/types/game.ts`)
+
+**Code Locations:**
+- `src/simulation/systems/government.ts` (main government system)
+- `src/simulation/systems/government-actions/*.ts` (individual action files)
+- `src/types/game.ts` (GameState interface updates)
+
+**Phase 4: Quality Gates - PRIORITY: HIGH**
+**Timeline:** 4-6 hours
+
+1. **Architecture Review** (architecture-skeptic):
+   - Performance analysis (O(n) complexity checks)
+   - State propagation validation
+   - Edge case identification
+   - MUST address CRITICAL/HIGH issues before merge
+
+2. **Monte Carlo Validation** (N≥10 runs):
+   - Deterministic reproducibility with RNG seeds
+   - Budget depletion mechanics working
+   - Legislative bandwidth preventing spam
+   - Physical constraints creating realistic bottlenecks
+   - No NaN/Infinity values in resource pools
+
+**Phase 5: Documentation - PRIORITY: MEDIUM**
+**Timeline:** 2-3 hours
+
+Update documentation:
+- `docs/wiki/README.md` - Add "Resource Constraint System" section
+- `docs/PLAYER_DECISION_POINTS.md` - Add cost/timeline columns to all actions
+- `docs/DECISION_POINTS_QUICK_REFERENCE.md` - Budget summary table
+- DevLog creation documenting implementation
+
+**Success Criteria:**
+- ✅ Every action has numeric $ cost backed by research (2+ peer-reviewed sources)
+- ✅ Every action has realistic implementation timeline (domain-specific, research-backed)
+- ✅ Government budget pool defined with replenishment mechanics
+- ✅ Legislative bandwidth prevents unlimited policy spam
+- ✅ Physical constraints model real-world bottlenecks
+- ✅ Monte Carlo validation passes (N≥10 runs, no NaN, deterministic)
+- ✅ Architecture review CRITICAL/HIGH issues addressed
+
+**Context Files for Autonomous Worker:**
+- **Analysis docs (root):** `GOVERNMENT_RESOURCE_CONSTRAINTS_ANALYSIS.md`, `GOVERNMENT_COSTS_SUMMARY.txt`, `GOVERNMENT_ANALYSIS_INDEX.md`
+- **Existing research:** `plans/full-resource-economy-plan.md`, `plans/p3-4-government-implementation-realism.md`
+- **Code locations:** `src/simulation/systems/government.ts`, `src/simulation/systems/government-actions/*.ts`
+- **Type definitions:** `src/types/game.ts`
+
+**Total Estimated Time:** 22-35 hours (research 6-10h, validation 2-4h, implementation 8-12h, quality gates 4-6h, documentation 2-3h)
+
+**Expected Impact:**
+- Replace abstract game mechanics with real-world constraints
+- Prevent unrealistic "spam all policies" strategies
+- Ground player decisions in actual budgets and timelines
+- Model legislative bandwidth and political capital realistically
+- Add physical constraints (supply chains, labor, geography)
+- Increase research validity and realism
+
+---
+
 ## 🟠 HIGH Priority
 
 
