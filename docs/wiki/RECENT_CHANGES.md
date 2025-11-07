@@ -6,6 +6,40 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
+**🔧 AUTONOMOUS WORKER: HEALTH CHECK FIX** (Nov 7, 2025, commit a1b6a23)
+
+**Summary:** Fixed two critical issues preventing autonomous workers from completing full cycles.
+
+**Problem 1 - CRITICAL:** Invalid Claude CLI flag in merge orchestrator
+- Merge orchestrator called `claude --task-file "$FILE"` which isn't supported
+- Claude CLI requires content as argument, not file path flag
+- Auto-remediation couldn't spawn Claude Code to fix conflicts/test failures
+- Affected both test failure and conflict remediation flows (lines 300, 369)
+
+**Problem 2:** Missing test scripts in package.json
+- `npm run test` and `npm run test:backend` scripts were removed
+- Present in git history but lost during package.json updates
+- VM quality gates require `test:backend` to validate merges
+- All merges failing quality gate 2 unnecessarily
+
+**Solution:**
+1. Changed Claude invocation: `claude "$(cat $FILE)"` (pass content directly)
+2. Restored npm scripts: `test` and `test:backend` in package.json
+
+**Impact:**
+- ✅ Merge orchestrator can spawn Claude Code for remediation
+- ✅ `npm run test:backend` validates merges correctly
+- ✅ Workers can complete full cycle: merge → test → review → commit
+- ✅ Autonomous processing unblocked
+
+**Files Modified:**
+- `scripts/merge-orchestrator.sh:300,369` - Claude CLI invocation
+- `package.json` - Restored test scripts
+
+**Testing:** Both fixes validated, autonomous worker health check passes
+
+---
+
 **🛡️ DEFENSIVE CODING CLEANUP: Phase 1 Silent Fallback Removal** (Nov 7, 2025, commit 769925c)
 
 **Summary:** Removed silent fallback patterns that mask bugs in simulation calculations (CRITICAL-4 roadmap item).
