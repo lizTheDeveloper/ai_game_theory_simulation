@@ -111,8 +111,18 @@ export class HumanEnhancementPhase implements SimulationPhase {
         );
 
         // UBI level from UBIPhase (order 15.3)
+        // MUST exist - validate state property first, then check finite
+        const ubiAmount = assertStateProperty(
+          state,
+          'ubiSystem.basicIncome.amount',
+          {
+            location: 'HumanEnhancementPhase.execute',
+            month: state.currentMonth,
+            additionalInfo: { expectedSource: 'UBIPhase (order 15.3)' }
+          }
+        );
         const ubiLevel = assertFinite(
-          state.ubiSystem?.basicIncome?.amount ?? 0,
+          ubiAmount,
           {
             location: 'HumanEnhancementPhase.execute',
             valueName: 'ubiLevel',
