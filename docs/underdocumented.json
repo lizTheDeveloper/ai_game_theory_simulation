@@ -53463,6 +53463,190 @@
     "context": "execute: executeCollectiveFormationPhase,"
   },
   {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 31,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ComputeAllocationPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 32,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'computeInfrastructure',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 33,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 38,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ComputeAllocationPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 39,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'computeInfrastructure.totalCompute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 40,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 49,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ComputeAllocationPhase.execute (post-allocation)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 50,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: `agent[${agent.id}].allocatedCompute`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 51,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 52,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { agentId: agent.id, lifecycle: agent.lifecycle },"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 30,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ComputeGrowthPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 31,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'computeInfrastructure',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 32,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 37,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ComputeGrowthPhase.execute (pre-growth)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 38,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'computeInfrastructure.totalCompute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 39,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 46,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ComputeGrowthPhase.execute (post-growth)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 47,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'computeInfrastructure.totalCompute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 48,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 54,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ComputeGrowthPhase.execute (post-growth)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 55,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'computeInfrastructure.efficiencyMultiplier',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 56,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ComputeGrowthPhase.ts",
+    "line": 57,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { note: 'Moore\\'s Law should not exceed 10x in this timeframe' },"
+  },
+  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CrisisDetectionPhase.ts",
     "line": 36,
     "type": "property",
@@ -54389,6 +54573,126 @@
     "name": "democracyIndex",
     "currentDoc": "(none)",
     "context": "democracyIndex: number"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 29,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'DystopiaProgressionPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 30,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'dystopiaProgression',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 31,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 37,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'DystopiaProgressionPhase.execute (pre-update)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 38,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'dystopiaProgression.surveillanceScore',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 39,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 46,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'DystopiaProgressionPhase.execute (pre-update)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 47,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'dystopiaProgression.authoritarianismScore',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 48,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 57,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'DystopiaProgressionPhase.execute (post-update)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 58,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'dystopiaProgression.surveillanceScore',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 59,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 65,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'DystopiaProgressionPhase.execute (post-update)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 66,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'dystopiaProgression.authoritarianismScore',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/DystopiaProgressionPhase.ts",
+    "line": 67,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/EconomicTransitionPhase.ts",
@@ -60064,7 +60368,175 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 52,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'FamineSystemPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 53,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'totalAICapability',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 54,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 55,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { agentCount: state.aiAgents.length },"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 63,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'FamineSystemPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 64,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'resourceEconomy.food.reserves',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 65,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 80,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'FamineSystemPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 81,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'famineDeaths',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
     "line": 82,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 83,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 86,
+    "type": "property",
+    "name": "activeFamines",
+    "currentDoc": "(none)",
+    "context": "activeFamines: state.famineSystem.activeFamines.length,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 109,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'FamineSystemPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 110,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'activeFamines',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 111,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 119,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'FamineSystemPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 120,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'humanPopulationSystem.population',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 121,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 136,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'FamineSystemPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 137,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'famineMortalityRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 138,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 162,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -60072,7 +60544,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 83,
+    "line": 163,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -60080,7 +60552,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 84,
+    "line": 164,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -60088,7 +60560,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 85,
+    "line": 165,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -60096,7 +60568,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 88,
+    "line": 168,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -60104,7 +60576,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 89,
+    "line": 169,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -60112,7 +60584,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 90,
+    "line": 170,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -60120,39 +60592,23 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 97,
+    "line": 176,
     "type": "property",
-    "name": "type",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "type: 'famine',"
+    "context": "location: 'FamineSystemPhase.execute (fallback)',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 98,
+    "line": 177,
     "type": "property",
-    "name": "baseRisk",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "baseRisk: mortalityRate,"
+    "context": "valueName: 'humanPopulationSystem.population',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 99,
-    "type": "property",
-    "name": "proximate",
-    "currentDoc": "(none)",
-    "context": "proximate: 'famine',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 102,
-    "type": "property",
-    "name": "scope",
-    "currentDoc": "(none)",
-    "context": "scope: 'SEMI-GLOBAL',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 103,
+    "line": 178,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -60160,7 +60616,71 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
-    "line": 104,
+    "line": 193,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'FamineSystemPhase.execute (fallback)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 194,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'mortalityRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 195,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 200,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'famine',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 201,
+    "type": "property",
+    "name": "baseRisk",
+    "currentDoc": "(none)",
+    "context": "baseRisk: mortalityRate,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 202,
+    "type": "property",
+    "name": "proximate",
+    "currentDoc": "(none)",
+    "context": "proximate: 'famine',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 205,
+    "type": "property",
+    "name": "scope",
+    "currentDoc": "(none)",
+    "context": "scope: 'SEMI-GLOBAL',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 206,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FamineSystemPhase.ts",
+    "line": 207,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",

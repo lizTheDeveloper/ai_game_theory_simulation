@@ -15,6 +15,13 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import {
+  assertFinite,
+  assertProbability,
+  assertMortalityRate,
+  assertNonEmpty,
+  assertInRange,
+} from '@/simulation/utils/assertions';
 
 export class FamineSystemPhase implements SimulationPhase {
   readonly id = 'famine_system';
@@ -38,16 +45,57 @@ export class FamineSystemPhase implements SimulationPhase {
     // 2. Update active famines (progress death curves)
     const { updateFamineSystem } = require('../../../types/famine');
 
-    const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
-    const resourcesAvailable = state.resourceEconomy.food.reserves > 0.5;
+    // Validate AI capability aggregation (prevent NaN propagation)
+    const totalAICapability = assertFinite(
+      state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0),
+      {
+        location: 'FamineSystemPhase.execute',
+        valueName: 'totalAICapability',
+        month: state.currentMonth,
+        additionalInfo: { agentCount: state.aiAgents.length },
+      }
+    );
+
+    // Validate food reserves are valid probability
+    const foodReserves = assertProbability(
+      state.resourceEconomy.food.reserves,
+      {
+        location: 'FamineSystemPhase.execute',
+        valueName: 'resourceEconomy.food.reserves',
+        month: state.currentMonth,
+      }
+    );
+    const resourcesAvailable = foodReserves > 0.5;
 
     // FIX (Oct 26, 2025): Pass current month for seasonal mortality calculation
-    const famineDeaths = updateFamineSystem(
+    const famineDeathsRaw = updateFamineSystem(
       state.famineSystem,
       totalAICapability,
       resourcesAvailable,
       state.currentMonth
     );
+
+    // Validate famine deaths (critical mortality value, cannot be NaN)
+    const famineDeaths = assertFinite(famineDeathsRaw, {
+      location: 'FamineSystemPhase.execute',
+      valueName: 'famineDeaths',
+      month: state.currentMonth,
+      additionalInfo: {
+        totalAICapability,
+        resourcesAvailable,
+        activeFamines: state.famineSystem.activeFamines.length,
+      },
+    });
+
+    // Famine deaths must be non-negative (deaths cannot be negative)
+    if (famineDeaths < 0) {
+      throw new Error(
+        `❌ Negative famine deaths in FamineSystemPhase\n` +
+        `   famineDeaths = ${famineDeaths}M\n` +
+        `   Month: ${state.currentMonth}\n` +
+        `   This indicates a bug in updateFamineSystem calculation.`
+      );
+    }
 
     // 3. Apply famine deaths to population via centralized mortality system
     if (famineDeaths > 0) {
@@ -56,9 +104,41 @@ export class FamineSystemPhase implements SimulationPhase {
       // For each active famine, add mortality risk with appropriate root cause
       // This allows proper Bayesian compounding of multi-causal famines
       if (famines.length > 0) {
+        // Validate we have famines array
+        assertNonEmpty(famines, {
+          location: 'FamineSystemPhase.execute',
+          valueName: 'activeFamines',
+          month: state.currentMonth,
+        });
+
         for (const famine of famines) {
           // Estimate this famine's contribution (proportional to active famines)
-          const famineMortalityRate = (famineDeaths / famines.length) / state.humanPopulationSystem.population;
+          // Division by famines.length is safe (assertNonEmpty checked it)
+          // Division by population needs validation
+          const population = assertFinite(state.humanPopulationSystem.population, {
+            location: 'FamineSystemPhase.execute',
+            valueName: 'humanPopulationSystem.population',
+            month: state.currentMonth,
+          });
+
+          if (population <= 0) {
+            throw new Error(
+              `❌ Zero or negative population in FamineSystemPhase\n` +
+              `   population = ${population}B\n` +
+              `   Month: ${state.currentMonth}\n` +
+              `   Cannot calculate famine mortality rate with zero population.`
+            );
+          }
+
+          const famineMortalityRate = assertMortalityRate(
+            (famineDeaths / famines.length) / population,
+            {
+              location: 'FamineSystemPhase.execute',
+              valueName: 'famineMortalityRate',
+              month: state.currentMonth,
+              population: population * 1000, // Convert to millions for display
+            }
+          );
 
           // Determine root cause based on famine cause
           let rootCause: 'conflict' | 'climate' | 'social' | 'ecosystem' = 'social';
@@ -92,7 +172,30 @@ export class FamineSystemPhase implements SimulationPhase {
         }
       } else {
         // No active famines (shouldn't happen) - add aggregate risk with social cause
-        const mortalityRate = famineDeaths / state.humanPopulationSystem.population;
+        const population = assertFinite(state.humanPopulationSystem.population, {
+          location: 'FamineSystemPhase.execute (fallback)',
+          valueName: 'humanPopulationSystem.population',
+          month: state.currentMonth,
+        });
+
+        if (population <= 0) {
+          throw new Error(
+            `❌ Zero or negative population in FamineSystemPhase (fallback)\n` +
+            `   population = ${population}B\n` +
+            `   Month: ${state.currentMonth}\n` +
+            `   Cannot calculate mortality rate with zero population.`
+          );
+        }
+
+        const mortalityRate = assertMortalityRate(
+          famineDeaths / population,
+          {
+            location: 'FamineSystemPhase.execute (fallback)',
+            valueName: 'mortalityRate',
+            month: state.currentMonth,
+            population: population * 1000, // Convert to millions for display
+          }
+        );
         addMortalityRisk(state.humanPopulationSystem, {
           type: 'famine',
           baseRisk: mortalityRate,
