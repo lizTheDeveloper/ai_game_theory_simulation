@@ -244,7 +244,9 @@ export function updateDeploymentProgress(
   const climateMultiplier = getClimateRecoveryMultiplier(gameState);
   const investmentMultiplier = getInvestmentMultiplier(gameState);
 
-  for (const region of Object.keys(techTreeState.regionalDeployment)) {
+  // FIX (Nov 7, 2025): Sort regions for deterministic iteration (Issue #11)
+  const sortedRegions = Object.keys(techTreeState.regionalDeployment).sort();
+  for (const region of sortedRegions) {
     const deployments = techTreeState.regionalDeployment[region];
 
     for (const deployment of deployments) {

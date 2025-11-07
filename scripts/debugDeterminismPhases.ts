@@ -31,7 +31,9 @@ for (let run = 1; run <= 3; run++) {
     logLevel: 'none'
   });
 
-  const initialState = createDefaultInitialState();
+  // FIX (Nov 7, 2025): Pass RNG to initialization (CRITICAL-3 fix)
+  const rng = engine.getRNG();
+  const initialState = createDefaultInitialState(() => rng.next());
 
   console.log(`Initial state hash: ${hashState(initialState)}`);
 

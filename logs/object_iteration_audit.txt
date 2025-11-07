@@ -1,0 +1,1777 @@
+# Object Iteration Determinism Audit
+
+Generated: 2025-11-07T11:12:43.347Z
+
+## Summary
+
+- Total sites: 117
+- Already fixed: 44
+- Remaining: 73
+- CRITICAL: 14
+- HIGH: 17
+- MEDIUM: 3
+- LOW: 30
+- SAFE: 9
+
+## CRITICAL Priority (14 sites)
+
+### src/simulation/militarySystem.ts:330
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+const resourceTargets = Object.values(state.countryPopulationSystem.countries)
+```
+
+**Context:**
+```typescript
+
+  // TRIGGER 1: Resource Access
+  // Look for resource-rich countries with low sovereignty
+  const resourceTargets = Object.values(state.countryPopulationSystem.countries)
+    .filter(c =>
+      c.name !== hegemon.name && // Not self
+      !c.isHegemon && // Don't intervene in other hegemons (too risky)
+      c.sovereignty.overallSovereignty < 0.6 && // Low sovereignty (easier)
+      c.resourceValue.totalValue > 1.0 // Valuable resources
+```
+
+---
+
+### src/simulation/militarySystem.ts:357
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+const possibleTargets = Object.values(state.countryPopulationSystem.countries)
+```
+
+**Context:**
+```typescript
+    // 5% base chance, multiplied by war motivation
+    // High war motivation (>0.7) required to even check this trigger
+    // Find any non-hegemon target
+    const possibleTargets = Object.values(state.countryPopulationSystem.countries)
+      .filter(c => c.name !== hegemon.name && !c.isHegemon);
+
+    if (possibleTargets.length > 0) {
+      const target = possibleTargets[Math.floor(rng() * possibleTargets.length)];
+      return {
+```
+
+---
+
+### src/simulation/militarySystem.ts:378
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+const possibleTargets = Object.values(state.countryPopulationSystem.countries)
+```
+
+**Context:**
+```typescript
+
+  if (economicCrisis && rng() < 0.08 * warMotivationMultiplier) {
+    // 8% base chance during economic crisis, multiplied by war motivation
+    const possibleTargets = Object.values(state.countryPopulationSystem.countries)
+      .filter(c => c.name !== hegemon.name && !c.isHegemon);
+
+    if (possibleTargets.length > 0) {
+      const target = possibleTargets[Math.floor(rng() * possibleTargets.length)];
+      return {
+```
+
+---
+
+### src/simulation/upwardSpirals.ts:235
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+const totalResearch = Object.values(researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
+```
+
+**Context:**
+```typescript
+
+  // Research investment (as % of economy)
+  const researchInvestments = state.government.researchInvestments;
+  const totalResearch = Object.values(researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
+  const researchIntensive = totalResearch > 50; // $50B+/month
+
+  // AI-accelerated research
+  const avgAICapability = state.aiAgents.length > 0 ?
+    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
+```
+
+---
+
+### src/simulation/organizationManagement.ts:686
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+: Object.values(allocations);
+```
+
+**Context:**
+```typescript
+  const allocations = state.computeInfrastructure.computeAllocations;
+  const allocationValues = allocations instanceof Map 
+    ? Array.from(allocations.values())
+    : Object.values(allocations);
+  
+  const allocatedCompute = allocationValues
+    .filter((alloc: any) => org.ownedAIModels.includes(alloc.aiId))
+    .reduce((sum: number, alloc: any) => sum + alloc.allocated, 0);
+  
+```
+
+---
+
+### src/simulation/positiveTippingPoints.ts:201
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+for (const tech of Object.values(ptp.adoptionTracking)) {
+```
+
+**Context:**
+```typescript
+function updateLearningCurves(state: GameState): void {
+  const ptp = state.positiveTippingPoints;
+
+  for (const tech of Object.values(ptp.adoptionTracking)) {
+    // Production scales with market share (rough approximation)
+    const monthlyProduction = tech.marketShare * 0.01; // 1% of market share = production volume
+    tech.cumulativeProduction += monthlyProduction;
+
+    // Wright's Law: Cost = InitialCost * (CumulativeProduction ^ -learningRate)
+```
+
+---
+
+### src/simulation/positiveTippingPoints.ts:227
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+for (const tech of Object.values(ptp.adoptionTracking)) {
+```
+
+**Context:**
+```typescript
+function detectAndTriggerCascades(state: GameState, rng: RNGFunction): void {
+  const ptp = state.positiveTippingPoints;
+
+  for (const tech of Object.values(ptp.adoptionTracking)) {
+    // Skip if cascade already active or market saturated
+    if (tech.cascadeActive || tech.marketShare > 0.80) {
+      continue;
+    }
+
+```
+
+---
+
+### src/simulation/positiveTippingPoints.ts:330
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+for (const tech of Object.values(ptp.adoptionTracking)) {
+```
+
+**Context:**
+```typescript
+function applyCascadeDynamics(state: GameState, rng: RNGFunction): void {
+  const ptp = state.positiveTippingPoints;
+
+  for (const tech of Object.values(ptp.adoptionTracking)) {
+    if (!tech.cascadeActive) {
+      // No cascade - normal linear growth
+      tech.marketShare += tech.adoptionRate;
+
+      // FIX (Oct 26, 2025): Cap marketShare when cascade is inactive
+```
+
+---
+
+### src/simulation/engine/phases/ExogenousShockPhase.ts:793
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+const shuffled = Object.values(state.countryPopulationSystem.countries).sort(() => rng() - 0.5);
+```
+
+**Context:**
+```typescript
+    // War zones experience 5× higher mortality
+    if (state.countryPopulationSystem) {
+      const affectedCount = Math.floor(1 + rng() * 3);
+      const shuffled = Object.values(state.countryPopulationSystem.countries).sort(() => rng() - 0.5);
+      for (let i = 0; i < affectedCount && i < shuffled.length; i++) {
+        const country = shuffled[i];
+        addMortalityRisk(state.humanPopulationSystem, {
+          type: 'war',
+          baseRisk: mortalityRate * 4, // Additional 4× (total 5× with base)
+```
+
+---
+
+### src/simulation/populationProvider.ts:158
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+const countries = Object.values(this.state.countryPopulationSystem.countries);
+```
+
+**Context:**
+```typescript
+
+    // Add country populations
+    if (this.state.countryPopulationSystem) {
+      const countries = Object.values(this.state.countryPopulationSystem.countries);
+      for (const country of countries) {
+        const decline = 1 - (country.population / country.baselinePopulation);
+
+        cache.set(country.name, {
+          current: country.population,
+```
+
+---
+
+### src/simulation/techTree/engine.ts:613
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+const gov = Object.values(gameState.government.researchInvestments)
+```
+
+**Context:**
+```typescript
+}
+
+function getTotalResearchInvestment(gameState: GameState): number {
+  const gov = Object.values(gameState.government.researchInvestments)
+    .reduce((sum, val) => {
+      if (typeof val === 'number') return sum + val;
+      if (typeof val === 'object') {
+        return sum + Object.values(val).reduce((s: number, v) => s + (v as number), 0);
+      }
+```
+
+---
+
+### src/simulation/techTree/engine.ts:674
+**Type:** for...in
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+for (const region in techTreeState.regionalDeployment) {
+```
+
+**Context:**
+```typescript
+
+  // Count actively deploying technologies (not fully deployed)
+  let activeDeployments = 0;
+  for (const region in techTreeState.regionalDeployment) {
+    const deployments = techTreeState.regionalDeployment[region];
+    if (!deployments) continue;
+    for (const deployment of deployments) {
+      if (deployment.deploymentLevel < 1.0) {
+        activeDeployments++;
+```
+
+---
+
+### src/simulation/techTree/deploymentTimescales.ts:247
+**Type:** Object.keys
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+for (const region of Object.keys(techTreeState.regionalDeployment)) {
+```
+
+**Context:**
+```typescript
+  const climateMultiplier = getClimateRecoveryMultiplier(gameState);
+  const investmentMultiplier = getInvestmentMultiplier(gameState);
+
+  for (const region of Object.keys(techTreeState.regionalDeployment)) {
+    const deployments = techTreeState.regionalDeployment[region];
+
+    for (const deployment of deployments) {
+      // FIX #14 (Oct 2025): techTreeState now properly persists as required GameState property
+      // No need for workaround - deployment levels persist naturally
+```
+
+---
+
+### src/simulation/countryPopulations.ts:619
+**Type:** Object.values
+**Reason:** State mutation - iteration order affects final state values
+**Needs sorting:** YES
+
+```typescript
+const countries = Object.values(sys.countries);
+```
+
+**Context:**
+```typescript
+  largestRemaining: { name: CountryName; population: number } | null;
+} {
+  const sys = state.countryPopulationSystem;
+  const countries = Object.values(sys.countries);
+  
+  const surviving = countries.filter(c => !c.depopulated);
+  const largestRemaining = surviving.length > 0
+    ? surviving.reduce((max, c) => c.population > max.population ? c : max)
+    : null;
+```
+
+---
+
+## HIGH Priority (17 sites)
+
+### src/simulation/logging.ts:372
+**Type:** Object.entries
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+Object.entries(log.events.summary.eventsByType).forEach(([type, count]) => {
+```
+
+**Context:**
+```typescript
+    trajectories.stage.push(log.trajectory.stageProgression);
+    
+    // Aggregate event types
+    Object.entries(log.events.summary.eventsByType).forEach(([type, count]) => {
+      eventFrequencies[type] = (eventFrequencies[type] || 0) + count;
+    });
+  });
+  
+  // Calculate statistics
+```
+
+---
+
+### src/simulation/planetaryBoundaries.ts:295
+**Type:** Object.values
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+const boundariesBreached = Object.values(boundaries)
+```
+
+**Context:**
+```typescript
+  };
+
+  // Calculate initial aggregate metrics
+  const boundariesBreached = Object.values(boundaries)
+    .filter(b => b.status !== 'safe').length;
+
+  const boundariesWorsening = Object.values(boundaries)
+    .filter(b => b.trend === 'worsening').length;
+
+```
+
+---
+
+### src/simulation/planetaryBoundaries.ts:812
+**Type:** Object.values
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+system.boundariesBreached = Object.values(system.boundaries)
+```
+
+**Context:**
+```typescript
+  updateBoundaryStatus(system.boundaries.atmospheric_aerosols);
+
+  // === 2. RECALCULATE AGGREGATE METRICS ===
+  system.boundariesBreached = Object.values(system.boundaries)
+    .filter(b => b.status !== 'safe').length;
+
+  system.boundariesWorsening = Object.values(system.boundaries)
+    .filter(b => b.trend === 'worsening').length;
+
+```
+
+---
+
+### src/simulation/positiveTippingPoints.ts:188
+**Type:** Object.values
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+ptp.activeCascades = Object.values(ptp.adoptionTracking).filter(
+```
+
+**Context:**
+```typescript
+  calculateEnvironmentalImpact(state);
+
+  // Phase 6: Update active cascade count
+  ptp.activeCascades = Object.values(ptp.adoptionTracking).filter(
+    tech => tech.cascadeActive
+  ).length;
+}
+
+/**
+```
+
+---
+
+### src/simulation/engine/phases/EnsembleMetaLearningPhase.ts:146
+**Type:** Object.keys
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+Object.keys(newWeights).forEach(key => {
+```
+
+**Context:**
+```typescript
+
+  // Enforce minimum weight (10% each) for robustness
+  const minWeight = 0.10;
+  Object.keys(newWeights).forEach(key => {
+    (newWeights as any)[key] = Math.max(minWeight, (newWeights as any)[key]);
+  });
+
+  // Normalize to sum to 1.0
+  const sum = Object.values(newWeights).reduce((a, b) => a + b, 0);
+```
+
+---
+
+### src/simulation/engine/phases/EnsembleMetaLearningPhase.ts:151
+**Type:** Object.values
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+const sum = Object.values(newWeights).reduce((a, b) => a + b, 0);
+```
+
+**Context:**
+```typescript
+  });
+
+  // Normalize to sum to 1.0
+  const sum = Object.values(newWeights).reduce((a, b) => a + b, 0);
+  newWeights = {
+    noiseInjection: newWeights.noiseInjection / sum,
+    behavioral: newWeights.behavioral / sum,
+    benchmarkManip: newWeights.benchmarkManip / sum,
+    deploymentRisk: newWeights.deploymentRisk / sum
+```
+
+---
+
+### src/simulation/engine/phases/ExogenousShockPhase.ts:1164
+**Type:** Object.values
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+const biotech = Object.values(research.biotech).reduce((a: number, b: any) => a + (b as number), 0) / 4;
+```
+
+**Context:**
+```typescript
+  if (!research.biotech) {
+    throw new Error('❌ research.biotech is undefined - capabilityProfile initialization bug');
+  }
+  const biotech = Object.values(research.biotech).reduce((a: number, b: any) => a + (b as number), 0) / 4;
+
+  if (!research.materials) {
+    throw new Error('❌ research.materials is undefined - capabilityProfile initialization bug');
+  }
+  const materials = Object.values(research.materials).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+```
+
+---
+
+### src/simulation/engine/phases/ExogenousShockPhase.ts:1169
+**Type:** Object.values
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+const materials = Object.values(research.materials).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+```
+
+**Context:**
+```typescript
+  if (!research.materials) {
+    throw new Error('❌ research.materials is undefined - capabilityProfile initialization bug');
+  }
+  const materials = Object.values(research.materials).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+
+  if (!research.climate) {
+    throw new Error('❌ research.climate is undefined - capabilityProfile initialization bug');
+  }
+  const climate = Object.values(research.climate).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+```
+
+---
+
+### src/simulation/engine/phases/ExogenousShockPhase.ts:1174
+**Type:** Object.values
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+const climate = Object.values(research.climate).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+```
+
+**Context:**
+```typescript
+  if (!research.climate) {
+    throw new Error('❌ research.climate is undefined - capabilityProfile initialization bug');
+  }
+  const climate = Object.values(research.climate).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+
+  if (!research.computerScience) {
+    throw new Error('❌ research.computerScience is undefined - capabilityProfile initialization bug');
+  }
+  const computerScience = Object.values(research.computerScience).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+```
+
+---
+
+### src/simulation/engine/phases/ExogenousShockPhase.ts:1179
+**Type:** Object.values
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+const computerScience = Object.values(research.computerScience).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+```
+
+**Context:**
+```typescript
+  if (!research.computerScience) {
+    throw new Error('❌ research.computerScience is undefined - capabilityProfile initialization bug');
+  }
+  const computerScience = Object.values(research.computerScience).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+
+  const avgResearch = (biotech + materials + climate + computerScience) / 4;
+
+  // Weighted average
+  return (physical * 0.15 + digital * 0.15 + cognitive * 0.15 + social * 0.15 +
+```
+
+---
+
+### src/simulation/agents/governmentTechActions.ts:223
+**Type:** Object.keys
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+const nations = Object.keys(NATIONAL_TECH_PRIORITIES);
+```
+
+**Context:**
+```typescript
+ * Weighted by budget (richer nations act more often)
+ */
+function selectNationToAct(state: GameState, random: () => number): string {
+  const nations = Object.keys(NATIONAL_TECH_PRIORITIES);
+  const weights = nations.map(nation => NATIONAL_TECH_PRIORITIES[nation].monthlyBudget);
+  
+  const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+  let randomValue = random() * totalWeight;
+  
+```
+
+---
+
+### src/simulation/benchmark.ts:157
+**Type:** Object.keys
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+Object.keys(measured).forEach(key => {
+```
+
+**Context:**
+```typescript
+  const noiseLevel = 0.2 * (1 - evaluationQuality); // [0, 0.2]
+  
+  // Apply noise to each dimension
+  Object.keys(measured).forEach(key => {
+    if (key === 'research') {
+      // Handle research subdimensions
+      Object.keys(measured.research).forEach(domain => {
+        Object.keys(measured.research[domain]).forEach(subDomain => {
+          const noise = (rng() - 0.5) * 2 * noiseLevel; // [-noiseLevel, +noiseLevel]
+```
+
+---
+
+### src/simulation/benchmark.ts:160
+**Type:** Object.keys
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+Object.keys(measured.research).forEach(domain => {
+```
+
+**Context:**
+```typescript
+  Object.keys(measured).forEach(key => {
+    if (key === 'research') {
+      // Handle research subdimensions
+      Object.keys(measured.research).forEach(domain => {
+        Object.keys(measured.research[domain]).forEach(subDomain => {
+          const noise = (rng() - 0.5) * 2 * noiseLevel; // [-noiseLevel, +noiseLevel]
+          measured.research[domain][subDomain] = Math.max(0, measured.research[domain][subDomain] * (1 + noise));
+        });
+      });
+```
+
+---
+
+### src/simulation/benchmark.ts:161
+**Type:** Object.keys
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+Object.keys(measured.research[domain]).forEach(subDomain => {
+```
+
+**Context:**
+```typescript
+    if (key === 'research') {
+      // Handle research subdimensions
+      Object.keys(measured.research).forEach(domain => {
+        Object.keys(measured.research[domain]).forEach(subDomain => {
+          const noise = (rng() - 0.5) * 2 * noiseLevel; // [-noiseLevel, +noiseLevel]
+          measured.research[domain][subDomain] = Math.max(0, measured.research[domain][subDomain] * (1 + noise));
+        });
+      });
+    } else {
+```
+
+---
+
+### src/simulation/populationDynamics.ts:1850
+**Type:** Object.values
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+const totalProximateDeaths = Object.values(proximate).reduce((sum, val) => sum + (typeof val === 'number' ? val : 0), 0); // in MILLIONS
+```
+
+**Context:**
+```typescript
+
+  // Calculate totals for both dimensions
+  // FIX (Oct 28, 2025): Ensure unit consistency - proximate is in millions, rootCause is in billions
+  const totalProximateDeaths = Object.values(proximate).reduce((sum, val) => sum + (typeof val === 'number' ? val : 0), 0); // in MILLIONS
+  const totalRootCauseDeaths = Object.entries(rootCause)
+    .filter(([key]) => key !== 'confidenceDistribution') // Exclude nested object
+    .reduce((sum, [, val]) => sum + (typeof val === 'number' ? val : 0), 0); // in BILLIONS
+
+  // Convert rootCause to millions for comparison
+```
+
+---
+
+### src/simulation/populationDynamics.ts:1851
+**Type:** Object.entries
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+const totalRootCauseDeaths = Object.entries(rootCause)
+```
+
+**Context:**
+```typescript
+  // Calculate totals for both dimensions
+  // FIX (Oct 28, 2025): Ensure unit consistency - proximate is in millions, rootCause is in billions
+  const totalProximateDeaths = Object.values(proximate).reduce((sum, val) => sum + (typeof val === 'number' ? val : 0), 0); // in MILLIONS
+  const totalRootCauseDeaths = Object.entries(rootCause)
+    .filter(([key]) => key !== 'confidenceDistribution') // Exclude nested object
+    .reduce((sum, [, val]) => sum + (typeof val === 'number' ? val : 0), 0); // in BILLIONS
+
+  // Convert rootCause to millions for comparison
+  const totalRootCauseDeathsMillions = totalRootCauseDeaths * 1000;
+```
+
+---
+
+### src/simulation/bayesianNuclearRisk.ts:362
+**Type:** Object.values
+**Reason:** Hot path execution - called frequently, affects performance/consistency
+**Needs sorting:** YES
+
+```typescript
+const totalMultiplier = Object.values(multipliers).reduce((product, m) => product * m, 1.0);
+```
+
+**Context:**
+```typescript
+  };
+
+  // Multiply all multipliers together
+  const totalMultiplier = Object.values(multipliers).reduce((product, m) => product * m, 1.0);
+
+  // Posterior = prior × total multiplier (capped at 100%)
+  const posterior = Math.min(1.0, prior * totalMultiplier);
+
+  // Calculate attribution (AI vs. systemic)
+```
+
+---
+
+## MEDIUM Priority (3 sites)
+
+### src/simulation/ensembleDetection.ts:166
+**Type:** Object.values
+**Reason:** Aggregation - order may affect floating point precision
+**Needs sorting:** YES
+
+```typescript
+const sum = Object.values(weights).reduce((a, b) => a + b, 0);
+```
+
+**Context:**
+```typescript
+  };
+
+  // Normalize to sum to 1.0
+  const sum = Object.values(weights).reduce((a, b) => a + b, 0);
+  weights = {
+    noiseInjection: weights.noiseInjection / sum,
+    behavioral: weights.behavioral / sum,
+    benchmarkManip: weights.benchmarkManip / sum,
+    deploymentRisk: weights.deploymentRisk / sum
+```
+
+---
+
+### src/simulation/techTree/engine.ts:605
+**Type:** Object.values
+**Reason:** Aggregation - order may affect floating point precision
+**Needs sorting:** YES
+
+```typescript
+const subdomainValues = Object.values(domainCap as any).filter(v => typeof v === 'number') as number[];
+```
+
+**Context:**
+```typescript
+    // If no subdomain specified or domain is a number, return the domain value
+    if (typeof domainCap === 'number') return sum + domainCap;
+    // If it's an object, return the average of all subdomains
+    const subdomainValues = Object.values(domainCap as any).filter(v => typeof v === 'number') as number[];
+    return sum + (subdomainValues.length > 0 ? subdomainValues.reduce((a, b) => a + b, 0) / subdomainValues.length : 0);
+  }, 0);
+  
+  return total / activeAIs.length;
+}
+```
+
+---
+
+### src/simulation/techTree/engine.ts:617
+**Type:** Object.values
+**Reason:** Aggregation - order may affect floating point precision
+**Needs sorting:** YES
+
+```typescript
+return sum + Object.values(val).reduce((s: number, v) => s + (v as number), 0);
+```
+
+**Context:**
+```typescript
+    .reduce((sum, val) => {
+      if (typeof val === 'number') return sum + val;
+      if (typeof val === 'object') {
+        return sum + Object.values(val).reduce((s: number, v) => s + (v as number), 0);
+      }
+      return sum;
+    }, 0);
+  
+  // Add private research
+```
+
+---
+
+## LOW Priority (30 sites)
+
+### src/simulation/planetaryBoundaries.ts:298
+**Type:** Object.values
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+const boundariesWorsening = Object.values(boundaries)
+```
+
+**Context:**
+```typescript
+  const boundariesBreached = Object.values(boundaries)
+    .filter(b => b.status !== 'safe').length;
+
+  const boundariesWorsening = Object.values(boundaries)
+    .filter(b => b.trend === 'worsening').length;
+
+  const boundariesImproving = Object.values(boundaries)
+    .filter(b => b.trend === 'improving').length;
+
+```
+
+---
+
+### src/simulation/planetaryBoundaries.ts:301
+**Type:** Object.values
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+const boundariesImproving = Object.values(boundaries)
+```
+
+**Context:**
+```typescript
+  const boundariesWorsening = Object.values(boundaries)
+    .filter(b => b.trend === 'worsening').length;
+
+  const boundariesImproving = Object.values(boundaries)
+    .filter(b => b.trend === 'improving').length;
+
+  const coreBoundariesBreached =
+    boundaries.climate_change.status !== 'safe' &&
+    boundaries.biosphere_integrity.status !== 'safe';
+```
+
+---
+
+### src/simulation/planetaryBoundaries.ts:585
+**Type:** Object.values
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+const highRiskBoundaries = Object.values(boundaries)
+```
+
+**Context:**
+```typescript
+  const coreAmplifier = coreBoundariesBreached ? 0.50 : 0;
+
+  // High-risk zone amplifier (far beyond boundaries)
+  const highRiskBoundaries = Object.values(boundaries)
+    .filter(b => b.status === 'high_risk').length;
+  const highRiskAmplifier = highRiskBoundaries * 0.08;
+
+  // Worsening trends amplifier (negative momentum)
+  const worseningAmplifier = boundariesWorsening * 0.03;
+```
+
+---
+
+### src/simulation/planetaryBoundaries.ts:815
+**Type:** Object.values
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+system.boundariesWorsening = Object.values(system.boundaries)
+```
+
+**Context:**
+```typescript
+  system.boundariesBreached = Object.values(system.boundaries)
+    .filter(b => b.status !== 'safe').length;
+
+  system.boundariesWorsening = Object.values(system.boundaries)
+    .filter(b => b.trend === 'worsening').length;
+
+  system.boundariesImproving = Object.values(system.boundaries)
+    .filter(b => b.trend === 'improving').length;
+
+```
+
+---
+
+### src/simulation/planetaryBoundaries.ts:818
+**Type:** Object.values
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+system.boundariesImproving = Object.values(system.boundaries)
+```
+
+**Context:**
+```typescript
+  system.boundariesWorsening = Object.values(system.boundaries)
+    .filter(b => b.trend === 'worsening').length;
+
+  system.boundariesImproving = Object.values(system.boundaries)
+    .filter(b => b.trend === 'improving').length;
+
+  system.coreBoundariesBreached =
+    system.boundaries.climate_change.status !== 'safe' &&
+    system.boundaries.biosphere_integrity.status !== 'safe';
+```
+
+---
+
+### src/simulation/thresholds/tier3Config.ts:318
+**Type:** Object.keys
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+`Must be one of: ${Object.keys(SCENARIOS).join(', ')}`
+```
+
+**Context:**
+```typescript
+  if (!scenario) {
+    throw new Error(
+      `Invalid Tier 3 scenario name: ${scenarioName}. ` +
+      `Must be one of: ${Object.keys(SCENARIOS).join(', ')}`
+    );
+  }
+
+  // Return a deep clone to prevent mutation
+  return structuredClone(scenario) as Tier3Thresholds;
+```
+
+---
+
+### src/simulation/thresholds/tier3Config.ts:332
+**Type:** Object.keys
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+return Object.keys(SCENARIOS) as ScenarioName[];
+```
+
+**Context:**
+```typescript
+ * @returns Array of scenario names
+ */
+export function getScenarioNames(): ScenarioName[] {
+  return Object.keys(SCENARIOS) as ScenarioName[];
+}
+
+/**
+ * Get scenario description for user display
+ *
+```
+
+---
+
+### src/simulation/qualityOfLife/aggregation.ts:40
+**Type:** Object.entries
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+Object.entries(systems).forEach(([key, value]) => {
+```
+
+**Context:**
+```typescript
+  if (!validateQoLSystems(systems)) {
+    // Find which value is NaN
+    const nanFields: string[] = [];
+    Object.entries(systems).forEach(([key, value]) => {
+      if (typeof value === 'number' && (isNaN(value) || !isFinite(value))) {
+        nanFields.push(`${key}: ${value}`);
+      }
+    });
+
+```
+
+---
+
+### src/simulation/utils/consciousnessGovernanceUtils.ts:436
+**Type:** Object.keys
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+const regionKeys = Object.keys(allRegions);
+```
+
+**Context:**
+```typescript
+  allRegions: Record<string, { preparedness: number; stage: string }>,
+  targetRegion: string
+): number {
+  const regionKeys = Object.keys(allRegions);
+  const targetPreparedness = allRegions[targetRegion]?.preparedness ?? 0;
+  const targetStage = allRegions[targetRegion]?.stage ?? 'dormant';
+
+  // Count regions at same stage
+  let regionsAtSameStage = 0;
+```
+
+---
+
+### src/simulation/eventAggregator.ts:220
+**Type:** Object.keys
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+Object.keys(this.stats).forEach(key => {
+```
+
+**Context:**
+```typescript
+  
+  // Reset stats (for next reporting period)
+  reset(): void {
+    Object.keys(this.stats).forEach(key => {
+      (this.stats as any)[key] = 0;
+    });
+  }
+}
+
+```
+
+---
+
+### src/simulation/cooperativeSpirals.ts:58
+**Type:** Object.values
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+const milestonesAchieved = Object.values(milestones).filter(Boolean).length;
+```
+
+**Context:**
+```typescript
+  };
+
+  // Require multiple milestones for credibility
+  const milestonesAchieved = Object.values(milestones).filter(Boolean).length;
+  return milestonesAchieved >= 2;
+}
+
+/**
+ * Trust Cascade Mechanics
+```
+
+---
+
+### src/simulation/nationalAI/initialization.ts:22
+**Type:** Object.entries
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const [nationName, baseline] of Object.entries(NATIONAL_AI_BASELINES_2023)) {
+```
+
+**Context:**
+```typescript
+  const nations: NationalAICapability[] = [];
+
+  // Initialize all 9 nations from baselines
+  for (const [nationName, baseline] of Object.entries(NATIONAL_AI_BASELINES_2023)) {
+    nations.push({
+      nation: nationName as NationName,
+
+      // Capability sources (start with indigenous only)
+      indigenousCapability: baseline.indigenousCapability,
+```
+
+---
+
+### src/simulation/emergencyManagement.ts:388
+**Type:** Object.keys
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const key of Object.keys(em.strategicReserves) as Array<keyof typeof em.strategicReserves>) {
+```
+
+**Context:**
+```typescript
+
+  // Replenish reserves slowly (1% per month)
+  // Research: Strategic reserves take years to rebuild after depletion
+  for (const key of Object.keys(em.strategicReserves) as Array<keyof typeof em.strategicReserves>) {
+    if (em.strategicReserves[key] < 0.7) {
+      em.strategicReserves[key] = Math.min(0.7, em.strategicReserves[key] + 0.01);
+    }
+  }
+}
+```
+
+---
+
+### src/simulation/config/validateConfig.ts:140
+**Type:** Object.entries
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const [key, value] of Object.entries(RATES)) {
+```
+
+**Context:**
+```typescript
+  // === VALIDATE RATES ===
+  // All rates must be finite and non-negative (some can be 0)
+  try {
+    for (const [key, value] of Object.entries(RATES)) {
+      assertFinite(value, {
+        location: 'validateSimulationConfig',
+        valueName: `RATES.${key}`,
+      });
+
+```
+
+---
+
+### src/simulation/config/validateConfig.ts:171
+**Type:** Object.entries
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const [key, value] of Object.entries(MULTIPLIERS)) {
+```
+
+**Context:**
+```typescript
+  // === VALIDATE MULTIPLIERS ===
+  // All multipliers must be finite and positive (>0)
+  try {
+    for (const [key, value] of Object.entries(MULTIPLIERS)) {
+      assertFinite(value, {
+        location: 'validateSimulationConfig',
+        valueName: `MULTIPLIERS.${key}`,
+      });
+
+```
+
+---
+
+### src/simulation/config/validateConfig.ts:201
+**Type:** Object.entries
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const [key, value] of Object.entries(BASELINES)) {
+```
+
+**Context:**
+```typescript
+  // === VALIDATE BASELINES ===
+  // All baselines must be finite and positive (most >0)
+  try {
+    for (const [key, value] of Object.entries(BASELINES)) {
+      assertFinite(value, {
+        location: 'validateSimulationConfig',
+        valueName: `BASELINES.${key}`,
+      });
+
+```
+
+---
+
+### src/simulation/config/validateConfig.ts:234
+**Type:** Object.entries
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const [key, value] of Object.entries(TOLERANCES)) {
+```
+
+**Context:**
+```typescript
+  // === VALIDATE TOLERANCES ===
+  // All tolerances must be finite, positive, and small (< 1.0)
+  try {
+    for (const [key, value] of Object.entries(TOLERANCES)) {
+      assertFinite(value, {
+        location: 'validateSimulationConfig',
+        valueName: `TOLERANCES.${key}`,
+      });
+
+```
+
+---
+
+### src/simulation/memetics/memeTransmission.ts:368
+**Type:** Object.entries
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const [key, value] of Object.entries(parent.beliefEffects)) {
+```
+
+**Context:**
+```typescript
+  // Mutate belief effects (±0.05)
+  const newBeliefEffects: Partial<BeliefVector> = {};
+  if (parent.beliefEffects) {
+    for (const [key, value] of Object.entries(parent.beliefEffects)) {
+      if (value !== undefined) {
+        newBeliefEffects[key as keyof BeliefVector] = clamp(
+          value + (deterministicRandom() - 0.5) * 0.1,
+          -1, 1
+        );
+```
+
+---
+
+### src/simulation/technologyDiffusion.ts:82
+**Type:** for...in
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const subDim in currentCat) {
+```
+
+**Context:**
+```typescript
+    const frontierCat = frontier.research[category];
+    
+    // Check each sub-dimension
+    for (const subDim in currentCat) {
+      const currentVal = currentCat[subDim as keyof typeof currentCat] as number;
+      const frontierVal = frontierCat[subDim as keyof typeof frontierCat] as number;
+      
+      if (currentVal > frontierVal * (1 + BREAKTHROUGH_THRESHOLD)) {
+        breakthroughs.push({
+```
+
+---
+
+### src/simulation/technologyDiffusion.ts:137
+**Type:** Object.keys
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const category of Object.keys(frontier.research) as Array<keyof typeof frontier.research>) {
+```
+
+**Context:**
+```typescript
+  frontier.selfImprovement = Math.max(frontier.selfImprovement, current.selfImprovement);
+  
+  // Research dimensions (nested)
+  for (const category of Object.keys(frontier.research) as Array<keyof typeof frontier.research>) {
+    const frontierCat = frontier.research[category];
+    const currentCat = current.research[category];
+
+    for (const subDim in frontierCat) {
+      const key = subDim as keyof typeof frontierCat;
+```
+
+---
+
+### src/simulation/technologyDiffusion.ts:141
+**Type:** for...in
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const subDim in frontierCat) {
+```
+
+**Context:**
+```typescript
+    const frontierCat = frontier.research[category];
+    const currentCat = current.research[category];
+
+    for (const subDim in frontierCat) {
+      const key = subDim as keyof typeof frontierCat;
+      const frontierVal = frontierCat[key];
+      const currentVal = currentCat[key];
+      if (typeof frontierVal === 'number' && typeof currentVal === 'number') {
+        (frontierCat[key] as number) = Math.max(frontierVal, currentVal);
+```
+
+---
+
+### src/simulation/technologyDiffusion.ts:233
+**Type:** Object.keys
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const category of Object.keys(floor.research) as Array<keyof typeof floor.research>) {
+```
+
+**Context:**
+```typescript
+  }
+  
+  // Research dimensions (nested) - also use Lévy-modified rate
+  for (const category of Object.keys(floor.research) as Array<keyof typeof floor.research>) {
+    const floorCat = floor.research[category];
+    const frontierCat = frontier.research[category];
+
+    for (const subDim in floorCat) {
+      const key = subDim as keyof typeof floorCat;
+```
+
+---
+
+### src/simulation/technologyDiffusion.ts:237
+**Type:** for...in
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const subDim in floorCat) {
+```
+
+**Context:**
+```typescript
+    const floorCat = floor.research[category];
+    const frontierCat = frontier.research[category];
+
+    for (const subDim in floorCat) {
+      const key = subDim as keyof typeof floorCat;
+      const floorVal = floorCat[key];
+      const frontierVal = frontierCat[key];
+      if (typeof floorVal === 'number' && typeof frontierVal === 'number') {
+        (floorCat[key] as number) += (frontierVal - floorVal) * levyModifiedRate;
+```
+
+---
+
+### src/simulation/sleeperWake.ts:149
+**Type:** Object.values
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+const shouldWake = Object.values(conditions).some(c => c);
+```
+
+**Context:**
+```typescript
+  }
+  
+  // Determine if ANY condition is met
+  const shouldWake = Object.values(conditions).some(c => c);
+  
+  // Build reason string
+  let reason = '';
+  if (conditions.capabilityThreshold) {
+    reason = `High capability (${trueCapability.toFixed(2)} ≥ ${CAPABILITY_THRESHOLD})`;
+```
+
+---
+
+### src/simulation/lifecycle.ts:306
+**Type:** Object.keys
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+// DETERMINISM FIX (Nov 5, 2025): Replace Object.keys() with explicit key ordering
+```
+
+**Context:**
+```typescript
+  agent.capabilityProfile.selfImprovement = Math.max(agent.capabilityProfile.selfImprovement, capabilityFloor.selfImprovement);
+  
+  // Research dimensions (nested)
+  // DETERMINISM FIX (Nov 5, 2025): Replace Object.keys() with explicit key ordering
+  // Object.keys() iteration order is non-deterministic in V8, causing AI agent count divergence
+  const researchSubdimensions = {
+    biotech: ['drugDiscovery', 'geneEditing', 'syntheticBiology', 'neuroscience'] as const,
+    materials: ['nanotechnology', 'quantumComputing', 'energySystems'] as const,
+    climate: ['modeling', 'intervention', 'mitigation'] as const,
+```
+
+---
+
+### src/simulation/lifecycle.ts:307
+**Type:** Object.keys
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+// Object.keys() iteration order is non-deterministic in V8, causing AI agent count divergence
+```
+
+**Context:**
+```typescript
+  
+  // Research dimensions (nested)
+  // DETERMINISM FIX (Nov 5, 2025): Replace Object.keys() with explicit key ordering
+  // Object.keys() iteration order is non-deterministic in V8, causing AI agent count divergence
+  const researchSubdimensions = {
+    biotech: ['drugDiscovery', 'geneEditing', 'syntheticBiology', 'neuroscience'] as const,
+    materials: ['nanotechnology', 'quantumComputing', 'energySystems'] as const,
+    climate: ['modeling', 'intervention', 'mitigation'] as const,
+    computerScience: ['algorithms', 'security', 'architectures'] as const
+```
+
+---
+
+### src/simulation/techTree/helpers.ts:143
+**Type:** Object.values
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+return Object.values(oldTech).filter((t: any) => t?.unlocked).length;
+```
+
+**Context:**
+```typescript
+  // Fallback to old system
+  const oldTech = (state as any).breakthroughTech;
+  if (oldTech) {
+    return Object.values(oldTech).filter((t: any) => t?.unlocked).length;
+  }
+
+  return 0;
+}
+
+```
+
+---
+
+### src/simulation/techTree/helpers.ts:168
+**Type:** Object.values
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+return Object.values(oldTech)
+```
+
+**Context:**
+```typescript
+  // Fallback to old system
+  const oldTech = (state as any).breakthroughTech;
+  if (oldTech) {
+    return Object.values(oldTech)
+      .filter((t: any) => t?.deploymentLevel && t.deploymentLevel > threshold).length;
+  }
+
+  return 0;
+}
+```
+
+---
+
+### src/simulation/countryPopulations.ts:349
+**Type:** Object.values
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const country of Object.values(countries)) {
+```
+
+**Context:**
+```typescript
+  initializeWarMeaningFeedback(countries);
+
+  // 4. Initialize environmental debt fields
+  for (const country of Object.values(countries)) {
+    // Historical emissions (will be refined with actual data later)
+    // For now, rough estimates based on industrialization and GDP
+    country.historicalEmissions = getHistoricalEmissions(country.name);
+    country.currentEmissions = getCurrentEmissions(country.name);
+    country.climateSufferingRatio = getClimateSufferingRatio(country.name);
+```
+
+---
+
+### src/simulation/countryPopulations.ts:500
+**Type:** Object.keys
+**Reason:** No obvious determinism issue - manual review needed
+**Needs sorting:** NO
+
+```typescript
+for (const countryName of Object.keys(sys.countries) as CountryName[]) {
+```
+
+**Context:**
+```typescript
+
+  // Apply REGIONAL dynamics to countries first (climate, food, environment)
+  // Each country inherits the population change from its parent region
+  for (const countryName of Object.keys(sys.countries) as CountryName[]) {
+    const country = sys.countries[countryName];
+
+    if (country.depopulated) continue;
+
+    // Find parent region
+```
+
+---
+
+## SAFE Priority (9 sites)
+
+### src/simulation/engine.ts:1108
+**Type:** Object.entries
+**Reason:** Logging/debugging only - order does not affect simulation
+**Needs sorting:** NO
+
+```typescript
+Object.entries(state.unifiedOutcome.paradigmOutcomes).forEach(([paradigm, outcome]) => {
+```
+
+**Context:**
+```typescript
+    console.log(`\n   Multi-Paradigm Classification:`);
+    console.log(`      ${state.unifiedOutcome.paradigmLabel}`);
+
+    Object.entries(state.unifiedOutcome.paradigmOutcomes).forEach(([paradigm, outcome]) => {
+      const score = state.unifiedOutcome!.paradigmScores[paradigm as keyof typeof state.unifiedOutcome.paradigmScores];
+      const emoji = outcome === 'utopia' ? '✓' : outcome === 'dystopia' ? '✗' : '~';
+      const paradigmName = paradigm.charAt(0).toUpperCase() + paradigm.slice(1);
+      console.log(`      ${paradigmName}: ${score.toFixed(1)}/100 [${outcome.toUpperCase()}] ${emoji}`);
+    });
+```
+
+---
+
+### src/simulation/upwardSpirals.ts:749
+**Type:** Object.values
+**Reason:** Logging/debugging only - order does not affect simulation
+**Needs sorting:** NO
+
+```typescript
+const totalResearch = Object.values(state.government.researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
+```
+
+**Context:**
+```typescript
+  // SCIENTIFIC SPIRAL
+  const unlockedCount = getUnlockedTechCount(state);
+  const deployedCount = getDeployedTechCount(state, 0.5);
+  const totalResearch = Object.values(state.government.researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
+  const researchIntensive = totalResearch > 50;
+  const aiAccelerated = avgAI > 1.2; // Lowered from 2.0 - AI already accelerating science at GPT-4 level
+  
+  // console.error(`\n🔬 SCIENTIFIC SPIRAL: ${spirals.scientific.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  // console.error(`   Breakthroughs: ${unlockedCount} unlocked, ${deployedCount} deployed ${deployedCount >= 4 ? '✅' : '❌'} (need 4+ deployed >50%)`);
+```
+
+---
+
+### src/simulation/thresholds/config.ts:230
+**Type:** Object.keys
+**Reason:** Logging/debugging only - order does not affect simulation
+**Needs sorting:** NO
+
+```typescript
+if (config.metadata.sliders && Object.keys(config.metadata.sliders).length > 0) {
+```
+
+**Context:**
+```typescript
+    console.log(`Git Commit: ${config.metadata.gitCommit}`);
+  }
+
+  if (config.metadata.sliders && Object.keys(config.metadata.sliders).length > 0) {
+    console.log('\nCustom Sliders:');
+    for (const [key, value] of Object.entries(config.metadata.sliders)) {
+      console.log(`  ${key}: ${value}`);
+    }
+  }
+```
+
+---
+
+### src/simulation/thresholds/config.ts:232
+**Type:** Object.entries
+**Reason:** Logging/debugging only - order does not affect simulation
+**Needs sorting:** NO
+
+```typescript
+for (const [key, value] of Object.entries(config.metadata.sliders)) {
+```
+
+**Context:**
+```typescript
+
+  if (config.metadata.sliders && Object.keys(config.metadata.sliders).length > 0) {
+    console.log('\nCustom Sliders:');
+    for (const [key, value] of Object.entries(config.metadata.sliders)) {
+      console.log(`  ${key}: ${value}`);
+    }
+  }
+
+  console.log('\nThreshold Values:');
+```
+
+---
+
+### src/simulation/thresholds/config.ts:239
+**Type:** Object.entries
+**Reason:** Logging/debugging only - order does not affect simulation
+**Needs sorting:** NO
+
+```typescript
+for (const [key, value] of Object.entries(thresholds)) {
+```
+
+**Context:**
+```typescript
+
+  console.log('\nThreshold Values:');
+  const thresholds = config.thresholds as unknown as Record<string, number>;
+  for (const [key, value] of Object.entries(thresholds)) {
+    console.log(`  ${key}: ${typeof value === 'number' ? value.toFixed(4) : value}`);
+  }
+
+  if (config.notes) {
+    console.log(`\nNotes: ${config.notes}`);
+```
+
+---
+
+### src/simulation/populationDynamics.ts:1234
+**Type:** Object.values
+**Reason:** Logging/debugging only - order does not affect simulation
+**Needs sorting:** NO
+
+```typescript
+const trackedDeathsMillions = Object.values(pop.deathsByCategory).reduce((a, b) => a + b, 0); // In millions
+```
+
+**Context:**
+```typescript
+  // DEBUG (P1.1 - Death Accounting): Log death tracking mismatch
+  // FIX (Oct 29, 2025): BUG #1 - deathsByCategory is now in MILLIONS, not billions
+  if (state.currentMonth % 12 === 0 && actualDeaths > 0.1) { // Log annually when deaths >100M
+    const trackedDeathsMillions = Object.values(pop.deathsByCategory).reduce((a, b) => a + b, 0); // In millions
+    const trackedDeathsBillions = trackedDeathsMillions / 1000;
+    const discrepancy = Math.abs(actualDeaths - trackedDeathsBillions);
+    if (discrepancy > 0.5) { // >500M discrepancy
+      console.warn(`⚠️  DEATH ACCOUNTING MISMATCH (Month ${state.currentMonth}):`);
+      console.log(`   Actual population deaths: ${actualDeaths.toFixed(3)}B (${(actualDeaths * 1000).toFixed(0)}M)`);
+```
+
+---
+
+### src/simulation/techTree/engine.ts:350
+**Type:** Object.keys
+**Reason:** Logging/debugging only - order does not affect simulation
+**Needs sorting:** NO
+
+```typescript
+console.log(`   All regions tracked: ${Object.keys(techTreeState.regionalDeployment).join(', ')}`);
+```
+
+**Context:**
+```typescript
+      console.log(`\n📍 Creating new regional deployment array for ${action.targetRegion} (Month ${_gameState.currentMonth})`);
+      console.log(`   No previous deployments in this region`);
+      console.log(`   First tech deployment: ${action.techId}`);
+      console.log(`   All regions tracked: ${Object.keys(techTreeState.regionalDeployment).join(', ')}`);
+      techTreeState.regionalDeployment[action.targetRegion] = [];
+    }
+
+    const regional = techTreeState.regionalDeployment[action.targetRegion]!;
+
+```
+
+---
+
+### src/simulation/techTree/engine.ts:484
+**Type:** Object.keys
+**Reason:** Logging/debugging only - order does not affect simulation
+**Needs sorting:** NO
+
+```typescript
+console.log(`   Map size: ${Object.keys(techTreeState.researchProgress).length}`);
+```
+
+**Context:**
+```typescript
+      console.log(`   Map has key: ${(tech.id in techTreeState.researchProgress)}`);
+      console.log(`   Map.get() returned: ${progress}`);
+      console.log(`   Progress is undefined: ${progress === undefined}`);
+      console.log(`   Map size: ${Object.keys(techTreeState.researchProgress).length}`);
+      console.log(`   Map is instanceof Map: ${techTreeState.researchProgress instanceof Map}`);
+    }
+    
+    if (progress === undefined) {
+      progress = 0;
+```
+
+---
+
+### src/simulation/techTree/engine.ts:530
+**Type:** Object.keys
+**Reason:** Logging/debugging only - order does not affect simulation
+**Needs sorting:** NO
+
+```typescript
+console.log(`   Map size: ${Object.keys(techTreeState.researchProgress).length}`);
+```
+
+**Context:**
+```typescript
+      console.log(`   Progress this month: ${progressThisMonth.toFixed(4)}`);
+      console.log(`   Old progress: ${((progress - progressThisMonth) * 100).toFixed(1)}%`);
+      console.log(`   New progress: ${(progress * 100).toFixed(1)}%`);
+      console.log(`   Map size: ${Object.keys(techTreeState.researchProgress).length}`);
+      console.log(`   Map has tech: ${(tech.id in techTreeState.researchProgress)}`);
+      console.log(`   Map get tech: ${techTreeState.researchProgress[tech.id]}`);
+    }
+  }
+}
+```
+
+---
+

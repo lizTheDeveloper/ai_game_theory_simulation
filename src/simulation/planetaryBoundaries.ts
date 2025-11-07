@@ -292,13 +292,18 @@ export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): Planetar
   };
 
   // Calculate initial aggregate metrics
-  const boundariesBreached = Object.values(boundaries)
+  // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
+  const boundaryValues = Object.entries(boundaries)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(e => e[1]);
+
+  const boundariesBreached = boundaryValues
     .filter(b => b.status !== 'safe').length;
 
-  const boundariesWorsening = Object.values(boundaries)
+  const boundariesWorsening = boundaryValues
     .filter(b => b.trend === 'worsening').length;
 
-  const boundariesImproving = Object.values(boundaries)
+  const boundariesImproving = boundaryValues
     .filter(b => b.trend === 'improving').length;
 
   const coreBoundariesBreached =
@@ -582,7 +587,10 @@ export function calculateTippingPointRisk(
   const coreAmplifier = coreBoundariesBreached ? 0.50 : 0;
 
   // High-risk zone amplifier (far beyond boundaries)
-  const highRiskBoundaries = Object.values(boundaries)
+  // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
+  const highRiskBoundaries = Object.entries(boundaries)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(e => e[1])
     .filter(b => b.status === 'high_risk').length;
   const highRiskAmplifier = highRiskBoundaries * 0.08;
 
@@ -809,13 +817,18 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   updateBoundaryStatus(system.boundaries.atmospheric_aerosols);
 
   // === 2. RECALCULATE AGGREGATE METRICS ===
-  system.boundariesBreached = Object.values(system.boundaries)
+  // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
+  const sortedBoundaries = Object.entries(system.boundaries)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(e => e[1]);
+
+  system.boundariesBreached = sortedBoundaries
     .filter(b => b.status !== 'safe').length;
 
-  system.boundariesWorsening = Object.values(system.boundaries)
+  system.boundariesWorsening = sortedBoundaries
     .filter(b => b.trend === 'worsening').length;
 
-  system.boundariesImproving = Object.values(system.boundaries)
+  system.boundariesImproving = sortedBoundaries
     .filter(b => b.trend === 'improving').length;
 
   system.coreBoundariesBreached =

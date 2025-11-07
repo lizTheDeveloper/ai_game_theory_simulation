@@ -155,7 +155,9 @@ export class CachedPopulationProvider implements PopulationProvider {
 
     // Add country populations
     if (this.state.countryPopulationSystem) {
-      const countries = Object.values(this.state.countryPopulationSystem.countries);
+      // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
+      const countries = Object.values(this.state.countryPopulationSystem.countries)
+        .sort((a, b) => a.name.localeCompare(b.name));
       for (const country of countries) {
         const decline = 1 - (country.population / country.baselinePopulation);
 

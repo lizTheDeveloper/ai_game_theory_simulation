@@ -327,7 +327,9 @@ export function shouldInitiateIntervention(
 
   // TRIGGER 1: Resource Access
   // Look for resource-rich countries with low sovereignty
+  // FIX (Nov 7, 2025): Sort countries for deterministic iteration (Issue #11)
   const resourceTargets = Object.values(state.countryPopulationSystem.countries)
+    .sort((a, b) => a.name.localeCompare(b.name))
     .filter(c =>
       c.name !== hegemon.name && // Not self
       !c.isHegemon && // Don't intervene in other hegemons (too risky)
@@ -354,7 +356,9 @@ export function shouldInitiateIntervention(
     // 5% base chance, multiplied by war motivation
     // High war motivation (>0.7) required to even check this trigger
     // Find any non-hegemon target
+    // FIX (Nov 7, 2025): Sort countries for deterministic iteration (Issue #11)
     const possibleTargets = Object.values(state.countryPopulationSystem.countries)
+      .sort((a, b) => a.name.localeCompare(b.name))
       .filter(c => c.name !== hegemon.name && !c.isHegemon);
 
     if (possibleTargets.length > 0) {
@@ -375,7 +379,9 @@ export function shouldInitiateIntervention(
 
   if (economicCrisis && rng() < 0.08 * warMotivationMultiplier) {
     // 8% base chance during economic crisis, multiplied by war motivation
+    // FIX (Nov 7, 2025): Sort countries for deterministic iteration (Issue #11)
     const possibleTargets = Object.values(state.countryPopulationSystem.countries)
+      .sort((a, b) => a.name.localeCompare(b.name))
       .filter(c => c.name !== hegemon.name && !c.isHegemon);
 
     if (possibleTargets.length > 0) {

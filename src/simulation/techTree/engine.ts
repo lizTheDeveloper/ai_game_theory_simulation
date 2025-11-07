@@ -610,11 +610,16 @@ function getAverageResearchCapability(
 }
 
 function getTotalResearchInvestment(gameState: GameState): number {
-  const gov = Object.values(gameState.government.researchInvestments)
-    .reduce((sum, val) => {
+  // FIX (Nov 7, 2025): Sort for deterministic reduce order (Issue #11)
+  const sortedKeys = Object.keys(gameState.government.researchInvestments).sort();
+  const gov = sortedKeys
+    .reduce((sum, key) => {
+      const val = gameState.government.researchInvestments[key];
       if (typeof val === 'number') return sum + val;
       if (typeof val === 'object') {
-        return sum + Object.values(val).reduce((s: number, v) => s + (v as number), 0);
+        // Also sort nested object keys
+        const nestedSorted = Object.keys(val).sort();
+        return sum + nestedSorted.reduce((s: number, k) => s + ((val as any)[k] as number), 0);
       }
       return sum;
     }, 0);
@@ -671,7 +676,9 @@ function getEnergyMultiplier(gameState: GameState): number {
 
   // Count actively deploying technologies (not fully deployed)
   let activeDeployments = 0;
-  for (const region in techTreeState.regionalDeployment) {
+  // FIX (Nov 7, 2025): Sort regions for deterministic iteration (Issue #11)
+  const sortedRegions = Object.keys(techTreeState.regionalDeployment).sort();
+  for (const region of sortedRegions) {
     const deployments = techTreeState.regionalDeployment[region];
     if (!deployments) continue;
     for (const deployment of deployments) {

@@ -185,9 +185,11 @@ export function updatePositiveTippingPoints(
   calculateEnvironmentalImpact(state);
 
   // Phase 6: Update active cascade count
-  ptp.activeCascades = Object.values(ptp.adoptionTracking).filter(
-    tech => tech.cascadeActive
-  ).length;
+  // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
+  ptp.activeCascades = Object.entries(ptp.adoptionTracking)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(e => e[1])
+    .filter(tech => tech.cascadeActive).length;
 }
 
 /**
@@ -198,7 +200,12 @@ export function updatePositiveTippingPoints(
 function updateLearningCurves(state: GameState): void {
   const ptp = state.positiveTippingPoints;
 
-  for (const tech of Object.values(ptp.adoptionTracking)) {
+  // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
+  const sortedTechs = Object.entries(ptp.adoptionTracking)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(e => e[1]);
+
+  for (const tech of sortedTechs) {
     // Production scales with market share (rough approximation)
     const monthlyProduction = tech.marketShare * 0.01; // 1% of market share = production volume
     tech.cumulativeProduction += monthlyProduction;
@@ -224,7 +231,12 @@ function updateLearningCurves(state: GameState): void {
 function detectAndTriggerCascades(state: GameState, rng: RNGFunction): void {
   const ptp = state.positiveTippingPoints;
 
-  for (const tech of Object.values(ptp.adoptionTracking)) {
+  // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
+  const sortedTechs = Object.entries(ptp.adoptionTracking)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(e => e[1]);
+
+  for (const tech of sortedTechs) {
     // Skip if cascade already active or market saturated
     if (tech.cascadeActive || tech.marketShare > 0.80) {
       continue;
@@ -327,7 +339,12 @@ function detectAndTriggerCascades(state: GameState, rng: RNGFunction): void {
 function applyCascadeDynamics(state: GameState, rng: RNGFunction): void {
   const ptp = state.positiveTippingPoints;
 
-  for (const tech of Object.values(ptp.adoptionTracking)) {
+  // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
+  const sortedTechs = Object.entries(ptp.adoptionTracking)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(e => e[1]);
+
+  for (const tech of sortedTechs) {
     if (!tech.cascadeActive) {
       // No cascade - normal linear growth
       tech.marketShare += tech.adoptionRate;

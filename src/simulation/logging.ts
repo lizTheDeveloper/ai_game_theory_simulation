@@ -369,9 +369,12 @@ export function aggregateLogs(logs: SimulationLog[]): {
     trajectories.stage.push(log.trajectory.stageProgression);
     
     // Aggregate event types
-    Object.entries(log.events.summary.eventsByType).forEach(([type, count]) => {
-      eventFrequencies[type] = (eventFrequencies[type] || 0) + count;
-    });
+    // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
+    Object.entries(log.events.summary.eventsByType)
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .forEach(([type, count]) => {
+        eventFrequencies[type] = (eventFrequencies[type] || 0) + count;
+      });
   });
   
   // Calculate statistics
