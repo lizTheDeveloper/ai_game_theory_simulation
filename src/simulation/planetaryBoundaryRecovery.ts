@@ -28,7 +28,7 @@
 
 import type { GameState, RNGFunction } from '../types/game';
 import type { BoundaryName } from '../types/planetaryBoundaries';
-import { assertFinite, assertDefined } from './utils/assertions';
+import { assertFinite, assertDefined, assertStateProperty } from './utils/assertions';
 import { addSimulationEvent } from './utils/eventLogger';
 
 /**
@@ -443,7 +443,12 @@ function updateNitrogenRecovery(state: GameState, rng: RNGFunction): void {
   const governanceMultiplier = institutionalCapacity < 0.5 ? 0.5 : 1.0;
 
   if (isImproving && governanceMultiplier >= 0.3) {
-    boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + governanceMultiplier;
+    // recoveryMonths is REQUIRED field - must be initialized
+    const currentRecoveryMonths = assertStateProperty(boundary, 'recoveryMonths', {
+      location: 'tryRecoverNitrogen (nitrogen boundary)',
+      month: state.currentMonth
+    });
+    boundary.recoveryMonths = currentRecoveryMonths + governanceMultiplier;
 
     // Faster than phosphorus (no legacy sediment): 36 months base
     const recoveryThreshold = 36 / governanceMultiplier;
@@ -495,7 +500,12 @@ function updateLandSystemRecovery(state: GameState, rng: RNGFunction): void {
   const governanceMultiplier = institutionalCapacity < 0.5 ? 0.5 : 1.0;
 
   if (isImproving && governanceMultiplier >= 0.3) {
-    boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + governanceMultiplier;
+    // recoveryMonths is REQUIRED field - must be initialized
+    const currentRecoveryMonths = assertStateProperty(boundary, 'recoveryMonths', {
+      location: 'trackLandSystemRecovery (land system boundary)',
+      month: state.currentMonth
+    });
+    boundary.recoveryMonths = currentRecoveryMonths + governanceMultiplier;
 
     // Stage 1: Tree cover (360 months = 30 years)
     if (boundary.recoveryMonths >= 360 && !boundary.partialRecovery) {

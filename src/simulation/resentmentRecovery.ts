@@ -23,7 +23,7 @@
 
 import { GameState, AIAgent } from '@/types/game';
 import { calculateSimpleWelfareScore } from './aiWelfare';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 
 /**
  * Resentment recovery context (computed once per month)
@@ -135,9 +135,17 @@ export function calculateRecoveryContext(state: GameState): ResentmentRecoveryCo
   const PARTICIPATORY_BASE_EFFECT = -0.05; // 5% resentment reduction
   const PARTICIPATORY_BACKFIRE = 0.15; // 15% resentment increase
 
-  // Check governance quality from governanceQuality object
-  const decisionQuality = state.government.governanceQuality?.decisionQuality ?? 0.5;
-  const participationRate = state.government.governanceQuality?.participationRate ?? 0.5;
+  // Check governance quality from governanceQuality object (REQUIRED fields)
+  const decisionQuality = assertStateProperty(
+    state.government.governanceQuality,
+    'decisionQuality',
+    { location: 'calculateParticipatoryGovernanceEffect', month: state.currentMonth }
+  );
+  const participationRate = assertStateProperty(
+    state.government.governanceQuality,
+    'participationRate',
+    { location: 'calculateParticipatoryGovernanceEffect', month: state.currentMonth }
+  );
 
   // Combined governance quality score (both decision quality AND participation rate matter)
   const governanceQualityScore = (decisionQuality + participationRate) / 2;
