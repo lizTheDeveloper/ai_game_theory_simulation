@@ -102,9 +102,16 @@ if (majorEconomiesCollapsed / totalMajorEconomies > 0.5) {
 
 **Combined Effect:** Empirical maximum 80% reduction (European data)
 
-**CRITICAL LIMIT (Sylvia's Quality Gate 1 Fix):**
+**CRITICAL LIMIT (Sylvia's Quality Gate 1 Fix, Updated Nov 7, 2025):**
 
-Wet bulb temperature **30.5°C** (empirical for young healthy adults), NOT 35°C (theoretical). Elderly limits much lower (21.9-33.7°C). Above physiological limits, adaptation ceases entirely.
+Wet bulb temperature **30.5°C** (empirical survivability limit from Vecellio et al. 2022), NOT 35°C (theoretical from Raymond et al. 2020).
+
+**CRITICAL:** Empirical limit is 4.5°C LOWER than theoretical. People die at 30.5-31.2°C in practice, not 35°C in theory. Above physiological limits, adaptation ceases entirely.
+
+**Fix Applied (Nov 7, 2025):** All wet bulb thresholds updated in simulation code:
+- SEVERE: 32°C → 30.5°C (empirical limit)
+- EXTREME: 35°C → 31.2°C (extreme empirical limit)
+- Heat mortality now triggers 4.5°C earlier in warming scenarios
 
 **Development Pattern:**
 - **Immediate (0-3 months):** Behavioral adaptation dominates (10-30% reduction)
