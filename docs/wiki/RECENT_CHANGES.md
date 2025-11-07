@@ -43,8 +43,10 @@ Through informal dialogue, agents identified their natural validation layers:
 - `.claude/agents/memories/cynthia-memory.json` - Added coffee-talk conversation
 - `.claude/agents/memories/sylvia-memory.json` - Added coffee-talk conversation
 - `.claude/agents/memories/priya-memory.json` - Created new agent memory with initial conversation
+- `.claude/agents/memories/roy-memory.json` - Added coffee-talk conversation (commit 622a99c)
+- `.claude/agents/memories/ray-memory.json` - Added coffee-talk conversation (commit 622a99c)
 
-**Commit:** 9bc4b2a - "feat: Coffee-talk conversation and Ray personality updates"
+**Commits:** 9bc4b2a - "feat: Coffee-talk conversation and Ray personality updates", 622a99c - "feat: Add coffee-talk conversation to Roy and Ray memories"
 
 ---
 
