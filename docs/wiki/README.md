@@ -403,12 +403,15 @@ Fixed critical threshold mismatch: simulation used theoretical 35°C limit inste
 - Result: Poisson sampling diverged at Month 0 (potentialNew: 1, 0, 1)
 - Caused 2× increase in coefficient of variation (2.61% → 5.16%)
 
-**Fix Applied:** (commit 9c6f25d)
+**Fix Applied:** (commit 9c6f25d, signature hardened in commit 004884e)
 - Changed `createDefaultInitialState()` signature: parameter `seed?: number` → `rng?: () => number`
+- **CRITICAL UPDATE (Nov 7, 2025):** RNG now **REQUIRED** and moved to **FIRST** parameter
+- New signature: `createDefaultInitialState(rng: () => number, scenarioMode, ...)`
 - Removed local LCG creation from initialization
 - Engine creates SeededRandom (as before), gets RNG function via `engine.getRNG().next.bind(...)`
-- Passes engine's RNG to initialization: `createDefaultInitialState(..., rngFunction)`
+- Passes engine's RNG to initialization: `createDefaultInitialState(rngFunction, scenarioMode, ...)`
 - **Now ONE shared RNG instance** across initialization + engine
+- **Fail loudly** if RNG missing (no silent Math.random fallback)
 
 **Results:**
 - **Before:** N=3 runs with seed=42000 showed divergence at Month 0 (potentialNew: 1, 0, 1)
@@ -440,12 +443,15 @@ const engine = new SimulationEngine({ seed });  // Creates SeededRandom
 const state = createDefaultInitialState('historical', ..., seed);  // Created LCG
 // → Two different algorithms → divergence
 
-// ✅ ALWAYS share engine's RNG instance
+// ✅ ALWAYS share engine's RNG instance (RNG MUST be first parameter)
 const seed = 42000;
 const engine = new SimulationEngine({ seed });
 const rng = engine.getRNG().next.bind(engine.getRNG());
-const state = createDefaultInitialState('historical', ..., rng);
+const state = createDefaultInitialState(rng, 'historical', ...);  // RNG first!
 // → One RNG instance → perfect determinism
+
+// ❌ NEVER use optional RNG with Math.random fallback (removed in commit 004884e)
+const state = createDefaultInitialState('historical');  // TypeError: rng required
 ```
 
 **Files Changed:**

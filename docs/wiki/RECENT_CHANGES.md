@@ -58,6 +58,75 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
+**🔧 CRITICAL REGRESSIONS FIXED: RNG Fallback + Defensive Fallbacks (CRITICAL-3, CRITICAL-4)** (Nov 7, 2025, commit 004884e)
+
+**Summary:** Eliminated two critical anti-patterns that broke Monte Carlo determinism and masked bugs for months.
+
+**CRITICAL-3: RNG Math.random Fallback ELIMINATED**
+
+**Problem:** Optional RNG parameter with silent fallback to Math.random broke Monte Carlo reproducibility
+- `createDefaultInitialState(scenarioMode, ..., rng?: () => number)`
+- Silent fallback: `rng ?? Math.random` used in initialization
+- Impact: Monte Carlo runs non-deterministic despite seeded engine
+
+**Solution:**
+- Made RNG parameter **REQUIRED** (not optional)
+- Moved RNG to **FIRST** parameter position (breaking signature change)
+- New signature: `createDefaultInitialState(rng: () => number, scenarioMode, ...)`
+- Fail loudly if RNG missing (throws TypeError)
+
+**Files Modified:**
+- `src/simulation/initialization.ts` - RNG now required, signature changed
+- `src/workers/simulationWorker.ts` - Updated to pass engine RNG before creating state
+- `scripts/monteCarloSimulation.ts` - Updated to new signature (RNG first)
+
+**Why This Matters:** Research simulations MUST be deterministic. Silent fallbacks to Math.random produce subtly wrong results that can't be reproduced. This regression could have invalidated months of Monte Carlo data if not caught early.
+
+**CRITICAL-4: Defensive Fallback Cleanup COMPLETE**
+
+**Problem:** 7 defensive fallbacks in simulation hot paths masked bugs instead of surfacing them
+- `state.currentMonth || 1` - Hides missing month initialization
+- `capabilities[0] ?? 0` - Hides missing agent data
+- `totalResearch || 0` - Hides NaN research investments
+
+**Pattern Eliminated:**
+```typescript
+// ❌ BAD - Silent fallback
+const value = state.foo || fallback;
+const arr = capabilities[0] ?? 0;
+
+// ✅ GOOD - Fail loudly with context
+const value = assertFinite(state.foo, { location: '...', month: state.currentMonth });
+const arr = assertDefined(capabilities[0], { location: '...', month: state.currentMonth });
+```
+
+**Files Modified:**
+- `src/simulation/planetaryBoundaries.ts` - 3 fixes (currentMonth validation)
+- `src/simulation/gamingDetection.ts` - 1 fix (capabilities array validation)
+- `src/simulation/behavioralDetection.ts` - 1 fix (capabilities array validation)
+- `src/simulation/upwardSpirals.ts` - 2 fixes (research investment validation)
+
+**Historical Context:** The October 2025 ecology NaN bug was hidden for months by a `?? 50` fallback. Research simulations must fail loudly, not silently produce wrong results.
+
+**Validation:**
+- ✅ Type checking passes (`npx tsc --noEmit`)
+- ✅ All RNG callers updated to new signature
+- ✅ Assertion utilities properly imported and used
+- ✅ No defensive fallbacks remain in simulation calculations
+
+**Impact:**
+- ✅ Monte Carlo determinism restored (same seed = same outcome)
+- ✅ Invalid states now fail at source (not after propagation)
+- ✅ Error messages include full debugging context
+- ✅ Research integrity maintained
+
+**Related Documentation:**
+- CLAUDE.md lines 128-186 (NaN and Invalid Value Handling)
+- CLAUDE.md lines 366-378 (Defensive Programming Anti-Patterns)
+- docs/wiki/README.md lines 1869-1921 (Defensive Coding Best Practices)
+
+---
+
 **🔧 AUTONOMOUS WORKER HEALTH CHECK FIX** (Nov 7, 2025, commit a7103fd)
 
 **Summary:** Fixed autonomous-worker-watcher.sh bash scripting bug that was producing multi-line output in count variables, causing health check failures and multi-instance contention.
