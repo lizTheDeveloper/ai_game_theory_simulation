@@ -7,6 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions';
 
 export class FreshwaterPhase implements SimulationPhase {
   readonly id = 'freshwater';
@@ -17,8 +18,22 @@ export class FreshwaterPhase implements SimulationPhase {
     const { updateFreshwaterSystem, checkFreshwaterTechUnlocks } = require('../../freshwaterDepletion');
     setDeterministicRng(rng);
 
+    // Validate freshwater boundary before update
+    assertFinite(state.planetaryBoundaries.freshwaterUse, {
+      location: 'FreshwaterPhase.execute (pre-update)',
+      valueName: 'freshwaterUse',
+      month: state.currentMonth
+    });
+
     updateFreshwaterSystem(state, rng);
     checkFreshwaterTechUnlocks(state);
+
+    // Validate freshwater boundary after update
+    assertFinite(state.planetaryBoundaries.freshwaterUse, {
+      location: 'FreshwaterPhase.execute (post-update)',
+      valueName: 'freshwaterUse',
+      month: state.currentMonth
+    });
 
     return { events: [] };
   }

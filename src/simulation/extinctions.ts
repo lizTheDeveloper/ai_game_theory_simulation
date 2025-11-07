@@ -16,8 +16,10 @@ import { GameState, ExtinctionState, ExtinctionType, ExtinctionMechanism, GameEv
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { addMortalityRisk } from './bayesianMortality';
-import { assertFinite } from './utils/assertions';
+import * as Assertions from './utils/assertions';
 import { RootCause } from '@/types/population';
+
+// NaN AUDIT (Nov 7, 2025): Import full assertions module for comprehensive validation
 
 /**
  * Initialize a blank extinction state
@@ -465,6 +467,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
         }
         
         // FIX #21 DEBUG: Summary of safety layer effectiveness
+        // NaN AUDIT (Nov 7, 2025): Protect percentage calculations from division by zero
         console.log(`\n   📊 SAFETY LAYERS SUMMARY:`);
         console.log(`      Bilateral pairs eligible:        ${pairsEligible}`);
         console.log(`      Passed deterrence check:         ${pairsPassedDeterrenceCheck} (${pairsEligible > 0 ? ((pairsPassedDeterrenceCheck / pairsEligible) * 100).toFixed(0) : 0}%)`);
@@ -479,7 +482,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
           // Add immediate nuclear war casualties (blast + radiation)
           // REGIONAL CRISIS: Only nuclear nations (US, Russia, China, EU, allies) = ~30% of world population
           // 60% mortality rate within exposed regions (blast + immediate radiation)
-          const nuclearBaseRisk = assertFinite(0.60, {
+          const nuclearBaseRisk = Assertions.assertFinite(0.60, {
             location: 'triggerExtinction (nuclear war)',
             valueName: 'nuclearBaseRisk',
             month: state.currentMonth
@@ -1245,9 +1248,18 @@ export function classifyExtinctionType(state: GameState): import('../types/outco
   const timelineMonths = extinctionMonth - collapseStartMonth;
 
   // Death attribution analysis
+  // NaN AUDIT (Nov 7, 2025): Protect division from NaN
   const totalDeaths = population.cumulativeCrisisDeaths;
-  const peakPopulation = population.peakPopulation;
-  const mortalityRate = totalDeaths / peakPopulation;
+  const peakPopulation = Assertions.assertInRange(
+    population.peakPopulation,
+    1, // Must be at least 1 to avoid division by zero
+    1e12, // Reasonable upper bound
+    { location: 'classifyExtinctionType', valueName: 'peakPopulation' }
+  );
+  const mortalityRate = Assertions.assertFinite(
+    totalDeaths / peakPopulation,
+    { location: 'classifyExtinctionType', valueName: 'mortalityRate', additionalInfo: { totalDeaths, peakPopulation } }
+  );
 
   const primaryProximateCause = getPrimaryCauseProximate(population.deathsByCategory);
   const primaryRootCause = getPrimaryCauseRoot(population.deathsByRootCause);
@@ -1280,10 +1292,11 @@ export function classifyExtinctionType(state: GameState): import('../types/outco
   };
 
   // AI involvement analysis
+  // NaN AUDIT (Nov 7, 2025): Protect division operations
   const aiDeaths = population.deathsByCategory.ai;
   const aiRootCause = population.deathsByRootCause.alignment + population.deathsByRootCause.disruption;
-  const aiDirectCausation = (aiDeaths / totalDeaths) > 0.6;
-  const aiIndirectCausation = (aiRootCause / totalDeaths) > 0.5 && !aiDirectCausation;
+  const aiDirectCausation = totalDeaths > 0 && (aiDeaths / totalDeaths) > 0.6;
+  const aiIndirectCausation = totalDeaths > 0 && (aiRootCause / totalDeaths) > 0.5 && !aiDirectCausation;
 
   const responsibleAgents = identifyResponsibleAIs(state);
   const alignmentFailures = countAlignmentFailureEvents(events);
@@ -1534,6 +1547,8 @@ function getPrimaryCauseRoot(causes: { climate: number; resource: number; pollut
 
 /**
  * Identify mass death months (>50% population loss in single month)
+ *
+ * NaN AUDIT (Nov 7, 2025): Protect division from zero
  */
 function identifyMassDeathMonths(state: GameState): { month: number; mortalityRate: number }[] {
   // This would require population history tracking
@@ -1542,10 +1557,21 @@ function identifyMassDeathMonths(state: GameState): { month: number; mortalityRa
   const peakPop = state.humanPopulationSystem.peakPopulation;
   const monthsSincePeak = state.currentMonth - state.humanPopulationSystem.peakPopulationMonth;
 
-  if (monthsSincePeak <= 1 && (peakPop - currentPop) / peakPop > 0.9) {
+  // Protect division by zero
+  if (peakPop === 0) {
+    return [];
+  }
+
+  const mortalityRate = (peakPop - currentPop) / peakPop;
+
+  if (monthsSincePeak <= 1 && mortalityRate > 0.9) {
     return [{
       month: state.currentMonth,
-      mortalityRate: (peakPop - currentPop) / peakPop
+      mortalityRate: Assertions.assertFinite(mortalityRate, {
+        location: 'identifyMassDeathMonths',
+        valueName: 'mortalityRate',
+        additionalInfo: { currentPop, peakPop }
+      })
     }];
   }
 

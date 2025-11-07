@@ -25,7 +25,13 @@
 import { GameState } from '../types/game';
 import { NuclearWinterState, RadiationZone } from '../types/nuclearWinter';
 import { addMortalityRisk } from './bayesianMortality';
-import { assertFinite } from './utils/assertions';
+import {
+  assertFinite,
+  assertTemperatureDelta,
+  assertProbability,
+  assertInRange,
+  assertMortalityRate
+} from './utils/assertions';
 import { RootCause } from '../types/population';
 
 /**
@@ -137,15 +143,29 @@ function calculateSootInjection(warScale: number): number {
   // - 100 warheads → 5 Tg
   // - 1000 warheads → 50 Tg
   // - 5000+ warheads → 150 Tg (saturation)
-  
-  if (warScale <= 100) {
-    return warScale * 0.05;  // 5 Tg per 100 warheads
-  } else if (warScale <= 1000) {
-    return 5 + (warScale - 100) * 0.05;  // Linear scaling
+
+  // Validate input
+  const validWarScale = assertFinite(warScale, {
+    location: 'calculateSootInjection',
+    valueName: 'warScale'
+  });
+
+  let soot: number;
+  if (validWarScale <= 100) {
+    soot = validWarScale * 0.05;  // 5 Tg per 100 warheads
+  } else if (validWarScale <= 1000) {
+    soot = 5 + (validWarScale - 100) * 0.05;  // Linear scaling
   } else {
     // Saturation: diminishing returns above 1000 warheads
-    return 50 + Math.min(100, (warScale - 1000) * 0.1);
+    soot = 50 + Math.min(100, (validWarScale - 1000) * 0.1);
   }
+
+  // Validate output: Soot injection must be in [0, 150] Tg (research bounds)
+  return assertInRange(soot, 0, 150, {
+    location: 'calculateSootInjection',
+    valueName: 'sootInjection',
+    additionalInfo: { warScale: validWarScale }
+  });
 }
 
 /**
@@ -160,15 +180,29 @@ function calculateSootInjection(warScale: number): number {
  * @returns Temperature anomaly (negative °C)
  */
 function calculateTemperatureAnomaly(soot: number): number {
-  if (soot <= 5) {
-    return -soot * 0.45;  // Linear: 5 Tg → -2.25°C (Robock 2019 midpoint)
-  } else if (soot <= 50) {
+  // Validate input: Soot must be in [0, 150] Tg (research bounds)
+  const validSoot = assertInRange(soot, 0, 150, {
+    location: 'calculateTemperatureAnomaly',
+    valueName: 'soot'
+  });
+
+  let tempAnomaly: number;
+  if (validSoot <= 5) {
+    tempAnomaly = -validSoot * 0.45;  // Linear: 5 Tg → -2.25°C (Robock 2019 midpoint)
+  } else if (validSoot <= 50) {
     // Interpolate from -2.25°C (5 Tg) to -7°C (50 Tg)
-    return -2.25 - ((soot - 5) * 0.105);  // 50 Tg → -7°C
+    tempAnomaly = -2.25 - ((validSoot - 5) * 0.105);  // 50 Tg → -7°C
   } else {
     // Saturation: 150 Tg → -17.5°C (midpoint of -15°C to -20°C)
-    return -7 - Math.min(10.5, (soot - 50) * 0.105);
+    tempAnomaly = -7 - Math.min(10.5, (validSoot - 50) * 0.105);
   }
+
+  // Validate output: Temperature anomaly must be in [-20, 0]°C (research bounds)
+  return assertInRange(tempAnomaly, -20, 0, {
+    location: 'calculateTemperatureAnomaly',
+    valueName: 'temperatureAnomaly',
+    additionalInfo: { soot: validSoot }
+  });
 }
 
 /**
@@ -181,9 +215,22 @@ function calculateTemperatureAnomaly(soot: number): number {
  * @returns Crop yield multiplier [0,1]
  */
 function calculateCropYield(tempAnomaly: number): number {
+  // Validate input: Temperature anomaly must be in [-20, 0]°C
+  const validTempAnomaly = assertInRange(tempAnomaly, -20, 0, {
+    location: 'calculateCropYield',
+    valueName: 'temperatureAnomaly'
+  });
+
   // Each degree drop reduces yield by 7% (conservative mid-range)
-  const yieldLoss = Math.abs(tempAnomaly) * 0.07;
-  return Math.max(0.05, 1.0 - yieldLoss);  // Minimum 5% yield (some crops survive)
+  const yieldLoss = Math.abs(validTempAnomaly) * 0.07;
+  const cropYield = Math.max(0.05, 1.0 - yieldLoss);  // Minimum 5% yield (some crops survive)
+
+  // Validate output: Crop yield must be in [0, 1] (probability/fraction)
+  return assertProbability(cropYield, {
+    location: 'calculateCropYield',
+    valueName: 'cropYieldMultiplier',
+    additionalInfo: { temperatureAnomaly: validTempAnomaly }
+  });
 }
 
 /**
@@ -219,23 +266,34 @@ function calculateCropYield(tempAnomaly: number): number {
  * @returns Monthly starvation rate [0,1]
  */
 function calculateStarvationRate(cropYield: number, monthsSinceWar: number): number {
+  // Validate inputs
+  const validCropYield = assertProbability(cropYield, {
+    location: 'calculateStarvationRate',
+    valueName: 'cropYield'
+  });
+
+  const validMonths = assertFinite(monthsSinceWar, {
+    location: 'calculateStarvationRate',
+    valueName: 'monthsSinceWar'
+  });
+
   // Food shortage severity (1 - crop yield)
-  const shortage = 1 - cropYield;
-  
+  const shortage = 1 - validCropYield;
+
   // Starvation ramps up over first 6 months (takes time for food stocks to run out)
   let rampMultiplier = 1.0;
-  if (monthsSinceWar < 6) {
-    rampMultiplier = monthsSinceWar / 6;  // Linear ramp: 0 → 1.0 over 6 months
+  if (validMonths < 6) {
+    rampMultiplier = validMonths / 6;  // Linear ramp: 0 → 1.0 over 6 months
   }
-  
+
   // Peak starvation: months 6-24
   // After month 24, gradual decline as agriculture partially recovers
   let recoveryMultiplier = 1.0;
-  if (monthsSinceWar > 24) {
+  if (validMonths > 24) {
     // Exponential decay: 50% reduction every 24 months
-    recoveryMultiplier = Math.pow(0.5, (monthsSinceWar - 24) / 24);
+    recoveryMultiplier = Math.pow(0.5, (validMonths - 24) / 24);
   }
-  
+
   // Base starvation rate scales with shortage severity
   // ⚠️⚠️ CALIBRATED TO XIA ET AL. 2022, NOT HISTORICAL FAMINE RATES
   // - 90% crop failure → 12% monthly mortality (calibrated to reach 5-6B deaths)
@@ -244,8 +302,14 @@ function calculateStarvationRate(cropYield: number, monthsSinceWar: number): num
   //   is global collapse, no external aid, collapsed institutions → much higher rate
   const NUCLEAR_WINTER_MONTHLY_BASE = 0.12;  // 12% monthly at 90% crop failure (calibrated to Xia)
   const baseRate = shortage * (NUCLEAR_WINTER_MONTHLY_BASE / 0.9);  // Scale linearly: 90% shortage → 12% monthly
-  
-  return baseRate * rampMultiplier * recoveryMultiplier;
+
+  const starvationRate = baseRate * rampMultiplier * recoveryMultiplier;
+
+  // Validate output: Mortality rate must be plausible (max 50% monthly per Black Death reference)
+  return assertMortalityRate(starvationRate, {
+    location: 'calculateStarvationRate',
+    valueName: 'starvationRate'
+  });
 }
 
 /**
@@ -286,18 +350,33 @@ function addRadiationZones(
 export function updateNuclearWinter(state: GameState): void {
   const winter = state.nuclearWinterState;
   if (!winter.active) return;
-  
+
   winter.monthsSinceWar++;
-  
+
   // 1. Update soot levels (decay over time)
-  winter.currentSoot = winter.currentSoot * (1 - winter.sootDecayRate);
-  
+  // Validate soot before decay calculation
+  const previousSoot = assertInRange(winter.currentSoot, 0, 150, {
+    location: 'updateNuclearWinter',
+    valueName: 'currentSoot (before decay)',
+    month: state.currentMonth
+  });
+
+  winter.currentSoot = previousSoot * (1 - winter.sootDecayRate);
+
+  // Validate soot after decay
+  winter.currentSoot = assertInRange(winter.currentSoot, 0, 150, {
+    location: 'updateNuclearWinter',
+    valueName: 'currentSoot (after decay)',
+    month: state.currentMonth,
+    additionalInfo: { previousSoot, decayRate: winter.sootDecayRate }
+  });
+
   // 2. Update temperature (recovers as soot clears)
   winter.temperatureAnomaly = calculateTemperatureAnomaly(winter.currentSoot);
-  
+
   // 3. Update crop yields (improve as temperature recovers)
   winter.cropYieldMultiplier = calculateCropYield(winter.temperatureAnomaly);
-  
+
   // 4. Update starvation rate
   winter.monthlyStarvationRate = calculateStarvationRate(
     winter.cropYieldMultiplier,
