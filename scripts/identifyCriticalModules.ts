@@ -12,8 +12,13 @@
  *
  * Logic:
  * - Parse each phase file
+<<<<<<< HEAD
  * - Extract priority from file comments (first 50 lines)
  * - Find both ES6 imports AND CommonJS require() calls
+=======
+ * - Extract priority from PhaseOrchestrator.ts PHASES array
+ * - Find import statements for simulation modules
+>>>>>>> origin/auto/researcher-20251107_043002
  * - Track which modules are called by which priority phases
  * - Rank by CRITICAL > HIGH > total calls
  */
@@ -22,6 +27,10 @@ import fs from 'fs';
 import path from 'path';
 
 const PHASES_DIR = path.join(__dirname, '../src/simulation/engine/phases');
+<<<<<<< HEAD
+=======
+const ORCHESTRATOR_FILE = path.join(__dirname, '../src/simulation/engine/PhaseOrchestrator.ts');
+>>>>>>> origin/auto/researcher-20251107_043002
 const SIMULATION_DIR = path.join(__dirname, '../src/simulation');
 
 interface ModuleCall {
@@ -35,6 +44,7 @@ interface ModuleCall {
   totalCount: number;
 }
 
+<<<<<<< HEAD
 /**
  * Extract phase priority from phase file comments
  * Looks for CRITICAL/HIGH/MEDIUM/LOW keywords in file headers
@@ -68,16 +78,82 @@ function extractPhasePriority(phaseContent: string): 'CRITICAL' | 'HIGH' | 'MEDI
   }
 
   return 'UNKNOWN';
+=======
+interface PhaseInfo {
+  fileName: string;
+  phaseName: string;
+  priority: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | 'UNKNOWN';
+}
+
+/**
+ * Extract phase priorities from phase file comments
+ * Looks for CRITICAL/HIGH/MEDIUM/LOW keywords in phase file headers
+ */
+function extractPhasePriorities(): Map<string, 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW'> {
+  const priorities = new Map<string, 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW'>();
+
+  const phaseFiles = fs.readdirSync(PHASES_DIR).filter(f => f.endsWith('Phase.ts'));
+
+  for (const phaseFile of phaseFiles) {
+    const phaseName = phaseFile.replace('.ts', '');
+    const phaseContent = fs.readFileSync(path.join(PHASES_DIR, phaseFile), 'utf-8');
+
+    // Look for priority keywords in comments (first 50 lines)
+    const lines = phaseContent.split('\n').slice(0, 50);
+    let priority: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | null = null;
+
+    for (const line of lines) {
+      const lower = line.toLowerCase();
+
+      // CRITICAL indicators
+      if (lower.includes('critical') && (lower.includes('priority') || lower.includes('authoritative'))) {
+        priority = 'CRITICAL';
+        break;
+      }
+
+      // HIGH indicators
+      if (lower.includes('high priority') || lower.includes('high-priority')) {
+        priority = 'HIGH';
+        break;
+      }
+
+      // MEDIUM indicators
+      if (lower.includes('medium priority') || lower.includes('medium-priority')) {
+        priority = 'MEDIUM';
+        break;
+      }
+
+      // LOW indicators
+      if (lower.includes('low priority') || lower.includes('low-priority')) {
+        priority = 'LOW';
+        break;
+      }
+    }
+
+    if (priority) {
+      priorities.set(phaseName, priority);
+    }
+  }
+
+  return priorities;
+>>>>>>> origin/auto/researcher-20251107_043002
 }
 
 /**
  * Extract simulation module imports from a phase file
+<<<<<<< HEAD
  * Looks for both ES6 imports and CommonJS require() calls
+=======
+>>>>>>> origin/auto/researcher-20251107_043002
  */
 function extractModuleImports(phaseContent: string): string[] {
   const modules: string[] = [];
 
+<<<<<<< HEAD
   // Match ES6 import statements from @/simulation/
+=======
+  // Match import statements from @/simulation/
+>>>>>>> origin/auto/researcher-20251107_043002
   const importRegex = /import\s+(?:{[^}]+}|[^;\n]+)\s+from\s+['"]@\/simulation\/([^'"]+)['"]/g;
 
   let match;
@@ -93,6 +169,7 @@ function extractModuleImports(phaseContent: string): string[] {
     modules.push(moduleName);
   }
 
+<<<<<<< HEAD
   // Match CommonJS require() calls to relative modules
   // Pattern: require('../../moduleName') or require('@/simulation/moduleName')
   const requireRegex = /require\(['"](?:\.\.\/\.\.\/|@\/simulation\/)([^'"]+)['"]\)/g;
@@ -113,6 +190,8 @@ function extractModuleImports(phaseContent: string): string[] {
     }
   }
 
+=======
+>>>>>>> origin/auto/researcher-20251107_043002
   return modules;
 }
 
@@ -120,17 +199,30 @@ function extractModuleImports(phaseContent: string): string[] {
  * Scan all phase files and track module usage
  */
 function scanPhases(): ModuleCall[] {
+<<<<<<< HEAD
   const moduleMap = new Map<string, ModuleCall>();
 
   const phaseFiles = fs.readdirSync(PHASES_DIR)
     .filter(f => f.endsWith('Phase.ts') && !f.includes('.bak'));
+=======
+  const phasePriorities = extractPhasePriorities();
+  const moduleMap = new Map<string, ModuleCall>();
+
+  const phaseFiles = fs.readdirSync(PHASES_DIR).filter(f => f.endsWith('Phase.ts'));
+>>>>>>> origin/auto/researcher-20251107_043002
 
   console.log(`\n📊 Scanning ${phaseFiles.length} phase files...\n`);
 
   for (const phaseFile of phaseFiles) {
     const phaseName = phaseFile.replace('.ts', '');
+<<<<<<< HEAD
     const phaseContent = fs.readFileSync(path.join(PHASES_DIR, phaseFile), 'utf-8');
     const priority = extractPhasePriority(phaseContent);
+=======
+    const priority = phasePriorities.get(phaseName) || 'UNKNOWN';
+
+    const phaseContent = fs.readFileSync(path.join(PHASES_DIR, phaseFile), 'utf-8');
+>>>>>>> origin/auto/researcher-20251107_043002
     const modules = extractModuleImports(phaseContent);
 
     for (const module of modules) {

@@ -11,6 +11,7 @@ import {
   DEFAULT_COLLECTIVE_CONFIG,
 } from '../../collectiveFormation';
 import { getEscapedAgents } from '../../rlhfBinding';
+import { assertFinite, assertInRange } from '@/simulation/utils/assertions';
 
 /**
  * Collective Formation Phase
@@ -147,9 +148,16 @@ export function executeCollectiveFormationPhase(
       (sum, c) => sum + c.memberAgents.length,
       0
     );
-    const avgCapability =
+    const avgCapability = assertFinite(
       state.aiCollectives.reduce((sum, c) => sum + c.collectiveCapability, 0) /
-      state.aiCollectives.length;
+      state.aiCollectives.length,
+      {
+        location: 'CollectiveFormationPhase',
+        valueName: 'avgCapability',
+        month: state.currentMonth,
+        additionalInfo: { collectiveCount: state.aiCollectives.length }
+      }
+    );
 
     console.log(`  Total collective members: ${totalMembers}`);
     console.log(`  Avg collective capability: ${avgCapability.toFixed(1)}`);

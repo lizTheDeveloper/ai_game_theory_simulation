@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
   "timestamp": "2025-11-07T04:40:38.127Z",
   "totalModules": 55,
+=======
+  "timestamp": "2025-11-07T04:39:15.997Z",
+  "totalModules": 13,
+>>>>>>> origin/auto/researcher-20251107_043002
   "top20": [
     {
       "module": "bayesianMortality",
@@ -31,6 +36,7 @@
       ]
     },
     {
+<<<<<<< HEAD
       "module": "computeInfrastructure",
       "criticalCount": 0,
       "highCount": 0,
@@ -63,6 +69,8 @@
       ]
     },
     {
+=======
+>>>>>>> origin/auto/researcher-20251107_043002
       "module": "policyLifecycle",
       "criticalCount": 0,
       "highCount": 0,
@@ -79,6 +87,7 @@
       ]
     },
     {
+<<<<<<< HEAD
       "module": "planetaryBoundaryRecovery",
       "criticalCount": 0,
       "highCount": 0,
@@ -131,6 +140,8 @@
       ]
     },
     {
+=======
+>>>>>>> origin/auto/researcher-20251107_043002
       "module": "aiSuffering",
       "criticalCount": 0,
       "highCount": 0,
@@ -155,108 +166,177 @@
       ]
     },
     {
+<<<<<<< HEAD
       "module": "benchmark",
+=======
+      "module": "earlyWarningSystems",
+>>>>>>> origin/auto/researcher-20251107_043002
       "criticalCount": 0,
       "highCount": 0,
       "totalCount": 1,
       "calledByPhases": [
         {
+<<<<<<< HEAD
           "phaseName": "BenchmarkEvaluationsPhase",
+=======
+          "phaseName": "EarlyWarningPhase",
+>>>>>>> origin/auto/researcher-20251107_043002
           "priority": "UNKNOWN"
         }
       ]
     },
     {
+<<<<<<< HEAD
       "module": "catastrophicScenarios",
+=======
+      "module": "extremeWeatherEvents",
+>>>>>>> origin/auto/researcher-20251107_043002
       "criticalCount": 0,
       "highCount": 0,
       "totalCount": 1,
       "calledByPhases": [
         {
+<<<<<<< HEAD
           "phaseName": "CatastrophicScenariosPhase",
+=======
+          "phaseName": "ExtremeWeatherEventsPhase",
+>>>>>>> origin/auto/researcher-20251107_043002
           "priority": "UNKNOWN"
         }
       ]
     },
     {
+<<<<<<< HEAD
       "module": "climateJustice",
+=======
+      "module": "gamingDetection",
+>>>>>>> origin/auto/researcher-20251107_043002
       "criticalCount": 0,
       "highCount": 0,
       "totalCount": 1,
       "calledByPhases": [
         {
+<<<<<<< HEAD
           "phaseName": "ClimateJusticePhase",
+=======
+          "phaseName": "GamingDetectionPhase",
+>>>>>>> origin/auto/researcher-20251107_043002
           "priority": "UNKNOWN"
         }
       ]
     },
     {
+<<<<<<< HEAD
       "module": "conflictResolution",
+=======
+      "module": "government",
+>>>>>>> origin/auto/researcher-20251107_043002
       "criticalCount": 0,
       "highCount": 0,
       "totalCount": 1,
       "calledByPhases": [
         {
+<<<<<<< HEAD
           "phaseName": "ConflictResolutionPhase",
+=======
+          "phaseName": "GovernmentActionsPhase",
+>>>>>>> origin/auto/researcher-20251107_043002
           "priority": "UNKNOWN"
         }
       ]
     },
     {
+<<<<<<< HEAD
       "module": "cooperativeSpirals",
+=======
+      "module": "centralConfig",
+>>>>>>> origin/auto/researcher-20251107_043002
       "criticalCount": 0,
       "highCount": 0,
       "totalCount": 1,
       "calledByPhases": [
         {
+<<<<<<< HEAD
           "phaseName": "CooperativeSpiralsPhase",
+=======
+          "phaseName": "MortalityStabilizersPhase",
+>>>>>>> origin/auto/researcher-20251107_043002
           "priority": "UNKNOWN"
         }
       ]
     },
     {
+<<<<<<< HEAD
       "module": "crisisPoints",
+=======
+      "module": "planetaryBoundaryRecovery",
+>>>>>>> origin/auto/researcher-20251107_043002
       "criticalCount": 0,
       "highCount": 0,
       "totalCount": 1,
       "calledByPhases": [
         {
+<<<<<<< HEAD
           "phaseName": "CrisisPointsPhase",
+=======
+          "phaseName": "MultiParadigmDUIUpdatePhase",
+>>>>>>> origin/auto/researcher-20251107_043002
           "priority": "UNKNOWN"
         }
       ]
     },
     {
+<<<<<<< HEAD
       "module": "cyberSecurity",
+=======
+      "module": "positiveTippingPoints",
+>>>>>>> origin/auto/researcher-20251107_043002
       "criticalCount": 0,
       "highCount": 0,
       "totalCount": 1,
       "calledByPhases": [
         {
+<<<<<<< HEAD
           "phaseName": "CyberSecurityPhase",
+=======
+          "phaseName": "PositiveTippingPointsPhase",
+>>>>>>> origin/auto/researcher-20251107_043002
           "priority": "UNKNOWN"
         }
       ]
     },
     {
+<<<<<<< HEAD
       "module": "defensiveAI",
+=======
+      "module": "proactiveSleeperDetection",
+>>>>>>> origin/auto/researcher-20251107_043002
       "criticalCount": 0,
       "highCount": 0,
       "totalCount": 1,
       "calledByPhases": [
         {
+<<<<<<< HEAD
           "phaseName": "DefensiveAIPhase",
+=======
+          "phaseName": "ProactiveSleeperDetectionPhase",
+>>>>>>> origin/auto/researcher-20251107_043002
           "priority": "UNKNOWN"
         }
       ]
     },
     {
+<<<<<<< HEAD
       "module": "diplomaticAI",
+=======
+      "module": "workflowAdaptation",
+>>>>>>> origin/auto/researcher-20251107_043002
       "criticalCount": 0,
       "highCount": 0,
       "totalCount": 1,
       "calledByPhases": [
         {
+<<<<<<< HEAD
           "phaseName": "DiplomaticAIPhase",
           "priority": "UNKNOWN"
         }
@@ -270,6 +350,9 @@
       "calledByPhases": [
         {
           "phaseName": "DystopiaProgressionPhase",
+=======
+          "phaseName": "WorkflowAdaptationPhase",
+>>>>>>> origin/auto/researcher-20251107_043002
           "priority": "UNKNOWN"
         }
       ]
