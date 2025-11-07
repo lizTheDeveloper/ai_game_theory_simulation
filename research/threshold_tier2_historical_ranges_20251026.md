@@ -1,9 +1,13 @@
 # Tier 2 Threshold Distributions - Historical Range Research
 
 **Date:** October 26, 2025
+**Last Updated:** November 7, 2025
 **Phase:** Phase 2 - Threshold Uncertainty Feature
-**Status:** Research in Progress
+**Status:** Updated with 2023-2025 research
 **Classification:** Tier 2 (Semi-known, Historical Ranges)
+**Oldest Source:** 1930 (Keynes - Economic Possibilities for our Grandchildren)
+**Newest Source:** 2024 (Lisciandra - Corruption dynamics and political instability; IDEA Global State of Democracy)
+**Last Verified:** November 7, 2025
 
 ---
 
@@ -437,6 +441,40 @@ At what level of combined resentment (inequality + perceived unfairness + contro
   - Resentment (inequality + exclusion)
 - Threshold: Elite control < 0.40 AND resentment > 0.60 → revolution likely
 
+### Recent Empirical Research (2023-2025)
+
+**Belgioioso, Dworschak & Gleditsch (2023) - PLOS ONE:**
+- **Study:** Local deprivation predicts right-wing hate crime in England
+- **Sample:** 32,844 neighborhoods (2015-2021)
+- **Key Finding:** Local deprivation explains ~13% of variance in hate crimes
+- **Mechanism:** High local deprivation erodes perceived legitimacy of political leaders and central institutions, undermines trust, increases political and social alienation, and leads to support for violence
+- **Citation:** Belgioioso, M., Dworschak, C., & Gleditsch, K.S. (2023). Local deprivation predicts right-wing hate crime in England. *PLOS ONE*, 18(9): e0289423. https://doi.org/10.1371/journal.pone.0289423
+
+**Lisciandra (2024) - Journal of Public Economic Theory:**
+- **Study:** Corruption dynamics and political instability
+- **Key Finding:** Resentment thresholds exist where initial resentment levels determine stability vs. explosive dynamics
+- **Mechanism:** When initial resentment exceeds threshold, it initiates continuous increases in societal resentment resulting in "explosive dynamics" that threaten political system stability
+- **Outcome:** Corruption becomes endemic, driving public resentment to destabilizing levels
+- **Citation:** Lisciandra, M. (2024). Corruption dynamics and political instability. *Journal of Public Economic Theory*, 26(5). https://doi.org/10.1111/jpet.12712
+
+**International IDEA (2024) - Global State of Democracy:**
+- **Electoral Legitimacy Crisis Indicators:**
+  - 2020-2024: Almost 1 in 5 elections saw losing candidate/party reject outcome
+  - 2024: 1 in 3 voters live in country where election quality has declined
+  - 54% of countries assessed suffered democratic decline in at least one factor
+- **Key Insight:** "When the standard of peaceful power transfer erodes, the legitimacy of the entire system erodes"
+- **Citation:** International IDEA (2024). The Global State of Democracy 2024: Strengthening the Legitimacy of Elections in a Time of Radical Uncertainty. Stockholm: International IDEA.
+
+**World Bank & IMF (2024) - Inequality Thresholds:**
+- **Gini 0.30:** IMF/World Bank consensus threshold - inequality below this doesn't undermine growth
+- **Gini 0.40:** World Bank tracks countries above this as "high inequality" (key indicator for shared prosperity)
+- **Gini 0.461:** Critical value identified in 2024 study - above this, policy interventions have different carbon emission effects
+- **Current Global Status (2023):**
+  - Global mean Gini: 0.65 (wealth), 0.38 (disposable income)
+  - High inequality regions: Latin America (0.48), Sub-Saharan Africa (0.43)
+  - Low inequality regions: Nordic countries (0.25-0.28)
+- **Citation:** World Bank (2024). The World Bank's New Inequality Indicator. Washington, DC: World Bank Group.
+
 ### Distribution Parameters
 
 **Type:** Triangular(min=0.60, mode=0.70, max=0.80)
@@ -581,3 +619,9 @@ At what level of combined resentment (inequality + perceived unfairness + contro
 - Gurr, T. R. (1970). *Why Men Rebel*. Princeton University Press.
 - Piketty, T. (2014). *Capital in the Twenty-First Century*. Harvard University Press.
 - Acemoglu, D., & Robinson, J. A. (2006). *Economic Origins of Dictatorship and Democracy*. Cambridge University Press.
+
+### Recent Research (2023-2025)
+- Belgioioso, M., Dworschak, C., & Gleditsch, K.S. (2023). Local deprivation predicts right-wing hate crime in England. *PLOS ONE*, 18(9): e0289423. https://doi.org/10.1371/journal.pone.0289423
+- Lisciandra, M. (2024). Corruption dynamics and political instability. *Journal of Public Economic Theory*, 26(5). https://doi.org/10.1111/jpet.12712
+- International IDEA (2024). *The Global State of Democracy 2024: Strengthening the Legitimacy of Elections in a Time of Radical Uncertainty*. Stockholm: International IDEA.
+- World Bank (2024). *The World Bank's New Inequality Indicator*. Washington, DC: World Bank Group.
