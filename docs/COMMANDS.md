@@ -153,10 +153,11 @@ npx tsx scripts/findDivergentPhase.ts
 
 **Infrastructure:**
 - Pre-commit hook: Blocks unsorted Object.entries/keys iterations
-- CI workflow: `.github/workflows/determinism-validation.yml` runs on every PR
+- CI workflow: `.github/workflows/determinism-validation.yml.disabled` (⚠️ TEMPORARILY DISABLED Nov 6, 2025 - conserving Claude API tokens)
 - Investigation logs: `/logs/determinism_*.md` (2,758 lines of debugging artifacts)
 
 **Current Status:** 90% determinism achieved (9/10 runs identical), 10% regression under investigation
+**Note:** Run manual validation until CI workflow re-enabled: `npx tsx scripts/comprehensiveDeterminismValidation.ts`
 
 ## Building & Development
 

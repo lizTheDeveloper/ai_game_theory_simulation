@@ -118,7 +118,7 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
   - ✅ Impact: **~359 hours/year saved** (98% reduction in manual tracking)
 - **Files Changed:**
   - `scripts/auditResearchAge.ts` - Citation extraction, age classification
-  - `.github/workflows/research-age-audit.yml` - Weekly automation
+  - `.github/workflows/research-age-audit.yml.disabled` - Weekly automation (⚠️ TEMPORARILY DISABLED Nov 6, 2025)
   - `research/UPDATE_QUEUE.md` - Auto-generated priority queue (726 lines)
   - Documentation: `RESEARCH_PIPELINE.md`, `RESEARCH_PIPELINE_QUICKSTART.md`
 - **Current Status:**
@@ -431,12 +431,13 @@ const privateOrgs = state.organizations
 - **Action:** Blocks commit with fix guidance if violations found
 - **Override:** `git commit --no-verify` for false positives (commutative operations)
 
-**2. CI Workflow** (`.github/workflows/determinism-validation.yml`):
+**2. CI Workflow** (`.github/workflows/determinism-validation.yml.disabled`):
 - **Purpose:** Validate determinism on every commit to main/develop/feature branches
 - **Test:** Runs 10 Monte Carlo simulations × 12 months with seed=42
 - **Pass Criteria:** 9-10/10 runs identical (CV ≤ 0.01%), 90%+ success rate acceptable
 - **Output:** Uploads validation logs as artifacts, comments on PRs with results
 - **Runtime:** ~10-15 minutes on GitHub Actions runners
+- **Status:** ⚠️ TEMPORARILY DISABLED (Nov 6, 2025) - Conserving Claude API tokens (79% weekly usage). Re-enable by removing `.disabled` extension.
 
 **Impact:**
 - ✅ Prevents determinism regressions before merge
@@ -698,11 +699,11 @@ While worker-side contract enforcement remains blocked, **Layer 4 runtime monito
 
 **Pipeline Components:**
 - **Automated age detection:** `scripts/auditResearchAge.ts` (604 lines) - Citation extraction, age classification
-- **Weekly GitHub Action:** `.github/workflows/research-age-audit.yml` (220 lines) - Every Monday 8am UTC
+- **Weekly GitHub Action:** `.github/workflows/research-age-audit.yml.disabled` (220 lines) - Every Monday 8am UTC (⚠️ TEMPORARILY DISABLED Nov 6, 2025)
 - **Priority queue:** `research/UPDATE_QUEUE.md` (726 lines, auto-generated) - CRITICAL/HIGH/MEDIUM/LOW sections
 - **Alert system:** Creates GitHub issues for CRITICAL items (>5yr + used in simulation)
 - **Documentation:** `docs/RESEARCH_PIPELINE.md` (19KB), `docs/RESEARCH_PIPELINE_QUICKSTART.md` (6KB)
-- **NPM scripts:** `npm run audit:research`, `npm run audit:research:verbose`
+- **NPM scripts:** `npm run audit:research`, `npm run audit:research:verbose` (manual run still available)
 
 **Current Research Status:**
 - 🚨 **CRITICAL: 0 items (0%)** ✅ MEETING TARGET - All simulation-used sources <3yr old
@@ -720,7 +721,7 @@ While worker-side contract enforcement remains blocked, **Layer 4 runtime monito
 
 **Files Changed:**
 - `scripts/auditResearchAge.ts` (604 lines) - Core audit logic
-- `.github/workflows/research-age-audit.yml` (220 lines) - Weekly automation
+- `.github/workflows/research-age-audit.yml.disabled` (220 lines) - Weekly automation (⚠️ TEMPORARILY DISABLED Nov 6, 2025)
 - `research/UPDATE_QUEUE.md` (726 lines) - Auto-generated priority queue
 - `docs/RESEARCH_PIPELINE.md` (19KB) - Full workflow documentation
 - `docs/RESEARCH_PIPELINE_QUICKSTART.md` (6KB) - 1-page reference
