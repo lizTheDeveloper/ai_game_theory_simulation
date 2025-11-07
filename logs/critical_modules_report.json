@@ -1,0 +1,182 @@
+{
+  "timestamp": "2025-11-07T04:39:15.997Z",
+  "totalModules": 13,
+  "top20": [
+    {
+      "module": "bayesianMortality",
+      "criticalCount": 1,
+      "highCount": 0,
+      "totalCount": 5,
+      "calledByPhases": [
+        {
+          "phaseName": "BayesianMortalityResolutionPhase",
+          "priority": "CRITICAL"
+        },
+        {
+          "phaseName": "ClimateImpactCascadePhase",
+          "priority": "UNKNOWN"
+        },
+        {
+          "phaseName": "ExogenousShockPhase",
+          "priority": "UNKNOWN"
+        },
+        {
+          "phaseName": "FamineSystemPhase",
+          "priority": "UNKNOWN"
+        },
+        {
+          "phaseName": "RadiationSystemPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "policyLifecycle",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 2,
+      "calledByPhases": [
+        {
+          "phaseName": "GovernmentResponsePhase",
+          "priority": "UNKNOWN"
+        },
+        {
+          "phaseName": "PolicyImplementationPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "aiSuffering",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "AISufferingPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "alignmentDynamics",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "AlignmentDynamicsPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "earlyWarningSystems",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "EarlyWarningPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "extremeWeatherEvents",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "ExtremeWeatherEventsPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "gamingDetection",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "GamingDetectionPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "government",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "GovernmentActionsPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "centralConfig",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "MortalityStabilizersPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "planetaryBoundaryRecovery",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "MultiParadigmDUIUpdatePhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "positiveTippingPoints",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "PositiveTippingPointsPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "proactiveSleeperDetection",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "ProactiveSleeperDetectionPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "module": "workflowAdaptation",
+      "criticalCount": 0,
+      "highCount": 0,
+      "totalCount": 1,
+      "calledByPhases": [
+        {
+          "phaseName": "WorkflowAdaptationPhase",
+          "priority": "UNKNOWN"
+        }
+      ]
+    }
+  ]
+}
