@@ -422,12 +422,49 @@ TimeoutStartSec=1h  # Increase to 1 hour
 
 ### Worker not running?
 
+**CRITICAL: Check crontab has `cd` command** (Nov 7, 2025 incident)
+
+The most common silent failure is a missing `cd` command in crontab entries. Cron doesn't inherit your shell's working directory.
+
+```bash
+# ❌ WRONG - Will fail silently (script not found)
+0 * * * * ./autonomous-worker.sh >> logs/cron_worker.log 2>&1
+
+# ✅ CORRECT - Always use cd to working directory
+0 * * * * cd /home/username/ai_game_theory_simulation && ./autonomous-worker.sh >> logs/cron_worker.log 2>&1
+
+# Or use absolute paths everywhere
+0 * * * * /home/username/ai_game_theory_simulation/autonomous-worker.sh >> /home/username/ai_game_theory_simulation/logs/cron_worker.log 2>&1
+```
+
+**Verify crontab entries:**
+```bash
+# View current crontab
+crontab -l
+
+# Check ALL cron jobs have cd or absolute paths
+crontab -l | grep -E "(autonomous|researcher|watcher|merge)"
+```
+
+**Symptoms of missing `cd`:**
+- No error messages (complete silence)
+- No logs in `logs/cron_worker.log`
+- Health watcher reports worker hasn't run
+- systemctl shows timer is active but no execution
+
+**Other checks:**
 ```bash
 # Check timer is active
 sudo systemctl list-timers claude-worker.timer
 
 # Check service logs
 sudo journalctl -u claude-worker.service -n 100
+
+# Verify script exists and is executable
+ls -la ~/ai_game_theory_simulation/autonomous-worker.sh
+
+# Test manual run from correct directory
+cd ~/ai_game_theory_simulation && ./autonomous-worker.sh
 ```
 
 ### API key issues?
