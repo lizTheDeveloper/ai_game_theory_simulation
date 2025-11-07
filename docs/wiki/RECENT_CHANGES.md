@@ -6,6 +6,45 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
+**🔧 AUTONOMOUS WORKER HEALTH CHECK FIX** (Nov 7, 2025, commit a7103fd)
+
+**Summary:** Fixed autonomous-worker-watcher.sh bash scripting bug that was producing multi-line output in count variables, causing health check failures and multi-instance contention.
+
+**Root Cause:** Defensive fallback pattern `grep -c "pattern" || echo "0"` was producing multi-line output (e.g., "0\n0") when grep found zero matches, violating bash integer expression requirements.
+
+**Symptoms:**
+- ⚠️ Watcher script failing with "integer expression expected" errors (line 166)
+- 🚨 Multiple Claude Code instances running simultaneously
+- 🔒 Git lock contention between worker, watcher, and researcher
+- 💥 Merge conflicts in researcher status files
+
+**Solution - Defensive Programming Best Practices:**
+1. **Line 74:** Fixed `RECENT_COUNT` calculation
+   - Changed from: `grep -c "worker_" || echo "0"`
+   - Changed to: `grep "worker_" | wc -l` + `${VAR:-0}` fallback
+2. **Line 163:** Fixed `WORKER_BRANCHES` calculation
+   - Changed from: `grep -c "auto/worker-" || echo "0"`
+   - Changed to: `grep "auto/worker-" | wc -l` + `${VAR:-0}` fallback
+
+**Why This Matters:**
+This implements the defensive programming anti-pattern guidance from CLAUDE.md:366-371. Silent fallbacks (`|| echo "0"`) with commands that return numeric output can mask errors and produce invalid output. The fix uses proper bash idioms: `wc -l` for counting + `${VAR:-default}` for safe defaults.
+
+**Impact:**
+- ✅ Watcher script runs without integer errors
+- ✅ Branch counting works correctly (returns 0 for zero branches)
+- ✅ No multi-line output in count variables
+- ✅ Prevented multiple Claude instances from fighting over git
+
+**Files Modified:**
+- `scripts/autonomous-worker-watcher.sh` - Fixed two grep counting patterns (lines 74, 163)
+- `logs/autonomous/researcher/status_current.txt` - Resolved merge conflict markers
+
+**Script Location:** `scripts/autonomous-worker-watcher.sh`
+
+**Related Documentation:** CLAUDE.md lines 366-378 (Defensive Programming Anti-Patterns)
+
+---
+
 **🔧 MERGE ORCHESTRATOR WORKING TREE FIX** (Nov 7, 2025, commit 2c32f0e)
 
 **Summary:** Fixed merge orchestrator script failure that blocked all 10 autonomous worker branches from merging due to uncommitted changes in working tree.
