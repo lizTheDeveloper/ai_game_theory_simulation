@@ -44,6 +44,13 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
 
 **Next Priority:** 5-8 days of CRITICAL implementation work to close adoption gaps (assertion coverage + phase dependencies).
 
+**🚨 NEW CRITICAL INITIATIVE: Real-World Resource Constraints for Government Actions** (November 7, 2025)
+- **Problem:** 97% of government actions (33/34) have NO budget costs, generic timelines, no legislative bandwidth limits
+- **Solution:** 5-phase research initiative to replace abstract "energy system" with ACTUAL constraints (budget costs, implementation timelines, legislative bandwidth, physical bottlenecks)
+- **Status:** Planning complete, ready for autonomous worker pickup
+- **Estimated Timeline:** 22-35 hours across 5 phases
+- **See:** `plans/SIMULATION_ROADMAP.md` (Real-World Resource Constraints section) for complete initiative structure
+
 **The Architect's Assessment:** This assessment revealed gaps BEFORE system failure - this is the success of transparency and architectural honesty. Planning complete ≠ Implementation complete. Frameworks exist, but adoption is incomplete.
 
 **✅ POST-WEEK 4 INTEGRATION MAINTENANCE COMPLETE** (commit 0d4ba337b, Nov 6, 2025)
@@ -3976,19 +3983,26 @@ See: `devlogs/multidimensional-death-tracking_20251018.md` for complete implemen
 
 **Immediate Priorities:**
 
-1. **Multi-Paradigm DUI Implementation (Phases 4-7)** (~35-45 hours)
+1. **🚨 CRITICAL: Real-World Resource Constraints for Government Actions** (~22-35 hours) **NEW Nov 7**
+   - Replace abstract "energy system" with actual constraints (budget costs, implementation timelines, legislative bandwidth)
+   - Research Phase: Find peer-reviewed sources for government budgets, timelines, legislative bandwidth, physical constraints
+   - Implementation: Add numeric $ costs and realistic timelines to all 44+ government actions
+   - Validation: Monte Carlo N≥10, architecture review
+   - **See:** `plans/SIMULATION_ROADMAP.md` (Real-World Resource Constraints section)
+
+2. **Multi-Paradigm DUI Implementation (Phases 4-7)** (~35-45 hours)
    - Phase 4: Data pipeline (V-Dem, UNDP, WHO APIs)
    - Phase 5: Monte Carlo integration (compute 4 paradigm scores per country/month)
    - Phase 6: Validation & calibration (historical validation, sensitivity analysis)
    - Phase 7: Documentation & advocacy (wiki, research gap reports)
 
-2. **Extended Monte Carlo Validation (N=50-100, 240 months)**
+3. **Extended Monte Carlo Validation (N=50-100, 240 months)**
    - Test government system impact on outcomes
    - Measure treaty formation rates over 20 years
    - Validate coalition stability and election cycles
    - Assess policy response effectiveness by government type
 
-3. **Government System Enhancements** (optional, 10-20 hours)
+4. **Government System Enhancements** (optional, 10-20 hours)
    - Additional historical validation (Netherlands 2021, Israel 2023, Italy 2022, France 2024)
    - Expand from 30 → 50 countries
    - Add more party data (23 → 100+ parties)
