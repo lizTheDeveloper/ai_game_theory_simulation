@@ -70,6 +70,42 @@
    - **Status:** 🔴 NOT PRODUCTION READY - Silent data loss worse than crashes
    - See HIGH-6 section below for detailed analysis
 
+0c. 🚨 **INCOMPLETE WORKER FIXES:** Dashboard State Contract Enforcement (Nov 7, 2025)
+   - **Status:** ❌ BLOCKED - TypeScript compilation errors in `src/workers/simulationWorker.ts`
+   - **Validation:** 14 critical dashboard issues detected (manual run: `logs/manual_validation_20251106_195740.log`)
+
+   **TypeScript Errors:**
+   ```
+   src/workers/simulationWorker.ts(1867,24): error TS2339: Property 'environment' does not exist on type 'GameState'.
+   src/workers/simulationWorker.ts(2381,9): error TS2339: Property 'technologies' does not exist on type 'StateDelta'.
+   src/workers/simulationWorker.ts(2384,9): error TS2339: Property 'environment' does not exist on type 'StateDelta'.
+   src/workers/simulationWorker.ts(2385,9): error TS2339: Property 'society' does not exist on type 'StateDelta'.
+   src/workers/simulationWorker.ts(2386,9): error TS2339: Property 'multiParadigmDUI' does not exist on type 'StateDelta'.
+   ```
+
+   **Root Causes:**
+   1. **StateDelta type missing fields** - Must add `technologies`, `environment`, `society`, `multiParadigmDUI` to interface
+   2. **Environment aggregation incomplete** - Need to construct from distributed GameState fields:
+      - `state.resourceEconomy.co2.temperatureAnomaly` → `environment.temperature`
+      - `state.resourceEconomy.co2.ppm` → `environment.co2ppm`
+      - Plus: climateChange, resourceDepletion, biodiversityLoss, pollutionLevel
+   3. **Society field exists** - `state.society` IS valid (line 181 in game.ts), just need type update
+
+   **Dashboard Impact:**
+   - Tech Tree: 0/71 technologies (all breakthrough tech missing)
+   - Regions: 0/7 regions (all regional populations missing)
+   - Paradigm: 0/4 paradigms (Multi-Paradigm DUI history missing)
+   - AI Agents: 0 after 2min (arrays disappear after first step)
+
+   **Required Actions:**
+   1. Update `StateDelta` interface (add 4 missing fields)
+   2. Complete environment object construction in snapshot (lines 1866-1872)
+   3. Validate all fields included in delta (lines 2372-2393)
+   4. Run headless validation: `npx tsx scripts/validateDashboardSemantics.ts`
+
+   **Context:** Dashboard State Divergence Crisis - 4-layer defense system partially implemented
+   **See also:** Frontend roadmap, `docs/DASHBOARD_CRISIS_SUMMARY_20251107.md`
+
 0b. ✅ **BLOCKERS RESOLVED (Superseded by HIGH-6 findings):** Monte Carlo Validation Critical Issues (Oct 30 @12:30pm - @10:00pm, 11-16h total)
    - ✅ **ALL 3 CRITICAL BLOCKERS FIXED & VALIDATED** - N=10 Monte Carlo validation passed (seeds 42000-42009)
    - ✅ BLOCKER-1: Monthly mortality >100% - FIXED (bayesianMortality.ts compression logic, capping + division protection)

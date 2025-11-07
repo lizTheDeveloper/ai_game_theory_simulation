@@ -493,6 +493,88 @@ All determinism patterns now documented in:
 
 ---
 
+**🚨 Dashboard State Divergence Crisis - Worker Fixes Incomplete** (November 7, 2025)
+
+**Status:** ❌ BLOCKED - TypeScript compilation errors in worker state contract enforcement
+
+**Issue:** Attempt to implement full `FrontendStateContract` compliance in `simulationWorker.ts` failed with type errors, leaving dashboard with 14 critical failures (0 technologies, 0 regions, 0 paradigms, 0 AI agents after 2 minutes).
+
+**TypeScript Compilation Errors:**
+```
+src/workers/simulationWorker.ts(1867,24): error TS2339: Property 'environment' does not exist on type 'GameState'.
+src/workers/simulationWorker.ts(2381,9): error TS2339: Property 'technologies' does not exist on type 'StateDelta'.
+src/workers/simulationWorker.ts(2384,9): error TS2339: Property 'environment' does not exist on type 'StateDelta'.
+src/workers/simulationWorker.ts(2385,9): error TS2339: Property 'society' does not exist on type 'StateDelta'.
+src/workers/simulationWorker.ts(2386,9): error TS2339: Property 'multiParadigmDUI' does not exist on type 'StateDelta'.
+```
+
+**Root Causes:**
+1. **StateDelta type missing fields** - Must add `technologies`, `environment`, `society`, `multiParadigmDUI` to interface
+2. **Environment object construction** - `state.environment` doesn't exist as single object; must construct from distributed GameState fields:
+   - `state.resourceEconomy.co2.temperatureAnomaly` → `environment.temperature`
+   - `state.resourceEconomy.co2.ppm` → `environment.co2ppm`
+   - Plus: climateChange, resourceDepletion, biodiversityLoss, pollutionLevel metrics
+3. **Society field exists** - `state.society` IS valid (game.ts:181), just needs type update in StateDelta
+
+**Dashboard Impact (Validated: `logs/manual_validation_20251106_195740.log`):**
+- ❌ **Tech Tree:** 0/71 technologies rendered (all breakthrough tech missing)
+- ❌ **Regions:** 0/7 regions rendered (Africa, Asia, Europe, Latin America, Middle East, North America, Oceania)
+- ❌ **Paradigm:** 0/4 paradigms rendered (Western, Development, Ecological, Indigenous)
+- ❌ **AI Agents:** 0 agents after 2 minutes (data disappears after first step)
+- ⚠️ **QoL Dimensions:** Only 1/17 dimensions visible
+
+**Required Fixes:**
+1. Update `StateDelta` interface with 4 missing fields
+2. Complete environment object construction in snapshot (lines 1866-1872)
+3. Ensure all fields included in delta calculation (lines 2372-2393)
+4. Validate with: `npx tsx scripts/validateDashboardSemantics.ts`
+
+**Context Documentation:**
+- **Roadmaps:** Priority 0c in SIMULATION_ROADMAP.md (lines 73-107), FRONTEND_ROADMAP.md (lines 908-972)
+- **Crisis Summary:** `docs/DASHBOARD_CRISIS_SUMMARY_20251107.md`
+- **Case Study:** `docs/course/case-studies/dashboard-state-divergence.md`
+- **Manual Validation:** `logs/manual_validation_20251106_195740.log`
+
+**Technical Context:** This issue represents incomplete implementation of the 4-layer dashboard defense system designed to prevent state divergence. Worker-side contract enforcement was attempted but blocked by type system mismatches between GameState structure and FrontendStateContract expectations.
+
+**✅ Layer 4 Runtime Monitoring Complete** (November 7, 2025)
+
+While worker-side contract enforcement remains blocked, **Layer 4 runtime monitoring** has been successfully implemented to detect violations in real-time:
+
+**Components:**
+- **`useStateDriftMonitor()` hook** (`src/lib/utils/stateDriftMonitor.ts`) - React hook validates state against `FrontendStateContract` in real-time, logs detailed diagnostics
+- **`StateDriftWarningBanner` component** (`src/components/StateDriftWarningBanner.tsx`) - Red warning banner in dev mode shows contract violations with expandable details
+- **Zero production overhead** - Monitoring only active in development (`NODE_ENV === 'development'`)
+- **Non-blocking** - Logs errors without throwing, prevents app crashes
+
+**Diagnostic Info:**
+- Timestamp of violation
+- Error message with missing fields
+- Delta keys present in update
+- Array length samples (aiAgents, regionalPopulations, technologies, paradigmTrajectory)
+- Full state delta logged to console
+
+**Multi-Layer Defense System:**
+1. **Layer 1 - Compile Time:** TypeScript type checking (catches static type errors)
+2. **Layer 2 - Commit Time:** Pre-commit validation hooks (prevents bad commits)
+3. **Layer 3 - CI Time:** GitHub Actions validation (prevents bad merges)
+4. **Layer 4 - Runtime:** Visual monitoring in dev (catches state drift <1 second vs days) ✅ COMPLETE
+
+**Why Layer 4 Matters:** Complex delta-based state propagation can silently accumulate drift that bypasses compile-time checks. Runtime monitoring provides immediate visual feedback during development, catching violations before they reach production.
+
+**Case Study:** See `docs/course/case-studies/dashboard-state-divergence.md` for complete architectural analysis of how multi-layer defense prevents entire bug classes.
+
+**Related:** See "Dashboard Data Flow Fix - Paradigm Trajectory Delta Bug" (above) for earlier delta-based array inclusion fix. This crisis represents deeper structural issues with state contract enforcement.
+
+**Files Affected:**
+- `src/workers/simulationWorker.ts` - Worker state contract (incomplete)
+- `src/types/FrontendStateContract.ts` - Contract definition
+- `src/types/game.ts` - GameState interface (source of truth)
+- `src/lib/utils/stateDriftMonitor.ts` - Runtime monitoring hook ✅
+- `src/components/StateDriftWarningBanner.tsx` - Visual warning component ✅
+
+---
+
 **🎯 4-WEEK CRITICAL PATH COMPLETE - Research Update Pipeline Operational**
 
 **WEEK 4 Task 10 Complete:** Automated research currency monitoring system (commit 4a54b09)
