@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 🔬 Autonomous Research Worker - Session Complete
 
 **Session:** 2025-11-07 02:30-02:40 UTC
@@ -61,3 +62,6 @@ From `research/UPDATE_QUEUE.md`:
 **Session Duration:** ~10 minutes
 **Quality:** Research-backed, peer-reviewed 2024-2025 sources
 **Status:** Ready for merge 🚀
+=======
+GIT OPERATIONS
+>>>>>>> origin/auto/researcher-20251107_020000
