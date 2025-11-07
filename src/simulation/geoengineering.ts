@@ -23,6 +23,11 @@ import {
   BioengineeredCleanersState,
   GeoengTechnology,
 } from '../types/resources';
+import {
+  assertFinite,
+  assertProbability,
+  assertInRange
+} from './utils/assertions';
 
 // Helper to add events
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
@@ -71,11 +76,17 @@ export function updateGeoengineering(state: GameState): void {
   resources.ocean.geoengInterventionActive = anyActive;
   
   if (anyActive) {
-    resources.ocean.geoengIntensity = 
+    resources.ocean.geoengIntensity = assertProbability(
       (geoeng.ironFertilization?.deploymentLevel || 0) * 0.3 +
       (geoeng.oceanAlkalinity?.deploymentLevel || 0) * 0.4 +
       (geoeng.artificialUpwelling?.deploymentLevel || 0) * 0.2 +
-      (geoeng.bioengineeredCleaners?.deploymentLevel || 0) * 0.5;
+      (geoeng.bioengineeredCleaners?.deploymentLevel || 0) * 0.5,
+      {
+        location: 'updateGeoengineering',
+        valueName: 'geoengIntensity',
+        month: state.currentMonth
+      }
+    );
   } else {
     resources.ocean.geoengIntensity = 0;
   }
@@ -97,15 +108,32 @@ function updateIronFertilization(state: GameState, tech: IronFertilizationState)
   tech.monthsActive++;
   
   // Deployment quality depends on AI capability (need 2.0+ for safe deployment)
-  tech.deploymentQuality = Math.min(1.0, avgAI / 2.0);
+  tech.deploymentQuality = assertProbability(Math.min(1.0, avgAI / 2.0), {
+    location: 'updateIronFertilization',
+    valueName: 'deploymentQuality',
+    month: state.currentMonth,
+    additionalInfo: { avgAI }
+  });
   
   // BENEFITS: Phytoplankton boost + CO2 sequestration
   const qualityFactor = tech.deploymentQuality;
   const deploymentFactor = tech.deploymentLevel;
   
   // Boost phytoplankton
-  const phytoBoost = 0.03 * deploymentFactor * qualityFactor; // Up to 3% per month
-  ocean.phytoplanktonPopulation = Math.min(1.0, ocean.phytoplanktonPopulation + phytoBoost);
+  const phytoBoost = assertFinite(0.03 * deploymentFactor * qualityFactor, {
+    location: 'updateIronFertilization',
+    valueName: 'phytoBoost',
+    month: state.currentMonth,
+    additionalInfo: { qualityFactor, deploymentFactor }
+  });
+  ocean.phytoplanktonPopulation = assertProbability(
+    Math.min(1.0, ocean.phytoplanktonPopulation + phytoBoost),
+    {
+      location: 'updateIronFertilization',
+      valueName: 'phytoplanktonPopulation',
+      month: state.currentMonth
+    }
+  );
   
   // Sequester CO2
   const co2Removal = 0.008 * deploymentFactor * qualityFactor; // Up to 0.8% per month
