@@ -458,6 +458,87 @@ const state = createDefaultInitialState('historical', ..., rng);
 
 ---
 
+**🔧 CRITICAL REGRESSION FIX - Math.random Fallbacks Removed (Nov 7, 2025)**
+
+**Issue:** Commit 9c6f25dde (RNG unification fix above) introduced `Math.random` fallbacks "for backward compatibility." Comment claimed "DETERMINISM FIX" but actually **BROKE determinism** by allowing non-deterministic fallback paths.
+
+**Root Cause:** Three locations had `rng?: () => number` (optional) with `const random = rng || Math.random`:
+1. `src/simulation/initialization.ts:478` - `createDefaultInitialState()` accepted optional RNG, fell back to `Math.random`
+2. `src/simulation/environmental.ts:44` - `initializeEnvironmentalAccumulation()` accepted optional RNG, fell back to `Math.random`
+3. `src/simulation/systems/EnvironmentalSystem.ts` - Did not accept RNG at all, always used `Math.random`
+
+**Impact:**
+- If RNG undefined, ALL Monte Carlo runs could be non-deterministic
+- Silent failure mode: no error, just wrong results
+- Violated research simulation requirement: **MUST be deterministic**
+- Violated fail-loudly philosophy: errors should crash, not fallback
+
+**Fix Applied:** (commit 0702a1d, Nov 7, 2025 - CRITICAL-3 from daily review)
+
+1. **Make RNG REQUIRED everywhere** (not optional):
+   ```typescript
+   // ❌ BEFORE: Optional with fallback
+   function createDefaultInitialState(rng?: () => number) {
+     const rngFunction = rng ?? Math.random;  // Silent fallback!
+   }
+
+   // ✅ AFTER: Required with assertion
+   function createDefaultInitialState(rng: () => number) {
+     if (!rng || typeof rng !== 'function') {
+       throw new Error('❌ CRITICAL: RNG function required for deterministic simulation. NEVER use Math.random.');
+     }
+     const rngFunction = rng;
+   }
+   ```
+
+2. **Add RNG to EnvironmentalSystem constructor**:
+   ```typescript
+   // ❌ BEFORE: No RNG parameter
+   class EnvironmentalSystem {
+     initialize() { return initializeEnvironmentalAccumulation(); }
+     update(state) { updateEnvironmentalAccumulation(state, Math.random); }
+   }
+
+   // ✅ AFTER: RNG required via constructor
+   class EnvironmentalSystem {
+     constructor(rng: () => number) { this.rng = rng; }
+     initialize() { return initializeEnvironmentalAccumulation(this.rng); }
+     update(state) { updateEnvironmentalAccumulation(state, this.rng); }
+   }
+   ```
+
+3. **Added fail-loudly assertions** in 3 files to catch missing RNG
+
+**Validation:**
+- Type checks pass (only unrelated merge conflicts remain)
+- Main Monte Carlo script already passes RNG correctly (no changes needed)
+- Debug/test scripts will need updating (follow-up task)
+
+**Defensive Pattern - NO FALLBACKS:**
+```typescript
+// ❌ WRONG: Optional with fallback (NEVER do this)
+function simulate(rng?: () => number) {
+  const random = rng || Math.random;  // Silent non-determinism!
+}
+
+// ✅ CORRECT: Required with assertion (ALWAYS do this)
+function simulate(rng: () => number) {
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for determinism');
+  }
+  const random = rng;
+}
+```
+
+**Key Lesson:** Silent fallbacks hide bugs. In research simulations, **fail loudly** is safer than **fail silently**. If RNG is missing, the simulation should CRASH with a clear error, not produce wrong results.
+
+**Related:**
+- Daily review: `/plans/daily_review_items_20251107_060000.md`
+- CRITICAL-3: RNG Algorithm Regression
+- See also: NaN handling section (same fail-loudly philosophy)
+
+---
+
 **🔧 Determinism Fix - Object Iteration Order (90% Resolution)**
 
 **Issue:** Monte Carlo runs with identical seeds were producing divergent results (CV = 2.61%), breaking deterministic reproducibility required for research validation.

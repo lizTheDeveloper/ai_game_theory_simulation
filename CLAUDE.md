@@ -253,6 +253,25 @@ This codebase uses **very strict TypeScript** (see `tsconfig.json`). Follow thes
 const value = rng();  // ✅ GOOD - deterministic with seed
 ```
 
+**CRITICAL: RNG must be REQUIRED, never optional with fallback.** (CRITICAL-3 regression fix, Nov 7, 2025)
+
+```typescript
+// ❌ WRONG - Optional with Math.random fallback
+function simulate(rng?: () => number) {
+  const random = rng || Math.random;  // Silent non-determinism!
+}
+
+// ✅ CORRECT - Required with fail-loudly assertion
+function simulate(rng: () => number) {
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation');
+  }
+  const random = rng;
+}
+```
+
+**Why this matters:** Silent fallbacks to `Math.random` break Monte Carlo reproducibility without any error. Research simulations MUST be deterministic - if RNG is missing, crash with a clear error, don't produce wrong results.
+
 ### NaN and Invalid Value Handling
 
 **CRITICAL: Never use silent fallback values for NaN/undefined in simulation calculations.**
