@@ -18,19 +18,29 @@ import {
 
 /**
  * Environmental accumulation system (wrapper for backward compatibility)
+ *
+ * CRITICAL FIX (Nov 7, 2025): Now requires RNG via constructor
+ * Removed Math.random fallbacks (CRITICAL-3 regression fix)
  */
 export class EnvironmentalSystem implements AccumulationSystem<EnvironmentalAccumulation> {
   readonly id = 'environmental';
   readonly name = 'Environmental Accumulation';
+  private rng: () => number;
+
+  constructor(rng: () => number) {
+    if (!rng || typeof rng !== 'function') {
+      throw new Error('❌ CRITICAL: EnvironmentalSystem requires RNG function. NEVER use Math.random.');
+    }
+    this.rng = rng;
+  }
 
   initialize(): EnvironmentalAccumulation {
-    return initializeEnvironmentalAccumulation();
+    return initializeEnvironmentalAccumulation(this.rng);
   }
 
   update(globalState: GameState): void {
-    // Use Math.random for system wrapper (tests only, not used in phase-based sim)
-    // Phase-based simulation uses deterministic RNG passed to phases
-    updateEnvironmentalAccumulation(globalState, Math.random);
+    // Use deterministic RNG provided via constructor (NOT Math.random)
+    updateEnvironmentalAccumulation(globalState, this.rng);
   }
 
   getSustainability(globalState: GameState): number {

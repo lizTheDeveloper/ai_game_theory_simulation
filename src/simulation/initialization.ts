@@ -466,7 +466,7 @@ export function createDefaultInitialState(
   climatePriorityConfig?: any,
   thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders, // Phase 4: Slider-based threshold control
   speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia',
-  rng?: () => number  // DETERMINISM FIX (Nov 6, 2025): Accept RNG function from caller (replaces seed parameter)
+  rng: () => number  // CRITICAL (Nov 7, 2025): RNG REQUIRED, no Math.random fallback
 ): GameState {
   // WEEK 2 Task 2.1 (Nov 6, 2025): Validate central configuration at startup
   // Fail-loudly if any parameter is invalid (research simulation rigor)
@@ -475,10 +475,13 @@ export function createDefaultInitialState(
   const initialYear = 2025;
   const initialMonth = 0;
 
-  // DETERMINISM FIX (Nov 6, 2025): Use caller's RNG or Math.random as fallback
-  // This ensures initialization and engine use the SAME RNG algorithm (SeededRandom)
-  // Previously: initialization used LCG, engine used SeededRandom → divergence even with same seed
-  const rngFunction: () => number = rng ?? Math.random;
+  // CRITICAL FIX (Nov 7, 2025): Removed Math.random fallback (CRITICAL-3 regression)
+  // RNG is now REQUIRED parameter - simulation MUST be deterministic
+  // See: daily review Nov 7, 2025 - RNG algorithm regression (commit 9c6f25dde)
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG function required for deterministic simulation. NEVER use Math.random.');
+  }
+  const rngFunction: () => number = rng;
 
   // DETERMINISM FIX (Oct 30, 2025): Set global RNG for initialization functions
   // This allows init functions to use deterministicRandom() before phases run
