@@ -24,6 +24,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 
 import { calculateAIAssistedSkillsAggregateMetrics, calculateProductivityMultiplierFromAIAssistedSkills, updateLaborCapitalDistribution, checkCompetenceCrisis, checkWageInequality, applyPolicyInterventions } from '../../aiAssistedSkills';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertNonEmpty } from '@/simulation/utils/assertions';
 
 export class HumanEnhancementPhase implements SimulationPhase {
   readonly id = 'ai-assisted-skills-metrics';
@@ -45,7 +46,15 @@ export class HumanEnhancementPhase implements SimulationPhase {
 
       // Get average AI capability for phase detection
       const avgAICapability = state.aiAgents && state.aiAgents.length > 0
-        ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
+        ? assertFinite(
+            state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length,
+            {
+              location: 'HumanEnhancementPhase',
+              valueName: 'avgAICapability',
+              month: state.currentMonth,
+              additionalInfo: { agentCount: state.aiAgents.length }
+            }
+          )
         : 0;
 
       // Calculate aggregate metrics from segment data

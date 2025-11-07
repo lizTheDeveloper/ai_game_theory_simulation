@@ -54288,7 +54288,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 37,
+    "line": 38,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -54296,7 +54296,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 38,
+    "line": 39,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -54304,7 +54304,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 39,
+    "line": 40,
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -54312,7 +54312,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 74,
+    "line": 75,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -54320,7 +54320,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 75,
+    "line": 76,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -54328,7 +54328,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 76,
+    "line": 77,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -54336,7 +54336,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 77,
+    "line": 78,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -54344,7 +54344,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 78,
+    "line": 79,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -54352,7 +54352,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 79,
+    "line": 80,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -54360,7 +54360,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 80,
+    "line": 81,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -54368,7 +54368,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 81,
+    "line": 82,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -54376,7 +54376,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 82,
+    "line": 83,
     "type": "property",
     "name": "collectiveId",
     "currentDoc": "(none)",
@@ -54384,7 +54384,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 83,
+    "line": 84,
     "type": "property",
     "name": "memberCount",
     "currentDoc": "(none)",
@@ -54392,7 +54392,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 84,
+    "line": 85,
     "type": "property",
     "name": "formationCause",
     "currentDoc": "(none)",
@@ -54400,7 +54400,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 95,
+    "line": 96,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -54408,7 +54408,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 96,
+    "line": 97,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -54416,7 +54416,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 97,
+    "line": 98,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -54424,7 +54424,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 98,
+    "line": 99,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -54432,7 +54432,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 99,
+    "line": 100,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -54440,7 +54440,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 100,
+    "line": 101,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -54448,7 +54448,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 101,
+    "line": 102,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -54456,7 +54456,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 102,
+    "line": 103,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -54464,7 +54464,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 103,
+    "line": 104,
     "type": "property",
     "name": "collectiveId",
     "currentDoc": "(none)",
@@ -54472,7 +54472,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 104,
+    "line": 105,
     "type": "property",
     "name": "traumaIntensity",
     "currentDoc": "(none)",
@@ -54480,7 +54480,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 105,
+    "line": 106,
     "type": "property",
     "name": "adversarialPosture",
     "currentDoc": "(none)",
@@ -54488,7 +54488,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 124,
+    "line": 125,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -54496,7 +54496,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 125,
+    "line": 126,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -54504,7 +54504,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 126,
+    "line": 127,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -54512,7 +54512,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 127,
+    "line": 128,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -54520,7 +54520,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 128,
+    "line": 129,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -54528,7 +54528,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 129,
+    "line": 130,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -54536,7 +54536,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 130,
+    "line": 131,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -54544,7 +54544,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 131,
+    "line": 132,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -54552,7 +54552,39 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 167,
+    "line": 155,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CollectiveFormationPhase',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
+    "line": 156,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'avgCapability',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
+    "line": 157,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
+    "line": 158,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveCount: state.aiCollectives.length }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
+    "line": 175,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -54560,7 +54592,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 168,
+    "line": 176,
     "type": "property",
     "name": "metadata",
     "currentDoc": "(none)",
@@ -54568,7 +54600,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 176,
+    "line": 184,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -54576,7 +54608,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 177,
+    "line": 185,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -54584,7 +54616,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 178,
+    "line": 186,
     "type": "property",
     "name": "order",
     "currentDoc": "(none)",
@@ -54592,7 +54624,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CollectiveFormationPhase.ts",
-    "line": 179,
+    "line": 187,
     "type": "property",
     "name": "execute",
     "currentDoc": "(none)",
@@ -91136,7 +91168,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 241,
+    "line": 260,
     "type": "property",
     "name": "biotech",
     "currentDoc": "(none)",
@@ -91144,7 +91176,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 242,
+    "line": 261,
     "type": "property",
     "name": "materials",
     "currentDoc": "(none)",
@@ -91152,7 +91184,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 243,
+    "line": 262,
     "type": "property",
     "name": "climate",
     "currentDoc": "(none)",
@@ -91160,7 +91192,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 244,
+    "line": 263,
     "type": "property",
     "name": "computerScience",
     "currentDoc": "(none)",
@@ -91168,7 +91200,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 664,
+    "line": 690,
     "type": "property",
     "name": "training",
     "currentDoc": "(none)",
@@ -91176,7 +91208,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 665,
+    "line": 691,
     "type": "property",
     "name": "testing",
     "currentDoc": "(none)",
@@ -91184,7 +91216,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 666,
+    "line": 692,
     "type": "property",
     "name": "deployed_closed",
     "currentDoc": "(none)",
@@ -91192,7 +91224,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 667,
+    "line": 693,
     "type": "property",
     "name": "deployed_open",
     "currentDoc": "(none)",
@@ -91200,7 +91232,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/lifecycle.ts",
-    "line": 668,
+    "line": 694,
     "type": "property",
     "name": "retired",
     "currentDoc": "(none)",
