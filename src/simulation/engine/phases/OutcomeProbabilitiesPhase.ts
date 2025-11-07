@@ -24,7 +24,7 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     setDeterministicRng(rng);
-<<<<<<< HEAD
+    const outcomeProbs = calculateOutcomeProbabilities(state);
 
     // Validate outcomeProbs exists
     assertDefined(outcomeProbs, {
@@ -34,6 +34,7 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
     });
 
     // Validate all outcome probabilities are valid [0, 1] ranges
+    // NOTE: These ARE probabilities (unlike QoL which is a wellbeing score)
     if (outcomeProbs.utopiaProbability !== undefined) {
       assertProbability(outcomeProbs.utopiaProbability, {
         location: 'OutcomeProbabilitiesPhase.execute',
@@ -74,28 +75,6 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
         `   Month: ${state.currentMonth}`
       );
     }
-=======
-    const outcomeProbs = calculateOutcomeProbabilities(state);
-
-    // Validate all outcome probabilities are in [0, 1]
-    assertProbability(outcomeProbs.utopiaProbability || 0, {
-      location: 'OutcomeProbabilitiesPhase.execute',
-      valueName: 'utopiaProbability',
-      month: state.currentMonth
-    });
-
-    assertProbability(outcomeProbs.dystopiaProbability || 0, {
-      location: 'OutcomeProbabilitiesPhase.execute',
-      valueName: 'dystopiaProbability',
-      month: state.currentMonth
-    });
-
-    assertProbability(outcomeProbs.extinctionProbability || 0, {
-      location: 'OutcomeProbabilitiesPhase.execute',
-      valueName: 'extinctionProbability',
-      month: state.currentMonth
-    });
->>>>>>> origin/auto/researcher-20251107_013000
 
     state.outcomeMetrics = outcomeProbs;
 

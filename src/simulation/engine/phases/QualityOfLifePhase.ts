@@ -34,8 +34,11 @@ export class QualityOfLifePhase implements SimulationPhase {
     const updatedQoLSystems = updateQualityOfLifeSystems(state);
     state.qualityOfLifeSystems = updatedQoLSystems;
 
-    // Calculate global-level QoL from systems (CRITICAL: must be valid probability)
-    const globalQoLFromSystems = assertProbability(
+    // Calculate global-level QoL from systems
+    // NOTE: QoL is a wellbeing score [0, ~1.5], NOT a probability [0, 1]
+    // Values > 1.0 represent exceptional futures (post-scarcity, longevity gains)
+    // See aggregation.ts line 33 for design rationale
+    const globalQoLFromSystems = assertFinite(
       calculateQualityOfLife(updatedQoLSystems),
       {
         location: 'QualityOfLifePhase.execute',
@@ -59,8 +62,9 @@ export class QualityOfLifePhase implements SimulationPhase {
         region.qualityOfLife = globalQoLFromSystems;
       }
 
-      // Bottom-up aggregation: Global QoL = population-weighted average of regional QoL (CRITICAL: must be valid probability)
-      const aggregatedQoL = assertProbability(
+      // Bottom-up aggregation: Global QoL = population-weighted average of regional QoL
+      // NOTE: QoL can exceed 1.0 (exceptional futures), so use assertFinite not assertProbability
+      const aggregatedQoL = assertFinite(
         aggregateGlobalQoL(state),
         {
           location: 'QualityOfLifePhase.execute',
