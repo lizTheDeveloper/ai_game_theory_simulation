@@ -1,0 +1,826 @@
+{
+  "timestamp": "2025-11-07T20:24:29.854Z",
+  "summary": {
+    "total": 116,
+    "dangerous": 31,
+    "suspicious": 85,
+    "safe": 0
+  },
+  "dangerous": [
+    {
+      "file": "src/simulation/aiWelfare.ts",
+      "line": 64,
+      "code": "const crossContextConsistency = state.aiWelfare?.consistency ?? 0.8;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/alignmentDynamics.ts",
+      "line": 43,
+      "code": "const phase = epicycleConfig.phaseOffset ?? rng() * 2 * Math.PI;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: math\\."
+    },
+    {
+      "file": "src/simulation/bayesianNuclearRisk.ts",
+      "line": 274,
+      "code": "const states = state.nuclearStates ?? [];",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/computeInfrastructure.ts",
+      "line": 726,
+      "code": "const globalPrecautionaryCost = state.consciousnessGovernanceReadiness?.precautionaryCosts?.global ?? 0;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/engine/phases/AISufferingPhase.ts",
+      "line": 50,
+      "code": "const config: AISufferingConfig = (state.config as any).aiSuffering ?? DEFAULT_SUFFERING_CONFIG;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/engine/phases/AlignmentDynamicsPhase.ts",
+      "line": 39,
+      "code": "const config = state.config.alignmentDynamics ?? DEFAULT_ALIGNMENT_DYNAMICS_CONFIG;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/engine/phases/AlignmentDynamicsPhase.ts",
+      "line": 42,
+      "code": "const inGoldenAge = state.upwardSpirals?.abundance?.active ?? false;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/engine/phases/CriticalJuncturePhase.ts",
+      "line": 269,
+      "code": "effects: { warPrevented: true, crisisStability: state.madDeterrence?.crisisStability ?? 0 }",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/engine/phases/HumanEnhancementPhase.ts",
+      "line": 115,
+      "code": "state.ubiSystem?.basicIncome?.amount ?? 0,",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/engine/phases/MortalityStabilizersPhase.ts",
+      "line": 336,
+      "code": "const climateCrisisFlag = state.environmentalAccumulation?.climateCrisisActive ?? false;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/engine/phases/UpwardSpiralsPhase.ts",
+      "line": 19,
+      "code": "const month = context?.month ?? state.currentMonth;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/extinctions.ts",
+      "line": 370,
+      "code": "const states = state.nuclearStates ?? [];",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/gamingDetection.ts",
+      "line": 219,
+      "code": "const baseCapability = Math.max(0.01, capabilities[0] ?? 0);",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: math\\."
+    },
+    {
+      "file": "src/simulation/government/core/governmentCore.ts",
+      "line": 530,
+      "code": "const amazonThreat = (state.specificTippingPoints?.amazon?.deforestation ?? 0) > 23;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/government/core/governmentCore.ts",
+      "line": 531,
+      "code": "const coralThreat = (state.specificTippingPoints?.coral?.healthPercentage ?? 100) < 40;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/government/core/governmentCore.ts",
+      "line": 532,
+      "code": "const pollinatorThreat = (state.specificTippingPoints?.pollinators?.populationPercentage ?? 100) < 45;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/lifecycle.ts",
+      "line": 527,
+      "code": "const monitoringGap = 1 - ((state.government.cyberDefense?.monitoring ?? 0) / 10); // 0.0-1.0",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/minimalSufferingTracking.ts",
+      "line": 429,
+      "code": "const trust = assertProbability(state.society.trustInGovernment ?? 0.5, {",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/minimalSufferingTracking.ts",
+      "line": 503,
+      "code": "state.planetaryBoundariesSystem?.boundariesBreached ?? BASELINE_2025.planetaryBoundaries,",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/minimalSufferingTracking.ts",
+      "line": 914,
+      "code": "state.planetaryBoundariesSystem?.boundariesBreached ?? BASELINE_2025.planetaryBoundaries,",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/nuclearCommandControl.ts",
+      "line": 400,
+      "code": "ncc.aiKillSwitches.coverage = Math.min(1.0, config?.coverage ?? ncc.aiKillSwitches.coverage + 0.1);",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: math\\."
+    },
+    {
+      "file": "src/simulation/nuclearCommandControl.ts",
+      "line": 415,
+      "code": "ncc.timeDelays.delayDuration = Math.min(48, config?.delayDuration ?? ncc.timeDelays.delayDuration + 6);",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: math\\."
+    },
+    {
+      "file": "src/simulation/qualityOfLife/core.ts",
+      "line": 97,
+      "code": "const foodSecurity = state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity ?? 0.7;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/research.ts",
+      "line": 125,
+      "code": "const cascadeStart = state.planetaryBoundariesSystem.cascadeStartMonth ?? currentMonth;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/resentmentRecovery.ts",
+      "line": 74,
+      "code": "const trustInvestment = (state.government.socialCohesionInvestment ?? 0) / 100; // Normalized",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/resentmentRecovery.ts",
+      "line": 101,
+      "code": "const monthsSinceLastControl = state.currentMonth - (state.government.lastControlIncreaseMonth ?? 0);",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/resentmentRecovery.ts",
+      "line": 106,
+      "code": "const policyLevel = state.government.aiRightsPolicy ?? 'none';",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/resentmentRecovery.ts",
+      "line": 358,
+      "code": "const previousControl = state.government.previousControlLevel ?? currentControl;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/resentmentRecovery.ts",
+      "line": 371,
+      "code": "const previousControl = state.government.previousControlLevel ?? currentControl;",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/trappedPopulations.ts",
+      "line": 89,
+      "code": "if ((state.conflictResolution?.activeConflicts ?? 0) > 0) {",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    },
+    {
+      "file": "src/simulation/trappedPopulations.ts",
+      "line": 90,
+      "code": "const conflictAffected = totalPopulation * (state.conflictResolution?.activeConflicts ?? 0) * 0.05; // 5% per conflict",
+      "category": "DANGEROUS",
+      "reason": "Calculation/state mutation fallback: state\\."
+    }
+  ],
+  "suspicious": [
+    {
+      "file": "src/simulation/aiSuffering.ts",
+      "line": 352,
+      "code": "const consciousMonth = agent.becameConsciousMonth ?? Infinity;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/alignmentDynamics.ts",
+      "line": 38,
+      "code": "const attractorAlignment = attractorPositions[basinIndex] ?? 0.5;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/behavioralDetection.ts",
+      "line": 162,
+      "code": "const safeVal = trueVal ?? 0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/catastrophicScenarios.ts",
+      "line": 1102,
+      "code": "const step5Met = scenario.prerequisites[5]?.met ?? false;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/catastrophicScenarios.ts",
+      "line": 1114,
+      "code": "const step5CompletionMonth = scenario.prerequisites[5]?.metDate ?? currentMonth;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/catastrophicScenarios.ts",
+      "line": 1127,
+      "code": "const requiredMonths = scenario.step7RequiredMonths ?? 600; // Fallback (shouldn't happen)",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/earlyWarningSystems.ts",
+      "line": 324,
+      "code": "if (urgentWarnings.length > 0 && (gov.resources ?? 0) > protectionCost) {",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine/phases/AlignmentDynamicsPhase.ts",
+      "line": 162,
+      "code": "const wasHidden = (agent as any).alignmentMeasurementState?.isHidden ?? false;",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine/phases/CollectiveFormationPhase.ts",
+      "line": 104,
+      "code": "traumaIntensity: newCollective.sharedTraumaIntensity ?? 0,",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine/phases/CriticalJuncturePhase.ts",
+      "line": 494,
+      "code": "stateChanges += escapeResult.metadata?.stateChanges ?? 0;",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 64,
+      "code": "(outcomeProbs.utopiaProbability ?? 0) +",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 65,
+      "code": "(outcomeProbs.dystopiaProbability ?? 0) +",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 66,
+      "code": "(outcomeProbs.extinctionProbability ?? 0);",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 72,
+      "code": "`   Utopia: ${(outcomeProbs.utopiaProbability ?? 0).toFixed(3)}\\n` +",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 73,
+      "code": "`   Dystopia: ${(outcomeProbs.dystopiaProbability ?? 0).toFixed(3)}\\n` +",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 74,
+      "code": "`   Extinction: ${(outcomeProbs.extinctionProbability ?? 0).toFixed(3)}\\n` +",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 462,
+      "code": "seed: config.seed ?? Date.now(),",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 463,
+      "code": "maxMonths: config.maxMonths ?? 1000,",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 464,
+      "code": "governmentActionFrequency: config.governmentActionFrequency ?? 0.5, // Default: 1 action per 2 months",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 465,
+      "code": "socialAdaptationRate: config.socialAdaptationRate ?? 1.0,",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 466,
+      "code": "aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 467,
+      "code": "economicTransitionRate: config.economicTransitionRate ?? 1.0,",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 468,
+      "code": "snapshotInterval: config.snapshotInterval ?? 12  // Default to quarterly snapshots",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 737,
+      "code": "const maxMonths = stopConditions?.maxMonths ?? this.config.maxMonths!;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 738,
+      "code": "const checkActualOutcomes = stopConditions?.checkActualOutcomes ?? true;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 739,
+      "code": "const logLevel = this.config.logLevel ?? 'quartile';",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 771,
+      "code": "const snapshotInterval = this.config.snapshotInterval ?? 12; // Default: snapshot every 12 months",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/government/actions/environmentalActions.ts",
+      "line": 82,
+      "code": "agent: agentId ?? 'government',",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/government/actions/environmentalActions.ts",
+      "line": 145,
+      "code": "agent: agentId ?? 'government',",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/government/actions/environmentalActions.ts",
+      "line": 216,
+      "code": "agent: agentId ?? 'government',",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/government/actions/environmentalActions.ts",
+      "line": 290,
+      "code": "agent: agentId ?? 'government',",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/government/actions/environmentalActions.ts",
+      "line": 381,
+      "code": "agent: agentId ?? 'government',",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/government/actions/internationalActions.ts",
+      "line": 61,
+      "code": "agent: agentId ?? 'government',",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/government/actions/internationalActions.ts",
+      "line": 111,
+      "code": "agent: agentId ?? 'government',",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/government/actions/internationalActions.ts",
+      "line": 154,
+      "code": "agent: agentId ?? 'government',",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/government/actions/safetyActions.ts",
+      "line": 136,
+      "code": "economic_cost: levelEffects?.economicCost ?? (() => {",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/llm/client.ts",
+      "line": 369,
+      "code": "const tokensUsed = response.usage?.total_tokens ?? 1200; // Default estimate",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/llm/client.ts",
+      "line": 509,
+      "code": "thresholds: agent.thresholds ?? {},",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 85,
+      "code": "capability: assertDefined(agent.previousCapability ?? agent.capability, {",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 91,
+      "code": "alignment: assertDefined(agent.previousAlignment ?? agent.trueAlignment, {",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 102,
+      "code": "agent.thresholds ?? {},",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 282,
+      "code": "const weight = weights[action] ?? 0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 292,
+      "code": "return availableActions[idx] ?? availableActions[0] ?? 'advance_research';",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 305,
+      "code": "return actionWeights[0]?.action ?? 'advance_research';",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/nuclearCommandControl.ts",
+      "line": 381,
+      "code": "ncc.humanInTheLoop.vetoPointsEnforced = config?.vetoPoints ?? 3; // Default: 3 veto points",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/nuclearCommandControl.ts",
+      "line": 393,
+      "code": "ncc.aiKillSwitches.coverage = config?.coverage ?? 0.8; // Default: 80% coverage",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/nuclearCommandControl.ts",
+      "line": 408,
+      "code": "ncc.timeDelays.delayDuration = config?.delayDuration ?? 24; // Default: 24 hours",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/organizationManagement.ts",
+      "line": 384,
+      "code": "const workforceMultiplier = org.workforceMultiplier ?? 1.0;",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/organizationManagement.ts",
+      "line": 754,
+      "code": "const workforceMultiplier = org.workforceMultiplier ?? 1.0;",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/organizationManagement.ts",
+      "line": 755,
+      "code": "const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;",
+      "category": "SUSPICIOUS",
+      "reason": "Phase/system module - needs manual review"
+    },
+    {
+      "file": "src/simulation/qualityOfLife/mortality.ts",
+      "line": 281,
+      "code": "const baseProb = scenarioParams?.environmentalShockProbability ?? 0.02;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/qualityOfLife/mortality.ts",
+      "line": 283,
+      "code": "const baseMag = scenarioParams?.environmentalShockMagnitude ?? 2.0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/resentmentRecovery.ts",
+      "line": 423,
+      "code": "const hasAIRights = aiRights?.completed ?? false;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/resentmentRecovery.ts",
+      "line": 424,
+      "code": "const hasEnhancedUBI = enhancedUBI?.completed ?? false;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/socialCohesion.ts",
+      "line": 948,
+      "code": "const paranoia = society.paranoiaLevel ?? 0.15; // Default to 15% baseline paranoia",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/deploymentTimescales.ts",
+      "line": 104,
+      "code": "// FIX #14 (Oct 2025): Use nullish coalescing (??) instead of logical OR (||)",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/deploymentTimescales.ts",
+      "line": 106,
+      "code": "const result = tierTimescales[tech.status] ?? DEFAULT_TIMESCALES.tier2;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/deploymentTimescales.ts",
+      "line": 156,
+      "code": "const enforcement = gameState.government?.governanceQuality?.institutionalCapacity ?? 0.5;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/deploymentTimescales.ts",
+      "line": 184,
+      "code": "const globalWarming = gameState.planetaryBoundariesSystem?.boundaries?.['climateChange']?.currentValue ?? 1.2;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/deploymentTimescales.ts",
+      "line": 217,
+      "code": "const climateMitigation = climateResearch.climate?.mitigation ?? 0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/deploymentTimescales.ts",
+      "line": 218,
+      "code": "const climateIntervention = climateResearch.climate?.intervention ?? 0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/deploymentTimescales.ts",
+      "line": 283,
+      "code": "const emergencyAcceleration = techTreeState.deploymentAcceleration[deployment.techId] ?? 1.0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/effectsEngine.ts",
+      "line": 49,
+      "code": "return (obj as Record<string, number>)[key] ?? defaultValue;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/effectsEngine.ts",
+      "line": 122,
+      "code": "globalEffects.set(effectName, (globalEffects.get(effectName) ?? 0) + scaledValue);",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/effectsEngine.ts",
+      "line": 130,
+      "code": "regionMap.set(effectName, (regionMap.get(effectName) ?? 0) + scaledValue);",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/effectsEngine.ts",
+      "line": 1031,
+      "code": "const current = (gameState.planetaryBoundariesSystem as any).pfasContamination ?? 0.5;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/effectsEngine.ts",
+      "line": 1318,
+      "code": "// This is initialization context (valid use of ?? fallback per CLAUDE.md)",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/effectsEngine.ts",
+      "line": 1320,
+      "code": "const currentRisk = (gameState.oceanAcidificationSystem as any).coralBleachingRisk ?? 0.5;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/techTree/engine.ts",
+      "line": 275,
+      "code": "const progress = techTreeState.researchProgress[tech.id] ?? 0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/thresholds/config.ts",
+      "line": 122,
+      "code": "id: metadata.id ?? generateConfigId(),",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/thresholds/config.ts",
+      "line": 128,
+      "code": "gitCommit: metadata.gitCommit ?? getCurrentGitCommit()",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/assertions.ts",
+      "line": 193,
+      "code": "* Use this instead of `obj.property || 0` or `obj.property ?? 0`",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/assertions.ts",
+      "line": 546,
+      "code": "const tolerance = info.tolerance ?? 0.000001;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 437,
+      "code": "const targetPreparedness = allRegions[targetRegion]?.preparedness ?? 0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 438,
+      "code": "const targetStage = allRegions[targetRegion]?.stage ?? 'dormant';",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 468,
+      "code": "const euPrep = allRegions['eu']?.preparedness ?? 0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 469,
+      "code": "const usPrep = allRegions['us']?.preparedness ?? 0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 470,
+      "code": "const chinaPrep = allRegions['china']?.preparedness ?? 0;",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 178,
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 189,
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 227,
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 238,
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 289,
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 336,
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    },
+    {
+      "file": "src/simulation/wetBulbEvents.ts",
+      "line": 383,
+      "code": "const temperatureAnomaly = assertFinite(resources?.co2?.temperatureAnomaly ?? 0, {",
+      "category": "SUSPICIOUS",
+      "reason": "Context unclear - needs manual review"
+    }
+  ],
+  "safe": []
+}

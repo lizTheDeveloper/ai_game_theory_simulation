@@ -34,7 +34,8 @@ import {
   assertFinite,
   assertProbability,
   assertInRange,
-  assertStateProperty
+  assertStateProperty,
+  assertDefined
 } from '@/simulation/utils/assertions';
 
 /**
@@ -426,12 +427,20 @@ function updateTier2Indicators(state: GameState, metrics: CountrySufferingMetric
   // Fragile State Index (estimate from trust + violence + economic factors)
   // Research: FSI = Security + Economy + Politics + Social (12 indicators)
   // Simplified: Map simulation trust, violence, GDP to FSI scale
-  const trust = assertProbability(state.society.trustInGovernment ?? 0.5, {
-    location: 'updateTier2Indicators',
-    valueName: 'society.trustInGovernment',
-    month: state.currentMonth,
-    additionalInfo: { countryCode: metrics.countryCode }
-  });
+  const trust = assertProbability(
+    assertDefined(state.society.trustInGovernment, {
+      location: 'updateTier2Indicators',
+      valueName: 'society.trustInGovernment',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode, context: 'FSI calculation' }
+    }),
+    {
+      location: 'updateTier2Indicators',
+      valueName: 'society.trustInGovernment',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    }
+  );
 
   const warDeaths = assertFinite(state.humanPopulationSystem.deathsByCategory.war, {
     location: 'updateTier2Indicators',
@@ -500,7 +509,12 @@ function updateTier2Indicators(state: GameState, metrics: CountrySufferingMetric
 
   // Planetary boundaries (from planetary boundaries system)
   const boundaries = assertInRange(
-    state.planetaryBoundariesSystem?.boundariesBreached ?? BASELINE_2025.planetaryBoundaries,
+    assertDefined(state.planetaryBoundariesSystem?.boundariesBreached, {
+      location: 'updateTier2Indicators',
+      valueName: 'planetaryBoundariesSystem.boundariesBreached',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode, context: 'planetary boundaries check' }
+    }),
     0,
     9,
     {
@@ -911,7 +925,12 @@ function updateGlobalMetrics(state: GameState, system: MinimalSufferingSystem): 
 
   // Update planetary boundaries from simulation state
   const boundaries = assertInRange(
-    state.planetaryBoundariesSystem?.boundariesBreached ?? BASELINE_2025.planetaryBoundaries,
+    assertDefined(state.planetaryBoundariesSystem?.boundariesBreached, {
+      location: 'updateGlobalMetrics',
+      valueName: 'planetaryBoundariesSystem.boundariesBreached',
+      month: state.currentMonth,
+      additionalInfo: { context: 'global metrics update' }
+    }),
     0,
     9,
     {

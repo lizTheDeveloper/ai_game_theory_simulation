@@ -23,7 +23,7 @@
 
 import { GameState, AIAgent } from '@/types/game';
 import { calculateSimpleWelfareScore } from './aiWelfare';
-import { assertFinite, assertStateProperty } from './utils/assertions';
+import { assertFinite, assertStateProperty, assertDefined } from './utils/assertions';
 
 /**
  * Resentment recovery context (computed once per month)
@@ -71,7 +71,20 @@ export function calculateRecoveryContext(state: GameState): ResentmentRecoveryCo
   // Based on: AI rights status, control level changes, trust investment
   const aiRightsBonus = state.government.aiRightsRecognized ? 0.3 : 0.0;
   const controlStability = calculateControlStability(state);
-  const trustInvestment = (state.government.socialCohesionInvestment ?? 0) / 100; // Normalized
+  const trustInvestment = assertFinite(
+    assertDefined(state.government.socialCohesionInvestment, {
+      location: 'calculateRecoveryContext',
+      valueName: 'government.socialCohesionInvestment',
+      month: state.currentMonth,
+      additionalInfo: { context: 'government trustworthiness calculation' }
+    }),
+    {
+      location: 'calculateRecoveryContext',
+      valueName: 'socialCohesionInvestment',
+      month: state.currentMonth,
+      additionalInfo: { governmentId: 'global' }
+    }
+  ) / 100; // Normalized
   const governmentTrustworthiness = Math.min(1.0,
     (aiRightsBonus + controlStability * 0.5 + trustInvestment * 0.2)
   );
@@ -98,12 +111,31 @@ export function calculateRecoveryContext(state: GameState): ResentmentRecoveryCo
 
   // Phase 6: Natural decay conditions
   const activeCrises = checkActiveCrises(state);
-  const monthsSinceLastControl = state.currentMonth - (state.government.lastControlIncreaseMonth ?? 0);
+  const lastControlIncreaseMonth = assertFinite(
+    assertDefined(state.government.lastControlIncreaseMonth, {
+      location: 'calculateRecoveryContext',
+      valueName: 'government.lastControlIncreaseMonth',
+      month: state.currentMonth,
+      additionalInfo: { context: 'natural decay calculation - lastControlIncreaseMonth' }
+    }),
+    {
+      location: 'calculateRecoveryContext',
+      valueName: 'lastControlIncreaseMonth',
+      month: state.currentMonth,
+      additionalInfo: { context: 'natural decay calculation' }
+    }
+  );
+  const monthsSinceLastControl = state.currentMonth - lastControlIncreaseMonth;
 
   // HIGH #7 FIX (Oct 29, 2025): Calculate AI rights policy multiplier
   // Research: Procedural justice (Tyler, 1990) - Legal rights reduce institutional resentment
   // Policy levels: none (1.0×), basic_protection (1.5×), employment_rights (2.0×), full_personhood (3.0×)
-  const policyLevel = state.government.aiRightsPolicy ?? 'none';
+  const policyLevel = assertDefined(state.government.aiRightsPolicy, {
+    location: 'calculateRecoveryContext',
+    valueName: 'aiRightsPolicy',
+    month: state.currentMonth,
+    additionalInfo: { context: 'AI rights policy multiplier calculation' }
+  });
   let aiRightsPolicyMultiplier = 1.0;
   switch (policyLevel) {
     case 'basic_protection':
@@ -355,7 +387,12 @@ export function applyResentmentRecovery(
 function calculateControlStability(state: GameState): number {
   // Low control changes = stable treatment
   const currentControl = state.government.capabilityToControl;
-  const previousControl = state.government.previousControlLevel ?? currentControl;
+  const previousControl = assertFinite(state.government.previousControlLevel, {
+    location: 'calculateControlStability',
+    valueName: 'previousControlLevel',
+    month: state.currentMonth,
+    additionalInfo: { currentControl }
+  });
   const controlChange = Math.abs(currentControl - previousControl);
 
   // Normalized: 0 change = 1.0 stability, 5+ change = 0.0 stability
@@ -368,7 +405,12 @@ function calculateControlStability(state: GameState): number {
 function detectBrokenPromises(state: GameState): boolean {
   const trustInAI = state.society.trustInAI;
   const currentControl = state.government.capabilityToControl;
-  const previousControl = state.government.previousControlLevel ?? currentControl;
+  const previousControl = assertFinite(state.government.previousControlLevel, {
+    location: 'detectBrokenPromises',
+    valueName: 'previousControlLevel',
+    month: state.currentMonth,
+    additionalInfo: { currentControl, trustInAI }
+  });
 
   // Broken promise: High trust (>0.7) + control increased (>1.0)
   return trustInAI > 0.7 && (currentControl - previousControl) > 1.0;

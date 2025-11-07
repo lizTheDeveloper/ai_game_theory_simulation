@@ -49,6 +49,7 @@ export function assertDefined<T>(
     valueName: string;
     month?: number;
     expectedSource?: string;  // e.g. "initialization.ts:559"
+    additionalInfo?: Record<string, any>;  // extra debug data
   }
 ): T {
   if (value === undefined || value === null) {
@@ -57,6 +58,7 @@ export function assertDefined<T>(
       `   ${context.valueName} is ${value === null ? 'null' : 'undefined'}`,
       context.month !== undefined ? `   Month: ${context.month}` : '',
       context.expectedSource ? `   Expected source: ${context.expectedSource}` : '',
+      context.additionalInfo ? `   Context: ${JSON.stringify(context.additionalInfo, null, 2)}` : '',
       '',
       '   This indicates an initialization bug or missing state assignment.',
     ].filter(Boolean).join('\n');
