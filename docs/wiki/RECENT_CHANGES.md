@@ -58,6 +58,49 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
+**🔬 RESEARCH UPDATE: Mortality Caps with 2024-2025 Conflict, Famine, and Pandemic Data** (Nov 7, 2025, commit f926377)
+
+**Summary:** Comprehensive update to mortality caps research file with current data from ongoing crises (Sudan famine, Gaza/Ukraine conflicts, measles resurgence).
+
+**Research Updated:**
+- `research/mortality_caps_historical_data_20251027.md` - Added 3 new major sections + updated frontmatter
+
+**New Data Sections:**
+
+1. **Sudan Famine (2024-2025):**
+   - 522,000 child deaths from malnutrition (Jan 2025)
+   - IPC Phase 5 surge: 705K → 1.9M (170% increase)
+   - Monthly mortality: 0.25-0.38% in affected regions
+   - Comparable to Ethiopia 1984-1985 rates
+
+2. **Measles Resurgence (2024):**
+   - 10.3M cases globally (20% increase from 2022)
+   - 22M children missed first measles vaccine
+   - Coverage at 83% (below 95% herd immunity threshold)
+   - European cases highest in 25+ years
+
+3. **Modern Conflict Mortality (2024):**
+   - Global deaths up 30%: 179K (2023) → 234K (2024)
+   - Gaza: 52,958 deaths by May 2025 (highest daily rate of 21st century)
+   - Ukraine: 67,000 deaths in 2024 (deadliest zone)
+   - Sudan: 20.1 civilian casualties per incident (highest globally)
+
+**Sources Added:**
+- All peer-reviewed or from authoritative organizations (WHO, UNICEF, CDC, AOAV, ACLED, Global Hunger Index 2025)
+- Newest source: 2025 (Sudan, Gaza, measles data)
+- Oldest source: 1945 (Hiroshima/Nagasaki baseline)
+
+**Documentation Updated:**
+- `docs/wiki/BIBLIOGRAPHY.md` - Added 7 new sources (170+ total citations, up from 163+)
+- Organized into Contemporary Famine (2024-2025), Contemporary Pandemic (2024-2025), Contemporary Conflict (2024-2025)
+
+**Research By:** Autonomous Researcher (@researcher)
+**Fixes:** UPDATE_QUEUE.md HIGH priority item (updating 2006-2014 sources with current data)
+
+**Context:** This addresses research currency audit findings - simulation should reflect current crisis realities, not decade-old data. All new sources from 2024-2025.
+
+---
+
 **📋 CRITICAL-1 PLANNING: Assertion Coverage Expansion (35.9% → 95%)** (Nov 7, 2025, commit 87f9954)
 
 **Summary:** Comprehensive audit and implementation plan for systematic assertion coverage across all 117 simulation phases.

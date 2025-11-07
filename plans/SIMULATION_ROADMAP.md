@@ -291,6 +291,21 @@
 
 ### P1 - HIGH (Needs Verification Before Publication)
 
+- [ ] **Mortality Caps 2024-2025 Update Verification** 🚨 **READY FOR ORCHESTRATOR (Nov 7, 2025)**
+  - **Commit:** f926377 (2024-2025 conflict, famine, pandemic mortality data)
+  - **Status:** Research file created by historian, ready for validation phase
+  - **Verification File:** `research/verification_f926377_20251107.md` (comprehensive 2-layer verification spec)
+  - **Scope:** 3 major sections (Sudan famine, measles resurgence, modern conflict mortality)
+  - **Key Claims Requiring Verification:**
+    - Sudan: 522,000 child deaths, 0.25-0.38% monthly mortality (Section 2.6)
+    - Measles: 10.3M cases (2023), 83% coverage below 95% threshold (Section 3.6)
+    - Conflict: 233,597 global deaths (2024), 30% increase (Section 7)
+  - **Sources:** 15+ citations (Global Hunger Index 2025, WHO/UNICEF, CDC MMWR, AOAV, Oxfam)
+  - **Impact:** Mortality stabilizer parameters, famine/pandemic/conflict mortality caps
+  - **Next Step:** Orchestrator should start at VALIDATION phase (skip research, begin with research-skeptic review)
+  - **Timeline:** Research-skeptic Layer 1 (2-3h) + Layer 2 (4-6h) = 6-9h total
+  - **Priority:** HIGH - grounds critical simulation parameters for mortality systems
+
 - [ ] **Variance Amplification Citations Verification** 🚨 **READY FOR ORCHESTRATOR (Nov 6, 2025)**
   - **Commit:** 474f590 (Variance amplification 10× → 100×)
   - **Priority:** HIGH - ROOT CAUSE of 100% dystopia convergence
