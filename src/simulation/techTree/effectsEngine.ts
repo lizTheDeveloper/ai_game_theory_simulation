@@ -1026,11 +1026,18 @@ function applyRegionalEffects(
         case 'pfasReduction':
           // Reduce PFAS contamination
           if (gameState.planetaryBoundariesSystem) {
+            // DEFENSIVE CODING FIX (Nov 7, 2025): Explicit initialization with logging instead of silent fallback
             // Initialize pfasContamination if not set (part of Novel Entities boundary)
             // Default: 0.5 (moderate contamination, 2025 baseline)
-            const current = (gameState.planetaryBoundariesSystem as any).pfasContamination ?? 0.5;
+            // TODO: Add pfasContamination to PlanetaryBoundariesSystem type definition
+            const pbs = gameState.planetaryBoundariesSystem as any;
+            if (pbs.pfasContamination === undefined) {
+              pbs.pfasContamination = 0.5; // Initialize on first use
+              console.log(`  🧪 Initializing PFAS contamination baseline: 50% (2025 baseline)`);
+            }
+            const current = pbs.pfasContamination;
             const newValue = Math.max(0, current - value * 0.01);
-            (gameState.planetaryBoundariesSystem as any).pfasContamination = newValue;
+            pbs.pfasContamination = newValue;
 
             // DEFENSIVE LOGGING (Oct 27, 2025): Track novel entities sub-pollutant
             console.log(`  🧪 PFAS Reduction: ${(current * 100).toFixed(1)}% → ${(newValue * 100).toFixed(1)}% contamination (Δ=${(value * 0.01 * 100).toFixed(2)}%) | Month ${gameState.currentMonth}`);

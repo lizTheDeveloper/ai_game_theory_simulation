@@ -27,6 +27,7 @@ import {
 import { addSimulationEvent } from './utils/eventLogger';
 import { addMortalityRisk } from './bayesianMortality';
 import {
+  assertDefined,
   assertFinite,
   assertInRange,
   assertProbability,
@@ -380,9 +381,20 @@ export function updateWetBulbTemperatureSystem(
   const resources = state.resourceEconomy;
 
   // Get global temperature anomaly from CO2 system
-  const temperatureAnomaly = assertFinite(resources?.co2?.temperatureAnomaly ?? 0, {
+  // CRITICAL FIX (Nov 7, 2025): Never wrap fallbacks in assertions - defeats fail-loudly
+  const co2System = assertDefined(resources?.co2, {
     location: 'updateWetBulbTemperatureSystem',
-    valueName: 'temperatureAnomaly',
+    valueName: 'resources.co2',
+    month: state.currentMonth,
+    additionalInfo: {
+      message: 'CO2 system should be initialized during game start',
+      resourcesExists: !!resources
+    }
+  });
+
+  const temperatureAnomaly = assertFinite(co2System.temperatureAnomaly, {
+    location: 'updateWetBulbTemperatureSystem',
+    valueName: 'co2System.temperatureAnomaly',
     month: state.currentMonth,
   });
 
