@@ -1,5 +1,5 @@
 # Research Update Queue
-**Generated:** 11/7/2025, 6:00:09 AM
+**Generated:** 11/7/2025, 6:30:06 AM
 **Files Scanned:** 323
 
 ---
@@ -455,7 +455,7 @@
 - **Path:** `research/paradigm_1_western_liberal_20251019.md`
 
 ### `paradigm_2_development_needs_20251019.md`
-- **Oldest source:** 1981 (44 years old) [Updated Nov 7: Kuznets analysis refreshed with 2024-2025 evidence]
+- **Oldest source:** 1955 (70 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/paradigm_2_development_needs_20251019.md`
 
