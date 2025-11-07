@@ -61,7 +61,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/geoengineering.ts",
-    "line": 41,
+    "line": 46,
     "name": "updateGeoengineering",
     "doc": "Updates geoengineering based on current state and modifiers."
   },
