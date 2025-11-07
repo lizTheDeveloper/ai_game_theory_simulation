@@ -629,6 +629,9 @@ export function createDefaultInitialState(
       institutionalResilience: 0.5,  // Moderate baseline institutional resilience
       policyEffectivenessMultiplier: 1.0,  // Baseline (no boost from cooperative spirals yet)
 
+      // Social cohesion investment (0-100 scale, used in resentmentRecovery.ts)
+      socialCohesionInvestment: 50,  // Baseline moderate investment in social programs
+
       // Government Resources (Budget Pool)
       resources: 10  // Baseline resource pool for government actions
     },
