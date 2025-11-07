@@ -9,7 +9,7 @@
 import { GameState, GameEvent } from '@/types/game';
 import { ActionResult, GameAction } from '@/simulation/agents/types';
 import { getTrustInAIForPolicy, getTrustInAI } from '@/simulation/socialCohesion';
-import { assertStateProperty } from '@/simulation/utils/assertions';
+import { assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
 import {
   calculateObservableAICapability,
   calculateTotalCapabilityFromProfile
@@ -527,9 +527,38 @@ export function selectGovernmentAction(
         // Get environmental crisis severity
         const ecosystemCrisis = state.environmentalAccumulation?.ecosystemCrisisActive || false;
         const biodiversityLevel = state.environmentalAccumulation?.biodiversityIndex || 1.0;
-        const amazonThreat = (state.specificTippingPoints?.amazon?.deforestation ?? 0) > 23;
-        const coralThreat = (state.specificTippingPoints?.coral?.healthPercentage ?? 100) < 40;
-        const pollinatorThreat = (state.specificTippingPoints?.pollinators?.populationPercentage ?? 100) < 45;
+
+        // Tipping point checks: Fail loudly if data missing (critical for government response)
+        const amazonDeforestation = state.specificTippingPoints?.amazon
+          ? assertFinite(state.specificTippingPoints.amazon.deforestation, {
+              location: 'calculateActionPriority_habitat_protection',
+              valueName: 'specificTippingPoints.amazon.deforestation',
+              month: state.currentMonth,
+              additionalInfo: { action: 'habitat_protection' }
+            })
+          : 0; // No amazon tracking = no threat (initialization fallback)
+
+        const coralHealthPercentage = state.specificTippingPoints?.coral
+          ? assertFinite(state.specificTippingPoints.coral.healthPercentage, {
+              location: 'calculateActionPriority_habitat_protection',
+              valueName: 'specificTippingPoints.coral.healthPercentage',
+              month: state.currentMonth,
+              additionalInfo: { action: 'habitat_protection' }
+            })
+          : 100; // No coral tracking = healthy (initialization fallback)
+
+        const pollinatorPopPercentage = state.specificTippingPoints?.pollinators
+          ? assertFinite(state.specificTippingPoints.pollinators.populationPercentage, {
+              location: 'calculateActionPriority_habitat_protection',
+              valueName: 'specificTippingPoints.pollinators.populationPercentage',
+              month: state.currentMonth,
+              additionalInfo: { action: 'habitat_protection' }
+            })
+          : 100; // No pollinator tracking = healthy (initialization fallback)
+
+        const amazonThreat = amazonDeforestation > 23;
+        const coralThreat = coralHealthPercentage < 40;
+        const pollinatorThreat = pollinatorPopPercentage < 45;
 
         // MASSIVE boost during ecosystem crisis (25x priority)
         if (ecosystemCrisis) {

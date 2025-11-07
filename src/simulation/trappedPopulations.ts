@@ -16,6 +16,7 @@
 
 import { GameState } from '@/types/game';
 import { billionsToMillions, toBillions } from '@/simulation/utils/populationUnits';
+import { assertFinite } from '@/simulation/utils/assertions';
 
 /**
  * Update trapped population tracking each month
@@ -86,8 +87,21 @@ export function updateTrappedPopulations(state: GameState): void {
   }
 
   // === 4. CONFLICT ZONES ===
-  if ((state.conflictResolution?.activeConflicts ?? 0) > 0) {
-    const conflictAffected = totalPopulation * (state.conflictResolution?.activeConflicts ?? 0) * 0.05; // 5% per conflict
+  // If conflictResolution system not initialized, default to 0 conflicts (initialization context)
+  const activeConflicts = state.conflictResolution
+    ? assertFinite(
+        state.conflictResolution.activeConflicts,
+        {
+          location: 'calculateTrappedPopulations',
+          valueName: 'conflictResolution.activeConflicts',
+          month: state.currentMonth,
+          additionalInfo: { context: 'conflict-affected population calculation' }
+        }
+      )
+    : 0; // No conflict system = no conflicts (safe initialization fallback)
+
+  if (activeConflicts > 0) {
+    const conflictAffected = totalPopulation * activeConflicts * 0.05; // 5% per conflict
     const aspiringConflict = conflictAffected * 0.80; // 80% want to escape war
     const ableConflict = conflictAffected * 0.30; // 30% can afford to leave (conflict destroys wealth)
 
