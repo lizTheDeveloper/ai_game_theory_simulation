@@ -18,6 +18,7 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertDefined, assertProbability } from '@/simulation/utils/assertions';
 
 export class ExtinctionTriggersPhase implements SimulationPhase {
   readonly id = 'extinction-triggers';
