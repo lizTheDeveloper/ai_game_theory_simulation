@@ -71,7 +71,8 @@ log_section "📋 Recent Worker Activity"
 
 # Find logs from the last CHECK_WINDOW_MINUTES
 RECENT_LOGS=$(find "$WORKER_LOG_DIR" -name "worker_*.log" -mmin -${CHECK_WINDOW_MINUTES} -type f 2>/dev/null | sort -r)
-RECENT_COUNT=$(echo "$RECENT_LOGS" | grep -c "worker_" || echo "0")
+RECENT_COUNT=$(echo "$RECENT_LOGS" | grep "worker_" | wc -l)
+RECENT_COUNT=${RECENT_COUNT:-0}
 
 log "ℹ️  Found $RECENT_COUNT worker log(s) in last ${CHECK_WINDOW_MINUTES} minutes"
 
@@ -160,7 +161,8 @@ fi
 log_section "🌿 Worker Branch Status"
 
 # Count remote worker branches
-WORKER_BRANCHES=$(git branch -r 2>/dev/null | grep -c "auto/worker-" || echo "0")
+WORKER_BRANCHES=$(git branch -r 2>/dev/null | grep "auto/worker-" | wc -l)
+WORKER_BRANCHES=${WORKER_BRANCHES:-0}  # Default to 0 if empty
 log "ℹ️  Remote worker branches: $WORKER_BRANCHES"
 
 if [ "$WORKER_BRANCHES" -gt 50 ]; then
