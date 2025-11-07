@@ -10,6 +10,8 @@ Quality of Life (QoL) is the **primary discriminator** between Utopia and Dystop
 
 **Key Insight:** High AI capability can lead to either Utopia (high QoL) or Dystopia (low QoL) depending on alignment, distribution, and control.
 
+**CRITICAL:** QoL is a **wellbeing score [0, ~1.5]**, NOT a probability [0, 1]. Values >1.0 represent exceptional futures (post-scarcity, longevity gains, environmental restoration). Always use `assertFinite()` for validation, NEVER `assertProbability()` which rejects values >1.0.
+
 ## 17 Dimensions of Quality of Life
 
 | Dimension | Weight | What It Measures |
@@ -473,6 +475,14 @@ From recent 100-run simulation:
 **Fix:** Added guards: `Math.max(0.01, value)` before divisions
 **Status:** ✅ Fixed in commit 1f0884f
 
+### QoL Validation Bug (FIXED)
+
+**Problem:** QoLPhase used `assertProbability()` which rejects values >1.0, but QoL is a wellbeing score that can exceed 1.0 in exceptional futures
+**Cause:** Misunderstanding of QoL semantics - it's NOT a probability, it's a wellbeing score
+**Fix:** Changed to `assertFinite()` in QualityOfLifePhase.ts (lines 37, 66) with clarifying comments
+**Status:** ✅ Fixed in commit 420e29f (Nov 7, 2025)
+**Note:** OutcomeProbabilitiesPhase correctly uses `assertProbability()` since outcome probabilities ARE actual probabilities [0,1]
+
 ## Future Plans
 
 - **Individual QoL Distribution:** Track variance (is everyone better or just elites?)
@@ -501,3 +511,4 @@ From recent 100-run simulation:
 - **v1.1** (Oct 2025): Dark valley dynamics (commit 2b728e4)
 - **v1.2** (Oct 2025): Fix NaN bug with guards (commit 1f0884f)
 - **v2.0** (Oct 9, 2025): Crisis degradation mechanics, technology boosts, cascade multipliers
+- **v2.1** (Nov 7, 2025): Fix validation bug - QoL uses `assertFinite()` not `assertProbability()` (commit 420e29f)
