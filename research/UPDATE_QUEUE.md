@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/7/2025, 10:30:05 PM
-**Files Scanned:** 326
+**Generated:** 11/7/2025, 11:30:05 PM
+**Files Scanned:** 330
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 131 (40.2%)
+**Count:** 132 (40.0%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -359,6 +359,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/death_attribution_methodology_20251018.md`
 
+### `defensive_coding_audit_20251107.md`
+- **Oldest source:** 2011 (14 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/defensive_coding_audit_20251107.md`
+
 ### `emergency_response_deployment_times_20251020.md`
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
@@ -699,7 +704,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 176 (54.0%)
+**Count:** 179 (54.2%)
 
 All sources <3 years old. No action required.
 
@@ -709,11 +714,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 326 |
+| Total files | 330 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 131 (40.2%) |
+| HIGH | 132 (40.0%) |
 | MEDIUM | 19 (5.8%) |
-| LOW | 176 (54.0%) |
+| LOW | 179 (54.2%) |
 | Average age | 8.9 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -721,21 +726,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 176 | 54.0% |
+| Current (<3yr) | 179 | 54.2% |
 | Warning (3-5yr) | 19 | 5.8% |
-| Critical (>5yr) | 131 | 40.2% |
+| Critical (>5yr) | 132 | 40.0% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 40.2% critical (>5yr)
+- **Current:** 40.0% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 131 HIGH priority file(s) within 1 month
+1. Update 132 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
