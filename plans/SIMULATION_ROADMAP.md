@@ -795,6 +795,14 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW:** Verify AI automation, climate tipping, and heat stress research (research/verification_65e0f1c_20251107.md, commit 65e0f1c) - **12 citations requiring Layer 1+2 verification** including:
+  - **AI Automation (HIGH PRIORITY - Parameter Replacement):** HBS (2025) 24% displacement, White House CEA (2024) 60% new jobs, Fed St. Louis (2025) unemployment correlation, ArXiv (2025) wage effects
+  - **Climate Tipping Points:** Wunderling et al. (2024) cascades, Lenton et al. (2024) 45% risk, McKay et al. (2022) 72% overshoot increase
+  - **Wet Bulb Temperature (Validation):** Kong et al. (2024) young mortality, Zhang et al. (2024) thresholds, Wiezel et al. (2025) 32°C labor limit
+  - **Impact:** Replaces Frey & Osborne (2013) AUTOMATION_DISPLACEMENT_THRESHOLD=0.47 with multi-tier system
+  - **Priority:** HIGH (proposes simulation parameter replacement with 2024-2025 empirical data)
+  - **Status:** Ready for orchestrator pickup at VALIDATION phase (research file exists, Layer 2 verification critical)
+
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)
