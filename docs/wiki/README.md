@@ -274,6 +274,22 @@ See: [`.claude/agents/memories/`](../../.claude/agents/memories/) for agent memo
 
 Commit: 876ea94 (Nov 5, 2025)
 
+### November 7, 2025
+
+**🌡️ WET BULB TEMPERATURE THRESHOLD FIX** (commit a9aa743)
+
+Fixed critical threshold mismatch: simulation used theoretical 35°C limit instead of empirical 30.5-31.2°C from Vecellio et al. (2022), underestimating heat mortality by 40-60%.
+
+**Changes:**
+- SEVERE: 32°C → 30.5°C (empirical survivability limit)
+- EXTREME: 35°C → 31.2°C (extreme empirical limit)
+- Heat mortality now triggers **4.5°C earlier** in warming scenarios
+- Mortality rates calibrated to historical heatwave data (2003 EU, 2010 Russian, 2021 PNW)
+
+**Research:** Vecellio et al. (2022) empirical experiments (TRL 8) vs Raymond et al. (2020) theoretical 35°C. People die at 30.5°C in practice, not 35°C in theory.
+
+**Files:** `src/types/wetBulbTemperature.ts`, `src/simulation/wetBulbEvents.ts`, `src/simulation/config/centralConfig.ts`
+
 ### November 6, 2025
 
 **🎯 4-WEEK CRITICAL PATH COMPLETE - Research Update Pipeline Operational**
