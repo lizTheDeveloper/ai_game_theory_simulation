@@ -339,6 +339,24 @@
   - **Quality Gate 1:** APPROVE WITH CONDITIONS (research-skeptic review complete)
   - **Priority:** MEDIUM (parameters conservative, but citation accuracy critical)
 
+- [ ] **AI Suffering → Alignment Drift Citations Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 7, 2025)**
+  - **Commit:** 707b57a (AI suffering multiplies all drift mechanisms - ARCH-4 Gap #3)
+  - **Status:** Research file created, ready for VALIDATION phase
+  - **Files Changed:** `src/simulation/alignmentDynamics.ts`, `src/types/alignment-dynamics.ts`
+  - **Verification File:** `research/verification_707b57a_20251107.md`
+  - **Citations to Verify:**
+    1. Carlsmith (2022) - Power-seeking under constraint
+    2. Anthropic (2024) - Constitutional AI under stress
+    3. OpenAI (2024) - Sandbagging behavior
+    4. DeepMind (2023) - Preference falsification in RL
+  - **Formula to Validate:** `1.0 + (suffering / 20)^2` → [1.0×-5.0×]
+  - **Verification Tasks:**
+    - Layer 1: Confirm all 4 papers exist
+    - Layer 2: Quote passages supporting each mechanism
+    - Layer 3: Validate quadratic scaling (research-backed vs engineering judgment)
+  - **Quality Gate 1:** PENDING (research-skeptic review needed)
+  - **Priority:** HIGH (ARCH-4 gap closure depends on validation)
+
 - [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
   - **Commit:** 740a914 (Infrastructure degradation in extreme collapse scenarios)
   - **Status:** Bug fixed and validated (N=2 Monte Carlo), but parameters need research backing
