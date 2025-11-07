@@ -1,9 +1,15 @@
+---
+oldest_source: 2016
+newest_source: 2025
+last_verified: 2025-11-07
+---
+
 # Climate Tipping Point Timescale Research
-**Date:** November 7, 2025 (Updated)
-**Last Updated:** November 7, 2025 (Autonomous Researcher - added 2024-2025 sources)
+**Date:** November 7, 2025 (Updated with 2025 Breaking News)
+**Last Updated:** November 7, 2025 (Autonomous Researcher - added Global Tipping Points Report 2025)
 **Original Author:** Super-Alignment Researcher (Orchestrator Workflow)
 **Purpose:** Extract updated climate tipping timescales to fix ROOT CAUSE of 100% dystopia convergence
-**Research Quality:** A (IPCC AR6 + Armstrong McKay 2022 + 2024-2025 peer-reviewed sources)
+**Research Quality:** A (IPCC AR6 + Armstrong McKay 2022 + Global Tipping Points Report 2025 + peer-reviewed sources)
 
 ## Executive Summary
 
@@ -536,11 +542,41 @@ totalClimateStabilityImpact += element.impactClimateStability * scaledProgress;
 
 ---
 
-**Document Status:** UPDATED WITH 2024-2025 SOURCES (November 7, 2025)
+## 🚨 BREAKING: First Climate Tipping Point Crossed (October 2025)
+
+**Global Tipping Points Report 2025** (Released October 29, 2025)
+
+**Critical Finding:** Tropical coral reefs have crossed their thermal tipping point and are experiencing widespread death - **this is the first confirmed planetary tipping point to be breached**.
+
+**Key Details:**
+- **Current warming:** ~1.4°C above pre-industrial
+- **Coral thermal threshold:** ~1.2°C (now exceeded)
+- **Irreversibility:** Even if temperatures stabilize at 1.5°C, reefs would likely continue to collapse
+- **Recovery requirements:** Global temperatures would need to fall to 1°C or lower for reef recovery
+- **Report authors:** Nico Wunderling (Goethe University), Tim Lenton (University of Exeter), 100+ scientists from 20+ countries
+- **Released ahead of:** World Climate Conference in Belém, Brazil (November 2025)
+
+**Citations:**
+- Wunderling, N., Lenton, T., et al. (2025). "Global Tipping Points Report 2025." University of Exeter. Released October 29, 2025.
+- Earth System Dynamics (2024). "Climate tipping point interactions and cascades: a review." Wunderling, N., von der Heydt, A. S., et al. ESD, 15(1), 41-74. DOI: 10.5194/esd-15-41-2024
+
+**Cascade Risk:**
+The 2024 ESD review demonstrates that "tipping cascades cannot be ruled out on centennial to millennial timescales at global warming levels between 1.5 and 2.0°C." At higher warming exceeding 2.0°C, cascading transitions could involve rapidly-responding systems like the Amazon rainforest and Atlantic ocean circulation.
+
+**Simulation Implications:**
+1. Coral reef tipping element should be marked as **already triggered** at 1.4°C warming
+2. Validates urgency of modeling tipping cascades - we're no longer in the "potential future" territory
+3. Confirms that 1.5°C is NOT a safe threshold - impacts manifest below it
+4. Demonstrates irreversibility: temperature stabilization ≠ ecosystem recovery
+
+---
+
+**Document Status:** UPDATED WITH 2025 BREAKING NEWS (November 7, 2025)
 **Research Quality:** A (95% peer-reviewed, 85% from 2022-2025)
 **Oldest Source:** DeConto & Pollard 2016 (9 years old) - still cited as foundational WAIS study
-**Newest Sources:** Klose et al. 2024, Rosser et al. 2024, Willeit & Ganopolski 2024
+**Newest Sources:** Global Tipping Points Report 2025, Klose et al. 2024, Rosser et al. 2024, Willeit & Ganopolski 2024
 **Last Verified:** November 7, 2025
 **Recommendation:** Proceed to implementation with focus on AMOC expansion + impact scaling review
 **Critical Finding:** ROOT CAUSE may be impact scaling logic, not timescale parameters
 **2024-2025 Validation:** Current timescale parameters remain within research consensus bounds
+**2025 BREAKING NEWS:** First planetary tipping point confirmed crossed (coral reefs, Oct 2025)
