@@ -7,7 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertPlanetaryBoundary } from '@/simulation/utils/assertions';
+import { assertProbability } from '@/simulation/utils/assertions';
 
 export class OceanAcidificationPhase implements SimulationPhase {
   readonly id = 'ocean-acidification';
@@ -18,21 +18,37 @@ export class OceanAcidificationPhase implements SimulationPhase {
     const { updateOceanAcidificationSystem, checkOceanAcidificationTechUnlocks } = require('../../oceanAcidification');
     setDeterministicRng(rng);
 
-    // Validate ocean pH before/after update
-    assertPlanetaryBoundary(state.oceanHealth.pH, 'oceanPH', {
-      location: 'OceanAcidificationPhase.execute',
-      valueName: 'ocean pH',
-      month: state.currentMonth
-    });
+    // Validate ocean acidification system state before/after update
+    // NOTE: pHLevel is stored as [0,1] normalized (1.0 = pre-industrial 8.2 pH)
+    // updateOceanAcidificationSystem handles all internal validation
+    if (state.oceanAcidificationSystem) {
+      assertProbability(state.oceanAcidificationSystem.pHLevel, {
+        location: 'OceanAcidificationPhase.execute',
+        valueName: 'pHLevel',
+        month: state.currentMonth
+      });
+      assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+        location: 'OceanAcidificationPhase.execute',
+        valueName: 'aragoniteSaturation',
+        month: state.currentMonth
+      });
+    }
 
     updateOceanAcidificationSystem(state);
     checkOceanAcidificationTechUnlocks(state);
 
-    assertPlanetaryBoundary(state.oceanHealth.pH, 'oceanPH', {
-      location: 'OceanAcidificationPhase.execute (post-update)',
-      valueName: 'ocean pH',
-      month: state.currentMonth
-    });
+    if (state.oceanAcidificationSystem) {
+      assertProbability(state.oceanAcidificationSystem.pHLevel, {
+        location: 'OceanAcidificationPhase.execute (post-update)',
+        valueName: 'pHLevel',
+        month: state.currentMonth
+      });
+      assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+        location: 'OceanAcidificationPhase.execute (post-update)',
+        valueName: 'aragoniteSaturation',
+        month: state.currentMonth
+      });
+    }
 
     return { events: [] };
   }

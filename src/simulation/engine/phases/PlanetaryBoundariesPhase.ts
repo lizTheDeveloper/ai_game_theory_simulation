@@ -32,11 +32,19 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     const { updateBoundaryRecovery } = require('../../planetaryBoundaryRecovery');
 
     // Validate key planetary boundaries before update
-    assertPlanetaryBoundary(state.planetaryBoundaries.co2Concentration, 'co2', {
-      location: 'PlanetaryBoundariesPhase.execute',
-      valueName: 'co2Concentration',
-      month: state.currentMonth
-    });
+    // FIX: state.planetaryBoundaries doesn't exist, use planetaryBoundariesSystem.boundaries
+    // Validate temperature anomaly (climate change boundary)
+    if (state.resourceEconomy?.co2) {
+      assertPlanetaryBoundary(
+        state.resourceEconomy.co2.temperatureAnomaly,
+        'temperature',
+        {
+          location: 'PlanetaryBoundariesPhase.execute',
+          valueName: 'temperatureAnomaly',
+          month: state.currentMonth
+        }
+      );
+    }
 
     // Update Biosphere Integrity Index (BII) - Climate Mortality Phase 2 (Nov 6, 2025)
     // Species tracking with climate velocity modeling
@@ -49,11 +57,17 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     updateBoundaryRecovery(state, rng);
 
     // Validate key planetary boundaries after update
-    assertPlanetaryBoundary(state.planetaryBoundaries.co2Concentration, 'co2', {
-      location: 'PlanetaryBoundariesPhase.execute (post-update)',
-      valueName: 'co2Concentration',
-      month: state.currentMonth
-    });
+    if (state.resourceEconomy?.co2) {
+      assertPlanetaryBoundary(
+        state.resourceEconomy.co2.temperatureAnomaly,
+        'temperature',
+        {
+          location: 'PlanetaryBoundariesPhase.execute (post-update)',
+          valueName: 'temperatureAnomaly',
+          month: state.currentMonth
+        }
+      );
+    }
 
     return { events: [] };
   }

@@ -17,6 +17,12 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import {
+  assertFinite,
+  assertProbability,
+  assertDefined,
+  assertMortalityRate
+} from '../../utils/assertions';
 
 export class PsychologicalTraumaPhase implements SimulationPhase {
   readonly id = 'psychological_trauma';
@@ -38,15 +44,33 @@ export class PsychologicalTraumaPhase implements SimulationPhase {
     }
 
     const trauma = state.psychologicalTrauma;
-    const population = state.humanPopulationSystem.population;
+    const population = assertFinite(state.humanPopulationSystem.population, {
+      location: 'PsychologicalTraumaPhase.execute',
+      valueName: 'population',
+      month: state.currentMonth
+    });
     const initialPopulation = 8000; // 8B baseline (in millions)
 
     // Calculate monthly mortality rate
-    if (state.humanPopulationSystem.monthlyExcessDeaths === undefined) {
-      throw new Error('❌ state.humanPopulationSystem.monthlyExcessDeaths is undefined in PsychologicalTraumaPhase:43 - initialization bug');
-    }
-    const monthlyDeaths = state.humanPopulationSystem.monthlyExcessDeaths;
-    const monthlyMortalityRate = monthlyDeaths / population;
+    const monthlyDeaths = assertDefined(
+      state.humanPopulationSystem.monthlyExcessDeaths,
+      {
+        location: 'PsychologicalTraumaPhase.execute',
+        valueName: 'monthlyExcessDeaths',
+        month: state.currentMonth,
+        expectedSource: 'initialization.ts or prior mortality phase'
+      }
+    );
+
+    const monthlyMortalityRate = assertMortalityRate(
+      monthlyDeaths / population,
+      {
+        location: 'PsychologicalTraumaPhase.execute',
+        valueName: 'monthlyMortalityRate',
+        month: state.currentMonth,
+        population
+      }
+    );
 
     // Check for mass death events
     if (monthlyMortalityRate > 0.10) {  // >10% monthly mortality = traumatic event
@@ -65,10 +89,27 @@ export class PsychologicalTraumaPhase implements SimulationPhase {
       }
 
       // Apply trauma increase (with diminishing returns)
-      const currentTrauma = trauma.traumaLevel;
+      const currentTrauma = assertProbability(trauma.traumaLevel, {
+        location: 'PsychologicalTraumaPhase.execute',
+        valueName: 'currentTrauma',
+        month: state.currentMonth
+      });
       const maxTrauma = 0.95; // Can't reach 1.0 (some resilience always exists)
-      const remainingCapacity = maxTrauma - currentTrauma;
-      trauma.traumaLevel = Math.min(maxTrauma, currentTrauma + (traumaIncrease * remainingCapacity));
+      const remainingCapacity = assertFinite(maxTrauma - currentTrauma, {
+        location: 'PsychologicalTraumaPhase.execute',
+        valueName: 'remainingCapacity',
+        month: state.currentMonth,
+        additionalInfo: { currentTrauma, maxTrauma }
+      });
+      trauma.traumaLevel = assertProbability(
+        Math.min(maxTrauma, currentTrauma + (traumaIncrease * remainingCapacity)),
+        {
+          location: 'PsychologicalTraumaPhase.execute',
+          valueName: 'newTraumaLevel',
+          month: state.currentMonth,
+          additionalInfo: { currentTrauma, traumaIncrease, remainingCapacity }
+        }
+      );
 
       // Reset recovery timer
       trauma.monthsSinceLastMassEvent = 0;
@@ -96,13 +137,35 @@ export class PsychologicalTraumaPhase implements SimulationPhase {
       // Social cohesion helps recovery (average of components, 0-1 scale)
       const defaultCohesion = { trust: 50, communityBonds: 50, civilLiberties: 50 };
       const cohesion = state.socialAccumulation?.socialCohesion || defaultCohesion;
-      const avgCohesion = (cohesion.trust + cohesion.communityBonds + cohesion.civilLiberties) / 300;
+      const avgCohesion = assertProbability(
+        (cohesion.trust + cohesion.communityBonds + cohesion.civilLiberties) / 300,
+        {
+          location: 'PsychologicalTraumaPhase.execute',
+          valueName: 'avgCohesion',
+          month: state.currentMonth,
+          additionalInfo: { trust: cohesion.trust, communityBonds: cohesion.communityBonds, civilLiberties: cohesion.civilLiberties }
+        }
+      );
       if (avgCohesion > 0.6) {
         recoveryRate *= 1.25;  // 25% faster recovery in cohesive societies
       }
 
       // Apply recovery
-      trauma.traumaLevel = Math.max(0, trauma.traumaLevel - recoveryRate);
+      const finalRecoveryRate = assertFinite(recoveryRate, {
+        location: 'PsychologicalTraumaPhase.execute',
+        valueName: 'recoveryRate',
+        month: state.currentMonth,
+        additionalInfo: { psychWellbeingDeployment, avgCohesion }
+      });
+      trauma.traumaLevel = assertProbability(
+        Math.max(0, trauma.traumaLevel - finalRecoveryRate),
+        {
+          location: 'PsychologicalTraumaPhase.execute',
+          valueName: 'traumaLevelAfterRecovery',
+          month: state.currentMonth,
+          additionalInfo: { previousTraumaLevel: trauma.traumaLevel, recoveryRate: finalRecoveryRate }
+        }
+      );
 
       // Log significant recovery milestones
       if (trauma.traumaLevel > 0 && trauma.monthsSinceLastMassEvent % 24 === 0) {

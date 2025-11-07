@@ -23,20 +23,25 @@ export class WetBulbTemperaturePhase implements SimulationPhase {
     setDeterministicRng(rng);
 
     // Validate temperature state before update
-    assertFinite(state.environmental.currentTemperature, {
-      location: 'WetBulbTemperaturePhase.execute (pre-update)',
-      valueName: 'currentTemperature',
-      month: state.currentMonth
-    });
+    // FIX: Temperature is tracked in resourceEconomy.co2.temperatureAnomaly
+    if (state.resourceEconomy?.co2) {
+      assertFinite(state.resourceEconomy.co2.temperatureAnomaly, {
+        location: 'WetBulbTemperaturePhase.execute (pre-update)',
+        valueName: 'temperatureAnomaly',
+        month: state.currentMonth
+      });
+    }
 
     updateWetBulbTemperatureSystem(state, rng);
 
     // Validate temperature state after update
-    assertFinite(state.environmental.currentTemperature, {
-      location: 'WetBulbTemperaturePhase.execute (post-update)',
-      valueName: 'currentTemperature',
-      month: state.currentMonth
-    });
+    if (state.resourceEconomy?.co2) {
+      assertFinite(state.resourceEconomy.co2.temperatureAnomaly, {
+        location: 'WetBulbTemperaturePhase.execute (post-update)',
+        valueName: 'temperatureAnomaly',
+        month: state.currentMonth
+      });
+    }
 
     return { events: [] };
   }
