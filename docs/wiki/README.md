@@ -468,6 +468,114 @@ All determinism patterns now documented in:
 
 ---
 
+**🔧 Determinism Investigation Artifacts (Nov 6, 2025)**
+
+**Purpose:** Comprehensive tooling and documentation for diagnosing and preventing determinism bugs in the simulation engine.
+
+**Status:** 90% determinism achieved (9/10 runs identical), 10% regression under investigation (CV 2.61% → 5.16% after upstream merge).
+
+**Validation Scripts:**
+
+1. **`scripts/comprehensiveDeterminismValidation.ts`** - Main N-run statistical validation
+   - Configuration: N=10 runs × 36 months with seed=42000
+   - Outputs: State hashes, AI capability sums, alignment sums per month
+   - Statistical analysis: CV (coefficient of variation), first divergence point
+   - Usage: `npx tsx scripts/comprehensiveDeterminismValidation.ts`
+
+2. **`scripts/quickDeterminismTest.ts`** - Fast 3-run sanity check
+   - Configuration: N=5 runs × 2 months with seed=42
+   - Quick feedback loop for debugging (5-10 seconds runtime)
+   - Usage: `npx tsx scripts/quickDeterminismTest.ts`
+
+3. **`scripts/compareRngSequences.ts`** - RNG sequence divergence finder
+   - Logs RNG calls with phase labels: `[RNG-0] Value: 0.123456 (Phase: ResearchPhase)`
+   - Compares RNG sequences across runs to find first divergence point
+   - Proven: RNG sequences are IDENTICAL (bug is not in RNG system)
+
+4. **`scripts/debugDivergence.ts`** - Divergence debugging utility
+   - Detailed state inspection at divergence points
+   - Compares AI capabilities, research progress, lifecycle state
+
+5. **`scripts/findDivergentPhase.ts`** - Phase-level tracking
+   - Binary search to identify which phase first causes divergence
+   - Instruments PhaseOrchestrator to log per-AI capability after each phase
+
+**Investigation Logs:**
+
+All logs preserved in `/logs/` directory (NEVER `/tmp/` - tmp gets cleared):
+
+1. **`logs/determinism_ROOT_CAUSE_FOUND_20251106.md`** (289 lines)
+   - Root cause analysis of Object.entries() iteration order bug
+
+2. **`logs/determinism_bug_root_cause_20251106.md`** (231 lines)
+   - Bug documentation with reproduction steps
+
+3. **`logs/determinism_final_summary_20251106.md`** (154 lines)
+   - Executive summary of investigation
+   - 13 bugs fixed across 12 files
+   - CV progress: 2.94% → 0.25% (best) → 2.61% (current)
+
+4. **`logs/determinism_fix_sleeper_detection_20251106.md`** (107 lines)
+   - Sleeper agent detection fix attempt
+
+5. **`logs/determinism_investigation_complete_20251106.md`** (359 lines)
+   - Complete investigation timeline with all fix attempts
+
+6. **`logs/determinism_math_sin_bug_20251106.md`** (106 lines)
+   - Math.sin() non-determinism investigation (red herring)
+
+7. **`logs/determinism_nuclear_option_fix_20251106.md`** (272 lines)
+   - Comprehensive Object.keys() sorting across all files
+
+8. **`logs/determinism_object_iteration_fixes_20251106.md`** (135 lines)
+   - Object iteration order fixes documentation
+
+9. **`logs/determinism_regression_20251106.md`** (106 lines) **[NEW]**
+   - Regression tracking after upstream merge
+   - CV increased from 2.61% → 5.16%
+   - Investigation in progress
+
+**Key Findings:**
+
+- **13 bugs fixed** across 12 files:
+  1. Initialization seed passing (Math.random fallback)
+  2. Object.entries() sorting (3 locations in research.ts)
+  3. Conditional RNG calls (8 locations in lifecycle.ts)
+  4. Poisson sampling variable consumption
+  5. Object.keys() sorting (8 locations across multiple files)
+
+- **Defensive patterns established:**
+  - Always sort Object.entries/keys before iteration
+  - Always call rng() even if value discarded (maintain RNG state)
+  - Pre-generate fixed RNG values for loops (no variable consumption)
+  - Never use Math.random() (use RNG function for determinism)
+
+- **RNG proven identical:** All runs produce identical RNG sequences, so remaining divergence is NOT in RNG system
+
+- **Remaining mystery:** 10% of runs still diverge (CV 2.61%), likely due to:
+  - Floating-point arithmetic order dependencies
+  - Array operations with undefined ordering
+  - Phase execution order issues
+  - Hidden async operations
+
+**Infrastructure Added:**
+
+- Pre-commit hook: Detects unsorted object iterations before commit
+- CI workflow: Validates determinism on every PR (10 runs × 12 months)
+- RNG logging: `LOG_RNG_CALLS=true` environment variable for debugging
+
+**Next Steps:**
+
+- Binary search phases to identify first divergence point
+- Floating-point analysis for arithmetic order dependencies
+- Array operation audit for undefined ordering
+
+**Historical Context:**
+
+This investigation documents the complete determinism debugging process from October-November 2025, establishing defensive coding patterns and infrastructure to prevent future regressions. The 90% determinism achievement (down from 100% non-determinism) represents significant progress toward Monte Carlo validation reliability.
+
+---
+
 **🐛 Dashboard Data Flow Fix - Paradigm Trajectory Delta Bug**
 
 **Issue:** The `paradigmTrajectory` array (and other critical arrays like `aiAgents`, `regionalPopulations`, `qualityOfLifeBreakdown`) were missing from delta calculations after the first simulation step, causing dashboard visualizations to lose data after initial render.

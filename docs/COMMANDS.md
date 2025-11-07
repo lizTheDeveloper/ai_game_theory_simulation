@@ -128,6 +128,36 @@ npx tsx tests/refactoring/runRegressionTests.ts
 - **Regression tests:** `tests/refactoring/` - Phase 1 (utilities), Phase 2 (systems), baseline integration
 - **Monte Carlo validation:** All features require N≥10 runs to validate behavior
 
+### Determinism Validation (Added Nov 6, 2025)
+
+**Purpose:** Verify simulation produces identical outcomes for identical seeds (critical for Monte Carlo analysis).
+
+```bash
+# Comprehensive validation (10 runs × 36 months, statistical analysis)
+npx tsx scripts/comprehensiveDeterminismValidation.ts
+
+# Quick sanity check (5 runs × 2 months, 5-10 seconds)
+npx tsx scripts/quickDeterminismTest.ts
+
+# RNG sequence comparison (debug tool)
+LOG_RNG_CALLS=true npx tsx scripts/compareRngSequences.ts
+
+# Divergence debugging
+npx tsx scripts/debugDivergence.ts
+
+# Phase-level tracking (binary search for divergence)
+npx tsx scripts/findDivergentPhase.ts
+```
+
+**Pass Criteria:** 9-10/10 runs identical (CV ≤ 0.01%), 90%+ success rate acceptable
+
+**Infrastructure:**
+- Pre-commit hook: Blocks unsorted Object.entries/keys iterations
+- CI workflow: `.github/workflows/determinism-validation.yml` runs on every PR
+- Investigation logs: `/logs/determinism_*.md` (2,758 lines of debugging artifacts)
+
+**Current Status:** 90% determinism achieved (9/10 runs identical), 10% regression under investigation
+
 ## Building & Development
 
 ### Next.js Frontend
