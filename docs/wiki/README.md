@@ -282,6 +282,47 @@ Commits: 876ea94 (Nov 5, 2025), 9bc4b2a (Nov 6, 2025)
 
 ### November 6, 2025
 
+**🔧 Determinism Fix - Object Iteration Order (90% Resolution)**
+
+**Issue:** Monte Carlo runs with identical seeds were producing divergent results (CV = 2.61%), breaking deterministic reproducibility required for research validation.
+
+**Root Cause:** Non-deterministic `Object.entries()`, `Object.keys()`, and `Object.values()` iteration in `research.ts`. JavaScript object property iteration order is implementation-dependent and not guaranteed to be consistent across runs. Weighted random selection code depends on iteration order, so different orders produced different RNG consumption patterns even with identical seeds.
+
+**Fix Applied:** (commit cda4474)
+- Sort all `Object.entries()` and `Object.keys()` calls alphabetically before iteration
+- Pattern: `.sort(([a], [b]) => a.localeCompare(b))` for entries, `.sort()` for keys
+- Three locations fixed in `research.ts`:
+  - Line 391-394: `selectDimensionToAdvance()` - dimension selection
+  - Line 418-422: `selectDimensionToAdvance()` - research domain selection
+  - Line 547-548: `applyResearchGrowth()` - domain averaging
+
+**Results:**
+- **Before:** 10/10 runs diverged (CV = 2.61%)
+- **After:** 9/10 runs identical (CV = 0%)
+- **90% fix achieved** - Major determinism improvement
+
+**Remaining Work:** 1/10 runs still diverges in Month 2 Climate Justice phase (different bug, requires further investigation).
+
+**Validation Command:**
+```bash
+npx tsx scripts/comprehensiveDeterminismValidation.ts --seed=42 --runs=10
+```
+
+**Defensive Pattern for Determinism:**
+```typescript
+// ❌ NEVER iterate over objects directly
+for (const [key, val] of Object.entries(obj)) { ... }
+
+// ✅ ALWAYS sort first
+for (const [key, val] of Object.entries(obj).sort(([a], [b]) => a.localeCompare(b))) { ... }
+```
+
+**Files Changed:**
+- `src/simulation/research.ts` (3 fixes for deterministic iteration)
+- `logs/determinism_fix_summary_20251106.md` (111 lines, detailed analysis)
+
+---
+
 **🐛 Dashboard Data Flow Fix - Paradigm Trajectory Delta Bug**
 
 **Issue:** The `paradigmTrajectory` array (and other critical arrays like `aiAgents`, `regionalPopulations`, `qualityOfLifeBreakdown`) were missing from delta calculations after the first simulation step, causing dashboard visualizations to lose data after initial render.
@@ -1266,6 +1307,7 @@ When auditing or writing simulation code:
 5. ✅ Division operations protected from zero denominators
 6. ✅ All state mutations preceded by assertions
 7. ✅ Full context in all assertion calls
+8. ✅ **All `Object.entries()`, `Object.keys()`, `Object.values()` iterations sorted** (determinism - see commit cda4474)
 
 ### Research Documentation
 
