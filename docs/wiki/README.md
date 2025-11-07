@@ -199,6 +199,12 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
   - **Validation:** Monte Carlo N=5, 12 months - ZERO assertion errors
   - **Impact:** Bug caught immediately instead of silent corruption for months (compare to Oct 2025 ecology NaN bug)
   - **Design note:** `materialAbundance` and `energyAvailability` intentionally exceed 1.0 (up to 2.0) for post-scarcity economies (upwardSpirals.ts:495)
+- ✅ **Government socialCohesionInvestment Initialization Added** (commit 1f81c9c, Nov 7, 2025)
+  - **Bug:** `socialCohesionInvestment` field used by resentmentRecovery.ts was missing from government initialization
+  - **Impact:** Would cause assertion failures in calculateRecoveryContext (lines 74-87) when accessing undefined field
+  - **Fix:** Added baseline value (50) to government state initialization
+  - **Part of:** CRITICAL-4 remediation (defensive coding cleanup, proper initialization vs silent fallbacks)
+  - **Validation:** Field already defined in src/types/government.ts:72, properly used with assertions in resentmentRecovery.ts
 - ✅ **AGI Breakthrough Shock Magnitude Bug Fixed** (commit 141712b, Nov 6, 2025)
   - **Bug:** ExogenousShockPhase AGI breakthrough had typo'd parameter values (500%/300% boosts vs intended 50%/30%)
   - **Root cause:** Missing decimal points (5.0/3.0 vs 0.5/0.3)
