@@ -1461,6 +1461,7 @@ New autonomous worker specialized for research maintenance, fixing cron job fail
 - Script: `researcher-worker.sh` (333 lines)
 - Documentation: Updated `docs/AUTONOMOUS_SETUP.md`, `scripts/CRON_SETUP.md`
 - Logs: `logs/autonomous/researcher/researcher_TIMESTAMP.log`
+- Status: `logs/autonomous/researcher/status_current.txt` (session summaries, queue health, next priorities)
 
 See: Commit 05ea749
 
