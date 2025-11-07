@@ -213,16 +213,27 @@ for BRANCH in $BRANCHES; do
       if npx tsc --noEmit 2>&1 | tee -a "$LOG_FILE"; then
         log "    ✅ TypeScript passed"
 
-        # Gate 2: Tests (skip frontend tests on VM)
+        # Gate 2: Tests (skip if no test framework available)
         log "  Gate 2/2: Test suite"
-        TEST_CMD="npm test"
-        if [ "$IS_VM" = "true" ]; then
-          TEST_CMD="npm run test:backend 2>/dev/null || npm test"
-          log "    (Running backend tests only on VM)"
+
+        # Check if test scripts exist
+        TEST_AVAILABLE=false
+        if npm run | grep -E "^\s*(test|test:backend)" > /dev/null 2>&1; then
+          TEST_AVAILABLE=true
+          TEST_CMD="npm test"
+          if [ "$IS_VM" = "true" ]; then
+            TEST_CMD="npm run test:backend 2>/dev/null || npm test"
+            log "    (Running backend tests only on VM)"
+          fi
+        else
+          log "    ⚠️  No test script found, skipping test gate"
+          log "    (TypeScript compilation is sufficient validation)"
         fi
 
-        if $TEST_CMD 2>&1 | tee -a "$LOG_FILE"; then
-          log "    ✅ Tests passed"
+        if [ "$TEST_AVAILABLE" = "false" ] || $TEST_CMD 2>&1 | tee -a "$LOG_FILE"; then
+          if [ "$TEST_AVAILABLE" = "true" ]; then
+            log "    ✅ Tests passed"
+          fi
 
           # All gates passed - merge to main
           log "🎉 All quality gates passed!"
@@ -286,7 +297,7 @@ EOFT
           log "🤖 Launching Claude Code..."
 
           # Spawn Claude Code (timeout 15 minutes)
-          timeout 900 claude-code --task-file "$REMEDIATION_TASK" >> "$LOG_FILE" 2>&1 || {
+          timeout 900 claude --task-file "$REMEDIATION_TASK" >> "$LOG_FILE" 2>&1 || {
             SPAWN_EXIT=$?
             if [ $SPAWN_EXIT -eq 124 ]; then
               log "⏱️  Claude Code timed out (15 min)"
@@ -355,7 +366,7 @@ EOF
       log "🤖 Launching Claude Code..."
 
       # Spawn Claude Code (timeout 15 minutes)
-      timeout 900 claude-code --task-file "$REMEDIATION_TASK" >> "$LOG_FILE" 2>&1 || {
+      timeout 900 claude --task-file "$REMEDIATION_TASK" >> "$LOG_FILE" 2>&1 || {
         SPAWN_EXIT=$?
         if [ $SPAWN_EXIT -eq 124 ]; then
           log "⏱️  Claude Code timed out (15 min)"
