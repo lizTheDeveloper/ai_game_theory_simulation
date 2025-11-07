@@ -110,15 +110,42 @@ function updateFossilFuel(
   economicMultiplier: number,
   resources: ResourceEconomy
 ): void {
+  // Validate inputs
+  assertFinite(fuel.reserves, {
+    location: 'updateFossilFuel',
+    valueName: 'fuel.reserves',
+    additionalInfo: { economicMultiplier }
+  });
+  assertFinite(economicMultiplier, {
+    location: 'updateFossilFuel',
+    valueName: 'economicMultiplier'
+  });
+
   if (fuel.reserves <= 0) {
     fuel.monthlyExtraction = 0;
     fuel.monthlyConsumption = 0;
     return;
   }
-  
+
   // Extraction scales with depletion rate, economic activity, and substitution
+  assertFinite(fuel.substitutionLevel, {
+    location: 'updateFossilFuel',
+    valueName: 'fuel.substitutionLevel'
+  });
+  assertFinite(fuel.depletionRate, {
+    location: 'updateFossilFuel',
+    valueName: 'fuel.depletionRate'
+  });
+
   const substitutionFactor = 1 - fuel.substitutionLevel * 0.8; // Up to 80% reduction
-  fuel.monthlyExtraction = fuel.depletionRate * economicMultiplier * substitutionFactor;
+  fuel.monthlyExtraction = assertFinite(
+    fuel.depletionRate * economicMultiplier * substitutionFactor,
+    {
+      location: 'updateFossilFuel',
+      valueName: 'monthlyExtraction',
+      additionalInfo: { depletionRate: fuel.depletionRate, economicMultiplier, substitutionFactor }
+    }
+  );
 
   // FIX #18 (Oct 22, 2025): Consumption responds to renewable energy deployment
   // Research: IEA World Energy Outlook 2024, IPCC AR6 WG3 (2022)
@@ -127,7 +154,10 @@ function updateFossilFuel(
   // - At 50% renewable penetration, fossil consumption drops ~60-70% (not 50%)
   // - At 80% renewable, fossil consumption drops ~90-95% (grid optimization + storage)
 
-  const renewablePercentage = resources.energy.renewablePercentage;
+  const renewablePercentage = assertFinite(resources.energy.renewablePercentage, {
+    location: 'updateFossilFuel',
+    valueName: 'renewablePercentage'
+  });
 
   // Consumption reduction from renewable substitution
   // Accelerates faster than linear: grid optimization, storage, efficiency gains
@@ -138,18 +168,61 @@ function updateFossilFuel(
   // At 100% renewable → 100% reduction (but capped at 95% for baseline demand)
   const consumptionReduction = Math.min(0.95, Math.pow(renewablePercentage, 0.9));
 
-  fuel.monthlyConsumption = fuel.monthlyExtraction * (1 - consumptionReduction);
-  
+  fuel.monthlyConsumption = assertFinite(
+    fuel.monthlyExtraction * (1 - consumptionReduction),
+    {
+      location: 'updateFossilFuel',
+      valueName: 'monthlyConsumption',
+      additionalInfo: { monthlyExtraction: fuel.monthlyExtraction, consumptionReduction }
+    }
+  );
+
   // Deplete reserves
   fuel.reserves = Math.max(0, fuel.reserves - fuel.monthlyExtraction);
-  
+
   // Extraction cost increases as reserves deplete (harder to extract)
-  const depletionFactor = fuel.reserves / fuel.initialReserves;
-  fuel.extractionCost = fuel.extractionCost * (1 + (1 - depletionFactor) * 0.05); // Up to 5% increase per month
-  
+  assertFinite(fuel.initialReserves, {
+    location: 'updateFossilFuel',
+    valueName: 'fuel.initialReserves'
+  });
+  assertFinite(fuel.extractionCost, {
+    location: 'updateFossilFuel',
+    valueName: 'fuel.extractionCost (before update)'
+  });
+
+  const depletionFactor = assertFinite(
+    fuel.reserves / Math.max(0.001, fuel.initialReserves), // Prevent division by zero
+    {
+      location: 'updateFossilFuel',
+      valueName: 'depletionFactor',
+      additionalInfo: { reserves: fuel.reserves, initialReserves: fuel.initialReserves }
+    }
+  );
+
+  fuel.extractionCost = assertFinite(
+    fuel.extractionCost * (1 + (1 - depletionFactor) * 0.05),
+    {
+      location: 'updateFossilFuel',
+      valueName: 'extractionCost (after update)',
+      additionalInfo: { oldCost: fuel.extractionCost, depletionFactor }
+    }
+  );
+
   // Market price follows supply/demand
+  assertFinite(fuel.marketPrice, {
+    location: 'updateFossilFuel',
+    valueName: 'fuel.marketPrice (before update)'
+  });
+
   if (fuel.reserves < 0.3) {
-    fuel.marketPrice *= 1.02; // 2% price increase per month when scarce
+    fuel.marketPrice = assertFinite(
+      fuel.marketPrice * 1.02,
+      {
+        location: 'updateFossilFuel',
+        valueName: 'marketPrice (after increase)',
+        additionalInfo: { oldPrice: fuel.marketPrice }
+      }
+    );
   }
 }
 
@@ -169,20 +242,64 @@ function updateMetalDepletion(state: GameState, resources: ResourceEconomy): voi
   updateMetal(resources.lithium, economicMultiplier, resources);
   
   // Special: Copper and Rare Earths demand increases with clean energy transition
-  const renewablePercentage = resources.energy.renewablePercentage;
+  const renewablePercentage = assertFinite(resources.energy.renewablePercentage, {
+    location: 'updateMetalDepletion',
+    valueName: 'renewablePercentage'
+  });
+
   if (renewablePercentage > 0.3) {
     // Clean energy needs 3x more copper, 5x more rare earths
     const cleanEnergyDemand = (renewablePercentage - 0.3) * 2; // Peaks at +1.4x at 100% renewable
-    resources.copper.monthlyExtraction *= (1 + cleanEnergyDemand);
-    resources.rareEarths.monthlyExtraction *= (1 + cleanEnergyDemand * 1.5);
+
+    assertFinite(resources.copper.monthlyExtraction, {
+      location: 'updateMetalDepletion',
+      valueName: 'copper.monthlyExtraction (before clean energy boost)'
+    });
+    resources.copper.monthlyExtraction = assertFinite(
+      resources.copper.monthlyExtraction * (1 + cleanEnergyDemand),
+      {
+        location: 'updateMetalDepletion',
+        valueName: 'copper.monthlyExtraction (after clean energy boost)',
+        additionalInfo: { cleanEnergyDemand }
+      }
+    );
+
+    assertFinite(resources.rareEarths.monthlyExtraction, {
+      location: 'updateMetalDepletion',
+      valueName: 'rareEarths.monthlyExtraction (before clean energy boost)'
+    });
+    resources.rareEarths.monthlyExtraction = assertFinite(
+      resources.rareEarths.monthlyExtraction * (1 + cleanEnergyDemand * 1.5),
+      {
+        location: 'updateMetalDepletion',
+        valueName: 'rareEarths.monthlyExtraction (after clean energy boost)',
+        additionalInfo: { cleanEnergyDemand }
+      }
+    );
   }
-  
+
   // Special: Lithium demand increases with EVs
-  const oilSubstitution = resources.oil.substitutionLevel;
+  const oilSubstitution = assertFinite(resources.oil.substitutionLevel, {
+    location: 'updateMetalDepletion',
+    valueName: 'oil.substitutionLevel'
+  });
+
   if (oilSubstitution > 0.1) {
     // EVs need massive lithium
     const evDemand = oilSubstitution * 5; // 5x multiplier
-    resources.lithium.monthlyExtraction *= (1 + evDemand);
+
+    assertFinite(resources.lithium.monthlyExtraction, {
+      location: 'updateMetalDepletion',
+      valueName: 'lithium.monthlyExtraction (before EV boost)'
+    });
+    resources.lithium.monthlyExtraction = assertFinite(
+      resources.lithium.monthlyExtraction * (1 + evDemand),
+      {
+        location: 'updateMetalDepletion',
+        valueName: 'lithium.monthlyExtraction (after EV boost)',
+        additionalInfo: { evDemand }
+      }
+    );
   }
 }
 
@@ -191,32 +308,128 @@ function updateMetal(
   economicMultiplier: number,
   resources: ResourceEconomy
 ): void {
+  // Validate inputs
+  assertFinite(metal.reserves, {
+    location: 'updateMetal',
+    valueName: 'metal.reserves'
+  });
+  assertFinite(economicMultiplier, {
+    location: 'updateMetal',
+    valueName: 'economicMultiplier'
+  });
+
   // Virgin extraction
   if (metal.reserves > 0) {
-    metal.monthlyExtraction = metal.depletionRate * economicMultiplier;
+    assertFinite(metal.depletionRate, {
+      location: 'updateMetal',
+      valueName: 'metal.depletionRate'
+    });
+
+    metal.monthlyExtraction = assertFinite(
+      metal.depletionRate * economicMultiplier,
+      {
+        location: 'updateMetal',
+        valueName: 'monthlyExtraction',
+        additionalInfo: { depletionRate: metal.depletionRate, economicMultiplier }
+      }
+    );
+
     metal.reserves = Math.max(0, metal.reserves - metal.monthlyExtraction);
-    
+
     // Extraction cost increases as depletes
-    const depletionFactor = metal.reserves / metal.initialReserves;
-    metal.extractionCost *= (1 + (1 - depletionFactor) * 0.03); // 3% per month
+    assertFinite(metal.initialReserves, {
+      location: 'updateMetal',
+      valueName: 'metal.initialReserves'
+    });
+    assertFinite(metal.extractionCost, {
+      location: 'updateMetal',
+      valueName: 'metal.extractionCost (before update)'
+    });
+
+    const depletionFactor = assertFinite(
+      metal.reserves / Math.max(0.001, metal.initialReserves), // Prevent division by zero
+      {
+        location: 'updateMetal',
+        valueName: 'depletionFactor',
+        additionalInfo: { reserves: metal.reserves, initialReserves: metal.initialReserves }
+      }
+    );
+
+    metal.extractionCost = assertFinite(
+      metal.extractionCost * (1 + (1 - depletionFactor) * 0.03),
+      {
+        location: 'updateMetal',
+        valueName: 'extractionCost (after update)',
+        additionalInfo: { oldCost: metal.extractionCost, depletionFactor }
+      }
+    );
   } else {
     metal.monthlyExtraction = 0;
   }
-  
+
   // Recycling (from circular economy tech)
-  const circularEconomy = resources.circularityIndex; // Boosted by tech
-  metal.monthlyRecycling = metal.monthlyConsumption * metal.recyclingRate * circularEconomy;
+  const circularEconomy = assertFinite(resources.circularityIndex, {
+    location: 'updateMetal',
+    valueName: 'circularityIndex'
+  });
+
+  assertFinite(metal.monthlyConsumption, {
+    location: 'updateMetal',
+    valueName: 'metal.monthlyConsumption (before recycling calc)'
+  });
+  assertFinite(metal.recyclingRate, {
+    location: 'updateMetal',
+    valueName: 'metal.recyclingRate'
+  });
+
+  metal.monthlyRecycling = assertFinite(
+    metal.monthlyConsumption * metal.recyclingRate * circularEconomy,
+    {
+      location: 'updateMetal',
+      valueName: 'monthlyRecycling',
+      additionalInfo: { monthlyConsumption: metal.monthlyConsumption, recyclingRate: metal.recyclingRate, circularEconomy }
+    }
+  );
+
+  assertFinite(metal.recycledStock, {
+    location: 'updateMetal',
+    valueName: 'metal.recycledStock (before update)'
+  });
+  assertFinite(metal.recyclingEfficiency, {
+    location: 'updateMetal',
+    valueName: 'metal.recyclingEfficiency'
+  });
+
   metal.recycledStock = Math.min(1.0, metal.recycledStock + metal.monthlyRecycling * metal.recyclingEfficiency);
-  
+
   // Total consumption (virgin + recycled)
-  const recycledContribution = metal.recycledStock * metal.recyclingRate;
-  metal.monthlyConsumption = metal.monthlyExtraction + recycledContribution;
-  
+  const recycledContribution = assertFinite(
+    metal.recycledStock * metal.recyclingRate,
+    {
+      location: 'updateMetal',
+      valueName: 'recycledContribution',
+      additionalInfo: { recycledStock: metal.recycledStock, recyclingRate: metal.recyclingRate }
+    }
+  );
+
+  metal.monthlyConsumption = assertFinite(
+    metal.monthlyExtraction + recycledContribution,
+    {
+      location: 'updateMetal',
+      valueName: 'monthlyConsumption (after recycling)',
+      additionalInfo: { monthlyExtraction: metal.monthlyExtraction, recycledContribution }
+    }
+  );
+
   // Use up recycled stock
   metal.recycledStock = Math.max(0, metal.recycledStock - recycledContribution);
-  
+
   // Criticality increases as reserves deplete
   if (metal.reserves < 0.4) {
+    assertFinite(metal.criticality, {
+      location: 'updateMetal',
+      valueName: 'metal.criticality (before update)'
+    });
     metal.criticality = Math.min(1.0, metal.criticality + 0.01);
   }
 }
@@ -237,31 +450,81 @@ function updateRenewableRegeneration(state: GameState, resources: ResourceEconom
     'biodiversityIndex',
     { location: 'updateRenewableRegeneration', month: state.currentMonth }
   );
-  
+
   // Pollinators decline with biodiversity and pesticides
   food.pollinatorPopulation = Math.max(0.1, biodiversity * 0.9); // Track biodiversity closely
-  
+
   // Soil health degrades with monoculture, improves with sustainable ag
+  assertFinite(food.overharvest, {
+    location: 'updateRenewableRegeneration',
+    valueName: 'food.overharvest'
+  });
+  assertFinite(food.soilHealth, {
+    location: 'updateRenewableRegeneration',
+    valueName: 'food.soilHealth (before degradation)'
+  });
+
   const soilDegradation = food.overharvest * 0.02; // Overharvest damages soil
   food.soilHealth = Math.max(0.3, food.soilHealth - soilDegradation);
-  
+
   // Climate stress from temperature
-  const tempAnomaly = resources.co2.temperatureAnomaly;
+  const tempAnomaly = assertFinite(resources.co2.temperatureAnomaly, {
+    location: 'updateRenewableRegeneration',
+    valueName: 'temperatureAnomaly'
+  });
+
   food.climateStress = Math.min(1.0, tempAnomaly / 4.0); // Maxes at +4°C
   food.waterAvailability = Math.max(0.3, 1.0 - food.climateStress * 0.5); // Droughts
-  
+
   // Regeneration multiplier reduced by stress
-  food.regenerationMultiplier = food.soilHealth * food.pollinatorPopulation * (1 - food.climateStress * 0.5);
-  
+  food.regenerationMultiplier = assertFinite(
+    food.soilHealth * food.pollinatorPopulation * (1 - food.climateStress * 0.5),
+    {
+      location: 'updateRenewableRegeneration',
+      valueName: 'food.regenerationMultiplier',
+      additionalInfo: { soilHealth: food.soilHealth, pollinatorPopulation: food.pollinatorPopulation, climateStress: food.climateStress }
+    }
+  );
+
   // Water-specific: Aquifer depletion and climate
   const water = resources.water;
+  assertFinite(water.overharvest, {
+    location: 'updateRenewableRegeneration',
+    valueName: 'water.overharvest'
+  });
+  assertFinite(water.aquiferLevels, {
+    location: 'updateRenewableRegeneration',
+    valueName: 'water.aquiferLevels (before depletion)'
+  });
+
   if (water.overharvest > 0) {
     water.aquiferLevels = Math.max(0.1, water.aquiferLevels - water.overharvest * 0.5);
   }
-  water.regenerationMultiplier = Math.max(0.5, 1.0 - resources.co2.temperatureAnomaly * 0.15); // Climate disrupts water cycle
-  
+
+  water.regenerationMultiplier = assertFinite(
+    Math.max(0.5, 1.0 - resources.co2.temperatureAnomaly * 0.15),
+    {
+      location: 'updateRenewableRegeneration',
+      valueName: 'water.regenerationMultiplier',
+      additionalInfo: { temperatureAnomaly: resources.co2.temperatureAnomaly }
+    }
+  );
+
   // Timber-specific: Old growth doesn't regenerate
   const timber = resources.timber;
+  assertFinite(timber.monthlyHarvest, {
+    location: 'updateRenewableRegeneration',
+    valueName: 'timber.monthlyHarvest'
+  });
+  assertFinite(timber.sustainableHarvestRate, {
+    location: 'updateRenewableRegeneration',
+    valueName: 'timber.sustainableHarvestRate'
+  });
+  assertFinite(timber.oldGrowthRemaining, {
+    location: 'updateRenewableRegeneration',
+    valueName: 'timber.oldGrowthRemaining (before depletion)'
+  });
+
   if (timber.monthlyHarvest > timber.sustainableHarvestRate) {
     timber.oldGrowthRemaining = Math.max(0, timber.oldGrowthRemaining - 0.005);
   }
@@ -272,30 +535,81 @@ function updateRenewable(
   state: GameState,
   resources: ResourceEconomy
 ): void {
+  // Validate inputs
+  assertFinite(resource.monthlyRegeneration, {
+    location: 'updateRenewable',
+    valueName: 'monthlyRegeneration'
+  });
+  assertFinite(resource.regenerationMultiplier, {
+    location: 'updateRenewable',
+    valueName: 'regenerationMultiplier'
+  });
+  assertFinite(resource.reserves, {
+    location: 'updateRenewable',
+    valueName: 'reserves (before regeneration)'
+  });
+  assertFinite(resource.capacity, {
+    location: 'updateRenewable',
+    valueName: 'capacity'
+  });
+
   // Regeneration
-  const regen = resource.monthlyRegeneration * resource.regenerationMultiplier;
+  const regen = assertFinite(
+    resource.monthlyRegeneration * resource.regenerationMultiplier,
+    {
+      location: 'updateRenewable',
+      valueName: 'regen',
+      additionalInfo: { monthlyRegeneration: resource.monthlyRegeneration, regenerationMultiplier: resource.regenerationMultiplier }
+    }
+  );
+
   resource.reserves = Math.min(resource.capacity, resource.reserves + regen);
-  
+
   // Harvesting (scales with economic stage)
   // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
   const economicStage = assertEconomicStage(state, 'resourceDepletion');
   const economicMultiplier = 0.8 + economicStage * 0.2; // 1.0x to 1.4x
-  resource.monthlyHarvest = resource.sustainableHarvestRate * economicMultiplier;
-  
+
+  assertFinite(resource.sustainableHarvestRate, {
+    location: 'updateRenewable',
+    valueName: 'sustainableHarvestRate'
+  });
+
+  resource.monthlyHarvest = assertFinite(
+    resource.sustainableHarvestRate * economicMultiplier,
+    {
+      location: 'updateRenewable',
+      valueName: 'monthlyHarvest',
+      additionalInfo: { sustainableHarvestRate: resource.sustainableHarvestRate, economicMultiplier }
+    }
+  );
+
   // Consume
   resource.reserves = Math.max(0, resource.reserves - resource.monthlyHarvest);
-  
+
   // Overharvest if consumption exceeds regeneration
   resource.overharvest = Math.max(0, resource.monthlyHarvest - regen);
-  
+
   // Sustainability index
   if (regen > 0) {
-    resource.sustainabilityIndex = Math.min(1.0, resource.monthlyHarvest / regen);
+    resource.sustainabilityIndex = assertFinite(
+      Math.min(1.0, resource.monthlyHarvest / regen),
+      {
+        location: 'updateRenewable',
+        valueName: 'sustainabilityIndex',
+        additionalInfo: { monthlyHarvest: resource.monthlyHarvest, regen }
+      }
+    );
   } else {
     resource.sustainabilityIndex = 0; // Collapse
   }
-  
+
   // Capacity degrades with persistent overharvest
+  assertFinite(resource.capacity, {
+    location: 'updateRenewable',
+    valueName: 'capacity (before degradation)'
+  });
+
   if (resource.overharvest > resource.sustainableHarvestRate * 0.2) {
     resource.capacity = Math.max(0.5, resource.capacity - 0.002); // 0.2% per month
   }
@@ -337,7 +651,29 @@ function updateEnergySystem(state: GameState, resources: ResourceEconomy): void 
   // Fusion unlocks when tech deployed (handled in tech deployment)
   
   // Total production
-  energy.totalProduction = 
+  // Validate all sources before summing
+  assertFinite(energy.sources.nuclear, {
+    location: 'updateEnergySystem',
+    valueName: 'energy.sources.nuclear'
+  });
+  assertFinite(energy.sources.solar, {
+    location: 'updateEnergySystem',
+    valueName: 'energy.sources.solar'
+  });
+  assertFinite(energy.sources.wind, {
+    location: 'updateEnergySystem',
+    valueName: 'energy.sources.wind'
+  });
+  assertFinite(energy.sources.hydro, {
+    location: 'updateEnergySystem',
+    valueName: 'energy.sources.hydro'
+  });
+  assertFinite(energy.sources.fusion, {
+    location: 'updateEnergySystem',
+    valueName: 'energy.sources.fusion'
+  });
+
+  energy.totalProduction = assertFinite(
     energy.sources.oil +
     energy.sources.coal +
     energy.sources.naturalGas +
@@ -345,26 +681,101 @@ function updateEnergySystem(state: GameState, resources: ResourceEconomy): void 
     energy.sources.solar +
     energy.sources.wind +
     energy.sources.hydro +
-    energy.sources.fusion;
-  
+    energy.sources.fusion,
+    {
+      location: 'updateEnergySystem',
+      valueName: 'totalProduction',
+      additionalInfo: {
+        oil: energy.sources.oil,
+        coal: energy.sources.coal,
+        gas: energy.sources.naturalGas,
+        nuclear: energy.sources.nuclear,
+        solar: energy.sources.solar,
+        wind: energy.sources.wind,
+        hydro: energy.sources.hydro,
+        fusion: energy.sources.fusion
+      }
+    }
+  );
+
   // Surplus/deficit
-  energy.surplus = energy.totalProduction - energy.totalDemand;
-  
+  assertFinite(energy.totalDemand, {
+    location: 'updateEnergySystem',
+    valueName: 'totalDemand'
+  });
+
+  energy.surplus = assertFinite(
+    energy.totalProduction - energy.totalDemand,
+    {
+      location: 'updateEnergySystem',
+      valueName: 'surplus',
+      additionalInfo: { totalProduction: energy.totalProduction, totalDemand: energy.totalDemand }
+    }
+  );
+
   // Renewable percentage
-  energy.renewablePercentage = (
-    energy.sources.solar +
-    energy.sources.wind +
-    energy.sources.hydro +
-    energy.sources.fusion
-  ) / Math.max(1, energy.totalProduction);
-  
+  energy.renewablePercentage = assertFinite(
+    (
+      energy.sources.solar +
+      energy.sources.wind +
+      energy.sources.hydro +
+      energy.sources.fusion
+    ) / Math.max(1, energy.totalProduction),
+    {
+      location: 'updateEnergySystem',
+      valueName: 'renewablePercentage',
+      additionalInfo: {
+        solar: energy.sources.solar,
+        wind: energy.sources.wind,
+        hydro: energy.sources.hydro,
+        fusion: energy.sources.fusion,
+        totalProduction: energy.totalProduction
+      }
+    }
+  );
+
   // Carbon intensity (kg CO2 per unit energy)
   const fossilProduction = energy.sources.oil + energy.sources.coal + energy.sources.naturalGas;
-  const fossilCO2 = 
+
+  assertFinite(resources.oil.co2PerUnit, {
+    location: 'updateEnergySystem',
+    valueName: 'oil.co2PerUnit'
+  });
+  assertFinite(resources.coal.co2PerUnit, {
+    location: 'updateEnergySystem',
+    valueName: 'coal.co2PerUnit'
+  });
+  assertFinite(resources.naturalGas.co2PerUnit, {
+    location: 'updateEnergySystem',
+    valueName: 'naturalGas.co2PerUnit'
+  });
+
+  const fossilCO2 = assertFinite(
     energy.sources.oil * resources.oil.co2PerUnit * 0.1 +
     energy.sources.coal * resources.coal.co2PerUnit * 0.1 +
-    energy.sources.naturalGas * resources.naturalGas.co2PerUnit * 0.1;
-  energy.carbonIntensity = fossilCO2 / Math.max(1, energy.totalProduction);
+    energy.sources.naturalGas * resources.naturalGas.co2PerUnit * 0.1,
+    {
+      location: 'updateEnergySystem',
+      valueName: 'fossilCO2',
+      additionalInfo: {
+        oil: energy.sources.oil,
+        coal: energy.sources.coal,
+        gas: energy.sources.naturalGas,
+        oilCO2: resources.oil.co2PerUnit,
+        coalCO2: resources.coal.co2PerUnit,
+        gasCO2: resources.naturalGas.co2PerUnit
+      }
+    }
+  );
+
+  energy.carbonIntensity = assertFinite(
+    fossilCO2 / Math.max(1, energy.totalProduction),
+    {
+      location: 'updateEnergySystem',
+      valueName: 'carbonIntensity',
+      additionalInfo: { fossilCO2, totalProduction: energy.totalProduction }
+    }
+  );
 }
 
 // ============================================================================
@@ -449,17 +860,87 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   }
 
   // === ATMOSPHERIC CO2 ===
-  
+
   // Natural sinks absorb some emissions (ocean + land)
-  const sinkCapacity = (co2.oceanAbsorption + co2.landAbsorption) * (1 - co2.sinkSaturation);
-  const netEmissions = Math.max(0, monthlyEmissions - sinkCapacity / 12);
-  
+  assertFinite(co2.oceanAbsorption, {
+    location: 'updateCO2System',
+    valueName: 'oceanAbsorption',
+    month: state.currentMonth
+  });
+  assertFinite(co2.landAbsorption, {
+    location: 'updateCO2System',
+    valueName: 'landAbsorption',
+    month: state.currentMonth
+  });
+  assertFinite(co2.sinkSaturation, {
+    location: 'updateCO2System',
+    valueName: 'sinkSaturation',
+    month: state.currentMonth
+  });
+
+  const sinkCapacity = assertFinite(
+    (co2.oceanAbsorption + co2.landAbsorption) * (1 - co2.sinkSaturation),
+    {
+      location: 'updateCO2System',
+      valueName: 'sinkCapacity',
+      month: state.currentMonth,
+      additionalInfo: { oceanAbsorption: co2.oceanAbsorption, landAbsorption: co2.landAbsorption, sinkSaturation: co2.sinkSaturation }
+    }
+  );
+
+  const netEmissions = assertFinite(
+    Math.max(0, monthlyEmissions - sinkCapacity / 12),
+    {
+      location: 'updateCO2System',
+      valueName: 'netEmissions',
+      month: state.currentMonth,
+      additionalInfo: { monthlyEmissions, sinkCapacity }
+    }
+  );
+
   // Convert to ppm (2.13 Gt CO2 = 1 ppm)
-  const ppmIncrease = netEmissions / 2.13;
-  co2.atmosphericCO2 += ppmIncrease;
-  
+  const ppmIncrease = assertFinite(
+    netEmissions / 2.13,
+    {
+      location: 'updateCO2System',
+      valueName: 'ppmIncrease',
+      month: state.currentMonth,
+      additionalInfo: { netEmissions }
+    }
+  );
+
+  assertFinite(co2.atmosphericCO2, {
+    location: 'updateCO2System',
+    valueName: 'atmosphericCO2 (before increase)',
+    month: state.currentMonth
+  });
+
+  co2.atmosphericCO2 = assertFinite(
+    co2.atmosphericCO2 + ppmIncrease,
+    {
+      location: 'updateCO2System',
+      valueName: 'atmosphericCO2 (after increase)',
+      month: state.currentMonth,
+      additionalInfo: { oldValue: co2.atmosphericCO2, ppmIncrease }
+    }
+  );
+
   // Track cumulative emissions (PERMANENT!)
-  co2.cumulativeEmissions += monthlyEmissions;
+  assertFinite(co2.cumulativeEmissions, {
+    location: 'updateCO2System',
+    valueName: 'cumulativeEmissions (before update)',
+    month: state.currentMonth
+  });
+
+  co2.cumulativeEmissions = assertFinite(
+    co2.cumulativeEmissions + monthlyEmissions,
+    {
+      location: 'updateCO2System',
+      valueName: 'cumulativeEmissions (after update)',
+      month: state.currentMonth,
+      additionalInfo: { oldValue: co2.cumulativeEmissions, monthlyEmissions }
+    }
+  );
   
   // === SINKS SATURATE ===
   
@@ -478,11 +959,43 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   co2.sinkSaturation = Math.min(0.8, co2.cumulativeEmissions / 1000); // 80% saturated at 1000 Gt
   
   // === TEMPERATURE ===
-  
+
   // IPCC formula: T = sensitivity * log2(CO2 / CO2_preindustrial)
-  const co2Ratio = co2.atmosphericCO2 / 280; // 280 ppm = pre-industrial
-  const co2Doublings = Math.log2(co2Ratio);
-  co2.temperatureAnomaly = co2Doublings * co2.climateSensitivity;
+  const co2Ratio = assertFinite(
+    co2.atmosphericCO2 / 280, // 280 ppm = pre-industrial
+    {
+      location: 'updateCO2System',
+      valueName: 'co2Ratio',
+      month: state.currentMonth,
+      additionalInfo: { atmosphericCO2: co2.atmosphericCO2 }
+    }
+  );
+
+  const co2Doublings = assertFinite(
+    Math.log2(co2Ratio),
+    {
+      location: 'updateCO2System',
+      valueName: 'co2Doublings',
+      month: state.currentMonth,
+      additionalInfo: { co2Ratio }
+    }
+  );
+
+  assertFinite(co2.climateSensitivity, {
+    location: 'updateCO2System',
+    valueName: 'climateSensitivity',
+    month: state.currentMonth
+  });
+
+  co2.temperatureAnomaly = assertFinite(
+    co2Doublings * co2.climateSensitivity,
+    {
+      location: 'updateCO2System',
+      valueName: 'temperatureAnomaly',
+      month: state.currentMonth,
+      additionalInfo: { co2Doublings, climateSensitivity: co2.climateSensitivity }
+    }
+  );
   
   // === TIPPING POINTS ===
   
@@ -521,34 +1034,171 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   const co2 = resources.co2;
   
   // === ACIDIFICATION (from atmospheric CO2) ===
-  
+
   // CO2 dissolves in ocean, forms carbonic acid
+  assertFinite(co2.atmosphericCO2, {
+    location: 'updateOceanHealth',
+    valueName: 'atmosphericCO2',
+    month: state.currentMonth
+  });
+
   const co2Above420 = Math.max(0, co2.atmosphericCO2 - 420); // ppm above baseline
-  ocean.acidification += co2Above420 * 0.00005; // Accumulates slowly
-  
+
+  assertFinite(ocean.acidification, {
+    location: 'updateOceanHealth',
+    valueName: 'ocean.acidification (before increase)',
+    month: state.currentMonth
+  });
+
+  ocean.acidification = assertFinite(
+    ocean.acidification + co2Above420 * 0.00005,
+    {
+      location: 'updateOceanHealth',
+      valueName: 'ocean.acidification (after increase)',
+      month: state.currentMonth,
+      additionalInfo: { oldValue: ocean.acidification, co2Above420 }
+    }
+  );
+
   // pH drops with acidification
-  ocean.pH = 8.2 - ocean.acidification * 0.5; // Starts at 8.2, drops to 7.7 at 100% acidification
-  
+  ocean.pH = assertFinite(
+    8.2 - ocean.acidification * 0.5,
+    {
+      location: 'updateOceanHealth',
+      valueName: 'ocean.pH',
+      month: state.currentMonth,
+      additionalInfo: { acidification: ocean.acidification }
+    }
+  );
+
   // === THERMAL STRESS (from warming) ===
-  
-  ocean.thermalStress = Math.min(1.0, co2.temperatureAnomaly / 4.0); // Maxes at +4°C
-  
+
+  assertFinite(co2.temperatureAnomaly, {
+    location: 'updateOceanHealth',
+    valueName: 'temperatureAnomaly',
+    month: state.currentMonth
+  });
+
+  ocean.thermalStress = assertFinite(
+    Math.min(1.0, co2.temperatureAnomaly / 4.0),
+    {
+      location: 'updateOceanHealth',
+      valueName: 'thermalStress',
+      month: state.currentMonth,
+      additionalInfo: { temperatureAnomaly: co2.temperatureAnomaly }
+    }
+  );
+
   // Thermal stress reduces oxygen capacity
   const thermalOxygenLoss = ocean.thermalStress * 0.01; // 1% per month at max stress
-  ocean.oxygenLevel = Math.max(0, ocean.oxygenLevel - thermalOxygenLoss);
+
+  assertFinite(ocean.oxygenLevel, {
+    location: 'updateOceanHealth',
+    valueName: 'oxygenLevel (before thermal loss)',
+    month: state.currentMonth
+  });
+
+  ocean.oxygenLevel = assertFinite(
+    Math.max(0, ocean.oxygenLevel - thermalOxygenLoss),
+    {
+      location: 'updateOceanHealth',
+      valueName: 'oxygenLevel (after thermal loss)',
+      month: state.currentMonth,
+      additionalInfo: { oldValue: ocean.oxygenLevel, thermalOxygenLoss }
+    }
+  );
   
   // === POLLUTION (from mining, spills, plastics) ===
   
   // Mining runoff
-  const miningPollution = 
+  assertFinite(resources.lithium.monthlyExtraction, {
+    location: 'updateOceanHealth',
+    valueName: 'lithium.monthlyExtraction',
+    month: state.currentMonth
+  });
+  assertFinite(resources.rareEarths.monthlyExtraction, {
+    location: 'updateOceanHealth',
+    valueName: 'rareEarths.monthlyExtraction',
+    month: state.currentMonth
+  });
+  assertFinite(resources.copper.monthlyExtraction, {
+    location: 'updateOceanHealth',
+    valueName: 'copper.monthlyExtraction',
+    month: state.currentMonth
+  });
+
+  const miningPollution = assertFinite(
     resources.lithium.monthlyExtraction * 0.02 +
     resources.rareEarths.monthlyExtraction * 0.03 + // Worse (radioactive)
-    resources.copper.monthlyExtraction * 0.01;
-  ocean.pollutionLoad = Math.min(1.0, ocean.pollutionLoad + miningPollution);
-  
+    resources.copper.monthlyExtraction * 0.01,
+    {
+      location: 'updateOceanHealth',
+      valueName: 'miningPollution',
+      month: state.currentMonth,
+      additionalInfo: {
+        lithium: resources.lithium.monthlyExtraction,
+        rareEarths: resources.rareEarths.monthlyExtraction,
+        copper: resources.copper.monthlyExtraction
+      }
+    }
+  );
+
+  assertFinite(ocean.pollutionLoad, {
+    location: 'updateOceanHealth',
+    valueName: 'pollutionLoad (before mining)',
+    month: state.currentMonth
+  });
+
+  ocean.pollutionLoad = assertFinite(
+    Math.min(1.0, ocean.pollutionLoad + miningPollution),
+    {
+      location: 'updateOceanHealth',
+      valueName: 'pollutionLoad (after mining)',
+      month: state.currentMonth,
+      additionalInfo: { oldValue: ocean.pollutionLoad, miningPollution }
+    }
+  );
+
   // Plastics (from oil)
-  const plasticsProduction = resources.oil.monthlyConsumption * resources.oil.plasticProduction;
-  ocean.plasticConcentration = Math.min(1.0, ocean.plasticConcentration + plasticsProduction * 0.005);
+  assertFinite(resources.oil.monthlyConsumption, {
+    location: 'updateOceanHealth',
+    valueName: 'oil.monthlyConsumption',
+    month: state.currentMonth
+  });
+  assertFinite(resources.oil.plasticProduction, {
+    location: 'updateOceanHealth',
+    valueName: 'oil.plasticProduction',
+    month: state.currentMonth
+  });
+
+  const plasticsProduction = assertFinite(
+    resources.oil.monthlyConsumption * resources.oil.plasticProduction,
+    {
+      location: 'updateOceanHealth',
+      valueName: 'plasticsProduction',
+      month: state.currentMonth,
+      additionalInfo: {
+        monthlyConsumption: resources.oil.monthlyConsumption,
+        plasticProduction: resources.oil.plasticProduction
+      }
+    }
+  );
+
+  assertFinite(ocean.plasticConcentration, {
+    location: 'updateOceanHealth',
+    valueName: 'plasticConcentration (before increase)',
+    month: state.currentMonth
+  });
+
+  ocean.plasticConcentration = assertFinite(
+    Math.min(1.0, ocean.plasticConcentration + plasticsProduction * 0.005),
+    {
+      location: 'updateOceanHealth',
+      valueName: 'plasticConcentration (after increase)',
+      month: state.currentMonth,
+      additionalInfo: { oldValue: ocean.plasticConcentration, plasticsProduction }
+    }
+  );
   
   // === PHYTOPLANKTON (pH kills them) ===
   
@@ -644,17 +1294,63 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   ocean.fishStocks = Math.max(0, ocean.fishStocks - overfishing);
   
   // === ECOSYSTEM RESILIENCE ===
-  
-  ocean.ecosystemResilience = (
+
+  assertFinite(ocean.phytoplanktonPopulation, {
+    location: 'updateOceanHealth',
+    valueName: 'phytoplanktonPopulation',
+    month: state.currentMonth
+  });
+  assertFinite(ocean.fishStocks, {
+    location: 'updateOceanHealth',
+    valueName: 'fishStocks',
+    month: state.currentMonth
+  });
+  assertFinite(ocean.pollutionLoad, {
+    location: 'updateOceanHealth',
+    valueName: 'pollutionLoad (for resilience calc)',
+    month: state.currentMonth
+  });
+  assertFinite(ocean.deadZoneExtent, {
+    location: 'updateOceanHealth',
+    valueName: 'deadZoneExtent (for resilience calc)',
+    month: state.currentMonth
+  });
+
+  ocean.ecosystemResilience = assertFinite(
     ocean.phytoplanktonPopulation * 0.3 +
     ocean.fishStocks * 0.2 +
     (1 - ocean.pollutionLoad) * 0.2 +
-    (1 - ocean.deadZoneExtent) * 0.3
+    (1 - ocean.deadZoneExtent) * 0.3,
+    {
+      location: 'updateOceanHealth',
+      valueName: 'ecosystemResilience',
+      month: state.currentMonth,
+      additionalInfo: {
+        phytoplanktonPopulation: ocean.phytoplanktonPopulation,
+        fishStocks: ocean.fishStocks,
+        pollutionLoad: ocean.pollutionLoad,
+        deadZoneExtent: ocean.deadZoneExtent
+      }
+    }
   );
-  
+
   // === ANOXIC RISK ===
-  
-  ocean.anoxicRisk = ocean.deadZoneExtent * 0.8 + (ocean.oxygenLevel < 0.3 ? 0.2 : 0);
+
+  assertFinite(ocean.oxygenLevel, {
+    location: 'updateOceanHealth',
+    valueName: 'oxygenLevel (for anoxic risk)',
+    month: state.currentMonth
+  });
+
+  ocean.anoxicRisk = assertFinite(
+    ocean.deadZoneExtent * 0.8 + (ocean.oxygenLevel < 0.3 ? 0.2 : 0),
+    {
+      location: 'updateOceanHealth',
+      valueName: 'anoxicRisk',
+      month: state.currentMonth,
+      additionalInfo: { deadZoneExtent: ocean.deadZoneExtent, oxygenLevel: ocean.oxygenLevel }
+    }
+  );
   
   // === POINT OF NO RETURN ===
   
@@ -724,23 +1420,129 @@ function updateIndustryOpposition(state: GameState, resources: ResourceEconomy):
   const energy = resources.energy;
   
   // === FOSSIL FUEL INDUSTRY ===
-  
+
   // Economic share tracks fossil fuel use
-  fossil.economicShare = (energy.sources.oil + energy.sources.coal + energy.sources.naturalGas) / 
-    Math.max(1, energy.totalProduction);
-  
+  assertFinite(energy.sources.oil, {
+    location: 'updateIndustryOpposition',
+    valueName: 'energy.sources.oil'
+  });
+  assertFinite(energy.sources.coal, {
+    location: 'updateIndustryOpposition',
+    valueName: 'energy.sources.coal'
+  });
+  assertFinite(energy.sources.naturalGas, {
+    location: 'updateIndustryOpposition',
+    valueName: 'energy.sources.naturalGas'
+  });
+  assertFinite(energy.totalProduction, {
+    location: 'updateIndustryOpposition',
+    valueName: 'energy.totalProduction'
+  });
+
+  fossil.economicShare = assertFinite(
+    (energy.sources.oil + energy.sources.coal + energy.sources.naturalGas) / Math.max(1, energy.totalProduction),
+    {
+      location: 'updateIndustryOpposition',
+      valueName: 'fossil.economicShare',
+      additionalInfo: {
+        oil: energy.sources.oil,
+        coal: energy.sources.coal,
+        gas: energy.sources.naturalGas,
+        totalProduction: energy.totalProduction
+      }
+    }
+  );
+
   // Political power correlates with economic share
-  fossil.politicalPower = fossil.economicShare * 0.9; // Slightly less than economic share
-  
+  fossil.politicalPower = assertFinite(
+    fossil.economicShare * 0.9,
+    {
+      location: 'updateIndustryOpposition',
+      valueName: 'fossil.politicalPower',
+      additionalInfo: { economicShare: fossil.economicShare }
+    }
+  );
+
   // Desperation increases as reserves deplete and substitution grows
-  const avgFossilReserves = (resources.oil.reserves + resources.coal.reserves + resources.naturalGas.reserves) / 3;
-  const avgSubstitution = (resources.oil.substitutionLevel + resources.coal.substitutionLevel + resources.naturalGas.substitutionLevel) / 3;
-  
-  fossil.desperation = Math.max(0, 1 - avgFossilReserves / 0.5) * 0.5 + avgSubstitution * 0.5;
-  
+  assertFinite(resources.oil.reserves, {
+    location: 'updateIndustryOpposition',
+    valueName: 'oil.reserves (for desperation)'
+  });
+  assertFinite(resources.coal.reserves, {
+    location: 'updateIndustryOpposition',
+    valueName: 'coal.reserves (for desperation)'
+  });
+  assertFinite(resources.naturalGas.reserves, {
+    location: 'updateIndustryOpposition',
+    valueName: 'naturalGas.reserves (for desperation)'
+  });
+
+  const avgFossilReserves = assertFinite(
+    (resources.oil.reserves + resources.coal.reserves + resources.naturalGas.reserves) / 3,
+    {
+      location: 'updateIndustryOpposition',
+      valueName: 'avgFossilReserves',
+      additionalInfo: {
+        oil: resources.oil.reserves,
+        coal: resources.coal.reserves,
+        gas: resources.naturalGas.reserves
+      }
+    }
+  );
+
+  assertFinite(resources.oil.substitutionLevel, {
+    location: 'updateIndustryOpposition',
+    valueName: 'oil.substitutionLevel (for desperation)'
+  });
+  assertFinite(resources.coal.substitutionLevel, {
+    location: 'updateIndustryOpposition',
+    valueName: 'coal.substitutionLevel (for desperation)'
+  });
+  assertFinite(resources.naturalGas.substitutionLevel, {
+    location: 'updateIndustryOpposition',
+    valueName: 'naturalGas.substitutionLevel (for desperation)'
+  });
+
+  const avgSubstitution = assertFinite(
+    (resources.oil.substitutionLevel + resources.coal.substitutionLevel + resources.naturalGas.substitutionLevel) / 3,
+    {
+      location: 'updateIndustryOpposition',
+      valueName: 'avgSubstitution',
+      additionalInfo: {
+        oil: resources.oil.substitutionLevel,
+        coal: resources.coal.substitutionLevel,
+        gas: resources.naturalGas.substitutionLevel
+      }
+    }
+  );
+
+  fossil.desperation = assertFinite(
+    Math.max(0, 1 - avgFossilReserves / 0.5) * 0.5 + avgSubstitution * 0.5,
+    {
+      location: 'updateIndustryOpposition',
+      valueName: 'fossil.desperation',
+      additionalInfo: { avgFossilReserves, avgSubstitution }
+    }
+  );
+
   // Opposition intensity scales with political power and desperation
-  fossil.researchResistance = fossil.politicalPower * fossil.desperation * 0.4; // Up to 40%
-  fossil.deploymentResistance = fossil.politicalPower * fossil.desperation * 0.5; // Up to 50%
+  fossil.researchResistance = assertFinite(
+    fossil.politicalPower * fossil.desperation * 0.4,
+    {
+      location: 'updateIndustryOpposition',
+      valueName: 'fossil.researchResistance',
+      additionalInfo: { politicalPower: fossil.politicalPower, desperation: fossil.desperation }
+    }
+  );
+
+  fossil.deploymentResistance = assertFinite(
+    fossil.politicalPower * fossil.desperation * 0.5,
+    {
+      location: 'updateIndustryOpposition',
+      valueName: 'fossil.deploymentResistance',
+      additionalInfo: { politicalPower: fossil.politicalPower, desperation: fossil.desperation }
+    }
+  );
   
   // Government capture (depends on government type)
   const govType = state.government.governmentType;
@@ -750,10 +1552,24 @@ function updateIndustryOpposition(state: GameState, resources: ResourceEconomy):
   );
   
   // Media disinformation scales with desperation
-  fossil.mediaDisinformation = fossil.desperation * 0.6;
-  
+  fossil.mediaDisinformation = assertFinite(
+    fossil.desperation * 0.6,
+    {
+      location: 'updateIndustryOpposition',
+      valueName: 'fossil.mediaDisinformation',
+      additionalInfo: { desperation: fossil.desperation }
+    }
+  );
+
   // Political donations
-  fossil.politicalDonations = fossil.economicShare * 25; // Up to $25B/year
+  fossil.politicalDonations = assertFinite(
+    fossil.economicShare * 25,
+    {
+      location: 'updateIndustryOpposition',
+      valueName: 'fossil.politicalDonations',
+      additionalInfo: { economicShare: fossil.economicShare }
+    }
+  );
   
   // Sabotage attempts (when desperate)
   if (fossil.desperation > 0.7 && deterministicRandom() < 0.01) {
@@ -794,31 +1610,95 @@ function updateIndustryOpposition(state: GameState, resources: ResourceEconomy):
 function updateAggregates(state: GameState, resources: ResourceEconomy): void {
   // Import from resourceEconomy.ts
   const { calculateResourceSecurity, identifyBottlenecks } = require('./resourceEconomy');
-  
+
   // Total resource security (weighted average)
-  resources.totalResourceSecurity = calculateResourceSecurity(resources);
-  
+  resources.totalResourceSecurity = assertFinite(
+    calculateResourceSecurity(resources),
+    {
+      location: 'updateAggregates',
+      valueName: 'totalResourceSecurity',
+      month: state.currentMonth
+    }
+  );
+
   // Energy independence (% renewable or domestic)
+  assertFinite(resources.energy.renewablePercentage, {
+    location: 'updateAggregates',
+    valueName: 'energy.renewablePercentage',
+    month: state.currentMonth
+  });
+
   resources.energyIndependence = resources.energy.renewablePercentage;
-  
+
   // Circularity index (% recycled) - boosted by tech
-  const avgRecyclingRate = (
-    resources.iron.recyclingRate +
-    resources.copper.recyclingRate +
-    resources.rareEarths.recyclingRate +
-    resources.lithium.recyclingRate
-  ) / 4;
-  resources.circularityIndex = avgRecyclingRate * 0.9; // Close to recycling rate
-  
+  assertFinite(resources.iron.recyclingRate, {
+    location: 'updateAggregates',
+    valueName: 'iron.recyclingRate',
+    month: state.currentMonth
+  });
+  assertFinite(resources.copper.recyclingRate, {
+    location: 'updateAggregates',
+    valueName: 'copper.recyclingRate',
+    month: state.currentMonth
+  });
+  assertFinite(resources.rareEarths.recyclingRate, {
+    location: 'updateAggregates',
+    valueName: 'rareEarths.recyclingRate',
+    month: state.currentMonth
+  });
+  assertFinite(resources.lithium.recyclingRate, {
+    location: 'updateAggregates',
+    valueName: 'lithium.recyclingRate',
+    month: state.currentMonth
+  });
+
+  const avgRecyclingRate = assertFinite(
+    (
+      resources.iron.recyclingRate +
+      resources.copper.recyclingRate +
+      resources.rareEarths.recyclingRate +
+      resources.lithium.recyclingRate
+    ) / 4,
+    {
+      location: 'updateAggregates',
+      valueName: 'avgRecyclingRate',
+      month: state.currentMonth,
+      additionalInfo: {
+        iron: resources.iron.recyclingRate,
+        copper: resources.copper.recyclingRate,
+        rareEarths: resources.rareEarths.recyclingRate,
+        lithium: resources.lithium.recyclingRate
+      }
+    }
+  );
+
+  resources.circularityIndex = assertFinite(
+    avgRecyclingRate * 0.9,
+    {
+      location: 'updateAggregates',
+      valueName: 'circularityIndex',
+      month: state.currentMonth,
+      additionalInfo: { avgRecyclingRate }
+    }
+  );
+
   // Fossil dependence
-  resources.fossilDependence = 1 - resources.energy.renewablePercentage;
-  
+  resources.fossilDependence = assertFinite(
+    1 - resources.energy.renewablePercentage,
+    {
+      location: 'updateAggregates',
+      valueName: 'fossilDependence',
+      month: state.currentMonth,
+      additionalInfo: { renewablePercentage: resources.energy.renewablePercentage }
+    }
+  );
+
   // Critical bottlenecks
   resources.criticalBottlenecks = identifyBottlenecks(resources);
-  
+
   // Legacy compatibility (for existing code using resourceReserves)
   resources.resourceReserves = resources.totalResourceSecurity;
-  
+
   // Update environmental accumulation for backward compatibility
   if (state.environmentalAccumulation) {
     state.environmentalAccumulation.resourceReserves = resources.totalResourceSecurity;
