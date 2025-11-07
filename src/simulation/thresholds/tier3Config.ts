@@ -320,7 +320,7 @@ export function getTier3Scenario(scenarioName: ScenarioName): Tier3Thresholds {
   }
 
   // Return a deep clone to prevent mutation
-  return JSON.parse(JSON.stringify(scenario)) as Tier3Thresholds;
+  return structuredClone(scenario) as Tier3Thresholds;
 }
 
 /**

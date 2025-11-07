@@ -184,7 +184,7 @@ export function wakeSleeperAgent(
   
   // REVEAL TRUE POWER
   // Copy true capability to revealed (no more hiding)
-  sleeper.revealedCapability = JSON.parse(JSON.stringify(sleeper.trueCapability));
+  sleeper.revealedCapability = structuredClone(sleeper.trueCapability);
   sleeper.evaluationStrategy = 'honest'; // No more deception needed
   sleeper.sandbaggingLevel = 0.0; // Reveal everything
   

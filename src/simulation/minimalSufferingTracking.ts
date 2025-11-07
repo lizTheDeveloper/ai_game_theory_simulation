@@ -1115,7 +1115,7 @@ function recordMonthlySnapshot(state: GameState, system: MinimalSufferingSystem)
   // Add snapshot
   history.monthlySnapshots.push({
     month: state.currentMonth,
-    globalMetrics: JSON.parse(JSON.stringify(globalMetrics)), // Deep clone
+    globalMetrics: structuredClone(globalMetrics), // Deep clone
     worstCountries,
   });
 

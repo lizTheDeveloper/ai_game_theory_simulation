@@ -474,7 +474,7 @@ export function applyResearchGrowth(
   selection: ReturnType<typeof selectDimensionToAdvance>,
   rng: () => number // REQUIRED: Deterministic RNG for reproducibility
 ): { newProfile: AICapabilityProfile; growth: number } {
-  const newProfile = JSON.parse(JSON.stringify(ai.capabilityProfile)) as AICapabilityProfile;
+  const newProfile = structuredClone(ai.capabilityProfile) as AICapabilityProfile;
 
   // DETERMINISM FIX (Nov 5, 2025): RNG is now required, no fallback to Math.random
   // This ensures Monte Carlo simulations are reproducible with seeds

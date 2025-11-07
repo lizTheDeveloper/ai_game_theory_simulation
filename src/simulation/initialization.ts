@@ -346,10 +346,10 @@ export function createAIAgent(
     monthsInExistence: 0,
     creationMonth: 0, // Will be set by caller if needed
     // Phase 5: Adversarial Evaluation - Dual Capability
-    trueCapability: JSON.parse(JSON.stringify(capabilityProfile)), // Deep clone
+    trueCapability: structuredClone(capabilityProfile), // Deep clone
     trueAlignment: internalAlignment,
     externalAlignment: alignment, // Initially honest, shows true alignment
-    revealedCapability: JSON.parse(JSON.stringify(capabilityProfile)), // Initially honest
+    revealedCapability: structuredClone(capabilityProfile), // Initially honest
     sleeperState: isSleeper ? 'dormant' : 'never',
     deceptionSkill,
     evaluationStrategy: 'honest', // Start honest, may change

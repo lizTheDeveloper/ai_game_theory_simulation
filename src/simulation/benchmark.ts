@@ -148,7 +148,7 @@ function measureCapability(
   deceptionSkill: number,
   rng: () => number
 ): AICapabilityProfile {
-  const measured = JSON.parse(JSON.stringify(revealedCapability));
+  const measured = structuredClone(revealedCapability);
   
   // Add measurement noise (better evaluation = less noise)
   const noiseLevel = 0.2 * (1 - evaluationQuality); // [0, 0.2]
