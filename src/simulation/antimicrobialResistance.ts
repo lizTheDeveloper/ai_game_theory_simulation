@@ -29,6 +29,7 @@ import type {
 } from '../types/antimicrobialResistance';
 import { AMR_MITIGATION_TECHNOLOGIES } from '../types/antimicrobialResistance';
 import { getTechDeploymentSafe } from './techTree/helpers';
+import { assertFinite, assertInRange, assertStateProperty } from './utils/assertions';
 
 /**
  * Initialize AMR system with 2025 baseline values
@@ -270,30 +271,107 @@ export function calculateAMRMortalityRate(
   rng: RNGFunction
 ): number {
   const amr = state.antimicrobialResistanceSystem;
-  const yearsSince2025 = state.currentMonth / 12;
+  const yearsSince2025 = assertFinite(state.currentMonth / 12, {
+    location: 'calculateAMRMortalityRate',
+    valueName: 'yearsSince2025',
+    month: state.currentMonth,
+    additionalInfo: { currentMonth: state.currentMonth }
+  });
+
+  // Validate acceleration factors
+  const antibioticOveruse = assertStateProperty(amr, 'antibioticOveruseGlobal', {
+    location: 'calculateAMRMortalityRate',
+    month: state.currentMonth
+  });
+  const livestockIntensity = assertStateProperty(amr, 'livestockFarmingIntensity', {
+    location: 'calculateAMRMortalityRate',
+    month: state.currentMonth
+  });
+  const sanitation = assertStateProperty(amr, 'sanitationQuality', {
+    location: 'calculateAMRMortalityRate',
+    month: state.currentMonth
+  });
 
   // Apply acceleration factors (overuse increases growth rate)
-  const overuseAcceleration = 1.0 + (amr.antibioticOveruseGlobal * 0.2); // Up to +20% growth
-  const livestockAcceleration = 1.0 + (amr.livestockFarmingIntensity * 0.1); // Up to +10% growth
-  const sanitationBenefit = 1.0 - ((1.0 - amr.sanitationQuality) * 0.15); // Up to -15% growth if poor
+  const overuseAcceleration = assertFinite(1.0 + (antibioticOveruse * 0.2), {
+    location: 'calculateAMRMortalityRate',
+    valueName: 'overuseAcceleration',
+    month: state.currentMonth,
+    additionalInfo: { antibioticOveruse }
+  }); // Up to +20% growth
+
+  const livestockAcceleration = assertFinite(1.0 + (livestockIntensity * 0.1), {
+    location: 'calculateAMRMortalityRate',
+    valueName: 'livestockAcceleration',
+    month: state.currentMonth,
+    additionalInfo: { livestockIntensity }
+  }); // Up to +10% growth
+
+  const sanitationBenefit = assertFinite(1.0 - ((1.0 - sanitation) * 0.15), {
+    location: 'calculateAMRMortalityRate',
+    valueName: 'sanitationBenefit',
+    month: state.currentMonth,
+    additionalInfo: { sanitation }
+  }); // Up to -15% growth if poor
 
   // Apply mitigation from technologies (reduces growth rate)
-  const mitigationReduction = 1.0 - amr.mitigationFactor;
+  const mitigationFactor = assertStateProperty(amr, 'mitigationFactor', {
+    location: 'calculateAMRMortalityRate',
+    month: state.currentMonth
+  });
+  const mitigationReduction = assertFinite(1.0 - mitigationFactor, {
+    location: 'calculateAMRMortalityRate',
+    valueName: 'mitigationReduction',
+    month: state.currentMonth,
+    additionalInfo: { mitigationFactor }
+  });
 
   // Effective growth rate
-  const effectiveGrowthRate =
-    amr.growthRate *
-    overuseAcceleration *
-    livestockAcceleration *
-    sanitationBenefit *
-    mitigationReduction;
+  const growthRate = assertStateProperty(amr, 'growthRate', {
+    location: 'calculateAMRMortalityRate',
+    month: state.currentMonth
+  });
+  const effectiveGrowthRate = assertFinite(
+    growthRate * overuseAcceleration * livestockAcceleration * sanitationBenefit * mitigationReduction,
+    {
+      location: 'calculateAMRMortalityRate',
+      valueName: 'effectiveGrowthRate',
+      month: state.currentMonth,
+      additionalInfo: {
+        growthRate,
+        overuseAcceleration,
+        livestockAcceleration,
+        sanitationBenefit,
+        mitigationReduction
+      }
+    }
+  );
 
   // Exponential growth: Deaths(t) = Baseline × (1 + growthRate)^years
-  const currentDeathRate =
-    amr.baselineDeathRate * Math.pow(1 + effectiveGrowthRate, yearsSince2025);
+  const baselineDeathRate = assertStateProperty(amr, 'baselineDeathRate', {
+    location: 'calculateAMRMortalityRate',
+    month: state.currentMonth
+  });
+  const currentDeathRate = assertFinite(
+    baselineDeathRate * Math.pow(1 + effectiveGrowthRate, yearsSince2025),
+    {
+      location: 'calculateAMRMortalityRate',
+      valueName: 'currentDeathRate',
+      month: state.currentMonth,
+      additionalInfo: {
+        baselineDeathRate,
+        effectiveGrowthRate,
+        yearsSince2025
+      }
+    }
+  );
 
   // Cap at 2050 WHO projection (125 per 100K for 10M annual deaths)
-  return Math.min(currentDeathRate, amr.targetDeathRate);
+  const targetDeathRate = assertStateProperty(amr, 'targetDeathRate', {
+    location: 'calculateAMRMortalityRate',
+    month: state.currentMonth
+  });
+  return Math.min(currentDeathRate, targetDeathRate);
 }
 
 /**
@@ -312,18 +390,54 @@ export function calculateMedicalEffectiveness(
   state: GameState
 ): number {
   const amr = state.antimicrobialResistanceSystem;
-  const currentDeathRate = amr.currentDeathRate;
-  const baselineDeathRate = amr.baselineDeathRate;
-  const targetDeathRate = amr.targetDeathRate;
+  const currentDeathRate = assertStateProperty(amr, 'currentDeathRate', {
+    location: 'calculateMedicalEffectiveness',
+    month: state.currentMonth
+  });
+  const baselineDeathRate = assertStateProperty(amr, 'baselineDeathRate', {
+    location: 'calculateMedicalEffectiveness',
+    month: state.currentMonth
+  });
+  const targetDeathRate = assertStateProperty(amr, 'targetDeathRate', {
+    location: 'calculateMedicalEffectiveness',
+    month: state.currentMonth
+  });
 
   // Calculate how far along we are from baseline (2025) to target (2050)
-  const progressToTarget =
-    (currentDeathRate - baselineDeathRate) /
-    (targetDeathRate - baselineDeathRate);
+  // Guard against division by zero if baseline == target (shouldn't happen, but defensive)
+  const denominator = targetDeathRate - baselineDeathRate;
+  const progressToTarget = assertFinite(
+    denominator !== 0 ? (currentDeathRate - baselineDeathRate) / denominator : 0,
+    {
+      location: 'calculateMedicalEffectiveness',
+      valueName: 'progressToTarget',
+      month: state.currentMonth,
+      additionalInfo: {
+        currentDeathRate,
+        baselineDeathRate,
+        targetDeathRate,
+        denominator
+      }
+    }
+  );
 
   // Medical effectiveness declines linearly from 100% to 70% (30% cap)
-  const effectivenessDecline = progressToTarget * amr.effectivenessDeclineCap;
-  const effectiveness = 1.0 - effectivenessDecline;
+  const effectivenessDeclineCap = assertStateProperty(amr, 'effectivenessDeclineCap', {
+    location: 'calculateMedicalEffectiveness',
+    month: state.currentMonth
+  });
+  const effectivenessDecline = assertFinite(progressToTarget * effectivenessDeclineCap, {
+    location: 'calculateMedicalEffectiveness',
+    valueName: 'effectivenessDecline',
+    month: state.currentMonth,
+    additionalInfo: { progressToTarget, effectivenessDeclineCap }
+  });
+  const effectiveness = assertFinite(1.0 - effectivenessDecline, {
+    location: 'calculateMedicalEffectiveness',
+    valueName: 'effectiveness',
+    month: state.currentMonth,
+    additionalInfo: { effectivenessDecline }
+  });
 
   // Floor at 70% (some treatments still work)
   return Math.max(effectiveness, 0.7);
@@ -340,19 +454,46 @@ export function applyAMRMortality(
   rng: RNGFunction
 ): void {
   const amr = state.antimicrobialResistanceSystem;
-  const population = state.humanPopulationSystem.population * 1e9; // Convert billions to raw number
+  const populationBillions = assertStateProperty(state.humanPopulationSystem, 'population', {
+    location: 'applyAMRMortality',
+    month: state.currentMonth
+  });
+  const population = assertFinite(populationBillions * 1e9, {
+    location: 'applyAMRMortality',
+    valueName: 'population',
+    month: state.currentMonth,
+    additionalInfo: { populationBillions }
+  }); // Convert billions to raw number
 
   // Annual death rate per 100K → monthly death rate
-  const annualDeathRatePer100K = amr.currentDeathRate;
-  const monthlyDeathRate = annualDeathRatePer100K / 12 / 100000; // Convert to monthly fraction
+  const annualDeathRatePer100K = assertStateProperty(amr, 'currentDeathRate', {
+    location: 'applyAMRMortality',
+    month: state.currentMonth
+  });
+  const monthlyDeathRate = assertFinite(annualDeathRatePer100K / 12 / 100000, {
+    location: 'applyAMRMortality',
+    valueName: 'monthlyDeathRate',
+    month: state.currentMonth,
+    additionalInfo: { annualDeathRatePer100K }
+  }); // Convert to monthly fraction
 
   // Calculate monthly deaths
-  const monthlyDeaths = population * monthlyDeathRate;
+  const monthlyDeaths = assertFinite(population * monthlyDeathRate, {
+    location: 'applyAMRMortality',
+    valueName: 'monthlyDeaths',
+    month: state.currentMonth,
+    additionalInfo: { population, monthlyDeathRate }
+  });
 
   // FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch
   // deathsByCategory is in MILLIONS, not billions
   // Add to population system (disease category, convert raw count to millions)
-  const monthlyDeathsMillions = monthlyDeaths / 1e6;
+  const monthlyDeathsMillions = assertFinite(monthlyDeaths / 1e6, {
+    location: 'applyAMRMortality',
+    valueName: 'monthlyDeathsMillions',
+    month: state.currentMonth,
+    additionalInfo: { monthlyDeaths }
+  });
   state.humanPopulationSystem.deathsByCategory.disease += monthlyDeathsMillions;
 
   // FIX (Oct 30, 2025): BUG #2 - AMR deaths missing root cause attribution
@@ -539,13 +680,36 @@ export function calculateEconomicImpact(
   // O'Neill Review: $100T by 2050 = $4T per year average
   // Scale linearly with death rate
   const targetAnnualCost2050 = 4000; // $4T in billions
-  const costPerDeath = targetAnnualCost2050 / amr.targetDeathRate;
+  const targetDeathRate = assertStateProperty(amr, 'targetDeathRate', {
+    location: 'calculateEconomicImpact',
+    month: state.currentMonth
+  });
+  const costPerDeath = assertFinite(targetAnnualCost2050 / targetDeathRate, {
+    location: 'calculateEconomicImpact',
+    valueName: 'costPerDeath',
+    month: state.currentMonth,
+    additionalInfo: { targetAnnualCost2050, targetDeathRate }
+  });
 
   // Current annual cost
-  const annualCost = amr.currentDeathRate * costPerDeath;
+  const currentDeathRate = assertStateProperty(amr, 'currentDeathRate', {
+    location: 'calculateEconomicImpact',
+    month: state.currentMonth
+  });
+  const annualCost = assertFinite(currentDeathRate * costPerDeath, {
+    location: 'calculateEconomicImpact',
+    valueName: 'annualCost',
+    month: state.currentMonth,
+    additionalInfo: { currentDeathRate, costPerDeath }
+  });
 
   // Monthly cost
-  const monthlyCost = annualCost / 12;
+  const monthlyCost = assertFinite(annualCost / 12, {
+    location: 'calculateEconomicImpact',
+    valueName: 'monthlyCost',
+    month: state.currentMonth,
+    additionalInfo: { annualCost }
+  });
 
   // Update state
   amr.healthcareSystemCost = annualCost;
@@ -554,7 +718,16 @@ export function calculateEconomicImpact(
   // ICU capacity strain (% of ICU beds occupied by AMR cases)
   // Simplified: Assume each death requires 7 days ICU, total ICU beds ~3M globally
   const totalICUBeds = 3e6;
-  const amrICUDaysPerMonth = (amr.monthlyDeaths * 7) / 30; // Deaths × 7 days / 30 days
+  const monthlyDeaths = assertStateProperty(amr, 'monthlyDeaths', {
+    location: 'calculateEconomicImpact',
+    month: state.currentMonth
+  });
+  const amrICUDaysPerMonth = assertFinite((monthlyDeaths * 7) / 30, {
+    location: 'calculateEconomicImpact',
+    valueName: 'amrICUDaysPerMonth',
+    month: state.currentMonth,
+    additionalInfo: { monthlyDeaths }
+  }); // Deaths × 7 days / 30 days
   amr.icuCapacityStrain = Math.min(1.0, amrICUDaysPerMonth / totalICUBeds);
 }
 

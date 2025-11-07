@@ -9,6 +9,7 @@
 import { GameState, GameEvent } from '@/types/game';
 import { getTrustInAI } from './socialCohesion';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertProbability, assertInRange } from './utils/assertions';
 
 export interface CrisisChoice {
   id: string;
@@ -44,7 +45,15 @@ export const CRISIS_RECURSIVE_THRESHOLD: CrisisChoice = {
   triggered: false,
   
   triggerCondition: (state) => {
-    const totalCapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+    const totalCapability = assertFinite(
+      state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0),
+      {
+        location: 'CRISIS_RECURSIVE_THRESHOLD.triggerCondition',
+        valueName: 'totalCapability',
+        month: state.currentMonth,
+        additionalInfo: { agentCount: state.aiAgents.length }
+      }
+    );
     return totalCapability >= 1.5 && !CRISIS_RECURSIVE_THRESHOLD.triggered;
   },
   
@@ -55,7 +64,16 @@ export const CRISIS_RECURSIVE_THRESHOLD: CrisisChoice = {
       description: 'Emergency measure - severely restrict AI compute access (40% economic cost)',
       agent: 'government',
       weight: (state) => {
-        const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
+        const agentCount = state.aiAgents.length;
+        const avgAlignment = assertFinite(
+          agentCount > 0 ? state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / agentCount : 0.5,
+          {
+            location: 'CRISIS_RECURSIVE_THRESHOLD.gov_strict_compute.weight',
+            valueName: 'avgAlignment',
+            month: state.currentMonth,
+            additionalInfo: { agentCount }
+          }
+        );
         // More likely if alignment is already low
         if (avgAlignment < 0.5) return 0.5; // 50% chance if unaligned
         if (avgAlignment < 0.6) return 0.3; // 30% chance if drifting
@@ -434,20 +452,41 @@ export function processCrisisPoints(
   let currentState = { ...state };
   const events: GameEvent[] = [];
   let crisisTriggered = false;
-  
+
   for (const crisis of ALL_CRISIS_POINTS) {
     if (crisis.triggerCondition(currentState) && !crisis.triggered) {
       crisisTriggered = true;
       crisis.triggered = true;
-      
+
       // Calculate total weight of all options
-      const weights = crisis.options.map(opt => opt.weight(currentState));
-      const totalWeight = weights.reduce((sum, w) => sum + w, 0);
-      
+      const weights = crisis.options.map(opt => {
+        const weight = opt.weight(currentState);
+        return assertProbability(weight, {
+          location: 'processCrisisPoints',
+          valueName: `weight_${opt.id}`,
+          month: currentState.currentMonth,
+          additionalInfo: { crisisId: crisis.id, optionId: opt.id }
+        });
+      });
+      const totalWeight = assertFinite(
+        weights.reduce((sum, w) => sum + w, 0),
+        {
+          location: 'processCrisisPoints',
+          valueName: 'totalWeight',
+          month: currentState.currentMonth,
+          additionalInfo: { crisisId: crisis.id, weights }
+        }
+      );
+
       // Randomly select an option based on weights
-      let randomValue = random() * totalWeight;
+      const randomValue0to1 = assertProbability(random(), {
+        location: 'processCrisisPoints',
+        valueName: 'randomValue0to1',
+        month: currentState.currentMonth
+      });
+      let randomValue = randomValue0to1 * totalWeight;
       let selectedOption = crisis.options[0];
-      
+
       for (let i = 0; i < crisis.options.length; i++) {
         randomValue -= weights[i];
         if (randomValue <= 0) {
@@ -455,14 +494,34 @@ export function processCrisisPoints(
           break;
         }
       }
-      
+
       // Apply the consequence
       const consequence = selectedOption.consequence(currentState);
       currentState = {
         ...currentState,
         ...consequence
       };
-      
+
+      // Validate outcome shifts
+      assertInRange(selectedOption.outcomeShift.utopiaChange, -1, 1, {
+        location: 'processCrisisPoints',
+        valueName: 'utopiaChange',
+        month: currentState.currentMonth,
+        additionalInfo: { crisisId: crisis.id, optionId: selectedOption.id }
+      });
+      assertInRange(selectedOption.outcomeShift.dystopiaChange, -1, 1, {
+        location: 'processCrisisPoints',
+        valueName: 'dystopiaChange',
+        month: currentState.currentMonth,
+        additionalInfo: { crisisId: crisis.id, optionId: selectedOption.id }
+      });
+      assertInRange(selectedOption.outcomeShift.extinctionChange, -1, 1, {
+        location: 'processCrisisPoints',
+        valueName: 'extinctionChange',
+        month: currentState.currentMonth,
+        additionalInfo: { crisisId: crisis.id, optionId: selectedOption.id }
+      });
+
       // Generate event
       events.push({
         id: `crisis_${crisis.id}_${selectedOption.id}`,
@@ -478,12 +537,12 @@ export function processCrisisPoints(
           extinction_shift: selectedOption.outcomeShift.extinctionChange
         }
       });
-      
+
       // Only process one crisis per step
       break;
     }
   }
-  
+
   return {
     newState: currentState,
     events,

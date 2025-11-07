@@ -165,10 +165,11 @@ function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
       );
     }
     if (boundaries.biosphere_integrity) {
-      // BUG FIX (Oct 30, 2025): Nuclear war INCREASES extinction rate (higher = worse)
-      // Before: Subtracted 0.6 (incorrectly made biosphere BETTER)
-      // After: Add 0.6 (correctly makes biosphere WORSE via mass extinctions)
-      const biosphereDelta = assertShockMagnitude(0.6, {
+      // BUG FIX (Nov 7, 2025): Nuclear war damages biosphere (negative shock, subtract to increase currentValue)
+      // Shock magnitude: -0.5 (50% damage to biosphere integrity)
+      // Application: SUBTRACT negative value = ADD 0.5 to currentValue (makes biosphere worse)
+      // Rationale: biosphere_integrity.currentValue scale: 0 = safe, 1+ = collapse
+      const biosphereDelta = assertShockMagnitude(-0.5, {
         location: 'applyNuclearWarShock',
         valueName: 'biosphereDelta',
         month: state.currentMonth,
@@ -176,7 +177,7 @@ function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
       });
 
       boundaries.biosphere_integrity.currentValue = assertFinite(
-        boundaries.biosphere_integrity.currentValue + biosphereDelta,
+        boundaries.biosphere_integrity.currentValue - biosphereDelta,
         {
           location: 'applyNuclearWarShock',
           valueName: 'biosphere_integrity.currentValue',
@@ -446,10 +447,11 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
       );
     }
     if (boundaries.biosphere_integrity) {
-      // BUG FIX (Oct 30, 2025): Asteroid impact INCREASES extinction rate (higher = worse)
-      // Before: Subtracted impactSize * 0.5 (incorrectly made biosphere BETTER)
-      // After: Add impactSize * 0.5 (correctly makes biosphere WORSE via mass extinctions)
-      const biosphereDelta = assertShockMagnitude(impactSize * 0.5, {
+      // BUG FIX (Nov 7, 2025): Asteroid impact damages biosphere (negative shock, subtract to increase currentValue)
+      // Shock magnitude: -(impactSize * 0.5) where impactSize ∈ [0, 1]
+      // Application: SUBTRACT negative value = ADD to currentValue (makes biosphere worse)
+      // Rationale: biosphere_integrity.currentValue scale: 0 = safe, 1+ = collapse
+      const biosphereDelta = assertShockMagnitude(-impactSize * 0.5, {
         location: 'applyAsteroidImpactShock',
         valueName: 'biosphereDelta',
         month: state.currentMonth,
@@ -457,7 +459,7 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
       });
 
       boundaries.biosphere_integrity.currentValue = assertFinite(
-        boundaries.biosphere_integrity.currentValue + biosphereDelta,
+        boundaries.biosphere_integrity.currentValue - biosphereDelta,
         {
           location: 'applyAsteroidImpactShock',
           valueName: 'biosphere_integrity.currentValue',

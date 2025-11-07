@@ -33,3 +33,32 @@ export function generateShortId(state: GameState): string {
   state.eventIdCounter++;
   return shortId;
 }
+
+/**
+ * Deterministic hash of a string to a number
+ *
+ * CRITICAL: Used for seeding SeededRandom instances with ID strings.
+ * Must be deterministic (same string always produces same hash).
+ *
+ * Uses simple DJB2 hash algorithm (fast, good distribution, deterministic).
+ *
+ * @param str - String to hash (e.g., org.id, ai.id)
+ * @returns Deterministic integer hash
+ *
+ * @example
+ * ```typescript
+ * // ❌ NON-DETERMINISTIC (string length varies across runs)
+ * const seed = state.currentMonth + org.id.length;
+ *
+ * // ✅ DETERMINISTIC (hash is consistent for same string)
+ * const seed = state.currentMonth + hashString(org.id);
+ * ```
+ */
+export function hashString(str: string): number {
+  let hash = 5381; // DJB2 initial value
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) + hash) + str.charCodeAt(i); // hash * 33 + c
+  }
+  // Ensure positive integer
+  return Math.abs(hash);
+}

@@ -388,12 +388,14 @@ export function selectDimensionToAdvance(
   // 70% chance to advance core dimension, 30% chance to advance research
   if (pathChoice < 0.7) {
     // Advance core dimension (use dimensionRoll)
-    // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries to ensure consistent iteration order
-    const sortedDimensionEntries = Object.entries(dimensionWeights).sort(([a], [b]) => a.localeCompare(b));
-    const totalWeight = sortedDimensionEntries.reduce((sum, [, weight]) => sum + weight, 0);
+    const totalWeight = Object.values(dimensionWeights).reduce((a, b) => a + b, 0);
     let roll = dimensionRoll * totalWeight;
 
-    for (const [dim, weight] of sortedDimensionEntries) {
+    // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
+    // Object.entries() order is not guaranteed across JS engines/runs
+    const sortedDimensions = Object.entries(dimensionWeights).sort((a, b) => a[0].localeCompare(b[0]));
+
+    for (const [dim, weight] of sortedDimensions) {
       roll -= weight;
       if (roll <= 0) {
         const currentValue = capabilityProfile[dim as keyof AICapabilityProfile];
@@ -417,13 +419,14 @@ export function selectDimensionToAdvance(
     climate: alignment > 0.7 ? 1.2 : 0.5  // Aligned AIs care about climate
   };
 
-  // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries to ensure consistent iteration order
-  const sortedDomainEntries = Object.entries(domainWeights).sort(([a], [b]) => a.localeCompare(b));
-  const totalDomainWeight = sortedDomainEntries.reduce((sum, [, weight]) => sum + weight, 0);
+  const totalDomainWeight = Object.values(domainWeights).reduce((a, b) => a + b, 0);
   let domainRollValue = domainRoll * totalDomainWeight;
 
+  // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
+  const sortedDomains = Object.entries(domainWeights).sort((a, b) => a[0].localeCompare(b[0]));
+
   let selectedDomain: 'biotech' | 'materials' | 'climate' | 'computerScience' | null = null;
-  for (const [domain, weight] of sortedDomainEntries) {
+  for (const [domain, weight] of sortedDomains) {
     domainRollValue -= weight;
     if (domainRollValue <= 0) {
       selectedDomain = domain as any;
@@ -469,10 +472,13 @@ export function applyResearchGrowth(
   ai: AIAgent,
   state: GameState,
   selection: ReturnType<typeof selectDimensionToAdvance>,
-  rng?: () => number // Phase 1: Add RNG parameter for Lévy flights
+  rng: () => number // REQUIRED: Deterministic RNG for reproducibility
 ): { newProfile: AICapabilityProfile; growth: number } {
   const newProfile = JSON.parse(JSON.stringify(ai.capabilityProfile)) as AICapabilityProfile;
-  const random = rng || Math.random; // Use provided RNG or fallback
+
+  // DETERMINISM FIX (Nov 5, 2025): RNG is now required, no fallback to Math.random
+  // This ensures Monte Carlo simulations are reproducible with seeds
+  const random = rng;
 
   // Get government investment for this dimension/research
   const govInvestment = state.government.researchInvestments;
@@ -548,10 +554,8 @@ export function applyResearchGrowth(
     const govResearchInvestment = govInvestment[domain]?.[subfield] || 0;
 
     // Calculate AI's research capability (average of cognitive + relevant research domain)
-    // DETERMINISM FIX (Nov 6, 2025): Sort Object.keys to ensure consistent iteration order
-    const domainKeys = Object.keys(newProfile.research[domain]).sort();
-    const domainSum = domainKeys.reduce((sum, key) => sum + newProfile.research[domain][key], 0);
-    const domainAvg = domainSum / domainKeys.length;
+    const domainAvg = Object.values(newProfile.research[domain]).reduce((a, b) => a + b, 0) /
+      Object.keys(newProfile.research[domain]).length;
     const aiResearchCapability = (newProfile.cognitive + domainAvg) / 2;
 
     growth = calculateResearchGrowth(

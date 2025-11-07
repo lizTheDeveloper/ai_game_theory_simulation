@@ -13,6 +13,8 @@
  * - Medical: 30-60 days severe malnutrition → death
  */
 
+import { assertProbability, assertFinite } from '@/simulation/utils/assertions';
+
 export interface FamineEvent {
   id: string;
   startMonth: number;
@@ -179,6 +181,11 @@ export function calculateMonthlyMortalityRate(
   else if (monthsSinceOnset === 4) baseMortality = 0.10;  // 10% - remaining weak
   else baseMortality = 0.02; // 2% sustained mortality (months 5+)
 
+  baseMortality = assertProbability(
+    baseMortality,
+    { location: 'calculateMonthlyMortalityRate', valueName: 'baseMortality', additionalInfo: { monthsSinceOnset } }
+  );
+
   // FIX (Nov 6, 2025): Apply severity multiplier
   // Research: FAO (2023) IPC Phase 3 = crisis (NO mass mortality)
   //           FAO (2023) IPC Phase 4 = emergency (LOW mortality, ~15% of catastrophe)
@@ -192,7 +199,15 @@ export function calculateMonthlyMortalityRate(
     severityMultiplier = 1.0;   // Full mortality (famine/catastrophe)
   }
 
-  return baseMortality * severityMultiplier;
+  severityMultiplier = assertProbability(
+    severityMultiplier,
+    { location: 'calculateMonthlyMortalityRate', valueName: 'severityMultiplier', additionalInfo: { severity } }
+  );
+
+  return assertProbability(
+    baseMortality * severityMultiplier,
+    { location: 'calculateMonthlyMortalityRate', valueName: 'mortalityRate', additionalInfo: { monthsSinceOnset, severity } }
+  );
 }
 
 /**
@@ -268,9 +283,12 @@ export function progressFamine(
   // Apply seasonal adjustment
   // Research: 1.5-2x severity during lean season (using 1.75x midpoint)
   // Non-lean season: Chronic undernourishment only (0.25x baseline)
-  let mortalityRate = inLeanSeason
-    ? baseMortalityRate * 1.75  // ACUTE lean season mortality
-    : baseMortalityRate * 0.25; // Chronic year-round undernourishment
+  let mortalityRate = assertProbability(
+    inLeanSeason
+      ? baseMortalityRate * 1.75  // ACUTE lean season mortality
+      : baseMortalityRate * 0.25, // Chronic year-round undernourishment
+    { location: 'progressFamine_seasonal', valueName: 'mortalityRate', additionalInfo: { inLeanSeason, baseMortalityRate } }
+  );
 
   // Apply tech mitigation (only if not genocide)
   if (famine.canDeployTech && !famine.techDeployed) {
@@ -279,19 +297,30 @@ export function progressFamine(
       famine.techDeployed = true;
       // Tech effectiveness: 50-90% mortality reduction
       // Higher AI capability = better tech (hydroponics, emergency food, water purification)
-      famine.techEffectiveness = 0.5 + (aiCapability - famine.aiCapabilityRequired) * 0.1;
-      famine.techEffectiveness = Math.min(0.9, famine.techEffectiveness); // Cap at 90%
+      famine.techEffectiveness = assertProbability(
+        Math.min(0.9, 0.5 + (aiCapability - famine.aiCapabilityRequired) * 0.1), // Cap at 90%
+        { location: 'progressFamine_tech', valueName: 'techEffectiveness', additionalInfo: { aiCapability } }
+      );
     }
   }
 
   // If tech is deployed, reduce mortality
   if (famine.techDeployed) {
-    mortalityRate *= (1 - famine.techEffectiveness);
+    mortalityRate = assertProbability(
+      mortalityRate * (1 - famine.techEffectiveness),
+      { location: 'progressFamine_tech_reduced', valueName: 'mortalityRate', additionalInfo: { techEffectiveness: famine.techEffectiveness } }
+    );
   }
 
   // Calculate deaths this month
-  const survivingPopulation = famine.populationAtRisk - famine.cumulativeDeaths;
-  const deathsThisMonth = survivingPopulation * mortalityRate;
+  const survivingPopulation = assertFinite(
+    famine.populationAtRisk - famine.cumulativeDeaths,
+    { location: 'progressFamine_deaths', valueName: 'survivingPopulation', additionalInfo: { populationAtRisk: famine.populationAtRisk, cumulativeDeaths: famine.cumulativeDeaths } }
+  );
+  const deathsThisMonth = assertFinite(
+    survivingPopulation * mortalityRate,
+    { location: 'progressFamine_deaths', valueName: 'deathsThisMonth', additionalInfo: { survivingPopulation, mortalityRate } }
+  );
 
   famine.cumulativeDeaths += deathsThisMonth;
   famine.monthlyMortalityRate = mortalityRate;
@@ -306,7 +335,15 @@ export function progressFamine(
  * - Or population at risk depleted (>80% mortality)
  */
 export function isFamineActive(famine: FamineEvent): boolean {
-  const mortalityRate = famine.cumulativeDeaths / famine.populationAtRisk;
+  // Protect against division by zero
+  if (famine.populationAtRisk === 0) {
+    return false; // No population at risk = famine inactive
+  }
+
+  const mortalityRate = assertProbability(
+    famine.cumulativeDeaths / famine.populationAtRisk,
+    { location: 'isFamineActive', valueName: 'mortalityRate', additionalInfo: { cumulativeDeaths: famine.cumulativeDeaths, populationAtRisk: famine.populationAtRisk } }
+  );
   return famine.foodSecurityLevel < 0.8 && mortalityRate < 0.8;
 }
 
@@ -381,13 +418,21 @@ export function getFamineStats(system: FamineSystem): {
   techPreventedDeaths: number;
   techEffectiveness: number;
 } {
+  // Calculate tech effectiveness with division protection
+  let techEffectiveness = 0;
+  const totalFamineDeaths = system.totalDeaths + system.techPreventedDeaths;
+  if (totalFamineDeaths > 0) {
+    techEffectiveness = assertProbability(
+      system.techPreventedDeaths / totalFamineDeaths,
+      { location: 'getFamineStats', valueName: 'techEffectiveness', additionalInfo: { techPreventedDeaths: system.techPreventedDeaths, totalFamineDeaths } }
+    );
+  }
+
   return {
     activeFamines: system.activeFamines.length,
     totalDeaths: system.totalDeaths,
     genocideFamines: system.genocideFamines,
     techPreventedDeaths: system.techPreventedDeaths,
-    techEffectiveness: system.totalDeaths > 0
-      ? system.techPreventedDeaths / (system.totalDeaths + system.techPreventedDeaths)
-      : 0,
+    techEffectiveness,
   };
 }

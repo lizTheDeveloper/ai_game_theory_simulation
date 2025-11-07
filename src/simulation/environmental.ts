@@ -110,7 +110,8 @@ function applyStochasticVariance(baseRate: number, variance: number = 0.25): num
  * Rate-based: high production = faster accumulation (unless mitigated)
  */
 export function updateEnvironmentalAccumulation(
-  state: GameState
+  state: GameState,
+  rng: () => number
 ): void {
   const env = state.environmentalAccumulation;
   const economicStage = state.globalMetrics.economicTransitionStage;
@@ -338,7 +339,7 @@ export function updateEnvironmentalAccumulation(
 
   // Resource cascade (alpha=1.8 - fatter tails for financial-like shocks)
   if (env.resourceReserves < criticalThreshold) {
-    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, Math.random);
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, rng);
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (rare but devastating - supply chain collapse, hoarding)
@@ -353,7 +354,7 @@ export function updateEnvironmentalAccumulation(
 
   // Climate cascade (positive feedbacks - methane release, ice-albedo)
   if (env.climateStability < criticalThreshold) {
-    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, Math.random);
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, rng);
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (tipping point triggers positive feedbacks)
@@ -368,7 +369,7 @@ export function updateEnvironmentalAccumulation(
 
   // Biodiversity cascade (ecosystem collapse cascades)
   if (env.biodiversityIndex < criticalThreshold) {
-    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, Math.random);
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, rng);
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (keystone species loss triggers avalanche)

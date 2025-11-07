@@ -10,7 +10,7 @@
 import { GameState } from '@/types/game';
 import type { RNGFunction } from '@/types/config';
 import { calculateAverageAlignment } from './utils/ai';
-import { assertProbability, assertInRange } from './utils/assertions';
+import { assertProbability, assertInRange, assertFinite } from './utils/assertions';
 
 /**
  * Update government control response based on AI threat level
@@ -21,16 +21,28 @@ import { assertProbability, assertInRange } from './utils/assertions';
  * - High surveillance → QoL decay (freedom, autonomy)
  */
 export function updateGovernmentControlResponse(state: GameState, rng: RNGFunction): void {
-  const maxAICapability = Math.max(...state.aiAgents.map(ai => ai.capability), 0);
-  const avgAlignment = calculateAverageAlignment(state.aiAgents);
-  const controlGap = maxAICapability - state.government.capabilityToControl;
+  const maxAICapability = assertFinite(
+    Math.max(...state.aiAgents.map(ai => ai.capability), 0),
+    { location: 'updateGovernmentControlResponse', valueName: 'maxAICapability', month: state.currentMonth }
+  );
+  const avgAlignment = assertProbability(
+    calculateAverageAlignment(state.aiAgents),
+    { location: 'updateGovernmentControlResponse', valueName: 'avgAlignment', month: state.currentMonth }
+  );
+  const controlGap = assertFinite(
+    maxAICapability - state.government.capabilityToControl,
+    { location: 'updateGovernmentControlResponse', valueName: 'controlGap', month: state.currentMonth }
+  );
   
   // === FEAR RESPONSE: Surveillance Escalation ===
   
   // AI capability exceeds control → government panics → ramps up surveillance
   if (controlGap > 1.0) {
     // Significant control gap → emergency surveillance measures
-    const surveillanceIncrease = Math.min(0.05, controlGap * 0.02); // Up to +0.05/month
+    const surveillanceIncrease = assertProbability(
+      Math.min(0.05, controlGap * 0.02), // Up to +0.05/month
+      { location: 'surveillanceEscalation', valueName: 'surveillanceIncrease', month: state.currentMonth }
+    );
     const oldSurveillance = state.government.structuralChoices.surveillanceLevel;
     state.government.structuralChoices.surveillanceLevel = assertProbability(
       Math.min(1.0, oldSurveillance + surveillanceIncrease),
@@ -62,7 +74,10 @@ export function updateGovernmentControlResponse(state: GameState, rng: RNGFuncti
   // Path 1: Low alignment + high capability → fear-driven authoritarianism
   if (avgAlignment < 0.4 && maxAICapability > 1.5 && state.government.governmentType === 'democratic') {
     // Probability of authoritarian transition (fear-driven political shift)
-    const transitionChance = (0.4 - avgAlignment) * 0.05; // Up to 2%/month at 0 alignment
+    const transitionChance = assertProbability(
+      (0.4 - avgAlignment) * 0.05, // Up to 2%/month at 0 alignment
+      { location: 'authTransition', valueName: 'transitionChance', month: state.currentMonth }
+    );
 
     if (rng() < transitionChance) {
       console.log(`   🏛️  AUTHORITARIAN TRANSITION (AI Threat): Government shifts to authoritarian control (AI capability: ${maxAICapability.toFixed(2)}, alignment: ${avgAlignment.toFixed(2)})`);
@@ -128,12 +143,21 @@ export function updateGovernmentControlResponse(state: GameState, rng: RNGFuncti
     
     // Multiple crises + low stability → high authoritarian risk
     if (crisisCount >= 4 && state.globalMetrics.socialStability < 0.3) {
-      let crisisTransitionChance = 0.03 * (crisisCount - 3); // 3% per crisis above 3
-      
+      let crisisTransitionChance = assertProbability(
+        0.03 * (crisisCount - 3), // 3% per crisis above 3
+        { location: 'crisisAuth_baseChance', valueName: 'crisisTransitionChance', month: state.currentMonth }
+      );
+
       // Democratic resilience reduces authoritarian risk
       const { getAuthoritarianResistance } = require('./governanceQuality');
-      const resistance = getAuthoritarianResistance(state);
-      crisisTransitionChance *= resistance;
+      const resistance = assertProbability(
+        getAuthoritarianResistance(state),
+        { location: 'crisisAuth_resistance', valueName: 'resistance', month: state.currentMonth }
+      );
+      crisisTransitionChance = assertProbability(
+        crisisTransitionChance * resistance,
+        { location: 'crisisAuth_finalChance', valueName: 'crisisTransitionChance', month: state.currentMonth }
+      );
 
       if (rng() < crisisTransitionChance) {
         console.log(`   🏛️  AUTHORITARIAN TRANSITION (Crisis): ${crisisCount} cascading crises → emergency powers → dictatorship`);
@@ -167,11 +191,17 @@ export function updateGovernmentControlResponse(state: GameState, rng: RNGFuncti
   // === QOL DECAY FROM SURVEILLANCE ===
   
   // High surveillance directly erodes freedom and autonomy
-  const surveillance = state.government.structuralChoices.surveillanceLevel;
-  
+  const surveillance = assertProbability(
+    state.government.structuralChoices.surveillanceLevel,
+    { location: 'qolDecay', valueName: 'surveillance', month: state.currentMonth }
+  );
+
   if (surveillance > 0.6 && state.qualityOfLifeSystems) {
     // Surveillance state emerging → rapid QoL decay
-    const decayRate = surveillance * 0.02; // Up to 2%/month at max surveillance
+    const decayRate = assertProbability(
+      surveillance * 0.02, // Up to 2%/month at max surveillance
+      { location: 'qolDecay', valueName: 'decayRate', month: state.currentMonth }
+    );
     
     // Direct impact on political freedom
     state.qualityOfLifeSystems.politicalFreedom = assertProbability(
@@ -247,41 +277,65 @@ export function checkDystopiaConditions(state: GameState): {
   severity: number;
   reason: string | null;
 } {
-  const surveillance = state.government.structuralChoices.surveillanceLevel;
-  const autonomy = state.qualityOfLifeSystems?.autonomy ?? 1.0;
-  const politicalFreedom = state.qualityOfLifeSystems?.politicalFreedom ?? 1.0;
-  const controlDesire = state.government.controlDesire;
-  const currentMonth = state.currentYear * 12 + state.currentMonth;
-  
+  const surveillance = assertProbability(
+    state.government.structuralChoices.surveillanceLevel,
+    { location: 'checkDystopiaConditions', valueName: 'surveillance', month: state.currentMonth }
+  );
+  const autonomy = assertProbability(
+    state.qualityOfLifeSystems?.autonomy ?? 1.0,
+    { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
+  );
+  const politicalFreedom = assertProbability(
+    state.qualityOfLifeSystems?.politicalFreedom ?? 1.0,
+    { location: 'checkDystopiaConditions', valueName: 'politicalFreedom', month: state.currentMonth }
+  );
+  const controlDesire = assertProbability(
+    state.government.controlDesire,
+    { location: 'checkDystopiaConditions', valueName: 'controlDesire', month: state.currentMonth }
+  );
+  const currentMonth = assertFinite(
+    state.currentYear * 12 + state.currentMonth,
+    { location: 'checkDystopiaConditions', valueName: 'currentMonth', month: state.currentMonth }
+  );
+
   // Surveillance state (most common dystopia path)
   if (surveillance > 0.7 && autonomy < 0.3 && politicalFreedom < 0.3 && currentMonth > 24) {
     return {
       type: 'surveillance_state',
-      severity: (surveillance + (1 - autonomy) + (1 - politicalFreedom)) / 3,
+      severity: assertProbability(
+        (surveillance + (1 - autonomy) + (1 - politicalFreedom)) / 3,
+        { location: 'checkDystopiaConditions_severity', valueName: 'surveillance_state_severity', month: state.currentMonth }
+      ),
       reason: 'Permanent surveillance state: pervasive monitoring, no autonomy, no freedom'
     };
   }
-  
+
   // Authoritarian dystopia
-  if (state.government.governmentType === 'authoritarian' && 
+  if (state.government.governmentType === 'authoritarian' &&
       autonomy < 0.4 && politicalFreedom < 0.3 && currentMonth > 18) {
     return {
       type: 'authoritarian',
-      severity: (1 - autonomy + 1 - politicalFreedom) / 2,
+      severity: assertProbability(
+        (1 - autonomy + 1 - politicalFreedom) / 2,
+        { location: 'checkDystopiaConditions_severity', valueName: 'authoritarian_severity', month: state.currentMonth }
+      ),
       reason: 'Authoritarian regime with structural oppression established'
     };
   }
-  
+
   // High-control dystopia
-  if (controlDesire > 0.8 && surveillance > 0.6 && 
+  if (controlDesire > 0.8 && surveillance > 0.6 &&
       politicalFreedom < 0.4 && autonomy < 0.4 && currentMonth > 30) {
     return {
       type: 'high_control',
-      severity: (controlDesire + surveillance + (1 - politicalFreedom) + (1 - autonomy)) / 4,
+      severity: assertProbability(
+        (controlDesire + surveillance + (1 - politicalFreedom) + (1 - autonomy)) / 4,
+        { location: 'checkDystopiaConditions_severity', valueName: 'high_control_severity', month: state.currentMonth }
+      ),
       reason: 'High-control society: AI obedient but humans oppressed'
     };
   }
-  
+
   // No dystopia conditions met
   return {
     type: null,

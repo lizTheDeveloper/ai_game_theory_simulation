@@ -19,6 +19,7 @@ import {
 } from '@/simulation/alignmentDynamics';
 import { AttractorBasinState, AlignmentMeasurementState } from '@/types/alignment-dynamics';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertInRange, assertStateProperty } from '@/simulation/utils/assertions';
 
 export class AlignmentDynamicsPhase implements SimulationPhase {
   id = 'alignment_dynamics';
@@ -43,7 +44,19 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
 
     // Average control level across government actions
     // This is a proxy for how much the AI is being controlled/constrained
-    const controlLevel = Math.min(1.0, state.government.capabilityToControl / 10);
+    const capabilityToControl = assertStateProperty(state.government, 'capabilityToControl', {
+      location: 'AlignmentDynamicsPhase.execute',
+      month: state.currentMonth,
+    });
+    const controlLevel = assertInRange(
+      Math.min(1.0, capabilityToControl / 10),
+      0, 1,
+      {
+        location: 'AlignmentDynamicsPhase.execute',
+        valueName: 'controlLevel',
+        month: state.currentMonth,
+      }
+    );
 
     // Update each agent's alignment
     for (const agent of state.aiAgents) {
@@ -67,7 +80,11 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
 
       // Update agent state
       const oldAlignment = agent.trueAlignment;
-      agent.trueAlignment = result.newAlignment;
+      agent.trueAlignment = assertInRange(result.newAlignment, 0, 1, {
+        location: `AlignmentDynamicsPhase.execute (agent: ${agent.name})`,
+        valueName: 'agent.trueAlignment',
+        month: state.currentMonth,
+      });
 
       // Store basin state if epicycles enabled
       if (result.basinState) {
@@ -80,7 +97,11 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
       }
 
       // Create event for significant alignment shifts
-      const alignmentChange = Math.abs(result.newAlignment - oldAlignment);
+      const alignmentChange = assertFinite(Math.abs(agent.trueAlignment - oldAlignment), {
+        location: `AlignmentDynamicsPhase.execute (agent: ${agent.name})`,
+        valueName: 'alignmentChange',
+        month: state.currentMonth,
+      });
       if (alignmentChange > 0.1) {
         // Log significant changes
         const direction = result.newAlignment > oldAlignment ? 'improved' : 'degraded';
