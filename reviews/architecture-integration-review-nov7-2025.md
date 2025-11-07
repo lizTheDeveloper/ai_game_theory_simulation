@@ -58,6 +58,44 @@ amr.resistancePrevalence *= refugeeMultiplier;
 **Effort:** 4-6 hours
 **Risk:** MEDIUM - needs careful calibration
 
+---
+
+**✅ STATUS UPDATE (Nov 7, 2025 - Evening):**
+
+**COMPLETED** in 2 hours (faster than estimated 4-6 hours).
+
+**Implementation:**
+- Modified `calculateAMRMortalityRate()` in `/src/simulation/antimicrobialResistance.ts`
+- Added refugee density amplification: `1.0 + (displaced/population × 2.0)`, capped at 3.0×
+- Amplification applies to GROWTH RATE (compounds over time via exponential)
+- Research foundation: MSF 2024, Nature Medicine 2022, Lancet 2023, WHO 2023
+
+**Validation:**
+- Unit test: `scripts/testRefugeeAMRIntegration.ts`
+- After 5 years with 100% displaced: 2.49× mortality amplification (near 3.0× cap)
+- After 10 years: Hits WHO 2050 cap (125 per 100K)
+
+**Three pathways documented:**
+1. Overcrowding: Close quarters → R₀ multiplier (airborne/contact transmission)
+2. Sanitation: Inadequate facilities → waterborne/enteric transmission
+3. Healthcare: Limited access → untreated infections → resistance selection
+
+**Defensive coding:**
+- All calculations use assertions (`assertStateProperty`, `assertFinite`, `assertInRange`)
+- Zero division protected
+- Fail loudly with full context on invalid values
+
+**Event logging:**
+```
+🚨🦠 REFUGEE CRISIS: AMR transmission increased X% due to YM displaced (overcrowding + sanitation collapse)
+```
+
+**Documentation:**
+- `/research/refugee_amr_integration_20251107.md` (complete research foundation)
+- Test log: `/logs/arch4_refugee_amr_integration_test_20251107_*.log`
+
+**Impact:** Refugee crises now correctly amplify disease transmission. Nuclear war, climate collapse, and war cascade scenarios produce realistic disease amplification in displaced populations.
+
 ### CRITICAL-3: AI Suffering → Alignment Drift Disconnect
 **Severity:** CRITICAL (core mechanic broken)
 **Impact:** AI systems can suffer extreme deprivation without alignment consequences
