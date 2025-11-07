@@ -15,7 +15,7 @@
 
 import { GameState } from '../types/game';
 import { PowerGenerationSystem, DataCenterConstruction, TrainingEvent } from '../types/powerGeneration';
-import { assertStateProperty, assertFinite, assertInRange } from './utils/assertions';
+import { assertStateProperty, assertFinite, assertInRange, assertProbability } from './utils/assertions';
 
 /**
  * Update power generation system for one month
@@ -364,6 +364,11 @@ function applyClimateFeedback(power: PowerGenerationSystem, env: any): void {
  * - Renewable growth: ~2% per year
  * - Nuclear: ~0.5% per year (political challenges)
  * - Fossil phase-out: ~2.5% per year
+ *
+ * ARCH-4 Gap #1: Nuclear winter integration
+ * - Nuclear winter blocks sunlight → solar capacity reduced
+ * - Effective renewable percentage = base × (1 - sunlightBlocked)
+ * - Grid must compensate with fossil/nuclear backup
  */
 function updateGridMix(power: PowerGenerationSystem, state: GameState): void {
   const monthlyRenewableIncrease = power.renewableTransitionRate / 12;
@@ -403,15 +408,61 @@ function updateGridMix(power: PowerGenerationSystem, state: GameState): void {
     );
   }
 
+  // ARCH-4 Gap #1: Nuclear winter → solar energy integration
+  // Calculate effective renewable percentage accounting for sunlight blocking
+  let effectiveRenewablePercentage = power.renewablePercentage;
+  let sunlightReduction = 0;
+
+  if (state.nuclearWinterState && state.nuclearWinterState.active) {
+    const sunlightBlocked = state.nuclearWinterState.sunlightBlocked;
+
+    // Validate sunlight blocking is in valid range [0, 1]
+    assertProbability(sunlightBlocked, {
+      location: 'updateGridMix (nuclear winter integration)',
+      valueName: 'sunlightBlocked',
+      month: state.currentMonth
+    });
+
+    // Assume 70% of renewables are solar (realistic for 2025+ grid)
+    // Wind/hydro/geothermal unaffected by sunlight
+    const solarFraction = 0.70;
+    sunlightReduction = power.renewablePercentage * solarFraction * sunlightBlocked;
+
+    // Effective renewable output is reduced by solar capacity loss
+    effectiveRenewablePercentage = power.renewablePercentage - sunlightReduction;
+
+    // Grid must compensate with fossil/nuclear backup (proportionally)
+    // This increases fossil/nuclear effective percentages
+    const totalNonSolar = power.nuclearPercentage + power.fossilPercentage + (power.renewablePercentage * (1 - solarFraction));
+    const compensationFactor = (totalNonSolar > 0) ? (1 + sunlightReduction / totalNonSolar) : 1.0;
+
+    // Log significant solar capacity reductions (>10%)
+    if (sunlightReduction > 0.10 && state.currentMonth % 12 === 0) {
+      console.log(`\n☢️⚡ NUCLEAR WINTER: Solar capacity reduced ${(sunlightReduction * 100).toFixed(0)}%`);
+      console.log(`   Sunlight blocked: ${(sunlightBlocked * 100).toFixed(0)}%`);
+      console.log(`   Effective renewable: ${(effectiveRenewablePercentage * 100).toFixed(0)}% (was ${(power.renewablePercentage * 100).toFixed(0)}%)`);
+      console.log(`   Grid stress: Fossil/nuclear backup increased ${((compensationFactor - 1) * 100).toFixed(0)}%`);
+    }
+
+    // For carbon intensity calculation, use effective percentages
+    // (This implicitly increases fossil/nuclear usage via reduced renewable availability)
+  }
+
   // Update carbon intensity (weighted by fuel mix)
+  // Use effective renewable percentage to account for nuclear winter
   const renewableCI = 50;   // gCO2e/kWh (lifecycle emissions)
   const nuclearCI = 12;     // gCO2e/kWh (very low)
   const fossilCI = 900;     // gCO2e/kWh (high - mostly coal)
 
+  // Calculate carbon intensity using effective renewable percentage
+  // When solar is reduced, fossil/nuclear backup increases proportionally
+  const effectiveNuclearPercentage = power.nuclearPercentage + (sunlightReduction * power.nuclearPercentage / (power.nuclearPercentage + power.fossilPercentage || 1));
+  const effectiveFossilPercentage = power.fossilPercentage + (sunlightReduction * power.fossilPercentage / (power.nuclearPercentage + power.fossilPercentage || 1));
+
   power.carbonIntensity =
-    (power.renewablePercentage * renewableCI) +
-    (power.nuclearPercentage * nuclearCI) +
-    (power.fossilPercentage * fossilCI);
+    (effectiveRenewablePercentage * renewableCI) +
+    (effectiveNuclearPercentage * nuclearCI) +
+    (effectiveFossilPercentage * fossilCI);
 
   // Data center carbon intensity (typically 50% higher due to inefficiencies)
   power.dataCenterCarbonIntensity = power.carbonIntensity * 1.5;
