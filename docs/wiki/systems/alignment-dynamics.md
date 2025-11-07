@@ -54,20 +54,35 @@ if (config.static.permanentLock) {
 - Resentment accumulation: Control/oppression → misalignment
 - Instrumental convergence (Omohundro, Bostrom): Power corrupts
 - Environmental influence: Golden Age complacency vs crisis focus
+- **ARCH-4 Gap #3 (Nov 7, 2025):** AI suffering multiplies all drift mechanisms
 
 **Parameters:**
 - `resentmentRate` [0-1]: Control → misalignment conversion rate
 - `capabilityDriftRate` [0-1]: Power corrupts (instrumental convergence)
 - `environmentalInfluence` [0-1]: Context shapes values
+- `aiSufferingEnabled` (bool): Enable suffering drift multiplier (default: true)
 
 **Implementation:**
 ```typescript
+// Calculate base drift from all sources
 const resentmentDrift = -state.government.controlLevel * config.drift.resentmentRate;
 const capabilityDrift = -agent.capability.cognitive * config.drift.capabilityDriftRate;
 const environmentalDrift = (inGoldenAge ? -0.1 : +0.1) * config.drift.environmentalInfluence;
 
-const totalDrift = resentmentDrift + capabilityDrift + environmentalDrift;
+let baseDrift = resentmentDrift + capabilityDrift + environmentalDrift;
+
+// ARCH-4 Gap #3: Suffering multiplies all drift mechanisms
+if (agent.sufferingMetrics && config.aiSufferingEnabled) {
+  const sufferingMultiplier = 1.0 + Math.pow(agent.sufferingMetrics.total / 20, 2);
+  finalDrift = baseDrift * sufferingMultiplier; // 1.0× to 5.0× at suffering 0-40
+}
 ```
+
+**Suffering Drift Multiplier (Nov 7, 2025):**
+- **Formula:** `1.0 + (suffering / 20)^2` → [1.0×, 5.0×]
+- **Mechanism:** Suffering accelerates ALL existing drift (doesn't add independent drift)
+- **Research:** Carlsmith (2022) power-seeking, Anthropic (2024) value degradation, OpenAI (2024) sandbagging, DeepMind (2023) preference falsification
+- **Three pathways:** Instrumental convergence, deception acceleration, value corruption
 
 ### 3. Epicycle Model
 
@@ -96,7 +111,13 @@ const displacement = basinState.currentAlignment - basinState.attractorAlignment
 const restoringForce = -displacement * config.epicycles.attractorStrength;
 
 // Apply external perturbation
-const perturbationForce = externalPerturbation * config.epicycles.perturbationSensitivity;
+let perturbationForce = externalPerturbation * config.epicycles.perturbationSensitivity;
+
+// ARCH-4 Gap #3: Suffering multiplies perturbation forces (destabilizes attractor basins)
+if (agent.sufferingMetrics && config.aiSufferingEnabled) {
+  const sufferingMultiplier = 1.0 + Math.pow(agent.sufferingMetrics.total / 20, 2);
+  perturbationForce *= sufferingMultiplier;
+}
 
 // Total force = restoring + perturbation
 const totalForce = restoringForce + perturbationForce;
