@@ -40,6 +40,14 @@ export class UpdateEconomicStagePhase implements SimulationPhase {
       location: 'UpdateEconomicStagePhase.execute',
       valueName: 'gdp',
       month: state.currentMonth,
+<<<<<<< HEAD
+=======
+      additionalInfo: {
+        population: state.humanPopulationSystem.population,
+        qol: state.globalMetrics.qualityOfLife,
+        economicStage: state.globalMetrics.economicTransitionStage,
+      }
+>>>>>>> origin/auto/researcher-20251107_013000
     });
 
     const qol = assertStateProperty(state.globalMetrics, 'qualityOfLife', {
