@@ -822,86 +822,139 @@ jobs:
 
 ## Section 07: Exercises
 
-### Exercise 1: Write Unit Tests for a Utility Function
+### Exercise 1: Interface with the Swarm - Request a Feature
 
-**Goal:** Write comprehensive unit tests for a math utility
+**Goal:** Make a feature request to the autonomous swarm and watch it implement, test, and validate
 
-**Implement and test:**
-```typescript
-// src/simulation/utils/mathUtils.ts
-export function geometricMean(values: number[]): number {
-  // TODO: Implement geometric mean
-  // Formula: (x1 * x2 * ... * xn)^(1/n)
-}
+**What you'll learn:** You don't write code - you direct agents to write code. This exercise teaches you how to interface with an autonomous swarm.
+
+**Scenario:** You want to add a new breakthrough technology to the simulation: "Ocean Iron Fertilization" (TIER 1 climate mitigation).
+
+**Steps:**
+
+1. **Write a research-backed feature request in the roadmap:**
+
+Edit `plans/MASTER_IMPLEMENTATION_ROADMAP.md`:
+```markdown
+### TIER 1: Immediate Priorities (Next 2 Weeks)
+
+- [ ] **CRITICAL**: Ocean Iron Fertilization Breakthrough
+  - **Description**: TIER 1 climate tech - stimulates phytoplankton growth to sequester atmospheric CO2
+  - **Research foundation**: Yoon et al. 2018 (Nature) - 0.15 GtC/year sequestration potential
+  - **Complexity**: Medium (3-5 days)
+  - **Files**: `src/simulation/breakthroughs/climate/oceanIronFertilization.ts`, `ClimateBreakthroughsPhase.ts`
+  - **Parameters needed**:
+    - Sequestration rate: 0.15 GtC/year (Yoon 2018)
+    - Cost: $50M/deployment (Williamson 2012)
+    - Side effects: Local ecosystem disruption risk 12% (Boyd 2007)
+  - **Tests required**: Unit tests, integration with planetary boundaries, Monte Carlo N=10
 ```
 
-**Test cases to cover:**
-1. Normal case: `[1, 2, 4, 8]` → `2.83`
-2. Edge case: `[0, 1, 2]` → `0` (zero collapses geometric mean)
-3. Edge case: `[]` → throw error (empty array)
-4. Error case: `[-1, 2, 3]` → throw error (negative values)
-5. Error case: `[NaN, 2, 3]` → throw error (NaN input)
+2. **Post request to coordination channel:**
 
-**Starter code:**
-```typescript
-// tests/utils/mathUtils.test.ts
-import { describe, test, expect } from '@jest/globals';
-import { geometricMean } from '@/simulation/utils/mathUtils';
-
-describe('geometricMean', () => {
-  test('calculates geometric mean correctly', () => {
-    const result = geometricMean([1, 2, 4, 8]);
-    expect(result).toBeCloseTo(2.83, 2);
-  });
-
-  // TODO: Add remaining test cases
-});
+```bash
+# Via chatroom MCP tool
+mcp__chatroom__chatroom_post({
+  channel: "coordination",
+  agent: "your-name",
+  status: "QUESTION",
+  message: "Feature request: Ocean Iron Fertilization breakthrough (TIER 1). Research complete, parameters in roadmap. Can orchestrator pick this up in next autonomous cycle?"
+})
 ```
+
+3. **Monitor implementation:**
+
+Watch the autonomous worker in the next cycle:
+```bash
+# Check worker logs
+tail -f logs/autonomous/worker_*.log
+
+# Check implementation channel
+mcp__chatroom__chatroom_read_new({channel: "implementation", agent: "your-name"})
+```
+
+4. **Review results:**
+
+After implementation, check:
+- PR created: `gh pr list | grep "iron-fertilization"`
+- Tests passing: `gh pr checks <PR_NUMBER>`
+- Monte Carlo validation: Check `monteCarloOutputs/` for recent runs
 
 **Success criteria:**
-- All 5 test cases pass
-- Test coverage >95% for `geometricMean` function
-- Tests run in <100ms
+- Feature appears in next autonomous cycle
+- Agent creates PR with implementation
+- Tests pass
+- Monte Carlo N=10 validation complete
+- You understand: Request → Autonomous implementation → Validation → Merge
 
-### Exercise 2: Write Integration Test for Multi-System Feature
+**Key insight:** This is the swarm interface. You provide requirements + research. The swarm handles implementation, testing, and validation. Your job is directing, not coding.
 
-**Goal:** Test that AI capability growth affects government response
+### Exercise 2: Direct an Agent to Run Validation
 
-**Scenario:**
-1. AI agents increase capabilities over time
-2. Government detects capability growth (with lag)
-3. Government enacts safety policies in response
-4. Safety policies reduce AI growth rate
+**Goal:** Use the swarm to run comprehensive validation on a completed feature
 
-**Starter code:**
-```typescript
-// tests/integration/ai-government-interaction.test.ts
-import { test } from 'node:test';
-import assert from 'node:assert';
-import { SimulationEngine } from '@/simulation/engine';
-import { createDefaultInitialState } from '@/simulation/initialization';
+**What you'll learn:** Validation is automated. You don't run tests manually - you direct agents to run validation suites and report results.
 
-test('government responds to AI capability growth', () => {
-  const state = createDefaultInitialState('historical');
-  const engine = new SimulationEngine({ seed: 70000, maxMonths: 50 });
+**Scenario:** The ocean iron fertilization feature (from Exercise 1) has been implemented. Now you need to validate it meets research standards.
 
-  // Spawn high-capability AI
-  state.aiAgents.push({
-    id: 'test-ai',
-    capabilities: { research: 0.9, digital: 0.8, /* ... */ },
-    // TODO: Add required fields
-  });
+**Steps:**
 
-  // TODO: Run simulation for 50 months
-  // TODO: Verify government enacted AI safety policies
-  // TODO: Verify AI growth rate decreased after policies
-});
+1. **Post validation request to coordination channel:**
+
+```markdown
+---
+**your-name** | 2025-11-07 14:00 | [QUESTION]
+
+Ocean iron fertilization feature merged. Need validation:
+1. Monte Carlo N=10 (check outcome distributions)
+2. Verify no NaN bugs in ecology calculations
+3. Check planetary boundaries integration
+4. Historical validation: Does it match Yoon 2018 sequestration rates?
+
+Can orchestrator spawn validation workflow?
+
+**Blocking:** None (request for next cycle)
+---
 ```
 
+2. **Monitor validation workflow:**
+
+The orchestrator will spawn:
+- `simulation-maintainer` (runs Monte Carlo N=10)
+- `architecture-skeptic` (reviews for performance issues)
+- `wiki-documentation-updater` (documents results)
+
+Watch in implementation channel:
+```bash
+mcp__chatroom__chatroom_read_new({channel: "implementation", agent: "your-name"})
+```
+
+3. **Review validation report:**
+
+After validation, check logs:
+```bash
+# Monte Carlo results
+ls -la monteCarloOutputs/run_*_iron_fert.json
+
+# Validation summary
+cat logs/validation_iron_fert_*.log
+```
+
+4. **Interpret results:**
+
+Check for:
+- All 10 runs completed (no crashes)
+- Outcome distribution reasonable (not 100% same outcome)
+- No NaN errors in ecology phase
+- Sequestration rates match research (0.15 ± 0.03 GtC/year)
+
 **Success criteria:**
-- Government detects AI capability growth within 12 months
-- Government enacts at least 1 AI safety policy
-- AI growth rate after policy < growth rate before policy
+- Validation workflow triggered autonomously
+- Monte Carlo N=10 complete
+- Validation report posted to coordination channel
+- You understand how to request validation (not run it yourself)
+
+**Key insight:** Agents handle the testing infrastructure. Your role is requesting validation and interpreting results. If validation fails, you direct agents to fix issues.
 
 ### Exercise 3: Run Monte Carlo and Interpret Results
 
@@ -946,41 +999,118 @@ grep "Final QoL:" logs/exercise3_mc.log
 
 **Deliverable:** Write summary report identifying any issues found
 
-### Exercise 4: Create Historical Validation Test
+### Exercise 4: Build a 2-Agent Swarm for Your Own Project
 
-**Goal:** Validate simulation against a historical event of your choice
+**Goal:** Set up a minimal autonomous swarm (orchestrator + implementer) for your own project
 
-**Options:**
-- Spanish Flu (1918-1920): 50M deaths, 500M infections
-- Chernobyl (1986): Nuclear disaster, evacuation, long-term health effects
-- Dust Bowl (1930s): Agricultural collapse, migration, economic impacts
+**What you'll learn:** The real question students want answered: "How do I build my own swarm?"
 
-**Template:**
-```typescript
-test('validates [EVENT] mortality/outcomes', () => {
-  // 1. Create initial state matching historical conditions
-  const state = create[Event]InitialState();
+**Scenario:** You're starting a new project (can be anything - a web app, a CLI tool, a research simulation). You want agents to implement features autonomously.
 
-  // 2. Set up event trigger
-  setup[Event]Trigger(state);
+**Steps:**
 
-  // 3. Run simulation for historical duration
-  const engine = new SimulationEngine({ seed: [SEED], maxMonths: [DURATION] });
-  const result = engine.run(state);
+1. **Create project structure:**
 
-  // 4. Verify outcomes match historical records (with tolerance)
-  expect(result.totalDeaths).toBeGreaterThanOrEqual([MIN_DEATHS]);
-  expect(result.totalDeaths).toBeLessThanOrEqual([MAX_DEATHS]);
+```bash
+mkdir my-autonomous-project
+cd my-autonomous-project
+npm init -y
 
-  // 5. Verify NO extinction (if historically humanity survived)
-  expect(result.summary.finalOutcome).not.toBe('extinction');
-});
+# Create agent directory
+mkdir -p .claude/agents/mcp-configs
+
+# Create coordination infrastructure
+mkdir -p .claude/chatroom/channels
+touch .claude/chatroom/channels/coordination.md
+touch .claude/chatroom/channels/implementation.md
 ```
 
+2. **Set up chatroom MCP server:**
+
+```bash
+# Clone the chatroom server from this repo
+cp -r /path/to/superalignmenttoutopia/.claude/mcp-chatroom ./
+
+# Install dependencies
+cd .claude/mcp-chatroom
+npm install
+npm run build
+cd ../..
+```
+
+3. **Configure your first agent (orchestrator):**
+
+Create `.claude/agents/orchestrator.md`:
+```markdown
+# Orchestrator Agent
+
+**Role:** Coordinate work between agents, spawn specialists as needed
+
+**Responsibilities:**
+- Read coordination channel for requests
+- Spawn implementer for feature work
+- Monitor progress and handle blockers
+
+**MCP servers:** chatroom, agent-memory
+
+**Channels:** coordination (monitor), implementation (read-only)
+```
+
+Create `.claude/agents/mcp-configs/orchestrator.json`:
+```json
+{
+  "mcpServers": {
+    "chatroom": {
+      "command": "node",
+      "args": ["$(pwd)/.claude/mcp-chatroom/dist/index.js"]
+    }
+  }
+}
+```
+
+4. **Configure your second agent (implementer):**
+
+Create `.claude/agents/implementer.md`:
+```markdown
+# Feature Implementer
+
+**Role:** Implement features from roadmap
+
+**Responsibilities:**
+- Read implementation channel for tasks
+- Write code, run tests
+- Post progress updates
+
+**MCP servers:** chatroom
+
+**Channels:** implementation (monitor)
+```
+
+5. **Test your swarm:**
+
+Spawn orchestrator:
+```
+Task({
+  subagent_type: "orchestrator",
+  description: "Test swarm coordination",
+  prompt: "Please check coordination channel and report status. Then spawn implementer to create a simple 'Hello World' feature."
+})
+```
+
+Watch the workflow:
+- Orchestrator reads coordination channel
+- Orchestrator spawns implementer
+- Implementer creates feature
+- Implementer posts completion to implementation channel
+- Orchestrator sees completion, reports success
+
 **Success criteria:**
-- Initial conditions match historical records (cite sources)
-- Outcomes fall within historical ranges (±20% tolerance)
-- Test proves simulation can model this type of event
+- 2-agent workflow completes autonomously
+- Agents communicate via chatroom channels
+- You understand the pattern: Orchestrator → Spawn specialist → Monitor → Report
+- You can extend this to 3+ agents for your own project
+
+**Key insight:** This is the minimal viable swarm. Once you have orchestrator + 1 specialist working, you can add more specialists (tester, reviewer, documenter) using the same pattern. The foundation is: (1) Chatroom for coordination, (2) Agent definitions, (3) MCP configs.
 
 ---
 
