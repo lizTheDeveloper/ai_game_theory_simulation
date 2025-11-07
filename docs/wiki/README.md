@@ -341,6 +341,72 @@ Fixed critical threshold mismatch: simulation used theoretical 35°C limit inste
 
 ### November 6, 2025
 
+**🔧 Determinism Fix - RNG Algorithm Unification (CRITICAL)**
+
+**Issue:** Monte Carlo coefficient of variation regressed from 2.61% to 5.16% after a large merge, despite using identical seeds across runs.
+
+**Root Cause:** Initialization and engine used DIFFERENT RNG algorithms:
+- `initialization.ts` created its own **LCG** (Linear Congruential Generator) from seed
+- `engine.ts` created its own **SeededRandom** from seed
+- Even with IDENTICAL seeds (42000, 42000, 42000), different algorithms produced different sequences
+- Result: Poisson sampling diverged at Month 0 (potentialNew: 1, 0, 1)
+- Caused 2× increase in coefficient of variation (2.61% → 5.16%)
+
+**Fix Applied:** (commit 9c6f25d)
+- Changed `createDefaultInitialState()` signature: parameter `seed?: number` → `rng?: () => number`
+- Removed local LCG creation from initialization
+- Engine creates SeededRandom (as before), gets RNG function via `engine.getRNG().next.bind(...)`
+- Passes engine's RNG to initialization: `createDefaultInitialState(..., rngFunction)`
+- **Now ONE shared RNG instance** across initialization + engine
+
+**Results:**
+- **Before:** N=3 runs with seed=42000 showed divergence at Month 0 (potentialNew: 1, 0, 1)
+- **After:** Perfect determinism achieved - all metrics match to 6 decimal places:
+  ```
+  Agent count:       20 vs 20 vs 20 - ✅ MATCH
+  Total capability:  2.069271 vs 2.069271 vs 2.069271 - ✅ MATCH
+  Avg alignment:     0.635266 vs 0.635266 vs 0.635266 - ✅ MATCH
+  First agent cap:   0.095986 vs 0.095986 vs 0.095986 - ✅ MATCH
+  ```
+
+**Impact:**
+- Eliminates 5.16% CV regression
+- Should return to ~2.61% baseline (or better)
+- Enables proper Monte Carlo validation
+- Architectural insight: **Engine owns the RNG, callers borrow it**
+
+**Validation Command:**
+```bash
+npx tsx scripts/testRNGUnification.ts  # Fast 3-run test
+npx tsx scripts/comprehensiveDeterminismValidation.ts --seed=42 --runs=10  # Full validation
+```
+
+**Defensive Pattern for RNG:**
+```typescript
+// ❌ NEVER create separate RNG instances with same seed
+const seed = 42000;
+const engine = new SimulationEngine({ seed });  // Creates SeededRandom
+const state = createDefaultInitialState('historical', ..., seed);  // Created LCG
+// → Two different algorithms → divergence
+
+// ✅ ALWAYS share engine's RNG instance
+const seed = 42000;
+const engine = new SimulationEngine({ seed });
+const rng = engine.getRNG().next.bind(engine.getRNG());
+const state = createDefaultInitialState('historical', ..., rng);
+// → One RNG instance → perfect determinism
+```
+
+**Files Changed:**
+- `src/simulation/initialization.ts` (accept rng param, remove LCG creation)
+- `scripts/monteCarloSimulation.ts` (2 call sites updated to pass engine's RNG)
+- `scripts/testRNGUnification.ts` (NEW - validation script)
+- `logs/rng_unification_fix_20251106.md` (NEW - detailed documentation)
+
+**Key Lesson:** Same seed ≠ same sequence if algorithms differ. RNG algorithm matters as much as the seed.
+
+---
+
 **🔧 Determinism Fix - Object Iteration Order (90% Resolution)**
 
 **Issue:** Monte Carlo runs with identical seeds were producing divergent results (CV = 2.61%), breaking deterministic reproducibility required for research validation.
