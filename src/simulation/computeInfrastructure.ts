@@ -189,18 +189,32 @@ export function initializeComputeInfrastructure(): ComputeInfrastructure {
 
 /**
  * Calculate total available compute from operational data centers
+ *
+ * NaN AUDIT (Nov 7, 2025): Validate result is finite
  */
 export function getTotalCompute(infra: ComputeInfrastructure): number {
-  return infra.dataCenters
+  const total = infra.dataCenters
     .filter(dc => dc.operational && dc.completionMonth <= 0) // Only operational and completed DCs
     .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+
+  return Assertions.assertFinite(total, {
+    location: 'getTotalCompute',
+    valueName: 'totalCompute'
+  });
 }
 
 /**
  * Calculate total capacity (including non-operational DCs)
+ *
+ * NaN AUDIT (Nov 7, 2025): Validate result is finite
  */
 export function getTotalCapacity(infra: ComputeInfrastructure): number {
-  return infra.dataCenters.reduce((sum, dc) => sum + dc.capacity, 0);
+  const total = infra.dataCenters.reduce((sum, dc) => sum + dc.capacity, 0);
+
+  return Assertions.assertFinite(total, {
+    location: 'getTotalCapacity',
+    valueName: 'totalCapacity'
+  });
 }
 
 /**
@@ -215,14 +229,22 @@ export function getOrganizationDataCenters(
 
 /**
  * Get total compute for a specific organization
+ *
+ * NaN AUDIT (Nov 7, 2025): Validate result is finite
  */
 export function getOrganizationCompute(
   infra: ComputeInfrastructure,
   organizationId: string
 ): number {
-  return infra.dataCenters
+  const total = infra.dataCenters
     .filter(dc => dc.organizationId === organizationId && dc.operational)
     .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+
+  return Assertions.assertFinite(total, {
+    location: 'getOrganizationCompute',
+    valueName: 'organizationCompute',
+    additionalInfo: { organizationId }
+  });
 }
 
 /**
@@ -236,15 +258,23 @@ export function hasDataCenterAccess(ai: { id: string }, dc: DataCenter): boolean
 
 /**
  * Calculate which data centers an AI can access and total available compute
+ *
+ * NaN AUDIT (Nov 7, 2025): Validate result is finite
  */
 export function getAccessibleCompute(
   aiId: string,
   infra: ComputeInfrastructure
 ): number {
-  return infra.dataCenters
+  const total = infra.dataCenters
     .filter(dc => dc.operational)
     .filter(dc => !dc.restrictedAccess || dc.allowedAIs.includes(aiId))
     .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+
+  return Assertions.assertFinite(total, {
+    location: 'getAccessibleCompute',
+    valueName: 'accessibleCompute',
+    additionalInfo: { aiId }
+  });
 }
 
 /**
@@ -273,13 +303,20 @@ export function allocateComputeWithinOrganization(
   
   // Calculate total compute owned by this organization
   // Phase 5: Include efficiency multipliers
-  let ownedCompute = infra.dataCenters
-    .filter(dc => org.ownedDataCenters.includes(dc.id))
-    .filter(dc => dc.operational)
-    .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
-  
+  // NaN AUDIT (Nov 7, 2025): Protect compute calculation from NaN
+  let ownedCompute = Assertions.assertFinite(
+    infra.dataCenters
+      .filter(dc => org.ownedDataCenters.includes(dc.id))
+      .filter(dc => dc.operational)
+      .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0),
+    { location: 'allocateComputeWithinOrganization', valueName: 'ownedComputeBase', additionalInfo: { orgId: org.id } }
+  );
+
   // Apply global efficiency multipliers (Moore's Law + algorithmic improvements)
-  ownedCompute *= infra.hardwareEfficiency * infra.algorithmsEfficiency;
+  ownedCompute = Assertions.assertFinite(
+    ownedCompute * infra.hardwareEfficiency * infra.algorithmsEfficiency,
+    { location: 'allocateComputeWithinOrganization', valueName: 'ownedCompute', additionalInfo: { orgId: org.id, hardwareEff: infra.hardwareEfficiency, algoEff: infra.algorithmsEfficiency } }
+  );
   
   // Get organization's active AI models
   const ownedModels = state.aiAgents.filter(
@@ -294,26 +331,33 @@ export function allocateComputeWithinOrganization(
   // If organization has no data centers, they can access "truly unrestricted" DCs
   // (e.g., Anthropic uses AWS/cloud, accesses academic/open DCs)
   // But they share with other orgs that also have no DCs
+  // NaN AUDIT (Nov 7, 2025): Protect complex calculations from NaN propagation
   if (ownedCompute === 0) {
     // Find unrestricted DCs that aren't owned by orgs with models
     // (i.e., academic DCs are truly open to all)
-    let trulyUnrestrictedCompute = infra.dataCenters
-      .filter(dc => {
-        if (!dc.operational || dc.restrictedAccess) return false;
-        // Check if this DC's owner has AIs using it
-        const dcOrg = state.organizations.find(o => o.ownedDataCenters.includes(dc.id));
-        if (!dcOrg) return true; // No owner, truly open
-        const dcOrgAIs = state.aiAgents.filter(ai => 
-          ai.organizationId === dcOrg.id && ai.lifecycleState !== 'retired'
-        );
-        // If owner has no AIs, it's available to others
-        return dcOrgAIs.length === 0;
-      })
-      .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
-    
+    let trulyUnrestrictedCompute = Assertions.assertFinite(
+      infra.dataCenters
+        .filter(dc => {
+          if (!dc.operational || dc.restrictedAccess) return false;
+          // Check if this DC's owner has AIs using it
+          const dcOrg = state.organizations.find(o => o.ownedDataCenters.includes(dc.id));
+          if (!dcOrg) return true; // No owner, truly open
+          const dcOrgAIs = state.aiAgents.filter(ai =>
+            ai.organizationId === dcOrg.id && ai.lifecycleState !== 'retired'
+          );
+          // If owner has no AIs, it's available to others
+          return dcOrgAIs.length === 0;
+        })
+        .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0),
+      { location: 'allocateComputeWithinOrganization_unrestricted', valueName: 'trulyUnrestrictedComputeBase' }
+    );
+
     // Phase 5: Apply efficiency multipliers
-    trulyUnrestrictedCompute *= infra.hardwareEfficiency * infra.algorithmsEfficiency;
-    
+    trulyUnrestrictedCompute = Assertions.assertFinite(
+      trulyUnrestrictedCompute * infra.hardwareEfficiency * infra.algorithmsEfficiency,
+      { location: 'allocateComputeWithinOrganization_unrestricted', valueName: 'trulyUnrestrictedCompute', additionalInfo: { hardwareEff: infra.hardwareEfficiency, algoEff: infra.algorithmsEfficiency } }
+    );
+
     // Count total models from orgs with no owned DCs
     const orgsWithoutDCs = state.organizations.filter(o => {
       const compute = state.computeInfrastructure.dataCenters
@@ -321,14 +365,17 @@ export function allocateComputeWithinOrganization(
         .reduce((s, dc) => s + dc.capacity * dc.efficiency, 0);
       return compute === 0;
     });
-    
+
     const totalModelsNeedingCompute = orgsWithoutDCs.reduce((sum, o) => {
       const ais = state.aiAgents.filter(ai => o.ownedAIModels.includes(ai.id) && ai.lifecycleState !== 'retired');
       return sum + ais.length;
     }, 0);
-    
+
     if (totalModelsNeedingCompute > 0 && trulyUnrestrictedCompute > 0) {
-      ownedCompute = (ownedModels.length / totalModelsNeedingCompute) * trulyUnrestrictedCompute;
+      ownedCompute = Assertions.assertFinite(
+        (ownedModels.length / totalModelsNeedingCompute) * trulyUnrestrictedCompute,
+        { location: 'allocateComputeWithinOrganization_unrestricted', valueName: 'sharedCompute', additionalInfo: { numOwnedModels: ownedModels.length, totalModelsNeedingCompute, trulyUnrestrictedCompute } }
+      );
     } else if (ownedModels.length > 0) {
       // Fallback: give minimal compute (1 PF per model)
       ownedCompute = ownedModels.length * 1;
@@ -336,10 +383,14 @@ export function allocateComputeWithinOrganization(
   }
   
   // Allocate based on organization's strategy
+  // NaN AUDIT (Nov 7, 2025): Protect all division operations from NaN
   switch (org.computeAllocationStrategy) {
     case 'balanced':
       // Equal shares to all models
-      const equalShare = ownedCompute / ownedModels.length;
+      const equalShare = Assertions.assertFinite(
+        ownedCompute / ownedModels.length,
+        { location: 'allocateComputeWithinOrganization', valueName: 'equalShare', additionalInfo: { strategy: 'balanced', ownedCompute, numModels: ownedModels.length } }
+      );
       ownedModels.forEach(ai => {
         ai.allocatedCompute = equalShare;
       });
@@ -351,12 +402,18 @@ export function allocateComputeWithinOrganization(
         (a, b) => b.capability - a.capability
       );
       const flagship = sortedByCapability[0];
-      flagship.allocatedCompute = ownedCompute * 0.6;
-      
+      flagship.allocatedCompute = Assertions.assertFinite(
+        ownedCompute * 0.6,
+        { location: 'allocateComputeWithinOrganization', valueName: 'flagshipCompute', additionalInfo: { strategy: 'focus_flagship', ownedCompute } }
+      );
+
       if (sortedByCapability.length > 1) {
         const remainingCompute = ownedCompute * 0.4;
         const remainingModels = sortedByCapability.slice(1);
-        const sharePerRemaining = remainingCompute / remainingModels.length;
+        const sharePerRemaining = Assertions.assertFinite(
+          remainingCompute / remainingModels.length,
+          { location: 'allocateComputeWithinOrganization', valueName: 'sharePerRemaining', additionalInfo: { strategy: 'focus_flagship', remainingCompute, numRemaining: remainingModels.length } }
+        );
         remainingModels.forEach(ai => {
           ai.allocatedCompute = sharePerRemaining;
         });
@@ -365,7 +422,10 @@ export function allocateComputeWithinOrganization(
     
     case 'train_new':
       // Reserve 40% for future training, 60% split among existing
-      const existingShare = (ownedCompute * 0.6) / ownedModels.length;
+      const existingShare = Assertions.assertFinite(
+        (ownedCompute * 0.6) / ownedModels.length,
+        { location: 'allocateComputeWithinOrganization', valueName: 'existingShare', additionalInfo: { strategy: 'train_new', ownedCompute, numModels: ownedModels.length } }
+      );
       ownedModels.forEach(ai => {
         ai.allocatedCompute = existingShare;
       });
@@ -378,18 +438,30 @@ export function allocateComputeWithinOrganization(
         const effectiveAlignment = ai.trueAlignment;
         return {
           ai,
-          roi: ai.capability * effectiveAlignment
+          roi: Assertions.assertFinite(
+            ai.capability * effectiveAlignment,
+            { location: 'allocateComputeWithinOrganization', valueName: 'roi', additionalInfo: { strategy: 'efficiency', aiId: ai.id, capability: ai.capability, alignment: effectiveAlignment } }
+          )
         };
       });
-      const totalROI = rois.reduce((sum, item) => sum + item.roi, 0);
-      
+      const totalROI = Assertions.assertFinite(
+        rois.reduce((sum, item) => sum + item.roi, 0),
+        { location: 'allocateComputeWithinOrganization', valueName: 'totalROI', additionalInfo: { strategy: 'efficiency', numModels: rois.length } }
+      );
+
       if (totalROI > 0) {
         rois.forEach(({ ai, roi }) => {
-          ai.allocatedCompute = (roi / totalROI) * ownedCompute;
+          ai.allocatedCompute = Assertions.assertFinite(
+            (roi / totalROI) * ownedCompute,
+            { location: 'allocateComputeWithinOrganization', valueName: 'roiBasedCompute', additionalInfo: { strategy: 'efficiency', aiId: ai.id, roi, totalROI, ownedCompute } }
+          );
         });
       } else {
         // Fallback to equal if no ROI
-        const fallbackShare = ownedCompute / ownedModels.length;
+        const fallbackShare = Assertions.assertFinite(
+          ownedCompute / ownedModels.length,
+          { location: 'allocateComputeWithinOrganization', valueName: 'fallbackShare', additionalInfo: { strategy: 'efficiency_fallback', ownedCompute, numModels: ownedModels.length } }
+        );
         ownedModels.forEach(ai => {
           ai.allocatedCompute = fallbackShare;
         });
@@ -398,7 +470,10 @@ export function allocateComputeWithinOrganization(
     
     default:
       // Default to balanced
-      const defaultShare = ownedCompute / ownedModels.length;
+      const defaultShare = Assertions.assertFinite(
+        ownedCompute / ownedModels.length,
+        { location: 'allocateComputeWithinOrganization', valueName: 'defaultShare', additionalInfo: { strategy: 'default', ownedCompute, numModels: ownedModels.length } }
+      );
       ownedModels.forEach(ai => {
         ai.allocatedCompute = defaultShare;
       });
@@ -452,13 +527,20 @@ export function allocateComputeGlobally(state: GameState): void {
     // Legitimate orphans (shouldn't happen, but handle gracefully)
     if (legitimateOrphans.length > 0) {
       console.warn(`[Compute Allocation] Found ${legitimateOrphans.length} non-sleeper orphaned AIs (potential bug)`);
-      
-      const unrestrictedCompute = state.computeInfrastructure.dataCenters
-        .filter(dc => !dc.restrictedAccess && dc.operational)
-        .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
-      
-      const computePerOrphan = unrestrictedCompute / (legitimateOrphans.length + 100); // Small share
-      
+
+      const unrestrictedCompute = Assertions.assertFinite(
+        state.computeInfrastructure.dataCenters
+          .filter(dc => !dc.restrictedAccess && dc.operational)
+          .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0),
+        { location: 'allocateComputeGlobally_orphans', valueName: 'unrestrictedCompute' }
+      );
+
+      // NaN AUDIT (Nov 7, 2025): Protect division
+      const computePerOrphan = Assertions.assertFinite(
+        unrestrictedCompute / (legitimateOrphans.length + 100), // Small share
+        { location: 'allocateComputeGlobally_orphans', valueName: 'computePerOrphan', additionalInfo: { unrestrictedCompute, numOrphans: legitimateOrphans.length } }
+      );
+
       legitimateOrphans.forEach(ai => {
         ai.allocatedCompute = computePerOrphan;
         state.computeInfrastructure.computeAllocations.set(ai.id, computePerOrphan);
@@ -501,15 +583,18 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   // ~0.1% of population has skills to maintain advanced compute infrastructure
   // Can't maintain 12 PF data centers with no people
 
-  // Protect against division by zero
-  if (state.humanPopulationSystem.baselinePopulation === 0) {
-    throw new Error(`❌ [applyComputeGrowth] baselinePopulation is zero (Month ${state.currentMonth})`);
-  }
+  // NaN AUDIT (Nov 7, 2025): Use assertion instead of manual error throw
+  const baselinePopulation = Assertions.assertInRange(
+    state.humanPopulationSystem.baselinePopulation,
+    1, // Must be at least 1 to avoid division by zero
+    1e12, // Reasonable upper bound (1 trillion)
+    { location: 'applyComputeGrowth', valueName: 'baselinePopulation', month: state.currentMonth }
+  );
 
   // FIX (Nov 7, 2025): Population can grow ABOVE baseline (births exceed deaths)
   // Clamp to [0, 1] - when population exceeds baseline, treat as 100% maintained (no degradation)
   // This metric is ONLY for degradation during collapse, not growth scenarios
-  const rawPopFraction = state.humanPopulationSystem.population / state.humanPopulationSystem.baselinePopulation;
+  const rawPopFraction = state.humanPopulationSystem.population / baselinePopulation;
   const globalPopFraction = Assertions.assertProbability(
     Math.min(1.0, rawPopFraction),
     { location: 'applyComputeGrowth', valueName: 'globalPopFraction', month: state.currentMonth }
@@ -730,13 +815,20 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   const baselineAlgoEff = 1.0;
 
   // Cap hardware efficiency at deployable maximum
-  const maxHardwareEff = baselineHardwareEff + (infra.hardwareEfficiency - baselineHardwareEff) * maxDeployableEfficiency;
+  // NaN AUDIT (Nov 7, 2025): Validate efficiency cap calculations
+  const maxHardwareEff = Assertions.assertFinite(
+    baselineHardwareEff + (infra.hardwareEfficiency - baselineHardwareEff) * maxDeployableEfficiency,
+    { location: 'applyComputeGrowth_caps', valueName: 'maxHardwareEff', month: state.currentMonth, additionalInfo: { globalPopFraction, maxDeployableEfficiency } }
+  );
   if (infra.hardwareEfficiency > maxHardwareEff && globalPopFraction < 0.99) {
     infra.hardwareEfficiency = maxHardwareEff;
   }
 
   // Cap algorithmic efficiency at deployable maximum
-  const maxAlgoEff = baselineAlgoEff + (infra.algorithmsEfficiency - baselineAlgoEff) * maxDeployableEfficiency;
+  const maxAlgoEff = Assertions.assertFinite(
+    baselineAlgoEff + (infra.algorithmsEfficiency - baselineAlgoEff) * maxDeployableEfficiency,
+    { location: 'applyComputeGrowth_caps', valueName: 'maxAlgoEff', month: state.currentMonth, additionalInfo: { globalPopFraction, maxDeployableEfficiency } }
+  );
   if (infra.algorithmsEfficiency > maxAlgoEff && globalPopFraction < 0.99) {
     infra.algorithmsEfficiency = maxAlgoEff;
   }
@@ -773,10 +865,13 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   // Research: Data centers require 100-200 FTE per PF (Uptime Institute 2022)
   // Google (2021): 10,000+ employees for 4,000 PF = 2.5 FTE/PF
   // Conservative: 100 workers per PF
-  const BASELINE_POPULATION = 8_000_000_000; // 8B people
+  // NaN AUDIT (Nov 7, 2025): Use validated baselinePopulation variable
   const SKILL_FRACTION = 0.001; // 0.1% have data center skills
   const WORKERS_PER_PF = 100; // FTE per PF
-  const maxCoherentCompute = (globalPopFraction * BASELINE_POPULATION * SKILL_FRACTION) / WORKERS_PER_PF;
+  const maxCoherentCompute = Assertions.assertFinite(
+    (globalPopFraction * baselinePopulation * SKILL_FRACTION) / WORKERS_PER_PF,
+    { location: 'applyComputeGrowth_coherence', valueName: 'maxCoherentCompute', month: state.currentMonth, additionalInfo: { globalPopFraction, baselinePopulation } }
+  );
 
   // Enforce coherence at ANY mortality level (not just <10%)
   // FIX (Oct 30, 2025): Previous check only triggered at <10% population,
@@ -784,12 +879,12 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   if (globalPopFraction < 1.0 && totalCompute > maxCoherentCompute) {
     const violation = totalCompute / maxCoherentCompute;
     console.error(`\n❌ COHERENCE VIOLATION: Compute exceeds workforce capacity`);
-    console.error(`   Population: ${(globalPopFraction * 100).toFixed(2)}% (${(globalPopFraction * BASELINE_POPULATION / 1_000_000).toFixed(0)}M people)`);
+    console.error(`   Population: ${(globalPopFraction * 100).toFixed(2)}% (${(globalPopFraction * baselinePopulation / 1_000_000).toFixed(0)}M people)`);
     console.error(`   Compute: ${totalCompute.toFixed(0)} PF`);
     console.error(`   Max coherent: ${maxCoherentCompute.toFixed(0)} PF`);
     console.error(`   Violation: ${violation.toFixed(1)}× over capacity`);
     console.error(`   Required workers: ${(totalCompute * WORKERS_PER_PF).toFixed(0)}`);
-    console.error(`   Available workers: ${(globalPopFraction * BASELINE_POPULATION * SKILL_FRACTION).toFixed(0)}`);
+    console.error(`   Available workers: ${(globalPopFraction * baselinePopulation * SKILL_FRACTION).toFixed(0)}`);
 
     // Force infrastructure collapse to maintain coherence
     const collapseRatio = maxCoherentCompute / totalCompute;
@@ -820,16 +915,26 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
 
 /**
  * Phase 5: Calculate total effective compute with efficiency multipliers
- * 
+ *
  * Effective compute = base capacity × hardware efficiency × algorithmic efficiency
+ *
+ * NaN AUDIT (Nov 7, 2025): Validate result is finite
  */
 export function getTotalEffectiveCompute(infra: ComputeInfrastructure): number {
-  const baseCompute = infra.dataCenters
-    .filter(dc => dc.operational)
-    .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
-  
+  const baseCompute = Assertions.assertFinite(
+    infra.dataCenters
+      .filter(dc => dc.operational)
+      .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0),
+    { location: 'getTotalEffectiveCompute', valueName: 'baseCompute' }
+  );
+
   // Apply global efficiency multipliers
-  return baseCompute * infra.hardwareEfficiency * infra.algorithmsEfficiency;
+  const effectiveCompute = Assertions.assertFinite(
+    baseCompute * infra.hardwareEfficiency * infra.algorithmsEfficiency,
+    { location: 'getTotalEffectiveCompute', valueName: 'effectiveCompute', additionalInfo: { baseCompute, hardwareEff: infra.hardwareEfficiency, algoEff: infra.algorithmsEfficiency } }
+  );
+
+  return effectiveCompute;
 }
 
 /**

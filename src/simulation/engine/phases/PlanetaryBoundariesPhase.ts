@@ -12,6 +12,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertPlanetaryBoundary } from '@/simulation/utils/assertions';
 
 export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly id = 'planetary_boundaries';
@@ -30,6 +31,13 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     setDeterministicRng(rng);
     const { updateBoundaryRecovery } = require('../../planetaryBoundaryRecovery');
 
+    // Validate key planetary boundaries before update
+    assertPlanetaryBoundary(state.planetaryBoundaries.co2Concentration, 'co2', {
+      location: 'PlanetaryBoundariesPhase.execute',
+      valueName: 'co2Concentration',
+      month: state.currentMonth
+    });
+
     // Update Biosphere Integrity Index (BII) - Climate Mortality Phase 2 (Nov 6, 2025)
     // Species tracking with climate velocity modeling
     updateBiosphereIntegrityIndex(state, rng);
@@ -39,6 +47,13 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
 
     // Update boundary recovery mechanics (Oct 21, 2025 - Ecological Recovery System)
     updateBoundaryRecovery(state, rng);
+
+    // Validate key planetary boundaries after update
+    assertPlanetaryBoundary(state.planetaryBoundaries.co2Concentration, 'co2', {
+      location: 'PlanetaryBoundariesPhase.execute (post-update)',
+      valueName: 'co2Concentration',
+      month: state.currentMonth
+    });
 
     return { events: [] };
   }

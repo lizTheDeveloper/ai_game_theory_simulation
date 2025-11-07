@@ -16,6 +16,7 @@ import { SimulationPhase, PhaseResult, RNGFunction, PhaseContext } from '../Phas
 import { GameState } from '@/types/game';
 import { updateExtremeWeatherEvents } from '@/simulation/extremeWeatherEvents';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions';
 
 export class ExtremeWeatherEventsPhase implements SimulationPhase {
   readonly id = 'extreme-weather-events';
@@ -23,6 +24,13 @@ export class ExtremeWeatherEventsPhase implements SimulationPhase {
   readonly order = 15.2; // After WetBulbTemperaturePhase (order 15.0), before UBI (15.3)
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
+    // Validate temperature state (extreme weather driven by climate)
+    assertFinite(state.environmental.currentTemperature, {
+      location: 'ExtremeWeatherEventsPhase.execute',
+      valueName: 'currentTemperature',
+      month: state.currentMonth
+    });
+
     // Update extreme weather system (storms)
     setDeterministicRng(rng);
     updateExtremeWeatherEvents(state, rng);

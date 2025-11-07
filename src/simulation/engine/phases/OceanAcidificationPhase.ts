@@ -7,6 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertPlanetaryBoundary } from '@/simulation/utils/assertions';
 
 export class OceanAcidificationPhase implements SimulationPhase {
   readonly id = 'ocean-acidification';
@@ -16,9 +17,22 @@ export class OceanAcidificationPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateOceanAcidificationSystem, checkOceanAcidificationTechUnlocks } = require('../../oceanAcidification');
     setDeterministicRng(rng);
-    
+
+    // Validate ocean pH before/after update
+    assertPlanetaryBoundary(state.oceanHealth.pH, 'oceanPH', {
+      location: 'OceanAcidificationPhase.execute',
+      valueName: 'ocean pH',
+      month: state.currentMonth
+    });
+
     updateOceanAcidificationSystem(state);
     checkOceanAcidificationTechUnlocks(state);
+
+    assertPlanetaryBoundary(state.oceanHealth.pH, 'oceanPH', {
+      location: 'OceanAcidificationPhase.execute (post-update)',
+      valueName: 'ocean pH',
+      month: state.currentMonth
+    });
 
     return { events: [] };
   }

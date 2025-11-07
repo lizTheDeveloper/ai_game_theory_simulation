@@ -11,6 +11,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertTemperatureDelta } from '@/simulation/utils/assertions';
 
 export class WetBulbTemperaturePhase implements SimulationPhase {
   readonly id = 'wet_bulb_temperature';
@@ -21,7 +22,21 @@ export class WetBulbTemperaturePhase implements SimulationPhase {
     const { updateWetBulbTemperatureSystem } = require('../../wetBulbEvents');
     setDeterministicRng(rng);
 
+    // Validate temperature state before update
+    assertFinite(state.environmental.currentTemperature, {
+      location: 'WetBulbTemperaturePhase.execute (pre-update)',
+      valueName: 'currentTemperature',
+      month: state.currentMonth
+    });
+
     updateWetBulbTemperatureSystem(state, rng);
+
+    // Validate temperature state after update
+    assertFinite(state.environmental.currentTemperature, {
+      location: 'WetBulbTemperaturePhase.execute (post-update)',
+      valueName: 'currentTemperature',
+      month: state.currentMonth
+    });
 
     return { events: [] };
   }

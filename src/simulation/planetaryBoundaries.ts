@@ -463,6 +463,19 @@ function initializeLandUseSystem(rng?: RNGFunction): LandUseSystem {
       grasslands.extinctionRate * grasslands.biodiversityWeight +
       borealArctic.extinctionRate * borealArctic.biodiversityWeight;
     // = 116 E/MSY (conservative baseline)
+
+    // NaN AUDIT (Nov 7, 2025): Validate baselineGlobalRate before division
+    assertFinite(baselineGlobalRate, {
+      location: 'initializeLandUseSystem.scaleRegionalRates',
+      valueName: 'baselineGlobalRate',
+      additionalInfo: {
+        tropicalRate: tropical.extinctionRate,
+        temperateRate: temperate.extinctionRate,
+        grasslandsRate: grasslands.extinctionRate,
+        borealArcticRate: borealArctic.extinctionRate
+      }
+    });
+
     const scaleFactor = globalExtinctionRate / baselineGlobalRate;
     // Scale regional rates proportionally
     // DETERMINISM FIX (Nov 5, 2025): Clamp scaled rates to [10, 1000] E/MSY range
@@ -1108,7 +1121,12 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
       console.log(`   Status: Initial crisis (Month ${monthsSinceCascade}/48)`);
     } else {
       console.log(`   Status: ACCELERATING COLLAPSE (Month ${monthsSinceCascade - 48} past crisis)`);
-      console.log(`   Death rate: ${(theoreticalMortalityUncapped / baseMortalityRate).toFixed(1)}x baseline`);
+      // NaN AUDIT (Nov 7, 2025): Protect division by baseMortalityRate (should be > 0 from config)
+      if (baseMortalityRate > 0) {
+        console.log(`   Death rate: ${(theoreticalMortalityUncapped / baseMortalityRate).toFixed(1)}x baseline`);
+      } else {
+        console.log(`   Death rate: INVALID (baseMortalityRate = ${baseMortalityRate})`);
+      }
     }
   }
 

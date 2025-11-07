@@ -14,6 +14,7 @@
 import { GameState, AIAgent, GameEvent } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { addSimulationEvent } from './utils/eventLogger';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Wake conditions for a sleeper agent

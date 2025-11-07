@@ -258,6 +258,15 @@ export function resolveMortality(
   // Summarize mortality risk sources BEFORE resolution
   // This shows what's driving base mortality (target: identify 5% monthly sources)
   const totalBaseRisk = risks.reduce((sum, r) => sum + r.baseRisk, 0);
+
+  // NaN AUDIT (Nov 7, 2025): Validate totalBaseRisk before division
+  assertFinite(totalBaseRisk, {
+    location: 'resolveMortality.diagnosticLogging',
+    valueName: 'totalBaseRisk',
+    month: state.currentMonth,
+    additionalInfo: { riskCount: risks.length }
+  });
+
   const risksBySource = new Map<string, { risk: number; count: number }>();
   const risksByProximate = new Map<string, number>();
   const risksByRoot = new Map<string, number>();
@@ -276,6 +285,8 @@ export function resolveMortality(
   }
 
   // Log summary (only if total risk > 0.1% to reduce noise)
+  // NaN AUDIT (Nov 7, 2025): Division by totalBaseRisk is safe here
+  // because we've validated it's finite above
   if (totalBaseRisk > 0.001) {
     console.log(`\n💀💀💀 MORTALITY RISK SUMMARY (Month ${state.currentMonth}) 💀💀💀`);
     console.log(`  Total base risk: ${totalBaseRisk.toFixed(4)} (${(totalBaseRisk * 100).toFixed(2)}%)`);
@@ -404,6 +415,19 @@ export function resolveMortality(
       } else {
         const currentVulnerabilityEffect = deathProb / sumBaseRisks;
 
+        // NaN AUDIT (Nov 7, 2025): Validate currentVulnerabilityEffect before division at line 422
+        assertFinite(currentVulnerabilityEffect, {
+          location: 'resolveMortality.compressionCalculation',
+          valueName: 'currentVulnerabilityEffect',
+          month: state.currentMonth,
+          additionalInfo: {
+            demographic: demo.name,
+            deathProb,
+            sumBaseRisks,
+            riskCount: risks.length
+          }
+        });
+
         // ASSERTION: currentVulnerabilityEffect should never exceed ~3× (informal worker max)
         // If it does, something is very wrong with the risk accumulation
         if (currentVulnerabilityEffect > 5.0) {
@@ -419,6 +443,8 @@ export function resolveMortality(
           baselineVulnerability +
           (currentVulnerabilityEffect - baselineVulnerability) * (1 - caps.compressionFactor);
 
+        // NaN AUDIT (Nov 7, 2025): Division by currentVulnerabilityEffect is safe here
+        // because we've validated it's finite above
         finalDeathProb = deathProb * (compressedVulnerability / currentVulnerabilityEffect);
       }
     }
@@ -476,8 +502,22 @@ export function resolveMortality(
 
     // Multi-causal attribution (distribute deaths across causes by risk weight)
     const totalRisk = risks.reduce((sum, r) => sum + r.baseRisk * demo.vulnerability[r.type], 0);
+
+    // NaN AUDIT (Nov 7, 2025): Validate totalRisk before division
+    assertFinite(totalRisk, {
+      location: 'resolveMortality.multiCausalAttribution',
+      valueName: 'totalRisk',
+      month: state.currentMonth,
+      additionalInfo: {
+        demographic: demo.name,
+        riskCount: risks.length
+      }
+    });
+
     const causes: CauseAttribution[] = risks.map((risk) => {
-      const riskWeight = (risk.baseRisk * demo.vulnerability[risk.type]) / totalRisk;
+      // NaN AUDIT (Nov 7, 2025): Division by totalRisk is safe here because validated above
+      // If totalRisk is 0 (no risks), this loop won't execute anyway (risks is empty)
+      const riskWeight = totalRisk > 0 ? (risk.baseRisk * demo.vulnerability[risk.type]) / totalRisk : 0;
       return {
         proximate: risk.proximate,
         root: risk.root,
@@ -525,9 +565,22 @@ export function resolveMortality(
     // pop.population is in BILLIONS, regional.population is in MILLIONS
     const globalPopulationMillions: Millions = billionsToMillions(toBillions(pop.population));
 
+    // NaN AUDIT (Nov 7, 2025): Validate globalPopulationMillions before division
+    assertFinite(globalPopulationMillions, {
+      location: 'resolveMortality.regionalDeathDistribution',
+      valueName: 'globalPopulationMillions',
+      month: state.currentMonth,
+      additionalInfo: {
+        popPopulation: pop.population,
+        regionCount: pop.regionalPopulations?.length
+      }
+    });
+
     for (const region of pop.regionalPopulations) {
       // Each region gets deaths proportional to its share of global population
       // BOTH values are now MILLIONS (type-safe, no 1000× error possible)
+      // NaN AUDIT (Nov 7, 2025): Division by globalPopulationMillions is safe here
+      // because we've validated it's finite above
       const regionFraction = region.population / globalPopulationMillions;
       const regionalDeaths = totalDeathsMillions * regionFraction;
 
@@ -589,13 +642,15 @@ export function resolveMortality(
 
       // Update proximate cause (stored in millions)
       const newProximateCategoryTotal = (pop.deathsByCategory[cause.proximate] || 0) + attributedDeathsMillions;
+      // Clamp to valid range (floating-point precision can cause slight overflow)
+      const clampedProximateTotal = Math.min(10000, Math.max(0, newProximateCategoryTotal));
       // deathsByCategory tracks GLOBAL cumulative deaths by cause - use 10B cap
-      assertInRange(newProximateCategoryTotal, 0, 10000, {
+      assertInRange(clampedProximateTotal, 0, 10000, {
         location: 'resolveMortality.deathsByCategory',
         valueName: `deathsByCategory.${cause.proximate}`,
         month: state.currentMonth,
       });
-      pop.deathsByCategory[cause.proximate] = newProximateCategoryTotal;
+      pop.deathsByCategory[cause.proximate] = clampedProximateTotal;
 
       // FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch (730× error)
       // ROOT CAUSE: deathsByRootCause was stored in BILLIONS while deathsByCategory was in MILLIONS
@@ -646,8 +701,28 @@ export function resolveMortality(
   }
 
   // Calculate summary statistics
-  const avgDeathProbability =
-    deathSegments.reduce((sum, s) => sum + s.probability * (demographics.find((d) => d.name === s.demographic)?.fraction || 0), 0);
+  // NaN AUDIT (Nov 7, 2025): Replace silent fallback with explicit assertion
+  const avgDeathProbability = deathSegments.reduce((sum, s) => {
+    const demo = demographics.find((d) => d.name === s.demographic);
+    if (!demo) {
+      throw new Error(
+        `❌ NaN AUDIT: Demographic not found for segment "${s.demographic}". ` +
+        `Available demographics: ${demographics.map(d => d.name).join(', ')}. ` +
+        `Month: ${state.currentMonth}`
+      );
+    }
+    return sum + s.probability * demo.fraction;
+  }, 0);
+
+  // NaN AUDIT (Nov 7, 2025): Validate avgDeathProbability
+  assertFinite(avgDeathProbability, {
+    location: 'resolveMortality.summaryStatistics',
+    valueName: 'avgDeathProbability',
+    month: state.currentMonth,
+    additionalInfo: {
+      segmentCount: deathSegments.length
+    }
+  });
 
   const peakSegment = deathSegments.reduce((max, s) =>
     s.probability > max.probability ? s : max

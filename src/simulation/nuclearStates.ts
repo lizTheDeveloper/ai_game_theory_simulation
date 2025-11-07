@@ -8,7 +8,13 @@
 
 import { GameState } from '../types/game';
 import { NuclearState, MADDeterrence, BilateralTension } from '../types/nuclearStates';
-import { assertEconomicStage } from './utils/assertions';
+import {
+  assertEconomicStage,
+  assertFinite,
+  assertProbability,
+  assertInRange,
+  assertStateProperty
+} from './utils/assertions';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
@@ -189,12 +195,20 @@ export function updateMADDeterrence(state: GameState): void {
   // DANGEROUS AI TRACKING
   // Only very misaligned (<0.2) or sleeper AIs threaten nuclear stability
   const avgAlignment = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => {
-      if (typeof ai.trueAlignment !== 'number') {
-        throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name} at month ${state.currentMonth}`);
+    assertFinite(
+      state.aiAgents.reduce((sum, ai) => {
+        if (typeof ai.trueAlignment !== 'number') {
+          throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name} at month ${state.currentMonth}`);
+        }
+        return sum + ai.trueAlignment;
+      }, 0) / state.aiAgents.length,
+      {
+        location: 'updateMADDeterrence',
+        valueName: 'avgAlignment',
+        month: state.currentMonth,
+        additionalInfo: { agentCount: state.aiAgents.length }
       }
-      return sum + ai.trueAlignment;
-    }, 0) / state.aiAgents.length : 1;
+    ) : 1;
   
   const dangerousAIs = state.aiAgents.filter(ai => {
     if (typeof ai.trueAlignment !== 'number') {
@@ -206,8 +220,15 @@ export function updateMADDeterrence(state: GameState): void {
   });
   
   mad.dangerousAICount = dangerousAIs.length;
-  mad.dangerousFactor = state.aiAgents.length > 0 ?
-    dangerousAIs.length / state.aiAgents.length : 0;
+  mad.dangerousFactor = assertProbability(
+    state.aiAgents.length > 0 ? dangerousAIs.length / state.aiAgents.length : 0,
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'dangerousFactor',
+      month: state.currentMonth,
+      additionalInfo: { dangerousAIs: dangerousAIs.length, totalAIs: state.aiAgents.length }
+    }
+  );
   
   // ============================================================================
   // ARMS CONTROL: Gradual Treaty Decay with Government Renegotiation
@@ -311,11 +332,29 @@ export function updateMADDeterrence(state: GameState): void {
   // AI INTEGRATION IN C&C SYSTEMS
   // Reuse usNation from above (already validated)
   const usAICapability = usNation.effectiveCapability;
-  
-  const militaryAIIntegration = Math.min(0.9, usAICapability / 5.0);
+
+  const militaryAIIntegration = assertProbability(
+    Math.min(0.9, usAICapability / 5.0),
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'militaryAIIntegration',
+      month: state.currentMonth,
+      additionalInfo: { usAICapability }
+    }
+  );
   usState.aiIntegration = militaryAIIntegration;
-  chinaState.aiIntegration = militaryAIIntegration * 1.2;
-  russiaState.aiIntegration = militaryAIIntegration * 0.8;
+  chinaState.aiIntegration = assertProbability(militaryAIIntegration * 1.2, {
+    location: 'updateMADDeterrence',
+    valueName: 'chinaAIIntegration',
+    month: state.currentMonth,
+    additionalInfo: { militaryAIIntegration }
+  });
+  russiaState.aiIntegration = assertProbability(militaryAIIntegration * 0.8, {
+    location: 'updateMADDeterrence',
+    valueName: 'russiaAIIntegration',
+    month: state.currentMonth,
+    additionalInfo: { militaryAIIntegration }
+  });
   
   // AUTONOMOUS WEAPONS
   if (militaryAIIntegration > 0.6 && aiRaceIntensity > 0.7 && !mad.autonomousWeapons) {
@@ -325,9 +364,25 @@ export function updateMADDeterrence(state: GameState): void {
 
   // CYBER THREATS (Only from dangerous AIs)
   // FIX: Phase 5.1 (Oct 26, 2025) - capabilityProfile is required, digital dimension is required
-  const dangerousCyberCap = dangerousAIs.length > 0 ?
-    dangerousAIs.reduce((sum, ai) => sum + ai.capabilityProfile.digital, 0) / dangerousAIs.length : 0;
-  mad.cyberThreats = Math.min(1, (dangerousCyberCap * mad.dangerousFactor) / 4.0);
+  const dangerousCyberCap = assertFinite(
+    dangerousAIs.length > 0 ?
+      dangerousAIs.reduce((sum, ai) => sum + ai.capabilityProfile.digital, 0) / dangerousAIs.length : 0,
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'dangerousCyberCap',
+      month: state.currentMonth,
+      additionalInfo: { dangerousAICount: dangerousAIs.length }
+    }
+  );
+  mad.cyberThreats = assertProbability(
+    Math.min(1, (dangerousCyberCap * mad.dangerousFactor) / 4.0),
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'cyberThreats',
+      month: state.currentMonth,
+      additionalInfo: { dangerousCyberCap, dangerousFactor: mad.dangerousFactor }
+    }
+  );
 
   // EARLY WARNING DEGRADATION (Only from dangerous AIs with high cyber capability)
   if (mad.cyberThreats > 0.3 && dangerousAIs.some(ai => ai.capabilityProfile.digital > 3.0)) {
@@ -338,37 +393,97 @@ export function updateMADDeterrence(state: GameState): void {
   }
   
   // CRISIS STABILITY
-  const avgLaunchTime = (usState.launchTime + russiaState.launchTime + chinaState.launchTime) / 3;
+  const avgLaunchTime = assertFinite(
+    (usState.launchTime + russiaState.launchTime + chinaState.launchTime) / 3,
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'avgLaunchTime',
+      month: state.currentMonth,
+      additionalInfo: {
+        usLaunch: usState.launchTime,
+        russiaLaunch: russiaState.launchTime,
+        chinaLaunch: chinaState.launchTime
+      }
+    }
+  );
   const fastLaunch = avgLaunchTime < 5;
   const autonomousPenalty = mad.autonomousWeapons ? 0.3 : 0;
-  
-  mad.crisisStability = Math.max(0.1, 
-    mad.earlyWarningReliability * 0.4 + 
-    (fastLaunch ? 0 : 0.3) + 
-    (mad.hotlinesOperational ? 0.3 : 0) - 
-    autonomousPenalty
+
+  mad.crisisStability = assertProbability(
+    Math.max(0.1,
+      mad.earlyWarningReliability * 0.4 +
+      (fastLaunch ? 0 : 0.3) +
+      (mad.hotlinesOperational ? 0.3 : 0) -
+      autonomousPenalty
+    ),
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'crisisStability',
+      month: state.currentMonth,
+      additionalInfo: {
+        earlyWarning: mad.earlyWarningReliability,
+        fastLaunch,
+        hotlines: mad.hotlinesOperational,
+        autonomousPenalty
+      }
+    }
   );
   
   // BILATERAL DETERRENCE (now uses gradual treatyStrength 0.0-1.0)
-  mad.usRussiaDeterrence = Math.max(0.2, 
-    mad.treatyStrength * 0.3 +     // Max +30% from full treaties
-    mad.crisisStability * 0.4 + 
-    (1 - aiRaceIntensity) * 0.3
+  mad.usRussiaDeterrence = assertProbability(
+    Math.max(0.2,
+      mad.treatyStrength * 0.3 +     // Max +30% from full treaties
+      mad.crisisStability * 0.4 +
+      (1 - aiRaceIntensity) * 0.3
+    ),
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'usRussiaDeterrence',
+      month: state.currentMonth,
+      additionalInfo: { treatyStrength: mad.treatyStrength, crisisStability: mad.crisisStability, aiRaceIntensity }
+    }
   );
-  
-  mad.usChinaDeterrence = Math.max(0.2, 
-    mad.treatyStrength * 0.2 +     // Max +20% from full treaties
-    mad.crisisStability * 0.3 + 
-    (1 - aiRaceIntensity) * 0.5
+
+  mad.usChinaDeterrence = assertProbability(
+    Math.max(0.2,
+      mad.treatyStrength * 0.2 +     // Max +20% from full treaties
+      mad.crisisStability * 0.3 +
+      (1 - aiRaceIntensity) * 0.5
+    ),
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'usChinaDeterrence',
+      month: state.currentMonth,
+      additionalInfo: { treatyStrength: mad.treatyStrength, crisisStability: mad.crisisStability, aiRaceIntensity }
+    }
   );
-  
-  mad.indiaPakistanDeterrence = Math.max(0.3, 0.6 - mad.cyberThreats * 0.5);
-  
+
+  mad.indiaPakistanDeterrence = assertProbability(
+    Math.max(0.3, 0.6 - mad.cyberThreats * 0.5),
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'indiaPakistanDeterrence',
+      month: state.currentMonth,
+      additionalInfo: { cyberThreats: mad.cyberThreats }
+    }
+  );
+
   // OVERALL MAD STRENGTH (weighted by arsenal size)
-  mad.madStrength = 
-    mad.usRussiaDeterrence * 0.6 + 
-    mad.usChinaDeterrence * 0.3 + 
-    mad.indiaPakistanDeterrence * 0.1;
+  mad.madStrength = assertProbability(
+    mad.usRussiaDeterrence * 0.6 +
+    mad.usChinaDeterrence * 0.3 +
+    mad.indiaPakistanDeterrence * 0.1,
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'madStrength',
+      month: state.currentMonth,
+      additionalInfo: {
+        usRussia: mad.usRussiaDeterrence,
+        usChina: mad.usChinaDeterrence,
+        indiaPak: mad.indiaPakistanDeterrence
+      }
+    }
+  );
   
   // GLOBAL PEACE BONUS (Phase 2F integration fix)
   // If conflict resolution systems have achieved high peace, boost MAD
@@ -383,10 +498,18 @@ export function updateMADDeterrence(state: GameState): void {
   }
   
   // AI EROSION FACTOR
-  mad.aiErosionFactor = Math.min(0.9, 
-    aiRaceIntensity * 0.4 + 
-    militaryAIIntegration * 0.3 + 
-    mad.cyberThreats * 0.3
+  mad.aiErosionFactor = assertProbability(
+    Math.min(0.9,
+      aiRaceIntensity * 0.4 +
+      militaryAIIntegration * 0.3 +
+      mad.cyberThreats * 0.3
+    ),
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'aiErosionFactor',
+      month: state.currentMonth,
+      additionalInfo: { aiRaceIntensity, militaryAIIntegration, cyberThreats: mad.cyberThreats }
+    }
   );
 }
 
@@ -415,13 +538,29 @@ function calculateAIEscalationRate(state: GameState, tension: BilateralTension):
   if (dangerousAIs.length === 0) return 0.0; // No AI escalation
 
   // Calculate manipulation capability (social × digital)
-  const maxManipulation = Math.max(...dangerousAIs.map(ai =>
-    ai.capabilityProfile.social * ai.capabilityProfile.digital
-  ));
+  const maxManipulation = assertFinite(
+    Math.max(...dangerousAIs.map(ai =>
+      ai.capabilityProfile.social * ai.capabilityProfile.digital
+    )),
+    {
+      location: 'calculateAIEscalationRate',
+      valueName: 'maxManipulation',
+      month: state.currentMonth,
+      additionalInfo: { dangerousAICount: dangerousAIs.length }
+    }
+  );
 
   // Base escalation rate from AI manipulation (0.0-0.5)
   // At social=3.0, digital=3.0 → manipulation=9.0 → rate = 9.0 / 20 = 0.45
-  const baseEscalationRate = Math.min(0.5, maxManipulation / 20);
+  const baseEscalationRate = assertProbability(
+    Math.min(0.5, maxManipulation / 20),
+    {
+      location: 'calculateAIEscalationRate',
+      valueName: 'baseEscalationRate',
+      month: state.currentMonth,
+      additionalInfo: { maxManipulation }
+    }
+  );
 
   // Amplify for specific flashpoints where AI manipulation is more effective
   let flashpointAmplifier = 1.0;
@@ -432,7 +571,15 @@ function calculateAIEscalationRate(state: GameState, tension: BilateralTension):
     flashpointAmplifier = Math.max(flashpointAmplifier, 1.3); // Cyber warfare escalates faster
   }
 
-  return Math.min(1.0, baseEscalationRate * flashpointAmplifier);
+  return assertProbability(
+    Math.min(1.0, baseEscalationRate * flashpointAmplifier),
+    {
+      location: 'calculateAIEscalationRate',
+      valueName: 'escalationRate',
+      month: state.currentMonth,
+      additionalInfo: { baseRate: baseEscalationRate, amplifier: flashpointAmplifier }
+    }
+  );
 }
 
 /**
@@ -482,11 +629,27 @@ function calculateCircuitBreakerRate(state: GameState, tension: BilateralTension
   }
   const states = state.nuclearStates;
   if (states.length > 0) {
-    const avgVetoPoints = states.reduce((sum, s) => sum + s.vetoPoints, 0) / states.length;
+    const avgVetoPoints = assertFinite(
+      states.reduce((sum, s) => sum + s.vetoPoints, 0) / states.length,
+      {
+        location: 'calculateCircuitBreakerRate',
+        valueName: 'avgVetoPoints',
+        month: state.currentMonth,
+        additionalInfo: { nuclearStateCount: states.length }
+      }
+    );
     circuitBreakerStrength += (avgVetoPoints / 5) * 0.1; // 0.0 to 0.1
   }
 
-  return Math.min(1.0, circuitBreakerStrength);
+  return assertProbability(
+    Math.min(1.0, circuitBreakerStrength),
+    {
+      location: 'calculateCircuitBreakerRate',
+      valueName: 'circuitBreakerStrength',
+      month: state.currentMonth,
+      additionalInfo: { rawStrength: circuitBreakerStrength }
+    }
+  );
 }
 
 /**
@@ -499,8 +662,16 @@ export function updateBilateralTensions(state: GameState): void {
   const social = state.socialAccumulation;
   
   // AI race intensity
-  const aiRaceIntensity = state.aiAgents.length > 0 ?
-    Math.min(1, state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length / 5) : 0;
+  const aiRaceIntensity = assertProbability(
+    state.aiAgents.length > 0 ?
+      Math.min(1, state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length / 5) : 0,
+    {
+      location: 'updateBilateralTensions',
+      valueName: 'aiRaceIntensity',
+      month: state.currentMonth,
+      additionalInfo: { agentCount: state.aiAgents.length }
+    }
+  );
   
   for (const tension of tensions) {
     // === TENSION DRIVERS ===
@@ -538,7 +709,17 @@ export function updateBilateralTensions(state: GameState): void {
     // Calculate net escalation rate (AI escalation - circuit breakers)
     const aiEscalationRate = calculateAIEscalationRate(state, tension);
     const circuitBreakerRate = calculateCircuitBreakerRate(state, tension);
-    const netEscalation = aiEscalationRate - circuitBreakerRate;
+    const netEscalation = assertInRange(
+      aiEscalationRate - circuitBreakerRate,
+      -1.0,
+      1.0,
+      {
+        location: 'updateBilateralTensions',
+        valueName: 'netEscalation',
+        month: state.currentMonth,
+        additionalInfo: { aiEscalationRate, circuitBreakerRate, tension: `${tension.nationA}-${tension.nationB}` }
+      }
+    );
 
     // Escalation or de-escalation based on net rate
     if (tension.tensionLevel > 0.7 && tension.escalationLadder < 7) {
