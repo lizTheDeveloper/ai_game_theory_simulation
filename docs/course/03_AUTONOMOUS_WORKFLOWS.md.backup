@@ -89,35 +89,104 @@ The autonomous system consists of **4 cron jobs** that run at specific offsets w
 ---
 
 ## Section 01: Autonomous Worker - Hourly Implementation
+
 The autonomous worker (`autonomous-worker.sh`) is the **heart of the system**. It runs every hour at `:00` and handles implementation work from the roadmap.
 
 ### Architecture: 11 Stages, 534 Lines
 
-**Stage summary table:**
+The script follows a **structured workflow** with explicit stages:
 
-| Stage | Duration | Key Actions | Failure Mode | Resume Point |
-|-------|----------|-------------|--------------|--------------|
-| 1: Pre-flight | 1-2 min | Health, disk, API checks | Exit early if disk full | Start over |
-| 2: Git ops | 1 min | Fetch, checkout main, pull | Clean untracked files | After stage 1 |
-| 3: Branch create | 30 sec | Create `auto/worker-TIMESTAMP` | Use timestamp if exists | After stage 2 |
-| 4: Roadmap analysis | 2-3 min | Read, parse, prioritize | No tasks = graceful exit | After stage 3 |
-| 5: Research requests | 2-3 min | Post to research channel | Research runs in parallel | After stage 4 |
-| 6: Task selection | 1 min | Pick highest priority ready | Skip blocked tasks | After stage 5 |
-| 7: Implementation | 15-35 min | Spawn orchestrator, 45m timeout | Partial work saved | After stage 6 |
-| 8: Validation | 2-5 min | Type check, run tests | Hard fail on TS errors | After stage 7 |
-| 9: Commit & Push | 1-2 min | Git add, commit, PR create | Include error in message | After stage 8 |
-| 10: Cleanup | 1 min | Return to main, save metrics | Best effort | After stage 9 |
-| 11: Complete | 30 sec | Log timing, exit status | N/A | Done |
+```
+Stage 1:  PRE-FLIGHT CHECKS (health, disk space, API availability)
+Stage 2:  GIT OPERATIONS (fetch, checkout, clean)
+Stage 3:  BRANCH CREATION (auto/worker-TIMESTAMP)
+Stage 4:  ROADMAP ANALYSIS (read, parse, prioritize)
+Stage 5:  RESEARCH REQUESTS (post to research channel)
+Stage 6:  TASK SELECTION (pick highest priority ready task)
+Stage 7:  IMPLEMENTATION (spawn orchestrator via Claude Code CLI)
+Stage 8:  VALIDATION (run tests, check build)
+Stage 9:  COMMIT & PUSH (create PR)
+Stage 10: CLEANUP (restore branch, save metrics)
+Stage 11: COMPLETE (log timing, exit status)
+```
 
-**Design principle:** Each stage is **idempotent and resumable**. Status file (`logs/autonomous/status_current.txt`) tracks current stage. If failure occurs, manually fix and resume from that stage.
+**Design principle:** Each stage is **idempotent and resumable**. If stage 5 fails, you can manually fix and jump to stage 6. The status file (`logs/autonomous/status_current.txt`) tracks current stage.
 
-**Total timing:** 25-35 minutes typical, 45 minutes max (hard timeout at Claude Code session level).
+### Stage Breakdown
 
-### Detailed Breakdown (Complex Stages Only)
+#### Stage 1: Pre-Flight Checks
 
-The table above summarizes all 11 stages. Most are straightforward. Below we expand ONLY the complex stages that need additional explanation.
+```bash
+# Check Claude Code CLI available
+if ! command -v claude >/dev/null 2>&1; then
+    log_error "Claude Code CLI not found!"
+    exit 1
+fi
 
-#### Stage 4: Roadmap Analysis (Complex - Reading Priority Logic)
+# Check disk space
+DISK_AVAIL=$(df -h "$PROJECT_DIR" | awk 'NR==2 {print $4}')
+log_metric "Disk available: $DISK_AVAIL"
+
+# Check memory
+MEM_AVAIL=$(free -h | awk 'NR==2 {print $7}')
+log_metric "Memory available: $MEM_AVAIL"
+```
+
+**What this does:**
+- Verifies Claude Code CLI is installed
+- Checks system resources (disk, memory)
+- Updates Claude Code to latest version
+- Starts chatroom monitor if not running
+
+**Why this matters:** Autonomous systems must **validate assumptions** before doing work. If disk is full, stop early rather than failing mid-implementation.
+
+---
+
+#### Stage 2: Git Operations
+
+```bash
+# Fetch latest
+git fetch origin
+
+# Ensure we're on main
+git checkout main
+
+# Pull latest changes
+git pull origin main
+
+# Clean untracked files (careful!)
+git clean -fd
+```
+
+**What this does:**
+- Fetches latest from remote
+- Switches to main branch
+- Pulls latest changes
+- Cleans untracked files (prevents stale code)
+
+**Why this matters:** Each autonomous run starts from **clean state**. No leftover files from previous runs, no stale branches, just fresh main.
+
+---
+
+#### Stage 3: Branch Creation
+
+```bash
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+BRANCH_NAME="auto/worker-$TIMESTAMP"
+
+git checkout -b "$BRANCH_NAME"
+log_success "Created branch: $BRANCH_NAME"
+```
+
+**What this does:**
+- Creates timestamped branch (e.g., `auto/worker-20251107_140000`)
+- Prefix `auto/` signals autonomous branch (merge orchestrator filters on this)
+
+**Why this matters:** Every autonomous run gets a **unique branch**. Multiple workers can run in parallel (different machines) without conflicts.
+
+---
+
+#### Stage 4: Roadmap Analysis
 
 ```bash
 # Read roadmap
@@ -129,27 +198,68 @@ HIGH_ITEMS=$(grep -E "^\- \[❌\] \*\*HIGH\*\*" "$ROADMAP_FILE" || true)
 ```
 
 **What this does:**
-- Reads roadmap file
+- Reads `plans/MASTER_IMPLEMENTATION_ROADMAP.md`
 - Filters for unchecked (❌) CRITICAL/HIGH items
 - Counts available tasks
 
-**Why this matters:** Roadmap is the **source of truth**. Worker doesn't invent work—it executes what's in the roadmap.
-
-**Priority logic:**
-1. Scan CRITICAL (system broken)
-2. If none, scan HIGH (important features)
-3. Skip MEDIUM/LOW unless all others complete
+**Why this matters:** Roadmap is the **source of truth**. The worker doesn't invent work - it executes what's in the roadmap.
 
 ---
 
-#### Stage 7: Implementation (Complex - The Big One)
+#### Stage 5: Research Requests (STEP 0)
+
+```bash
+# Post research requests to research channel FIRST
+# This allows research to run in parallel with implementation
+
+claude-code chat --session-file .claude/research-worker-session "
+Post to research channel: Scan roadmap for CRITICAL/HIGH items needing research.
+Post specific research needs (parameters, sources, validation).
+Format: [QUESTION] status with clear research ask.
+"
+```
+
+**What this does:**
+- Posts research requests to `research` channel
+- Cynthia (research worker) monitors this channel
+- Research happens in parallel with implementation (next stage)
+
+**Why this matters:** **Research-first workflow**. Don't start implementing and then discover you need parameters. Post research needs early, let research happen in parallel.
+
+---
+
+#### Stage 6: Task Selection
+
+```bash
+# Priority order: CRITICAL > HIGH > MEDIUM
+# Prefer tasks with research complete
+
+TASK=$(select_highest_priority_ready_task "$CRITICAL_ITEMS" "$HIGH_ITEMS")
+
+if [ -z "$TASK" ]; then
+    log_warning "No ready tasks found in roadmap"
+    exit 0  # Not an error - just nothing to do
+fi
+
+log_success "Selected task: $TASK"
+```
+
+**What this does:**
+- Picks highest-priority task that's ready (research done, dependencies met)
+- If no tasks ready, exits gracefully (not an error)
+
+**Why this matters:** **Smart task selection**. Don't pick tasks that are blocked. Don't pick tasks without research. Pick what's actually implementable right now.
+
+---
+
+#### Stage 7: Implementation (The Big One)
 
 ```bash
 # Spawn Claude Code chat session with orchestrator context
-claude-code chat \
-  --timeout 45m \
-  --model sonnet \
-  --session-file .claude/worker-session \
+claude-code chat \\
+  --timeout 45m \\
+  --model sonnet \\
+  --session-file .claude/worker-session \\
   "
 You are the orchestrator. Read roadmap item: $TASK
 
@@ -169,23 +279,111 @@ Create commits as you work. Push when complete.
 ```
 
 **What this does:**
-- Spawns Claude Code chat (45-minute timeout)
+- Spawns Claude Code chat session (45-minute timeout)
 - Uses orchestrator agent (coordinates specialists)
 - Full workflow: research → implement → test → document
-- Session persists (can resume if interrupted)
+- Session persists across stages (can resume if interrupted)
 
-**Why this matters:** This is where **actual work happens**. Orchestrator spawns Roy (simulation code), Tessa (UI), Historian (docs), coordinates their work.
+**Why this matters:** This is where the **actual work happens**. The orchestrator spawns specialized agents (Roy for simulation code, Tessa for UI, etc.), coordinates their work, and produces a working implementation.
 
 **Timeout justification:** 45 minutes allows for:
 - Complex features (6-8 phases)
 - Monte Carlo validation (N=10 runs, 5-10 minutes)
 - Documentation updates
-- Hard stop prevents runaway sessions
+- But prevents runaway sessions (hard stop at 45m)
 
-**Common failure modes:**
-- Tests fail → Saved partial work, next run retries
-- Timeout → Commits what's done, marks incomplete
-- NaN bugs → Caught by Monte Carlo, session logs error
+---
+
+#### Stage 8: Validation
+
+```bash
+# Check if implementation successful
+if git diff --quiet; then
+    log_warning "No changes made - task may not be complete"
+    exit 0
+fi
+
+# Run type checking
+if ! npx tsc --noEmit; then
+    log_error "TypeScript errors detected"
+    exit 1
+fi
+
+# Run tests (if available)
+if [ -f "package.json" ] && grep -q "\"test\":" package.json; then
+    npm test || log_warning "Some tests failed (continuing anyway)"
+fi
+```
+
+**What this does:**
+- Verifies changes were made
+- Runs TypeScript type checking (catches type errors)
+- Runs tests if available (warnings only, not hard failure)
+
+**Why this matters:** **Quality gate**. Don't push broken code. If TypeScript errors exist, fail the run. If tests fail, log warning but continue (tests might be flaky).
+
+---
+
+#### Stage 9: Commit & Push
+
+```bash
+# Create commit
+git add .
+git commit -m "$(cat <<EOF
+feat: $TASK
+
+Autonomous implementation by worker at $TIMESTAMP.
+
+🤖 Generated with Claude Code
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+
+# Push branch
+git push -u origin "$BRANCH_NAME"
+
+# Create PR (via gh CLI)
+gh pr create \\
+  --title "feat: $TASK" \\
+  --body "Autonomous implementation. Validation: Monte Carlo N=10 passed." \\
+  --base main \\
+  --head "$BRANCH_NAME"
+```
+
+**What this does:**
+- Commits changes with structured message
+- Pushes branch to origin
+- Creates pull request via GitHub CLI
+
+**Why this matters:** **Proper git hygiene**. Every autonomous run creates a proper PR with clear title, description, and link to source branch.
+
+---
+
+#### Stage 10: Cleanup
+
+```bash
+# Return to main
+git checkout main
+
+# Save metrics
+cat > "$METRICS_FILE" <<EOF
+{
+  "timestamp": "$TIMESTAMP",
+  "branch": "$BRANCH_NAME",
+  "task": "$TASK",
+  "duration_seconds": $TOTAL_DURATION,
+  "stages_completed": 11,
+  "status": "success"
+}
+EOF
+```
+
+**What this does:**
+- Switches back to main (clean state for next run)
+- Saves timing metrics to JSON
+- Writes final status
+
+**Why this matters:** **Observability**. Metrics enable monitoring: How long do runs take? Which tasks are slow? What's the success rate?
 
 ---
 
@@ -194,27 +392,22 @@ Create commits as you work. Push when complete.
 **Target:** 25-35 minutes per run (fits within :00 to :15 window before watcher checks)
 
 **Breakdown:**
-- Stages 1-3 (setup): ~3 min
-- Stage 4 (roadmap): 2-3 min
-- Stage 5 (research): 2-3 min
-- **Stage 7 (implementation): 15-35 min** ← Most time here
-- Stages 8-11 (validate/cleanup): ~5 min
+- Pre-flight checks: 1-2 minutes
+- Git operations: 1 minute
+- Roadmap analysis: 30 seconds
+- Research requests: 2-3 minutes
+- Task selection: 30 seconds
+- Implementation: 15-35 minutes (most time here)
+- Validation: 2-5 minutes
+- Commit & push: 1-2 minutes
+- Cleanup: 30 seconds
 
-**Hard timeout:** 45 minutes at Claude Code session level (stage 7)
+**Hard timeout:** 45 minutes at Claude Code session level
 
-**Why this timing:** Leaves 15-30 min buffer before next :00 cycle. If run goes long, next run simply skips (no pile-up).
-
----
-
-**What you learned:**
-- 11 stages summarized in table (scan quickly)
-- Stages 4 and 7 are complex (roadmap parsing, orchestrator spawning)
-- Timing budget prevents pile-up (25-35 min typical, 45 min max)
-- Each stage is resumable (status file tracks progress)
-
-**Next:** [Section 02: Worker Watcher](#section-02-worker-watcher---health-monitoring) - Health monitoring and auto-remediation
+**Why this timing:** Leaves 15-30 minute buffer before next :00 cycle. If run goes long, next run simply skips (no pile-up).
 
 ---
+
 ## Section 02: Worker Watcher - Health Monitoring
 
 The worker watcher (`scripts/autonomous-worker-watcher.sh`) monitors autonomous system health and auto-remediates issues.
