@@ -5415,7 +5415,14 @@ state.history.exogenousShocks?: Array<{
 
 ## 📚 Recent Research & Plans Reference (Oct 16-30, 2025)
 
-### Development Workflow Updates (Oct 30-Nov 1, 2025)
+### Development Workflow Updates (Oct 30-Nov 7, 2025)
+
+**Token Efficiency Emphasis** ✅ DOCUMENTED (Nov 7, 2025)
+- **CRITICAL**: Token efficiency now prioritized for all Claude Code operations (CLAUDE.md:5-24)
+- **Core principles**: Be concise, avoid redundancy, use grep/glob before reading files, trust existing docs
+- **Near token limits**: Focus critical work only, skip optional docs, commit partial work frequently, exit early if complete
+- **Autonomous worker**: Creates GitHub issue when tokens exhausted, backup account needed
+- Commit: 11ce203 (Nov 7, 2025)
 
 **VM Development Constraints** ✅ DOCUMENTED (Nov 1, 2025)
 - **CRITICAL**: Frontend development forbidden on VM (GCloud instances)
