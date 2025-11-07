@@ -41,16 +41,17 @@ export function initializeNuclearWinterState(): NuclearWinterState {
   return {
     active: false,
     triggerMonth: -1,
-    
+
     // Atmospheric
     sootInStratosphere: 0,
     sootDecayRate: 0.05,  // 5% per month (research: ~3-7 year half-life)
     currentSoot: 0,
-    
+
     // Climate
     temperatureAnomaly: 0,
     baselineTemperature: 15.0,  // °C global average (pre-war)
-    
+    sunlightBlocked: 0,          // No blockage initially
+
     // Agriculture
     cropYieldMultiplier: 1.0,   // Normal initially
     monthlyStarvationRate: 0,
@@ -105,7 +106,10 @@ export function triggerNuclearWinter(
   
   // Calculate initial temperature drop
   winter.temperatureAnomaly = calculateTemperatureAnomaly(winter.currentSoot);
-  
+
+  // Calculate sunlight blocking (ARCH-4 Gap #1: Nuclear winter → solar energy integration)
+  winter.sunlightBlocked = calculateSunlightBlocking(winter.currentSoot);
+
   // Calculate crop failure
   winter.cropYieldMultiplier = calculateCropYield(winter.temperatureAnomaly);
   
@@ -120,6 +124,7 @@ export function triggerNuclearWinter(
   
   console.log(`\n☢️  NUCLEAR WINTER TRIGGERED (Month ${state.currentMonth})`);
   console.log(`   Soot injected: ${winter.sootInStratosphere.toFixed(0)} Tg`);
+  console.log(`   Sunlight blocked: ${(winter.sunlightBlocked * 100).toFixed(0)}% (solar capacity reduced)`);
   console.log(`   Temperature drop: ${winter.temperatureAnomaly.toFixed(1)}°C`);
   console.log(`   Crop yield: ${(winter.cropYieldMultiplier * 100).toFixed(0)}% of normal`);
   console.log(`   Starvation rate: ${(winter.monthlyStarvationRate * 100).toFixed(1)}% per month`);
@@ -234,8 +239,53 @@ function calculateCropYield(tempAnomaly: number): number {
 }
 
 /**
+ * Calculate sunlight blocking from soot level
+ *
+ * Research (Robock et al. 2019, Coupe et al. 2019):
+ * - 5 Tg soot → 50-70% sunlight blocked (midpoint: 60%)
+ * - 50 Tg soot → 80-90% sunlight blocked (midpoint: 85%)
+ * - 150 Tg soot → 90-95% sunlight blocked (midpoint: 92.5%)
+ *
+ * Sunlight blocking directly affects:
+ * - Solar panel energy production (proportional to available sunlight)
+ * - Agricultural yields (already modeled via temperature anomaly)
+ * - Temperature (already modeled via temperature anomaly)
+ *
+ * @param soot - Soot in stratosphere (Tg)
+ * @returns Fraction of sunlight blocked [0, 1]
+ */
+function calculateSunlightBlocking(soot: number): number {
+  // Validate input: Soot must be in [0, 150] Tg (research bounds)
+  const validSoot = assertInRange(soot, 0, 150, {
+    location: 'calculateSunlightBlocking',
+    valueName: 'soot'
+  });
+
+  let sunlightBlocked: number;
+  if (validSoot <= 5) {
+    // Linear: 5 Tg → 60% blocking (Robock 2019 midpoint)
+    sunlightBlocked = validSoot * 0.12; // 5 Tg → 0.60
+  } else if (validSoot <= 50) {
+    // Interpolate from 60% (5 Tg) to 85% (50 Tg)
+    const progress = (validSoot - 5) / (50 - 5);
+    sunlightBlocked = 0.60 + (progress * 0.25); // 0.60 → 0.85
+  } else {
+    // Saturation: 150 Tg → 92.5% blocking (midpoint of 90-95%)
+    const progress = (validSoot - 50) / (150 - 50);
+    sunlightBlocked = 0.85 + (progress * 0.075); // 0.85 → 0.925
+  }
+
+  // Validate output: Sunlight blocking must be in [0, 1] (probability/fraction)
+  return assertProbability(sunlightBlocked, {
+    location: 'calculateSunlightBlocking',
+    valueName: 'sunlightBlocked',
+    additionalInfo: { soot: validSoot }
+  });
+}
+
+/**
  * Calculate monthly starvation rate
- * 
+ *
  * ⚠️⚠️ TIER 3 BRONZE - Modeling assumption (calibrated to Xia et al. 2022)
  * CONCEPT SUPPORT: Nuclear winter causes massive famine (Xia et al. 2022, Robock & Toon 2012)
  * QUANTIFICATION: Calibrated to Xia's 5-6B deaths, NOT from historical famine rates
@@ -374,7 +424,10 @@ export function updateNuclearWinter(state: GameState): void {
   // 2. Update temperature (recovers as soot clears)
   winter.temperatureAnomaly = calculateTemperatureAnomaly(winter.currentSoot);
 
-  // 3. Update crop yields (improve as temperature recovers)
+  // 3. Update sunlight blocking (ARCH-4 Gap #1: Nuclear winter → solar energy integration)
+  winter.sunlightBlocked = calculateSunlightBlocking(winter.currentSoot);
+
+  // 4. Update crop yields (improve as temperature recovers)
   winter.cropYieldMultiplier = calculateCropYield(winter.temperatureAnomaly);
 
   // 4. Update starvation rate

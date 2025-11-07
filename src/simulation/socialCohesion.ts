@@ -945,7 +945,16 @@ function calculateCapabilityFear(state: GameState): number {
  * DEPRECATED: Use calculateComprehensiveTrustInAI() for post-recalibration runs
  */
 export function getTrustInAI(society: HumanSocietyAgent): number {
-  const paranoia = society.paranoiaLevel ?? 0.15; // Default to 15% baseline paranoia
+  // paranoiaLevel is REQUIRED field - if missing, initialization bug
+  if (society.paranoiaLevel === undefined || !isFinite(society.paranoiaLevel)) {
+    throw new Error(
+      `❌ Missing or invalid society.paranoiaLevel in getTrustInAI\n` +
+      `   Value: ${society.paranoiaLevel}\n` +
+      `   Expected: finite number [0, 1]\n` +
+      `   This is required field in HumanSocietyAgent type`
+    );
+  }
+  const paranoia = society.paranoiaLevel;
   const trustFromParanoia = 1.0 - paranoia * 0.75;
 
   // Floor: Even 100% paranoia leaves 20% trust (some people always believe)

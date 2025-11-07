@@ -94,8 +94,16 @@ function countActiveCrises(state: GameState): number {
 export function isAtCriticalJuncture(state: GameState): boolean {
   // 1. Institutional Flux (institutions unstable)
   // institutionStrength from governance quality (1.0 = strong, 0.0 = collapsed)
-  // KEEP LEGITIMATE DEFAULT - governanceQuality may not be initialized yet
-  const institutionStrength = state.government.governanceQuality?.institutionalCapacity || 0.5;
+  // NOTE: governanceQuality is REQUIRED field - if missing, initialization bug
+  const institutionStrength = assertStateProperty(
+    state.government.governanceQuality,
+    'institutionalCapacity',
+    {
+      location: 'isAtCriticalJuncture',
+      month: state.currentMonth,
+      expectedSource: 'initialization.ts (governanceQuality required field)'
+    }
+  );
   const institutionalFlux = 1 - institutionStrength;
 
   // Threshold: >0.6 means institutions very weak but not destroyed
@@ -145,8 +153,17 @@ export function calculateAgencyPotential(state: GameState, rng: () => number): n
   const democracyIndex = state.government.governmentType === 'democratic' ? 0.8 :
                          state.government.governmentType === 'technocratic' ? 0.5 : 0.2;
   const infoIntegrity = state.globalMetrics.informationIntegrity;
-  // KEEP LEGITIMATE DEFAULT - governanceQuality may not be initialized yet
-  const institutionStrength = state.government.governanceQuality?.institutionalCapacity || 0.5;
+  // NOTE: governanceQuality is REQUIRED field - if missing, initialization bug
+  const institutionStrength = assertStateProperty(
+    state.government.governanceQuality,
+    'institutionalCapacity',
+    {
+      location: 'calculateAgencyPotential',
+      month: state.currentMonth,
+      expectedSource: 'initialization.ts (governanceQuality required field)'
+    }
+  );
+
 
   const baseAgency =
     democracyIndex * 0.4 + infoIntegrity * 0.3 + institutionStrength * 0.3;
