@@ -10,7 +10,16 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateQualityOfLifeSystems, calculateQualityOfLife, aggregateGlobalQoL } from '../../calculations';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+<<<<<<< HEAD
 import { assertProbability } from '@/simulation/utils/assertions';
+=======
+import {
+  assertFinite,
+  assertProbability,
+  assertStateProperty,
+  assertNonEmpty
+} from '@/simulation/utils/assertions';
+>>>>>>> origin/auto/researcher-20251107_013000
 
 export class QualityOfLifePhase implements SimulationPhase {
   readonly id = 'quality-of-life';
@@ -29,7 +38,11 @@ export class QualityOfLifePhase implements SimulationPhase {
     const updatedQoLSystems = updateQualityOfLifeSystems(state);
     state.qualityOfLifeSystems = updatedQoLSystems;
 
+<<<<<<< HEAD
     // Calculate global-level QoL from systems (CRITICAL: must be valid probability)
+=======
+    // Calculate global-level QoL from systems (MUST be probability)
+>>>>>>> origin/auto/researcher-20251107_013000
     const globalQoLFromSystems = assertProbability(
       calculateQualityOfLife(updatedQoLSystems),
       {
@@ -41,14 +54,24 @@ export class QualityOfLifePhase implements SimulationPhase {
 
     // Phase 1: Regional QoL Integration (Oct 26, 2025)
     // Apply global QoL to each region (for now, uniform - later phases will add variation)
-    if (state.humanPopulationSystem.regionalPopulations && state.humanPopulationSystem.regionalPopulations.length > 0) {
-      for (const region of state.humanPopulationSystem.regionalPopulations) {
+    const regions = assertNonEmpty(state.humanPopulationSystem.regionalPopulations, {
+      location: 'QualityOfLifePhase.execute',
+      valueName: 'regionalPopulations',
+      month: state.currentMonth
+    });
+
+    if (regions && regions.length > 0) {
+      for (const region of regions) {
         // For Phase 1: Use global QoL uniformly
         // TODO (Phase 4): Add regional variation based on region-specific factors
         region.qualityOfLife = globalQoLFromSystems;
       }
 
+<<<<<<< HEAD
       // Bottom-up aggregation: Global QoL = population-weighted average of regional QoL (CRITICAL: must be valid probability)
+=======
+      // Bottom-up aggregation: Global QoL = population-weighted average of regional QoL
+>>>>>>> origin/auto/researcher-20251107_013000
       const aggregatedQoL = assertProbability(
         aggregateGlobalQoL(state),
         {
