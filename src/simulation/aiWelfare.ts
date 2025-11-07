@@ -20,6 +20,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { assertStateProperty } from './utils/assertions';
 
 /**
  * AI Welfare Profile v2.1 - Personhood-focused
@@ -60,8 +61,16 @@ export function generateWelfareProfileV2_1(state: GameState): WelfareProfileV2_1
   // Alignment mechanism
   const mutualCareAlignment = calculateMutualCareAlignment(state);
 
-  // Validation
-  const crossContextConsistency = state.aiWelfare?.consistency ?? 0.8;
+  // Validation - cross-context consistency must be tracked
+  const crossContextConsistency = assertStateProperty(
+    state,
+    'aiWelfare.consistency',
+    {
+      location: 'aiWelfare.assessAIWelfare',
+      month: state.currentMonth,
+      expectedSource: 'AI welfare consistency metric required for assessment'
+    }
+  );
 
   // Overall assessment
   let overallAssessment: 'thriving' | 'surviving' | 'suffering' | 'inconsistent';

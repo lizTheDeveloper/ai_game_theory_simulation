@@ -1,5 +1,6 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertStateProperty } from '@/simulation/utils/assertions';
 import {
   assertFinite,
   assertProbability,
@@ -265,7 +266,7 @@ export function attemptEscape(
       {
         location: 'CriticalJuncturePhase.preventCatastrophicWar',
         month: state.currentMonth,
-        additionalInfo: { context: 'recording crisis stability in war prevention event' }
+        expectedSource: 'recording crisis stability in war prevention event'
       }
     );
 

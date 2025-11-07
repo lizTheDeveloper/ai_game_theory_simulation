@@ -723,7 +723,15 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
 
   // === PHASE 5: CONSCIOUSNESS GOVERNANCE R&D DRAG ===
   // Get global precautionary cost (% of AI R&D budget)
-  const globalPrecautionaryCost = state.consciousnessGovernanceReadiness?.precautionaryCosts?.global ?? 0;
+  const globalPrecautionaryCost = Assertions.assertStateProperty(
+    state,
+    'consciousnessGovernanceReadiness.precautionaryCosts.global',
+    {
+      location: 'computeInfrastructure.applyComputeGrowth',
+      month: state.currentMonth,
+      expectedSource: 'R&D drag calculation for consciousness governance'
+    }
+  );
 
   // Calculate R&D drag (cost × 0.5)
   // Example: 10% precautionary cost → 5% slower growth

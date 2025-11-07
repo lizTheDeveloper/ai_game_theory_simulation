@@ -19,6 +19,7 @@
 import type { GameState, QualityOfLifeSystems } from '@/types/game';
 import { getTrustInAI } from '../socialCohesion';
 import { calculateNonFoodSurvivalMetrics } from './dimensions';
+import { assertStateProperty } from '../utils/assertions';
 import {
   calculateUnemploymentPenalty,
   calculateFoodSecurityPenalty,
@@ -94,7 +95,15 @@ export function updateQualityOfLifeSystems(
   }
 
   // Food security penalty
-  const foodSecurity = state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity ?? 0.7;
+  const foodSecurity = assertStateProperty(
+    state,
+    'qualityOfLifeSystems.survivalFundamentals.foodSecurity',
+    {
+      location: 'qualityOfLife/core.calculateMaterialAbundance',
+      month: state.currentMonth,
+      expectedSource: 'food security penalty calculation'
+    }
+  );
   if (foodSecurity < 0.7) {
     const foodPenalty = calculateFoodSecurityPenalty(foodSecurity);
     materialAbundance -= foodPenalty;

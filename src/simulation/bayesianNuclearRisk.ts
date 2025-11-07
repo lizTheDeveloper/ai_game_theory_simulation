@@ -16,6 +16,7 @@
  */
 
 import type { GameState } from '../types/game';
+import { assertDefined } from './utils/assertions';
 
 /**
  * Bayesian nuclear risk calculation result
@@ -271,7 +272,14 @@ function calculateMADDeterrenceMultiplier(state: GameState): number {
  */
 function calculateHumanVetoPointsMultiplier(state: GameState): number {
   // Average veto points across nuclear powers
-  const states = state.nuclearStates ?? [];
+  const states = assertDefined(state.nuclearStates, {
+    location: 'bayesianNuclearRisk.calculateHumanVetoPointsMultiplier',
+    valueName: 'nuclearStates',
+    additionalInfo: {
+      month: state.currentMonth,
+      context: 'nuclear states must be initialized to calculate veto points'
+    }
+  });
 
   if (states.length === 0) return 1.0; // No nuclear states initialized yet
 

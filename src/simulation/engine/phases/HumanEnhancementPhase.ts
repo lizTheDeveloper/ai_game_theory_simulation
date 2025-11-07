@@ -25,6 +25,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 import { calculateAIAssistedSkillsAggregateMetrics, calculateProductivityMultiplierFromAIAssistedSkills, updateLaborCapitalDistribution, checkCompetenceCrisis, checkWageInequality, applyPolicyInterventions } from '../../aiAssistedSkills';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
+  assertStateProperty,
   assertFinite,
   assertNonEmpty,
   assertInRange,
@@ -118,7 +119,7 @@ export class HumanEnhancementPhase implements SimulationPhase {
           {
             location: 'HumanEnhancementPhase.execute',
             month: state.currentMonth,
-            additionalInfo: { expectedSource: 'UBIPhase (order 15.3)' }
+            expectedSource: 'UBIPhase (order 15.3)'
           }
         );
         const ubiLevel = assertFinite(

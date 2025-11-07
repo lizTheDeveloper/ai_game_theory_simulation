@@ -18,6 +18,7 @@ import {
   DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
 } from '@/types/alignment-dynamics';
 import { AIAgent } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Initialize attractor basin state for an agent
@@ -38,7 +39,17 @@ export function initializeAttractorBasin(
   const attractorAlignment = attractorPositions[basinIndex] ?? 0.5;
 
   // Random initial phase in oscillation cycle
-  const phase = epicycleConfig.phaseOffset ?? rng() * 2 * Math.PI;
+  // Use config phaseOffset if provided, otherwise randomize deterministically
+  const phase = epicycleConfig.phaseOffset !== undefined
+    ? epicycleConfig.phaseOffset
+    : assertFinite(rng() * 2 * Math.PI, {
+        location: 'alignmentDynamics.initializeAlignmentDynamicsState',
+        valueName: 'phase',
+        additionalInfo: {
+          agentId: agent.id,
+          context: 'random phase initialization for alignment oscillation'
+        }
+      });
 
   return {
     currentAlignment: agent.trueAlignment,

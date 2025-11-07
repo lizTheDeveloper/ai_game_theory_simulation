@@ -16,7 +16,17 @@ export class UpwardSpiralsPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const { updateUpwardSpirals } = require('../../upwardSpirals');
     setDeterministicRng(rng);
-    const month = context?.month ?? state.currentMonth;
+
+    // PhaseContext.month should always be provided by orchestrator
+    // If missing, fail loudly rather than silently using state.currentMonth
+    if (!context || context.month === undefined) {
+      throw new Error(
+        `❌ CRITICAL: PhaseContext.month missing in UpwardSpiralsPhase (Month ${state.currentMonth}). ` +
+        `Phase orchestrator must provide context.month for all phases.`
+      );
+    }
+
+    const month = context.month;
     updateUpwardSpirals(state, month);
 
     return { events: [] };

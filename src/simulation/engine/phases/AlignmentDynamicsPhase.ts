@@ -164,7 +164,8 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
 
       // Detect unknowability threshold crossing
       if (config.unknowable.enabled && result.measurementState) {
-        const wasHidden = (agent as any).alignmentMeasurementState?.isHidden ?? false;
+        // Check if agent had previous measurement state
+        const wasHidden = (agent as any).alignmentMeasurementState?.isHidden === true;
         const isNowHidden = result.measurementState.isHidden;
 
         if (!wasHidden && isNowHidden) {
