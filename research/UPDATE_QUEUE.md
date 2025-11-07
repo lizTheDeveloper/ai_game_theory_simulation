@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/7/2025, 11:30:04 AM
-**Files Scanned:** 325
+**Generated:** 11/7/2025, 12:30:04 PM
+**Files Scanned:** 326
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 130 (40.0%)
+**Count:** 131 (40.2%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -609,6 +609,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/validation-summary-ready-for-implementation-20251101.md`
 
+### `verification_65e0f1c_20251107.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_65e0f1c_20251107.md`
+
 ### `verification_9f29b05_20251030.md`
 - **Oldest source:** 2004 (21 years old)
 - **Status:** Not used in simulation
@@ -694,7 +699,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 176 (54.2%)
+**Count:** 176 (54.0%)
 
 All sources <3 years old. No action required.
 
@@ -704,11 +709,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 325 |
+| Total files | 326 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 130 (40.0%) |
+| HIGH | 131 (40.2%) |
 | MEDIUM | 19 (5.8%) |
-| LOW | 176 (54.2%) |
+| LOW | 176 (54.0%) |
 | Average age | 8.9 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -716,21 +721,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 176 | 54.2% |
+| Current (<3yr) | 176 | 54.0% |
 | Warning (3-5yr) | 19 | 5.8% |
-| Critical (>5yr) | 130 | 40.0% |
+| Critical (>5yr) | 131 | 40.2% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 40.0% critical (>5yr)
+- **Current:** 40.2% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 130 HIGH priority file(s) within 1 month
+1. Update 131 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
