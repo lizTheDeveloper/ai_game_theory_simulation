@@ -32,6 +32,7 @@ import {
   assertProbability,
   assertMortalityRate,
   assertTemperatureDelta,
+  assertStateProperty,
 } from './utils/assertions';
 
 /**
@@ -380,10 +381,12 @@ export function updateWetBulbTemperatureSystem(
   const resources = state.resourceEconomy;
 
   // Get global temperature anomaly from CO2 system
-  const temperatureAnomaly = assertFinite(resources?.co2?.temperatureAnomaly ?? 0, {
+  // Nov 7, 2025: Use assertStateProperty instead of ?? fallback
+  // The ?? 0 pattern masks bugs - if temperatureAnomaly is undefined, that's a bug to fix
+  const temperatureAnomaly = assertStateProperty(resources.co2, 'temperatureAnomaly', {
     location: 'updateWetBulbTemperatureSystem',
-    valueName: 'temperatureAnomaly',
     month: state.currentMonth,
+    expectedSource: 'initialization.ts or climate update phase',
   });
 
   // Validate temperature anomaly is within plausible range (-2°C to +10°C)

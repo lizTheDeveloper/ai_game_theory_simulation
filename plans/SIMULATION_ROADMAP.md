@@ -812,6 +812,12 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **BREAKING NEWS:** Verify 2025 coral reef tipping point citations (research/verification_1028fbc_20251107.md, commit 1028fbc) - **First confirmed planetary tipping point crossed**
+  - Global Tipping Points Report 2025 (Wunderling, Lenton et al.) - 8 specific claims need verification
+  - Earth System Dynamics (2024) cascade review - 2 claims need verification
+  - Real-world validation: coral threshold ~1.2°C crossed at 1.4°C warming (Oct 2025)
+  - Simulation implications: Should coral system be pre-triggered at initialization?
+  - **Priority:** HIGH (validates simulation urgency, shifts from "speculative" to "current reality")
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)

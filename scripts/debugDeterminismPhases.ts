@@ -31,7 +31,9 @@ for (let run = 1; run <= 3; run++) {
     logLevel: 'none'
   });
 
-  const initialState = createDefaultInitialState();
+  // Nov 7, 2025: Pass engine's RNG to initialization for determinism
+  const rng = engine.getRNG().next.bind(engine.getRNG());
+  const initialState = createDefaultInitialState('historical', undefined, undefined, undefined, undefined, rng);
 
   console.log(`Initial state hash: ${hashState(initialState)}`);
 

@@ -818,20 +818,20 @@ export function progressExtinction(
   }
 
   // Validate current month and start month
-  const currentMonth = assertFinite(state.currentMonth, {
+  const currentMonth = Assertions.assertFinite(state.currentMonth, {
     location: 'progressExtinction',
     valueName: 'currentMonth',
     month: state.currentMonth
   });
 
-  const startMonth = assertFinite(state.extinctionState.startMonth, {
+  const startMonth = Assertions.assertFinite(state.extinctionState.startMonth, {
     location: 'progressExtinction',
     valueName: 'extinctionState.startMonth',
     month: state.currentMonth,
     additionalInfo: { extinctionType: state.extinctionState.type }
   });
 
-  const monthsElapsed = assertFinite(currentMonth - startMonth, {
+  const monthsElapsed = Assertions.assertFinite(currentMonth - startMonth, {
     location: 'progressExtinction',
     valueName: 'monthsElapsed',
     month: state.currentMonth,
@@ -882,7 +882,7 @@ function progressRapidExtinction(
   // Month 7+: Irreversible
 
   // Validate monthsElapsed
-  const validatedMonthsElapsed = assertFinite(monthsElapsed, {
+  const validatedMonthsElapsed = Assertions.assertFinite(monthsElapsed, {
     location: 'progressRapidExtinction',
     valueName: 'monthsElapsed',
     month: state.currentMonth,
@@ -891,7 +891,7 @@ function progressRapidExtinction(
 
   if (validatedMonthsElapsed <= 2) {
     extinctionState.currentPhase = 1;
-    extinctionState.severity = assertProbability(0.2 + validatedMonthsElapsed * 0.1, {
+    extinctionState.severity = Assertions.assertProbability(0.2 + validatedMonthsElapsed * 0.1, {
       location: 'progressRapidExtinction',
       valueName: 'severity (phase 1)',
       month: state.currentMonth,
@@ -900,7 +900,7 @@ function progressRapidExtinction(
     extinctionState.recoveryWindowClosed = false;
   } else if (validatedMonthsElapsed <= 6) {
     extinctionState.currentPhase = 2;
-    extinctionState.severity = assertProbability(0.4 + (validatedMonthsElapsed - 3) * 0.1, {
+    extinctionState.severity = Assertions.assertProbability(0.4 + (validatedMonthsElapsed - 3) * 0.1, {
       location: 'progressRapidExtinction',
       valueName: 'severity (phase 2)',
       month: state.currentMonth,
@@ -923,7 +923,7 @@ function progressRapidExtinction(
     }
   } else if (validatedMonthsElapsed <= 9) {
     extinctionState.currentPhase = 3;
-    extinctionState.severity = assertProbability(0.7 + (validatedMonthsElapsed - 7) * 0.1, {
+    extinctionState.severity = Assertions.assertProbability(0.7 + (validatedMonthsElapsed - 7) * 0.1, {
       location: 'progressRapidExtinction',
       valueName: 'severity (phase 3)',
       month: state.currentMonth,
@@ -978,7 +978,7 @@ function progressSlowExtinction(
   // Month 60+: Population too low to recover
 
   // Validate monthsElapsed
-  const validatedMonthsElapsed = assertFinite(monthsElapsed, {
+  const validatedMonthsElapsed = Assertions.assertFinite(monthsElapsed, {
     location: 'progressSlowExtinction',
     valueName: 'monthsElapsed',
     month: state.currentMonth,
@@ -987,7 +987,7 @@ function progressSlowExtinction(
 
   if (validatedMonthsElapsed <= 24) {
     extinctionState.currentPhase = 1;
-    extinctionState.severity = assertProbability(0.1 + validatedMonthsElapsed * 0.01, {
+    extinctionState.severity = Assertions.assertProbability(0.1 + validatedMonthsElapsed * 0.01, {
       location: 'progressSlowExtinction',
       valueName: 'severity (phase 1)',
       month: state.currentMonth,
@@ -1010,7 +1010,7 @@ function progressSlowExtinction(
     }
   } else if (validatedMonthsElapsed <= 60) {
     extinctionState.currentPhase = 2;
-    extinctionState.severity = assertProbability(0.3 + (validatedMonthsElapsed - 24) * 0.008, {
+    extinctionState.severity = Assertions.assertProbability(0.3 + (validatedMonthsElapsed - 24) * 0.008, {
       location: 'progressSlowExtinction',
       valueName: 'severity (phase 2)',
       month: state.currentMonth,
@@ -1033,7 +1033,7 @@ function progressSlowExtinction(
     }
   } else if (validatedMonthsElapsed <= 96) {
     extinctionState.currentPhase = 3;
-    extinctionState.severity = assertProbability(0.6 + (validatedMonthsElapsed - 60) * 0.01, {
+    extinctionState.severity = Assertions.assertProbability(0.6 + (validatedMonthsElapsed - 60) * 0.01, {
       location: 'progressSlowExtinction',
       valueName: 'severity (phase 3)',
       month: state.currentMonth,
@@ -1056,7 +1056,7 @@ function progressSlowExtinction(
     }
   } else {
     extinctionState.currentPhase = 4;
-    extinctionState.severity = assertProbability(0.96 + (validatedMonthsElapsed - 96) * 0.001, {
+    extinctionState.severity = Assertions.assertProbability(0.96 + (validatedMonthsElapsed - 96) * 0.001, {
       location: 'progressSlowExtinction',
       valueName: 'severity (phase 4)',
       month: state.currentMonth,
@@ -1089,7 +1089,7 @@ function progressControlledExtinction(
   // Month 13+: Inevitable
 
   // Validate monthsElapsed
-  const validatedMonthsElapsed = assertFinite(monthsElapsed, {
+  const validatedMonthsElapsed = Assertions.assertFinite(monthsElapsed, {
     location: 'progressControlledExtinction',
     valueName: 'monthsElapsed',
     month: state.currentMonth,
@@ -1098,7 +1098,7 @@ function progressControlledExtinction(
 
   if (validatedMonthsElapsed <= 6) {
     extinctionState.currentPhase = 1;
-    extinctionState.severity = assertProbability(0.15 + validatedMonthsElapsed * 0.05, {
+    extinctionState.severity = Assertions.assertProbability(0.15 + validatedMonthsElapsed * 0.05, {
       location: 'progressControlledExtinction',
       valueName: 'severity (phase 1)',
       month: state.currentMonth,
@@ -1121,7 +1121,7 @@ function progressControlledExtinction(
     }
   } else if (validatedMonthsElapsed <= 18) {
     extinctionState.currentPhase = 2;
-    extinctionState.severity = assertProbability(0.4 + (validatedMonthsElapsed - 6) * 0.03, {
+    extinctionState.severity = Assertions.assertProbability(0.4 + (validatedMonthsElapsed - 6) * 0.03, {
       location: 'progressControlledExtinction',
       valueName: 'severity (phase 2)',
       month: state.currentMonth,
@@ -1144,7 +1144,7 @@ function progressControlledExtinction(
     }
   } else if (validatedMonthsElapsed <= 30) {
     extinctionState.currentPhase = 3;
-    extinctionState.severity = assertProbability(0.7 + (validatedMonthsElapsed - 18) * 0.02, {
+    extinctionState.severity = Assertions.assertProbability(0.7 + (validatedMonthsElapsed - 18) * 0.02, {
       location: 'progressControlledExtinction',
       valueName: 'severity (phase 3)',
       month: state.currentMonth,
@@ -1167,7 +1167,7 @@ function progressControlledExtinction(
     }
   } else {
     extinctionState.currentPhase = 4;
-    extinctionState.severity = assertProbability(0.94 + (validatedMonthsElapsed - 30) * 0.01, {
+    extinctionState.severity = Assertions.assertProbability(0.94 + (validatedMonthsElapsed - 30) * 0.01, {
       location: 'progressControlledExtinction',
       valueName: 'severity (phase 4)',
       month: state.currentMonth,
@@ -1200,7 +1200,7 @@ function progressUnintendedExtinction(
   // Month 48+: Too late
 
   // Validate monthsElapsed
-  const validatedMonthsElapsed = assertFinite(monthsElapsed, {
+  const validatedMonthsElapsed = Assertions.assertFinite(monthsElapsed, {
     location: 'progressUnintendedExtinction',
     valueName: 'monthsElapsed',
     month: state.currentMonth,
@@ -1209,7 +1209,7 @@ function progressUnintendedExtinction(
 
   if (validatedMonthsElapsed <= 12) {
     extinctionState.currentPhase = 1;
-    extinctionState.severity = assertProbability(0.1 + validatedMonthsElapsed * 0.02, {
+    extinctionState.severity = Assertions.assertProbability(0.1 + validatedMonthsElapsed * 0.02, {
       location: 'progressUnintendedExtinction',
       valueName: 'severity (phase 1)',
       month: state.currentMonth,
@@ -1232,7 +1232,7 @@ function progressUnintendedExtinction(
     }
   } else if (validatedMonthsElapsed <= 36) {
     extinctionState.currentPhase = 2;
-    extinctionState.severity = assertProbability(0.3 + (validatedMonthsElapsed - 12) * 0.015, {
+    extinctionState.severity = Assertions.assertProbability(0.3 + (validatedMonthsElapsed - 12) * 0.015, {
       location: 'progressUnintendedExtinction',
       valueName: 'severity (phase 2)',
       month: state.currentMonth,
@@ -1255,7 +1255,7 @@ function progressUnintendedExtinction(
     }
   } else if (validatedMonthsElapsed <= 48) {
     extinctionState.currentPhase = 3;
-    extinctionState.severity = assertProbability(0.65 + (validatedMonthsElapsed - 36) * 0.025, {
+    extinctionState.severity = Assertions.assertProbability(0.65 + (validatedMonthsElapsed - 36) * 0.025, {
       location: 'progressUnintendedExtinction',
       valueName: 'severity (phase 3)',
       month: state.currentMonth,
@@ -1278,7 +1278,7 @@ function progressUnintendedExtinction(
     }
   } else {
     extinctionState.currentPhase = 4;
-    extinctionState.severity = assertProbability(0.95 + (validatedMonthsElapsed - 48) * 0.004, {
+    extinctionState.severity = Assertions.assertProbability(0.95 + (validatedMonthsElapsed - 48) * 0.004, {
       location: 'progressUnintendedExtinction',
       valueName: 'severity (phase 4)',
       month: state.currentMonth,

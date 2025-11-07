@@ -30,6 +30,12 @@ import {
   DystopiaType,
   DystopiaDetection
 } from '@/types/minimalSuffering';
+import {
+  assertFinite,
+  assertProbability,
+  assertInRange,
+  assertStateProperty
+} from './utils/assertions';
 
 /**
  * 15 key countries for Tier 2 tracking (70% global population, 80% GDP, 75% emissions)
@@ -316,12 +322,20 @@ function updateTier2Indicators(state: GameState, metrics: CountrySufferingMetric
   // Fragile State Index (estimate from trust + violence + economic factors)
   // Research: FSI = Security + Economy + Politics + Social (12 indicators)
   // Simplified: Map simulation trust, violence, GDP to FSI scale
-  const trust = assertProbability(state.society.trustInGovernment ?? 0.5, {
-    location: 'updateTier2Indicators',
-    valueName: 'society.trustInGovernment',
-    month: state.currentMonth,
-    additionalInfo: { countryCode: metrics.countryCode }
-  });
+  // Nov 7, 2025: Remove ?? fallback - if trust is undefined, that's a bug to fix
+  const trust = assertProbability(
+    assertStateProperty(state.society, 'trustInGovernment', {
+      location: 'updateTier2Indicators',
+      month: state.currentMonth,
+      expectedSource: 'initialization.ts',
+    }),
+    {
+      location: 'updateTier2Indicators',
+      valueName: 'society.trustInGovernment',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    }
+  );
 
   const warDeaths = assertFinite(state.humanPopulationSystem.deathsByCategory.war, {
     location: 'updateTier2Indicators',
@@ -483,12 +497,20 @@ function updateTier2Indicators(state: GameState, metrics: CountrySufferingMetric
 
   // Healthcare Access & Quality (from QoL health dimension)
   // HAQ scale: 0 (worst) to 100 (best)
-  const healthQoL = assertProbability(state.qualityOfLifeSystems?.health ?? 0.6, {
-    location: 'updateTier2Indicators',
-    valueName: 'qualityOfLifeSystems.health',
-    month: state.currentMonth,
-    additionalInfo: { countryCode: metrics.countryCode }
-  });
+  // Nov 7, 2025: Remove ?? fallback - if health is undefined, that's a bug to fix
+  const healthQoL = assertProbability(
+    assertStateProperty(state.qualityOfLifeSystems, 'health', {
+      location: 'updateTier2Indicators',
+      month: state.currentMonth,
+      expectedSource: 'initialization.ts',
+    }),
+    {
+      location: 'updateTier2Indicators',
+      valueName: 'qualityOfLifeSystems.health',
+      month: state.currentMonth,
+      additionalInfo: { countryCode: metrics.countryCode }
+    }
+  );
 
   tier2Indicators.haqIndex = assertInRange(healthQoL * 100, 0, 100, {
     location: 'updateTier2Indicators',

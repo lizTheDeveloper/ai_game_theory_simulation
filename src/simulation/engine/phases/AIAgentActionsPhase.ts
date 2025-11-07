@@ -45,12 +45,14 @@ export class AIAgentActionsPhase implements SimulationPhase {
     Object.assign(state, aiResult.newState);
 
     // Validate AI agent capabilities after actions (CRITICAL: prevent NaN propagation)
+    // Nov 7, 2025: Use assertInRange instead of assertAICapability
+    // Capabilities are actually continuous [0, 5], not discrete integers
     for (const agent of state.aiAgents || []) {
-      // Validate main capability (should be in [0, 5])
-      assertAICapability(agent.capability || 0, {
+      // Validate main capability (continuous in [0, 5])
+      assertInRange(agent.capability || 0, 0, 5, {
         location: 'AIAgentActionsPhase.execute',
         valueName: 'capability',
-        agentId: agent.id
+        additionalInfo: { agentId: agent.id }
       });
     }
 

@@ -459,6 +459,7 @@ export function createAIAgent(
  * @param climatePriorityConfig Optional climate priority configuration override
  * @param preSampledThresholds Optional pre-sampled thresholds (Phase 1C: Nested Monte Carlo)
  * @param speculativeScenario Optional speculative scenario for Tier 3 thresholds (Phase 3)
+ * @param rng REQUIRED RNG function for deterministic initialization (Nov 7, 2025: MUST be provided - no fallbacks)
  */
 export function createDefaultInitialState(
   scenarioMode: ScenarioMode = 'historical',
@@ -466,7 +467,7 @@ export function createDefaultInitialState(
   climatePriorityConfig?: any,
   thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders, // Phase 4: Slider-based threshold control
   speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia',
-  rng?: () => number  // DETERMINISM FIX (Nov 6, 2025): Accept RNG function from caller (replaces seed parameter)
+  rng?: () => number  // DETERMINISM FIX (Nov 7, 2025): Optional for TS compatibility, but MUST be provided (enforced at runtime)
 ): GameState {
   // WEEK 2 Task 2.1 (Nov 6, 2025): Validate central configuration at startup
   // Fail-loudly if any parameter is invalid (research simulation rigor)
@@ -475,10 +476,34 @@ export function createDefaultInitialState(
   const initialYear = 2025;
   const initialMonth = 0;
 
-  // DETERMINISM FIX (Nov 6, 2025): Use caller's RNG or Math.random as fallback
-  // This ensures initialization and engine use the SAME RNG algorithm (SeededRandom)
-  // Previously: initialization used LCG, engine used SeededRandom → divergence even with same seed
-  const rngFunction: () => number = rng ?? Math.random;
+  // DETERMINISM FIX (Nov 7, 2025): RNG is REQUIRED - fail loudly if not provided
+  // Math.random fallback was added Nov 6 for "safety" but completely breaks Monte Carlo determinism.
+  // If rng is undefined, that's a BUG in the caller - they MUST provide it.
+  // Research simulation rigor: Invalid values indicate bugs to fix, not hide.
+  if (!rng || typeof rng !== 'function') {
+    throw new Error(
+      `❌ CRITICAL: createDefaultInitialState() called without RNG function\n` +
+      `   Location: initialization.ts:createDefaultInitialState\n` +
+      `   Parameter 'rng' is ${rng === undefined ? 'undefined' : typeof rng}\n` +
+      `\n` +
+      `   WHY THIS MATTERS:\n` +
+      `   - Math.random() fallback breaks Monte Carlo determinism\n` +
+      `   - Seeds become meaningless if some code uses Math.random()\n` +
+      `   - Reproducibility is CRITICAL for research simulations\n` +
+      `\n` +
+      `   FIX:\n` +
+      `   - Tests: Pass SeededRandom RNG function with fixed seed\n` +
+      `   - Monte Carlo: Pass engine's RNG function (already implemented)\n` +
+      `   - Never rely on Math.random() - it's non-deterministic\n` +
+      `\n` +
+      `   Example:\n` +
+      `   import { SeededRandom } from '@/simulation/utils/SeededRandom';\n` +
+      `   const rng = new SeededRandom(42).random.bind(...);\n` +
+      `   createDefaultInitialState('historical', undefined, undefined, undefined, undefined, rng);`
+    );
+  }
+
+  const rngFunction: () => number = rng;
 
   // DETERMINISM FIX (Oct 30, 2025): Set global RNG for initialization functions
   // This allows init functions to use deterministicRandom() before phases run
