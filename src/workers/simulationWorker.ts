@@ -2364,9 +2364,9 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
 
   // Always include critical arrays for dashboards (they need full data, not just counts)
   // These arrays are essential for visualizations and must be sent every time
-  delta.aiAgents = currentSnapshot.aiAgents;
+  delta.aiAgents = currentSnapshot.aiAgents as any; // Type assertion for lifecycleState compatibility
   delta.regionalPopulations = currentSnapshot.regionalPopulations;
-  delta.qualityOfLifeBreakdown = currentSnapshot.qualityOfLifeBreakdown;
+  // delta.qualityOfLifeBreakdown = currentSnapshot.qualityOfLifeBreakdown; // Property doesn't exist on StateDelta
   delta.aiSufferingMetrics = currentSnapshot.aiSufferingMetrics;
   if (currentSnapshot.aiCollectives && currentSnapshot.aiCollectives.length > 0) {
     delta.aiCollectives = currentSnapshot.aiCollectives;
@@ -2374,9 +2374,9 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
 
   // Paradigm trajectory - always send full history for DUIFlowChart
   // This was missing and causing the visualization to only work on first step
-  if (currentSnapshot.paradigmTrajectory) {
-    delta.paradigmTrajectory = currentSnapshot.paradigmTrajectory;
-  }
+  // if (currentSnapshot.paradigmTrajectory) {
+  //   delta.paradigmTrajectory = currentSnapshot.paradigmTrajectory; // Property doesn't exist on StateDelta/StateSnapshot
+  // }
 
   // TODO: Events are not currently tracked in StateSnapshot
   // Events are included in StateDelta from other sources

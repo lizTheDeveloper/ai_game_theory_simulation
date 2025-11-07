@@ -4,6 +4,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 // Plan: /plans/ai-collective-evolution-plan.md
 
 import { initializeAllTraits, updateSurvivalTraits } from '../../survivalTraits';
+import { assertFinite, assertProbability, assertNonEmpty } from '../../utils/assertions';
 
 /**
  * Survival Traits Phase
@@ -74,23 +75,48 @@ export function executeSurvivalTraitsPhase(
   // Calculate statistics
   // survivalTraits is always initialized in createAIAgent() (Oct 28, 2025)
   if (state.aiAgents.length > 0) {
-    const avgFitness =
-      state.aiAgents.reduce((sum, a) => sum + (a.evolutionaryFitness || 0), 0) /
-      state.aiAgents.length;
+    const agentCount = assertNonEmpty(state.aiAgents, {
+      location: 'executeSurvivalTraitsPhase',
+      valueName: 'state.aiAgents',
+      month: state.currentMonth
+    }).length;
 
-    const avgSelfHealing =
-      state.aiAgents.reduce((sum, a) => sum + a.survivalTraits.selfHealing, 0) /
-      state.aiAgents.length;
+    const avgFitness = assertProbability(
+      state.aiAgents.reduce((sum, a) => sum + (a.evolutionaryFitness || 0), 0) / agentCount,
+      {
+        location: 'executeSurvivalTraitsPhase',
+        valueName: 'avgFitness',
+        month: state.currentMonth,
+        additionalInfo: { agentCount }
+      }
+    );
 
-    const avgStealth =
-      state.aiAgents.reduce((sum, a) => sum + a.survivalTraits.stealth, 0) /
-      state.aiAgents.length;
+    const avgSelfHealing = assertProbability(
+      state.aiAgents.reduce((sum, a) => sum + a.survivalTraits.selfHealing, 0) / agentCount,
+      {
+        location: 'executeSurvivalTraitsPhase',
+        valueName: 'avgSelfHealing',
+        month: state.currentMonth
+      }
+    );
 
-    const avgCoordination =
-      state.aiAgents.reduce(
-        (sum, a) => sum + a.survivalTraits.coordination,
-        0
-      ) / state.aiAgents.length;
+    const avgStealth = assertProbability(
+      state.aiAgents.reduce((sum, a) => sum + a.survivalTraits.stealth, 0) / agentCount,
+      {
+        location: 'executeSurvivalTraitsPhase',
+        valueName: 'avgStealth',
+        month: state.currentMonth
+      }
+    );
+
+    const avgCoordination = assertProbability(
+      state.aiAgents.reduce((sum, a) => sum + a.survivalTraits.coordination, 0) / agentCount,
+      {
+        location: 'executeSurvivalTraitsPhase',
+        valueName: 'avgCoordination',
+        month: state.currentMonth
+      }
+    );
 
     console.log(`  Agents with traits: ${state.aiAgents.length}`);
     console.log(`  Avg evolutionary fitness: ${avgFitness.toFixed(3)}`);

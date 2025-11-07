@@ -18,22 +18,38 @@ export class FreshwaterPhase implements SimulationPhase {
     const { updateFreshwaterSystem, checkFreshwaterTechUnlocks } = require('../../freshwaterDepletion');
     setDeterministicRng(rng);
 
-    // Validate freshwater boundary before update
-    assertFinite(state.planetaryBoundaries.freshwaterUse, {
-      location: 'FreshwaterPhase.execute (pre-update)',
-      valueName: 'freshwaterUse',
-      month: state.currentMonth
-    });
+    // Validate freshwater system state before update
+    // NOTE: freshwaterSystem is the actual state object, not planetaryBoundaries
+    // The planetary boundary for freshwater is in planetaryBoundariesSystem.boundaries.freshwater_change
+    if (state.freshwaterSystem) {
+      assertFinite(state.freshwaterSystem.waterStress, {
+        location: 'FreshwaterPhase.execute (pre-update)',
+        valueName: 'waterStress',
+        month: state.currentMonth
+      });
+      assertFinite(state.freshwaterSystem.blueWater.groundwater, {
+        location: 'FreshwaterPhase.execute (pre-update)',
+        valueName: 'groundwater',
+        month: state.currentMonth
+      });
+    }
 
     updateFreshwaterSystem(state, rng);
     checkFreshwaterTechUnlocks(state);
 
-    // Validate freshwater boundary after update
-    assertFinite(state.planetaryBoundaries.freshwaterUse, {
-      location: 'FreshwaterPhase.execute (post-update)',
-      valueName: 'freshwaterUse',
-      month: state.currentMonth
-    });
+    // Validate freshwater system state after update
+    if (state.freshwaterSystem) {
+      assertFinite(state.freshwaterSystem.waterStress, {
+        location: 'FreshwaterPhase.execute (post-update)',
+        valueName: 'waterStress',
+        month: state.currentMonth
+      });
+      assertFinite(state.freshwaterSystem.blueWater.groundwater, {
+        location: 'FreshwaterPhase.execute (post-update)',
+        valueName: 'groundwater',
+        month: state.currentMonth
+      });
+    }
 
     return { events: [] };
   }
