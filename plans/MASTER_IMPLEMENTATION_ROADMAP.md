@@ -21,6 +21,14 @@
   - **Status:** READY FOR PHASE 2 (implementation by simulation-maintainer)
 
 **Recent Completions (Nov 7, 2025):**
+- ✅ **WEEK 5 VARIANCE AMPLIFICATION IMPLEMENTATION COMPLETE** (Nov 6-7, 2025 - 6 hours)
+  - **Variance Fix:** maxAmplification 10× → 100× (commit 474f5903e)
+  - **Research:** Scheffer et al. 2024 (15-200×), financial crisis (40×), ecosystems (100×)
+  - **Additional Fixes:** refugeeCrises assertion cap (10B global), QoL assertion type (probability → finite)
+  - **Merge Conflicts:** OutcomeProbabilitiesPhase + UpdateEconomicStagePhase resolved (commit 420e29f58)
+  - **Expected Impact:** Mortality 43-58% → 60-75%, outcome diversity improves
+  - **Validation Status:** 🔴 BLOCKED - Monte Carlo runs stall after batch 1 (NEW CRITICAL TASK: Debug Monte Carlo execution)
+  - Archive: `/plans/completed/week5_variance_amplification_implementation_20251107.md`
 - ✅ **AUTONOMOUS SESSION 20251107_010001 COMPLETE** (Nov 7, 2025 - 30 minutes)
   - **HIGH-3 Wet Bulb Temperature Fix:** Implementation COMPLETE (empirical 30.5-31.2°C vs theoretical 35°C)
     - Impact: 40-60% heat mortality underestimation eliminated
@@ -1276,30 +1284,55 @@ The future is worth building toward. The roadmap now reflects reality: not aspir
 
 ## 🎯 Next Priority Work (Post-4-Week Critical Path)
 
-### WEEK 5: Variance Amplification & Validation (HIGH - 2-3 days)
+### WEEK 5: Variance Amplification & Validation (HIGH - Implementation COMPLETE, Validation BLOCKED)
 
-**1. Fix Variance Amplification (HIGH)**
+**Archive:** [/plans/completed/week5_variance_amplification_implementation_20251107.md](/plans/completed/week5_variance_amplification_implementation_20251107.md)
+
+**1. Fix Variance Amplification (HIGH)** ✅ COMPLETE
 - **Priority:** 🔴 ROOT CAUSE of outcome convergence
-- **Change:** BifurcationLogicPhase.ts - increase maxAmplification from 10 to 50-100
-- **Expected impact:** Mortality 43-58% → 60-75%
+- **Change:** BifurcationLogicPhase.ts - maxAmplification 10 → 100
+- **Implementation:** Commit 474f5903e (Nov 6, 2025)
 - **Research basis:** Scheffer et al. 2024 (15-200×), Financial crisis (40×), Ecosystems (100×)
-- **Effort:** 4-6 hours (small code change, careful validation needed)
-- **Status:** Ready to implement
+- **Additional fixes:** refugeeCrises.ts assertion cap (10B global), QualityOfLifePhase assertion type (probability → finite)
+- **Merge conflicts:** OutcomeProbabilitiesPhase.ts, UpdateEconomicStagePhase.ts resolved (commit 420e29f58)
+- **Expected impact:** Mortality 43-58% → 60-75%, outcome diversity improves
+- **Status:** ✅ IMPLEMENTATION COMPLETE (6 hours, Nov 6-7)
 
-**2. Monte Carlo Validation (N=20)**
+**2. Monte Carlo Validation (N=20)** 🔴 BLOCKED
 - **Purpose:** Verify variance fix improves outcome diversity
-- **Metrics:**
-  - Outcome distribution (currently 100% dystopia, target: 70-80% dystopia, 15-25% mixed, 0-10% good)
-  - Mortality coefficient of variation (currently ~2%, target: 20-40%)
-  - Paradigm score ranges (currently narrow, should widen)
-- **Acceptance:** If still 100% dystopia with 100× cap, this is HONEST RESEARCH
-- **Effort:** 1-2 days
-- **Status:** Ready to execute
+- **Status:** BLOCKED by Monte Carlo execution failures
+- **Symptoms:** Runs stall after "Executing batch 1/3", incomplete output (ends at month 239, missing outcome data)
+- **Attempted runs:** Multiple N=20 attempts Nov 6-7, all failed silently
+- **Blocking issue:** NEW CRITICAL TASK 3 below
+- **Deferred until:** Monte Carlo execution debugged and fixed
 
-**WEEK 5 Success Metrics:**
-- ✅ Variance amplification increased to 50-100× (empirically grounded)
-- ✅ Monte Carlo N=20 shows outcome diversity OR confirms dystopia convergence is research-backed
-- ✅ Mortality range 60-75% (honest middle ground between Sylvia's 75% floor and Cynthia's defense)
+**3. DEBUG MONTE CARLO EXECUTION (CRITICAL - NEW)** 🔴 BLOCKING VALIDATION
+- **Priority:** CRITICAL - Blocks all WEEK 5 validation work
+- **Issue:** Parallel Monte Carlo runs stall after first batch, produce incomplete output
+- **Symptoms:**
+  - Logs show only "Run 1/20 completed" then silence
+  - JSON output ends at month 239 (not 240)
+  - Missing outcomeClassification, outcomeProb, deathCount in final state
+- **Possible causes:**
+  1. OutcomeProbabilitiesPhase not executing (merge conflict damage?)
+  2. Parallel execution race conditions
+  3. Silent assertion failures
+  4. Final month state not being written
+- **Investigation needed:**
+  - Run single simulation (seed 42000) with full logging
+  - Verify OutcomeProbabilitiesPhase executes
+  - Check if month 240 calculated and saved
+  - Test N=3 to isolate parallel vs serial issue
+- **Effort:** 4-8 hours debugging + fix
+- **Status:** 🔴 READY TO DEBUG (next priority)
+
+**WEEK 5 Status:**
+- ✅ Variance amplification increased to 100× (empirically grounded) - COMPLETE
+- ✅ Assertion bugs fixed (refugeeCrises cap, QoL type) - COMPLETE
+- ✅ Merge conflicts resolved (OutcomeProbabilities, UpdateEconomicStage) - COMPLETE
+- 🔴 Monte Carlo N=20 validation - BLOCKED (technical issue)
+- ⏳ Outcome diversity analysis - PENDING (awaits debug fix)
+- ⏳ Mortality CV 20-40% - PENDING (awaits debug fix)
 
 ---
 
