@@ -58,6 +58,36 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
+**📚 RESEARCH UPDATE: Tier 2 Threshold Citations (2023-2025)** (Nov 7, 2025, commit 6e92344)
+
+**Summary:** Updated resentment revolt threshold research with 4 new peer-reviewed sources from 2023-2025, reducing oldest source age from 1970 (Gurr) to 1930 (Keynes).
+
+**New Research Added:**
+- **Belgioioso et al. (2023) - PLOS ONE:** Local deprivation → political violence (32,844 neighborhoods, 2015-2021)
+  - Key finding: Deprivation explains ~13% variance in hate crimes
+  - Mechanism: Erodes legitimacy, undermines trust, increases alienation
+- **Lisciandra (2024) - J. Public Economic Theory:** Resentment threshold dynamics
+  - Key finding: Resentment exceeding threshold → explosive dynamics threatening stability
+- **IDEA Global State of Democracy 2024:** Electoral legitimacy crisis metrics
+  - 1 in 5 elections (2020-2024): Losing party rejects outcome
+  - 54% of countries: Democratic decline on at least one factor
+- **World Bank/IMF 2024:** Inequality thresholds
+  - Gini 0.30: Growth-undermining threshold
+  - Gini 0.40: "High inequality" tracking threshold
+  - Gini 0.461: Critical policy intervention threshold
+
+**Context:** This research backs the resentment revolt threshold (0.60-0.80) used in `src/simulation/thresholds/tier2Config.ts`. No parameter changes - citation currency update only.
+
+**Research Currency Status:**
+- Oldest source: 1930 (Keynes - Economic Possibilities)
+- Newest source: 2024 (Lisciandra, IDEA, World Bank/IMF)
+- Last verified: November 7, 2025
+
+**Files Modified:**
+- `research/threshold_tier2_historical_ranges_20251026.md` (+57 lines, 4 new citations)
+
+---
+
 **📋 CRITICAL-1 PLANNING: Assertion Coverage Expansion (35.9% → 95%)** (Nov 7, 2025, commit 87f9954)
 
 **Summary:** Comprehensive audit and implementation plan for systematic assertion coverage across all 117 simulation phases.

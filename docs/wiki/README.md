@@ -30,6 +30,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **CRITICAL-3 RNG Regression FIXED** - Removed Math.random fallbacks, made RNG required, determinism restored (commit 0702a1da6)
 - ✅ **HIGH-1 Deep Cloning COMPLETE** - 14 instances JSON.parse → structuredClone, 30.5% performance improvement, 2h vs 1-2d estimated
 - ✅ **CRITICAL-1/2 Planning COMPLETE** - Assertion coverage + phase dependency handoff documents ready, tooling limitations documented
+- ✅ **Research Currency Update** - Tier 2 thresholds updated with 2023-2025 sources (Belgioioso, Lisciandra, IDEA, World Bank/IMF) (commit 6e92344)
 - 🟢 **Architectural Honesty Preserved** - Gaps acknowledged (not hidden), planning vs execution reality documented, industrial-scale changes require manual intervention
 
 **🔍 KEY FINDING - ARCHITECTURAL HONESTY** (commit 8462f30, November 7, 2025)

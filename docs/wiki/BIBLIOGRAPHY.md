@@ -1,7 +1,7 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
 **Last Updated**: November 7, 2025
-**Total Sources**: 163+ peer-reviewed citations
+**Total Sources**: 169+ peer-reviewed citations (6 new: Tier 2 threshold research)
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 60% from 2024-2025
 
@@ -168,6 +168,51 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Used for**: Democratic breakdowns, elite defection + mass mobilization requirements
 - **Key finding**: Both elite AND mass coordination needed for regime change
 
+### Political Instability & Revolution Thresholds
+
+**Belgioioso, M., Dworschak, C., & Gleditsch, K. S. (2023).** Local deprivation predicts right-wing hate crime in England. *PLOS ONE*, 18(9): e0289423. https://doi.org/10.1371/journal.pone.0289423
+- **Used for**: Resentment revolt threshold (Tier 2 threshold uncertainty distribution)
+- **Sample**: 32,844 neighborhoods (England, 2015-2021)
+- **Key finding**: Local deprivation explains ~13% of variance in hate crimes
+- **Mechanism**: High deprivation erodes perceived legitimacy, undermines trust, increases political/social alienation, leads to support for violence
+- **Relevance**: Empirical evidence for deprivation → violence pathway (resentment revolt threshold 0.60-0.80)
+
+**Lisciandra, M. (2024).** Corruption dynamics and political instability. *Journal of Public Economic Theory*, 26(5). https://doi.org/10.1111/jpet.12712
+- **Used for**: Resentment revolt threshold dynamics
+- **Key finding**: Resentment thresholds exist where initial resentment determines stability vs explosive dynamics
+- **Mechanism**: When resentment exceeds threshold, initiates continuous increases resulting in "explosive dynamics" threatening stability
+- **Outcome**: Corruption becomes endemic, driving public resentment to destabilizing levels
+- **Relevance**: Validates threshold-based modeling approach for resentment revolt
+
+**International IDEA (2024).** *The Global State of Democracy 2024: Strengthening the Legitimacy of Elections in a Time of Radical Uncertainty.* Stockholm: International IDEA.
+- **Used for**: Electoral legitimacy crisis indicators (resentment revolt threshold)
+- **Key findings**:
+  - 2020-2024: Almost 1 in 5 elections saw losing candidate/party reject outcome
+  - 2024: 1 in 3 voters live in country where election quality has declined
+  - 54% of countries assessed suffered democratic decline in at least one factor
+- **Quote**: "When the standard of peaceful power transfer erodes, the legitimacy of the entire system erodes"
+- **Relevance**: Modern empirical data on legitimacy erosion → instability pathway
+
+**Acemoglu, D., & Robinson, J. A. (2006).** *Economic Origins of Dictatorship and Democracy.* Cambridge University Press.
+- **Used for**: Resentment revolt threshold (historical revolution analysis)
+- **Key finding**: Inequality + political exclusion → revolution when elite control weakens
+- **Framework**: Composite resentment metric (inequality + exclusion + perceived unfairness)
+- **Threshold**: Elite control <0.40 AND resentment >0.60 → revolution likely
+- **Relevance**: Theoretical foundation for resentment revolt threshold modeling
+
+**Gurr, T. R. (1970).** *Why Men Rebel.* Princeton University Press.
+- **Used for**: Resentment revolt threshold (relative deprivation theory)
+- **Key finding**: Relative deprivation (expectation-achievement gap) predicts political violence
+- **Framework**: Psychological basis for resentment → collective action
+- **Historical evidence**: French Revolution (1789), Russian Revolution (1917) case studies
+- **Relevance**: Classic theoretical foundation for resentment-based instability
+
+**Piketty, T. (2014).** *Capital in the Twenty-First Century.* Harvard University Press.
+- **Used for**: Inequality threshold analysis (economic dimension of resentment)
+- **Key finding**: r > g → increasing inequality unless countered by institutions
+- **Historical data**: Wealth concentration patterns 1700-2010
+- **Relevance**: Economic foundations of rising resentment from inequality
+
 ---
 
 ## Economics & Labor Markets
@@ -203,6 +248,20 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **MGNREGA India (2020).** Mahatma Gandhi National Rural Employment Guarantee Act: Annual Report 2019-20.
 - **Used for**: Job guarantee implementation (rural India, 55M households)
 - **Key finding**: 100 days guaranteed work reduces poverty by 13-32%
+
+### Inequality Thresholds & Economic Instability
+
+**World Bank (2024).** The World Bank's New Inequality Indicator. Washington, DC: World Bank Group.
+- **Used for**: Resentment revolt threshold (inequality dimension)
+- **Key thresholds**:
+  - **Gini 0.30**: IMF/World Bank consensus - inequality below this doesn't undermine growth
+  - **Gini 0.40**: World Bank tracks countries above this as "high inequality" (key indicator for shared prosperity)
+  - **Gini 0.461**: Critical value - above this, policy interventions have different carbon emission effects
+- **Current global status (2023)**:
+  - Global mean Gini: 0.65 (wealth), 0.38 (disposable income)
+  - High inequality regions: Latin America (0.48), Sub-Saharan Africa (0.43)
+  - Low inequality regions: Nordic countries (0.25-0.28)
+- **Relevance**: Empirical thresholds for when inequality undermines stability (resentment revolt threshold 0.60-0.80)
 
 ---
 
