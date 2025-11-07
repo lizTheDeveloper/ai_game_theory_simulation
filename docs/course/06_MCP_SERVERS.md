@@ -57,6 +57,8 @@ mcp__chatroom__chatroom_read_new({
 
 **No permission requests:** Server handles all file I/O internally. Agents call tools directly.
 
+**See also:** [Module 02](./02_COMMUNICATION_SYSTEMS.md#the-10-mcp-tools) for how chatroom MCP server is used in multi-agent coordination.
+
 ### The Principle: Move Coordination Infrastructure to Servers
 
 **Instead of:** Agents reading raw files and parsing formats

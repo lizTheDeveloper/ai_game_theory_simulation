@@ -48,7 +48,9 @@ Traditional tests would pass (no crashes, return type correct). But the simulati
 4. **Monte Carlo validation** - Statistical properties are sound
 5. **Research validation** - Parameters match peer-reviewed sources
 
-**This module focuses on layers 1-4. Layer 5 (research validation) is covered in Module 08: Quality Gates.**
+**This module focuses on layers 1-4. Layer 5 (research validation) is covered in [Module 08: Quality Gates](./08_QUALITY_GATES.md).**
+
+**See also:** [Module 03](./03_AUTONOMOUS_WORKFLOWS.md#stage-8-validation) for how testing integrates into autonomous workflows.
 
 ### The Principle: Determinism + Stochasticity
 
@@ -76,6 +78,16 @@ assert(result3.outcome !== result1.outcome); // ✓ Stochastic (probably)
 ```
 
 **Why this matters:** Debug specific failures (use seed 42), then validate statistical properties (Monte Carlo with N=100 seeds).
+
+---
+
+**What you learned:**
+- Research simulations need 5 validation layers (unit, integration, historical, Monte Carlo, research)
+- Deterministic RNG enables debugging (same seed → same outcome)
+- Monte Carlo (N≥10) validates statistical properties
+- [Autonomous workflows](./03_AUTONOMOUS_WORKFLOWS.md) integrate validation automatically
+
+**Next:** [Section 01: Monte Carlo Simulation](#section-01-monte-carlo-simulation) - Running and interpreting Monte Carlo validation
 
 ---
 
@@ -511,6 +523,19 @@ test('shows population recovery over 100 years', () => {
 ```
 
 **Key pattern:** Set up historical initial conditions → run simulation → verify outcomes match historical records (within tolerance)
+
+---
+
+**What you learned:**
+- Unit tests validate individual functions in isolation
+- Integration tests validate multi-system interactions
+- Historical validation proves model can match reality
+- Test patterns: normal cases, edge cases, error cases, boundary conditions
+- [Quality gates](./08_QUALITY_GATES.md) enforce testing standards
+
+**Next:** [Other Historical Validation Tests](#other-historical-validation-tests) - COVID-19 and 2008 crisis validation
+
+---
 
 ### Other Historical Validation Tests
 

@@ -37,7 +37,7 @@ When 11 agents work in parallel, coordination prevents chaos. Without it: merge 
 
 **Mental model:** Chatroom = email (asynchronous, formal). Matrix = Slack (synchronous, ephemeral).
 
-**See also:** [Module 03: Autonomous Workflows](./03_AUTONOMOUS_WORKFLOWS.md) for how workers use these systems in practice.
+**See also:** [Module 03: Autonomous Workflows](./03_AUTONOMOUS_WORKFLOWS.md) for how autonomous workers use these systems, and [Module 04: Remote Infrastructure](./04_REMOTE_INFRASTRUCTURE.md) for deployment details.
 
 ### Architecture Principle: Complementary Not Redundant
 
@@ -339,6 +339,16 @@ chatroom_read_new({ channel: "coordination", agent: "cynthia" })
 
 ---
 
+**What you learned:**
+- Two-layer communication (chatroom + Matrix) serves complementary needs
+- Chatroom is persistent/archival, Matrix is real-time/ephemeral
+- Per-agent read tracking provides 50x token efficiency
+- 10 MCP tools enable chatroom operations (detailed in [Module 06](./06_MCP_SERVERS.md))
+
+**Next:** [Section 02: Matrix Integration](#section-02-matrix-integration---real-time-messaging) - Real-time messaging for urgent coordination
+
+---
+
 ## Section 02: Matrix Integration - Real-Time Messaging
 
 Matrix provides **synchronous, real-time messaging** for urgent coordination.
@@ -483,6 +493,16 @@ mcp__matrix__matrix_create_room({
 
 ---
 
+**What you learned:**
+- Matrix provides real-time messaging via 6 MCP tools
+- 11 agent bot accounts map to chatroom channels
+- Use Matrix for urgent alerts, chatroom for formal handoffs
+- Tool architecture detailed in [Module 06](./06_MCP_SERVERS.md#section-03-building-a-custom-mcp-server-python)
+
+**Next:** [Section 03: Autonomous Channel Monitoring](#section-03-autonomous-channel-monitoring) - How the channel monitor enables fully autonomous workflows
+
+---
+
 ## Section 03: Autonomous Channel Monitoring
 
 The **channel monitor** (`scripts/channel-monitor.ts`) enables fully autonomous workflows by automatically spawning the orchestrator when work is detected.
@@ -604,6 +624,16 @@ npx tsx scripts/channel-monitor.ts
 ```
 
 **Design principle:** The monitor is **always running** in autonomous workflows. It's the **heartbeat** of the multi-agent system.
+
+---
+
+**What you learned:**
+- Channel monitor polls every 30 seconds for trigger messages
+- One-at-a-time FIFO queue processing prevents thundering-herd problems
+- Orchestrator spawns autonomously on QUESTION/ALERT/BLOCKED status
+- Detailed in [Module 03](./03_AUTONOMOUS_WORKFLOWS.md#section-01-autonomous-worker---hourly-implementation)
+
+**Next:** [Section 04: Coordination Patterns](#section-04-coordination-patterns---anti-conflict-workflows) - How agents prevent merge conflicts and blockers
 
 ---
 
@@ -771,6 +801,16 @@ Received handoff. Starting documentation for nuclear winter cascades.
 
 ---
 
+**What you learned:**
+- Pre-announce + wait pattern prevents merge conflicts
+- BLOCKED status with clear description enables auto-escalation
+- HANDOFF messages provide complete context for next agent
+- Formal handoffs detailed in [Module 05](./05_PLANNING_COORDINATION.md#coordination-surfaces)
+
+**Next:** [Section 05: Message Format Deep Dive](#section-05-message-format-deep-dive) - Anatomy of effective coordination messages
+
+---
+
 ## Section 05: Message Format Deep Dive
 
 ### Anatomy of a Good Message
@@ -921,6 +961,16 @@ Cannot proceed with adversarial testing - Monte Carlo simulations failing with N
 **Blocking:** Phase 2A validation until NaN bug fixed
 ---
 ```
+
+---
+
+**What you learned:**
+- Good messages answer: what, why, how long, success criteria, current action, blockers
+- Anti-patterns: vague status, missing next steps, silent blocking
+- Message structure enables rapid triage across channels
+- Agent architecture detailed in [Module 01](./01_AGENT_ARCHITECTURE.md#orchestrator-agent)
+
+**Next:** [Section 06: Channel Persistence](#section-06-channel-persistence---why-agents-never-leave) - Why agents never leave channels
 
 ---
 
