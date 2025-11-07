@@ -455,7 +455,7 @@
 - **Path:** `research/paradigm_1_western_liberal_20251019.md`
 
 ### `paradigm_2_development_needs_20251019.md`
-- **Oldest source:** 1955 (70 years old)
+- **Oldest source:** 1981 (44 years old) [Updated Nov 7: Kuznets analysis refreshed with 2024-2025 evidence]
 - **Status:** Not used in simulation
 - **Path:** `research/paradigm_2_development_needs_20251019.md`
 

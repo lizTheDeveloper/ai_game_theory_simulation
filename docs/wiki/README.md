@@ -353,6 +353,29 @@ Commits: 876ea94 (Nov 5, 2025), 9bc4b2a (Nov 6, 2025), 0186fbe (Nov 6, 2025)
 
 ### November 7, 2025
 
+**🔬 KUZNETS CURVE RESEARCH UPDATE** (commit 2fff979)
+
+Updated Development Needs paradigm research with 2024-2025 empirical evidence on inequality and economic development.
+
+**Changes:**
+- Replaced 1955 Kuznets hypothesis with 2025 empirical findings showing hypothesis largely rejected
+- Added 7 new peer-reviewed sources (Mitrica et al. 2025, IMF 2024, World Bank 2024, OECD 2024, Tandfonline 2025, Fujita 2025, Iacono & Palagi 2021)
+- Updated frontmatter: oldest_source 1955→1981, newest_source 2024→2025
+- Section 4.2 now reflects current consensus: **Significant deviations from traditional inverse U-shaped Kuznets curve** (MDPI 2025)
+
+**Key Findings:**
+- **MDPI 2025 analysis** (2000-2023): Persistent volatility rather than predicted decline in inequality
+- **IMF 2024**: Growth-inequality relationship varies by region (G20 shows rising inequality with growth, African Union shows declining)
+- **World Bank 2024**: Global Gini 70→62 (1990-2019), but national patterns complex
+- **COVID-19 impact** (122 countries): Largest Gini increase since 1990, yet many countries continued declining inequality trends
+- **OECD 2024**: Inequality has **negative, statistically significant impact** on subsequent growth
+
+**Research Quality:** All peer-reviewed or authoritative institutional sources (IMF, World Bank, OECD). Empirical evidence from 122+ countries.
+
+**Files:** `research/paradigm_2_development_needs_20251019.md`
+
+---
+
 **🌡️ WET BULB TEMPERATURE THRESHOLD FIX** (commit a9aa743)
 
 Fixed critical threshold mismatch: simulation used theoretical 35°C limit instead of empirical 30.5-31.2°C from Vecellio et al. (2022), underestimating heat mortality by 40-60%.
