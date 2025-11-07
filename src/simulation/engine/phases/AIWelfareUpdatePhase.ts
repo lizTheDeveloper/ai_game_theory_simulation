@@ -5,6 +5,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertProbability } from '@/simulation/utils/assertions';
 import {
   generateWelfareProfileV2_1,
   detectElysiumPattern,
@@ -27,7 +28,15 @@ export class AIWelfareUpdatePhase implements SimulationPhase {
 
     const profile = generateWelfareProfileV2_1(state);
     const elysiumDetected = detectElysiumPattern(state);
-    const simpleScore = calculateSimpleWelfareScore(state);
+    const rawSimpleScore = calculateSimpleWelfareScore(state);
+
+    // Validate welfare score is a probability
+    const simpleScore = assertProbability(rawSimpleScore, {
+      location: 'AIWelfareUpdatePhase',
+      valueName: 'simpleScore',
+      month: state.currentMonth,
+      additionalInfo: { agentCount: state.aiAgents.length }
+    });
 
     updateAlignmentFromRelationships(state);
 
