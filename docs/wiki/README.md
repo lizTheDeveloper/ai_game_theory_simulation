@@ -3163,8 +3163,12 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 
 **Research Foundation:**
 - Sen (1981): Entitlement theory - famines are distribution failures, not production failures
-- WHO social determinants framework: Root causes vs immediate causes
+- WHO (2024): Updated PAF methodology, warns against summing PAFs (validates normalized weights)
+- Aleshin-Guendel et al. (2025): Excess mortality estimation framework, validates compound causality
+- World Weather Attribution (2024-2025): Rapid attribution methodology, vulnerability assessment
+- Carleton et al. (2022): Climate-mortality interaction effects, income-based adaptation capacity
 - ICD-10 classification: Medical cause of death
+- **Research Update (Nov 7, 2025):** Added 6 new sources (2022-2025) to replace aging sources. See `research/death_attribution_methodology_20251018.md` Section 13.
 
 **Validation Results (N=100, 120 months):**
 - **Proximate:** Famine 97.3%, Disease 1.4%, Ecosystem 0.5%, Disasters 0.3%

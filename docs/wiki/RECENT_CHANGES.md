@@ -4,6 +4,44 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔬 Research Updates (November 7, 2025)
+
+**DEATH ATTRIBUTION METHODOLOGY - RESEARCH CURRENCY RESTORED** (Nov 7, 2025, commit ff8f713)
+
+**Summary:** Autonomous research worker updated `research/death_attribution_methodology_20251018.md` with 6 new peer-reviewed sources (2022-2025) to replace aging sources.
+
+**Changes:**
+- **Oldest source**: 2007 (18 years old) → 2022 (3 years old)
+- **New sources**: 6 papers (2022-2025) added
+- **Section added**: Section 13 - "2024-2025 Research Updates"
+- **Research quality**: CURRENT (all critical sources <3 years old)
+
+**New Sources:**
+1. Aleshin-Guendel et al. (2025) - Excess mortality estimation (Annual Review of Statistics)
+2. World Weather Attribution (2024-2025) - Rapid attribution methodology
+3. WHO (2024) - Updated PAF methodology
+4. European J. Epidemiology (2024) - graphPAF package
+5. Carleton et al. (2022) - Climate-mortality QJE publication
+6. BioScience (2025) - State of climate report
+
+**Key Advances:**
+- Formal excess mortality framework validates compound attribution approach
+- WWA rapid attribution shows climate deaths require vulnerability assessment
+- WHO 2024 warns against summing PAFs (validates normalized weights)
+- Carleton 2022 quantifies income-climate interaction (validates dynamic weighting)
+- Modern Bradford Hill criteria treat causation as continuum (validates confidence levels)
+
+**Impact:**
+- ✅ **No code changes**: Methodology in `src/simulation/utils/deathAttribution.ts` unchanged
+- ✅ **Research backing strengthened**: Aging sources replaced with current (2022-2025) literature
+- ✅ **Validation of existing approach**: New research confirms compound causality framework
+
+**Documentation Updated:**
+- `docs/wiki/README.md` - Death attribution section updated with new sources
+- `research/death_attribution_methodology_20251018.md` - Section 13 added
+
+---
+
 ## ✅ Recent Changes (November 6, 2025)
 
 **⚙️ GITHUB ACTIONS WORKFLOWS TEMPORARILY DISABLED** (Nov 6, 2025, commit 4378525)
