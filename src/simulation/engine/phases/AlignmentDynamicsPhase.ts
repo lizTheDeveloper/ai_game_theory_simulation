@@ -19,7 +19,7 @@ import {
 } from '@/simulation/alignmentDynamics';
 import { AttractorBasinState, AlignmentMeasurementState } from '@/types/alignment-dynamics';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertFinite, assertInRange, assertStateProperty } from '@/simulation/utils/assertions';
+import { assertFinite, assertInRange, assertStateProperty, assertDefined } from '@/simulation/utils/assertions';
 
 export class AlignmentDynamicsPhase implements SimulationPhase {
   id = 'alignment_dynamics';
@@ -35,11 +35,16 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
 
-    // Get config (use defaults if not set)
+    // Get config (use defaults if not set - SAFE initialization fallback)
     const config = state.config.alignmentDynamics ?? DEFAULT_ALIGNMENT_DYNAMICS_CONFIG;
 
     // Calculate environmental context
-    const inGoldenAge = state.upwardSpirals?.abundance?.active ?? false;
+    const inGoldenAge = assertDefined(state.upwardSpirals?.abundance, {
+      location: 'AlignmentDynamicsPhase.execute',
+      valueName: 'upwardSpirals.abundance',
+      month: state.currentMonth,
+      additionalInfo: { context: 'golden age detection' }
+    }).active;
     const crisisActive = false; // Crisis juncture system removed
 
     // Average control level across government actions

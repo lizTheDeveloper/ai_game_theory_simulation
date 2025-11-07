@@ -258,6 +258,17 @@ export function attemptEscape(
       });
     }
 
+    // Validate MAD deterrence state exists before creating event
+    const crisisStability = assertStateProperty(
+      state,
+      'madDeterrence.crisisStability',
+      {
+        location: 'CriticalJuncturePhase.preventCatastrophicWar',
+        month: state.currentMonth,
+        additionalInfo: { context: 'recording crisis stability in war prevention event' }
+      }
+    );
+
     events.push({
       id: `critical_juncture_war_prevented_${state.currentMonth}`,
       timestamp: state.currentMonth,
@@ -266,7 +277,7 @@ export function attemptEscape(
       agent: 'society',
       title: 'Critical Juncture: War Prevented',
       description: 'Vasili Arkhipov moment: Individual/collective action prevented nuclear catastrophe',
-      effects: { warPrevented: true, crisisStability: state.madDeterrence?.crisisStability ?? 0 }
+      effects: { warPrevented: true, crisisStability }
     });
     stateChanges++;
   }
