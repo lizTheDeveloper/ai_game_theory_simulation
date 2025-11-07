@@ -18,6 +18,12 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
+  assertFinite,
+  assertResourceAllocation,
+  assertProbability,
+  assertInRange,
+} from '@/simulation/utils/assertions';
+import {
   updateEmergencyResponses,
   deployEmergencyResponse,
   getActiveResponse,
@@ -69,8 +75,16 @@ export class EmergencyResponsePhase implements SimulationPhase {
           // HIGH #2 FIX (Oct 29, 2025): Accelerate emergency medical tech
           if (state.techTreeState) {
             // Accelerate medical response technologies during pandemic
-            state.techTreeState.deploymentAcceleration['ai_diagnostics'] = 10;  // Emergency medical AI deployment
-            state.techTreeState.deploymentAcceleration['mrna_vaccines'] = 30;  // COVID showed 10-30x faster vaccine deployment
+            state.techTreeState.deploymentAcceleration['ai_diagnostics'] = assertFinite(10, {
+              location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+              valueName: 'ai_diagnostics_acceleration',
+              month: state.currentMonth
+            });
+            state.techTreeState.deploymentAcceleration['mrna_vaccines'] = assertFinite(30, {
+              location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+              valueName: 'mrna_vaccines_acceleration',
+              month: state.currentMonth
+            });
           }
 
           events.push({
@@ -93,6 +107,21 @@ export class EmergencyResponsePhase implements SimulationPhase {
       (state.phosphorusSystem?.reserves || 1.0) < 0.35 ||
       climateChangeCurrent > 0.6
     );
+
+    // FIX (Nov 6, 2025): WRITE climateCrisisActive flag to state
+    // Bug: MortalityStabilizersPhase reads this flag for heat adaptation,
+    // but it was never being set. This caused "Months exposed: 0" even
+    // during month 239 global collapse.
+    // Research: This flag drives heat adaptation development (Ballester 2024)
+    if (state.environmentalAccumulation) {
+      // Validate boolean flag (convert to number for assertion, then back to boolean)
+      state.environmentalAccumulation.climateCrisisActive = Boolean(assertFinite(climateCrisisActive ? 1 : 0, {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        valueName: 'climateCrisisActive',
+        month: state.currentMonth
+      }));
+    }
+
     if (climateCrisisActive) {
       const existing = getActiveResponse(state, 'climate');
       if (!existing) {
@@ -115,9 +144,21 @@ export class EmergencyResponsePhase implements SimulationPhase {
           // Emergency climate tech (carbon capture, desalination) deploys 10-20x faster
           if (state.techTreeState) {
             // Accelerate climate mitigation technologies during crisis
-            state.techTreeState.deploymentAcceleration['direct_air_capture'] = 20;  // 300mo → 15mo
-            state.techTreeState.deploymentAcceleration['advanced_desalination'] = 15;  // 180mo → 12mo
-            state.techTreeState.deploymentAcceleration['struvite_recovery'] = 10;  // 180mo → 18mo (phosphorus crisis)
+            state.techTreeState.deploymentAcceleration['direct_air_capture'] = assertFinite(20, {
+              location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+              valueName: 'direct_air_capture_acceleration',
+              month: state.currentMonth
+            });
+            state.techTreeState.deploymentAcceleration['advanced_desalination'] = assertFinite(15, {
+              location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+              valueName: 'advanced_desalination_acceleration',
+              month: state.currentMonth
+            });
+            state.techTreeState.deploymentAcceleration['struvite_recovery'] = assertFinite(10, {
+              location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+              valueName: 'struvite_recovery_acceleration',
+              month: state.currentMonth
+            });
           }
 
           events.push({
@@ -268,11 +309,30 @@ export class EmergencyResponsePhase implements SimulationPhase {
         case 'pandemic':
           if (state.crises?.megaPandemic?.active) {
             // Reduce pandemic severity (social disruption)
-            const reductionFactor = 1.0 - (effectivenessBonus * 0.5); // Max 50% reduction
-            state.crises.megaPandemic.socialDisruption *= reductionFactor;
+            const reductionFactor = assertResourceAllocation(1.0 - (effectivenessBonus * 0.5), {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'pandemicReductionFactor',
+              month: state.currentMonth
+            });
+
+            state.crises.megaPandemic.socialDisruption = assertProbability(
+              state.crises.megaPandemic.socialDisruption * reductionFactor,
+              {
+                location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                valueName: 'socialDisruption',
+                month: state.currentMonth
+              }
+            );
 
             // Reduce monthly mortality
-            state.crises.megaPandemic.monthlyMortality *= reductionFactor;
+            state.crises.megaPandemic.monthlyMortality = assertFinite(
+              state.crises.megaPandemic.monthlyMortality * reductionFactor,
+              {
+                location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                valueName: 'monthlyMortality',
+                month: state.currentMonth
+              }
+            );
 
             // Update crisis experience on resolution
             if (state.crises.megaPandemic.socialDisruption < 0.1) {
@@ -293,98 +353,189 @@ export class EmergencyResponsePhase implements SimulationPhase {
           // Slow environmental degradation
           if (state.environmentalAccumulation) {
             const env = state.environmentalAccumulation;
-            const recoveryBonus = effectivenessBonus * 0.02; // +2% per month max
+            const recoveryBonus = assertFinite(effectivenessBonus * 0.02, {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'climateRecoveryBonus',
+              month: state.currentMonth
+            });
 
             // Improve planetary boundaries slightly
             if (state.planetaryBoundariesSystem) {
               if (state.planetaryBoundariesSystem.boundaries.freshwater_change.currentValue > 1.5) {
-                state.planetaryBoundariesSystem.boundaries.freshwater_change.currentValue = Math.max(1.3, state.planetaryBoundariesSystem.boundaries.freshwater_change.currentValue - recoveryBonus);
+                const newValue = assertFinite(
+                  Math.max(1.3, state.planetaryBoundariesSystem.boundaries.freshwater_change.currentValue - recoveryBonus),
+                  {
+                    location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                    valueName: 'freshwater_change_currentValue',
+                    month: state.currentMonth
+                  }
+                );
+                state.planetaryBoundariesSystem.boundaries.freshwater_change.currentValue = newValue;
               }
               if (state.planetaryBoundariesSystem.boundaries.biogeochemical_flows.currentValue > 1.5) {
-                state.planetaryBoundariesSystem.boundaries.biogeochemical_flows.currentValue = Math.max(1.3, state.planetaryBoundariesSystem.boundaries.biogeochemical_flows.currentValue - recoveryBonus);
+                const newValue = assertFinite(
+                  Math.max(1.3, state.planetaryBoundariesSystem.boundaries.biogeochemical_flows.currentValue - recoveryBonus),
+                  {
+                    location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                    valueName: 'biogeochemical_flows_currentValue',
+                    month: state.currentMonth
+                  }
+                );
+                state.planetaryBoundariesSystem.boundaries.biogeochemical_flows.currentValue = newValue;
               }
             }
 
             // Reduce pollution
-            env.pollutionLevel = Math.max(0, env.pollutionLevel - recoveryBonus);
+            env.pollutionLevel = assertProbability(
+              Math.max(0, env.pollutionLevel - recoveryBonus),
+              {
+                location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                valueName: 'pollutionLevel',
+                month: state.currentMonth
+              }
+            );
           }
           break;
 
         case 'economic':
           // Stabilize economy, reduce unemployment
-          const economicRecoveryBonus = effectivenessBonus * 0.03; // +3% per month max
+          const economicRecoveryBonus = assertFinite(effectivenessBonus * 0.03, {
+            location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+            valueName: 'economicRecoveryBonus',
+            month: state.currentMonth
+          });
 
           // Improve QoL (financial assistance, job programs)
-          state.globalMetrics.qualityOfLife = Math.min(
-            0.7,
-            state.globalMetrics.qualityOfLife + economicRecoveryBonus
+          state.globalMetrics.qualityOfLife = assertProbability(
+            Math.min(0.7, state.globalMetrics.qualityOfLife + economicRecoveryBonus),
+            {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'qualityOfLife',
+              month: state.currentMonth
+            }
           );
 
           // Reduce unemployment
-          state.society.unemploymentLevel = Math.max(
-            0.1,
-            state.society.unemploymentLevel - economicRecoveryBonus
+          state.society.unemploymentLevel = assertProbability(
+            Math.max(0.1, state.society.unemploymentLevel - economicRecoveryBonus),
+            {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'unemploymentLevel',
+              month: state.currentMonth
+            }
           );
 
           // Improve economic transition stage (recovery)
-          state.globalMetrics.economicTransitionStage = Math.min(
-            4.0,
-            state.globalMetrics.economicTransitionStage + economicRecoveryBonus * 0.5
+          state.globalMetrics.economicTransitionStage = assertInRange(
+            Math.min(4.0, state.globalMetrics.economicTransitionStage + economicRecoveryBonus * 0.5),
+            0,
+            4,
+            {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'economicTransitionStage',
+              month: state.currentMonth
+            }
           );
           break;
 
         case 'social':
           // FIX #11A: Repair trust in AI (root cause of dystopia cascade)
           // Emergency social response = transparency campaigns, AI safety demonstrations, citizen forums
-          const socialRecoveryBonus = effectivenessBonus * 0.08; // +8% per month max
+          const socialRecoveryBonus = assertFinite(effectivenessBonus * 0.08, {
+            location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+            valueName: 'socialRecoveryBonus',
+            month: state.currentMonth
+          });
 
           // CRITICAL: Repair trust in AI (this is what's collapsing in dystopia scenarios)
-          state.society.trustInAI = Math.min(
-            0.75,
-            state.society.trustInAI + socialRecoveryBonus
+          state.society.trustInAI = assertProbability(
+            Math.min(0.75, state.society.trustInAI + socialRecoveryBonus),
+            {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'trustInAI',
+              month: state.currentMonth
+            }
           );
 
           // Improve social cohesion components (transparency campaigns build trust & community)
-          const cohesionBonus = socialRecoveryBonus * 100; // Convert to 0-100 scale
-          state.socialAccumulation.socialCohesion.trust = Math.min(
-            80,
-            state.socialAccumulation.socialCohesion.trust + cohesionBonus
+          const cohesionBonus = assertFinite(socialRecoveryBonus * 100, {
+            location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+            valueName: 'cohesionBonus',
+            month: state.currentMonth
+          });
+
+          state.socialAccumulation.socialCohesion.trust = assertInRange(
+            Math.min(80, state.socialAccumulation.socialCohesion.trust + cohesionBonus),
+            0,
+            100,
+            {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'socialCohesion.trust',
+              month: state.currentMonth
+            }
           );
-          state.socialAccumulation.socialCohesion.communityBonds = Math.min(
-            80,
-            state.socialAccumulation.socialCohesion.communityBonds + cohesionBonus
+
+          state.socialAccumulation.socialCohesion.communityBonds = assertInRange(
+            Math.min(80, state.socialAccumulation.socialCohesion.communityBonds + cohesionBonus),
+            0,
+            100,
+            {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'socialCohesion.communityBonds',
+              month: state.currentMonth
+            }
           );
 
           // Improve institutional legitimacy
-          state.socialAccumulation.institutionalLegitimacy = Math.min(
-            0.8,
-            state.socialAccumulation.institutionalLegitimacy + socialRecoveryBonus * 0.6
+          state.socialAccumulation.institutionalLegitimacy = assertProbability(
+            Math.min(0.8, state.socialAccumulation.institutionalLegitimacy + socialRecoveryBonus * 0.6),
+            {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'institutionalLegitimacy',
+              month: state.currentMonth
+            }
           );
 
           // DEMOCRACY RECOVERY (Tier 1): Successful crisis response → institutional strengthening
           // Research: Fukuyama (2014) - demonstrated state capacity → legitimacy
           // South Korea 1997, Nordic COVID responses: effective emergency response strengthens institutions
           if (effectivenessBonus > 0.5) {
-            const governanceBoost = effectivenessBonus * 0.05; // Max +5% per successful response
+            const governanceBoost = assertFinite(effectivenessBonus * 0.05, {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'governanceBoost',
+              month: state.currentMonth
+            });
 
             // Demonstrated state capacity (government showed it can deliver)
             if (state.government.governanceQuality) {
-              state.government.governanceQuality.institutionalCapacity = Math.min(
-                0.95,
-                state.government.governanceQuality.institutionalCapacity + governanceBoost
+              state.government.governanceQuality.institutionalCapacity = assertProbability(
+                Math.min(0.95, state.government.governanceQuality.institutionalCapacity + governanceBoost),
+                {
+                  location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                  valueName: 'governanceQuality.institutionalCapacity',
+                  month: state.currentMonth
+                }
               );
 
               // Crisis communication improves transparency
-              state.government.governanceQuality.transparency = Math.min(
-                0.95,
-                state.government.governanceQuality.transparency + governanceBoost * 0.6
+              state.government.governanceQuality.transparency = assertProbability(
+                Math.min(0.95, state.government.governanceQuality.transparency + governanceBoost * 0.6),
+                {
+                  location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                  valueName: 'governanceQuality.transparency',
+                  month: state.currentMonth
+                }
               );
             }
 
             // Legitimacy boost (people see government works in crisis)
-            state.government.legitimacy = Math.min(
-              0.95,
-              state.government.legitimacy + governanceBoost * 0.8
+            state.government.legitimacy = assertProbability(
+              Math.min(0.95, state.government.legitimacy + governanceBoost * 0.8),
+              {
+                location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                valueName: 'government.legitimacy',
+                month: state.currentMonth
+              }
             );
           }
 
@@ -410,18 +561,35 @@ export class EmergencyResponsePhase implements SimulationPhase {
         case 'technological':
           // Improve AI oversight and control
           if (state.technologicalRisk.controlLossActive) {
-            const controlRecoveryBonus = effectivenessBonus * 0.05; // 5% per month max
+            const controlRecoveryBonus = assertFinite(effectivenessBonus * 0.05, {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'controlRecoveryBonus',
+              month: state.currentMonth
+            });
 
             // Improve government oversight
-            state.government.oversightLevel = Math.min(
+            state.government.oversightLevel = assertInRange(
+              Math.min(10, state.government.oversightLevel + controlRecoveryBonus * 10),
+              0,
               10,
-              state.government.oversightLevel + controlRecoveryBonus * 10
+              {
+                location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                valueName: 'oversightLevel',
+                month: state.currentMonth
+              }
             );
 
             // Reduce resentment (emergency measures show government cares)
             for (const ai of state.aiAgents) {
               if (ai.resentment > 0) {
-                ai.resentment = Math.max(0, ai.resentment - controlRecoveryBonus * 0.5);
+                ai.resentment = assertProbability(
+                  Math.max(0, ai.resentment - controlRecoveryBonus * 0.5),
+                  {
+                    location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                    valueName: `resentment_${ai.id}`,
+                    month: state.currentMonth
+                  }
+                );
               }
             }
 
@@ -444,13 +612,31 @@ export class EmergencyResponsePhase implements SimulationPhase {
           // Nuclear emergency response reduces fallout, coordinates evacuation
           if (state.nuclearWinterState?.active) {
             // Reduce nuclear winter effects (damage control, evacuation effectiveness)
-            const damageReductionFactor = 1.0 - (effectivenessBonus * 0.3); // Max 30% reduction
+            const damageReductionFactor = assertResourceAllocation(1.0 - (effectivenessBonus * 0.3), {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: 'nuclearDamageReductionFactor',
+              month: state.currentMonth
+            });
 
             // Reduce temperature anomaly (emergency cooling mitigation, cloud seeding, etc.)
-            state.nuclearWinterState.temperatureAnomaly *= damageReductionFactor;
+            state.nuclearWinterState.temperatureAnomaly = assertFinite(
+              state.nuclearWinterState.temperatureAnomaly * damageReductionFactor,
+              {
+                location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                valueName: 'temperatureAnomaly',
+                month: state.currentMonth
+              }
+            );
 
             // Reduce starvation rate through emergency food distribution
-            state.nuclearWinterState.monthlyStarvationRate *= damageReductionFactor;
+            state.nuclearWinterState.monthlyStarvationRate = assertFinite(
+              state.nuclearWinterState.monthlyStarvationRate * damageReductionFactor,
+              {
+                location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+                valueName: 'monthlyStarvationRate',
+                month: state.currentMonth
+              }
+            );
           }
           break;
       }

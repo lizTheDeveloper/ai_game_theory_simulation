@@ -42,7 +42,9 @@ import { CountryName, CountryPopulation } from '../types/countryPopulations';
  * Initialize war-meaning feedback fields for all countries
  */
 export function initializeWarMeaningFeedback(countries: Record<CountryName, CountryPopulation>): void {
-  for (const country of Object.values(countries)) {
+  // FIX: Sort countries for deterministic iteration order
+  const sortedCountries = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
+  for (const country of sortedCountries) {
     // Meaning crisis: Higher in wealthy, automated hegemons
     // Lower in developing countries (traditional meaning structures still intact)
     country.meaningCrisis = calculateInitialMeaningCrisis(country);
@@ -156,7 +158,9 @@ function calculateInitialNationalism(country: CountryPopulation): number {
  * Update war-meaning feedback for all countries each month
  */
 export function updateWarMeaningFeedback(state: GameState): void {
-  for (const country of Object.values(state.countryPopulationSystem.countries)) {
+  // FIX: Sort countries for deterministic iteration order
+  const sortedCountries = Object.values(state.countryPopulationSystem.countries).sort((a, b) => a.name.localeCompare(b.name));
+  for (const country of sortedCountries) {
     // 1. Update meaning crisis (driven by automation, unemployment, isolation)
     updateMeaningCrisis(country, state);
 
@@ -226,7 +230,9 @@ function updateNationalism(country: CountryPopulation, state: GameState): void {
   // Rival threats increase nationalism (rally around flag)
   // Check if other hegemons are aggressive
   let rivalThreat = 0.0;
-  for (const other of Object.values(state.countryPopulationSystem.countries)) {
+  // FIX: Sort countries for deterministic iteration order
+  const sortedOthers = Object.values(state.countryPopulationSystem.countries).sort((a, b) => a.name.localeCompare(b.name));
+  for (const other of sortedOthers) {
     if (other.isHegemon && other.name !== country.name && other.activeInterventions) {
       rivalThreat += other.activeInterventions.length * 0.1;
     }

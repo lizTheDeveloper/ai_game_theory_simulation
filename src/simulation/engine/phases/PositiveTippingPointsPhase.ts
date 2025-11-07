@@ -33,6 +33,11 @@ export class PositiveTippingPointsPhase implements SimulationPhase {
   readonly name = 'Positive Tipping Point Cascades';
   readonly order = 20.5;
 
+  // DEPENDENCIES (Nov 6, 2025): Must run after tech tree
+  readonly dependencies = [
+    'tech-tree',  // Order 12.5: Technology breakthroughs enable cascades
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);

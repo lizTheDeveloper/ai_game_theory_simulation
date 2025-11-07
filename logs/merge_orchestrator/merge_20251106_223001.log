@@ -1,0 +1,31 @@
+
+=== Merge Orchestrator Started ===
+[22:30:01] Timestamp: Thu Nov  6 22:30:01 UTC 2025
+[22:30:01] Dry run: false
+[22:30:01] Max branches: 10
+[22:30:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[22:30:02] Found 99 branches to process
+
+=== Branch 1/99: auto/researcher-20251106_193001 ===
+[22:30:02] 📝 Creating merge branch: merge/auto/researcher-20251106_193001_20251106_223001
+Switched to a new branch 'merge/auto/researcher-20251106_193001_20251106_223001'
+M	logs/autonomous/researcher/cron_20251106.log
+M	logs/autonomous/researcher/status_current.txt
+M	src/simulation/refugeeCrises.ts
+Branch 'merge/auto/researcher-20251106_193001_20251106_223001' set up to track remote branch 'main' from 'origin'.
+[22:30:02] 🔀 Attempting merge from origin/auto/researcher-20251106_193001
+error: Your local changes to the following files would be overwritten by merge:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+Please commit your changes or stash them before you merge.
+Aborting
+[22:30:03] ❌ Merge conflicts detected
+[22:30:03] 🔧 AUTO-REMEDIATION: Spawning Claude Code to resolve conflicts...
+M	logs/autonomous/researcher/cron_20251106.log
+M	logs/autonomous/researcher/status_current.txt
+M	src/simulation/refugeeCrises.ts
+Your branch is up to date with 'origin/main'.

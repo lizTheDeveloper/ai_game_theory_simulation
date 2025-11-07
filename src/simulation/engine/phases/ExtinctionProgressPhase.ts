@@ -23,6 +23,11 @@ export class ExtinctionProgressPhase implements SimulationPhase {
   readonly name = 'Extinction Progress';
   readonly order = 38.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Must run after extinction triggers
+  readonly dependencies = [
+    'extinction-triggers',  // Order 37.0: Extinction detection
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Only progress if there's an active extinction scenario
     setDeterministicRng(rng);

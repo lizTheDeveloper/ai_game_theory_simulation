@@ -20,6 +20,11 @@ export class NuclearWinterPhase implements SimulationPhase {
   readonly name = 'NuclearWinter';
   readonly order = 252; // After organization viability (251)
 
+  // DEPENDENCIES (Nov 6, 2025): Requires nuclear command control state
+  readonly dependencies = [
+    'nuclear_command_control',   // Order 20: Nuclear safeguards state
+  ];
+
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // Nuclear winter updates run once per simulation step (once per month)
     setDeterministicRng(_rng);

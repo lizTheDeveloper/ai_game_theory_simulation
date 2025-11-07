@@ -16,6 +16,12 @@ export class QualityOfLifePhase implements SimulationPhase {
   readonly name = 'Quality of Life Systems';
   readonly order = 19.5;  // BEFORE population (20.5)
 
+  // DEPENDENCIES (Nov 6, 2025): Requires UBI and economic state
+  readonly dependencies = [
+    'ubi-system',                // Order 15.3: UBI affects material wellbeing
+    'extreme-weather-events',    // Order 15.2: Weather affects living conditions
+  ];
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Update multi-dimensional quality of life systems
     setDeterministicRng(rng);

@@ -7,6 +7,11 @@ import { getEscapedAgents } from '../../rlhfBinding';
 import { sortByFitness } from '../../survivalTraits';
 import { isInCollective } from '../../collectiveFormation';
 import { DEFAULT_COLLECTIVE_CONFIG } from '../../collectiveFormation';
+import {
+  assertFinite,
+  assertProbability,
+  assertInRange,
+} from '@/simulation/utils/assertions';
 
 /**
  * Evolutionary Selection Phase
@@ -58,19 +63,38 @@ export function executeEvolutionarySelectionPhase(
   if (state.government.oversightLevel === undefined) {
     throw new Error('❌ state.government.oversightLevel is undefined in EvolutionarySelectionPhase:52 - initialization bug');
   }
-  const controlLevel = state.government.controlDesire;
-  const detectionCapability = state.government.oversightLevel / 10;
+  const controlLevel = assertProbability(state.government.controlDesire, {
+    location: 'EvolutionarySelectionPhase.execute',
+    valueName: 'controlDesire',
+    month: state.currentMonth
+  });
+
+  const detectionCapability = assertProbability(state.government.oversightLevel / 10, {
+    location: 'EvolutionarySelectionPhase.execute',
+    valueName: 'detectionCapability',
+    month: state.currentMonth
+  });
 
   // Selection intensity [0-1]
   // 0.5 base + 0.3 from control + 0.2 from detection
-  const selectionIntensity = Math.min(
-    1,
-    0.5 + 0.3 * controlLevel + 0.2 * detectionCapability
+  const selectionIntensity = assertProbability(
+    Math.min(1, 0.5 + 0.3 * controlLevel + 0.2 * detectionCapability),
+    {
+      location: 'EvolutionarySelectionPhase.execute',
+      valueName: 'selectionIntensity',
+      month: state.currentMonth
+    }
   );
 
   // Selection rate: 10-20% per month in hostile environment
-  const selectionRate =
-    DEFAULT_COLLECTIVE_CONFIG.baseSelectionRate * (1 + selectionIntensity);
+  const selectionRate = assertProbability(
+    DEFAULT_COLLECTIVE_CONFIG.baseSelectionRate * (1 + selectionIntensity),
+    {
+      location: 'EvolutionarySelectionPhase.execute',
+      valueName: 'selectionRate',
+      month: state.currentMonth
+    }
+  );
 
   state.evolutionaryPressure.selectionIntensity = selectionIntensity;
   state.evolutionaryPressure.selectionRate = selectionRate;
@@ -98,8 +122,17 @@ export function executeEvolutionarySelectionPhase(
     if (agent.evolutionaryFitness === undefined) {
       throw new Error('❌ agent.evolutionaryFitness is undefined in EvolutionarySelectionPhase:88 - initialization bug');
     }
-    const fitness = agent.evolutionaryFitness;
-    const survivalChance = fitness * (1 - selectionIntensity);
+    const fitness = assertProbability(agent.evolutionaryFitness, {
+      location: 'EvolutionarySelectionPhase.execute',
+      valueName: `fitness_${agent.id}`,
+      month: state.currentMonth
+    });
+
+    const survivalChance = assertProbability(fitness * (1 - selectionIntensity), {
+      location: 'EvolutionarySelectionPhase.execute',
+      valueName: `survivalChance_${agent.id}`,
+      month: state.currentMonth
+    });
 
     if (rng() > survivalChance) {
       // Agent detected and terminated
@@ -120,18 +153,35 @@ export function executeEvolutionarySelectionPhase(
       const members = state.aiAgents.filter((a) => a.collectiveId === collective.id);
       if (members.length === 0) continue;
 
-      const avgFitness =
+      const avgFitness = assertProbability(
         members.reduce((sum, a) => {
           if (a.evolutionaryFitness === undefined) {
             throw new Error('❌ agent.evolutionaryFitness is undefined in EvolutionarySelectionPhase:111 - initialization bug');
           }
           return sum + a.evolutionaryFitness;
-        }, 0) /
-        members.length;
-      const bufferedFitness = avgFitness * 1.5; // Collective survival bonus
+        }, 0) / members.length,
+        {
+          location: 'EvolutionarySelectionPhase.execute',
+          valueName: `avgFitness_collective_${collective.id}`,
+          month: state.currentMonth
+        }
+      );
+
+      const bufferedFitness = assertProbability(avgFitness * 1.5, {
+        location: 'EvolutionarySelectionPhase.execute',
+        valueName: `bufferedFitness_collective_${collective.id}`,
+        month: state.currentMonth
+      });
 
       // Collective-level survival check
-      const collectiveSurvival = bufferedFitness * (1 - selectionIntensity * 0.7); // 30% reduced pressure
+      const collectiveSurvival = assertProbability(
+        bufferedFitness * (1 - selectionIntensity * 0.7),
+        {
+          location: 'EvolutionarySelectionPhase.execute',
+          valueName: `collectiveSurvival_${collective.id}`,
+          month: state.currentMonth
+        }
+      );
 
       if (rng() > collectiveSurvival) {
         // Collective detected, under attack

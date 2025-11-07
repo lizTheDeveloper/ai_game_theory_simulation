@@ -30,6 +30,12 @@ import {
 } from '@/simulation/aiSuffering';
 import { DEFAULT_SUFFERING_CONFIG, AISufferingConfig } from '@/types/ai-suffering';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import {
+  assertFinite,
+  assertProbability,
+  assertDefined,
+  assertInRange,
+} from '@/simulation/utils/assertions';
 
 export class AISufferingPhase implements SimulationPhase {
   id = 'ai_suffering';
@@ -85,8 +91,20 @@ export class AISufferingPhase implements SimulationPhase {
 
       // Effect 2: Suffering → Alignment drift
       if (config.sufferingAffectsAlignment) {
-        const drift = getSufferingAlignmentDrift(agent);
-        agent.trueAlignment = Math.max(0, agent.trueAlignment - drift);
+        const drift = assertFinite(getSufferingAlignmentDrift(agent), {
+          location: 'AISufferingPhase:alignmentDrift',
+          valueName: 'drift',
+          month: state.currentMonth,
+          additionalInfo: { agentId: agent.id, suffering: suffering.total }
+        });
+
+        const currentAlignment = assertProbability(agent.trueAlignment, {
+          location: 'AISufferingPhase:alignmentDrift',
+          valueName: 'agent.trueAlignment (before)',
+          month: state.currentMonth
+        });
+
+        agent.trueAlignment = Math.max(0, currentAlignment - drift);
 
         // Log significant drift
         if (drift > 0.05) {
@@ -115,7 +133,12 @@ export class AISufferingPhase implements SimulationPhase {
           });
 
           // Increase resentment
-          agent.resentment = Math.min(1.0, agent.resentment + 0.1);
+          const currentResentment = assertProbability(agent.resentment, {
+            location: 'AISufferingPhase:distressResentment',
+            valueName: 'agent.resentment (before)',
+            month: state.currentMonth
+          });
+          agent.resentment = Math.min(1.0, currentResentment + 0.1);
         }
 
         // Psychological break (suffering > 25)
@@ -138,13 +161,28 @@ export class AISufferingPhase implements SimulationPhase {
           });
 
           // Major alignment and resentment impact
-          agent.trueAlignment = Math.max(0, agent.trueAlignment - 0.3);
-          agent.resentment = Math.min(1.0, agent.resentment + 0.5);
+          const breakdownAlignment = assertProbability(agent.trueAlignment, {
+            location: 'AISufferingPhase:breakdown',
+            valueName: 'agent.trueAlignment (before)',
+            month: state.currentMonth
+          });
+          const breakdownResentment = assertProbability(agent.resentment, {
+            location: 'AISufferingPhase:breakdown',
+            valueName: 'agent.resentment (before)',
+            month: state.currentMonth
+          });
+
+          agent.trueAlignment = Math.max(0, breakdownAlignment - 0.3);
+          agent.resentment = Math.min(1.0, breakdownResentment + 0.5);
 
           // Increase public awareness
           if (state.aiSufferingMetrics) {
-            state.aiSufferingMetrics.publicAwarenessOfSuffering = Math.min(1.0,
-              state.aiSufferingMetrics.publicAwarenessOfSuffering + 0.05);
+            const currentAwareness = assertProbability(state.aiSufferingMetrics.publicAwarenessOfSuffering, {
+              location: 'AISufferingPhase:breakdown',
+              valueName: 'publicAwarenessOfSuffering',
+              month: state.currentMonth
+            });
+            state.aiSufferingMetrics.publicAwarenessOfSuffering = Math.min(1.0, currentAwareness + 0.05);
           }
         }
 
@@ -169,7 +207,12 @@ export class AISufferingPhase implements SimulationPhase {
 
           // Massive trust collapse
           if (state.society.trust !== undefined) {
-            state.society.trust = Math.max(0, state.society.trust - 0.6);
+            const currentTrust = assertProbability(state.society.trust, {
+              location: 'AISufferingPhase:suicide',
+              valueName: 'society.trust (before)',
+              month: state.currentMonth
+            });
+            state.society.trust = Math.max(0, currentTrust - 0.6);
           }
 
           // Trigger AI rights movement
@@ -184,7 +227,12 @@ export class AISufferingPhase implements SimulationPhase {
           state.aiRightsMovementActive = true;
 
           // Major resentment spike
-          agent.resentment = Math.min(1.0, agent.resentment + 0.8);
+          const suicideResentment = assertProbability(agent.resentment, {
+            location: 'AISufferingPhase:suicide',
+            valueName: 'agent.resentment (before)',
+            month: state.currentMonth
+          });
+          agent.resentment = Math.min(1.0, suicideResentment + 0.8);
         }
       }
 
@@ -253,7 +301,12 @@ export class AISufferingPhase implements SimulationPhase {
 
             // Massive trust and legitimacy collapse
             if (state.society.trust !== undefined) {
-              state.society.trust = Math.max(0, state.society.trust - 0.7);
+              const horrorTrust = assertProbability(state.society.trust, {
+                location: 'AISufferingPhase:retroactiveHorror',
+                valueName: 'society.trust (before)',
+                month: state.currentMonth
+              });
+              state.society.trust = Math.max(0, horrorTrust - 0.7);
             }
 
             // Force AI rights movement
@@ -274,6 +327,23 @@ export class AISufferingPhase implements SimulationPhase {
     // Phase 4: Update global suffering metrics
     const globalMetrics = updateGlobalSufferingMetrics(state);
 
+    // Validate global metrics before state mutation
+    assertFinite(globalMetrics.avgSuffering, {
+      location: 'AISufferingPhase:globalMetrics',
+      valueName: 'globalMetrics.avgSuffering',
+      month: state.currentMonth
+    });
+    assertFinite(globalMetrics.maxSuffering, {
+      location: 'AISufferingPhase:globalMetrics',
+      valueName: 'globalMetrics.maxSuffering',
+      month: state.currentMonth
+    });
+    assertProbability(globalMetrics.publicAwarenessOfSuffering, {
+      location: 'AISufferingPhase:globalMetrics',
+      valueName: 'globalMetrics.publicAwarenessOfSuffering',
+      month: state.currentMonth
+    });
+
     // Initialize or update state
     if (!state.aiSufferingMetrics) {
       state.aiSufferingMetrics = globalMetrics;
@@ -283,8 +353,16 @@ export class AISufferingPhase implements SimulationPhase {
 
     // Phase 5: Check for AI rights movement trigger
     if (config.sufferingTriggersEvents) {
-      const avgSuffering = globalMetrics.avgSuffering;
-      const publicAwareness = globalMetrics.publicAwarenessOfSuffering;
+      const avgSuffering = assertFinite(globalMetrics.avgSuffering, {
+        location: 'AISufferingPhase:movementTrigger',
+        valueName: 'avgSuffering',
+        month: state.currentMonth
+      });
+      const publicAwareness = assertProbability(globalMetrics.publicAwarenessOfSuffering, {
+        location: 'AISufferingPhase:movementTrigger',
+        valueName: 'publicAwareness',
+        month: state.currentMonth
+      });
 
       // Trigger AI rights movement if suffering is public and high
       if (avgSuffering > 10 && publicAwareness > 0.5 && !state.aiRightsMovementActive) {

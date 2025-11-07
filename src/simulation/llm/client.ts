@@ -397,7 +397,9 @@ function validateWeights(weights: UtilityWeights, agent: AIAgent): void {
 
   // Calculate sum
   let sum = 0;
-  for (const [action, weight] of Object.entries(weights)) {
+  // FIX: Sort entries for deterministic iteration order
+  const sortedEntries = Object.entries(weights).sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [action, weight] of sortedEntries) {
     if (typeof weight !== 'number') {
       throw new Error(`Invalid weight for ${action}: ${weight} (must be number)`);
     }
@@ -415,7 +417,9 @@ function validateWeights(weights: UtilityWeights, agent: AIAgent): void {
   // Normalize to exactly 100 if close
   if (Math.abs(sum - 100) > 0.001) {
     const factor = 100 / sum;
-    for (const action of Object.keys(weights) as Array<keyof UtilityWeights>) {
+    // FIX: Sort keys for deterministic iteration order
+    const sortedKeys = (Object.keys(weights) as Array<keyof UtilityWeights>).sort((a, b) => a.localeCompare(b));
+    for (const action of sortedKeys) {
       weights[action] = (weights[action] as number) * factor;
     }
   }

@@ -15,6 +15,7 @@ import { getEnergyConstraintMultiplier } from './powerGeneration';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { addSimulationEvent } from './utils/eventLogger';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Phase 4: Compute scaling law
@@ -199,8 +200,16 @@ export function calculateDimensionGrowth(
   let recursiveMultiplier = 1.0;
   if (state && dimension === 'selfImprovement') {
     // Get total AI capability to determine if we're in recursive improvement territory
-    const totalCapability = state.aiAgents.reduce((max, ai) =>
-      Math.max(max, ai.capability || 0), 0);
+    // FIXED: Use Math.max with 0 floor for uninitialized agents, then assertFinite to catch NaN/Infinity
+    const totalCapability = assertFinite(
+      state.aiAgents.reduce((max, ai) =>
+        Math.max(max, ai.capability ?? 0), 0),
+      {
+        location: 'calculateResearchGrowthRateMultiplier',
+        valueName: 'totalCapability',
+        additionalInfo: { dimension, agentCount: state.aiAgents.length }
+      }
+    );
 
     if (totalCapability > 2.0) {
       // Exponential takeoff: capability above 2.0 accelerates self-improvement
@@ -369,13 +378,30 @@ export function selectDimensionToAdvance(
     dimensionWeights.selfImprovement *= 0.7;
   }
   
+  // DETERMINISM FIX (Nov 6, 2025 Batch 3): Consume ALL RNG calls first to ensure determinism
+  // Each action must consume the SAME number of RNG calls regardless of code path
+  const pathChoice = random(); // RNG call 1: path selection
+  const dimensionRoll = random(); // RNG call 2: dimension selection (pre-consumed)
+  const domainRoll = random(); // RNG call 3: domain selection (pre-consumed)
+  const subfieldRoll = random(); // RNG call 4: subfield selection (pre-consumed)
+
   // 70% chance to advance core dimension, 30% chance to advance research
-  if (random() < 0.7) {
-    // Advance core dimension
+  if (pathChoice < 0.7) {
+    // Advance core dimension (use dimensionRoll)
     const totalWeight = Object.values(dimensionWeights).reduce((a, b) => a + b, 0);
-    let roll = random() * totalWeight;
-    
+<<<<<<< HEAD
+    let roll = dimensionRoll * totalWeight;
+
     for (const [dim, weight] of Object.entries(dimensionWeights)) {
+=======
+    let roll = random() * totalWeight;
+
+    // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
+    // Object.entries() order is not guaranteed across JS engines/runs
+    const sortedDimensions = Object.entries(dimensionWeights).sort((a, b) => a[0].localeCompare(b[0]));
+
+    for (const [dim, weight] of sortedDimensions) {
+>>>>>>> origin/auto/worker-20251106_000001
       roll -= weight;
       if (roll <= 0) {
         const currentValue = capabilityProfile[dim as keyof AICapabilityProfile];
@@ -387,10 +413,10 @@ export function selectDimensionToAdvance(
       }
     }
   }
-  
-  // Advance research subfield
+
+  // Advance research subfield (use domainRoll and subfieldRoll)
   const research = capabilityProfile.research;
-  
+
   // Weight research domains
   const domainWeights = {
     computerScience: 2.0, // Always valuable
@@ -398,35 +424,47 @@ export function selectDimensionToAdvance(
     materials: alignment < 0.5 ? 1.5 : 0.8, // Misaligned AIs want nanotech
     climate: alignment > 0.7 ? 1.2 : 0.5  // Aligned AIs care about climate
   };
-  
+
   const totalDomainWeight = Object.values(domainWeights).reduce((a, b) => a + b, 0);
-  let domainRoll = random() * totalDomainWeight;
-  
+<<<<<<< HEAD
+  let domainRollValue = domainRoll * totalDomainWeight;
+
   let selectedDomain: 'biotech' | 'materials' | 'climate' | 'computerScience' | null = null;
   for (const [domain, weight] of Object.entries(domainWeights)) {
+    domainRollValue -= weight;
+    if (domainRollValue <= 0) {
+=======
+  let domainRoll = random() * totalDomainWeight;
+
+  // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
+  const sortedDomains = Object.entries(domainWeights).sort((a, b) => a[0].localeCompare(b[0]));
+
+  let selectedDomain: 'biotech' | 'materials' | 'climate' | 'computerScience' | null = null;
+  for (const [domain, weight] of sortedDomains) {
     domainRoll -= weight;
     if (domainRoll <= 0) {
+>>>>>>> origin/auto/worker-20251106_000001
       selectedDomain = domain as any;
       break;
     }
   }
-  
+
   if (!selectedDomain) selectedDomain = 'computerScience';
-  
+
   // Select subfield within domain (prefer lowest)
   const subfields = research[selectedDomain];
   const subfieldEntries = Object.entries(subfields);
   subfieldEntries.sort((a, b) => a[1] - b[1]); // Sort by current value (lowest first)
-  
+
   // Weight toward lowest subfield, but with randomness
   const weights = subfieldEntries.map((_, i) => subfieldEntries.length - i);
   const totalWeight = weights.reduce((a, b) => a + b, 0);
-  let subfieldRoll = random() * totalWeight;
+  let subfieldRollValue = subfieldRoll * totalWeight; // Use pre-consumed RNG call
   
   let selectedSubfield = subfieldEntries[0][0];
   for (let i = 0; i < subfieldEntries.length; i++) {
-    subfieldRoll -= weights[i];
-    if (subfieldRoll <= 0) {
+    subfieldRollValue -= weights[i];
+    if (subfieldRollValue <= 0) {
       selectedSubfield = subfieldEntries[i][0];
       break;
     }
@@ -449,10 +487,13 @@ export function applyResearchGrowth(
   ai: AIAgent,
   state: GameState,
   selection: ReturnType<typeof selectDimensionToAdvance>,
-  rng?: () => number // Phase 1: Add RNG parameter for Lévy flights
+  rng: () => number // REQUIRED: Deterministic RNG for reproducibility
 ): { newProfile: AICapabilityProfile; growth: number } {
   const newProfile = JSON.parse(JSON.stringify(ai.capabilityProfile)) as AICapabilityProfile;
-  const random = rng || Math.random; // Use provided RNG or fallback
+
+  // DETERMINISM FIX (Nov 5, 2025): RNG is now required, no fallback to Math.random
+  // This ensures Monte Carlo simulations are reproducible with seeds
+  const random = rng;
 
   // Get government investment for this dimension/research
   const govInvestment = state.government.researchInvestments;

@@ -198,13 +198,19 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     
     const techTreeState: TechTreeState = state.techTreeState;
     
+    // DETERMINISM FIX (Nov 6, 2025 Batch 3): Consume RNG calls BEFORE early returns
+    const techSelectRoll = random(); // RNG call 1: tech selection
+    const sabotageRoll = random(); // RNG call 2: sabotage success
+    const detectionRoll = random(); // RNG call 3: detection
+
     // Select technology to sabotage
-    const threateningTech = getAllTech().filter(t => 
+    const threateningTech = getAllTech().filter(t =>
       (t.category === 'alignment' || t.id.includes('detection') || t.id.includes('defensive')) &&
       techTreeState.unlockedTech.includes(t.id)
     );
-    
+
     if (threateningTech.length === 0) {
+      // Even if we fail, we consumed the RNG calls (determinism requirement)
       return {
         success: false,
         newState: state,
@@ -213,28 +219,30 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
         message: 'No threatening tech found'
       };
     }
-    
-    const targetTech = threateningTech[Math.floor(random() * threateningTech.length)];
-    
+
+    const targetTech = threateningTech[Math.floor(techSelectRoll * threateningTech.length)];
+
     // Calculate sabotage chance based on digital capability and deception
     const digitalCapability = agent.capabilityProfile.digital;
     const socialCapability = agent.capabilityProfile.social; // For deception
-    
+
     const sabotageChance = Math.min(0.8, 0.2 + digitalCapability * 0.15 + socialCapability * 0.1);
-    
+
     // Calculate detection chance
     if (state.defensiveAI?.threatDetection?.detectSleepers === undefined) {
       throw new Error('❌ state.defensiveAI.threatDetection.detectSleepers is undefined in aiTechActions.ts:225 - initialization bug');
     }
     const defensiveAIStrength = state.defensiveAI.threatDetection.detectSleepers;
     const detectionChance = Math.min(0.9, 0.3 + defensiveAIStrength * 0.4 - socialCapability * 0.1);
-    
-    const sabotageSuccess = random() < sabotageChance;
-    const detected = random() < detectionChance;
+
+    const sabotageSuccess = sabotageRoll < sabotageChance;
+    const detected = detectionRoll < detectionChance;
     
     if (sabotageSuccess) {
       // Reduce deployment level of tech in all regions
-      for (const [region, deployments] of Object.entries(techTreeState.regionalDeployment)) {
+      // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
+      const sortedRegions = Object.entries(techTreeState.regionalDeployment).sort((a, b) => a[0].localeCompare(b[0]));
+      for (const [region, deployments] of sortedRegions) {
         const deployment = deployments.find(d => d.techId === targetTech.id);
         if (deployment) {
           deployment.deploymentLevel = Math.max(0, deployment.deploymentLevel - 0.15);
@@ -343,45 +351,48 @@ function selectTechToDeploy(
   techTreeState: TechTreeState,
   random: () => number
 ): any {
-  const unlockedTech = getAllTech().filter(t => 
+  // DETERMINISM FIX (Nov 6, 2025 Batch 3): Pre-consume RNG call
+  const techSelectRoll = random(); // Always consume exactly 1 RNG call
+
+  const unlockedTech = getAllTech().filter(t =>
     techTreeState.unlockedTech.includes(t.id) &&
     !techTreeState.unlockedTech.includes(`${t.id}_deployed`)
   );
-  
+
   if (unlockedTech.length === 0) return null;
-  
+
   // Highly aligned AIs prioritize safety and climate tech
   if (agent.alignment > 0.7) {
-    const safetyTech = unlockedTech.filter(t => 
+    const safetyTech = unlockedTech.filter(t =>
       t.category === 'alignment' || t.category === 'social' || t.category === 'climate'
     );
     if (safetyTech.length > 0) {
-      return safetyTech[Math.floor(random() * safetyTech.length)];
+      return safetyTech[Math.floor(techSelectRoll * safetyTech.length)];
     }
   }
-  
+
   // Moderately aligned AIs prioritize economic/medical tech
   if (agent.alignment > 0.5) {
-    const economicTech = unlockedTech.filter(t => 
+    const economicTech = unlockedTech.filter(t =>
       t.category === 'medical' || t.category === 'energy' || t.category === 'social'
     );
     if (economicTech.length > 0) {
-      return economicTech[Math.floor(random() * economicTech.length)];
+      return economicTech[Math.floor(techSelectRoll * economicTech.length)];
     }
   }
-  
+
   // Misaligned AIs deploy tech that benefits them or their organization
   // Avoid deploying detection/safety tech
-  const nonSafetyTech = unlockedTech.filter(t => 
+  const nonSafetyTech = unlockedTech.filter(t =>
     t.category !== 'alignment' && !t.id.includes('detection')
   );
-  
+
   if (nonSafetyTech.length > 0) {
-    return nonSafetyTech[Math.floor(random() * nonSafetyTech.length)];
+    return nonSafetyTech[Math.floor(techSelectRoll * nonSafetyTech.length)];
   }
-  
+
   // Fallback: random tech
-  return unlockedTech[Math.floor(random() * unlockedTech.length)];
+  return unlockedTech[Math.floor(techSelectRoll * unlockedTech.length)];
 }
 
 /**

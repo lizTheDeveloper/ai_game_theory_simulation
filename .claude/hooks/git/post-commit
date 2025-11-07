@@ -13,6 +13,18 @@ if echo "$COMMIT_MSG" | grep -qi "historian"; then
   exit 0
 fi
 
+# Skip chore commits (infrastructure, tooling, no simulation changes)
+if echo "$COMMIT_MSG" | grep -qiE "^chore:|^chore\("; then
+  echo "📚 Skipping: Chore commit (infrastructure only)"
+  exit 0
+fi
+
+# Skip merge commits (already documented in branches)
+if echo "$COMMIT_MSG" | grep -qiE "^Merge "; then
+  echo "📚 Skipping: Merge commit (work already documented)"
+  exit 0
+fi
+
 # Check if docs were updated
 DOCS_UPDATED=$(echo "$FILES_CHANGED" | grep -E '^docs/' || true)
 

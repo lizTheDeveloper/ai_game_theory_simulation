@@ -18,6 +18,7 @@ import { GameState, EnvironmentalAccumulation } from '@/types/game';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { updateCatastropheTracking } from './calculations';
 import { RootCause } from '@/types/population';
+import { assertFinite, assertProbability, assertInRange } from './utils/assertions';
 import { calculateClimatePovertyWeights, calculateEcosystemWeights } from './utils/deathAttribution';
 import { convertClimateSensitivityToRate } from './thresholds/tier1Config';
 import { addMortalityRisk } from './bayesianMortality';
@@ -109,7 +110,8 @@ function applyStochasticVariance(baseRate: number, variance: number = 0.25): num
  * Rate-based: high production = faster accumulation (unless mitigated)
  */
 export function updateEnvironmentalAccumulation(
-  state: GameState
+  state: GameState,
+  rng: () => number
 ): void {
   const env = state.environmentalAccumulation;
   const economicStage = state.globalMetrics.economicTransitionStage;
@@ -153,14 +155,15 @@ export function updateEnvironmentalAccumulation(
   // Apply depletion (with MIN_FLOOR to prevent exactly 0, which breaks geometric means)
   const MIN_RESERVE_FLOOR = 0.001; // 0.1% minimum to prevent geometric mean collapse
 
-  // Detect NaN and fail loudly - don't hide bugs with fallbacks
-  if (isNaN(env.resourceReserves)) {
-    console.error(`❌ NaN in resourceReserves at month ${state.currentMonth}`);
-    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
-    throw new Error(`NaN resource reserves - simulation corrupted at month ${state.currentMonth}`);
-  }
-
-  env.resourceReserves = Math.max(MIN_RESERVE_FLOOR, env.resourceReserves - resourceDepletionRate);
+  // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
+  env.resourceReserves = assertFinite(
+    Math.max(MIN_RESERVE_FLOOR, env.resourceReserves - resourceDepletionRate),
+    {
+      location: 'updateResourceReserves',
+      valueName: 'resourceReserves',
+      month: state.currentMonth,
+    }
+  );
   
   // === RESOURCE REGENERATION (Phase 2.8) ===
   // Tech-enabled recovery: Circular economy, sustainable agriculture, clean energy
@@ -204,24 +207,16 @@ export function updateEnvironmentalAccumulation(
   
   // Natural degradation (Earth can process some pollution)
   const naturalDegradation = 0.003; // 0.3% per month natural cleanup
-  
-  // Detect NaN before calculation - fail loudly
-  if (isNaN(env.pollutionLevel)) {
-    console.error(`❌ NaN in pollutionLevel BEFORE calculation at month ${state.currentMonth}`);
-    console.error(`   pollutionRate: ${pollutionRate}, naturalDegradation: ${naturalDegradation}`);
-    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
-    throw new Error(`NaN pollution level - simulation corrupted at month ${state.currentMonth}`);
-  }
 
-  // Apply pollution (accumulation - degradation)
-  env.pollutionLevel = Math.max(0, Math.min(1, env.pollutionLevel + pollutionRate - naturalDegradation));
-
-  // Detect NaN after calculation - this means the calculation itself produced NaN
-  if (isNaN(env.pollutionLevel)) {
-    console.error(`❌ NaN in pollutionLevel AFTER calculation at month ${state.currentMonth}`);
-    console.error(`   pollutionRate: ${pollutionRate}, naturalDegradation: ${naturalDegradation}`);
-    throw new Error(`Pollution calculation produced NaN - check pollutionRate/naturalDegradation`);
-  }
+  // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
+  env.pollutionLevel = assertFinite(
+    Math.max(0, Math.min(1, env.pollutionLevel + pollutionRate - naturalDegradation)),
+    {
+      location: 'updatePollutionLevel',
+      valueName: 'pollutionLevel',
+      month: state.currentMonth,
+    }
+  );
   
   // === CLIMATE DEGRADATION ===
   // Energy usage drives climate impact
@@ -256,16 +251,18 @@ export function updateEnvironmentalAccumulation(
   const naturalStabilization = 0.001; // 0.1% per month
   
   // Detect NaN before calculation - fail loudly
-  if (isNaN(env.climateStability)) {
-    console.error(`❌ NaN in climateStability at month ${state.currentMonth}`);
-    console.error(`   climateDegradationRate: ${climateDegradationRate}, naturalStabilization: ${naturalStabilization}`);
-    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
-    throw new Error(`NaN climate stability - simulation corrupted at month ${state.currentMonth}`);
-  }
-
   // Apply climate degradation (with MIN_FLOOR to prevent exactly 0, which breaks geometric means)
   const MIN_CLIMATE_FLOOR = 0.001; // 0.1% minimum to prevent geometric mean collapse
-  env.climateStability = Math.max(MIN_CLIMATE_FLOOR, Math.min(1, env.climateStability - climateDegradationRate + naturalStabilization));
+
+  // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
+  env.climateStability = assertFinite(
+    Math.max(MIN_CLIMATE_FLOOR, Math.min(1, env.climateStability - climateDegradationRate + naturalStabilization)),
+    {
+      location: 'updateClimateStability',
+      valueName: 'climateStability',
+      month: state.currentMonth,
+    }
+  );
   
   // === BIODIVERSITY LOSS ===
   // Habitat disruption from expansion
@@ -294,17 +291,16 @@ export function updateEnvironmentalAccumulation(
   
   // Natural recovery (very slow without active management)
   const naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
-  
-  // Detect NaN before calculation - fail loudly
-  if (isNaN(env.biodiversityIndex)) {
-    console.error(`❌ NaN in biodiversityIndex at month ${state.currentMonth}`);
-    console.error(`   biodiversityLossRate: ${biodiversityLossRate}, naturalRecovery: ${naturalRecovery}`);
-    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
-    throw new Error(`NaN biodiversity index - simulation corrupted at month ${state.currentMonth}`);
-  }
 
-  // Apply biodiversity loss
-  env.biodiversityIndex = Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery));
+  // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
+  env.biodiversityIndex = assertFinite(
+    Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
+    {
+      location: 'updateBiodiversityIndex',
+      valueName: 'biodiversityIndex',
+      month: state.currentMonth,
+    }
+  );
 
   // === P1.5: ECOSYSTEM REGENERATION FROM POPULATION DECLINE ===
   // Historical evidence: Nature rebounds when human pressure reduces
@@ -343,7 +339,7 @@ export function updateEnvironmentalAccumulation(
 
   // Resource cascade (alpha=1.8 - fatter tails for financial-like shocks)
   if (env.resourceReserves < criticalThreshold) {
-    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, Math.random);
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, rng);
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (rare but devastating - supply chain collapse, hoarding)
@@ -358,7 +354,7 @@ export function updateEnvironmentalAccumulation(
 
   // Climate cascade (positive feedbacks - methane release, ice-albedo)
   if (env.climateStability < criticalThreshold) {
-    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, Math.random);
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, rng);
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (tipping point triggers positive feedbacks)
@@ -373,7 +369,7 @@ export function updateEnvironmentalAccumulation(
 
   // Biodiversity cascade (ecosystem collapse cascades)
   if (env.biodiversityIndex < criticalThreshold) {
-    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, Math.random);
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, rng);
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (keystone species loss triggers avalanche)
@@ -426,9 +422,24 @@ function checkEnvironmentalCrises(state: GameState): void {
     });
 
     // Immediate QoL impacts
-    qol.materialAbundance *= 0.7; // 30% drop in material goods
-    qol.energyAvailability *= 0.8; // 20% drop in energy
-    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.3);
+    qol.materialAbundance = assertInRange(qol.materialAbundance * 0.7, 0, 2,
+      {
+      location: 'resourceCrisis_materialAbundance',
+      valueName: 'materialAbundance',
+      month: state.currentMonth,
+    }); // 30% drop in material goods
+    qol.energyAvailability = assertInRange(qol.energyAvailability * 0.8, 0, 2,
+      {
+      location: 'resourceCrisis_energyAvailability',
+      valueName: 'energyAvailability',
+      month: state.currentMonth,
+    }); // 20% drop in energy
+    state.globalMetrics.socialStability = assertProbability(Math.max(0, Math.min(1, state.globalMetrics.socialStability - 0.3)),
+      {
+      location: 'resourceCrisis_socialStability',
+      valueName: 'socialStability',
+      month: state.currentMonth,
+    });
 
     // Population impact: Initial famine/scarcity deaths (0.5-1% casualties)
     // SEMI-GLOBAL: Affects food/water insecure regions (~25% of world)
@@ -436,7 +447,8 @@ function checkEnvironmentalCrises(state: GameState): void {
     const pop = state.humanPopulationSystem as any;
 
     // Resource component: 50%
-    addMortalityRisk(pop, {
+    addMortalityRisk(pop,
+      {
       type: 'famine',
       baseRisk: 0.008 * 0.50,
       proximate: 'famine',
@@ -448,7 +460,8 @@ function checkEnvironmentalCrises(state: GameState): void {
     });
 
     // Inequality component: 35%
-    addMortalityRisk(pop, {
+    addMortalityRisk(pop,
+      {
       type: 'famine',
       baseRisk: 0.008 * 0.35,
       proximate: 'famine',
@@ -460,7 +473,8 @@ function checkEnvironmentalCrises(state: GameState): void {
     });
 
     // Demographic component: 15%
-    addMortalityRisk(pop, {
+    addMortalityRisk(pop,
+      {
       type: 'famine',
       baseRisk: 0.008 * 0.15,
       proximate: 'famine',
@@ -499,16 +513,37 @@ function checkEnvironmentalCrises(state: GameState): void {
     });
 
     // Immediate QoL impacts
-    qol.healthcareQuality *= 0.75; // 25% drop (pollution-related diseases)
-    qol.diseasesBurden = Math.min(1, qol.diseasesBurden + 0.3); // Disease burden increases
-    qol.ecosystemHealth *= 0.6; // 40% drop in ecosystem health
-    state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.25);
+    qol.healthcareQuality = assertProbability(qol.healthcareQuality * 0.75,
+      {
+      location: 'pollutionCrisis_healthcareQuality',
+      valueName: 'healthcareQuality',
+      month: state.currentMonth,
+    }); // 25% drop (pollution-related diseases)
+    qol.diseasesBurden = assertProbability(Math.min(1, qol.diseasesBurden + 0.3),
+      {
+      location: 'pollutionCrisis_diseasesBurden',
+      valueName: 'diseasesBurden',
+      month: state.currentMonth,
+    }); // Disease burden increases
+    qol.ecosystemHealth = assertProbability(qol.ecosystemHealth * 0.6,
+      {
+      location: 'pollutionCrisis_ecosystemHealth',
+      valueName: 'ecosystemHealth',
+      month: state.currentMonth,
+    }); // 40% drop in ecosystem health
+    state.globalMetrics.qualityOfLife = assertProbability(Math.max(0, Math.min(1, state.globalMetrics.qualityOfLife - 0.25)),
+      {
+      location: 'pollutionCrisis_qualityOfLife',
+      valueName: 'qualityOfLife',
+      month: state.currentMonth,
+    });
 
     // Population impact: Pollution-related disease deaths (0.3-0.5% casualties)
     // SEMI-GLOBAL: Industrial nations + downwind regions (~60% of world)
     // 0.4% mortality rate from acute contamination/disease
     const pop = state.humanPopulationSystem as any;
-    addMortalityRisk(pop, {
+    addMortalityRisk(pop,
+      {
       type: 'pollution',
       baseRisk: 0.004,
       proximate: 'pollution',
@@ -583,10 +618,30 @@ function checkEnvironmentalCrises(state: GameState): void {
     });
 
     // Initial QoL impacts (minor at first)
-    qol.materialAbundance *= 0.95; // 5% initial drop
-    qol.healthcareQuality *= 0.97; // 3% initial drop
-    qol.ecosystemHealth *= 0.90; // 10% initial drop
-    state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.05);
+    qol.materialAbundance = assertInRange(qol.materialAbundance * 0.95, 0, 2,
+      {
+      location: 'ecosystemTipping_materialAbundance',
+      valueName: 'materialAbundance',
+      month: state.currentMonth,
+    }); // 5% initial drop
+    qol.healthcareQuality = assertProbability(qol.healthcareQuality * 0.97,
+      {
+      location: 'ecosystemTipping_healthcareQuality',
+      valueName: 'healthcareQuality',
+      month: state.currentMonth,
+    }); // 3% initial drop
+    qol.ecosystemHealth = assertProbability(qol.ecosystemHealth * 0.90,
+      {
+      location: 'ecosystemTipping_ecosystemHealth',
+      valueName: 'ecosystemHealth',
+      month: state.currentMonth,
+    }); // 10% initial drop
+    state.globalMetrics.qualityOfLife = assertProbability(Math.max(0, Math.min(1, state.globalMetrics.qualityOfLife - 0.05)),
+      {
+      location: 'ecosystemTipping_qualityOfLife',
+      valueName: 'qualityOfLife',
+      month: state.currentMonth,
+    });
 
     // NO immediate deaths - that comes gradually over years
   }
@@ -607,7 +662,8 @@ function checkEnvironmentalCrises(state: GameState): void {
       const ecosystemWeights1 = calculateEcosystemWeights(1);
 
       // Ecosystem component
-      addMortalityRisk(pop, {
+      addMortalityRisk(pop,
+      {
         type: 'ecosystem',
         baseRisk: 0.0001 * ecosystemWeights1.ecosystem,
         proximate: 'ecosystem',
@@ -619,7 +675,8 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
 
       // Climate component
-      addMortalityRisk(pop, {
+      addMortalityRisk(pop,
+      {
         type: 'ecosystem',
         baseRisk: 0.0001 * ecosystemWeights1.climate,
         proximate: 'ecosystem',
@@ -631,7 +688,8 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
 
       // Pollution component
-      addMortalityRisk(pop, {
+      addMortalityRisk(pop,
+      {
         type: 'ecosystem',
         baseRisk: 0.0001 * ecosystemWeights1.pollution,
         proximate: 'ecosystem',
@@ -643,8 +701,18 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
       
       // Gradual QoL degradation
-      qol.materialAbundance = Math.max(0.3, qol.materialAbundance - 0.002); // -0.2%/month
-      qol.ecosystemHealth = Math.max(0.2, qol.ecosystemHealth - 0.003); // -0.3%/month
+      qol.materialAbundance = assertInRange(Math.max(0.3, qol.materialAbundance - 0.002), 0, 2,
+      {
+        location: 'ecosystemDeclining_materialAbundance',
+        valueName: 'materialAbundance',
+        month: state.currentMonth,
+      }); // -0.2%/month
+      qol.ecosystemHealth = assertInRange(Math.max(0.2, qol.ecosystemHealth - 0.003), 0, 1,
+      {
+        location: 'ecosystemDeclining_ecosystemHealth',
+        valueName: 'ecosystemHealth',
+        month: state.currentMonth,
+      }); // -0.3%/month
       
     } else if (monthsSince < 60) {
       // Phase 2: CRISIS (2-5 years) - Accelerating failures
@@ -656,7 +724,8 @@ function checkEnvironmentalCrises(state: GameState): void {
       const ecosystemWeights2 = calculateEcosystemWeights(2);
 
       // Ecosystem component
-      addMortalityRisk(pop, {
+      addMortalityRisk(pop,
+      {
         type: 'ecosystem',
         baseRisk: 0.001 * ecosystemWeights2.ecosystem,
         proximate: 'ecosystem',
@@ -668,7 +737,8 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
 
       // Climate component
-      addMortalityRisk(pop, {
+      addMortalityRisk(pop,
+      {
         type: 'ecosystem',
         baseRisk: 0.001 * ecosystemWeights2.climate,
         proximate: 'ecosystem',
@@ -680,7 +750,8 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
 
       // Pollution component
-      addMortalityRisk(pop, {
+      addMortalityRisk(pop,
+      {
         type: 'ecosystem',
         baseRisk: 0.001 * ecosystemWeights2.pollution,
         proximate: 'ecosystem',
@@ -692,9 +763,24 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
       
       // Accelerating QoL degradation
-      qol.materialAbundance = Math.max(0.2, qol.materialAbundance - 0.005); // -0.5%/month
-      qol.healthcareQuality = Math.max(0.3, qol.healthcareQuality - 0.003); // -0.3%/month
-      qol.ecosystemHealth = Math.max(0.1, qol.ecosystemHealth - 0.005); // -0.5%/month
+      qol.materialAbundance = assertInRange(Math.max(0.2, qol.materialAbundance - 0.005), 0, 2,
+      {
+        location: 'ecosystemCrisis_materialAbundance',
+        valueName: 'materialAbundance',
+        month: state.currentMonth,
+      }); // -0.5%/month
+      qol.healthcareQuality = assertInRange(Math.max(0.3, qol.healthcareQuality - 0.003), 0, 1,
+      {
+        location: 'ecosystemCrisis_healthcareQuality',
+        valueName: 'healthcareQuality',
+        month: state.currentMonth,
+      }); // -0.3%/month
+      qol.ecosystemHealth = assertInRange(Math.max(0.1, qol.ecosystemHealth - 0.005), 0, 1,
+      {
+        location: 'ecosystemCrisis_ecosystemHealth',
+        valueName: 'ecosystemHealth',
+        month: state.currentMonth,
+      }); // -0.5%/month
       
       // Log phase transition (once)
       if (monthsSince === 24) {
@@ -715,7 +801,8 @@ function checkEnvironmentalCrises(state: GameState): void {
       const ecosystemWeights3 = calculateEcosystemWeights(3);
 
       // Ecosystem component
-      addMortalityRisk(pop, {
+      addMortalityRisk(pop,
+      {
         type: 'ecosystem',
         baseRisk: 0.015 * ecosystemWeights3.ecosystem,
         proximate: 'ecosystem',
@@ -727,7 +814,8 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
 
       // Climate component
-      addMortalityRisk(pop, {
+      addMortalityRisk(pop,
+      {
         type: 'ecosystem',
         baseRisk: 0.015 * ecosystemWeights3.climate,
         proximate: 'ecosystem',
@@ -739,7 +827,8 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
 
       // Pollution component
-      addMortalityRisk(pop, {
+      addMortalityRisk(pop,
+      {
         type: 'ecosystem',
         baseRisk: 0.015 * ecosystemWeights3.pollution,
         proximate: 'ecosystem',
@@ -751,10 +840,30 @@ function checkEnvironmentalCrises(state: GameState): void {
       });
       
       // Severe ongoing degradation
-      qol.materialAbundance = Math.max(0.1, qol.materialAbundance - 0.01); // -1%/month
-      qol.healthcareQuality = Math.max(0.2, qol.healthcareQuality - 0.005); // -0.5%/month
-      qol.ecosystemHealth = Math.max(0.05, qol.ecosystemHealth - 0.008); // -0.8%/month
-      state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.01);
+      qol.materialAbundance = assertInRange(Math.max(0.1, qol.materialAbundance - 0.01), 0, 2,
+      {
+        location: 'ecosystemCollapse_materialAbundance',
+        valueName: 'materialAbundance',
+        month: state.currentMonth,
+      }); // -1%/month
+      qol.healthcareQuality = assertInRange(Math.max(0.2, qol.healthcareQuality - 0.005), 0, 1,
+      {
+        location: 'ecosystemCollapse_healthcareQuality',
+        valueName: 'healthcareQuality',
+        month: state.currentMonth,
+      }); // -0.5%/month
+      qol.ecosystemHealth = assertInRange(Math.max(0.05, qol.ecosystemHealth - 0.008), 0, 1,
+      {
+        location: 'ecosystemCollapse_ecosystemHealth',
+        valueName: 'ecosystemHealth',
+        month: state.currentMonth,
+      }); // -0.8%/month
+      state.globalMetrics.qualityOfLife = assertProbability(Math.max(0, Math.min(1, state.globalMetrics.qualityOfLife - 0.01)),
+      {
+        location: 'ecosystemCollapse_qualityOfLife',
+        valueName: 'qualityOfLife',
+        month: state.currentMonth,
+      });
       
       // Log phase transition (once)
       if (monthsSince === 60) {
@@ -771,30 +880,75 @@ function checkEnvironmentalCrises(state: GameState): void {
   // Once triggered, crises continue to degrade QoL
   
   // Calculate cascading failure multiplier
-  const cascadeMultiplier = calculateCascadingFailureMultiplier(state);
+  const cascadeMultiplier = assertFinite(calculateCascadingFailureMultiplier(state),
+      {
+    location: 'checkEnvironmentalCrises',
+    valueName: 'cascadeMultiplier',
+    month: state.currentMonth
+  });
   
   if (env.resourceCrisisActive) {
     // Ongoing resource scarcity
-    qol.materialAbundance = Math.max(0, qol.materialAbundance - 0.01 * cascadeMultiplier);
-    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.01 * cascadeMultiplier);
+    qol.materialAbundance = assertInRange(Math.max(0, Math.min(2, qol.materialAbundance - 0.01 * cascadeMultiplier)), 0, 2,
+      {
+      location: 'ongoingResourceCrisis_materialAbundance',
+      valueName: 'materialAbundance',
+      month: state.currentMonth,
+    });
+    state.globalMetrics.socialStability = assertProbability(Math.max(0, Math.min(1, state.globalMetrics.socialStability - 0.01 * cascadeMultiplier)),
+      {
+      location: 'ongoingResourceCrisis_socialStability',
+      valueName: 'socialStability',
+      month: state.currentMonth,
+    });
   }
-  
+
   if (env.pollutionCrisisActive) {
     // Ongoing health impacts
-    qol.healthcareQuality = Math.max(0, qol.healthcareQuality - 0.008 * cascadeMultiplier);
-    qol.diseasesBurden = Math.min(1, qol.diseasesBurden + 0.01 * cascadeMultiplier);
+    qol.healthcareQuality = assertProbability(Math.max(0, Math.min(1, qol.healthcareQuality - 0.008 * cascadeMultiplier)),
+      {
+      location: 'ongoingPollutionCrisis_healthcareQuality',
+      valueName: 'healthcareQuality',
+      month: state.currentMonth,
+    });
+    qol.diseasesBurden = assertProbability(Math.max(0, Math.min(1, qol.diseasesBurden + 0.01 * cascadeMultiplier)),
+      {
+      location: 'ongoingPollutionCrisis_diseasesBurden',
+      valueName: 'diseasesBurden',
+      month: state.currentMonth,
+    });
   }
-  
+
   if (env.climateCrisisActive) {
     // Ongoing climate disasters
-    qol.physicalSafety = Math.max(0, qol.physicalSafety - 0.012 * cascadeMultiplier);
-    qol.materialAbundance = Math.max(0, qol.materialAbundance - 0.015 * cascadeMultiplier);
+    qol.physicalSafety = assertProbability(Math.max(0, Math.min(1, qol.physicalSafety - 0.012 * cascadeMultiplier)),
+      {
+      location: 'ongoingClimateCrisis_physicalSafety',
+      valueName: 'physicalSafety',
+      month: state.currentMonth,
+    });
+    qol.materialAbundance = assertInRange(Math.max(0, Math.min(2, qol.materialAbundance - 0.015 * cascadeMultiplier)), 0, 2,
+      {
+      location: 'ongoingClimateCrisis_materialAbundance',
+      valueName: 'materialAbundance',
+      month: state.currentMonth,
+    });
   }
-  
+
   if (env.ecosystemCrisisActive) {
     // Ongoing ecosystem degradation
-    qol.ecosystemHealth = Math.max(0, qol.ecosystemHealth - 0.01 * cascadeMultiplier);
-    qol.materialAbundance = Math.max(0, qol.materialAbundance - 0.01 * cascadeMultiplier);
+    qol.ecosystemHealth = assertProbability(Math.max(0, Math.min(1, qol.ecosystemHealth - 0.01 * cascadeMultiplier)),
+      {
+      location: 'ongoingEcosystemCrisis_ecosystemHealth',
+      valueName: 'ecosystemHealth',
+      month: state.currentMonth,
+    });
+    qol.materialAbundance = assertInRange(Math.max(0, Math.min(2, qol.materialAbundance - 0.01 * cascadeMultiplier)), 0, 2,
+      {
+      location: 'ongoingEcosystemCrisis_materialAbundance',
+      valueName: 'materialAbundance',
+      month: state.currentMonth,
+    });
   }
   
   // Extra cascading failure warning

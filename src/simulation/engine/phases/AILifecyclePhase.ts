@@ -23,6 +23,13 @@ export class AILifecyclePhase implements SimulationPhase {
   readonly name = 'AI Population Lifecycle';
   readonly order = 4.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Must run after compute/alignment/capability updates
+  readonly dependencies = [
+    'compute-growth',          // Order 1.0: Compute availability
+    'compute-allocation',      // Order 3.0: Compute distributed to AIs
+    'alignment_dynamics',      // Order 3.5: Alignment state before lifecycle
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute existing lifecycle logic
     setDeterministicRng(rng);

@@ -1,0 +1,224 @@
+
+📊 PHASE DEPENDENCY AUDIT
+========================================================================================================================
+Total phases: 117 (as of Nov 6, 2025)
+Goal: Top 30 critical phases with explicit dependencies
+========================================================================================================================
+
+
+🔍 PHASE EXECUTION ORDER & DEPENDENCIES
+========================================================================================================================
+Format: [ORDER] Phase Name (phase-id) [Dependencies: count]
+------------------------------------------------------------------------------------------------------------------------
+[1] Compute Growth (Moore's Law) (compute-growth)
+[2] Organization Turns (organization-turns)
+[2.5] AI Welfare Update v2.1 (ai-welfare-update)
+[2.5] LLM Weight Update (llm_weight_update)
+[2.5] Triggered Events (triggered-events)
+[3] Compute Allocation (compute-allocation)
+[3.4] Alignment Technique Update (alignment_techniques)
+[3.5] Alignment Dynamics Update (alignment_dynamics) [DEPS: 1]
+    → compute-growth (order: 1)
+[3.6] AI Suffering Calculation (ai_suffering)
+[4] AI Population Lifecycle (ai-lifecycle)
+[4] RLHF Binding (rlhf_binding)
+[4.1] Survival Traits (survival_traits)
+[4.2] Collective Formation (collective_formation)
+[4.3] Evolutionary Selection (evolutionary_selection)
+[4.5] Bifurcation Logic (bifurcation-logic)
+[5] Cybersecurity Breaches (cybersecurity)
+[5.5] Collective Actions (collective_actions)
+[6] Sleeper Agent Wake Check (sleeper-wake)
+[6.5] War-Meaning Feedback (war_meaning_feedback)
+[6.7] Climate Justice (climate_justice)
+[7] AI Agent Actions (ai-agent-actions) [DEPS: 1]
+    → alignment_dynamics (order: 3.5)
+[8.5] Government Elections & Opinion (government-elections)
+[8.5] Player Decision Processing (player-decision)
+[8.5] Stochastic Innovation Breakthroughs (stochastic-innovation)
+[9] Government Agent Actions (government-actions)
+[10] Governance Quality Update (governance-quality)
+[10] Society Agent Actions (society-actions)
+[11] Upward Spirals Update (upward-spirals)
+[11.5] Cooperative Spirals Update (cooperative-spirals)
+[12] Meaning Renaissance Update (meaning-renaissance)
+[12.5] Technology Tree Update (tech-tree)
+[12.5] TIER 2: Human-AI Centaur Systems (tier2_centaur_systems)
+[13] Conflict Resolution Update (conflict-resolution)
+[13.5] TIER 2: Community Cohesion Programs (tier2_community_cohesion)
+[14] Diplomatic AI Update (diplomatic-ai)
+[14.5] TIER 2: Crisis Anticipation Systems (tier2_crisis_anticipation)
+[15] Antimicrobial Resistance (antimicrobial_resistance)
+[15] National AI Update (national-ai)
+[15.2] Extreme Weather Events (extreme-weather-events)
+[15.3] Enhanced UBI Update (ubi-system) [DEPS: 2]
+    → tech-tree (order: 12.5)
+    → governance-quality (order: 10)
+[15.4] TIER 2: AI Interpretability Ensemble (tier2_interpretability)
+[15.5] Cooperative Ownership Update (cooperative-ownership)
+[15.6] Social Safety Nets Update (social-safety-nets)
+[16] MAD Deterrence Update (mad-deterrence)
+[16.5] TIER 2: Dark Compute Monitoring (tier2_dark_compute)
+[17] AI-Assisted Skills Metrics (ai-assisted-skills-metrics)
+[17] Resentment Recovery (resentment_recovery)
+[17] Resource Economy Update (resource-economy)
+[18] Resource Technology Update (resource-technology)
+[18.5] Memetic Evolution (memetic-evolution)
+[18.5] TIER 2: Nuclear Command Security (tier2_nuclear_security)
+[19] Geoengineering Update (geoengineering)
+[19] Social Influence Update (social_influence_update)
+[19.5] Quality of Life Systems (quality-of-life) [DEPS: 2]
+    → ubi-system (order: 15.3)
+    → extreme-weather-events (order: 15.2)
+[19.5] TIER 2: Synthetic Ecosystem Services (tier2_synthetic_ecosystems)
+[19.7] Food Security Degradation (food-security-degradation) [DEPS: 2]
+    → quality-of-life (order: 19.5)
+    → extreme-weather-events (order: 15.2)
+[20] Defensive AI Update (defensive-ai)
+[20] Nuclear Command & Control (nuclear_command_control) [DEPS: 1]
+    → governance-quality (order: 10)
+[20.1] Democracy Dynamics (democracy_dynamics)
+[20.1] Phosphorus System Update (phosphorus)
+[20.2] Freshwater System Update (freshwater)
+[20.3] Ocean Acidification Update (ocean-acidification)
+[20.4] Novel Entities Update (novel-entities)
+[20.45] Wet Bulb Temperature Events (wet_bulb_temperature)
+[20.5] Human Population Dynamics (human_population) [DEPS: 1]
+    → quality-of-life (order: 19.5)
+[20.5] Positive Tipping Point Cascades (positive-tipping-points)
+[20.5] TIER 2: High-Value Coastal Protection (tier2_coastal_protection)
+[20.6] Refugee Crisis System (refugee_crisis) [DEPS: 2]
+    → human_population (order: 20.5)
+    → wet_bulb_temperature (order: 20.45)
+[20.8] Mortality Stabilizers (mortality-stabilizers) [DEPS: 2]
+    → food-security-degradation (order: 19.7)
+    → wet_bulb_temperature (order: 20.45)
+[21] Dystopia Progression Update (dystopia-progression)
+[21] Planetary Boundaries System (planetary_boundaries) [DEPS: 3]
+    → ocean-acidification (order: 20.3)
+    → novel-entities (order: 20.4)
+    → wet_bulb_temperature (order: 20.45)
+[21] Power Generation Update (power-generation)
+[21] TIER 2: Intervention Synergy (tier2_synergy)
+[21.5] Famine System (famine_system)
+[21.6] Tipping Point Phase (tipping-point-phase) [DEPS: 1]
+    → planetary_boundaries (order: 21)
+[22] Benchmark Evaluations (benchmark-evaluations)
+[22] Information Warfare Update (information-warfare)
+[23] Crisis Points Check (crisis-points)
+[23.5] Psychological Trauma (psychological_trauma)
+[24] Workflow Adaptation Update (workflow-adaptation)
+[24.5] Consciousness Governance (consciousness-governance)
+[24.5] Trust Recovery & Decay (trustRecovery)
+[25] Government Policy Response (government-response)
+[25.5] Policy Implementation (policy-implementation)
+[26] Emergency Response (emergency_response)
+[26.1] Social Cohesion Update (social_cohesion_update) [DEPS: 1]
+    → refugee_crisis (order: 20.6)
+[26.5] Early Warning Detection (early-warning)
+[27] Gaming Detection (gaming-detection) [DEPS: 1]
+    → ai-agent-actions (order: 7)
+[27.5] Exogenous Shock Detection (exogenous-shocks) [DEPS: 1]
+    → planetary_boundaries (order: 21)
+[28] Proactive Sleeper Detection (proactive-sleeper-detection)
+[29] Critical Juncture Agency (critical_juncture_phase)
+[29] Flash War Escalation Check (flash-war-escalation)
+[30] Unemployment & Skills (unemployment) [DEPS: 2]
+    → ai-agent-actions (order: 7)
+    → social_cohesion_update (order: 26.1)
+[30.5] Unknown Unknown Events (unknown-unknown)
+[31] Economic Transition (economic-transition) [DEPS: 1]
+    → unemployment (order: 30)
+[31] Update Economic Stage (update-economic-stage)
+[32] Paranoia & Trust Update (paranoia)
+[33] Social Stability Calculation (social-stability) [DEPS: 2]
+    → unemployment (order: 30)
+    → economic-transition (order: 31)
+[33.5] Environmental Feedback (environmental_feedback) [DEPS: 3]
+    → ocean-acidification (order: 20.3)
+    → novel-entities (order: 20.4)
+    → planetary_boundaries (order: 21)
+[34] Climate Impact Cascade (climate_impact_cascade) [DEPS: 2]
+    → tipping-point-phase (order: 21.6)
+    → environmental_feedback (order: 33.5)
+[34.1] Multi-Paradigm DUI Update (multi_paradigm_dui_update) [DEPS: 4]
+    → social_cohesion_update (order: 26.1)
+    → social-stability (order: 33)
+    → environmental_feedback (order: 33.5)
+    → climate_impact_cascade (order: 34)
+[35] Bayesian Mortality Resolution (bayesian_mortality_resolution) [DEPS: 2]
+    → mortality-stabilizers (order: 20.8)
+    → climate_impact_cascade (order: 34)
+[35] Outcome Probabilities Calculation (outcome-probabilities)
+[35.5] Minimal Suffering Indicators (minimal_suffering)
+[36] Crisis Detection (crisis-detection)
+[36] Ensemble Meta-Learning (ensemble-meta-learning)
+[37] Extinction Triggers Check (extinction-triggers)
+[38] Extinction Progress (extinction-progress)
+[39] Technology Diffusion (technology-diffusion)
+[40] Catastrophic Scenarios (catastrophic-scenarios)
+[98] Event Collection (event-collection)
+[99] Time Advancement (time-advancement)
+[251] Organization Viability (organization-viability)
+[252] NuclearWinter (nuclear_winter) [DEPS: 1]
+    → nuclear_command_control (order: 20)
+[252.5] Radiation Health Effects (radiation_system)
+========================================================================================================================
+
+Phases WITH dependencies: 22
+Phases WITHOUT dependencies: 93
+Total phases: 115
+
+Coverage: 19.1%
+
+
+⚠️  CRITICAL PHASE CATEGORIES (Need Dependency Review)
+========================================================================================================================
+
+🔴 MORTALITY phases:
+  ✅ [20.8] Mortality Stabilizers (mortality-stabilizers)
+  ✅ [35] Bayesian Mortality Resolution (bayesian_mortality_resolution)
+
+🔴 POPULATION phases:
+  ❌ [4] AI Population Lifecycle (ai-lifecycle)
+  ✅ [20.5] Human Population Dynamics (human_population)
+
+🔴 CLIMATE phases:
+  ❌ [6.7] Climate Justice (climate_justice)
+  ✅ [34] Climate Impact Cascade (climate_impact_cascade)
+
+🔴 CRISIS phases:
+  ❌ [14.5] TIER 2: Crisis Anticipation Systems (tier2_crisis_anticipation)
+  ✅ [20.6] Refugee Crisis System (refugee_crisis)
+  ❌ [23] Crisis Points Check (crisis-points)
+  ❌ [36] Crisis Detection (crisis-detection)
+
+🔴 NUCLEAR phases:
+  ❌ [18.5] TIER 2: Nuclear Command Security (tier2_nuclear_security)
+  ✅ [20] Nuclear Command & Control (nuclear_command_control)
+  ✅ [252] NuclearWinter (nuclear_winter)
+
+🔴 EXTINCTION phases:
+  ❌ [37] Extinction Triggers Check (extinction-triggers)
+  ❌ [38] Extinction Progress (extinction-progress)
+
+🔴 TIPPING phases:
+  ❌ [20.5] Positive Tipping Point Cascades (positive-tipping-points)
+  ✅ [21.6] Tipping Point Phase (tipping-point-phase)
+
+🔴 CATASTROPHE phases:
+
+🔴 COLLAPSE phases:
+
+🔴 OUTCOME phases:
+  ❌ [35] Outcome Probabilities Calculation (outcome-probabilities)
+
+
+📋 RECOMMENDED ACTIONS
+========================================================================================================================
+1. Review phases marked with ❌ in critical categories
+2. Add dependencies for phases that read state from earlier phases
+3. Ensure climate phases run before mortality phases
+4. Ensure AI capability phases run before alignment phases
+5. Ensure crisis detection runs after all risk accumulation
+========================================================================================================================

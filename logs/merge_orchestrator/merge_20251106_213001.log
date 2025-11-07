@@ -1,0 +1,135 @@
+
+=== Merge Orchestrator Started ===
+[21:30:01] Timestamp: Thu Nov  6 21:30:01 UTC 2025
+[21:30:01] Dry run: false
+[21:30:01] Max branches: 10
+[21:30:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[21:30:02] Found 98 branches to process
+
+=== Branch 1/98: auto/researcher-20251106_193001 ===
+[21:30:02] 📝 Creating merge branch: merge/auto/researcher-20251106_193001_20251106_213001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+	logs/autonomous/status_current.txt
+	logs/worker_watcher/watcher_20251106_211501.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[21:30:02] ❌ Failed to create merge branch
+
+=== Branch 2/98: auto/researcher-20251106_203001 ===
+[21:30:02] 📝 Creating merge branch: merge/auto/researcher-20251106_203001_20251106_213001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+	logs/autonomous/status_current.txt
+	logs/worker_watcher/watcher_20251106_211501.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[21:30:02] ❌ Failed to create merge branch
+
+=== Branch 3/98: auto/worker-20251102_043015 ===
+[21:30:02] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251106_213001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+	logs/autonomous/status_current.txt
+	logs/worker_watcher/watcher_20251106_211501.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[21:30:02] ❌ Failed to create merge branch
+
+=== Branch 4/98: auto/worker-20251102_050015 ===
+[21:30:02] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251106_213001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+	logs/autonomous/status_current.txt
+	logs/worker_watcher/watcher_20251106_211501.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[21:30:02] ❌ Failed to create merge branch
+
+=== Branch 5/98: auto/worker-20251102_080006 ===
+[21:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251106_213001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+	logs/autonomous/status_current.txt
+	logs/worker_watcher/watcher_20251106_211501.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[21:30:03] ❌ Failed to create merge branch
+
+=== Branch 6/98: auto/worker-20251102_090015 ===
+[21:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251106_213001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+	logs/autonomous/status_current.txt
+	logs/worker_watcher/watcher_20251106_211501.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[21:30:03] ❌ Failed to create merge branch
+
+=== Branch 7/98: auto/worker-20251102_100015 ===
+[21:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251106_213001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+	logs/autonomous/status_current.txt
+	logs/worker_watcher/watcher_20251106_211501.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[21:30:03] ❌ Failed to create merge branch
+
+=== Branch 8/98: auto/worker-20251102_110015 ===
+[21:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251106_213001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+	logs/autonomous/status_current.txt
+	logs/worker_watcher/watcher_20251106_211501.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[21:30:03] ❌ Failed to create merge branch
+
+=== Branch 9/98: auto/worker-20251102_120000 ===
+[21:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251106_213001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+	logs/autonomous/status_current.txt
+	logs/worker_watcher/watcher_20251106_211501.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[21:30:03] ❌ Failed to create merge branch
+
+=== Branch 10/98: auto/worker-20251102_130014 ===
+[21:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251106_213001
+error: Your local changes to the following files would be overwritten by checkout:
+	logs/autonomous/researcher/cron_20251106.log
+	logs/autonomous/researcher/status_current.txt
+	logs/autonomous/status_current.txt
+	logs/worker_watcher/watcher_20251106_211501.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+[21:30:03] ❌ Failed to create merge branch
+[21:30:03] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[21:30:03] Total branches found: 98
+[21:30:03] Branches processed: 10
+[21:30:03] ✅ Successfully merged: 0
+[21:30:03] ⏭️  Skipped (frontend on VM): 0
+[21:30:03] ❌ Failed (conflicts/gates): 10
+[21:30:03] 
+[21:30:03] 📊 Remaining branches: 88
+[21:30:03]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[21:30:03] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251106_213001.log

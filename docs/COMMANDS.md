@@ -264,7 +264,28 @@ git worktree remove ../superalignment-feature-x
 
 See CLAUDE.md "Git Safety Protocol" section for detailed commit/PR guidelines.
 
-### Automated Merge Orchestrator
+### Merge Utilities
+
+#### Manual Merge with Log Cleanup
+
+**Purpose:** Merge branches with automatic log file conflict resolution (keeps logs deleted, preventing log accumulation).
+
+```bash
+# Merge a branch with auto-resolved log conflicts
+./scripts/merge-with-log-cleanup.sh <branch-name>
+
+# Example
+./scripts/merge-with-log-cleanup.sh auto/worker-20251105_230001
+```
+
+**What it resolves automatically:**
+- Deleted log files (`*.log`) - keeps them deleted (status: DU)
+- Log file conflicts - prefers current branch (ours)
+- `research/UPDATE_QUEUE.md` - keeps current version (auto-generated)
+
+**Use when:** Merging autonomous worker branches or any branches with log conflicts.
+
+#### Automated Merge Orchestrator
 
 **Purpose:** Hourly automated branch merging with quality gates (reduces manual merge overhead).
 

@@ -1,0 +1,44 @@
+Analyzing mortality sources from: logs/mortality_diagnostic_fixed_mc1_20251106_042812.log
+
+
+================================================================================
+💀💀💀 MORTALITY SOURCES ANALYSIS (60-month simulation) 💀💀💀
+================================================================================
+
+📊 SUMMARY STATISTICS:
+  Months analyzed: 52
+  Average base mortality: 0.0069 (0.69%/month)
+  Total cumulative risk: 0.36
+  Months above Holodomor cap (2.8%): 1 (1.9%)
+
+📊 TOP PROXIMATE CAUSES (cumulative over 60 months):
+  famine: 0.3144 total (87.5% of all risk, 0.60%/month avg)
+  cascade: 0.0400 total (11.1% of all risk, 0.08%/month avg)
+  other: 0.0050 total (1.4% of all risk, 0.01%/month avg)
+
+🔍 TOP ROOT CAUSES (cumulative over 60 months):
+  climate: 0.3144 total (87.5% of all risk, 0.60%/month avg)
+  social: 0.0425 total (11.8% of all risk, 0.08%/month avg)
+  disruption: 0.0025 total (0.7% of all risk, 0.00%/month avg)
+
+🎯 TOP 10 SPECIFIC SOURCES (proximate + root):
+  [Run   1/1]      famine (climate): 0.3144 total (87.5%, 594 events, 0.60%/month avg)
+  [Run   1/1]      cascade (social): 0.0400 total (11.1%, 1 events, 0.08%/month avg)
+  [Run   1/1]      other (social): 0.0025 total (0.7%, 1 events, 0.00%/month avg)
+  [Run   1/1]      other (disruption): 0.0025 total (0.7%, 1 events, 0.00%/month avg)
+  [Run   1/1]      famine (social): 0.0000 total (0.0%, 48 events, 0.00%/month avg)
+
+⚠️  HIGHEST MORTALITY MONTHS:
+  Month 47: 4.60% ([Run   1/1]      cascade (social))
+  Month 41: 1.12% ([Run   1/1]      famine (climate))
+  Month 17: 0.62% ([Run   1/1]      famine (climate))
+  Month 18: 0.62% ([Run   1/1]      famine (climate))
+  Month 19: 0.62% ([Run   1/1]      famine (climate))
+  Month 29: 0.62% ([Run   1/1]      famine (climate))
+  Month 30: 0.62% ([Run   1/1]      famine (climate))
+  Month 31: 0.62% ([Run   1/1]      famine (climate))
+  Month 42: 0.62% ([Run   1/1]      famine (climate))
+  Month 43: 0.62% ([Run   1/1]      famine (climate))
+
+================================================================================
+

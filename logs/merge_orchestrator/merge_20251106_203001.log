@@ -1,0 +1,125 @@
+
+=== Merge Orchestrator Started ===
+[20:30:01] Timestamp: Thu Nov  6 20:30:01 UTC 2025
+[20:30:01] Dry run: false
+[20:30:01] Max branches: 10
+[20:30:01] Environment: VM (backend only)
+
+=== Fetching Latest Changes ===
+
+=== Discovering Branches ===
+[20:30:03] Found 95 branches to process
+
+=== Branch 1/95: auto/researcher-20251106_193001 ===
+[20:30:03] 📝 Creating merge branch: merge/auto/researcher-20251106_193001_20251106_203001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	research/UPDATE_QUEUE.md
+Please commit your changes or stash them before you switch branches.
+Aborting
+[20:30:03] ❌ Failed to create merge branch
+
+=== Branch 2/95: auto/worker-20251102_043015 ===
+[20:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_043015_20251106_203001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	research/UPDATE_QUEUE.md
+Please commit your changes or stash them before you switch branches.
+Aborting
+[20:30:03] ❌ Failed to create merge branch
+
+=== Branch 3/95: auto/worker-20251102_050015 ===
+[20:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_050015_20251106_203001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	research/UPDATE_QUEUE.md
+Please commit your changes or stash them before you switch branches.
+Aborting
+[20:30:03] ❌ Failed to create merge branch
+
+=== Branch 4/95: auto/worker-20251102_080006 ===
+[20:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_080006_20251106_203001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	research/UPDATE_QUEUE.md
+Please commit your changes or stash them before you switch branches.
+Aborting
+[20:30:03] ❌ Failed to create merge branch
+
+=== Branch 5/95: auto/worker-20251102_090015 ===
+[20:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_090015_20251106_203001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	research/UPDATE_QUEUE.md
+Please commit your changes or stash them before you switch branches.
+Aborting
+[20:30:03] ❌ Failed to create merge branch
+
+=== Branch 6/95: auto/worker-20251102_100015 ===
+[20:30:03] 📝 Creating merge branch: merge/auto/worker-20251102_100015_20251106_203001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	research/UPDATE_QUEUE.md
+Please commit your changes or stash them before you switch branches.
+Aborting
+[20:30:04] ❌ Failed to create merge branch
+
+=== Branch 7/95: auto/worker-20251102_110015 ===
+[20:30:04] 📝 Creating merge branch: merge/auto/worker-20251102_110015_20251106_203001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	research/UPDATE_QUEUE.md
+Please commit your changes or stash them before you switch branches.
+Aborting
+[20:30:04] ❌ Failed to create merge branch
+
+=== Branch 8/95: auto/worker-20251102_120000 ===
+[20:30:04] 📝 Creating merge branch: merge/auto/worker-20251102_120000_20251106_203001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	research/UPDATE_QUEUE.md
+Please commit your changes or stash them before you switch branches.
+Aborting
+[20:30:04] ❌ Failed to create merge branch
+
+=== Branch 9/95: auto/worker-20251102_130014 ===
+[20:30:04] 📝 Creating merge branch: merge/auto/worker-20251102_130014_20251106_203001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	research/UPDATE_QUEUE.md
+Please commit your changes or stash them before you switch branches.
+Aborting
+[20:30:04] ❌ Failed to create merge branch
+
+=== Branch 10/95: auto/worker-20251102_140015 ===
+[20:30:04] 📝 Creating merge branch: merge/auto/worker-20251102_140015_20251106_203001
+error: Your local changes to the following files would be overwritten by checkout:
+	docs/wiki/README.md
+	logs/autonomous/researcher/cron_20251106.log
+	research/UPDATE_QUEUE.md
+Please commit your changes or stash them before you switch branches.
+Aborting
+[20:30:04] ❌ Failed to create merge branch
+[20:30:04] ⏸️  Reached max branches limit (10), stopping
+
+=== Summary ===
+[20:30:04] Total branches found: 95
+[20:30:04] Branches processed: 10
+[20:30:04] ✅ Successfully merged: 0
+[20:30:04] ⏭️  Skipped (frontend on VM): 0
+[20:30:04] ❌ Failed (conflicts/gates): 10
+[20:30:04] 
+[20:30:04] 📊 Remaining branches: 85
+[20:30:04]    (Will be processed in next run)
+
+=== Merge Orchestrator Complete ===
+[20:30:04] Full log: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/merge_orchestrator/merge_20251106_203001.log

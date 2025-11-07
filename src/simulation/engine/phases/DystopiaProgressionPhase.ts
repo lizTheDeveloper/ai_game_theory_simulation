@@ -14,6 +14,11 @@ export class DystopiaProgressionPhase implements SimulationPhase {
   readonly name = 'Dystopia Progression Update';
   readonly order = 21.0;
 
+  // DEPENDENCIES (Nov 6, 2025): Must run after defensive AI
+  readonly dependencies = [
+    'defensive-ai',  // Order 20.0: Surveillance AI capability
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateGovernmentControlResponse } = require('../../dystopiaProgression');
     setDeterministicRng(rng);

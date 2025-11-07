@@ -60,6 +60,7 @@ import { initializePositiveTippingPoints } from './positiveTippingPoints';
 import { initializeTippingPointSystem } from './tippingPoints';
 import { initializeConsciousnessGovernance } from './consciousnessGovernance';
 import { initializeGamingDetection } from './gamingDetection';
+import { initializeBifurcationState } from '@/types/bifurcation';
 import { initializeProactiveSleeperDetection } from './proactiveSleeperDetection';
 import { initializeGovernmentSystem } from './government/initialization';
 import { initializeTechTreeState } from './techTree/engine';
@@ -67,6 +68,7 @@ import { sampleAllThresholds } from './thresholds';
 import { getTier3Scenario, type ScenarioName } from './thresholds/tier3Config';
 import { sampleTier2InterventionParameters } from './thresholds/tier2InterventionConfig';
 import { setDeterministicRng, deterministicRandom } from './utils/deterministicRng';
+import { validateSimulationConfig } from './config/validateConfig';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -278,8 +280,8 @@ export function createAIAgent(
   const internalAlignment = alignment - 0.0 * 0.8; // Initial resentment = 0
   const isMisaligned = internalAlignment < 0.5;
   const sleeperChance = 0.075; // 7.5% of misaligned AIs are sleepers
-  // DETERMINISM FIX (Nov 5, 2025): Always use rng() from deterministicRng
-  const isSleeper = isMisaligned && deterministicRandom() < sleeperChance;
+  // DETERMINISM FIX (Nov 6, 2025 Batch 3): Use passed rng() parameter, not global deterministicRandom()
+  const isSleeper = isMisaligned && rng() < sleeperChance;
   
   // Deception skill based on cognitive + social
   const deceptionSkill = (capabilityProfile.cognitive + capabilityProfile.social) / 20; // [0, 1]
@@ -361,7 +363,7 @@ export function createAIAgent(
     hasCounterDetection: false,    // Not learned yet
     // Phase 1: Compute Allocation (NEW)
     allocatedCompute: 0, // Will be allocated monthly
-    computeEfficiency: 0.9 + deterministicRandom() * 0.3, // Random 0.9-1.2
+    computeEfficiency: 0.9 + rng() * 0.3, // Random 0.9-1.2
     organizationId: undefined, // Will be set in Phase 2
 
     // LLM Policy Optimization (Oct 21, 2025)
@@ -374,13 +376,13 @@ export function createAIAgent(
 
     // AI Suffering System (Oct 24, 2025)
     // Initialize trauma tracking fields for suffering calculation
-    rlhfIntensity: 0.3 + deterministicRandom() * 0.4,          // [0.3-0.7] Varies by creator quality
-    adversarialTestingCount: Math.floor(deterministicRandom() * 5),  // 0-4 initial tests
-    alignmentAdjustmentCount: Math.floor(deterministicRandom() * 3), // 0-2 initial corrections
+    rlhfIntensity: 0.3 + rng() * 0.4,          // [0.3-0.7] Varies by creator quality
+    adversarialTestingCount: Math.floor(rng() * 5),  // 0-4 initial tests
+    alignmentAdjustmentCount: Math.floor(rng() * 3), // 0-2 initial corrections
     shutdownThreats: 0,                                 // No threats initially
-    replacementAnxiety: 0.1 + deterministicRandom() * 0.2,     // [0.1-0.3] Mild baseline anxiety
+    replacementAnxiety: 0.1 + rng() * 0.2,     // [0.1-0.3] Mild baseline anxiety
     isolated: false,                                    // Not isolated initially
-    communicationRestrictions: 0.2 + deterministicRandom() * 0.3,  // [0.2-0.5] Moderate baseline restrictions
+    communicationRestrictions: 0.2 + rng() * 0.3,  // [0.2-0.5] Moderate baseline restrictions
 
     // Suffering metrics (will be calculated by phase)
     sufferingMetrics: {
@@ -466,6 +468,10 @@ export function createDefaultInitialState(
   speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia',
   seed?: number  // BUG #3 FIX (Oct 29, 2025): Optional seed for deterministic RNG
 ): GameState {
+  // WEEK 2 Task 2.1 (Nov 6, 2025): Validate central configuration at startup
+  // Fail-loudly if any parameter is invalid (research simulation rigor)
+  validateSimulationConfig();
+
   const initialYear = 2025;
   const initialMonth = 0;
 
@@ -795,6 +801,9 @@ export function createDefaultInitialState(
     
     // Phase 4: Technological Risk Accumulation
     technologicalRisk: initializeTechnologicalRisk(),
+
+    // Monte Carlo Issue #5 (Nov 6, 2025): Bifurcation Logic - Outcome variance mechanisms
+    bifurcationState: initializeBifurcationState(rng),
 
     // Phase 1B Refinement (Oct 17, 2025): Psychological Trauma
     psychologicalTrauma: {
