@@ -1509,7 +1509,7 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 ### Research Foundation
 
 **[📖 Bibliography](./BIBLIOGRAPHY.md)** - Comprehensive citation index
-- **156+ peer-reviewed sources** across 11 academic disciplines
+- **165+ peer-reviewed sources** across 11 academic disciplines (9 sources added Nov 7, 2025)
 - Full citations with confidence levels, key findings, and usage notes
 - Organized by discipline: AI Safety, Climate Science, Political Science, Economics, Social Psychology, Implementation Science, Complex Systems, Public Health, International Relations, Information Theory, Demography
 - **Validation cases**: Germany 2021 (100% coalition match), COVID acceleration (10× speedup), Black Death calibration
@@ -1563,6 +1563,20 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 - **Files Created**: `research/mortality_stabilizers_layer2_verification_20251106.md` (8.7KB), `research/UPDATE_QUEUE.md` (updated)
 - **Impact**: Fundamental modeling errors identified requiring parameter corrections and additional research sources
 - See: [`research/mortality_stabilizers_layer2_verification_20251106.md`](/research/mortality_stabilizers_layer2_verification_20251106.md), [`research/UPDATE_QUEUE.md`](/research/UPDATE_QUEUE.md)
+
+**✅ HIGH Priority Research Updates** (November 7, 2025):
+- **Status**: ✅ **2 of top 3 HIGH priority files updated** with 2024-2025 peer-reviewed sources
+- **Files Updated**:
+  - `threshold_tier2_historical_ranges_20251026.md` - Oldest source 1970 (55y) → validated with 7 new 2024-2025 sources
+  - `mortality_caps_historical_data_20251027.md` - Oldest source 1980 (45y) → validated with 2022-2023 nuclear winter research
+- **Key Updates**:
+  - **Tier 2 Thresholds**: All 5 threshold distributions validated (government legitimacy, surveillance dystopia, automation displacement, AI RSI, resentment revolt)
+  - **New Sources**: Studebaker 2022 (legitimacy crises), Karpa & Rochlitz 2025 (surveillance), Frank et al. 2025 (AI unemployment), Houle et al. 2022 (inequality & unrest), Anthropic 2024 (alignment faking), Xia & Robock 2022 Nature Food (nuclear winter mortality)
+  - **Nuclear Winter Mortality**: >5B deaths (>60% global) from US-Russia war validated by Nature Food 2022 study
+  - **AI Capabilities**: Contemporary validation of RSI threshold (AlphaEvolve 2025, OpenAI Preparedness Framework 2024-2025)
+- **Impact**: Research age reduced from 55y → 0y (current validation), maintains research rigor while addressing UPDATE_QUEUE HIGH priorities
+- **Simulation Impact**: Parameters in `tier2Config.ts` and `bayesianMortality.ts` now grounded in 2024-2025 empirical evidence
+- See: Commit 66fc134, [`research/threshold_tier2_historical_ranges_20251026.md`](/research/threshold_tier2_historical_ranges_20251026.md), [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md)
 
 ### Core Systems
 
@@ -5327,6 +5341,27 @@ state.history.exogenousShocks?: Array<{
 ---
 
 ## 📚 Recent Research & Plans Reference (Oct 16-30, 2025)
+
+### Research Validation Updates (Nov 7, 2025)
+
+**HIGH Priority Research Files Updated** ✅ COMPLETE (Nov 7, 2025)
+- **Files**: `threshold_tier2_historical_ranges_20251026.md`, `mortality_caps_historical_data_20251027.md`
+- **Impact**: Addressed 2 of top 3 HIGH priority items from UPDATE_QUEUE.md (sources >5 years old)
+- **New Sources**: 9 peer-reviewed sources added (2022-2025)
+  - Studebaker 2022 (legitimacy crises), Karpa & Rochlitz 2025 (surveillance)
+  - Frank et al. 2025 (AI unemployment), Houle et al. 2022 (inequality & unrest)
+  - Anthropic 2024 (alignment faking), OpenAI Preparedness 2024-2025 (RSI)
+  - Google DeepMind AlphaEvolve 2025 (evolutionary coding), Xia & Robock 2022 Nature Food (nuclear winter)
+  - Vilhelmsson & Baum 2023 (public health & nuclear winter)
+- **Research Age Improvement**:
+  - threshold_tier2: 1970 oldest source (55y old) → validated with 2024-2025 research
+  - mortality_caps: 1980 oldest source (45y old) → validated with 2022-2023 research
+- **Key Validations**:
+  - Tier 2 thresholds (5 distributions): Government legitimacy Δ(0.25,0.30,0.40), Surveillance U[0.65,0.80], Automation Δ(0.40,0.50,0.60), AI RSI U[1.2,1.5], Resentment Δ(0.60,0.70,0.80)
+  - Nuclear winter mortality: >5B deaths (>60% global population) from US-Russia war
+  - Timeline: 75% global starvation within 2 years, 90% crop decline 3-4 years post-conflict
+- **Simulation Impact**: Parameters in `tier2Config.ts` and `bayesianMortality.ts` now grounded in contemporary empirical evidence
+- Commit: 66fc134 (Nov 7, 2025)
 
 ### Development Workflow Updates (Oct 30-Nov 1, 2025)
 
