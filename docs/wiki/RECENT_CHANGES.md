@@ -6,7 +6,34 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
-<<<<<<< HEAD
+**🔧 MERGE ORCHESTRATOR WORKING TREE FIX** (Nov 7, 2025, commit 2c32f0e)
+
+**Summary:** Fixed merge orchestrator script failure that blocked all 10 autonomous worker branches from merging due to uncommitted changes in working tree.
+
+**Problem:** Orchestrator failed with "Your local changes would be overwritten by checkout" error on every branch, specifically `logs/autonomous/researcher/status_current.txt`.
+
+**Root Cause:** Script didn't check or clean working tree before attempting branch checkouts.
+
+**Solution:**
+1. Added pre-flight check for uncommitted changes (both staged and unstaged)
+2. Auto-stash with timestamped name if working tree is dirty (`merge-orchestrator-autostash-YYYYMMDD_HHMMSS`)
+3. Ensure script is on main branch before processing
+4. Provide recovery instructions in log (how to restore stashed changes)
+
+**Additional Fix:** Resolved merge conflict markers in script itself (lines 43-71 - configuration section had `<<<<<<< HEAD` markers from previous merge).
+
+**Impact:**
+- ✅ Unblocked hourly merge orchestrator cron job
+- ✅ All 10 autonomous worker branches can now merge cleanly
+- ✅ Preserves uncommitted changes via timestamped stash (recoverable)
+
+**Files Modified:**
+- `scripts/merge-orchestrator.sh` - Added working tree validation + cleanup logic (lines 115-145)
+
+**Script Location:** `scripts/merge-orchestrator.sh`
+
+---
+
 **📚 COMPETITIVE ALIGNMENT RESEARCH UPDATE** (Nov 7, 2025, commit d300e1d)
 
 **Summary:** Updated competitive alignment failure modes research with 2024-2025 empirical evidence. Research quality upgraded from historical analogies to direct experimental evidence.
@@ -47,7 +74,9 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - `research/competitive_alignment_failure_modes_20251016.md` - Added 4 peer-reviewed sources, updated quality metrics
 
 **No simulation changes:** This is research documentation only (background context for future mechanics).
-=======
+
+---
+
 **📚 RESEARCH FOUNDATION AUDIT - CURRENT STATUS CONFIRMED** (Nov 7, 2025, commit 78d658d)
 
 **Summary:** Autonomous researcher completed comprehensive audit of research file currency. All 18 research files directly referenced in simulation code are current (Oct-Nov 2025 updates).
@@ -69,7 +98,6 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - Plus 11 additional core research files
 
 **Status:** Research foundation is solid and well-maintained. Automated pipeline working as designed.
->>>>>>> origin/auto/researcher-20251107_013000
 
 ---
 
