@@ -1,9 +1,15 @@
+---
+oldest_source: 2007
+newest_source: 2024
+last_verified: 2025-11-07
+---
+
 # Death Attribution Methodology - Research Review
 
-**Date:** October 18, 2025
-**Researcher:** Orchestrator (following super-alignment-researcher methodology)
+**Date:** October 18, 2025 (Verified: November 7, 2025)
+**Researcher:** Orchestrator / Autonomous Researcher (verification update)
 **Purpose:** Research-backed framework for attributing catastrophic deaths to root causes
-**Status:** Ready for research-skeptic review
+**Status:** Verified with 2024 GBD methodology
 
 ---
 
@@ -21,17 +27,21 @@ This review synthesizes peer-reviewed research on death attribution methodologie
 
 ## 1. Death Attribution Frameworks
 
-### 1.1 IHME Global Burden of Disease (GBD 2021)
+### 1.1 IHME Global Burden of Disease (GBD 2021, Published 2024)
 
 **Source:** Institute for Health Metrics and Evaluation (2024). Global Burden of Disease Study 2021 Protocol. Available: https://www.healthdata.org/research-analysis/gbd
 
+**Primary Publication:** GBD 2021 Causes of Death Collaborators (2024). "Global burden of 288 causes of death and life expectancy decomposition in 204 countries and territories and 811 subnational locations, 1990-2021: a systematic analysis for the Global Burden of Disease Study 2021." *The Lancet*, 403(10440):2100-2132. DOI: 10.1016/S0140-6736(24)00367-2
+
 **Methodology:**
-- **Multi-cause attribution**: GBD incorporates all available data (vital registration, surveys, censuses, registries, studies) to attribute deaths to 369 diseases and injuries
+- **Single underlying cause principle**: Each death attributed to one underlying cause that initiated the series of events leading to death (following ICD principles)
+- **288 causes of death**: Comprehensive attribution across diseases, injuries, and risk factors
+- **Multiple cause data usage**: Analyzed 116 million deaths with multiple causes to develop redistribution algorithms for intermediate causes (sepsis, heart failure, acute kidney failure)
 - **Risk factor attribution**: Quantifies deaths attributable to 87 risk factors using population attributable fraction (PAF)
 - **Hierarchy of causes**: Distinguishes between underlying cause (root), intermediate causes, and immediate cause of death
 - **Validation**: COVID-19 pandemic demonstrated need for "other pandemic-related outcomes" category capturing excess deaths NOT directly attributable to SARS-CoV-2 infection
 
-**Key Insight:** Even for a single pandemic, deaths split between direct (virus) and indirect (healthcare collapse, economic disruption) causes. Most catastrophic events have compound causality.
+**Key Insight:** Even for a single pandemic, deaths split between direct (virus) and indirect (healthcare collapse, economic disruption) causes. Most catastrophic events have compound causality. GBD 2024 methods now explicitly use multiple cause data to inform more accurate redistribution of ambiguous deaths.
 
 ### 1.2 Climate-Mortality Attribution (Burke, Hsiang, Carleton)
 
