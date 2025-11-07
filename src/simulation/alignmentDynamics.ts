@@ -36,7 +36,16 @@ export function initializeAttractorBasin(
   // Set attractor position based on basin
   // Basin 0 = aligned (0.8), Basin 1 = uncertain (0.5), Basin 2 = misaligned (0.2)
   const attractorPositions = [0.8, 0.5, 0.2, 0.35, 0.65]; // Up to 5 attractors
-  const attractorAlignment = attractorPositions[basinIndex] ?? 0.5;
+
+  // DEFENSIVE CODING FIX (Nov 7, 2025): Validate array access instead of fallback
+  if (basinIndex < 0 || basinIndex >= attractorPositions.length) {
+    throw new Error(
+      `❌ ALIGNMENT DYNAMICS: Invalid basin index ${basinIndex} (valid range: 0-${attractorPositions.length - 1}). ` +
+      `Configuration specifies ${epicycleConfig.numAttractors} attractors but only ${attractorPositions.length} positions defined.`
+    );
+  }
+
+  const attractorAlignment = attractorPositions[basinIndex];
 
   // Random initial phase in oscillation cycle
   // Use config phaseOffset if provided, otherwise randomize deterministically

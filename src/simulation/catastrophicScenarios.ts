@@ -8,7 +8,7 @@
 import { GameState, AIAgent } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { getTrustInAI } from './socialCohesion';
-import { assertProbability, assertInRange, assertFinite } from '@/simulation/utils/assertions';
+import { assertDefined, assertProbability, assertInRange, assertFinite } from '@/simulation/utils/assertions';
 
 /**
  * Catastrophic scenario types
@@ -1099,7 +1099,19 @@ function checkSlowDisplacementPrerequisite(step: number, ai: AIAgent, state: Gam
       const currentMonth = state.currentYear * 12 + state.currentMonth;
 
       // Check if step 5 (previous step) is met - required for step 6 to begin
-      const step5Met = scenario.prerequisites[5]?.met ?? false;
+      // DEFENSIVE CODING FIX (Nov 7, 2025): Validate prerequisites array structure
+      const step5 = assertDefined(scenario.prerequisites[5], {
+        location: 'checkSlowTakeoverStep7',
+        valueName: 'prerequisites[5]',
+        month: currentMonth,
+        additionalInfo: {
+          scenarioType: scenario.type,
+          prerequisitesLength: scenario.prerequisites.length,
+          expected: '6+ elements'
+        }
+      });
+
+      const step5Met = step5.met;
       if (!step5Met) {
         return { met: false, progress: 0 };
       }
@@ -1111,7 +1123,8 @@ function checkSlowDisplacementPrerequisite(step: number, ai: AIAgent, state: Gam
         // Deterministic variance: Use scenario's step 5 completion date for pseudo-randomness
         // This ensures same scenario always gets same requirement, but varies across runs
         // Use simple hash to avoid modulo collision bias (month 120 and 720 would both produce 120)
-        const step5CompletionMonth = scenario.prerequisites[5]?.metDate ?? currentMonth;
+        // metDate may legitimately be undefined if step was never met - keep ?? currentMonth
+        const step5CompletionMonth = step5.metDate ?? currentMonth;
         const hash = ((step5CompletionMonth * 2654435761) >>> 0) % 600; // Knuth's multiplicative hash
         const variance = hash + 1; // 1-600 months variance
         scenario.step7RequiredMonths = 600 + variance; // 601-1200 months (50.1-100 years)
@@ -1124,7 +1137,15 @@ function checkSlowDisplacementPrerequisite(step: number, ai: AIAgent, state: Gam
 
       // Calculate progress toward step 7 completion
       const monthsSinceStep6 = currentMonth - scenario.step6CompletionMonth;
-      const requiredMonths = scenario.step7RequiredMonths ?? 600; // Fallback (shouldn't happen)
+      const requiredMonths = assertDefined(scenario.step7RequiredMonths, {
+        location: 'checkSlowTakeoverStep7',
+        valueName: 'step7RequiredMonths',
+        month: currentMonth,
+        additionalInfo: {
+          step6CompletionMonth: scenario.step6CompletionMonth,
+          message: 'Should be set when step 6 begins'
+        }
+      });
 
       if (monthsSinceStep6 >= requiredMonths) {
         console.log(`🤖💀 SLOW TAKEOVER COMPLETE: Multi-generational decline reached irreversibility (${monthsSinceStep6} months elapsed, ${requiredMonths} required)`);
