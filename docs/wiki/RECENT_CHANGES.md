@@ -44,11 +44,37 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 7, 2025)
+
+**🔧 MERGE CONFLICT RESOLUTION - Simulation Files** (Nov 7, 2025 01:22 UTC, commit b754e7c)
+
+**Summary:** Removed merge conflict markers from three simulation files that were blocking TypeScript compilation and merge orchestrator quality gates.
+
+**Files Fixed:**
+- `src/simulation/engine/phases/TechnologyDiffusionPhase.ts` - Kept `dependencies` array, used `rng` parameter (not `_rng`)
+- `src/simulation/refugeeCrises.ts` - Kept 20B death cap (vs 10B in conflict)
+- `src/simulation/research.ts` - Kept deterministic RNG with sorted `Object.entries()`
+
+**Conflict Context:**
+- HEAD: Version with phase dependencies array (Nov 6 updates)
+- origin/auto/worker-20251105_230001: Version without dependencies (older)
+
+**Resolution:** Kept HEAD versions (correct implementations) in all cases.
+
+**Impact:**
+- ✅ Unblocked merge orchestrator from processing 74 pending autonomous worker branches
+- ✅ TypeScript compilation passing
+- ✅ Monte Carlo validation can proceed
+
+**Files Modified:**
+- `src/simulation/engine/phases/TechnologyDiffusionPhase.ts`
+- `src/simulation/refugeeCrises.ts`
+- `src/simulation/research.ts`
+
+---
+
 ## ✅ Recent Changes (November 6, 2025)
 
-<<<<<<< HEAD
-**🔬 Research Update - AI Sandbagging & Deceptive Behavior** (Nov 6, 2025 23:33 UTC)
-=======
 **📊 RESEARCH SOURCE VALIDATION AUDIT** (Nov 6, 2025, commit 84fb820)
 
 **Summary:** Comprehensive audit of research foundation by Cynthia (super-alignment-researcher) confirms EXCELLENT status.
@@ -80,7 +106,10 @@ This file contains the complete history of recent changes to the AI Game Theory 
 ---
 
 **✅ WEEK 3 TASK 7 COMPLETE: State Validation Framework** (Nov 6, 2025)
->>>>>>> origin/auto/worker-20251106_200001
+
+---
+
+**🔬 Research Update - AI Sandbagging & Deceptive Behavior** (Nov 6, 2025 23:33 UTC)
 
 **Update:** Added two critical 2024-2025 studies to AI sandbagging research file.
 
