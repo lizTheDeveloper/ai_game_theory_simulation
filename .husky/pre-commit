@@ -1,0 +1,62 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Emoji validation (existing)
+npm run validate:emojis
+
+# NEW: Determinism validation - check for unsorted object iterations
+echo ""
+echo "🔍 Checking for unsorted object iterations (determinism)..."
+
+# Get staged TypeScript files in simulation directory
+STAGED_TS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '^src/simulation/.*\.ts$' || true)
+
+if [ -z "$STAGED_TS_FILES" ]; then
+  echo "   ✅ No simulation files changed"
+  exit 0
+fi
+
+# Check for Object.entries/keys/values without .sort()
+VIOLATIONS=""
+
+for FILE in $STAGED_TS_FILES; do
+  # Check for Object.entries( not followed by .sort( within ~100 chars
+  # This is a heuristic - may need refinement
+
+  # Pattern 1: Object.entries(... ) with RNG in context
+  ENTRIES_VIOLATIONS=$(grep -n "Object\.entries(" "$FILE" | grep -v "\.sort(" || true)
+
+  # Pattern 2: Object.keys(... ) with RNG in context
+  KEYS_VIOLATIONS=$(grep -n "Object\.keys(" "$FILE" | grep -v "\.sort(" || true)
+
+  # Pattern 3: for...in loops (always suspicious in simulation code)
+  FOR_IN_VIOLATIONS=$(grep -n "for\s*(.*\s*in\s*" "$FILE" || true)
+
+  if [ -n "$ENTRIES_VIOLATIONS" ] || [ -n "$KEYS_VIOLATIONS" ] || [ -n "$FOR_IN_VIOLATIONS" ]; then
+    echo ""
+    echo "⚠️  $FILE has potentially unsorted object iterations:"
+    [ -n "$ENTRIES_VIOLATIONS" ] && echo "   Object.entries():" && echo "$ENTRIES_VIOLATIONS" | head -3
+    [ -n "$KEYS_VIOLATIONS" ] && echo "   Object.keys():" && echo "$KEYS_VIOLATIONS" | head -3
+    [ -n "$FOR_IN_VIOLATIONS" ] && echo "   for...in loops:" && echo "$FOR_IN_VIOLATIONS" | head -3
+    VIOLATIONS="$VIOLATIONS\n$FILE"
+  fi
+done
+
+if [ -n "$VIOLATIONS" ]; then
+  echo ""
+  echo "❌ DETERMINISM CHECK FAILED"
+  echo ""
+  echo "Files with unsorted object iterations detected."
+  echo "This can cause non-deterministic Monte Carlo results."
+  echo ""
+  echo "Fix pattern:"
+  echo "  ❌ for (const [k,v] of Object.entries(obj)) { ... }"
+  echo "  ✅ for (const [k,v] of Object.entries(obj).sort(([a],[b]) => a.localeCompare(b))) { ... }"
+  echo ""
+  echo "If this is a false positive (e.g., commutative operation):"
+  echo "  git commit --no-verify"
+  echo ""
+  exit 1
+fi
+
+echo "   ✅ No unsorted object iterations detected"

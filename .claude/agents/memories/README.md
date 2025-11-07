@@ -16,19 +16,25 @@ Each agent has a personal memory file with five layers:
 
 Each agent has their own JSON memory file:
 
+- `architect-memory.json` - The Architect (roadmap manager) - agent ID: `architect`
 - `cynthia-memory.json` - Cynthia (super-alignment-researcher) - agent ID: `cynthia`
-- `sylvia-memory.json` - Sylvia (research-skeptic) - agent ID: `sylvia`
-- `orchestrator-memory.json` - Orchestrator - agent ID: `orchestrator`
-- `tessa-memory.json` - Tessa (far-future-ux-designer) - agent ID: `tessa`
 - `historian-memory.json` - The Historian (wiki-documentation-updater) - agent ID: `historian`
+- `moss-memory.json` - Moss (feature-implementer) - agent ID: `moss`
+- `operator-memory.json` - Operator (system operations) - agent ID: `operator`
+- `orchestrator-memory.json` - Orchestrator (workflow coordinator) - agent ID: `orchestrator`
 - `planner-memory.json` - Planner (project-plan-manager) - agent ID: `planner`
 - `ray-memory.json` - Ray (sci-fi-tech-visionary) - agent ID: `ray`
-- `moss-memory.json` - Moss (feature-implementer) - agent ID: `moss`
 - `roy-memory.json` - Roy (simulation-maintainer) - agent ID: `roy`
+- `sylvia-memory.json` - Sylvia (research-skeptic) - agent ID: `sylvia`
+- `tessa-memory.json` - Tessa (far-future-ux-designer) - agent ID: `tessa`
+
+**Note:** The MCP server (`scripts/agent-memory-server.py`) also includes configuration for `priya` (Priya - monte-carlo-validator) but the memory file doesn't exist yet. This agent is planned but not yet active.
 
 ## MCP Server
 
 The agent memory system is exposed through an MCP server at `scripts/agent-memory-server.py`.
+
+**Configuration:** The server maps agent IDs to memory files via the `AGENT_MEMORY_FILES` dictionary. As of commit `5aba1e9` (Nov 6, 2025), the server supports 12 agent configurations (11 active agents + priya planned).
 
 Agents access their memories by calling MCP tools (no direct file I/O needed).
 

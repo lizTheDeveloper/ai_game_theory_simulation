@@ -41,6 +41,9 @@ AGENT_MEMORY_FILES = {
     'ray': 'ray-memory.json',
     'moss': 'moss-memory.json',
     'roy': 'roy-memory.json',
+    'architect': 'architect-memory.json',
+    'orchestrator': 'orchestrator-memory.json',
+    'priya': 'priya-memory.json',
 }
 
 # Create fastMCP server
@@ -613,7 +616,7 @@ if __name__ == "__main__":
     print("🧠 Starting Agent Memory MCP Server (fastMCP + stdio)", file=sys.stderr)
     print(f"📁 Memory directory: {MEMORY_DIR}", file=sys.stderr)
     print(f"📋 Audit log: {AUDIT_LOG}", file=sys.stderr)
-    print(f"👥 Agents: {len(AGENT_MEMORY_FILES)}", file=sys.stderr)
+    print(f"👥 Agents: {len(AGENT_MEMORY_FILES)} ({', '.join(sorted(AGENT_MEMORY_FILES.keys()))})", file=sys.stderr)
 
     # Run server with stdio transport
     mcp.run(transport="stdio")
