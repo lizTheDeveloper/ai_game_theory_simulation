@@ -36,6 +36,12 @@
 
 import { GameState } from '../types/game';
 import { CountryName, CountryPopulation } from '../types/countryPopulations';
+import {
+  assertFinite,
+  assertStateProperty,
+  assertProbability,
+  assertInRange
+} from './utils/assertions';
 
 /**
  * Climate reparations willingness (political will to pay)
@@ -138,16 +144,39 @@ export function updateClimateJustice(state: GameState): void {
  */
 function calculateClimateDebt(state: GameState): void {
   const countries = state.countryPopulationSystem.countries;
-  const climateSeverity = 1 - state.environmentalAccumulation.climateStability; // [0, 1] - inverted since climateStability is 1=good, 0=bad
+  const climateStability = assertStateProperty(
+    state.environmentalAccumulation,
+    'climateStability',
+    { location: 'calculateClimateDebt', month: state.currentMonth }
+  );
+  const climateSeverity = assertProbability(1 - climateStability, {
+    location: 'calculateClimateDebt',
+    valueName: 'climateSeverity',
+    month: state.currentMonth
+  });
 
   // FIX: Sort countries for deterministic iteration order
   const sortedCountries = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
   for (const country of sortedCountries) {
     // Historical emissions contribution (normalized)
-    const emissionsShare = country.historicalEmissions! / 1600; // Total ~1600 Gt since 1850
+    const historicalEmissions = assertStateProperty(
+      country,
+      'historicalEmissions',
+      { location: 'calculateClimateDebt', month: state.currentMonth }
+    );
+    const emissionsShare = assertFinite(historicalEmissions / 1600, {
+      location: 'calculateClimateDebt',
+      valueName: 'emissionsShare',
+      month: state.currentMonth,
+      additionalInfo: { country: country.name, historicalEmissions }
+    });
 
     // Climate suffering ratio (how much they suffer vs. caused)
-    const sufferingRatio = country.climateSufferingRatio!;
+    const sufferingRatio = assertStateProperty(
+      country,
+      'climateSufferingRatio',
+      { location: 'calculateClimateDebt', month: state.currentMonth }
+    );
 
     // Climate debt calculation
     // High emitters with low suffering = Positive debt (owe money)
@@ -157,11 +186,21 @@ function calculateClimateDebt(state: GameState): void {
     // - suffered = emissionsShare * sufferingRatio (how much they actually suffer)
     // If sufferingRatio < 1: suffer less than caused → positive debt
     // If sufferingRatio > 1: suffer more than caused → negative debt
-    const rawDebt = emissionsShare * (1 - sufferingRatio);
+    const rawDebt = assertFinite(emissionsShare * (1 - sufferingRatio), {
+      location: 'calculateClimateDebt',
+      valueName: 'rawDebt',
+      month: state.currentMonth,
+      additionalInfo: { country: country.name, emissionsShare, sufferingRatio }
+    });
 
     // Scale by climate severity (worse climate = more urgent transfers)
     // Only set debt if positive (countries with negative debt are receivers)
-    country.climateReparationsOwed = Math.max(0, rawDebt * climateSeverity * 1000); // Billions $
+    country.climateReparationsOwed = assertFinite(Math.max(0, rawDebt * climateSeverity * 1000), {
+      location: 'calculateClimateDebt',
+      valueName: 'climateReparationsOwed',
+      month: state.currentMonth,
+      additionalInfo: { country: country.name, rawDebt, climateSeverity }
+    });
   }
 }
 
@@ -177,49 +216,125 @@ function processReparationsTransfers(state: GameState): void {
   const payers: Array<{country: CountryPopulation, amount: number}> = [];
   const receivers: Array<{country: CountryPopulation, need: number}> = [];
 
+  const climateStability = assertStateProperty(
+    state.environmentalAccumulation,
+    'climateStability',
+    { location: 'processReparationsTransfers', month: state.currentMonth }
+  );
+
   // FIX: Sort countries for deterministic iteration order
   const sortedCountries = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
   for (const country of sortedCountries) {
-    if (country.climateReparationsOwed! > 0) {
+    const owed = assertStateProperty(
+      country,
+      'climateReparationsOwed',
+      { location: 'processReparationsTransfers', month: state.currentMonth }
+    );
+
+    if (owed > 0) {
       // Country owes reparations
-      // All fields initialized in createCountry() (Oct 28, 2025)
-      const willingness = country.climateReparationsWillingness;
-      const capacity = Math.min(1.0, country.sovereignty.overallSovereignty);
+      const willingness = assertProbability(
+        assertStateProperty(country, 'climateReparationsWillingness', {
+          location: 'processReparationsTransfers',
+          month: state.currentMonth
+        }),
+        { location: 'processReparationsTransfers', valueName: 'willingness', month: state.currentMonth }
+      );
+      const capacity = assertProbability(Math.min(1.0, country.sovereignty.overallSovereignty), {
+        location: 'processReparationsTransfers',
+        valueName: 'capacity',
+        month: state.currentMonth,
+        additionalInfo: { country: country.name }
+      });
 
       // International pressure increases with crisis severity
-      const pressure = (1 - state.environmentalAccumulation.climateStability) * 0.5;
+      const pressure = assertInRange((1 - climateStability) * 0.5, 0, 1, {
+        location: 'processReparationsTransfers',
+        valueName: 'pressure',
+        month: state.currentMonth,
+        additionalInfo: { climateStability }
+      });
 
       // Monthly transfer (fraction of total debt)
-      const monthlyTransfer = country.climateReparationsOwed! * willingness * capacity * pressure * 0.01;
+      const monthlyTransfer = assertFinite(owed * willingness * capacity * pressure * 0.01, {
+        location: 'processReparationsTransfers',
+        valueName: 'monthlyTransfer',
+        month: state.currentMonth,
+        additionalInfo: { country: country.name, owed, willingness, capacity, pressure }
+      });
 
       payers.push({ country, amount: monthlyTransfer });
     } else {
       // Country is owed reparations (climate victim)
-      const sufferingRatio = country.climateSufferingRatio!;
-      const need = sufferingRatio * (1 - state.environmentalAccumulation.climateStability) * 10; // Billions
+      const sufferingRatio = assertStateProperty(
+        country,
+        'climateSufferingRatio',
+        { location: 'processReparationsTransfers', month: state.currentMonth }
+      );
+      const need = assertFinite(sufferingRatio * (1 - climateStability) * 10, {
+        location: 'processReparationsTransfers',
+        valueName: 'need',
+        month: state.currentMonth,
+        additionalInfo: { country: country.name, sufferingRatio, climateStability }
+      });
 
       receivers.push({ country, need });
     }
   }
 
   // Distribute payments proportionally to need
-  const totalNeed = receivers.reduce((sum, r) => sum + r.need, 0);
-  const totalPayments = payers.reduce((sum, p) => sum + p.amount, 0);
+  const totalNeed = assertFinite(receivers.reduce((sum, r) => sum + r.need, 0), {
+    location: 'processReparationsTransfers',
+    valueName: 'totalNeed',
+    month: state.currentMonth
+  });
+  const totalPayments = assertFinite(payers.reduce((sum, p) => sum + p.amount, 0), {
+    location: 'processReparationsTransfers',
+    valueName: 'totalPayments',
+    month: state.currentMonth
+  });
 
   if (totalNeed > 0 && totalPayments > 0) {
     for (const receiver of receivers) {
-      const share = receiver.need / totalNeed;
-      const received = totalPayments * share;
+      const share = assertProbability(receiver.need / totalNeed, {
+        location: 'processReparationsTransfers',
+        valueName: 'share',
+        month: state.currentMonth,
+        additionalInfo: { country: receiver.country.name }
+      });
+      const received = assertFinite(totalPayments * share, {
+        location: 'processReparationsTransfers',
+        valueName: 'received',
+        month: state.currentMonth,
+        additionalInfo: { country: receiver.country.name, totalPayments, share }
+      });
 
-      receiver.country.climateReparationsReceived =
-        receiver.country.climateReparationsReceived + received;
+      receiver.country.climateReparationsReceived = assertFinite(
+        receiver.country.climateReparationsReceived + received,
+        {
+          location: 'processReparationsTransfers',
+          valueName: 'climateReparationsReceived',
+          month: state.currentMonth,
+          additionalInfo: { country: receiver.country.name, received }
+        }
+      );
 
       // Reparations reduce climate suffering (adaptation funding)
       // Each $1B reduces suffering by 0.1% (diminishing returns)
-      const sufferingReduction = Math.min(0.1, received * 0.001);
-      receiver.country.climateSufferingRatio = Math.max(
-        0.1,
-        receiver.country.climateSufferingRatio! * (1 - sufferingReduction)
+      const sufferingReduction = assertInRange(Math.min(0.1, received * 0.001), 0, 0.1, {
+        location: 'processReparationsTransfers',
+        valueName: 'sufferingReduction',
+        month: state.currentMonth,
+        additionalInfo: { country: receiver.country.name, received }
+      });
+      receiver.country.climateSufferingRatio = assertFinite(
+        Math.max(0.1, receiver.country.climateSufferingRatio! * (1 - sufferingReduction)),
+        {
+          location: 'processReparationsTransfers',
+          valueName: 'climateSufferingRatio',
+          month: state.currentMonth,
+          additionalInfo: { country: receiver.country.name, sufferingReduction }
+        }
       );
     }
   }
@@ -236,13 +351,32 @@ function processReparationsTransfers(state: GameState): void {
  */
 function updateClimateMigrationPressure(state: GameState): void {
   const countries = state.countryPopulationSystem.countries;
-  const climateSeverity = 1 - state.environmentalAccumulation.climateStability;
+  const climateStability = assertStateProperty(
+    state.environmentalAccumulation,
+    'climateStability',
+    { location: 'updateClimateMigrationPressure', month: state.currentMonth }
+  );
+  const climateSeverity = assertProbability(1 - climateStability, {
+    location: 'updateClimateMigrationPressure',
+    valueName: 'climateSeverity',
+    month: state.currentMonth
+  });
 
   // FIX: Sort countries for deterministic iteration order
   const sortedCountries = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
   for (const country of sortedCountries) {
     // Base migration pressure from climate suffering
-    const basePressure = country.climateSufferingRatio! * climateSeverity * 0.01;
+    const sufferingRatio = assertStateProperty(
+      country,
+      'climateSufferingRatio',
+      { location: 'updateClimateMigrationPressure', month: state.currentMonth }
+    );
+    const basePressure = assertFinite(sufferingRatio * climateSeverity * 0.01, {
+      location: 'updateClimateMigrationPressure',
+      valueName: 'basePressure',
+      month: state.currentMonth,
+      additionalInfo: { country: country.name, sufferingRatio, climateSeverity }
+    });
 
     // Amplifiers
     let pressure = basePressure;
@@ -253,23 +387,58 @@ function updateClimateMigrationPressure(state: GameState): void {
     }
 
     // Food insecurity amplifies migration (using biodiversity as proxy for food system health)
-    if (state.environmentalAccumulation.biodiversityIndex < 0.5) {
+    const biodiversityIndex = assertStateProperty(
+      state.environmentalAccumulation,
+      'biodiversityIndex',
+      { location: 'updateClimateMigrationPressure', month: state.currentMonth }
+    );
+    if (biodiversityIndex < 0.5) {
       pressure *= 1.5;
     }
 
     // Water scarcity amplifies migration
-    // freshwaterSystem always initialized in createDefaultInitialState() (Oct 28, 2025)
-    const waterScarcity = state.freshwaterSystem.waterStress;
-    pressure *= (1 + waterScarcity);
+    const waterStress = assertStateProperty(
+      state.freshwaterSystem,
+      'waterStress',
+      { location: 'updateClimateMigrationPressure', month: state.currentMonth }
+    );
+    pressure = assertFinite(pressure * (1 + waterStress), {
+      location: 'updateClimateMigrationPressure',
+      valueName: 'pressure',
+      month: state.currentMonth,
+      additionalInfo: { country: country.name, waterStress }
+    });
 
     // Update migration pressure (cumulative)
-    country.climateMigrationPressure =
-      country.climateMigrationPressure + pressure;
+    country.climateMigrationPressure = assertFinite(
+      country.climateMigrationPressure + pressure,
+      {
+        location: 'updateClimateMigrationPressure',
+        valueName: 'climateMigrationPressure',
+        month: state.currentMonth,
+        additionalInfo: { country: country.name, pressure }
+      }
+    );
 
     // Migration pressure affects population (people leave)
     if (country.climateMigrationPressure! > 0.1) {
-      const emigrationRate = Math.min(0.01, country.climateMigrationPressure! * 0.001);
-      country.population *= (1 - emigrationRate);
+      const emigrationRate = assertInRange(
+        Math.min(0.01, country.climateMigrationPressure! * 0.001),
+        0,
+        0.01,
+        {
+          location: 'updateClimateMigrationPressure',
+          valueName: 'emigrationRate',
+          month: state.currentMonth,
+          additionalInfo: { country: country.name, migrationPressure: country.climateMigrationPressure }
+        }
+      );
+      country.population = assertFinite(country.population * (1 - emigrationRate), {
+        location: 'updateClimateMigrationPressure',
+        valueName: 'population',
+        month: state.currentMonth,
+        additionalInfo: { country: country.name, emigrationRate }
+      });
     }
   }
 }
@@ -312,21 +481,68 @@ function processGreenTechTransfer(state: GameState): void {
   );
 
   // Climate severity increases urgency and international pressure
-  const climateSeverity = 1 - state.environmentalAccumulation.climateStability;
+  const climateStability = assertStateProperty(
+    state.environmentalAccumulation,
+    'climateStability',
+    { location: 'processGreenTechTransfer', month: state.currentMonth }
+  );
+  const climateSeverity = assertProbability(1 - climateStability, {
+    location: 'processGreenTechTransfer',
+    valueName: 'climateSeverity',
+    month: state.currentMonth
+  });
 
   for (const donor of richDonors) {
     // Transfer capacity scales with willingness, techs available, and climate urgency
-    const transferCapacity = donor.climateReparationsWillingness! * greenTechUnlocked * climateSeverity * 0.1; // Monthly capacity
+    const willingness = assertStateProperty(
+      donor,
+      'climateReparationsWillingness',
+      { location: 'processGreenTechTransfer', month: state.currentMonth }
+    );
+    const transferCapacity = assertFinite(
+      willingness * greenTechUnlocked * climateSeverity * 0.1,
+      {
+        location: 'processGreenTechTransfer',
+        valueName: 'transferCapacity',
+        month: state.currentMonth,
+        additionalInfo: { donor: donor.name, willingness, greenTechUnlocked, climateSeverity }
+      }
+    );
 
     for (const recipient of poorRecipients) {
-      const transfer = transferCapacity / poorRecipients.length;
+      const transfer = assertFinite(transferCapacity / poorRecipients.length, {
+        location: 'processGreenTechTransfer',
+        valueName: 'transfer',
+        month: state.currentMonth,
+        additionalInfo: { donor: donor.name, recipient: recipient.name, transferCapacity }
+      });
 
-      recipient.greenTechReceived = recipient.greenTechReceived + transfer;
-      donor.greenTechShared = donor.greenTechShared + transfer;
+      recipient.greenTechReceived = assertFinite(recipient.greenTechReceived + transfer, {
+        location: 'processGreenTechTransfer',
+        valueName: 'greenTechReceived',
+        month: state.currentMonth,
+        additionalInfo: { recipient: recipient.name, transfer }
+      });
+      donor.greenTechShared = assertFinite(donor.greenTechShared + transfer, {
+        location: 'processGreenTechTransfer',
+        valueName: 'greenTechShared',
+        month: state.currentMonth,
+        additionalInfo: { donor: donor.name, transfer }
+      });
 
       // Green tech reduces emissions
       if (recipient.greenTechReceived! > 1.0) {
-        recipient.currentEmissions! *= 0.99; // 1% reduction per month (with tech)
+        const currentEmissions = assertStateProperty(
+          recipient,
+          'currentEmissions',
+          { location: 'processGreenTechTransfer', month: state.currentMonth }
+        );
+        recipient.currentEmissions = assertFinite(currentEmissions * 0.99, {
+          location: 'processGreenTechTransfer',
+          valueName: 'currentEmissions',
+          month: state.currentMonth,
+          additionalInfo: { recipient: recipient.name, currentEmissions }
+        });
       }
     }
   }

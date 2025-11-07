@@ -9,6 +9,7 @@ import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/ga
 import type { RNGFunction } from '@/types/config';
 import { detectCrisis } from '../../calculations';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertProbability } from '@/simulation/utils/assertions';
 
 export class CrisisDetectionPhase implements SimulationPhase {
   readonly id = 'crisis-detection';
@@ -26,6 +27,13 @@ export class CrisisDetectionPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const crisis = detectCrisis(state);
     setDeterministicRng(rng);
+
+    // ASSERTION (Nov 7, 2025): Validate crisis severity is a probability
+    assertProbability(crisis.severity, {
+      location: 'CrisisDetectionPhase.execute',
+      valueName: 'crisis.severity',
+      month: state.currentMonth
+    });
 
     // Store crisis info in context for other phases to use
     if (context) {

@@ -27,7 +27,12 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { resolveMortality } from '@/simulation/bayesianMortality';
-import { assertPhaseNotExecuted } from '@/simulation/utils/assertions';
+import {
+  assertPhaseNotExecuted,
+  assertFinite,
+  assertPopulationChange,
+  assertProbability
+} from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class BayesianMortalityResolutionPhase implements SimulationPhase {
@@ -82,18 +87,44 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
     }
 
     // Resolve all accumulated mortality risks
+    const oldPopulation = state.humanPopulationSystem.population;
     const result = resolveMortality(state, rng);
 
-    // DEBUG (Oct 28, 2025): Verify population after resolveMortality
-    if (isNaN(state.humanPopulationSystem.population)) {
-      console.error(`❌ Population is NaN after resolveMortality`);
-      console.error(`   totalDeaths (from result): ${result.totalDeaths}`);
-      console.error(`   remainingPopulation (from result): ${result.remainingPopulation}`);
-      throw new Error(`resolveMortality corrupted population to NaN`);
-    }
+    // ASSERTIONS (Nov 7, 2025): Validate mortality calculation results
+    const totalDeaths = assertFinite(result.totalDeaths, {
+      location: 'BayesianMortalityResolutionPhase.execute',
+      valueName: 'result.totalDeaths',
+      month: state.currentMonth,
+      additionalInfo: { numRisks }
+    });
+
+    const remainingPopulation = assertFinite(result.remainingPopulation, {
+      location: 'BayesianMortalityResolutionPhase.execute',
+      valueName: 'result.remainingPopulation',
+      month: state.currentMonth,
+      additionalInfo: { oldPopulation, totalDeaths }
+    });
+
+    // Validate population change is plausible (max -50% per month)
+    const newPopulation = assertPopulationChange(
+      state.humanPopulationSystem.population,
+      oldPopulation,
+      {
+        location: 'BayesianMortalityResolutionPhase.execute',
+        valueName: 'population after mortality',
+        month: state.currentMonth
+      }
+    );
+
+    // Validate average death probability is a valid probability
+    assertProbability(result.summary.avgDeathProbability, {
+      location: 'BayesianMortalityResolutionPhase.execute',
+      valueName: 'summary.avgDeathProbability',
+      month: state.currentMonth
+    });
 
     // Log mortality results if significant deaths occurred
-    const deathsMillions = result.totalDeaths; // Already in millions
+    const deathsMillions = totalDeaths; // Already in millions
     if (deathsMillions > 0.1) {
       console.log(`\n=== Bayesian Mortality Resolution (Month ${state.currentMonth}) ===`);
       console.log(`  Risks compounded: ${numRisks}`);

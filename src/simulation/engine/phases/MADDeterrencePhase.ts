@@ -7,6 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertProbability } from '@/simulation/utils/assertions';
 
 export class MADDeterrencePhase implements SimulationPhase {
   readonly id = 'mad-deterrence';
@@ -18,6 +19,23 @@ export class MADDeterrencePhase implements SimulationPhase {
     setDeterministicRng(rng);
     updateMADDeterrence(state);
     updateBilateralTensions(state);
+
+    // ASSERTIONS (Nov 7, 2025): Validate MAD deterrence calculations
+    assertProbability(state.madDeterrence.madStrength, {
+      location: 'MADDeterrencePhase.execute',
+      valueName: 'madDeterrence.madStrength',
+      month: state.currentMonth
+    });
+    assertProbability(state.madDeterrence.crisisStability, {
+      location: 'MADDeterrencePhase.execute',
+      valueName: 'madDeterrence.crisisStability',
+      month: state.currentMonth
+    });
+    assertProbability(state.madDeterrence.earlyWarningReliability, {
+      location: 'MADDeterrencePhase.execute',
+      valueName: 'madDeterrence.earlyWarningReliability',
+      month: state.currentMonth
+    });
 
     return { events: [] };
   }

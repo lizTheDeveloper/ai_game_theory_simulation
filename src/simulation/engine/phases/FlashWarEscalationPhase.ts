@@ -14,6 +14,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions';
 import {
   checkFlashWarRisk,
   applyFlashWarEffects,
@@ -40,6 +41,13 @@ export class FlashWarEscalationPhase implements SimulationPhase {
 
       if (flashWarOccurs) {
         applyFlashWarEffects(state);
+
+        // ASSERTION (Nov 7, 2025): Validate flash war didn't corrupt state
+        assertFinite(state.humanPopulationSystem.population, {
+          location: 'FlashWarEscalationPhase.execute',
+          valueName: 'population after flash war',
+          month: state.currentMonth
+        });
       }
     }
 
