@@ -113224,7 +113224,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 226,
+=======
+    "line": 223,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -113232,7 +113236,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 227,
+=======
+    "line": 224,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -113240,7 +113248,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 228,
+=======
+    "line": 225,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -113248,7 +113260,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 244,
+=======
+    "line": 232,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -113256,7 +113272,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 245,
+=======
+    "line": 233,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -113264,7 +113284,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 246,
+=======
+    "line": 234,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -113272,7 +113296,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 265,
+=======
+    "line": 253,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -113280,7 +113308,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 266,
+=======
+    "line": 254,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -113288,7 +113320,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 267,
+=======
+    "line": 255,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -113296,7 +113332,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 268,
+=======
+    "line": 256,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -113304,7 +113344,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 269,
+=======
+    "line": 257,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -113312,7 +113356,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 273,
+=======
+    "line": 261,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -113320,7 +113368,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 274,
+=======
+    "line": 262,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalFled",
     "currentDoc": "(none)",
@@ -113328,7 +113380,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 275,
+=======
+    "line": 263,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "stillInSource",
     "currentDoc": "(none)",
@@ -113336,7 +113392,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 276,
+=======
+    "line": 264,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "deaths",
     "currentDoc": "(none)",
@@ -113344,7 +113404,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 277,
+=======
+    "line": 265,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -113352,7 +113416,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 278,
+=======
+    "line": 266,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -113360,7 +113428,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 279,
+=======
+    "line": 267,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -113368,7 +113440,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 324,
+=======
+    "line": 312,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -113376,7 +113452,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 325,
+=======
+    "line": 313,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -113384,7 +113464,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 326,
+=======
+    "line": 314,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -113392,7 +113476,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 327,
+=======
+    "line": 315,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -113400,7 +113488,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 328,
+=======
+    "line": 316,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -113408,7 +113500,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 331,
+=======
+    "line": 319,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -113416,7 +113512,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 332,
+=======
+    "line": 320,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalDisplaced",
     "currentDoc": "(none)",
@@ -113424,7 +113524,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 333,
+=======
+    "line": 321,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "resettled",
     "currentDoc": "(none)",
@@ -113432,7 +113536,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 334,
+=======
+    "line": 322,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -113440,7 +113548,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 336,
+=======
+    "line": 324,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -113448,7 +113560,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 337,
+=======
+    "line": 325,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -113456,7 +113572,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 378,
+=======
+    "line": 366,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -113464,7 +113584,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 379,
+=======
+    "line": 367,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -113472,7 +113596,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 380,
+=======
+    "line": 368,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -113480,7 +113608,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 390,
+=======
+    "line": 378,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -113488,7 +113620,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 391,
+=======
+    "line": 379,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -113496,7 +113632,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 392,
+=======
+    "line": 380,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -113504,7 +113644,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 403,
+=======
+    "line": 391,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -113512,7 +113656,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 404,
+=======
+    "line": 392,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -113520,7 +113668,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 405,
+=======
+    "line": 393,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -113528,7 +113680,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 415,
+=======
+    "line": 403,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -113536,7 +113692,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 416,
+=======
+    "line": 404,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -113544,7 +113704,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 417,
+=======
+    "line": 405,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -113552,7 +113716,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 428,
+=======
+    "line": 416,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -113560,7 +113728,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 429,
+=======
+    "line": 417,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -113568,7 +113740,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 430,
+=======
+    "line": 418,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -113576,7 +113752,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 438,
+=======
+    "line": 426,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -113584,7 +113764,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 439,
+=======
+    "line": 427,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -113592,7 +113776,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 440,
+=======
+    "line": 428,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -113600,7 +113788,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 449,
+=======
+    "line": 437,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -113608,7 +113800,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 450,
+=======
+    "line": 438,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -113616,7 +113812,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 451,
+=======
+    "line": 439,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -113624,7 +113824,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 485,
+=======
+    "line": 473,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -113632,7 +113836,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 486,
+=======
+    "line": 474,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -113640,7 +113848,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 487,
+=======
+    "line": 475,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -113648,7 +113860,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 522,
+=======
+    "line": 510,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -113656,7 +113872,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 523,
+=======
+    "line": 511,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -113664,7 +113884,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 524,
+=======
+    "line": 512,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -113672,7 +113896,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 525,
+=======
+    "line": 513,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -113680,7 +113908,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 538,
+=======
+    "line": 526,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -113688,7 +113920,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 539,
+=======
+    "line": 527,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -113696,7 +113932,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 540,
+=======
+    "line": 528,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -113704,7 +113944,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 541,
+=======
+    "line": 529,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -113712,7 +113956,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 562,
+=======
+    "line": 550,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -113720,7 +113968,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 563,
+=======
+    "line": 551,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -113728,7 +113980,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 564,
+=======
+    "line": 552,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -113736,7 +113992,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 584,
+=======
+    "line": 572,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -113744,7 +114004,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 585,
+=======
+    "line": 573,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -113752,7 +114016,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 586,
+=======
+    "line": 574,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -113760,7 +114028,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 625,
+=======
+    "line": 613,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -113768,7 +114040,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 626,
+=======
+    "line": 614,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -113776,7 +114052,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 627,
+=======
+    "line": 615,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -113784,7 +114064,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 652,
+=======
+    "line": 640,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -113792,7 +114076,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 653,
+=======
+    "line": 641,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -113800,7 +114088,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 654,
+=======
+    "line": 642,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -113808,7 +114100,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 655,
+=======
+    "line": 643,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -113816,7 +114112,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 656,
+=======
+    "line": 644,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -113824,7 +114124,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 660,
+=======
+    "line": 648,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -113832,7 +114136,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 661,
+=======
+    "line": 649,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -113840,7 +114148,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 662,
+=======
+    "line": 650,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "potentialDisplaced",
     "currentDoc": "(none)",
@@ -113848,7 +114160,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 663,
+=======
+    "line": 651,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -113856,7 +114172,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 664,
+=======
+    "line": 652,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "displacementDuration",
     "currentDoc": "(none)",
@@ -113864,7 +114184,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 665,
+=======
+    "line": 653,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "monthsToComplete",
     "currentDoc": "(none)",
@@ -113872,7 +114196,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 677,
+=======
+    "line": 665,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -113880,7 +114208,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 678,
+=======
+    "line": 666,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "sourceRegion",
     "currentDoc": "(none)",
@@ -113888,7 +114220,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 679,
+=======
+    "line": 667,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "displacedPopulation",
     "currentDoc": "(none)",
@@ -113896,7 +114232,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 680,
+=======
+    "line": 668,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -113904,7 +114244,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 681,
+=======
+    "line": 669,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -113912,7 +114256,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 697,
+=======
+    "line": 685,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -113920,7 +114268,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 699,
+=======
+    "line": 687,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "startMonth",
     "currentDoc": "(none)",
@@ -113928,7 +114280,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 708,
+=======
+    "line": 696,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "resettledCount",
     "currentDoc": "(none)",
@@ -113936,7 +114292,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 709,
+=======
+    "line": 697,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "deathsInTransit",
     "currentDoc": "(none)",
@@ -113944,7 +114304,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 714,
+=======
+    "line": 702,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "displacementComplete",
     "currentDoc": "(none)",
@@ -113952,7 +114316,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 718,
+=======
+    "line": 706,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "monthsActive",
     "currentDoc": "(none)",
@@ -113960,7 +114328,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 719,
+=======
+    "line": 707,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "resettlementProgress",
     "currentDoc": "(none)",
@@ -113968,7 +114340,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 722,
+=======
+    "line": 710,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "socialTension",
     "currentDoc": "(none)",
@@ -113976,7 +114352,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 723,
+=======
+    "line": 711,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "economicStrain",
     "currentDoc": "(none)",
@@ -113984,7 +114364,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 724,
+=======
+    "line": 712,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "politicalInstability",
     "currentDoc": "(none)",
@@ -113992,7 +114376,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 727,
+=======
+    "line": 715,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "resettlementRate",
     "currentDoc": "(none)",
@@ -114000,7 +114388,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 729,
+=======
+    "line": 717,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "acceleratedResettlement",
     "currentDoc": "(none)",
@@ -114008,7 +114400,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 730,
+=======
+    "line": 718,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "resolved",
     "currentDoc": "(none)",
@@ -114016,7 +114412,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/refugeeCrises.ts",
+<<<<<<< Updated upstream
     "line": 734,
+=======
+    "line": 722,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
