@@ -86,12 +86,9 @@ cd ~/ai_game_theory_simulation
 
 **Merge Orchestrator** (`merge-orchestrator.sh`):
 - Runs at `:45` to process branches from both workers
-=======
-- Runs hourly during business hours (8am-8pm UTC)
-- **13 runs per day** (down from 48 runs with 30-minute schedule)
-- Can be changed in `/etc/systemd/system/claude-worker.timer`
-- Edit `OnCalendar=*-*-* 08..20:00:00` to adjust frequency or hours
->>>>>>> origin/auto/worker-20251102_050015:AUTONOMOUS_SETUP.md
+- Processes up to 15 branches per run
+- Merges auto/* branches created by workers and researcher
+- Auto-cleans up merged branches
 
 ### Task Selection Priority
 
