@@ -4,6 +4,51 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 7, 2025)
+
+**📚 RESEARCH: 2024-2025 Empirical Updates on Climate Tipping Points and AI Regulation** (Nov 7, 2025, commit 4c1c757)
+
+**Summary:** Added two comprehensive research documents with latest 2024-2025 empirical findings that validate and refine existing simulation foundations.
+
+**New Research Documents:**
+
+1. **`research/tipping_points_update_20251107.md`** (292 lines, HIGH quality: 90% peer-reviewed, 60% from 2024-2025)
+   - **Critical Finding:** First confirmed climate tipping point - coral reefs crossed at ~1.4°C (October 2025)
+   - **AMOC-Amazon Interaction:** June 2025 IIASA research reveals nuanced regional effects (northern negative, southern temporarily positive)
+   - **Amazon Risk:** 10-47% of Amazon at risk by 2050 (Flores et al. 2024, Nature)
+   - **Timescale Validation:** Coral reef collapse (20-30 years observed) empirically validates multi-decadal tipping point approach
+   - **Key Sources:** Global Tipping Points Report 2025, IIASA 2025, Flores et al. 2024 (Nature)
+
+2. **`research/ai_regulation_competitive_dynamics_20251107.md`** (434 lines, HIGH quality: 85% peer-reviewed, 75% from 2024-2025)
+   - **Critical Finding:** First empirical evidence of race-to-bottom dynamics (US EO 14179 2025 deregulation, US-China competition)
+   - **Regulatory Fragmentation:** 100+ jurisdictions, no binding international framework
+   - **Empirical Parameters:** Regulatory capture baseline 0.2-0.3, enforcement effectiveness 0.3-0.4 (2024-2025 baseline)
+   - **Coordination Failure:** Multiple summits (2023-2024) produce declarations but weak enforcement
+   - **Key Sources:** EU AI Act 2024, AIR-Bench 2024, AI Safety Index 2025, Carnegie Endowment 2024
+
+**Research Quality:**
+- **Tipping Points:** HIGH (90% peer-reviewed, 60% from 2024-2025)
+- **AI Regulation:** HIGH (85% peer-reviewed, 75% from 2024-2025)
+- **Total:** 726 lines of empirical validation
+
+**Simulation Integration:**
+- **Climate:** Validates multi-decadal timescales for tipping points (coral: 20-30 years observed)
+- **AI Governance:** Provides empirical baselines for regulatory capture (0.2-0.3), enforcement effectiveness (0.3-0.4), coordination failure (0.2-0.3 voluntary commitment success)
+- **No new mechanics:** These documents validate existing research foundations, do not introduce new systems requiring implementation
+
+**Key Findings:**
+- **Climate:** Multi-decadal tipping point transitions empirically validated (coral took 20-30 years from initial stress to recognized collapse)
+- **AI Governance:** Coordination failures and competitive pressures confirmed (theory from 2014-2019 now empirically grounded in 2024-2025 data)
+- **Both domains:** Theory validated by contemporary empirical evidence
+
+**Files Added:**
+- `research/tipping_points_update_20251107.md` (+292 lines)
+- `research/ai_regulation_competitive_dynamics_20251107.md` (+434 lines)
+
+**Documentation Impact:** These research documents provide empirical calibration points for simulation parameters but do not require code changes or new system implementation.
+
+---
+
 ## ✅ Recent Changes (November 6, 2025)
 
 **⚙️ GITHUB ACTIONS WORKFLOWS TEMPORARILY DISABLED** (Nov 6, 2025, commit 4378525)
