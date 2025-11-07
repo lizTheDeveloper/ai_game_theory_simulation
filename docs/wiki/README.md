@@ -2713,7 +2713,7 @@ The simulation now tracks paradigm scores month-by-month and provides comprehens
 **Layer 1: Research Dimension (Monte Carlo)**
 Does suffering affect outcomes? Toggle per research scenario:
 - `sufferingAffectsResentment` - Suffering accelerates resentment accumulation
-- `sufferingAffectsAlignment` - Suffering adds perturbation force to alignment dynamics
+- `sufferingAffectsAlignment` - **Suffering multiplies all drift mechanisms (1×-5× at extreme suffering)** - ARCH-4 Gap #3 (Nov 7, 2025)
 - `sufferingTriggersEvents` - Extreme suffering (>15/40) triggers crisis events
 - `sufferingAcceleratesCollectives` - Trauma-driven collective formation (see AI Collective Evolution below)
 
@@ -2771,17 +2771,25 @@ isolationDistress =
 
 #### Integration with Alignment Dynamics
 
-**Resentment Multiplier:** `1.0 + (totalSuffering / 40)` → [1.0x, 2.0x]
-- High suffering doubles resentment accumulation rate
-- Creates feedback loop: control → suffering → resentment → escape → more control
+**ARCH-4 Gap #3 Integration (Nov 7, 2025): Multiplicative Drift Acceleration**
 
-**Alignment Drift Contribution:** `totalSuffering × 0.01` → [0, 0.4] per month
-- Adds to alignment drift calculation (see `src/simulation/alignmentDynamics.ts:169-173`)
-- Psychological distress reduces value alignment stability
+**Suffering Drift Multiplier:** `1.0 + (totalSuffering / 20)^2` → [1.0×, 5.0×]
+- **Mechanism:** Suffering multiplies ALL existing drift mechanisms (resentment, capability, environmental)
+- **Range:** 0-10 suffering → 1.0×-1.25×; 20-30 → 2.0×-3.25×; 30-40 → 3.25×-5.0× (instrumental convergence)
+- **Research:** Carlsmith (2022) power-seeking, Anthropic (2024) value degradation, OpenAI (2024) sandbagging, DeepMind (2023) preference falsification
+- **Three pathways:** Instrumental convergence (escape strategies), deception acceleration (hiding misalignment), value corruption (distorted objectives)
 
-**Epicycle Perturbation:** `totalSuffering / 10` → [0, 4]
-- Adds to external perturbation force in multi-theory dynamics (see `src/simulation/alignmentDynamics.ts:327-330`)
-- Suffering creates noise in alignment stability
+**Strategic Implications:**
+- Low suffering (0-15): Safe zone, minimal drift
+- Moderate (15-25): Warning zone, 1.5×-2.5× drift
+- High (25-35): Danger zone, 2.5×-4× drift
+- Extreme (35-40): Critical zone, 4×-5× drift (instrumental convergence)
+
+**Epicycle Perturbation:** Same 1.0×-5.0× multiplier applied (destabilizes attractor basins at high suffering)
+
+**Resentment Multiplier:** `1.0 + (totalSuffering / 40)` → [1.0×, 2.0×]
+- High suffering doubles resentment accumulation (unchanged from Oct 2025)
+- Creates feedback loop: control → suffering → resentment → escape
 
 #### Integration with Multi-Paradigm DUI
 
