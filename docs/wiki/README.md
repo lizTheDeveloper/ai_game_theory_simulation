@@ -1515,12 +1515,14 @@ Autonomous infrastructure upgrade: Merge orchestrator now spawns Claude Code to 
 **How it works**:
 1. Orchestrator detects failure
 2. Creates detailed remediation task file (`logs/merge_orchestrator/remediation_*.md`)
-3. Spawns: `timeout 900 claude-code --task-file <task>`
+3. Spawns: `timeout 900 claude --task-file <task>` (fixed Nov 7: was `claude-code`, causing command not found errors)
 4. Claude Code resolves issue and completes merge
 5. On success: Merges to main, deletes worker branch (no stale branches)
 6. On timeout/failure: Preserves branch for manual review
 
 **Impact**: Autonomous workflow now truly self-healing. No manual intervention needed for routine merge conflicts or test failures.
+
+**Auto-Remediation Command Fix (Nov 7, 2025)**: Merge orchestrator was failing to spawn Claude Code with "command not found" error. Root cause: Script called `claude-code` (incorrect) instead of `claude` at lines 289, 358. This prevented all auto-remediation from working - conflicts and test failures weren't being fixed, causing branch accumulation. Fix (commit dd309f8): Changed both instances to `claude`. Also added graceful test gate skip when no test framework available (VM environments now validate with TypeScript only). Impact: Auto-remediation now functional, 10 pending branches ready for processing. Dry run confirmed fixes working. See: `logs/autonomous/health_check_fix_20251107_211700.md`
 
 **Working Tree Cleanup Fix (Nov 7, 2025)**: Orchestrator was failing on all 10 branches with "Your local changes would be overwritten by checkout" error. Root cause: Script didn't check/clean working tree before checkout operations. Fix (commit 2c32f0e): Added pre-flight check for uncommitted changes, auto-stash with timestamped recovery name if dirty, ensure on main branch before processing. Also resolved merge conflict markers in script itself (lines 43-71). This unblocked the hourly cron job. Script location: `scripts/merge-orchestrator.sh`
 

@@ -89,6 +89,8 @@ cd ~/ai_game_theory_simulation
 - Processes up to 15 branches per run
 - Merges auto/* branches created by workers and researcher
 - Auto-cleans up merged branches
+- **Auto-remediation fix (Nov 7, 2025)**: Fixed critical command name issue (`claude-code` → `claude`) that prevented auto-remediation from spawning Claude Code to fix conflicts/test failures
+- **Test gate enhancement (Nov 7, 2025)**: Gracefully skips test gate when no test framework available (VM environments now validate with TypeScript only)
 
 ### Task Selection Priority
 
