@@ -16,7 +16,7 @@
 
 import { GameState, AIAgent, AICapabilityProfile } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertDefined } from './utils/assertions';
 
 export interface BehavioralDetectionResult {
   detected: boolean;           // Final detection verdict
@@ -214,7 +214,13 @@ function calculateTrajectoryAnomaly(
   }
 
   // Calculate percentage drop relative to previous capability
-  const baseCapability = capabilities[0] || 0.01;
+  // AI agents should always have some capability if they exist
+  const firstCapability = assertDefined(capabilities[0], {
+    location: 'calculateTrajectoryAnomaly',
+    valueName: 'capabilities[0]',
+    month: -1  // No state.currentMonth available in this context
+  });
+  const baseCapability = Math.max(0.01, firstCapability); // Floor at 0.01 to prevent division by zero
   const percentDrop = maxDrop / baseCapability;
 
   return percentDrop; // [0, 1+] where >0.15 is anomalous

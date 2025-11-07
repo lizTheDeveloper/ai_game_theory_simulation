@@ -16,10 +16,10 @@ import { GameState, ExtinctionState, ExtinctionType, ExtinctionMechanism, GameEv
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { addMortalityRisk } from './bayesianMortality';
-import * as Assertions from './utils/assertions';
+import { assertFinite, assertProbability, assertInRange } from './utils/assertions';
 import { RootCause } from '@/types/population';
 
-// NaN AUDIT (Nov 7, 2025): Import full assertions module for comprehensive validation
+// NaN AUDIT (Nov 7, 2025): Import assertion utilities for comprehensive validation
 
 /**
  * Initialize a blank extinction state
@@ -482,7 +482,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
           // Add immediate nuclear war casualties (blast + radiation)
           // REGIONAL CRISIS: Only nuclear nations (US, Russia, China, EU, allies) = ~30% of world population
           // 60% mortality rate within exposed regions (blast + immediate radiation)
-          const nuclearBaseRisk = Assertions.assertFinite(0.60, {
+          const nuclearBaseRisk = assertFinite(0.60, {
             location: 'triggerExtinction (nuclear war)',
             valueName: 'nuclearBaseRisk',
             month: state.currentMonth
@@ -1377,13 +1377,13 @@ export function classifyExtinctionType(state: GameState): import('../types/outco
   // Death attribution analysis
   // NaN AUDIT (Nov 7, 2025): Protect division from NaN
   const totalDeaths = population.cumulativeCrisisDeaths;
-  const peakPopulation = Assertions.assertInRange(
+  const peakPopulation = assertInRange(
     population.peakPopulation,
     1, // Must be at least 1 to avoid division by zero
     1e12, // Reasonable upper bound
     { location: 'classifyExtinctionType', valueName: 'peakPopulation' }
   );
-  const mortalityRate = Assertions.assertFinite(
+  const mortalityRate = assertFinite(
     totalDeaths / peakPopulation,
     { location: 'classifyExtinctionType', valueName: 'mortalityRate', additionalInfo: { totalDeaths, peakPopulation } }
   );
@@ -1694,7 +1694,7 @@ function identifyMassDeathMonths(state: GameState): { month: number; mortalityRa
   if (monthsSincePeak <= 1 && mortalityRate > 0.9) {
     return [{
       month: state.currentMonth,
-      mortalityRate: Assertions.assertFinite(mortalityRate, {
+      mortalityRate: assertFinite(mortalityRate, {
         location: 'identifyMassDeathMonths',
         valueName: 'mortalityRate',
         additionalInfo: { currentPop, peakPop }

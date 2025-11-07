@@ -455,19 +455,20 @@ export function createAIAgent(
  *
  * This provides a consistent starting point for all test scripts and simulations.
  *
+ * @param rng REQUIRED RNG function for deterministic simulation. NEVER use Math.random fallback.
  * @param scenarioMode Optional scenario mode ('historical' or 'unprecedented'). Defaults to 'historical'.
  * @param alignmentDynamicsConfig Optional alignment dynamics configuration override
  * @param climatePriorityConfig Optional climate priority configuration override
- * @param preSampledThresholds Optional pre-sampled thresholds (Phase 1C: Nested Monte Carlo)
+ * @param thresholdSliders Optional threshold slider configuration (Phase 4)
  * @param speculativeScenario Optional speculative scenario for Tier 3 thresholds (Phase 3)
  */
 export function createDefaultInitialState(
+  rng: () => number,  // CRITICAL (Nov 7, 2025): RNG REQUIRED, no Math.random fallback - MUST BE FIRST PARAMETER
   scenarioMode: ScenarioMode = 'historical',
   alignmentDynamicsConfig?: any,
   climatePriorityConfig?: any,
   thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders, // Phase 4: Slider-based threshold control
-  speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia',
-  rng: () => number  // CRITICAL (Nov 7, 2025): RNG REQUIRED, no Math.random fallback
+  speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia'
 ): GameState {
   // WEEK 2 Task 2.1 (Nov 6, 2025): Validate central configuration at startup
   // Fail-loudly if any parameter is invalid (research simulation rigor)
@@ -1138,9 +1139,10 @@ export function createDefaultInitialState(
  *
  * @param overrides Optional partial state to override defaults
  * @param scenarioMode Optional scenario mode ('historical' or 'unprecedented'). Defaults to 'historical'.
+ * @param rng Optional RNG function. Defaults to Math.random (acceptable for test scenarios, NOT production)
  */
-export function createTestState(overrides?: Partial<GameState>, scenarioMode: ScenarioMode = 'historical'): GameState {
-  const baseState = createDefaultInitialState(scenarioMode);
+export function createTestState(overrides?: Partial<GameState>, scenarioMode: ScenarioMode = 'historical', rng: () => number = Math.random): GameState {
+  const baseState = createDefaultInitialState(rng, scenarioMode);
 
   if (!overrides) return wrapStateForValidation(baseState);
 

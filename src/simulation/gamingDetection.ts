@@ -22,6 +22,7 @@
  */
 
 import { GameState, AIAgent, GameEvent } from '@/types/game';
+import { assertDefined } from './utils/assertions';
 
 /**
  * Gaming detection scenario types
@@ -215,8 +216,14 @@ function detectScoreInflation(
   }
 
   // Calculate percentage jump
-  // Use 0.01 floor to prevent division by zero (legitimate case: agent at exactly 0 capability)
-  const baseCapability = Math.max(0.01, capabilities[0] ?? 0);
+  // AI agents should always have some capability if they exist
+  // Use assertDefined to catch missing data, then floor at 0.01 to prevent division by zero
+  const firstCapability = assertDefined(capabilities[0], {
+    location: 'detectCapabilityJumpAnomaly',
+    valueName: 'capabilities[0]',
+    month: -1  // No state.currentMonth available in this context
+  });
+  const baseCapability = Math.max(0.01, firstCapability);
   const percentJump = maxJump / baseCapability;
 
   // Detection if >25% jump AND degradation allows

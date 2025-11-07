@@ -1018,8 +1018,8 @@ if (nestedMonteCarlo) {
       }
 
       // DETERMINISM FIX (Nov 6, 2025): Pass engine's RNG function to initialization
-      // Now initialization and engine share the SAME RNG sequence
-      const initialState = createDefaultInitialState(runScenarioMode, undefined, undefined, undefined, undefined, rngFunction);
+      // CRITICAL (Nov 7, 2025): RNG is now FIRST parameter (required, not optional)
+      const initialState = createDefaultInitialState(rngFunction, runScenarioMode, undefined, undefined, undefined, undefined);
 
       // Set run label for logging
       initialState.config.runLabel = `Epistemic ${epistemicIndex + 1}/${NUM_RUNS}, Aleatory ${aleatoryIndex + 1}/${aleatoryNumSamples} [${runScenarioMode}]`;
@@ -1978,7 +1978,8 @@ if (nestedMonteCarlo) {
     }
 
     // DETERMINISM FIX (Nov 6, 2025): Pass engine's RNG function to initialization
-    const initialState = createDefaultInitialState(runScenarioMode, undefined, undefined, undefined, undefined, rngFunction);
+    // CRITICAL (Nov 7, 2025): RNG is now FIRST parameter (required, not optional)
+    const initialState = createDefaultInitialState(rngFunction, runScenarioMode, undefined, undefined, undefined, undefined);
 
     // Set run label for logging
     initialState.config.runLabel = `Run ${i + 1}/${NUM_RUNS} [${runScenarioMode}]`;

@@ -22,7 +22,7 @@ import type { GameState } from '../types/game';
 import { getTrustInAI, calculateComprehensiveTrustInAI } from './socialCohesion';
 import { TRUST_THRESHOLD_ACCEPTANCE, TRUST_THRESHOLD_EMBRACE } from './trustThresholds';
 import { getUnlockedTechCount, getDeployedTechCount } from './techTree/helpers';
-import { assertStateProperty } from './utils/assertions';
+import { assertStateProperty, assertFinite } from './utils/assertions';
 
 export interface UpwardSpiral {
   active: boolean;           // Is this spiral currently active?
@@ -232,7 +232,17 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
 
   // Research investment (as % of economy)
   const researchInvestments = state.government.researchInvestments;
-  const totalResearch = Object.values(researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
+  const totalResearch = Object.values(researchInvestments).reduce((sum, val) => {
+    const numVal = Number(val);
+    // Validate research investment is finite (catch NaN from corrupt state)
+    const validVal = assertFinite(numVal, {
+      location: 'evaluateScientificSpiral',
+      valueName: 'researchInvestment',
+      month: state.currentMonth,
+      additionalInfo: { rawValue: val }
+    });
+    return sum + validVal;
+  }, 0);
   const researchIntensive = totalResearch > 50; // $50B+/month
 
   // AI-accelerated research
@@ -268,10 +278,11 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
   // Aggregate spiral diagnostics (removed verbose debug logs)
 
   if (spiral.active) {
+    // totalResearch is already validated above, no need for fallback
     spiral.strength = (
       Math.min(1.0, unlockedCount / 8) * 0.25 +
       Math.min(1.0, deployedCount / 6) * 0.25 +
-      Math.min(1.0, (totalResearch || 0) / 100) * 0.2 +
+      Math.min(1.0, totalResearch / 100) * 0.2 +
       Math.min(1.0, avgAICapability / 4.0) * 0.15 +
       Math.min(1.0, workflowAdaptation / 0.7) * 0.15  // Workflow adaptation contributes to strength
     );
@@ -746,13 +757,23 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   // SCIENTIFIC SPIRAL
   const unlockedCount = getUnlockedTechCount(state);
   const deployedCount = getDeployedTechCount(state, 0.5);
-  const totalResearch = Object.values(state.government.researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
+  const totalResearch = Object.values(state.government.researchInvestments).reduce((sum, val) => {
+    const numVal = Number(val);
+    // Validate research investment is finite (catch NaN from corrupt state)
+    const validVal = assertFinite(numVal, {
+      location: 'evaluateAllUpwardSpirals:scientific',
+      valueName: 'researchInvestment',
+      month: state.currentMonth,
+      additionalInfo: { rawValue: val }
+    });
+    return sum + validVal;
+  }, 0);
   const researchIntensive = totalResearch > 50;
   const aiAccelerated = avgAI > 1.2; // Lowered from 2.0 - AI already accelerating science at GPT-4 level
-  
+
   // console.error(`\n🔬 SCIENTIFIC SPIRAL: ${spirals.scientific.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
   // console.error(`   Breakthroughs: ${unlockedCount} unlocked, ${deployedCount} deployed ${deployedCount >= 4 ? '✅' : '❌'} (need 4+ deployed >50%)`);
-  // console.error(`   Research Investment: $${Number(totalResearch || 0).toFixed(1)}B/month ${researchIntensive ? '✅' : '❌'} (need >$50B/month)`);
+  // console.error(`   Research Investment: $${totalResearch.toFixed(1)}B/month ${researchIntensive ? '✅' : '❌'} (need >$50B/month)`);
   // console.error(`   AI Acceleration: avg capability ${avgAI.toFixed(2)} ${aiAccelerated ? '✅' : '❌'} (need >1.2)`);
   
   // MEANING SPIRAL

@@ -586,8 +586,12 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, al
   // Create engine with seed (use 'summary' log level for minimal logging)
   engine = new SimulationEngine({ seed, maxMonths: Infinity, logLevel: 'summary' });
 
+  // CRITICAL (Nov 7, 2025): Get RNG from engine BEFORE creating initial state
+  // This ensures initialization uses the SAME RNG algorithm as the simulation engine
+  const rngFunction = engine.getRNG().next.bind(engine.getRNG());
+
   // Create initial state with optional alignment, climate, threshold sliders, and speculative scenario configs
-  state = createDefaultInitialState(scenario || 'historical', alignmentConfig, climatePriorityConfig, thresholdSliders, speculativeScenario);
+  state = createDefaultInitialState(rngFunction, scenario || 'historical', alignmentConfig, climatePriorityConfig, thresholdSliders, speculativeScenario);
 
   // Initialize RNG call counter (for perfect determinism on resume)
   if (state.rngCallCounter === undefined) {

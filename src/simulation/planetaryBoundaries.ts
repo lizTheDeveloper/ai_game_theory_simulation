@@ -1693,8 +1693,13 @@ export function updateBiosphereIntegrityIndex(
     month: state.currentMonth
   });
 
-  const monthsElapsed = state.currentMonth || 1;
-  const warmingRate = assertFinite(globalTempIncrease / (monthsElapsed / 12), {
+  const monthsElapsed = assertFinite(state.currentMonth, {
+    location: 'updateBiosphereIntegrityIndex:climateVelocity',
+    valueName: 'monthsElapsed',
+    month: state.currentMonth,
+    additionalInfo: { note: 'currentMonth should never be 0 after initialization' }
+  });
+  const warmingRate = assertFinite(globalTempIncrease / Math.max(1, monthsElapsed / 12), {
     location: 'updateBiosphereIntegrityIndex:climateVelocity',
     valueName: 'warmingRate',
     month: state.currentMonth,
@@ -1769,7 +1774,13 @@ export function updateBiosphereIntegrityIndex(
     }
   });
 
-  const yearsElapsed = (state.currentMonth || 1) / 12;
+  const validMonth = assertFinite(state.currentMonth, {
+    location: 'updateBiosphereIntegrityIndex:extinctionRate',
+    valueName: 'currentMonth',
+    month: state.currentMonth,
+    additionalInfo: { note: 'currentMonth should never be 0 after initialization' }
+  });
+  const yearsElapsed = validMonth / 12;
   const extinctionsPerYear = assertFinite(speciesLost / Math.max(1, yearsElapsed), {
     location: 'updateBiosphereIntegrityIndex:extinctionRate',
     valueName: 'extinctionsPerYear',
@@ -1840,7 +1851,11 @@ export function updateBiosphereIntegrityIndex(
         root: 'ecosystem', // RootCause: ecosystem (biodiversity degradation)
         confidence: 'MEDIUM',
         scope: 'GLOBAL',
-        month: state.currentMonth || 0,
+        month: assertFinite(state.currentMonth, {
+          location: 'updateBiosphereIntegrityIndex:recordRiskFactor',
+          valueName: 'currentMonth',
+          month: state.currentMonth
+        }),
         description: `🦋 ${Math.round(bii.trackingFailureRate * 100)}% species unable to track climate (${bii.currentExtinctionRate.toFixed(1)} E/MSY)`
       });
     }
