@@ -6,6 +6,34 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
+**🔧 MERGE ORCHESTRATOR: AUTO-REMEDIATION FIXES** (Nov 7, 2025, commit dd309f8)
+
+**Summary:** Fixed two critical issues preventing merge orchestrator's auto-remediation from functioning.
+
+**Problem 1 - CRITICAL:** Command name error (`claude-code` → `claude`)
+- Merge orchestrator was calling `timeout 900 claude-code` which doesn't exist
+- Auto-remediation couldn't spawn Claude Code to fix conflicts/test failures
+- Caused branch accumulation without resolution
+
+**Problem 2:** Test gate failing when no test framework available
+- Script tried to run `npm run test:backend` which doesn't exist in VM environments
+- All branches failing quality gate 2 unnecessarily
+
+**Solution:**
+1. Changed command from `claude-code` to `claude` (lines 289, 358 in `scripts/merge-orchestrator.sh`)
+2. Added graceful skip when no test script available (TypeScript compilation sufficient for VM)
+
+**Impact:**
+- ✅ Merge orchestrator can now spawn Claude Code for auto-remediation
+- ✅ VM environments validate with TypeScript only (appropriate for backend-only changes)
+- ✅ 10 pending branches ready for processing at next `:45` run
+
+**Files Modified:** `scripts/merge-orchestrator.sh`, `logs/autonomous/health_check_fix_20251107_211700.md`
+
+**Testing:** Dry run successful with both fixes working correctly
+
+---
+
 **🚨 AUTONOMOUS WORKER: TOKEN EXHAUSTION DETECTION** (Nov 7, 2025, commit e6bf293)
 
 **Summary:** Added automatic GitHub issue creation when autonomous worker runs out of Claude Max subscription tokens.
