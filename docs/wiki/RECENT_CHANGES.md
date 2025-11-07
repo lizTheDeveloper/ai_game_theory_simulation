@@ -6,6 +6,61 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
+**🛡️ DEFENSIVE CODING CLEANUP: Phase 1 Silent Fallback Removal** (Nov 7, 2025, commit 769925c)
+
+**Summary:** Removed silent fallback patterns that mask bugs in simulation calculations (CRITICAL-4 roadmap item).
+
+**Philosophy:** Research simulations require correctness over convenience. Better to crash during development than produce wrong results silently.
+
+**Changes:**
+
+1. **CRITICAL - wetBulbEvents.ts:380-398**
+   - **Before:** `assertFinite(resources?.co2?.temperatureAnomaly ?? 0)` - wrapped fallback in assertion
+   - **After:** `assertDefined(resources?.co2)` then `assertFinite(co2.temperatureAnomaly)`
+   - **Impact:** Now detects missing CO2 system instead of silently using 0°C temperature anomaly
+   - **Why critical:** Using 0°C when CO2 system is missing produces incorrect wet-bulb calculations
+
+2. **catastrophicScenarios.ts:1102-1147**
+   - **Before:** `scenario.prerequisites[5]?.met ?? false` - silent fallback for missing prerequisites
+   - **After:** `assertDefined(scenario.prerequisites[5])` then check `.met`
+   - **Impact:** Detects incomplete scenario initialization (step 7 slow takeover)
+   - **Additional:** Also validated `step7RequiredMonths` with descriptive error context
+
+3. **alignmentDynamics.ts:39-46**
+   - **Before:** `attractorPositions[basinIndex] ?? 0.5` - silent fallback for invalid index
+   - **After:** Range check with descriptive error showing config mismatch
+   - **Impact:** Catches mismatch between `numAttractors` config and `attractorPositions` array length
+   - **Error message:** Shows expected range and config values for debugging
+
+4. **techTree/effectsEngine.ts:1029-1041**
+   - **Before:** `pfasContamination ?? 0.5` - silent initialization
+   - **After:** Explicit initialization check with console log
+   - **Impact:** Makes PFAS contamination initialization visible in logs
+   - **Note:** Added TODO for type definition (currently using `any`)
+
+**Validation:**
+- ✅ TypeScript compilation passes (`npx tsc --noEmit`)
+- ⏳ Monte Carlo N=3 pending (needs initialization fixes from separate branch)
+
+**Pattern Applied:**
+```typescript
+// ❌ WRONG - Hides bugs
+const value = state.property ?? fallbackValue;
+assertFinite(value);
+
+// ✅ CORRECT - Fails loudly with context
+const property = assertDefined(state.property, {
+  location: 'functionName',
+  valueName: 'state.property',
+  month: state.currentMonth
+});
+assertFinite(property);
+```
+
+**Related Documentation:** See CLAUDE.md sections on "NaN and Invalid Value Handling" and "Defensive Programming Anti-Patterns"
+
+---
+
 **🔧 MERGE ORCHESTRATOR: AUTO-REMEDIATION FIXES** (Nov 7, 2025, commit dd309f8)
 
 **Summary:** Fixed two critical issues preventing merge orchestrator's auto-remediation from functioning.
