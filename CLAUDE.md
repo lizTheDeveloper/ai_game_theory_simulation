@@ -2,6 +2,27 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚡ Token Efficiency - READ THIS FIRST
+
+**CRITICAL: Be extremely token-efficient in all operations.**
+
+**Core Principles:**
+1. **Be concise** - No verbose explanations, get straight to implementation
+2. **Avoid redundancy** - Don't repeat what's in documentation
+3. **Use tools efficiently** - Read only what you need, grep before reading entire files
+4. **Skip unnecessary analysis** - If the task is clear, just do it
+5. **Batch operations** - Combine related changes in single tool calls
+6. **Trust existing docs** - Don't re-explain what's in CLAUDE.md or wiki
+
+**When near token limits:**
+- Focus only on critical/high priority work
+- Skip optional documentation updates
+- Use grep/glob aggressively before reading files
+- Commit partial work frequently
+- Exit early if work is complete
+
+**Token exhaustion alert:** The autonomous worker will create a GitHub issue when tokens run out. Have backup account ready.
+
 ## ⚠️ CRITICAL: ALWAYS Use Agents
 
 **This codebase is too complex for direct changes. ALL code changes must go through specialized agents.**
