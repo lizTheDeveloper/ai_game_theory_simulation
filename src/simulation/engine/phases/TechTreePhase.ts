@@ -21,6 +21,7 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertProbability } from '@/simulation/utils/assertions';
 import {
   updateTechTree,
   TechTreeState,
@@ -40,6 +41,15 @@ export class TechTreePhase implements SimulationPhase {
 
     // Update tech tree (checks unlocks, applies actions, updates progress)
     const unlockEvents = updateTechTree(state, techTreeState, rng);
+
+    // ASSERTIONS (Nov 7, 2025): Validate research progress values are probabilities
+    for (const [techId, progress] of Object.entries(techTreeState.researchProgress)) {
+      assertProbability(progress, {
+        location: 'TechTreePhase.execute',
+        valueName: `techTreeState.researchProgress.${techId}`,
+        month: state.currentMonth
+      });
+    }
 
     // Convert tech unlock events to game events
     const events: GameEvent[] = unlockEvents.map(unlockEvent => ({

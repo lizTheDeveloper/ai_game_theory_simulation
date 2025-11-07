@@ -12,6 +12,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions';
 
 export class HumanPopulationPhase implements SimulationPhase {
   readonly id = 'human_population';
@@ -62,41 +63,45 @@ export class HumanPopulationPhase implements SimulationPhase {
     // Bottom-up aggregation: Global population = sum of regional populations
     aggregateGlobalPopulation(state);
 
-    // DEBUG (Oct 28, 2025): Verify population after aggregateGlobalPopulation
-    if (isNaN(state.humanPopulationSystem.population)) {
-      console.error(`❌ Population is NaN after aggregateGlobalPopulation at month ${state.currentMonth}`);
-      throw new Error(`Population is NaN after aggregateGlobalPopulation`);
-    }
+    // ASSERTION (Nov 7, 2025): Validate population after aggregation
+    assertFinite(state.humanPopulationSystem.population, {
+      location: 'HumanPopulationPhase.execute',
+      valueName: 'population after aggregateGlobalPopulation',
+      month: state.currentMonth
+    });
 
     // === PHASE 2: DEMOGRAPHICS AGGREGATION (Oct 26, 2025) ===
     // Bottom-up aggregation: Global demographics = population-weighted average of regional
     aggregateGlobalDemographics(state);
 
-    // DEBUG (Oct 28, 2025): Verify population after aggregateGlobalDemographics
-    if (isNaN(state.humanPopulationSystem.population)) {
-      console.error(`❌ Population is NaN after aggregateGlobalDemographics at month ${state.currentMonth}`);
-      throw new Error(`Population became NaN in aggregateGlobalDemographics`);
-    }
+    // ASSERTION (Nov 7, 2025): Validate demographics didn't corrupt population
+    assertFinite(state.humanPopulationSystem.population, {
+      location: 'HumanPopulationPhase.execute',
+      valueName: 'population after aggregateGlobalDemographics',
+      month: state.currentMonth
+    });
 
     // === PHASE 3: CARRYING CAPACITY AGGREGATION (Oct 26, 2025) ===
     // Bottom-up aggregation: Global capacity = sum of regional capacities
     aggregateGlobalCarryingCapacity(state);
 
-    // DEBUG (Oct 28, 2025): Verify population after aggregateGlobalCarryingCapacity
-    if (isNaN(state.humanPopulationSystem.population)) {
-      console.error(`❌ Population is NaN after aggregateGlobalCarryingCapacity at month ${state.currentMonth}`);
-      throw new Error(`Population became NaN in aggregateGlobalCarryingCapacity`);
-    }
+    // ASSERTION (Nov 7, 2025): Validate capacity aggregation didn't corrupt population
+    assertFinite(state.humanPopulationSystem.population, {
+      location: 'HumanPopulationPhase.execute',
+      valueName: 'population after aggregateGlobalCarryingCapacity',
+      month: state.currentMonth
+    });
 
     // === PHASE 4: DEATH TRACKING AGGREGATION (Oct 26, 2025) ===
     // Bottom-up aggregation: Global deaths = sum of regional deaths
     aggregateGlobalDeaths(state);
 
-    // DEBUG (Oct 28, 2025): Verify population after aggregateGlobalDeaths
-    if (isNaN(state.humanPopulationSystem.population)) {
-      console.error(`❌ Population is NaN after aggregateGlobalDeaths at month ${state.currentMonth}`);
-      throw new Error(`Population became NaN in aggregateGlobalDeaths`);
-    }
+    // ASSERTION (Nov 7, 2025): Validate death tracking didn't corrupt population
+    assertFinite(state.humanPopulationSystem.population, {
+      location: 'HumanPopulationPhase.execute',
+      valueName: 'population after aggregateGlobalDeaths',
+      month: state.currentMonth
+    });
 
     // === PHASE 5: CONSISTENCY ASSERTION (Oct 26, 2025) ===
     // Verify no drift between regional and global values

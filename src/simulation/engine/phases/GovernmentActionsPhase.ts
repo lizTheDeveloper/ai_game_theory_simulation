@@ -23,6 +23,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { executeGovernmentActions } from '@/simulation/government';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions';
 
 export class GovernmentActionsPhase implements SimulationPhase {
   readonly id = 'government-actions';
@@ -36,6 +37,13 @@ export class GovernmentActionsPhase implements SimulationPhase {
 
     // Update state
     Object.assign(state, govResult.newState);
+
+    // ASSERTIONS (Nov 7, 2025): Validate government actions didn't corrupt critical state
+    assertFinite(state.humanPopulationSystem.population, {
+      location: 'GovernmentActionsPhase.execute',
+      valueName: 'population after government actions',
+      month: state.currentMonth
+    });
 
     return { events: govResult.events || [] };
   }

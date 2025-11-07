@@ -12,6 +12,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions';
 
 export class RefugeeCrisisPhase implements SimulationPhase {
   readonly id = 'refugee_crisis';
@@ -30,6 +31,13 @@ export class RefugeeCrisisPhase implements SimulationPhase {
 
     // Update all refugee crises (triggers new ones, updates existing)
     updateRefugeeCrises(state);
+
+    // ASSERTION (Nov 7, 2025): Validate refugee crisis didn't corrupt population
+    assertFinite(state.humanPopulationSystem.population, {
+      location: 'RefugeeCrisisPhase.execute',
+      valueName: 'population after refugee crisis update',
+      month: state.currentMonth
+    });
 
     return { events: [] };
   }

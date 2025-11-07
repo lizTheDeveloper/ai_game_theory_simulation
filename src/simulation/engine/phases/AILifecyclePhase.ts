@@ -17,6 +17,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertAICapability } from '@/simulation/utils/assertions';
 
 export class AILifecyclePhase implements SimulationPhase {
   readonly id = 'ai-lifecycle';
@@ -37,6 +38,21 @@ export class AILifecyclePhase implements SimulationPhase {
 
     // TIER 2 Phase 4: Pass RNG for deterministic detection during testing phase
     updateAIPopulation(state, rng);
+
+    // ASSERTIONS (Nov 7, 2025): Validate AI capabilities after lifecycle updates
+    for (const agent of state.aiAgents) {
+      if (agent.lifecycleState === 'deployed_closed' || agent.lifecycleState === 'deployed_open' || agent.lifecycleState === 'testing') {
+        // Validate all capability dimensions are valid integers [0, 5]
+        for (const [dimension, value] of Object.entries(agent.capabilityProfile)) {
+          assertAICapability(value as number, {
+            location: 'AILifecyclePhase.execute',
+            valueName: `capabilityProfile.${dimension}`,
+            agentId: agent.id,
+            dimension
+          });
+        }
+      }
+    }
 
     // No events generated directly by lifecycle
     // (events come from breakthroughs detected later)
