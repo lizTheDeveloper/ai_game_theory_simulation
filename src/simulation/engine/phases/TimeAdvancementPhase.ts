@@ -21,6 +21,10 @@ export class TimeAdvancementPhase implements SimulationPhase {
   readonly order = 99.0;
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
+    // Track previous control level for next step (used by resentmentRecovery.ts)
+    // This must happen BEFORE advancing time, so next step can compare
+    state.government.previousControlLevel = state.government.capabilityToControl;
+
     // Advance time by one month
     setDeterministicRng(_rng);
     state.currentMonth += 1;
