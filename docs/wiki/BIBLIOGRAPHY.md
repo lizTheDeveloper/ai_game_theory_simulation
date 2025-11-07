@@ -1,7 +1,7 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 4, 2025
-**Total Sources**: 159+ peer-reviewed citations
+**Last Updated**: November 7, 2025
+**Total Sources**: 163+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 60% from 2024-2025
 
@@ -42,6 +42,30 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 ---
 
 ## AI Safety & Capabilities
+
+### Multi-Agent AI Coordination & Alignment (2024-2025)
+
+**Hammond, L., Chan, A., Clifton, J., Hoelscher-Obermaier, J., Khan, A., et al. (2025).** Multi-Agent Risks from Advanced AI. *Cooperative AI Foundation, Technical Report #1*. arXiv:2502.14143
+- **Used for**: Competitive AI equilibrium research (TIER 2B, deferred implementation)
+- **Key findings**: Three primary failure modes (miscoordination, conflict, collusion); seven risk factors (information asymmetries, network effects, selection pressures, destabilizing dynamics, commitment problems, emergent agency, security vulnerabilities)
+- **Relevance**: Modern AI safety research has shifted from singleton alignment to multi-agent coordination problems
+- **Published**: February 19, 2025
+
+**Ji, J., et al. (2023, updated 2025).** AI Alignment: A Comprehensive Survey. *arXiv:2310.19852 v6*
+- **Used for**: Competitive AI equilibrium research (TIER 2B, deferred implementation)
+- **Key findings**: RICE principles (Robustness, Interpretability, Controllability, Ethicality); forward vs backward alignment distinction
+- **Relevance**: Validates both training-for-alignment (forward) AND governance structures (backward) - competitive equilibrium implements backward alignment
+- **Updated**: April 4, 2025
+
+**Anthropic Alignment Science Team (2025).** Recommendations for Technical AI Safety Research Directions. https://alignment.anthropic.com/2025/recommended-directions/
+- **Used for**: Competitive AI equilibrium research (TIER 2B, deferred implementation)
+- **Key findings**: Multi-agent coordination failures (aggregated negligible harms, information cascades, ambiguous responsibility, inadequate information sharing); game-theoretic approaches recommended
+- **Relevance**: Anthropic's 2025 research priorities explicitly call for game-theoretic multi-agent coordination
+
+**Anthropic & Collective Intelligence Project (2024).** Collective Constitutional AI: Aligning a Language Model with Public Input. *ACM FAccT 2024*
+- **Used for**: Competitive AI equilibrium research (TIER 2B, deferred implementation)
+- **Key findings**: Democratic input process (~1,000 Americans) to draft AI constitution using Polis platform; polycentric value alignment outperforms centralized alignment
+- **Relevance**: Validates alternative to monolithic alignment enforcement - governance process where diverse stakeholders shape AI behavior
 
 ### Adversarial AI & Deception
 
