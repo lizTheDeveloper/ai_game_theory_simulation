@@ -20,6 +20,7 @@
 
 import type { GameState } from '../types/game';
 import type { RNGFunction } from '../types/game';
+import { assertProbability, assertInRange } from './utils/assertions';
 
 /**
  * Nuclear Command & Control System State
@@ -397,7 +398,15 @@ export function deployCircuitBreaker(
         console.log(`   Policy: Dangerous AIs can be remotely deactivated before nuclear escalation\n`);
       } else {
         // Increase coverage if already deployed
-        ncc.aiKillSwitches.coverage = Math.min(1.0, config?.coverage ?? ncc.aiKillSwitches.coverage + 0.1);
+        const newCoverage = config?.coverage !== undefined
+          ? config.coverage
+          : ncc.aiKillSwitches.coverage + 0.1;
+        ncc.aiKillSwitches.coverage = assertProbability(Math.min(1.0, newCoverage), {
+          location: 'nuclearCommandControl.deployNuclearCommandControlSystem',
+          valueName: 'aiKillSwitches.coverage',
+          month: currentMonth,
+          additionalInfo: { system: 'ai_kill_switches', update: 'increase coverage' }
+        });
       }
       break;
 
@@ -412,7 +421,15 @@ export function deployCircuitBreaker(
         console.log(`   Policy: Mandatory cooling-off period for high-tension nuclear situations\n`);
       } else {
         // Increase delay duration if already deployed
-        ncc.timeDelays.delayDuration = Math.min(48, config?.delayDuration ?? ncc.timeDelays.delayDuration + 6);
+        const newDelayDuration = config?.delayDuration !== undefined
+          ? config.delayDuration
+          : ncc.timeDelays.delayDuration + 6;
+        ncc.timeDelays.delayDuration = assertInRange(Math.min(48, newDelayDuration), 0, 48, {
+          location: 'nuclearCommandControl.deployNuclearCommandControlSystem',
+          valueName: 'timeDelays.delayDuration',
+          month: currentMonth,
+          additionalInfo: { system: 'time_delays', update: 'increase delay duration' }
+        });
       }
       break;
   }

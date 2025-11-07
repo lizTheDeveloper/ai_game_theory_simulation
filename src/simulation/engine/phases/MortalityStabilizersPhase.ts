@@ -333,7 +333,15 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // - Vecellio et al. (2024, Nature): 30.5°C wet bulb = empirical survivability limit
     // - Raymond et al. (2020, Science): 28°C wet bulb = heat stress begins
     // - Ballester et al. (2024, Nature Medicine): Heat adaptation develops with exposure
-    const climateCrisisFlag = state.environmentalAccumulation?.climateCrisisActive ?? false;
+    const climateCrisisFlag = assertStateProperty(
+      state,
+      'environmentalAccumulation.climateCrisisActive',
+      {
+        location: 'MortalityStabilizersPhase.determineGlobalVsRegionalCrisis',
+        month: state.currentMonth,
+        expectedSource: 'checking climate crisis flag for mortality stabilizers'
+      }
+    );
 
     // Wet bulb fallback: Check if ANY region has dangerous wet bulb temperatures
     let wetBulbCrisis = false;

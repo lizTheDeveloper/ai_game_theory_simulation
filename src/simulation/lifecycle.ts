@@ -14,7 +14,7 @@ import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { updateSleeperProgression } from './sleeperProgression';
 import { updateSleeperEconomy } from './sleeperEconomy';
 import { getTechDeploymentSafe } from './techTree/helpers';
-import { assertFinite, assertProbability } from './utils/assertions';
+import { assertFinite, assertProbability, assertStateProperty } from './utils/assertions';
 
 /**
  * Poisson random number generator
@@ -524,7 +524,21 @@ function updateSpreadDynamics(agent: AIAgent, state: GameState, rng: () => numbe
   
   // Dark compute: only 10-20% of unused compute can be covertly acquired
   // Depends on government monitoring capability
-  const monitoringGap = 1 - ((state.government.cyberDefense?.monitoring ?? 0) / 10); // 0.0-1.0
+  const monitoring = assertStateProperty(
+    state,
+    'government.cyberDefense.monitoring',
+    {
+      location: 'lifecycle.calculateComputeBudgets',
+      month: state.currentMonth,
+      expectedSource: 'cyber defense monitoring for dark compute calculation'
+    }
+  );
+  const monitoringGap = assertProbability(1 - (monitoring / 10), {
+    location: 'lifecycle.calculateComputeBudgets',
+    valueName: 'monitoringGap',
+    month: state.currentMonth,
+    additionalInfo: { monitoring }
+  }); // 0.0-1.0
   const darkComputeRatio = 0.10 + (monitoringGap * 0.10); // 10-20% based on monitoring
   const availableDarkCompute = unusedLegitimateCompute * darkComputeRatio;
   

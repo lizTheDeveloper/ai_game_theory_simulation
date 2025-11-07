@@ -365,9 +365,18 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
           pairsPassedDeterrenceCheck++;
           console.warn(`      ⚠️  DETERRENCE WEAK: Bilateral deterrence ${(bilateralDeterrence * 100).toFixed(0)}% (threshold: 70%)`);
 
-          
+
           // Check human veto points
-          const states = state.nuclearStates ?? [];
+          const states = assertDefined(state.nuclearStates, {
+            location: 'extinctions.checkNuclearWarRisk',
+            valueName: 'nuclearStates',
+            additionalInfo: {
+              month: state.currentMonth,
+              nationA: tension.nationA,
+              nationB: tension.nationB,
+              context: 'nuclear states must be initialized to check veto points'
+            }
+          });
           const stateA = states.find(s => s.name === tension.nationA);
           const stateB = states.find(s => s.name === tension.nationB);
           

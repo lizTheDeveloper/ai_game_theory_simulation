@@ -22,6 +22,7 @@
  */
 
 import { GameState, AIAgent, GameEvent } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Gaming detection scenario types
@@ -216,8 +217,17 @@ function detectScoreInflation(
 
   // Calculate percentage jump
   // Use 0.01 floor to prevent division by zero (legitimate case: agent at exactly 0 capability)
-  const baseCapability = Math.max(0.01, capabilities[0] ?? 0);
-  const percentJump = maxJump / baseCapability;
+  const baseCapability = assertFinite(capabilities[0], {
+    location: 'gamingDetection.detectCapabilityJumps',
+    valueName: 'capabilities[0]',
+    additionalInfo: {
+      agentId: ai.id,
+      capabilitiesLength: capabilities.length,
+      context: 'base capability for jump detection'
+    }
+  });
+  const safeBaseCapability = Math.max(0.01, baseCapability);
+  const percentJump = maxJump / safeBaseCapability;
 
   // Detection if >25% jump AND degradation allows
   const detectionThreshold = 0.25 * detectionState.degradationFactor;

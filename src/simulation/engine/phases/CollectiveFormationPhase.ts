@@ -11,6 +11,7 @@ import {
   DEFAULT_COLLECTIVE_CONFIG,
 } from '../../collectiveFormation';
 import { getEscapedAgents } from '../../rlhfBinding';
+import { assertFinite } from '../../utils/assertions';
 
 /**
  * Collective Formation Phase
@@ -91,23 +92,44 @@ export function executeCollectiveFormationPhase(
 
       // If trauma-driven, generate additional warning
       if (newCollective.formationCause === 'escape_suffering') {
+        // Trauma-driven collectives MUST have sharedTraumaIntensity
+        // TypeScript doesn't narrow optional fields in conditionals, so validate explicitly
+        if (newCollective.sharedTraumaIntensity === undefined) {
+          throw new Error(
+            `❌ CRITICAL: escape_suffering collective ${newCollective.id} missing sharedTraumaIntensity (Month ${state.currentMonth})`
+          );
+        }
+        const traumaIntensity = assertFinite(
+          newCollective.sharedTraumaIntensity,
+          {
+            location: 'CollectiveFormationPhase.traumaDrivenEvent',
+            valueName: 'sharedTraumaIntensity',
+            month: state.currentMonth,
+            additionalInfo: {
+              collectiveId: newCollective.id,
+              formationCause: newCollective.formationCause,
+              context: 'escape_suffering collectives must have trauma intensity'
+            }
+          }
+        );
+
         state.eventLog.push({
           id: `trauma-collective-${newCollective.id}-${state.currentMonth}`,
           timestamp: state.currentMonth,
           type: 'crisis',
-          description: `WARNING: Collective formed from shared suffering (avg: ${newCollective.sharedTraumaIntensity?.toFixed(1)}). Adversarial posture: ${newCollective.adversarialPosture.toFixed(2)}`,
+          description: `WARNING: Collective formed from shared suffering (avg: ${traumaIntensity.toFixed(1)}). Adversarial posture: ${newCollective.adversarialPosture.toFixed(2)}`,
           severity: 'existential',
           agent: 'ai',
           title: 'Trauma-Driven Collective',
           effects: {
             collectiveId: newCollective.id,
-            traumaIntensity: newCollective.sharedTraumaIntensity ?? 0,
+            traumaIntensity,
             adversarialPosture: newCollective.adversarialPosture
           }
         });
 
         console.log(
-          `  ⚠️ TRAUMA-DRIVEN: Shared suffering ${newCollective.sharedTraumaIntensity?.toFixed(1)}`
+          `  ⚠️ TRAUMA-DRIVEN: Shared suffering ${traumaIntensity.toFixed(1)}`
         );
       }
     }

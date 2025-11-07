@@ -387,20 +387,24 @@ export function applyResentmentRecovery(
 function calculateControlStability(state: GameState): number {
   // Low control changes = stable treatment
   const currentControl = state.government.capabilityToControl;
-  const previousControl = assertFinite(
-    assertDefined(state.government.previousControlLevel, {
-      location: 'calculateControlStability',
-      valueName: 'government.previousControlLevel',
-      month: state.currentMonth,
-      additionalInfo: { currentControl, context: 'control stability check' }
-    }),
-    {
-      location: 'calculateControlStability',
-      valueName: 'previousControlLevel',
-      month: state.currentMonth,
-      additionalInfo: { currentControl }
-    }
-  );
+
+  // At Month 0, previousControlLevel doesn't exist yet - use currentControl (no change)
+  const previousControl = state.currentMonth === 0
+    ? currentControl
+    : assertFinite(
+        assertDefined(state.government.previousControlLevel, {
+          location: 'calculateControlStability',
+          valueName: 'government.previousControlLevel',
+          month: state.currentMonth,
+          additionalInfo: { currentControl, context: 'control stability check' }
+        }),
+        {
+          location: 'calculateControlStability',
+          valueName: 'previousControlLevel',
+          month: state.currentMonth,
+          additionalInfo: { currentControl }
+        }
+      );
   const controlChange = Math.abs(currentControl - previousControl);
 
   // Normalized: 0 change = 1.0 stability, 5+ change = 0.0 stability

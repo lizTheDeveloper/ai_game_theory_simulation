@@ -15,7 +15,7 @@ import { getEnergyConstraintMultiplier } from './powerGeneration';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { addSimulationEvent } from './utils/eventLogger';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 
 /**
  * Phase 4: Compute scaling law
@@ -122,7 +122,15 @@ export function calculateInfrastructureMultiplier(state: GameState): number {
   // Tipping point cascade severely disrupts infrastructure
   if (state.planetaryBoundariesSystem?.cascadeActive) {
     const currentMonth = state.currentYear * 12 + state.currentMonth;
-    const cascadeStart = state.planetaryBoundariesSystem.cascadeStartMonth ?? currentMonth;
+    const cascadeStart = assertStateProperty(
+      state,
+      'planetaryBoundariesSystem.cascadeStartMonth',
+      {
+        location: 'research.calculateAIResearchRate',
+        month: state.currentMonth,
+        expectedSource: 'cascade start month required when cascade is active'
+      }
+    );
     const months = currentMonth - cascadeStart;
     // Degradation increases over time during cascade
     const cascadePenalty = Math.max(0.5, 1.0 - (months * 0.02)); // 2% per month, floor at 50%
