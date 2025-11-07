@@ -143,12 +143,15 @@ function updateWeights(
 
   // Enforce minimum weight (10% each) for robustness
   const minWeight = 0.10;
-  Object.keys(newWeights).forEach(key => {
+  // FIX (Nov 7, 2025): Sort keys for deterministic iteration (Issue #11)
+  const sortedKeys = Object.keys(newWeights).sort();
+  sortedKeys.forEach(key => {
     (newWeights as any)[key] = Math.max(minWeight, (newWeights as any)[key]);
   });
 
   // Normalize to sum to 1.0
-  const sum = Object.values(newWeights).reduce((a, b) => a + b, 0);
+  // FIX (Nov 7, 2025): Sort for deterministic reduce order (Issue #11)
+  const sum = sortedKeys.reduce((a, k) => a + (newWeights as any)[k], 0);
   newWeights = {
     noiseInjection: newWeights.noiseInjection / sum,
     behavioral: newWeights.behavioral / sum,

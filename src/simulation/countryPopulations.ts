@@ -616,8 +616,10 @@ export function getCountryPopulationSummary(state: GameState): {
   largestRemaining: { name: CountryName; population: number } | null;
 } {
   const sys = state.countryPopulationSystem;
-  const countries = Object.values(sys.countries);
-  
+  // FIX (Nov 7, 2025): Sort for deterministic reduce order (Issue #11)
+  const countries = Object.values(sys.countries)
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   const surviving = countries.filter(c => !c.depopulated);
   const largestRemaining = surviving.length > 0
     ? surviving.reduce((max, c) => c.population > max.population ? c : max)

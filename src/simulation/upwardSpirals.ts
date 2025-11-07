@@ -232,7 +232,9 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
 
   // Research investment (as % of economy)
   const researchInvestments = state.government.researchInvestments;
-  const totalResearch = Object.values(researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
+  // FIX (Nov 7, 2025): Sort keys for deterministic reduce order (Issue #11)
+  const sortedKeys = Object.keys(researchInvestments).sort();
+  const totalResearch = sortedKeys.reduce((sum, key) => sum + (Number(researchInvestments[key]) || 0), 0);
   const researchIntensive = totalResearch > 50; // $50B+/month
 
   // AI-accelerated research

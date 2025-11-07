@@ -790,7 +790,10 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
     // War zones experience 5× higher mortality
     if (state.countryPopulationSystem) {
       const affectedCount = Math.floor(1 + rng() * 3);
-      const shuffled = Object.values(state.countryPopulationSystem.countries).sort(() => rng() - 0.5);
+      // FIX (Nov 7, 2025): Sort by name first for deterministic base order (Issue #11)
+      const shuffled = Object.values(state.countryPopulationSystem.countries)
+        .sort((a, b) => a.name.localeCompare(b.name)) // Deterministic base order
+        .sort(() => rng() - 0.5); // THEN randomize deterministically
       for (let i = 0; i < affectedCount && i < shuffled.length; i++) {
         const country = shuffled[i];
         addMortalityRisk(state.humanPopulationSystem, {
@@ -1161,22 +1164,27 @@ function calculateTotalCapability(profile: any): number {
   if (!research.biotech) {
     throw new Error('❌ research.biotech is undefined - capabilityProfile initialization bug');
   }
-  const biotech = Object.values(research.biotech).reduce((a: number, b: any) => a + (b as number), 0) / 4;
+  // FIX (Nov 7, 2025): Sort for deterministic reduce order (Issue #11)
+  const biotechKeys = Object.keys(research.biotech).sort();
+  const biotech = biotechKeys.reduce((a: number, k) => a + ((research.biotech as any)[k] as number), 0) / 4;
 
   if (!research.materials) {
     throw new Error('❌ research.materials is undefined - capabilityProfile initialization bug');
   }
-  const materials = Object.values(research.materials).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+  const materialsKeys = Object.keys(research.materials).sort();
+  const materials = materialsKeys.reduce((a: number, k) => a + ((research.materials as any)[k] as number), 0) / 3;
 
   if (!research.climate) {
     throw new Error('❌ research.climate is undefined - capabilityProfile initialization bug');
   }
-  const climate = Object.values(research.climate).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+  const climateKeys = Object.keys(research.climate).sort();
+  const climate = climateKeys.reduce((a: number, k) => a + ((research.climate as any)[k] as number), 0) / 3;
 
   if (!research.computerScience) {
     throw new Error('❌ research.computerScience is undefined - capabilityProfile initialization bug');
   }
-  const computerScience = Object.values(research.computerScience).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+  const csKeys = Object.keys(research.computerScience).sort();
+  const computerScience = csKeys.reduce((a: number, k) => a + ((research.computerScience as any)[k] as number), 0) / 3;
 
   const avgResearch = (biotech + materials + climate + computerScience) / 4;
 

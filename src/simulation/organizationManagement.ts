@@ -681,9 +681,10 @@ export function calculateComputeRevenue(org: Organization, state: GameState): nu
   
   // Handle computeAllocations as either Map or Object (after JSON serialization)
   const allocations = state.computeInfrastructure.computeAllocations;
-  const allocationValues = allocations instanceof Map 
-    ? Array.from(allocations.values())
-    : Object.values(allocations);
+  // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
+  const allocationValues = allocations instanceof Map
+    ? Array.from(allocations.entries()).sort((a, b) => String(a[0]).localeCompare(String(b[0]))).map(e => e[1])
+    : Object.entries(allocations).sort((a, b) => a[0].localeCompare(b[0])).map(e => e[1]);
   
   const allocatedCompute = allocationValues
     .filter((alloc: any) => org.ownedAIModels.includes(alloc.aiId))
