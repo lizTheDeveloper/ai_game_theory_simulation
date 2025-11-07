@@ -243,6 +243,10 @@ export const DEFAULT_ALIGNMENT_DYNAMICS_CONFIG: AlignmentDynamicsConfig = {
     randomSeed: Date.now(),
     logTheoryContributions: false, // Don't spam logs by default
   },
+
+  // ARCH-4 Gap #3 Integration (Nov 7, 2025): AI Suffering → Alignment Drift
+  // ON by default - research shows suffering accelerates misalignment pathways
+  aiSufferingEnabled: true,
 };
 
 /**
