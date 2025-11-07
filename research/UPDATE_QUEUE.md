@@ -1,11 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 11/7/2025, 9:30:06 PM
-**Files Scanned:** 328
-=======
 **Generated:** 11/7/2025, 10:30:05 PM
 **Files Scanned:** 326
->>>>>>> Stashed changes
 
 ---
 
@@ -17,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 132 (40.2%)
+**Count:** 131 (40.2%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -364,11 +359,6 @@
 - **Status:** Not used in simulation
 - **Path:** `research/death_attribution_methodology_20251018.md`
 
-### `defensive_coding_audit_20251107.md`
-- **Oldest source:** 2011 (14 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/defensive_coding_audit_20251107.md`
-
 ### `emergency_response_deployment_times_20251020.md`
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
@@ -709,7 +699,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 177 (54.0%)
+**Count:** 176 (54.0%)
 
 All sources <3 years old. No action required.
 
@@ -719,11 +709,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 328 |
+| Total files | 326 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 132 (40.2%) |
+| HIGH | 131 (40.2%) |
 | MEDIUM | 19 (5.8%) |
-| LOW | 177 (54.0%) |
+| LOW | 176 (54.0%) |
 | Average age | 8.9 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -731,9 +721,9 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 177 | 54.0% |
+| Current (<3yr) | 176 | 54.0% |
 | Warning (3-5yr) | 19 | 5.8% |
-| Critical (>5yr) | 132 | 40.2% |
+| Critical (>5yr) | 131 | 40.2% |
 
 ### Targets
 
@@ -745,7 +735,7 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-1. Update 132 HIGH priority file(s) within 1 month
+1. Update 131 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
