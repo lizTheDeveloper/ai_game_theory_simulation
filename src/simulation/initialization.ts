@@ -274,7 +274,8 @@ export function createAIAgent(
   const capabilityProfile = scaleCapabilityProfile(baseProfile, scalingFactor);
 
   // Calculate actual total capability from scaled profile
-  const actualCapability = calculateTotalCapabilityFromProfile(capabilityProfile);
+  // CRITICAL FIX (Nov 7, 2025): Round to integer (capabilities are discrete levels 0-5)
+  const actualCapability = Math.round(calculateTotalCapabilityFromProfile(capabilityProfile));
   
   // Determine sleeper status (5-10% of misaligned AIs are sleepers)
   const internalAlignment = alignment - 0.0 * 0.8; // Initial resentment = 0
