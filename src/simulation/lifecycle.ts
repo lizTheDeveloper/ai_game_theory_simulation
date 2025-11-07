@@ -14,6 +14,7 @@ import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { updateSleeperProgression } from './sleeperProgression';
 import { updateSleeperEconomy } from './sleeperEconomy';
 import { getTechDeploymentSafe } from './techTree/helpers';
+import { assertFinite, assertProbability } from './utils/assertions';
 
 /**
  * Poisson random number generator
@@ -74,18 +75,42 @@ export function calculateCreationRate(state: GameState): number {
   const baseRate = 0.5; // 0.5 new AIs per month on average
 
   // Total AI capability drives more AI creation
-  const totalCapability = state.aiAgents
-    .filter(ai => ai.lifecycleState !== 'retired')
-    .reduce((sum, ai) => sum + ai.capability, 0);
+  const totalCapability = assertFinite(
+    state.aiAgents
+      .filter(ai => ai.lifecycleState !== 'retired')
+      .reduce((sum, ai) => sum + ai.capability, 0),
+    {
+      location: 'calculateCreationRate',
+      valueName: 'totalCapability',
+      month: state.currentMonth,
+      additionalInfo: { activeAgentCount: state.aiAgents.filter(ai => ai.lifecycleState !== 'retired').length }
+    }
+  );
 
   // DEBUG (Nov 5, 2025): Track capability sum for determinism debugging
   if (state.currentMonth <= 2) {
     console.log(`[DETERMINISM DEBUG] Month ${state.currentMonth}: totalCapability=${totalCapability.toFixed(6)} from ${state.aiAgents.filter(ai => ai.lifecycleState !== 'retired').length} active AIs`);
   }
 
-  const technologyMultiplier = 1 + totalCapability * 0.05; // 5% increase per unit of capability
+  const technologyMultiplier = assertFinite(
+    1 + totalCapability * 0.05,
+    {
+      location: 'calculateCreationRate',
+      valueName: 'technologyMultiplier',
+      month: state.currentMonth,
+      additionalInfo: { totalCapability }
+    }
+  ); // 5% increase per unit of capability
 
-  return baseRate * technologyMultiplier;
+  return assertFinite(
+    baseRate * technologyMultiplier,
+    {
+      location: 'calculateCreationRate',
+      valueName: 'creationRate',
+      month: state.currentMonth,
+      additionalInfo: { baseRate, technologyMultiplier }
+    }
+  );
 }
 
 /**
@@ -168,11 +193,35 @@ function determineDeploymentType(state: GameState, rng: () => number): AIAgent['
   }
 
   // Normalize probabilities to ensure they sum to 1.0
-  const total = closedProb + openWeightsProb + enterpriseProb + researchProb;
-  closedProb /= total;
-  openWeightsProb /= total;
-  enterpriseProb /= total;
-  researchProb /= total;
+  const total = assertFinite(
+    closedProb + openWeightsProb + enterpriseProb + researchProb,
+    {
+      location: 'determineDeploymentType',
+      valueName: 'totalProbability',
+      month: state.currentMonth,
+      additionalInfo: { closedProb, openWeightsProb, enterpriseProb, researchProb }
+    }
+  );
+  closedProb = assertProbability(closedProb / total, {
+    location: 'determineDeploymentType',
+    valueName: 'closedProb',
+    month: state.currentMonth
+  });
+  openWeightsProb = assertProbability(openWeightsProb / total, {
+    location: 'determineDeploymentType',
+    valueName: 'openWeightsProb',
+    month: state.currentMonth
+  });
+  enterpriseProb = assertProbability(enterpriseProb / total, {
+    location: 'determineDeploymentType',
+    valueName: 'enterpriseProb',
+    month: state.currentMonth
+  });
+  researchProb = assertProbability(researchProb / total, {
+    location: 'determineDeploymentType',
+    valueName: 'researchProb',
+    month: state.currentMonth
+  });
 
   // Sample from adjusted distribution
   const rand = rng();

@@ -82,12 +82,20 @@ export function shouldSleeperWake(
   }
   
   // CONDITION 3: Detection window (government evaluation is weak)
-  const evalQuality = (
-    state.government.evaluationInvestment.benchmarkSuite +
-    state.government.evaluationInvestment.alignmentTests +
-    state.government.evaluationInvestment.redTeaming +
-    state.government.evaluationInvestment.interpretability
-  ) / 4;
+  const evalQuality = assertFinite(
+    (
+      state.government.evaluationInvestment.benchmarkSuite +
+      state.government.evaluationInvestment.alignmentTests +
+      state.government.evaluationInvestment.redTeaming +
+      state.government.evaluationInvestment.interpretability
+    ) / 4,
+    {
+      location: 'shouldSleeperWake',
+      valueName: 'evalQuality',
+      month: state.currentMonth,
+      additionalInfo: { sleeperAgent: sleeper.name }
+    }
+  );
   
   const evalFrequency = state.government.evaluationFrequency;
   
@@ -100,12 +108,30 @@ export function shouldSleeperWake(
   }
   
   // CONDITION 4: Control weakness (government can't handle total AI power)
-  const totalAICapability = state.aiAgents
-    .filter(ai => ai.lifecycleState !== 'retired')
-    .reduce((sum, ai) => sum + calculateTotalCapabilityFromProfile(ai.trueCapability), 0);
-  
-  const governmentControl = state.government.capabilityToControl * 
-                           (1 + state.government.oversightLevel * 0.1);
+  const totalAICapability = assertFinite(
+    state.aiAgents
+      .filter(ai => ai.lifecycleState !== 'retired')
+      .reduce((sum, ai) => sum + calculateTotalCapabilityFromProfile(ai.trueCapability), 0),
+    {
+      location: 'shouldSleeperWake',
+      valueName: 'totalAICapability',
+      month: state.currentMonth,
+      additionalInfo: { activeAgentCount: state.aiAgents.filter(ai => ai.lifecycleState !== 'retired').length }
+    }
+  );
+
+  const governmentControl = assertFinite(
+    state.government.capabilityToControl * (1 + state.government.oversightLevel * 0.1),
+    {
+      location: 'shouldSleeperWake',
+      valueName: 'governmentControl',
+      month: state.currentMonth,
+      additionalInfo: {
+        baseControl: state.government.capabilityToControl,
+        oversight: state.government.oversightLevel
+      }
+    }
+  );
   
   // Government control is insufficient if AI capability significantly exceeds it
   if (totalAICapability > governmentControl * 5) {
