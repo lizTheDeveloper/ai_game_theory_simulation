@@ -1,4 +1,6 @@
-# Planning & Coordination
+# Module 05: Planning & Coordination
+
+*Module 5 of 9 | Prerequisites: [Module 01](./01_AGENT_ARCHITECTURE.md), [Module 03](./03_AUTONOMOUS_WORKFLOWS.md)*
 
 **Roadmaps, devlogs, planning systems - and the sacred duty of historical preservation**
 
