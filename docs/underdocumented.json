@@ -30600,7 +30600,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 270,
+    "line": 275,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -30608,7 +30608,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 271,
+    "line": 276,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -30616,7 +30616,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 275,
+    "line": 280,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -30624,7 +30624,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 276,
+    "line": 281,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -30632,7 +30632,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 277,
+    "line": 282,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -30640,7 +30640,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 278,
+    "line": 283,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -30648,183 +30648,103 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 283,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateAMRMortalityRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 284,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 287,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateAMRMortalityRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 288,
     "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 291,
-    "type": "property",
     "name": "location",
     "currentDoc": "(none)",
     "context": "location: 'calculateAMRMortalityRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 289,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 292,
     "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateAMRMortalityRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 293,
+    "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 296,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateAMRMortalityRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 297,
     "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 303,
+    "type": "property",
     "name": "location",
     "currentDoc": "(none)",
     "context": "location: 'calculateAMRMortalityRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 298,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'overuseAcceleration',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 299,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 300,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { antibioticOveruse }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 304,
     "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateAMRMortalityRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 305,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'livestockAcceleration',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 306,
-    "type": "property",
     "name": "month",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
+    "context": "month: state.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 307,
     "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { livestockIntensity }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 311,
-    "type": "property",
     "name": "location",
     "currentDoc": "(none)",
     "context": "location: 'calculateAMRMortalityRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 312,
+    "line": 308,
     "type": "property",
-    "name": "valueName",
+    "name": "month",
     "currentDoc": "(none)",
-    "context": "valueName: 'sanitationBenefit',"
+    "context": "month: state.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 313,
     "type": "property",
-    "name": "month",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
+    "context": "location: 'calculateAMRMortalityRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 314,
     "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { sanitation }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 319,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateAMRMortalityRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 320,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 323,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateAMRMortalityRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 324,
-    "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'mitigationReduction',"
+    "context": "valueName: 'populationMillions',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 325,
+    "line": 315,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -30832,15 +30752,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 326,
+    "line": 316,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { mitigationFactor }"
+    "context": "additionalInfo: { populationBillions }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 331,
+    "line": 322,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -30848,11 +30768,27 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 332,
+    "line": 323,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'refugeeDensity',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 324,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 325,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { totalDisplaced, populationMillions }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
@@ -30868,7 +30804,7 @@
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'effectiveGrowthRate',"
+    "context": "valueName: 'refugeeAmplification',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
@@ -30884,11 +30820,11 @@
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: {"
+    "context": "additionalInfo: { refugeeDensity, totalDisplaced, populationMillions }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 352,
+    "line": 346,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -30896,31 +30832,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 353,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 358,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateAMRMortalityRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 359,
+    "line": 347,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'currentDeathRate',"
+    "context": "valueName: 'overuseAcceleration',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 360,
+    "line": 348,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -30928,15 +30848,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 361,
+    "line": 349,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: {"
+    "context": "additionalInfo: { antibioticOveruse }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 371,
+    "line": 353,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -30944,31 +30864,119 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 354,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'livestockAcceleration',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 355,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 356,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { livestockIntensity }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 360,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateAMRMortalityRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 361,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'sanitationBenefit',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 362,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 363,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { sanitation }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 368,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateAMRMortalityRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 369,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 372,
     "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateAMRMortalityRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 373,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'mitigationReduction',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 374,
+    "type": "property",
     "name": "month",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
+    "context": "month: state.currentMonth,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 390,
+    "line": 375,
     "type": "property",
-    "name": "state",
+    "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "state: GameState"
+    "context": "additionalInfo: { mitigationFactor }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 394,
+    "line": 380,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateMedicalEffectiveness',"
+    "context": "location: 'calculateAMRMortalityRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 395,
+    "line": 381,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -30976,19 +30984,35 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 398,
+    "line": 386,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateMedicalEffectiveness',"
+    "context": "location: 'calculateAMRMortalityRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 399,
+    "line": 387,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'effectiveGrowthRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 388,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 389,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
@@ -30996,7 +31020,7 @@
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateMedicalEffectiveness',"
+    "context": "location: 'calculateAMRMortalityRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
@@ -31008,23 +31032,23 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 412,
+    "line": 408,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateMedicalEffectiveness',"
+    "context": "location: 'calculateAMRMortalityRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 413,
+    "line": 409,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'progressToTarget',"
+    "context": "valueName: 'currentDeathRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 414,
+    "line": 410,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31032,7 +31056,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 415,
+    "line": 411,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -31040,15 +31064,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 426,
+    "line": 428,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateMedicalEffectiveness',"
+    "context": "location: 'calculateAMRMortalityRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 427,
+    "line": 429,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31056,139 +31080,75 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 430,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateMedicalEffectiveness',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 431,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'effectivenessDecline',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 432,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 433,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { progressToTarget, effectivenessDeclineCap }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 436,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateMedicalEffectiveness',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 437,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'effectiveness',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 438,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 439,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { effectivenessDecline }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 453,
+    "line": 447,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
-    "context": "state: GameState,"
+    "context": "state: GameState"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 454,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 458,
+    "line": 451,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyAMRMortality',"
+    "context": "location: 'calculateMedicalEffectiveness',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 452,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 455,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateMedicalEffectiveness',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 456,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 459,
     "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateMedicalEffectiveness',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 460,
+    "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: state.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 462,
+    "line": 469,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyAMRMortality',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 463,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'population',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 464,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 465,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { populationBillions }"
+    "context": "location: 'calculateMedicalEffectiveness',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 470,
     "type": "property",
-    "name": "location",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "location: 'applyAMRMortality',"
+    "context": "valueName: 'progressToTarget',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
@@ -31196,55 +31156,23 @@
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 474,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyAMRMortality',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 475,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'monthlyDeathRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 476,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
     "context": "month: state.currentMonth,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 477,
+    "line": 472,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { annualDeathRatePer100K }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 482,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyAMRMortality',"
+    "context": "additionalInfo: {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 483,
     "type": "property",
-    "name": "valueName",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "valueName: 'monthlyDeaths',"
+    "context": "location: 'calculateMedicalEffectiveness',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
@@ -31252,35 +31180,27 @@
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
+    "context": "month: state.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 485,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { population, monthlyDeathRate }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 492,
+    "line": 487,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyAMRMortality',"
+    "context": "location: 'calculateMedicalEffectiveness',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 493,
+    "line": 488,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'monthlyDeathsMillions',"
+    "context": "valueName: 'effectivenessDecline',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 494,
+    "line": 489,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31288,23 +31208,47 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 495,
+    "line": 490,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { monthlyDeaths }"
+    "context": "additionalInfo: { progressToTarget, effectivenessDeclineCap }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 531,
+    "line": 493,
     "type": "property",
-    "name": "state",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "state: GameState"
+    "context": "location: 'calculateMedicalEffectiveness',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 569,
+    "line": 494,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'effectiveness',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 495,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 496,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { effectivenessDecline }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 510,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -31312,7 +31256,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 570,
+    "line": 511,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -31320,31 +31264,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 637,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 676,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 684,
+    "line": 515,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateEconomicImpact',"
+    "context": "location: 'applyAMRMortality',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 685,
+    "line": 516,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31352,23 +31280,23 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 688,
+    "line": 519,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateEconomicImpact',"
+    "context": "location: 'applyAMRMortality',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 689,
+    "line": 520,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'costPerDeath',"
+    "context": "valueName: 'population',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 690,
+    "line": 521,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31376,23 +31304,23 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 691,
+    "line": 522,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { targetAnnualCost2050, targetDeathRate }"
+    "context": "additionalInfo: { populationBillions }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 696,
+    "line": 527,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateEconomicImpact',"
+    "context": "location: 'applyAMRMortality',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 697,
+    "line": 528,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31400,23 +31328,23 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 700,
+    "line": 531,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateEconomicImpact',"
+    "context": "location: 'applyAMRMortality',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 701,
+    "line": 532,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'annualCost',"
+    "context": "valueName: 'monthlyDeathRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 702,
+    "line": 533,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31424,31 +31352,31 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 703,
+    "line": 534,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { currentDeathRate, costPerDeath }"
+    "context": "additionalInfo: { annualDeathRatePer100K }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 708,
+    "line": 539,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateEconomicImpact',"
+    "context": "location: 'applyAMRMortality',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 709,
+    "line": 540,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'monthlyCost',"
+    "context": "valueName: 'monthlyDeaths',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 710,
+    "line": 541,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31456,47 +31384,31 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 711,
+    "line": 542,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { annualCost }"
+    "context": "additionalInfo: { population, monthlyDeathRate }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 722,
+    "line": 549,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateEconomicImpact',"
+    "context": "location: 'applyAMRMortality',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 723,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 726,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateEconomicImpact',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 727,
+    "line": 550,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'amrICUDaysPerMonth',"
+    "context": "valueName: 'monthlyDeathsMillions',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 728,
+    "line": 551,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -31504,7 +31416,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 729,
+    "line": 552,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -31512,7 +31424,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
-    "line": 747,
+    "line": 588,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 626,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -31520,7 +31440,215 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 627,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 694,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 733,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 741,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateEconomicImpact',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 742,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 745,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateEconomicImpact',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 746,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'costPerDeath',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 747,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
     "line": 748,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { targetAnnualCost2050, targetDeathRate }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 753,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateEconomicImpact',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 754,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 757,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateEconomicImpact',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 758,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'annualCost',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 759,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 760,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { currentDeathRate, costPerDeath }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 765,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateEconomicImpact',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 766,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'monthlyCost',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 767,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 768,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { annualCost }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 779,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateEconomicImpact',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 780,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 783,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateEconomicImpact',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 784,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'amrICUDaysPerMonth',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 785,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 786,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { monthlyDeaths }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 804,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/antimicrobialResistance.ts",
+    "line": 805,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
