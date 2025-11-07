@@ -17,6 +17,11 @@ import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } fr
 import { updateRadiationSystem } from '@/types/radiation';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import {
+  assertFinite,
+  assertInRange,
+  assertProbability,
+} from '@/simulation/utils/assertions';
 
 export class RadiationSystemPhase implements SimulationPhase {
   readonly id = 'radiation_system';
@@ -42,7 +47,24 @@ export class RadiationSystemPhase implements SimulationPhase {
     // Apply radiation deaths via centralized mortality system
     if (deaths > 0) {
       // Calculate monthly mortality rate (deaths is already in millions)
-      const mortalityRate = deaths / state.humanPopulationSystem.population;
+      const mortalityRate = assertFinite(
+        assertFinite(deaths, {
+          location: 'RadiationSystemPhase:radiationDeaths',
+          valueName: 'deaths',
+          month: state.currentMonth,
+          additionalInfo: { activeExposures: system.activeExposures.length }
+        }) / assertFinite(state.humanPopulationSystem.population, {
+          location: 'RadiationSystemPhase:radiationDeaths',
+          valueName: 'population',
+          month: state.currentMonth,
+        }),
+        {
+          location: 'RadiationSystemPhase:radiationDeaths',
+          valueName: 'mortalityRate',
+          month: state.currentMonth,
+          additionalInfo: { deaths, population: state.humanPopulationSystem.population }
+        }
+      );
 
       addMortalityRisk(state.humanPopulationSystem, {
         type: 'disease', // Radiation sickness & cancer classified as disease
@@ -66,11 +88,36 @@ export class RadiationSystemPhase implements SimulationPhase {
     // Track birth defects (reduce birth rate or increase infant mortality)
     if (birthDefects > 0) {
       // Birth defects reduce effective birth rate by reducing infant survival
-      const birthDefectMortality = birthDefects * 0.3; // 30% of birth defects are fatal
+      const birthDefectMortality = assertFinite(
+        assertFinite(birthDefects, {
+          location: 'RadiationSystemPhase:birthDefects',
+          valueName: 'birthDefects',
+          month: state.currentMonth,
+          additionalInfo: { activeExposures: system.activeExposures.length }
+        }) * 0.3,
+        {
+          location: 'RadiationSystemPhase:birthDefects',
+          valueName: 'birthDefectMortality',
+          month: state.currentMonth,
+          additionalInfo: { birthDefects }
+        }
+      ); // 30% of birth defects are fatal
 
       // Apply birth defect mortality via centralized system
       if (birthDefectMortality > 0) {
-        const mortalityRate = birthDefectMortality / state.humanPopulationSystem.population;
+        const mortalityRate = assertFinite(
+          birthDefectMortality / assertFinite(state.humanPopulationSystem.population, {
+            location: 'RadiationSystemPhase:birthDefects',
+            valueName: 'population',
+            month: state.currentMonth,
+          }),
+          {
+            location: 'RadiationSystemPhase:birthDefects',
+            valueName: 'mortalityRate',
+            month: state.currentMonth,
+            additionalInfo: { birthDefectMortality, population: state.humanPopulationSystem.population }
+          }
+        );
 
         addMortalityRisk(state.humanPopulationSystem, {
           type: 'disease', // Genetic defects classified as disease
@@ -85,7 +132,15 @@ export class RadiationSystemPhase implements SimulationPhase {
       }
 
       // Track non-fatal birth defects for QoL impact
-      const survivingWithDefects = birthDefects * 0.7; // 70% survive but with defects
+      const survivingWithDefects = assertFinite(
+        birthDefects * 0.7,
+        {
+          location: 'RadiationSystemPhase:birthDefects',
+          valueName: 'survivingWithDefects',
+          month: state.currentMonth,
+          additionalInfo: { birthDefects }
+        }
+      ); // 70% survive but with defects
       if (!state.humanPopulationSystem.birthDefectsCount) {
         state.humanPopulationSystem.birthDefectsCount = 0;
       }
@@ -124,15 +179,44 @@ function applyContaminationToFoodSecurity(state: GameState): void {
 
   if (contaminatedCount === 0) return;
 
-  const avgContamination = totalContamination / contaminatedCount;
+  const avgContamination = assertFinite(
+    assertFinite(totalContamination, {
+      location: 'applyContaminationToFoodSecurity',
+      valueName: 'totalContamination',
+      month: state.currentMonth,
+      additionalInfo: { contaminatedCount }
+    }) / contaminatedCount,
+    {
+      location: 'applyContaminationToFoodSecurity',
+      valueName: 'avgContamination',
+      month: state.currentMonth,
+      additionalInfo: { totalContamination, contaminatedCount }
+    }
+  );
 
   // Food security penalty based on contaminated farmland
   // Assume contaminated regions represent 10-30% of global farmland
-  const contaminatedFarmlandFraction = system.contaminatedRegions.size * 0.10; // 10% per region
+  const contaminatedFarmlandFraction = assertFinite(
+    system.contaminatedRegions.size * 0.10,
+    {
+      location: 'applyContaminationToFoodSecurity',
+      valueName: 'contaminatedFarmlandFraction',
+      month: state.currentMonth,
+      additionalInfo: { contaminatedRegionsSize: system.contaminatedRegions.size }
+    }
+  ); // 10% per region
 
   // Agriculture impossible when contamination > 20%
   // Gradual recovery as contamination decays
-  const agriculturePenalty = contaminatedFarmlandFraction * Math.min(1.0, avgContamination / 0.2);
+  const agriculturePenalty = assertFinite(
+    contaminatedFarmlandFraction * Math.min(1.0, avgContamination / 0.2),
+    {
+      location: 'applyContaminationToFoodSecurity',
+      valueName: 'agriculturePenalty',
+      month: state.currentMonth,
+      additionalInfo: { contaminatedFarmlandFraction, avgContamination }
+    }
+  );
 
   // Apply to food security (if exists)
   if (state.qualityOfLifeSystems && state.qualityOfLifeSystems.survivalFundamentals) {
@@ -143,7 +227,15 @@ function applyContaminationToFoodSecurity(state: GameState): void {
 
   // Reduce resource economy food production (monthlyHarvest = production)
   if (state.resourceEconomy && state.resourceEconomy.food) {
-    const productionPenalty = agriculturePenalty * 0.3; // 30% production loss per contaminated region
+    const productionPenalty = assertFinite(
+      agriculturePenalty * 0.3,
+      {
+        location: 'applyContaminationToFoodSecurity',
+        valueName: 'productionPenalty',
+        month: state.currentMonth,
+        additionalInfo: { agriculturePenalty }
+      }
+    ); // 30% production loss per contaminated region
     state.resourceEconomy.food.monthlyHarvest = Math.max(0,
       state.resourceEconomy.food.monthlyHarvest * (1 - productionPenalty)
     );
@@ -160,19 +252,71 @@ function applyContaminationToQoL(state: GameState): void {
   if (system.totalRadiationDeaths === 0 && system.totalBirthDefects === 0) return;
 
   // Calculate QoL impact from ongoing health crisis
-  const population = state.humanPopulationSystem.population;
+  const population = assertFinite(state.humanPopulationSystem.population, {
+    location: 'applyContaminationToQoL',
+    valueName: 'population',
+    month: state.currentMonth,
+  });
 
   // Cancer deaths as fraction of population
-  const cancerRate = system.totalCancerDeaths / population;
+  const cancerRate = assertFinite(
+    assertFinite(system.totalCancerDeaths, {
+      location: 'applyContaminationToQoL',
+      valueName: 'totalCancerDeaths',
+      month: state.currentMonth,
+    }) / population,
+    {
+      location: 'applyContaminationToQoL',
+      valueName: 'cancerRate',
+      month: state.currentMonth,
+      additionalInfo: { totalCancerDeaths: system.totalCancerDeaths, population }
+    }
+  );
 
   // Birth defects as fraction of births
   const birthRate = 0.01; // ~1% of population has children per year
-  const annualBirths = population * birthRate;
-  const birthDefectRate = system.totalBirthDefects / (annualBirths * 10); // Last 10 years of births
+  const annualBirths = assertFinite(
+    population * birthRate,
+    {
+      location: 'applyContaminationToQoL',
+      valueName: 'annualBirths',
+      month: state.currentMonth,
+      additionalInfo: { population, birthRate }
+    }
+  );
+  const birthDefectRate = assertFinite(
+    assertFinite(system.totalBirthDefects, {
+      location: 'applyContaminationToQoL',
+      valueName: 'totalBirthDefects',
+      month: state.currentMonth,
+    }) / (annualBirths * 10),
+    {
+      location: 'applyContaminationToQoL',
+      valueName: 'birthDefectRate',
+      month: state.currentMonth,
+      additionalInfo: { totalBirthDefects: system.totalBirthDefects, annualBirths }
+    }
+  ); // Last 10 years of births
 
   // QoL penalties
-  const healthcareBurden = Math.min(0.3, cancerRate * 100 + birthDefectRate * 50); // Up to -30% QoL
-  const psychologicalTrauma = Math.min(0.2, system.activeExposures.length * 0.05); // Up to -20% QoL
+  const healthcareBurden = assertFinite(
+    Math.min(0.3, cancerRate * 100 + birthDefectRate * 50),
+    {
+      location: 'applyContaminationToQoL',
+      valueName: 'healthcareBurden',
+      month: state.currentMonth,
+      additionalInfo: { cancerRate, birthDefectRate }
+    }
+  ); // Up to -30% QoL
+  const psychologicalTrauma = assertFinite(
+    Math.min(0.2, system.activeExposures.length * 0.05),
+    {
+      location: 'applyContaminationToQoL',
+      valueName: 'psychologicalTrauma',
+      month: state.currentMonth,
+      additionalInfo: { activeExposuresCount: system.activeExposures.length }
+    }
+  ); // Up to -20% QoL
 
   // Apply to global QoL (if exists)
   if (state.globalMetrics && state.globalMetrics.qualityOfLife) {

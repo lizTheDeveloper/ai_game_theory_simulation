@@ -18,6 +18,10 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 import type { ActivePolicy, Treaty, GovernmentCapacity } from '../../../types/government';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
+  assertFinite,
+  assertProbability,
+} from '@/simulation/utils/assertions';
+import {
   calculateDeploymentTime,
   calculateTargetEffectiveness,
   isCaptureProbable,
@@ -200,7 +204,20 @@ function attemptAIGovernanceTreaty(state: GameState, rng: RNGFunction): Treaty |
     const isDemo = (gov as any).type?.includes('liberal') || (gov as any).type?.includes('electoral');
 
     // Probability to sign based on capacity and regime type
-    const signProbability = capacity * 0.6 + (isDemo ? 0.3 : 0.1);
+    const signProbability = assertProbability(
+      assertFinite(capacity, {
+        location: 'attemptAIGovernanceTreaty',
+        valueName: 'capacity',
+        month: state.currentMonth,
+        additionalInfo: { countryCode }
+      }) * 0.6 + (isDemo ? 0.3 : 0.1),
+      {
+        location: 'attemptAIGovernanceTreaty',
+        valueName: 'signProbability',
+        month: state.currentMonth,
+        additionalInfo: { countryCode, capacity, isDemo }
+      }
+    );
 
     if (rng() < signProbability) {
       supporters.push(countryCode);
