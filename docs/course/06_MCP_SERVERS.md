@@ -1,6 +1,12 @@
 # Module 06: MCP Servers
 
-**Learning Objectives:**
+*Module 6 of 9 | Prerequisites: [Module 02](./02_COMMUNICATION_SYSTEMS.md)*
+
+**Building custom tools that reduce token consumption by 14x**
+
+---
+
+## Learning Objectives
 1. Understand what MCP (Model Context Protocol) is and why it's critical for multi-agent systems
 2. Learn how MCP servers provide 14x token reduction over bash commands
 3. Build custom MCP servers in TypeScript and Python
