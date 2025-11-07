@@ -506,8 +506,12 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
     throw new Error(`❌ [applyComputeGrowth] baselinePopulation is zero (Month ${state.currentMonth})`);
   }
 
+  // FIX (Nov 7, 2025): Population can grow ABOVE baseline (births exceed deaths)
+  // Clamp to [0, 1] - when population exceeds baseline, treat as 100% maintained (no degradation)
+  // This metric is ONLY for degradation during collapse, not growth scenarios
+  const rawPopFraction = state.humanPopulationSystem.population / state.humanPopulationSystem.baselinePopulation;
   const globalPopFraction = Assertions.assertProbability(
-    state.humanPopulationSystem.population / state.humanPopulationSystem.baselinePopulation,
+    Math.min(1.0, rawPopFraction),
     { location: 'applyComputeGrowth', valueName: 'globalPopFraction', month: state.currentMonth }
   );
 

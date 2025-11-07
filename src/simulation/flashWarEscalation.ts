@@ -25,6 +25,7 @@
 
 import type { GameState } from '../types/game';
 import type { RNGFunction } from './engine/PhaseOrchestrator';
+import { assertFinite, assertProbability, assertInRange, assertStateProperty } from './utils/assertions';
 
 // === FLASH WAR ESCALATION PARAMETERS ===
 
@@ -102,9 +103,16 @@ export function checkFlashWarRisk(state: GameState, rng: RNGFunction): boolean {
   const peace = state.conflictResolution;
 
   // Get average AI capability
-  const avgCapability = state.aiAgents.length > 0
-    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
-    : 0;
+  const agentCount = state.aiAgents.length;
+  const avgCapability = assertFinite(
+    agentCount > 0 ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / agentCount : 0,
+    {
+      location: 'checkFlashWarRisk',
+      valueName: 'avgCapability',
+      month: state.currentMonth,
+      additionalInfo: { agentCount }
+    }
+  );
 
   // No risk if AI capability below threshold
   if (avgCapability < FLASH_WAR_THRESHOLD_CAPABILITY) {
@@ -120,14 +128,29 @@ export function checkFlashWarRisk(state: GameState, rng: RNGFunction): boolean {
   }
 
   // Circuit breakers reduce flash war chance
-  let escalationChance = FLASH_WAR_ESCALATION_CHANCE;
+  let escalationChance = assertProbability(FLASH_WAR_ESCALATION_CHANCE, {
+    location: 'checkFlashWarRisk',
+    valueName: 'escalationChance',
+    month: state.currentMonth
+  });
   if (peace.circuitBreakersActive) {
-    escalationChance *= (1 - CIRCUIT_BREAKER_EFFECTIVENESS);
+    escalationChance = assertProbability(escalationChance * (1 - CIRCUIT_BREAKER_EFFECTIVENESS), {
+      location: 'checkFlashWarRisk',
+      valueName: 'escalationChance_withCircuitBreakers',
+      month: state.currentMonth,
+      additionalInfo: { originalChance: FLASH_WAR_ESCALATION_CHANCE }
+    });
   }
 
   // Each active conflict has independent chance to escalate
   for (let i = 0; i < activeConflicts; i++) {
-    if (rng() < escalationChance) {
+    const randomValue = assertProbability(rng(), {
+      location: 'checkFlashWarRisk',
+      valueName: 'randomValue',
+      month: state.currentMonth,
+      additionalInfo: { conflictIndex: i }
+    });
+    if (randomValue < escalationChance) {
       return true;  // Flash war triggered
     }
   }
@@ -150,14 +173,37 @@ export function applyFlashWarEffects(state: GameState): void {
   const peace = state.conflictResolution;
 
   // Apply 2.5x casualties to current month war deaths
-  const originalWarDeaths = pop.deathsByCategory.war;
-  pop.deathsByCategory.war *= FLASH_WAR_MULTIPLIER;
+  const originalWarDeaths = assertStateProperty(pop.deathsByCategory, 'war', {
+    location: 'applyFlashWarEffects',
+    month: state.currentMonth
+  });
+  const multiplier = assertInRange(FLASH_WAR_MULTIPLIER, 1, 10, {
+    location: 'applyFlashWarEffects',
+    valueName: 'FLASH_WAR_MULTIPLIER',
+    month: state.currentMonth
+  });
+  pop.deathsByCategory.war = assertFinite(originalWarDeaths * multiplier, {
+    location: 'applyFlashWarEffects',
+    valueName: 'newWarDeaths',
+    month: state.currentMonth,
+    additionalInfo: { originalWarDeaths, multiplier }
+  });
 
-  const additionalDeaths = pop.deathsByCategory.war - originalWarDeaths;
+  const additionalDeaths = assertFinite(pop.deathsByCategory.war - originalWarDeaths, {
+    location: 'applyFlashWarEffects',
+    valueName: 'additionalDeaths',
+    month: state.currentMonth,
+    additionalInfo: { originalWarDeaths, newWarDeaths: pop.deathsByCategory.war }
+  });
 
   // Update total death tracking
   // monthlyDeathsApplied is always initialized in initializeHumanPopulationSystem() (Oct 28, 2025)
-  pop.monthlyDeathsApplied = pop.monthlyDeathsApplied + additionalDeaths;
+  pop.monthlyDeathsApplied = assertFinite(pop.monthlyDeathsApplied + additionalDeaths, {
+    location: 'applyFlashWarEffects',
+    valueName: 'monthlyDeathsApplied',
+    month: state.currentMonth,
+    additionalInfo: { previousTotal: pop.monthlyDeathsApplied, additionalDeaths }
+  });
 
   // FIX (Oct 30, 2025): BUG #2 - Flash war additional deaths missing root attribution
   // Flash wars are autonomous AI escalation beyond human control
@@ -222,21 +268,63 @@ export function attemptAIDeEscalation(state: GameState, rng: RNGFunction): boole
       bestSocialCapability = socialCap;
     }
   }
+  bestSocialCapability = assertFinite(bestSocialCapability, {
+    location: 'attemptAIDeEscalation',
+    valueName: 'bestSocialCapability',
+    month: state.currentMonth,
+    additionalInfo: { diplomaticAICount: diplomaticAIs.length }
+  });
 
   // Success chance increases with social capability
-  const successChance = DEESCALATION_SUCCESS_RATE * (1 + (bestSocialCapability / 10));
+  const successChance = assertProbability(
+    DEESCALATION_SUCCESS_RATE * (1 + (bestSocialCapability / 10)),
+    {
+      location: 'attemptAIDeEscalation',
+      valueName: 'successChance',
+      month: state.currentMonth,
+      additionalInfo: { baseRate: DEESCALATION_SUCCESS_RATE, bestSocialCapability }
+    }
+  );
 
-  if (rng() < successChance) {
+  const randomValue = assertProbability(rng(), {
+    location: 'attemptAIDeEscalation',
+    valueName: 'randomValue',
+    month: state.currentMonth
+  });
+  if (randomValue < successChance) {
     // AI mediation successful - reduce war deaths
     const pop = state.humanPopulationSystem;
-    const originalWarDeaths = pop.deathsByCategory.war;
-    pop.deathsByCategory.war *= (1 - DEESCALATION_REDUCES_DEATHS);
+    const originalWarDeaths = assertStateProperty(pop.deathsByCategory, 'war', {
+      location: 'attemptAIDeEscalation',
+      month: state.currentMonth
+    });
+    const reductionFactor = assertProbability(DEESCALATION_REDUCES_DEATHS, {
+      location: 'attemptAIDeEscalation',
+      valueName: 'DEESCALATION_REDUCES_DEATHS',
+      month: state.currentMonth
+    });
+    pop.deathsByCategory.war = assertFinite(originalWarDeaths * (1 - reductionFactor), {
+      location: 'attemptAIDeEscalation',
+      valueName: 'newWarDeaths',
+      month: state.currentMonth,
+      additionalInfo: { originalWarDeaths, reductionFactor }
+    });
 
-    const deathsAverted = originalWarDeaths - pop.deathsByCategory.war;
+    const deathsAverted = assertFinite(originalWarDeaths - pop.deathsByCategory.war, {
+      location: 'attemptAIDeEscalation',
+      valueName: 'deathsAverted',
+      month: state.currentMonth,
+      additionalInfo: { originalWarDeaths, newWarDeaths: pop.deathsByCategory.war }
+    });
 
     // Update total death tracking
     // monthlyDeathsApplied is always initialized in initializeHumanPopulationSystem() (Oct 28, 2025)
-    pop.monthlyDeathsApplied = pop.monthlyDeathsApplied - deathsAverted;
+    pop.monthlyDeathsApplied = assertFinite(pop.monthlyDeathsApplied - deathsAverted, {
+      location: 'attemptAIDeEscalation',
+      valueName: 'monthlyDeathsApplied',
+      month: state.currentMonth,
+      additionalInfo: { previousTotal: pop.monthlyDeathsApplied, deathsAverted }
+    });
 
     // Log success
     console.log(`\n🕊️  AI-MEDIATED DE-ESCALATION SUCCESS (Month ${state.currentMonth})`);
