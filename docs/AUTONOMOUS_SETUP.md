@@ -143,8 +143,13 @@ The worker now exhausts the entire roadmap backlog in priority order, not just C
   - **Active coordination:** Monitor automatically spawns orchestrator when work detected (not just passive notifications)
 - **Automatic PR creation:** Worker creates pull requests after pushing feature branches
 - **GitHub issue alerts:** Automatic issue creation when Claude execution fails
-  - Timeout detection (exit 124) creates issue with `timeout` label
-  - Any non-zero exit code creates issue with `failure` label
+  - **Token exhaustion detection:** Creates urgent issue when Claude Max subscription limit reached
+    - Detects usage limit errors from Claude API
+    - Creates issue with `token-exhaustion` and `urgent` labels
+    - Includes instructions for manual account switching
+    - Worker/researcher pause until next hourly retry
+  - **Timeout detection:** (exit 124) creates issue with `timeout` label
+  - **General failures:** Any non-zero exit code creates issue with `failure` label
   - Issues include timestamp, duration, branch, exit code, log path, and cleanup status
   - Graceful fallback if `gh` CLI unavailable
   - No silent failures - every problem creates actionable GitHub issue
@@ -482,6 +487,30 @@ echo $ANTHROPIC_API_KEY
 
 # Test key manually
 claude --version
+```
+
+### Token exhaustion (Claude Max limit)?
+
+When the autonomous worker hits the Claude Max subscription limit, it will automatically create a GitHub issue with the `token-exhaustion` label.
+
+**Resolution:**
+1. SSH to VM: `gcloud compute ssh claude-workspace --zone=europe-west10-a`
+2. Log out of current Claude Code session
+3. Log in with backup Claude Max account
+4. Verify cron jobs still configured: `crontab -l`
+
+**Worker behavior during exhaustion:**
+- Worker and researcher pause automatically
+- Retry hourly until tokens are available
+- No data loss (all work is committed)
+
+**Check for exhaustion issues:**
+```bash
+# Check recent GitHub issues
+gh issue list --label "token-exhaustion"
+
+# Check worker logs for rate limit errors
+grep -i "rate.*limit\|quota.*exceeded\|usage.*limit" logs/autonomous/worker_*.log
 ```
 
 ### Permission errors?

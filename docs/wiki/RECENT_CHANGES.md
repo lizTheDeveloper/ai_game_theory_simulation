@@ -6,6 +6,30 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 7, 2025)
 
+**🚨 AUTONOMOUS WORKER: TOKEN EXHAUSTION DETECTION** (Nov 7, 2025, commit e6bf293)
+
+**Summary:** Added automatic GitHub issue creation when autonomous worker runs out of Claude Max subscription tokens.
+
+**Problem:** When Claude Max subscription exhausts tokens, the worker would fail silently or with generic errors. User wouldn't know to switch accounts.
+
+**Solution:** Pattern detection in Claude output for rate limit/quota errors:
+- Detects: "rate limit", "quota exceeded", "insufficient credits", "usage limit"
+- Creates GitHub issue with `token-exhaustion` and `urgent` labels
+- Includes manual intervention instructions (SSH, logout, account switch)
+- Worker/researcher pause until next hourly retry
+
+**User Experience:**
+- GitHub notification alerts user immediately
+- Clear action steps provided
+- No data loss (all work committed before failure)
+- Worker resumes automatically after account switch
+
+**Files Modified:** `autonomous-worker.sh`
+
+**Documentation:** Updated `docs/AUTONOMOUS_SETUP.md` with token exhaustion troubleshooting section
+
+---
+
 **✅ CRITICAL-4: DEFENSIVE FALLBACK ELIMINATION - COMPLETE** (Nov 7, 2025, commit 0e2a7e9)
 
 **Summary:** Eliminated all 17 DANGEROUS defensive fallbacks from simulation calculation code by replacing `?? defaultValue` patterns with assertion utilities.
