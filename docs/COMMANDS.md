@@ -554,6 +554,8 @@ The autonomous worker executes in 7 stages:
 2. **GIT SYNC** - Pull latest, resolve conflicts, create branch
 3. **ENVIRONMENT SETUP** - Activate venv, verify Claude version
 4. **CLAUDE CODE EXECUTION** - Run orchestrator workflow (25-minute timeout)
+   - **Exhaustive backlog processing** (updated Nov 7, 2025): Works through entire roadmap (CRITICAL → HIGH → MEDIUM → LOW)
+   - **Token budget guidance:** Under 75% = aggressive mode (full backlog), 75-90% = normal (CRITICAL/HIGH/MEDIUM), over 90% = conservative (CRITICAL/HIGH only)
 5. **GIT OPERATIONS** - Commit changes, push branch
 6. **PR CREATION** - Automatically create pull request with metrics (added Oct 30, 2025)
 7. **METRICS COLLECTION** - Export JSON metrics, update status

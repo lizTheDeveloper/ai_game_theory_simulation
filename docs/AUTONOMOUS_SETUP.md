@@ -95,16 +95,23 @@ cd ~/ai_game_theory_simulation
 **Research-First Workflow:**
 Every autonomous run begins by posting research requests to the research channel. This allows research to run in parallel with implementation work.
 
+**Exhaustive Backlog Processing** (Updated November 7, 2025):
+The worker now exhausts the entire roadmap backlog in priority order, not just CRITICAL/HIGH items:
+
 1. **Post research requests** (STEP 0 - always first)
    - Scan roadmap for CRITICAL/HIGH items
    - Post specific research needs to research channel
    - Research monitor spawns super-alignment-researcher
    - Research runs in parallel with implementation
-2. **CRITICAL** roadmap items
+2. **CRITICAL** roadmap items (always first)
 3. **HIGH** priority tasks
-4. Research verification tasks (using parallel research results)
-5. Code reviews
-6. Documentation updates
+4. **MEDIUM** priority tasks
+5. **LOW** priority tasks
+6. Research verification tasks (using parallel research results)
+7. Code reviews
+8. Documentation updates
+
+**Goal:** Exhaust all available tokens clearing the entire backlog (CRITICAL → HIGH → MEDIUM → LOW)
 
 ### Safety Features
 
