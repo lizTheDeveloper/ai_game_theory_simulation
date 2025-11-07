@@ -388,10 +388,12 @@ export function selectDimensionToAdvance(
   // 70% chance to advance core dimension, 30% chance to advance research
   if (pathChoice < 0.7) {
     // Advance core dimension (use dimensionRoll)
-    const totalWeight = Object.values(dimensionWeights).reduce((a, b) => a + b, 0);
+    // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries to ensure consistent iteration order
+    const sortedDimensionEntries = Object.entries(dimensionWeights).sort(([a], [b]) => a.localeCompare(b));
+    const totalWeight = sortedDimensionEntries.reduce((sum, [, weight]) => sum + weight, 0);
     let roll = dimensionRoll * totalWeight;
 
-    for (const [dim, weight] of Object.entries(dimensionWeights)) {
+    for (const [dim, weight] of sortedDimensionEntries) {
       roll -= weight;
       if (roll <= 0) {
         const currentValue = capabilityProfile[dim as keyof AICapabilityProfile];
@@ -415,11 +417,13 @@ export function selectDimensionToAdvance(
     climate: alignment > 0.7 ? 1.2 : 0.5  // Aligned AIs care about climate
   };
 
-  const totalDomainWeight = Object.values(domainWeights).reduce((a, b) => a + b, 0);
+  // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries to ensure consistent iteration order
+  const sortedDomainEntries = Object.entries(domainWeights).sort(([a], [b]) => a.localeCompare(b));
+  const totalDomainWeight = sortedDomainEntries.reduce((sum, [, weight]) => sum + weight, 0);
   let domainRollValue = domainRoll * totalDomainWeight;
 
   let selectedDomain: 'biotech' | 'materials' | 'climate' | 'computerScience' | null = null;
-  for (const [domain, weight] of Object.entries(domainWeights)) {
+  for (const [domain, weight] of sortedDomainEntries) {
     domainRollValue -= weight;
     if (domainRollValue <= 0) {
       selectedDomain = domain as any;
@@ -544,8 +548,10 @@ export function applyResearchGrowth(
     const govResearchInvestment = govInvestment[domain]?.[subfield] || 0;
 
     // Calculate AI's research capability (average of cognitive + relevant research domain)
-    const domainAvg = Object.values(newProfile.research[domain]).reduce((a, b) => a + b, 0) /
-      Object.keys(newProfile.research[domain]).length;
+    // DETERMINISM FIX (Nov 6, 2025): Sort Object.keys to ensure consistent iteration order
+    const domainKeys = Object.keys(newProfile.research[domain]).sort();
+    const domainSum = domainKeys.reduce((sum, key) => sum + newProfile.research[domain][key], 0);
+    const domainAvg = domainSum / domainKeys.length;
     const aiResearchCapability = (newProfile.cognitive + domainAvg) / 2;
 
     growth = calculateResearchGrowth(
