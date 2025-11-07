@@ -217,17 +217,12 @@ export function updateRefugeeCrises(state: GameState): void {
 
       // WEEK 3: Validate deaths before mutation
       const newDeathsByCategory = (state.humanPopulationSystem.deathsByCategory[category] || 0) + validatedDeaths;
-<<<<<<< HEAD
       // Global cumulative by category across all regions and time
       // Cap: 20B (2× initial world population) - allows for high-mortality scenarios with partial recovery cycles
       // Research: Xia et al. 2022 - worst-case nuclear winter scenario: 75% mortality (6B deaths)
       //           Multiple collapse/recovery cycles over 20 years could theoretically reach 2× initial population
       // Week 5 Fix: Raised from 10B after Monte Carlo N=10 hit cap at Month 160 (10.05B famine deaths)
       assertInRange(newDeathsByCategory, 0, 20000, {
-=======
-      // deathsByCategory tracks GLOBAL deaths by cause - use 10B cap
-      assertInRange(newDeathsByCategory, 0, 10000, {
->>>>>>> origin/auto/worker-20251106_220001
         location: 'updateRefugeeCrises.transitDeaths',
         valueName: `deathsByCategory.${category}`,
         month: state.currentMonth,
@@ -243,14 +238,9 @@ export function updateRefugeeCrises(state: GameState): void {
       state.humanPopulationSystem.deathsByCategory[category] = newDeathsByCategory;
 
       const newCumulativeDeaths = state.humanPopulationSystem.cumulativeCrisisDeaths + validatedDeaths;
-<<<<<<< HEAD
       // Global cumulative across all regions and time
       // Cap: 20B (2× initial world population) - same rationale as deathsByCategory
       assertInRange(newCumulativeDeaths, 0, 20000, {
-=======
-      // cumulativeCrisisDeaths is GLOBAL, not regional - use 10B cap (world population ~8B)
-      assertInRange(newCumulativeDeaths, 0, 10000, {
->>>>>>> origin/auto/worker-20251106_220001
         location: 'updateRefugeeCrises.transitDeaths',
         valueName: 'cumulativeCrisisDeaths',
         month: state.currentMonth,
