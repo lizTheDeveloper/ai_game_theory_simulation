@@ -40,13 +40,7 @@ if [ -f "/etc/cloud/cloud.cfg" ] || [ -f "/.dockerenv" ]; then
   IS_VM=true
 fi
 
-<<<<<<< HEAD
-# Create log directory
-=======
 # Configuration (can be overridden via environment variables)
-DRY_RUN="${MERGE_ORCHESTRATOR_DRY_RUN:-false}"
-NOTIFY="${MERGE_ORCHESTRATOR_NOTIFY:-true}"
-MAX_BRANCHES="${MERGE_ORCHESTRATOR_MAX_BRANCHES:-10}"
 SKIP_FRONTEND="${MERGE_ORCHESTRATOR_SKIP_FRONTEND:-$IS_VM}"
 ENABLE_AGENT_REVIEWS="${MERGE_ORCHESTRATOR_ENABLE_AGENT_REVIEWS:-true}"  # Phase 2: Architecture-skeptic + Sylvia reviews
 ENABLE_AUTO_REMEDIATION="${MERGE_ORCHESTRATOR_ENABLE_AUTO_REMEDIATION:-true}"  # Phase 2.5: Auto-fix CRITICAL issues
@@ -68,7 +62,7 @@ fi
 # Logging Setup
 # ============================================
 
->>>>>>> origin/auto/worker-20251102_050015
+# Create log directory
 mkdir -p "$LOG_DIR"
 
 # Log file for this run
@@ -117,6 +111,39 @@ git fetch origin 2>&1 | tee -a "$LOG_FILE" || {
   log "❌ Failed to fetch from origin"
   exit 1
 }
+
+# Clean working tree before processing branches
+log_section "Ensuring Clean Working Tree"
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  log "⚠️  Working tree has uncommitted changes"
+  log "📦 Stashing changes to prevent checkout conflicts..."
+
+  # Create a timestamped stash
+  STASH_NAME="merge-orchestrator-autostash-${TIMESTAMP}"
+  if git stash push -u -m "$STASH_NAME" 2>&1 | tee -a "$LOG_FILE"; then
+    log "✅ Changes stashed as: $STASH_NAME"
+    log "ℹ️  To recover: git stash list | grep '$STASH_NAME'"
+  else
+    log "❌ Failed to stash changes"
+    log "⚠️  Manual cleanup required before merge orchestrator can run"
+    exit 1
+  fi
+fi
+
+# Ensure we're on main branch
+CURRENT_BRANCH=$(git branch --show-current)
+if [ "$CURRENT_BRANCH" != "main" ]; then
+  log "⚠️  Not on main branch (currently on: $CURRENT_BRANCH)"
+  log "📍 Switching to main..."
+  if git checkout main 2>&1 | tee -a "$LOG_FILE"; then
+    log "✅ Switched to main"
+  else
+    log "❌ Failed to switch to main - manual intervention required"
+    exit 1
+  fi
+fi
+
+log "✅ Working tree clean and on main branch"
 
 # Get list of remote branches (exclude main, HEAD)
 log_section "Discovering Branches"
