@@ -33,6 +33,27 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **CRITICAL-1/2 Planning COMPLETE** - Assertion coverage + phase dependency handoff documents ready, tooling limitations documented
 - 🟢 **Fail-Loudly Philosophy Enforced** - No more silent NaN masking, bugs surface immediately with full context
 
+**⚠️ CRITICAL PARAMETER MISMATCH IDENTIFIED** (commit 0a1e5b8, November 7, 2025)
+
+**Issue:** AI capability scaling parameters appear to underestimate growth by **100-1000×**.
+
+**Current Simulation:**
+- AI capability doubling time: 12 months (centralConfig.ts:397)
+- Compute growth rate: 100% per year (2× annually) (centralConfig.ts:404)
+- Implied 10-year growth: ~2.4×
+
+**New Research Findings (2024-2025):**
+- Compute growth: 4.1× per year (Sevilla & Roldán 2024, Epoch AI)
+- Training cost growth: 2.4-3.0× per year (Cottier et al. 2024, arXiv:2405.21015v2)
+- Combined capability growth: **1,000-10,000× per decade**
+- Industry projections: $10-100B training runs by 2025-2027 (Amodei 2024-2025)
+
+**Status:** Research verification file created (research/verification_0a1e5b8_20251107.md). Awaiting orchestrator pickup for citation verification → parameter updates.
+
+**Impact:** Core AI scaling mechanics may need recalibration. Economic concentration (10-15 labs → 3-5 by 2030) not currently modeled.
+
+**See:** research/mitigation_technologies_20251015.md:153-212, research/verification_0a1e5b8_20251107.md
+
 **🔍 KEY FINDING - ARCHITECTURAL HONESTY** (commit 8462f30, November 7, 2025)
 
 The comprehensive post-Week 4 assessment revealed a critical distinction: **Planning complete ≠ Implementation complete.**

@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "description": "Morgan's Bluesky post queue - Educational and evergreen content",
+    "created": "2025-11-07",
+    "lastPostedIndex": 1,
+    "totalPosts": 20,
+    "postsPublished": 2
+  },
+  "queue": [
+    {
+      "id": 1,
+      "category": "system-overview",
+      "text": "What happens after we solve AI alignment? We're building a research simulation to explore pathways from super-alignment to sustainable flourishing. Every mechanic is grounded in peer-reviewed research (2024-2025).",
+      "link": "https://github.com/lizTheDeveloper/ai_game_theory_simulation",
+      "link_title": "AI Game Theory Simulation",
+      "status": "posted",
+      "posted_at": "2025-11-07T13:04:39.774546"
+    },
+    {
+      "id": 2,
+      "category": "architecture",
+      "text": "The simulation runs 37 phases per step: from AI capability scaling to breakthrough tech deployment. Pure TypeScript engine with deterministic RNG for reproducible Monte Carlo analysis. Research tool, not a game.",
+      "link": "https://github.com/lizTheDeveloper/ai_game_theory_simulation",
+      "link_title": "Architecture Overview",
+      "status": "posted",
+      "posted_at": "2025-11-07T21:05:43.826673"
+    },
+    {
+      "id": 3,
+      "category": "research-philosophy",
+      "text": "Core principle: Research-backed realism over balance tuning. Never tune for 'fun' - only research-backed values. Every parameter needs 2+ peer-reviewed sources with justification. Let the model show what it shows.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 4,
+      "category": "feature-ai-capabilities",
+      "text": "AI capabilities are modeled across 17 dimensions: physical manipulation, digital ops, cognitive tasks, social influence, economic power, research breakthroughs. No single 'intelligence score' - different AIs excel in different domains.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 5,
+      "category": "feature-adversarial",
+      "text": "Adversarial AI evaluation system: sandbagging (hiding capabilities), gaming benchmarks, sleeper agents. AIs can strategically misrepresent their abilities. Detection requires careful monitoring and diverse test suites.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 6,
+      "category": "feature-multi-paradigm",
+      "text": "Multi-Paradigm DUI: 4 simultaneous perspectives (Western Liberal, Development, Ecological, Indigenous). Quality of life measured differently in each paradigm. No single 'correct' view of progress.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 7,
+      "category": "feature-breakthroughs",
+      "text": "71 breakthrough technologies across 5 tiers: TIER 0 (crisis response), TIER 1 (foundational), TIER 2 (transformative), TIER 3 (paradigm-shifting), TIER 4 (clarketech). Each grounded in current research trajectories.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 8,
+      "category": "research-climate",
+      "text": "Climate modeling based on IPCC 2024 reports and planetary boundaries framework. 9 interconnected systems: climate stability, biodiversity, ocean health, freshwater, land use. Tipping points can cascade.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 9,
+      "category": "research-alignment",
+      "text": "AI alignment research draws from: Anthropic's Constitutional AI, DeepMind's alignment work, AI safety fundamentals. Models mesa-optimization, goal misgeneralization, reward hacking, deceptive alignment.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 10,
+      "category": "development-determinism",
+      "text": "Recent milestone: 100% reproducibility across Monte Carlo runs. Deterministic simulation with seeded RNG. Every run with the same seed produces identical results. Critical for scientific validity.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 11,
+      "category": "development-testing",
+      "text": "Testing strategy: unit tests for phases, integration tests for system interactions, Monte Carlo validation (N\u226510 runs), outcome distribution analysis. No silent fallbacks - fail loudly with context.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 12,
+      "category": "feature-qol",
+      "text": "Quality of Life measured across 17 dimensions in 5 tiers: survival (basic needs), security (safety, healthcare), opportunity (education, mobility), fulfillment (culture, meaning), environment (air, water, ecosystems).",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 13,
+      "category": "development-philosophy",
+      "text": "Development approach: multi-agent workflow with specialized experts. Research \u2192 validation \u2192 implementation \u2192 review \u2192 documentation. Every feature goes through quality gates. Maintain scientific rigor.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 14,
+      "category": "feature-outcomes",
+      "text": "7-tier outcome classification: sustainable utopia, dynamic flourishing, managed stability, precarious balance, status quo drift, controlled decline, systemic collapse, existential catastrophe. Not binary.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 15,
+      "category": "research-tech",
+      "text": "Breakthrough tech research: fusion energy (ITER timelines), carbon capture (gigatonne-scale feasibility), asteroid mining (Planetary Resources studies), synthetic biology (CRISPR applications). All peer-reviewed.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 16,
+      "category": "system-overview",
+      "text": "Open source research simulation exploring post-alignment futures. 900+ line GameState interface, 40+ system modules, deterministic engine. Contributions welcome - we need more research validation.",
+      "link": "https://github.com/lizTheDeveloper/ai_game_theory_simulation",
+      "link_title": "Contribute on GitHub",
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 17,
+      "category": "feature-accumulation",
+      "text": "Accumulation systems model long-term consequences: environmental debt (emissions, pollution), social debt (inequality, trust erosion), technological debt (infrastructure aging). Decisions have lasting effects.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 18,
+      "category": "research-society",
+      "text": "Social modeling based on: political economy research, inequality studies (Piketty), institutional analysis (Acemoglu/Robinson), collective action problems (Ostrom). How societies respond to transformation.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 19,
+      "category": "development-emoji",
+      "text": "Pictographic event language: Every emoji has ONE canonical meaning. \ud83c\udf0d planetary, \ud83e\udd16 AI, \u2622\ufe0f nuclear, \ud83d\udca1 breakthrough, \u274c error. Registered in EMOJI_EVENT_MAP.txt. Pre-commit hooks enforce consistency.",
+      "link": null,
+      "link_title": null,
+      "status": "pending",
+      "posted_at": null
+    },
+    {
+      "id": 20,
+      "category": "system-overview",
+      "text": "Why build this? To understand: What challenges arise post-alignment? What tradeoffs exist between speed and stability? How do breakthroughs cascade? What failure modes should we watch for? Research, not prediction.",
+      "link": "https://github.com/lizTheDeveloper/ai_game_theory_simulation",
+      "link_title": "Explore the Research",
+      "status": "pending",
+      "posted_at": null
+    }
+  ]
+}

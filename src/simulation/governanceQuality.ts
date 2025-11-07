@@ -13,6 +13,11 @@
 
 import type { GameState } from '../types/game';
 import { getTrustInAI } from './socialCohesion';
+import {
+  assertFinite,
+  assertProbability,
+  assertInRange
+} from './utils/assertions';
 
 export function initializeGovernanceQuality() {
   return {
@@ -35,15 +40,39 @@ export function updateGovernanceQuality(state: GameState): void {
   // === DECISION QUALITY (AI-Augmented Governance) ===
   
   const aiAgents = state.aiAgents;
-  const avgCapability = aiAgents.length > 0
-    ? aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / aiAgents.length
-    : 0;
-  const avgAlignment = aiAgents.length > 0
-    ? aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / aiAgents.length
-    : 0.5;
+  const avgCapability = assertFinite(
+    aiAgents.length > 0
+      ? aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / aiAgents.length
+      : 0,
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'avgCapability',
+      month: state.currentMonth
+    }
+  );
+  const avgAlignment = assertProbability(
+    aiAgents.length > 0
+      ? aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / aiAgents.length
+      : 0.5,
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'avgAlignment',
+      month: state.currentMonth
+    }
+  );
   
   // High-capability aligned AI improves decision quality
-  const aiAugmentation = Math.min(0.3, (avgCapability * avgAlignment * 0.15));
+  const aiAugmentation = assertInRange(
+    Math.min(0.3, (avgCapability * avgAlignment * 0.15)),
+    0,
+    0.3,
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'aiAugmentation',
+      month: state.currentMonth,
+      additionalInfo: { avgCapability, avgAlignment }
+    }
+  );
   
   // Government type affects decision-making
   let govTypeMultiplier = 1.0;
@@ -56,15 +85,32 @@ export function updateGovernanceQuality(state: GameState): void {
   }
   
   // Institutional capacity affects execution
-  const capacityBonus = quality.institutionalCapacity * 0.2;
-  
+  const capacityBonus = assertFinite(quality.institutionalCapacity * 0.2, {
+    location: 'updateGovernanceQuality',
+    valueName: 'capacityBonus',
+    month: state.currentMonth
+  });
+
   // Target decision quality
-  const targetDecisionQuality = Math.min(1.0, 
-    (0.5 + aiAugmentation + capacityBonus) * govTypeMultiplier
+  const targetDecisionQuality = assertProbability(
+    Math.min(1.0, (0.5 + aiAugmentation + capacityBonus) * govTypeMultiplier),
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'targetDecisionQuality',
+      month: state.currentMonth,
+      additionalInfo: { aiAugmentation, capacityBonus, govTypeMultiplier }
+    }
   );
-  
+
   // Gradual convergence (don't jump instantly)
-  quality.decisionQuality += (targetDecisionQuality - quality.decisionQuality) * 0.1;
+  quality.decisionQuality = assertProbability(
+    quality.decisionQuality + (targetDecisionQuality - quality.decisionQuality) * 0.1,
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'decisionQuality',
+      month: state.currentMonth
+    }
+  );
   
   // === TRANSPARENCY ===
   
@@ -85,7 +131,14 @@ export function updateGovernanceQuality(state: GameState): void {
   }
   
   // Clamp
-  quality.transparency = Math.max(0.1, Math.min(1.0, quality.transparency));
+  quality.transparency = assertProbability(
+    Math.max(0.1, Math.min(1.0, quality.transparency)),
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'transparency',
+      month: state.currentMonth
+    }
+  );
   
   // === PARTICIPATION RATE ===
   
@@ -108,7 +161,14 @@ export function updateGovernanceQuality(state: GameState): void {
   }
   
   // Clamp
-  quality.participationRate = Math.max(0.1, Math.min(0.9, quality.participationRate));
+  quality.participationRate = assertProbability(
+    Math.max(0.1, Math.min(0.9, quality.participationRate)),
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'participationRate',
+      month: state.currentMonth
+    }
+  );
   
   // === INSTITUTIONAL CAPACITY ===
   
@@ -134,10 +194,25 @@ export function updateGovernanceQuality(state: GameState): void {
   
   const crisisOverload = activeCrises > 2 ? -(activeCrises - 2) * 0.01 : 0;
   
-  quality.institutionalCapacity += qualityFeedback + resourceBonus + crisisOverload;
-  
+  quality.institutionalCapacity = assertFinite(
+    quality.institutionalCapacity + qualityFeedback + resourceBonus + crisisOverload,
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'institutionalCapacity (pre-clamp)',
+      month: state.currentMonth,
+      additionalInfo: { qualityFeedback, resourceBonus, crisisOverload }
+    }
+  );
+
   // Clamp
-  quality.institutionalCapacity = Math.max(0.2, Math.min(1.0, quality.institutionalCapacity));
+  quality.institutionalCapacity = assertProbability(
+    Math.max(0.2, Math.min(1.0, quality.institutionalCapacity)),
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'institutionalCapacity',
+      month: state.currentMonth
+    }
+  );
   
   // === CONSENSUS BUILDING EFFICIENCY (Liquid Democracy / AI-Mediated) ===
   
@@ -168,7 +243,14 @@ export function updateGovernanceQuality(state: GameState): void {
   }
   
   // Clamp
-  quality.consensusBuildingEfficiency = Math.max(0.1, Math.min(0.9, quality.consensusBuildingEfficiency));
+  quality.consensusBuildingEfficiency = assertProbability(
+    Math.max(0.1, Math.min(0.9, quality.consensusBuildingEfficiency)),
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'consensusBuildingEfficiency',
+      month: state.currentMonth
+    }
+  );
   
   // === MINORITY PROTECTION STRENGTH (AI Bias Detection) ===
   
@@ -203,7 +285,14 @@ export function updateGovernanceQuality(state: GameState): void {
   quality.minorityProtectionStrength += (targetProtection - quality.minorityProtectionStrength) * 0.08;
   
   // Clamp
-  quality.minorityProtectionStrength = Math.max(0.1, Math.min(0.95, quality.minorityProtectionStrength));
+  quality.minorityProtectionStrength = assertProbability(
+    Math.max(0.1, Math.min(0.95, quality.minorityProtectionStrength)),
+    {
+      location: 'updateGovernanceQuality',
+      valueName: 'minorityProtectionStrength',
+      month: state.currentMonth
+    }
+  );
   
   // === VIRTUOUS CYCLES ===
   
@@ -225,21 +314,54 @@ export function updateGovernanceQuality(state: GameState): void {
  */
 export function getAuthoritarianResistance(state: GameState): number {
   const quality = state.government.governanceQuality;
-  
+
   // Strong democratic institutions resist authoritarianism
-  const transparencyDefense = quality.transparency * 0.4; // Up to 40% reduction
-  const participationDefense = quality.participationRate * 0.25; // Up to 25% reduction
-  const capacityDefense = quality.institutionalCapacity * 0.15; // Up to 15% reduction
-  
+  const transparencyDefense = assertFinite(quality.transparency * 0.4, {
+    location: 'getAuthoritarianResistance',
+    valueName: 'transparencyDefense',
+    month: state.currentMonth
+  });
+  const participationDefense = assertFinite(quality.participationRate * 0.25, {
+    location: 'getAuthoritarianResistance',
+    valueName: 'participationDefense',
+    month: state.currentMonth
+  });
+  const capacityDefense = assertFinite(quality.institutionalCapacity * 0.15, {
+    location: 'getAuthoritarianResistance',
+    valueName: 'capacityDefense',
+    month: state.currentMonth
+  });
+
   // NEW: Liquid democracy mechanics make authoritarianism harder
-  const consensusDefense = quality.consensusBuildingEfficiency * 0.15; // Up to 15% reduction
-  const minorityDefense = quality.minorityProtectionStrength * 0.2; // Up to 20% reduction
-  
+  const consensusDefense = assertFinite(quality.consensusBuildingEfficiency * 0.15, {
+    location: 'getAuthoritarianResistance',
+    valueName: 'consensusDefense',
+    month: state.currentMonth
+  });
+  const minorityDefense = assertFinite(quality.minorityProtectionStrength * 0.2, {
+    location: 'getAuthoritarianResistance',
+    valueName: 'minorityDefense',
+    month: state.currentMonth
+  });
+
   // Total defense: up to ~115% reduction (but practically 70-90%)
-  const totalDefense = transparencyDefense + participationDefense + capacityDefense + consensusDefense + minorityDefense;
-  
+  const totalDefense = assertFinite(
+    transparencyDefense + participationDefense + capacityDefense + consensusDefense + minorityDefense,
+    {
+      location: 'getAuthoritarianResistance',
+      valueName: 'totalDefense',
+      month: state.currentMonth,
+      additionalInfo: { transparencyDefense, participationDefense, capacityDefense, consensusDefense, minorityDefense }
+    }
+  );
+
   // Convert to multiplier: 0.8 defense = 0.2 multiplier (80% reduction)
-  return Math.max(0.05, 1.0 - totalDefense); // Lower minimum (better max protection)
+  return assertInRange(Math.max(0.05, 1.0 - totalDefense), 0.05, 1.0, {
+    location: 'getAuthoritarianResistance',
+    valueName: 'resistance',
+    month: state.currentMonth,
+    additionalInfo: { totalDefense }
+  });
 }
 
 /**
@@ -250,17 +372,34 @@ export function getAuthoritarianResistance(state: GameState): number {
  */
 export function getPolicyEffectivenessMultiplier(state: GameState): number {
   const quality = state.government.governanceQuality;
-  
+
   // Decision quality directly affects policy outcomes
-  const baseMultiplier = 0.7 + (quality.decisionQuality * 0.6); // Range: 0.7-1.3
-  
+  const baseMultiplier = assertInRange(0.7 + (quality.decisionQuality * 0.6), 0.7, 1.3, {
+    location: 'getPolicyEffectivenessMultiplier',
+    valueName: 'baseMultiplier',
+    month: state.currentMonth
+  });
+
   // Institutional capacity affects execution
-  const executionMultiplier = 0.8 + (quality.institutionalCapacity * 0.4); // Range: 0.8-1.2
-  
+  const executionMultiplier = assertInRange(0.8 + (quality.institutionalCapacity * 0.4), 0.8, 1.2, {
+    location: 'getPolicyEffectivenessMultiplier',
+    valueName: 'executionMultiplier',
+    month: state.currentMonth
+  });
+
   // NEW: Consensus building makes policies stick (less fighting/reversal)
-  const consensusMultiplier = 0.9 + (quality.consensusBuildingEfficiency * 0.2); // Range: 0.9-1.1
-  
+  const consensusMultiplier = assertInRange(0.9 + (quality.consensusBuildingEfficiency * 0.2), 0.9, 1.1, {
+    location: 'getPolicyEffectivenessMultiplier',
+    valueName: 'consensusMultiplier',
+    month: state.currentMonth
+  });
+
   // Combined effect
-  return baseMultiplier * executionMultiplier * consensusMultiplier; // Range: 0.504-1.716
+  return assertInRange(baseMultiplier * executionMultiplier * consensusMultiplier, 0.504, 1.716, {
+    location: 'getPolicyEffectivenessMultiplier',
+    valueName: 'effectivenessMultiplier',
+    month: state.currentMonth,
+    additionalInfo: { baseMultiplier, executionMultiplier, consensusMultiplier }
+  });
 }
 
