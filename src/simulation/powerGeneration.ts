@@ -15,7 +15,7 @@
 
 import { GameState } from '../types/game';
 import { PowerGenerationSystem, DataCenterConstruction, TrainingEvent } from '../types/powerGeneration';
-import { assertStateProperty } from './utils/assertions';
+import { assertStateProperty, assertFinite, assertInRange } from './utils/assertions';
 
 /**
  * Update power generation system for one month
@@ -26,7 +26,15 @@ export function updatePowerGeneration(state: GameState, rng: () => number): void
 
   // Increment time
   power.monthsSinceStart += 1;
-  const year = power.monthsSinceStart / 12;
+  const year = assertFinite(
+    power.monthsSinceStart / 12,
+    {
+      location: 'updatePowerGeneration',
+      valueName: 'year',
+      month: state.currentMonth,
+      additionalInfo: { monthsSinceStart: power.monthsSinceStart }
+    }
+  );
 
   // 1. Update AI inference efficiency (exponential growth with diminishing returns)
   updateAIEfficiency(power, year);
@@ -136,10 +144,42 @@ function updateQueryVolume(power: PowerGenerationSystem, year: number): void {
  */
 function updateAIInferencePower(power: PowerGenerationSystem): void {
   // Power = Query Volume / Efficiency
-  const powerPerQueryKWh = 1 / power.inferenceEfficiency; // kWh per query
-  const queriesPerMonth = power.queryVolume * 1e9; // Convert billions to actual number
-  const powerKWh = queriesPerMonth * powerPerQueryKWh;
-  const powerTWh = powerKWh / 1e9; // Convert kWh to TWh
+  const powerPerQueryKWh = assertFinite(
+    1 / power.inferenceEfficiency,
+    {
+      location: 'updateAIInferencePower',
+      valueName: 'powerPerQueryKWh',
+      month: -1, // No state available here
+      additionalInfo: { inferenceEfficiency: power.inferenceEfficiency }
+    }
+  ); // kWh per query
+  const queriesPerMonth = assertFinite(
+    power.queryVolume * 1e9,
+    {
+      location: 'updateAIInferencePower',
+      valueName: 'queriesPerMonth',
+      month: -1,
+      additionalInfo: { queryVolumeBillions: power.queryVolume }
+    }
+  ); // Convert billions to actual number
+  const powerKWh = assertFinite(
+    queriesPerMonth * powerPerQueryKWh,
+    {
+      location: 'updateAIInferencePower',
+      valueName: 'powerKWh',
+      month: -1,
+      additionalInfo: { queriesPerMonth, powerPerQueryKWh }
+    }
+  );
+  const powerTWh = assertFinite(
+    powerKWh / 1e9,
+    {
+      location: 'updateAIInferencePower',
+      valueName: 'powerTWh',
+      month: -1,
+      additionalInfo: { powerKWh }
+    }
+  ); // Convert kWh to TWh
 
   power.aiInferencePower = powerTWh;
 }
