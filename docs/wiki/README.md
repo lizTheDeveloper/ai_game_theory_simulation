@@ -796,6 +796,8 @@ Autonomous infrastructure upgrade: Merge orchestrator now spawns Claude Code to 
 
 **Impact**: Autonomous workflow now truly self-healing. No manual intervention needed for routine merge conflicts or test failures.
 
+**Incident resolution (Nov 7, 2025)**: Manual fix required when parallel worker updates created merge conflict in `docs/underdocumented.json`, blocking orchestrator from switching branches. Fix: Resolved conflict using `git checkout --theirs` (auto-generated file), cleaned working tree, committed resolution. Orchestrator unblocked, resumed normal operation. Monitoring: 73 accumulated branches cleaned at ~15/hour (~5 hours to clear backlog). Root cause: Expected pattern with parallel auto-generated file updates; automation handles most cases, manual intervention needed when automation fails. See: `logs/autonomous/fix_summary_20251107_021716.md`, Commit: bb48ef4
+
 See: [`docs/course/10_AUTONOMOUS_INFRASTRUCTURE.md`](../course/10_AUTONOMOUS_INFRASTRUCTURE.md#auto-remediation-new---nov-6-2025), Commit: d0f85ff
 
 ---
