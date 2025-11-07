@@ -502,11 +502,21 @@ totalClimateStabilityImpact += element.impactClimateStability * scaledProgress;
 
 ### Primary Sources (2024-2025 Updates)
 
+**Wunderling, N., et al. (2024).** "Climate tipping point interactions and cascades: a review." *Earth System Dynamics*, 15, 41–74. DOI: 10.5194/esd-15-41-2024. [Major review mapping interactions between tipping elements; found many interactions are destabilizing; tipping cascades cannot be ruled out on centennial to millennial timescales at 1.5-2.0°C warming]
+
 **Klose, A.K., Donges, J.F., Feudel, U., & Winkelmann, R. (2024).** "Rate-induced tipping cascades arising from interactions between the Greenland Ice Sheet and the Atlantic Meridional Overturning Circulation." *Earth System Dynamics*, 15(3), 635–652. DOI: 10.5194/esd-15-635-2024
 
-**Rosser, J.P., Winkelmann, R., & Wunderling, N. (2024).** "Polar ice sheets are decisive contributors to uncertainty in climate tipping projections." *Nature Communications Earth & Environment*, 5, 1051. DOI: 10.1038/s43247-024-01799-5
+**Rosser, J.P., Winkelmann, R., & Wunderling, N. (2024).** "Polar ice sheets are decisive contributors to uncertainty in climate tipping projections." *Nature Communications Earth & Environment*, 5, 1051. DOI: 10.1038/s43247-024-01799-5. [Polar ice sheets most decisive for tipping likelihoods and cascading effects; neglecting them alters expected tipped elements by >2x at 1.5°C warming]
 
 **Willeit, M., & Ganopolski, A. (2024).** "Generalized stability landscape of the Atlantic meridional overturning circulation." *Earth System Dynamics*, 15(6), 1417–1433. DOI: 10.5194/esd-15-1417-2024
+
+**Dekker, M.M., et al. (2024).** "Remotely sensing potential climate change tipping points across scales." *Nature Communications*, 15, 343. DOI: 10.1038/s41467-023-44609-w. [Combining Earth observation with models can improve process understanding of tipping points, their interactions, and cascades]
+
+**Lenton, T.M., et al. (2024).** "Achieving net zero greenhouse gas emissions critical to limit climate tipping risks." *Nature Communications*, 15, 5192. DOI: 10.1038/s41467-024-49863-0. [Current policies commit to 45% tipping risk by 2300; tipping risk increases with every 0.1°C overshoot above 1.5°C]
+
+**McKay, D.I.A., et al. (2022).** "Global warming overshoots increase risks of climate tipping cascades in a network model." *Nature Climate Change*, 12, 1114–1119. DOI: 10.1038/s41558-022-01545-9. [Temporary overshoots can increase tipping risks by up to 72% compared with non-overshoot scenarios]
+
+**Global Tipping Points Report (2025).** University of Exeter. [Identifies ~24 parts of global climate system that could reach tipping points; risk of cascading tipping increases significantly once 1.5°C threshold exceeded]
 
 ### Primary Sources (2021-2022 Foundation)
 
