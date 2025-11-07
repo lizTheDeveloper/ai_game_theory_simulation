@@ -17,7 +17,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertAICapability, assertDefined } from '@/simulation/utils/assertions';
+import { assertAICapability, assertDefined, assertInRange } from '@/simulation/utils/assertions';
 
 export class AIAgentActionsPhase implements SimulationPhase {
   readonly id = 'ai-agent-actions';
