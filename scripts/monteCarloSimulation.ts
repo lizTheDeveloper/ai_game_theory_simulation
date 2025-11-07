@@ -999,6 +999,11 @@ if (nestedMonteCarlo) {
       const seed = SEED_START + i;
       const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'summary' });
 
+      // DETERMINISM FIX (Nov 6, 2025): Use engine's RNG for initialization
+      // This ensures initialization and engine use the SAME SeededRandom instance
+      // Previously: initialization used LCG, engine used SeededRandom → divergence even with same seed
+      const rngFunction = engine.getRNG().next.bind(engine.getRNG());
+
       // PERFORMANCE INSTRUMENTATION (Oct 28, 2025): Enable timing on first run
       if (i === 0) {
         engine.getOrchestrator().enablePerformanceTiming();
@@ -1012,8 +1017,9 @@ if (nestedMonteCarlo) {
         runScenarioMode = SCENARIO_MODE as ScenarioMode;
       }
 
-      // BUG #3 FIX (Oct 29, 2025): Pass seed to enable stochastic environmental initialization
-      const initialState = createDefaultInitialState(runScenarioMode, undefined, undefined, undefined, undefined, seed);
+      // DETERMINISM FIX (Nov 6, 2025): Pass engine's RNG function to initialization
+      // Now initialization and engine share the SAME RNG sequence
+      const initialState = createDefaultInitialState(runScenarioMode, undefined, undefined, undefined, undefined, rngFunction);
 
       // Set run label for logging
       initialState.config.runLabel = `Epistemic ${epistemicIndex + 1}/${NUM_RUNS}, Aleatory ${aleatoryIndex + 1}/${aleatoryNumSamples} [${runScenarioMode}]`;
@@ -1955,6 +1961,9 @@ if (nestedMonteCarlo) {
       const seed = SEED_START + i;
     const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'summary' });
 
+    // DETERMINISM FIX (Nov 6, 2025): Use engine's RNG for initialization
+    const rngFunction = engine.getRNG().next.bind(engine.getRNG());
+
     // PERFORMANCE INSTRUMENTATION (Oct 28, 2025): Enable timing on first run
     if (i === 0) {
       engine.getOrchestrator().enablePerformanceTiming();
@@ -1968,8 +1977,8 @@ if (nestedMonteCarlo) {
       runScenarioMode = SCENARIO_MODE as ScenarioMode;
     }
 
-    // BUG #3 FIX (Oct 29, 2025): Pass seed to enable stochastic environmental initialization
-    const initialState = createDefaultInitialState(runScenarioMode, undefined, undefined, undefined, undefined, seed);
+    // DETERMINISM FIX (Nov 6, 2025): Pass engine's RNG function to initialization
+    const initialState = createDefaultInitialState(runScenarioMode, undefined, undefined, undefined, undefined, rngFunction);
 
     // Set run label for logging
     initialState.config.runLabel = `Run ${i + 1}/${NUM_RUNS} [${runScenarioMode}]`;

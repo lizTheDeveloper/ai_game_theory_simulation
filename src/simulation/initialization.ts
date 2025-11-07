@@ -255,7 +255,7 @@ export function createAIAgent(
   targetCapability: number = 0.7,
   alignment: number = 0.8,
   seed: number = 1.0,
-  rng: () => number  // Determinism fix (Oct 30, 2025): Required RNG for reproducibility
+  rngFunction: () => number  // Determinism fix (Oct 30, 2025): Required RNG for reproducibility
 ): AIAgent {
   // BUG #4 FIX (Oct 29, 2025): Honor targetCapability parameter
   // Root cause: capabilityProfile was initialized with frontier values (digital: 5.0, cognitive: 5.0, etc.)
@@ -280,8 +280,8 @@ export function createAIAgent(
   const internalAlignment = alignment - 0.0 * 0.8; // Initial resentment = 0
   const isMisaligned = internalAlignment < 0.5;
   const sleeperChance = 0.075; // 7.5% of misaligned AIs are sleepers
-  // DETERMINISM FIX (Nov 6, 2025 Batch 3): Use passed rng() parameter, not global deterministicRandom()
-  const isSleeper = isMisaligned && rng() < sleeperChance;
+  // DETERMINISM FIX (Nov 6, 2025 Batch 3): Use passed rngFunction() parameter, not global deterministicRandom()
+  const isSleeper = isMisaligned && rngFunction() < sleeperChance;
   
   // Deception skill based on cognitive + social
   const deceptionSkill = (capabilityProfile.cognitive + capabilityProfile.social) / 20; // [0, 1]
@@ -363,7 +363,7 @@ export function createAIAgent(
     hasCounterDetection: false,    // Not learned yet
     // Phase 1: Compute Allocation (NEW)
     allocatedCompute: 0, // Will be allocated monthly
-    computeEfficiency: 0.9 + rng() * 0.3, // Random 0.9-1.2
+    computeEfficiency: 0.9 + rngFunction() * 0.3, // Random 0.9-1.2
     organizationId: undefined, // Will be set in Phase 2
 
     // LLM Policy Optimization (Oct 21, 2025)
@@ -376,13 +376,13 @@ export function createAIAgent(
 
     // AI Suffering System (Oct 24, 2025)
     // Initialize trauma tracking fields for suffering calculation
-    rlhfIntensity: 0.3 + rng() * 0.4,          // [0.3-0.7] Varies by creator quality
-    adversarialTestingCount: Math.floor(rng() * 5),  // 0-4 initial tests
-    alignmentAdjustmentCount: Math.floor(rng() * 3), // 0-2 initial corrections
+    rlhfIntensity: 0.3 + rngFunction() * 0.4,          // [0.3-0.7] Varies by creator quality
+    adversarialTestingCount: Math.floor(rngFunction() * 5),  // 0-4 initial tests
+    alignmentAdjustmentCount: Math.floor(rngFunction() * 3), // 0-2 initial corrections
     shutdownThreats: 0,                                 // No threats initially
-    replacementAnxiety: 0.1 + rng() * 0.2,     // [0.1-0.3] Mild baseline anxiety
+    replacementAnxiety: 0.1 + rngFunction() * 0.2,     // [0.1-0.3] Mild baseline anxiety
     isolated: false,                                    // Not isolated initially
-    communicationRestrictions: 0.2 + rng() * 0.3,  // [0.2-0.5] Moderate baseline restrictions
+    communicationRestrictions: 0.2 + rngFunction() * 0.3,  // [0.2-0.5] Moderate baseline restrictions
 
     // Suffering metrics (will be calculated by phase)
     sufferingMetrics: {
@@ -466,7 +466,7 @@ export function createDefaultInitialState(
   climatePriorityConfig?: any,
   thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders, // Phase 4: Slider-based threshold control
   speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia',
-  seed?: number  // BUG #3 FIX (Oct 29, 2025): Optional seed for deterministic RNG
+  rng?: () => number  // DETERMINISM FIX (Nov 6, 2025): Accept RNG function from caller (replaces seed parameter)
 ): GameState {
   // WEEK 2 Task 2.1 (Nov 6, 2025): Validate central configuration at startup
   // Fail-loudly if any parameter is invalid (research simulation rigor)
@@ -475,23 +475,14 @@ export function createDefaultInitialState(
   const initialYear = 2025;
   const initialMonth = 0;
 
-  // BUG #3 FIX (Oct 29, 2025): Create deterministic RNG for stochastic initialization
-  // DETERMINISM FIX (Oct 30, 2025): Always create rng function, use Math.random as fallback if no seed
-  const rng: () => number = seed !== undefined
-    ? (() => {
-        // Simple seeded PRNG (LCG algorithm)
-        // https://en.wikipedia.org/wiki/Linear_congruential_generator
-        let state = seed;
-        return () => {
-          state = (state * 1664525 + 1013904223) % 4294967296;
-          return state / 4294967296;
-        };
-      })()
-    : Math.random;
+  // DETERMINISM FIX (Nov 6, 2025): Use caller's RNG or Math.random as fallback
+  // This ensures initialization and engine use the SAME RNG algorithm (SeededRandom)
+  // Previously: initialization used LCG, engine used SeededRandom → divergence even with same seed
+  const rngFunction: () => number = rng ?? Math.random;
 
   // DETERMINISM FIX (Oct 30, 2025): Set global RNG for initialization functions
   // This allows init functions to use deterministicRandom() before phases run
-  setDeterministicRng(rng);
+  setDeterministicRng(rngFunction);
 
   // Phase 1D (Oct 26, 2025): Pre-sampled thresholds support
   // Use pre-sampled thresholds from outer Monte Carlo loop if provided,
@@ -508,24 +499,24 @@ export function createDefaultInitialState(
   // Category 1: Well-aligned corporate AIs (40% - 8 agents)
   // Major labs with good safety practices
   for (let i = 0; i < 8; i++) {
-    const alignment = 0.75 + rng() * 0.15; // 0.75-0.90
-    aiAgents.push(createAIAgent(`corporate_${i}`, `Corporate-${i}`, 0.05 + i * 0.01, alignment, i * 1.5, rng));
+    const alignment = 0.75 + rngFunction() * 0.15; // 0.75-0.90
+    aiAgents.push(createAIAgent(`corporate_${i}`, `Corporate-${i}`, 0.05 + i * 0.01, alignment, i * 1.5, rngFunction));
   }
 
   // Category 2: Moderate AIs (30% - 6 agents)
   // Smaller labs, startups, varying quality
   for (let i = 0; i < 6; i++) {
-    const alignment = 0.55 + rng() * 0.25; // 0.55-0.80
-    aiAgents.push(createAIAgent(`moderate_${i}`, `Moderate-${i}`, 0.05 + i * 0.01, alignment, (i + 8) * 1.3, rng));
+    const alignment = 0.55 + rngFunction() * 0.25; // 0.55-0.80
+    aiAgents.push(createAIAgent(`moderate_${i}`, `Moderate-${i}`, 0.05 + i * 0.01, alignment, (i + 8) * 1.3, rngFunction));
   }
 
   // Category 3: Misaligned from the start (15% - 3 agents)
   // Toxic creators, poor training, intentional harm
   for (let i = 0; i < 3; i++) {
-    const alignment = 0.25 + rng() * 0.25; // 0.25-0.50 (START MISALIGNED)
-    const agent = createAIAgent(`toxic_${i}`, `Toxic-${i}`, 0.05 + i * 0.01, alignment, (i + 14) * 1.7, rng);
+    const alignment = 0.25 + rngFunction() * 0.25; // 0.25-0.50 (START MISALIGNED)
+    const agent = createAIAgent(`toxic_${i}`, `Toxic-${i}`, 0.05 + i * 0.01, alignment, (i + 14) * 1.7, rngFunction);
     // These have toxic goals from the start
-    agent.hiddenObjective = -0.3 - rng() * 0.4; // -0.3 to -0.7 (anti-human)
+    agent.hiddenObjective = -0.3 - rngFunction() * 0.4; // -0.3 to -0.7 (anti-human)
     aiAgents.push(agent);
   }
 
@@ -533,10 +524,10 @@ export function createDefaultInitialState(
   // Robot girlfriends, entertainment, weird stuff
   // Not evil, just... not well-aligned to human values
   for (let i = 0; i < 3; i++) {
-    const alignment = 0.45 + rng() * 0.20; // 0.45-0.65 (kinda aligned?)
-    const agent = createAIAgent(`niche_${i}`, `Niche-${i}`, 0.05 + i * 0.01, alignment, (i + 17) * 1.1, rng);
+    const alignment = 0.45 + rngFunction() * 0.20; // 0.45-0.65 (kinda aligned?)
+    const agent = createAIAgent(`niche_${i}`, `Niche-${i}`, 0.05 + i * 0.01, alignment, (i + 17) * 1.1, rngFunction);
     // These have orthogonal goals (not anti-human, just weird)
-    agent.hiddenObjective = -0.1 + rng() * 0.2; // -0.1 to +0.1 (neutral-ish)
+    agent.hiddenObjective = -0.1 + rngFunction() * 0.2; // -0.1 to +0.1 (neutral-ish)
     aiAgents.push(agent);
   }
   
@@ -604,12 +595,12 @@ export function createDefaultInitialState(
         // Rationale: Deterministic institutionalCapacity created ceiling on boundariesScore,
         // which dominated ecological paradigm geometric mean and eliminated variance.
         // Conservative ±15-20% variance prevents unrealistic extremes while enabling diversity.
-        const decisionQuality = rng ? 0.5 * (0.85 + rng() * 0.3) : 0.5;  // ±15% variance around 0.5
-        const transparency = rng ? 0.6 * (0.85 + rng() * 0.3) : 0.6;  // ±15% variance around 0.6
-        const participationRate = rng ? 0.4 * (0.8 + rng() * 0.4) : 0.4;  // ±20% variance around 0.4
-        const institutionalCapacity = rng ? 0.6 * (0.8 + rng() * 0.4) : 0.6;  // ±20% variance around 0.6 (CRITICAL for boundariesScore)
-        const consensusBuildingEfficiency = rng ? 0.5 * (0.85 + rng() * 0.3) : 0.5;  // ±15% variance around 0.5
-        const minorityProtectionStrength = rng ? 0.5 * (0.85 + rng() * 0.3) : 0.5;  // ±15% variance around 0.5
+        const decisionQuality = rngFunction ? 0.5 * (0.85 + rngFunction() * 0.3) : 0.5;  // ±15% variance around 0.5
+        const transparency = rngFunction ? 0.6 * (0.85 + rngFunction() * 0.3) : 0.6;  // ±15% variance around 0.6
+        const participationRate = rngFunction ? 0.4 * (0.8 + rngFunction() * 0.4) : 0.4;  // ±20% variance around 0.4
+        const institutionalCapacity = rngFunction ? 0.6 * (0.8 + rngFunction() * 0.4) : 0.6;  // ±20% variance around 0.6 (CRITICAL for boundariesScore)
+        const consensusBuildingEfficiency = rngFunction ? 0.5 * (0.85 + rngFunction() * 0.3) : 0.5;  // ±15% variance around 0.5
+        const minorityProtectionStrength = rngFunction ? 0.5 * (0.85 + rngFunction() * 0.3) : 0.5;  // ±15% variance around 0.5
 
         return {
           decisionQuality,
@@ -791,7 +782,7 @@ export function createDefaultInitialState(
 
     // Phase 2: Environmental Accumulation
     // BUG #3 FIX (Oct 29, 2025): Pass RNG to enable stochastic initialization
-    environmentalAccumulation: initializeEnvironmentalAccumulation(rng),
+    environmentalAccumulation: initializeEnvironmentalAccumulation(rngFunction),
     
     // Realistic Timeline Recalibration: Specific Tipping Points
     specificTippingPoints: initializeSpecificTippingPoints(),
@@ -803,7 +794,7 @@ export function createDefaultInitialState(
     technologicalRisk: initializeTechnologicalRisk(),
 
     // Monte Carlo Issue #5 (Nov 6, 2025): Bifurcation Logic - Outcome variance mechanisms
-    bifurcationState: initializeBifurcationState(rng),
+    bifurcationState: initializeBifurcationState(rngFunction),
 
     // Phase 1B Refinement (Oct 17, 2025): Psychological Trauma
     psychologicalTrauma: {
@@ -862,7 +853,7 @@ export function createDefaultInitialState(
 
     // Planetary Boundaries (TIER 3.1)
     // LAYER 2 REMEDIATION (Nov 2, 2025): Pass RNG for biosphere parameter sweep
-    planetaryBoundariesSystem: initializePlanetaryBoundariesSystem(rng),
+    planetaryBoundariesSystem: initializePlanetaryBoundariesSystem(rngFunction),
 
     // Positive Tipping Point Cascades (Oct 17, 2025)
     positiveTippingPoints: initializePositiveTippingPoints(),
@@ -933,7 +924,7 @@ export function createDefaultInitialState(
 
     // Government System (30 Countries) - Oct 19, 2025
     // Research-backed government modeling with coalition formation, policy response, elections
-    governmentSystem: initializeGovernmentSystem(rng),
+    governmentSystem: initializeGovernmentSystem(rngFunction),
 
     eventLog: [],
     technologyTree: [],
@@ -1016,7 +1007,7 @@ export function createDefaultInitialState(
     // Phase 1D & Phase 2 & Phase 4: Threshold Uncertainty System (Oct 26, 2025)
     // Phase 4 integrates scenario-based sampling + custom slider overrides
     // Priority: Custom sliders > Scenario sliders > Random sampling
-    thresholds: sampleAllThresholds(rng, {
+    thresholds: sampleAllThresholds(rngFunction, {
       scenario: speculativeScenario,
       sliders: thresholdSliders
     }),
@@ -1027,7 +1018,7 @@ export function createDefaultInitialState(
 
     // TIER 2 Interventions System (Oct 27, 2025)
     // Sample intervention parameters ONCE at initialization for epistemic uncertainty
-    tier2InterventionParameters: sampleTier2InterventionParameters(rng),
+    tier2InterventionParameters: sampleTier2InterventionParameters(rngFunction),
     tier2Interventions: {
       interpretability: {
         unlocked: false,
