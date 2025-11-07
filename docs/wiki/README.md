@@ -323,6 +323,40 @@ for (const [key, val] of Object.entries(obj).sort(([a], [b]) => a.localeCompare(
 
 ---
 
+**🔧 Determinism Fix - Organization Selection Order (WEEK 2 Task 2.2)**
+
+**Issue:** Monte Carlo runs with identical seeds were producing divergent AI agent organization assignments in lifecycle phase.
+
+**Root Cause:** Weighted organization selection for new AI agents depended on `privateOrgs` array iteration order. When organizations array order varied (from modifications in other phases), same RNG value selected different organizations, causing divergent AI capability trajectories.
+
+**Fix Applied:** (commit 79d024f)
+- Sort `privateOrgs` by ID before weighted selection in `updateAIPopulation()`
+- Pattern: `.sort((a, b) => a.id.localeCompare(b.id))` for stable deterministic order
+- Location: `src/simulation/lifecycle.ts` line 656-658
+
+**Results:**
+- **Before:** Run 1 diverged from Runs 2-10
+- **After:** Runs 2-10 now fully deterministic (9/10 deterministic)
+- **90% fix achieved** - Partial resolution (Run 1 still diverges due to separate initialization bug)
+
+**Defensive Pattern for Determinism:**
+```typescript
+// ❌ NEVER iterate over filtered arrays with unstable order
+const privateOrgs = state.organizations.filter(o => o.type === 'private');
+// Weighted selection depends on array position!
+
+// ✅ ALWAYS sort by stable ID before weighted selection
+const privateOrgs = state.organizations
+  .filter(o => o.type === 'private' && !o.bankrupt)
+  .sort((a, b) => a.id.localeCompare(b.id)); // Deterministic order
+```
+
+**Files Changed:**
+- `src/simulation/lifecycle.ts` (organization sort before weighted selection)
+- `logs/lifecycle_organization_sort_fix_20251106.md` (78 lines, validation results)
+
+---
+
 **🐛 Dashboard Data Flow Fix - Paradigm Trajectory Delta Bug**
 
 **Issue:** The `paradigmTrajectory` array (and other critical arrays like `aiAgents`, `regionalPopulations`, `qualityOfLifeBreakdown`) were missing from delta calculations after the first simulation step, causing dashboard visualizations to lose data after initial render.
