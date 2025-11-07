@@ -3088,10 +3088,13 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 - Richards et al. (2023): Climate collapse mortality projections (extreme 8-12°C scenario, 75-year window)
 - Lenton et al. (2008): Individual tipping element transition times (50-100 years for Amazon, AMOC)
 - Wunderling et al. (2024): Tipping cascade timescales (centennial to millennial scales)
+- **Wunderling, Lenton et al. (2025): Global Tipping Points Report 2025 - First confirmed tipping point crossed (coral reefs)**
 - Armstrong McKay et al. (2022): Comprehensive tipping point review (Science)
 - Steffen et al. (2018): Hothouse Earth trajectory
 - Ord (2020): *The Precipice* - Existential risk methodologies
 - Tonn & Stiefel (2013): Exploratory modeling for catastrophic risks
+
+**🚨 BREAKING NEWS (October 2025):** Tropical coral reefs have crossed their thermal tipping point at 1.4°C warming, marking the first confirmed planetary tipping point breach (Global Tipping Points Report 2025). This validates the simulation's urgency and confirms 1.5°C is not a safe threshold.
 
 #### Fix #9: Technology Diffusion Recalibration ✅
 

@@ -155,16 +155,25 @@ The Environmental Accumulation System tracks four metrics that slowly degrade du
 - Cascade amplification when multiple elements active
 - Regional variation in impacts
 
-**Six Major Tipping Elements:**
+**Seven Major Tipping Elements:**
 
-| Element | Transition Duration | Threshold | Impact | Cascades |
-|---------|-------------------|-----------|---------|----------|
-| **Arctic Sea Ice Loss** | 10-30 years | climateStability < 0.65 | -0.10 climate (albedo feedback) | ❌ No |
-| **Amazon Dieback** | 30-80 years | climateStability < 0.55 | -0.15 biodiversity, -0.08 climate | ✅ Yes |
-| **AMOC Collapse** | 50-300 years | climateStability < 0.60 | -0.25 climate (Europe -40%) | ✅ Yes |
-| **Permafrost Carbon** | 50-300 years | climateStability < 0.60 | -0.15 climate (carbon feedback) | ✅ Yes |
-| **West Antarctic Ice** | 2,000-13,000 years | climateStability < 0.65 | -0.20 climate (coastal -50%) | ✅ Yes |
-| **Greenland Ice Sheet** | 1,000-15,000 years | climateStability < 0.65 | -0.25 climate (coastal -60%) | ✅ Yes |
+| Element | Transition Duration | Threshold | Impact | Cascades | Status |
+|---------|-------------------|-----------|---------|----------|--------|
+| **Tropical Coral Reefs** | 10-50 years | ~1.2°C warming | -0.10 biodiversity, fisheries collapse | ✅ Yes | **🚨 CROSSED (Oct 2025)** |
+| **Arctic Sea Ice Loss** | 10-30 years | climateStability < 0.65 | -0.10 climate (albedo feedback) | ❌ No | Approaching |
+| **Amazon Dieback** | 30-80 years | climateStability < 0.55 | -0.15 biodiversity, -0.08 climate | ✅ Yes | At risk |
+| **AMOC Collapse** | 50-300 years | climateStability < 0.60 | -0.25 climate (Europe -40%) | ✅ Yes | At risk |
+| **Permafrost Carbon** | 50-300 years | climateStability < 0.60 | -0.15 climate (carbon feedback) | ✅ Yes | At risk |
+| **West Antarctic Ice** | 2,000-13,000 years | climateStability < 0.65 | -0.20 climate (coastal -50%) | ✅ Yes | Long-term risk |
+| **Greenland Ice Sheet** | 1,000-15,000 years | climateStability < 0.65 | -0.25 climate (coastal -60%) | ✅ Yes | Long-term risk |
+
+**🚨 BREAKING NEWS (November 7, 2025):**
+- **Tropical Coral Reefs:** First confirmed planetary tipping point crossed (Global Tipping Points Report 2025, Oct 29, 2025)
+  - Current warming: ~1.4°C exceeded coral thermal threshold (~1.2°C)
+  - Irreversible even if temperatures stabilize at 1.5°C
+  - Recovery requires cooling to 1°C or lower
+  - Validates simulation urgency - confirms 1.5°C is NOT a safe threshold
+  - See: `src/simulation/specificTippingPoints.ts` for coral reef system implementation
 
 **Recent Updates (November 6, 2025):**
 - **Arctic Sea Ice:** No longer cascades (Armstrong McKay et al. 2022 - not a true tipping element)

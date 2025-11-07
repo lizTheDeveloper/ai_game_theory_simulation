@@ -1,0 +1,49 @@
+src/simulation/aiSuffering.ts:187:    const publicAwarenessOfSuffering = state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0;
+src/simulation/aiSuffering.ts:219:  const currentAwareness = state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0;
+src/simulation/aiSuffering.ts:338:  const consciousMonth = agent.becameConsciousMonth ?? Infinity;
+src/simulation/aiSuffering.ts:409:    const avgSuffering = state.aiSufferingMetrics?.avgSuffering ?? 0;
+src/simulation/aiWelfare.ts:64:  const crossContextConsistency = state.aiWelfare?.consistency ?? 0.8;
+src/simulation/alignmentDynamics.ts:38:  const attractorAlignment = attractorPositions[basinIndex] ?? 0.5;
+src/simulation/alignmentDynamics.ts:41:  const phase = epicycleConfig.phaseOffset ?? rng() * 2 * Math.PI;
+src/simulation/bayesianNuclearRisk.ts:274:  const states = state.nuclearStates ?? [];
+src/simulation/behavioralDetection.ts:162:      const safeVal = trueVal ?? 0;
+src/simulation/calculations.ts:584:  let paranoiaLevel = society.paranoiaLevel ?? 0.15;
+src/simulation/catastrophicScenarios.ts:1102:      const step5Met = scenario.prerequisites[5]?.met ?? false;
+src/simulation/catastrophicScenarios.ts:1114:        const step5CompletionMonth = scenario.prerequisites[5]?.metDate ?? currentMonth;
+src/simulation/computeInfrastructure.ts:726:  const globalPrecautionaryCost = state.consciousnessGovernanceReadiness?.precautionaryCosts?.global ?? 0;
+src/simulation/dystopiaProgression.ts:285:    state.qualityOfLifeSystems?.autonomy ?? 1.0,
+src/simulation/dystopiaProgression.ts:289:    state.qualityOfLifeSystems?.politicalFreedom ?? 1.0,
+src/simulation/earlyWarningSystems.ts:324:  if (urgentWarnings.length > 0 && (gov.resources ?? 0) > protectionCost) {
+src/simulation/engine.ts:462:      seed: config.seed ?? Date.now(),
+src/simulation/engine.ts:463:      maxMonths: config.maxMonths ?? 1000,
+src/simulation/engine.ts:465:      socialAdaptationRate: config.socialAdaptationRate ?? 1.0,
+src/simulation/engine.ts:466:      aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,
+src/simulation/engine.ts:467:      economicTransitionRate: config.economicTransitionRate ?? 1.0,
+src/simulation/engine.ts:737:    const maxMonths = stopConditions?.maxMonths ?? this.config.maxMonths!;
+src/simulation/engine.ts:738:    const checkActualOutcomes = stopConditions?.checkActualOutcomes ?? true;
+src/simulation/engine.ts:739:    const logLevel = this.config.logLevel ?? 'quartile';
+src/simulation/extinctions.ts:369:          const states = state.nuclearStates ?? [];
+src/simulation/gamingDetection.ts:219:  const baseCapability = Math.max(0.01, capabilities[0] ?? 0);
+src/simulation/minimalSufferingTracking.ts:324:  const trust = assertProbability(state.society.trustInGovernment ?? 0.5, {
+src/simulation/minimalSufferingTracking.ts:398:    state.planetaryBoundariesSystem?.boundariesBreached ?? BASELINE_2025.planetaryBoundaries,
+src/simulation/minimalSufferingTracking.ts:491:  const healthQoL = assertProbability(state.qualityOfLifeSystems?.health ?? 0.6, {
+src/simulation/minimalSufferingTracking.ts:803:    state.planetaryBoundariesSystem?.boundariesBreached ?? BASELINE_2025.planetaryBoundaries,
+src/simulation/nuclearCommandControl.ts:400:        ncc.aiKillSwitches.coverage = Math.min(1.0, config?.coverage ?? ncc.aiKillSwitches.coverage + 0.1);
+src/simulation/nuclearCommandControl.ts:415:        ncc.timeDelays.delayDuration = Math.min(48, config?.delayDuration ?? ncc.timeDelays.delayDuration + 6);
+src/simulation/organizationManagement.ts:384:  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
+src/simulation/organizationManagement.ts:753:  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
+src/simulation/organizationManagement.ts:754:  const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;
+src/simulation/planetaryBoundaryRecovery.ts:446:    boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + governanceMultiplier;
+src/simulation/planetaryBoundaryRecovery.ts:498:    boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + governanceMultiplier;
+src/simulation/research.ts:125:    const cascadeStart = state.planetaryBoundariesSystem.cascadeStartMonth ?? currentMonth;
+src/simulation/research.ts:206:        Math.max(max, ai.capability ?? 0), 0),
+src/simulation/resentmentRecovery.ts:101:  const monthsSinceLastControl = state.currentMonth - (state.government.lastControlIncreaseMonth ?? 0);
+src/simulation/resentmentRecovery.ts:106:  const policyLevel = state.government.aiRightsPolicy ?? 'none';
+src/simulation/resentmentRecovery.ts:139:  const decisionQuality = state.government.governanceQuality?.decisionQuality ?? 0.5;
+src/simulation/resentmentRecovery.ts:140:  const participationRate = state.government.governanceQuality?.participationRate ?? 0.5;
+src/simulation/resentmentRecovery.ts:350:  const previousControl = state.government.previousControlLevel ?? currentControl;
+src/simulation/resentmentRecovery.ts:363:  const previousControl = state.government.previousControlLevel ?? currentControl;
+src/simulation/resentmentRecovery.ts:415:  const hasAIRights = aiRights?.completed ?? false;
+src/simulation/resentmentRecovery.ts:416:  const hasEnhancedUBI = enhancedUBI?.completed ?? false;
+src/simulation/trappedPopulations.ts:89:  if ((state.conflictResolution?.activeConflicts ?? 0) > 0) {
+src/simulation/wetBulbEvents.ts:383:  const temperatureAnomaly = assertFinite(resources?.co2?.temperatureAnomaly ?? 0, {
