@@ -5,12 +5,12 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟡 **POST-WEEK 4 ASSESSMENT - PLANNING COMPLETE, CRITICAL GAPS IDENTIFIED** (Nov 7, 2025)
-- **Research Quality:** A (100% peer-reviewed, 0 CRITICAL issues, automated currency pipeline operational)
-- **Implementation Fidelity:** B+ (frameworks exist but incomplete adoption: 16.2% assertion coverage, 25.6% phase dependencies)
-- **Architecture Health:** 7.5/10 (CRITICAL gaps identified: 83.8% phases lack assertions, 74.4% lack dependencies)
-- **System Trajectory:** Architectural honesty - planning complete, 5-8 days CRITICAL implementation work ahead
-- **4-Week Assessment:** PLANNING 100% complete, revealed significant implementation gaps requiring 5-8 days
+**Current Status:** 🔴 **CRITICAL REGRESSIONS DETECTED - IMMEDIATE ACTION REQUIRED** (Nov 7, 2025)
+- **Research Quality:** CONCERNS (mixing peer-reviewed/non-peer-reviewed, Wikipedia citations, outdated sources)
+- **Implementation Fidelity:** C+ (REGRESSION - defensive fallbacks reintroduced, assertions only 29% coverage)
+- **Architecture Health:** 6.5/10 (DECLINING - RNG regression, incomplete fixes, rushed implementations)
+- **System Trajectory:** DANGEROUS - partial fixes creating more problems than solutions
+- **Daily Review:** 2 CRITICAL issues, 1 REGRESSION detected, autonomous workers outpacing validation
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - QUALITY GATE 1 PASSED (CONDITIONAL)
@@ -1165,3 +1165,45 @@ Then proceed with phase consolidation implementation (2-3 weeks).
 
 **Explicitly Deprioritized (Until CRITICAL gaps addressed):**
 - Layer 2 Remediation, new features, UI/Dashboard, complex phases
+
+---
+
+## 🚨 CRITICAL Issues from Daily Review (November 7, 2025)
+
+### From Research Skeptic Review (Sylvia) - 06:00 UTC
+
+**🔴 CRITICAL-3: RNG Algorithm Regression** (IMMEDIATE ACTION)
+- **Problem:** Commit 9c6f25dde introduces non-deterministic fallback to Math.random when RNG undefined
+- **Impact:** Completely invalidates Monte Carlo simulations
+- **Action:** REVERT the RNG "unification" commit immediately
+- **Source:** Daily Review 20251107_060000
+
+**🔴 CRITICAL-4: Incomplete Defensive Coding Cleanup** (1-2 days)
+- **Problem:** 20+ files still contain `?? defaultValue` patterns despite "complete" cleanup claims
+- **Impact:** Silent data corruption, hidden bugs (Oct 2025 ecology NaN pattern still present)
+- **Files:** powerGeneration.ts, freshwaterDepletion.ts, organizationManagement.ts, multiple phases
+- **Action:** Complete audit with automated detection, replace with assertions
+- **Source:** Daily Review 20251107_060000
+
+**🟠 HIGH-4: Determinism Sorting Coverage** (2-3 days)
+- **Problem:** Object iteration sorting only applied to 3/200+ locations (1.5% coverage)
+- **Impact:** Non-deterministic behavior, invalid Monte Carlo results
+- **Action:** Complete object iteration audit, apply sorting to ALL Object.entries/keys/values
+- **Source:** Daily Review 20251107_060000
+
+**🟠 HIGH-5: Research Integrity Issues** (Ongoing)
+- **Problem:** Mixing peer-reviewed and non-peer-reviewed sources without distinction
+- **Examples:** Wikipedia citations, blog posts mixed with journals, 2022 sources claimed as "2024-2025"
+- **Action:** Implement peer review gate for research updates, clear source quality labeling
+- **Source:** Daily Review 20251107_060000
+
+**🟠 HIGH-6: State Validation Reality Check** (3-5 days)
+- **Problem:** Assertion coverage at 29% vs claimed "comprehensive" 95%+
+- **Impact:** 71% of phases allow silent NaN/undefined propagation
+- **Action:** Complete assertion coverage expansion to actual 95%+
+- **Source:** Daily Review 20251107_060000
+
+**Regression Count:** 1 (RNG fallback making working code worse)
+**Autonomous Worker Risk:** Changes happening faster than validation can occur
+
+**Daily Review Tracking:** `/plans/daily_review_items_20251107_060000.md`

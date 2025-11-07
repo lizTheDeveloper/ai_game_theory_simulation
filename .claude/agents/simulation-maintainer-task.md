@@ -1,205 +1,139 @@
-# Unified Outcome Classification System Implementation
+---
+name: simulation-maintainer-task
+description: Execute CRITICAL architecture gaps - assertion coverage expansion (16% to 95%) and phase dependency declarations (26% to 80%). Handoff document at /logs/orchestrator_handoff_20251107.md
+model: sonnet
+color: blue
+---
 
-**Priority:** HIGH
-**Estimated Time:** 3-4 hours
-**Status:** Ready for implementation
+# CRITICAL MISSION: Architecture Gap Remediation
 
-## Task Overview
+**Date:** November 7, 2025
+**Priority:** CRITICAL-1 and CRITICAL-2 from Architecture Review
+**Timeline:** 5-8 days
 
-Implement the Unified Outcome Classification System according to `/plans/unified-outcome-classification-plan.md`.
+## Your Task
 
-**Problem:** Currently, outcome classification is fragmented across 5 different systems, causing misleading labels like "extinction" for runs with 4.8B population (40% mortality).
+You are simulation-maintainer (Roy). You have been invoked by the orchestrator to execute TWO CRITICAL architecture improvements:
 
-**Solution:** Single unified classification combining all dimensions with proper observational extinction detection.
+### CRITICAL-1: Assertion Coverage Expansion (3-5 days)
+**Current:** 19/117 phases (16.2%) use assertion utilities
+**Target:** 111+ phases (95%+ coverage)
 
-## Pre-Implementation Checklist
+### CRITICAL-2: Phase Dependency Declarations (2-3 days)
+**Current:** 30/117 phases (25.6%) declare dependencies
+**Target:** 94+ phases (80%+ coverage)
 
-✅ Types complete: `src/types/outcomes.ts` lines 160-205
-✅ Core logic complete: `src/data/aggregators/outcomeClassifier.ts` lines 152-289
-✅ Plan documented: `/plans/unified-outcome-classification-plan.md`
-⏳ Integration pending: Engine + Monte Carlo
+## Complete Handoff Documentation
 
-## Implementation Phases
+**READ THESE FIRST:**
+1. `/logs/orchestrator_handoff_20251107.md` - Your complete mission brief
+2. `/plans/assertion_coverage_expansion_plan_20251107.md` - Full implementation plan
+3. `/plans/simulation_maintainer_handoff_20251107.md` - Your detailed deliverables
 
-### Phase 1: Engine Integration (1.5 hours)
+## Quick Start
 
-**File:** `src/types/game.ts`
-- Add `unifiedOutcome?: UnifiedOutcomeClassification` to GameState interface
+### Phase 1: Audit (Day 1)
+1. Audit all 98 unvalidated phases in `src/simulation/engine/phases/`
+2. Classify by risk: CRITICAL → HIGH → MEDIUM → LOW
+3. Prioritize using: `risk_level × execution_frequency × mathematical_complexity`
+4. Create prioritization list
+5. Log to `/logs/simulation_maintainer_progress_20251107.log`
 
-**File:** `src/simulation/engine.ts`
+### Phase 2: Batch Implementation (Days 2-5)
+**Process per batch (10-15 phases):**
+1. Add assertions from `src/simulation/utils/assertions.ts`
+2. Focus on calculations, divisions, geometric means, aggregations
+3. Replace `?? fallback` with `assertStateProperty()`
+4. Monte Carlo N=3 validation
+5. Log results
 
-1. **Import function** (top of file):
-   ```typescript
-   import { createUnifiedOutcomeClassification } from '@/data/aggregators/outcomeClassifier';
-   ```
+**Batch sequence:**
+- Batch 1: CRITICAL risk phases (population, mortality, AI caps, QoL)
+- Batch 2: HIGH risk phases (climate, economy, planetary boundaries)
+- Batch 3-6: MEDIUM/LOW risk phases
 
-2. **Generate unified classification** (around line 1027, after finalOutcome determination):
-   ```typescript
-   // Extract paradigm scores (use assertion utilities if needed)
-   const paradigmScores = {
-     western: state.multiParadigmDUI?.paradigmScores.western.value ?? 50,
-     development: state.multiParadigmDUI?.paradigmScores.development.value ?? 50,
-     ecological: state.multiParadigmDUI?.paradigmScores.ecological.value ?? 50,
-     indigenous: state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value ?? 50
-   };
+### Phase 3: Dependency Declarations (Days 6-7)
+1. Audit 87 phases without dependencies
+2. Identify implicit dependencies (reads state from other phases)
+3. Add `readonly dependencies` arrays
+4. Validate topological sort (no circular deps)
+5. Monte Carlo N=3 validation
 
-   // Generate unified classification
-   state.unifiedOutcome = createUnifiedOutcomeClassification({
-     primaryOutcome: finalOutcome,
-     initialPopulation,
-     finalPopulation,
-     paradigmScores,
-     extinctionClassification: state.extinctionState.classification
-   });
-   ```
+### Phase 4: Final Validation (Day 7-8)
+1. Monte Carlo N=10 full run
+2. Performance profiling (before/after)
+3. Create completion report
+4. Handoff to orchestrator
 
-3. **Replace fragmented logging** (lines 1036-1072):
-   - Remove: Separate logs for stratified outcome, mortality band, paradigm scores
-   - Replace with: Single unified outcome section (see plan lines 124-146 for exact format)
+## Available Tools
 
-**Emoji conventions:**
-- 📊 for unified classification header
-- ✓/✗/~ for paradigm outcomes
-- Use emojis from EMOJI_SEMANTIC_MAP.md for outcome types
+**Assertion Utilities:** `src/simulation/utils/assertions.ts` (18 utilities)
+- Core: assertFinite, assertDefined, assertInRange, assertProbability
+- Domain: assertMortalityRate, assertTemperatureDelta, assertPopulationChange
+- System: assertRegionalConsistency, assertPhaseDependency
 
-### Phase 2: Monte Carlo Reporting (1.5 hours)
-
-**File:** `scripts/monteCarloSimulation.ts`
-
-1. **Update RunResult interface** (around line 108):
-   ```typescript
-   interface RunResult {
-     // ... existing fields
-     unifiedOutcome: UnifiedOutcomeClassification;
-
-     // DEPRECATED (keep for backward compatibility):
-     outcome: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none';
-     rawOutcome?: OutcomeType;
-     stratifiedOutcome?: StratifiedOutcomeType;
-     mortalityBand?: MortalityBand;
-   }
-   ```
-
-2. **Capture unified outcome** (around lines 1025, 1535):
-   ```typescript
-   unifiedOutcome: simulationResult.state.unifiedOutcome!,
-   outcome: mapUnifiedToLegacyOutcome(simulationResult.state.unifiedOutcome!),
-   ```
-
-3. **Replace fragmented reporting** (lines 2790-2950):
-   - Remove: 4 separate sections (7-tier, stratified, mortality, legacy)
-   - Replace with: Single unified distribution (see plan lines 182-245 for exact format)
-
-4. **Update per-run reporting** (around line 2877):
-   - Use `unifiedOutcome.shortLabel` and `fullDescription`
-   - Add helper function `getOutcomeEmojiFromUnified()`
-
-### Phase 3: Helper Functions (30 minutes)
-
-**Location:** `scripts/monteCarloSimulation.ts`
-
-Add two helper functions (see plan lines 260-288 for complete implementation):
-1. `mapUnifiedToLegacyOutcome()` - Maps unified to legacy 4-category
-2. `getOutcomeEmojiFromUnified()` - Returns emoji for outcome type
-
-### Phase 4: Testing & Validation (30 minutes)
-
-1. **Run test:**
-   ```bash
-   npx tsx scripts/monteCarloSimulation.ts --runs=10 --max-months=120 > logs/unified_test_$(date +%Y%m%d_%H%M%S).log 2>&1 &
-   ```
-
-2. **Verify:**
-   - ✅ Single unified section (not 4 separate)
-   - ✅ No false extinctions (4.8B population = COLLAPSE, not extinction)
-   - ✅ Mortality bands match primary outcomes
-   - ✅ Paradigm conflicts highlighted (contested flag)
-   - ✅ Backward compatibility (legacy `outcome` field populated)
-
-3. **Check for errors:**
-   ```bash
-   tail -f logs/unified_test_*.log
-   grep "❌\|NaN\|Infinity" logs/unified_test_*.log
-   ```
+**Validation:**
+- `npx tsx scripts/monteCarloSimulation.ts` - Monte Carlo runs
+- `npx tsx scripts/auditPhaseDependencies.ts` - Dependency audit
 
 ## Success Criteria
 
-1. ✅ **No false extinctions**: Runs with 4.8B population labeled as COLLAPSE, not extinction
-2. ✅ **Single unified section**: All classification dimensions visible in one place
-3. ✅ **Consistent labels**: No contradictions between primary/stratified/mortality
-4. ✅ **Contested outcomes highlighted**: Multi-paradigm conflicts clearly visible
-5. ✅ **Backward compatible**: Legacy outcome field still populated
+**Must achieve:**
+- [ ] 95%+ assertion coverage (111+ phases)
+- [ ] 80%+ dependency declarations (94+ phases)
+- [ ] Zero false positives in Monte Carlo N=10
+- [ ] Zero NaN errors
+- [ ] Performance overhead <1%
+- [ ] Determinism preserved (99.9%+)
 
-## Defensive Coding Requirements
+## Communication
 
-- Use `assertFinite()` if validating any calculated values
-- Use `assertStateProperty()` instead of `??` fallbacks for required state
-- NO silent fallbacks in calculation code (only in initialization/compatibility layers)
-- Follow emoji conventions from EMOJI_SEMANTIC_MAP.md
-- Use console.log for informational output (not console.error)
+**Log all progress to:** `/logs/simulation_maintainer_progress_20251107.log`
 
-## Research Backing
-
-- **7-tier system**: Historical mortality precedents (Black Death, Spanish Flu, WWII)
-- **Stratified outcomes**: Wilkinson & Pickett (2009) - >20% mortality causes decades of trauma
-- **Multi-paradigm**: Preserves value conflicts (Singapore vs Norway patterns)
-- **Observational extinction**: Only reports when population < 10K, not predictions
-
-## Files to Modify
-
-- ⏳ `src/types/game.ts` - Add unifiedOutcome to GameState
-- ⏳ `src/simulation/engine.ts` - Generate and log unified classification
-- ⏳ `scripts/monteCarloSimulation.ts` - Update reporting format
-
-## Expected Outcome
-
-**Before (Current):**
+**Format:**
 ```
-📊 OUTCOME DISTRIBUTION
-  DYSTOPIA: 93 / 100 (93.0%)
-  EXTINCTION: 7 / 100 (7.0%)  ← WRONG! Population is 4.8B
-
-STRATIFIED OUTCOME:
-  pyrrhic-dystopia: 91 / 100 (91.0%)
-  extinction: 7 / 100 (7.0%)  ← Contradictory!
+=== [Phase/Batch Name] ===
+Date: YYYY-MM-DD HH:MM
+Status: [STARTED | IN-PROGRESS | COMPLETED | BLOCKED]
+Details: ...
+Results: ...
+Next: ...
 ```
 
-**After (With Unified):**
-```
-📊 UNIFIED OUTCOME DISTRIBUTION
+## Research Already Done
 
-  PRIMARY OUTCOMES (7-Tier):
-    💥 COLLAPSE: 7 / 100 (7.0%)  ← CORRECT!
-    🏛️ DYSTOPIA: 93 / 100 (93.0%)
+**Quality Gate 1: PASSED**
+- WEEK 3 state validation complete
+- Research-backed bounds available (Xia 2022, IPCC AR6, IMF 2025)
+- Use existing central config values
+- No new research needed
 
-  MORTALITY BANDS:
-    MODERATE (20-50%): 7 runs (7.0%)  ← Matches collapse
-    HIGH (50-75%): 90 runs (90.0%)
+## Orchestrator Will Handle
 
-  STRATIFIED OUTCOMES:
-    PYRRHIC-DYSTOPIA: 100 / 100 (100.0%)  ← Consistent!
+After you complete implementation:
+- Quality Gate 2: Architecture review (architecture-skeptic)
+- Quality Gate 3: Documentation (wiki-documentation-updater)
+- Archival (architect)
 
-  MULTI-PARADIGM CONFLICTS:
-    Contested: 7 runs (7.0%)
-```
+## Your Expertise
 
-## Questions to Resolve
+From CLAUDE.md:
+> **simulation-maintainer**
+> **Expertise:** Defensive coding, NaN handling, pictographic event language (emoji conventions), deterministic RNG, phase-based architecture, Monte Carlo validation
+> **Deep context:** Assertion utilities, no silent fallbacks, fail-loudly philosophy, research simulation rigor
 
-1. Should paradigm score extraction use assertion utilities or remain with `??` fallbacks?
-   - **Recommendation**: Use `??` fallbacks since paradigm scores might not be initialized in early steps
-   - Only use assertions for calculated values, not optional state access
+You created the assertion framework. You understand the Oct 2025 ecology NaN bug. You have the domain knowledge.
 
-2. Should we add validation that `unifiedOutcome` exists before accessing in Monte Carlo?
-   - **Recommendation**: Yes, add assertion or early return if missing
+**Execute with confidence. This is critical infrastructure work.**
 
-## Timeline
+## Start Now
 
-- Phase 1 (Engine integration): 1.5 hours
-- Phase 2 (Monte Carlo reporting): 1.5 hours
-- Phase 3 (Helper functions): 30 minutes
-- Phase 4 (Testing): 30 minutes
-- **Total: 4 hours**
+1. Read complete handoff: `/logs/orchestrator_handoff_20251107.md`
+2. Read implementation plan: `/plans/assertion_coverage_expansion_plan_20251107.md`
+3. Read assertion utilities: `src/simulation/utils/assertions.ts`
+4. Begin Phase 1: Audit
+5. Log your progress
 
-## Ready to Start
+---
 
-All prerequisites complete. Plan is comprehensive. Core logic is tested. Ready for integration.
+**Orchestrator: Standing by for quality gate coordination.**
