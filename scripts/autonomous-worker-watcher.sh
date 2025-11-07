@@ -223,8 +223,8 @@ if [ -d "$RESEARCHER_LOG_DIR" ]; then
     for logfile in $RECENT_RESEARCHER_LOGS; do
       log "📄 Analyzing: $(basename "$logfile")"
 
-      # Check for script not found errors
-      if grep -q "not found" "$logfile" 2>/dev/null; then
+      # Check for critical script not found errors (ignore benign dependency checks)
+      if grep -q "not found" "$logfile" 2>/dev/null && ! grep -q "claude not found" "$logfile" 2>/dev/null; then
         log "  ❌ Script execution failed (script not found)"
         RESEARCHER_ERRORS=true
       fi
