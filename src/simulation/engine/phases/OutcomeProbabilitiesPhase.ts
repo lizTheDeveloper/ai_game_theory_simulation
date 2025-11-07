@@ -8,6 +8,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { calculateOutcomeProbabilities } from '../../calculations';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertProbability } from '@/simulation/utils/assertions';
 
 export class OutcomeProbabilitiesPhase implements SimulationPhase {
   readonly id = 'outcome-probabilities';
@@ -22,8 +23,28 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
   ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const outcomeProbs = calculateOutcomeProbabilities(state);
     setDeterministicRng(rng);
+    const outcomeProbs = calculateOutcomeProbabilities(state);
+
+    // Validate all outcome probabilities are in [0, 1]
+    assertProbability(outcomeProbs.utopiaProbability || 0, {
+      location: 'OutcomeProbabilitiesPhase.execute',
+      valueName: 'utopiaProbability',
+      month: state.currentMonth
+    });
+
+    assertProbability(outcomeProbs.dystopiaProbability || 0, {
+      location: 'OutcomeProbabilitiesPhase.execute',
+      valueName: 'dystopiaProbability',
+      month: state.currentMonth
+    });
+
+    assertProbability(outcomeProbs.extinctionProbability || 0, {
+      location: 'OutcomeProbabilitiesPhase.execute',
+      valueName: 'extinctionProbability',
+      month: state.currentMonth
+    });
+
     state.outcomeMetrics = outcomeProbs;
 
     return { events: [] };
