@@ -200,10 +200,14 @@ export function calculateDimensionGrowth(
   let recursiveMultiplier = 1.0;
   if (state && dimension === 'selfImprovement') {
     // Get total AI capability to determine if we're in recursive improvement territory
-    // FIXED: Use Math.max with 0 floor for uninitialized agents, then assertFinite to catch NaN/Infinity
     const totalCapability = assertFinite(
-      state.aiAgents.reduce((max, ai) =>
-        Math.max(max, ai.capability ?? 0), 0),
+      state.aiAgents.reduce((max, ai) => {
+        const cap = assertFinite(ai.capability, {
+          location: 'calculateResearchGrowthRateMultiplier (selfImprovement)',
+          valueName: `agent[${ai.id}].capability`,
+        });
+        return Math.max(max, cap);
+      }, 0),
       {
         location: 'calculateResearchGrowthRateMultiplier',
         valueName: 'totalCapability',
