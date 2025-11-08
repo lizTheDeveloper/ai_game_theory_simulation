@@ -10,7 +10,7 @@ import type { RNGFunction } from '../../types/config';
 import type { LLMWeightUpdate, WeightUpdateHistory } from '../../types/llm';
 import { shouldUpdateWeights } from './config';
 import { updateWeightsWithLLM, getFallbackWeights } from './client';
-import { assertDefined } from '../utils/assertions';
+import { assertDefined, assertNonEmpty } from '../utils/assertions';
 
 /**
  * Check and update AI agent weights if needed
@@ -288,8 +288,13 @@ export function selectActionFromWeights(
 
   // If no weights for available actions, use uniform random
   if (totalWeight === 0 || actionWeights.length === 0) {
-    const idx = Math.floor(rng() * availableActions.length);
-    return availableActions[idx] ?? availableActions[0] ?? 'advance_research';
+    // Assert availableActions is non-empty (if empty, this is a bug)
+    const validActions = assertNonEmpty(availableActions, {
+      location: 'selectActionWithWeights',
+      valueName: 'availableActions'
+    });
+    const idx = Math.floor(rng() * validActions.length);
+    return validActions[idx];
   }
 
   // Weighted random selection
@@ -301,8 +306,14 @@ export function selectActionFromWeights(
     }
   }
 
-  // Fallback (shouldn't reach here)
-  return actionWeights[0]?.action ?? 'advance_research';
+  // Should never reach here - if we do, it's a bug in the weighted selection logic
+  throw new Error(
+    `❌ CRITICAL: Weighted action selection failed for agent ${agent.id}\n` +
+    `   Total weight: ${totalWeight}\n` +
+    `   Action weights: ${JSON.stringify(actionWeights)}\n` +
+    `   Random value: ${r}\n` +
+    `   This indicates a bug in the weighted random selection algorithm.`
+  );
 }
 
 /**
