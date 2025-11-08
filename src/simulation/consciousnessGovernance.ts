@@ -7,6 +7,7 @@ import type {
   RegionalGovernance,
   ScenarioTrajectory
 } from '../types/consciousness';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Initialize consciousness governance state with regional baselines (2025)

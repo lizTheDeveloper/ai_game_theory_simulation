@@ -22,6 +22,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Emergency Management Bureau State

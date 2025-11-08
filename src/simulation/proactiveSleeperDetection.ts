@@ -24,6 +24,7 @@
  */
 
 import { GameState, AIAgent, GameEvent } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Sleeper detection scenario types

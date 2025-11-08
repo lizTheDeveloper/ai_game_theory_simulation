@@ -43,6 +43,7 @@
  */
 
 import { RegionName } from '@/types/populationProvider';
+import { assertFinite } from './utils/assertions';
 import { CountryName } from '@/types/countryPopulations';
 
 /**

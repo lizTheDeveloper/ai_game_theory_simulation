@@ -21,6 +21,7 @@ import {
   initializeRegionalFamineState,
   initializeRegionalResilienceProfile
 } from './mortalityStabilizersInit';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Initialize regional populations with 2025 baseline data
@@ -523,7 +524,23 @@ export function updateRegionalPopulations(state: GameState): void {
 
     const capacityModifier = climateModifier * resourceModifier * ecosystemModifier * techModifier;
     region.carryingCapacity = Math.max(100, region.baselineCarryingCapacity * capacityModifier);
-    region.populationPressure = region.population / region.carryingCapacity;
+
+    // Population pressure calculation (protected with assertFinite)
+    // carryingCapacity is always >= 100 from Math.max above, so division is safe
+    // but we validate the result to catch NaN propagation from inputs
+    region.populationPressure = assertFinite(
+      region.population / region.carryingCapacity,
+      {
+        location: 'updateRegionalPopulation',
+        valueName: 'populationPressure',
+        month: state.currentMonth,
+        additionalInfo: {
+          region: region.name,
+          population: region.population,
+          carryingCapacity: region.carryingCapacity
+        }
+      }
+    );
 
     // FIX (Oct 26, 2025): REMOVED instant 5% per month overshoot death mechanic
     //
