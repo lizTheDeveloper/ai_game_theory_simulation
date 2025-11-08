@@ -483,6 +483,28 @@ From recent 100-run simulation:
 **Status:** ✅ Fixed in commit 420e29f (Nov 7, 2025)
 **Note:** OutcomeProbabilitiesPhase correctly uses `assertProbability()` since outcome probabilities ARE actual probabilities [0,1]
 
+## Research Foundation
+
+The 17-dimensional QoL framework draws on peer-reviewed multi-dimensional welfare research:
+
+**Primary Research File:** `research/welfare_quality_of_life_frameworks_20251019.md`
+
+**Key Frameworks:**
+- **UNECE (2025):** 10-dimensional well-being guidelines (official UN framework beyond GDP)
+- **UNDP HDI (2025):** Geometric mean aggregation methodology (health, education, income)
+- **Social Progress Index (2025):** 57 indicators across Basic Needs, Foundations, Opportunity
+- **Reig-Mullor et al. (2024):** Fuzzy multicriteria QoL with uncertainty quantification
+
+**Research Quality:** A+ (newest source Sept 2025, last verified Nov 8, 2025)
+
+**Simulation Adaptations:**
+- Expanded UNECE's 10 dimensions to 17 for granularity
+- Weighted sum aggregation (not geometric mean) to allow dimension-specific interventions
+- Added post-scarcity multipliers for futures beyond current empirical data
+- Integrated AI-specific dimensions (trust in AI, beneficial contributions)
+
+**Active Code References:** `src/types/minimalSuffering.ts`, `src/simulation/qualityOfLife.ts`
+
 ## Future Plans
 
 - **Individual QoL Distribution:** Track variance (is everyone better or just elites?)
