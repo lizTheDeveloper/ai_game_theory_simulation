@@ -408,7 +408,19 @@ function updateGridMix(power: PowerGenerationSystem, state: GameState): void {
     );
   }
 
-  // ARCH-4 Gap #1: Nuclear winter → solar energy integration
+  // ARCH-4 Gap #1: Nuclear winter → solar energy integration (Nov 7, 2025)
+  //
+  // Research Foundation:
+  // - Xia et al. (2022) Nature Food: 5+ billion deaths from agricultural collapse via sunlight blocking
+  //   DOI: https://doi.org/10.1038/s43016-022-00573-0
+  // - Coupe et al. (2019) JGR Atmospheres: 35-45% sunlight reduction for 3-5 years (150 Tg soot)
+  //   DOI: https://doi.org/10.1029/2019JD030509
+  // - Robock & Toon (2012) Bulletin of Atomic Scientists: Regional wars cause 20-35% reduction
+  //   DOI: https://doi.org/10.1177/0096340212459127
+  //
+  // Mechanism: Soot injection → stratospheric sunlight blocking → solar panel efficiency reduction
+  // Impact: Renewables lose capacity → grid forced to use fossil/nuclear backup → emissions increase
+  //
   // Calculate effective renewable percentage accounting for sunlight blocking
   let effectiveRenewablePercentage = power.renewablePercentage;
   let sunlightReduction = 0;
@@ -423,8 +435,9 @@ function updateGridMix(power: PowerGenerationSystem, state: GameState): void {
       month: state.currentMonth
     });
 
-    // Assume 70% of renewables are solar (realistic for 2025+ grid)
+    // Assume 70% of renewables are solar (realistic for 2025+ grid mix)
     // Wind/hydro/geothermal unaffected by sunlight
+    // Research: IEA (2024) - Solar dominates renewable capacity additions globally
     const solarFraction = 0.70;
     sunlightReduction = power.renewablePercentage * solarFraction * sunlightBlocked;
 
