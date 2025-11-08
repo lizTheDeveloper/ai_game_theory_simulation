@@ -64,7 +64,7 @@ export class Tier2NuclearSecurityPhase implements SimulationPhase {
           additionalInfo: { agentCount: state.aiAgents.length }
         });
 
-        assertAICapability(avgCapability, {
+        assertAICapability(avgCapability, { allowContinuous: true,
           location: 'Tier2NuclearSecurityPhase.execute',
           valueName: 'avgCapability',
           month: state.currentMonth,

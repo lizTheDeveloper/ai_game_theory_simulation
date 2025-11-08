@@ -62,7 +62,7 @@ export class Tier2CrisisAnticipationPhase implements SimulationPhase {
           additionalInfo: { agentCount: state.aiAgents.length }
         });
 
-        assertAICapability(avgCapability, {
+        assertAICapability(avgCapability, { allowContinuous: true,
           location: 'Tier2CrisisAnticipationPhase.execute',
           valueName: 'avgCapability',
           month: state.currentMonth,

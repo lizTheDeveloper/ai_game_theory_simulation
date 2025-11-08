@@ -74,7 +74,7 @@ export class Tier2DarkComputePhase implements SimulationPhase {
           additionalInfo: { agentCount: state.aiAgents.length }
         });
 
-        assertAICapability(avgCapability, {
+        assertAICapability(avgCapability, { allowContinuous: true,
           location: 'Tier2DarkComputePhase.execute',
           valueName: 'avgCapability',
           month: state.currentMonth,
