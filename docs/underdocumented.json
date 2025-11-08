@@ -139,11 +139,12 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "line": 162,
     "type": "property",
-    "name": "strat
-✅ Full results saved to: docs/underdocumented.json
-   Use this file to generate documentation improvements
-
-"file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
+    "name": "strategy",
+    "currentDoc": "(none)",
+    "context": "strategy: 'honest' | 'gaming' | 'sandbagging';"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "line": 191,
     "type": "property",
     "name": "sleeperProgression",
