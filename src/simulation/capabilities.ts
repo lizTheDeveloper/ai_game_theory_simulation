@@ -345,37 +345,40 @@ export function getIndustryImpact(profile: AICapabilityProfile, industry: string
  * @returns Scaled capability profile
  */
 export function scaleCapabilityProfile(
-  profile: AICapabilityProfile, 
+  profile: AICapabilityProfile,
   multiplier: number
 ): AICapabilityProfile {
+  // CRITICAL FIX (Nov 8, 2025): Round all capabilities to integers [0-5]
+  // Capabilities are discrete levels, not continuous values
+  // Bug: Scaling created non-integer values, caught by AILifecyclePhase assertions
   return {
-    physical: profile.physical * multiplier,
-    digital: profile.digital * multiplier,
-    cognitive: profile.cognitive * multiplier,
-    social: profile.social * multiplier,
-    economic: profile.economic * multiplier,
-    selfImprovement: profile.selfImprovement * multiplier,
+    physical: Math.round(profile.physical * multiplier),
+    digital: Math.round(profile.digital * multiplier),
+    cognitive: Math.round(profile.cognitive * multiplier),
+    social: Math.round(profile.social * multiplier),
+    economic: Math.round(profile.economic * multiplier),
+    selfImprovement: Math.round(profile.selfImprovement * multiplier),
     research: {
       biotech: {
-        drugDiscovery: profile.research.biotech.drugDiscovery * multiplier,
-        geneEditing: profile.research.biotech.geneEditing * multiplier,
-        syntheticBiology: profile.research.biotech.syntheticBiology * multiplier,
-        neuroscience: profile.research.biotech.neuroscience * multiplier
+        drugDiscovery: Math.round(profile.research.biotech.drugDiscovery * multiplier),
+        geneEditing: Math.round(profile.research.biotech.geneEditing * multiplier),
+        syntheticBiology: Math.round(profile.research.biotech.syntheticBiology * multiplier),
+        neuroscience: Math.round(profile.research.biotech.neuroscience * multiplier)
       },
       materials: {
-        nanotechnology: profile.research.materials.nanotechnology * multiplier,
-        quantumComputing: profile.research.materials.quantumComputing * multiplier,
-        energySystems: profile.research.materials.energySystems * multiplier
+        nanotechnology: Math.round(profile.research.materials.nanotechnology * multiplier),
+        quantumComputing: Math.round(profile.research.materials.quantumComputing * multiplier),
+        energySystems: Math.round(profile.research.materials.energySystems * multiplier)
       },
       climate: {
-        modeling: profile.research.climate.modeling * multiplier,
-        intervention: profile.research.climate.intervention * multiplier,
-        mitigation: profile.research.climate.mitigation * multiplier
+        modeling: Math.round(profile.research.climate.modeling * multiplier),
+        intervention: Math.round(profile.research.climate.intervention * multiplier),
+        mitigation: Math.round(profile.research.climate.mitigation * multiplier)
       },
       computerScience: {
-        algorithms: profile.research.computerScience.algorithms * multiplier,
-        security: profile.research.computerScience.security * multiplier,
-        architectures: profile.research.computerScience.architectures * multiplier
+        algorithms: Math.round(profile.research.computerScience.algorithms * multiplier),
+        security: Math.round(profile.research.computerScience.security * multiplier),
+        architectures: Math.round(profile.research.computerScience.architectures * multiplier)
       }
     }
   };
