@@ -12,6 +12,7 @@
  */
 
 import { GameState } from '../types/game';
+import { assertFinite } from './utils/assertions';
 import { ResourceEconomy } from '../types/resources';
 import { BreakthroughTechState, TechnologyNode } from '../types/technologies';
 

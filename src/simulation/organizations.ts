@@ -10,6 +10,7 @@ import { handleBankruptcy } from './organizationManagement';
 import type { RNGFunction } from './engine/PhaseOrchestrator';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 
 /**
  * Initialize 6 organizations for January 2025
@@ -399,14 +400,38 @@ function updateOrganizationEconomics(
     for (const presence of org.geographicPresence) {
       const country = countries[presence.country];
       if (country) {
-        const popFraction = country.population / country.peakPopulation;
+        const peakPop = assertFinite(country.peakPopulation, {
+          location: 'updateOrganizationEconomy',
+          valueName: 'country.peakPopulation',
+          month: state.currentMonth,
+          additionalInfo: { country: presence.country, org: org.name }
+        });
+        const currentPop = assertFinite(country.population, {
+          location: 'updateOrganizationEconomy',
+          valueName: 'country.population',
+          month: state.currentMonth,
+          additionalInfo: { country: presence.country, org: org.name }
+        });
+
+        const popFraction = assertFinite(currentPop / peakPop, {
+          location: 'updateOrganizationEconomy',
+          valueName: 'popFraction',
+          month: state.currentMonth,
+          additionalInfo: { country: presence.country, org: org.name, peakPop, currentPop }
+        });
+
         weightedPopFraction += popFraction * presence.operationsWeight;
         totalWeight += presence.operationsWeight;
       }
     }
     
     if (totalWeight > 0) {
-      weightedPopFraction /= totalWeight;
+      weightedPopFraction = assertFinite(weightedPopFraction / totalWeight, {
+        location: 'updateOrganizationEconomy',
+        valueName: 'weightedPopFraction',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name, totalWeight }
+      });
     } else {
       weightedPopFraction = 1.0; // Default if no valid countries
     }
@@ -419,14 +444,51 @@ function updateOrganizationEconomics(
   } else {
     // Fall back to old single-country logic
     if (org.country === 'Multi-national') {
-      const globalPopFraction = state.humanPopulationSystem.population / 
-                                state.humanPopulationSystem.baselinePopulation;
+      const globalPop = assertFinite(state.humanPopulationSystem.population, {
+        location: 'updateOrganizationEconomy',
+        valueName: 'humanPopulationSystem.population',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name }
+      });
+      const baselinePop = assertFinite(state.humanPopulationSystem.baselinePopulation, {
+        location: 'updateOrganizationEconomy',
+        valueName: 'humanPopulationSystem.baselinePopulation',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name }
+      });
+
+      const globalPopFraction = assertFinite(globalPop / baselinePop, {
+        location: 'updateOrganizationEconomy',
+        valueName: 'globalPopFraction',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name, globalPop, baselinePop }
+      });
+
       org.monthlyRevenue = baseline * calculateEconomicMultiplier(globalPopFraction);
       org.monthlyExpenses = baseExpenses * calculateExpenseMultiplier(globalPopFraction);
     } else {
       const country = countries[org.country];
       if (country) {
-        const popFraction = country.population / country.peakPopulation;
+        const peakPop = assertFinite(country.peakPopulation, {
+          location: 'updateOrganizationEconomy',
+          valueName: 'country.peakPopulation',
+          month: state.currentMonth,
+          additionalInfo: { country: org.country, org: org.name }
+        });
+        const currentPop = assertFinite(country.population, {
+          location: 'updateOrganizationEconomy',
+          valueName: 'country.population',
+          month: state.currentMonth,
+          additionalInfo: { country: org.country, org: org.name }
+        });
+
+        const popFraction = assertFinite(currentPop / peakPop, {
+          location: 'updateOrganizationEconomy',
+          valueName: 'popFraction',
+          month: state.currentMonth,
+          additionalInfo: { country: org.country, org: org.name, peakPop, currentPop }
+        });
+
         org.monthlyRevenue = baseline * calculateEconomicMultiplier(popFraction);
         org.monthlyExpenses = baseExpenses * calculateExpenseMultiplier(popFraction);
       }
@@ -466,24 +528,55 @@ function calculateOrganizationBankruptcyRisk(
         console.warn(`Organization ${org.name} references unknown country: ${presence.country}`);
         continue;
       }
-      
-      const popDecline = 1 - (country.population / country.peakPopulation);
+
+      const peakPop = assertFinite(country.peakPopulation, {
+        location: 'calculateOrganizationBankruptcyRisk',
+        valueName: 'country.peakPopulation',
+        month: state.currentMonth,
+        additionalInfo: { country: presence.country, org: org.name }
+      });
+      const currentPop = assertFinite(country.population, {
+        location: 'calculateOrganizationBankruptcyRisk',
+        valueName: 'country.population',
+        month: state.currentMonth,
+        additionalInfo: { country: presence.country, org: org.name }
+      });
+
+      const popFraction = assertFinite(currentPop / peakPop, {
+        location: 'calculateOrganizationBankruptcyRisk',
+        valueName: 'popFraction',
+        month: state.currentMonth,
+        additionalInfo: { country: presence.country, org: org.name, peakPop, currentPop }
+      });
+
+      const popDecline = 1 - popFraction;
       weightedPopDecline += popDecline * presence.operationsWeight;
       totalWeight += presence.operationsWeight;
     }
     
     // Normalize (in case weights don't sum to exactly 1.0)
     if (totalWeight > 0) {
-      weightedPopDecline /= totalWeight;
+      weightedPopDecline = assertFinite(weightedPopDecline / totalWeight, {
+        location: 'calculateOrganizationBankruptcyRisk',
+        valueName: 'weightedPopDecline',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name, totalWeight }
+      });
     }
-    
+
     // === 2. BASE BANKRUPTCY RISK (SIGMOID CURVE) ===
     // Sigmoid: Risk increases sharply around 60% weighted decline
     // - 0% decline → 0% risk
     // - 40% decline → 2% risk
     // - 60% decline → 50% risk
     // - 80% decline → 98% risk
-    let baseRisk = 1 / (1 + Math.exp(-10 * (weightedPopDecline - 0.6)));
+    const sigmoid = 1 + Math.exp(-10 * (weightedPopDecline - 0.6));
+    let baseRisk = assertFinite(1 / sigmoid, {
+      location: 'calculateOrganizationBankruptcyRisk',
+      valueName: 'baseRisk (sigmoid)',
+      month: state.currentMonth,
+      additionalInfo: { org: org.name, weightedPopDecline, sigmoid }
+    });
     
     // === 3. APPLY RESILIENCE MODIFIERS ===
 
@@ -560,11 +653,21 @@ function calculateOrganizationBankruptcyRisk(
     // Most bankruptcies gradual (Gaussian), but rare mega-crashes (2008, COVID-19)
     // Alpha = 1.5: Very fat tails (extreme events like Lehman Brothers)
 
-    const crashMagnitude = levyFlight(ALPHA_PRESETS.FINANCE, rng);
+    const crashMagnitude = assertFinite(levyFlight(ALPHA_PRESETS.FINANCE, rng), {
+      location: 'calculateOrganizationBankruptcyRisk',
+      valueName: 'crashMagnitude (Lévy flight)',
+      month: state.currentMonth,
+      additionalInfo: { org: org.name }
+    });
 
     if (crashMagnitude > 20.0) {
       // Mega-crash event (rare, devastating - 2008 financial crisis, COVID-19 shock)
-      const crashMultiplier = Math.min(crashMagnitude / 20, 5.0); // Max 5x risk increase
+      const crashMultiplier = assertFinite(Math.min(crashMagnitude / 20, 5.0), {
+        location: 'calculateOrganizationBankruptcyRisk',
+        valueName: 'crashMultiplier',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name, crashMagnitude }
+      });
       adjustedRisk *= crashMultiplier;
 
       // Log extreme financial events
@@ -574,7 +677,12 @@ function calculateOrganizationBankruptcyRisk(
       console.log(`     Adjusted risk: ${(Math.min(1.0, adjustedRisk) * 100).toFixed(1)}%`);
     } else if (crashMagnitude > 5.0) {
       // Moderate financial shock (more common)
-      const shockMultiplier = 1.0 + (crashMagnitude / 20);
+      const shockMultiplier = assertFinite(1.0 + (crashMagnitude / 20), {
+        location: 'calculateOrganizationBankruptcyRisk',
+        valueName: 'shockMultiplier',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name, crashMagnitude }
+      });
       adjustedRisk *= shockMultiplier;
     }
 
@@ -582,35 +690,84 @@ function calculateOrganizationBankruptcyRisk(
     
   } else {
     // Fall back to old single-country logic
-    const country = org.country === 'Multi-national' 
-      ? null 
+    const country = org.country === 'Multi-national'
+      ? null
       : countries[org.country];
-    
+
     if (!country) {
       // Multi-national: use global population
-      const globalPopFraction = state.humanPopulationSystem.population / 
-                                state.humanPopulationSystem.baselinePopulation;
+      const globalPop = assertFinite(state.humanPopulationSystem.population, {
+        location: 'calculateOrganizationBankruptcyRisk',
+        valueName: 'humanPopulationSystem.population',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name }
+      });
+      const baselinePop = assertFinite(state.humanPopulationSystem.baselinePopulation, {
+        location: 'calculateOrganizationBankruptcyRisk',
+        valueName: 'humanPopulationSystem.baselinePopulation',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name }
+      });
+
+      const globalPopFraction = assertFinite(globalPop / baselinePop, {
+        location: 'calculateOrganizationBankruptcyRisk',
+        valueName: 'globalPopFraction',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name, globalPop, baselinePop }
+      });
+
       const popDecline = 1 - globalPopFraction;
-      const baseRisk = 1 / (1 + Math.exp(-10 * (popDecline - 0.6)));
+      const sigmoid = 1 + Math.exp(-10 * (popDecline - 0.6));
+      const baseRisk = assertFinite(1 / sigmoid, {
+        location: 'calculateOrganizationBankruptcyRisk',
+        valueName: 'baseRisk (multi-national)',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name, popDecline, sigmoid }
+      });
       return Math.min(1.0, baseRisk * 0.8); // Multi-national bonus (20% reduction)
     }
-    
-    const popFraction = country.population / country.peakPopulation;
+
+    const peakPop = assertFinite(country.peakPopulation, {
+      location: 'calculateOrganizationBankruptcyRisk',
+      valueName: 'country.peakPopulation',
+      month: state.currentMonth,
+      additionalInfo: { country: org.country, org: org.name }
+    });
+    const currentPop = assertFinite(country.population, {
+      location: 'calculateOrganizationBankruptcyRisk',
+      valueName: 'country.population',
+      month: state.currentMonth,
+      additionalInfo: { country: org.country, org: org.name }
+    });
+
+    const popFraction = assertFinite(currentPop / peakPop, {
+      location: 'calculateOrganizationBankruptcyRisk',
+      valueName: 'popFraction',
+      month: state.currentMonth,
+      additionalInfo: { country: org.country, org: org.name, peakPop, currentPop }
+    });
+
     const popDecline = 1 - popFraction;
-    
+
     // Check depopulation (absolute threshold)
     if (country.depopulated) {
       return 1.0; // 100% bankruptcy if country depopulated
     }
-    
+
     // Old threshold logic converted to risk
     if (popFraction < org.survivalThreshold) {
       // P2.4 FIX: Use deterministic RNG
       return 0.90 + rng() * 0.10; // 90-100% risk
     }
-    
+
     // Gradual risk increase as population declines
-    const baseRisk = 1 / (1 + Math.exp(-10 * (popDecline - 0.6)));
+    const sigmoid = 1 + Math.exp(-10 * (popDecline - 0.6));
+    const baseRisk = assertFinite(1 / sigmoid, {
+      location: 'calculateOrganizationBankruptcyRisk',
+      valueName: 'baseRisk (single-country)',
+      month: state.currentMonth,
+      additionalInfo: { org: org.name, country: org.country, popDecline, sigmoid }
+    });
     return Math.min(1.0, baseRisk);
   }
 }
@@ -625,8 +782,22 @@ export function updateOrganizationViability(state: GameState, rng: RNGFunction):
   const currentMonth = state.currentMonth;
   
   // Calculate global population fraction (needed for logging)
-  const globalPopFraction = state.humanPopulationSystem.population / 
-                            state.humanPopulationSystem.baselinePopulation;
+  const globalPop = assertFinite(state.humanPopulationSystem.population, {
+    location: 'updateOrganizationViability',
+    valueName: 'humanPopulationSystem.population',
+    month: state.currentMonth
+  });
+  const baselinePop = assertFinite(state.humanPopulationSystem.baselinePopulation, {
+    location: 'updateOrganizationViability',
+    valueName: 'humanPopulationSystem.baselinePopulation',
+    month: state.currentMonth
+  });
+  const globalPopFraction = assertFinite(globalPop / baselinePop, {
+    location: 'updateOrganizationViability',
+    valueName: 'globalPopFraction',
+    month: state.currentMonth,
+    additionalInfo: { globalPop, baselinePop }
+  });
   
   // TIER 1.7.5: Track baseline revenue/expenses (first month only)
   const needsBaseline = !state.organizations[0].hasOwnProperty('baselineRevenue');
@@ -669,7 +840,27 @@ export function updateOrganizationViability(state: GameState, rng: RNGFunction):
         for (const presence of org.geographicPresence) {
           const country = countries[presence.country];
           if (country) {
-            const decline = 1 - (country.population / country.peakPopulation);
+            const peakPop = assertFinite(country.peakPopulation, {
+              location: 'updateOrganizationViability',
+              valueName: 'country.peakPopulation',
+              month: state.currentMonth,
+              additionalInfo: { country: presence.country, org: org.name }
+            });
+            const currentPop = assertFinite(country.population, {
+              location: 'updateOrganizationViability',
+              valueName: 'country.population',
+              month: state.currentMonth,
+              additionalInfo: { country: presence.country, org: org.name }
+            });
+
+            const popFraction = assertFinite(currentPop / peakPop, {
+              location: 'updateOrganizationViability',
+              valueName: 'popFraction',
+              month: state.currentMonth,
+              additionalInfo: { country: presence.country, org: org.name, peakPop, currentPop }
+            });
+
+            const decline = 1 - popFraction;
             const weightedDecline = decline * presence.operationsWeight;
             if (weightedDecline > maxWeightedDecline) {
               maxWeightedDecline = weightedDecline;
@@ -700,7 +891,13 @@ export function updateOrganizationViability(state: GameState, rng: RNGFunction):
   if (currentMonth % 12 === 0) {
     const totalOrgs = state.organizations.length;
     const bankruptOrgs = state.organizations.filter(o => o.bankrupt).length;
-    const survivalRate = ((totalOrgs - bankruptOrgs) / totalOrgs * 100).toFixed(0);
+    const survivalFraction = assertFinite((totalOrgs - bankruptOrgs) / totalOrgs, {
+      location: 'updateOrganizationViability',
+      valueName: 'survivalFraction',
+      month: state.currentMonth,
+      additionalInfo: { totalOrgs, bankruptOrgs }
+    });
+    const survivalRate = (survivalFraction * 100).toFixed(0);
     
     if (bankruptOrgs > 0) {
       console.log(`\n📊 ORGANIZATION SURVIVAL RATE: ${survivalRate}% (${totalOrgs - bankruptOrgs}/${totalOrgs} orgs alive)`);

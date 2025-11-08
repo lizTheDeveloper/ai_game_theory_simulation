@@ -18,6 +18,7 @@
 
 import { GameState } from '../../types/game';
 import { Meme, MemeticSegment, BeliefVector } from '../../types/memetics';
+import { assertFinite } from '@/simulation/utils/assertions';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
@@ -82,7 +83,11 @@ function createOrganicMemes(state: GameState): void {
   // AI beneficial actions → pro-AI memes
   const beneficialAI = state.aiAgents.filter(ai => ai.beneficialActions > ai.harmfulActions).length;
   const totalAI = Math.max(1, state.aiAgents.length);
-  if (beneficialAI / totalAI > 0.7 && deterministicRandom() < 0.2) {
+  const beneficialRatio = assertFinite(
+    beneficialAI / totalAI,
+    { location: 'createOrganicMemes', valueName: 'beneficialAIRatio', month: state.currentMonth }
+  );
+  if (beneficialRatio > 0.7 && deterministicRandom() < 0.2) {
     const meme: Meme = {
       id: `meme_${memetic.totalMemesCreated++}`,
       contentType: 'pro_ai',
@@ -325,7 +330,11 @@ function calculateBeliefAlignment(meme: Meme, beliefs: BeliefVector): number {
     count++;
   }
   
-  return count > 0 ? alignment / count : 0;
+  return count > 0 ?
+    assertFinite(alignment / count, {
+      location: 'calculateAlignment',
+      valueName: 'avgAlignment'
+    }) : 0;
 }
 
 /**
@@ -444,7 +453,10 @@ function cullDeadMemes(state: GameState): void {
   memetic.activeMemes = memetic.activeMemes.filter(meme => {
     const age = state.currentMonth - meme.createdMonth;
     const totalPrevalence = Array.from(meme.prevalence.values()).reduce((a, b) => a + b, 0);
-    const avgPrevalence = totalPrevalence / Math.max(1, meme.prevalence.size);
+    const avgPrevalence = assertFinite(
+      totalPrevalence / Math.max(1, meme.prevalence.size),
+      { location: 'decayMemes', valueName: 'avgMemePrevalence', month: state.currentMonth }
+    );
     
     // Keep if:
     // 1. Young (<6 months)

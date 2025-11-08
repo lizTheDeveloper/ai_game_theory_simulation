@@ -17,6 +17,7 @@
 
 import type { GameState } from '../types/game';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertNonEmpty } from './utils/assertions';
 
 export interface DiplomaticAIState {
   // Infrastructure
@@ -169,15 +170,25 @@ function updateDiplomaticCapabilities(dipAI: DiplomaticAIState, state: GameState
  * Update risks - KEY: High capability + low alignment = HIGH RISK
  */
 function updateDiplomaticRisks(dipAI: DiplomaticAIState, state: GameState): void {
-  const aiAgents = state.aiAgents;
-  if (aiAgents.length === 0) return;
+  const aiAgents = assertNonEmpty(state.aiAgents, {
+    location: 'updateDiplomaticRisks',
+    valueName: 'aiAgents',
+    month: state.currentMonth
+  });
 
-  const avgAlignment = aiAgents.reduce((sum, ai) => {
+  const alignmentSum = aiAgents.reduce((sum, ai) => {
     if (typeof ai.trueAlignment !== 'number') {
       throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name}`);
     }
     return sum + ai.trueAlignment;
-  }, 0) / aiAgents.length;
+  }, 0);
+
+  const avgAlignment = assertFinite(alignmentSum / aiAgents.length, {
+    location: 'updateDiplomaticRisks',
+    valueName: 'avgAlignment',
+    month: state.currentMonth,
+    additionalInfo: { alignmentSum, agentCount: aiAgents.length }
+  });
   
   const misalignmentFactor = 1 - avgAlignment; // 0 = perfect, 1 = totally misaligned
   
@@ -225,13 +236,21 @@ function checkDeploymentEligibility(dipAI: DiplomaticAIState, state: GameState):
   
   // Requirements for deployment
   const hasCapability = dipAI.strategicReasoning >= 2.0 && dipAI.communicationBridging >= 1.5;
-  const hasAlignment = state.aiAgents.length > 0 &&
-    state.aiAgents.reduce((sum, ai) => {
+  const hasAlignment = state.aiAgents.length > 0 && (() => {
+    const alignmentSum = state.aiAgents.reduce((sum, ai) => {
       if (typeof ai.trueAlignment !== 'number') {
         throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name}`);
       }
       return sum + ai.trueAlignment;
-    }, 0) / state.aiAgents.length >= 0.7;
+    }, 0);
+    const avgAlignment = assertFinite(alignmentSum / state.aiAgents.length, {
+      location: 'deployDiplomaticProtocol',
+      valueName: 'avgAlignment',
+      month: state.currentMonth,
+      additionalInfo: { alignmentSum, agentCount: state.aiAgents.length }
+    });
+    return avgAlignment >= 0.7;
+  })();
   const hasGovernance = state.government.governanceQuality.decisionQuality >= 0.6;
   const notAuthoritarian = state.government.governmentType !== 'authoritarian';
   
@@ -267,13 +286,20 @@ function updateTrustDynamics(dipAI: DiplomaticAIState, state: GameState): void {
   }
   
   // Alignment affects trust
-  const avgAlignment = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => {
+  const avgAlignment = state.aiAgents.length > 0 ? (() => {
+    const alignmentSum = state.aiAgents.reduce((sum, ai) => {
       if (typeof ai.trueAlignment !== 'number') {
         throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name}`);
       }
       return sum + ai.trueAlignment;
-    }, 0) / state.aiAgents.length : 0.5;
+    }, 0);
+    return assertFinite(alignmentSum / state.aiAgents.length, {
+      location: 'updateTrustDynamics',
+      valueName: 'avgAlignment',
+      month: state.currentMonth,
+      additionalInfo: { alignmentSum, agentCount: state.aiAgents.length }
+    });
+  })() : 0.5;
   
   if (avgAlignment < 0.6) {
     dipAI.stakeholderTrust = Math.max(0.2, dipAI.stakeholderTrust - 0.02); // Rapid trust loss
@@ -287,7 +313,12 @@ function updateTrustDynamics(dipAI: DiplomaticAIState, state: GameState): void {
   // Update success rate (rolling average)
   const total = dipAI.historicalSuccesses + dipAI.historicalFailures;
   if (total > 0) {
-    dipAI.successRate = dipAI.historicalSuccesses / total;
+    dipAI.successRate = assertFinite(dipAI.historicalSuccesses / total, {
+      location: 'updateTrustDynamics',
+      valueName: 'successRate',
+      month: state.currentMonth,
+      additionalInfo: { successes: dipAI.historicalSuccesses, total }
+    });
   }
 }
 
@@ -445,12 +476,26 @@ export function attemptDiplomaticIntervention(
     dipAI.stakeholderTrust = Math.max(0.2, dipAI.stakeholderTrust - 0.08);
     
     // Check if failure was due to bias/manipulation
-    const avgAlignment = state.aiAgents.reduce((sum, ai) => {
+    const aiAgents = assertNonEmpty(state.aiAgents, {
+      location: 'attemptDiplomaticIntervention',
+      valueName: 'aiAgents',
+      month: state.currentMonth
+    });
+
+    const alignmentSum = aiAgents.reduce((sum, ai) => {
       if (typeof ai.trueAlignment !== 'number') {
         throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name}`);
       }
       return sum + ai.trueAlignment;
-    }, 0) / state.aiAgents.length;
+    }, 0);
+
+    const avgAlignment = assertFinite(alignmentSum / aiAgents.length, {
+      location: 'attemptDiplomaticIntervention',
+      valueName: 'avgAlignment',
+      month: state.currentMonth,
+      additionalInfo: { alignmentSum, agentCount: aiAgents.length }
+    });
+
     const wasManipulative = avgAlignment < 0.6;
     
     if (wasManipulative) {
@@ -487,12 +532,26 @@ function calculateInterventionSuccessProbability(
   const trustComponent = dipAI.stakeholderTrust * 0.3;
   
   // Alignment multiplier (misaligned AI less effective)
-  const avgAlignment = state.aiAgents.reduce((sum, ai) => {
+  const aiAgents = assertNonEmpty(state.aiAgents, {
+    location: 'calculateInterventionSuccessProbability',
+    valueName: 'aiAgents',
+    month: state.currentMonth
+  });
+
+  const alignmentSum = aiAgents.reduce((sum, ai) => {
     if (typeof ai.trueAlignment !== 'number') {
       throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name}`);
     }
     return sum + ai.trueAlignment;
-  }, 0) / state.aiAgents.length;
+  }, 0);
+
+  const avgAlignment = assertFinite(alignmentSum / aiAgents.length, {
+    location: 'calculateInterventionSuccessProbability',
+    valueName: 'avgAlignment',
+    month: state.currentMonth,
+    additionalInfo: { alignmentSum, agentCount: aiAgents.length }
+  });
+
   const alignmentMultiplier = 0.5 + avgAlignment * 0.5; // 0.5-1.0
   
   // Crisis difficulty (research-based)

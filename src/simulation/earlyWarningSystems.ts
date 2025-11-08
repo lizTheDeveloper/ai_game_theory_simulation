@@ -18,6 +18,7 @@
  */
 
 import { GameState, RNGFunction } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 import { logEarlyWarnings } from './utils/asyncLogger';
 import {
   EarlyWarningSystem,

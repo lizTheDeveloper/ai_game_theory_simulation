@@ -11,6 +11,7 @@
  */
 
 import { GameState, AIAgent, GovernmentAgent } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Attack capabilities (offensive hacking, spread techniques)

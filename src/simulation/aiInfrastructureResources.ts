@@ -26,6 +26,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Water consumption parameters (FIX #3A: Research-corrected values)

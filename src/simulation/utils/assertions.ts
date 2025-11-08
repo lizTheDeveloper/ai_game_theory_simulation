@@ -911,6 +911,46 @@ export function assertAICapability(
 }
 
 /**
+ * Assert AI aggregate capability is valid
+ *
+ * Validates:
+ * 1. Finite value
+ * 2. Range: [0, 100] (sum/average of all dimensions, can be continuous)
+ *
+ * NOTE: Unlike individual dimensions, aggregate capability CAN be continuous.
+ * Individual dimensions are discrete integers [0, 5], but their sum/weighted
+ * average produces continuous values.
+ *
+ * @throws Error if capability is invalid
+ */
+export function assertAIAggregateCapability(
+  capability: number,
+  context: {
+    location: string;
+    valueName: string;
+    agentId?: string;
+  }
+): number {
+  assertFinite(capability, context);
+
+  // Aggregate capability can be much larger than individual dimensions
+  // (sum of 6 core dimensions + 13 research sub-dimensions = up to 19*5 = 95)
+  if (capability < 0 || capability > 100) {
+    throw new Error(
+      `❌ AI aggregate capability out of range in ${context.location}\n` +
+      `   ${context.valueName} = ${capability}\n` +
+      `   Valid range: [0, 100]\n` +
+      (context.agentId ? `   Agent: ${context.agentId}\n` : '') +
+      `\n` +
+      `   Aggregate capability is sum of all dimension levels.\n` +
+      `   Unlike individual dimensions, aggregate CAN be continuous.`
+    );
+  }
+
+  return capability;
+}
+
+/**
  * Assert planetary boundary value is within safe operating space
  *
  * Validates boundary-specific ranges based on Earth system science.

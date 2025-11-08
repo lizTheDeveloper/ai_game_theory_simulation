@@ -27,7 +27,7 @@ import type {
   RNGFunction
 } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertAICapability, assertFinite, assertProbability } from '@/simulation/utils/assertions';
+import { assertAICapability, assertAIAggregateCapability, assertFinite, assertProbability } from '@/simulation/utils/assertions';
 
 export class Tier2CrisisAnticipationPhase implements SimulationPhase {
   id = 'tier2_crisis_anticipation';
@@ -61,11 +61,9 @@ export class Tier2CrisisAnticipationPhase implements SimulationPhase {
           additionalInfo: { agentCount: state.aiAgents.length }
         });
 
-        assertAICapability(avgCapability, {
+        assertAIAggregateCapability(avgCapability, {
           location: 'Tier2CrisisAnticipationPhase.execute',
-          valueName: 'avgCapability',
-          month: state.currentMonth,
-          additionalInfo: { agentCount: state.aiAgents.length }
+          valueName: 'avgCapability'
         });
       }
 

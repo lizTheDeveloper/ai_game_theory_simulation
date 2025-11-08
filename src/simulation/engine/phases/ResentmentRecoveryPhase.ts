@@ -17,6 +17,7 @@
 import { GameState } from '@/types/game';
 import { PhaseResult, RNGFunction } from '../PhaseOrchestrator';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions';
 import {
   calculateRecoveryContext,
   applyResentmentRecovery,
@@ -40,12 +41,15 @@ export const ResentmentRecoveryPhase = {
     // Calculate average resentment
     const agentsWithResentment = state.aiAgents.filter(ai => ai.resentment !== undefined && ai.resentment > 0);
     const avgResentment = agentsWithResentment.length > 0
-      ? agentsWithResentment.reduce((sum, ai) => {
-          if (ai.resentment === undefined) {
-            throw new Error('❌ ai.resentment is undefined in ResentmentRecoveryPhase:41 - initialization bug');
-          }
-          return sum + ai.resentment;
-        }, 0) / agentsWithResentment.length
+      ? assertFinite(
+          agentsWithResentment.reduce((sum, ai) => {
+            if (ai.resentment === undefined) {
+              throw new Error('❌ ai.resentment is undefined in ResentmentRecoveryPhase:41 - initialization bug');
+            }
+            return sum + ai.resentment;
+          }, 0) / agentsWithResentment.length,
+          { location: 'ResentmentRecoveryPhase', valueName: 'avgResentment', month: state.currentMonth }
+        )
       : 0;
 
     // Logging

@@ -11,6 +11,7 @@
  */
 
 import type { GameState } from '../types/game';
+import { assertFinite } from './utils/assertions';
 
 export interface DeterrenceCheckResult {
   allowed: boolean;
