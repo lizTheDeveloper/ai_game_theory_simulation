@@ -945,20 +945,10 @@ function calculateCapabilityFear(state: GameState): number {
  * DEPRECATED: Use calculateComprehensiveTrustInAI() for post-recalibration runs
  */
 export function getTrustInAI(society: HumanSocietyAgent): number {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  const paranoia = society.paranoiaLevel ?? 0.15; // Default to 15% baseline paranoia
-=======
-=======
->>>>>>> Stashed changes
   // NOTE: paranoiaLevel is ALWAYS initialized in initialization.ts
   const paranoia = assertStateProperty(society, 'paranoiaLevel', {
     location: 'getTrustInAI'
   });
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
   const trustFromParanoia = 1.0 - paranoia * 0.75;
 
   // Floor: Even 100% paranoia leaves 20% trust (some people always believe)
