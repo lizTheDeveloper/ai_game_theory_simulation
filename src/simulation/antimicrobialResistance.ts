@@ -265,6 +265,11 @@ function initializeRegionalData(): RegionalAMRData[] {
  *
  * Research: WHO baseline scenario shows 10% annual increase
  * Can be accelerated by overuse or slowed by mitigation technologies
+ *
+ * ARCH-4 Integration (Nov 7, 2025): Refugee Crisis Amplification
+ * - Refugee camps amplify transmission 2-5× due to overcrowding, sanitation collapse, healthcare access
+ * - Research: MSF 2024 (2-5× transmission in camps), Nature Medicine 2022 (30-50% AMR increase in Syrian crisis)
+ * - Mechanism: Close quarters (R₀ multiplier) + inadequate sanitation + untreated infections
  */
 export function calculateAMRMortalityRate(
   state: GameState,
@@ -291,6 +296,50 @@ export function calculateAMRMortalityRate(
     location: 'calculateAMRMortalityRate',
     month: state.currentMonth
   });
+
+  // ARCH-4 Integration: Refugee crisis amplification
+  // Calculate refugee density (displaced / total population)
+  const totalDisplaced = assertStateProperty(state.refugeeCrisisSystem, 'totalDisplaced', {
+    location: 'calculateAMRMortalityRate',
+    month: state.currentMonth
+  }); // Millions
+  const populationBillions = assertStateProperty(state.humanPopulationSystem, 'population', {
+    location: 'calculateAMRMortalityRate',
+    month: state.currentMonth
+  }); // Billions
+
+  // Prevent division by zero (shouldn't happen, but defensive)
+  const populationMillions = assertFinite(populationBillions * 1000, {
+    location: 'calculateAMRMortalityRate',
+    valueName: 'populationMillions',
+    month: state.currentMonth,
+    additionalInfo: { populationBillions }
+  });
+
+  // Refugee density as fraction of population
+  const refugeeDensity = populationMillions > 0
+    ? assertFinite(totalDisplaced / populationMillions, {
+        location: 'calculateAMRMortalityRate',
+        valueName: 'refugeeDensity',
+        month: state.currentMonth,
+        additionalInfo: { totalDisplaced, populationMillions }
+      })
+    : 0;
+
+  // Amplification factor: 1.0 baseline → up to 3.0× for extreme displacement
+  // Research: MSF 2024 shows 2-5× transmission in refugee camps
+  // Formula: 1.0 + (refugeeDensity × 2.0), capped at 3.0× for extreme crises
+  // Example: 10% displaced → 1.2× (20% increase), 50% displaced → 2.0× (100% increase)
+  const refugeeAmplification = assertInRange(
+    1.0 + (refugeeDensity * 2.0),
+    1.0, 3.0,
+    {
+      location: 'calculateAMRMortalityRate',
+      valueName: 'refugeeAmplification',
+      month: state.currentMonth,
+      additionalInfo: { refugeeDensity, totalDisplaced, populationMillions }
+    }
+  );
 
   // Apply acceleration factors (overuse increases growth rate)
   const overuseAcceleration = assertFinite(1.0 + (antibioticOveruse * 0.2), {
@@ -326,13 +375,13 @@ export function calculateAMRMortalityRate(
     additionalInfo: { mitigationFactor }
   });
 
-  // Effective growth rate
+  // Effective growth rate (NOW includes refugee amplification)
   const growthRate = assertStateProperty(amr, 'growthRate', {
     location: 'calculateAMRMortalityRate',
     month: state.currentMonth
   });
   const effectiveGrowthRate = assertFinite(
-    growthRate * overuseAcceleration * livestockAcceleration * sanitationBenefit * mitigationReduction,
+    growthRate * overuseAcceleration * livestockAcceleration * sanitationBenefit * mitigationReduction * refugeeAmplification,
     {
       location: 'calculateAMRMortalityRate',
       valueName: 'effectiveGrowthRate',
@@ -342,7 +391,8 @@ export function calculateAMRMortalityRate(
         overuseAcceleration,
         livestockAcceleration,
         sanitationBenefit,
-        mitigationReduction
+        mitigationReduction,
+        refugeeAmplification
       }
     }
   );
@@ -365,6 +415,13 @@ export function calculateAMRMortalityRate(
       }
     }
   );
+
+  // Log refugee amplification if significant
+  if (refugeeAmplification > 1.1 && totalDisplaced > 10) { // >10% amplification, >10M displaced
+    console.log(
+      `  🚨🦠 REFUGEE CRISIS: AMR transmission increased ${((refugeeAmplification - 1) * 100).toFixed(0)}% due to ${totalDisplaced.toFixed(1)}M displaced (overcrowding + sanitation collapse)`
+    );
+  }
 
   // Cap at 2050 WHO projection (125 per 100K for 10M annual deaths)
   const targetDeathRate = assertStateProperty(amr, 'targetDeathRate', {
