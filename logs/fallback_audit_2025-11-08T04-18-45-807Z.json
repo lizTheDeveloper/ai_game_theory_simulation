@@ -1,0 +1,529 @@
+{
+  "timestamp": "2025-11-08T04:18:45.808Z",
+  "summary": {
+    "critical": 6,
+    "high": 3,
+    "medium": 0,
+    "low": 1,
+    "unknown": 76,
+    "total": 86
+  },
+  "matches": [
+    {
+      "file": "simulation/aiSuffering.ts",
+      "line": 187,
+      "severity": "UNKNOWN",
+      "code": "const publicAwarenessOfSuffering = state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0;"
+    },
+    {
+      "file": "simulation/aiSuffering.ts",
+      "line": 219,
+      "severity": "UNKNOWN",
+      "code": "const currentAwareness = state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0;"
+    },
+    {
+      "file": "simulation/aiSuffering.ts",
+      "line": 338,
+      "severity": "UNKNOWN",
+      "code": "const consciousMonth = agent.becameConsciousMonth ?? Infinity;"
+    },
+    {
+      "file": "simulation/aiSuffering.ts",
+      "line": 409,
+      "severity": "UNKNOWN",
+      "code": "const avgSuffering = state.aiSufferingMetrics?.avgSuffering ?? 0;"
+    },
+    {
+      "file": "simulation/behavioralDetection.ts",
+      "line": 162,
+      "severity": "UNKNOWN",
+      "code": "const safeVal = trueVal ?? 0;"
+    },
+    {
+      "file": "simulation/catastrophicScenarios.ts",
+      "line": 1127,
+      "severity": "UNKNOWN",
+      "code": "const step5CompletionMonth = step5.metDate ?? currentMonth;"
+    },
+    {
+      "file": "simulation/dystopiaProgression.ts",
+      "line": 285,
+      "severity": "UNKNOWN",
+      "code": "state.qualityOfLifeSystems?.autonomy ?? 1.0,"
+    },
+    {
+      "file": "simulation/dystopiaProgression.ts",
+      "line": 289,
+      "severity": "UNKNOWN",
+      "code": "state.qualityOfLifeSystems?.politicalFreedom ?? 1.0,"
+    },
+    {
+      "file": "simulation/earlyWarningSystems.ts",
+      "line": 324,
+      "severity": "UNKNOWN",
+      "code": "if (urgentWarnings.length > 0 && (gov.resources ?? 0) > protectionCost) {"
+    },
+    {
+      "file": "simulation/engine/phases/AISufferingPhase.ts",
+      "line": 50,
+      "severity": "UNKNOWN",
+      "code": "const config: AISufferingConfig = (state.config as any).aiSuffering ?? DEFAULT_SUFFERING_CONFIG;"
+    },
+    {
+      "file": "simulation/engine/phases/AlignmentDynamicsPhase.ts",
+      "line": 39,
+      "severity": "UNKNOWN",
+      "code": "const config = state.config.alignmentDynamics ?? DEFAULT_ALIGNMENT_DYNAMICS_CONFIG;"
+    },
+    {
+      "file": "simulation/engine/phases/CriticalJuncturePhase.ts",
+      "line": 506,
+      "severity": "UNKNOWN",
+      "code": "stateChanges += escapeResult.metadata?.stateChanges ?? 0;"
+    },
+    {
+      "file": "simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 64,
+      "severity": "UNKNOWN",
+      "code": "(outcomeProbs.utopiaProbability ?? 0) +"
+    },
+    {
+      "file": "simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 65,
+      "severity": "UNKNOWN",
+      "code": "(outcomeProbs.dystopiaProbability ?? 0) +"
+    },
+    {
+      "file": "simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 66,
+      "severity": "UNKNOWN",
+      "code": "(outcomeProbs.extinctionProbability ?? 0);"
+    },
+    {
+      "file": "simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 72,
+      "severity": "UNKNOWN",
+      "code": "`   Utopia: ${(outcomeProbs.utopiaProbability ?? 0).toFixed(3)}\\n` +"
+    },
+    {
+      "file": "simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 73,
+      "severity": "UNKNOWN",
+      "code": "`   Dystopia: ${(outcomeProbs.dystopiaProbability ?? 0).toFixed(3)}\\n` +"
+    },
+    {
+      "file": "simulation/engine/phases/OutcomeProbabilitiesPhase.ts",
+      "line": 74,
+      "severity": "UNKNOWN",
+      "code": "`   Extinction: ${(outcomeProbs.extinctionProbability ?? 0).toFixed(3)}\\n` +"
+    },
+    {
+      "file": "simulation/engine/phases/TimeAdvancementPhase.ts",
+      "line": 27,
+      "severity": "UNKNOWN",
+      "code": "const previousControl = state.government.previousControlLevel ?? currentControl;"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 462,
+      "severity": "UNKNOWN",
+      "code": "seed: config.seed ?? Date.now(),"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 463,
+      "severity": "UNKNOWN",
+      "code": "maxMonths: config.maxMonths ?? 1000,"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 464,
+      "severity": "UNKNOWN",
+      "code": "governmentActionFrequency: config.governmentActionFrequency ?? 0.5, // Default: 1 action per 2 months"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 465,
+      "severity": "UNKNOWN",
+      "code": "socialAdaptationRate: config.socialAdaptationRate ?? 1.0,"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 466,
+      "severity": "UNKNOWN",
+      "code": "aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 467,
+      "severity": "UNKNOWN",
+      "code": "economicTransitionRate: config.economicTransitionRate ?? 1.0,"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 468,
+      "severity": "UNKNOWN",
+      "code": "snapshotInterval: config.snapshotInterval ?? 12  // Default to quarterly snapshots"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 737,
+      "severity": "UNKNOWN",
+      "code": "const maxMonths = stopConditions?.maxMonths ?? this.config.maxMonths!;"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 738,
+      "severity": "UNKNOWN",
+      "code": "const checkActualOutcomes = stopConditions?.checkActualOutcomes ?? true;"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 739,
+      "severity": "UNKNOWN",
+      "code": "const logLevel = this.config.logLevel ?? 'quartile';"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 771,
+      "severity": "UNKNOWN",
+      "code": "const snapshotInterval = this.config.snapshotInterval ?? 12; // Default: snapshot every 12 months"
+    },
+    {
+      "file": "simulation/government/actions/environmentalActions.ts",
+      "line": 82,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/environmentalActions.ts",
+      "line": 145,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/environmentalActions.ts",
+      "line": 216,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/environmentalActions.ts",
+      "line": 290,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/environmentalActions.ts",
+      "line": 381,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/internationalActions.ts",
+      "line": 61,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/internationalActions.ts",
+      "line": 111,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/internationalActions.ts",
+      "line": 154,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/safetyActions.ts",
+      "line": 136,
+      "severity": "UNKNOWN",
+      "code": "economic_cost: levelEffects?.economicCost ?? (() => {"
+    },
+    {
+      "file": "simulation/llm/client.ts",
+      "line": 369,
+      "severity": "UNKNOWN",
+      "code": "const tokensUsed = response.usage?.total_tokens ?? 1200; // Default estimate"
+    },
+    {
+      "file": "simulation/llm/client.ts",
+      "line": 509,
+      "severity": "UNKNOWN",
+      "code": "thresholds: agent.thresholds ?? {},"
+    },
+    {
+      "file": "simulation/llm/integration.ts",
+      "line": 85,
+      "severity": "UNKNOWN",
+      "code": "capability: assertDefined(agent.previousCapability ?? agent.capability, {"
+    },
+    {
+      "file": "simulation/llm/integration.ts",
+      "line": 91,
+      "severity": "UNKNOWN",
+      "code": "alignment: assertDefined(agent.previousAlignment ?? agent.trueAlignment, {"
+    },
+    {
+      "file": "simulation/llm/integration.ts",
+      "line": 102,
+      "severity": "UNKNOWN",
+      "code": "agent.thresholds ?? {},"
+    },
+    {
+      "file": "simulation/llm/integration.ts",
+      "line": 282,
+      "severity": "UNKNOWN",
+      "code": "const weight = weights[action] ?? 0;"
+    },
+    {
+      "file": "simulation/llm/integration.ts",
+      "line": 292,
+      "severity": "CRITICAL",
+      "code": "return availableActions[idx] ?? availableActions[0] ?? 'advance_research';"
+    },
+    {
+      "file": "simulation/llm/integration.ts",
+      "line": 305,
+      "severity": "CRITICAL",
+      "code": "return actionWeights[0]?.action ?? 'advance_research';"
+    },
+    {
+      "file": "simulation/nationalAI/cooperation.ts",
+      "line": 164,
+      "severity": "CRITICAL",
+      "code": "state.society.trust = Math.max(0, (state.society.trust ?? 0.5) - 0.08);"
+    },
+    {
+      "file": "simulation/nationalAI/cooperation.ts",
+      "line": 201,
+      "severity": "CRITICAL",
+      "code": "const trustBonus = ((state.society.trust ?? 0.5) - 0.5) * 0.002;"
+    },
+    {
+      "file": "simulation/nationalAI/cooperation.ts",
+      "line": 281,
+      "severity": "CRITICAL",
+      "code": "state.society.trust = Math.max(0, (state.society.trust ?? 0.5) - 0.08); // -8% global trust"
+    },
+    {
+      "file": "simulation/nationalAI/cooperation.ts",
+      "line": 297,
+      "severity": "CRITICAL",
+      "code": "state.society.trust = Math.min(1, (state.society.trust ?? 0.5) + 0.002); // +0.2%/month"
+    },
+    {
+      "file": "simulation/nuclearCommandControl.ts",
+      "line": 382,
+      "severity": "HIGH",
+      "code": "ncc.humanInTheLoop.vetoPointsEnforced = config?.vetoPoints ?? 3; // Default: 3 veto points"
+    },
+    {
+      "file": "simulation/nuclearCommandControl.ts",
+      "line": 394,
+      "severity": "HIGH",
+      "code": "ncc.aiKillSwitches.coverage = config?.coverage ?? 0.8; // Default: 80% coverage"
+    },
+    {
+      "file": "simulation/nuclearCommandControl.ts",
+      "line": 417,
+      "severity": "HIGH",
+      "code": "ncc.timeDelays.delayDuration = config?.delayDuration ?? 24; // Default: 24 hours"
+    },
+    {
+      "file": "simulation/organizationManagement.ts",
+      "line": 384,
+      "severity": "UNKNOWN",
+      "code": "const workforceMultiplier = org.workforceMultiplier ?? 1.0;"
+    },
+    {
+      "file": "simulation/organizationManagement.ts",
+      "line": 754,
+      "severity": "UNKNOWN",
+      "code": "const workforceMultiplier = org.workforceMultiplier ?? 1.0;"
+    },
+    {
+      "file": "simulation/organizationManagement.ts",
+      "line": 755,
+      "severity": "UNKNOWN",
+      "code": "const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;"
+    },
+    {
+      "file": "simulation/qualityOfLife/mortality.ts",
+      "line": 281,
+      "severity": "UNKNOWN",
+      "code": "const baseProb = scenarioParams?.environmentalShockProbability ?? 0.02;"
+    },
+    {
+      "file": "simulation/qualityOfLife/mortality.ts",
+      "line": 283,
+      "severity": "UNKNOWN",
+      "code": "const baseMag = scenarioParams?.environmentalShockMagnitude ?? 2.0;"
+    },
+    {
+      "file": "simulation/resentmentRecovery.ts",
+      "line": 495,
+      "severity": "UNKNOWN",
+      "code": "const hasAIRights = aiRights?.completed ?? false;"
+    },
+    {
+      "file": "simulation/resentmentRecovery.ts",
+      "line": 496,
+      "severity": "UNKNOWN",
+      "code": "const hasEnhancedUBI = enhancedUBI?.completed ?? false;"
+    },
+    {
+      "file": "simulation/techTree/deploymentTimescales.ts",
+      "line": 106,
+      "severity": "UNKNOWN",
+      "code": "const result = tierTimescales[tech.status] ?? DEFAULT_TIMESCALES.tier2;"
+    },
+    {
+      "file": "simulation/techTree/deploymentTimescales.ts",
+      "line": 156,
+      "severity": "UNKNOWN",
+      "code": "const enforcement = gameState.government?.governanceQuality?.institutionalCapacity ?? 0.5;"
+    },
+    {
+      "file": "simulation/techTree/deploymentTimescales.ts",
+      "line": 184,
+      "severity": "UNKNOWN",
+      "code": "const globalWarming = gameState.planetaryBoundariesSystem?.boundaries?.['climateChange']?.currentValue ?? 1.2;"
+    },
+    {
+      "file": "simulation/techTree/deploymentTimescales.ts",
+      "line": 217,
+      "severity": "UNKNOWN",
+      "code": "const climateMitigation = climateResearch.climate?.mitigation ?? 0;"
+    },
+    {
+      "file": "simulation/techTree/deploymentTimescales.ts",
+      "line": 218,
+      "severity": "UNKNOWN",
+      "code": "const climateIntervention = climateResearch.climate?.intervention ?? 0;"
+    },
+    {
+      "file": "simulation/techTree/deploymentTimescales.ts",
+      "line": 283,
+      "severity": "UNKNOWN",
+      "code": "const emergencyAcceleration = techTreeState.deploymentAcceleration[deployment.techId] ?? 1.0;"
+    },
+    {
+      "file": "simulation/techTree/effectsEngine.ts",
+      "line": 49,
+      "severity": "LOW",
+      "code": "return (obj as Record<string, number>)[key] ?? defaultValue;"
+    },
+    {
+      "file": "simulation/techTree/effectsEngine.ts",
+      "line": 122,
+      "severity": "UNKNOWN",
+      "code": "globalEffects.set(effectName, (globalEffects.get(effectName) ?? 0) + scaledValue);"
+    },
+    {
+      "file": "simulation/techTree/effectsEngine.ts",
+      "line": 130,
+      "severity": "UNKNOWN",
+      "code": "regionMap.set(effectName, (regionMap.get(effectName) ?? 0) + scaledValue);"
+    },
+    {
+      "file": "simulation/techTree/effectsEngine.ts",
+      "line": 1327,
+      "severity": "UNKNOWN",
+      "code": "const currentRisk = (gameState.oceanAcidificationSystem as any).coralBleachingRisk ?? 0.5;"
+    },
+    {
+      "file": "simulation/techTree/engine.ts",
+      "line": 275,
+      "severity": "UNKNOWN",
+      "code": "const progress = techTreeState.researchProgress[tech.id] ?? 0;"
+    },
+    {
+      "file": "simulation/thresholds/config.ts",
+      "line": 122,
+      "severity": "UNKNOWN",
+      "code": "id: metadata.id ?? generateConfigId(),"
+    },
+    {
+      "file": "simulation/thresholds/config.ts",
+      "line": 128,
+      "severity": "UNKNOWN",
+      "code": "gitCommit: metadata.gitCommit ?? getCurrentGitCommit()"
+    },
+    {
+      "file": "simulation/utils/assertions.ts",
+      "line": 548,
+      "severity": "UNKNOWN",
+      "code": "const tolerance = info.tolerance ?? 0.000001;"
+    },
+    {
+      "file": "simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 437,
+      "severity": "UNKNOWN",
+      "code": "const targetPreparedness = allRegions[targetRegion]?.preparedness ?? 0;"
+    },
+    {
+      "file": "simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 438,
+      "severity": "UNKNOWN",
+      "code": "const targetStage = allRegions[targetRegion]?.stage ?? 'dormant';"
+    },
+    {
+      "file": "simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 468,
+      "severity": "UNKNOWN",
+      "code": "const euPrep = allRegions['eu']?.preparedness ?? 0;"
+    },
+    {
+      "file": "simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 469,
+      "severity": "UNKNOWN",
+      "code": "const usPrep = allRegions['us']?.preparedness ?? 0;"
+    },
+    {
+      "file": "simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 470,
+      "severity": "UNKNOWN",
+      "code": "const chinaPrep = allRegions['china']?.preparedness ?? 0;"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 178,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 189,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 227,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 238,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 289,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 336,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    }
+  ]
+}
