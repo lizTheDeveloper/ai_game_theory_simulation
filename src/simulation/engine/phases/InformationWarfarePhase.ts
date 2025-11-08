@@ -11,6 +11,7 @@ export class InformationWarfarePhase implements SimulationPhase {
   readonly name = 'Information Warfare Update';
   readonly id = 'information-warfare';
   readonly order = 22; // After social systems, before crisis detection
+  dependencies = ['ai-agent-actions'];
 
   /**
    * Execute information warfare dynamics

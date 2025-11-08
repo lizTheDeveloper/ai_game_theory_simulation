@@ -31,6 +31,7 @@ export class Tier2CommunityCohesionPhase implements SimulationPhase {
   id = 'tier2_community_cohesion';
   name = 'TIER 2: Community Cohesion Programs';
   order = 13.5; // After social cohesion, before meaning crisis
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

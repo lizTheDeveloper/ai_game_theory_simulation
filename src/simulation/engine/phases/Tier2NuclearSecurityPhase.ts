@@ -33,6 +33,7 @@ export class Tier2NuclearSecurityPhase implements SimulationPhase {
   id = 'tier2_nuclear_security';
   name = 'TIER 2: Nuclear Command Security';
   order = 18.5; // After nuclear risk calculations, before crisis detection
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

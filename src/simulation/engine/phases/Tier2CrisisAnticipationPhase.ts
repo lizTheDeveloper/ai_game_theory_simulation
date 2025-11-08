@@ -32,6 +32,7 @@ export class Tier2CrisisAnticipationPhase implements SimulationPhase {
   id = 'tier2_crisis_anticipation';
   name = 'TIER 2: Crisis Anticipation Systems';
   order = 14.5; // Before crisis detection, after AI capability updates
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

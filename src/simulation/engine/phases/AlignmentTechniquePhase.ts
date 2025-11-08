@@ -32,6 +32,7 @@ export class AlignmentTechniquePhase implements SimulationPhase {
   id = 'alignment_techniques';
   name = 'Alignment Technique Update';
   order = 3.4; // Before alignment dynamics (3.5), after agent actions
+  dependencies = ['compute-growth'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

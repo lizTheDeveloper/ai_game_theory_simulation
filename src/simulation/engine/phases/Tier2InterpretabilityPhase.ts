@@ -34,6 +34,7 @@ export class Tier2InterpretabilityPhase implements SimulationPhase {
   id = 'tier2_interpretability';
   name = 'TIER 2: AI Interpretability Ensemble';
   order = 15.4; // After UBI (15.3), before social safety nets (15.6)
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

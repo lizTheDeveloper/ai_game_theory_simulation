@@ -12,6 +12,7 @@ export class MeaningRenaissancePhase implements SimulationPhase {
   readonly id = 'meaning-renaissance';
   readonly name = 'Meaning Renaissance Update';
   readonly order = 12.0;
+  dependencies = ['upward-spirals'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateMeaningRenaissance } = require('../../meaningRenaissance');

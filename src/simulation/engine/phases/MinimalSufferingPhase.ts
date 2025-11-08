@@ -38,6 +38,7 @@ export class MinimalSufferingPhase implements SimulationPhase {
   readonly id = 'minimal_suffering';
   readonly name = 'Minimal Suffering Indicators';
   readonly order = 35.5; // After all crisis/death systems (35.x), before outcome metrics (36.0)
+  dependencies = ['ai_suffering'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Update entire minimal suffering system

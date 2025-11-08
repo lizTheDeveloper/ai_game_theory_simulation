@@ -32,6 +32,7 @@ export class Tier2SynergyPhase implements SimulationPhase {
   id = 'tier2_synergy';
   name = 'TIER 2: Intervention Synergy';
   order = 21.0; // After all TIER 2 phases
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
