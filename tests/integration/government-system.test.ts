@@ -25,7 +25,8 @@ test('Government system initializes with 30 countries', () => {
 });
 
 test('Government system integrates with GameState', () => {
-  const state = createDefaultInitialState('historical');
+  // RNG is first required parameter (Nov 7, 2025 fix: no Math.random fallback)
+  const state = createDefaultInitialState(() => 0.5, 'historical');
 
   assert.ok(state.governmentSystem, 'GameState should have government system');
   assert.strictEqual(state.governmentSystem.governments.size, 30, 'Should have 30 governments');
