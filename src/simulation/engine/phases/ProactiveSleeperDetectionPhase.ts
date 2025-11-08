@@ -15,6 +15,7 @@ export class ProactiveSleeperDetectionPhase implements SimulationPhase {
   id = 'proactive-sleeper-detection';
   name = 'Proactive Sleeper Detection';
   order = 28; // After gaming detection, before crisis detection
+  dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Only run if sleeper detection is enabled

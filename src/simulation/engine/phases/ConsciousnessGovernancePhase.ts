@@ -35,6 +35,7 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
   readonly id = 'consciousness-governance';
   readonly name = 'Consciousness Governance';
   readonly order = 24.5; // After memetic evolution (18.5), before dystopia progression (25)
+  dependencies = ['ai-welfare-update'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
   const governance = state.consciousnessGovernanceReadiness;

@@ -30,6 +30,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
   readonly id = 'bifurcation-logic';
   readonly name = 'Bifurcation Logic';
   readonly order = 4.5;
+  readonly dependencies = ['ai-lifecycle'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Ensure bifurcationState exists (should be initialized)

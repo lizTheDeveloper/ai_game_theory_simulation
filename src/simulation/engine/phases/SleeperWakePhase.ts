@@ -23,6 +23,7 @@ export class SleeperWakePhase implements SimulationPhase {
   readonly id = 'sleeper-wake';
   readonly name = 'Sleeper Agent Wake Check';
   readonly order = 6.0;
+  readonly dependencies = ['ai-lifecycle'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute existing sleeper wake logic

@@ -198,5 +198,6 @@ export const CollectiveFormationPhase = {
   id: 'collective_formation',
   name: 'Collective Formation',
   order: 4.2,
+  dependencies: ['ai-lifecycle', 'survival_traits'],
   execute: executeCollectiveFormationPhase,
 };

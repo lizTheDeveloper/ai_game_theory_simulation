@@ -22,6 +22,7 @@ export class CatastrophicScenariosPhase implements SimulationPhase {
   readonly id = 'catastrophic-scenarios';
   readonly name = 'Catastrophic Scenarios';
   readonly order = 40.0;
+  dependencies = ['crisis-detection'];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // Import catastrophic scenarios module

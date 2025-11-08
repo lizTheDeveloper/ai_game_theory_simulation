@@ -312,5 +312,6 @@ export const CollectiveActionsPhase = {
   id: 'collective_actions',
   name: 'Collective Actions',
   order: 5.5,
+  dependencies: ['collective_formation'],
   execute: executeCollectiveActionsPhase,
 };

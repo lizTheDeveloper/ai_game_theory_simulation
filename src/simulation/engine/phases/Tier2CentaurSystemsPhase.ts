@@ -31,7 +31,8 @@ import { assertProbability, assertFinite } from '@/simulation/utils/assertions';
 export class Tier2CentaurSystemsPhase implements SimulationPhase {
   id = 'tier2_centaur_systems';
   name = 'TIER 2: Human-AI Centaur Systems';
-  order = 12.5; // After employment, before meaning crisis
+  order = 12.6; // After employment, before meaning crisis
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

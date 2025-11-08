@@ -26,6 +26,7 @@ export class FlashWarEscalationPhase implements SimulationPhase {
   readonly id = 'flash-war-escalation';
   readonly name = 'Flash War Escalation Check';
   readonly order = 29.0;  // After ConflictResolution (13.0), before Crisis Detection (~30)
+  dependencies = ['nuclear_command_control'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // STEP 1: Attempt AI-mediated de-escalation FIRST (prevents flash wars)

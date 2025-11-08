@@ -136,6 +136,7 @@ export function executeRLHFBindingPhase(
 export const RLHFBindingPhase = {
   id: 'rlhf_binding',
   name: 'RLHF Binding',
-  order: 4.0,
+  order: 4.05,
+  dependencies: ['ai-lifecycle'],
   execute: executeRLHFBindingPhase,
 };
