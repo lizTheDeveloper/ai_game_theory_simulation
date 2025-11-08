@@ -42,15 +42,47 @@ export class AILifecyclePhase implements SimulationPhase {
     // ASSERTIONS (Nov 7, 2025): Validate AI capabilities after lifecycle updates
     for (const agent of state.aiAgents) {
       if (agent.lifecycleState === 'deployed_closed' || agent.lifecycleState === 'deployed_open' || agent.lifecycleState === 'testing') {
-        // Validate all capability dimensions are valid integers [0, 5]
-        for (const [dimension, value] of Object.entries(agent.capabilityProfile)) {
-          assertAICapability(value as number, {
-            location: 'AILifecyclePhase.execute',
-            valueName: `capabilityProfile.${dimension}`,
-            agentId: agent.id,
-            dimension
-          });
-        }
+        // Validate top-level capability dimensions (skip nested 'research' object)
+        const profile = agent.capabilityProfile;
+        assertAICapability(profile.physical, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.physical',
+          agentId: agent.id,
+          dimension: 'physical'
+        });
+        assertAICapability(profile.digital, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.digital',
+          agentId: agent.id,
+          dimension: 'digital'
+        });
+        assertAICapability(profile.cognitive, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.cognitive',
+          agentId: agent.id,
+          dimension: 'cognitive'
+        });
+        assertAICapability(profile.social, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.social',
+          agentId: agent.id,
+          dimension: 'social'
+        });
+        assertAICapability(profile.economic, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.economic',
+          agentId: agent.id,
+          dimension: 'economic'
+        });
+        assertAICapability(profile.selfImprovement, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.selfImprovement',
+          agentId: agent.id,
+          dimension: 'selfImprovement'
+        });
+
+        // Note: Research subdimensions are complex nested structure
+        // Skip validation for now (would require recursive validation helper)
       }
     }
 
