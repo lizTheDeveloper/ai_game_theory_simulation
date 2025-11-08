@@ -298,7 +298,8 @@ function applyCapabilityBoosts(
 
     // Recalculate total capability
     const { calculateTotalCapabilityFromProfile } = require('../capabilities');
-    const newCapability = calculateTotalCapabilityFromProfile(ai.capabilityProfile);
+    // HIGH-6 FIX (Nov 8, 2025): Round to integer - capabilities are discrete levels [0-5]
+    const newCapability = Math.round(calculateTotalCapabilityFromProfile(ai.capabilityProfile));
 
     // FIX (Oct 25, 2025): Replaced defensive NaN guard with assertive validation
     // If capability calculation produces NaN, that's a BUG in calculateTotalCapabilityFromProfile

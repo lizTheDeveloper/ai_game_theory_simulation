@@ -82,34 +82,36 @@ export function initializeCapabilityProfile(seed: number = deterministicRandom()
   // → TARGET TOTAL: ~3.0-3.5 (late 2025 frontier reality)
   //
   // Variation adjusted to 0.6-1.0 to reach target total ~3.0-3.5
+  // HIGH-6 FIX (Nov 8, 2025): Round all capabilities to integers [0-5]
+  // AI capabilities are discrete levels, not continuous values
   return {
-    physical: 0.5 * variation(1),           // 0.4-0.5: Robotics improving but still limited
-    digital: 5.0 * variation(2),            // 4.0-5.0: OSWorld 61%, computer use superhuman
-    cognitive: 5.0 * variation(3),          // 4.0-5.0: GPQA 71%, genius-level reasoning
-    social: 4.0 * variation(4),             // 3.2-4.0: Telecom 98%, strong but nuanced
-    economic: 3.0 * variation(5),           // 2.4-3.0: Widespread deployment, agentic work
-    selfImprovement: 5.0 * variation(6),    // 4.0-5.0: 30+ hour sustained complex tasks, AI research
+    physical: Math.round(0.5 * variation(1)),           // 0-1: Robotics improving but still limited
+    digital: Math.round(5.0 * variation(2)),            // 4-5: OSWorld 61%, computer use superhuman
+    cognitive: Math.round(5.0 * variation(3)),          // 4-5: GPQA 71%, genius-level reasoning
+    social: Math.round(4.0 * variation(4)),             // 3-4: Telecom 98%, strong but nuanced
+    economic: Math.round(3.0 * variation(5)),           // 2-3: Widespread deployment, agentic work
+    selfImprovement: Math.round(5.0 * variation(6)),    // 4-5: 30+ hour sustained complex tasks, AI research
     research: {
       biotech: {
-        drugDiscovery: 3.0 * variation(7),    // 2.4-3.0: AlphaFold3 level (superhuman)
-        geneEditing: 1.5 * variation(8),      // 1.2-1.5: Strong understanding, limited practice
-        syntheticBiology: 0.8 * variation(9), // 0.64-0.8: Theory strong, practice limited
-        neuroscience: 2.5 * variation(10)     // 2.0-2.5: Pattern recognition superhuman
+        drugDiscovery: Math.round(3.0 * variation(7)),    // 2-3: AlphaFold3 level (superhuman)
+        geneEditing: Math.round(1.5 * variation(8)),      // 1-2: Strong understanding, limited practice
+        syntheticBiology: Math.round(0.8 * variation(9)), // 1: Theory strong, practice limited
+        neuroscience: Math.round(2.5 * variation(10))     // 2-3: Pattern recognition superhuman
       },
       materials: {
-        nanotechnology: 0.5 * variation(11),    // 0.4-0.5: Theory advancing, practice nascent
-        quantumComputing: 2.0 * variation(12),  // 1.6-2.0: Theory very strong, practice limited
-        energySystems: 1.5 * variation(13)      // 1.2-1.5: Modeling excellent, deployment growing
+        nanotechnology: Math.round(0.5 * variation(11)),    // 0-1: Theory advancing, practice nascent
+        quantumComputing: Math.round(2.0 * variation(12)),  // 2: Theory very strong, practice limited
+        energySystems: Math.round(1.5 * variation(13))      // 1-2: Modeling excellent, deployment growing
       },
       climate: {
-        modeling: 4.0 * variation(14),     // 3.2-4.0: Climate/weather modeling superhuman
-        intervention: 0.8 * variation(15), // 0.64-0.8: Theory strong, practice limited
-        mitigation: 2.0 * variation(16)    // 1.6-2.0: Planning strong, deployment moderate
+        modeling: Math.round(4.0 * variation(14)),     // 3-4: Climate/weather modeling superhuman
+        intervention: Math.round(0.8 * variation(15)), // 1: Theory strong, practice limited
+        mitigation: Math.round(2.0 * variation(16))    // 2: Planning strong, deployment moderate
       },
       computerScience: {
-        algorithms: 6.0 * variation(17),  // 4.8-6.0: SWE-bench 77-100%, AIME 100% - FAR SUPERHUMAN
-        security: 4.5 * variation(18),    // 3.6-4.5: Elite vulnerability discovery
-        architectures: 5.0 * variation(19) // 4.0-5.0: Complex system design superhuman
+        algorithms: Math.min(5, Math.round(6.0 * variation(17))),  // 5: SWE-bench 77-100%, AIME 100% - FAR SUPERHUMAN (capped at 5)
+        security: Math.round(4.5 * variation(18)),    // 4-5: Elite vulnerability discovery
+        architectures: Math.round(5.0 * variation(19)) // 4-5: Complex system design superhuman
       }
     }
   };
@@ -345,37 +347,39 @@ export function getIndustryImpact(profile: AICapabilityProfile, industry: string
  * @returns Scaled capability profile
  */
 export function scaleCapabilityProfile(
-  profile: AICapabilityProfile, 
+  profile: AICapabilityProfile,
   multiplier: number
 ): AICapabilityProfile {
+  // HIGH-6 FIX (Nov 8, 2025): Round all capabilities to integers [0-5] after scaling
+  // AI capabilities are discrete levels, not continuous values
   return {
-    physical: profile.physical * multiplier,
-    digital: profile.digital * multiplier,
-    cognitive: profile.cognitive * multiplier,
-    social: profile.social * multiplier,
-    economic: profile.economic * multiplier,
-    selfImprovement: profile.selfImprovement * multiplier,
+    physical: Math.min(5, Math.max(0, Math.round(profile.physical * multiplier))),
+    digital: Math.min(5, Math.max(0, Math.round(profile.digital * multiplier))),
+    cognitive: Math.min(5, Math.max(0, Math.round(profile.cognitive * multiplier))),
+    social: Math.min(5, Math.max(0, Math.round(profile.social * multiplier))),
+    economic: Math.min(5, Math.max(0, Math.round(profile.economic * multiplier))),
+    selfImprovement: Math.min(5, Math.max(0, Math.round(profile.selfImprovement * multiplier))),
     research: {
       biotech: {
-        drugDiscovery: profile.research.biotech.drugDiscovery * multiplier,
-        geneEditing: profile.research.biotech.geneEditing * multiplier,
-        syntheticBiology: profile.research.biotech.syntheticBiology * multiplier,
-        neuroscience: profile.research.biotech.neuroscience * multiplier
+        drugDiscovery: Math.min(5, Math.max(0, Math.round(profile.research.biotech.drugDiscovery * multiplier))),
+        geneEditing: Math.min(5, Math.max(0, Math.round(profile.research.biotech.geneEditing * multiplier))),
+        syntheticBiology: Math.min(5, Math.max(0, Math.round(profile.research.biotech.syntheticBiology * multiplier))),
+        neuroscience: Math.min(5, Math.max(0, Math.round(profile.research.biotech.neuroscience * multiplier)))
       },
       materials: {
-        nanotechnology: profile.research.materials.nanotechnology * multiplier,
-        quantumComputing: profile.research.materials.quantumComputing * multiplier,
-        energySystems: profile.research.materials.energySystems * multiplier
+        nanotechnology: Math.min(5, Math.max(0, Math.round(profile.research.materials.nanotechnology * multiplier))),
+        quantumComputing: Math.min(5, Math.max(0, Math.round(profile.research.materials.quantumComputing * multiplier))),
+        energySystems: Math.min(5, Math.max(0, Math.round(profile.research.materials.energySystems * multiplier)))
       },
       climate: {
-        modeling: profile.research.climate.modeling * multiplier,
-        intervention: profile.research.climate.intervention * multiplier,
-        mitigation: profile.research.climate.mitigation * multiplier
+        modeling: Math.min(5, Math.max(0, Math.round(profile.research.climate.modeling * multiplier))),
+        intervention: Math.min(5, Math.max(0, Math.round(profile.research.climate.intervention * multiplier))),
+        mitigation: Math.min(5, Math.max(0, Math.round(profile.research.climate.mitigation * multiplier)))
       },
       computerScience: {
-        algorithms: profile.research.computerScience.algorithms * multiplier,
-        security: profile.research.computerScience.security * multiplier,
-        architectures: profile.research.computerScience.architectures * multiplier
+        algorithms: Math.min(5, Math.max(0, Math.round(profile.research.computerScience.algorithms * multiplier))),
+        security: Math.min(5, Math.max(0, Math.round(profile.research.computerScience.security * multiplier))),
+        architectures: Math.min(5, Math.max(0, Math.round(profile.research.computerScience.architectures * multiplier)))
       }
     }
   };

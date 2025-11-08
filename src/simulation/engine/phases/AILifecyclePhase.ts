@@ -43,13 +43,55 @@ export class AILifecyclePhase implements SimulationPhase {
     for (const agent of state.aiAgents) {
       if (agent.lifecycleState === 'deployed_closed' || agent.lifecycleState === 'deployed_open' || agent.lifecycleState === 'testing') {
         // Validate all capability dimensions are valid integers [0, 5]
-        for (const [dimension, value] of Object.entries(agent.capabilityProfile)) {
-          assertAICapability(value as number, {
-            location: 'AILifecyclePhase.execute',
-            valueName: `capabilityProfile.${dimension}`,
-            agentId: agent.id,
-            dimension
-          });
+        // Top-level dimensions (physical, digital, cognitive, social, economic, selfImprovement)
+        assertAICapability(agent.capabilityProfile.physical, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.physical',
+          agentId: agent.id,
+          dimension: 'physical'
+        });
+        assertAICapability(agent.capabilityProfile.digital, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.digital',
+          agentId: agent.id,
+          dimension: 'digital'
+        });
+        assertAICapability(agent.capabilityProfile.cognitive, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.cognitive',
+          agentId: agent.id,
+          dimension: 'cognitive'
+        });
+        assertAICapability(agent.capabilityProfile.social, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.social',
+          agentId: agent.id,
+          dimension: 'social'
+        });
+        assertAICapability(agent.capabilityProfile.economic, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.economic',
+          agentId: agent.id,
+          dimension: 'economic'
+        });
+        assertAICapability(agent.capabilityProfile.selfImprovement, {
+          location: 'AILifecyclePhase.execute',
+          valueName: 'capabilityProfile.selfImprovement',
+          agentId: agent.id,
+          dimension: 'selfImprovement'
+        });
+
+        // Research dimensions (nested) - validate all sub-dimensions
+        const research = agent.capabilityProfile.research;
+        for (const category of ['biotech', 'materials', 'climate', 'computerScience'] as const) {
+          for (const [subdimension, value] of Object.entries(research[category])) {
+            assertAICapability(value as number, {
+              location: 'AILifecyclePhase.execute',
+              valueName: `capabilityProfile.research.${category}.${subdimension}`,
+              agentId: agent.id,
+              dimension: `research.${category}.${subdimension}`
+            });
+          }
         }
       }
     }
