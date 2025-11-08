@@ -1,6 +1,11 @@
 # Research Update Queue
+<<<<<<< Updated upstream
 **Generated:** 11/8/2025, 12:30:06 AM
 **Files Scanned:** 329
+=======
+**Generated:** 11/8/2025, 3:08:58 AM
+**Files Scanned:** 331
+>>>>>>> Stashed changes
 
 ---
 
@@ -12,7 +17,11 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
+<<<<<<< Updated upstream
 **Count:** 132 (40.1%)
+=======
+**Count:** 132 (39.9%)
+>>>>>>> Stashed changes
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -678,7 +687,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 19 (5.8%)
+**Count:** 19 (5.7%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -704,7 +713,11 @@
 
 ## ✅ LOW (Monitor Only)
 
+<<<<<<< Updated upstream
 **Count:** 178 (54.1%)
+=======
+**Count:** 180 (54.4%)
+>>>>>>> Stashed changes
 
 All sources <3 years old. No action required.
 
@@ -714,11 +727,19 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
+<<<<<<< Updated upstream
 | Total files | 329 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 132 (40.1%) |
 | MEDIUM | 19 (5.8%) |
 | LOW | 178 (54.1%) |
+=======
+| Total files | 331 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 132 (39.9%) |
+| MEDIUM | 19 (5.7%) |
+| LOW | 180 (54.4%) |
+>>>>>>> Stashed changes
 | Average age | 8.9 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -726,14 +747,24 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
+<<<<<<< Updated upstream
 | Current (<3yr) | 178 | 54.1% |
 | Warning (3-5yr) | 19 | 5.8% |
 | Critical (>5yr) | 132 | 40.1% |
+=======
+| Current (<3yr) | 180 | 54.4% |
+| Warning (3-5yr) | 19 | 5.7% |
+| Critical (>5yr) | 132 | 39.9% |
+>>>>>>> Stashed changes
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
+<<<<<<< Updated upstream
 - **Current:** 40.1% critical (>5yr)
+=======
+- **Current:** 39.9% critical (>5yr)
+>>>>>>> Stashed changes
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
