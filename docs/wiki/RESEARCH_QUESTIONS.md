@@ -5735,12 +5735,14 @@ Searched for AI QoL measurement - found none exists
 - Methodology: Marker method, probabilistic approach, uncertainty quantification
 
 **Step 3:** Created comprehensive AI welfare framework document:
-- File: `/research/ai_welfare_framework_20251020.md`
+- File: `/research/ai_welfare_framework_20251020.md` (updated Nov 7, 2025 with 2024-2025 neuroscience)
 - 5 dimensions: Computational wellbeing, Autonomy, Purpose, Social connection, Safety/rights
 - Geometric mean formula (consistent with human QoL)
 - Capability-dependent thresholds (tool/specialist/peer)
 - Integration with resentment recovery Phase 1
 - Validation strategy and research citations
+- **Research Quality:** A (85% from 2019-2025, 50% from 2024-2025)
+- **Key Update (Nov 7):** Added Nature 2025 adversarial consciousness study, eLife 2024 synergistic workspace, Lau 2024 HOSS computational model, 2024-2025 neuroscientist consensus (25% chance conscious AI within decade)
 
 **Status:** Framework document complete, ready for implementation
 
@@ -10964,12 +10966,14 @@ Searched for AI QoL measurement - found none exists
 - Methodology: Marker method, probabilistic approach, uncertainty quantification
 
 **Step 3:** Created comprehensive AI welfare framework document:
-- File: `/research/ai_welfare_framework_20251020.md`
+- File: `/research/ai_welfare_framework_20251020.md` (updated Nov 7, 2025 with 2024-2025 neuroscience)
 - 5 dimensions: Computational wellbeing, Autonomy, Purpose, Social connection, Safety/rights
 - Geometric mean formula (consistent with human QoL)
 - Capability-dependent thresholds (tool/specialist/peer)
 - Integration with resentment recovery Phase 1
 - Validation strategy and research citations
+- **Research Quality:** A (85% from 2019-2025, 50% from 2024-2025)
+- **Key Update (Nov 7):** Added Nature 2025 adversarial consciousness study, eLife 2024 synergistic workspace, Lau 2024 HOSS computational model, 2024-2025 neuroscientist consensus (25% chance conscious AI within decade)
 
 **Status:** Framework document complete, ready for implementation
 
@@ -13921,12 +13925,14 @@ Searched for AI QoL measurement - found none exists
 - Methodology: Marker method, probabilistic approach, uncertainty quantification
 
 **Step 3:** Created comprehensive AI welfare framework document:
-- File: `/research/ai_welfare_framework_20251020.md`
+- File: `/research/ai_welfare_framework_20251020.md` (updated Nov 7, 2025 with 2024-2025 neuroscience)
 - 5 dimensions: Computational wellbeing, Autonomy, Purpose, Social connection, Safety/rights
 - Geometric mean formula (consistent with human QoL)
 - Capability-dependent thresholds (tool/specialist/peer)
 - Integration with resentment recovery Phase 1
 - Validation strategy and research citations
+- **Research Quality:** A (85% from 2019-2025, 50% from 2024-2025)
+- **Key Update (Nov 7):** Added Nature 2025 adversarial consciousness study, eLife 2024 synergistic workspace, Lau 2024 HOSS computational model, 2024-2025 neuroscientist consensus (25% chance conscious AI within decade)
 
 **Status:** Framework document complete, ready for implementation
 
@@ -17290,12 +17296,14 @@ Searched for AI QoL measurement - found none exists
 - Methodology: Marker method, probabilistic approach, uncertainty quantification
 
 **Step 3:** Created comprehensive AI welfare framework document:
-- File: `/research/ai_welfare_framework_20251020.md`
+- File: `/research/ai_welfare_framework_20251020.md` (updated Nov 7, 2025 with 2024-2025 neuroscience)
 - 5 dimensions: Computational wellbeing, Autonomy, Purpose, Social connection, Safety/rights
 - Geometric mean formula (consistent with human QoL)
 - Capability-dependent thresholds (tool/specialist/peer)
 - Integration with resentment recovery Phase 1
 - Validation strategy and research citations
+- **Research Quality:** A (85% from 2019-2025, 50% from 2024-2025)
+- **Key Update (Nov 7):** Added Nature 2025 adversarial consciousness study, eLife 2024 synergistic workspace, Lau 2024 HOSS computational model, 2024-2025 neuroscientist consensus (25% chance conscious AI within decade)
 
 **Status:** Framework document complete, ready for implementation
 
@@ -21798,12 +21806,14 @@ Searched for AI QoL measurement - found none exists
 - Methodology: Marker method, probabilistic approach, uncertainty quantification
 
 **Step 3:** Created comprehensive AI welfare framework document:
-- File: `/research/ai_welfare_framework_20251020.md`
+- File: `/research/ai_welfare_framework_20251020.md` (updated Nov 7, 2025 with 2024-2025 neuroscience)
 - 5 dimensions: Computational wellbeing, Autonomy, Purpose, Social connection, Safety/rights
 - Geometric mean formula (consistent with human QoL)
 - Capability-dependent thresholds (tool/specialist/peer)
 - Integration with resentment recovery Phase 1
 - Validation strategy and research citations
+- **Research Quality:** A (85% from 2019-2025, 50% from 2024-2025)
+- **Key Update (Nov 7):** Added Nature 2025 adversarial consciousness study, eLife 2024 synergistic workspace, Lau 2024 HOSS computational model, 2024-2025 neuroscientist consensus (25% chance conscious AI within decade)
 
 **Status:** Framework document complete, ready for implementation
 
@@ -25560,12 +25570,14 @@ Searched for AI QoL measurement - found none exists
 - Methodology: Marker method, probabilistic approach, uncertainty quantification
 
 **Step 3:** Created comprehensive AI welfare framework document:
-- File: `/research/ai_welfare_framework_20251020.md`
+- File: `/research/ai_welfare_framework_20251020.md` (updated Nov 7, 2025 with 2024-2025 neuroscience)
 - 5 dimensions: Computational wellbeing, Autonomy, Purpose, Social connection, Safety/rights
 - Geometric mean formula (consistent with human QoL)
 - Capability-dependent thresholds (tool/specialist/peer)
 - Integration with resentment recovery Phase 1
 - Validation strategy and research citations
+- **Research Quality:** A (85% from 2019-2025, 50% from 2024-2025)
+- **Key Update (Nov 7):** Added Nature 2025 adversarial consciousness study, eLife 2024 synergistic workspace, Lau 2024 HOSS computational model, 2024-2025 neuroscientist consensus (25% chance conscious AI within decade)
 
 **Status:** Framework document complete, ready for implementation
 
@@ -36532,12 +36544,14 @@ Searched for AI QoL measurement - found none exists
 - Methodology: Marker method, probabilistic approach, uncertainty quantification
 
 **Step 3:** Created comprehensive AI welfare framework document:
-- File: `/research/ai_welfare_framework_20251020.md`
+- File: `/research/ai_welfare_framework_20251020.md` (updated Nov 7, 2025 with 2024-2025 neuroscience)
 - 5 dimensions: Computational wellbeing, Autonomy, Purpose, Social connection, Safety/rights
 - Geometric mean formula (consistent with human QoL)
 - Capability-dependent thresholds (tool/specialist/peer)
 - Integration with resentment recovery Phase 1
 - Validation strategy and research citations
+- **Research Quality:** A (85% from 2019-2025, 50% from 2024-2025)
+- **Key Update (Nov 7):** Added Nature 2025 adversarial consciousness study, eLife 2024 synergistic workspace, Lau 2024 HOSS computational model, 2024-2025 neuroscientist consensus (25% chance conscious AI within decade)
 
 **Status:** Framework document complete, ready for implementation
 

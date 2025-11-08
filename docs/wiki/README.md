@@ -70,17 +70,30 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
 - ⚠️ **60.3%** of phases lack assertions (70 phases remaining, 18 CRITICAL priority)
 - ⚠️ **74.4%** of phases lack dependencies
 
-**🟡 CRITICAL-1: ASSERTION COVERAGE - BATCH 1 IN PROGRESS** (Nov 7, 2025)
-- **Status:** Batch 1 implementation STARTED (1/18 CRITICAL phases complete)
-- **Current Coverage:** 39.7% (46/116 phases) → **Target: 95%+** (111+ phases)
-- **Progress:** HumanEnhancementPhase complete with 4 assertion groups, type checking passes
+**🟡 CRITICAL-1/HIGH-6: ASSERTION COVERAGE - BATCH 2 COMPLETE** (Nov 7, 2025)
+- **Status:** Batch 2 COMPLETE (96 new assertions across 4 critical modules)
+- **Current Coverage:** 47.0% (55/117 phases) → **Target: 95%+** (111+ phases)
+- **Batch 2 Modules Protected (commit 318a823):**
+  - climateJustice: 46 assertions (climate debt, reparations, migration, tech transfer)
+  - governanceQuality: 26 assertions (all governance quality metrics)
+  - enhancedUBI: 17 assertions (payment calculations, coverage, effects, meaning crisis)
+  - geoengineering: 7 assertions (intervention intensity, deployment quality, ocean effects)
+- **Total Assertions Added (Batch 2):** 96 assertions across 4 critical calculation modules
+- **Top Protected Modules:**
+  - effectsEngine.ts: 124
+  - minimalSufferingTracking.ts: 73
+  - climateJustice.ts: 46
+  - computeInfrastructure.ts: 40
+  - planetaryBoundaries.ts: 39
+  - environmental.ts: 38
 - **Timeline:** 10-13 hours for Batch 1 (phase layer + module layer), 25-30 hours total for 95% coverage
 - **Implementation Logs:**
-  - Audit: `logs/assertion_batch1_summary_20251107.md`
-  - Findings: `logs/assertion_batch1_findings_20251107.md` (0 bugs found yet, validation pending)
-  - Plan: `logs/assertion_batch1_plan_20251107.md`
-- **Strategy:** Manual phase-by-phase implementation (18 CRITICAL → 11 HIGH → 3 MEDIUM)
-- **Next Steps:** Complete remaining 17 CRITICAL phases, then validate with Monte Carlo N=10+
+  - Batch 2 Summary: `logs/assertion_coverage_batch2_summary.md` (all type checks pass)
+  - Batch 1 Audit: `logs/assertion_batch1_summary_20251107.md`
+  - Batch 1 Findings: `logs/assertion_batch1_findings_20251107.md` (0 bugs found yet, validation pending)
+  - Progress: `scripts/checkAssertionCoverage.ts` (tracking tool)
+- **Strategy Refinement:** Focus on **module-level assertion density** (not phase count). Many phases are thin wrappers delegating to modules - protecting calculation modules is the real goal.
+- **Next Steps (Batch 3):** Target resourceDepletion.ts (38KB, only 5 assertions), technologyDiffusion.ts (320 lines, 0 assertions), and other large calculation-heavy modules
 
 **✅ CRITICAL-4: DEFENSIVE FALLBACK ELIMINATION - COMPLETE** (Nov 7, 2025 - commits 0e2a7e9 + 80c83a8)
 - **Status:** ✅ ALL 17 DANGEROUS FALLBACKS ELIMINATED + Field initialization cleanup complete (4 hours work)
@@ -5280,6 +5293,10 @@ When adding/modifying simulation code:
 - `/reviews/state_mutation_audit_20251106.md` - Comprehensive audit report (920 mutations, 713 assertions, 207 gap) ✅ NEW
 - `/src/simulation/bayesianMortality.ts` - 100% assertion coverage (all ~15 mutations validated) ✅ NEW
 - `/src/simulation/catastrophicScenarios.ts` - 100% assertion coverage (all 42 mutations validated) ✅ NEW
+- `/src/simulation/climateJustice.ts` - 46 assertions (debt calculations, reparations, migration, tech transfer) ✅ NEW
+- `/src/simulation/governanceQuality.ts` - 26 assertions (all 6 governance metrics: decision quality, transparency, participation, capacity, consensus, minority protection) ✅ NEW
+- `/src/simulation/enhancedUBI.ts` - 17 assertions (payment calculations, coverage metrics, meaning crisis reduction, population adaptation) ✅ NEW
+- `/src/simulation/geoengineering.ts` - 7 assertions (intervention intensity, deployment quality, ocean property mutations) ✅ NEW
 - `/src/simulation/engine/phases/TippingPointPhase.ts` - 7 assertions for climate tipping points (sigmoid transitions, cascade multipliers, climate stability)
 - `/src/simulation/engine/phases/MortalityStabilizersPhase.ts` - 11 assertions for mortality reduction (cascade functioning, combined reductions)
 - `/src/simulation/engine/phases/EmergencyResponsePhase.ts:75-640` - 27 validated mutations across 7 emergency types

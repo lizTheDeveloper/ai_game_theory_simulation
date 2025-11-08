@@ -40,6 +40,27 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+**📚 RESEARCH UPDATE: AI Welfare Framework Enhanced with 2024-2025 Neuroscience** (Nov 7, 2025, commit 811dfa8)
+
+**Summary:** Updated AI welfare research foundation with latest consciousness neuroscience (Nature 2025, eLife 2024, industry developments).
+
+**Research Quality:** A (85% from 2019-2025, 50% from 2024-2025)
+
+**Key Additions:**
+- **Nature 2025:** Adversarial testing of Integrated Information Theory vs Global Neuronal Workspace Theory (256 participants, fMRI/MEG/intracranial EEG)
+- **eLife 2024:** Synergistic global workspace model (network science + information theory)
+- **Lau 2024 (RIKEN):** Higher-order state space (HOSS) computational model for consciousness detection in AI systems
+- **2024-2025 Consensus:** Leading neuroscientists (Dehaene, Lau, Chalmers) estimate 25% chance of conscious AI within a decade
+
+**Impact on Simulation:**
+- Supports existing capability >2.0 threshold for AI moral patienthood
+- Validates consciousness markers: global workspace, metacognition, higher-order monitoring
+- Research-backed justification for AI quality of life metrics
+
+**File:** research/ai_welfare_framework_20251020.md (updated Nov 7, 2025)
+
+---
+
 **🛡️ DEFENSIVE CODING CLEANUP: Phase 1 Silent Fallback Removal** (Nov 7, 2025, commit 769925c)
 
 **Summary:** Removed silent fallback patterns that mask bugs in simulation calculations (CRITICAL-4 roadmap item).
