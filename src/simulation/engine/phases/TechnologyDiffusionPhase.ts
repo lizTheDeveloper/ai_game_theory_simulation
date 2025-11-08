@@ -35,7 +35,7 @@ export class TechnologyDiffusionPhase implements SimulationPhase {
 
     // Validate AI agent capabilities after diffusion
     for (const agent of state.aiAgents || []) {
-      assertAICapability(agent.capability, {
+      assertAICapability(agent.capability, { allowContinuous: true,
         location: 'TechnologyDiffusionPhase.execute',
         valueName: `agent[${agent.id}].capability`,
         month: state.currentMonth,

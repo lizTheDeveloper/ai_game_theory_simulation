@@ -63,7 +63,7 @@ export const LLMWeightUpdatePhase: SimulationPhase = {
           updatedAgents.push(agent.name);
 
           // Validate AI capability after weight update
-          assertAICapability(agent.capability, {
+          assertAICapability(agent.capability, { allowContinuous: true,
             location: 'LLMWeightUpdatePhase.execute',
             valueName: `agent[${agent.id}].capability`,
             month: state.currentMonth,

@@ -64,7 +64,7 @@ export class Tier2InterpretabilityPhase implements SimulationPhase {
           additionalInfo: { agentCount: state.aiAgents.length }
         });
 
-        assertAICapability(avgCapability, {
+        assertAICapability(avgCapability, { allowContinuous: true,
           location: 'Tier2InterpretabilityPhase.execute',
           valueName: 'avgCapability',
           month: state.currentMonth,
