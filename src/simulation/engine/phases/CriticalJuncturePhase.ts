@@ -242,7 +242,15 @@ export function attemptEscape(
   const activeCrises = countActiveCrises(state);
   const qol = state.globalMetrics.qualityOfLife;
   // Count deployed breakthrough technologies
-  const unlockedTech = state.technologyTree ? state.technologyTree.filter(tech => tech.completed).length : 0;
+  // FIX (Nov 8, 2025): technologyTree is REQUIRED field - fail loudly if missing
+  if (!state.technologyTree) {
+    throw new Error(
+      `❌ Missing state.technologyTree in CriticalJuncturePhase.attemptEscape\n` +
+      `   Expected: required field in GameState (TechnologyNode[])\n` +
+      `   This is an initialization bug`
+    );
+  }
+  const unlockedTech = state.technologyTree.filter(tech => tech.completed).length;
 
   let escapeType: 'prevent_war' | 'enable_cooperation' | 'recover_from_crisis' | 'unlock_breakthrough';
 

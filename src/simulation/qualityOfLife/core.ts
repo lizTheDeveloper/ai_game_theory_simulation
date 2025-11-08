@@ -222,11 +222,27 @@ export function updateQualityOfLifeSystems(
   autonomy += current.politicalFreedom * 0.2;
 
   // Autonomy floor
+  // FIX (Nov 8, 2025): governanceQuality is REQUIRED field - fail loudly if missing
+  if (!government.governanceQuality) {
+    throw new Error(
+      `❌ Missing government.governanceQuality in calculateQualityOfLife\n` +
+      `   Expected: required field in GovernmentAgent\n` +
+      `   This is an initialization bug`
+    );
+  }
   const govQuality = government.governanceQuality;
+  if (!isFinite(govQuality.transparency) || !isFinite(govQuality.participationRate)) {
+    throw new Error(
+      `❌ Invalid governance quality values in calculateQualityOfLife\n` +
+      `   transparency: ${govQuality.transparency}\n` +
+      `   participationRate: ${govQuality.participationRate}\n` +
+      `   Expected: finite numbers`
+    );
+  }
   const democraticFloor = government.governmentType === 'democratic' ? 0.25 :
                           government.governmentType === 'technocratic' ? 0.15 : 0.05;
-  const transparencyFloor = (govQuality?.transparency || 0.5) * 0.15;
-  const participationFloor = (govQuality?.participationRate || 0.5) * 0.10;
+  const transparencyFloor = govQuality.transparency * 0.15;
+  const participationFloor = govQuality.participationRate * 0.10;
 
   // Tech tree: collective purpose networks provide autonomy boost
   const counterSurveillanceTech = require('../techTree/helpers').isTechDeployed(state, 'collective_purpose_networks') * 0.25; // Combined boost
