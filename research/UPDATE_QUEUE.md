@@ -1,21 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-**Generated:** 11/8/2025, 3:08:58 AM
-**Files Scanned:** 331
-=======
-**Generated:** 11/8/2025, 5:30:04 AM
+**Generated:** 11/8/2025, 7:30:05 AM
 **Files Scanned:** 333
->>>>>>> Stashed changes
-=======
-**Generated:** 11/8/2025, 6:30:04 AM
-**Files Scanned:** 333
->>>>>>> Stashed changes
-=======
-**Generated:** 11/8/2025, 6:30:04 AM
-**Files Scanned:** 333
->>>>>>> Stashed changes
 
 ---
 
@@ -27,19 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-**Count:** 132 (39.9%)
-=======
 **Count:** 132 (39.6%)
->>>>>>> Stashed changes
-=======
-**Count:** 132 (39.6%)
->>>>>>> Stashed changes
-=======
-**Count:** 132 (39.6%)
->>>>>>> Stashed changes
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -731,19 +704,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-**Count:** 180 (54.4%)
-=======
 **Count:** 182 (54.7%)
->>>>>>> Stashed changes
-=======
-**Count:** 182 (54.7%)
->>>>>>> Stashed changes
-=======
-**Count:** 182 (54.7%)
->>>>>>> Stashed changes
 
 All sources <3 years old. No action required.
 
@@ -753,83 +714,26 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-| Total files | 331 |
-=======
-| Total files | 333 |
->>>>>>> Stashed changes
-| CRITICAL | 0 (0.0%) |
-| HIGH | 132 (39.6%) |
-| MEDIUM | 19 (5.7%) |
-<<<<<<< Updated upstream
-| LOW | 180 (54.4%) |
-| Average age | 8.9 years |
-=======
-| LOW | 182 (54.7%) |
-| Average age | 8.8 years |
->>>>>>> Stashed changes
-=======
 | Total files | 333 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 132 (39.6%) |
 | MEDIUM | 19 (5.7%) |
 | LOW | 182 (54.7%) |
 | Average age | 8.8 years |
->>>>>>> Stashed changes
-=======
-| Total files | 333 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 132 (39.6%) |
-| MEDIUM | 19 (5.7%) |
-| LOW | 182 (54.7%) |
-| Average age | 8.8 years |
->>>>>>> Stashed changes
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-| Current (<3yr) | 180 | 54.4% |
-| Warning (3-5yr) | 19 | 5.7% |
-| Critical (>5yr) | 132 | 39.9% |
-=======
 | Current (<3yr) | 182 | 54.7% |
 | Warning (3-5yr) | 19 | 5.7% |
 | Critical (>5yr) | 132 | 39.6% |
->>>>>>> Stashed changes
-=======
-| Current (<3yr) | 182 | 54.7% |
-| Warning (3-5yr) | 19 | 5.7% |
-| Critical (>5yr) | 132 | 39.6% |
->>>>>>> Stashed changes
-=======
-| Current (<3yr) | 182 | 54.7% |
-| Warning (3-5yr) | 19 | 5.7% |
-| Critical (>5yr) | 132 | 39.6% |
->>>>>>> Stashed changes
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-- **Current:** 39.9% critical (>5yr)
-=======
 - **Current:** 39.6% critical (>5yr)
->>>>>>> Stashed changes
-=======
-- **Current:** 39.6% critical (>5yr)
->>>>>>> Stashed changes
-=======
-- **Current:** 39.6% critical (>5yr)
->>>>>>> Stashed changes
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
