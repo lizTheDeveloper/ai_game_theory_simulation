@@ -17,6 +17,7 @@
  */
 
 import { GameState, AIAgent, AICapabilityProfile, EcosystemState, GameEvent } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 import { createEmptyCapabilityProfile } from './capabilities';
 import { levyAdoptionCurve, ALPHA_PRESETS } from './utils/levyDistributions';
 
@@ -215,12 +216,13 @@ export function diffuseCapabilities(state: GameState, rng: () => number): void {
   const levyModifiedRate = levyAdoptionCurve(clampedRate, ALPHA_PRESETS.TECHNOLOGY, rng);
 
   // Core dimensions: floor moves toward frontier
-  floor.physical += (frontier.physical - floor.physical) * levyModifiedRate;
-  floor.digital += (frontier.digital - floor.digital) * levyModifiedRate;
-  floor.cognitive += (frontier.cognitive - floor.cognitive) * levyModifiedRate;
-  floor.social += (frontier.social - floor.social) * levyModifiedRate;
-  floor.economic += (frontier.economic - floor.economic) * levyModifiedRate;
-  floor.selfImprovement += (frontier.selfImprovement - floor.selfImprovement) * levyModifiedRate;
+  // Round to integers - AI capabilities are discrete levels
+  floor.physical = Math.round(floor.physical + (frontier.physical - floor.physical) * levyModifiedRate);
+  floor.digital = Math.round(floor.digital + (frontier.digital - floor.digital) * levyModifiedRate);
+  floor.cognitive = Math.round(floor.cognitive + (frontier.cognitive - floor.cognitive) * levyModifiedRate);
+  floor.social = Math.round(floor.social + (frontier.social - floor.social) * levyModifiedRate);
+  floor.economic = Math.round(floor.economic + (frontier.economic - floor.economic) * levyModifiedRate);
+  floor.selfImprovement = Math.round(floor.selfImprovement + (frontier.selfImprovement - floor.selfImprovement) * levyModifiedRate);
 
   // Log explosive diffusion events
   if (levyModifiedRate > clampedRate * 1.3) {
@@ -230,6 +232,7 @@ export function diffuseCapabilities(state: GameState, rng: () => number): void {
   }
   
   // Research dimensions (nested) - also use Lévy-modified rate
+  // Round to integers - AI capabilities are discrete levels
   for (const category of Object.keys(floor.research) as Array<keyof typeof floor.research>) {
     const floorCat = floor.research[category];
     const frontierCat = frontier.research[category];
@@ -239,7 +242,7 @@ export function diffuseCapabilities(state: GameState, rng: () => number): void {
       const floorVal = floorCat[key];
       const frontierVal = frontierCat[key];
       if (typeof floorVal === 'number' && typeof frontierVal === 'number') {
-        (floorCat[key] as number) += (frontierVal - floorVal) * levyModifiedRate;
+        (floorCat[key] as number) = Math.round(floorVal + (frontierVal - floorVal) * levyModifiedRate);
       }
     }
   }
@@ -257,7 +260,25 @@ export function getCapabilityFloorForNewAI(state: GameState): AICapabilityProfil
   const floor = state.ecosystem.capabilityFloor;
 
   // Return a copy (don't mutate the floor)
-  return structuredClone(floor);
+  // Defensive rounding: Ensure all capabilities are integers even if floor has fractional values
+  const rounded = structuredClone(floor);
+
+  // Round core dimensions
+  rounded.physical = Math.round(rounded.physical);
+  rounded.digital = Math.round(rounded.digital);
+  rounded.cognitive = Math.round(rounded.cognitive);
+  rounded.social = Math.round(rounded.social);
+  rounded.economic = Math.round(rounded.economic);
+  rounded.selfImprovement = Math.round(rounded.selfImprovement);
+
+  // Round research dimensions
+  Object.keys(rounded.research).forEach((domain) => {
+    Object.keys(rounded.research[domain]).forEach((subDomain) => {
+      rounded.research[domain][subDomain] = Math.round(rounded.research[domain][subDomain]);
+    });
+  });
+
+  return rounded;
 }
 
 /**

@@ -21,6 +21,7 @@ import {
 } from '../types/defensiveAI';
 import { getTrustInAI } from './socialCohesion';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from './utils/assertions';
 
 // ============================================================================
 // INITIALIZATION
@@ -710,9 +711,25 @@ export function attemptCyberSpoofingAttack(
   // 2. CAN WE BLOCK IT IN TIME?
   const attackCapability = attacker.capabilityProfile?.digital || attacker.capability;
   const defenseCapability = defense.avgCapability;
-  
+
   // Capability contest: defender needs to be within 80% of attacker
-  const capabilityGap = defenseCapability / attackCapability;
+  // Division by attackCapability (protected against zero)
+  const capabilityGap = attackCapability > 0
+    ? assertFinite(
+        defenseCapability / attackCapability,
+        {
+          location: 'blockCyberAttack',
+          valueName: 'capabilityGap',
+          month: state.currentMonth,
+          additionalInfo: {
+            attacker: attacker.name,
+            attackCapability,
+            defenseCapability
+          }
+        }
+      )
+    : 0; // If attacker has 0 capability, treat as no threat (gap = 0)
+
   const adaptationFactor = defense.cyberDefense.adaptationSpeed;
   
   // Block probability

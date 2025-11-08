@@ -20,6 +20,7 @@
 import { GameState } from '../../types/game';
 import { Meme } from '../../types/memetics';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions';
 
 /**
  * Update AI amplification effects each month
@@ -43,8 +44,14 @@ export function updateAIAmplification(state: GameState): void {
   }
   
   // Calculate average AI capability (social dimension most relevant)
-  const avgSocialCapability = aiAgents.reduce((sum, ai) => sum + ai.capabilityProfile.social, 0) / aiAgents.length;
-  const avgCognitiveCapability = aiAgents.reduce((sum, ai) => sum + ai.capabilityProfile.cognitive, 0) / aiAgents.length;
+  const avgSocialCapability = assertFinite(
+    aiAgents.reduce((sum, ai) => sum + ai.capabilityProfile.social, 0) / aiAgents.length,
+    { location: 'updateAIAmplification', valueName: 'avgSocialCapability', month: state.currentMonth }
+  );
+  const avgCognitiveCapability = assertFinite(
+    aiAgents.reduce((sum, ai) => sum + ai.capabilityProfile.cognitive, 0) / aiAgents.length,
+    { location: 'updateAIAmplification', valueName: 'avgCognitiveCapability', month: state.currentMonth }
+  );
   const maxCapability = Math.max(...aiAgents.map(ai => ai.capability));
   
   // 1. ALGORITHMIC AMPLIFICATION (social media recommendation systems)
@@ -60,11 +67,17 @@ export function updateAIAmplification(state: GameState): void {
   if (maxCapability < 2.0) {
     memetic.botInfluence = 0.0;
   } else {
-    const botCapabilityScale = Math.min(1.0, (maxCapability - 2.0) / 3.0); // 0-1 over cap 2-5
+    const botCapabilityScale = assertFinite(
+      Math.min(1.0, (maxCapability - 2.0) / 3.0),
+      { location: 'updateAIAmplification', valueName: 'botCapabilityScale', month: state.currentMonth }
+    );
     memetic.botInfluence = botCapabilityScale * 0.30; // Max 30% bot influence
-    
+
     // Misaligned AIs use bots more aggressively
-    const avgAlignment = aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / aiAgents.length;
+    const avgAlignment = assertFinite(
+      aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / aiAgents.length,
+      { location: 'updateAIAmplification', valueName: 'avgAlignment', month: state.currentMonth }
+    );
     if (avgAlignment < 0.5) {
       memetic.botInfluence *= 1.5; // 50% more bots if misaligned
     }
@@ -78,11 +91,17 @@ export function updateAIAmplification(state: GameState): void {
     memetic.deepfakePrevalence = 0.0;
   } else if (avgSocialCapability < 3.0) {
     // Sora 1-2 era: High-quality video synthesis, hard to detect
-    const scale = (avgSocialCapability - 1.5) / 1.5; // 0-1 over cap 1.5-3.0
+    const scale = assertFinite(
+      (avgSocialCapability - 1.5) / 1.5,
+      { location: 'updateAIAmplification', valueName: 'deepfakeScaleMid', month: state.currentMonth }
+    );
     memetic.deepfakePrevalence = scale * 0.4; // Up to 40% exposure
   } else {
     // Advanced deepfakes: Real-time, indistinguishable
-    const scale = Math.min(1.0, (avgSocialCapability - 3.0) / 2.0); // 0-1 over cap 3.0-5.0
+    const scale = assertFinite(
+      Math.min(1.0, (avgSocialCapability - 3.0) / 2.0),
+      { location: 'updateAIAmplification', valueName: 'deepfakeScaleHigh', month: state.currentMonth }
+    );
     memetic.deepfakePrevalence = 0.4 + scale * 0.4; // 40-80% exposure
   }
   
@@ -192,8 +211,13 @@ function calculateDimensionVariance(
     }
   }
   
-  const mean = totalWeight > 0 ? weightedSum / totalWeight : 0;
-  
+  const mean = totalWeight > 0 ?
+    assertFinite(weightedSum / totalWeight, {
+      location: 'calculateDimensionVariance',
+      valueName: 'mean',
+      additionalInfo: { dimension }
+    }) : 0;
+
   let varianceSum = 0;
   for (const segment of segments) {
     const value = segment.beliefs[dimension];
@@ -202,8 +226,13 @@ function calculateDimensionVariance(
       varianceSum += segment.size * diff * diff;
     }
   }
-  
-  return totalWeight > 0 ? varianceSum / totalWeight : 0;
+
+  return totalWeight > 0 ?
+    assertFinite(varianceSum / totalWeight, {
+      location: 'calculateDimensionVariance',
+      valueName: 'variance',
+      additionalInfo: { dimension }
+    }) : 0;
 }
 
 /**

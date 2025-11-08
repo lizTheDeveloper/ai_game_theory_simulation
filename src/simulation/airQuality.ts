@@ -37,6 +37,8 @@
  * @module simulation/airQuality
  */
 
+import { assertFinite, assertInRange } from './utils/assertions';
+
 /**
  * Air quality state
  */
@@ -216,20 +218,68 @@ function updateHealthImpact(state: AirQualityState): void {
   // WHO exposure-response: RR = 1.06 per 10 μg/m³
   // Attributable fraction: AF = (RR - 1) / RR
   const excessPM25 = Math.max(0, state.pm25 - 5); // Excess above WHO guideline
-  const relativeRisk = Math.pow(1.06, excessPM25 / 10);
-  const attributableFraction = (relativeRisk - 1) / relativeRisk;
+
+  // Division by constant 10 is safe, but validate result
+  const relativeRisk = assertFinite(
+    Math.pow(1.06, excessPM25 / 10),
+    {
+      location: 'updateHealthImpact',
+      valueName: 'relativeRisk',
+      additionalInfo: { pm25: state.pm25, excessPM25 }
+    }
+  );
+
+  // Division by relativeRisk - protect against zero (shouldn't happen with RR = 1.06^x >= 1)
+  if (relativeRisk === 0) {
+    throw new Error(
+      `❌ Division by zero in updateHealthImpact\n` +
+      `   relativeRisk = 0 (impossible with formula RR = 1.06^(excessPM25/10))\n` +
+      `   PM2.5: ${state.pm25}, excessPM25: ${excessPM25}\n` +
+      `   This indicates a calculation bug.`
+    );
+  }
+
+  const attributableFraction = assertFinite(
+    (relativeRisk - 1) / relativeRisk,
+    {
+      location: 'updateHealthImpact',
+      valueName: 'attributableFraction',
+      additionalInfo: { relativeRisk, pm25: state.pm25 }
+    }
+  );
 
   // Global baseline mortality ~60M deaths/year
   const globalMortality = 60_000_000;
 
   // Air pollution mortality (cardiopulmonary + lung cancer + stroke)
-  state.healthImpact.deaths = globalMortality * attributableFraction * 0.25; // 25% of deaths from these causes
+  state.healthImpact.deaths = assertFinite(
+    globalMortality * attributableFraction * 0.25,
+    {
+      location: 'updateHealthImpact',
+      valueName: 'deaths',
+      additionalInfo: { globalMortality, attributableFraction, pm25: state.pm25 }
+    }
+  );
 
   // DALYs: ~20 DALYs per death (average)
-  state.healthImpact.dalys = state.healthImpact.deaths * 20;
+  state.healthImpact.dalys = assertFinite(
+    state.healthImpact.deaths * 20,
+    {
+      location: 'updateHealthImpact',
+      valueName: 'dalys',
+      additionalInfo: { deaths: state.healthImpact.deaths }
+    }
+  );
 
-  // Mortality fraction
-  state.healthImpact.mortalityFraction = state.healthImpact.deaths / globalMortality;
+  // Mortality fraction - division by constant, but validate
+  state.healthImpact.mortalityFraction = assertFinite(
+    state.healthImpact.deaths / globalMortality,
+    {
+      location: 'updateHealthImpact',
+      valueName: 'mortalityFraction',
+      additionalInfo: { deaths: state.healthImpact.deaths, globalMortality }
+    }
+  );
 }
 
 /**
@@ -249,7 +299,20 @@ function updateEconomicCost(state: AirQualityState): void {
   // Utopia: 5 μg/m³ → 0.5% GDP
   // Dystopia: 100 μg/m³ → 10% GDP
   const costPerUnitPM25 = 0.0008; // 0.08% GDP per μg/m³
-  state.economicCost = Math.max(0.005, Math.min(0.15, state.pm25 * costPerUnitPM25));
+
+  const rawCost = state.pm25 * costPerUnitPM25;
+  const boundedCost = Math.max(0.005, Math.min(0.15, rawCost));
+
+  state.economicCost = assertInRange(
+    boundedCost,
+    0,
+    0.2, // Allow slight buffer above 0.15 for validation
+    {
+      location: 'updateEconomicCost',
+      valueName: 'economicCost',
+      additionalInfo: { pm25: state.pm25, rawCost, boundedCost }
+    }
+  );
 }
 
 /**

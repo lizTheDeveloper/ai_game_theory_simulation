@@ -6,6 +6,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Calculate structural consequences of regulation type

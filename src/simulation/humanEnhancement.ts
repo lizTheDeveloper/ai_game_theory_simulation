@@ -22,6 +22,7 @@ import {
   EnhancementBarriers,
   EnhancementOutcome,
 } from '../types/humanEnhancement';
+import { assertFinite, assertProbability } from './utils/assertions';
 
 /**
  * Initialize Human Enhancement System (TIER 4.6)
@@ -413,7 +414,25 @@ function calculateAggregateMetrics(
   const productivities = segments.map(s => s.productivityMultiplier);
   const maxProd = Math.max(...productivities);
   const minProd = Math.min(...productivities);
-  system.productivityGap = maxProd / minProd;
+
+  // Division by zero protection
+  if (minProd === 0) {
+    throw new Error(
+      `❌ Division by zero in updateAggregateMetrics (productivity gap)\n` +
+      `   minProd = 0 (impossible - all segments should have productivity > 0)\n` +
+      `   maxProd: ${maxProd}\n` +
+      `   This indicates a segment initialization or update bug.`
+    );
+  }
+
+  system.productivityGap = assertFinite(
+    maxProd / minProd,
+    {
+      location: 'updateAggregateMetrics',
+      valueName: 'productivityGap',
+      additionalInfo: { maxProd, minProd }
+    }
+  );
   
   // Calculate Gini coefficient of enhancement
   const enhancements = segments.map((s, i) => ({
@@ -470,11 +489,39 @@ function updateStratification(
   strat.socialStratification = Math.min(1, strat.socialStratification);
   
   // Economic stratification = how much economic power diverges from population
-  const economicGini = calculateGini(segments.map(s => s.economicPower / s.populationFraction));
+  const economicValues = segments.map(s => {
+    if (s.populationFraction === 0) {
+      // Segment with 0 population contributes 0 to Gini
+      return 0;
+    }
+    return assertFinite(
+      s.economicPower / s.populationFraction,
+      {
+        location: 'updateStratification',
+        valueName: 'economicPower/populationFraction',
+        additionalInfo: { segment: s.name, economicPower: s.economicPower, populationFraction: s.populationFraction }
+      }
+    );
+  });
+  const economicGini = calculateGini(economicValues);
   strat.economicStratification = economicGini;
-  
+
   // Political stratification = how much political power diverges from population
-  const politicalGini = calculateGini(segments.map(s => s.politicalPower / s.populationFraction));
+  const politicalValues = segments.map(s => {
+    if (s.populationFraction === 0) {
+      // Segment with 0 population contributes 0 to Gini
+      return 0;
+    }
+    return assertFinite(
+      s.politicalPower / s.populationFraction,
+      {
+        location: 'updateStratification',
+        valueName: 'politicalPower/populationFraction',
+        additionalInfo: { segment: s.name, politicalPower: s.politicalPower, populationFraction: s.populationFraction }
+      }
+    );
+  });
+  const politicalGini = calculateGini(politicalValues);
   strat.politicalStratification = politicalGini;
   
   // Check if cognitive apartheid threshold crossed

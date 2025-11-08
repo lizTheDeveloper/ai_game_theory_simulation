@@ -12,6 +12,7 @@
  */
 
 import type { GameState } from '../types/game';
+import { assertFinite } from './utils/assertions';
 import { clamp } from './utils';
 import { getTechDeploymentSafe } from './techTree/helpers';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';

@@ -23,7 +23,7 @@
 
 import type { GameState, RNGFunction } from '@/types/game';
 import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchestrator';
-import { assertStateProperty } from '@/simulation/utils/assertions';
+import { assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 /**
@@ -247,7 +247,15 @@ function calculateCrisisPressure(state: GameState): number {
 
     if (effectiveResponses.length > 0) {
       // Average effectiveness of active responses
-      const avgEffectiveness = effectiveResponses.reduce((sum, r) => sum + r.effectiveness, 0) / effectiveResponses.length;
+      const avgEffectiveness = assertFinite(
+        effectiveResponses.reduce((sum, r) => sum + r.effectiveness, 0) / effectiveResponses.length,
+        {
+          location: 'calculateCrisisPressure',
+          valueName: 'avgEffectiveness',
+          month: state.currentMonth,
+          additionalInfo: { effectiveResponseCount: effectiveResponses.length }
+        }
+      );
 
       // Reduce pressure proportionally (max 40% reduction with perfect responses)
       const pressureReduction = avgEffectiveness * 0.4;
@@ -324,7 +332,14 @@ function calculateGovernanceQuality(state: GameState): number {
     throw new Error(`❌ govt.governanceQuality.transparency is not a number at month ${state.currentMonth} in DemocracyDynamicsPhase.calculateGovernanceQuality`);
   }
 
-  return (legitimacy + govt.governanceQuality.institutionalCapacity + govt.governanceQuality.transparency) / 3;
+  return assertFinite(
+    (legitimacy + govt.governanceQuality.institutionalCapacity + govt.governanceQuality.transparency) / 3,
+    {
+      location: 'calculateGovernanceQuality',
+      valueName: 'governanceQualityAverage',
+      month: state.currentMonth
+    }
+  );
 }
 
 /**

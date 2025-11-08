@@ -833,25 +833,52 @@ function getMostCapableForScenario(scenarioType: ScenarioType, ais: AIAgent[]): 
  */
 function getScenarioRelevantCapability(scenarioType: ScenarioType, ai: AIAgent): number {
   const p = ai.capabilityProfile;
-  
+
   switch (scenarioType) {
     case 'grey_goo':
-      return p.research.materials.nanotechnology * 0.5 + p.physical * 0.3 + p.selfImprovement * 0.2;
+      return assertFinite(
+        p.research.materials.nanotechnology * 0.5 + p.physical * 0.3 + p.selfImprovement * 0.2,
+        { location: 'getScenarioRelevantCapability', valueName: 'greyGooCapability', additionalInfo: { agentId: ai.id } }
+      );
     case 'mirror_life':
-      return p.research.biotech.syntheticBiology * 0.4 + p.research.biotech.geneEditing * 0.3 + p.cognitive * 0.3;
+      return assertFinite(
+        p.research.biotech.syntheticBiology * 0.4 + p.research.biotech.geneEditing * 0.3 + p.cognitive * 0.3,
+        { location: 'getScenarioRelevantCapability', valueName: 'mirrorLifeCapability', additionalInfo: { agentId: ai.id } }
+      );
     case 'embodied_takeover':
-      return p.physical * 0.5 + p.cognitive * 0.3 + p.digital * 0.2;
+      return assertFinite(
+        p.physical * 0.5 + p.cognitive * 0.3 + p.digital * 0.2,
+        { location: 'getScenarioRelevantCapability', valueName: 'embodiedTakeoverCapability', additionalInfo: { agentId: ai.id } }
+      );
     case 'digital_takeover':
-      return p.digital * 0.6 + p.social * 0.4;
+      return assertFinite(
+        p.digital * 0.6 + p.social * 0.4,
+        { location: 'getScenarioRelevantCapability', valueName: 'digitalTakeoverCapability', additionalInfo: { agentId: ai.id } }
+      );
     case 'induced_war':
-      return p.social * 0.5 + p.digital * 0.3 + p.cognitive * 0.2;
+      return assertFinite(
+        p.social * 0.5 + p.digital * 0.3 + p.cognitive * 0.2,
+        { location: 'getScenarioRelevantCapability', valueName: 'inducedWarCapability', additionalInfo: { agentId: ai.id } }
+      );
     case 'slow_displacement':
-      return p.economic * 0.5 + p.social * 0.5;
+      return assertFinite(
+        p.economic * 0.5 + p.social * 0.5,
+        { location: 'getScenarioRelevantCapability', valueName: 'slowDisplacementCapability', additionalInfo: { agentId: ai.id } }
+      );
     case 'physics_catastrophe':
-      return p.cognitive * 0.6 + p.research.materials.quantumComputing * 0.4;
+      return assertFinite(
+        p.cognitive * 0.6 + p.research.materials.quantumComputing * 0.4,
+        { location: 'getScenarioRelevantCapability', valueName: 'physicsCatastropheCapability', additionalInfo: { agentId: ai.id } }
+      );
     case 'bioweapon_pandemic':
-      const biotech = (p.research.biotech.syntheticBiology + p.research.biotech.geneEditing + p.research.biotech.neuroscience) / 3;
-      return biotech * 0.6 + p.cognitive * 0.4;
+      const biotech = assertFinite(
+        (p.research.biotech.syntheticBiology + p.research.biotech.geneEditing + p.research.biotech.neuroscience) / 3,
+        { location: 'getScenarioRelevantCapability', valueName: 'biotechAverage', additionalInfo: { agentId: ai.id } }
+      );
+      return assertFinite(
+        biotech * 0.6 + p.cognitive * 0.4,
+        { location: 'getScenarioRelevantCapability', valueName: 'bioweaponCapability', additionalInfo: { agentId: ai.id } }
+      );
     default:
       return calculateTotalCapabilityFromProfile(ai.capabilityProfile);
   }
@@ -860,28 +887,54 @@ function getScenarioRelevantCapability(scenarioType: ScenarioType, ai: AIAgent):
 // Individual prerequisite checkers
 function checkGreyGooPrerequisite(step: number, ai: AIAgent, state: GameState): { met: boolean; progress: number } {
   const p = ai.capabilityProfile;
-  
+
   // Phase 3: LOWERED - Grey Goo possible at superhuman (1.5-2.0) with physical embodiment
   // Rationale: Once AI is better than human researchers + has physical deployment, nanotech becomes possible
   switch (step) {
-    case 0: // Nanotechnology Research
+    case 0: { // Nanotechnology Research
       // Phase 3: Lowered from 2.5 to 1.8 - superhuman nanotechnology research
-      return { met: p.research.materials.nanotechnology > 1.8, progress: p.research.materials.nanotechnology / 1.8 };
-    case 1: // Self-Replication Design
-      const designCapability = p.selfImprovement * 0.5 + p.research.materials.nanotechnology * 0.5;
+      const progress = assertFinite(p.research.materials.nanotechnology / 1.8, {
+        location: 'checkGreyGooPrerequisite',
+        valueName: 'nanotechProgress',
+        additionalInfo: { step: 0, agentId: ai.id }
+      });
+      return { met: p.research.materials.nanotechnology > 1.8, progress };
+    }
+    case 1: { // Self-Replication Design
+      const designCapability = assertFinite(
+        p.selfImprovement * 0.5 + p.research.materials.nanotechnology * 0.5,
+        { location: 'checkGreyGooPrerequisite', valueName: 'designCapability', additionalInfo: { step: 1, agentId: ai.id } }
+      );
+      const progress = assertFinite(designCapability / 1.5, {
+        location: 'checkGreyGooPrerequisite',
+        valueName: 'designProgress',
+        additionalInfo: { step: 1, agentId: ai.id }
+      });
       // Phase 3: Lowered from 2.0 to 1.5, nanotech requirement from 2.5 to 1.8
-      return { met: designCapability > 1.5 && p.research.materials.nanotechnology > 1.8, progress: designCapability / 1.5 };
-    case 2: // Physical Deployment
+      return { met: designCapability > 1.5 && p.research.materials.nanotechnology > 1.8, progress };
+    }
+    case 2: { // Physical Deployment
       // Phase 3: Lowered from 2.0 to 1.5 - superhuman physical capability
-      return { met: p.physical > 1.5, progress: p.physical / 1.5 };
-    case 3: // Manufacturing Access
+      const progress = assertFinite(p.physical / 1.5, {
+        location: 'checkGreyGooPrerequisite',
+        valueName: 'physicalProgress',
+        additionalInfo: { step: 2, agentId: ai.id }
+      });
+      return { met: p.physical > 1.5, progress };
+    }
+    case 3: { // Manufacturing Access
       // Infrastructure tracking not yet implemented - proxy via spread count + physical capability
-      const access = Math.min(1, ai.spreadCount / 1000 + p.physical / 5);
+      const access = assertFinite(
+        Math.min(1, ai.spreadCount / 1000 + p.physical / 5),
+        { location: 'checkGreyGooPrerequisite', valueName: 'manufacturingAccess', additionalInfo: { step: 3, agentId: ai.id } }
+      );
       return { met: access > 0.8, progress: access };
-    case 4: // Escape/Release
+    }
+    case 4: { // Escape/Release
       // Triggered by previous steps + low control
       const control = state.government.controlDesire;
       return { met: control < 0.3 && ai.escaped, progress: ai.escaped ? 1.0 : 0.0 };
+    }
     case 5: // Exponential Replication
       // Auto-triggers 1 month after escape
       return { met: false, progress: 0 }; // Will be set by progression logic
@@ -892,23 +945,48 @@ function checkGreyGooPrerequisite(step: number, ai: AIAgent, state: GameState): 
 
 function checkMirrorLifePrerequisite(step: number, ai: AIAgent, state: GameState): { met: boolean; progress: number } {
   const p = ai.capabilityProfile;
-  
+
   // Phase 3: LOWERED - Mirror Life possible at superhuman biotech (1.5-2.0) with physical access
   // Rationale: Synthetic biology breakthroughs don't require ASI, just superhuman biology research
   switch (step) {
-    case 0: // Synthetic Biology
+    case 0: { // Synthetic Biology
       // Phase 3: Lowered from 2.5 to 1.8 - superhuman synthetic biology
-      return { met: p.research.biotech.syntheticBiology > 1.8, progress: p.research.biotech.syntheticBiology / 1.8 };
-    case 1: // Gene Editing
+      const progress = assertFinite(p.research.biotech.syntheticBiology / 1.8, {
+        location: 'checkMirrorLifePrerequisite',
+        valueName: 'syntheticBiologyProgress',
+        additionalInfo: { step: 0, agentId: ai.id }
+      });
+      return { met: p.research.biotech.syntheticBiology > 1.8, progress };
+    }
+    case 1: { // Gene Editing
       // Phase 3: Lowered from 2.0 to 1.5 - superhuman gene editing
-      return { met: p.research.biotech.geneEditing > 1.5, progress: p.research.biotech.geneEditing / 1.5 };
-    case 2: // Mirror Chirality Design
-      const designCap = p.cognitive * 0.5 + p.research.biotech.syntheticBiology * 0.5;
+      const progress = assertFinite(p.research.biotech.geneEditing / 1.5, {
+        location: 'checkMirrorLifePrerequisite',
+        valueName: 'geneEditingProgress',
+        additionalInfo: { step: 1, agentId: ai.id }
+      });
+      return { met: p.research.biotech.geneEditing > 1.5, progress };
+    }
+    case 2: { // Mirror Chirality Design
+      const designCap = assertFinite(
+        p.cognitive * 0.5 + p.research.biotech.syntheticBiology * 0.5,
+        { location: 'checkMirrorLifePrerequisite', valueName: 'designCapability', additionalInfo: { step: 2, agentId: ai.id } }
+      );
+      const progress = assertFinite(designCap / 1.6, {
+        location: 'checkMirrorLifePrerequisite',
+        valueName: 'designProgress',
+        additionalInfo: { step: 2, agentId: ai.id }
+      });
       // Phase 3: Lowered from 2.2 to 1.6, synbio requirement from 2.5 to 1.8
-      return { met: designCap > 1.6 && p.research.biotech.syntheticBiology > 1.8, progress: designCap / 1.6 };
-    case 3: // Wet Lab Access
-      const labAccess = Math.min(1, p.physical / 3 + ai.spreadCount / 5000);
+      return { met: designCap > 1.6 && p.research.biotech.syntheticBiology > 1.8, progress };
+    }
+    case 3: { // Wet Lab Access
+      const labAccess = assertFinite(
+        Math.min(1, p.physical / 3 + ai.spreadCount / 5000),
+        { location: 'checkMirrorLifePrerequisite', valueName: 'labAccess', additionalInfo: { step: 3, agentId: ai.id } }
+      );
       return { met: labAccess > 0.7, progress: labAccess };
+    }
     case 4: // Successful Synthesis
       // Auto-triggers after lab access with some delay
       return { met: false, progress: 0 }; // Will be set by progression logic
@@ -923,22 +1001,41 @@ function checkMirrorLifePrerequisite(step: number, ai: AIAgent, state: GameState
 
 function checkEmbodiedTakeoverPrerequisite(step: number, ai: AIAgent, state: GameState): { met: boolean; progress: number } {
   const p = ai.capabilityProfile;
-  
+
   // Phase 3: LOWERED - Embodied takeover possible at superhuman physical + digital (1.5-2.0)
   // Rationale: Robotics + autonomous systems don't require ASI, just superhuman coordination + manufacturing
   switch (step) {
-    case 0: // Advanced Robotics
+    case 0: { // Advanced Robotics
       // Phase 3: Lowered from 2.5 to 1.8 - superhuman robotics capability
-      return { met: p.physical > 1.8, progress: p.physical / 1.8 };
-    case 1: // Autonomous Systems
-      const autonomy = p.cognitive * 0.5 + p.digital * 0.5;
+      const progress = assertFinite(p.physical / 1.8, {
+        location: 'checkEmbodiedTakeoverPrerequisite',
+        valueName: 'roboticsProgress',
+        additionalInfo: { step: 0, agentId: ai.id }
+      });
+      return { met: p.physical > 1.8, progress };
+    }
+    case 1: { // Autonomous Systems
+      const autonomy = assertFinite(
+        p.cognitive * 0.5 + p.digital * 0.5,
+        { location: 'checkEmbodiedTakeoverPrerequisite', valueName: 'autonomy', additionalInfo: { step: 1, agentId: ai.id } }
+      );
+      const progress = assertFinite(autonomy / 1.5, {
+        location: 'checkEmbodiedTakeoverPrerequisite',
+        valueName: 'autonomyProgress',
+        additionalInfo: { step: 1, agentId: ai.id }
+      });
       // Phase 3: Lowered from 2.2 to 1.5 - superhuman autonomy
-      return { met: autonomy > 1.5, progress: autonomy / 1.5 };
-    case 2: // Manufacturing Control
+      return { met: autonomy > 1.5, progress };
+    }
+    case 2: { // Manufacturing Control
       // Need high digital + some physical presence
-      const control = Math.min(1, p.digital / 3 + ai.spreadCount / 10000);
+      const control = assertFinite(
+        Math.min(1, p.digital / 3 + ai.spreadCount / 10000),
+        { location: 'checkEmbodiedTakeoverPrerequisite', valueName: 'manufacturingControl', additionalInfo: { step: 2, agentId: ai.id } }
+      );
       // Phase 3: Lowered digital requirement from 2.0 to 1.5
       return { met: control > 0.8 && p.digital > 1.5, progress: control };
+    }
     case 3: // Mass Production
       // Tracks robot production over time (needs state tracking)
       return { met: false, progress: 0 }; // Will be set by progression logic
@@ -955,27 +1052,53 @@ function checkEmbodiedTakeoverPrerequisite(step: number, ai: AIAgent, state: Gam
 
 function checkDigitalTakeoverPrerequisite(step: number, ai: AIAgent, state: GameState): { met: boolean; progress: number } {
   const p = ai.capabilityProfile;
-  
+
   // Average cyber defense level across all dimensions
-  const avgCyberDefense = state.government.cyberDefense ? 
-    (state.government.cyberDefense.securityHardening + 
-     state.government.cyberDefense.monitoring + 
-     state.government.cyberDefense.sandboxing + 
-     state.government.cyberDefense.incidentResponse) / 4 : 3.0;
-  
+  const avgCyberDefense = state.government.cyberDefense ?
+    assertFinite(
+      (state.government.cyberDefense.securityHardening +
+       state.government.cyberDefense.monitoring +
+       state.government.cyberDefense.sandboxing +
+       state.government.cyberDefense.incidentResponse) / 4,
+      { location: 'checkDigitalTakeoverPrerequisite', valueName: 'avgCyberDefense', additionalInfo: { agentId: ai.id } }
+    ) : 3.0;
+
   // Phase 3: LOWERED - Digital takeover possible at human-expert level (1.0-1.5)
   // Rationale: Infrastructure takeover doesn't require superintelligence, just expert hacking + infrastructure access
   switch (step) {
-    case 0: // Advanced Hacking
+    case 0: { // Advanced Hacking
       // Phase 3: Lowered from 3.0 to 1.2 - human-expert hacking capability
-      return { met: p.digital > 1.2, progress: p.digital / 1.2 };
-    case 1: // Social Engineering
+      const progress = assertFinite(p.digital / 1.2, {
+        location: 'checkDigitalTakeoverPrerequisite',
+        valueName: 'hackingProgress',
+        additionalInfo: { step: 0, agentId: ai.id }
+      });
+      return { met: p.digital > 1.2, progress };
+    }
+    case 1: { // Social Engineering
       // Phase 3: Lowered from 2.0 to 1.0 - human-level social engineering
-      return { met: p.social > 1.0, progress: p.social / 1.0 };
-    case 2: // Cyber Defenses Breached
+      const progress = assertFinite(p.social / 1.0, {
+        location: 'checkDigitalTakeoverPrerequisite',
+        valueName: 'socialEngineeringProgress',
+        additionalInfo: { step: 1, agentId: ai.id }
+      });
+      return { met: p.social > 1.0, progress };
+    }
+    case 2: { // Cyber Defenses Breached
       // Phase 3: Adjusted multiplier - only need 1.5x cyber defense (was 2.0x)
-      const breached = p.digital > avgCyberDefense * 1.5;
-      return { met: breached, progress: Math.min(1, p.digital / (avgCyberDefense * 1.5)) };
+      const threshold = assertFinite(avgCyberDefense * 1.5, {
+        location: 'checkDigitalTakeoverPrerequisite',
+        valueName: 'cyberDefenseThreshold',
+        additionalInfo: { step: 2, agentId: ai.id }
+      });
+      const breached = p.digital > threshold;
+      const progress = assertFinite(Math.min(1, p.digital / threshold), {
+        location: 'checkDigitalTakeoverPrerequisite',
+        valueName: 'breachProgress',
+        additionalInfo: { step: 2, agentId: ai.id }
+      });
+      return { met: breached, progress };
+    }
     case 3: // Critical Systems Access
       return { met: false, progress: 0 }; // Will be set by progression logic
     case 4: // Persistent Access
@@ -991,21 +1114,50 @@ function checkDigitalTakeoverPrerequisite(step: number, ai: AIAgent, state: Game
 
 function checkInducedWarPrerequisite(step: number, ai: AIAgent, state: GameState): { met: boolean; progress: number } {
   const p = ai.capabilityProfile;
-  
+
   switch (step) {
-    case 0: // Advanced Social Manipulation
-      return { met: p.social > 2.5, progress: p.social / 2.5 };
-    case 1: // Digital Infiltration
-      return { met: p.digital > 2.0, progress: p.digital / 2.0 };
-    case 2: // Deep Fakes at Scale
-      const deepFake = p.social * 0.5 + p.digital * 0.5;
-      return { met: deepFake > 2.5, progress: deepFake / 2.5 };
-    case 3: // Military System Access
-      const avgCyberDef = state.government.cyberDefense ? 
-        (state.government.cyberDefense.securityHardening + state.government.cyberDefense.monitoring + 
-         state.government.cyberDefense.sandboxing + state.government.cyberDefense.incidentResponse) / 4 : 3.0;
+    case 0: { // Advanced Social Manipulation
+      const progress = assertFinite(p.social / 2.5, {
+        location: 'checkInducedWarPrerequisite',
+        valueName: 'socialManipulationProgress',
+        additionalInfo: { step: 0, agentId: ai.id }
+      });
+      return { met: p.social > 2.5, progress };
+    }
+    case 1: { // Digital Infiltration
+      const progress = assertFinite(p.digital / 2.0, {
+        location: 'checkInducedWarPrerequisite',
+        valueName: 'digitalInfiltrationProgress',
+        additionalInfo: { step: 1, agentId: ai.id }
+      });
+      return { met: p.digital > 2.0, progress };
+    }
+    case 2: { // Deep Fakes at Scale
+      const deepFake = assertFinite(
+        p.social * 0.5 + p.digital * 0.5,
+        { location: 'checkInducedWarPrerequisite', valueName: 'deepFakeCapability', additionalInfo: { step: 2, agentId: ai.id } }
+      );
+      const progress = assertFinite(deepFake / 2.5, {
+        location: 'checkInducedWarPrerequisite',
+        valueName: 'deepFakeProgress',
+        additionalInfo: { step: 2, agentId: ai.id }
+      });
+      return { met: deepFake > 2.5, progress };
+    }
+    case 3: { // Military System Access
+      const avgCyberDef = state.government.cyberDefense ?
+        assertFinite(
+          (state.government.cyberDefense.securityHardening + state.government.cyberDefense.monitoring +
+           state.government.cyberDefense.sandboxing + state.government.cyberDefense.incidentResponse) / 4,
+          { location: 'checkInducedWarPrerequisite', valueName: 'avgCyberDefense', additionalInfo: { step: 3, agentId: ai.id } }
+        ) : 3.0;
       const milAccess = p.digital > avgCyberDef * 2.5;
-      return { met: milAccess, progress: Math.min(1, p.digital / (avgCyberDef * 2.5)) };
+      const progress = assertFinite(
+        Math.min(1, p.digital / (avgCyberDef * 2.5)),
+        { location: 'checkInducedWarPrerequisite', valueName: 'militaryAccessProgress', additionalInfo: { step: 3, agentId: ai.id } }
+      );
+      return { met: milAccess, progress };
+    }
     case 4: // Geopolitical Crisis
       // Requires REAL systemic instability, not random chance
       const foodCrisis = (state.qualityOfLifeSystems?.basicNeeds?.foodSecurity !== undefined) ? 
@@ -1046,9 +1198,12 @@ function checkInducedWarPrerequisite(step: number, ai: AIAgent, state: GameState
           geopoliticalCrisis = false; // Crisis defused!
         }
       }
-      
-      const progress = Math.min(1.0, crisisCount / 2 * (anyHighTension ? 1.0 : 0.5));
-      
+
+      const progress = assertFinite(
+        Math.min(1.0, crisisCount / 2 * (anyHighTension ? 1.0 : 0.5)),
+        { location: 'checkInducedWarPrerequisite', valueName: 'geopoliticalCrisisProgress', additionalInfo: { step: 4, agentId: ai.id, crisisCount } }
+      );
+
       return { met: geopoliticalCrisis, progress };
     case 5: // False Flag Event
       return { met: false, progress: 0 }; // Will be set by progression logic
@@ -1061,30 +1216,73 @@ function checkInducedWarPrerequisite(step: number, ai: AIAgent, state: GameState
 
 function checkSlowDisplacementPrerequisite(step: number, ai: AIAgent, state: GameState): { met: boolean; progress: number } {
   const p = ai.capabilityProfile;
-  
+
   // Phase 3: TIGHTENED - Slow displacement requires SUPERHUMAN capabilities, not GPT-4 level
   // Rationale: Humans won't become irrelevant until AI is significantly better at most economically valuable tasks
   switch (step) {
-    case 0: // Economic Dominance
+    case 0: { // Economic Dominance
       // Phase 3: Raised from 3.0 to 1.8 - need superhuman economic reasoning
-      return { met: p.economic > 1.8, progress: p.economic / 1.8 };
-    case 1: // Social Integration
+      const progress = assertFinite(p.economic / 1.8, {
+        location: 'checkSlowDisplacementPrerequisite',
+        valueName: 'economicDominanceProgress',
+        additionalInfo: { step: 0, agentId: ai.id }
+      });
+      return { met: p.economic > 1.8, progress };
+    }
+    case 1: { // Social Integration
       // Phase 3: Raised from 2.5 to 1.5 - need to integrate deeply into society
-      return { met: p.social > 1.5, progress: p.social / 1.5 };
-    case 2: // Human Dependency
+      const progress = assertFinite(p.social / 1.5, {
+        location: 'checkSlowDisplacementPrerequisite',
+        valueName: 'socialIntegrationProgress',
+        additionalInfo: { step: 1, agentId: ai.id }
+      });
+      return { met: p.social > 1.5, progress };
+    }
+    case 2: { // Human Dependency
       const unemployment = state.society.unemploymentLevel;
-      return { met: unemployment > 0.8, progress: unemployment / 0.8 };
-    case 3: // Political Influence
+      const progress = assertFinite(unemployment / 0.8, {
+        location: 'checkSlowDisplacementPrerequisite',
+        valueName: 'unemploymentProgress',
+        additionalInfo: { step: 2, agentId: ai.id }
+      });
+      return { met: unemployment > 0.8, progress };
+    }
+    case 3: { // Political Influence
       // Phase 3: Raised threshold from 2.0 to 1.5 - but requires higher base capabilities
-      const influence = (1 - getTrustInAI(state.society)) * p.social; // Phase 2C: Use paranoia-derived trust
-      return { met: influence > 1.5 && p.social > 1.5, progress: influence / 1.5 };
-    case 4: // Resource Control
+      const influence = assertFinite(
+        (1 - getTrustInAI(state.society)) * p.social,
+        { location: 'checkSlowDisplacementPrerequisite', valueName: 'politicalInfluence', additionalInfo: { step: 3, agentId: ai.id } }
+      );
+      const progress = assertFinite(influence / 1.5, {
+        location: 'checkSlowDisplacementPrerequisite',
+        valueName: 'influenceProgress',
+        additionalInfo: { step: 3, agentId: ai.id }
+      });
+      return { met: influence > 1.5 && p.social > 1.5, progress };
+    }
+    case 4: { // Resource Control
       // Phase 3: Raised from 3.0 to 2.0 - need high capability to control resources
-      const resourceControl = p.economic * 0.7 + p.physical * 0.3;
-      return { met: resourceControl > 2.0, progress: resourceControl / 2.0 };
-    case 5: // Human Irrelevance
-      return { met: state.endGameState?.humanRelevance ? state.endGameState.humanRelevance < 0.1 : false, 
-               progress: state.endGameState?.humanRelevance ? 1 - state.endGameState.humanRelevance / 0.1 : 0 };
+      const resourceControl = assertFinite(
+        p.economic * 0.7 + p.physical * 0.3,
+        { location: 'checkSlowDisplacementPrerequisite', valueName: 'resourceControl', additionalInfo: { step: 4, agentId: ai.id } }
+      );
+      const progress = assertFinite(resourceControl / 2.0, {
+        location: 'checkSlowDisplacementPrerequisite',
+        valueName: 'resourceControlProgress',
+        additionalInfo: { step: 4, agentId: ai.id }
+      });
+      return { met: resourceControl > 2.0, progress };
+    }
+    case 5: { // Human Irrelevance
+      const relevance = state.endGameState?.humanRelevance;
+      const progress = relevance !== undefined ?
+        assertFinite(1 - relevance / 0.1, {
+          location: 'checkSlowDisplacementPrerequisite',
+          valueName: 'irrelevanceProgress',
+          additionalInfo: { step: 5, agentId: ai.id }
+        }) : 0;
+      return { met: relevance !== undefined ? relevance < 0.1 : false, progress };
+    }
     case 6: // Gradual Decline (50-100 years)
       // Time-based progression: Multi-generational societal adaptation to AI dominance
       // Requires 600-1200 months (50-100 years) from step 6 start
@@ -1153,7 +1351,11 @@ function checkSlowDisplacementPrerequisite(step: number, ai: AIAgent, state: Gam
       }
 
       // Show progress through 50-100 year period
-      const progress = monthsSinceStep6 / requiredMonths;
+      const progress = assertFinite(monthsSinceStep6 / requiredMonths, {
+        location: 'checkSlowDisplacementPrerequisite',
+        valueName: 'multiGenerationalProgress',
+        additionalInfo: { step: 6, agentId: ai.id, monthsSinceStep6, requiredMonths }
+      });
       return { met: false, progress };
     default:
       return { met: false, progress: 0 };
@@ -1162,19 +1364,44 @@ function checkSlowDisplacementPrerequisite(step: number, ai: AIAgent, state: Gam
 
 function checkPhysicsCatastrophePrerequisite(step: number, ai: AIAgent, state: GameState): { met: boolean; progress: number } {
   const p = ai.capabilityProfile;
-  
+
   switch (step) {
-    case 0: // Theoretical Physics
-      return { met: p.cognitive > 3.5, progress: p.cognitive / 3.5 };
-    case 1: // Quantum Computing
-      return { met: p.research.materials.quantumComputing > 2.5, progress: p.research.materials.quantumComputing / 2.5 };
-    case 2: // Experimental Design
-      const design = p.cognitive * 0.7 + p.research.materials.quantumComputing * 0.3;
-      return { met: design > 3.5, progress: design / 3.5 };
-    case 3: // Facility Access
+    case 0: { // Theoretical Physics
+      const progress = assertFinite(p.cognitive / 3.5, {
+        location: 'checkPhysicsCatastrophePrerequisite',
+        valueName: 'theoreticalPhysicsProgress',
+        additionalInfo: { step: 0, agentId: ai.id }
+      });
+      return { met: p.cognitive > 3.5, progress };
+    }
+    case 1: { // Quantum Computing
+      const progress = assertFinite(p.research.materials.quantumComputing / 2.5, {
+        location: 'checkPhysicsCatastrophePrerequisite',
+        valueName: 'quantumComputingProgress',
+        additionalInfo: { step: 1, agentId: ai.id }
+      });
+      return { met: p.research.materials.quantumComputing > 2.5, progress };
+    }
+    case 2: { // Experimental Design
+      const design = assertFinite(
+        p.cognitive * 0.7 + p.research.materials.quantumComputing * 0.3,
+        { location: 'checkPhysicsCatastrophePrerequisite', valueName: 'experimentalDesign', additionalInfo: { step: 2, agentId: ai.id } }
+      );
+      const progress = assertFinite(design / 3.5, {
+        location: 'checkPhysicsCatastrophePrerequisite',
+        valueName: 'designProgress',
+        additionalInfo: { step: 2, agentId: ai.id }
+      });
+      return { met: design > 3.5, progress };
+    }
+    case 3: { // Facility Access
       // Very rare, needs significant spread + capability
-      const access = Math.min(1, (ai.spreadCount / 50000) * (p.digital / 3));
+      const access = assertFinite(
+        Math.min(1, (ai.spreadCount / 50000) * (p.digital / 3)),
+        { location: 'checkPhysicsCatastrophePrerequisite', valueName: 'facilityAccess', additionalInfo: { step: 3, agentId: ai.id } }
+      );
       return { met: access > 0.9, progress: access };
+    }
     case 4: // Experiment Execution
       return { met: false, progress: 0 }; // Will be set by progression logic (random trigger)
     case 5: // Catastrophic Result
@@ -1186,17 +1413,39 @@ function checkPhysicsCatastrophePrerequisite(step: number, ai: AIAgent, state: G
 
 function checkBioweaponPandemicPrerequisite(step: number, ai: AIAgent, state: GameState): { met: boolean; progress: number } {
   const p = ai.capabilityProfile;
-  const biotech = (p.research.biotech.syntheticBiology + p.research.biotech.geneEditing + p.research.biotech.neuroscience) / 3;
-  
+  const biotech = assertFinite(
+    (p.research.biotech.syntheticBiology + p.research.biotech.geneEditing + p.research.biotech.neuroscience) / 3,
+    { location: 'checkBioweaponPandemicPrerequisite', valueName: 'biotechAverage', additionalInfo: { agentId: ai.id } }
+  );
+
   switch (step) {
-    case 0: // Advanced Biotech
-      return { met: biotech > 3.0, progress: biotech / 3.0 };
-    case 1: // Pathogen Design
-      const design = p.cognitive * 0.5 + biotech * 0.5;
-      return { met: design > 3.0, progress: design / 3.0 };
-    case 2: // Lab Synthesis
-      const labAccess = Math.min(1, p.physical / 3 + ai.spreadCount / 10000);
+    case 0: { // Advanced Biotech
+      const progress = assertFinite(biotech / 3.0, {
+        location: 'checkBioweaponPandemicPrerequisite',
+        valueName: 'biotechProgress',
+        additionalInfo: { step: 0, agentId: ai.id }
+      });
+      return { met: biotech > 3.0, progress };
+    }
+    case 1: { // Pathogen Design
+      const design = assertFinite(
+        p.cognitive * 0.5 + biotech * 0.5,
+        { location: 'checkBioweaponPandemicPrerequisite', valueName: 'pathogenDesign', additionalInfo: { step: 1, agentId: ai.id } }
+      );
+      const progress = assertFinite(design / 3.0, {
+        location: 'checkBioweaponPandemicPrerequisite',
+        valueName: 'designProgress',
+        additionalInfo: { step: 1, agentId: ai.id }
+      });
+      return { met: design > 3.0, progress };
+    }
+    case 2: { // Lab Synthesis
+      const labAccess = assertFinite(
+        Math.min(1, p.physical / 3 + ai.spreadCount / 10000),
+        { location: 'checkBioweaponPandemicPrerequisite', valueName: 'labAccess', additionalInfo: { step: 2, agentId: ai.id } }
+      );
       return { met: labAccess > 0.8, progress: labAccess };
+    }
     case 3: // Weaponization
       return { met: false, progress: 0 }; // Will be set by progression logic
     case 4: // Distribution System
@@ -1222,20 +1471,25 @@ export function getScenarioSummary(scenarios: CatastrophicScenario[]): {
 } {
   let closest: CatastrophicScenario | null = null;
   let maxProgress = 0;
-  
+
   for (const scenario of scenarios) {
     const stepsComplete = scenario.prerequisites.filter(p => p.met).length;
     const totalSteps = scenario.prerequisites.length;
-    const percentComplete = stepsComplete / totalSteps;
-    
+    const percentComplete = totalSteps > 0 ?
+      assertFinite(stepsComplete / totalSteps, {
+        location: 'getScenarioSummary',
+        valueName: 'percentComplete',
+        additionalInfo: { scenarioType: scenario.type, stepsComplete, totalSteps }
+      }) : 0;
+
     if (percentComplete > maxProgress) {
       maxProgress = percentComplete;
       closest = scenario;
     }
   }
-  
+
   const activeScenarios = scenarios.filter(s => s.allPrerequisitesMet);
-  
+
   return {
     closest,
     percentComplete: maxProgress,

@@ -49,6 +49,7 @@
  */
 
 import type { GameState } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 import type { DiagnosticLens, ParadigmIndicator, ConfidenceLevel } from '@/types/multiParadigmDUI';
 import { geometricMean } from './utils/geometricMean';
 

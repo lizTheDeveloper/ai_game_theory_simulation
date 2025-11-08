@@ -11,6 +11,7 @@
 import { GameState, Organization, OrganizationProject, DataCenter, AIAgent, AICapabilityProfile } from '@/types/game';
 import { getCapabilityFloorForNewAI } from './technologyDiffusion';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
+import { assertFinite, assertInRange, assertProbability } from './utils/assertions';
 
 /**
  * Get absolute month count (handles year rollover)
@@ -37,17 +38,25 @@ export function calculateComputeUtilization(org: Organization, state: GameState)
   let ownedCompute = state.computeInfrastructure.dataCenters
     .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
-  
+
   // Apply global efficiency multipliers to match allocation
   ownedCompute *= state.computeInfrastructure.hardwareEfficiency * state.computeInfrastructure.algorithmsEfficiency;
-  
+
+  // Division by zero protection
   if (ownedCompute === 0) return 0;
-  
+
   const allocatedCompute = state.aiAgents
     .filter(ai => org.ownedAIModels.includes(ai.id) && ai.lifecycleState !== 'retired')
     .reduce((sum, ai) => sum + ai.allocatedCompute, 0);
-  
-  return allocatedCompute / ownedCompute;
+
+  const utilization = allocatedCompute / ownedCompute;
+
+  return assertFinite(utilization, {
+    location: 'calculateComputeUtilization',
+    valueName: 'utilization',
+    month: state.currentMonth,
+    additionalInfo: { org: org.name, allocatedCompute, ownedCompute }
+  });
 }
 
 /**
@@ -162,19 +171,55 @@ export function updateProjects(org: Organization, state: GameState): void {
   org.currentProjects.forEach(project => {
     const elapsed = absoluteMonth - project.startMonth;
     const duration = project.completionMonth - project.startMonth;
-    project.progress = Math.min(1.0, elapsed / duration);
-    
+
+    // Division by zero protection for duration
+    if (duration <= 0) {
+      throw new Error(
+        `❌ Invalid project duration: ${duration}\n` +
+        `   Project: ${project.id}\n` +
+        `   Org: ${org.name}\n` +
+        `   Start: ${project.startMonth}, Completion: ${project.completionMonth}\n` +
+        `   This indicates a project initialization bug.`
+      );
+    }
+
+    project.progress = assertFinite(
+      Math.min(1.0, elapsed / duration),
+      {
+        location: 'updateProjects',
+        valueName: 'project.progress',
+        month: state.currentMonth,
+        additionalInfo: { project: project.id, elapsed, duration }
+      }
+    );
+
     // Pay monthly costs
     if (project.type === 'datacenter_construction') {
       // Remaining 70% spread over construction period
-      const monthlyCost = (project.capitalInvested * 0.7) / duration;
+      const monthlyCost = assertFinite(
+        (project.capitalInvested * 0.7) / duration,
+        {
+          location: 'updateProjects',
+          valueName: 'monthlyCost (DC construction)',
+          month: state.currentMonth,
+          additionalInfo: { project: project.id, capitalInvested: project.capitalInvested, duration }
+        }
+      );
       org.capital -= monthlyCost;
     } else if (project.type === 'model_training') {
       // Remaining 50% spread over training period
-      const monthlyCost = (project.capitalInvested * 0.5) / duration;
+      const monthlyCost = assertFinite(
+        (project.capitalInvested * 0.5) / duration,
+        {
+          location: 'updateProjects',
+          valueName: 'monthlyCost (model training)',
+          month: state.currentMonth,
+          additionalInfo: { project: project.id, capitalInvested: project.capitalInvested, duration }
+        }
+      );
       org.capital -= monthlyCost;
     }
-    
+
     // Check if completed
     if (absoluteMonth >= project.completionMonth) {
       completedProjects.push(project);
@@ -336,11 +381,23 @@ export function shouldTrainNewModel(
   const worthTraining = !newestModel || capFloorTotal > newestModel.capability * 1.2;
   
   // Market gap check - do we have fewer models than competitors?
-  const avgModelsPerOrg = state.organizations
-    .filter(o => o.type === 'private')
-    .reduce((sum, o) => sum + o.ownedAIModels.length, 0) / 
-    state.organizations.filter(o => o.type === 'private').length;
-  
+  const privateOrgs = state.organizations.filter(o => o.type === 'private');
+  const totalModels = privateOrgs.reduce((sum, o) => sum + o.ownedAIModels.length, 0);
+  const orgCount = privateOrgs.length;
+
+  // Division by zero protection
+  const avgModelsPerOrg = orgCount > 0
+    ? assertFinite(
+        totalModels / orgCount,
+        {
+          location: 'shouldTrainNewModel',
+          valueName: 'avgModelsPerOrg',
+          month: state.currentMonth,
+          additionalInfo: { totalModels, orgCount }
+        }
+      )
+    : 0;
+
   const marketGap = org.ownedAIModels.length < avgModelsPerOrg * 1.2;
   
   // Capital check (5x monthly revenue)
@@ -619,11 +676,19 @@ export function calculateAIRevenue(org: Organization, state: GameState): number 
   // NEW (Oct 13, 2025): Use REGIONAL population, not global!
   // Google cares about US/EU population, Alibaba cares about Asia
   const regionalPopulationDecline = calculateRegionalPopulationDecline(org, state);
-  
+
   if (regionalPopulationDecline > 0.30) {
     // 30%+ REGIONAL population decline → revenue drops proportionally
     // If 80% of local customers died, revenue drops 80%
-    const revenueLoss = Math.min(0.95, regionalPopulationDecline * 0.8); // Cap at 95% loss
+    const revenueLoss = assertProbability(
+      Math.min(0.95, regionalPopulationDecline * 0.8),
+      {
+        location: 'calculateAIRevenue',
+        valueName: 'revenueLoss (population collapse)',
+        month: state.currentMonth,
+        additionalInfo: { org: org.name, regionalPopulationDecline }
+      }
+    );
     baseRevenue *= (1 - revenueLoss);
   }
   
@@ -805,10 +870,40 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // === PROJECT COSTS (already paid, track for reporting) ===
   const projectCosts = org.currentProjects.reduce((sum, project) => {
     const duration = project.completionMonth - project.startMonth;
+
+    // Division by zero protection
+    if (duration <= 0) {
+      console.warn(
+        `⚠️  Invalid project duration in calculateTotalExpenses\n` +
+        `   Project: ${project.id}, Org: ${org.name}\n` +
+        `   Duration: ${duration} (start: ${project.startMonth}, end: ${project.completionMonth})\n` +
+        `   Skipping project cost calculation.`
+      );
+      return sum;
+    }
+
     if (project.type === 'datacenter_construction') {
-      return sum + (project.capitalInvested * 0.7) / duration;
+      const cost = assertFinite(
+        (project.capitalInvested * 0.7) / duration,
+        {
+          location: 'calculateTotalExpenses',
+          valueName: 'project cost (DC construction)',
+          month: state.currentMonth,
+          additionalInfo: { project: project.id, capitalInvested: project.capitalInvested, duration }
+        }
+      );
+      return sum + cost;
     } else if (project.type === 'model_training') {
-      return sum + (project.capitalInvested * 0.5) / duration;
+      const cost = assertFinite(
+        (project.capitalInvested * 0.5) / duration,
+        {
+          location: 'calculateTotalExpenses',
+          valueName: 'project cost (model training)',
+          month: state.currentMonth,
+          additionalInfo: { project: project.id, capitalInvested: project.capitalInvested, duration }
+        }
+      );
+      return sum + cost;
     }
     return sum;
   }, 0);

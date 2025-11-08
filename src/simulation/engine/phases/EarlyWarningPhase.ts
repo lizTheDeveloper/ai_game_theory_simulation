@@ -26,6 +26,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateEarlyWarningDetection } from '@/simulation/earlyWarningSystems';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions'; // Module uses assertions
 
 export class EarlyWarningPhase implements SimulationPhase {
   readonly id = 'early-warning';
