@@ -1066,12 +1066,16 @@ function progressSlowExtinction(
     }
   } else {
     extinctionState.currentPhase = 4;
-    extinctionState.severity = assertProbability(0.96 + (validatedMonthsElapsed - 96) * 0.001, {
-      location: 'progressSlowExtinction',
-      valueName: 'severity (phase 4)',
-      month: state.currentMonth,
-      additionalInfo: { monthsElapsed: validatedMonthsElapsed }
-    });
+    // CRITICAL: Clamp to 1.0 - formula can exceed 1.0 when monthsElapsed > 136
+    extinctionState.severity = assertProbability(
+      Math.min(1.0, 0.96 + (validatedMonthsElapsed - 96) * 0.001),
+      {
+        location: 'progressSlowExtinction',
+        valueName: 'severity (phase 4)',
+        month: state.currentMonth,
+        additionalInfo: { monthsElapsed: validatedMonthsElapsed }
+      }
+    );
     extinctionState.recoveryWindowClosed = true;
   }
 

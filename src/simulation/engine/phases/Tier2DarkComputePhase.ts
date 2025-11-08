@@ -83,12 +83,13 @@ export class Tier2DarkComputePhase implements SimulationPhase {
       }
 
       // Use alignmentResearchInvestment as proxy for international coordination
-      const internationalCoordination = state.government.alignmentResearchInvestment;
+      // Normalize from [0,10] to [0,1] for probability checks
+      const internationalCoordination = state.government.alignmentResearchInvestment / 10;
 
       const shouldUnlock =
         avgCapability > 45 &&
         internationalCoordination > 0.60 &&
-        state.government.alignmentResearchInvestment > 0.30;
+        internationalCoordination > 0.30;
 
       if (shouldUnlock) {
         darkComputeState.unlocked = true;

@@ -118,22 +118,29 @@ export function updateFrontierCapabilities(
   if (breakthroughs.length === 0) {
     return events;
   }
-  
+
   const currentMonth = state.currentYear * 12 + state.currentMonth;
-  
+
+  // CRITICAL FIX (Nov 8, 2025): Round all frontier updates to integers [0-5]
+  // Bug: Frontier values propagate to floor, which propagates to new agents
+  // Defensive: Ensure frontier stays discrete
+  const toCapabilityLevel = (value: number): number => {
+    return Math.max(0, Math.min(5, Math.round(value)));
+  };
+
   // Update frontier
   const frontier = state.ecosystem.frontierCapabilities;
   const current = ai.trueCapability;
-  
-  // Core dimensions
-  frontier.physical = Math.max(frontier.physical, current.physical);
-  frontier.digital = Math.max(frontier.digital, current.digital);
-  frontier.cognitive = Math.max(frontier.cognitive, current.cognitive);
-  frontier.social = Math.max(frontier.social, current.social);
-  frontier.economic = Math.max(frontier.economic, current.economic);
-  frontier.selfImprovement = Math.max(frontier.selfImprovement, current.selfImprovement);
-  
-  // Research dimensions (nested)
+
+  // Core dimensions (rounded to discrete levels)
+  frontier.physical = toCapabilityLevel(Math.max(frontier.physical, current.physical));
+  frontier.digital = toCapabilityLevel(Math.max(frontier.digital, current.digital));
+  frontier.cognitive = toCapabilityLevel(Math.max(frontier.cognitive, current.cognitive));
+  frontier.social = toCapabilityLevel(Math.max(frontier.social, current.social));
+  frontier.economic = toCapabilityLevel(Math.max(frontier.economic, current.economic));
+  frontier.selfImprovement = toCapabilityLevel(Math.max(frontier.selfImprovement, current.selfImprovement));
+
+  // Research dimensions (nested) - also round to discrete levels
   for (const category of Object.keys(frontier.research) as Array<keyof typeof frontier.research>) {
     const frontierCat = frontier.research[category];
     const currentCat = current.research[category];
@@ -143,7 +150,7 @@ export function updateFrontierCapabilities(
       const frontierVal = frontierCat[key];
       const currentVal = currentCat[key];
       if (typeof frontierVal === 'number' && typeof currentVal === 'number') {
-        (frontierCat[key] as number) = Math.max(frontierVal, currentVal);
+        (frontierCat[key] as number) = toCapabilityLevel(Math.max(frontierVal, currentVal));
       }
     }
   }
@@ -214,13 +221,20 @@ export function diffuseCapabilities(state: GameState, rng: () => number): void {
   // Base S-curve already calculated, Lévy adds stochastic fat-tail variation
   const levyModifiedRate = levyAdoptionCurve(clampedRate, ALPHA_PRESETS.TECHNOLOGY, rng);
 
-  // Core dimensions: floor moves toward frontier
-  floor.physical += (frontier.physical - floor.physical) * levyModifiedRate;
-  floor.digital += (frontier.digital - floor.digital) * levyModifiedRate;
-  floor.cognitive += (frontier.cognitive - floor.cognitive) * levyModifiedRate;
-  floor.social += (frontier.social - floor.social) * levyModifiedRate;
-  floor.economic += (frontier.economic - floor.economic) * levyModifiedRate;
-  floor.selfImprovement += (frontier.selfImprovement - floor.selfImprovement) * levyModifiedRate;
+  // CRITICAL FIX (Nov 8, 2025): Round all floor updates to integers [0-5]
+  // Bug: Continuous diffusion arithmetic created non-integer capabilities
+  // Capabilities are discrete levels, not continuous values
+  const toCapabilityLevel = (value: number): number => {
+    return Math.max(0, Math.min(5, Math.round(value)));
+  };
+
+  // Core dimensions: floor moves toward frontier (rounded to discrete levels)
+  floor.physical = toCapabilityLevel(floor.physical + (frontier.physical - floor.physical) * levyModifiedRate);
+  floor.digital = toCapabilityLevel(floor.digital + (frontier.digital - floor.digital) * levyModifiedRate);
+  floor.cognitive = toCapabilityLevel(floor.cognitive + (frontier.cognitive - floor.cognitive) * levyModifiedRate);
+  floor.social = toCapabilityLevel(floor.social + (frontier.social - floor.social) * levyModifiedRate);
+  floor.economic = toCapabilityLevel(floor.economic + (frontier.economic - floor.economic) * levyModifiedRate);
+  floor.selfImprovement = toCapabilityLevel(floor.selfImprovement + (frontier.selfImprovement - floor.selfImprovement) * levyModifiedRate);
 
   // Log explosive diffusion events
   if (levyModifiedRate > clampedRate * 1.3) {
@@ -228,8 +242,8 @@ export function diffuseCapabilities(state: GameState, rng: () => number): void {
     console.log(`     Base diffusion: ${(clampedRate * 100).toFixed(1)}%/month → Modified: ${(levyModifiedRate * 100).toFixed(1)}%/month`);
     console.log(`     Rare rapid adoption event (like ChatGPT viral growth)`);
   }
-  
-  // Research dimensions (nested) - also use Lévy-modified rate
+
+  // Research dimensions (nested) - also use Lévy-modified rate and round to discrete levels
   for (const category of Object.keys(floor.research) as Array<keyof typeof floor.research>) {
     const floorCat = floor.research[category];
     const frontierCat = frontier.research[category];
@@ -239,7 +253,7 @@ export function diffuseCapabilities(state: GameState, rng: () => number): void {
       const floorVal = floorCat[key];
       const frontierVal = frontierCat[key];
       if (typeof floorVal === 'number' && typeof frontierVal === 'number') {
-        (floorCat[key] as number) += (frontierVal - floorVal) * levyModifiedRate;
+        (floorCat[key] as number) = toCapabilityLevel(floorVal + (frontierVal - floorVal) * levyModifiedRate);
       }
     }
   }

@@ -51,7 +51,8 @@ export class Tier2CentaurSystemsPhase implements SimulationPhase {
       // (Architecture Review M4 - Oct 27, 2025): Now uses unemployment from GlobalMetrics
       const unemployment = state.globalMetrics.unemployment || 0;
       const meaningCrisis = state.socialAccumulation.meaningCrisisLevel;
-      const governmentInvestment = state.government.alignmentResearchInvestment;
+      // Normalize alignmentResearchInvestment from [0,10] to [0,1] for probability checks
+      const governmentInvestment = state.government.alignmentResearchInvestment / 10;
 
       // Validate metrics are valid probabilities/fractions
       assertProbability(unemployment, {

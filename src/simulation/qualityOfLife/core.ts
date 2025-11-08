@@ -393,11 +393,12 @@ export function updateQualityOfLifeSystems(
   // === HEALTH AGGREGATE ===
   // Calculate aggregate health metric from health tier components
   // Matches aggregation.ts formula: (healthcareQuality * 0.4 + longevityGains * 0.3 + (1 - diseasesBurden) * 0.3)
-  const health = (
+  // Note: longevityGains can be [0, 2], so we clamp final result to [0, 1]
+  const health = Math.min(1.0, Math.max(0,
     healthcareQuality * 0.4 +
     longevityGains * 0.3 +
     (1 - diseasesBurden) * 0.3
-  );
+  ));
 
   return {
     // Survival fundamentals (required)

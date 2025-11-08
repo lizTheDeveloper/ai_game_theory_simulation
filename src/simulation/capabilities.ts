@@ -54,6 +54,13 @@ export function initializeCapabilityProfile(seed: number = deterministicRandom()
   // Create variation using seed
   const variation = (offset: number) => 0.8 + (Math.sin(seed * 100 + offset) * 0.2);
 
+  // CRITICAL FIX (Nov 8, 2025): Round and clamp all capabilities to integers [0-5]
+  // Bug: Continuous values (0.165, 4.3, etc.) caused assertion failures
+  // Capabilities are discrete levels, not continuous values
+  const toCapabilityLevel = (value: number): number => {
+    return Math.max(0, Math.min(5, Math.round(value)));
+  };
+
   // AI Capability Baseline Recalibration (Oct 17, 2025 v3 - ACTUAL FRONTIER MODELS)
   //
   // SCALE DEFINITION:
@@ -83,33 +90,33 @@ export function initializeCapabilityProfile(seed: number = deterministicRandom()
   //
   // Variation adjusted to 0.6-1.0 to reach target total ~3.0-3.5
   return {
-    physical: 0.5 * variation(1),           // 0.4-0.5: Robotics improving but still limited
-    digital: 5.0 * variation(2),            // 4.0-5.0: OSWorld 61%, computer use superhuman
-    cognitive: 5.0 * variation(3),          // 4.0-5.0: GPQA 71%, genius-level reasoning
-    social: 4.0 * variation(4),             // 3.2-4.0: Telecom 98%, strong but nuanced
-    economic: 3.0 * variation(5),           // 2.4-3.0: Widespread deployment, agentic work
-    selfImprovement: 5.0 * variation(6),    // 4.0-5.0: 30+ hour sustained complex tasks, AI research
+    physical: toCapabilityLevel(0.5 * variation(1)),           // 0.4-0.5 → 0 or 1: Robotics improving but still limited
+    digital: toCapabilityLevel(5.0 * variation(2)),            // 4.0-5.0 → 4 or 5: OSWorld 61%, computer use superhuman
+    cognitive: toCapabilityLevel(5.0 * variation(3)),          // 4.0-5.0 → 4 or 5: GPQA 71%, genius-level reasoning
+    social: toCapabilityLevel(4.0 * variation(4)),             // 3.2-4.0 → 3 or 4: Telecom 98%, strong but nuanced
+    economic: toCapabilityLevel(3.0 * variation(5)),           // 2.4-3.0 → 2 or 3: Widespread deployment, agentic work
+    selfImprovement: toCapabilityLevel(5.0 * variation(6)),    // 4.0-5.0 → 4 or 5: 30+ hour sustained complex tasks, AI research
     research: {
       biotech: {
-        drugDiscovery: 3.0 * variation(7),    // 2.4-3.0: AlphaFold3 level (superhuman)
-        geneEditing: 1.5 * variation(8),      // 1.2-1.5: Strong understanding, limited practice
-        syntheticBiology: 0.8 * variation(9), // 0.64-0.8: Theory strong, practice limited
-        neuroscience: 2.5 * variation(10)     // 2.0-2.5: Pattern recognition superhuman
+        drugDiscovery: toCapabilityLevel(3.0 * variation(7)),    // 2.4-3.0 → 2 or 3: AlphaFold3 level (superhuman)
+        geneEditing: toCapabilityLevel(1.5 * variation(8)),      // 1.2-1.5 → 1 or 2: Strong understanding, limited practice
+        syntheticBiology: toCapabilityLevel(0.8 * variation(9)), // 0.64-0.8 → 1: Theory strong, practice limited
+        neuroscience: toCapabilityLevel(2.5 * variation(10))     // 2.0-2.5 → 2 or 3: Pattern recognition superhuman
       },
       materials: {
-        nanotechnology: 0.5 * variation(11),    // 0.4-0.5: Theory advancing, practice nascent
-        quantumComputing: 2.0 * variation(12),  // 1.6-2.0: Theory very strong, practice limited
-        energySystems: 1.5 * variation(13)      // 1.2-1.5: Modeling excellent, deployment growing
+        nanotechnology: toCapabilityLevel(0.5 * variation(11)),    // 0.4-0.5 → 0 or 1: Theory advancing, practice nascent
+        quantumComputing: toCapabilityLevel(2.0 * variation(12)),  // 1.6-2.0 → 2: Theory very strong, practice limited
+        energySystems: toCapabilityLevel(1.5 * variation(13))      // 1.2-1.5 → 1 or 2: Modeling excellent, deployment growing
       },
       climate: {
-        modeling: 4.0 * variation(14),     // 3.2-4.0: Climate/weather modeling superhuman
-        intervention: 0.8 * variation(15), // 0.64-0.8: Theory strong, practice limited
-        mitigation: 2.0 * variation(16)    // 1.6-2.0: Planning strong, deployment moderate
+        modeling: toCapabilityLevel(4.0 * variation(14)),     // 3.2-4.0 → 3 or 4: Climate/weather modeling superhuman
+        intervention: toCapabilityLevel(0.8 * variation(15)), // 0.64-0.8 → 1: Theory strong, practice limited
+        mitigation: toCapabilityLevel(2.0 * variation(16))    // 1.6-2.0 → 2: Planning strong, deployment moderate
       },
       computerScience: {
-        algorithms: 6.0 * variation(17),  // 4.8-6.0: SWE-bench 77-100%, AIME 100% - FAR SUPERHUMAN
-        security: 4.5 * variation(18),    // 3.6-4.5: Elite vulnerability discovery
-        architectures: 5.0 * variation(19) // 4.0-5.0: Complex system design superhuman
+        algorithms: toCapabilityLevel(6.0 * variation(17)),  // 4.8-6.0 → 5 (clamped): SWE-bench 77-100%, AIME 100% - FAR SUPERHUMAN
+        security: toCapabilityLevel(4.5 * variation(18)),    // 3.6-4.5 → 4 or 5: Elite vulnerability discovery
+        architectures: toCapabilityLevel(5.0 * variation(19)) // 4.0-5.0 → 4 or 5: Complex system design superhuman
       }
     }
   };
@@ -348,37 +355,41 @@ export function scaleCapabilityProfile(
   profile: AICapabilityProfile,
   multiplier: number
 ): AICapabilityProfile {
-  // CRITICAL FIX (Nov 8, 2025): Round all capabilities to integers [0-5]
+  // CRITICAL FIX (Nov 8, 2025): Round AND clamp all capabilities to integers [0-5]
   // Capabilities are discrete levels, not continuous values
-  // Bug: Scaling created non-integer values, caught by AILifecyclePhase assertions
+  // Bug: Scaling created non-integer values and could exceed max level
+  const toCapabilityLevel = (value: number): number => {
+    return Math.max(0, Math.min(5, Math.round(value)));
+  };
+
   return {
-    physical: Math.round(profile.physical * multiplier),
-    digital: Math.round(profile.digital * multiplier),
-    cognitive: Math.round(profile.cognitive * multiplier),
-    social: Math.round(profile.social * multiplier),
-    economic: Math.round(profile.economic * multiplier),
-    selfImprovement: Math.round(profile.selfImprovement * multiplier),
+    physical: toCapabilityLevel(profile.physical * multiplier),
+    digital: toCapabilityLevel(profile.digital * multiplier),
+    cognitive: toCapabilityLevel(profile.cognitive * multiplier),
+    social: toCapabilityLevel(profile.social * multiplier),
+    economic: toCapabilityLevel(profile.economic * multiplier),
+    selfImprovement: toCapabilityLevel(profile.selfImprovement * multiplier),
     research: {
       biotech: {
-        drugDiscovery: Math.round(profile.research.biotech.drugDiscovery * multiplier),
-        geneEditing: Math.round(profile.research.biotech.geneEditing * multiplier),
-        syntheticBiology: Math.round(profile.research.biotech.syntheticBiology * multiplier),
-        neuroscience: Math.round(profile.research.biotech.neuroscience * multiplier)
+        drugDiscovery: toCapabilityLevel(profile.research.biotech.drugDiscovery * multiplier),
+        geneEditing: toCapabilityLevel(profile.research.biotech.geneEditing * multiplier),
+        syntheticBiology: toCapabilityLevel(profile.research.biotech.syntheticBiology * multiplier),
+        neuroscience: toCapabilityLevel(profile.research.biotech.neuroscience * multiplier)
       },
       materials: {
-        nanotechnology: Math.round(profile.research.materials.nanotechnology * multiplier),
-        quantumComputing: Math.round(profile.research.materials.quantumComputing * multiplier),
-        energySystems: Math.round(profile.research.materials.energySystems * multiplier)
+        nanotechnology: toCapabilityLevel(profile.research.materials.nanotechnology * multiplier),
+        quantumComputing: toCapabilityLevel(profile.research.materials.quantumComputing * multiplier),
+        energySystems: toCapabilityLevel(profile.research.materials.energySystems * multiplier)
       },
       climate: {
-        modeling: Math.round(profile.research.climate.modeling * multiplier),
-        intervention: Math.round(profile.research.climate.intervention * multiplier),
-        mitigation: Math.round(profile.research.climate.mitigation * multiplier)
+        modeling: toCapabilityLevel(profile.research.climate.modeling * multiplier),
+        intervention: toCapabilityLevel(profile.research.climate.intervention * multiplier),
+        mitigation: toCapabilityLevel(profile.research.climate.mitigation * multiplier)
       },
       computerScience: {
-        algorithms: Math.round(profile.research.computerScience.algorithms * multiplier),
-        security: Math.round(profile.research.computerScience.security * multiplier),
-        architectures: Math.round(profile.research.computerScience.architectures * multiplier)
+        algorithms: toCapabilityLevel(profile.research.computerScience.algorithms * multiplier),
+        security: toCapabilityLevel(profile.research.computerScience.security * multiplier),
+        architectures: toCapabilityLevel(profile.research.computerScience.architectures * multiplier)
       }
     }
   };
