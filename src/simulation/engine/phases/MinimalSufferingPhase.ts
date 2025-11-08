@@ -48,24 +48,30 @@ export class MinimalSufferingPhase implements SimulationPhase {
     updateMinimalSufferingSystem(state);
 
     // Validate suffering metrics after update (prevent NaN propagation)
-    if (state.minimalSufferingIndicators?.globalAggregates) {
-      const global = state.minimalSufferingIndicators.globalAggregates;
+    if (state.minimalSufferingSystem?.globalMetrics) {
+      const global = state.minimalSufferingSystem.globalMetrics;
 
-      assertFinite(global.totalPopulation, {
+      assertFinite(global.totalExcessDeaths, {
         location: 'MinimalSufferingPhase.execute',
-        valueName: 'globalAggregates.totalPopulation',
+        valueName: 'globalMetrics.totalExcessDeaths',
         month: state.currentMonth
       });
 
-      assertFinite(global.acuteSufferingCount, {
+      assertFinite(global.totalConflictDeaths, {
         location: 'MinimalSufferingPhase.execute',
-        valueName: 'globalAggregates.acuteSufferingCount',
+        valueName: 'globalMetrics.totalConflictDeaths',
         month: state.currentMonth
       });
 
-      assertFinite(global.chronicSufferingCount, {
+      assertFinite(global.totalMalnourished, {
         location: 'MinimalSufferingPhase.execute',
-        valueName: 'globalAggregates.chronicSufferingCount',
+        valueName: 'globalMetrics.totalMalnourished',
+        month: state.currentMonth
+      });
+
+      assertFinite(global.totalDisplaced, {
+        location: 'MinimalSufferingPhase.execute',
+        valueName: 'globalMetrics.totalDisplaced',
         month: state.currentMonth
       });
     }

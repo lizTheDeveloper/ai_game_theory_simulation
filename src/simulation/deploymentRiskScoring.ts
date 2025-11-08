@@ -14,6 +14,7 @@
  */
 
 import { AIAgent } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 
 export interface DeploymentRiskScore {

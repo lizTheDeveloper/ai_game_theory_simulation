@@ -17,6 +17,7 @@
  */
 
 import { GameState } from '../types/game';
+import { assertFinite } from './utils/assertions';
 import { CountryName, CountryPopulation, MilitaryIntervention } from '../types/countryPopulations';
 import { addMortalityRisk } from './bayesianMortality';
 

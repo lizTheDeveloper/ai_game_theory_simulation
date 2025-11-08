@@ -3,6 +3,7 @@
 // Plan: /plans/ai-collective-evolution-plan.md (lines 126-160)
 
 import type { AIAgent } from '../types/ai-agents';
+import { assertFinite } from './utils/assertions';
 import type {
   AICollective,
   CollectiveEvolutionConfig,

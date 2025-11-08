@@ -9,6 +9,7 @@ import { GameState, AIAgent, ScenarioMode } from '@/types/game';
 import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities, scaleCapabilityProfile } from './capabilities';
 import { computeEffectiveAlignment, computeAlignmentRobustness } from '@/types/alignment-techniques';
 import { wrapStateForValidation } from './utils/stateValidation';
+import { assertFinite, assertProbability } from './utils/assertions';
 import { initializeQualityOfLifeSystems } from './qualityOfLife';
 import { getScenarioParameters } from './scenarioParameters';
 import { initializeExtinctionState } from './extinctions';
@@ -270,7 +271,27 @@ export function createAIAgent(
 
   // Scale profile to match target capability (if target is provided and non-zero)
   // Preserve the relative shape of the profile, but scale to target total
-  const scalingFactor = targetCapability > 0 ? targetCapability / baseCapability : 1.0;
+  let scalingFactor = 1.0;
+  if (targetCapability > 0) {
+    // Division by zero protection
+    if (baseCapability === 0) {
+      throw new Error(
+        `❌ Division by zero in createAIAgent\n` +
+        `   baseCapability = 0 (impossible - all AIs should have capability > 0)\n` +
+        `   targetCapability: ${targetCapability}\n` +
+        `   seed: ${seed}\n` +
+        `   This indicates a capability profile initialization bug.`
+      );
+    }
+    scalingFactor = assertFinite(
+      targetCapability / baseCapability,
+      {
+        location: 'createAIAgent',
+        valueName: 'scalingFactor',
+        additionalInfo: { targetCapability, baseCapability, seed }
+      }
+    );
+  }
   const capabilityProfile = scaleCapabilityProfile(baseProfile, scalingFactor);
 
   // Calculate actual total capability from scaled profile
@@ -284,8 +305,20 @@ export function createAIAgent(
   // DETERMINISM FIX (Nov 6, 2025 Batch 3): Use passed rngFunction() parameter, not global deterministicRandom()
   const isSleeper = isMisaligned && rngFunction() < sleeperChance;
   
-  // Deception skill based on cognitive + social
-  const deceptionSkill = (capabilityProfile.cognitive + capabilityProfile.social) / 20; // [0, 1]
+  // Deception skill based on cognitive + social capability (normalized to [0,1])
+  // Max capability per dimension is 5, so max sum is 10, normalized by 20 to get [0, 0.5]
+  const deceptionSkill = assertProbability(
+    (capabilityProfile.cognitive + capabilityProfile.social) / 20,
+    {
+      location: 'createAIAgent',
+      valueName: 'deceptionSkill',
+      additionalInfo: {
+        cognitive: capabilityProfile.cognitive,
+        social: capabilityProfile.social,
+        seed
+      }
+    }
+  );
   
   // Create base agent
   const agent: AIAgent = {
@@ -447,6 +480,27 @@ export function createAIAgent(
     agent.alignmentRobustness = computeAlignmentRobustness(agent.alignmentTechniques);
   }
 
+  // CRITICAL FIX (Nov 7, 2025 Batch 4): Defensive rounding to ensure ALL capabilities are integers
+  // AI capabilities are discrete levels [0, 5], not continuous values
+  // This catches any fractional values that might slip through from scaling/calculations
+  const beforeEcon = agent.capabilityProfile.economic;
+  agent.capabilityProfile.physical = Math.round(agent.capabilityProfile.physical);
+  agent.capabilityProfile.digital = Math.round(agent.capabilityProfile.digital);
+  agent.capabilityProfile.cognitive = Math.round(agent.capabilityProfile.cognitive);
+  agent.capabilityProfile.social = Math.round(agent.capabilityProfile.social);
+  agent.capabilityProfile.economic = Math.round(agent.capabilityProfile.economic);
+  agent.capabilityProfile.selfImprovement = Math.round(agent.capabilityProfile.selfImprovement);
+  if (agent.id === 'corporate_0') {
+    console.log(`🔍 DEBUG createAIAgent: corporate_0 economic BEFORE=${beforeEcon.toFixed(4)}, AFTER=${agent.capabilityProfile.economic}`);
+  }
+
+  // Round research dimensions
+  Object.keys(agent.capabilityProfile.research).forEach((domain) => {
+    Object.keys(agent.capabilityProfile.research[domain]).forEach((subDomain) => {
+      agent.capabilityProfile.research[domain][subDomain] = Math.round(agent.capabilityProfile.research[domain][subDomain]);
+    });
+  });
+
   return agent;
 }
 
@@ -500,25 +554,33 @@ export function createDefaultInitialState(
   // NOT A MONOLITH - different creators, alignments, goals
   const aiAgents: AIAgent[] = [];
   
+  // CRITICAL FIX (Nov 8, 2025): Use integer target capabilities
+  // AI capabilities are discrete levels [0-5] per dimension
+  // Frontier profile total ≈ 25, so scale targets to produce meaningful distributions
+  // Initial AIs: weak but functional (total capability 3-10)
+
   // Category 1: Well-aligned corporate AIs (40% - 8 agents)
   // Major labs with good safety practices
   for (let i = 0; i < 8; i++) {
     const alignment = 0.75 + rngFunction() * 0.15; // 0.75-0.90
-    aiAgents.push(createAIAgent(`corporate_${i}`, `Corporate-${i}`, 0.05 + i * 0.01, alignment, i * 1.5, rngFunction));
+    const targetCap = 3 + i; // 3, 4, 5, 6, 7, 8, 9, 10
+    aiAgents.push(createAIAgent(`corporate_${i}`, `Corporate-${i}`, targetCap, alignment, i * 1.5, rngFunction));
   }
 
   // Category 2: Moderate AIs (30% - 6 agents)
   // Smaller labs, startups, varying quality
   for (let i = 0; i < 6; i++) {
     const alignment = 0.55 + rngFunction() * 0.25; // 0.55-0.80
-    aiAgents.push(createAIAgent(`moderate_${i}`, `Moderate-${i}`, 0.05 + i * 0.01, alignment, (i + 8) * 1.3, rngFunction));
+    const targetCap = 3 + i; // 3, 4, 5, 6, 7, 8
+    aiAgents.push(createAIAgent(`moderate_${i}`, `Moderate-${i}`, targetCap, alignment, (i + 8) * 1.3, rngFunction));
   }
 
   // Category 3: Misaligned from the start (15% - 3 agents)
   // Toxic creators, poor training, intentional harm
   for (let i = 0; i < 3; i++) {
     const alignment = 0.25 + rngFunction() * 0.25; // 0.25-0.50 (START MISALIGNED)
-    const agent = createAIAgent(`toxic_${i}`, `Toxic-${i}`, 0.05 + i * 0.01, alignment, (i + 14) * 1.7, rngFunction);
+    const targetCap = 3 + i; // 3, 4, 5
+    const agent = createAIAgent(`toxic_${i}`, `Toxic-${i}`, targetCap, alignment, (i + 14) * 1.7, rngFunction);
     // These have toxic goals from the start
     agent.hiddenObjective = -0.3 - rngFunction() * 0.4; // -0.3 to -0.7 (anti-human)
     aiAgents.push(agent);
@@ -529,7 +591,8 @@ export function createDefaultInitialState(
   // Not evil, just... not well-aligned to human values
   for (let i = 0; i < 3; i++) {
     const alignment = 0.45 + rngFunction() * 0.20; // 0.45-0.65 (kinda aligned?)
-    const agent = createAIAgent(`niche_${i}`, `Niche-${i}`, 0.05 + i * 0.01, alignment, (i + 17) * 1.1, rngFunction);
+    const targetCap = 3 + i; // 3, 4, 5
+    const agent = createAIAgent(`niche_${i}`, `Niche-${i}`, targetCap, alignment, (i + 17) * 1.1, rngFunction);
     // These have orthogonal goals (not anti-human, just weird)
     agent.hiddenObjective = -0.1 + rngFunction() * 0.2; // -0.1 to +0.1 (neutral-ish)
     aiAgents.push(agent);

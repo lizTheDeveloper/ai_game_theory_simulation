@@ -6,6 +6,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 
 import { updatePowerGeneration } from '../../powerGeneration';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions'; // Module uses assertions
 
 export class PowerGenerationPhase implements SimulationPhase {
   readonly name = 'Power Generation Update';

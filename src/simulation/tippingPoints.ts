@@ -13,6 +13,7 @@
  */
 
 import { TippingPointSystem, TIPPING_ELEMENTS } from '../types/tipping-points';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Initialize the tipping point system state
