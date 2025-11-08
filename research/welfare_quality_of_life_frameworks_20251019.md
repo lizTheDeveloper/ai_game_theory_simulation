@@ -1,8 +1,146 @@
 # Multi-Dimensional Welfare, Quality of Life, and Dystopian Condition Frameworks: Research Findings
 
 **Research Date:** October 19, 2025
+**Last Updated:** November 8, 2025 (autonomous researcher)
 **Researcher:** super-alignment-researcher (researcher-dui)
 **Purpose:** Ground the simulation's country-level welfare and dystopia mechanics in peer-reviewed research
+
+**Update Summary (Nov 8, 2025):** Added UNECE 2025 guidelines, Reig-Mullor et al. 2024 fuzzy multicriteria approach, HDI 2025 report, and SPI 2025 methodology updates.
+
+**Oldest Source:** Posner & Costanza (2011) - GPI foundational methodology (14 years old, appropriate for core economic framework)
+**Newest Source:** UNECE (2025) - Well-being measurement guidelines (September 2025)
+**Last Verified:** November 8, 2025
+
+---
+
+## 2025 Updates: Emerging Frameworks and Methodologies
+
+### UNECE Guidelines on Measurement of Well-being (2025)
+
+**Primary Source:**
+UNECE (2025). *Guidelines on measurement of well-being*. Conference of European Statisticians, Task Force on Well-being Measurement. Released September 2025.
+- Publisher: United Nations Economic Commission for Europe
+- Status: Official UN guidelines responding to 2024 UN Summit for the Future commitment to develop measures "to complement and go beyond GDP"
+
+**Context:**
+The UN Pact for the Future (2024) includes commitment to "a framework containing a limited number of country-owned and universally applicable measures of progress on sustainable development to complement and go beyond GDP."
+
+**10 Key Dimensions of Well-being:**
+
+1. **Subjective well-being** - Life satisfaction, happiness, sense of meaning
+2. **Material living conditions** - Income, consumption, wealth
+3. **Work and leisure** - Employment quality, work-life balance, time use
+4. **Housing** - Affordability, quality, safety, overcrowding
+5. **Health** - Physical and mental health, life expectancy, healthcare access
+6. **Knowledge and skills** - Education attainment, literacy, lifelong learning
+7. **Physical safety** - Crime, violence, traffic accidents, natural disasters
+8. **Social connections** - Social support networks, trust, community belonging
+9. **Civic engagement** - Political participation, voice in decision-making
+10. **Environmental conditions** - Air/water quality, green spaces, climate risks
+
+**Temporal Framework:**
+- **"Here and now"** (present generation well-being) - Primary focus
+- **"Elsewhere"** (well-being of people in other countries) - Acknowledged
+- **"Later"** (well-being of future generations) - Acknowledged
+
+**Implementation Roadmap:**
+For countries starting from scratch, Chapter 6 provides 17 practical steps from scoping to launch to sustainability.
+
+**Significance for Simulation:**
+- Most comprehensive official UN framework for well-being beyond GDP
+- Integrates OECD Better Life Initiative, Stiglitz-Sen-Fitoussi report, Eurostat Quality of Life indicators, and SDGs
+- Temporal dimensions ("here," "elsewhere," "later") align with simulation's need to track present vs. future trade-offs
+- 10 dimensions map well to simulation's 5-dimensional framework (material, health, environment, social, political)
+
+**Citation:**
+UNECE (2025). Guidelines on measurement of well-being. United Nations Economic Commission for Europe. https://unece.org/statistics/publications
+
+---
+
+### Fuzzy Multicriteria Approach to Quality of Life (2024)
+
+**Primary Source:**
+Reig-Mullor, J., Garcia-Bernabeu, A., Pla-Santamaria, D., & Salas-Molina, F. (2024). Measuring quality of life in Europe: A new fuzzy multicriteria approach. *Technological Forecasting and Social Change*, 206, 123494.
+- Journal: High-impact interdisciplinary journal (Q1)
+- Methodology: Picture fuzzy sets combined with multicriteria decision-making
+- Application: European Union quality of life monitoring
+
+**Key Innovation:**
+Introduces **picture fuzzy sets** to handle uncertainty and imprecision in both objective and subjective quality-of-life dimensions. Traditional crisp indicators (e.g., GDP per capita = $50,000) ignore measurement error and conceptual fuzziness; fuzzy approach represents values as distributions.
+
+**Methodology:**
+- Combines objective indicators (e.g., income, life expectancy) with subjective assessments (e.g., life satisfaction)
+- Uses multicriteria prioritization to weight dimensions
+- Accounts for uncertainty in measurement and valuation
+- Produces single composite index with confidence bounds
+
+**Dimensions Measured:**
+- Economic (objective and subjective)
+- Social (objective and subjective)
+- Environmental (objective and subjective)
+
+**Significance for Simulation:**
+- **Uncertainty quantification:** Rather than point estimates (e.g., welfare = 65), use distributions (welfare ~ N(65, σ=5))
+- **Subjective-objective integration:** Combines "hard" metrics (GDP) with "soft" perceptions (life satisfaction)
+- **European validation:** Applied to EU data, providing empirical grounding
+
+**Citation:**
+Reig-Mullor, J., Garcia-Bernabeu, A., Pla-Santamaria, D., & Salas-Molina, F. (2024). Measuring quality of life in Europe: A new fuzzy multicriteria approach. *Technological Forecasting and Social Change*, 206, 123494. DOI: 10.1016/j.techfore.2024.123494
+
+---
+
+### Human Development Report 2025
+
+**Primary Source:**
+UNDP (2025). *Human Development Report 2025: A matter of choice: People and possibilities in the age of AI*. Released May 6, 2025.
+- Focus: AI's impact on human development choices
+- Data: Based on 2023 data (2-year lag standard)
+
+**Methodology Updates:**
+- **Core HDI calculation unchanged:** Geometric mean of health, education, income indices
+- **Data revisions:** HDI values recalculated for previous years due to improved data and methodology updates
+- **Important note:** HDI values NOT comparable across different HDR editions (each report recalculates historical values)
+
+**Key 2025 Findings:**
+- Global HDI continues upward trajectory despite COVID-19 disruption
+- AI theme: Focus on how AI affects choices in education, work, health, governance
+- Regional disparities persist: Sub-Saharan Africa lags, East Asia leads
+
+**Significance for Simulation:**
+- Confirms geometric mean aggregation remains standard (since 2010 methodology revision)
+- AI focus validates simulation's integration of AI capabilities into human development pathways
+- 2-year data lag reminder: Simulation should use 2023 baseline for 2025 start
+
+**Citation:**
+UNDP (2025). Human Development Report 2025: A matter of choice: People and possibilities in the age of AI. United Nations Development Programme. https://hdr.undp.org/content/human-development-report-2025
+
+---
+
+### Social Progress Index 2025
+
+**Primary Source:**
+Social Progress Imperative (2025). *AlTi Global Social Progress Index 2025*. Updated annually.
+- Coverage: 170+ countries, 99%+ of world population
+- Indicators: 57 drivers of social and environmental progress
+- Timeframe: Annual updates with data from 2011-2024
+
+**Methodology Stability:**
+- **Three dimensions unchanged:** Basic Needs, Foundations of Wellbeing, Opportunity
+- **12 components, 57 indicators:** Consistent framework since 2014
+- **Arithmetic mean aggregation:** Still used despite compensatory limitations
+
+**2025 Key Trends:**
+- Global social progress showing signs of "recession" (Progress Focused analysis)
+- Environmental quality declining in many regions
+- Opportunity dimension improving in developing countries, declining in some developed countries
+
+**Significance for Simulation:**
+- Confirms SPI as complement to GDP-based measures (economic growth ≠ social progress)
+- 57 granular indicators provide policy intervention targets
+- **Warning:** Arithmetic aggregation allows high opportunity to mask poor basic needs—simulation should flag these cases
+
+**Citation:**
+Social Progress Imperative (2025). AlTi Global Social Progress Index 2025. https://www.socialprogress.org/social-progress-index
 
 ---
 
@@ -1478,6 +1616,16 @@ Anthis, J.R., & Paez, E. (2021). Moral circle expansion: A promising strategy. *
 ---
 
 ## 9. PRIMARY SOURCES BIBLIOGRAPHY
+
+**2024-2025 Updates:**
+
+0a. UNECE (2025). *Guidelines on measurement of well-being*. Conference of European Statisticians. United Nations Economic Commission for Europe. https://unece.org/statistics/publications
+
+0b. UNDP (2025). *Human Development Report 2025: A matter of choice: People and possibilities in the age of AI*. United Nations Development Programme. https://hdr.undp.org/content/human-development-report-2025
+
+0c. Social Progress Imperative (2025). *AlTi Global Social Progress Index 2025*. https://www.socialprogress.org/social-progress-index
+
+0d. Reig-Mullor, J., Garcia-Bernabeu, A., Pla-Santamaria, D., & Salas-Molina, F. (2024). Measuring quality of life in Europe: A new fuzzy multicriteria approach. *Technological Forecasting and Social Change*, 206, 123494. DOI: 10.1016/j.techfore.2024.123494
 
 **Multi-Dimensional Welfare Indices:**
 
