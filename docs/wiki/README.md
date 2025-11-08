@@ -2085,6 +2085,14 @@ When auditing or writing simulation code:
   - Bug discovery: QoL overflow caught at month 13
   - Monte Carlo validation: N=3, zero failures after fix
 
+- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 7, 2025)
+  - Maximum mortality rates for catastrophic scenarios (pandemics, nuclear winter, famine)
+  - **Updated 2024-2025 research:**
+    - COVID-19 excess mortality (JAMA Health Forum May 2025, Int'l J. Epidemiology June 2025)
+    - Nuclear winter validation (IIASA May 2025, US National Academies ongoing review)
+  - **Key findings:** 23% of US deaths in 2023 were excess mortality, nuclear winter consensus reaffirmed (Xia 2022)
+  - Research quality: A- (75% peer-reviewed, 30% from 2024-2025)
+
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 
 ### Implementation Reports
@@ -5956,10 +5964,11 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 
 ---
 
-**Last Updated**: November 1, 2025 (🏆 **NEW PROJECT RECORD: 98% Verification Rate**)
+**Last Updated**: November 7, 2025 (Research currency update: mortality caps 2024-2025 sources)
 **Version**: 4.1.1 (Government System + Multi-Paradigm Framework + DUI Reporting Tools + Post-Recalibration Fixes)
 **Status**: 🎉 **MAJOR SYSTEMS INTEGRATED** + ✅ **LAYER 2 PHASE 3 SESSIONS 14-16 COMPLETE**
 **Latest**:
+- **📖 Research Currency Update (Nov 7)**: Added 2024-2025 peer-reviewed sources to mortality caps research (JAMA Health Forum May 2025, IIASA May 2025, Int'l J. Epidemiology June 2025). COVID-19 excess mortality persisted through 2023 (23% of US deaths). Nuclear winter consensus reaffirmed (Xia 2022 remains current best science). Research quality: A- (75% peer-reviewed, 30% from 2024-2025).
 - **🏆 Layer 2 Phase 3 Sessions 14-16 COMPLETE (Nov 1)**: 12 files verified (Sessions 14-16), ~2,110 total claims across all sessions (~74% verified). NEW PROJECT RECORD: climate_collapse_timelines achieved 98% verification (48/49 claims) - highest in project history. Quality trend: Peak increasing (98% → 89% → 85%), fabrication decreasing (2.25% → 3% → 6%). Pattern confirmed: Climate science consistently achieves highest verification rates (IPCC, Nature, Science sources).
 - **✅ Layer 2 Phase 2 COMPLETE (Oct 31)**: All 11 research files verified (14-15h total, ~366 claims, 71% verified). Session 6 completed 4 LOW priority files in parallel (tier2_params, alignment_technique, ai_collective_evolution, simulation_mortality). 20 CRITICAL issues found across all Phase 2 sessions.
 - **Layer 2 Phase 2 Session 3 (Oct 30)**: Climate-mortality verification complete (27 claims: 67% fully verified, 33% partial, 0% fabricated). 1 CRITICAL correction: Richardson 2023 land degradation inversion prevented 50% overestimation.

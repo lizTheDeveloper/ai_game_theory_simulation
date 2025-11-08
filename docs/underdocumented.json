@@ -29817,7 +29817,55 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 168,
+    "line": 194,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'alignmentDynamics.calculateSufferingDriftMultiplier',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 195,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'sufferingTotal',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 196,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { expectedRange: '[0, 40]' }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 212,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'alignmentDynamics.calculateSufferingDriftMultiplier',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 213,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'multiplier',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 214,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { suffering: clampedSuffering, formula: '1.0 + (suffering/20)^2' }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 228,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -29825,7 +29873,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 169,
+    "line": 229,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -29833,7 +29881,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 170,
+    "line": 230,
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -29841,7 +29889,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 172,
+    "line": 232,
     "type": "property",
     "name": "inGoldenAge",
     "currentDoc": "(none)",
@@ -29849,7 +29897,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 173,
+    "line": 233,
     "type": "property",
     "name": "crisisActive",
     "currentDoc": "(none)",
@@ -29857,7 +29905,55 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 224,
+    "line": 298,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'alignmentDynamics.calculateDriftContribution',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 299,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'finalDrift',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 300,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 301,
+    "type": "property",
+    "name": "agentId",
+    "currentDoc": "(none)",
+    "context": "agentId: agent.id,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 303,
+    "type": "property",
+    "name": "suffering",
+    "currentDoc": "(none)",
+    "context": "suffering: agent.sufferingMetrics?.total ?? 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 304,
+    "type": "property",
+    "name": "sufferingEnabled",
+    "currentDoc": "(none)",
+    "context": "sufferingEnabled: config.aiSufferingEnabled ?? false"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
+    "line": 315,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -29865,7 +29961,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 225,
+    "line": 316,
     "type": "property",
     "name": "measurementState",
     "currentDoc": "(none)",
@@ -29873,7 +29969,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 226,
+    "line": 317,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -29881,7 +29977,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 227,
+    "line": 318,
     "type": "property",
     "name": "trueAlignment",
     "currentDoc": "(none)",
@@ -29889,7 +29985,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 228,
+    "line": 319,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -29897,7 +29993,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 237,
+    "line": 328,
     "type": "property",
     "name": "measuredAlignment",
     "currentDoc": "(none)",
@@ -29905,7 +30001,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 238,
+    "line": 329,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -29913,7 +30009,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 239,
+    "line": 330,
     "type": "property",
     "name": "noiseLevel",
     "currentDoc": "(none)",
@@ -29921,7 +30017,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 240,
+    "line": 331,
     "type": "property",
     "name": "isHidden",
     "currentDoc": "(none)",
@@ -29929,7 +30025,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 276,
+    "line": 367,
     "type": "property",
     "name": "trueAlignment",
     "currentDoc": "(none)",
@@ -29937,7 +30033,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 290,
+    "line": 381,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -29945,7 +30041,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 291,
+    "line": 382,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -29953,7 +30049,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 292,
+    "line": 383,
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -29961,7 +30057,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 293,
+    "line": 384,
     "type": "property",
     "name": "controlLevel",
     "currentDoc": "(none)",
@@ -29969,7 +30065,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 294,
+    "line": 385,
     "type": "property",
     "name": "inGoldenAge",
     "currentDoc": "(none)",
@@ -29977,7 +30073,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 295,
+    "line": 386,
     "type": "property",
     "name": "crisisActive",
     "currentDoc": "(none)",
@@ -29985,7 +30081,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 297,
+    "line": 388,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -29993,7 +30089,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 298,
+    "line": 389,
     "type": "property",
     "name": "deltaTime",
     "currentDoc": "(none)",
@@ -30001,7 +30097,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 300,
+    "line": 391,
     "type": "property",
     "name": "newAlignment",
     "currentDoc": "(none)",
@@ -30009,7 +30105,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 301,
+    "line": 392,
     "type": "property",
     "name": "basinState",
     "currentDoc": "(none)",
@@ -30017,7 +30113,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 302,
+    "line": 393,
     "type": "property",
     "name": "measurementState",
     "currentDoc": "(none)",
@@ -30025,7 +30121,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 303,
+    "line": 394,
     "type": "property",
     "name": "contributions",
     "currentDoc": "(none)",
@@ -30033,7 +30129,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 304,
+    "line": 395,
     "type": "property",
     "name": "static",
     "currentDoc": "(none)",
@@ -30041,7 +30137,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 305,
+    "line": 396,
     "type": "property",
     "name": "drift",
     "currentDoc": "(none)",
@@ -30049,7 +30145,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 306,
+    "line": 397,
     "type": "property",
     "name": "epicycle",
     "currentDoc": "(none)",
@@ -30057,7 +30153,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 307,
+    "line": 398,
     "type": "property",
     "name": "uncertainty",
     "currentDoc": "(none)",
@@ -30065,7 +30161,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 314,
+    "line": 405,
     "type": "property",
     "name": "static",
     "currentDoc": "(none)",
@@ -30073,7 +30169,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 315,
+    "line": 406,
     "type": "property",
     "name": "drift",
     "currentDoc": "(none)",
@@ -30081,7 +30177,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 316,
+    "line": 407,
     "type": "property",
     "name": "epicycle",
     "currentDoc": "(none)",
@@ -30089,7 +30185,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 317,
+    "line": 408,
     "type": "property",
     "name": "uncertainty",
     "currentDoc": "(none)",
@@ -30097,7 +30193,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 324,
+    "line": 415,
     "type": "property",
     "name": "newAlignment",
     "currentDoc": "(none)",
@@ -30105,7 +30201,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 420,
+    "line": 524,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -30113,7 +30209,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/alignmentDynamics.ts",
-    "line": 421,
+    "line": 525,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",

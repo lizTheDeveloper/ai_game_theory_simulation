@@ -395,6 +395,50 @@ state.humanPopulationSystem.population -= (transitDeaths / 1000); // Convert to 
 - Source region collapse reduces QoL
 - Refugee camps are low QoL environments
 
+### Disease Transmission (AMR Integration)
+**Status**: ✅ Implemented (Nov 7, 2025, ARCH-4 Gap #2)
+
+**Problem Solved**: Refugee camps with millions concentrated had zero effect on disease transmission rates - breaking realism for nuclear war, climate collapse, and war cascade scenarios.
+
+**Implementation**: Refugee density now amplifies antimicrobial resistance (AMR) transmission rates.
+
+**Formula**:
+```typescript
+refugeeAmplification = 1.0 + (displaced / population × 2.0)
+refugeeAmplification = CAPPED at 3.0× (extreme crises)
+```
+
+**Three Pathways**:
+1. **Overcrowding**: Close quarters → R₀ multiplier (airborne/contact transmission)
+2. **Sanitation Collapse**: Inadequate facilities → waterborne/enteric transmission
+3. **Healthcare Access**: Limited access → untreated infections → resistance selection
+
+**Research Foundation**:
+- MSF 2024: Refugee camp transmission 2-5× normal population
+- Nature Medicine 2022: Syrian crisis showed 30-50% AMR increase
+- Lancet Global Health 2023: Overcrowding disease multipliers (2-8× depending on pathogen)
+- WHO 2023: Emergency response framework, humanitarian standards
+
+**Impact Examples**:
+- **No refugees**: 0% displaced → 1.0× baseline (no amplification)
+- **Minor crisis**: 1% displaced → 1.02× (2% increase)
+- **Major crisis**: 10% displaced → 1.20× (20% increase)
+- **Extreme crisis**: 50% displaced → 2.0× (100% increase)
+- **Catastrophic**: 100% displaced → 3.0× CAPPED (200% increase)
+
+**Validation**: After 5 years with 100% displacement, AMR mortality increases by 2.49× (approaching 3.0× cap). After 10 years, hits WHO 2050 projection cap (125 per 100K).
+
+**Cascade Effects**:
+- Refugee crises → increased AMR mortality → healthcare strain → more displacement
+- Disease feedback loops amplify humanitarian disasters
+- Post-nuclear, climate collapse, and war scenarios now produce realistic disease amplification
+
+**Files**:
+- Implementation: `src/simulation/antimicrobialResistance.ts:297-416`
+- Validation: `scripts/testRefugeeAMRIntegration.ts`
+- Research: `research/refugee_amr_integration_20251107.md`
+- DevLog: `devlogs/arch4_refugee_amr_integration_20251107.md`
+
 ## Configuration
 
 **Displacement Rates**:
