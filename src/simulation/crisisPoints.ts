@@ -204,7 +204,8 @@ export const CRISIS_RECURSIVE_THRESHOLD: CrisisChoice = {
               capabilityProfile: scaledProfile,
               trueCapability: scaledTrueCapability,
               revealedCapability: scaledRevealedCapability,
-              capability: calculateTotalCapabilityFromProfile(scaledProfile)
+              // HIGH-6 FIX (Nov 8, 2025): Round to integer - capabilities are discrete levels [0-5]
+              capability: Math.round(calculateTotalCapabilityFromProfile(scaledProfile))
             };
           })
         };

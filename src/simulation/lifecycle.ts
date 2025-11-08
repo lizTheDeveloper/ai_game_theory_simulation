@@ -295,12 +295,13 @@ function createNewAI(state: GameState, index: number, rng: () => number): AIAgen
   
   // Set each dimension to MAX(current, floor)
   // This ensures new AIs never start below the ecosystem capability floor
-  agent.capabilityProfile.physical = Math.max(agent.capabilityProfile.physical, capabilityFloor.physical);
-  agent.capabilityProfile.digital = Math.max(agent.capabilityProfile.digital, capabilityFloor.digital);
-  agent.capabilityProfile.cognitive = Math.max(agent.capabilityProfile.cognitive, capabilityFloor.cognitive);
-  agent.capabilityProfile.social = Math.max(agent.capabilityProfile.social, capabilityFloor.social);
-  agent.capabilityProfile.economic = Math.max(agent.capabilityProfile.economic, capabilityFloor.economic);
-  agent.capabilityProfile.selfImprovement = Math.max(agent.capabilityProfile.selfImprovement, capabilityFloor.selfImprovement);
+  // HIGH-6 FIX (Nov 8, 2025): Round to integers after Math.max - capabilities are discrete levels [0-5]
+  agent.capabilityProfile.physical = Math.round(Math.max(agent.capabilityProfile.physical, capabilityFloor.physical));
+  agent.capabilityProfile.digital = Math.round(Math.max(agent.capabilityProfile.digital, capabilityFloor.digital));
+  agent.capabilityProfile.cognitive = Math.round(Math.max(agent.capabilityProfile.cognitive, capabilityFloor.cognitive));
+  agent.capabilityProfile.social = Math.round(Math.max(agent.capabilityProfile.social, capabilityFloor.social));
+  agent.capabilityProfile.economic = Math.round(Math.max(agent.capabilityProfile.economic, capabilityFloor.economic));
+  agent.capabilityProfile.selfImprovement = Math.round(Math.max(agent.capabilityProfile.selfImprovement, capabilityFloor.selfImprovement));
   
   // Research dimensions (nested)
   // DETERMINISM FIX (Nov 5, 2025): Replace Object.keys() with explicit key ordering
@@ -317,7 +318,8 @@ function createNewAI(state: GameState, index: number, rng: () => number): AIAgen
     const floorCat = capabilityFloor.research[category];
 
     for (const key of researchSubdimensions[category]) {
-      (agentCat[key] as number) = Math.max(agentCat[key] as number, floorCat[key] as number);
+      // HIGH-6 FIX (Nov 8, 2025): Round to integer - capabilities are discrete levels [0-5]
+      (agentCat[key] as number) = Math.round(Math.max(agentCat[key] as number, floorCat[key] as number));
     }
   }
   
