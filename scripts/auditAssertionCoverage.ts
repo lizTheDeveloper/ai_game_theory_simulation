@@ -1,152 +1,172 @@
 #!/usr/bin/env tsx
 /**
- * Audit Assertion Coverage Across All Phases
- *
- * Identifies which phases lack assertion utilities and categorizes by risk level.
+ * Audit Assertion Coverage
+ * Scans all phase files to identify which have assertion utilities
  */
 
-import { readFileSync, readdirSync } from 'fs';
-import { join } from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 
-const PHASES_DIR = 'src/simulation/engine/phases';
-const ASSERTION_PATTERNS = [
-  'assertFinite',
-  'assertDefined',
-  'assertInRange',
-  'assertProbability',
-  'assertStateProperty',
-  'assertMortalityRate',
-  'assertTemperatureDelta',
-  'assertPopulationChange',
-  'assertAICapability',
-  'assertPlanetaryBoundary',
-  'assertEconomicMetric',
-  'assertShockMagnitude',
-  'assertResourceAllocation',
-  'assertRegionalConsistency',
-  'assertPhaseDependency',
-  'assertPhaseNotExecuted'
-];
+const PHASES_DIR = path.join(process.cwd(), 'src/simulation/engine/phases');
 
-// Risk keywords for categorization
-const CRITICAL_KEYWORDS = [
-  'population', 'mortality', 'death', 'capability', 'qol', 'quality of life',
-  'extinction', 'catastrophic'
-];
+interface PhaseAudit {
+  file: string;
+  hasImport: boolean;
+  hasAssertCalls: boolean;
+  assertionCount: number;
+  assertionTypes: Set<string>;
+  riskFactors: {
+    modifiesPopulation: boolean;
+    modifiesMortality: boolean;
+    modifiesClimate: boolean;
+    modifiesEconomy: boolean;
+    modifiesAI: boolean;
+    modifiesQoL: boolean;
+    hasMath: boolean;
+    hasDivision: boolean;
+    hasGeometricMean: boolean;
+  };
+}
 
-const HIGH_KEYWORDS = [
-  'climate', 'temperature', 'co2', 'ocean', 'boundary', 'gdp', 'economic',
-  'planetary', 'crisis'
-];
+function analyzePhase(filePath: string): PhaseAudit {
+  const content = fs.readFileSync(filePath, 'utf-8');
+  const filename = path.basename(filePath);
 
-const MEDIUM_KEYWORDS = [
-  'social', 'cohesion', 'technology', 'tech', 'diffusion', 'governance',
-  'stability', 'cooperation'
-];
+  // Check for assertion import
+  const hasImport = /from ['"]@\/simulation\/utils\/assertions['"]/.test(content);
 
-function categorizeRisk(filename: string, content: string): string {
-  const lower = content.toLowerCase();
-  const lowerFile = filename.toLowerCase();
+  // Find all assertion function calls
+  const assertionPattern = /assert[A-Z]\w+\(/g;
+  const assertionMatches = content.match(assertionPattern) || [];
+  const assertionTypes = new Set(
+    assertionMatches.map(match => match.replace('(', ''))
+  );
 
-  // Check if it's read-only (analysis/logging)
+  // Risk factor analysis
+  const riskFactors = {
+    modifiesPopulation: /state\.population\s*[=+\-]/.test(content) ||
+                        /\.population\s*[=+\-]/.test(content),
+    modifiesMortality: /mortality|deaths|mortalityRate/i.test(content),
+    modifiesClimate: /temperature|climate|CO2|emissions/i.test(content),
+    modifiesEconomy: /GDP|economy|spending|taxation/i.test(content),
+    modifiesAI: /aiAgents|capabilities|AICapability/i.test(content),
+    modifiesQoL: /qualityOfLife|QoL/i.test(content),
+    hasMath: /Math\.(pow|sqrt|exp|log|abs|min|max)/.test(content),
+    hasDivision: /\/\s*[a-zA-Z0-9_.]/.test(content),
+    hasGeometricMean: /geometricMean|reduce.*\*/.test(content),
+  };
+
+  return {
+    file: filename,
+    hasImport,
+    hasAssertCalls: assertionMatches.length > 0,
+    assertionCount: assertionMatches.length,
+    assertionTypes,
+    riskFactors,
+  };
+}
+
+function classifyRisk(audit: PhaseAudit): 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' {
+  const { riskFactors } = audit;
+
+  // CRITICAL: Modifies population, mortality, AI capabilities, QoL
   if (
-    content.includes('// read-only') ||
-    filename.includes('Event') ||
-    filename.includes('Detection') ||
-    !content.includes('state.')
+    riskFactors.modifiesPopulation ||
+    riskFactors.modifiesMortality ||
+    riskFactors.modifiesAI ||
+    riskFactors.modifiesQoL
   ) {
-    return 'LOW';
+    return 'CRITICAL';
   }
 
-  // Check for critical modifications
-  for (const keyword of CRITICAL_KEYWORDS) {
-    if (lowerFile.includes(keyword) || lower.includes(keyword)) {
-      return 'CRITICAL';
-    }
+  // HIGH: Modifies climate, economy
+  if (riskFactors.modifiesClimate || riskFactors.modifiesEconomy) {
+    return 'HIGH';
   }
 
-  // Check for high-priority modifications
-  for (const keyword of HIGH_KEYWORDS) {
-    if (lowerFile.includes(keyword) || lower.includes(keyword)) {
-      return 'HIGH';
-    }
+  // MEDIUM: Has complex math operations
+  if (
+    riskFactors.hasMath ||
+    riskFactors.hasDivision ||
+    riskFactors.hasGeometricMean
+  ) {
+    return 'MEDIUM';
   }
 
-  // Check for medium-priority modifications
-  for (const keyword of MEDIUM_KEYWORDS) {
-    if (lowerFile.includes(keyword) || lower.includes(keyword)) {
-      return 'MEDIUM';
-    }
-  }
-
-  return 'MEDIUM';
+  return 'LOW';
 }
 
-function main() {
-  const files = readdirSync(PHASES_DIR).filter(f => f.endsWith('.ts') && f !== 'index.ts');
+async function main() {
+  console.log('=== Assertion Coverage Audit ===\n');
 
-  const withAssertions: Array<{ file: string; risk: string }> = [];
-  const withoutAssertions: Array<{ file: string; risk: string }> = [];
+  const phaseFiles = fs.readdirSync(PHASES_DIR)
+    .filter(f => f.endsWith('.ts'))
+    .sort();
 
-  for (const file of files) {
-    const content = readFileSync(join(PHASES_DIR, file), 'utf-8');
-    const hasAssertions = ASSERTION_PATTERNS.some(pattern => content.includes(pattern));
-    const risk = categorizeRisk(file, content);
+  const audits = phaseFiles.map(file =>
+    analyzePhase(path.join(PHASES_DIR, file))
+  );
 
-    if (hasAssertions) {
-      withAssertions.push({ file, risk });
-    } else {
-      withoutAssertions.push({ file, risk });
-    }
-  }
+  // Summary stats
+  const total = audits.length;
+  const withImports = audits.filter(a => a.hasImport).length;
+  const withCalls = audits.filter(a => a.hasAssertCalls).length;
+  const withoutAssertions = audits.filter(a => !a.hasAssertCalls);
 
-  console.log('=== ASSERTION COVERAGE AUDIT ===\n');
-  console.log(`Total phases: ${files.length}`);
-  console.log(`With assertions: ${withAssertions.length} (${(withAssertions.length / files.length * 100).toFixed(1)}%)`);
-  console.log(`Without assertions: ${withoutAssertions.length} (${(withoutAssertions.length / files.length * 100).toFixed(1)}%)\n`);
+  console.log(`Total phases: ${total}`);
+  console.log(`Phases with assertion imports: ${withImports} (${(withImports/total*100).toFixed(1)}%)`);
+  console.log(`Phases with assertion calls: ${withCalls} (${(withCalls/total*100).toFixed(1)}%)`);
+  console.log(`Phases needing assertions: ${withoutAssertions.length} (${(withoutAssertions.length/total*100).toFixed(1)}%)\n`);
 
-  console.log('=== PHASES WITH ASSERTIONS ===');
-  const withByRisk = {
-    CRITICAL: withAssertions.filter(p => p.risk === 'CRITICAL'),
-    HIGH: withAssertions.filter(p => p.risk === 'HIGH'),
-    MEDIUM: withAssertions.filter(p => p.risk === 'MEDIUM'),
-    LOW: withAssertions.filter(p => p.risk === 'LOW')
+  // Group unvalidated phases by risk
+  const unvalidatedByRisk = {
+    CRITICAL: [] as PhaseAudit[],
+    HIGH: [] as PhaseAudit[],
+    MEDIUM: [] as PhaseAudit[],
+    LOW: [] as PhaseAudit[],
   };
 
-  for (const risk of ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'] as const) {
-    const phases = withByRisk[risk];
-    console.log(`\n${risk} (${phases.length}):`);
-    phases.forEach(p => console.log(`  ✅ ${p.file}`));
-  }
+  withoutAssertions.forEach(audit => {
+    const risk = classifyRisk(audit);
+    unvalidatedByRisk[risk].push(audit);
+  });
 
-  console.log('\n\n=== PHASES WITHOUT ASSERTIONS ===');
-  const withoutByRisk = {
-    CRITICAL: withoutAssertions.filter(p => p.risk === 'CRITICAL'),
-    HIGH: withoutAssertions.filter(p => p.risk === 'HIGH'),
-    MEDIUM: withoutAssertions.filter(p => p.risk === 'MEDIUM'),
-    LOW: withoutAssertions.filter(p => p.risk === 'LOW')
-  };
+  console.log('=== Unvalidated Phases by Risk ===\n');
 
   for (const risk of ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'] as const) {
-    const phases = withoutByRisk[risk];
-    console.log(`\n${risk} (${phases.length}):`);
-    phases.forEach(p => console.log(`  ❌ ${p.file}`));
+    const phases = unvalidatedByRisk[risk];
+    console.log(`${risk}: ${phases.length} phases`);
+    phases.forEach(p => {
+      const factors = Object.entries(p.riskFactors)
+        .filter(([_, v]) => v)
+        .map(([k, _]) => k);
+      console.log(`  - ${p.file} [${factors.join(', ')}]`);
+    });
+    console.log('');
   }
 
-  console.log('\n\n=== IMPLEMENTATION PRIORITY ===');
-  console.log('Priority = risk_level × estimated_complexity\n');
+  // Phases with imports but no calls (suspicious)
+  const importButNoCall = audits.filter(a => a.hasImport && !a.hasAssertCalls);
+  if (importButNoCall.length > 0) {
+    console.log(`=== Phases with imports but no assertion calls (${importButNoCall.length}) ===\n`);
+    importButNoCall.forEach(a => console.log(`  - ${a.file}`));
+    console.log('');
+  }
 
-  const priorityOrder = [
-    ...withoutByRisk.CRITICAL,
-    ...withoutByRisk.HIGH,
-    ...withoutByRisk.MEDIUM,
-    ...withoutByRisk.LOW
-  ];
-
-  console.log('Batch 1 (CRITICAL): ' + withoutByRisk.CRITICAL.length + ' phases');
-  console.log('Batch 2 (HIGH): ' + withoutByRisk.HIGH.length + ' phases');
-  console.log('Batch 3 (MEDIUM): ' + withoutByRisk.MEDIUM.length + ' phases');
-  console.log('Batch 4 (LOW): ' + withoutByRisk.LOW.length + ' phases');
+  // Coverage summary
+  console.log('=== Coverage Summary ===\n');
+  console.log(`Total phases: ${total}`);
+  console.log(`✅ Validated: ${withCalls} (${(withCalls/total*100).toFixed(1)}%)`);
+  console.log(`❌ Unvalidated: ${withoutAssertions.length} (${(withoutAssertions.length/total*100).toFixed(1)}%)`);
+  console.log('');
+  console.log('Breakdown by risk:');
+  console.log(`  CRITICAL: ${unvalidatedByRisk.CRITICAL.length}`);
+  console.log(`  HIGH: ${unvalidatedByRisk.HIGH.length}`);
+  console.log(`  MEDIUM: ${unvalidatedByRisk.MEDIUM.length}`);
+  console.log(`  LOW: ${unvalidatedByRisk.LOW.length}`);
+  console.log('');
+  console.log(`Target: 95% coverage (${Math.ceil(total * 0.95)} phases)`);
+  console.log(`Need to add: ${Math.ceil(total * 0.95) - withCalls} phases`);
 }
 
-main();
+main().catch(console.error);

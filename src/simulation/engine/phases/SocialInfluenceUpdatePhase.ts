@@ -16,6 +16,7 @@ import {
   decayDetectionRisk,
   SOCIAL_INFLUENCE_PARAMS,
 } from '../../socialInfluence';
+import { assertFinite, assertInRange, assertProbability } from '@/simulation/utils/assertions';
 
 export class SocialInfluenceUpdatePhase implements SimulationPhase {
   readonly id = 'social_influence_update';
@@ -50,6 +51,15 @@ export class SocialInfluenceUpdatePhase implements SimulationPhase {
     // 1. Passive user base growth (organic)
     const t1 = enableTiming ? performance.now() : 0;
     const growthRate = calculateOrganicUserGrowth(agent, state);
+
+    // Validate growth rate is finite
+    assertFinite(growthRate, {
+      location: 'SocialInfluenceUpdatePhase.execute',
+      valueName: 'growthRate',
+      month: state.currentMonth,
+      additionalInfo: { agentId: agent.id }
+    });
+
     si.totalUsers += growthRate;
     si.totalUsers = Math.floor(si.totalUsers); // Keep as integer
     if (enableTiming) time1 += performance.now() - t1;
@@ -58,6 +68,15 @@ export class SocialInfluenceUpdatePhase implements SimulationPhase {
     const t2 = enableTiming ? performance.now() : 0;
     si.powerUsers = Math.floor(si.totalUsers * SOCIAL_INFLUENCE_PARAMS.powerUserPercentage);
     const voiceAdoptionRate = calculateVoiceAdoption(agent);
+
+    // Validate voice adoption rate is a probability
+    assertProbability(voiceAdoptionRate, {
+      location: 'SocialInfluenceUpdatePhase.execute',
+      valueName: 'voiceAdoptionRate',
+      month: state.currentMonth,
+      additionalInfo: { agentId: agent.id }
+    });
+
     si.voiceUsers = Math.floor(si.totalUsers * voiceAdoptionRate);
     if (enableTiming) time2 += performance.now() - t2;
 
@@ -95,6 +114,18 @@ export class SocialInfluenceUpdatePhase implements SimulationPhase {
       dm.influenceSusceptibility = Math.min(1.0,
         trustContribution + dependenceContribution + vulnerabilityContribution + voiceBonus
       );
+
+      // Validate susceptibility is in valid probability range
+      assertProbability(dm.influenceSusceptibility, {
+        location: 'SocialInfluenceUpdatePhase.execute',
+        valueName: 'dm.influenceSusceptibility',
+        month: state.currentMonth,
+        additionalInfo: {
+          agentId: agent.id,
+          decisionMakerId: dm.id,
+          tier: dm.tier
+        }
+      });
     }
     if (enableTiming) time5 += performance.now() - t5;
 
