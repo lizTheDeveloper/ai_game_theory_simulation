@@ -21,6 +21,7 @@ export class CyberSecurityPhase implements SimulationPhase {
   readonly id = 'cybersecurity';
   readonly name = 'Cybersecurity Breaches';
   readonly order = 5.0;
+  readonly dependencies = ['ai-lifecycle'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute existing cybersecurity logic

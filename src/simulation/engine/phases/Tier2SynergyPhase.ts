@@ -27,11 +27,13 @@ import type {
   RNGFunction
 } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertProbability } from '@/simulation/utils/assertions';
 
 export class Tier2SynergyPhase implements SimulationPhase {
   id = 'tier2_synergy';
   name = 'TIER 2: Intervention Synergy';
   order = 21.0; // After all TIER 2 phases
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
@@ -55,6 +57,14 @@ export class Tier2SynergyPhase implements SimulationPhase {
       // Boost interpretability control loss reduction
       interventions.interpretability.controlLossReduction *= interpretabilityBonus;
 
+      // Validate control loss reduction is finite
+      assertFinite(interventions.interpretability.controlLossReduction, {
+        location: 'Tier2SynergyPhase.execute',
+        valueName: 'interpretability.controlLossReduction',
+        month: state.currentMonth,
+        additionalInfo: { synergy: 'Interpretability + Crisis Anticipation' }
+      });
+
       // Boost crisis anticipation effectiveness (tracked in state for next month)
       // Note: We can't directly modify effectiveness since it's in parameters, but we can
       // modify the state tracking which affects reported values
@@ -64,6 +74,14 @@ export class Tier2SynergyPhase implements SimulationPhase {
         // Apply synergy bonus to deaths prevented (retroactive for this month)
         const synergyBonus = crisisAnticipationBonus - 1.0;  // 0.15
         interventions.crisisAnticipation.crisisDeathsPrevented *= (1 + synergyBonus);
+
+        // Validate deaths prevented is finite
+        assertFinite(interventions.crisisAnticipation.crisisDeathsPrevented, {
+          location: 'Tier2SynergyPhase.execute',
+          valueName: 'crisisAnticipation.crisisDeathsPrevented',
+          month: state.currentMonth,
+          additionalInfo: { synergy: 'Interpretability + Crisis Anticipation' }
+        });
       }
 
       activeSynergies.push('Interpretability + Crisis Anticipation (+15% each)');
@@ -96,6 +114,14 @@ export class Tier2SynergyPhase implements SimulationPhase {
       // Track via effectiveSecurityRate - actual security effectiveness already applied
       const currentSecurityRate = interventions.nuclearSecurity.effectiveSecurityRate || 0;
       interventions.nuclearSecurity.effectiveSecurityRate = Math.min(1.0, currentSecurityRate * nuclearBonus);
+
+      // Validate effective security rate is in valid range [0, 1]
+      assertProbability(interventions.nuclearSecurity.effectiveSecurityRate, {
+        location: 'Tier2SynergyPhase.execute',
+        valueName: 'nuclearSecurity.effectiveSecurityRate',
+        month: state.currentMonth,
+        additionalInfo: { synergy: 'Nuclear Security + Dark Compute' }
+      });
 
       // Boost dark compute detection rate for next month
       // Note: Detection happens in DarkComputePhase, synergy improves baseline

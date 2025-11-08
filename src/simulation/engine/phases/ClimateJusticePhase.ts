@@ -17,7 +17,7 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 export class ClimateJusticePhase implements SimulationPhase {
   readonly id = 'climate_justice';
   readonly name = 'Climate Justice';
-  readonly order = 6.7;
+  readonly order = 7.7;
 
   // DEPENDENCIES (Nov 6, 2025): Needs war/meaning feedback
   readonly dependencies = [

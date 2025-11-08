@@ -25,6 +25,7 @@ export class PolicyImplementationPhase implements SimulationPhase {
   readonly id = 'policy-implementation';
   readonly name = 'Policy Implementation';
   readonly order = 25.5;
+  dependencies = ['government-response'];
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const defaultContext: PhaseContext = { month: state.currentMonth, data: new Map(), executedPhases: new Set() };

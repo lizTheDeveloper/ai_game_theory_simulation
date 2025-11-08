@@ -31,6 +31,7 @@ export class EarlyWarningPhase implements SimulationPhase {
   readonly id = 'early-warning';
   readonly name = 'Early Warning Detection';
   readonly order = 26.5;
+  dependencies = ['planetary_boundaries'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Only run if planetary boundaries system exists

@@ -39,11 +39,13 @@ import type {
   RNGFunction
 } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertAICapability, assertFinite } from '@/simulation/utils/assertions';
 
 export class Tier2DarkComputePhase implements SimulationPhase {
   id = 'tier2_dark_compute';
   name = 'TIER 2: Dark Compute Monitoring';
   order = 16.5; // After AI capability growth, before control crisis detection
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
@@ -59,7 +61,27 @@ export class Tier2DarkComputePhase implements SimulationPhase {
     // === UNLOCK CONDITIONS ===
     if (!darkComputeState.unlocked) {
       // Unlock when high AI capability + government concern + international coordination
-      const avgCapability = state.aiAgents.reduce((sum, a) => sum + a.capability, 0) / state.aiAgents.length;
+      const avgCapability = state.aiAgents.length > 0
+        ? state.aiAgents.reduce((sum, a) => sum + a.capability, 0) / state.aiAgents.length
+        : 0;
+
+      // Validate average capability is finite and in valid range
+      if (state.aiAgents.length > 0) {
+        assertFinite(avgCapability, {
+          location: 'Tier2DarkComputePhase.execute',
+          valueName: 'avgCapability',
+          month: state.currentMonth,
+          additionalInfo: { agentCount: state.aiAgents.length }
+        });
+
+        assertAICapability(avgCapability, {
+          location: 'Tier2DarkComputePhase.execute',
+          valueName: 'avgCapability',
+          month: state.currentMonth,
+          additionalInfo: { agentCount: state.aiAgents.length }
+        });
+      }
+
       // Use alignmentResearchInvestment as proxy for international coordination
       const internationalCoordination = state.government.alignmentResearchInvestment;
 

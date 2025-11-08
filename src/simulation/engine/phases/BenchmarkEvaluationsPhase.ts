@@ -13,6 +13,7 @@ export class BenchmarkEvaluationsPhase implements SimulationPhase {
   readonly id = 'benchmark-evaluations';
   readonly name = 'Benchmark Evaluations';
   readonly order = 22.0;
+  dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     console.log(`[DEBUG BENCHMARK START month=${state.currentMonth}] socialStability = ${state.globalMetrics.socialStability.toFixed(4)}`);

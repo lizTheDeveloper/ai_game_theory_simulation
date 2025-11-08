@@ -27,11 +27,13 @@ import type {
   RNGFunction
 } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertAICapability, assertFinite, assertProbability } from '@/simulation/utils/assertions';
 
 export class Tier2CrisisAnticipationPhase implements SimulationPhase {
   id = 'tier2_crisis_anticipation';
   name = 'TIER 2: Crisis Anticipation Systems';
   order = 14.5; // Before crisis detection, after AI capability updates
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
@@ -47,8 +49,35 @@ export class Tier2CrisisAnticipationPhase implements SimulationPhase {
     // === UNLOCK CONDITIONS ===
     if (!anticipationState.unlocked) {
       // Unlock when AI capability sufficient + government investing in prediction
-      const avgCapability = state.aiAgents.reduce((sum, a) => sum + a.capability, 0) / state.aiAgents.length;
+      const avgCapability = state.aiAgents.length > 0
+        ? state.aiAgents.reduce((sum, a) => sum + a.capability, 0) / state.aiAgents.length
+        : 0;
+
+      // Validate average capability is finite and in valid range
+      if (state.aiAgents.length > 0) {
+        assertFinite(avgCapability, {
+          location: 'Tier2CrisisAnticipationPhase.execute',
+          valueName: 'avgCapability',
+          month: state.currentMonth,
+          additionalInfo: { agentCount: state.aiAgents.length }
+        });
+
+        assertAICapability(avgCapability, {
+          location: 'Tier2CrisisAnticipationPhase.execute',
+          valueName: 'avgCapability',
+          month: state.currentMonth,
+          additionalInfo: { agentCount: state.aiAgents.length }
+        });
+      }
+
       const governmentInvestment = state.government.alignmentResearchInvestment;
+
+      // Validate government investment is a valid probability
+      assertProbability(governmentInvestment, {
+        location: 'Tier2CrisisAnticipationPhase.execute',
+        valueName: 'governmentInvestment',
+        month: state.currentMonth
+      });
 
       // Note: Already operational in 2024-2025, so unlock early
       const shouldUnlock =
@@ -79,6 +108,13 @@ export class Tier2CrisisAnticipationPhase implements SimulationPhase {
     if (anticipationState.unlocked && !anticipationState.active) {
       const progressIncrement = 1 / params.deploymentMonths;
       anticipationState.deploymentProgress = Math.min(1, anticipationState.deploymentProgress + progressIncrement);
+
+      // Validate deployment progress is in valid range [0, 1]
+      assertProbability(anticipationState.deploymentProgress, {
+        location: 'Tier2CrisisAnticipationPhase.execute',
+        valueName: 'deploymentProgress',
+        month: state.currentMonth
+      });
 
       // Activate when 60% deployed (operational threshold)
       if (anticipationState.deploymentProgress >= 0.60 && !anticipationState.active) {

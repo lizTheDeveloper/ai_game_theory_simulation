@@ -12,6 +12,7 @@ export class GeoengineringPhase implements SimulationPhase {
   readonly id = 'geoengineering';
   readonly name = 'Geoengineering Update';
   readonly order = 19.0;
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateGeoengineering } = require('../../geoengineering');

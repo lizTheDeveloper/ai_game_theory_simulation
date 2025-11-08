@@ -269,5 +269,6 @@ export const EvolutionarySelectionPhase = {
   id: 'evolutionary_selection',
   name: 'Evolutionary Selection',
   order: 4.3,
+  dependencies: ['collective_formation'],
   execute: executeEvolutionarySelectionPhase,
 };

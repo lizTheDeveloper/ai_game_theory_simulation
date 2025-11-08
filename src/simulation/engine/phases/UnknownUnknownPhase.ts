@@ -39,6 +39,7 @@ import {
 } from '../../unknownUnknowns';
 import { DEFAULT_UNKNOWN_UNKNOWN_CONFIG } from '@/types/unknownUnknown';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertProbability, assertAICapability } from '@/simulation/utils/assertions';
 
 export class UnknownUnknownPhase implements SimulationPhase {
   readonly id = 'unknown-unknown';
@@ -94,6 +95,13 @@ export class UnknownUnknownPhase implements SimulationPhase {
     if (state.currentMonth % 24 === 0) {
       const probability = calculateUnknownUnknownProbability(state, DEFAULT_UNKNOWN_UNKNOWN_CONFIG);
 
+      // Validate probability is in valid range [0, 1]
+      assertProbability(probability, {
+        location: 'UnknownUnknownPhase.execute',
+        valueName: 'calculatedProbability',
+        month: state.currentMonth
+      });
+
       if (probability > 0.002) { // > 0.2% monthly (worth noting)
         console.log(`\n☄️ UNKNOWN UNKNOWN PROBABILITY (Year ${Math.floor(state.currentMonth / 12)})`);
         console.log(`   Total: ${(probability * 100).toFixed(3)}% per month`);
@@ -102,6 +110,16 @@ export class UnknownUnknownPhase implements SimulationPhase {
         const maxAICapability = state.aiAgents.length > 0
           ? Math.max(...state.aiAgents.map(ai => ai.capability))
           : 0;
+
+        // Validate max AI capability is in valid range [0, 5]
+        if (state.aiAgents.length > 0) {
+          assertAICapability(maxAICapability, {
+            location: 'UnknownUnknownPhase.execute',
+            valueName: 'maxAICapability',
+            month: state.currentMonth
+          });
+        }
+
         console.log(`   AI multiplier: ${(1 + Math.min(maxAICapability * 0.5, 1.0)).toFixed(2)}× (max capability: ${maxAICapability.toFixed(2)})`);
 
         const occurrenceCount = state.unknownUnknownCount || 0;
