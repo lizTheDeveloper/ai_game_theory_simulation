@@ -19,6 +19,14 @@ export class MemeticEvolutionPhase implements SimulationPhase {
   readonly order = 18.5; // After human enhancement (17.0), before social QoL calculation (19.0)
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
+    if (!rng || typeof rng !== 'function') {
+      throw new Error(
+        `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
+        `(Month ${state.currentMonth})`
+      );
+    }
+
     // Phase 4: Update AI amplification effects (deepfakes, bots, algorithms)
     setDeterministicRng(rng);
     // Must run BEFORE meme transmission (affects transmission rates)

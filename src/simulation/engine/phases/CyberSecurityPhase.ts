@@ -24,6 +24,14 @@ export class CyberSecurityPhase implements SimulationPhase {
   readonly dependencies = ['ai-lifecycle'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
+    if (!rng || typeof rng !== 'function') {
+      throw new Error(
+        `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
+        `(Month ${state.currentMonth})`
+      );
+    }
+
     // Import and execute existing cybersecurity logic
     setDeterministicRng(rng);
     const { attemptBreaches } = require('../../cyberSecurity');

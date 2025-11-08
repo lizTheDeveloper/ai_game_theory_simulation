@@ -34,6 +34,14 @@ export class EarlyWarningPhase implements SimulationPhase {
   dependencies = ['planetary_boundaries'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
+    if (!rng || typeof rng !== 'function') {
+      throw new Error(
+        `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
+        `(Month ${state.currentMonth})`
+      );
+    }
+
     // Only run if planetary boundaries system exists
     setDeterministicRng(rng);
     if (!state.planetaryBoundariesSystem || !state.planetaryBoundariesSystem.earlyWarning) {
