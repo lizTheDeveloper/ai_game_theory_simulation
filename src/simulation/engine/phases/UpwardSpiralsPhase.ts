@@ -14,6 +14,14 @@ export class UpwardSpiralsPhase implements SimulationPhase {
   readonly order = 11.0;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
+    // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
+    if (!rng || typeof rng !== 'function') {
+      throw new Error(
+        `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
+        `(Month ${state.currentMonth})`
+      );
+    }
+
     const { updateUpwardSpirals } = require('../../upwardSpirals');
     setDeterministicRng(rng);
 
