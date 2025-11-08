@@ -232,9 +232,10 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
 
   // Research investment (as % of economy)
   const researchInvestments = state.government.researchInvestments;
-  // FIX (Nov 7, 2025): Sort keys for deterministic reduce order (Issue #11)
-  const sortedKeys = Object.keys(researchInvestments).sort();
-  const totalResearch = sortedKeys.reduce((sum, key) => sum + (Number(researchInvestments[key]) || 0), 0);
+  // FIX (Nov 8, 2025): Use totalBudget instead of broken reduce over mixed object/number fields
+  // Previous code: Object.keys().reduce() tried to Number() nested objects (biotech, materials, climate)
+  // This produced NaN, which || 0 silently converted to 0, hiding the bug
+  const totalResearch = researchInvestments.totalBudget;
   const researchIntensive = totalResearch > 50; // $50B+/month
 
   // AI-accelerated research
@@ -273,7 +274,7 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
     spiral.strength = (
       Math.min(1.0, unlockedCount / 8) * 0.25 +
       Math.min(1.0, deployedCount / 6) * 0.25 +
-      Math.min(1.0, (totalResearch || 0) / 100) * 0.2 +
+      Math.min(1.0, totalResearch / 100) * 0.2 +  // FIX (Nov 8): Remove || 0 fallback (totalBudget is always finite)
       Math.min(1.0, avgAICapability / 4.0) * 0.15 +
       Math.min(1.0, workflowAdaptation / 0.7) * 0.15  // Workflow adaptation contributes to strength
     );
@@ -748,13 +749,14 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   // SCIENTIFIC SPIRAL
   const unlockedCount = getUnlockedTechCount(state);
   const deployedCount = getDeployedTechCount(state, 0.5);
-  const totalResearch = Object.values(state.government.researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
+  // FIX (Nov 8, 2025): Use totalBudget instead of broken reduce (same bug as line 237)
+  const totalResearch = state.government.researchInvestments.totalBudget;
   const researchIntensive = totalResearch > 50;
   const aiAccelerated = avgAI > 1.2; // Lowered from 2.0 - AI already accelerating science at GPT-4 level
-  
+
   // console.error(`\n🔬 SCIENTIFIC SPIRAL: ${spirals.scientific.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
   // console.error(`   Breakthroughs: ${unlockedCount} unlocked, ${deployedCount} deployed ${deployedCount >= 4 ? '✅' : '❌'} (need 4+ deployed >50%)`);
-  // console.error(`   Research Investment: $${Number(totalResearch || 0).toFixed(1)}B/month ${researchIntensive ? '✅' : '❌'} (need >$50B/month)`);
+  // console.error(`   Research Investment: $${totalResearch.toFixed(1)}B/month ${researchIntensive ? '✅' : '❌'} (need >$50B/month)`);
   // console.error(`   AI Acceleration: avg capability ${avgAI.toFixed(2)} ${aiAccelerated ? '✅' : '❌'} (need >1.2)`);
   
   // MEANING SPIRAL

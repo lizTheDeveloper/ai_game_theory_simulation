@@ -59,8 +59,18 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
   /**
    * Check for active crises and deploy emergency responses if needed
+   *
+   * BIFURCATION INTEGRATION (Nov 8, 2025):
+   * - Check bifurcation threshold crossings
+   * - Trigger emergency responses based on regime shifts
+   * - Use varianceAmplification to adjust response urgency
    */
   private checkAndDeployEmergencyResponses(state: GameState, events: any[]): void {
+    // BIFURCATION-TRIGGERED EMERGENCY RESPONSES
+    // When bifurcation crosses critical thresholds, activate emergency protocols
+    // Research: Scheffer et al. (2024) - early warning signals before regime shifts
+    this.checkBifurcationEmergencies(state, events);
+
     // PANDEMIC CRISIS
     // FIX #11A: Lower threshold from 0.2 (trigger earlier)
     if (state.crises?.megaPandemic?.active && state.crises.megaPandemic.socialDisruption > 0.2) {
@@ -291,6 +301,241 @@ export class EmergencyResponsePhase implements SimulationPhase {
         }
       }
     }
+  }
+
+  /**
+   * Check bifurcation state and trigger emergency responses for threshold crossings
+   *
+   * BIFURCATION INTEGRATION (Nov 8, 2025):
+   * Research: Scheffer et al. (2024) - early warning signals predict regime shifts
+   * When system crosses critical thresholds, emergency response must be immediate
+   */
+  private checkBifurcationEmergencies(state: GameState, events: any[]): void {
+    const bifState = state.bifurcationState;
+    if (!bifState) return;
+
+    // Check if regime recently shifted (within last 3 months)
+    const recentShift = bifState.previousRegime !== bifState.currentRegime &&
+                        bifState.currentRegime !== 'status-quo';
+
+    // ECOLOGICAL COLLAPSE REGIME
+    if (bifState.currentRegime === 'ecological-collapse') {
+      const existing = getActiveResponse(state, 'climate');
+      if (!existing) {
+        // Ecological collapse regime → CRITICAL climate emergency
+        const severity = assertFinite(0.9, {
+          location: 'EmergencyResponsePhase.checkBifurcationEmergencies',
+          valueName: 'ecologicalCollapseSeverity',
+          month: state.currentMonth
+        });
+
+        const response = deployEmergencyResponse(
+          state,
+          'climate',
+          severity,
+          state.currentMonth
+        );
+
+        if (response) {
+          events.push({
+            type: 'emergency_response',
+            timestamp: state.currentMonth,
+            title: '🚨🌀 BIFURCATION EMERGENCY: Ecological Collapse',
+            description: `System crossed ecological collapse threshold. Emergency climate response deployed immediately. Variance amplification: ${bifState.varianceAmplification.toFixed(2)}×`,
+            effects: { crisisType: 'climate', effectiveness: response.effectiveness, bifurcationTriggered: true },
+          });
+        }
+      }
+    }
+
+    // SOCIAL BREAKDOWN REGIME
+    if (bifState.currentRegime === 'social-breakdown') {
+      const existing = getActiveResponse(state, 'social');
+      if (!existing) {
+        // Social breakdown regime → CRITICAL social emergency
+        const severity = assertFinite(0.85, {
+          location: 'EmergencyResponsePhase.checkBifurcationEmergencies',
+          valueName: 'socialBreakdownSeverity',
+          month: state.currentMonth
+        });
+
+        const response = deployEmergencyResponse(
+          state,
+          'social',
+          severity,
+          state.currentMonth
+        );
+
+        if (response) {
+          events.push({
+            type: 'emergency_response',
+            timestamp: state.currentMonth,
+            title: '🚨🌀 BIFURCATION EMERGENCY: Social Breakdown',
+            description: `System crossed social breakdown threshold. Emergency social stabilization deployed. Trust: ${(state.society.trustInAI * 100).toFixed(0)}%`,
+            effects: { crisisType: 'social', effectiveness: response.effectiveness, bifurcationTriggered: true },
+          });
+        }
+      }
+    }
+
+    // ECONOMIC COLLAPSE REGIME
+    if (bifState.currentRegime === 'economic-collapse') {
+      const existing = getActiveResponse(state, 'economic');
+      if (!existing) {
+        // Economic collapse regime → CRITICAL economic emergency
+        const severity = assertFinite(0.9, {
+          location: 'EmergencyResponsePhase.checkBifurcationEmergencies',
+          valueName: 'economicCollapseSeverity',
+          month: state.currentMonth
+        });
+
+        const response = deployEmergencyResponse(
+          state,
+          'economic',
+          severity,
+          state.currentMonth
+        );
+
+        if (response) {
+          events.push({
+            type: 'emergency_response',
+            timestamp: state.currentMonth,
+            title: '🚨🌀 BIFURCATION EMERGENCY: Economic Collapse',
+            description: `System crossed economic collapse threshold. Emergency economic stabilization deployed. QoL: ${(state.globalMetrics.qualityOfLife * 100).toFixed(0)}%`,
+            effects: { crisisType: 'economic', effectiveness: response.effectiveness, bifurcationTriggered: true },
+          });
+        }
+      }
+    }
+
+    // STATE FAILURE REGIME
+    if (bifState.currentRegime === 'state-failure') {
+      // State failure → multiple emergency responses (coordination breakdown)
+      // Deploy both social and economic responses (can't coordinate without governance)
+      const existingSocial = getActiveResponse(state, 'social');
+      const existingEconomic = getActiveResponse(state, 'economic');
+
+      if (!existingSocial) {
+        const severity = assertFinite(0.8, {
+          location: 'EmergencyResponsePhase.checkBifurcationEmergencies',
+          valueName: 'stateFailureSeverity',
+          month: state.currentMonth
+        });
+
+        const response = deployEmergencyResponse(
+          state,
+          'social',
+          severity,
+          state.currentMonth
+        );
+
+        if (response) {
+          events.push({
+            type: 'emergency_response',
+            timestamp: state.currentMonth,
+            title: '🚨🌀 BIFURCATION EMERGENCY: State Failure',
+            description: `System crossed state failure threshold. Emergency coordination protocols activated. Legitimacy: ${(state.government.legitimacy * 100).toFixed(0)}%`,
+            effects: { crisisType: 'social', effectiveness: response.effectiveness, bifurcationTriggered: true },
+          });
+        }
+      }
+    }
+
+    // PROXIMITY-BASED EARLY WARNING
+    // When very close to threshold (distance < 0.1), activate preventive response
+    // Research: Early warning signals allow intervention before regime shift
+    if (bifState.distanceToNearestThreshold < 0.1 && bifState.currentRegime === 'status-quo') {
+      // Identify which threshold we're approaching
+      const nearThreshold = this.identifyNearestThreshold(state, bifState);
+
+      if (nearThreshold && nearThreshold.crisisType) {
+        const existing = getActiveResponse(state, nearThreshold.crisisType);
+        if (!existing) {
+          const severity = assertFinite(0.5 + (0.1 - bifState.distanceToNearestThreshold) * 5, {
+            location: 'EmergencyResponsePhase.checkBifurcationEmergencies',
+            valueName: 'proximityEmergencySeverity',
+            month: state.currentMonth
+          });
+
+          const response = deployEmergencyResponse(
+            state,
+            nearThreshold.crisisType,
+            severity,
+            state.currentMonth
+          );
+
+          if (response) {
+            events.push({
+              type: 'emergency_response',
+              timestamp: state.currentMonth,
+              title: `⚠️🔀 EARLY WARNING: Approaching ${nearThreshold.name} Threshold`,
+              description: `System dangerously close to bifurcation point (distance: ${bifState.distanceToNearestThreshold.toFixed(3)}). Preventive emergency response deployed. Amplification: ${bifState.varianceAmplification.toFixed(2)}×`,
+              effects: { crisisType: nearThreshold.crisisType, effectiveness: response.effectiveness, earlyWarning: true },
+            });
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Identify which threshold system is nearest to crossing
+   * Returns crisis type and name for emergency response
+   */
+  private identifyNearestThreshold(
+    state: GameState,
+    bifState: import('@/types/bifurcation').BifurcationState
+  ): { crisisType: 'climate' | 'social' | 'economic' | 'pandemic' | 'technological' | 'nuclear', name: string } | null {
+    // Calculate current values for all thresholds (with assertions)
+    const climateStability = assertFinite(
+      state.environmentalAccumulation?.climateStability ?? 0.5,
+      {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        valueName: 'climateStability',
+        month: state.currentMonth
+      }
+    );
+
+    const socialCohesion = assertFinite(
+      state.society?.coordinationCapacity ?? 0.5,
+      {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        valueName: 'socialCohesion',
+        month: state.currentMonth
+      }
+    );
+
+    const economicStability = assertFinite(
+      (state.globalMetrics?.economicTransitionStage ?? 2) / 4.0,
+      {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        valueName: 'economicStability',
+        month: state.currentMonth
+      }
+    );
+
+    const governanceLegitimacy = assertFinite(
+      state.government?.legitimacy ?? 0.5,
+      {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        valueName: 'governanceLegitimacy',
+        month: state.currentMonth
+      }
+    );
+
+    // Find which is closest to its threshold
+    const distances = [
+      { distance: Math.abs(climateStability - bifState.environmentalCollapseThreshold.location), type: 'climate' as const, name: 'Environmental Collapse' },
+      { distance: Math.abs(socialCohesion - bifState.socialBreakdownThreshold.location), type: 'social' as const, name: 'Social Breakdown' },
+      { distance: Math.abs(economicStability - bifState.economicCollapseThreshold.location), type: 'economic' as const, name: 'Economic Collapse' },
+      { distance: Math.abs(governanceLegitimacy - bifState.governanceFailureThreshold.location), type: 'social' as const, name: 'Governance Failure' },
+    ];
+
+    const nearest = distances.reduce((min, current) =>
+      current.distance < min.distance ? current : min
+    );
+
+    return { crisisType: nearest.type, name: nearest.name };
   }
 
   /**

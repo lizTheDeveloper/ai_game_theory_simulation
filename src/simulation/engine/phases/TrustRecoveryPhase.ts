@@ -22,6 +22,14 @@ export class TrustRecoveryPhase implements SimulationPhase {
   readonly order = 24.5;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
+    if (!rng || typeof rng !== 'function') {
+      throw new Error(
+        `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
+        `(Month ${state.currentMonth})`
+      );
+    }
+
     // Update trust based on recovery factors (education, benefits, safety) and decay factors (incidents, misalignment)
     setDeterministicRng(rng);
     updateTrustRecovery(state);
