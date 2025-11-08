@@ -20,7 +20,18 @@
 
 import type { GameState } from '../types/game';
 import type { RNGFunction } from '../types/game';
-import { assertProbability, assertInRange } from './utils/assertions';
+import { assertProbability, assertInRange, assertFinite } from './utils/assertions';
+
+/**
+ * Default configuration for circuit breaker deployment
+ *
+ * These are research-backed defaults when config is not specified
+ */
+const DEFAULT_CIRCUIT_BREAKER_CONFIG = {
+  vetoPoints: 3,        // Human-in-the-loop: 3 veto points (Biden-Xi agreement baseline)
+  coverage: 0.8,        // Kill switches: 80% coverage (CCW technical safeguards 2024)
+  delayDuration: 24     // Time delays: 24 hours (NDAA 2025 cooling-off period)
+} as const;
 
 /**
  * Nuclear Command & Control System State
@@ -379,7 +390,18 @@ export function deployCircuitBreaker(
       if (!ncc.humanInTheLoop.deployed) {
         ncc.humanInTheLoop.deployed = true;
         ncc.humanInTheLoop.deploymentMonth = currentMonth;
-        ncc.humanInTheLoop.vetoPointsEnforced = config?.vetoPoints ?? 3; // Default: 3 veto points
+
+        // Use explicit default, validate if provided
+        const vetoPoints = config?.vetoPoints !== undefined
+          ? config.vetoPoints
+          : DEFAULT_CIRCUIT_BREAKER_CONFIG.vetoPoints;
+
+        ncc.humanInTheLoop.vetoPointsEnforced = assertInRange(vetoPoints, 1, 10, {
+          location: 'deployCircuitBreaker',
+          valueName: 'vetoPoints',
+          month: currentMonth,
+          additionalInfo: { layer: 'human_in_the_loop' }
+        });
 
         console.log(`\n✅ HUMAN-IN-THE-LOOP DEPLOYED (Month ${currentMonth}):`);
         console.log(`   Veto points enforced: ${ncc.humanInTheLoop.vetoPointsEnforced}`);
@@ -391,7 +413,18 @@ export function deployCircuitBreaker(
       if (!ncc.aiKillSwitches.deployed) {
         ncc.aiKillSwitches.deployed = true;
         ncc.aiKillSwitches.deploymentMonth = currentMonth;
-        ncc.aiKillSwitches.coverage = config?.coverage ?? 0.8; // Default: 80% coverage
+
+        // Use explicit default, validate if provided
+        const coverage = config?.coverage !== undefined
+          ? config.coverage
+          : DEFAULT_CIRCUIT_BREAKER_CONFIG.coverage;
+
+        ncc.aiKillSwitches.coverage = assertProbability(coverage, {
+          location: 'deployCircuitBreaker',
+          valueName: 'coverage',
+          month: currentMonth,
+          additionalInfo: { layer: 'kill_switches' }
+        });
 
         console.log(`\n✅ AI KILL SWITCHES DEPLOYED (Month ${currentMonth}):`);
         console.log(`   Coverage: ${(ncc.aiKillSwitches.coverage * 100).toFixed(0)}%`);
@@ -414,7 +447,18 @@ export function deployCircuitBreaker(
       if (!ncc.timeDelays.deployed) {
         ncc.timeDelays.deployed = true;
         ncc.timeDelays.deploymentMonth = currentMonth;
-        ncc.timeDelays.delayDuration = config?.delayDuration ?? 24; // Default: 24 hours
+
+        // Use explicit default, validate if provided
+        const delayDuration = config?.delayDuration !== undefined
+          ? config.delayDuration
+          : DEFAULT_CIRCUIT_BREAKER_CONFIG.delayDuration;
+
+        ncc.timeDelays.delayDuration = assertInRange(delayDuration, 1, 168, {
+          location: 'deployCircuitBreaker',
+          valueName: 'delayDuration',
+          month: currentMonth,
+          additionalInfo: { layer: 'time_delays', unit: 'hours' }
+        });
 
         console.log(`\n✅ TIME DELAYS DEPLOYED (Month ${currentMonth}):`);
         console.log(`   Delay duration: ${ncc.timeDelays.delayDuration} hours`);
