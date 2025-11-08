@@ -1,9 +1,5 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 11/8/2025, 5:30:05 PM
-=======
-**Generated:** 11/8/2025, 6:30:04 AM
->>>>>>> Stashed changes
+**Generated:** 11/8/2025, 6:30:04 PM
 **Files Scanned:** 333
 
 ---
