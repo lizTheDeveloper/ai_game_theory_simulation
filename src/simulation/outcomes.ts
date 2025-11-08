@@ -10,6 +10,7 @@
  */
 
 import { GameState, OutcomeMetrics, OutcomeType, GoldenAgeState } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 import { calculateQualityOfLife } from './qualityOfLife';
 import { getTrustInAI } from './socialCohesion';
 import {

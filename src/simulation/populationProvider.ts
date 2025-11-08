@@ -55,6 +55,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 import {
   PopulationProvider,
   PopulationData,

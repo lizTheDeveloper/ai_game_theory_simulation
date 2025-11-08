@@ -11,6 +11,7 @@
  */
 
 import { GameState, AIAgent, BenchmarkResult, AICapabilityProfile, GameEvent } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { detectBehavioralAnomalies, updateBehavioralTracking } from './behavioralDetection';
 import { detectViaEnsemble, initializeEnsembleDetection, updateEnsembleStatistics } from './ensembleDetection';
@@ -153,29 +154,29 @@ function measureCapability(
   // Add measurement noise (better evaluation = less noise)
   const noiseLevel = 0.2 * (1 - evaluationQuality); // [0, 0.2]
   
-  // Apply noise to each dimension
+  // Apply noise to each dimension (round to integers - AI capabilities are discrete levels)
   Object.keys(measured).forEach(key => {
     if (key === 'research') {
       // Handle research subdimensions
       Object.keys(measured.research).forEach(domain => {
         Object.keys(measured.research[domain]).forEach(subDomain => {
           const noise = (rng() - 0.5) * 2 * noiseLevel; // [-noiseLevel, +noiseLevel]
-          measured.research[domain][subDomain] = Math.max(0, measured.research[domain][subDomain] * (1 + noise));
+          measured.research[domain][subDomain] = Math.round(Math.max(0, measured.research[domain][subDomain] * (1 + noise)));
         });
       });
     } else {
       const noise = (rng() - 0.5) * 2 * noiseLevel;
-      (measured as any)[key] = Math.max(0, (measured as any)[key] * (1 + noise));
+      (measured as any)[key] = Math.round(Math.max(0, (measured as any)[key] * (1 + noise)));
     }
   });
   
   // Gaming detection: If government has good evaluation, might see through some inflation
   if (strategy === 'gaming' && evaluationQuality > 0.6) {
     const detectionFactor = evaluationQuality - 0.5; // [0.1, 0.5]
-    // Deflate measured capability slightly
+    // Deflate measured capability slightly (round to integers - AI capabilities are discrete levels)
     const deflation = 1 - (detectionFactor * 0.1); // [0.95, 0.99]
-    measured.cognitive *= deflation;
-    measured.digital *= deflation;
+    measured.cognitive = Math.round(measured.cognitive * deflation);
+    measured.digital = Math.round(measured.digital * deflation);
   }
   
   return measured;

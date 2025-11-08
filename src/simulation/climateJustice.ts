@@ -600,7 +600,14 @@ export function getGlobalClimateJusticeMetrics(state: GameState): {
 
   // Climate justice score: How well are reparations flowing
   const justiceScore = totalPaid > 0
-    ? Math.min(1.0, totalReceived / totalPaid)
+    ? assertProbability(
+        Math.min(1.0, totalReceived / totalPaid),
+        {
+          location: 'updateClimateJustice',
+          valueName: 'climateJusticeScore',
+          additionalInfo: { totalReceived, totalPaid }
+        }
+      )
     : 0;
 
   return {

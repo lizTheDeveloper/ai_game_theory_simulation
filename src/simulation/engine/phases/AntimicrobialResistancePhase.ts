@@ -37,26 +37,15 @@ export class AntimicrobialResistancePhase implements SimulationPhase {
     updateAMRSystem(state, rng);
 
     // Validate AMR state after update (prevent NaN propagation)
-    if (state.antimicrobialResistance) {
-      assertInRange(
-        state.antimicrobialResistance.resistancePrevalence,
-        0,
-        1,
-        {
-          location: 'AntimicrobialResistancePhase.execute',
-          valueName: 'resistancePrevalence',
-          month: state.currentMonth
-        }
-      );
-
-      assertFinite(state.antimicrobialResistance.currentMortalityRate, {
+    if (state.antimicrobialResistanceSystem) {
+      assertFinite(state.antimicrobialResistanceSystem.currentDeathRate, {
         location: 'AntimicrobialResistancePhase.execute',
-        valueName: 'currentMortalityRate',
+        valueName: 'currentDeathRate',
         month: state.currentMonth
       });
 
       assertInRange(
-        state.antimicrobialResistance.medicalEffectiveness,
+        state.antimicrobialResistanceSystem.currentMedicalEffectiveness,
         0,
         1,
         {

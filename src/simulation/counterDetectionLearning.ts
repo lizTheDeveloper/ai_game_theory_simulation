@@ -8,6 +8,7 @@
  */
 
 import { GameState, AIAgent } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Update counter-detection learning for all misaligned AIs

@@ -16,6 +16,7 @@
 
 import { GameState } from '../../types/game';
 import { MemeticSegment, BeliefVector } from '../../types/memetics';
+import { assertFinite } from '@/simulation/utils/assertions';
 
 /**
  * Update all segment beliefs based on network interactions
@@ -78,7 +79,10 @@ export function updateBeliefs(state: GameState): void {
       
       // Calculate belief update
       if (influenceWeight > 0) {
-        const averageInfluence = influenceSum / influenceWeight;
+        const averageInfluence = assertFinite(
+          influenceSum / influenceWeight,
+          { location: 'updateBeliefs', valueName: 'averageInfluence', month: state.currentMonth, additionalInfo: { dimension: dim } }
+        );
         const update = segment.susceptibilityToMemes * averageInfluence;
         
         // Apply update with memetic immunity as dampening
@@ -119,7 +123,11 @@ function applyExternalInfluences(state: GameState, segment: MemeticSegment, beli
   // 2. AI beneficial actions → increase trust (if any)
   const beneficialAI = state.aiAgents.filter(ai => ai.beneficialActions > ai.harmfulActions).length;
   const totalAI = Math.max(1, state.aiAgents.length);
-  if (beneficialAI / totalAI > 0.7) {
+  const beneficialRatio = assertFinite(
+    beneficialAI / totalAI,
+    { location: 'applyExternalInfluences', valueName: 'beneficialAIRatio', month: state.currentMonth }
+  );
+  if (beneficialRatio > 0.7) {
     beliefs.aiTrust += 0.005 * (1 - segment.memeticImmunity); // 0.5% increase per month if most AIs beneficial
   }
   
@@ -195,8 +203,11 @@ function updatePolarizationMetrics(state: GameState): void {
       }
     }
   }
-  memetic.polarization.echoChambersStrength = totalExternalStrength > 0 
-    ? totalInternalStrength / totalExternalStrength 
+  memetic.polarization.echoChambersStrength = totalExternalStrength > 0
+    ? assertFinite(
+        totalInternalStrength / totalExternalStrength,
+        { location: 'updatePolarizationMetrics', valueName: 'echoChambersStrength', month: state.currentMonth }
+      )
     : 10.0; // If no external connections, very strong echo chambers
   
   // 4. Network fragmentation (1 - connectivity)
@@ -210,8 +221,9 @@ function updatePolarizationMetrics(state: GameState): void {
   );
   
   // 6. Tribalism (in-group favoritism)
-  memetic.polarization.tribalism = Math.min(1.0,
-    memetic.polarization.echoChambersStrength / 5.0 // Normalize to [0, 1]
+  memetic.polarization.tribalism = assertFinite(
+    Math.min(1.0, memetic.polarization.echoChambersStrength / 5.0),
+    { location: 'updatePolarizationMetrics', valueName: 'tribalism', month: state.currentMonth }
   );
   
   // 7. Update trends (early warning signals)
@@ -219,7 +231,10 @@ function updatePolarizationMetrics(state: GameState): void {
   if (histLen >= 6) {
     // 6-month trend
     const recent = memetic.polarizationHistory.slice(-6);
-    const slope = (recent[5] - recent[0]) / 6;
+    const slope = assertFinite(
+      (recent[5] - recent[0]) / 6,
+      { location: 'updatePolarizationMetrics', valueName: 'varianceTrendSlope', month: state.currentMonth }
+    );
     memetic.polarization.varianceTrend = slope;
   }
   
@@ -232,7 +247,10 @@ function updatePolarizationMetrics(state: GameState): void {
     memetic.polarization.nearCriticalTransition = true;
     // Estimate time to transition (crude linear extrapolation)
     const distanceToThreshold = 0.8 - memetic.polarization.opinionVariance;
-    const monthsToTransition = distanceToThreshold / Math.max(0.001, memetic.polarization.varianceTrend);
+    const monthsToTransition = assertFinite(
+      distanceToThreshold / Math.max(0.001, memetic.polarization.varianceTrend),
+      { location: 'updatePolarizationMetrics', valueName: 'monthsToTransition', month: state.currentMonth }
+    );
     memetic.polarization.estimatedMonthsToTransition = Math.max(1, Math.floor(monthsToTransition));
   } else {
     memetic.polarization.nearCriticalTransition = false;
@@ -269,8 +287,11 @@ function calculateBeliefDistance(b1: BeliefVector, b2: BeliefVector): number {
     const diff = b1[dim] - b2[dim];
     sumSquaredDiff += diff * diff;
   }
-  
-  return Math.sqrt(sumSquaredDiff) / (Math.sqrt(dimensions.length) * 2);
+
+  return assertFinite(
+    Math.sqrt(sumSquaredDiff) / (Math.sqrt(dimensions.length) * 2),
+    { location: 'calculateBeliefDistance', valueName: 'normalizedDistance' }
+  );
 }
 
 /**
@@ -291,19 +312,28 @@ function calculateOpinionVariance(segments: MemeticSegment[]): number {
       weightedSum += segment.beliefs[dim] * segment.size;
       totalWeight += segment.size;
     }
-    const mean = weightedSum / totalWeight;
-    
+    const mean = assertFinite(
+      weightedSum / totalWeight,
+      { location: 'calculateOpinionVariance', valueName: 'dimensionMean', additionalInfo: { dimension: dim } }
+    );
+
     let varianceSum = 0;
     for (const segment of segments) {
       const diff = segment.beliefs[dim] - mean;
       varianceSum += segment.size * diff * diff;
     }
-    const variance = varianceSum / totalWeight;
-    
+    const variance = assertFinite(
+      varianceSum / totalWeight,
+      { location: 'calculateOpinionVariance', valueName: 'dimensionVariance', additionalInfo: { dimension: dim } }
+    );
+
     totalVariance += variance;
   }
-  
-  return totalVariance / dimensions.length;
+
+  return assertFinite(
+    totalVariance / dimensions.length,
+    { location: 'calculateOpinionVariance', valueName: 'totalVariance' }
+  );
 }
 
 /**
@@ -322,7 +352,11 @@ function calculateAverageBeliefDistance(segments: MemeticSegment[]): number {
     }
   }
   
-  return totalWeight > 0 ? totalDistance / totalWeight : 0;
+  return totalWeight > 0 ?
+    assertFinite(totalDistance / totalWeight, {
+      location: 'calculateAverageBeliefDistance',
+      valueName: 'avgDistance'
+    }) : 0;
 }
 
 /**
@@ -339,7 +373,11 @@ function calculateAverageConnectionStrength(segments: MemeticSegment[]): number 
     }
   }
   
-  return totalConnections > 0 ? totalStrength / totalConnections : 0;
+  return totalConnections > 0 ?
+    assertFinite(totalStrength / totalConnections, {
+      location: 'calculateAverageConnectionStrength',
+      valueName: 'avgConnectionStrength'
+    }) : 0;
 }
 
 /**

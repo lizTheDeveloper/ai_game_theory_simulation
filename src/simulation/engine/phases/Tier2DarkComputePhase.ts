@@ -39,7 +39,7 @@ import type {
   RNGFunction
 } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertAICapability, assertFinite } from '@/simulation/utils/assertions';
+import { assertAICapability, assertAIAggregateCapability, assertFinite } from '@/simulation/utils/assertions';
 
 export class Tier2DarkComputePhase implements SimulationPhase {
   id = 'tier2_dark_compute';
@@ -70,15 +70,15 @@ export class Tier2DarkComputePhase implements SimulationPhase {
         assertFinite(avgCapability, {
           location: 'Tier2DarkComputePhase.execute',
           valueName: 'avgCapability',
-          month: state.currentMonth,
-          additionalInfo: { agentCount: state.aiAgents.length }
+          
+          
         });
 
-        assertAICapability(avgCapability, {
+        assertAIAggregateCapability(avgCapability, {
           location: 'Tier2DarkComputePhase.execute',
           valueName: 'avgCapability',
-          month: state.currentMonth,
-          additionalInfo: { agentCount: state.aiAgents.length }
+          
+          
         });
       }
 

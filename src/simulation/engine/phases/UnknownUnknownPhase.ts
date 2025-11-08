@@ -39,7 +39,7 @@ import {
 } from '../../unknownUnknowns';
 import { DEFAULT_UNKNOWN_UNKNOWN_CONFIG } from '@/types/unknownUnknown';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertProbability, assertAICapability } from '@/simulation/utils/assertions';
+import { assertProbability, assertAICapability, assertAIAggregateCapability } from '@/simulation/utils/assertions';
 
 export class UnknownUnknownPhase implements SimulationPhase {
   readonly id = 'unknown-unknown';
@@ -113,10 +113,9 @@ export class UnknownUnknownPhase implements SimulationPhase {
 
         // Validate max AI capability is in valid range [0, 5]
         if (state.aiAgents.length > 0) {
-          assertAICapability(maxAICapability, {
+          assertAIAggregateCapability(maxAICapability, {
             location: 'UnknownUnknownPhase.execute',
-            valueName: 'maxAICapability',
-            month: state.currentMonth
+            valueName: 'maxAICapability'
           });
         }
 

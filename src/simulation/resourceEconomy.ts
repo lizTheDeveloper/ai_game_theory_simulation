@@ -26,6 +26,7 @@ import {
   MiningIndustry,
   OceanHealth,
 } from '../types/resources';
+import { assertFinite } from './utils/assertions';
 
 // ============================================================================
 // INITIALIZATION
@@ -487,7 +488,17 @@ export function calculateResourceSecurity(resources: ResourceEconomy): number {
     energy: 0.10,
   };
   
-  const energySecurity = Math.min(1.0, resources.energy.surplus / resources.energy.totalDemand);
+  const energySecurity = assertFinite(
+    Math.min(1.0, resources.energy.surplus / Math.max(0.001, resources.energy.totalDemand)),
+    {
+      location: 'calculateResourceSecurity',
+      valueName: 'energySecurity',
+      additionalInfo: {
+        surplus: resources.energy.surplus,
+        totalDemand: resources.energy.totalDemand
+      }
+    }
+  );
   
   const weighted =
     weights.oil * resources.oil.reserves +
@@ -501,8 +512,12 @@ export function calculateResourceSecurity(resources: ResourceEconomy): number {
     weights.water * resources.water.reserves +
     weights.timber * resources.timber.reserves +
     weights.energy * energySecurity;
-  
-  return weighted;
+
+  return assertFinite(weighted, {
+    location: 'calculateResourceSecurity',
+    valueName: 'weightedResourceSecurity',
+    additionalInfo: { energySecurity }
+  });
 }
 
 /**

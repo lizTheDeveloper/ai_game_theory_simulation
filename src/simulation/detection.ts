@@ -8,6 +8,7 @@
  */
 
 import { GameState, AIAgent, GameEvent } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Calculate detection chance for a specific AI

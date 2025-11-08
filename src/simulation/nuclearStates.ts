@@ -343,18 +343,24 @@ export function updateMADDeterrence(state: GameState): void {
     }
   );
   usState.aiIntegration = militaryAIIntegration;
-  chinaState.aiIntegration = assertProbability(militaryAIIntegration * 1.2, {
-    location: 'updateMADDeterrence',
-    valueName: 'chinaAIIntegration',
-    month: state.currentMonth,
-    additionalInfo: { militaryAIIntegration }
-  });
-  russiaState.aiIntegration = assertProbability(militaryAIIntegration * 0.8, {
-    location: 'updateMADDeterrence',
-    valueName: 'russiaAIIntegration',
-    month: state.currentMonth,
-    additionalInfo: { militaryAIIntegration }
-  });
+  chinaState.aiIntegration = assertProbability(
+    Math.min(1.0, militaryAIIntegration * 1.2),  // Clamp to [0, 1]
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'chinaAIIntegration',
+      month: state.currentMonth,
+      additionalInfo: { militaryAIIntegration }
+    }
+  );
+  russiaState.aiIntegration = assertProbability(
+    Math.min(1.0, militaryAIIntegration * 0.8),  // Clamp to [0, 1]
+    {
+      location: 'updateMADDeterrence',
+      valueName: 'russiaAIIntegration',
+      month: state.currentMonth,
+      additionalInfo: { militaryAIIntegration }
+    }
+  );
   
   // AUTONOMOUS WEAPONS
   if (militaryAIIntegration > 0.6 && aiRaceIntensity > 0.7 && !mad.autonomousWeapons) {

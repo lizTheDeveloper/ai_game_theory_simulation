@@ -19,6 +19,7 @@
  */
 
 import type { GameState } from '../types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Alignment Success Milestones
