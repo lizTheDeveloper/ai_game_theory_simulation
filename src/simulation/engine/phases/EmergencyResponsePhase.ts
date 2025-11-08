@@ -34,6 +34,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
   id = 'emergency_response';
   name = 'Emergency Response';
   order = 26; // After crisis detection (25), before crisis escalation
+  dependencies = ['crisis-points'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     if (!state.emergencyManagement) {

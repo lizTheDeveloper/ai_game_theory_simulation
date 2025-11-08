@@ -21,6 +21,7 @@ export class CooperativeSpiralsPhase implements SimulationPhase {
   readonly id = 'cooperative-spirals';
   readonly name = 'Cooperative Spirals Update';
   readonly order = 11.5;
+  dependencies = ['upward-spirals'];
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const { updateCooperativeSpirals } = require('../../cooperativeSpirals');

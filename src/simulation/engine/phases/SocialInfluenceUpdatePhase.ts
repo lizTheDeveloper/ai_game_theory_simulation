@@ -22,6 +22,7 @@ export class SocialInfluenceUpdatePhase implements SimulationPhase {
   readonly id = 'social_influence_update';
   readonly name = 'Social Influence Update';
   readonly order = 19.0; // After AI lifecycle (6.0), before agent actions (20.0)
+  dependencies = ['ai-agent-actions'];
 
   execute(
     state: GameState,
