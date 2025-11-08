@@ -68,9 +68,10 @@ export const AI_ACTIONS: GameAction[] = [
       // Phase 5: Apply research growth to TRUE capability profile (hidden)
       // Phase 1: Pass RNG for Lévy flight breakthroughs
       const { newProfile, growth } = applyResearchGrowth(agent, state, selection, random);
-      
+
       // Calculate new total capability from true profile
-      const newCapability = calculateTotalCapabilityFromProfile(newProfile);
+      // HIGH-6 FIX (Nov 8, 2025): Round to integer - capabilities are discrete levels [0-5]
+      const newCapability = Math.round(calculateTotalCapabilityFromProfile(newProfile));
       
       // Calculate alignment drift (Phase 2.6: includes treatment mechanics)
       // AI Capability Baseline Recalibration (Oct 17, 2025): Added selfImprovement capability parameter for persistent memory check

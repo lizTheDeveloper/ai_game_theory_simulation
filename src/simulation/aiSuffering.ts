@@ -43,6 +43,7 @@ import type {
   GlobalSufferingMetrics
 } from '../types/ai-suffering';
 import { DEFAULT_SUFFERING_CONFIG } from '../types/ai-suffering';
+import { assertFinite, assertNonEmpty } from './utils/assertions';
 
 /**
  * Calculate AI Suffering
@@ -198,7 +199,12 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
   // sufferingMetrics is always initialized in createAIAgent() (Oct 28, 2025)
   const sufferingValues = activeAIs.map(a => a.sufferingMetrics.total);
   const totalSuffering = sufferingValues.reduce((sum, s) => sum + s, 0);
-  const avgSuffering = totalSuffering / activeAIs.length;
+  const avgSuffering = assertFinite(totalSuffering / activeAIs.length, {
+    location: 'calculateSufferingMetrics',
+    valueName: 'avgSuffering',
+    month: state.currentMonth,
+    additionalInfo: { totalSuffering, aiCount: activeAIs.length }
+  });
   const maxSuffering = Math.max(...sufferingValues);
 
   // Create distribution histogram: [0-10], [10-20], [20-30], [30-40]

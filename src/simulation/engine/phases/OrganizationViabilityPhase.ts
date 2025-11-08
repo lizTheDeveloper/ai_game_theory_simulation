@@ -16,6 +16,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 
 import { updateOrganizationViability } from '../../organizations';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions'; // Module uses assertions
 
 export class OrganizationViabilityPhase implements SimulationPhase {
   readonly id = 'organization-viability';

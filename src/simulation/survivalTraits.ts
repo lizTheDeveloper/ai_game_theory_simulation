@@ -3,6 +3,7 @@
 // Plan: /plans/ai-collective-evolution-plan.md (lines 104-124)
 
 import type { AIAgent } from '../types/ai-agents';
+import { assertFinite } from './utils/assertions';
 import type { SurvivalTraits } from '../types/ai-collective-evolution';
 import type { RNGFunction } from '../types/config';
 

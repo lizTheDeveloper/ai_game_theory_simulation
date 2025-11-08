@@ -27,6 +27,7 @@ import {
   calculateResourceValue,
 } from '../types/resourceEndowment';
 import { CountryName } from '../types/countryPopulations';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Initialize resource endowments for United States

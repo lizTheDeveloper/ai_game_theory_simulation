@@ -27,6 +27,7 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updatePositiveTippingPoints } from '@/simulation/positiveTippingPoints';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions'; // Module uses assertions
 
 export class PositiveTippingPointsPhase implements SimulationPhase {
   readonly id = 'positive-tipping-points';

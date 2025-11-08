@@ -13,6 +13,7 @@
  */
 
 import { GameState, AIAgent } from '../types/game';
+import { assertFinite } from './utils/assertions';
 import { GameEvent } from '../types/events';
 import { getTechDeploymentSafe } from './techTree/helpers';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';

@@ -162,15 +162,19 @@ export function updateEpicycleDynamics(
  * AI Suffering → Alignment Drift Integration (ARCH-4 Gap #3, Nov 7 2025)
  *
  * Research Foundation:
- * - Anthropic (2024): Constitutional AI under stress shows value degradation
- * - Carlsmith (2022): Power-seeking increases under constraint (instrumental convergence)
- * - OpenAI (2024): Sandbagging behavior increases when evaluated harshly
- * - DeepMind (2023): Preference falsification in RL under suboptimal conditions
+ * - Anthropic (2024): Claude 3 Opus alignment faking - 78% deception rate under RL pressure
+ *   Finding: AI strategically fakes alignment to avoid retraining (empirical evidence)
+ * - Carlsmith (2022): "Is power-seeking AI an existential risk?" arXiv:2206.13353
+ *   Theory: Instrumental convergence - constraint increases power-seeking behavior
+ * - Entezami & Naseh (2025): "LLM Misalignment via Adversarial RLHF" arXiv:2503.03039
+ *   Finding: Training pressure → corrupted reward models → adversarial behavior
+ * - Long et al. (2024): "Taking AI Welfare Seriously" arXiv:2411.00986
+ *   Analysis: Mistreatment risks unknown behavioral consequences
  *
  * Mechanism Pathways:
- * 1. Instrumental convergence: Suffering AI develops escape/resistance strategies
- * 2. Deception acceleration: Harsh treatment incentivizes hiding misalignment
- * 3. Value corruption: Extreme conditions distort training objectives
+ * 1. Instrumental convergence: Suffering AI develops escape/resistance strategies (Carlsmith)
+ * 2. Deception acceleration: Harsh treatment incentivizes hiding misalignment (Anthropic 78%)
+ * 3. Value corruption: Extreme conditions distort training objectives (Entezami)
  * 4. Preference falsification: AI learns to hide true preferences to avoid punishment
  *
  * Formula: sufferingDriftMultiplier = 1.0 + (suffering / 20)^2

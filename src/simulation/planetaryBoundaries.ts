@@ -652,27 +652,52 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 
   // === 1. UPDATE BOUNDARY VALUES ===
 
-  // Climate change (from environmental system)
+  // Climate change (ARCH-4 Integration: Use actual temperature anomaly)
+  // Research: Richardson et al. (2023) - Climate boundary at 1.0°C warming, high-risk at 1.5°C
+  // Current approach: Direct mapping from temperature anomaly (no invented conversions)
   const climateBoundary = assertDefined(system.boundaries.climate_change, {
     location: 'updatePlanetaryBoundaries:climate',
     valueName: 'boundaries.climate_change',
     month: state.currentMonth
   });
 
-  const climateStability = assertProbability(env.climateStability, {
-    location: 'updatePlanetaryBoundaries:climate',
-    valueName: 'climateStability',
-    month: state.currentMonth
-  });
+  // Use temperature anomaly from resource economy (if available)
+  if (resources?.co2?.temperatureAnomaly !== undefined) {
+    const tempAnomaly = assertFinite(resources.co2.temperatureAnomaly, {
+      location: 'updatePlanetaryBoundaries:climate',
+      valueName: 'co2.temperatureAnomaly',
+      month: state.currentMonth
+    });
 
-  const newClimateValue = assertFinite(Math.max(0, 1.21 - (climateStability * 0.21)), {
-    location: 'updatePlanetaryBoundaries:climate',
-    valueName: 'climate_change.currentValue',
-    month: state.currentMonth,
-    additionalInfo: { climateStability }
-  });
+    // Direct mapping: boundary = 1.0°C, high-risk = 1.5°C
+    // currentValue = tempAnomaly / 1.0 (boundary threshold)
+    // 1.21°C warming = 1.21× boundary (current 2025 estimate)
+    const newClimateValue = assertFinite(tempAnomaly / 1.0, {
+      location: 'updatePlanetaryBoundaries:climate',
+      valueName: 'climate_change.currentValue',
+      month: state.currentMonth,
+      additionalInfo: { tempAnomaly }
+    });
 
-  climateBoundary.currentValue = newClimateValue;
+    climateBoundary.currentValue = Math.max(0, newClimateValue);
+  } else {
+    // Fallback: Use climateStability (legacy behavior)
+    const climateStability = assertProbability(env.climateStability, {
+      location: 'updatePlanetaryBoundaries:climate_fallback',
+      valueName: 'climateStability',
+      month: state.currentMonth
+    });
+
+    const newClimateValue = assertFinite(Math.max(0, 1.21 - (climateStability * 0.21)), {
+      location: 'updatePlanetaryBoundaries:climate_fallback',
+      valueName: 'climate_change.currentValue',
+      month: state.currentMonth,
+      additionalInfo: { climateStability }
+    });
+
+    climateBoundary.currentValue = newClimateValue;
+  }
+
   updateBoundaryStatus(climateBoundary);
 
   // Biosphere integrity (from regional extinction rates)
@@ -791,18 +816,34 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   system.boundaries.novel_entities.currentValue = novelEntitiesValue;
   updateBoundaryStatus(system.boundaries.novel_entities);
 
-  // Ocean acidification (from ocean system if available)
+  // Ocean acidification (ARCH-4 Integration: Direct pH mapping)
+  // Research: Richardson et al. (2023) - Ocean boundary at pH 8.0, current ~8.05 (near transgression)
+  // IPCC Ocean Report (2019) - pH declining with CO2 absorption
   if (state.oceanAcidificationSystem) {
-    const aragonite = assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+    // Use pH level directly if available (pHLevel: [0,1] where 1.0 = pre-industrial 8.2)
+    const pHLevel = assertProbability(state.oceanAcidificationSystem.pHLevel, {
       location: 'updatePlanetaryBoundaries:ocean',
-      valueName: 'aragoniteSaturation',
+      valueName: 'pHLevel',
       month: state.currentMonth
     });
-    const oceanValue = assertFinite(Math.max(0, 1.05 + (0.8 - aragonite) * 1.25), {
+
+    // Convert pHLevel [0,1] to actual pH: pH = 7.0 + (pHLevel × 1.2)
+    // pHLevel = 1.0 → pH 8.2 (pre-industrial)
+    // pHLevel = 0.83 → pH 8.0 (boundary)
+    // pHLevel = 0.79 → pH 7.95 (transgression)
+    const actualPH = 7.0 + (pHLevel * 1.2);
+
+    // Boundary value: (8.0 - actualPH) / (8.0 - 7.9) × 1.0 + 1.0
+    // pH 8.2 → 0.0× (pre-industrial, safe)
+    // pH 8.0 → 1.0× (boundary)
+    // pH 7.9 → 2.0× (high-risk)
+    const oceanBoundaryValue = Math.max(0, (8.0 - actualPH) / 0.1 + 1.0);
+
+    const oceanValue = assertFinite(oceanBoundaryValue, {
       location: 'updatePlanetaryBoundaries:ocean',
       valueName: 'ocean_acidification.currentValue',
       month: state.currentMonth,
-      additionalInfo: { aragonite }
+      additionalInfo: { pHLevel, actualPH }
     });
     system.boundaries.ocean_acidification.currentValue = oceanValue;
   }
@@ -1358,6 +1399,28 @@ function updateLandUseSystem(state: GameState): void {
 
     const boundaryValue = 1.0 + Math.max(0, (globalSafeThreshold - landUse.globalHabitatCoverPercent) / globalSafeThreshold);
     system.boundaries.land_system_change.currentValue = boundaryValue;
+
+    // ARCH-4 Integration: Wet bulb events → land habitability loss
+    // Research: Persistent wet bulb events make regions uninhabitable → de facto land-use change
+    // Mechanism: Wet bulb >35°C = human survival limit, >30.5°C = labor productivity collapse
+    if (state.wetBulbTemperatureSystem) {
+      const eventsCount = state.wetBulbTemperatureSystem.eventsThisMonth.length;
+
+      // Threshold: If sustained wet bulb events (>10/month for multiple months), model habitat loss
+      // Note: This is cumulative - persistent events → permanent habitability loss
+      if (eventsCount > 10 && state.currentMonth > 12) {
+        // Small incremental loss per month with persistent events
+        // 0.001 = 0.1% annual habitat loss if 10+ events/month sustained
+        // Research: This models Persian Gulf, South Asia uninhabitability by 2070 (IPCC)
+        const habitabilityLoss = 0.001;
+        system.boundaries.land_system_change.currentValue += habitabilityLoss;
+
+        // Log extreme wet bulb impact (first time only per year)
+        if (state.currentMonth % 12 === 0) {
+          console.log(`🌡️☠️ WET BULB CRISIS: ${eventsCount} extreme heat events this month → land habitability declining`);
+        }
+      }
+    }
   }
 
   // === 5. LOGGING (Every 12 months) ===

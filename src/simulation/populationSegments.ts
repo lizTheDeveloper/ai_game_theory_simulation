@@ -11,6 +11,7 @@
  */
 
 import { GameState, SocietySegment, HumanSocietyAgent } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Calculate population-weighted average of a segment attribute

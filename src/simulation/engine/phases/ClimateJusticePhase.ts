@@ -13,6 +13,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions'; // Module uses assertions
 
 export class ClimateJusticePhase implements SimulationPhase {
   readonly id = 'climate_justice';

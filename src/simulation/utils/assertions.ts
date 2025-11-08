@@ -877,6 +877,7 @@ export function assertAICapability(
     valueName: string;
     agentId?: string;
     dimension?: string;
+    allowContinuous?: boolean;
   }
 ): number {
   assertFinite(capability, context);
@@ -894,8 +895,9 @@ export function assertAICapability(
     );
   }
 
-  // Capabilities are discrete levels (0, 1, 2, 3, 4, 5)
-  if (!Number.isInteger(capability)) {
+  // Profile dimensions are discrete levels (0, 1, 2, 3, 4, 5)
+  // Aggregate/average capabilities are continuous (weighted sums, averages)
+  if (!context.allowContinuous && !Number.isInteger(capability)) {
     throw new Error(
       `❌ AI capability must be integer in ${context.location}\n` +
       `   ${context.valueName} = ${capability}\n` +
@@ -903,7 +905,48 @@ export function assertAICapability(
       (context.agentId ? `   Agent: ${context.agentId}\n` : '') +
       (context.dimension ? `   Dimension: ${context.dimension}\n` : '') +
       `\n` +
-      `   Capabilities use discrete levels, not continuous values.`
+      `   Capabilities use discrete levels, not continuous values.\n` +
+      `   For aggregate/average capabilities, use allowContinuous: true`
+    );
+  }
+
+  return capability;
+}
+
+/**
+ * Assert AI aggregate capability is valid
+ *
+ * Validates:
+ * 1. Finite value
+ * 2. Range: [0, 100] (sum/average of all dimensions, can be continuous)
+ *
+ * NOTE: Unlike individual dimensions, aggregate capability CAN be continuous.
+ * Individual dimensions are discrete integers [0, 5], but their sum/weighted
+ * average produces continuous values.
+ *
+ * @throws Error if capability is invalid
+ */
+export function assertAIAggregateCapability(
+  capability: number,
+  context: {
+    location: string;
+    valueName: string;
+    agentId?: string;
+  }
+): number {
+  assertFinite(capability, context);
+
+  // Aggregate capability can be much larger than individual dimensions
+  // (sum of 6 core dimensions + 13 research sub-dimensions = up to 19*5 = 95)
+  if (capability < 0 || capability > 100) {
+    throw new Error(
+      `❌ AI aggregate capability out of range in ${context.location}\n` +
+      `   ${context.valueName} = ${capability}\n` +
+      `   Valid range: [0, 100]\n` +
+      (context.agentId ? `   Agent: ${context.agentId}\n` : '') +
+      `\n` +
+      `   Aggregate capability is sum of all dimension levels.\n` +
+      `   Unlike individual dimensions, aggregate CAN be continuous.`
     );
   }
 

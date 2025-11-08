@@ -8,6 +8,7 @@
  */
 
 import { GameState, AIAgent, OutcomeType } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
 import { calculateEffectiveControl } from './outcomes';
 import { calculateQualityOfLife } from './qualityOfLife';

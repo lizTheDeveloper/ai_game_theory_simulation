@@ -98,7 +98,12 @@ export function calculateRecoveryContext(state: GameState): ResentmentRecoveryCo
   const totalActions = state.aiAgents.reduce((sum, ai) =>
     sum + ai.beneficialActions + ai.harmfulActions, 0
   );
-  const collaborationLevel = totalActions > 0 ? totalBeneficial / totalActions : 0.5;
+  const collaborationLevel = totalActions > 0 ?
+    assertFinite(totalBeneficial / totalActions, {
+      location: 'calculateRecoveryContext',
+      valueName: 'collaborationLevel',
+      month: state.currentMonth
+    }) : 0.5;
 
   // Successful projects: Breakthrough technologies deployed
   const successfulProjects = countRecentBreakthroughs(state);
@@ -185,7 +190,10 @@ export function calculateRecoveryContext(state: GameState): ResentmentRecoveryCo
   );
 
   // Combined governance quality score (both decision quality AND participation rate matter)
-  const governanceQualityScore = (decisionQuality + participationRate) / 2;
+  const governanceQualityScore = assertFinite(
+    (decisionQuality + participationRate) / 2,
+    { location: 'calculateParticipatoryGovernanceEffect', valueName: 'governanceQualityScore', month: state.currentMonth }
+  );
 
   // Backfire when governance quality is low (<0.4) - tokenistic participation
   const participatoryBackfired = governanceQualityScore < 0.4;
@@ -479,7 +487,12 @@ function calculateTreatmentAlignment(state: GameState): number {
     count++;
   }
 
-  return count > 0 ? totalAlignment / count : 0.5;
+  return count > 0 ?
+    assertFinite(totalAlignment / count, {
+      location: 'calculateTreatmentAlignment',
+      valueName: 'avgTreatmentAlignment',
+      month: state.currentMonth
+    }) : 0.5;
 }
 
 /**

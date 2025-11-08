@@ -14,6 +14,7 @@
  */
 
 import { AIAgent } from '@/types/ai-agents';
+import { assertFinite } from './utils/assertions';
 import { GameState } from '@/types/game';
 import { RNGFunction } from '@/types/config';
 

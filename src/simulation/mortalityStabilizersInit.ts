@@ -20,6 +20,7 @@
  */
 
 import type { RegionalMortalityStabilizers } from '@/types/mortalityStabilizers';
+import { assertFinite } from './utils/assertions';
 import type { RegionalPopulation } from '@/types/population';
 
 /**

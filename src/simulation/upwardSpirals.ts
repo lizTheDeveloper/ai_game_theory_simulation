@@ -22,7 +22,7 @@ import type { GameState } from '../types/game';
 import { getTrustInAI, calculateComprehensiveTrustInAI } from './socialCohesion';
 import { TRUST_THRESHOLD_ACCEPTANCE, TRUST_THRESHOLD_EMBRACE } from './trustThresholds';
 import { getUnlockedTechCount, getDeployedTechCount } from './techTree/helpers';
-import { assertStateProperty } from './utils/assertions';
+import { assertStateProperty, assertFinite, assertNonEmpty } from './utils/assertions';
 
 export interface UpwardSpiral {
   active: boolean;           // Is this spiral currently active?
@@ -239,8 +239,15 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
   const researchIntensive = totalResearch > 50; // $50B+/month
 
   // AI-accelerated research
-  const avgAICapability = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
+  const avgAICapability = state.aiAgents.length > 0 ? (() => {
+    const capabilitySum = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+    return assertFinite(capabilitySum / state.aiAgents.length, {
+      location: 'checkScientificSpiral',
+      valueName: 'avgAICapability',
+      month: state.currentMonth,
+      additionalInfo: { capabilitySum, agentCount: state.aiAgents.length }
+    });
+  })() : 0;
   const aiAccelerated = avgAICapability > 1.2; // Lowered from 2.0 - AI is already 3x-ing papers at GPT-4 level
 
   // FIX #4: Scale deployment threshold with AI capability
@@ -725,7 +732,15 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   // console.error(`   Time Liberation: unemployment ${(state.society.unemploymentLevel * 100).toFixed(0)}%, stage ${state.globalMetrics.economicTransitionStage} ${timeLiberated ? '✅' : '❌'} (need >60% + stage 3+)`);
   
   // COGNITIVE SPIRAL
-  const avgAI = state.aiAgents.length > 0 ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
+  const avgAI = state.aiAgents.length > 0 ? (() => {
+    const capabilitySum = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+    return assertFinite(capabilitySum / state.aiAgents.length, {
+      location: 'checkCognitiveSpiral',
+      valueName: 'avgAI',
+      month: state.currentMonth,
+      additionalInfo: { capabilitySum, agentCount: state.aiAgents.length }
+    });
+  })() : 0;
   const mentalHealthy = qol.diseasesBurden < 0.3 && qol.healthcareQuality > 0.8;
   const purposeful = social.meaningCrisisLevel < 0.3;
   const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
