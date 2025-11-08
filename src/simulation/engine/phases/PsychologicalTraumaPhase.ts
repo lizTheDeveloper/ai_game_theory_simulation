@@ -28,6 +28,7 @@ export class PsychologicalTraumaPhase implements SimulationPhase {
   readonly id = 'psychological_trauma';
   readonly name = 'Psychological Trauma';
   readonly order = 23.5;
+  dependencies = ['crisis-points'];
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     if (!state.psychologicalTrauma) {

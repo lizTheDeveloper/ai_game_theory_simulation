@@ -156,5 +156,6 @@ export const SurvivalTraitsPhase = {
   id: 'survival_traits',
   name: 'Survival Traits',
   order: 4.1,
+  dependencies: ['ai-lifecycle', 'rlhf_binding'],
   execute: executeSurvivalTraitsPhase,
 };

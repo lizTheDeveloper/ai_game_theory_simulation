@@ -39,6 +39,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
   readonly id = 'democracy_dynamics';
   readonly name = 'Democracy Dynamics';
   readonly order = 20.1;
+  dependencies = ['governance-quality'];
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Initialize democracy state if not present

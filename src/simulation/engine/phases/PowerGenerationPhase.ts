@@ -11,6 +11,7 @@ export class PowerGenerationPhase implements SimulationPhase {
   readonly name = 'Power Generation Update';
   readonly id = 'power-generation';
   readonly order = 21; // After resource economy, before social systems
+  dependencies = ['tech-tree'];
 
   /**
    * Execute power generation dynamics

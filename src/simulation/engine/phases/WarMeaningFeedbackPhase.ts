@@ -15,7 +15,8 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 export class WarMeaningFeedbackPhase implements SimulationPhase {
   readonly id = 'war_meaning_feedback';
   readonly name = 'War-Meaning Feedback';
-  readonly order = 6.5;
+  readonly order = 7.5;
+  dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateWarMeaningFeedback } = require('../../warMeaningFeedback');

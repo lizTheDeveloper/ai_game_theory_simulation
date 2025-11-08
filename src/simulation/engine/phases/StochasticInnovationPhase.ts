@@ -194,6 +194,7 @@ export class StochasticInnovationPhase implements SimulationPhase {
   readonly id = 'stochastic-innovation';
   readonly name = 'Stochastic Innovation Breakthroughs';
   readonly order = 8.5; // After technology breakthroughs, before environment
+  dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];

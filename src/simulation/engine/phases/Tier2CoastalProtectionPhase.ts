@@ -32,6 +32,7 @@ export class Tier2CoastalProtectionPhase implements SimulationPhase {
   id = 'tier2_coastal_protection';
   name = 'TIER 2: High-Value Coastal Protection';
   order = 20.5; // After ocean updates, before ocean acidification crisis
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

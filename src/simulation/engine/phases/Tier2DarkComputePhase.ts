@@ -44,6 +44,7 @@ export class Tier2DarkComputePhase implements SimulationPhase {
   id = 'tier2_dark_compute';
   name = 'TIER 2: Dark Compute Monitoring';
   order = 16.5; // After AI capability growth, before control crisis detection
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

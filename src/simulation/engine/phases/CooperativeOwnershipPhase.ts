@@ -34,6 +34,7 @@ export class CooperativeOwnershipPhase implements SimulationPhase {
   readonly id = 'cooperative-ownership';
   readonly name = 'Cooperative Ownership Update';
   readonly order = 15.5;
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Check if there are any cooperatives
