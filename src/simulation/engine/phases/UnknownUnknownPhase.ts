@@ -113,7 +113,7 @@ export class UnknownUnknownPhase implements SimulationPhase {
 
         // Validate max AI capability is in valid range [0, 5]
         if (state.aiAgents.length > 0) {
-          assertAICapability(maxAICapability, {
+          assertAICapability(maxAICapability, { allowContinuous: true,
             location: 'UnknownUnknownPhase.execute',
             valueName: 'maxAICapability',
             month: state.currentMonth
