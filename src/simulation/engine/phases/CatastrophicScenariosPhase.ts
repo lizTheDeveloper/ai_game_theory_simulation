@@ -25,8 +25,17 @@ export class CatastrophicScenariosPhase implements SimulationPhase {
   dependencies = ['crisis-detection'];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
+    // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
+    if (!_rng || typeof _rng !== 'function') {
+      throw new Error(
+        `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
+        `(Month ${state.currentMonth})`
+      );
+    }
+    const rng = _rng; // Rename for consistency
+
     // Import catastrophic scenarios module
-    setDeterministicRng(_rng);
+    setDeterministicRng(rng);
     const { updateScenarioPrerequisites, getScenarioSummary } = require('../../catastrophicScenarios');
 
     // Update scenario prerequisites (mutates state)
