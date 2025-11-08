@@ -60,3 +60,27 @@ if [ -n "$VIOLATIONS" ]; then
 fi
 
 echo "   ✅ No unsorted object iterations detected"
+
+# NEW: Integration test validation - run regression tests before commit
+echo ""
+echo "🧪 Running integration tests (regression prevention)..."
+
+# Run integration tests (CRITICAL and HIGH priority paths)
+npm test -- tests/integration/regressions/ tests/integration/cascades/ 2>&1 | tee /tmp/integration-test-output.txt
+
+# Check for failures
+if grep -q "# failing" /tmp/integration-test-output.txt; then
+  FAIL_COUNT=$(grep "# failing" /tmp/integration-test-output.txt | head -1 | awk '{print $3}')
+  echo ""
+  echo "❌ INTEGRATION TESTS FAILED: $FAIL_COUNT tests failing"
+  echo ""
+  echo "Integration tests prevent regressions of known bugs."
+  echo "Fix failing tests before committing."
+  echo ""
+  echo "If this is blocking urgent work:"
+  echo "  git commit --no-verify"
+  echo ""
+  exit 1
+fi
+
+echo "   ✅ All integration tests passed"

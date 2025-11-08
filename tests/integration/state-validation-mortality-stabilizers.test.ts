@@ -20,15 +20,24 @@
  * @module tests/integration/state-validation-mortality-stabilizers
  */
 
-import { describe, test, expect } from '@jest/globals';
+import { describe, test } from 'node:test';
+import assert from 'node:assert';
 import { SimulationEngine } from '@/simulation/engine';
 import { createDefaultInitialState } from '@/simulation/initialization';
 import { MortalityStabilizersPhase } from '@/simulation/engine/phases/MortalityStabilizersPhase';
 import type { GameState, RegionalPopulation } from '@/types/game';
-import seedrandom from 'seedrandom';
 
 describe('MortalityStabilizersPhase: State Validation Integration', () => {
   const TEST_SEED = 44000;
+
+  // Simple deterministic RNG for testing
+  function createTestRng(seed: number): () => number {
+    let state = seed;
+    return () => {
+      state = (state * 1664525 + 1013904223) % 4294967296;
+      return state / 4294967296;
+    };
+  }
 
   /**
    * Helper: Ensure regional populations exist with stabilizers
@@ -142,107 +151,107 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
 
   describe('Fail-Loudly Behavior: Invalid Inputs', () => {
     test('should throw on NaN aid effectiveness', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10; // After bootstrap
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Corrupt aid effectiveness
       state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.internationalAid.effectiveness = NaN;
 
-      expect(() => {
+      assert.throws(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).toThrow(/Non-finite|effectiveness/i);
+      }, /Non-finite|effectiveness/i);
     });
 
     test('should throw on Infinity heat adaptation level', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Corrupt heat adaptation
       state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.heatAdaptation.level = Infinity;
 
-      expect(() => {
+      assert.throws(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).toThrow(/Non-finite|Infinity/i);
+      }, /Non-finite|Infinity/i);
     });
 
     test('should throw on missing mortalityStabilizers after bootstrap', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10; // After bootstrap (Month 3)
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Remove stabilizers from one region
       delete state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers;
 
-      expect(() => {
+      assert.throws(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).toThrow(/missing mortalityStabilizers/i);
+      }, /missing mortalityStabilizers/i);
     });
 
     test('should throw on invalid probability (aid effectiveness > 1)', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Corrupt to invalid probability
       state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.internationalAid.effectiveness = 1.5;
 
-      expect(() => {
+      assert.throws(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).toThrow(/Out-of-range|probability/i);
+      }, /Out-of-range|probability/i);
     });
 
     test('should throw on negative migration capacity', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Corrupt migration capacity
       state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.migration.capacity = -0.2;
 
-      expect(() => {
+      assert.throws(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).toThrow(/Out-of-range|negative/i);
+      }, /Out-of-range|negative/i);
     });
   });
 
   describe('Valid Input Processing', () => {
     test('should successfully process regions with valid stabilizers', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       const result = phase.execute(state, rng, { executedPhases: new Set() });
 
-      expect(result).toBeDefined();
-      expect(result.events).toBeDefined();
+      assert.ok(result !== undefined);
+      assert.ok(result.events !== undefined);
     });
 
     test('should maintain all stabilizer values as finite numbers', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       phase.execute(state, rng, { executedPhases: new Set() });
@@ -251,60 +260,60 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
         const stab = region.mortalityStabilizers!;
 
         // Aid
-        expect(Number.isFinite(stab.internationalAid.effectiveness)).toBe(true);
-        expect(Number.isFinite(stab.internationalAid.received)).toBe(true);
-        expect(Number.isFinite(stab.internationalAid.capacity)).toBe(true);
+        assert.ok(Number.isFinite(stab.internationalAid.effectiveness));
+        assert.ok(Number.isFinite(stab.internationalAid.received));
+        assert.ok(Number.isFinite(stab.internationalAid.capacity));
 
         // Heat adaptation
-        expect(Number.isFinite(stab.heatAdaptation.level)).toBe(true);
-        expect(Number.isFinite(stab.heatAdaptation.infrastructure)).toBe(true);
-        expect(Number.isFinite(stab.heatAdaptation.behavioralAdaptation)).toBe(true);
+        assert.ok(Number.isFinite(stab.heatAdaptation.level));
+        assert.ok(Number.isFinite(stab.heatAdaptation.infrastructure));
+        assert.ok(Number.isFinite(stab.heatAdaptation.behavioralAdaptation));
 
         // Migration
-        expect(Number.isFinite(stab.migration.capacity)).toBe(true);
-        expect(Number.isFinite(stab.migration.destinationAvailability)).toBe(true);
-        expect(Number.isFinite(stab.migration.displacementMortality)).toBe(true);
+        assert.ok(Number.isFinite(stab.migration.capacity));
+        assert.ok(Number.isFinite(stab.migration.destinationAvailability));
+        assert.ok(Number.isFinite(stab.migration.displacementMortality));
 
         // Emergency response
-        expect(Number.isFinite(stab.emergencyResponse.capacity)).toBe(true);
-        expect(Number.isFinite(stab.emergencyResponse.workforce)).toBe(true);
-        expect(Number.isFinite(stab.emergencyResponse.resources)).toBe(true);
+        assert.ok(Number.isFinite(stab.emergencyResponse.capacity));
+        assert.ok(Number.isFinite(stab.emergencyResponse.workforce));
+        assert.ok(Number.isFinite(stab.emergencyResponse.resources));
 
         // Combined
-        expect(Number.isFinite(stab.combinedReduction)).toBe(true);
+        assert.ok(Number.isFinite(stab.combinedReduction));
       }
     });
 
     test('should calculate combinedReduction in valid [0,1] range', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       phase.execute(state, rng, { executedPhases: new Set() });
 
       for (const region of state.humanPopulationSystem.regionalPopulations) {
         const combined = region.mortalityStabilizers!.combinedReduction;
-        expect(combined).toBeGreaterThanOrEqual(0);
-        expect(combined).toBeLessThanOrEqual(1);
+        assert.ok(combined >= 0);
+        assert.ok(combined <= 1);
       }
     });
 
     test('should process multiple consecutive steps without errors', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Run 12 consecutive steps (1 year)
       for (let i = 0; i < 12; i++) {
-        expect(() => {
+        assert.doesNotThrow(() => {
           phase.execute(state, rng, { executedPhases: new Set() });
-        }).not.toThrow();
+        });
 
         state.currentMonth++;
       }
@@ -312,18 +321,18 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
       // All stabilizers should still be valid
       for (const region of state.humanPopulationSystem.regionalPopulations) {
         const stab = region.mortalityStabilizers!;
-        expect(Number.isFinite(stab.combinedReduction)).toBe(true);
+        assert.ok(Number.isFinite(stab.combinedReduction));
       }
     });
   });
 
   describe('Global vs Regional Crisis Branching', () => {
     test('should reduce aid effectiveness during global crisis', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Record baseline aid effectiveness
@@ -333,59 +342,59 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
       // Create global crisis conditions
       // (Implementation detail: this would require collapsing >50% of major economies)
       // For this test, we verify the assertion doesn't throw
-      expect(Number.isFinite(baselineAid)).toBe(true);
+      assert.ok(Number.isFinite(baselineAid));
     });
 
     test('should maintain regional aid effectiveness during local crisis', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Local crisis (one region affected, not global)
       state.humanPopulationSystem.regionalPopulations[0].monthlyExcessDeaths = 5; // High mortality
       state.humanPopulationSystem.regionalPopulations[1].monthlyExcessDeaths = 0; // Unaffected
 
-      expect(() => {
+      assert.doesNotThrow(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).not.toThrow();
+      });
 
       // Aid should still be effective (not global crisis)
       const aid = state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.internationalAid.effectiveness;
-      expect(Number.isFinite(aid)).toBe(true);
-      expect(aid).toBeGreaterThan(0);
+      assert.ok(Number.isFinite(aid));
+      assert.ok(aid > 0);
     });
   });
 
   describe('Heat Adaptation Mechanics', () => {
     test('should validate wet bulb temperature limits (30.5°C)', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Set extreme heat conditions
       state.environmentalState.globalTemperature = 18.0; // Very high (baseline ~15°C)
 
-      expect(() => {
+      assert.doesNotThrow(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).not.toThrow();
+      });
 
       // Heat adaptation should be finite
       const adaptation = state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.heatAdaptation.level;
-      expect(Number.isFinite(adaptation)).toBe(true);
+      assert.ok(Number.isFinite(adaptation));
     });
 
     test('should develop heat adaptation over time with exposure', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Record baseline adaptation
@@ -404,36 +413,36 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
       const newAdaptation = state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.heatAdaptation.level;
 
       // Adaptation should remain finite
-      expect(Number.isFinite(newAdaptation)).toBe(true);
-      expect(newAdaptation).toBeGreaterThanOrEqual(0);
-      expect(newAdaptation).toBeLessThanOrEqual(1);
+      assert.ok(Number.isFinite(newAdaptation));
+      assert.ok(newAdaptation >= 0);
+      assert.ok(newAdaptation <= 1);
     });
   });
 
   describe('Migration Capacity Validation', () => {
     test('should validate displacement mortality is low (<1%)', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       phase.execute(state, rng, { executedPhases: new Set() });
 
       for (const region of state.humanPopulationSystem.regionalPopulations) {
         const displacementMortality = region.mortalityStabilizers!.migration.displacementMortality;
-        expect(Number.isFinite(displacementMortality)).toBe(true);
-        expect(displacementMortality).toBeLessThan(0.01); // <1% per research
+        assert.ok(Number.isFinite(displacementMortality));
+        assert.ok(displacementMortality < 0.01); // <1% per research
       }
     });
 
     test('should reduce migration capacity when destinations saturated', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Saturate destination availability
@@ -442,41 +451,41 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
       phase.execute(state, rng, { executedPhases: new Set() });
 
       const capacity = state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.migration.capacity;
-      expect(Number.isFinite(capacity)).toBe(true);
+      assert.ok(Number.isFinite(capacity));
     });
   });
 
   describe('Emergency Response Validation', () => {
     test('should depend on workforce and resources', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Low workforce and resources
       state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.emergencyResponse.workforce = 0.2;
       state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.emergencyResponse.resources = 0.1;
 
-      expect(() => {
+      assert.doesNotThrow(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).not.toThrow();
+      });
 
       const capacity = state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.emergencyResponse.capacity;
-      expect(Number.isFinite(capacity)).toBe(true);
-      expect(capacity).toBeGreaterThanOrEqual(0);
-      expect(capacity).toBeLessThanOrEqual(1);
+      assert.ok(Number.isFinite(capacity));
+      assert.ok(capacity >= 0);
+      assert.ok(capacity <= 1);
     });
   });
 
   describe('Cascade Failure Mechanics', () => {
     test('should degrade other stabilizers when one fails', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Set one stabilizer to fail (aid effectiveness to 0)
@@ -486,17 +495,17 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
 
       // Other stabilizers should still be valid (cascade may reduce them)
       const stab = state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!;
-      expect(Number.isFinite(stab.heatAdaptation.level)).toBe(true);
-      expect(Number.isFinite(stab.migration.capacity)).toBe(true);
-      expect(Number.isFinite(stab.emergencyResponse.capacity)).toBe(true);
+      assert.ok(Number.isFinite(stab.heatAdaptation.level));
+      assert.ok(Number.isFinite(stab.migration.capacity));
+      assert.ok(Number.isFinite(stab.emergencyResponse.capacity));
     });
 
     test('should maintain all values as finite during cascades', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Create cascade conditions (multiple stabilizers at low effectiveness)
@@ -506,26 +515,26 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
       stab.migration.capacity = 0.05;
       stab.emergencyResponse.capacity = 0.15;
 
-      expect(() => {
+      assert.doesNotThrow(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).not.toThrow();
+      });
 
       // All should remain finite
-      expect(Number.isFinite(stab.internationalAid.effectiveness)).toBe(true);
-      expect(Number.isFinite(stab.heatAdaptation.level)).toBe(true);
-      expect(Number.isFinite(stab.migration.capacity)).toBe(true);
-      expect(Number.isFinite(stab.emergencyResponse.capacity)).toBe(true);
-      expect(Number.isFinite(stab.combinedReduction)).toBe(true);
+      assert.ok(Number.isFinite(stab.internationalAid.effectiveness));
+      assert.ok(Number.isFinite(stab.heatAdaptation.level));
+      assert.ok(Number.isFinite(stab.migration.capacity));
+      assert.ok(Number.isFinite(stab.emergencyResponse.capacity));
+      assert.ok(Number.isFinite(stab.combinedReduction));
     });
   });
 
   describe('Multi-Region State Consistency', () => {
     test('should process all regions without cross-contamination', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
       // Set different values for each region
@@ -538,21 +547,21 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
       const aid0 = state.humanPopulationSystem.regionalPopulations[0].mortalityStabilizers!.internationalAid.effectiveness;
       const aid1 = state.humanPopulationSystem.regionalPopulations[1].mortalityStabilizers!.internationalAid.effectiveness;
 
-      expect(Number.isFinite(aid0)).toBe(true);
-      expect(Number.isFinite(aid1)).toBe(true);
+      assert.ok(Number.isFinite(aid0));
+      assert.ok(Number.isFinite(aid1));
     });
 
     test('should gracefully handle empty regionalPopulations during bootstrap', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       state.currentMonth = 1; // During bootstrap
       state.humanPopulationSystem.regionalPopulations = [];
 
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new MortalityStabilizersPhase();
 
-      expect(() => {
+      assert.doesNotThrow(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).not.toThrow();
+      });
     });
   });
 
@@ -563,7 +572,7 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
         maxMonths: 24
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
@@ -576,9 +585,9 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
       for (const region of result.finalState.humanPopulationSystem.regionalPopulations) {
         if (region.mortalityStabilizers) {
           const stab = region.mortalityStabilizers;
-          expect(Number.isFinite(stab.combinedReduction)).toBe(true);
-          expect(stab.combinedReduction).toBeGreaterThanOrEqual(0);
-          expect(stab.combinedReduction).toBeLessThanOrEqual(1);
+          assert.ok(Number.isFinite(stab.combinedReduction));
+          assert.ok(stab.combinedReduction >= 0);
+          assert.ok(stab.combinedReduction <= 1);
         }
       }
     });
@@ -589,7 +598,7 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
         maxMonths: 12
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       ensureRegionalPopulations(state);
       state.currentMonth = 10;
 
@@ -600,12 +609,12 @@ describe('MortalityStabilizersPhase: State Validation Integration', () => {
 
       // Check no NaN in final state
       for (const region of result.finalState.humanPopulationSystem.regionalPopulations) {
-        expect(Number.isFinite(region.population)).toBe(true);
-        expect(Number.isFinite(region.monthlyExcessDeaths)).toBe(true);
-        expect(Number.isFinite(region.cumulativeCrisisDeaths)).toBe(true);
+        assert.ok(Number.isFinite(region.population));
+        assert.ok(Number.isFinite(region.monthlyExcessDeaths));
+        assert.ok(Number.isFinite(region.cumulativeCrisisDeaths));
 
         if (region.mortalityStabilizers) {
-          expect(Number.isFinite(region.mortalityStabilizers.combinedReduction)).toBe(true);
+          assert.ok(Number.isFinite(region.mortalityStabilizers.combinedReduction));
         }
       }
     });

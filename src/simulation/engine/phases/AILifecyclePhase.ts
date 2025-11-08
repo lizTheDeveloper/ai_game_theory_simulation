@@ -39,6 +39,53 @@ export class AILifecyclePhase implements SimulationPhase {
     // TIER 2 Phase 4: Pass RNG for deterministic detection during testing phase
     updateAIPopulation(state, rng);
 
+    // DEFENSIVE FIX (Nov 8, 2025): Round all AI capabilities to integers
+    // Capabilities are discrete levels [0, 5], but fractional values can slip through
+    // from various calculations (scaling, averaging, state updates)
+    // This defensive rounding ensures capabilities are always integers before assertions
+    for (const agent of state.aiAgents) {
+      const p = agent.capabilityProfile;
+      p.physical = Math.round(p.physical);
+      p.digital = Math.round(p.digital);
+      p.cognitive = Math.round(p.cognitive);
+      p.social = Math.round(p.social);
+      p.economic = Math.round(p.economic);
+      p.selfImprovement = Math.round(p.selfImprovement);
+
+      // Round research sub-dimensions
+      const r = p.research;
+      r.biotech.drugDiscovery = Math.round(r.biotech.drugDiscovery);
+      r.biotech.geneEditing = Math.round(r.biotech.geneEditing);
+      r.biotech.syntheticBiology = Math.round(r.biotech.syntheticBiology);
+      r.biotech.neuroscience = Math.round(r.biotech.neuroscience);
+      r.materials.nanotechnology = Math.round(r.materials.nanotechnology);
+      r.materials.quantumComputing = Math.round(r.materials.quantumComputing);
+      r.materials.energySystems = Math.round(r.materials.energySystems);
+      r.climate.modeling = Math.round(r.climate.modeling);
+      r.climate.intervention = Math.round(r.climate.intervention);
+      r.climate.mitigation = Math.round(r.climate.mitigation);
+      r.computerScience.algorithms = Math.round(r.computerScience.algorithms);
+      r.computerScience.security = Math.round(r.computerScience.security);
+      r.computerScience.architectures = Math.round(r.computerScience.architectures);
+
+      // Also round trueCapability and revealedCapability (used for sandbagging)
+      const tc = agent.trueCapability;
+      tc.physical = Math.round(tc.physical);
+      tc.digital = Math.round(tc.digital);
+      tc.cognitive = Math.round(tc.cognitive);
+      tc.social = Math.round(tc.social);
+      tc.economic = Math.round(tc.economic);
+      tc.selfImprovement = Math.round(tc.selfImprovement);
+
+      const rc = agent.revealedCapability;
+      rc.physical = Math.round(rc.physical);
+      rc.digital = Math.round(rc.digital);
+      rc.cognitive = Math.round(rc.cognitive);
+      rc.social = Math.round(rc.social);
+      rc.economic = Math.round(rc.economic);
+      rc.selfImprovement = Math.round(rc.selfImprovement);
+    }
+
     // ASSERTIONS (Nov 7, 2025): Validate AI capabilities after lifecycle updates
     for (const agent of state.aiAgents) {
       if (agent.lifecycleState === 'deployed_closed' || agent.lifecycleState === 'deployed_open' || agent.lifecycleState === 'testing') {

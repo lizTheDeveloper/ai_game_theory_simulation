@@ -26,7 +26,7 @@ import type {
   RNGFunction
 } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertProbability, assertFinite } from '@/simulation/utils/assertions';
+import { assertProbability, assertFinite, assertInRange } from '@/simulation/utils/assertions';
 
 export class Tier2CentaurSystemsPhase implements SimulationPhase {
   id = 'tier2_centaur_systems';
@@ -51,7 +51,10 @@ export class Tier2CentaurSystemsPhase implements SimulationPhase {
       // (Architecture Review M4 - Oct 27, 2025): Now uses unemployment from GlobalMetrics
       const unemployment = state.globalMetrics.unemployment || 0;
       const meaningCrisis = state.socialAccumulation.meaningCrisisLevel;
-      const governmentInvestment = state.government.alignmentResearchInvestment;
+      // BUG FIX (Nov 8, 2025): alignmentResearchInvestment is [0, 10], not [0, 1]
+      // Normalize to probability for threshold comparison
+      const governmentInvestmentRaw = state.government.alignmentResearchInvestment;
+      const governmentInvestment = governmentInvestmentRaw / 10; // Normalize [0, 10] → [0, 1]
 
       // Validate metrics are valid probabilities/fractions
       assertProbability(unemployment, {
@@ -66,9 +69,17 @@ export class Tier2CentaurSystemsPhase implements SimulationPhase {
         month: state.currentMonth
       });
 
+      // Validate raw investment level [0, 10]
+      assertInRange(governmentInvestmentRaw, 0, 10, {
+        location: 'Tier2CentaurSystemsPhase.execute',
+        valueName: 'government.alignmentResearchInvestment',
+        month: state.currentMonth
+      });
+
+      // Normalized value should be probability [0, 1]
       assertProbability(governmentInvestment, {
         location: 'Tier2CentaurSystemsPhase.execute',
-        valueName: 'governmentInvestment',
+        valueName: 'governmentInvestment (normalized)',
         month: state.currentMonth
       });
 

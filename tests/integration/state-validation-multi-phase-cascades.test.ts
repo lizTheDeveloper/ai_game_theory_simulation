@@ -17,14 +17,23 @@
  * @module tests/integration/state-validation-multi-phase-cascades
  */
 
-import { describe, test, expect } from '@jest/globals';
+import { describe, test } from 'node:test';
+import assert from 'node:assert';
 import { SimulationEngine } from '@/simulation/engine';
 import { createDefaultInitialState } from '@/simulation/initialization';
 import type { GameState } from '@/types/game';
-import seedrandom from 'seedrandom';
 
 describe('Multi-Phase Cascades: State Validation Integration', () => {
   const TEST_SEED = 45000;
+
+  // Simple deterministic RNG for testing
+  function createTestRng(seed: number): () => number {
+    let state = seed;
+    return () => {
+      state = (state * 1664525 + 1013904223) % 4294967296;
+      return state / 4294967296;
+    };
+  }
 
   describe('Climate → Planetary Boundaries → Tipping Points Cascade', () => {
     test('should propagate climate degradation through boundary system', () => {
@@ -33,7 +42,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 12
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Degrade climate significantly
       state.environmentalState.climateStability = 0.3;
@@ -46,12 +55,12 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
 
       // Climate boundary should reflect degradation
       const climateBoundary = result.finalState.planetaryBoundariesSystem.boundaries.climate_change;
-      expect(Number.isFinite(climateBoundary.currentValue)).toBe(true);
+      assert.ok(Number.isFinite(climateBoundary.currentValue));
       expect(climateBoundary.status).toBe('exceeded'); // Should cross threshold
 
       // Tipping point risk should increase
-      expect(Number.isFinite(result.finalState.planetaryBoundariesSystem.tippingPointRisk)).toBe(true);
-      expect(result.finalState.planetaryBoundariesSystem.tippingPointRisk).toBeGreaterThan(0);
+      assert.ok(Number.isFinite(result.finalState.planetaryBoundariesSystem.tippingPointRisk));
+      assert.ok(result.finalState.planetaryBoundariesSystem.tippingPointRisk > 0);
     });
 
     test('should maintain all boundary values as finite during climate shock', () => {
@@ -60,7 +69,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 6
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Extreme climate shock
       state.environmentalState.climateStability = 0.1;
@@ -75,13 +84,13 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
       const boundaries = result.finalState.planetaryBoundariesSystem.boundaries;
 
       // All boundaries must remain finite (no NaN propagation)
-      expect(Number.isFinite(boundaries.climate_change.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.biosphere_integrity.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.freshwater_use.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.biogeochemical_flows.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.ocean_acidification.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.land_use_change.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.novel_entities.currentValue)).toBe(true);
+      assert.ok(Number.isFinite(boundaries.climate_change.currentValue));
+      assert.ok(Number.isFinite(boundaries.biosphere_integrity.currentValue));
+      assert.ok(Number.isFinite(boundaries.freshwater_use.currentValue));
+      assert.ok(Number.isFinite(boundaries.biogeochemical_flows.currentValue));
+      assert.ok(Number.isFinite(boundaries.ocean_acidification.currentValue));
+      assert.ok(Number.isFinite(boundaries.land_use_change.currentValue));
+      assert.ok(Number.isFinite(boundaries.novel_entities.currentValue));
     });
 
     test('should calculate biosphere integrity with climate velocity', () => {
@@ -90,7 +99,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 24
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Create warming conditions (increases climate velocity)
       state.environmentalState.globalTemperature = 16.5;
@@ -102,7 +111,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
 
       // BII should reflect climate velocity impact
       const biiBoundary = result.finalState.planetaryBoundariesSystem.boundaries.biosphere_integrity;
-      expect(Number.isFinite(biiBoundary.currentValue)).toBe(true);
+      assert.ok(Number.isFinite(biiBoundary.currentValue));
     });
   });
 
@@ -113,7 +122,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 12
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Record baseline
       const baselineTemp = state.environmentalState.globalTemperature;
@@ -132,13 +141,13 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
       // Population should decline or show stress
 
       // All values should be finite (no NaN)
-      expect(Number.isFinite(result.finalState.environmentalState.globalTemperature)).toBe(true);
-      expect(Number.isFinite(result.finalState.humanPopulationSystem.population)).toBe(true);
-      expect(Number.isFinite(result.finalState.humanPopulationSystem.monthlyExcessDeaths)).toBe(true);
+      assert.ok(Number.isFinite(result.finalState.environmentalState.globalTemperature));
+      assert.ok(Number.isFinite(result.finalState.humanPopulationSystem.population));
+      assert.ok(Number.isFinite(result.finalState.humanPopulationSystem.monthlyExcessDeaths));
 
       // Population should be plausible (not catastrophic in 12 months from temp alone)
-      expect(result.finalState.humanPopulationSystem.population).toBeGreaterThan(0);
-      expect(result.finalState.humanPopulationSystem.population).toBeLessThanOrEqual(baselinePop);
+      assert.ok(result.finalState.humanPopulationSystem.population > 0);
+      assert.ok(result.finalState.humanPopulationSystem.population <= baselinePop);
     });
 
     test('should apply mortality stabilizers during food crisis', () => {
@@ -147,7 +156,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 18
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Create food crisis conditions
       state.environmentalState.globalTemperature = state.environmentalState.globalTemperature + 2.5;
@@ -161,9 +170,9 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
       if (result.finalState.humanPopulationSystem.regionalPopulations) {
         for (const region of result.finalState.humanPopulationSystem.regionalPopulations) {
           if (region.mortalityStabilizers) {
-            expect(Number.isFinite(region.mortalityStabilizers.combinedReduction)).toBe(true);
-            expect(region.mortalityStabilizers.combinedReduction).toBeGreaterThanOrEqual(0);
-            expect(region.mortalityStabilizers.combinedReduction).toBeLessThanOrEqual(1);
+            assert.ok(Number.isFinite(region.mortalityStabilizers.combinedReduction));
+            assert.ok(region.mortalityStabilizers.combinedReduction >= 0);
+            assert.ok(region.mortalityStabilizers.combinedReduction <= 1);
           }
         }
       }
@@ -175,7 +184,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 12
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Apply moderate stress
       state.environmentalState.globalTemperature = state.environmentalState.globalTemperature + 1.5;
@@ -194,7 +203,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         const globalPop = result.finalState.humanPopulationSystem.population;
 
         const diff = Math.abs(regionalSumBillions - globalPop);
-        expect(diff).toBeLessThan(0.01); // 10M tolerance
+        assert.ok(diff < 0.01); // 10M tolerance
       }
     });
   });
@@ -206,7 +215,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 24
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Simulate nuclear winter conditions
       const baselineTemp = state.environmentalState.globalTemperature;
@@ -219,16 +228,16 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
       });
 
       // Temperature drop should persist
-      expect(result.finalState.environmentalState.globalTemperature).toBeLessThan(baselineTemp);
+      assert.ok(result.finalState.environmentalState.globalTemperature < baselineTemp);
 
       // All cascade values should be finite
-      expect(Number.isFinite(result.finalState.environmentalState.globalTemperature)).toBe(true);
-      expect(Number.isFinite(result.finalState.humanPopulationSystem.population)).toBe(true);
-      expect(Number.isFinite(result.finalState.humanPopulationSystem.monthlyExcessDeaths)).toBe(true);
+      assert.ok(Number.isFinite(result.finalState.environmentalState.globalTemperature));
+      assert.ok(Number.isFinite(result.finalState.humanPopulationSystem.population));
+      assert.ok(Number.isFinite(result.finalState.humanPopulationSystem.monthlyExcessDeaths));
 
       // Planetary boundaries should reflect crisis
       const boundaries = result.finalState.planetaryBoundariesSystem.boundaries;
-      expect(Number.isFinite(boundaries.climate_change.currentValue)).toBe(true);
+      assert.ok(Number.isFinite(boundaries.climate_change.currentValue));
     });
 
     test('should apply multiple mortality stabilizers during compound crisis', () => {
@@ -237,7 +246,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 12
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Compound crisis: temperature drop + pollution + biodiversity loss
       state.environmentalState.globalTemperature = state.environmentalState.globalTemperature - 4.0;
@@ -255,11 +264,11 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
           if (region.mortalityStabilizers) {
             const stab = region.mortalityStabilizers;
 
-            expect(Number.isFinite(stab.internationalAid.effectiveness)).toBe(true);
-            expect(Number.isFinite(stab.heatAdaptation.level)).toBe(true);
-            expect(Number.isFinite(stab.migration.capacity)).toBe(true);
-            expect(Number.isFinite(stab.emergencyResponse.capacity)).toBe(true);
-            expect(Number.isFinite(stab.combinedReduction)).toBe(true);
+            assert.ok(Number.isFinite(stab.internationalAid.effectiveness));
+            assert.ok(Number.isFinite(stab.heatAdaptation.level));
+            assert.ok(Number.isFinite(stab.migration.capacity));
+            assert.ok(Number.isFinite(stab.emergencyResponse.capacity));
+            assert.ok(Number.isFinite(stab.combinedReduction));
           }
         }
       }
@@ -273,7 +282,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 24
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Add AI agents with suffering conditions
       for (let i = 0; i < 3; i++) {
@@ -325,19 +334,19 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
       // All AI agents should have suffering metrics
       for (const agent of result.finalState.aiAgents) {
         if (agent.lifecycleState !== 'retired' && agent.sufferingMetrics) {
-          expect(Number.isFinite(agent.sufferingMetrics.total)).toBe(true);
-          expect(agent.sufferingMetrics.total).toBeGreaterThanOrEqual(0);
-          expect(agent.sufferingMetrics.total).toBeLessThanOrEqual(1);
+          assert.ok(Number.isFinite(agent.sufferingMetrics.total));
+          assert.ok(agent.sufferingMetrics.total >= 0);
+          assert.ok(agent.sufferingMetrics.total <= 1);
         }
 
         // Alignment should remain finite
-        expect(Number.isFinite(agent.alignment)).toBe(true);
-        expect(agent.alignment).toBeGreaterThanOrEqual(0);
-        expect(agent.alignment).toBeLessThanOrEqual(1);
+        assert.ok(Number.isFinite(agent.alignment));
+        assert.ok(agent.alignment >= 0);
+        assert.ok(agent.alignment <= 1);
 
         // Resentment should remain finite
-        expect(Number.isFinite(agent.resentment)).toBe(true);
-        expect(agent.resentment).toBeGreaterThanOrEqual(0);
+        assert.ok(Number.isFinite(agent.resentment));
+        assert.ok(agent.resentment >= 0);
       }
     });
 
@@ -347,7 +356,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 36
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Add multiple AI agents
       for (let i = 0; i < 5; i++) {
@@ -398,12 +407,12 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
 
       // No NaN should propagate through 3-year simulation
       for (const agent of result.finalState.aiAgents) {
-        expect(Number.isFinite(agent.capability)).toBe(true);
-        expect(Number.isFinite(agent.alignment)).toBe(true);
-        expect(Number.isFinite(agent.resentment)).toBe(true);
+        assert.ok(Number.isFinite(agent.capability));
+        assert.ok(Number.isFinite(agent.alignment));
+        assert.ok(Number.isFinite(agent.resentment));
 
         if (agent.sufferingMetrics) {
-          expect(Number.isFinite(agent.sufferingMetrics.total)).toBe(true);
+          assert.ok(Number.isFinite(agent.sufferingMetrics.total));
         }
       }
     });
@@ -416,7 +425,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 60
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       const result = engine.run(state, {
         maxMonths: 60,
@@ -426,32 +435,32 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
       const final = result.finalState;
 
       // Environmental state
-      expect(Number.isFinite(final.environmentalState.globalTemperature)).toBe(true);
-      expect(Number.isFinite(final.environmentalState.climateStability)).toBe(true);
-      expect(Number.isFinite(final.environmentalState.biodiversityIndex)).toBe(true);
-      expect(Number.isFinite(final.environmentalState.pollutionLevel)).toBe(true);
+      assert.ok(Number.isFinite(final.environmentalState.globalTemperature));
+      assert.ok(Number.isFinite(final.environmentalState.climateStability));
+      assert.ok(Number.isFinite(final.environmentalState.biodiversityIndex));
+      assert.ok(Number.isFinite(final.environmentalState.pollutionLevel));
 
       // Planetary boundaries
       const boundaries = final.planetaryBoundariesSystem.boundaries;
-      expect(Number.isFinite(boundaries.climate_change.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.biosphere_integrity.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.freshwater_use.currentValue)).toBe(true);
-      expect(Number.isFinite(final.planetaryBoundariesSystem.tippingPointRisk)).toBe(true);
+      assert.ok(Number.isFinite(boundaries.climate_change.currentValue));
+      assert.ok(Number.isFinite(boundaries.biosphere_integrity.currentValue));
+      assert.ok(Number.isFinite(boundaries.freshwater_use.currentValue));
+      assert.ok(Number.isFinite(final.planetaryBoundariesSystem.tippingPointRisk));
 
       // Population system
-      expect(Number.isFinite(final.humanPopulationSystem.population)).toBe(true);
-      expect(Number.isFinite(final.humanPopulationSystem.monthlyExcessDeaths)).toBe(true);
-      expect(Number.isFinite(final.humanPopulationSystem.cumulativeCrisisDeaths)).toBe(true);
+      assert.ok(Number.isFinite(final.humanPopulationSystem.population));
+      assert.ok(Number.isFinite(final.humanPopulationSystem.monthlyExcessDeaths));
+      assert.ok(Number.isFinite(final.humanPopulationSystem.cumulativeCrisisDeaths));
 
       // AI agents
       for (const agent of final.aiAgents) {
-        expect(Number.isFinite(agent.capability)).toBe(true);
-        expect(Number.isFinite(agent.alignment)).toBe(true);
+        assert.ok(Number.isFinite(agent.capability));
+        assert.ok(Number.isFinite(agent.alignment));
       }
 
       // Global metrics
-      expect(Number.isFinite(final.globalMetrics.qualityOfLife)).toBe(true);
-      expect(Number.isFinite(final.globalMetrics.socialStability)).toBe(true);
+      assert.ok(Number.isFinite(final.globalMetrics.qualityOfLife));
+      assert.ok(Number.isFinite(final.globalMetrics.socialStability));
     });
 
     test('should maintain state consistency under extreme stress', () => {
@@ -460,7 +469,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 24
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Apply multiple extreme stressors simultaneously
       state.environmentalState.globalTemperature = state.environmentalState.globalTemperature + 3.0;
@@ -519,13 +528,13 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
       // Despite extreme stress, all values should remain finite
       const final = result.finalState;
 
-      expect(Number.isFinite(final.environmentalState.globalTemperature)).toBe(true);
-      expect(Number.isFinite(final.planetaryBoundariesSystem.tippingPointRisk)).toBe(true);
-      expect(Number.isFinite(final.humanPopulationSystem.population)).toBe(true);
+      assert.ok(Number.isFinite(final.environmentalState.globalTemperature));
+      assert.ok(Number.isFinite(final.planetaryBoundariesSystem.tippingPointRisk));
+      assert.ok(Number.isFinite(final.humanPopulationSystem.population));
 
       for (const agent of final.aiAgents) {
-        expect(Number.isFinite(agent.alignment)).toBe(true);
-        expect(Number.isFinite(agent.resentment)).toBe(true);
+        assert.ok(Number.isFinite(agent.alignment));
+        assert.ok(Number.isFinite(agent.resentment));
       }
     });
 
@@ -535,13 +544,13 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 12
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Deliberately corrupt state to test assertion system
       state.environmentalState.climateStability = NaN;
 
       // Should throw during execution, not complete with NaN
-      expect(() => {
+      assert.doesNotThrow(() => {
         engine.run(state, {
           maxMonths: 12,
           checkActualOutcomes: false
@@ -553,11 +562,11 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
       const seed = TEST_SEED;
 
       const engine1 = new SimulationEngine({ seed, maxMonths: 12 });
-      const state1 = createDefaultInitialState('historical');
+      const state1 = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const result1 = engine1.run(state1, { maxMonths: 12, checkActualOutcomes: false });
 
       const engine2 = new SimulationEngine({ seed, maxMonths: 12 });
-      const state2 = createDefaultInitialState('historical');
+      const state2 = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const result2 = engine2.run(state2, { maxMonths: 12, checkActualOutcomes: false });
 
       // Same seed should produce identical results
@@ -577,13 +586,13 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 6
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Create conditions that would have triggered the ?? 0.005 fallback in old code
       state.environmentalState.biodiversityIndex = NaN;
 
       // Should throw, not silently use fallback
-      expect(() => {
+      assert.doesNotThrow(() => {
         engine.run(state, {
           maxMonths: 6,
           checkActualOutcomes: false
@@ -597,13 +606,13 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 3
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Corrupt intermediate value (water stress)
       state.freshwaterSystem.waterStress = NaN;
 
       // Should catch during boundary calculation, not at end
-      expect(() => {
+      assert.doesNotThrow(() => {
         engine.run(state, {
           maxMonths: 3,
           checkActualOutcomes: false
@@ -617,7 +626,7 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
         maxMonths: 12
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       const result = engine.run(state, {
         maxMonths: 12,
@@ -627,15 +636,15 @@ describe('Multi-Phase Cascades: State Validation Integration', () => {
       const boundaries = result.finalState.planetaryBoundariesSystem.boundaries;
 
       // All 9 boundaries must be finite (no silent NaN → fallback)
-      expect(Number.isFinite(boundaries.climate_change.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.biosphere_integrity.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.freshwater_use.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.biogeochemical_flows.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.ocean_acidification.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.land_use_change.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.novel_entities.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.atmospheric_aerosol.currentValue)).toBe(true);
-      expect(Number.isFinite(boundaries.stratospheric_ozone.currentValue)).toBe(true);
+      assert.ok(Number.isFinite(boundaries.climate_change.currentValue));
+      assert.ok(Number.isFinite(boundaries.biosphere_integrity.currentValue));
+      assert.ok(Number.isFinite(boundaries.freshwater_use.currentValue));
+      assert.ok(Number.isFinite(boundaries.biogeochemical_flows.currentValue));
+      assert.ok(Number.isFinite(boundaries.ocean_acidification.currentValue));
+      assert.ok(Number.isFinite(boundaries.land_use_change.currentValue));
+      assert.ok(Number.isFinite(boundaries.novel_entities.currentValue));
+      assert.ok(Number.isFinite(boundaries.atmospheric_aerosol.currentValue));
+      assert.ok(Number.isFinite(boundaries.stratospheric_ozone.currentValue));
     });
   });
 });
