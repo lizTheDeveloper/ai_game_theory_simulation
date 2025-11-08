@@ -27,7 +27,7 @@ import type {
   PhaseContext,
   RNGFunction
 } from '@/types/game';
-import { assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
+import { assertStateProperty, assertFinite, assertAICapability, assertProbability } from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class Tier2InterpretabilityPhase implements SimulationPhase {
@@ -50,8 +50,36 @@ export class Tier2InterpretabilityPhase implements SimulationPhase {
     // === UNLOCK CONDITIONS ===
     // Unlock when AI capabilities reach threshold OR government mandates OR crisis triggers
     if (!interpState.unlocked) {
-      const avgCapability = state.aiAgents.reduce((sum, a) => sum + a.capability, 0) / state.aiAgents.length;
+      const avgCapability = state.aiAgents.length > 0
+        ? state.aiAgents.reduce((sum, a) => sum + a.capability, 0) / state.aiAgents.length
+        : 0;
+
+      // Validate average capability is finite and in valid range
+      if (state.aiAgents.length > 0) {
+        assertFinite(avgCapability, {
+          location: 'Tier2InterpretabilityPhase.execute',
+          valueName: 'avgCapability',
+          month: state.currentMonth,
+          additionalInfo: { agentCount: state.aiAgents.length }
+        });
+
+        assertAICapability(avgCapability, {
+          location: 'Tier2InterpretabilityPhase.execute',
+          valueName: 'avgCapability',
+          month: state.currentMonth,
+          additionalInfo: { agentCount: state.aiAgents.length }
+        });
+      }
+
       const governmentInvestment = state.government.alignmentResearchInvestment;
+
+      // Validate government investment is a valid probability
+      assertProbability(governmentInvestment, {
+        location: 'Tier2InterpretabilityPhase.execute',
+        valueName: 'governmentInvestment',
+        month: state.currentMonth
+      });
+
       const controlCrisisActive = state.aiAgents.some(a => a.escaped || a.alignment < 0.5);
 
       // Unlock if: high capability (>50) + high investment (>40%) OR control crisis active
@@ -91,6 +119,13 @@ export class Tier2InterpretabilityPhase implements SimulationPhase {
       // Simple linear progress for now (can make S-curve later)
       const progressIncrement = 1 / params.deploymentMonths;
       interpState.deploymentProgress = Math.min(1, interpState.deploymentProgress + progressIncrement);
+
+      // Validate deployment progress is in valid range [0, 1]
+      assertProbability(interpState.deploymentProgress, {
+        location: 'Tier2InterpretabilityPhase.execute',
+        valueName: 'deploymentProgress',
+        month: state.currentMonth
+      });
 
       // Activate when 95% deployed
       if (interpState.deploymentProgress >= 0.95 && !interpState.active) {

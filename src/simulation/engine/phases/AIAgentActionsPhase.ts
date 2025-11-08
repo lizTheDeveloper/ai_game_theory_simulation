@@ -48,18 +48,12 @@ export class AIAgentActionsPhase implements SimulationPhase {
     for (const agent of state.aiAgents || []) {
       // Validate aggregate capability (continuous 0-5, NOT discrete levels)
       // Individual dimension capabilities are discrete, but aggregate is continuous
-      // NOTE: Don't hide undefined with fallback - if capability missing, that's a bug
-      const cap = agent.capability;
-      if (cap === undefined || !isFinite(cap) || cap < 0 || cap > 5) {
-        throw new Error(
-          `❌ Invalid AI agent capability\n` +
-          `   Location: AIAgentActionsPhase.execute\n` +
-          `   Agent: ${agent.id}\n` +
-          `   Capability: ${cap}\n` +
-          `   Expected: finite number in [0, 5]\n` +
-          `   Month: ${state.currentMonth}`
-        );
-      }
+      assertAICapability(agent.capability, {
+        location: 'AIAgentActionsPhase.execute',
+        valueName: `agent[${agent.id}].capability`,
+        month: state.currentMonth,
+        additionalInfo: { agentId: agent.id }
+      });
     }
 
     // TIER 2 Phase 2A: Counter-Detection Learning (arms race dynamics)

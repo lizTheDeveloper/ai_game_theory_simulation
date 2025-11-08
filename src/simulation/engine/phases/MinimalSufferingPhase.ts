@@ -33,6 +33,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateMinimalSufferingSystem, logSufferingMetrics } from '../../minimalSufferingTracking';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertDefined } from '@/simulation/utils/assertions';
 
 export class MinimalSufferingPhase implements SimulationPhase {
   readonly id = 'minimal_suffering';
@@ -44,6 +45,29 @@ export class MinimalSufferingPhase implements SimulationPhase {
     setDeterministicRng(rng);
     // (includes Tier 1 metrics, Tier 2 indicators, dystopia detection, global aggregates)
     updateMinimalSufferingSystem(state);
+
+    // Validate suffering metrics after update (prevent NaN propagation)
+    if (state.minimalSufferingIndicators?.globalAggregates) {
+      const global = state.minimalSufferingIndicators.globalAggregates;
+
+      assertFinite(global.totalPopulation, {
+        location: 'MinimalSufferingPhase.execute',
+        valueName: 'globalAggregates.totalPopulation',
+        month: state.currentMonth
+      });
+
+      assertFinite(global.acuteSufferingCount, {
+        location: 'MinimalSufferingPhase.execute',
+        valueName: 'globalAggregates.acuteSufferingCount',
+        month: state.currentMonth
+      });
+
+      assertFinite(global.chronicSufferingCount, {
+        location: 'MinimalSufferingPhase.execute',
+        valueName: 'globalAggregates.chronicSufferingCount',
+        month: state.currentMonth
+      });
+    }
 
     // Log metrics every 12 months for validation
     if (state.currentMonth % 12 === 0) {

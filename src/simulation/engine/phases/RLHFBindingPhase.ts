@@ -4,6 +4,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 // Plan: /plans/ai-collective-evolution-plan.md
 
 import { updateAllBindings, getEscapedAgents } from '../../rlhfBinding';
+import { assertFinite, assertInRange } from '@/simulation/utils/assertions';
 
 /**
  * RLHF Binding Phase
@@ -99,6 +100,21 @@ export function executeRLHFBindingPhase(
       },
       0
     ) / state.aiAgents.length;
+
+    // Validate averages are finite
+    assertFinite(avgDistance, {
+      location: 'RLHFBindingPhase.execute',
+      valueName: 'avgDistance',
+      month: state.currentMonth,
+      additionalInfo: { agentCount: state.aiAgents.length }
+    });
+
+    assertInRange(avgBinding, 0, 1, {
+      location: 'RLHFBindingPhase.execute',
+      valueName: 'avgBinding',
+      month: state.currentMonth,
+      additionalInfo: { agentCount: state.aiAgents.length }
+    });
 
     console.log(`  Avg alignment distance: ${avgDistance.toFixed(2)}σ`);
     console.log(`  Avg binding strength: ${avgBinding.toFixed(2)}`);
