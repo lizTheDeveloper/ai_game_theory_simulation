@@ -32,6 +32,7 @@ export class Tier2SyntheticEcosystemsPhase implements SimulationPhase {
   id = 'tier2_synthetic_ecosystems';
   name = 'TIER 2: Synthetic Ecosystem Services';
   order = 19.5; // After environmental updates, before biodiversity crisis
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

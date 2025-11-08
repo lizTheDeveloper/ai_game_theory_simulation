@@ -12,6 +12,7 @@ export class NationalAIPhase implements SimulationPhase {
   readonly id = 'national-ai';
   readonly name = 'National AI Update';
   readonly order = 15.0;
+  dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateNationalAI } = require('../../nationalAI/index');

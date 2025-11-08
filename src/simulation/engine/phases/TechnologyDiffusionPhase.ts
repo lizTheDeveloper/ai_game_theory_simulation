@@ -13,6 +13,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertAICapability } from '@/simulation/utils/assertions';
 
 export class TechnologyDiffusionPhase implements SimulationPhase {
   readonly id = 'technology-diffusion';
@@ -31,6 +32,16 @@ export class TechnologyDiffusionPhase implements SimulationPhase {
     const { diffuseCapabilities } = require('../../technologyDiffusion');
 
     diffuseCapabilities(state, rng);
+
+    // Validate AI agent capabilities after diffusion
+    for (const agent of state.aiAgents || []) {
+      assertAICapability(agent.capability, {
+        location: 'TechnologyDiffusionPhase.execute',
+        valueName: `agent[${agent.id}].capability`,
+        month: state.currentMonth,
+        additionalInfo: { agentId: agent.id }
+      });
+    }
 
     return { events: [] };
   }

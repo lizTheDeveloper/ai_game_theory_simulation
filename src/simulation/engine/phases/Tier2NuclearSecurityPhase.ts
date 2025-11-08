@@ -26,13 +26,14 @@ import type {
   PhaseContext,
   RNGFunction
 } from '@/types/game';
-import { assertStateProperty } from '@/simulation/utils/assertions';
+import { assertStateProperty, assertAICapability, assertFinite, assertProbability } from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class Tier2NuclearSecurityPhase implements SimulationPhase {
   id = 'tier2_nuclear_security';
   name = 'TIER 2: Nuclear Command Security';
   order = 18.5; // After nuclear risk calculations, before crisis detection
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
@@ -49,7 +50,28 @@ export class Tier2NuclearSecurityPhase implements SimulationPhase {
     if (!securityState.unlocked) {
       // Unlock when: nuclear states exist + AI capability high + government concern high
       const nuclearStatesExist = state.nuclearStates && state.nuclearStates.length > 0;
-      const avgCapability = state.aiAgents.reduce((sum, a) => sum + a.capability, 0) / state.aiAgents.length;
+
+      const avgCapability = state.aiAgents.length > 0
+        ? state.aiAgents.reduce((sum, a) => sum + a.capability, 0) / state.aiAgents.length
+        : 0;
+
+      // Validate average capability is finite and in valid range
+      if (state.aiAgents.length > 0) {
+        assertFinite(avgCapability, {
+          location: 'Tier2NuclearSecurityPhase.execute',
+          valueName: 'avgCapability',
+          month: state.currentMonth,
+          additionalInfo: { agentCount: state.aiAgents.length }
+        });
+
+        assertAICapability(avgCapability, {
+          location: 'Tier2NuclearSecurityPhase.execute',
+          valueName: 'avgCapability',
+          month: state.currentMonth,
+          additionalInfo: { agentCount: state.aiAgents.length }
+        });
+      }
+
       const highGovernmentConcern = state.government.alignmentResearchInvestment > 0.35;
 
       // Unlock if nuclear states exist AND (high AI capability OR government concerned)
@@ -80,6 +102,13 @@ export class Tier2NuclearSecurityPhase implements SimulationPhase {
     if (securityState.unlocked && !securityState.active) {
       const progressIncrement = 1 / params.deploymentMonths;
       securityState.deploymentProgress = Math.min(1, securityState.deploymentProgress + progressIncrement);
+
+      // Validate deployment progress is in valid range [0, 1]
+      assertProbability(securityState.deploymentProgress, {
+        location: 'Tier2NuclearSecurityPhase.execute',
+        valueName: 'deploymentProgress',
+        month: state.currentMonth
+      });
 
       // Activate when 90% deployed (security phased deployment)
       if (securityState.deploymentProgress >= 0.90 && !securityState.active) {

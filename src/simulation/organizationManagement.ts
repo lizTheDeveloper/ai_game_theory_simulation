@@ -736,15 +736,29 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // Expenses: payroll, R&D, facilities, marketing, legal, failed products, dividends
 
   // Get current monthly revenue (REQUIRED field - if missing, initialization bug)
-  if (!org.monthlyRevenue || !isFinite(org.monthlyRevenue)) {
+  // EXCEPTION: Government organizations can have monthlyRevenue = 0 (taxpayer-funded)
+  if (org.monthlyRevenue === undefined || org.monthlyRevenue === null || !isFinite(org.monthlyRevenue)) {
     throw new Error(
       `❌ Missing or invalid org.monthlyRevenue in calculateMonthlyExpenses\n` +
       `   Org: ${org.name}\n` +
       `   Value: ${org.monthlyRevenue}\n` +
-      `   Expected: finite number > 0\n` +
+      `   Expected: finite number >= 0 (0 allowed for government orgs)\n` +
       `   This is required field in Organization type`
     );
   }
+
+  // If government organization with no revenue, return fixed expenses
+  if (org.type === 'government' && org.monthlyRevenue === 0) {
+    // Government orgs have fixed expenses set in initialization
+    const fixedExpenses = org.monthlyExpenses || 0;
+    return {
+      baseExpenses: fixedExpenses,
+      dcOperational: 0,
+      projectCosts: 0,
+      total: fixedExpenses
+    };
+  }
+
   const monthlyRevenue = org.monthlyRevenue;
   
   // === PROFIT MARGIN BASED ON COMPANY STAGE ===

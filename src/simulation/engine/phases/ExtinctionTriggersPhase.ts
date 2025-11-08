@@ -36,7 +36,12 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Store previous active status to detect new extinction
     setDeterministicRng(rng);
-    const wasActive = state.extinctionState.active;
+    const wasActive = assertDefined(state.extinctionState.active, {
+      location: 'ExtinctionTriggersPhase.execute',
+      valueName: 'extinctionState.active',
+      month: state.currentMonth,
+      expectedSource: 'initialization.ts'
+    });
 
     // Only check if not already in an extinction scenario
     if (wasActive) {
@@ -48,6 +53,14 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
 
     const extinctionCheck = checkExtinctionTriggers(state, rng);
 
+    // Validate extinction check result
+    assertDefined(extinctionCheck.newExtinctionState, {
+      location: 'ExtinctionTriggersPhase.execute',
+      valueName: 'extinctionCheck.newExtinctionState',
+      month: state.currentMonth,
+      expectedSource: 'extinctions.checkExtinctionTriggers'
+    });
+
     // Update state with new extinction state
     Object.assign(state.extinctionState, extinctionCheck.newExtinctionState);
 
@@ -56,6 +69,17 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
     // If extinction just triggered, classify it based on what actually happened
     if (!wasActive && state.extinctionState.active) {
       const classification = classifyExtinctionType(state);
+
+      // Validate classification confidence is a valid probability
+      assertProbability(classification.confidence, {
+        location: 'ExtinctionTriggersPhase.execute',
+        valueName: 'classification.confidence',
+        month: state.currentMonth,
+        additionalInfo: {
+          extinctionType: classification.type,
+          mechanism: classification.mechanism
+        }
+      });
 
       // Store classification in extinction state
       state.extinctionState.classification = classification;

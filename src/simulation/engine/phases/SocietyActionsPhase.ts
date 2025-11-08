@@ -20,7 +20,8 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 export class SocietyActionsPhase implements SimulationPhase {
   readonly id = 'society-actions';
   readonly name = 'Society Agent Actions';
-  readonly order = 10.0;
+  readonly order = 10.5;
+  dependencies = ['governance-quality'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute society actions

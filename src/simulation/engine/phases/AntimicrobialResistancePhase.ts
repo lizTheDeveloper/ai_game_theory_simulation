@@ -23,6 +23,7 @@ import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/ga
 import type { RNGFunction } from '@/types/config';
 import { updateAMRSystem } from '../../antimicrobialResistance';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite, assertInRange } from '@/simulation/utils/assertions';
 
 export class AntimicrobialResistancePhase implements SimulationPhase {
   readonly id = 'antimicrobial_resistance';
@@ -34,6 +35,37 @@ export class AntimicrobialResistancePhase implements SimulationPhase {
     setDeterministicRng(rng);
     // (includes mitigation, resistance evolution, mortality, medical effectiveness, economic impact)
     updateAMRSystem(state, rng);
+
+    // Validate AMR state after update (prevent NaN propagation)
+    if (state.antimicrobialResistance) {
+      assertInRange(
+        state.antimicrobialResistance.resistancePrevalence,
+        0,
+        1,
+        {
+          location: 'AntimicrobialResistancePhase.execute',
+          valueName: 'resistancePrevalence',
+          month: state.currentMonth
+        }
+      );
+
+      assertFinite(state.antimicrobialResistance.currentMortalityRate, {
+        location: 'AntimicrobialResistancePhase.execute',
+        valueName: 'currentMortalityRate',
+        month: state.currentMonth
+      });
+
+      assertInRange(
+        state.antimicrobialResistance.medicalEffectiveness,
+        0,
+        1,
+        {
+          location: 'AntimicrobialResistancePhase.execute',
+          valueName: 'medicalEffectiveness',
+          month: state.currentMonth
+        }
+      );
+    }
 
     return { events: [] };
   }

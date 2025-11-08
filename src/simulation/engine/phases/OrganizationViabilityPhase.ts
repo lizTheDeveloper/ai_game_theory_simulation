@@ -21,6 +21,7 @@ export class OrganizationViabilityPhase implements SimulationPhase {
   readonly id = 'organization-viability';
   readonly name = 'Organization Viability';
   readonly order = 251; // After country population (250)
+  dependencies = ['organization-turns'];
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // TIER 1.7.3: Check if organizations can survive based on country health

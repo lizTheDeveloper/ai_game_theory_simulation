@@ -20,6 +20,7 @@ export class ComputeAllocationPhase implements SimulationPhase {
   readonly id = 'compute-allocation';
   readonly name = 'Compute Allocation';
   readonly order = 3.0;
+  readonly dependencies = ['compute-growth', 'organization-turns'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute compute allocation

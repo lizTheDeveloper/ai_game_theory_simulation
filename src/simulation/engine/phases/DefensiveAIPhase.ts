@@ -13,6 +13,7 @@ export class DefensiveAIPhase implements SimulationPhase {
   readonly id = 'defensive-ai';
   readonly name = 'Defensive AI Update';
   readonly order = 20.0;
+  dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateDefensiveAI } = require('../../defensiveAI');

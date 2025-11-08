@@ -26,11 +26,13 @@ import type {
   RNGFunction
 } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertProbability, assertFinite } from '@/simulation/utils/assertions';
 
 export class Tier2CentaurSystemsPhase implements SimulationPhase {
   id = 'tier2_centaur_systems';
   name = 'TIER 2: Human-AI Centaur Systems';
-  order = 12.5; // After employment, before meaning crisis
+  order = 12.6; // After employment, before meaning crisis
+  dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
@@ -50,6 +52,25 @@ export class Tier2CentaurSystemsPhase implements SimulationPhase {
       const unemployment = state.globalMetrics.unemployment || 0;
       const meaningCrisis = state.socialAccumulation.meaningCrisisLevel;
       const governmentInvestment = state.government.alignmentResearchInvestment;
+
+      // Validate metrics are valid probabilities/fractions
+      assertProbability(unemployment, {
+        location: 'Tier2CentaurSystemsPhase.execute',
+        valueName: 'unemployment',
+        month: state.currentMonth
+      });
+
+      assertFinite(meaningCrisis, {
+        location: 'Tier2CentaurSystemsPhase.execute',
+        valueName: 'meaningCrisisLevel',
+        month: state.currentMonth
+      });
+
+      assertProbability(governmentInvestment, {
+        location: 'Tier2CentaurSystemsPhase.execute',
+        valueName: 'governmentInvestment',
+        month: state.currentMonth
+      });
 
       // Unlock if unemployment >20% OR meaning crisis >30% + government investing
       const shouldUnlock = (unemployment > 0.20 || meaningCrisis > 0.30) && governmentInvestment > 0.25;

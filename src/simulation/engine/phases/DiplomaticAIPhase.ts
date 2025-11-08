@@ -13,6 +13,7 @@ export class DiplomaticAIPhase implements SimulationPhase {
   readonly id = 'diplomatic-ai';
   readonly name = 'Diplomatic AI Update';
   readonly order = 14.0;
+  dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateDiplomaticAI } = require('../../diplomaticAI');

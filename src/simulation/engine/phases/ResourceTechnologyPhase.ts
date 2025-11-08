@@ -12,6 +12,7 @@ export class ResourceTechnologyPhase implements SimulationPhase {
   readonly id = 'resource-technology';
   readonly name = 'Resource Technology Update';
   readonly order = 18.0;
+  dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { applyTechnologyToResources, applyIndustryOppositionToTech } = require('../../resourceTechnology');
