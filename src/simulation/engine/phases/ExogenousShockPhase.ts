@@ -368,8 +368,9 @@ function applyAGIBreakthroughShock(state: GameState, rng: RNGFunction): GameEven
     );
 
     // Recalculate total capability
+    // HIGH-6 FIX (Nov 8, 2025): Round to integer - capabilities are discrete levels [0-5]
     agent.capability = assertFinite(
-      calculateTotalCapability(agent.capabilityProfile),
+      Math.round(calculateTotalCapability(agent.capabilityProfile)),
       {
         location: 'applyAGIBreakthroughShock',
         valueName: 'agent.capability',
