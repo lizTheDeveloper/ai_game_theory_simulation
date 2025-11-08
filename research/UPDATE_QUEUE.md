@@ -1,10 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 11/8/2025, 7:30:05 PM
-=======
-**Generated:** 11/8/2025, 6:30:04 AM
->>>>>>> Stashed changes
-**Files Scanned:** 333
+**Generated:** 11/8/2025, 8:30:05 PM
+**Files Scanned:** 334
 
 ---
 
@@ -16,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 132 (39.6%)
+**Count:** 133 (39.8%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -232,6 +228,11 @@
 - **Oldest source:** 2018 (7 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/alignment_technique_network_completion_20251031.md`
+
+### `arch4_cross_system_integrations_20251108.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/arch4_cross_system_integrations_20251108.md`
 
 ### `black-mirror-phase3-research-AMENDED_20251016.md`
 - **Oldest source:** 2000 (25 years old)
@@ -708,7 +709,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 182 (54.7%)
+**Count:** 182 (54.5%)
 
 All sources <3 years old. No action required.
 
@@ -718,11 +719,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 333 |
+| Total files | 334 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 132 (39.6%) |
+| HIGH | 133 (39.8%) |
 | MEDIUM | 19 (5.7%) |
-| LOW | 182 (54.7%) |
+| LOW | 182 (54.5%) |
 | Average age | 8.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -730,21 +731,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 182 | 54.7% |
+| Current (<3yr) | 182 | 54.5% |
 | Warning (3-5yr) | 19 | 5.7% |
-| Critical (>5yr) | 132 | 39.6% |
+| Critical (>5yr) | 133 | 39.8% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 39.6% critical (>5yr)
+- **Current:** 39.8% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 132 HIGH priority file(s) within 1 month
+1. Update 133 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
