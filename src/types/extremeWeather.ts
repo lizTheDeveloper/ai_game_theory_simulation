@@ -69,13 +69,33 @@ export interface ExtremeWeatherSystem {
  */
 export const STORM_CONSTANTS = {
   // === INTENSITY MULTIPLIERS ===
-  // Research: Mendelsohn et al. (2012) - exponential damage/mortality with category
-  // Cat 1: baseline (1x), Cat 5: 16× baseline
+  // NOTE: Simplified exponential scaling (base 2) - FIRST-ORDER APPROXIMATION
+  // Real hurricane mortality is complex:
+  // - Storm surge depends on coastline topology, not just category
+  // - Rainfall flooding can occur with tropical storms (not just hurricanes)
+  // - Infrastructure failure cascades (power outages → heat deaths)
+  // - Population density and preparedness vary regionally
+  //
+  // Sylvia's critique (Nov 1, 2025): "Cat 5 doesn't kill 16x Cat 1"
+  // VALID CONCERN - this is a simplified scaling pending better calibration
+  //
+  // Alternative for sensitivity analysis: [1, 1.5, 2.5, 4, 6] (more conservative)
+  //
+  // Sources:
+  // - Mendelsohn et al. (2012) - economic/mortality impacts (damage scales exponentially)
+  // - Saffir-Simpson scale wind speed is roughly exponential
+  //
+  // TODO: Improve with actual mortality data by category + regional factors
   INTENSITY_MULTIPLIERS: [1, 2, 4, 8, 16] as const,
 
   // === FREQUENCY SCALING PER 1°C WARMING ===
-  // Research: Knutson et al. (2020) - global projections
+  // Research: Knutson et al. (2020, 2023) - global projections
   // Key finding: FEWER Cat 1-2, STABLE Cat 3, MORE Cat 4-5
+  //
+  // CONSERVATIVE PARAMETERS (Nov 6, 2025):
+  // - Overall frequency: -20% per °C (middle of -6% to -34% range from Knutson)
+  // - Category-specific shifts create distribution change (more Cat 4-5)
+  OVERALL_FREQUENCY_CHANGE: -0.20,     // -20% per °C (CONSERVATIVE: middle estimate)
   CAT_1_2_FREQUENCY_CHANGE: -0.05,     // -5% per degree (decreasing)
   CAT_3_FREQUENCY_CHANGE: 0.0,         // 0% per degree (stable)
   CAT_4_5_FREQUENCY_CHANGE: 0.10,      // +10% per degree (increasing)

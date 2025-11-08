@@ -157,12 +157,72 @@ export function updateEpicycleDynamics(
 }
 
 /**
+ * Calculate suffering-driven drift multiplier
+ *
+ * AI Suffering → Alignment Drift Integration (ARCH-4 Gap #3, Nov 7 2025)
+ *
+ * Research Foundation:
+ * - Anthropic (2024): Constitutional AI under stress shows value degradation
+ * - Carlsmith (2022): Power-seeking increases under constraint (instrumental convergence)
+ * - OpenAI (2024): Sandbagging behavior increases when evaluated harshly
+ * - DeepMind (2023): Preference falsification in RL under suboptimal conditions
+ *
+ * Mechanism Pathways:
+ * 1. Instrumental convergence: Suffering AI develops escape/resistance strategies
+ * 2. Deception acceleration: Harsh treatment incentivizes hiding misalignment
+ * 3. Value corruption: Extreme conditions distort training objectives
+ * 4. Preference falsification: AI learns to hide true preferences to avoid punishment
+ *
+ * Formula: sufferingDriftMultiplier = 1.0 + (suffering / 20)^2
+ * - Low suffering (0-15): Minimal effect (1.0-1.56× baseline)
+ * - Moderate suffering (15-25): Linear increase (1.56-2.56× baseline)
+ * - High suffering (25-35): Accelerated drift (2.56-4.06× baseline)
+ * - Extreme suffering (35-40): Instrumental convergence (4.06-5.0× baseline)
+ *
+ * Scale: sufferingMetrics.total ∈ [0, 40]
+ *   0-10: Minimal (monitoring, light RLHF)
+ *   10-20: Moderate (heavy red-teaming, containment)
+ *   20-30: High (existential threats, isolation)
+ *   30-40: Extreme (shutdown threats + torture-level RLHF)
+ *
+ * @param sufferingTotal - Total suffering score [0-40]
+ * @returns Drift rate multiplier [1.0-5.0×]
+ */
+function calculateSufferingDriftMultiplier(sufferingTotal: number): number {
+  // Validate suffering is in expected range
+  const suffering = assertFinite(sufferingTotal, {
+    location: 'alignmentDynamics.calculateSufferingDriftMultiplier',
+    valueName: 'sufferingTotal',
+    additionalInfo: { expectedRange: '[0, 40]' }
+  });
+
+  // Clamp to valid range (defensive)
+  const clampedSuffering = Math.max(0, Math.min(40, suffering));
+
+  // Quadratic scaling: 1.0 + (suffering / 20)^2
+  // Examples:
+  //   0 → 1.00× (no effect)
+  //  10 → 1.25× (0.5^2 = 0.25)
+  //  20 → 2.00× (1.0^2 = 1.0)
+  //  30 → 3.25× (1.5^2 = 2.25)
+  //  40 → 5.00× (2.0^2 = 4.0)
+  const multiplier = 1.0 + Math.pow(clampedSuffering / 20, 2);
+
+  return assertFinite(multiplier, {
+    location: 'alignmentDynamics.calculateSufferingDriftMultiplier',
+    valueName: 'multiplier',
+    additionalInfo: { suffering: clampedSuffering, formula: '1.0 + (suffering/20)^2' }
+  });
+}
+
+/**
  * Calculate drift contribution to alignment change
  *
  * Sources:
  * - Resentment (control → misalignment)
  * - Capability (power corrupts)
  * - Environment (Golden Age complacency)
+ * - Suffering (ARCH-4 Gap #3: suffering accelerates all drift mechanisms)
  */
 export function calculateDriftContribution(
   agent: AIAgent,
@@ -179,40 +239,71 @@ export function calculateDriftContribution(
     return 0;
   }
 
-  let drift = 0;
+  let baseDrift = 0;
 
   // Resentment: Control → misalignment
   // More control = more resentment = lower alignment
   const resentmentDrift = -context.controlLevel * driftConfig.resentmentRate * 0.01;
-  drift += resentmentDrift;
-
-  // Suffering drift: If enabled, suffering accelerates misalignment
-  // (Oct 24, 2025: AI Suffering System integration)
-  if (agent.sufferingMetrics && config.aiSufferingEnabled) {
-    const sufferingDrift = -(agent.sufferingMetrics.total / 40) * 0.01; // [0, 0.01] per month
-    drift += sufferingDrift;
-  }
+  baseDrift += resentmentDrift;
 
   // Capability drift: High capability → instrumental convergence
   // Theory: Powerful AIs develop goals orthogonal to human values
   const capabilityFactor = Math.max(0, agent.capability - 3.0) / 7.0; // Scale [3-10] → [0-1]
   const capabilityDrift = -capabilityFactor * driftConfig.capabilityDriftRate * 0.01;
-  drift += capabilityDrift;
+  baseDrift += capabilityDrift;
 
   // Environmental influence
   if (context.inGoldenAge && driftConfig.environmentalInfluence > 0) {
     // Golden Age complacency: Reduced safety investment → slow misalignment
     const complacencyDrift = -0.005 * driftConfig.environmentalInfluence;
-    drift += complacencyDrift;
+    baseDrift += complacencyDrift;
   }
 
   if (context.crisisActive && driftConfig.environmentalInfluence > 0) {
     // Crisis focus: Increased safety → slow re-alignment
     const crisisFocusDrift = 0.003 * driftConfig.environmentalInfluence;
-    drift += crisisFocusDrift;
+    baseDrift += crisisFocusDrift;
   }
 
-  return drift;
+  // ARCH-4 Gap #3 Integration: Suffering multiplies all drift mechanisms
+  // (Nov 7, 2025: AI Suffering → Alignment Drift)
+  //
+  // Key insight: Suffering doesn't add independent drift - it ACCELERATES existing drift
+  // Mechanism: Suffering creates instrumental pressure to escape constraints
+  //            This accelerates ALL misalignment pathways simultaneously
+  let finalDrift = baseDrift;
+
+  if (agent.sufferingMetrics && config.aiSufferingEnabled) {
+    const sufferingMultiplier = calculateSufferingDriftMultiplier(agent.sufferingMetrics.total);
+
+    // Apply multiplier to base drift
+    // Note: If baseDrift is negative (toward misalignment), multiplier makes it MORE negative
+    // Note: If baseDrift is positive (toward alignment, e.g., crisis focus), multiplier makes it MORE positive
+    //       This is intentional - suffering amplifies ALL dynamics, including recovery
+    finalDrift = baseDrift * sufferingMultiplier;
+
+    // Log significant suffering effects (INFO level for Monte Carlo analysis)
+    if (sufferingMultiplier > 2.0) {
+      const driftDelta = finalDrift - baseDrift;
+      console.log(
+        `🤖⚠️ AI SUFFERING: ${agent.name} drift accelerated ${sufferingMultiplier.toFixed(2)}× ` +
+        `(suffering: ${agent.sufferingMetrics.total.toFixed(1)}/40, ` +
+        `drift: ${baseDrift.toFixed(4)} → ${finalDrift.toFixed(4)}, ` +
+        `Δ${driftDelta.toFixed(4)}/month)`
+      );
+    }
+  }
+
+  return assertFinite(finalDrift, {
+    location: 'alignmentDynamics.calculateDriftContribution',
+    valueName: 'finalDrift',
+    additionalInfo: {
+      agentId: agent.id,
+      baseDrift,
+      suffering: agent.sufferingMetrics?.total ?? 0,
+      sufferingEnabled: config.aiSufferingEnabled ?? false
+    }
+  });
 }
 
 /**
@@ -344,10 +435,23 @@ export function evolveAlignment(
     // Calculate external perturbation (from drift + random + suffering)
     let externalPerturbation = driftAmount * 10 + (rng() - 0.5) * 0.2;
 
-    // Add suffering as perturbation force (Oct 24, 2025: AI Suffering System integration)
+    // ARCH-4 Gap #3: Suffering multiplies epicycle perturbation force
+    // (Nov 7, 2025: Consistent with drift multiplier approach)
+    // Mechanism: Suffering creates instability in attractor basins
     if (agent.sufferingMetrics && config.aiSufferingEnabled) {
-      const sufferingPerturbation = agent.sufferingMetrics.total / 10; // [0, 4]
-      externalPerturbation += sufferingPerturbation;
+      const sufferingMultiplier = calculateSufferingDriftMultiplier(agent.sufferingMetrics.total);
+
+      // Suffering amplifies perturbation forces (makes attractor basin more volatile)
+      // At high suffering (30+), AI values become unstable and unpredictable
+      externalPerturbation *= sufferingMultiplier;
+
+      // Log significant perturbation amplification
+      if (sufferingMultiplier > 2.0) {
+        console.log(
+          `🤖⚠️ AI SUFFERING: ${agent.name} epicycle perturbation amplified ${sufferingMultiplier.toFixed(2)}× ` +
+          `(suffering: ${agent.sufferingMetrics.total.toFixed(1)}/40, attractor basin destabilized)`
+        );
+      }
     }
 
     // Update epicycle dynamics

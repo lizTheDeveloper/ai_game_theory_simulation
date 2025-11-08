@@ -48,8 +48,9 @@ export class AIAgentActionsPhase implements SimulationPhase {
     for (const agent of state.aiAgents || []) {
       // Validate aggregate capability (continuous 0-5, NOT discrete levels)
       // Individual dimension capabilities are discrete, but aggregate is continuous
-      const cap = agent.capability || 0;
-      if (!isFinite(cap) || cap < 0 || cap > 5) {
+      // NOTE: Don't hide undefined with fallback - if capability missing, that's a bug
+      const cap = agent.capability;
+      if (cap === undefined || !isFinite(cap) || cap < 0 || cap > 5) {
         throw new Error(
           `❌ Invalid AI agent capability\n` +
           `   Location: AIAgentActionsPhase.execute\n` +

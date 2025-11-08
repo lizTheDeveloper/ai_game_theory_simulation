@@ -734,9 +734,18 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // FIX (Oct 13, 2025 v2): Expenses as % of revenue (realistic business model)
   // Real companies: 70-90% of revenue goes to expenses, 10-30% profit margin
   // Expenses: payroll, R&D, facilities, marketing, legal, failed products, dividends
-  
-  // Get current monthly revenue
-  const monthlyRevenue = org.monthlyRevenue || 10; // Fallback to $10M
+
+  // Get current monthly revenue (REQUIRED field - if missing, initialization bug)
+  if (!org.monthlyRevenue || !isFinite(org.monthlyRevenue)) {
+    throw new Error(
+      `❌ Missing or invalid org.monthlyRevenue in calculateMonthlyExpenses\n` +
+      `   Org: ${org.name}\n` +
+      `   Value: ${org.monthlyRevenue}\n` +
+      `   Expected: finite number > 0\n` +
+      `   This is required field in Organization type`
+    );
+  }
+  const monthlyRevenue = org.monthlyRevenue;
   
   // === PROFIT MARGIN BASED ON COMPANY STAGE ===
   // Growth-stage (low capital): 10% margin (aggressive reinvestment)

@@ -437,14 +437,22 @@ export interface CriticalInfrastructureNode {
  * Comprehensive species tracking and extinction modeling.
  *
  * Research backing:
- * - IPBES (2024): 54,000 species baseline (comprehensive assessment)
+ * - Natural History Museum (2024): Biodiversity Intactness Index v2.1.1
+ *   - PREDICTS project data: 54,000+ species (plants, fungi, animals, insects)
+ *   - https://www.nhm.ac.uk/our-science/services/data/biodiversity-intactness-index.html
  * - Richardson et al. (2024): 6 of 9 planetary boundaries breached
  * - Yoder et al. (2024): Joshua Tree climate tracking failure
  * - U.S. National Park Service (2024): Climate velocity impacts
  *
+ * CITATION CORRECTION (Nov 6, 2025):
+ * - Previous citation to "IPBES (2024)" for 54,000 species baseline was INCORRECT
+ * - IPBES 2024 reports do NOT contain biodiversity baseline statistics
+ * - Correct source: Natural History Museum BII v2.1.1 (PREDICTS project)
+ *
  * Key insight: Non-migratory species CANNOT track climate velocity
  *
  * @see research/climate-mortality-biosphere-multiparadigm-framework_20251028.md (Section 2)
+ * @see research/climate-phase2-source-verification-20251106.md (Citation verification)
  */
 
 /**
@@ -473,7 +481,8 @@ export interface SpeciesGroup {
  * Extends planetary boundary framework with detailed species modeling.
  */
 export interface BiosphereIntegrityIndex {
-  // === IPBES 2024 BASELINE ===
+  // === NATURAL HISTORY MUSEUM BII v2.1.1 (2024) ===
+  // PREDICTS project: 54,000+ species (plants, fungi, animals, insects)
   totalSpeciesBaseline: 54000;          // Comprehensive species count
   currentSpeciesCount: number;          // Current surviving species
 
@@ -504,12 +513,16 @@ export interface BiosphereIntegrityIndex {
  * BII constants from research
  *
  * Research sources:
- * - IPBES (2024): Species baseline
+ * - Natural History Museum (2024): BII v2.1.1 - Species baseline (54,000+ from PREDICTS)
  * - Richardson et al. (2024): Current extinction rates
  * - Yoder et al. (2024): Climate tracking examples
+ *
+ * CITATION CORRECTION (Nov 6, 2025):
+ * - Previous: "IPBES (2024): Species baseline" [INCORRECT]
+ * - Correct: Natural History Museum BII v2.1.1 (2024) - PREDICTS project data
  */
 export const BII_CONSTANTS = {
-  // === SPECIES BASELINE (IPBES 2024) ===
+  // === SPECIES BASELINE (Natural History Museum BII v2.1.1, 2024) ===
   TOTAL_SPECIES_2024: 54000,
 
   // === EXTINCTION RATES (E/MSY) ===

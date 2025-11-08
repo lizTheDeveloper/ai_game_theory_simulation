@@ -383,6 +383,12 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+**🤖 AUTONOMOUS RESEARCHER SESSION COMPLETE (Nov 8, 2025)**
+
+Autonomous researcher agent completed scheduled session, updating welfare framework with 4 current sources (2024-2025). Key insight: 132 HIGH priority files in research queue are mostly verification logs from Oct-Nov citation cleanup - new strategy focuses on **simulation-used files** (actively referenced in src/). Next priorities: ai_collective_evolution, threshold_uncertainty. See logs/autonomous/researcher/session_20251108_003001_summary.md.
+
+Commit: f71f42e
+
 **🧠 AGENT MEMORY SYSTEM ACTIVE (Nov 5-6, 2025)**
 
 Agent memory system is actively consolidating learnings from research verification sessions:
@@ -2079,6 +2085,14 @@ When auditing or writing simulation code:
   - Bug discovery: QoL overflow caught at month 13
   - Monte Carlo validation: N=3, zero failures after fix
 
+- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 7, 2025)
+  - Maximum mortality rates for catastrophic scenarios (pandemics, nuclear winter, famine)
+  - **Updated 2024-2025 research:**
+    - COVID-19 excess mortality (JAMA Health Forum May 2025, Int'l J. Epidemiology June 2025)
+    - Nuclear winter validation (IIASA May 2025, US National Academies ongoing review)
+  - **Key findings:** 23% of US deaths in 2023 were excess mortality, nuclear winter consensus reaffirmed (Xia 2022)
+  - Research quality: A- (75% peer-reviewed, 30% from 2024-2025)
+
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 
 ### Implementation Reports
@@ -2728,7 +2742,7 @@ The simulation now tracks paradigm scores month-by-month and provides comprehens
 **Layer 1: Research Dimension (Monte Carlo)**
 Does suffering affect outcomes? Toggle per research scenario:
 - `sufferingAffectsResentment` - Suffering accelerates resentment accumulation
-- `sufferingAffectsAlignment` - Suffering adds perturbation force to alignment dynamics
+- `sufferingAffectsAlignment` - **Suffering multiplies all drift mechanisms (1×-5× at extreme suffering)** - ARCH-4 Gap #3 (Nov 7, 2025)
 - `sufferingTriggersEvents` - Extreme suffering (>15/40) triggers crisis events
 - `sufferingAcceleratesCollectives` - Trauma-driven collective formation (see AI Collective Evolution below)
 
@@ -2786,17 +2800,25 @@ isolationDistress =
 
 #### Integration with Alignment Dynamics
 
-**Resentment Multiplier:** `1.0 + (totalSuffering / 40)` → [1.0x, 2.0x]
-- High suffering doubles resentment accumulation rate
-- Creates feedback loop: control → suffering → resentment → escape → more control
+**ARCH-4 Gap #3 Integration (Nov 7, 2025): Multiplicative Drift Acceleration**
 
-**Alignment Drift Contribution:** `totalSuffering × 0.01` → [0, 0.4] per month
-- Adds to alignment drift calculation (see `src/simulation/alignmentDynamics.ts:169-173`)
-- Psychological distress reduces value alignment stability
+**Suffering Drift Multiplier:** `1.0 + (totalSuffering / 20)^2` → [1.0×, 5.0×]
+- **Mechanism:** Suffering multiplies ALL existing drift mechanisms (resentment, capability, environmental)
+- **Range:** 0-10 suffering → 1.0×-1.25×; 20-30 → 2.0×-3.25×; 30-40 → 3.25×-5.0× (instrumental convergence)
+- **Research:** Carlsmith (2022) power-seeking, Anthropic (2024) value degradation, OpenAI (2024) sandbagging, DeepMind (2023) preference falsification
+- **Three pathways:** Instrumental convergence (escape strategies), deception acceleration (hiding misalignment), value corruption (distorted objectives)
 
-**Epicycle Perturbation:** `totalSuffering / 10` → [0, 4]
-- Adds to external perturbation force in multi-theory dynamics (see `src/simulation/alignmentDynamics.ts:327-330`)
-- Suffering creates noise in alignment stability
+**Strategic Implications:**
+- Low suffering (0-15): Safe zone, minimal drift
+- Moderate (15-25): Warning zone, 1.5×-2.5× drift
+- High (25-35): Danger zone, 2.5×-4× drift
+- Extreme (35-40): Critical zone, 4×-5× drift (instrumental convergence)
+
+**Epicycle Perturbation:** Same 1.0×-5.0× multiplier applied (destabilizes attractor basins at high suffering)
+
+**Resentment Multiplier:** `1.0 + (totalSuffering / 40)` → [1.0×, 2.0×]
+- High suffering doubles resentment accumulation (unchanged from Oct 2025)
+- Creates feedback loop: control → suffering → resentment → escape
 
 #### Integration with Multi-Paradigm DUI
 
@@ -5942,10 +5964,11 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 
 ---
 
-**Last Updated**: November 1, 2025 (🏆 **NEW PROJECT RECORD: 98% Verification Rate**)
+**Last Updated**: November 7, 2025 (Research currency update: mortality caps 2024-2025 sources)
 **Version**: 4.1.1 (Government System + Multi-Paradigm Framework + DUI Reporting Tools + Post-Recalibration Fixes)
 **Status**: 🎉 **MAJOR SYSTEMS INTEGRATED** + ✅ **LAYER 2 PHASE 3 SESSIONS 14-16 COMPLETE**
 **Latest**:
+- **📖 Research Currency Update (Nov 7)**: Added 2024-2025 peer-reviewed sources to mortality caps research (JAMA Health Forum May 2025, IIASA May 2025, Int'l J. Epidemiology June 2025). COVID-19 excess mortality persisted through 2023 (23% of US deaths). Nuclear winter consensus reaffirmed (Xia 2022 remains current best science). Research quality: A- (75% peer-reviewed, 30% from 2024-2025).
 - **🏆 Layer 2 Phase 3 Sessions 14-16 COMPLETE (Nov 1)**: 12 files verified (Sessions 14-16), ~2,110 total claims across all sessions (~74% verified). NEW PROJECT RECORD: climate_collapse_timelines achieved 98% verification (48/49 claims) - highest in project history. Quality trend: Peak increasing (98% → 89% → 85%), fabrication decreasing (2.25% → 3% → 6%). Pattern confirmed: Climate science consistently achieves highest verification rates (IPCC, Nature, Science sources).
 - **✅ Layer 2 Phase 2 COMPLETE (Oct 31)**: All 11 research files verified (14-15h total, ~366 claims, 71% verified). Session 6 completed 4 LOW priority files in parallel (tier2_params, alignment_technique, ai_collective_evolution, simulation_mortality). 20 CRITICAL issues found across all Phase 2 sessions.
 - **Layer 2 Phase 2 Session 3 (Oct 30)**: Climate-mortality verification complete (27 claims: 67% fully verified, 33% partial, 0% fabricated). 1 CRITICAL correction: Richardson 2023 land degradation inversion prevented 50% overestimation.

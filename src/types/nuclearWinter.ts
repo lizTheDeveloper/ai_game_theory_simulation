@@ -57,6 +57,7 @@ export interface NuclearWinterState {
   // Climate effects
   temperatureAnomaly: number;   // °C below baseline (negative, e.g., -15°C)
   baselineTemperature: number;  // Pre-war temperature for recovery calculation
+  sunlightBlocked: number;      // [0,1] Fraction of sunlight blocked (0.9 = 90% blocked)
   
   // Agricultural collapse
   cropYieldMultiplier: number;  // [0,1] vs normal (0.1 = 90% crop failure)
