@@ -16,6 +16,14 @@ export class BenchmarkEvaluationsPhase implements SimulationPhase {
   dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
+    if (!rng || typeof rng !== 'function') {
+      throw new Error(
+        `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
+        `(Month ${state.currentMonth})`
+      );
+    }
+
     console.log(`[DEBUG BENCHMARK START month=${state.currentMonth}] socialStability = ${state.globalMetrics.socialStability.toFixed(4)}`);
     setDeterministicRng(rng);
     const { performMonthlyEvaluations } = require('../../benchmark');
