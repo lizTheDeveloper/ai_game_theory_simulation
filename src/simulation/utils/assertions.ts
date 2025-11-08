@@ -877,6 +877,7 @@ export function assertAICapability(
     valueName: string;
     agentId?: string;
     dimension?: string;
+    allowContinuous?: boolean;
   }
 ): number {
   assertFinite(capability, context);
@@ -894,8 +895,9 @@ export function assertAICapability(
     );
   }
 
-  // Capabilities are discrete levels (0, 1, 2, 3, 4, 5)
-  if (!Number.isInteger(capability)) {
+  // Profile dimensions are discrete levels (0, 1, 2, 3, 4, 5)
+  // Aggregate/average capabilities are continuous (weighted sums, averages)
+  if (!context.allowContinuous && !Number.isInteger(capability)) {
     throw new Error(
       `❌ AI capability must be integer in ${context.location}\n` +
       `   ${context.valueName} = ${capability}\n` +
@@ -903,7 +905,8 @@ export function assertAICapability(
       (context.agentId ? `   Agent: ${context.agentId}\n` : '') +
       (context.dimension ? `   Dimension: ${context.dimension}\n` : '') +
       `\n` +
-      `   Capabilities use discrete levels, not continuous values.`
+      `   Capabilities use discrete levels, not continuous values.\n` +
+      `   For aggregate/average capabilities, use allowContinuous: true`
     );
   }
 
