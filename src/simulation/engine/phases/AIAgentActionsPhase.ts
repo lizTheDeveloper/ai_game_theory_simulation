@@ -47,8 +47,8 @@ export class AIAgentActionsPhase implements SimulationPhase {
     // Validate AI agent capabilities after actions (CRITICAL: prevent NaN propagation)
     for (const agent of state.aiAgents || []) {
       // Validate aggregate capability (continuous 0-5, NOT discrete levels)
-      // Individual dimension capabilities are discrete, but aggregate is continuous
-      assertAICapability(agent.capability, {
+      // Individual dimension capabilities are discrete, but aggregate is continuous weighted sum
+      assertInRange(agent.capability, 0, 5, {
         location: 'AIAgentActionsPhase.execute',
         valueName: `agent[${agent.id}].capability`,
         month: state.currentMonth,
