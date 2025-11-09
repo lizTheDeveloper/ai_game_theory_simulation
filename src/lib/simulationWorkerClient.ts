@@ -98,6 +98,7 @@ export interface StateDelta {
   socialCohesion?: number;
   institutionalTrust?: number;
   meaningLevel?: number;
+  unemploymentLevel?: number;
   socialDebtLevel?: number;
 
   // Crisis Indicators
