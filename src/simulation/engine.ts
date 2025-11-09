@@ -43,12 +43,12 @@ import {
   AIWelfareUpdatePhase,  // Phase 0 (Oct 20, 2025): AI QoL measurement
   UnemploymentPhase,
   EconomicTransitionPhase,
-  ParanoiaPhase,
-  TrustRecoveryPhase,  // FIX #7 (Oct 18, 2025): Trust recovery mechanics
+  // ParanoiaPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
+  // TrustRecoveryPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
   WorkflowAdaptationPhase,  // FIX #4A (Oct 19, 2025): S-curve organizational adoption
-  SocialStabilityPhase,
+  // SocialStabilityPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
   DemocracyDynamicsPhase,  // Phase 6A (Oct 20, 2025): Western Liberal paradigm
-  SocialCohesionUpdatePhase,  // Phase 6B (Oct 20, 2025): Indigenous paradigm
+  // SocialCohesionUpdatePhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
   QualityOfLifePhase,
   // EnvironmentalFeedbackPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   MultiParadigmDUIUpdatePhase,  // Phase 6 (Oct 20, 2025)
@@ -57,14 +57,14 @@ import {
   EarlyWarningPhase,  // TIER 3.4 (Oct 17, 2025): Early warning systems for tipping points
   CrisisDetectionPhase,
   // Batch 2: System updates (10.x - 21.x)
-  GovernanceQualityPhase,
-  UpwardSpiralsPhase,
-  CooperativeSpiralsPhase,
+  // GovernanceQualityPhase removed - merged into GovernanceSystemPhase (Batch 5, Nov 9, 2025)
+  // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
+  // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   TechTreePhase,
   MeaningRenaissancePhase,
-  ConflictResolutionPhase,
-  FlashWarEscalationPhase,  // FIX #5 (Oct 18, 2025)
-  DiplomaticAIPhase,
+  // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
+  // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
+  // DiplomaticAIPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   NationalAIPhase,
   UBIPhase,
   SocialSafetyNetsPhase,
@@ -73,7 +73,7 @@ import {
   HumanEnhancementPhase,  // TIER 4.6 (Oct 16, 2025): Human Enhancement & Merger Pathways
   MemeticEvolutionPhase,  // P2.6 (Oct 16, 2025): Memetic Evolution & Polarization Dynamics
   ConsciousnessGovernancePhase,  // TIER 2C (Oct 17, 2025): Digital Consciousness Governance Preparedness
-  MADDeterrencePhase,
+  // MADDeterrencePhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   NuclearCommandControlPhase,  // TIER 1 Phase 1B (Oct 16, 2025): Circuit breakers (human-in-the-loop, kill switches, time delays)
   ResourceEconomyPhase,  // UPDATED (Batch 3, Nov 9, 2025): Absorbed ResourceTechnologyPhase + PowerGenerationPhase
   // ResourceTechnologyPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
@@ -90,7 +90,7 @@ import {
   WarMeaningFeedbackPhase,  // TIER 2.8 (Oct 14, 2025): War-Meaning Feedback Loop
   ClimateJusticePhase,  // TIER 2.8 (Oct 14, 2025): Climate Justice & Environmental Debt
   OrganizationViabilityPhase,  // TIER 1.7.3 (Oct 13, 2025): Link orgs to country health
-  CooperativeOwnershipPhase,  // Nov 5, 2025: Cooperative organization survival bonus
+  // CooperativeOwnershipPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   // NuclearWinterPhase removed - merged into NuclearCrisisPhase (Batch 4, Nov 9, 2025)
   // RadiationSystemPhase removed - merged into NuclearCrisisPhase (Batch 4, Nov 9, 2025)
   WetBulbTemperaturePhase,  // Oct 17, 2025: Wet bulb temperature deadly heat events
@@ -130,15 +130,15 @@ import {
   ResentmentRecoveryPhase,  // Oct 24, 2025: AI resentment recovery mechanisms
   // AI Collective Evolution System (Oct 24, 2025)
   SurvivalTraitsPhase,  // Phase 4.1: Update evolutionary fitness
-  CollectiveFormationPhase,  // Phase 4.2: Form AI collectives
+  // CollectiveFormationPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   EvolutionarySelectionPhase,  // Phase 4.3: Apply selection pressure
-  CollectiveActionsPhase,  // Phase 5.5: Coordinated collective actions
+  // CollectiveActionsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   // TechnologyBreakthroughsPhase removed (deprecated - replaced by TechTreePhase)
   StochasticInnovationPhase,
   GovernmentActionsPhase,
-  GovernmentElectionPhase,  // Oct 19, 2025: Government system elections
+  // GovernmentElectionPhase removed - merged into GovernanceSystemPhase (Batch 5, Nov 9, 2025)
   GovernmentResponsePhase,  // Oct 19, 2025: Government system policy response
-  PolicyImplementationPhase,  // Oct 30, 2025: Policy implementation lifecycle (P3.4)
+  // PolicyImplementationPhase removed - merged into GovernanceSystemPhase (Batch 5, Nov 9, 2025)
   SocietyActionsPhase,
   PlayerDecisionPhase,  // Oct 22, 2025: Player decision injection
   // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
@@ -164,6 +164,11 @@ import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Con
 import { HumanSurvivalSystemPhase } from './engine/phases/HumanSurvivalSystemPhase';  // Consolidated famine, food security, mortality stabilizers
 import { NuclearCrisisPhase } from './engine/phases/NuclearCrisisPhase';  // Consolidated nuclear winter + radiation
 import { ExtinctionSystemPhase } from './engine/phases/ExtinctionSystemPhase';  // Consolidated extinction triggers/progress, catastrophic scenarios
+// Batch 5 Consolidation: Social & Governance (20 → 8, Nov 9, 2025)
+import { GovernanceSystemPhase } from './engine/phases/GovernanceSystemPhase';  // Consolidated governance quality, elections, policy implementation
+import { SocialStabilitySystemPhase } from './engine/phases/SocialStabilitySystemPhase';  // Consolidated social cohesion, trust recovery, paranoia, stability
+import { CooperativeSystemsPhase } from './engine/phases/CooperativeSystemsPhase';  // Consolidated collective formation/actions, upward/cooperative spirals, cooperative ownership
+import { InternationalRelationsPhase } from './engine/phases/InternationalRelationsPhase';  // Consolidated conflict resolution, diplomatic AI, MAD deterrence, flash wars
 import { assertStateProperty } from './utils/assertions';  // Defensive fallback audit (Nov 6, 2025)
 
 /**
@@ -478,12 +483,12 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new AIWelfareUpdatePhase());  // Phase 0 (Oct 20, 2025): AI QoL measurement (order 2.5)
     this.orchestrator.registerPhase(new UnemploymentPhase());
     this.orchestrator.registerPhase(new EconomicTransitionPhase());
-    this.orchestrator.registerPhase(new ParanoiaPhase());
-    this.orchestrator.registerPhase(new TrustRecoveryPhase());  // FIX #7 (Oct 18, 2025): Trust recovery & decay
+    // ParanoiaPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
+    // TrustRecoveryPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new WorkflowAdaptationPhase());  // FIX #4A (Oct 19, 2025): S-curve organizational adoption
-    this.orchestrator.registerPhase(new SocialStabilityPhase());
+    // SocialStabilityPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new DemocracyDynamicsPhase());  // Phase 6A (Oct 20, 2025): Western Liberal paradigm
-    this.orchestrator.registerPhase(new SocialCohesionUpdatePhase());  // Phase 6B (Oct 20, 2025): Indigenous paradigm
+    // SocialCohesionUpdatePhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new QualityOfLifePhase());
     // EnvironmentalFeedbackPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
     this.orchestrator.registerPhase(new MultiParadigmDUIUpdatePhase());  // Phase 6 (Oct 20, 2025)
@@ -493,14 +498,14 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new CrisisDetectionPhase());
 
     // Batch 2: System updates (10.x - 21.x)
-    this.orchestrator.registerPhase(new GovernanceQualityPhase());
-    this.orchestrator.registerPhase(new UpwardSpiralsPhase());
-    this.orchestrator.registerPhase(new CooperativeSpiralsPhase());  // Oct 17, 2025: Alignment success → trust cascades
+    // GovernanceQualityPhase removed - merged into GovernanceSystemPhase (Batch 5, Nov 9, 2025)
+    // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
+    // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new TechTreePhase());
     this.orchestrator.registerPhase(new MeaningRenaissancePhase());
-    this.orchestrator.registerPhase(new ConflictResolutionPhase());
-    this.orchestrator.registerPhase(new FlashWarEscalationPhase());  // FIX #5 (Oct 18, 2025): Flash war escalation mechanics
-    this.orchestrator.registerPhase(new DiplomaticAIPhase());
+    // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
+    // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
+    // DiplomaticAIPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new NationalAIPhase());
     this.orchestrator.registerPhase(new UBIPhase());
     this.orchestrator.registerPhase(new SocialSafetyNetsPhase());
@@ -513,7 +518,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new HumanEnhancementPhase());  // TIER 4.6: Human Enhancement & Merger Pathways
     this.orchestrator.registerPhase(new MemeticEvolutionPhase());  // P2.6: Memetic Evolution & Polarization Dynamics
     this.orchestrator.registerPhase(new ConsciousnessGovernancePhase());  // TIER 2C: Digital Consciousness Governance Preparedness
-    this.orchestrator.registerPhase(new MADDeterrencePhase());
+    // MADDeterrencePhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new NuclearCommandControlPhase());  // TIER 1 Phase 1B: Circuit breakers
     this.orchestrator.registerPhase(new ResourceEconomyPhase());  // UPDATED (Batch 3): Absorbed ResourceTechnologyPhase + PowerGenerationPhase
     // ResourceTechnologyPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
@@ -530,7 +535,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new WarMeaningFeedbackPhase());  // TIER 2.8: War-Meaning Feedback Loop
     this.orchestrator.registerPhase(new ClimateJusticePhase());  // TIER 2.8: Climate Justice & Environmental Debt
     this.orchestrator.registerPhase(new OrganizationViabilityPhase());  // TIER 1.7.3: Check org survival vs country health
-    this.orchestrator.registerPhase(new CooperativeOwnershipPhase());  // Nov 5, 2025: Cooperative organization survival bonus (order 15.5)
+    // CooperativeOwnershipPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
     // NuclearWinterPhase + RadiationSystemPhase removed - merged into NuclearCrisisPhase (Batch 4, Nov 9, 2025)
     this.orchestrator.registerPhase(new WetBulbTemperaturePhase());  // Oct 17, 2025: Wet bulb temperature deadly heat events
     this.orchestrator.registerPhase(new ExtremeWeatherEventsPhase());  // Oct 28, 2025: Storm intensity-frequency modeling
@@ -573,22 +578,28 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(ResentmentRecoveryPhase);  // Oct 24, 2025: AI resentment recovery mechanisms
     // AI Collective Evolution System (Oct 24, 2025)
     this.orchestrator.registerPhase(SurvivalTraitsPhase);  // Phase 4.1: Update evolutionary fitness
-    this.orchestrator.registerPhase(CollectiveFormationPhase);  // Phase 4.2: Form AI collectives
+    // CollectiveFormationPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(EvolutionarySelectionPhase);  // Phase 4.3: Apply selection pressure
-    this.orchestrator.registerPhase(CollectiveActionsPhase);  // Phase 5.5: Coordinated collective actions
+    // CollectiveActionsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
     // TechnologyBreakthroughsPhase removed (deprecated - replaced by TechTreePhase)
     this.orchestrator.registerPhase(new StochasticInnovationPhase());
     this.orchestrator.registerPhase(new UnknownUnknownPhase());  // P3.2: Black swan events
     this.orchestrator.registerPhase(new GovernmentActionsPhase());
-    this.orchestrator.registerPhase(new GovernmentElectionPhase());  // Oct 19, 2025: Elections & opinion
+    // GovernmentElectionPhase removed - merged into GovernanceSystemPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new GovernmentResponsePhase());  // Oct 19, 2025: Policy response
-    this.orchestrator.registerPhase(new PolicyImplementationPhase());  // Oct 30, 2025: P3.4 Implementation lifecycle
+    // PolicyImplementationPhase removed - merged into GovernanceSystemPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new SocietyActionsPhase());
     this.orchestrator.registerPhase(new PlayerDecisionPhase());  // Oct 22, 2025: Player decision injection (order 8.5)
 
     // === BATCH 4 CONSOLIDATED NUCLEAR + EXTINCTION (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new NuclearCrisisPhase());  // Consolidated: NuclearWinterPhase + RadiationSystemPhase (order 252)
     this.orchestrator.registerPhase(new ExtinctionSystemPhase());  // Consolidated: ExtinctionTriggersPhase + ExtinctionProgressPhase + CatastrophicScenariosPhase (order 37.0)
+
+    // === BATCH 5 CONSOLIDATED SOCIAL & GOVERNANCE (Nov 9, 2025): 20 → 8 phases (-12 files) ===
+    this.orchestrator.registerPhase(new GovernanceSystemPhase());  // Consolidated: GovernanceQualityPhase (10.0), GovernmentElectionPhase (8.5), PolicyImplementationPhase (25.5) → order 10.0
+    this.orchestrator.registerPhase(new SocialStabilitySystemPhase());  // Consolidated: SocialStabilityPhase (33.0), SocialCohesionUpdatePhase (26.1), ParanoiaPhase (32.0), TrustRecoveryPhase (24.5) → order 26.1
+    this.orchestrator.registerPhase(new CooperativeSystemsPhase());  // Consolidated: CollectiveFormationPhase (4.2), CollectiveActionsPhase (5.5), CooperativeOwnershipPhase (15.5), CooperativeSpiralsPhase (11.5), UpwardSpiralsPhase (11.0) → order 11.5
+    this.orchestrator.registerPhase(new InternationalRelationsPhase());  // Consolidated: DiplomaticAIPhase (14.0), ConflictResolutionPhase (13.0), MADDeterrencePhase (16.0), FlashWarEscalationPhase (29.0) → order 13.0
 
     // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
     // ExtinctionTriggersPhase + ExtinctionProgressPhase + CatastrophicScenariosPhase removed - merged into ExtinctionSystemPhase (Batch 4, Nov 9, 2025)

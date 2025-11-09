@@ -20,7 +20,7 @@ export class CrisisDetectionPhase implements SimulationPhase {
   readonly dependencies = [
     'bayesian_mortality_resolution',  // Order 35.0: Population effects
     'climate_system',                 // Order 34.0: Environmental state (Batch 3: consolidated from climate_impact_cascade)
-    'social-stability',               // Order 33.0: Social state
+    'social-stability-system',        // Order 26.1: Social state (Batch 5: consolidated from social-stability)
     'outcome-probabilities',          // Order 35.0: Outcome assessment
   ] as const;
 

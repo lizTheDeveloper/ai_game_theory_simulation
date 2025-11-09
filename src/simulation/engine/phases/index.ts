@@ -22,14 +22,14 @@ export { AISufferingPhase } from './AISufferingPhase';  // Oct 24, 2025: AI suff
 export { ResentmentRecoveryPhase } from './ResentmentRecoveryPhase';  // Oct 24, 2025: AI resentment recovery mechanisms
 // AI Collective Evolution System (Oct 24, 2025)
 export { SurvivalTraitsPhase } from './SurvivalTraitsPhase';  // Phase 4.1: Update evolutionary fitness
-export { CollectiveFormationPhase } from './CollectiveFormationPhase';  // Phase 4.2: Form AI collectives
+// export { CollectiveFormationPhase } from './CollectiveFormationPhase';  // CONSOLIDATED into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
 export { EvolutionarySelectionPhase } from './EvolutionarySelectionPhase';  // Phase 4.3: Apply selection pressure
-export { CollectiveActionsPhase } from './CollectiveActionsPhase';  // Phase 5.5: Coordinated collective actions
+// export { CollectiveActionsPhase } from './CollectiveActionsPhase';  // CONSOLIDATED into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
 export { StochasticInnovationPhase } from './StochasticInnovationPhase';
 export { GovernmentActionsPhase } from './GovernmentActionsPhase';
-export { GovernmentElectionPhase } from './GovernmentElectionPhase';  // Oct 19, 2025: Government system elections
+// export { GovernmentElectionPhase } from './GovernmentElectionPhase';  // CONSOLIDATED into GovernanceSystemPhase (Batch 5, Nov 9, 2025)
 export { GovernmentResponsePhase } from './GovernmentResponsePhase';  // Oct 19, 2025: Government system policy response
-export { PolicyImplementationPhase } from './PolicyImplementationPhase';  // Oct 30, 2025: P3.4 Policy lifecycle
+// export { PolicyImplementationPhase } from './PolicyImplementationPhase';  // CONSOLIDATED into GovernanceSystemPhase (Batch 5, Nov 9, 2025)
 export { SocietyActionsPhase } from './SocietyActionsPhase';
 export { PlayerDecisionPhase } from './PlayerDecisionPhase';  // Oct 22, 2025: Player decision injection
 export { ComputeAllocationPhase } from './ComputeAllocationPhase';
@@ -40,12 +40,12 @@ export { OrganizationTurnsPhase } from './OrganizationTurnsPhase';
 export { AIWelfareUpdatePhase } from './AIWelfareUpdatePhase';  // Phase 0 (Oct 20, 2025) - AI QoL measurement
 export { UnemploymentPhase } from './UnemploymentPhase';
 export { EconomicTransitionPhase } from './EconomicTransitionPhase';
-export { ParanoiaPhase } from './ParanoiaPhase';
-export { TrustRecoveryPhase } from './TrustRecoveryPhase';  // FIX #7 (Oct 18, 2025)
+// export { ParanoiaPhase } from './ParanoiaPhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
+// export { TrustRecoveryPhase } from './TrustRecoveryPhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
 export { WorkflowAdaptationPhase } from './WorkflowAdaptationPhase';  // FIX #4A (Oct 19, 2025)
-export { SocialStabilityPhase } from './SocialStabilityPhase';
+// export { SocialStabilityPhase } from './SocialStabilityPhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
 export { DemocracyDynamicsPhase } from './DemocracyDynamicsPhase';  // Phase 6A (Oct 20, 2025) - Western Liberal paradigm
-export { SocialCohesionUpdatePhase } from './SocialCohesionUpdatePhase';  // Phase 6B (Oct 20, 2025) - Indigenous paradigm
+// export { SocialCohesionUpdatePhase } from './SocialCohesionUpdatePhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
 export { QualityOfLifePhase } from './QualityOfLifePhase';
 // export { EnvironmentalFeedbackPhase } from './EnvironmentalFeedbackPhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)
 export { MultiParadigmDUIUpdatePhase } from './MultiParadigmDUIUpdatePhase';  // Phase 6 (Oct 20, 2025)
@@ -55,14 +55,14 @@ export { EarlyWarningPhase } from './EarlyWarningPhase';  // TIER 3.4 (Oct 17, 2
 export { CrisisDetectionPhase } from './CrisisDetectionPhase';
 
 // Batch 2: System update phases (medium risk)
-export { GovernanceQualityPhase } from './GovernanceQualityPhase';
-export { UpwardSpiralsPhase } from './UpwardSpiralsPhase';
-export { CooperativeSpiralsPhase } from './CooperativeSpiralsPhase';  // Oct 17, 2025
+// export { GovernanceQualityPhase } from './GovernanceQualityPhase';  // CONSOLIDATED into GovernanceSystemPhase (Batch 5, Nov 9, 2025)
+// export { UpwardSpiralsPhase } from './UpwardSpiralsPhase';  // CONSOLIDATED into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
+// export { CooperativeSpiralsPhase } from './CooperativeSpiralsPhase';  // CONSOLIDATED into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
 export { TechTreePhase } from './TechTreePhase';
 export { MeaningRenaissancePhase } from './MeaningRenaissancePhase';
-export { ConflictResolutionPhase } from './ConflictResolutionPhase';
-export { FlashWarEscalationPhase } from './FlashWarEscalationPhase';  // FIX #5 (Oct 18, 2025)
-export { DiplomaticAIPhase } from './DiplomaticAIPhase';
+// export { ConflictResolutionPhase } from './ConflictResolutionPhase';  // CONSOLIDATED into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
+// export { FlashWarEscalationPhase } from './FlashWarEscalationPhase';  // CONSOLIDATED into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
+// export { DiplomaticAIPhase } from './DiplomaticAIPhase';  // CONSOLIDATED into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
 export { NationalAIPhase } from './NationalAIPhase';
 export { UBIPhase } from './UBIPhase';
 export { SocialSafetyNetsPhase } from './SocialSafetyNetsPhase';
@@ -71,7 +71,7 @@ export { InformationWarfarePhase } from './InformationWarfarePhase';
 export { HumanEnhancementPhase } from './HumanEnhancementPhase';
 export { MemeticEvolutionPhase } from './MemeticEvolutionPhase';  // P2.6 (Oct 16, 2025)
 export { ConsciousnessGovernancePhase } from './ConsciousnessGovernancePhase';  // TIER 2C (Oct 17, 2025)
-export { MADDeterrencePhase } from './MADDeterrencePhase';
+// export { MADDeterrencePhase } from './MADDeterrencePhase';  // CONSOLIDATED into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
 export { NuclearCommandControlPhase } from './NuclearCommandControlPhase';  // TIER 1 Phase 1B (Oct 16, 2025)
 export { ResourceEconomyPhase } from './ResourceEconomyPhase';  // UPDATED: Now includes PowerGeneration (Batch 3, Nov 2025)
 // export { ResourceTechnologyPhase } from './ResourceTechnologyPhase';  // CONSOLIDATED into ResourceEconomyPhase (Batch 3, Nov 2025)
@@ -89,7 +89,7 @@ export { PsychologicalTraumaPhase } from './PsychologicalTraumaPhase';  // Phase
 export { WarMeaningFeedbackPhase } from './WarMeaningFeedbackPhase';
 export { ClimateJusticePhase } from './ClimateJusticePhase';
 export { OrganizationViabilityPhase } from './OrganizationViabilityPhase';
-export { CooperativeOwnershipPhase } from './CooperativeOwnershipPhase';  // Nov 5, 2025: Cooperative organization survival bonus
+// export { CooperativeOwnershipPhase } from './CooperativeOwnershipPhase';  // CONSOLIDATED into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
 export { NuclearWinterPhase } from './NuclearWinterPhase';
 export { RadiationSystemPhase } from './RadiationSystemPhase';
 export { WetBulbTemperaturePhase } from './WetBulbTemperaturePhase';  // Wet Bulb Temperature Events (Oct 17, 2025)
@@ -126,3 +126,9 @@ export { TechnologyDiffusionPhase } from './TechnologyDiffusionPhase';
 export { CatastrophicScenariosPhase } from './CatastrophicScenariosPhase';
 export { EventCollectionPhase } from './EventCollectionPhase';
 export { TimeAdvancementPhase } from './TimeAdvancementPhase';
+
+// === BATCH 5 CONSOLIDATED PHASES (Nov 9, 2025): Social & Governance (20 → 8 phases, -12 files) ===
+export { GovernanceSystemPhase } from './GovernanceSystemPhase';  // Consolidated: GovernanceQualityPhase + GovernmentElectionPhase + PolicyImplementationPhase (order 10.0)
+export { SocialStabilitySystemPhase } from './SocialStabilitySystemPhase';  // Consolidated: SocialStabilityPhase + SocialCohesionUpdatePhase + ParanoiaPhase + TrustRecoveryPhase (order 26.1)
+export { CooperativeSystemsPhase } from './CooperativeSystemsPhase';  // Consolidated: CollectiveFormationPhase + CollectiveActionsPhase + CooperativeOwnershipPhase + CooperativeSpiralsPhase + UpwardSpiralsPhase (order 11.5)
+export { InternationalRelationsPhase } from './InternationalRelationsPhase';  // Consolidated: DiplomaticAIPhase + ConflictResolutionPhase + MADDeterrencePhase + FlashWarEscalationPhase (order 13.0)
