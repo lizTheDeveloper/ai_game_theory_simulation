@@ -28,7 +28,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 6, 2025): Must run after all risk accumulation
   readonly dependencies = [
     'bayesian_mortality_resolution',  // Order 35.0: Population mortality resolved
-    'climate_impact_cascade',         // Order 34.0: Climate collapse detection
+    'climate_system',                 // Order 34.0: Climate collapse detection (Batch 3: consolidated from climate_impact_cascade)
     'crisis-detection',               // Order 36.0: Crisis state assessed
     // NOTE: nuclear_winter order is 252 (AFTER this phase) - not a dependency
   ] as const;

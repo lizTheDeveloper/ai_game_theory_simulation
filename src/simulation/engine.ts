@@ -50,7 +50,7 @@ import {
   DemocracyDynamicsPhase,  // Phase 6A (Oct 20, 2025): Western Liberal paradigm
   SocialCohesionUpdatePhase,  // Phase 6B (Oct 20, 2025): Indigenous paradigm
   QualityOfLifePhase,
-  EnvironmentalFeedbackPhase,  // Phase 6C (Oct 20, 2025): Ecological paradigm
+  // EnvironmentalFeedbackPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   MultiParadigmDUIUpdatePhase,  // Phase 6 (Oct 20, 2025)
   OutcomeProbabilitiesPhase,
   UpdateEconomicStagePhase,  // P2.4 Feature 3 (Oct 16, 2025): Recovery tracking
@@ -69,20 +69,20 @@ import {
   UBIPhase,
   SocialSafetyNetsPhase,
   InformationWarfarePhase,
-  PowerGenerationPhase,
+  // PowerGenerationPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
   HumanEnhancementPhase,  // TIER 4.6 (Oct 16, 2025): Human Enhancement & Merger Pathways
   MemeticEvolutionPhase,  // P2.6 (Oct 16, 2025): Memetic Evolution & Polarization Dynamics
   ConsciousnessGovernancePhase,  // TIER 2C (Oct 17, 2025): Digital Consciousness Governance Preparedness
   MADDeterrencePhase,
   NuclearCommandControlPhase,  // TIER 1 Phase 1B (Oct 16, 2025): Circuit breakers (human-in-the-loop, kill switches, time delays)
-  ResourceEconomyPhase,
-  ResourceTechnologyPhase,
-  GeoengineringPhase,
+  ResourceEconomyPhase,  // UPDATED (Batch 3, Nov 9, 2025): Absorbed ResourceTechnologyPhase + PowerGenerationPhase
+  // ResourceTechnologyPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
+  // GeoengineringPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   DefensiveAIPhase,
-  PhosphorusPhase,
-  FreshwaterPhase,
-  OceanAcidificationPhase,
-  NovelEntitiesPhase,
+  // PhosphorusPhase removed - merged into ResourceSoilPhase (Batch 3, Nov 9, 2025)
+  // FreshwaterPhase removed - merged into ResourceWaterPhase (Batch 3, Nov 9, 2025)
+  // OceanAcidificationPhase removed - merged into ResourceWaterPhase (Batch 3, Nov 9, 2025)
+  // NovelEntitiesPhase removed - merged into ResourceSoilPhase (Batch 3, Nov 9, 2025)
   HumanPopulationPhase,
   RefugeeCrisisPhase,
   // CountryPopulationPhase,  // REMOVED (Oct 28, 2025): Deleted - was overwriting Bayesian mortality
@@ -97,10 +97,10 @@ import {
   ExtremeWeatherEventsPhase,  // Oct 28, 2025: Storm intensity-frequency modeling (MDF framework)
   PlanetaryBoundariesPhase,
   PositiveTippingPointsPhase,  // Oct 17, 2025: Positive technology adoption cascades
-  TippingPointPhase,  // Oct 26, 2025: Multi-timescale climate tipping points (replaces instant catastrophe)
+  // TippingPointPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   FoodSecurityDegradationPhase,  // Phase 1B Refinement (Oct 17, 2025): Crisis-accelerated food degradation
-  ClimateImpactCascadePhase,  // Oct 29, 2025: Climate → Famine → Mortality cascade coordinator
+  // ClimateImpactCascadePhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   BayesianMortalityResolutionPhase,  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
   AntimicrobialResistancePhase,  // TIER 1.8 (Oct 17, 2025): Progressive antibiotic resistance
   MinimalSufferingPhase,  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering metrics)
@@ -156,6 +156,10 @@ import { Tier2AIGovernancePhase } from './engine/phases/Tier2AIGovernancePhase';
 import { Tier2PhysicalSystemsPhase } from './engine/phases/Tier2PhysicalSystemsPhase';
 import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P3.2 (Oct 30, 2025)
 import { MortalityStabilizersPhase } from './engine/phases/MortalityStabilizersPhase';  // Issues #4, #5, #6 (Oct 30, 2025)
+// Batch 3 Consolidation: Climate & Environmental (17 → 7, Nov 9, 2025)
+import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Consolidated 4 climate phases
+import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Consolidated phosphorus + novel entities
+import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
 import { assertStateProperty } from './utils/assertions';  // Defensive fallback audit (Nov 6, 2025)
 
 /**
@@ -477,7 +481,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new DemocracyDynamicsPhase());  // Phase 6A (Oct 20, 2025): Western Liberal paradigm
     this.orchestrator.registerPhase(new SocialCohesionUpdatePhase());  // Phase 6B (Oct 20, 2025): Indigenous paradigm
     this.orchestrator.registerPhase(new QualityOfLifePhase());
-    this.orchestrator.registerPhase(new EnvironmentalFeedbackPhase());  // Phase 6C (Oct 20, 2025): Ecological paradigm
+    // EnvironmentalFeedbackPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
     this.orchestrator.registerPhase(new MultiParadigmDUIUpdatePhase());  // Phase 6 (Oct 20, 2025)
     this.orchestrator.registerPhase(new OutcomeProbabilitiesPhase());
     this.orchestrator.registerPhase(new UpdateEconomicStagePhase());  // P2.4 Feature 3: Recovery tracking
@@ -501,20 +505,19 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new Tier2SocialSystemsPhase());      // Order 12.6: Centaur + Community Cohesion
     this.orchestrator.registerPhase(new Tier2AIGovernancePhase());       // Order 14.5: Crisis + Interpretability + Dark Compute
     this.orchestrator.registerPhase(new Tier2PhysicalSystemsPhase());    // Order 18.5: Nuclear + Synthetic + Coastal + Synergies
-    this.orchestrator.registerPhase(new PowerGenerationPhase());
+    // PowerGenerationPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
     this.orchestrator.registerPhase(new HumanEnhancementPhase());  // TIER 4.6: Human Enhancement & Merger Pathways
     this.orchestrator.registerPhase(new MemeticEvolutionPhase());  // P2.6: Memetic Evolution & Polarization Dynamics
     this.orchestrator.registerPhase(new ConsciousnessGovernancePhase());  // TIER 2C: Digital Consciousness Governance Preparedness
     this.orchestrator.registerPhase(new MADDeterrencePhase());
     this.orchestrator.registerPhase(new NuclearCommandControlPhase());  // TIER 1 Phase 1B: Circuit breakers
-    this.orchestrator.registerPhase(new ResourceEconomyPhase());
-    this.orchestrator.registerPhase(new ResourceTechnologyPhase());
-    this.orchestrator.registerPhase(new GeoengineringPhase());
+    this.orchestrator.registerPhase(new ResourceEconomyPhase());  // UPDATED (Batch 3): Absorbed ResourceTechnologyPhase + PowerGenerationPhase
+    // ResourceTechnologyPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
+    // GeoengineringPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
     this.orchestrator.registerPhase(new DefensiveAIPhase());
-    this.orchestrator.registerPhase(new PhosphorusPhase());
-    this.orchestrator.registerPhase(new FreshwaterPhase());
-    this.orchestrator.registerPhase(new OceanAcidificationPhase());
-    this.orchestrator.registerPhase(new NovelEntitiesPhase());
+    // === BATCH 3 CONSOLIDATED PHASES (Nov 9, 2025) ===
+    this.orchestrator.registerPhase(new ResourceSoilPhase());  // Consolidated: PhosphorusPhase + NovelEntitiesPhase
+    this.orchestrator.registerPhase(new ResourceWaterPhase());  // Consolidated: FreshwaterPhase + OceanAcidificationPhase
     // FIX (Oct 28, 2025): Applies births to regions, then aggregates → global
     this.orchestrator.registerPhase(new HumanPopulationPhase());
     this.orchestrator.registerPhase(new RefugeeCrisisPhase());
@@ -530,11 +533,12 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ExtremeWeatherEventsPhase());  // Oct 28, 2025: Storm intensity-frequency modeling
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
     this.orchestrator.registerPhase(new PositiveTippingPointsPhase());  // Oct 17, 2025: Positive cascades (solar, EV, wind)
-    this.orchestrator.registerPhase(new TippingPointPhase());  // Oct 26, 2025: Multi-timescale climate tipping points (order 21.6)
+    // TippingPointPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new FoodSecurityDegradationPhase());  // Phase 1B Refinement: Crisis-accelerated food degradation
     this.orchestrator.registerPhase(new MortalityStabilizersPhase());  // Issues #4, #5, #6 (Oct 30, 2025): Aid/adaptation/migration/emergency response (order 20.8)
-    this.orchestrator.registerPhase(new ClimateImpactCascadePhase());  // Oct 29, 2025: Climate → Famine → Mortality cascade (order 34.0)
+    // === BATCH 3 CONSOLIDATED CLIMATE SYSTEM (Nov 9, 2025) ===
+    this.orchestrator.registerPhase(new ClimateSystemPhase());  // Consolidated: GeoengineringPhase + TippingPointPhase + EnvironmentalFeedbackPhase + ClimateImpactCascadePhase
     this.orchestrator.registerPhase(new BayesianMortalityResolutionPhase());  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline
     this.orchestrator.registerPhase(new MinimalSufferingPhase());  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering)

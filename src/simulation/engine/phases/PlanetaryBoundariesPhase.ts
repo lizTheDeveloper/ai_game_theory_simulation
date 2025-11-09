@@ -21,8 +21,8 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
 
   // DEPENDENCIES (Nov 6, 2025): Requires environmental state from earlier phases
   readonly dependencies = [
-    'ocean-acidification',      // Order 20.3: Ocean chemistry
-    'novel-entities',           // Order 20.4: Chemical pollution
+    'resource-water',           // Order 20.2: Ocean acidification + Freshwater (Batch 3: consolidated)
+    'resource-soil',            // Order 20.1: Novel entities + Phosphorus (Batch 3: consolidated)
     'wet_bulb_temperature',     // Order 20.45: Heat stress events
   ];
 
