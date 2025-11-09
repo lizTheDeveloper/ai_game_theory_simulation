@@ -25,7 +25,7 @@ export class UnemploymentPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 6, 2025): Requires AI capability for displacement calculation
   readonly dependencies = [
     'ai-agent-actions',          // Order 7.0: AI capabilities drive automation displacement
-    'social_cohesion_update',    // Order 26.1: Social state affects labor market
+    'social-stability-system',   // Order 26.1: Social state affects labor market (formerly social_cohesion_update, consolidated in Batch 5)
   ];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
