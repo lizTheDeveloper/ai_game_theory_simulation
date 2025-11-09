@@ -108,8 +108,7 @@ import {
   TriggeredEventsPhase,  // P2.5 (Oct 16, 2025): External event triggers for validation testing
   // Batch 3: Special phases (22.x - 23.x)
   BenchmarkEvaluationsPhase,
-  GamingDetectionPhase,  // TIER 2 Phase 3 (Oct 17, 2025)
-  ProactiveSleeperDetectionPhase,  // TIER 2 Phase 4 (Oct 17, 2025)
+  AIAdversarialDetectionPhase,  // BATCH 2B (Nov 9, 2025): Consolidated gaming + sleeper detection
   EnsembleMetaLearningPhase,  // TIER 2 Phase 2C-E (Oct 20, 2025)
   CrisisPointsPhase,
   EmergencyResponsePhase,
@@ -544,8 +543,7 @@ export class SimulationEngine {
 
     // Batch 3: Special phases (22.x - 23.x)
     this.orchestrator.registerPhase(new BenchmarkEvaluationsPhase());
-    this.orchestrator.registerPhase(new GamingDetectionPhase());  // TIER 2 Phase 3 (Oct 17, 2025)
-    this.orchestrator.registerPhase(new ProactiveSleeperDetectionPhase());  // TIER 2 Phase 4 (Oct 17, 2025)
+    this.orchestrator.registerPhase(new AIAdversarialDetectionPhase());  // BATCH 2B (Nov 9, 2025): Consolidated gaming + sleeper detection
     this.orchestrator.registerPhase(EnsembleMetaLearningPhase);  // TIER 2 Phase 2C-E (Oct 20, 2025) - const object, not class
     this.orchestrator.registerPhase(new CrisisPointsPhase());
     this.orchestrator.registerPhase(new EmergencyResponsePhase());  // FIX #11 (Oct 20, 2025) - Fast crisis response

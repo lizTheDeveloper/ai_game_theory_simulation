@@ -108,8 +108,7 @@ export { TriggeredEventsPhase } from './TriggeredEventsPhase';
 
 // Batch 3: Special phases (medium risk)
 export { BenchmarkEvaluationsPhase } from './BenchmarkEvaluationsPhase';
-export { GamingDetectionPhase } from './GamingDetectionPhase';  // TIER 2 Phase 3 (Oct 17, 2025)
-export { ProactiveSleeperDetectionPhase } from './ProactiveSleeperDetectionPhase';  // TIER 2 Phase 4 (Oct 17, 2025)
+export { AIAdversarialDetectionPhase } from './AIAdversarialDetectionPhase';  // BATCH 2B (Nov 9, 2025): Consolidated gaming + sleeper detection
 export { EnsembleMetaLearningPhase } from './EnsembleMetaLearningPhase';  // TIER 2 Phase 2C-E (Oct 20, 2025)
 export { CrisisPointsPhase } from './CrisisPointsPhase';
 export { EmergencyResponsePhase } from './EmergencyResponsePhase';  // FIX #11 (Oct 20, 2025)
