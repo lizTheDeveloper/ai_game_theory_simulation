@@ -19,7 +19,7 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
   readonly dependencies = [
     'quality-of-life',         // Order 19.5: QoL baseline
     'social-stability',        // Order 33.0: Social state
-    'environmental_feedback',  // Order 33.5: Environmental state
+    'climate_system',          // Order 34.0: Environmental state (Batch 3: consolidated from environmental_feedback)
   ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {

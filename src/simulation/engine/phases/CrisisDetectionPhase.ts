@@ -19,7 +19,7 @@ export class CrisisDetectionPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 6, 2025): Must run after all risk accumulation
   readonly dependencies = [
     'bayesian_mortality_resolution',  // Order 35.0: Population effects
-    'climate_impact_cascade',         // Order 34.0: Environmental state
+    'climate_system',                 // Order 34.0: Environmental state (Batch 3: consolidated from climate_impact_cascade)
     'social-stability',               // Order 33.0: Social state
     'outcome-probabilities',          // Order 35.0: Outcome assessment
   ] as const;

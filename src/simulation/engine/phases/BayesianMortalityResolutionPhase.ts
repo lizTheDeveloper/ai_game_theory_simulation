@@ -43,7 +43,7 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 6, 2025): CRITICAL - All mortality risks must be accumulated BEFORE this phase
   readonly dependencies = [
     'mortality-stabilizers',     // Order 20.8: Aid/adaptation/migration reductions applied
-    'climate_impact_cascade',    // Order 34.0: Climate mortality risks accumulated
+    'climate_system',            // Order 34.0: Climate mortality risks accumulated (Batch 3: consolidated from climate_impact_cascade)
   ];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {

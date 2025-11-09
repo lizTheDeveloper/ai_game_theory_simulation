@@ -47,7 +47,7 @@ export { SocialStabilityPhase } from './SocialStabilityPhase';
 export { DemocracyDynamicsPhase } from './DemocracyDynamicsPhase';  // Phase 6A (Oct 20, 2025) - Western Liberal paradigm
 export { SocialCohesionUpdatePhase } from './SocialCohesionUpdatePhase';  // Phase 6B (Oct 20, 2025) - Indigenous paradigm
 export { QualityOfLifePhase } from './QualityOfLifePhase';
-export { EnvironmentalFeedbackPhase } from './EnvironmentalFeedbackPhase';  // Phase 6C (Oct 20, 2025) - Ecological paradigm
+// export { EnvironmentalFeedbackPhase } from './EnvironmentalFeedbackPhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)
 export { MultiParadigmDUIUpdatePhase } from './MultiParadigmDUIUpdatePhase';  // Phase 6 (Oct 20, 2025)
 export { OutcomeProbabilitiesPhase } from './OutcomeProbabilitiesPhase';
 export { UpdateEconomicStagePhase } from './UpdateEconomicStagePhase';  // P2.4 Feature 3
@@ -67,20 +67,20 @@ export { NationalAIPhase } from './NationalAIPhase';
 export { UBIPhase } from './UBIPhase';
 export { SocialSafetyNetsPhase } from './SocialSafetyNetsPhase';
 export { InformationWarfarePhase } from './InformationWarfarePhase';
-export { PowerGenerationPhase } from './PowerGenerationPhase';
+// export { PowerGenerationPhase } from './PowerGenerationPhase';  // CONSOLIDATED into ResourceEconomyPhase (Batch 3, Nov 2025)
 export { HumanEnhancementPhase } from './HumanEnhancementPhase';
 export { MemeticEvolutionPhase } from './MemeticEvolutionPhase';  // P2.6 (Oct 16, 2025)
 export { ConsciousnessGovernancePhase } from './ConsciousnessGovernancePhase';  // TIER 2C (Oct 17, 2025)
 export { MADDeterrencePhase } from './MADDeterrencePhase';
 export { NuclearCommandControlPhase } from './NuclearCommandControlPhase';  // TIER 1 Phase 1B (Oct 16, 2025)
-export { ResourceEconomyPhase } from './ResourceEconomyPhase';
-export { ResourceTechnologyPhase } from './ResourceTechnologyPhase';
-export { GeoengineringPhase } from './GeoengineringPhase';
+export { ResourceEconomyPhase } from './ResourceEconomyPhase';  // UPDATED: Now includes PowerGeneration (Batch 3, Nov 2025)
+// export { ResourceTechnologyPhase } from './ResourceTechnologyPhase';  // CONSOLIDATED into ResourceEconomyPhase (Batch 3, Nov 2025)
+// export { GeoengineringPhase } from './GeoengineringPhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)
 export { DefensiveAIPhase } from './DefensiveAIPhase';
-export { PhosphorusPhase } from './PhosphorusPhase';
-export { FreshwaterPhase } from './FreshwaterPhase';
-export { OceanAcidificationPhase } from './OceanAcidificationPhase';
-export { NovelEntitiesPhase } from './NovelEntitiesPhase';
+// export { PhosphorusPhase } from './PhosphorusPhase';  // CONSOLIDATED into ResourceSoilPhase (Batch 3, Nov 2025)
+// export { FreshwaterPhase } from './FreshwaterPhase';  // CONSOLIDATED into ResourceWaterPhase (Batch 3, Nov 2025)
+// export { OceanAcidificationPhase } from './OceanAcidificationPhase';  // CONSOLIDATED into ResourceWaterPhase (Batch 3, Nov 2025)
+// export { NovelEntitiesPhase } from './NovelEntitiesPhase';  // CONSOLIDATED into ResourceSoilPhase (Batch 3, Nov 2025)
 export { HumanPopulationPhase } from './HumanPopulationPhase';
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
 export { GovernmentRelocationPhase } from './GovernmentRelocationPhase';  // Oct 20, 2025: Government-assisted relocation programs
@@ -96,10 +96,14 @@ export { WetBulbTemperaturePhase } from './WetBulbTemperaturePhase';  // Wet Bul
 export { ExtremeWeatherEventsPhase } from './ExtremeWeatherEventsPhase';  // Extreme Weather Events (Oct 28, 2025)
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
 export { PositiveTippingPointsPhase } from './PositiveTippingPointsPhase';  // Oct 17, 2025
-export { TippingPointPhase } from './TippingPointPhase';  // Oct 26, 2025: Multi-timescale climate tipping points
+// export { TippingPointPhase } from './TippingPointPhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)
 export { FamineSystemPhase } from './FamineSystemPhase';
 export { FoodSecurityDegradationPhase } from './FoodSecurityDegradationPhase';  // Phase 1B Refinement (Oct 17, 2025)
-export { ClimateImpactCascadePhase } from './ClimateImpactCascadePhase';  // Oct 29, 2025: Climate → Famine → Mortality cascade coordinator
+// export { ClimateImpactCascadePhase } from './ClimateImpactCascadePhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)
+// Batch 3 (Nov 2025): Climate & Environmental Consolidation
+export { ClimateSystemPhase } from './ClimateSystemPhase';  // Consolidates: Geoengineering, TippingPoint, EnvironmentalFeedback, ClimateImpactCascade
+export { ResourceSoilPhase } from './ResourceSoilPhase';  // Consolidates: Phosphorus, NovelEntities
+export { ResourceWaterPhase } from './ResourceWaterPhase';  // Consolidates: Freshwater, OceanAcidification
 export { BayesianMortalityResolutionPhase } from './BayesianMortalityResolutionPhase';  // Phase 35 (Oct 27, 2025) - Centralized mortality resolution
 export { AntimicrobialResistancePhase } from './AntimicrobialResistancePhase';  // TIER 1.8 (Oct 17, 2025)
 export { MinimalSufferingPhase } from './MinimalSufferingPhase';  // Oct 19, 2025: Dystopia baseline measurement

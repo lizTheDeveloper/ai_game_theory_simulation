@@ -28,12 +28,11 @@ export class MultiParadigmDUIUpdatePhase implements SimulationPhase {
   readonly name = 'Multi-Paradigm DUI Update';
   readonly order = 34.1;
 
-  // DEPENDENCIES (Nov 6, 2025): Requires all paradigm input systems
+  // DEPENDENCIES (Nov 6, 2025 + Batch 3 Nov 9, 2025): Requires all paradigm input systems
   readonly dependencies = [
     'social_cohesion_update',    // Order 26.1: Indigenous paradigm input
     'social-stability',          // Order 33.0: Western liberal paradigm input
-    'environmental_feedback',    // Order 33.5: Ecological paradigm input
-    'climate_impact_cascade',    // Order 34.0: Development paradigm input
+    'climate_system',            // Order 34.0: Ecological + Development paradigm input (Batch 3: consolidated from environmental_feedback + climate_impact_cascade)
   ];
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
