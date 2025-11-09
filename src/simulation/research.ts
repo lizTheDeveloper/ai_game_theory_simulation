@@ -492,6 +492,13 @@ export function applyResearchGrowth(
   // This ensures Monte Carlo simulations are reproducible with seeds
   const random = rng;
 
+  // CRITICAL FIX (Nov 8, 2025): Round all capability updates to integers [0-5]
+  // Bug: Continuous growth values created non-integer capabilities
+  // Capabilities are discrete levels, not continuous values
+  const toCapabilityLevel = (value: number): number => {
+    return Math.max(0, Math.min(5, Math.round(value)));
+  };
+
   // Get government investment for this dimension/research
   const govInvestment = state.government.researchInvestments;
 
@@ -555,7 +562,7 @@ export function applyResearchGrowth(
       growth += capabilityGain;
     }
 
-    newProfile[dim] = Math.min(10, newProfile[dim] + growth);
+    newProfile[dim] = toCapabilityLevel(newProfile[dim] + growth);
   } else if (selection.researchDomain && selection.researchSubfield) {
     // Advance research subfield
     const domain = selection.researchDomain;
@@ -617,7 +624,7 @@ export function applyResearchGrowth(
       growth += researchGain;
     }
 
-    newProfile.research[domain][subfield] = Math.min(5, currentValue + growth);
+    newProfile.research[domain][subfield] = toCapabilityLevel(currentValue + growth);
   }
 
   return { newProfile, growth };

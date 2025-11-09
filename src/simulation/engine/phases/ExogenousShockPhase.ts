@@ -31,6 +31,15 @@ import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 /**
+ * CRITICAL FIX (Nov 8, 2025): Round capabilities to discrete levels [0-5]
+ * Bug: Capability boosts like +0.5 created non-integer values (4 + 0.5 = 4.5)
+ * This helper ensures all capability values remain integers
+ */
+const toCapabilityLevel = (value: number): number => {
+  return Math.max(0, Math.min(5, Math.round(value)));
+};
+
+/**
  * Exogenous Shock Types
  *
  * Stratified by impact severity and recovery potential.
@@ -349,22 +358,28 @@ function applyAGIBreakthroughShock(state: GameState, rng: RNGFunction): GameEven
   });
 
   state.aiAgents.forEach(agent => {
-    agent.capabilityProfile.selfImprovement = assertFinite(
-      Math.min(capabilityCeiling, agent.capabilityProfile.selfImprovement + selfImprovementBoost),
-      {
-        location: 'applyAGIBreakthroughShock',
-        valueName: 'agent.capabilityProfile.selfImprovement',
-        month: state.currentMonth
-      }
+    // CRITICAL FIX (Nov 8, 2025): Round capability values to integers [0-5]
+    // Bug: Adding 0.5 boost to integer capability (4 + 0.5 = 4.5) broke discrete levels
+    agent.capabilityProfile.selfImprovement = toCapabilityLevel(
+      assertFinite(
+        Math.min(capabilityCeiling, agent.capabilityProfile.selfImprovement + selfImprovementBoost),
+        {
+          location: 'applyAGIBreakthroughShock',
+          valueName: 'agent.capabilityProfile.selfImprovement',
+          month: state.currentMonth
+        }
+      )
     );
 
-    agent.capabilityProfile.research.computerScience.algorithms = assertFinite(
-      Math.min(algorithmCeiling, agent.capabilityProfile.research.computerScience.algorithms + algorithmBoost),
-      {
-        location: 'applyAGIBreakthroughShock',
-        valueName: 'agent.capabilityProfile.research.computerScience.algorithms',
-        month: state.currentMonth
-      }
+    agent.capabilityProfile.research.computerScience.algorithms = toCapabilityLevel(
+      assertFinite(
+        Math.min(algorithmCeiling, agent.capabilityProfile.research.computerScience.algorithms + algorithmBoost),
+        {
+          location: 'applyAGIBreakthroughShock',
+          valueName: 'agent.capabilityProfile.research.computerScience.algorithms',
+          month: state.currentMonth
+        }
+      )
     );
 
     // Recalculate total capability
