@@ -18,9 +18,22 @@ import { runMonteCarlo, exportResults, MonteCarloConfig } from '../src/simulatio
 import { GameState } from '../src/types/game';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 
+/**
+ * Simple seeded RNG for deterministic simulation
+ * Uses Linear Congruential Generator (LCG) algorithm
+ */
+function createSeededRNG(seed: number): () => number {
+  let state = seed;
+  return () => {
+    state = (state * 1103515245 + 12345) & 0x7fffffff;
+    return state / 0x7fffffff;
+  };
+}
+
 // Use the shared initialization module
-function createInitialState(): GameState {
-  return createDefaultInitialState();
+function createInitialState(seed: number): GameState {
+  const rng = createSeededRNG(seed);
+  return createDefaultInitialState(rng);
 }
 
 /**
@@ -91,8 +104,8 @@ async function runSingleSimulation(options: any) {
   console.log('Starting single simulation...');
   console.log(`Seed: ${options.seed}`);
   console.log(`Max months: ${options.maxMonths}\n`);
-  
-  const initialState = createInitialState();
+
+  const initialState = createInitialState(options.seed);
   const engine = new SimulationEngine({
     seed: options.seed,
     maxMonths: options.maxMonths
@@ -127,9 +140,9 @@ async function runMonteCarloSimulation(options: any) {
   console.log(`Number of runs: ${options.runs}`);
   console.log(`Max months per run: ${options.maxMonths}`);
   console.log(`Base seed: ${options.seed}\n`);
-  
-  const initialState = createInitialState();
-  
+
+  const initialState = createInitialState(options.seed);
+
   const monteCarloConfig: MonteCarloConfig = {
     numRuns: options.runs,
     maxMonths: options.maxMonths,

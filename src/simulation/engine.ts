@@ -153,15 +153,10 @@ import {
   TimeAdvancementPhase
 } from './engine/phases';
 // TIER 2 Interventions (Oct 27, 2025)
-import { Tier2InterpretabilityPhase } from './engine/phases/Tier2InterpretabilityPhase';
-import { Tier2DarkComputePhase } from './engine/phases/Tier2DarkComputePhase';
-import { Tier2SyntheticEcosystemsPhase } from './engine/phases/Tier2SyntheticEcosystemsPhase';
-import { Tier2CoastalProtectionPhase } from './engine/phases/Tier2CoastalProtectionPhase';
-import { Tier2CrisisAnticipationPhase } from './engine/phases/Tier2CrisisAnticipationPhase';
-import { Tier2NuclearSecurityPhase } from './engine/phases/Tier2NuclearSecurityPhase';
-import { Tier2CentaurSystemsPhase } from './engine/phases/Tier2CentaurSystemsPhase';
-import { Tier2CommunityCohesionPhase } from './engine/phases/Tier2CommunityCohesionPhase';
-import { Tier2SynergyPhase } from './engine/phases/Tier2SynergyPhase';  // M3 Enhancement (Oct 27, 2025)
+// TIER 2 Consolidated Phases (Batch 1 consolidation: 9 → 3, Nov 9, 2025)
+import { Tier2SocialSystemsPhase } from './engine/phases/Tier2SocialSystemsPhase';
+import { Tier2AIGovernancePhase } from './engine/phases/Tier2AIGovernancePhase';
+import { Tier2PhysicalSystemsPhase } from './engine/phases/Tier2PhysicalSystemsPhase';
 import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P3.2 (Oct 30, 2025)
 import { MortalityStabilizersPhase } from './engine/phases/MortalityStabilizersPhase';  // Issues #4, #5, #6 (Oct 30, 2025)
 import { assertStateProperty } from './utils/assertions';  // Defensive fallback audit (Nov 6, 2025)
@@ -505,16 +500,10 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new UBIPhase());
     this.orchestrator.registerPhase(new SocialSafetyNetsPhase());
     this.orchestrator.registerPhase(new InformationWarfarePhase());
-    // TIER 2 Interventions (Oct 27, 2025)
-    this.orchestrator.registerPhase(new Tier2CrisisAnticipationPhase());  // Order 14.5: Before crisis detection
-    this.orchestrator.registerPhase(new Tier2InterpretabilityPhase());  // Order 15.5: After AI updates
-    this.orchestrator.registerPhase(new Tier2DarkComputePhase());  // Order 16.5: After AI capability growth
-    this.orchestrator.registerPhase(new Tier2CentaurSystemsPhase());  // Order 12.5: After employment
-    this.orchestrator.registerPhase(new Tier2CommunityCohesionPhase());  // Order 13.5: After social cohesion
-    this.orchestrator.registerPhase(new Tier2NuclearSecurityPhase());  // Order 18.5: After nuclear risk
-    this.orchestrator.registerPhase(new Tier2SyntheticEcosystemsPhase());  // Order 19.5: After environmental
-    this.orchestrator.registerPhase(new Tier2CoastalProtectionPhase());  // Order 20.5: After ocean updates
-    this.orchestrator.registerPhase(new Tier2SynergyPhase());  // Order 21.0: After all TIER 2, applies synergies
+    // TIER 2 Consolidated Interventions (Batch 1: 9 → 3 phases, Nov 9, 2025)
+    this.orchestrator.registerPhase(new Tier2SocialSystemsPhase());      // Order 12.6: Centaur + Community Cohesion
+    this.orchestrator.registerPhase(new Tier2AIGovernancePhase());       // Order 14.5: Crisis + Interpretability + Dark Compute
+    this.orchestrator.registerPhase(new Tier2PhysicalSystemsPhase());    // Order 18.5: Nuclear + Synthetic + Coastal + Synergies
     this.orchestrator.registerPhase(new PowerGenerationPhase());
     this.orchestrator.registerPhase(new HumanEnhancementPhase());  // TIER 4.6: Human Enhancement & Merger Pathways
     this.orchestrator.registerPhase(new MemeticEvolutionPhase());  // P2.6: Memetic Evolution & Polarization Dynamics
