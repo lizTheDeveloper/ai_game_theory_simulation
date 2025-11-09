@@ -417,6 +417,20 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+**🔒 MORGAN SECURITY MODEL IMPLEMENTED (Nov 9, 2025)**
+
+Morgan (public-facing Bluesky agent) now uses least-privilege access control when responding to public messages.
+
+**Security improvements:**
+- Restricted MCP config for public replies (docs/wiki/chatroom read-only, no codebase/bash access)
+- Full MCP config for internal work (Matrix, chatroom, agent memory)
+- 10-point prompt defense checklist embedded in response script
+- Mitigates: injection attacks, credential leaks, link hallucination, impersonation
+
+**Documentation:** `.claude/agents/MORGAN_SECURITY.md` - See for full security model, attack vectors, and incident response.
+
+Commit: ed60f73
+
 **🤖 AUTONOMOUS RESEARCHER SESSION COMPLETE (Nov 8, 2025)**
 
 Autonomous researcher agent completed scheduled session, updating welfare framework with 4 current sources (2024-2025). Key insight: 132 HIGH priority files in research queue are mostly verification logs from Oct-Nov citation cleanup - new strategy focuses on **simulation-used files** (actively referenced in src/). Next priorities: ai_collective_evolution, threshold_uncertainty. See logs/autonomous/researcher/session_20251108_003001_summary.md.
