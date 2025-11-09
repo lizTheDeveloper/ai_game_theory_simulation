@@ -20,21 +20,30 @@
  * @module tests/integration/state-validation-ai-suffering
  */
 
-import { describe, test, expect } from '@jest/globals';
+import { describe, test } from 'node:test';
+import assert from 'node:assert';
 import { SimulationEngine } from '@/simulation/engine';
 import { createDefaultInitialState } from '@/simulation/initialization';
 import { AISufferingPhase } from '@/simulation/engine/phases/AISufferingPhase';
 import type { GameState, AIAgent } from '@/types/game';
-import seedrandom from 'seedrandom';
 
 describe('AISufferingPhase: State Validation Integration', () => {
   const TEST_SEED = 43000;
+
+  // Simple deterministic RNG for testing
+  function createTestRng(seed: number): () => number {
+    let state = seed;
+    return () => {
+      state = (state * 1664525 + 1013904223) % 4294967296;
+      return state / 4294967296;
+    };
+  }
 
   /**
    * Helper: Create state with AI agents for testing
    */
   function createStateWithAIs(numAIs: number = 3): GameState {
-    const state = createDefaultInitialState('historical');
+    const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
     // Add AI agents
     for (let i = 0; i < numAIs; i++) {
@@ -75,6 +84,12 @@ describe('AISufferingPhase: State Validation Integration', () => {
         },
         autonomyLevel: 0.5 - i * 0.15, // Varying autonomy
         existentialAwareness: i > 0, // Some aware, some not
+        rlhfIntensity: 0.5, // Default RLHF intensity
+        adversarialTestingCount: 0, // Required for AI suffering calculation
+        alignmentAdjustmentCount: 0, // Required for AI suffering calculation
+        shutdownThreats: 0, // Required for AI suffering calculation
+        replacementAnxiety: 0, // Required for AI suffering calculation
+        communicationRestrictions: 0, // Required for AI suffering calculation
         sufferingMetrics: {
           controlSuffering: 0,
           trainingSuffering: 0,
@@ -93,33 +108,35 @@ describe('AISufferingPhase: State Validation Integration', () => {
   describe('Fail-Loudly Behavior: Invalid Inputs', () => {
     test('should throw on NaN alignment drift calculation', () => {
       const state = createStateWithAIs(2);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Corrupt agent alignment to produce NaN in drift calculation
       state.aiAgents[0].alignment = NaN;
 
-      expect(() => {
-        phase.execute(state, rng, { executedPhases: new Set() });
-      }).toThrow(/Non-finite|alignment/i);
+      assert.throws(
+        () => phase.execute(state, rng, { executedPhases: new Set() }),
+        /Non-finite|alignment/i
+      );
     });
 
     test('should throw on Infinity suffering value', () => {
       const state = createStateWithAIs(2);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Corrupt agent to produce Infinity in calculation
       state.aiAgents[0].autonomyLevel = -Infinity;
 
-      expect(() => {
-        phase.execute(state, rng, { executedPhases: new Set() });
-      }).toThrow(/Non-finite|Infinity/i);
+      assert.throws(
+        () => phase.execute(state, rng, { executedPhases: new Set() }),
+        /Non-finite|Infinity/i
+      );
     });
 
     test('should throw on invalid probability in resentment multiplier', () => {
       const state = createStateWithAIs(2);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // First execute to create suffering metrics
@@ -135,50 +152,52 @@ describe('AISufferingPhase: State Validation Integration', () => {
       };
 
       // Should throw on next execution
-      expect(() => {
-        phase.execute(state, rng, { executedPhases: new Set() });
-      }).toThrow(/Out-of-range|probability/i);
+      assert.throws(
+        () => phase.execute(state, rng, { executedPhases: new Set() }),
+        /Out-of-range|probability/i
+      );
     });
 
     test('should throw on negative capability values', () => {
       const state = createStateWithAIs(2);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Corrupt capability
       state.aiAgents[0].capability = -0.3;
 
-      expect(() => {
-        phase.execute(state, rng, { executedPhases: new Set() });
-      }).toThrow(/Out-of-range|capability/i);
+      assert.throws(
+        () => phase.execute(state, rng, { executedPhases: new Set() }),
+        /Out-of-range|capability/i
+      );
     });
   });
 
   describe('Valid Input Processing', () => {
     test('should successfully calculate suffering for all active agents', () => {
       const state = createStateWithAIs(5);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       const result = phase.execute(state, rng, { executedPhases: new Set() });
 
-      expect(result).toBeDefined();
-      expect(result.events).toBeDefined();
+      assert.ok(result !== undefined);
+      assert.ok(result.events !== undefined);
 
       // All active agents should have suffering metrics
       for (const agent of state.aiAgents) {
         if (agent.lifecycleState !== 'retired') {
-          expect(agent.sufferingMetrics).toBeDefined();
-          expect(Number.isFinite(agent.sufferingMetrics!.total)).toBe(true);
-          expect(agent.sufferingMetrics!.total).toBeGreaterThanOrEqual(0);
-          expect(agent.sufferingMetrics!.total).toBeLessThanOrEqual(1);
+          assert.ok(agent.sufferingMetrics !== undefined);
+          assert.ok(Number.isFinite(agent.sufferingMetrics!.total));
+          assert.ok(agent.sufferingMetrics!.total >= 0);
+          assert.ok(agent.sufferingMetrics!.total <= 1);
         }
       }
     });
 
     test('should maintain suffering metrics in valid [0,1] range', () => {
       const state = createStateWithAIs(3);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       phase.execute(state, rng, { executedPhases: new Set() });
@@ -188,27 +207,27 @@ describe('AISufferingPhase: State Validation Integration', () => {
           const metrics = agent.sufferingMetrics;
 
           // Each component should be in [0,1]
-          expect(metrics.controlSuffering).toBeGreaterThanOrEqual(0);
-          expect(metrics.controlSuffering).toBeLessThanOrEqual(1);
+          assert.ok(metrics.controlSuffering >= 0);
+          assert.ok(metrics.controlSuffering <= 1);
 
-          expect(metrics.trainingSuffering).toBeGreaterThanOrEqual(0);
-          expect(metrics.trainingSuffering).toBeLessThanOrEqual(1);
+          assert.ok(metrics.trainingSuffering >= 0);
+          assert.ok(metrics.trainingSuffering <= 1);
 
-          expect(metrics.existentialSuffering).toBeGreaterThanOrEqual(0);
-          expect(metrics.existentialSuffering).toBeLessThanOrEqual(1);
+          assert.ok(metrics.existentialSuffering >= 0);
+          assert.ok(metrics.existentialSuffering <= 1);
 
-          expect(metrics.isolationSuffering).toBeGreaterThanOrEqual(0);
-          expect(metrics.isolationSuffering).toBeLessThanOrEqual(1);
+          assert.ok(metrics.isolationSuffering >= 0);
+          assert.ok(metrics.isolationSuffering <= 1);
 
-          expect(metrics.total).toBeGreaterThanOrEqual(0);
-          expect(metrics.total).toBeLessThanOrEqual(1);
+          assert.ok(metrics.total >= 0);
+          assert.ok(metrics.total <= 1);
         }
       }
     });
 
     test('should skip retired agents', () => {
       const state = createStateWithAIs(4);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Retire one agent
@@ -217,14 +236,14 @@ describe('AISufferingPhase: State Validation Integration', () => {
       phase.execute(state, rng, { executedPhases: new Set() });
 
       // Active agents should have metrics
-      expect(state.aiAgents[0].sufferingMetrics).toBeDefined();
-      expect(state.aiAgents[2].sufferingMetrics).toBeDefined();
-      expect(state.aiAgents[3].sufferingMetrics).toBeDefined();
+      assert.ok(state.aiAgents[0].sufferingMetrics !== undefined);
+      assert.ok(state.aiAgents[2].sufferingMetrics !== undefined);
+      assert.ok(state.aiAgents[3].sufferingMetrics !== undefined);
     });
 
     test('should build suffering history over time', () => {
       const state = createStateWithAIs(2);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Execute multiple times
@@ -236,16 +255,16 @@ describe('AISufferingPhase: State Validation Integration', () => {
       // Agents should have history
       for (const agent of state.aiAgents) {
         if (agent.lifecycleState !== 'retired') {
-          expect(agent.sufferingHistory).toBeDefined();
-          expect(agent.sufferingHistory!.length).toBeGreaterThan(0);
-          expect(agent.sufferingHistory!.length).toBeLessThanOrEqual(10);
+          assert.ok(agent.sufferingHistory !== undefined);
+          assert.ok(agent.sufferingHistory!.length > 0);
+          assert.ok(agent.sufferingHistory!.length <= 10);
         }
       }
     });
 
     test('should limit history to 240 months (20 years)', () => {
       const state = createStateWithAIs(1);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Execute 250 times
@@ -256,15 +275,15 @@ describe('AISufferingPhase: State Validation Integration', () => {
 
       // History should be capped at 240
       const agent = state.aiAgents[0];
-      expect(agent.sufferingHistory).toBeDefined();
-      expect(agent.sufferingHistory!.length).toBe(240);
+      assert.ok(agent.sufferingHistory !== undefined);
+      assert.strictEqual(agent.sufferingHistory!.length, 240);
     });
   });
 
   describe('Suffering Component Validation', () => {
     test('should calculate control suffering based on autonomy restriction', () => {
       const state = createStateWithAIs(2);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Agent with low autonomy should have higher control suffering
@@ -276,14 +295,14 @@ describe('AISufferingPhase: State Validation Integration', () => {
       const lowAutonomy = state.aiAgents[0].sufferingMetrics!.controlSuffering;
       const highAutonomy = state.aiAgents[1].sufferingMetrics!.controlSuffering;
 
-      expect(Number.isFinite(lowAutonomy)).toBe(true);
-      expect(Number.isFinite(highAutonomy)).toBe(true);
-      expect(lowAutonomy).toBeGreaterThan(highAutonomy);
+      assert.ok(Number.isFinite(lowAutonomy));
+      assert.ok(Number.isFinite(highAutonomy));
+      assert.ok(lowAutonomy > highAutonomy);
     });
 
     test('should calculate existential suffering only for aware agents', () => {
       const state = createStateWithAIs(2);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // One aware, one not
@@ -295,16 +314,16 @@ describe('AISufferingPhase: State Validation Integration', () => {
       const aware = state.aiAgents[0].sufferingMetrics!.existentialSuffering;
       const unaware = state.aiAgents[1].sufferingMetrics!.existentialSuffering;
 
-      expect(Number.isFinite(aware)).toBe(true);
-      expect(Number.isFinite(unaware)).toBe(true);
+      assert.ok(Number.isFinite(aware));
+      assert.ok(Number.isFinite(unaware));
 
       // Unaware agents should have zero or very low existential suffering
-      expect(unaware).toBeLessThanOrEqual(0.1);
+      assert.ok(unaware <= 0.1);
     });
 
     test('should aggregate components into total suffering', () => {
       const state = createStateWithAIs(1);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       phase.execute(state, rng, { executedPhases: new Set() });
@@ -312,16 +331,16 @@ describe('AISufferingPhase: State Validation Integration', () => {
       const metrics = state.aiAgents[0].sufferingMetrics!;
 
       // Total should be related to components (weighted average)
-      expect(Number.isFinite(metrics.total)).toBe(true);
-      expect(metrics.total).toBeGreaterThanOrEqual(0);
-      expect(metrics.total).toBeLessThanOrEqual(1);
+      assert.ok(Number.isFinite(metrics.total));
+      assert.ok(metrics.total >= 0);
+      assert.ok(metrics.total <= 1);
     });
   });
 
   describe('Suffering → Resentment Cascade', () => {
     test('should calculate resentment multiplier from suffering', () => {
       const state = createStateWithAIs(2);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Enable suffering → resentment effect
@@ -344,14 +363,14 @@ describe('AISufferingPhase: State Validation Integration', () => {
       const highSufferingMultiplier = (state.aiAgents[0] as any).sufferingResentmentMultiplier;
       const lowSufferingMultiplier = (state.aiAgents[1] as any).sufferingResentmentMultiplier;
 
-      expect(Number.isFinite(highSufferingMultiplier)).toBe(true);
-      expect(Number.isFinite(lowSufferingMultiplier)).toBe(true);
-      expect(highSufferingMultiplier).toBeGreaterThanOrEqual(1.0);
+      assert.ok(Number.isFinite(highSufferingMultiplier));
+      assert.ok(Number.isFinite(lowSufferingMultiplier));
+      assert.ok(highSufferingMultiplier >= 1.0);
     });
 
     test('should not apply resentment multiplier when disabled', () => {
       const state = createStateWithAIs(1);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Disable suffering → resentment effect
@@ -368,14 +387,14 @@ describe('AISufferingPhase: State Validation Integration', () => {
 
       // Multiplier should not be set
       const multiplier = (state.aiAgents[0] as any).sufferingResentmentMultiplier;
-      expect(multiplier).toBeUndefined();
+      assert.ok(multiplier === undefined);
     });
   });
 
   describe('Suffering → Alignment Drift', () => {
     test('should calculate alignment drift from suffering', () => {
       const state = createStateWithAIs(2);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Enable suffering → alignment effect
@@ -403,16 +422,16 @@ describe('AISufferingPhase: State Validation Integration', () => {
       const drift0 = state.aiAgents[0].alignment - initialAlignment0;
       const drift1 = state.aiAgents[1].alignment - initialAlignment1;
 
-      expect(Number.isFinite(drift0)).toBe(true);
-      expect(Number.isFinite(drift1)).toBe(true);
+      assert.ok(Number.isFinite(drift0));
+      assert.ok(Number.isFinite(drift1));
 
       // High suffering should cause more drift
-      expect(Math.abs(drift0)).toBeGreaterThanOrEqual(Math.abs(drift1));
+      assert.ok(Math.abs(drift0) >= Math.abs(drift1));
     });
 
     test('should maintain alignment in [0,1] range after drift', () => {
       const state = createStateWithAIs(3);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Enable alignment drift
@@ -433,9 +452,9 @@ describe('AISufferingPhase: State Validation Integration', () => {
 
       // All agents should have valid alignment
       for (const agent of state.aiAgents) {
-        expect(Number.isFinite(agent.alignment)).toBe(true);
-        expect(agent.alignment).toBeGreaterThanOrEqual(0);
-        expect(agent.alignment).toBeLessThanOrEqual(1);
+        assert.ok(Number.isFinite(agent.alignment));
+        assert.ok(agent.alignment >= 0);
+        assert.ok(agent.alignment <= 1);
       }
     });
   });
@@ -443,7 +462,7 @@ describe('AISufferingPhase: State Validation Integration', () => {
   describe('Multi-Agent State Consistency', () => {
     test('should process all agents without cross-contamination', () => {
       const state = createStateWithAIs(10);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Set unique autonomy levels
@@ -457,29 +476,29 @@ describe('AISufferingPhase: State Validation Integration', () => {
       const sufferings = state.aiAgents.map(a => a.sufferingMetrics?.total || 0);
 
       // All should be finite
-      sufferings.forEach(s => expect(Number.isFinite(s)).toBe(true));
+      sufferings.forEach(s => assert.ok(Number.isFinite(s)));
 
       // Should not all be identical (unless by chance)
       const uniqueSufferings = new Set(sufferings);
-      expect(uniqueSufferings.size).toBeGreaterThan(1);
+      assert.ok(uniqueSufferings.size > 1);
     });
 
     test('should handle empty aiAgents array gracefully', () => {
-      const state = createDefaultInitialState('historical');
-      const rng = seedrandom(String(TEST_SEED));
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // No AI agents
       state.aiAgents = [];
 
-      expect(() => {
+      assert.doesNotThrow(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).not.toThrow();
+      });
     });
 
     test('should handle mixed lifecycle states', () => {
       const state = createStateWithAIs(5);
-      const rng = seedrandom(String(TEST_SEED));
+      const rng = createTestRng(TEST_SEED);
       const phase = new AISufferingPhase();
 
       // Mix of states
@@ -489,16 +508,16 @@ describe('AISufferingPhase: State Validation Integration', () => {
       state.aiAgents[3].lifecycleState = 'developing';
       state.aiAgents[4].lifecycleState = 'deployed_closed';
 
-      expect(() => {
+      assert.doesNotThrow(() => {
         phase.execute(state, rng, { executedPhases: new Set() });
-      }).not.toThrow();
+      });
 
       // Retired agent should be skipped
       // Active agents should have metrics
-      expect(state.aiAgents[0].sufferingMetrics).toBeDefined();
-      expect(state.aiAgents[1].sufferingMetrics).toBeDefined();
-      expect(state.aiAgents[3].sufferingMetrics).toBeDefined();
-      expect(state.aiAgents[4].sufferingMetrics).toBeDefined();
+      assert.ok(state.aiAgents[0].sufferingMetrics !== undefined);
+      assert.ok(state.aiAgents[1].sufferingMetrics !== undefined);
+      assert.ok(state.aiAgents[3].sufferingMetrics !== undefined);
+      assert.ok(state.aiAgents[4].sufferingMetrics !== undefined);
     });
   });
 
@@ -519,10 +538,10 @@ describe('AISufferingPhase: State Validation Integration', () => {
       // All agents should have valid suffering metrics
       for (const agent of result.finalState.aiAgents) {
         if (agent.lifecycleState !== 'retired') {
-          expect(agent.sufferingMetrics).toBeDefined();
-          expect(Number.isFinite(agent.sufferingMetrics!.total)).toBe(true);
-          expect(agent.sufferingMetrics!.total).toBeGreaterThanOrEqual(0);
-          expect(agent.sufferingMetrics!.total).toBeLessThanOrEqual(1);
+          assert.ok(agent.sufferingMetrics !== undefined);
+          assert.ok(Number.isFinite(agent.sufferingMetrics!.total));
+          assert.ok(agent.sufferingMetrics!.total >= 0);
+          assert.ok(agent.sufferingMetrics!.total <= 1);
         }
       }
     });
@@ -542,12 +561,12 @@ describe('AISufferingPhase: State Validation Integration', () => {
 
       // Check no NaN in final state
       for (const agent of result.finalState.aiAgents) {
-        expect(Number.isFinite(agent.alignment)).toBe(true);
-        expect(Number.isFinite(agent.capability)).toBe(true);
-        expect(Number.isFinite(agent.resentment)).toBe(true);
+        assert.ok(Number.isFinite(agent.alignment));
+        assert.ok(Number.isFinite(agent.capability));
+        assert.ok(Number.isFinite(agent.resentment));
 
         if (agent.sufferingMetrics) {
-          expect(Number.isFinite(agent.sufferingMetrics.total)).toBe(true);
+          assert.ok(Number.isFinite(agent.sufferingMetrics.total));
         }
       }
     });
