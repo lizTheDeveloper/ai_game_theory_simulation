@@ -15,7 +15,7 @@ export class UBIPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 6, 2025): Requires tech tree and governance for UBI deployment
   readonly dependencies = [
     'tech-tree',                 // Order 12.5: Tech breakthroughs enable UBI programs
-    'governance-quality',        // Order 10.0: Government capability to implement UBI
+    'governance-system',        // Order 10.0: Government capability to implement UBI
   ];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {

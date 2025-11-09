@@ -21,7 +21,7 @@ export class SocietyActionsPhase implements SimulationPhase {
   readonly id = 'society-actions';
   readonly name = 'Society Agent Actions';
   readonly order = 10.5;
-  dependencies = ['governance-quality'];
+  dependencies = ['governance-system'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

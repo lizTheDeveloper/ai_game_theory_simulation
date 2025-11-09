@@ -269,6 +269,6 @@ export const EvolutionarySelectionPhase = {
   id: 'evolutionary_selection',
   name: 'Evolutionary Selection',
   order: 4.3,
-  dependencies: ['collective_formation'],
+  dependencies: [],  // Batch 5: removed cooperative-systems (was collective_formation@4.2, now @12.6) - no longer valid dependency
   execute: executeEvolutionarySelectionPhase,
 };
