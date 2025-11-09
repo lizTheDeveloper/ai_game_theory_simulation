@@ -88,36 +88,75 @@ console.log('\n' + '='.repeat(80));
 console.log('📊 GOD MODE RESULTS');
 console.log('='.repeat(80));
 
+// Check if game ended early
+if (!result.finalState) {
+  console.log('\n🚨 GAME OVER - Simulation ended early');
+  console.log(`📅 Months Simulated: ${result.monthsSimulated || 'unknown'}`);
+  console.log(`💀 Outcome: ${result.outcome || 'CATASTROPHIC FAILURE'}`);
+  console.log(`\nReason: Game ended before ${maxMonths} months - likely extinction or total collapse`);
+  console.log('\n❌ God mode test FAILED - even with all tech, simulation ended catastrophically\n');
+  process.exit(1);
+}
+
 console.log(`\n🎯 Final Outcome: ${result.finalState.outcome || 'ONGOING'}`);
 console.log(`📅 Months Simulated: ${result.finalState.currentMonth}`);
 console.log(`🌍 Population: ${(result.finalState.population / 1e9).toFixed(2)}B`);
 
-// Quality of Life breakdown
-console.log('\n📈 Quality of Life (17 dimensions):');
+// Quality of Life breakdown (NEW: Tiered structure)
+console.log('\n📈 Quality of Life Systems:');
 const qol = result.finalState.qualityOfLifeSystems;
-const dims = [
-  'basicNeeds', 'healthcare', 'education', 'infrastructure',
-  'economicSecurity', 'politicalFreedom', 'socialCohesion', 'culturalVibrancy',
-  'workLifeBalance', 'mentalWellness', 'physicalSafety', 'environmentalQuality',
-  'digitalAccess', 'scientificProgress', 'artisticExpression', 'spiritualFulfillment',
-  'communityBelonging'
-];
 
-dims.forEach(dim => {
-  const value = qol[dim as keyof typeof qol];
-  console.log(`  ${dim.padEnd(25)}: ${(value * 100).toFixed(1)}%`);
-});
+console.log('\n  🆘 Tier 0 - Survival Fundamentals:');
+console.log(`    Food security:         ${(qol.survivalFundamentals.foodSecurity * 100).toFixed(1)}%`);
+console.log(`    Water security:        ${(qol.survivalFundamentals.waterSecurity * 100).toFixed(1)}%`);
+console.log(`    Thermal habitability:  ${(qol.survivalFundamentals.thermalHabitability * 100).toFixed(1)}%`);
+console.log(`    Shelter security:      ${(qol.survivalFundamentals.shelterSecurity * 100).toFixed(1)}%`);
+
+console.log('\n  📦 Tier 1 - Basic Needs:');
+console.log(`    Material abundance:    ${(qol.materialAbundance * 100).toFixed(1)}%`);
+console.log(`    Energy availability:   ${(qol.energyAvailability * 100).toFixed(1)}%`);
+console.log(`    Physical safety:       ${(qol.physicalSafety * 100).toFixed(1)}%`);
+
+console.log('\n  🧠 Tier 2 - Psychological Needs:');
+console.log(`    Mental health:         ${(qol.mentalHealth * 100).toFixed(1)}%`);
+console.log(`    Meaning & purpose:     ${(qol.meaningAndPurpose * 100).toFixed(1)}%`);
+console.log(`    Social connection:     ${(qol.socialConnection * 100).toFixed(1)}%`);
+console.log(`    Autonomy:              ${(qol.autonomy * 100).toFixed(1)}%`);
+
+console.log('\n  🤝 Tier 3 - Social Needs:');
+console.log(`    Political freedom:     ${(qol.politicalFreedom * 100).toFixed(1)}%`);
+console.log(`    Information integrity: ${(qol.informationIntegrity * 100).toFixed(1)}%`);
+console.log(`    Community strength:    ${(qol.communityStrength * 100).toFixed(1)}%`);
+console.log(`    Cultural vitality:     ${(qol.culturalVitality * 100).toFixed(1)}%`);
+
+console.log('\n  🏥 Tier 4 - Health & Longevity:');
+console.log(`    Healthcare quality:    ${(qol.healthcareQuality * 100).toFixed(1)}%`);
+console.log(`    Longevity gains:       ${(qol.longevityGains * 100).toFixed(1)}%`);
+console.log(`    Diseases burden:       ${(qol.diseasesBurden * 100).toFixed(1)}%`);
+
+console.log('\n  🌿 Tier 5 - Environmental:');
+console.log(`    Ecosystem health:      ${(qol.ecosystemHealth * 100).toFixed(1)}%`);
+console.log(`    Climate stability:     ${(qol.climateStability * 100).toFixed(1)}%`);
+console.log(`    Pollution level:       ${(qol.pollutionLevel * 100).toFixed(1)}%`);
 
 // Environmental metrics
 console.log('\n🌍 Environmental State:');
-console.log(`  Global temp delta: ${result.finalState.climate.globalTempDelta.toFixed(2)}°C`);
-console.log(`  CO2 concentration: ${result.finalState.climate.co2Concentration.toFixed(0)} ppm`);
-console.log(`  Biodiversity loss: ${(result.finalState.ecology.extinctionRate * 100).toFixed(1)}%`);
+if (result.finalState.climate && result.finalState.ecology) {
+  console.log(`  Global temp delta: ${result.finalState.climate.globalTempDelta.toFixed(2)}°C`);
+  console.log(`  CO2 concentration: ${result.finalState.climate.co2Concentration.toFixed(0)} ppm`);
+  console.log(`  Biodiversity loss: ${(result.finalState.ecology.extinctionRate * 100).toFixed(1)}%`);
+} else {
+  console.log(`  ⚠️  Environmental data corrupted or undefined`);
+}
 
 // Economic metrics
 console.log('\n💰 Economic State:');
 console.log(`  Global GDP: $${(result.finalState.globalEconomicActivity / 1e12).toFixed(1)}T`);
-console.log(`  Inequality (Gini): ${result.finalState.inequality.gini.toFixed(3)}`);
+if (result.finalState.inequality) {
+  console.log(`  Inequality (Gini): ${result.finalState.inequality.gini.toFixed(3)}`);
+} else {
+  console.log(`  Inequality (Gini): undefined`);
+}
 
 // AI state
 console.log('\n🤖 AI State:');
@@ -147,23 +186,54 @@ if (crisisEvents.length > 0) {
   });
 }
 
+// Planetary Boundaries - Initial vs Final State
+console.log('\n🌐 Planetary Boundaries - Initial State Check:');
+console.log(`  NOTE: Simulation starts in 2025 - some boundaries already crossed`);
+if (state.climate && state.ecology) {
+  console.log(`  Climate (initial): ${state.climate.globalTempDelta.toFixed(2)}°C above pre-industrial`);
+  console.log(`  Biodiversity (initial): ${(state.ecology.extinctionRate * 100).toFixed(1)}% extinction rate`);
+  console.log(`  CO2 (initial): ${state.climate.co2Concentration.toFixed(0)} ppm`);
+}
+
 // Analysis
 console.log('\n' + '='.repeat(80));
 console.log('📝 ANALYSIS');
 console.log('='.repeat(80));
 
-const avgQoL = dims.reduce((sum, dim) => sum + qol[dim as keyof typeof qol], 0) / dims.length;
+// Calculate average QoL from all tiers
+const survivalAvg = (qol.survivalFundamentals.foodSecurity + qol.survivalFundamentals.waterSecurity +
+                     qol.survivalFundamentals.thermalHabitability + qol.survivalFundamentals.shelterSecurity) / 4;
+const tier1Avg = (qol.materialAbundance + qol.energyAvailability + qol.physicalSafety) / 3;
+const tier2Avg = (qol.mentalHealth + qol.meaningAndPurpose + qol.socialConnection + qol.autonomy) / 4;
+const tier3Avg = (qol.politicalFreedom + qol.informationIntegrity + qol.communityStrength + qol.culturalVitality) / 4;
+const tier4Avg = (qol.healthcareQuality + qol.longevityGains + qol.diseasesBurden) / 3;
+const tier5Avg = (qol.ecosystemHealth + qol.climateStability + qol.pollutionLevel) / 3;
+const overallAvg = (survivalAvg + tier1Avg + tier2Avg + tier3Avg + tier4Avg + tier5Avg) / 6;
 
-console.log(`\n🎯 Average QoL: ${(avgQoL * 100).toFixed(1)}%`);
-console.log(`🌡️  Climate: ${result.finalState.climate.globalTempDelta > 2 ? '❌ FAILED' : '✅ STABLE'} (${result.finalState.climate.globalTempDelta.toFixed(2)}°C)`);
-console.log(`🦋 Biodiversity: ${result.finalState.ecology.extinctionRate > 0.5 ? '❌ COLLAPSED' : '✅ PRESERVED'}`);
-console.log(`👥 Population: ${result.finalState.population < 5e9 ? '⚠️  DECLINED' : '✅ SUSTAINED'}`);
+console.log(`\n🎯 QoL by Tier:`);
+console.log(`  Survival (Tier 0):     ${(survivalAvg * 100).toFixed(1)}%`);
+console.log(`  Basic Needs (Tier 1):  ${(tier1Avg * 100).toFixed(1)}%`);
+console.log(`  Psychological (Tier 2):${(tier2Avg * 100).toFixed(1)}%`);
+console.log(`  Social (Tier 3):       ${(tier3Avg * 100).toFixed(1)}%`);
+console.log(`  Health (Tier 4):       ${(tier4Avg * 100).toFixed(1)}%`);
+console.log(`  Environmental (Tier 5):${(tier5Avg * 100).toFixed(1)}%`);
+console.log(`  OVERALL AVERAGE:       ${(overallAvg * 100).toFixed(1)}%`);
+
+if (result.finalState.climate && state.climate) {
+  console.log(`\n🌡️  Climate: ${result.finalState.climate.globalTempDelta > 2 ? '❌ FAILED' : '✅ STABLE'} (${result.finalState.climate.globalTempDelta.toFixed(2)}°C, Δ = +${(result.finalState.climate.globalTempDelta - state.climate.globalTempDelta).toFixed(2)}°C)`);
+}
+if (result.finalState.ecology && state.ecology) {
+  console.log(`🦋 Biodiversity: ${result.finalState.ecology.extinctionRate > 0.5 ? '❌ COLLAPSED' : '✅ PRESERVED'} (${(result.finalState.ecology.extinctionRate * 100).toFixed(1)}%, Δ = +${((result.finalState.ecology.extinctionRate - state.ecology.extinctionRate) * 100).toFixed(1)}%)`);
+}
+console.log(`👥 Population: ${isNaN(result.finalState.population) ? '💀 NaN (CRASHED)' : result.finalState.population < 5e9 ? '⚠️  DECLINED' : '✅ SUSTAINED'} (${isNaN(result.finalState.population) ? 'NaN' : (result.finalState.population / 1e9).toFixed(2)}B)`);
 
 // Gap Analysis
 console.log('\n🔍 Coverage Gaps (Hypotheses):');
-if (avgQoL < 0.7) console.log('  ⚠️  QoL < 70% despite all tech - missing critical mechanisms?');
-if (result.finalState.climate.globalTempDelta > 2) console.log('  ⚠️  Climate unstable - tech insufficient or deployment timing wrong?');
-if (result.finalState.ecology.extinctionRate > 0.3) console.log('  ⚠️  Biodiversity loss continues - missing rewilding/restoration tech?');
-if (result.finalState.inequality.gini > 0.4) console.log('  ⚠️  Inequality persists - distribution mechanisms missing?');
+if (isNaN(result.finalState.population)) console.log(`  🚨 CRITICAL: Population = NaN - simulation experienced catastrophic failure`);
+if (survivalAvg < 0.9) console.log(`  ⚠️  Survival fundamentals at ${(survivalAvg * 100).toFixed(1)}% - critical gaps in food/water/shelter/thermal safety`);
+if (overallAvg < 0.7) console.log(`  ⚠️  Overall QoL ${(overallAvg * 100).toFixed(1)}% despite all tech - missing critical mechanisms?`);
+if (result.finalState.climate && state.climate && result.finalState.climate.globalTempDelta > state.climate.globalTempDelta + 0.5) console.log(`  ⚠️  Climate WORSENED by +${(result.finalState.climate.globalTempDelta - state.climate.globalTempDelta).toFixed(2)}°C - tech deployed too late or insufficient?`);
+if (result.finalState.ecology && state.ecology && result.finalState.ecology.extinctionRate > state.ecology.extinctionRate + 0.1) console.log(`  ⚠️  Biodiversity loss ACCELERATED by +${((result.finalState.ecology.extinctionRate - state.ecology.extinctionRate) * 100).toFixed(1)}% - missing rewilding/restoration tech?`);
+if (result.finalState.inequality && result.finalState.inequality.gini > 0.4) console.log(`  ⚠️  Inequality persists (${result.finalState.inequality.gini.toFixed(3)}) - distribution mechanisms missing?`);
 
 console.log('\n✅ God mode test complete\n');
