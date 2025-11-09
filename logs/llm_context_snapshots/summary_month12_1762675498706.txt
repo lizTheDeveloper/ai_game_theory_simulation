@@ -1,0 +1,31 @@
+═══════════════════════════════════════════════════════
+SIMULATION STATE - MONTH 12
+═══════════════════════════════════════════════════════
+
+GLOBAL METRICS:
+  Quality of Life: 74.0%
+  Social Cohesion: NaN%
+  Sustainability: NaN%
+
+GOVERNMENT:
+  Trust in Government: NaN%
+  Trust in AI: NaN%
+
+AI AGENTS (20 total):
+
+  Example Agent: corporate_0
+    Alignment: 0.8375215698925199
+    Lifecycle: deployed_closed
+    Deployed: No
+    Capability: 3.000
+
+ENVIRONMENT:
+  Climate Anomaly: N/A°C
+  Biodiversity: NaN%
+
+ACTIVE CRISES: 0
+
+BREAKTHROUGH TECHNOLOGIES:
+  Deployed: 0/0
+
+═══════════════════════════════════════════════════════

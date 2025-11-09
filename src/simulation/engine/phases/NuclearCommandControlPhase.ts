@@ -19,7 +19,7 @@ export class NuclearCommandControlPhase implements SimulationPhase {
 
   // DEPENDENCIES (Nov 6, 2025): Requires AI capability and governance state
   readonly dependencies = [
-    'governance-quality',        // Order 10.0: Government capability to implement safeguards
+    'governance-system',        // Order 10.0: Government capability to implement safeguards
   ];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
