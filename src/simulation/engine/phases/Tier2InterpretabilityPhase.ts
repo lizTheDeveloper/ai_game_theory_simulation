@@ -27,7 +27,7 @@ import type {
   PhaseContext,
   RNGFunction
 } from '@/types/game';
-import { assertStateProperty, assertFinite, assertAICapability, assertProbability } from '@/simulation/utils/assertions';
+import { assertStateProperty, assertFinite, assertAICapability, assertAIAggregateCapability, assertProbability } from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class Tier2InterpretabilityPhase implements SimulationPhase {
@@ -60,15 +60,15 @@ export class Tier2InterpretabilityPhase implements SimulationPhase {
         assertFinite(avgCapability, {
           location: 'Tier2InterpretabilityPhase.execute',
           valueName: 'avgCapability',
-          month: state.currentMonth,
-          additionalInfo: { agentCount: state.aiAgents.length }
+          
+          
         });
 
-        assertAICapability(avgCapability, { allowContinuous: true,
+        assertAIAggregateCapability(avgCapability, {
           location: 'Tier2InterpretabilityPhase.execute',
           valueName: 'avgCapability',
-          month: state.currentMonth,
-          additionalInfo: { agentCount: state.aiAgents.length }
+          
+          
         });
       }
 

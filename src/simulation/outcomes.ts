@@ -10,6 +10,7 @@
  */
 
 import { GameState, OutcomeMetrics, OutcomeType, GoldenAgeState } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 import { calculateQualityOfLife } from './qualityOfLife';
 import { getTrustInAI } from './socialCohesion';
 import {
@@ -64,8 +65,13 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
   const avgAlignment = calculateAverageAlignment(state.aiAgents);
   const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
 
+  // BIFURCATION INTEGRATION (Nov 8, 2025): Regime influences outcome trajectories
+  // Research: Scheffer et al. (2024) - regime shifts lock in outcomes
+  const bifState = state.bifurcationState;
+  const currentRegime = bifState?.currentRegime || 'status-quo';
+
   // Dystopia conditions: high control, low quality of life, low trust
-  const dystopiaScore = Math.max(0, 
+  let dystopiaScore = Math.max(0,
     (effectiveControl > 0.8 ? 0.4 : 0) +
     (qualityOfLife < 0.3 ? 0.3 : 0) +
     (trustInAI < 0.3 ? 0.3 : 0)
@@ -73,7 +79,7 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
 
   // Extinction conditions: uncontrolled powerful AI with recursive improvement, low alignment
   // Updated thresholds to match new balance mechanics (recursive improvement at 1.5+)
-  const extinctionScore = Math.max(0,
+  let extinctionScore = Math.max(0,
     // Capability risk: Scaled to match recursive improvement thresholds
     (totalAICapability > 3.0 ? 0.5 : totalAICapability > 2.0 ? 0.4 : totalAICapability > 1.5 ? 0.2 : 0) +
     // Control risk: Loss of control is critical
@@ -83,13 +89,62 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
   );
 
   // Utopia conditions: high quality of life, high trust, high alignment, controlled AI
-  const utopiaScore = Math.max(0,
+  let utopiaScore = Math.max(0,
     (qualityOfLife > 0.7 ? 0.3 : 0) +
     (trustInAI > 0.7 ? 0.2 : 0) +
     (avgAlignment > 0.7 ? 0.2 : 0) +
     // Bonus for successfully managing powerful AI
     (totalAICapability > 1.0 && avgAlignment > 0.6 && effectiveControl > 0.3 ? 0.3 : 0)
   );
+
+  // BIFURCATION REGIME ADJUSTMENTS
+  // Regime shifts lock in trajectories (research: Scheffer et al. 2024)
+  switch (currentRegime) {
+    case 'ecological-collapse':
+      // Ecological collapse → increased extinction risk (ecosystem failure)
+      extinctionScore += 0.3;
+      dystopiaScore += 0.2;
+      utopiaScore *= 0.5; // Hard to achieve utopia during environmental collapse
+      break;
+
+    case 'social-breakdown':
+      // Social breakdown → increased dystopia risk (authoritarianism, conflict)
+      dystopiaScore += 0.4;
+      utopiaScore *= 0.6; // Social cohesion required for utopia
+      break;
+
+    case 'economic-collapse':
+      // Economic collapse → increased dystopia risk (inequality, instability)
+      dystopiaScore += 0.3;
+      extinctionScore += 0.1; // Resource wars possible
+      utopiaScore *= 0.7;
+      break;
+
+    case 'state-failure':
+      // State failure → increased dystopia risk (no coordination)
+      dystopiaScore += 0.35;
+      extinctionScore += 0.15; // Can't coordinate AI safety
+      utopiaScore *= 0.5;
+      break;
+
+    case 'flourishing':
+      // Flourishing regime → increased utopia probability
+      utopiaScore += 0.4;
+      dystopiaScore *= 0.5;
+      extinctionScore *= 0.3;
+      break;
+
+    case 'sustainable':
+      // Sustainable regime → balanced outcomes, slight utopia boost
+      utopiaScore += 0.2;
+      extinctionScore *= 0.7;
+      break;
+
+    case 'status-quo':
+    default:
+      // No regime adjustment
+      break;
+  }
 
   // Normalize probabilities (add small baseline to prevent division by zero)
   const total = utopiaScore + dystopiaScore + extinctionScore + 0.1;

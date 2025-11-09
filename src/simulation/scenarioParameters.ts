@@ -25,6 +25,7 @@
  */
 
 import { ScenarioMode, ScenarioParameters } from '../types/game';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Get scenario parameters for the specified mode

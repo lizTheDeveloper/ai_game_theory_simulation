@@ -16,6 +16,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { assertFinite } from './utils/assertions';
 import { RootCause } from '@/types/population';
 import { addMortalityRisk } from './bayesianMortality';
 

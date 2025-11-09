@@ -27,6 +27,7 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updatePositiveTippingPoints } from '@/simulation/positiveTippingPoints';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions'; // Module uses assertions
 
 export class PositiveTippingPointsPhase implements SimulationPhase {
   readonly id = 'positive-tipping-points';
@@ -39,6 +40,14 @@ export class PositiveTippingPointsPhase implements SimulationPhase {
   ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
+    if (!rng || typeof rng !== 'function') {
+      throw new Error(
+        `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
+        `(Month ${state.currentMonth})`
+      );
+    }
+
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
 

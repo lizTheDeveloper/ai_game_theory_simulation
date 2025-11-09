@@ -16,6 +16,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 
 import { updateOrganizationViability } from '../../organizations';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions'; // Module uses assertions
 
 export class OrganizationViabilityPhase implements SimulationPhase {
   readonly id = 'organization-viability';
@@ -24,6 +25,14 @@ export class OrganizationViabilityPhase implements SimulationPhase {
   dependencies = ['organization-turns'];
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
+    // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
+    if (!rng || typeof rng !== 'function') {
+      throw new Error(
+        `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
+        `(Month ${state.currentMonth})`
+      );
+    }
+
     // TIER 1.7.3: Check if organizations can survive based on country health
     setDeterministicRng(rng);
     // P2.4 FIX: Pass RNG for deterministic bankruptcy checks

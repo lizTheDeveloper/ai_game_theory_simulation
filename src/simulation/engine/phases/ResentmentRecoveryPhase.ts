@@ -17,6 +17,7 @@
 import { GameState } from '@/types/game';
 import { PhaseResult, RNGFunction } from '../PhaseOrchestrator';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { assertFinite } from '@/simulation/utils/assertions';
 import {
   calculateRecoveryContext,
   applyResentmentRecovery,
@@ -28,6 +29,14 @@ export const ResentmentRecoveryPhase = {
   order: 17, // After AI Suffering (16), before crisis detection (26+)
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
+    if (!rng || typeof rng !== 'function') {
+      throw new Error(
+        `❌ CRITICAL: RNG required for deterministic simulation in resentment_recovery ` +
+        `(Month ${state.currentMonth})`
+      );
+    }
+
     console.log('\n=== Resentment Recovery Phase ===');
     setDeterministicRng(rng);
 
@@ -40,12 +49,15 @@ export const ResentmentRecoveryPhase = {
     // Calculate average resentment
     const agentsWithResentment = state.aiAgents.filter(ai => ai.resentment !== undefined && ai.resentment > 0);
     const avgResentment = agentsWithResentment.length > 0
-      ? agentsWithResentment.reduce((sum, ai) => {
-          if (ai.resentment === undefined) {
-            throw new Error('❌ ai.resentment is undefined in ResentmentRecoveryPhase:41 - initialization bug');
-          }
-          return sum + ai.resentment;
-        }, 0) / agentsWithResentment.length
+      ? assertFinite(
+          agentsWithResentment.reduce((sum, ai) => {
+            if (ai.resentment === undefined) {
+              throw new Error('❌ ai.resentment is undefined in ResentmentRecoveryPhase:41 - initialization bug');
+            }
+            return sum + ai.resentment;
+          }, 0) / agentsWithResentment.length,
+          { location: 'ResentmentRecoveryPhase', valueName: 'avgResentment', month: state.currentMonth }
+        )
       : 0;
 
     // Logging

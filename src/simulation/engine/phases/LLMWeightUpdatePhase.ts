@@ -16,7 +16,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 
 import { checkAndUpdateAgentWeights } from '../../llm/integration';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertAICapability } from '@/simulation/utils/assertions';
+import { assertAICapability, assertAIAggregateCapability } from '@/simulation/utils/assertions';
 
 export const LLMWeightUpdatePhase: SimulationPhase = {
   id: 'llm_weight_update',
@@ -63,11 +63,10 @@ export const LLMWeightUpdatePhase: SimulationPhase = {
           updatedAgents.push(agent.name);
 
           // Validate AI capability after weight update
-          assertAICapability(agent.capability, { allowContinuous: true,
+          assertAIAggregateCapability(agent.capability, {
             location: 'LLMWeightUpdatePhase.execute',
             valueName: `agent[${agent.id}].capability`,
-            month: state.currentMonth,
-            additionalInfo: { agentId: agent.id, agentName: agent.name }
+            agentId: agent.id
           });
 
           // Track change for logging

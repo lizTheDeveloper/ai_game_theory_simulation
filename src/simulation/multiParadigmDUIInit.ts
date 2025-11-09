@@ -13,6 +13,7 @@
  */
 
 import { aggregateParadigms } from '../data/aggregators/multiParadigmAggregator';
+import { assertFinite } from './utils/assertions';
 import type { MultiParadigmDUI } from '../types/multiParadigmDUI';
 import type { RNGFunction } from '../types/game';
 

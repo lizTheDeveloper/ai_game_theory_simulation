@@ -100,8 +100,15 @@ function updateIronFertilization(state: GameState, tech: IronFertilizationState)
   const resources = state.resourceEconomy;
   const ocean = resources.ocean;
   const avgAI = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
-  
+    assertFinite(
+      state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length,
+      {
+        location: 'updateIronFertilization',
+        valueName: 'avgAICapability',
+        additionalInfo: { agentCount: state.aiAgents.length }
+      }
+    ) : 0;
+
   if (tech.deploymentLevel <= 0) return;
   
   // Track active time
@@ -187,14 +194,26 @@ function updateOceanAlkalinity(state: GameState, tech: OceanAlkalinityState): vo
   const resources = state.resourceEconomy;
   const ocean = resources.ocean;
   const avgAI = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
-  
+    assertFinite(
+      state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length,
+      {
+        location: 'updateOceanAlkalinity',
+        valueName: 'avgAICapability',
+        additionalInfo: { agentCount: state.aiAgents.length }
+      }
+    ) : 0;
+
   if (tech.deploymentLevel <= 0) return;
-  
+
   tech.monthsActive++;
-  
+
   // Deployment quality (need 2.5+ for safe deployment)
-  tech.deploymentQuality = Math.min(1.0, avgAI / 2.5);
+  tech.deploymentQuality = assertProbability(Math.min(1.0, avgAI / 2.5), {
+    location: 'updateOceanAlkalinity',
+    valueName: 'deploymentQuality',
+    month: state.currentMonth,
+    additionalInfo: { avgAI }
+  });
   
   const qualityFactor = tech.deploymentQuality;
   const deploymentFactor = tech.deploymentLevel;
@@ -249,14 +268,26 @@ function updateArtificialUpwelling(state: GameState, tech: ArtificialUpwellingSt
   const resources = state.resourceEconomy;
   const ocean = resources.ocean;
   const avgAI = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
-  
+    assertFinite(
+      state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length,
+      {
+        location: 'updateArtificialUpwelling',
+        valueName: 'avgAICapability',
+        additionalInfo: { agentCount: state.aiAgents.length }
+      }
+    ) : 0;
+
   if (tech.deploymentLevel <= 0) return;
-  
+
   tech.monthsActive++;
-  
+
   // Deployment quality (need 3.0+ for optimal, but safer than others)
-  tech.deploymentQuality = Math.min(1.0, avgAI / 3.0);
+  tech.deploymentQuality = assertProbability(Math.min(1.0, avgAI / 3.0), {
+    location: 'updateArtificialUpwelling',
+    valueName: 'deploymentQuality',
+    month: state.currentMonth,
+    additionalInfo: { avgAI }
+  });
   
   const qualityFactor = Math.max(0.5, tech.deploymentQuality); // Minimum 50% quality
   const deploymentFactor = tech.deploymentLevel;
@@ -334,18 +365,42 @@ function updateBioengineeredCleaners(state: GameState, tech: BioengineeredCleane
   const resources = state.resourceEconomy;
   const ocean = resources.ocean;
   const avgAI = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
+    assertFinite(
+      state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length,
+      {
+        location: 'updateBioengineeredCleaners',
+        valueName: 'avgAICapability',
+        additionalInfo: { agentCount: state.aiAgents.length }
+      }
+    ) : 0;
   const avgAlignment = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length : 0;
-  
+    assertProbability(
+      state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length,
+      {
+        location: 'updateBioengineeredCleaners',
+        valueName: 'avgAIAlignment',
+        additionalInfo: { agentCount: state.aiAgents.length }
+      }
+    ) : 0;
+
   if (tech.deploymentLevel <= 0) return;
-  
+
   tech.monthsActive++;
-  
+
   // Deployment quality depends on AI capability AND alignment (need 4.0+ AND 0.7+)
-  const capabilityQuality = Math.min(1.0, avgAI / 4.0);
+  const capabilityQuality = assertProbability(Math.min(1.0, avgAI / 4.0), {
+    location: 'updateBioengineeredCleaners',
+    valueName: 'capabilityQuality',
+    month: state.currentMonth,
+    additionalInfo: { avgAI }
+  });
   const alignmentQuality = avgAlignment;
-  tech.deploymentQuality = capabilityQuality * alignmentQuality;
+  tech.deploymentQuality = assertProbability(capabilityQuality * alignmentQuality, {
+    location: 'updateBioengineeredCleaners',
+    valueName: 'deploymentQuality',
+    month: state.currentMonth,
+    additionalInfo: { capabilityQuality, alignmentQuality }
+  });
   
   const qualityFactor = tech.deploymentQuality;
   const deploymentFactor = tech.deploymentLevel;

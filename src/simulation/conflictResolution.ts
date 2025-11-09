@@ -12,6 +12,7 @@
  */
 
 import type { GameState } from '../types/game';
+import { assertFinite } from './utils/assertions';
 import { clamp } from './utils';
 import { getTechDeploymentSafe } from './techTree/helpers';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
@@ -203,8 +204,18 @@ function updateCyberDefense(peace: ConflictResolutionState, state: GameState): v
     aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / aiAgents.length : 0;
   
   // Government investment in cyber defense
-  const physicalResearch = gov.researchInvestments.physical || 0;
-  const digitalResearch = gov.researchInvestments.digital || 0;
+  // FIX (Nov 8, 2025): Remove defensive fallbacks - physical/digital are required fields
+  // If undefined/NaN, that's an initialization bug that should crash, not produce wrong results
+  const physicalResearch = gov.researchInvestments.physical;
+  const digitalResearch = gov.researchInvestments.digital;
+  if (!isFinite(physicalResearch) || !isFinite(digitalResearch)) {
+    throw new Error(
+      `❌ Invalid research investments in updateCyberConflictDynamics\n` +
+      `   physical: ${physicalResearch}\n` +
+      `   digital: ${digitalResearch}\n` +
+      `   Expected: finite numbers (required fields in ResearchInvestments)`
+    );
+  }
   const cyberInvestment = physicalResearch * 0.3 + digitalResearch * 0.5;
   
   // Defense strength grows with AI capability + investment

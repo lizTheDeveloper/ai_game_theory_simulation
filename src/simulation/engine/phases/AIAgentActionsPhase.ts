@@ -17,7 +17,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertAICapability, assertDefined, assertInRange } from '@/simulation/utils/assertions';
+import { assertAICapability, assertAIAggregateCapability, assertDefined, assertInRange } from '@/simulation/utils/assertions';
 
 export class AIAgentActionsPhase implements SimulationPhase {
   readonly id = 'ai-agent-actions';
@@ -46,13 +46,12 @@ export class AIAgentActionsPhase implements SimulationPhase {
 
     // Validate AI agent capabilities after actions (CRITICAL: prevent NaN propagation)
     for (const agent of state.aiAgents || []) {
-      // Validate aggregate capability (continuous 0-5, NOT discrete levels)
-      // Individual dimension capabilities are discrete, but aggregate is continuous weighted sum
-      assertInRange(agent.capability, 0, 5, {
+      // Validate aggregate capability (continuous, can be fractional)
+      // Individual dimension capabilities are discrete, but aggregate is continuous
+      assertAIAggregateCapability(agent.capability, {
         location: 'AIAgentActionsPhase.execute',
         valueName: `agent[${agent.id}].capability`,
-        month: state.currentMonth,
-        additionalInfo: { agentId: agent.id }
+        agentId: agent.id
       });
     }
 

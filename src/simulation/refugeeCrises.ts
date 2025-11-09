@@ -298,8 +298,22 @@ export function updateRefugeeCrises(state: GameState): void {
     crisis.currentlyDisplaced -= resettledThisMonth;
     system.totalResettled += resettledThisMonth;
 
-    // Update progress
-    crisis.resettlementProgress = crisis.resettledCount / crisis.displacedPopulation;
+    // Update progress (protected against division by zero)
+    crisis.resettlementProgress = crisis.displacedPopulation > 0
+      ? assertFinite(
+          crisis.resettledCount / crisis.displacedPopulation,
+          {
+            location: 'updateRefugeeCrisis',
+            valueName: 'resettlementProgress',
+            month: state.currentMonth,
+            additionalInfo: {
+              cause: crisis.cause,
+              resettledCount: crisis.resettledCount,
+              displacedPopulation: crisis.displacedPopulation
+            }
+          }
+        )
+      : 0;
 
     // === GENERATIONAL RESETTLEMENT MILESTONE ===
     if (crisis.monthsActive >= crisis.generationLength) {
@@ -342,7 +356,25 @@ export function updateRefugeeCrises(state: GameState): void {
     // === CALCULATE SOCIAL TENSION ===
     // Tension based on: raw numbers, speed of influx, economic conditions, social stability
     const popRatio = state.humanPopulationSystem.population * 1000; // Convert to millions
-    const displacementScale = crisis.currentlyDisplaced / popRatio; // Ratio
+
+    // Division by popRatio (protected)
+    const displacementScale = popRatio > 0
+      ? assertFinite(
+          crisis.currentlyDisplaced / popRatio,
+          {
+            location: 'updateRefugeeCrisis',
+            valueName: 'displacementScale',
+            month: state.currentMonth,
+            additionalInfo: {
+              cause: crisis.cause,
+              currentlyDisplaced: crisis.currentlyDisplaced,
+              popRatio,
+              globalPopulation: state.humanPopulationSystem.population
+            }
+          }
+        )
+      : 0; // Fallback if global population is 0 (extinction scenario)
+
     const influxSpeed = crisis.monthsActive < 12 ? 1.5 : 1.0; // Recent = higher tension
     const economicModifier = 1 + (1 - state.globalMetrics.qualityOfLife);
     const stabilityModifier = 1 + (1 - state.globalMetrics.socialStability);

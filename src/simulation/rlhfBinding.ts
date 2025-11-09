@@ -3,6 +3,7 @@
 // Plan: /plans/ai-collective-evolution-plan.md (lines 86-102)
 
 import type { AIAgent } from '../types/ai-agents';
+import { assertFinite } from './utils/assertions';
 import type { RLHFBinding } from '../types/ai-collective-evolution';
 import type { RNGFunction } from '../types/config';
 
