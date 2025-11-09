@@ -68,7 +68,8 @@ export class Tier2CrisisAnticipationPhase implements SimulationPhase {
         });
       }
 
-      const governmentInvestment = state.government.alignmentResearchInvestment;
+      // Normalize alignmentResearchInvestment from [0,10] to [0,1] for probability checks
+      const governmentInvestment = state.government.alignmentResearchInvestment / 10;
 
       // Validate government investment is a valid probability
       assertProbability(governmentInvestment, {

@@ -330,9 +330,9 @@ export function calculateAMRMortalityRate(
   // Research: MSF 2024 shows 2-5× transmission in refugee camps
   // Formula: 1.0 + (refugeeDensity × 2.0), capped at 3.0× for extreme crises
   // Example: 10% displaced → 1.2× (20% increase), 50% displaced → 2.0× (100% increase)
-  const refugeeAmplification = assertInRange(
-    1.0 + (refugeeDensity * 2.0),
-    1.0, 3.0,
+  // CRITICAL: Clamp BEFORE assertion - refugeeDensity can exceed 1.0 in extreme scenarios
+  const refugeeAmplification = assertFinite(
+    Math.min(3.0, Math.max(1.0, 1.0 + (refugeeDensity * 2.0))),
     {
       location: 'calculateAMRMortalityRate',
       valueName: 'refugeeAmplification',
