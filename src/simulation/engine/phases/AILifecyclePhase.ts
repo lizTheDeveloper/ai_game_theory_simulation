@@ -28,7 +28,7 @@ export class AILifecyclePhase implements SimulationPhase {
   readonly dependencies = [
     'compute-growth',          // Order 1.0: Compute availability
     'compute-allocation',      // Order 3.0: Compute distributed to AIs
-    'alignment_dynamics',      // Order 3.5: Alignment state before lifecycle
+    'ai_alignment_evolution',  // Order 3.5: Alignment state before lifecycle (CONSOLIDATED Nov 2025)
   ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
