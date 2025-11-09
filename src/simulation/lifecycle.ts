@@ -292,17 +292,23 @@ function createNewAI(state: GameState, index: number, rng: () => number): AIAgen
   // New AIs start with access to known techniques (rising capability floor)
   const { getCapabilityFloorForNewAI } = require('./technologyDiffusion');
   const capabilityFloor = getCapabilityFloorForNewAI(state);
-  
-  // Set each dimension to MAX(current, floor)
+
+  // CRITICAL FIX (Nov 8, 2025): Round all capability assignments to integers [0-5]
+  // Bug: Even with discrete floor, Math.max could propagate any continuous values
+  // Defensive: Always round after applying floor
+  const toCapabilityLevel = (value: number): number => {
+    return Math.max(0, Math.min(5, Math.round(value)));
+  };
+
+  // Set each dimension to MAX(current, floor), then round to discrete level
   // This ensures new AIs never start below the ecosystem capability floor
-  // Defensive rounding: Ensure final values are integers (capabilities are discrete levels)
-  agent.capabilityProfile.physical = Math.round(Math.max(agent.capabilityProfile.physical, capabilityFloor.physical));
-  agent.capabilityProfile.digital = Math.round(Math.max(agent.capabilityProfile.digital, capabilityFloor.digital));
-  agent.capabilityProfile.cognitive = Math.round(Math.max(agent.capabilityProfile.cognitive, capabilityFloor.cognitive));
-  agent.capabilityProfile.social = Math.round(Math.max(agent.capabilityProfile.social, capabilityFloor.social));
-  agent.capabilityProfile.economic = Math.round(Math.max(agent.capabilityProfile.economic, capabilityFloor.economic));
-  agent.capabilityProfile.selfImprovement = Math.round(Math.max(agent.capabilityProfile.selfImprovement, capabilityFloor.selfImprovement));
-  
+  agent.capabilityProfile.physical = toCapabilityLevel(Math.max(agent.capabilityProfile.physical, capabilityFloor.physical));
+  agent.capabilityProfile.digital = toCapabilityLevel(Math.max(agent.capabilityProfile.digital, capabilityFloor.digital));
+  agent.capabilityProfile.cognitive = toCapabilityLevel(Math.max(agent.capabilityProfile.cognitive, capabilityFloor.cognitive));
+  agent.capabilityProfile.social = toCapabilityLevel(Math.max(agent.capabilityProfile.social, capabilityFloor.social));
+  agent.capabilityProfile.economic = toCapabilityLevel(Math.max(agent.capabilityProfile.economic, capabilityFloor.economic));
+  agent.capabilityProfile.selfImprovement = toCapabilityLevel(Math.max(agent.capabilityProfile.selfImprovement, capabilityFloor.selfImprovement));
+
   // Research dimensions (nested)
   // DETERMINISM FIX (Nov 5, 2025): Replace Object.keys() with explicit key ordering
   // Object.keys() iteration order is non-deterministic in V8, causing AI agent count divergence
@@ -318,8 +324,7 @@ function createNewAI(state: GameState, index: number, rng: () => number): AIAgen
     const floorCat = capabilityFloor.research[category];
 
     for (const key of researchSubdimensions[category]) {
-      // Defensive rounding: Ensure final values are integers (capabilities are discrete levels)
-      (agentCat[key] as number) = Math.round(Math.max(agentCat[key] as number, floorCat[key] as number));
+      (agentCat[key] as number) = toCapabilityLevel(Math.max(agentCat[key] as number, floorCat[key] as number));
     }
   }
   
