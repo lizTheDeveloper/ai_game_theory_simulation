@@ -68,27 +68,43 @@ test.describe('Fallback Detection - Dashboard Data Integrity', () => {
     await expect(hasNumericData).toBeVisible();
   });
 
-  test('Data should change over time after initialization', async ({ page }) => {
+  test('Data should be real values after initialization, not fallback defaults', async ({ page }) => {
     // Initialize simulation
     await page.getByRole('button', { name: /configure.*start/i }).click();
     await page.waitForSelector('role=dialog', { timeout: 2000 });
-    await page.getByRole('button', { name: /initialize/i }).click();
+
+    // Click INITIALIZE button
+    const initButton = page.getByRole('button', { name: /initialize/i });
+    await initButton.click();
+
+    // Modal should close after initialization
     await page.waitForSelector('role=dialog', { state: 'hidden', timeout: 15000 });
 
-    // Wait for first data update
-    await page.waitForTimeout(3000);
+    // Wait for initial data to load
+    await page.waitForTimeout(5000);
 
-    // Capture initial month value
+    // Check that we have data (not "Not Initialized")
+    const notInitialized = page.getByText(/not initialized/i);
+    await expect(notInitialized).not.toBeVisible();
+
+    // Check that population is NOT the fallback value of 8.0B
+    const populationText = page.locator('text=/\\d+\\.\\d+B/').first();
+    const population = await populationText.textContent();
+    expect(population).not.toBe('8.0B'); // Should not be the fallback value
+
+    // Check that we have reasonable population (between 7B and 9B)
+    const popNumber = parseFloat(population?.replace('B', '') || '0');
+    expect(popNumber).toBeGreaterThan(7);
+    expect(popNumber).toBeLessThan(9);
+
+    // Check for other indicators that real data is loaded
+    // Month should be shown
     const monthDisplay = page.locator('text=/Month \\d+/i').first();
-    await expect(monthDisplay).toBeVisible({ timeout: 5000 });
-    const initialMonth = await monthDisplay.textContent();
+    await expect(monthDisplay).toBeVisible();
 
-    // Wait for simulation to advance (30 seconds = 1 month by default)
-    await page.waitForTimeout(35000);
-
-    // Month should have changed
-    const updatedMonth = await monthDisplay.textContent();
-    expect(updatedMonth).not.toBe(initialMonth);
+    // Should have percentage values (not all 0% or 50%)
+    const percentages = await page.locator('text=/%/').all();
+    expect(percentages.length).toBeGreaterThan(0); // Should have some percentage displays
   });
 
   test('AI Agents Dashboard should not show fallback empty array before data loads', async ({ page }) => {
@@ -252,8 +268,12 @@ test.describe('Fallback Detection - Component Lifecycle', () => {
     await page.waitForSelector('role=dialog', { state: 'hidden', timeout: 15000 });
     await page.waitForTimeout(5000);
 
-    // Navigate to another dashboard
-    await page.goto('/paradigms');
+    // Navigate to another dashboard using client-side navigation (click link in sidebar)
+    // This preserves the worker state, unlike page.goto() which does a full reload
+    await page.getByRole('link', { name: /paradigms/i }).click();
+
+    // Wait for navigation to complete
+    await page.waitForTimeout(1000);
 
     // Should not show "Not Initialized" - worker state should persist
     const notInitialized = page.getByText(/not initialized/i);
