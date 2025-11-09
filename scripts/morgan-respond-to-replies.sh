@@ -27,7 +27,7 @@ echo "🤖 Invoking Claude Code as Morgan to respond..."
 # Invoke Claude Code as Morgan
 cd /Users/annhoward/src/superalignmenttoutopia
 
-claude --print \
+/Users/annhoward/.nvm/versions/node/v22.12.0/bin/claude --print \
     --dangerously-skip-permissions \
     --model sonnet \
     --output-format json \
