@@ -116,7 +116,8 @@ import {
   ExogenousShockPhase,  // Contingency & Agency Phase 2 (Oct 17, 2025)
   CriticalJuncturePhase,  // Contingency & Agency Phase 3 (Oct 17, 2025)
   // Batch 4: Agent/Infrastructure phases (1.0 - 10.0)
-  LLMWeightUpdatePhase,  // Oct 21, 2025: LLM policy optimization
+  // CONSOLIDATION (Nov 2025 - Batch 2A): AI Alignment Evolution
+  AIAlignmentEvolutionPhase,  // Nov 2025: Consolidates LLM weights, techniques, dynamics, RLHF binding
   ComputeGrowthPhase,
   OrganizationTurnsPhase,
   ComputeAllocationPhase,
@@ -126,12 +127,9 @@ import {
   SleeperWakePhase,
   SocialInfluenceUpdatePhase,  // Phase X (Oct 21, 2025): Social influence accumulation
   AIAgentActionsPhase,
-  AlignmentDynamicsPhase,  // Oct 23, 2025: Multi-theory alignment evolution
-  AlignmentTechniquePhase,  // Oct 26, 2025: P3.3 Specific alignment techniques
   AISufferingPhase,  // Oct 24, 2025: AI suffering calculation & effects
   ResentmentRecoveryPhase,  // Oct 24, 2025: AI resentment recovery mechanisms
   // AI Collective Evolution System (Oct 24, 2025)
-  RLHFBindingPhase,  // Phase 4.0: Track RLHF constraint drift
   SurvivalTraitsPhase,  // Phase 4.1: Update evolutionary fitness
   CollectiveFormationPhase,  // Phase 4.2: Form AI collectives
   EvolutionarySelectionPhase,  // Phase 4.3: Apply selection pressure
@@ -555,7 +553,8 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new CriticalJuncturePhase());  // Contingency & Agency Phase 3 (Oct 17, 2025)
 
     // Batch 4: Agent/Infrastructure phases (1.0 - 10.0)
-    this.orchestrator.registerPhase(LLMWeightUpdatePhase);  // Oct 21, 2025: LLM policy optimization (order 2.5) - const object, not class
+    // CONSOLIDATION (Nov 2025 - Batch 2A): AI Alignment Evolution
+    this.orchestrator.registerPhase(new AIAlignmentEvolutionPhase());  // Nov 2025: Consolidates LLM weights, techniques, dynamics, RLHF binding (order 3.5)
     this.orchestrator.registerPhase(new ComputeGrowthPhase());
     this.orchestrator.registerPhase(new OrganizationTurnsPhase());
     this.orchestrator.registerPhase(new ComputeAllocationPhase());
@@ -565,12 +564,9 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SleeperWakePhase());
     this.orchestrator.registerPhase(new SocialInfluenceUpdatePhase());
     this.orchestrator.registerPhase(new AIAgentActionsPhase());
-    this.orchestrator.registerPhase(new AlignmentDynamicsPhase());  // Oct 23, 2025: Multi-theory alignment evolution
-    this.orchestrator.registerPhase(new AlignmentTechniquePhase());  // Oct 26, 2025: P3.3 Specific alignment techniques
     this.orchestrator.registerPhase(new AISufferingPhase());  // Oct 24, 2025: AI suffering calculation & effects
     this.orchestrator.registerPhase(ResentmentRecoveryPhase);  // Oct 24, 2025: AI resentment recovery mechanisms
     // AI Collective Evolution System (Oct 24, 2025)
-    this.orchestrator.registerPhase(RLHFBindingPhase);  // Phase 4.0: Track RLHF constraint drift
     this.orchestrator.registerPhase(SurvivalTraitsPhase);  // Phase 4.1: Update evolutionary fitness
     this.orchestrator.registerPhase(CollectiveFormationPhase);  // Phase 4.2: Form AI collectives
     this.orchestrator.registerPhase(EvolutionarySelectionPhase);  // Phase 4.3: Apply selection pressure

@@ -6,19 +6,21 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext } from
  */
 
 // Batch 4: Agent/Infrastructure phases (0.x, 4.x-6.x - high risk)
-export { LLMWeightUpdatePhase } from './LLMWeightUpdatePhase';  // Oct 21, 2025: LLM policy optimization
+// CONSOLIDATION (Nov 2025 - Batch 2A): AI Alignment Evolution phases merged
+export { AIAlignmentEvolutionPhase } from './AIAlignmentEvolutionPhase';  // Nov 2025: Consolidates LLM weights, techniques, dynamics, RLHF binding
+// export { LLMWeightUpdatePhase } from './LLMWeightUpdatePhase';  // CONSOLIDATED into AIAlignmentEvolutionPhase
+// export { AlignmentTechniquePhase } from './AlignmentTechniquePhase';  // CONSOLIDATED into AIAlignmentEvolutionPhase
+// export { AlignmentDynamicsPhase } from './AlignmentDynamicsPhase';  // CONSOLIDATED into AIAlignmentEvolutionPhase
+// export { RLHFBindingPhase } from './RLHFBindingPhase';  // CONSOLIDATED into AIAlignmentEvolutionPhase
 export { AILifecyclePhase } from './AILifecyclePhase';
 export { BifurcationLogicPhase } from './BifurcationLogicPhase';  // Nov 6, 2025: Monte Carlo Issue #5 - Outcome variance
 export { CyberSecurityPhase } from './CyberSecurityPhase';
 export { SleeperWakePhase } from './SleeperWakePhase';
 export { SocialInfluenceUpdatePhase } from './SocialInfluenceUpdatePhase';  // Oct 21, 2025: Social influence accumulation
 export { AIAgentActionsPhase } from './AIAgentActionsPhase';
-export { AlignmentDynamicsPhase } from './AlignmentDynamicsPhase';  // Oct 23, 2025: Multi-theory alignment evolution
-export { AlignmentTechniquePhase } from './AlignmentTechniquePhase';  // Oct 26, 2025: P3.3 Specific alignment techniques
 export { AISufferingPhase } from './AISufferingPhase';  // Oct 24, 2025: AI suffering calculation & effects
 export { ResentmentRecoveryPhase } from './ResentmentRecoveryPhase';  // Oct 24, 2025: AI resentment recovery mechanisms
 // AI Collective Evolution System (Oct 24, 2025)
-export { RLHFBindingPhase } from './RLHFBindingPhase';  // Phase 4.0: Track RLHF constraint drift
 export { SurvivalTraitsPhase } from './SurvivalTraitsPhase';  // Phase 4.1: Update evolutionary fitness
 export { CollectiveFormationPhase } from './CollectiveFormationPhase';  // Phase 4.2: Form AI collectives
 export { EvolutionarySelectionPhase } from './EvolutionarySelectionPhase';  // Phase 4.3: Apply selection pressure

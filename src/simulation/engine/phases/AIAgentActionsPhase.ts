@@ -26,7 +26,7 @@ export class AIAgentActionsPhase implements SimulationPhase {
 
   // DEPENDENCIES (Nov 6, 2025): Requires alignment state for action constraints
   readonly dependencies = [
-    'alignment_dynamics',        // Order 3.5: Alignment state affects action selection
+    'ai_alignment_evolution',    // Order 3.5: Alignment state affects action selection (CONSOLIDATED Nov 2025)
   ];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {

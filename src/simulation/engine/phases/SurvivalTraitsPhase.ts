@@ -156,6 +156,6 @@ export const SurvivalTraitsPhase = {
   id: 'survival_traits',
   name: 'Survival Traits',
   order: 4.1,
-  dependencies: ['ai-lifecycle', 'rlhf_binding'],
+  dependencies: ['ai-lifecycle', 'ai_alignment_evolution'],  // Nov 2025: rlhf_binding consolidated into ai_alignment_evolution
   execute: executeSurvivalTraitsPhase,
 };
