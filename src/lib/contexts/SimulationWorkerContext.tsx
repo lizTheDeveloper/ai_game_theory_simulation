@@ -52,6 +52,9 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
   // Use ref to ensure worker persists across re-renders
   const clientRef = useRef<SimulationWorkerClient | null>(null)
 
+  // Track initialization state with ref to avoid closure issues
+  const initializedRef = useRef(false)
+
   // Simulation state (actual month/day in the simulation)
   const [initialized, setInitialized] = useState(false)
   const [running, setRunning] = useState(false)
@@ -82,7 +85,8 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
         // Setup global listeners
         client.on('initialized', (snapshot: InitialStateSnapshot, startDate?: string) => {
           console.log('[WorkerContext] Worker initialized:', snapshot)
-          setInitialized(true)
+          // Don't set initialized=true here anymore
+          // We'll wait for the first update with actual data
           setSimulationMonth(snapshot.currentMonth)
           setScenario(snapshot.scenario)
 
@@ -95,6 +99,13 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
         })
 
         client.on('update', (delta: StateDelta, currentMonth?: number, currentDay?: number) => {
+          // If this is the first update and we're not initialized yet, set initialized now
+          if (!initializedRef.current && delta) {
+            console.log('[WorkerContext] First update received, setting initialized=true')
+            initializedRef.current = true
+            setInitialized(true)
+          }
+
           setLastUpdate(delta)
           // Always update simulation month from delta if present
           if (delta.currentMonth !== undefined) {
@@ -127,7 +138,8 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
 
           // Update state if snapshot provided (from resumeFromState)
           if (snapshot) {
-            setInitialized(true)
+            // Don't set initialized here - wait for the first update with data
+            // Just update the metadata
             setSimulationMonth(snapshot.currentMonth)
             setScenario(snapshot.scenario)
 
@@ -170,6 +182,10 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
       console.warn('[WorkerContext] Already initialized')
       return
     }
+
+    // Reset initialization tracking
+    initializedRef.current = false
+    setLastUpdate(null)
 
     setSeed(seedValue)
     setScenario(scenarioValue)
@@ -231,6 +247,10 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
       }
 
       console.log('[WorkerContext] Resuming from month:', stored.currentMonth)
+
+      // Reset initialization tracking
+      initializedRef.current = false
+      setLastUpdate(null)
 
       // Extract seed and scenario from simulationId (format: "{seed}_{scenario}")
       const [seedStr, ...scenarioParts] = simulationId.split('_')

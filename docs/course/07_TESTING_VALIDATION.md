@@ -17,6 +17,20 @@
 
 ---
 
+## Opening Principle
+
+> *"If a model makes you feel confident about outcomes, it is probably wrong. Good models are UNCOMFORTABLE. Reality contains opposed dynamics. Models should too."*
+>
+> — The Architect
+
+**Why testing matters:** Not to make you confident the simulation is correct, but to help you understand WHERE it might be wrong and HOW MUCH you should trust specific outcomes.
+
+This module teaches you to build systems that reveal their own uncertainties, not hide them.
+
+**Before you begin:** Read the [Hall of Failures](./HALL_OF_FAILURES.md) to understand why each testing pattern exists. Every pattern in this module emerged from a real disaster.
+
+---
+
 ## Section 00: The Big Picture
 
 ### The Problem: Research Simulations Need Different Testing

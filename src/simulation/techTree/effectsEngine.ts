@@ -864,20 +864,38 @@ function applyRegionalEffects(
         case 'freshwaterSupply':
           // Increase water supply in specific regions
           if (gameState.freshwaterSystem?.regions) {
-            const regionData = gameState.freshwaterSystem.regions[region];
-            if (regionData) {
-              regionData.availableWater *= (1 + value * 0.01);
-              // Reduce Day Zero risk
-              if (regionData.dayZeroMonthsUntil > 0) {
-                regionData.dayZeroMonthsUntil = assertFinite(Math.min(
-                  999,
-                  regionData.dayZeroMonthsUntil * (1 + value * 0.05)
-                ), {
-        location: 'applyRegionalEffects:freshwaterSupply',
-        valueName: 'dayZeroMonthsUntil',
-        month: gameState.currentMonth
-      });
+            const regionWater = gameState.freshwaterSystem.regions[region];
+            if (regionWater !== undefined) {
+              // regionData is a NUMBER [0,1], not an object - multiply directly
+              gameState.freshwaterSystem.regions[region] = assertFinite(
+                Math.min(1.0, regionWater * (1 + value * 0.01)),
+                {
+                  location: 'applyRegionalEffects:freshwaterSupply',
+                  valueName: `regions.${region}`,
+                  month: gameState.currentMonth,
+                  additionalInfo: { oldValue: regionWater, multiplier: (1 + value * 0.01) }
+                }
+              );
+
+              // Reduce Day Zero risk if active in this region
+              if (gameState.freshwaterSystem.dayZeroDrought.active &&
+                  gameState.freshwaterSystem.dayZeroDrought.region === region) {
+                const oldDuration = gameState.freshwaterSystem.dayZeroDrought.duration;
+                gameState.freshwaterSystem.dayZeroDrought.duration = assertFinite(
+                  Math.max(0, oldDuration - value * 0.5),
+                  {
+                    location: 'applyRegionalEffects:freshwaterSupply:dayZero',
+                    valueName: 'dayZeroDrought.duration',
+                    month: gameState.currentMonth,
+                    additionalInfo: { region, oldDuration, reduction: value * 0.5 }
+                  }
+                );
+                // If duration hits 0, deactivate drought
+                if (gameState.freshwaterSystem.dayZeroDrought.duration <= 0) {
+                  gameState.freshwaterSystem.dayZeroDrought.active = false;
+                }
               }
+
               // INTEGRATION FIX (Oct 29, 2025): Freshwater supply increase → freshwater recovery
               triggerBoundaryRecovery(gameState, 'freshwater_change');
             }
@@ -885,68 +903,118 @@ function applyRegionalEffects(
           break;
           
         case 'dayZeroRiskReduction':
-          // Directly reduce Day Zero risk
-          if (gameState.freshwaterSystem?.regions) {
-            const regionData = gameState.freshwaterSystem.regions[region];
-            if (regionData && regionData.dayZeroMonthsUntil > 0 && regionData.dayZeroMonthsUntil < 240) {
-              regionData.dayZeroMonthsUntil = assertFinite(Math.min(
-                999,
-                regionData.dayZeroMonthsUntil * (1 + value)
-              ), {
-        location: 'applyRegionalEffects:dayZeroRiskReduction',
-        valueName: 'dayZeroMonthsUntil',
-        month: gameState.currentMonth
-      });
+          // Directly reduce Day Zero risk (operates on dayZeroDrought.duration)
+          if (gameState.freshwaterSystem?.dayZeroDrought.active &&
+              gameState.freshwaterSystem.dayZeroDrought.region === region) {
+            const oldDuration = gameState.freshwaterSystem.dayZeroDrought.duration;
+            if (oldDuration > 0 && oldDuration < 240) {
+              gameState.freshwaterSystem.dayZeroDrought.duration = assertFinite(
+                Math.max(0, oldDuration - value * 2.0),
+                {
+                  location: 'applyRegionalEffects:dayZeroRiskReduction',
+                  valueName: 'dayZeroDrought.duration',
+                  month: gameState.currentMonth,
+                  additionalInfo: { region, oldDuration, reduction: value * 2.0 }
+                }
+              );
+              // If duration hits 0, deactivate drought
+              if (gameState.freshwaterSystem.dayZeroDrought.duration <= 0) {
+                gameState.freshwaterSystem.dayZeroDrought.active = false;
+              }
             }
           }
           break;
           
         case 'droughtResilience':
-          // Improve drought resilience
+          // Improve drought resilience (reduces Day Zero severity + increases regional water)
           if (gameState.freshwaterSystem?.regions) {
-            const regionData = gameState.freshwaterSystem.regions[region];
-            if (regionData) {
-              // FIX: Phase 2, Batch 1 (Oct 25, 2025) - Fail loudly if property missing
-              const current = assertStateProperty(
-                regionData,
-                'droughtResilience',
-                { location: 'applyRegionalEffects.droughtResilience', month: gameState.currentMonth }
+            const regionWater = gameState.freshwaterSystem.regions[region];
+            if (regionWater !== undefined) {
+              // Increase regional water availability
+              gameState.freshwaterSystem.regions[region] = assertFinite(
+                Math.min(1.0, regionWater + value * 0.01),
+                {
+                  location: 'applyRegionalEffects:droughtResilience',
+                  valueName: `regions.${region}`,
+                  month: gameState.currentMonth,
+                  additionalInfo: { oldValue: regionWater, increase: value * 0.01 }
+                }
               );
-              (regionData as any).droughtResilience = Math.min(1.0, current + value);
+
+              // Reduce Day Zero severity if active in this region
+              if (gameState.freshwaterSystem.dayZeroDrought.active &&
+                  gameState.freshwaterSystem.dayZeroDrought.region === region) {
+                const oldSeverity = gameState.freshwaterSystem.dayZeroDrought.severity;
+                gameState.freshwaterSystem.dayZeroDrought.severity = assertFinite(
+                  Math.max(0, oldSeverity - value * 0.05),
+                  {
+                    location: 'applyRegionalEffects:droughtResilience:severity',
+                    valueName: 'dayZeroDrought.severity',
+                    month: gameState.currentMonth,
+                    additionalInfo: { region, oldSeverity, reduction: value * 0.05 }
+                  }
+                );
+              }
             }
           }
           break;
 
         case 'aquiferProtection':
           // Protect groundwater levels via GRACE satellites + ML prediction
-          if (gameState.freshwaterSystem?.regions) {
-            const regionData = gameState.freshwaterSystem.regions[region];
-            if (regionData) {
-              // FIX: Phase 2, Batch 1 (Oct 25, 2025) - Fail loudly if property missing
-              const current = assertStateProperty(
-                regionData,
-                'aquiferDepletionRate',
-                { location: 'applyRegionalEffects.aquiferProtection', month: gameState.currentMonth }
-              );
-              (regionData as any).aquiferDepletionRate = Math.max(0, current - value * 0.01);
-            }
+          // (operates on global blueWater.depletionRate, not per-region)
+          if (gameState.freshwaterSystem?.blueWater) {
+            const oldDepletionRate = gameState.freshwaterSystem.blueWater.depletionRate;
+            gameState.freshwaterSystem.blueWater.depletionRate = assertFinite(
+              Math.max(0, oldDepletionRate - value * 0.01),
+              {
+                location: 'applyRegionalEffects:aquiferProtection',
+                valueName: 'blueWater.depletionRate',
+                month: gameState.currentMonth,
+                additionalInfo: { region, oldDepletionRate, reduction: value * 0.01 }
+              }
+            );
+
+            // Also increase aquifer recharge rate
+            const oldRecharge = gameState.freshwaterSystem.blueWater.aquiferRecharge;
+            gameState.freshwaterSystem.blueWater.aquiferRecharge = assertFinite(
+              Math.min(1.0, oldRecharge + value * 0.005),
+              {
+                location: 'applyRegionalEffects:aquiferProtection:recharge',
+                valueName: 'blueWater.aquiferRecharge',
+                month: gameState.currentMonth,
+                additionalInfo: { region, oldRecharge, increase: value * 0.005 }
+              }
+            );
           }
           break;
 
         case 'waterManagementBonus':
-          // Improve water management efficiency
+          // Improve water management efficiency (increases regional water availability)
           if (gameState.freshwaterSystem?.regions) {
-            const regionData = gameState.freshwaterSystem.regions[region];
-            if (regionData) {
+            const regionWater = gameState.freshwaterSystem.regions[region];
+            if (regionWater !== undefined) {
               // Increase available water through better management
-              regionData.availableWater *= (1 + value * 0.01);
-              // FIX: Phase 2, Batch 1 (Oct 25, 2025) - Fail loudly if property missing
-              const current = assertStateProperty(
-                regionData,
-                'waterUseEfficiency',
-                { location: 'applyRegionalEffects.waterManagementBonus', month: gameState.currentMonth }
+              gameState.freshwaterSystem.regions[region] = assertFinite(
+                Math.min(1.0, regionWater * (1 + value * 0.01)),
+                {
+                  location: 'applyRegionalEffects:waterManagementBonus',
+                  valueName: `regions.${region}`,
+                  month: gameState.currentMonth,
+                  additionalInfo: { oldValue: regionWater, multiplier: (1 + value * 0.01) }
+                }
               );
-              (regionData as any).waterUseEfficiency = Math.min(0.95, current + value * 0.01);
+
+              // Also reduce global water stress
+              const oldStress = gameState.freshwaterSystem.waterStress;
+              gameState.freshwaterSystem.waterStress = assertFinite(
+                Math.max(0, oldStress - value * 0.005),
+                {
+                  location: 'applyRegionalEffects:waterManagementBonus:stress',
+                  valueName: 'waterStress',
+                  month: gameState.currentMonth,
+                  additionalInfo: { region, oldStress, reduction: value * 0.005 }
+                }
+              );
             }
           }
           break;
