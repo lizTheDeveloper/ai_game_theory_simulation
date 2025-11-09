@@ -20,15 +20,19 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { migratedActions } from '@/simulation/government/actions';
+import { ActionResult } from '@/simulation/agents/types';
 
 export class PlayerDecisionPhase implements SimulationPhase {
   readonly id = 'player-decision';
   readonly name = 'Player Decision Processing';
   readonly order = 8.5;
+  private rng: RNGFunction | null = null;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
+    this.rng = rng; // Store RNG for use in handler methods
 
     // Initialize queue if not present
     if (!state.playerDecisions) {
@@ -77,6 +81,37 @@ export class PlayerDecisionPhase implements SimulationPhase {
    */
   private handlePolicyDecision(state: GameState, data: any, events: GameEvent[]): void {
     console.log(`  Policy Decision: ${JSON.stringify(data)}`);
+
+    // Handle government actions (new)
+    if (data.actionType === 'government' && data.actionId) {
+      // Find the action in the registry
+      const action = migratedActions.find(a => a.id === data.actionId);
+      if (action) {
+        console.log(`    Executing Government Action: ${action.name}`);
+
+        // Check if action can be executed
+        if (action.canExecute(state)) {
+          // Execute the action with deterministic RNG
+          if (!this.rng) {
+            throw new Error('RNG not initialized in PlayerDecisionPhase');
+          }
+          const result: ActionResult = action.execute(state, this.rng, 'player');
+
+          // Add events from action execution
+          if (result.events) {
+            events.push(...result.events);
+          }
+
+          console.log(`    ✅ Action executed successfully: ${action.name}`);
+          console.log(`    Effects:`, result.message || 'State updated');
+        } else {
+          console.log(`    ⚠️ Action cannot be executed: ${action.name} (requirements not met)`);
+        }
+      } else {
+        console.warn(`    ⚠️ Government action not found: ${data.actionId}`);
+      }
+      return;
+    }
 
     // Example: AI regulation control desire
     if (data.controlDesire !== undefined) {
