@@ -15,7 +15,7 @@ async function generateSimpleSnapshots(): Promise<void> {
 
   // Initialize simulation
   const rng = Math.random;
-  const state = createDefaultInitialState('historical');
+  const state = createDefaultInitialState(rng, 'historical');
   const orchestrator = new PhaseOrchestrator();
 
   console.log("Initializing simulation...");

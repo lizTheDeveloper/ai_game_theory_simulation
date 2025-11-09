@@ -18,8 +18,8 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 6, 2025): Must run after all systems update
   readonly dependencies = [
     'quality-of-life',         // Order 19.5: QoL baseline
-    'social-stability',        // Order 33.0: Social state
-    'environmental_feedback',  // Order 33.5: Environmental state
+    'social-stability-system', // Order 26.1: Social state (Batch 5: consolidated from social-stability)
+    'climate_system',          // Order 34.0: Environmental state (Batch 3: consolidated from environmental_feedback)
   ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {

@@ -10,7 +10,7 @@ export class SocialSafetyNetsPhase implements SimulationPhase {
   readonly name = 'Social Safety Nets Update';
   readonly id = 'social-safety-nets';
   readonly order = 15.6; // After UBI, continues social systems
-  dependencies = ['governance-quality'];
+  dependencies = ['governance-system'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

@@ -23,7 +23,7 @@ export class TechnologyDiffusionPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 6, 2025): Must run after tech tree and extinction progress
   readonly dependencies = [
     'tech-tree',           // Order 12.5: Technology breakthroughs
-    'extinction-progress', // Order 38.0: Extinction state before diffusion
+    'extinction-system',   // Order 37.0: Extinction state before diffusion (Batch 4, Nov 2025: consolidated from extinction-progress)
   ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {

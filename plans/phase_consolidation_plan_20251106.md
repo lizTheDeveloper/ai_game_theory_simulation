@@ -520,24 +520,41 @@ Order 250+:    6 phases (nuclear winter, radiation, org viability)
 
 ---
 
-#### Batch 6: Detection & Warning + Technology (LOW-MEDIUM RISK)
-**Priority:** LOW-MEDIUM (smaller reduction)
-**Phases:** 15 → 8 (-7 files)
-**Effort:** 1 day
-**Risk:** LOW-MEDIUM (warning systems have early detection patterns)
+#### Batch 6: Detection & Warning + Technology ❌ SKIPPED
+**Priority:** ~~LOW-MEDIUM~~ → **CANCELLED** (Nov 9, 2025)
+**Phases:** ~~15 → 8~~ → **NO CHANGE** (phases cannot be safely consolidated)
+**Effort:** ~~1 day~~ → 0 days (skipped)
+**Risk:** ~~LOW-MEDIUM~~ → **HIGH** if attempted (dependency breaks)
 
-**Merge Plan:**
-1. Create `CrisisDetectionSystemPhase.ts` (detection + points + juncture)
-2. Create `EarlyWarningSystemPhase.ts` (early warning + exogenous shock)
-3. Create `InformationSecurityPhase.ts` (info warfare + cybersecurity)
-4. Create `TechnologySystemPhase.ts` (tech tree + diffusion)
-5. Create `InnovationPhase.ts` (stochastic + ensemble)
+**STATUS: ❌ BATCH 6 SKIPPED**
 
-**Success Criteria:**
-- Crisis detection still fires at correct thresholds
-- Early warning precedes crisis events
-- Technology diffusion S-curves preserved
-- Innovation breakthroughs unchanged
+**Reason**: Detailed analysis (Nov 9, 2025) revealed execution order conflicts that make consolidation unsafe. See: `/logs/phase_consolidation_batch6_analysis_20251109.md`
+
+**Original Merge Plan (REJECTED):**
+1. ~~Create `CrisisDetectionSystemPhase.ts` (detection + points + juncture)~~
+   - ❌ Orders: 23.0, 29.0, 36.0 (13 orders apart, different dependencies)
+2. ~~Create `EarlyWarningSystemPhase.ts` (early warning + exogenous shock)~~
+   - ⚠️ Orders: 26.5, 27.5 (close but different purposes, minimal benefit)
+3. ~~Create `InformationSecurityPhase.ts` (info warfare + cybersecurity)~~
+   - ❌ Orders: 5.0, 22.0 (17 orders apart)
+4. ~~Create `TechnologySystemPhase.ts` (tech tree + diffusion)~~
+   - ❌ Orders: 12.5, 39.0 (26.5 orders apart! Tech must unlock before diffusing)
+5. ~~Create `InnovationPhase.ts` (stochastic + ensemble)~~
+   - ❌ Orders: 8.5, 36.0 (27.5 orders apart, completely different purposes)
+
+**Key Issues**:
+- **Execution order gaps**: 5.0 → 39.0 (34 order span across batch)
+- **Dependency breaks**: CrisisDetection depends on outcome-probabilities (35.0)
+- **Causality violations**: Can't diffuse tech before it's unlocked
+- **Thematic mismatch**: Crisis, tech, security, innovation - all different domains
+
+**Decision**: Phase separation is INTENTIONAL design for correct simulation behavior. Consolidating would require weeks of dependency rewriting for 7-file reduction. Not worth the risk.
+
+**Impact on Overall Plan**:
+- Batches 1-5: 66→34 phases (-32 files) ✅
+- Batch 6: SKIPPED (34 phases remain)
+- Batch 7: Proceed as planned
+- Final count: ~56 phases (still 35% reduction from original 88)
 
 ---
 
@@ -1030,17 +1047,21 @@ npx tsx -e "
 - [ ] Run Monte Carlo N=10
 - [ ] Commit with message: "Consolidate Social/Governance: 20→8 phases"
 
-### Batch 6: Detection/Tech (15→8)
-- [ ] Create CrisisDetectionSystemPhase.ts
-- [ ] Create EarlyWarningSystemPhase.ts
-- [ ] Create InformationSecurityPhase.ts
-- [ ] Create TechnologySystemPhase.ts
-- [ ] Create InnovationPhase.ts
-- [ ] Update registerAllPhases.ts
-- [ ] Run unit tests
-- [ ] Run determinism test
-- [ ] Run Monte Carlo N=10
-- [ ] Commit with message: "Consolidate Detection/Tech: 15→8 phases"
+### Batch 6: Detection/Tech ❌ SKIPPED (Nov 9, 2025)
+- [x] ~~Create CrisisDetectionSystemPhase.ts~~ **REJECTED** (orders 23/29/36 incompatible)
+- [x] ~~Create EarlyWarningSystemPhase.ts~~ **REJECTED** (minimal benefit, different purposes)
+- [x] ~~Create InformationSecurityPhase.ts~~ **REJECTED** (orders 5/22, 17 gap)
+- [x] ~~Create TechnologySystemPhase.ts~~ **REJECTED** (orders 12.5/39.0, 26.5 gap!)
+- [x] ~~Create InnovationPhase.ts~~ **REJECTED** (orders 8.5/36, different domains)
+- [x] Analysis completed: `/logs/phase_consolidation_batch6_analysis_20251109.md`
+- [x] Plan updated with SKIP decision
+- [-] ~~Update registerAllPhases.ts~~ N/A
+- [-] ~~Run unit tests~~ N/A
+- [-] ~~Run determinism test~~ N/A
+- [-] ~~Run Monte Carlo N=10~~ N/A
+- [-] ~~Commit with message: "Consolidate Detection/Tech: 15→8 phases"~~ SKIPPED
+
+**Outcome**: Batch 6 skipped due to execution order conflicts. Phases remain at 34 (from Batch 5).
 
 ### Batch 7: Final Cleanup (11→9)
 - [ ] Create EconomicSystemPhase.ts
