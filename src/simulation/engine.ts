@@ -91,15 +91,15 @@ import {
   ClimateJusticePhase,  // TIER 2.8 (Oct 14, 2025): Climate Justice & Environmental Debt
   OrganizationViabilityPhase,  // TIER 1.7.3 (Oct 13, 2025): Link orgs to country health
   CooperativeOwnershipPhase,  // Nov 5, 2025: Cooperative organization survival bonus
-  NuclearWinterPhase,  // TIER 1.7.4 (Oct 13, 2025): Long-term nuclear war effects
-  RadiationSystemPhase,  // TIER 1.7 (Oct 14, 2025): Radiation health effects (cancer, birth defects, contamination)
+  // NuclearWinterPhase removed - merged into NuclearCrisisPhase (Batch 4, Nov 9, 2025)
+  // RadiationSystemPhase removed - merged into NuclearCrisisPhase (Batch 4, Nov 9, 2025)
   WetBulbTemperaturePhase,  // Oct 17, 2025: Wet bulb temperature deadly heat events
   ExtremeWeatherEventsPhase,  // Oct 28, 2025: Storm intensity-frequency modeling (MDF framework)
   PlanetaryBoundariesPhase,
   PositiveTippingPointsPhase,  // Oct 17, 2025: Positive technology adoption cascades
   // TippingPointPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
-  FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
-  FoodSecurityDegradationPhase,  // Phase 1B Refinement (Oct 17, 2025): Crisis-accelerated food degradation
+  // FamineSystemPhase removed - merged into HumanSurvivalSystemPhase (Batch 4, Nov 9, 2025)
+  // FoodSecurityDegradationPhase removed - merged into HumanSurvivalSystemPhase (Batch 4, Nov 9, 2025)
   // ClimateImpactCascadePhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   BayesianMortalityResolutionPhase,  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
   AntimicrobialResistancePhase,  // TIER 1.8 (Oct 17, 2025): Progressive antibiotic resistance
@@ -142,10 +142,10 @@ import {
   SocietyActionsPhase,
   PlayerDecisionPhase,  // Oct 22, 2025: Player decision injection
   // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
-  ExtinctionTriggersPhase,
-  ExtinctionProgressPhase,
+  // ExtinctionTriggersPhase removed - merged into ExtinctionSystemPhase (Batch 4, Nov 9, 2025)
+  // ExtinctionProgressPhase removed - merged into ExtinctionSystemPhase (Batch 4, Nov 9, 2025)
   TechnologyDiffusionPhase,
-  CatastrophicScenariosPhase,
+  // CatastrophicScenariosPhase removed - merged into ExtinctionSystemPhase (Batch 4, Nov 9, 2025)
   EventCollectionPhase,
   TimeAdvancementPhase
 } from './engine/phases';
@@ -155,11 +155,15 @@ import { Tier2SocialSystemsPhase } from './engine/phases/Tier2SocialSystemsPhase
 import { Tier2AIGovernancePhase } from './engine/phases/Tier2AIGovernancePhase';
 import { Tier2PhysicalSystemsPhase } from './engine/phases/Tier2PhysicalSystemsPhase';
 import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P3.2 (Oct 30, 2025)
-import { MortalityStabilizersPhase } from './engine/phases/MortalityStabilizersPhase';  // Issues #4, #5, #6 (Oct 30, 2025)
+// MortalityStabilizersPhase removed - merged into HumanSurvivalSystemPhase (Batch 4, Nov 9, 2025)
 // Batch 3 Consolidation: Climate & Environmental (17 → 7, Nov 9, 2025)
 import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Consolidated 4 climate phases
 import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Consolidated phosphorus + novel entities
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
+// Batch 4 Consolidation: Crisis & Mortality (14 → 5, Nov 9, 2025)
+import { HumanSurvivalSystemPhase } from './engine/phases/HumanSurvivalSystemPhase';  // Consolidated famine, food security, mortality stabilizers
+import { NuclearCrisisPhase } from './engine/phases/NuclearCrisisPhase';  // Consolidated nuclear winter + radiation
+import { ExtinctionSystemPhase } from './engine/phases/ExtinctionSystemPhase';  // Consolidated extinction triggers/progress, catastrophic scenarios
 import { assertStateProperty } from './utils/assertions';  // Defensive fallback audit (Nov 6, 2025)
 
 /**
@@ -527,18 +531,17 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ClimateJusticePhase());  // TIER 2.8: Climate Justice & Environmental Debt
     this.orchestrator.registerPhase(new OrganizationViabilityPhase());  // TIER 1.7.3: Check org survival vs country health
     this.orchestrator.registerPhase(new CooperativeOwnershipPhase());  // Nov 5, 2025: Cooperative organization survival bonus (order 15.5)
-    this.orchestrator.registerPhase(new NuclearWinterPhase());  // TIER 1.7.4: Update nuclear winter effects
-    this.orchestrator.registerPhase(new RadiationSystemPhase());  // TIER 1.7: Radiation health effects (cancer, birth defects, contamination)
+    // NuclearWinterPhase + RadiationSystemPhase removed - merged into NuclearCrisisPhase (Batch 4, Nov 9, 2025)
     this.orchestrator.registerPhase(new WetBulbTemperaturePhase());  // Oct 17, 2025: Wet bulb temperature deadly heat events
     this.orchestrator.registerPhase(new ExtremeWeatherEventsPhase());  // Oct 28, 2025: Storm intensity-frequency modeling
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
     this.orchestrator.registerPhase(new PositiveTippingPointsPhase());  // Oct 17, 2025: Positive cascades (solar, EV, wind)
     // TippingPointPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
-    this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
-    this.orchestrator.registerPhase(new FoodSecurityDegradationPhase());  // Phase 1B Refinement: Crisis-accelerated food degradation
-    this.orchestrator.registerPhase(new MortalityStabilizersPhase());  // Issues #4, #5, #6 (Oct 30, 2025): Aid/adaptation/migration/emergency response (order 20.8)
+    // FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase removed - merged into HumanSurvivalSystemPhase (Batch 4, Nov 9, 2025)
     // === BATCH 3 CONSOLIDATED CLIMATE SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new ClimateSystemPhase());  // Consolidated: GeoengineringPhase + TippingPointPhase + EnvironmentalFeedbackPhase + ClimateImpactCascadePhase
+    // === BATCH 4 CONSOLIDATED SURVIVAL SYSTEM (Nov 9, 2025) ===
+    this.orchestrator.registerPhase(new HumanSurvivalSystemPhase());  // Consolidated: FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase (order 19.7)
     this.orchestrator.registerPhase(new BayesianMortalityResolutionPhase());  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline
     this.orchestrator.registerPhase(new MinimalSufferingPhase());  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering)
@@ -583,11 +586,13 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SocietyActionsPhase());
     this.orchestrator.registerPhase(new PlayerDecisionPhase());  // Oct 22, 2025: Player decision injection (order 8.5)
 
+    // === BATCH 4 CONSOLIDATED NUCLEAR + EXTINCTION (Nov 9, 2025) ===
+    this.orchestrator.registerPhase(new NuclearCrisisPhase());  // Consolidated: NuclearWinterPhase + RadiationSystemPhase (order 252)
+    this.orchestrator.registerPhase(new ExtinctionSystemPhase());  // Consolidated: ExtinctionTriggersPhase + ExtinctionProgressPhase + CatastrophicScenariosPhase (order 37.0)
+
     // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
-    this.orchestrator.registerPhase(new ExtinctionTriggersPhase());
-    this.orchestrator.registerPhase(new ExtinctionProgressPhase());
+    // ExtinctionTriggersPhase + ExtinctionProgressPhase + CatastrophicScenariosPhase removed - merged into ExtinctionSystemPhase (Batch 4, Nov 9, 2025)
     this.orchestrator.registerPhase(new TechnologyDiffusionPhase());
-    this.orchestrator.registerPhase(new CatastrophicScenariosPhase());
     this.orchestrator.registerPhase(new EventCollectionPhase());
     this.orchestrator.registerPhase(new TimeAdvancementPhase());
   }
