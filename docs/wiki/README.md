@@ -6105,6 +6105,54 @@ Recent critical evaluations:
 ### Testing & Analysis
 - **Monte Carlo Results**: `/docs/MONTE_CARLO_RESULTS.md`
 - **[Diagnostic Findings](./DIAGNOSTIC_FINDINGS.md)**: October 2025 deep dive into 0% Utopia blockers
+- **God Mode Test**: `scripts/godModeTest.ts` - Diagnostic test deploying all 73 technologies at month 0
+
+#### God Mode Test (November 2025)
+
+**Purpose:** Diagnostic tool that deploys ALL 73 breakthrough technologies at simulation start (month 0) to identify coverage gaps in the tech tree and model.
+
+**What it tests:**
+- Are technologies sufficient to prevent catastrophic failure even when all deployed?
+- Which planetary boundaries remain crossed despite full tech deployment?
+- What survival/QoL dimensions collapse even with unlimited technological intervention?
+
+**Recent Findings** (Commit c6fc3cc, November 9, 2025):
+
+**🚨 CATASTROPHIC FAILURE even with full tech deployment** (Seed 42, 120 months):
+- **Population:** NaN (simulation crashed before completion)
+- **Survival fundamentals COLLAPSED:**
+  - Food security: 31.5% (critical failure)
+  - Water security: 44.7% (critical failure)
+  - Shelter security: 0% (total collapse)
+  - Thermal habitability: data corrupted
+- **Material abundance:** 1% (near-total failure)
+- **Political freedom:** 6.6% (authoritarian collapse)
+- **6 Planetary boundaries still RED:** biogeochemical, biosphere, climate, freshwater, land, novel entities
+- **Early Warning System:** All boundaries flagged as 'LATE' interventions (too late to prevent crossing)
+
+**Key improvements in test (c6fc3cc):**
+- Fixed QoL field access to use tiered structure (survivalFundamentals, materialAbundance, etc.)
+- Added initial vs final planetary boundary comparison
+- Added defensive checks for undefined/NaN in crashed simulations
+- Shows tier-by-tier QoL breakdown (6 tiers: Survival → Environmental)
+
+**Implications:**
+1. **Tech tree has CRITICAL COVERAGE GAPS** - technologies insufficient even when all deployed
+2. **OR deployment timing wrong** - need technologies deployed earlier than 2025 start (month -60, -120?)
+3. **OR missing distribution/implementation mechanisms** - tech exists but can't reach people fast enough
+4. **OR simulation has NaN propagation bugs** - cascading failures corrupt state
+
+**Why this matters:** Simulation starts in 2025 with some planetary boundaries already crossed (late start). God mode reveals the limits of what's modeled - if deploying everything still fails catastrophically, either:
+- Missing critical intervention types (distribution, implementation, social acceptance)
+- Missing earlier intervention windows (pre-2025 baseline)
+- Model has propagation bugs hiding behind tech deployment logic
+
+**Usage:**
+```bash
+npx tsx scripts/godModeTest.ts --seed=42 --months=120
+```
+
+**Status:** 🟡 DIAGNOSTIC - Not for production Monte Carlo runs. For identifying model gaps only.
 
 ### Devlogs (Recent Key Findings)
 - `devlogs/monte-carlo-analysis-oct-9-action-fix.md` - Comprehensive blocker analysis
