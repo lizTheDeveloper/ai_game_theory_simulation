@@ -194,7 +194,9 @@ algorithmsEfficiency *= 1.004;  // ~5% per year
 hardwareEfficiency *= 1.003;
 ```
 
-**Result:** 5-10x compute growth over 60 months (if population remains stable)
+**Efficiency Multipliers:** Hardware and algorithmic efficiency accumulate **multiplicatively** over time with **no upper bound**. Quantum computing, neuromorphic chips, and transformative technologies can push these multipliers well beyond 100x baseline. Previously capped at 100x (removed Nov 9, 2025).
+
+**Result:** 5-10x compute growth over 60 months baseline (if population remains stable), potentially much higher with breakthrough technologies
 
 ### 3. Data Center Construction
 
@@ -426,3 +428,4 @@ Month 60: 3000-4000 PetaFLOPs (5-6x growth)
 - **v1.2** (Oct 2025): Government compute actions (commit dd6cbd3)
 - **v1.3** (Oct 30, 2025): Population → compute scaling, coherence enforcement (commit baaa33e)
 - **v1.4** (Oct 30, 2025): Bankruptcy asset transfer - data centers transferred to government/solvent orgs instead of destroyed (commit bb20927)
+- **v1.5** (Nov 9, 2025): Remove artificial 100x cap on hardware/algorithm efficiency - allow quantum/transformative tech beyond previous limits (commit 3f51ec8)
