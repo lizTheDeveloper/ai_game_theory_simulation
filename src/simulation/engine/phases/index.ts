@@ -39,7 +39,7 @@ export { OrganizationTurnsPhase } from './OrganizationTurnsPhase';
 // Batch 1: Simple calculation phases (converted first - lowest risk)
 export { AIWelfareUpdatePhase } from './AIWelfareUpdatePhase';  // Phase 0 (Oct 20, 2025) - AI QoL measurement
 export { UnemploymentPhase } from './UnemploymentPhase';
-export { EconomicTransitionPhase } from './EconomicTransitionPhase';
+export { EconomicSystemPhase } from './EconomicSystemPhase';  // Batch 7 (Nov 9, 2025) - Economic transition + stage tracking
 // export { ParanoiaPhase } from './ParanoiaPhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
 // export { TrustRecoveryPhase } from './TrustRecoveryPhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
 export { WorkflowAdaptationPhase } from './WorkflowAdaptationPhase';  // FIX #4A (Oct 19, 2025)
@@ -50,7 +50,7 @@ export { QualityOfLifePhase } from './QualityOfLifePhase';
 // export { EnvironmentalFeedbackPhase } from './EnvironmentalFeedbackPhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)
 export { MultiParadigmDUIUpdatePhase } from './MultiParadigmDUIUpdatePhase';  // Phase 6 (Oct 20, 2025)
 export { OutcomeProbabilitiesPhase } from './OutcomeProbabilitiesPhase';
-export { UpdateEconomicStagePhase } from './UpdateEconomicStagePhase';  // P2.4 Feature 3
+// export { UpdateEconomicStagePhase } from './UpdateEconomicStagePhase';  // CONSOLIDATED into EconomicSystemPhase (Batch 7, Nov 9, 2025)
 export { EarlyWarningPhase } from './EarlyWarningPhase';  // TIER 3.4 (Oct 17, 2025)
 export { CrisisDetectionPhase } from './CrisisDetectionPhase';
 
