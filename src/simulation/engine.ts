@@ -42,7 +42,7 @@ import {
   // Batch 1: Simple calculations (30.x)
   AIWelfareUpdatePhase,  // Phase 0 (Oct 20, 2025): AI QoL measurement
   UnemploymentPhase,
-  EconomicTransitionPhase,
+  EconomicSystemPhase,  // Batch 7 (Nov 9, 2025): Merged EconomicTransitionPhase + UpdateEconomicStagePhase
   // ParanoiaPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
   // TrustRecoveryPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
   WorkflowAdaptationPhase,  // FIX #4A (Oct 19, 2025): S-curve organizational adoption
@@ -53,7 +53,7 @@ import {
   // EnvironmentalFeedbackPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   MultiParadigmDUIUpdatePhase,  // Phase 6 (Oct 20, 2025)
   OutcomeProbabilitiesPhase,
-  UpdateEconomicStagePhase,  // P2.4 Feature 3 (Oct 16, 2025): Recovery tracking
+  // UpdateEconomicStagePhase removed - merged into EconomicSystemPhase (Batch 7, Nov 9, 2025)
   EarlyWarningPhase,  // TIER 3.4 (Oct 17, 2025): Early warning systems for tipping points
   CrisisDetectionPhase,
   // Batch 2: System updates (10.x - 21.x)
@@ -482,7 +482,7 @@ export class SimulationEngine {
     // Batch 1: Simple calculations (30.x)
     this.orchestrator.registerPhase(new AIWelfareUpdatePhase());  // Phase 0 (Oct 20, 2025): AI QoL measurement (order 2.5)
     this.orchestrator.registerPhase(new UnemploymentPhase());
-    this.orchestrator.registerPhase(new EconomicTransitionPhase());
+    this.orchestrator.registerPhase(new EconomicSystemPhase());  // Batch 7 (Nov 9, 2025): Economic transition + stage tracking
     // ParanoiaPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
     // TrustRecoveryPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new WorkflowAdaptationPhase());  // FIX #4A (Oct 19, 2025): S-curve organizational adoption
@@ -493,7 +493,7 @@ export class SimulationEngine {
     // EnvironmentalFeedbackPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
     this.orchestrator.registerPhase(new MultiParadigmDUIUpdatePhase());  // Phase 6 (Oct 20, 2025)
     this.orchestrator.registerPhase(new OutcomeProbabilitiesPhase());
-    this.orchestrator.registerPhase(new UpdateEconomicStagePhase());  // P2.4 Feature 3: Recovery tracking
+    // UpdateEconomicStagePhase removed - merged into EconomicSystemPhase (Batch 7, Nov 9, 2025)
     this.orchestrator.registerPhase(new EarlyWarningPhase());  // TIER 3.4: Early warning systems for tipping points
     this.orchestrator.registerPhase(new CrisisDetectionPhase());
 
