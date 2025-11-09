@@ -431,8 +431,14 @@ export function Navigation() {
       {/* Configuration Modal */}
       {showConfig && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur flex items-center justify-center z-50 p-4 overflow-y-auto" onClick={handleCloseConfig}>
-          <div className="bg-black border border-white/20 p-4 sm:p-6 md:p-8 w-full max-w-2xl my-8 shadow-[0_0_30px_rgba(0,240,255,0.3)] max-h-[calc(100vh-4rem)] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-xl md:text-2xl mb-4 md:mb-6 text-cyan-400">Initialize Simulation</h2>
+          <div
+            className="bg-black border border-white/20 p-4 sm:p-6 md:p-8 w-full max-w-2xl my-8 shadow-[0_0_30px_rgba(0,240,255,0.3)] max-h-[calc(100vh-4rem)] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+          >
+            <h2 id="modal-title" className="text-xl md:text-2xl mb-4 md:mb-6 text-cyan-400">Initialize Simulation</h2>
 
             {/* Error Display */}
             {initError && (
@@ -512,8 +518,9 @@ export function Navigation() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>RNG SEED</label>
+                <label htmlFor="rng-seed" className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>RNG SEED</label>
                 <input
+                  id="rng-seed"
                   type="number"
                   value={configSeed}
                   onChange={(e) => setConfigSeed(parseInt(e.target.value))}
@@ -522,8 +529,9 @@ export function Navigation() {
               </div>
 
               <div>
-                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>SCENARIO MODE</label>
+                <label htmlFor="scenario-mode" className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>SCENARIO MODE</label>
                 <select
+                  id="scenario-mode"
                   value={configScenario}
                   onChange={(e) => setConfigScenario(e.target.value as ScenarioMode)}
                   className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
@@ -539,8 +547,9 @@ export function Navigation() {
               </div>
 
               <div>
-                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>SIMULATION SPEED</label>
+                <label htmlFor="simulation-speed" className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>SIMULATION SPEED</label>
                 <select
+                  id="simulation-speed"
                   value={configSpeed.toFixed(1)}
                   onChange={(e) => setConfigSpeed(parseFloat(e.target.value))}
                   className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
@@ -553,8 +562,9 @@ export function Navigation() {
               </div>
 
               <div>
-                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>ALIGNMENT DYNAMICS</label>
+                <label htmlFor="alignment-dynamics" className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>ALIGNMENT DYNAMICS</label>
                 <select
+                  id="alignment-dynamics"
                   value={configAlignmentPreset}
                   onChange={(e) => setConfigAlignmentPreset(e.target.value as 'default' | 'conservative' | 'pessimistic' | 'epicycle')}
                   className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
@@ -573,8 +583,9 @@ export function Navigation() {
               </div>
 
               <div>
-                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>GOVERNMENT CLIMATE PRIORITY</label>
+                <label htmlFor="climate-priority" className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>GOVERNMENT CLIMATE PRIORITY</label>
                 <select
+                  id="climate-priority"
                   value={configClimatePriority}
                   onChange={(e) => setConfigClimatePriority(e.target.value as any)}
                   className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
@@ -611,8 +622,9 @@ export function Navigation() {
               />
 
               <div>
-                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>EPISTEMIC SCENARIO</label>
+                <label htmlFor="epistemic-scenario" className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>EPISTEMIC SCENARIO</label>
                 <select
+                  id="epistemic-scenario"
                   value={configSpeculativeScenario}
                   onChange={(e) => setConfigSpeculativeScenario(e.target.value as 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia')}
                   className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
