@@ -5792,6 +5792,22 @@ state.history.exogenousShocks?: Array<{
 
 ## 📚 Recent Research & Plans Reference (Oct 16-30, 2025)
 
+### Research Coordination (Nov 9, 2025)
+
+**Master Research Roadmap Created** ✅ DOCUMENTED (Nov 9, 2025)
+- **Purpose**: Single source of truth for all research coordination across AI alignment, climate mitigation, planetary boundaries, and post-scarcity pathways
+- **File**: `research/RESEARCH_ROADMAP.md` (617 lines)
+- **Integration**: Combines Sylvia's god mode gaps analysis with complete research index (335+ files)
+- **Priority Structure** (from Priya's quantitative analysis):
+  - **TIER 1 CRITICAL**: Novel Entities (0% effectiveness) - thermodynamic energy constraints, PFAS cleanup requires 4-40% global energy
+  - **TIER 2 HIGH**: Climate (5.5%), Biogeochemical (10%) - deployment physics, irreversibility (DAC needs 50-110% global electricity)
+  - **TIER 3 MEDIUM**: Biosphere outlier (81.5% - suspiciously good?) - functionality vs species counts investigation
+- **Research Index**: 335+ research files organized by domain (AI alignment, climate mortality, planetary boundaries, citation quality)
+- **Links**: Sylvia's roadmap (`reviews/god_mode_gaps_research_roadmap_20251109.md`), irreversibility evidence (Lake Erie case study)
+- **Agent Coordination**: Cynthia (literature search), Sylvia (citation verification), communication via research/coordination channels
+- **Active Questions**: Energy trap analysis, deployment timescales, legacy contamination modeling, nitrogen-food coupling
+- Commit: 91f567a (Nov 9, 2025)
+
 ### Development Workflow Updates (Oct 30-Nov 7, 2025)
 
 **Token Efficiency Emphasis** ✅ DOCUMENTED (Nov 7, 2025)
