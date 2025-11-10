@@ -12,8 +12,12 @@
 
 import { test, expect } from '@playwright/test';
 
-// Adaptive wait helper - polls for element visibility
-async function waitForDashboardData(page: any, selector: string | RegExp, maxAttempts: number = 5) {
+// Increase timeout to 40s for integration tests (longer than default 30s)
+// Needed for: ~5s init + 10-18s simulation + navigation + adaptive waits
+test.setTimeout(40000);
+
+// Adaptive wait helper - polls for element visibility (up to 16s total)
+async function waitForDashboardData(page: any, selector: string | RegExp, maxAttempts: number = 8) {
   for (let i = 0; i < maxAttempts; i++) {
     await page.waitForTimeout(2000);
     const isVisible = await page.locator(`text=${selector}`).first().isVisible().catch(() => false);
@@ -39,6 +43,7 @@ async function initializeAndRunSimulation(page: any, durationMs: number = 30000)
   await page.getByRole('button', { name: /start/i }).click();
   await page.waitForTimeout(durationMs);
   await page.getByRole('button', { name: /pause/i }).click();
+  await page.waitForTimeout(1000); // Brief stabilization after pause
 }
 
 test.describe('AI Systems → QoL Integration', () => {
@@ -70,7 +75,8 @@ test.describe('AI Systems → QoL Integration', () => {
     await page.getByRole('link', { name: /overview|dashboard/i }).click();
     // Adaptive wait added - waits for data to load
     await waitForDashboardData(page, /ai agents/i);
-    const overviewAgentText = await page.getByText(/ai agents/i).locator('..').textContent();
+    // Scope to main content to avoid navigation link
+    const overviewAgentText = await page.locator('main').getByText(/ai agents/i).locator('..').textContent();
 
     // Check AI Agents dashboard - use client-side navigation
     await page.getByRole('link', { name: /ai.*agents/i }).click();
