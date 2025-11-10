@@ -34,7 +34,7 @@
  */
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
-import { ScenarioGovernmentPriorities } from '@/types/scenario';
+import { ScenarioGovernmentPriorities } from '@/types/scenarios';
 import {
   assertFinite,
   assertProbability,
@@ -192,9 +192,9 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       gov.consensusBuildingEfficiency = value;
       gov.minorityProtectionStrength = value;
 
-      // Also set backward compatibility fields
-      state.government.democracy = value;
-      state.government.democracyQuality = value;
+      // FIX (Nov 10, 2025): Removed readonly property assignments
+      // state.government.democracy and democracyQuality are computed getters (initialization.ts:682-690)
+      // They automatically calculate from governanceQuality fields, so we don't need to set them
 
       overridesApplied.push(
         `Democracy: ${(oldParticipation * 100).toFixed(0)}% → ${(value * 100).toFixed(0)}% (participation, transparency, consensus)`
@@ -202,7 +202,7 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     }
 
     if (priorities.governmentType !== undefined) {
-      const validTypes = ['democratic', 'authoritarian', 'mixed'] as const;
+      const validTypes = ['democratic', 'authoritarian', 'mixed', 'technocratic'] as const;
       if (!validTypes.includes(priorities.governmentType)) {
         throw new Error(`❌ Invalid governmentType: ${priorities.governmentType}`);
       }
@@ -210,7 +210,9 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       // Map scenario governmentType to GameState governmentType
       // 'mixed' in scenario → 'technocratic' in GameState (closest match)
       const mappedType: 'democratic' | 'authoritarian' | 'technocratic' =
-        priorities.governmentType === 'mixed' ? 'technocratic' : priorities.governmentType;
+        priorities.governmentType === 'mixed' ? 'technocratic' :
+        priorities.governmentType === 'technocratic' ? 'technocratic' :
+        priorities.governmentType;
 
       // Apply government type override (this field DOES exist)
       const oldType = state.government.governmentType;
