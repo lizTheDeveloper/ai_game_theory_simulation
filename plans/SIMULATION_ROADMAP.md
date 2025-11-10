@@ -38,6 +38,21 @@
 ## 🎯 ACTIVE PRIORITIES
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
+   - **Workflow Adaptation Bug Fix Citations** - HIGH priority (Nov 10, 2025)
+     - **Context:** Commit d336915 - Two CRITICAL spiral activation blockers resolved
+     - **Issue:** OECD (2024) active labor market policies citation lacks specificity
+     - **Status:** ❌ NOT VERIFIED
+       - ✅ Rogers (1962) citation exists - needs claim verification (2.5%+2.5% resistance immunity)
+       - ❌ OECD (2024) - no paper title/URL, generic reference
+       - ❓ Quantitative claims ($50B→50%, $100B→75%) need backing
+     - **New Mechanics:**
+       - MIN_ADOPTION_FLOOR = 5% (prevents crash to 0%)
+       - Government research investment → retraining programs → skill gap reduction
+     - **Verification File:** research/verification_d336915_20251110.md
+     - **Workflow:** Find OECD 2024 paper → Verify claims → Adjust parameters if needed
+     - **Priority:** HIGH - Affects spiral activation pathways (scientific spiral requires workflowAdaptation ≥25%)
+     - **Blockers:** Need paper title/URL for OECD 2024 active labor market policies
+
    - **Government Priority Override Citations** - MEDIUM priority (Nov 10, 2025)
      - **Context:** Scenario Analysis Framework Phase 2 (commit 91b4264)
      - **Issue:** References V-Dem v14 and WGI 2024 as foundation for government priority types
