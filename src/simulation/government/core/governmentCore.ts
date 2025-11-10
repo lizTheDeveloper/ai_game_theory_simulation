@@ -9,7 +9,7 @@
 import { GameState, GameEvent } from '@/types/game';
 import { ActionResult, GameAction } from '@/simulation/agents/types';
 import { getTrustInAIForPolicy, getTrustInAI } from '@/simulation/socialCohesion';
-import { assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
+import { assertStateProperty, assertFinite, assertDefined } from '@/simulation/utils/assertions';
 import {
   calculateObservableAICapability,
   calculateTotalCapabilityFromProfile
@@ -45,12 +45,71 @@ export function selectGovernmentAction(
 
   if (availableActions.length === 0) return null;
 
-  // Oct 24, 2025: Log climate priority configuration (first month only)
-  if (state.currentMonth === 0 && state.config.climatePriority) {
-    console.log(`\n[Government] Climate Priority: ${state.config.climatePriority.preset}`);
-    console.log(`  Climate weight: ${(state.config.climatePriority.weights.climate * 100).toFixed(0)}%`);
-    console.log(`  Economic weight: ${(state.config.climatePriority.weights.economic * 100).toFixed(0)}%`);
-    console.log(`  Policy effectiveness: ${(state.config.climatePriority.policyEffectiveness * 100).toFixed(1)}%/year`);
+  // Nov 10, 2025: Read scenario configuration for priority enforcement
+  const scenarioPriorities = state.scenarioConfig?.governmentPriorities;
+
+  // DEFENSIVE ASSERTION: If scenario config exists, validate it has expected structure
+  if (state.scenarioConfig) {
+    assertDefined(state.scenarioConfig.name, {
+      location: 'selectGovernmentAction',
+      valueName: 'scenarioConfig.name',
+      additionalInfo: { month: state.currentMonth }
+    });
+
+    // Validate priority values are in range [0, 1] if defined
+    if (scenarioPriorities) {
+      if (scenarioPriorities.scientificResearch !== undefined) {
+        assertFinite(scenarioPriorities.scientificResearch, {
+          location: 'selectGovernmentAction',
+          valueName: 'scenarioPriorities.scientificResearch',
+          month: state.currentMonth
+        });
+      }
+      if (scenarioPriorities.redistributionLevel !== undefined) {
+        assertFinite(scenarioPriorities.redistributionLevel, {
+          location: 'selectGovernmentAction',
+          valueName: 'scenarioPriorities.redistributionLevel',
+          month: state.currentMonth
+        });
+      }
+      if (scenarioPriorities.climateSpending !== undefined) {
+        assertFinite(scenarioPriorities.climateSpending, {
+          location: 'selectGovernmentAction',
+          valueName: 'scenarioPriorities.climateSpending',
+          month: state.currentMonth
+        });
+      }
+    }
+  }
+
+  // First month: Log active scenario priorities (if any)
+  if (state.currentMonth === 0) {
+    if (scenarioPriorities) {
+      console.log(`\n🏛️ [Government] SCENARIO PRIORITIES ACTIVE: ${state.scenarioConfig?.name}`);
+      if (scenarioPriorities.climateSpending !== undefined) {
+        console.log(`  Climate spending: ${(scenarioPriorities.climateSpending * 100).toFixed(0)}%`);
+      }
+      if (scenarioPriorities.redistributionLevel !== undefined) {
+        console.log(`  Redistribution: ${(scenarioPriorities.redistributionLevel * 100).toFixed(0)}%`);
+      }
+      if (scenarioPriorities.alignmentResearch !== undefined) {
+        console.log(`  AI alignment: ${(scenarioPriorities.alignmentResearch * 100).toFixed(0)}%`);
+      }
+      if (scenarioPriorities.scientificResearch !== undefined) {
+        console.log(`  Scientific research: ${(scenarioPriorities.scientificResearch * 100).toFixed(0)}%`);
+      }
+      if (scenarioPriorities.democraticParticipation !== undefined) {
+        console.log(`  Democratic participation: ${(scenarioPriorities.democraticParticipation * 100).toFixed(0)}%`);
+      }
+    }
+
+    // Oct 24, 2025: Log climate priority configuration (if using config-based climate priority)
+    if (state.config.climatePriority) {
+      console.log(`\n[Government] Climate Priority: ${state.config.climatePriority.preset}`);
+      console.log(`  Climate weight: ${(state.config.climatePriority.weights.climate * 100).toFixed(0)}%`);
+      console.log(`  Economic weight: ${(state.config.climatePriority.weights.economic * 100).toFixed(0)}%`);
+      console.log(`  Policy effectiveness: ${(state.config.climatePriority.policyEffectiveness * 100).toFixed(1)}%/year`);
+    }
   }
 
   const unemploymentLevel = state.society.unemploymentLevel;
@@ -596,6 +655,56 @@ export function selectGovernmentAction(
         }
 
         break;
+    }
+
+    // === SCENARIO PRIORITY ENFORCEMENT (Nov 10, 2025 - Bug Fix) ===
+    // Apply strong multipliers (3x-10x) to ensure scenario priorities dominate default behavior
+    if (scenarioPriorities) {
+      // Scientific Research Priority (Scientific Acceleration scenario)
+      if (scenarioPriorities.scientificResearch !== undefined && scenarioPriorities.scientificResearch > 0) {
+        if (action.id === 'invest_alignment_research') {
+          // Alignment research is a form of scientific research
+          priority *= (1 + scenarioPriorities.scientificResearch * 9); // Up to 10x at priority=1.0
+        }
+        // TODO: Add other research-related actions here when they exist
+      }
+
+      // Redistribution Priority (Equality First scenario)
+      if (scenarioPriorities.redistributionLevel !== undefined && scenarioPriorities.redistributionLevel > 0) {
+        if (action.id === 'implement_generous_ubi' ||
+            action.id === 'implement_means_tested_benefits' ||
+            action.id === 'implement_job_guarantee') {
+          // Strong boost to redistribution actions to achieve target Gini
+          priority *= (1 + scenarioPriorities.redistributionLevel * 14); // Up to 15x at priority=1.0
+        }
+      }
+
+      // Climate Spending Priority (Climate First scenario)
+      if (scenarioPriorities.climateSpending !== undefined && scenarioPriorities.climateSpending > 0) {
+        if (action.id === 'emergency_amazon_protection' ||
+            action.id === 'fund_coral_restoration' ||
+            action.id === 'ban_harmful_pesticides' ||
+            action.id === 'deploy_environmental_tech') {
+          // Strong boost to environmental actions
+          priority *= (1 + scenarioPriorities.climateSpending * 9); // Up to 10x at priority=1.0
+        }
+      }
+
+      // AI Alignment Research Priority (AI Alignment First scenario)
+      if (scenarioPriorities.alignmentResearch !== undefined && scenarioPriorities.alignmentResearch > 0) {
+        if (action.id === 'invest_alignment_research' ||
+            action.id === 'implement_compute_governance' ||
+            action.id === 'mandatory_safety_reviews') {
+          // MASSIVE boost to alignment-related actions
+          priority *= (1 + scenarioPriorities.alignmentResearch * 19); // Up to 20x at priority=1.0
+        }
+      }
+
+      // Democratic Participation Priority (Democratic Participation scenario)
+      if (scenarioPriorities.democraticParticipation !== undefined && scenarioPriorities.democraticParticipation > 0) {
+        // TODO: Add democratic participation actions when they exist in action registry
+        // For now, this doesn't match any existing actions
+      }
     }
 
     if (priority > highestPriority) {
