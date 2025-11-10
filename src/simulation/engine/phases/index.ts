@@ -43,6 +43,7 @@ export { EconomicSystemPhase } from './EconomicSystemPhase';  // Batch 7 (Nov 9,
 // export { ParanoiaPhase } from './ParanoiaPhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
 // export { TrustRecoveryPhase } from './TrustRecoveryPhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
 export { WorkflowAdaptationPhase } from './WorkflowAdaptationPhase';  // FIX #4A (Oct 19, 2025)
+export { AlignmentMilestonesPhase } from './AlignmentMilestonesPhase';  // FIX (Nov 10, 2025) - Hook up alignment milestone detection
 // export { SocialStabilityPhase } from './SocialStabilityPhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
 export { DemocracyDynamicsPhase } from './DemocracyDynamicsPhase';  // Phase 6A (Oct 20, 2025) - Western Liberal paradigm
 // export { SocialCohesionUpdatePhase } from './SocialCohesionUpdatePhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)

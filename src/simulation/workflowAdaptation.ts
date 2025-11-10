@@ -20,7 +20,7 @@
  */
 
 import { GameState, RNGFunction } from '@/types/game';
-import { assertProbability } from './utils/assertions';
+import { assertProbability, assertFinite } from './utils/assertions';
 
 /**
  * S-curve growth parameters

@@ -179,3 +179,4 @@
 🔗 | Cascade failure linkage
 🚶 | Migration/relocation
 🎬 | Scenario event (scenario start/configuration changes)
+⏳ | Waiting/pending condition (not yet met)

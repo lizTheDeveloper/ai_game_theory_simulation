@@ -141,23 +141,41 @@ export function updateGovernanceQuality(state: GameState): void {
   );
   
   // === PARTICIPATION RATE ===
-  
+  // FIX (Nov 10, 2025): Enhanced participation growth mechanics to break 60% ceiling
+
   // Trust affects participation
   const trustInAI = getTrustInAI(state.society); // Phase 2C: Use paranoia-derived trust
   const trustBonus = (trustInAI - 0.5) * 0.02; // ±1% per month based on trust
-  
+
   // Transparency encourages participation
   const transparencyBonus = (quality.transparency - 0.5) * 0.015;
-  
+
   // Meaning crisis reduces participation (apathy)
   const meaningCrisis = state.socialAccumulation.meaningCrisisLevel;
   const apathyPenalty = meaningCrisis * -0.015;
-  
+
+  // FIX (Nov 10, 2025): UBI → participation feedback (more free time → civic engagement)
+  // Research: Alaska PFD shows modest +2-5% participation increase
+  const ubiBonus = state.globalMetrics.economicTransitionStage >= 3 ? 0.015 : 0; // +1.5%/month with UBI
+
+  // FIX (Nov 10, 2025): Education quality → participation (informed citizens engage more)
+  // Research: College education correlates with +15-20% participation rates
+  // Proxy: social stability / 2 (assumes stable societies have better education)
+  const socialStability = state.globalMetrics.socialStability;
+  const educationBonus = socialStability > 0.7 ? 0.01 : 0; // +1%/month if high stability
+
+  // FIX (Nov 10, 2025): S-curve network effects (critical mass 30-50%)
+  // Research: Rogers diffusion theory - rapid adoption during early majority phase
+  let networkBonus = 0;
+  if (quality.participationRate >= 0.3 && quality.participationRate <= 0.5) {
+    networkBonus = 0.025; // +2.5%/month during critical mass transition
+  }
+
   // Authoritarian governments suppress participation
   if (gov.governmentType === 'authoritarian') {
     quality.participationRate = Math.max(0.1, quality.participationRate - 0.025); // Forced atomization
   } else {
-    quality.participationRate += trustBonus + transparencyBonus + apathyPenalty;
+    quality.participationRate += trustBonus + transparencyBonus + apathyPenalty + ubiBonus + educationBonus + networkBonus;
   }
   
   // Clamp

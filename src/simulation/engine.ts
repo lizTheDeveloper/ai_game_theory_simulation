@@ -46,6 +46,7 @@ import {
   // ParanoiaPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
   // TrustRecoveryPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
   WorkflowAdaptationPhase,  // FIX #4A (Oct 19, 2025): S-curve organizational adoption
+  AlignmentMilestonesPhase,  // FIX (Nov 10, 2025): Hook up alignment milestone detection & trust cascade
   // SocialStabilityPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
   DemocracyDynamicsPhase,  // Phase 6A (Oct 20, 2025): Western Liberal paradigm
   // SocialCohesionUpdatePhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
@@ -486,6 +487,7 @@ export class SimulationEngine {
     // ParanoiaPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
     // TrustRecoveryPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new WorkflowAdaptationPhase());  // FIX #4A (Oct 19, 2025): S-curve organizational adoption
+    this.orchestrator.registerPhase(new AlignmentMilestonesPhase());  // FIX (Nov 10, 2025): Hook up alignment milestone detection & trust cascade
     // SocialStabilityPhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new DemocracyDynamicsPhase());  // Phase 6A (Oct 20, 2025): Western Liberal paradigm
     // SocialCohesionUpdatePhase removed - merged into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)

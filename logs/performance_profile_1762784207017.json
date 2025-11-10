@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "seed": 42,
+    "monthsSimulated": 12,
+    "totalPhases": 81,
+    "timestamp": "2025-11-10T14:16:47.017Z"
+  },
+  "stepStatistics": {
+    "avgStepTime": null,
+    "maxStepTime": null,
+    "minStepTime": null,
+    "allStepTimes": []
+  },
+  "phaseTimings": [],
+  "criticalIssues": [],
+  "highPriorityIssues": []
+}
