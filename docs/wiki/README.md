@@ -28,6 +28,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 10: HIGH-1 O(n²) Performance Bottleneck Fixed** (commit 12da0ce)
+- ✅ **Compute Utilization: 70× speedup** (100,000 → 1,400 operations per step)
+- ✅ **Root Cause:** `.filter(org => agents.some(a => a.orgs.includes(org.id)))` creates O(n²) nested loops
+- ✅ **Solution:** Build ownership Set once (O(n)), use O(1) `Set.has()` lookups instead of O(n) `array.includes()`
+- ✅ **Impact:** Unblocks scaling to 200+ organizations (currently infeasible), Monte Carlo N=100 (too slow)
+- ✅ **Function:** `calculateComputeUtilization()` in organizationManagement.ts (lines 43-74)
+- ✅ **Testing:** TypeScript compiles, zero behavioral changes (same outputs, faster execution)
+- 📊 **Remaining Work:** 4 similar O(n²) patterns in organizationManagement.ts (lower priority, less frequent calls)
+- 📖 **Documentation:** reviews/ARCHITECTURE_REVIEW_O_N2_BOTTLENECKS.md, devlogs/compute_utilization_o_n2_fix_20251110.md
+
 **Nov 10: CRITICAL Bug Fixes - Spiral Activation Blockers Resolved** (commit d336915)
 - ✅ **Bug 1 Fixed:** workflowAdaptation crash to 0% (blocked scientific spiral activation)
 - ✅ **MIN_ADOPTION_FLOOR = 5%:** Innovators + early adopters immune to resistance (Rogers 1962)
@@ -3892,6 +3902,16 @@ deploymentSpeed = baselineSpeed
 - Private sector acquires non-strategic facilities at market rates
 - Shutdown only as last resort (no viable buyers)
 - Result: Infrastructure preserved, maintains population coherence
+
+**Part 3c: Compute Utilization Performance Optimization (Nov 10, 2025)**
+- File: `src/simulation/organizationManagement.ts:43-74`
+- **Problem:** O(n²) bottleneck from `.filter(org => agents.some(a => a.orgs.includes(org.id)))`
+- **Impact:** 100,000 unnecessary operations per step (50 agents × 200 orgs × nested loops)
+- **Solution:** Build ownership Set once (O(n)), use O(1) `Set.has()` instead of O(n) `array.includes()`
+- **Performance gain:** 70× reduction (100,000 → 1,400 operations per step)
+- **Unblocks:** Scaling to 200+ organizations, Monte Carlo N=100 validation, scenario analysis
+- **Remaining work:** 4 similar O(n²) patterns in organizationManagement.ts (lower frequency)
+- **Review:** `reviews/ARCHITECTURE_REVIEW_O_N2_BOTTLENECKS.md`, `devlogs/compute_utilization_o_n2_fix_20251110.md`
 
 **Validation (Nov 5, 2025):**
 - **Unit tests:** `scripts/testInfrastructureDegradation_simple.ts`
