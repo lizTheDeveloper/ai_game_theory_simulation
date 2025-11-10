@@ -38,6 +38,21 @@
 ## 🎯 ACTIVE PRIORITIES
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
+   - **Government Priority Override Citations** - MEDIUM priority (Nov 10, 2025)
+     - **Context:** Scenario Analysis Framework Phase 2 (commit 91b4264)
+     - **Issue:** References V-Dem v14 and WGI 2024 as foundation for government priority types
+     - **Status:** ⚠️ PARTIAL VERIFICATION
+       - ✅ Citation existence verified (V-Dem v14, WGI 2024 accessible)
+       - ✅ WGI → institutional capacity mapping verified
+       - ❓ V-Dem → priority type mapping needs verification
+     - **Priority Types to Validate:**
+       - climateMitigation, inequalityReduction, aiSafety
+       - economicGrowth, socialStability, environmentalProtection
+     - **Verification File:** research/verification_91b4264_20251110.md
+     - **Workflow:** V-Dem indicator mapping → conceptual validation → parameter extraction
+     - **Priority:** MEDIUM - Testing infrastructure only, no parameter values extracted yet
+     - **Note:** Phase 3 scenarios can proceed with manual overrides while research completes
+
    - **AI Capability Scaling Parameters** - CRITICAL parameter mismatch identified
      - **Issue:** Current model assumes 2.4× AI growth/decade, research shows 1,000-10,000×
      - **Discrepancy:** 100-1000× underestimation in capability growth
