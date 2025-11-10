@@ -38,6 +38,21 @@
 ## 🎯 ACTIVE PRIORITIES
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
+
+   - **PFAS Production Ban (Novel Entities Prevention)** - TIER 1 CRITICAL (Added Nov 10, 2025)
+     - **Issue:** God mode testing shows 0% effectiveness for Novel Entities boundary despite 7 pollution cleanup techs deployed
+     - **Root Cause:** Cleanup addresses STOCK (existing contamination) but not FLOW (ongoing production: 4.4M tonnes/year)
+     - **Research Solution:** Global PFAS Production Ban (Montreal Protocol analogue)
+     - **Key Finding:** Ban + cleanup = synergistic 70-85% boundary recovery (vs 0% for cleanup alone)
+     - **Timeline:** 10-20 years (based on Montreal Protocol historical precedent: 1987 treaty → 2000 CFC phase-out)
+     - **Effectiveness:** 90-95% reduction in new emissions (5-10% essential use exemptions)
+     - **Research File:** research/pfas_production_ban_montreal_protocol_analogue_20251110.md (8,500+ words, 14 sources)
+     - **Verification File:** research/verification_f3132ac_20251110.md
+     - **Status:** READY FOR ORCHESTRATOR - Start at VALIDATION phase (research complete)
+     - **Workflow:** Citation verification → Claim verification → Roy implementation → Priya Monte Carlo validation
+     - **Priority:** TIER 1 CRITICAL - Prevents futile cleanup without stopping source
+     - **Implementation Note:** NOT YET IN CODE - Preparatory research for future TIER 0 technology
+
    - **AI Capability Scaling Parameters** - CRITICAL parameter mismatch identified
      - **Issue:** Current model assumes 2.4× AI growth/decade, research shows 1,000-10,000×
      - **Discrepancy:** 100-1000× underestimation in capability growth
