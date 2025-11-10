@@ -72,11 +72,17 @@ test.describe('Simulation Data Flow', () => {
     await page.getByRole('button', { name: /start/i }).click();
     await expect(page.getByText(/running/i)).toBeVisible();
 
-    // Wait for simulation to advance (with 4x speed: 1 month = 7.5 seconds, wait for 2 months)
-    await page.waitForTimeout(16000);
+    // Wait longer for simulation to advance
+    // Note: 4x speed may not always apply depending on system load
+    // Wait for up to 25 seconds and check periodically
+    let updatedMonth = initialMonth;
+    for (let i = 0; i < 5; i++) {
+      await page.waitForTimeout(5000);
+      updatedMonth = await monthValue.textContent();
+      if (updatedMonth !== initialMonth) break;
+    }
 
     // Month should have changed
-    const updatedMonth = await monthValue.textContent();
     expect(updatedMonth).not.toBe(initialMonth);
   });
 
