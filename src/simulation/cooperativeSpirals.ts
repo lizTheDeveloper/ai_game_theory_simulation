@@ -312,3 +312,99 @@ export function updateCooperativeSpirals(state: GameState): void {
   // 3. Check for critical juncture reform opportunities
   applyDeepInstitutionalReform(state);
 }
+
+/**
+ * 🔍 ENHANCED DIAGNOSTIC: Cooperative spiral diagnostics
+ * Shows why trust cascades and cooperative spirals aren't triggering
+ */
+export function logCooperativeSpiralDiagnostics(state: GameState): void {
+  console.log(`\n=== COOPERATIVE SPIRAL DIAGNOSTICS ===`);
+
+  // Check alignment milestones
+  const noMisalignedDeployments = state.currentMonth >= 24 &&
+    state.aiAgents.filter(ai =>
+      (ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open') &&
+      ai.alignment < 0.5
+    ).length === 0;
+
+  const transparencySuccess = state.government.governanceQuality.transparency > 0.7 &&
+    state.globalMetrics.informationIntegrity > 0.6;
+
+  const alignmentGapLow = state.aiAgents.length > 0 &&
+    state.aiAgents.reduce((sum, ai) =>
+      sum + Math.abs(ai.alignment - (ai.revealedCapability ?
+        (ai.revealedCapability.cognitive + ai.revealedCapability.social) / 20 : ai.alignment)
+      ), 0
+    ) / state.aiAgents.length < 0.15;
+
+  const crisisAvoided = state.history.cooperativeSpirals ?
+    state.history.cooperativeSpirals.some(s => s.type === 'alignment-success') : false;
+
+  console.log(`\n  📊 Alignment Milestones:`);
+  console.log(`     No misaligned deployments (24+ months): ${noMisalignedDeployments ? '✅' : '❌'}`);
+  if (!noMisalignedDeployments && state.currentMonth < 24) {
+    console.log(`       (Current month ${state.currentMonth} < 24)`);
+  } else if (!noMisalignedDeployments) {
+    const misalignedCount = state.aiAgents.filter(ai =>
+      (ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open') &&
+      ai.alignment < 0.5
+    ).length;
+    console.log(`       (${misalignedCount} misaligned agents deployed)`);
+  }
+  console.log(`     Transparency success (>0.7 gov + >0.6 info): ${transparencySuccess ? '✅' : '❌'} (gov=${(state.government.governanceQuality.transparency * 100).toFixed(1)}%, info=${(state.globalMetrics.informationIntegrity * 100).toFixed(1)}%)`);
+  console.log(`     Low alignment gap (<0.15): ${alignmentGapLow ? '✅' : '❌'}`);
+  if (state.aiAgents.length > 0 && !alignmentGapLow) {
+    const avgGap = state.aiAgents.reduce((sum, ai) =>
+      sum + Math.abs(ai.alignment - (ai.revealedCapability ?
+        (ai.revealedCapability.cognitive + ai.revealedCapability.social) / 20 : ai.alignment)
+      ), 0
+    ) / state.aiAgents.length;
+    console.log(`       (Average gap: ${avgGap.toFixed(3)})`);
+  }
+  console.log(`     Crisis avoided (historical): ${crisisAvoided ? '✅' : '❌'}`);
+
+  const milestonesAchieved = [noMisalignedDeployments, transparencySuccess, alignmentGapLow, crisisAvoided].filter(Boolean).length;
+  console.log(`     Total: ${milestonesAchieved}/4 (need 2+ for trust cascade)`);
+
+  // Check collective action potential
+  const trust = state.society.collectiveActionWillingness || 0.5;
+  const institutions = state.government.governanceQuality.institutionalCapacity;
+  const monitoring = state.government.governanceQuality.transparency;
+  const potential = trust * 0.4 + institutions * 0.35 + monitoring * 0.25;
+
+  console.log(`\n  🤝 Collective Action Potential: ${potential.toFixed(2)}`);
+  console.log(`     Trust: ${trust.toFixed(2)} (40% weight)`);
+  console.log(`     Institutions: ${institutions.toFixed(2)} (35% weight)`);
+  console.log(`     Monitoring: ${monitoring.toFixed(2)} (25% weight)`);
+  console.log(`     Threshold for high effectiveness: >0.6 ${potential > 0.6 ? '✅' : '❌'}`);
+  if (potential > 0.6) {
+    console.log(`     Cooperative spiral ACTIVE (+${((potential - 1.0) * 0.5 * 100).toFixed(0)}% policy effectiveness)`);
+  }
+
+  // Check cascade history
+  const cascades = state.history.cooperativeSpirals || [];
+  console.log(`\n  📜 Trust Cascades Triggered: ${cascades.length}`);
+  if (cascades.length > 0) {
+    cascades.forEach(c => {
+      console.log(`     Month ${c.month}: ${c.type} (+${(c.trustBoost * 100).toFixed(0)}% trust)`);
+    });
+  }
+
+  // Check critical juncture conditions
+  const institutionalFlux = state.government.governanceQuality.institutionalCapacity < 0.5;
+  const hasRecentCrisis =
+    (state.environmentalAccumulation.resourceCrisisActive ||
+     state.environmentalAccumulation.pollutionCrisisActive ||
+     state.environmentalAccumulation.climateCrisisActive ||
+     state.socialAccumulation.meaningCollapseActive ||
+     state.socialAccumulation.socialUnrestActive ||
+     state.technologicalRisk.controlLossActive);
+  const informationIntegrity = state.globalMetrics.informationIntegrity > 0.5;
+
+  console.log(`\n  🔄 Critical Juncture for Reform:`);
+  console.log(`     Institutional flux (<50% capacity): ${institutionalFlux ? '✅' : '❌'} (${(state.government.governanceQuality.institutionalCapacity * 100).toFixed(1)}%)`);
+  console.log(`     Recent crisis: ${hasRecentCrisis ? '✅' : '❌'}`);
+  console.log(`     Information integrity (>50%): ${informationIntegrity ? '✅' : '❌'} (${(state.globalMetrics.informationIntegrity * 100).toFixed(1)}%)`);
+  const junctureReady = institutionalFlux && hasRecentCrisis && informationIntegrity;
+  console.log(`     Critical juncture ready: ${junctureReady ? '✅ (if alignment success shown)' : '❌'}`);
+}

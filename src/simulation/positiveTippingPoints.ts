@@ -648,3 +648,68 @@ function getTechnologyAdoption(
     default: return undefined;
   }
 }
+
+/**
+ * 🔍 ENHANCED DIAGNOSTIC: Positive tipping point diagnostics
+ * Shows technology adoption rates and cascade trigger conditions
+ */
+export function logPositiveTippingPointDiagnostics(state: GameState): void {
+  const ptp = state.positiveTippingPoints;
+
+  console.log(`\n=== POSITIVE TIPPING POINT DIAGNOSTICS ===`);
+
+  // For each technology, show adoption status and cascade conditions
+  const techs: Array<{ key: keyof typeof ptp.adoptionTracking; name: string }> = [
+    { key: 'solarPV', name: 'Solar PV' },
+    { key: 'electricVehicles', name: 'Electric Vehicles' },
+    { key: 'windPower', name: 'Wind Power' },
+    { key: 'heatPumps', name: 'Heat Pumps' },
+    { key: 'batteryStorage', name: 'Battery Storage' },
+  ];
+
+  techs.forEach(({ key, name }) => {
+    const adoption = ptp.adoptionTracking[key];
+
+    console.log(`\n  ⚡ ${name}: ${adoption.cascadeActive ? '✅ CASCADE ACTIVE' : '❌ NO CASCADE'}`);
+    console.log(`     Market share: ${(adoption.marketShare * 100).toFixed(2)}%`);
+    console.log(`     Adoption rate: ${(adoption.adoptionRate * 100).toFixed(3)}% per month`);
+    console.log(`     Cost vs conventional: ${(adoption.costPerUnit / adoption.conventionalAlternativeCost).toFixed(2)}x`);
+    console.log(`     Price parity: ${adoption.priceParityAchieved ? '✅' : '❌'}`);
+
+    if (adoption.cascadeActive) {
+      console.log(`     Cascade strength: ${adoption.cascadeStrength.toFixed(2)}`);
+      if (adoption.cascadeTriggeredMonth !== undefined) {
+        console.log(`     Triggered month: ${adoption.cascadeTriggeredMonth}`);
+      }
+    } else {
+      // Show why cascade hasn't triggered
+      const inThresholdRange = adoption.marketShare >= ptp.parameters.cascadeThresholdMin &&
+                               adoption.marketShare <= ptp.parameters.cascadeThresholdMax;
+      console.log(`     In threshold range (5-20%): ${inThresholdRange ? '✅' : '❌'}`);
+
+      // Calculate trigger score
+      let triggerScore = 0;
+      if (adoption.priceParityAchieved) triggerScore += 0.4;
+      if (adoption.policyStrength > 0.3) triggerScore += 0.3;
+      if (adoption.marketShare > 0.15) triggerScore += 0.2;
+      const visibilityBonus = adoption.visibility * adoption.marketShare * 0.1;
+      triggerScore += visibilityBonus;
+
+      console.log(`     Trigger score: ${triggerScore.toFixed(2)} (need ~0.6+ for high probability)`);
+      console.log(`       - Price parity: ${adoption.priceParityAchieved ? '+0.4' : '0'}`);
+      console.log(`       - Policy support (>${(ptp.parameters.cascadeThresholdMin * 100).toFixed(0)}%): ${adoption.policyStrength > 0.3 ? '+0.3' : '0'} (${(adoption.policyStrength * 100).toFixed(0)}%)`);
+      console.log(`       - Social threshold (>15%): ${adoption.marketShare > 0.15 ? '+0.2' : '0'}`);
+      console.log(`       - Visibility bonus: +${visibilityBonus.toFixed(2)}`);
+    }
+
+    // Show learning curve progress
+    console.log(`     Cumulative production: ${adoption.cumulativeProduction.toFixed(2)}x baseline`);
+    console.log(`     Learning rate: ${(adoption.learningRate * 100).toFixed(0)}% per doubling`);
+  });
+
+  console.log(`\n  🌊 Summary:`);
+  console.log(`     Active cascades: ${ptp.activeCascades}`);
+  console.log(`     Adoption acceleration: ${ptp.adoptionAcceleration.toFixed(2)}x baseline`);
+  console.log(`     Cumulative emissions reduction: ${ptp.cumulativeEmissionsReduction.toFixed(2)} Gt CO2`);
+  console.log(`     Cumulative cost savings: $${ptp.cumulativeCostSavings.toFixed(1)}B`);
+}

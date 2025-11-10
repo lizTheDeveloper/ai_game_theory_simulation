@@ -9,6 +9,9 @@
 import { SimulationEngine } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 import { getAllTech } from '../src/simulation/techTree/comprehensiveTechTree';
+import { logSpiralActivationDiagnostics } from '../src/simulation/upwardSpirals';
+import { logCooperativeSpiralDiagnostics } from '../src/simulation/cooperativeSpirals';
+import { logPositiveTippingPointDiagnostics } from '../src/simulation/positiveTippingPoints';
 
 const seed = process.argv[2] ? parseInt(process.argv[2]) : 42;
 const maxMonths = process.argv[3] ? parseInt(process.argv[3]) : 120;
@@ -81,8 +84,41 @@ console.log('\n\n' + '='.repeat(80));
 console.log('▶️  Running simulation...');
 console.log('='.repeat(80) + '\n');
 
-// Run simulation
-const result = engine.run(state, { maxMonths, checkActualOutcomes: true });
+// Run simulation with periodic diagnostics
+const diagnosticInterval = 12; // Log every 12 months
+
+let month = 0;
+while (month < maxMonths) {
+  // Step simulation forward one month
+  engine.step(state);
+  month = state.currentMonth;
+
+  // Log diagnostics every 12 months
+  if (month % diagnosticInterval === 0 && month > 0) {
+    console.log(`\n\n${'='.repeat(80)}`);
+    console.log(`DIAGNOSTIC CHECKPOINT: Month ${month} (Year ${Math.floor(month / 12)})`);
+    console.log('='.repeat(80));
+
+    // Call all diagnostic functions
+    logSpiralActivationDiagnostics(state, month);
+    logCooperativeSpiralDiagnostics(state);
+    logPositiveTippingPointDiagnostics(state);
+  }
+
+  // Check for early termination (extinction, game over)
+  if (state.outcome) {
+    console.log(`\n🚨 Simulation ended early at month ${month}: ${state.outcome}`);
+    break;
+  }
+}
+
+// Wrap final state in result object for compatibility with existing code
+const result = {
+  finalState: state,
+  monthsSimulated: month,
+  outcome: state.outcome,
+  events: [] as any[], // Not tracked in step-by-step mode
+};
 
 console.log('\n' + '='.repeat(80));
 console.log('📊 GOD MODE RESULTS');
@@ -250,5 +286,54 @@ if (overallAvg < 0.7) console.log(`  ⚠️  Overall QoL ${(overallAvg * 100).to
 if (result.finalState.climate && state.climate && result.finalState.climate.globalTempDelta > state.climate.globalTempDelta + 0.5) console.log(`  ⚠️  Climate WORSENED by +${(result.finalState.climate.globalTempDelta - state.climate.globalTempDelta).toFixed(2)}°C - tech deployed too late or insufficient?`);
 if (result.finalState.ecology && state.ecology && result.finalState.ecology.extinctionRate > state.ecology.extinctionRate + 0.1) console.log(`  ⚠️  Biodiversity loss ACCELERATED by +${((result.finalState.ecology.extinctionRate - state.ecology.extinctionRate) * 100).toFixed(1)}% - missing rewilding/restoration tech?`);
 if (result.finalState.inequality && result.finalState.inequality.gini > 0.4) console.log(`  ⚠️  Inequality persists (${result.finalState.inequality.gini.toFixed(3)}) - distribution mechanisms missing?`);
+
+// SPIRAL ACTIVATION SUMMARY
+console.log('\n' + '='.repeat(80));
+console.log('🔍 SPIRAL ACTIVATION SUMMARY');
+console.log('='.repeat(80));
+
+// Summarize which spirals activated and when
+const spirals = result.finalState.upwardSpirals;
+const spiralNames = [
+  { key: 'abundance', name: 'Abundance' },
+  { key: 'cognitive', name: 'Cognitive' },
+  { key: 'democratic', name: 'Democratic' },
+  { key: 'scientific', name: 'Scientific' },
+  { key: 'meaning', name: 'Meaning' },
+  { key: 'ecological', name: 'Ecological' }
+] as const;
+
+spiralNames.forEach(({ key, name }) => {
+  const spiral = spirals[key];
+  if (spiral.monthsActive === 0 && spiral.lastActivatedMonth === -1) {
+    console.log(`  ❌ ${name} spiral: NEVER activated`);
+  } else if (spiral.active) {
+    console.log(`  ✅ ${name} spiral: ACTIVE (${spiral.monthsActive} months, last activated: month ${spiral.lastActivatedMonth})`);
+  } else {
+    console.log(`  ⚠️  ${name} spiral: Activated briefly (last active: month ${spiral.lastActivatedMonth}, deactivated: month ${spiral.lastDeactivatedMonth})`);
+  }
+});
+
+console.log(`\n  Virtuous cascade: ${spirals.cascadeActive ? '✅ ACTIVE' : spirals.cascadeMonths > 0 ? '⚠️  WAS ACTIVE (ended)' : '❌ NEVER ACTIVATED'}`);
+if (spirals.cascadeMonths > 0) {
+  console.log(`    Total cascade duration: ${spirals.cascadeMonths} months`);
+}
+
+const trustCascades = result.finalState.history.cooperativeSpirals || [];
+console.log(`\n  Trust cascades: ${trustCascades.length} triggered`);
+if (trustCascades.length > 0) {
+  trustCascades.forEach(c => {
+    console.log(`    Month ${c.month}: ${c.type} (+${(c.trustBoost * 100).toFixed(0)}% trust)`);
+  });
+}
+
+const techCascades = result.finalState.positiveTippingPoints.activeCascades;
+console.log(`\n  Tech cascades: ${techCascades} currently active`);
+console.log(`    Total triggered: ${result.finalState.positiveTippingPoints.triggeredCascades.length}`);
+if (result.finalState.positiveTippingPoints.triggeredCascades.length > 0) {
+  result.finalState.positiveTippingPoints.triggeredCascades.forEach(c => {
+    console.log(`    Month ${c.triggeredMonth}: ${c.type} (reason: ${c.triggerReason})`);
+  });
+}
 
 console.log('\n✅ God mode test complete\n');
