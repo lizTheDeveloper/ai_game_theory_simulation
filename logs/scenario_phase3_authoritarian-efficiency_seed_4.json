@@ -1,8 +1,6 @@
 {
-  "scenarioId": "ai-alignment-first",
+  "scenarioId": "authoritarian-efficiency",
   "seed": 4,
-  "outcome": "extinction",
-  "monthsSimulated": 3,
   "spiralActivation": {
     "activeUpwardSpirals": [],
     "cascadeActive": false,

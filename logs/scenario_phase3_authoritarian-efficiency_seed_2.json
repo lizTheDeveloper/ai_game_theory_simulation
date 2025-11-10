@@ -1,8 +1,6 @@
 {
-  "scenarioId": "democratic-participation",
+  "scenarioId": "authoritarian-efficiency",
   "seed": 2,
-  "outcome": "utopia",
-  "monthsSimulated": 5,
   "spiralActivation": {
     "activeUpwardSpirals": [],
     "cascadeActive": false,

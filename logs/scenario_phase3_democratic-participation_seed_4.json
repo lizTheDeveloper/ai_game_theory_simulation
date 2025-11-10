@@ -1,6 +1,8 @@
 {
   "scenarioId": "democratic-participation",
   "seed": 4,
+  "outcome": "extinction",
+  "monthsSimulated": 3,
   "spiralActivation": {
     "activeUpwardSpirals": [],
     "cascadeActive": false,

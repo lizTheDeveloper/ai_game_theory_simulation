@@ -1,8 +1,6 @@
 {
-  "scenarioId": "democratic-participation",
+  "scenarioId": "authoritarian-efficiency",
   "seed": 1,
-  "outcome": "extinction",
-  "monthsSimulated": 5,
   "spiralActivation": {
     "activeUpwardSpirals": [
       "cognitive"

@@ -1,8 +1,6 @@
 {
-  "scenarioId": "democratic-participation",
+  "scenarioId": "scientific-acceleration",
   "seed": 7,
-  "outcome": "utopia",
-  "monthsSimulated": 5,
   "spiralActivation": {
     "activeUpwardSpirals": [],
     "cascadeActive": false,

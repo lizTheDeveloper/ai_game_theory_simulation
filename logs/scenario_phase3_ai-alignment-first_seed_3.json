@@ -1,6 +1,8 @@
 {
   "scenarioId": "ai-alignment-first",
   "seed": 3,
+  "outcome": "utopia",
+  "monthsSimulated": 5,
   "spiralActivation": {
     "activeUpwardSpirals": [],
     "cascadeActive": false,

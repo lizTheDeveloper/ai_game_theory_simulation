@@ -1,8 +1,6 @@
 {
-  "scenarioId": "ai-alignment-first",
-  "seed": 9,
-  "outcome": "utopia",
-  "monthsSimulated": 5,
+  "scenarioId": "authoritarian-efficiency",
+  "seed": 6,
   "spiralActivation": {
     "activeUpwardSpirals": [],
     "cascadeActive": false,
@@ -11,19 +9,19 @@
     "tippingPointCascades": 5
   },
   "finalQoL": {
-    "survivalAvg": 0.622782305983397,
-    "basicNeedsAvg": 0.6891152481716478,
-    "psychologicalAvg": 0.664281045996072,
-    "socialAvg": 0.5640702928105856,
+    "survivalAvg": 0.5931049685026535,
+    "basicNeedsAvg": 0.8118893696667214,
+    "psychologicalAvg": 0.7156057681599471,
+    "socialAvg": 0.8254559630143017,
     "healthAvg": 0.37833333333333335,
-    "environmentalAvg": 0.534,
-    "overallAvg": 0.5754303710491726
+    "environmentalAvg": 0.504,
+    "overallAvg": 0.6380649004461595
   },
   "finalEnvironment": {
     "globalTempDelta": 0,
     "co2Concentration": 0,
     "extinctionRate": 0
   },
-  "finalPopulation": 5.2549604361628806,
+  "finalPopulation": 5.061941638650872,
   "boundariesBreached": []
 }
