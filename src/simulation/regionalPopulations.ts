@@ -579,9 +579,26 @@ export function updateRegionalPopulations(state: GameState): void {
   }
 
   // === 8. UPDATE GLOBAL POPULATION ===
-  // Store in millions (consistent with regional populations)
-  pop.population = totalPopulation; // Already in millions
-  pop.monthlyExcessDeaths = totalCrisisDeaths; // Already in millions
+  // FIX (Nov 9, 2025): Convert millions → billions for global population
+  // Regional populations are in millions, global population is in billions
+  pop.population = assertFinite(totalPopulation / 1000, {
+    location: 'updateRegionalPopulations',
+    valueName: 'pop.population (global)',
+    month: state.currentMonth,
+    additionalInfo: {
+      totalPopulationMillions: totalPopulation,
+      totalPopulationBillions: totalPopulation / 1000,
+      regionCount: pop.regionalPopulations.length
+    }
+  });
+
+  // Monthly excess deaths remain in millions for aggregation
+  pop.monthlyExcessDeaths = assertFinite(totalCrisisDeaths, {
+    location: 'updateRegionalPopulations',
+    valueName: 'pop.monthlyExcessDeaths',
+    month: state.currentMonth,
+    additionalInfo: { totalCrisisDeaths }
+  });
 }
 
 /**

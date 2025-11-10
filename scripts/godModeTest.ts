@@ -100,7 +100,12 @@ if (!result.finalState) {
 
 console.log(`\n🎯 Final Outcome: ${result.finalState.outcome || 'ONGOING'}`);
 console.log(`📅 Months Simulated: ${result.finalState.currentMonth}`);
-console.log(`🌍 Population: ${(result.finalState.population / 1e9).toFixed(2)}B`);
+
+// FIX (Nov 9, 2025): Read from correct location (humanPopulationSystem.population)
+// Bug was: old code read result.finalState.population which is undefined
+// Dividing undefined / 1e9 = NaN
+const populationValue = result.finalState.humanPopulationSystem?.population ?? 0;
+console.log(`🌍 Population: ${isNaN(populationValue) ? '❌ NaN' : populationValue.toFixed(2)}B`);
 
 // Quality of Life breakdown (NEW: Tiered structure)
 console.log('\n📈 Quality of Life Systems:');
@@ -164,7 +169,13 @@ console.log(`  AI agents: ${result.finalState.aiAgents.length}`);
 if (result.finalState.aiAgents.length > 0) {
   const topAgent = result.finalState.aiAgents[0];
   console.log(`  Top agent: ${topAgent.name}`);
-  console.log(`  Capabilities (avg): ${Object.values(topAgent.capabilities).reduce((a, b) => a + b, 0) / 17}`);
+  // FIX (Nov 9, 2025): Guard against undefined capabilities
+  if (topAgent.capabilities && typeof topAgent.capabilities === 'object') {
+    const avgCap = Object.values(topAgent.capabilities).reduce((a, b) => a + b, 0) / 17;
+    console.log(`  Capabilities (avg): ${avgCap.toFixed(2)}`);
+  } else {
+    console.log(`  Capabilities: ❌ UNDEFINED`);
+  }
 }
 
 // Crises encountered
@@ -225,11 +236,15 @@ if (result.finalState.climate && state.climate) {
 if (result.finalState.ecology && state.ecology) {
   console.log(`🦋 Biodiversity: ${result.finalState.ecology.extinctionRate > 0.5 ? '❌ COLLAPSED' : '✅ PRESERVED'} (${(result.finalState.ecology.extinctionRate * 100).toFixed(1)}%, Δ = +${((result.finalState.ecology.extinctionRate - state.ecology.extinctionRate) * 100).toFixed(1)}%)`);
 }
-console.log(`👥 Population: ${isNaN(result.finalState.population) ? '💀 NaN (CRASHED)' : result.finalState.population < 5e9 ? '⚠️  DECLINED' : '✅ SUSTAINED'} (${isNaN(result.finalState.population) ? 'NaN' : (result.finalState.population / 1e9).toFixed(2)}B)`);
+// FIX (Nov 9, 2025): Use correct population source
+const finalPop = result.finalState.humanPopulationSystem?.population ?? 0;
+console.log(`👥 Population: ${isNaN(finalPop) ? '💀 NaN (CRASHED)' : finalPop < 5 ? '⚠️  DECLINED' : '✅ SUSTAINED'} (${isNaN(finalPop) ? 'NaN' : finalPop.toFixed(2)}B)`);
 
 // Gap Analysis
 console.log('\n🔍 Coverage Gaps (Hypotheses):');
-if (isNaN(result.finalState.population)) console.log(`  🚨 CRITICAL: Population = NaN - simulation experienced catastrophic failure`);
+// FIX (Nov 9, 2025): Use correct population source
+const popForCheck = result.finalState.humanPopulationSystem?.population ?? 0;
+if (isNaN(popForCheck)) console.log(`  🚨 CRITICAL: Population = NaN - simulation experienced catastrophic failure`);
 if (survivalAvg < 0.9) console.log(`  ⚠️  Survival fundamentals at ${(survivalAvg * 100).toFixed(1)}% - critical gaps in food/water/shelter/thermal safety`);
 if (overallAvg < 0.7) console.log(`  ⚠️  Overall QoL ${(overallAvg * 100).toFixed(1)}% despite all tech - missing critical mechanisms?`);
 if (result.finalState.climate && state.climate && result.finalState.climate.globalTempDelta > state.climate.globalTempDelta + 0.5) console.log(`  ⚠️  Climate WORSENED by +${(result.finalState.climate.globalTempDelta - state.climate.globalTempDelta).toFixed(2)}°C - tech deployed too late or insufficient?`);
