@@ -231,6 +231,8 @@ function applyStartingConditions(
 
 /**
  * Apply tech deployment strategy
+ *
+ * OPTIMIZATION (Nov 10, 2025): Use Set for O(1) tech filtering (instead of includes() which is O(m))
  */
 function applyTechDeployment(
   state: GameState,
@@ -239,10 +241,15 @@ function applyTechDeployment(
 ): void {
   const allTech = getAllTech();
 
-  // Get specific techs to deploy (default: all)
-  const techsToDeploy = strategy.specificTechs && strategy.specificTechs.length > 0
-    ? allTech.filter(t => strategy.specificTechs!.includes(t.id))
-    : allTech;
+  // OPTIMIZATION: Get specific techs to deploy (default: all)
+  // Use Set for O(n) filtering instead of O(n·m) with includes()
+  let techsToDeploy: any[];
+  if (strategy.specificTechs && strategy.specificTechs.length > 0) {
+    const specificSet = new Set(strategy.specificTechs);
+    techsToDeploy = allTech.filter(t => specificSet.has(t.id));
+  } else {
+    techsToDeploy = allTech;
+  }
 
   console.log(`    Strategy: ${strategy.mode}`);
   console.log(`    Technologies: ${techsToDeploy.length}`);
@@ -285,6 +292,11 @@ function applyTechDeployment(
 /**
  * Deploy all technologies immediately at specified level (god mode style)
  * Copied from godModeTest.ts
+ *
+ * OPTIMIZATION (Nov 10, 2025): O(n²) → O(n)
+ * - Use Set for O(1) unlocked tech lookup (instead of includes())
+ * - Use Map for O(1) deployed tech lookup (instead of find())
+ * - Single pass for unlock + deployment
  */
 function deployAllTech(
   state: GameState,
@@ -293,24 +305,30 @@ function deployAllTech(
 ): void {
   console.log(`    Deploying ${technologies.length} technologies at ${(deploymentLevel * 100).toFixed(0)}%...`);
 
-  // First, unlock all tech
-  for (const tech of technologies) {
-    if (!state.techTreeState.unlockedTech.includes(tech.id)) {
-      state.techTreeState.unlockedTech.push(tech.id);
-      state.techTreeState.techUnlockedCount++;
-    }
-  }
-
   // Initialize global deployment array if needed
   if (!state.techTreeState.regionalDeployment['global']) {
     state.techTreeState.regionalDeployment['global'] = [];
   }
 
-  // Deploy all tech at specified level in global region
-  for (const tech of technologies) {
-    // Check if already deployed (e.g., deployed_2025 tech)
-    const existing = state.techTreeState.regionalDeployment['global'].find(d => d.techId === tech.id);
+  // OPTIMIZATION: Build Set of unlocked tech for O(1) lookup (instead of includes() which is O(n))
+  const unlockedSet = new Set(state.techTreeState.unlockedTech);
 
+  // OPTIMIZATION: Build Map of deployed tech for O(1) lookup (instead of find() which is O(n))
+  const deployedMap = new Map(
+    state.techTreeState.regionalDeployment['global'].map(d => [d.techId, d])
+  );
+
+  // OPTIMIZATION: Single pass - unlock and deploy in same loop (O(n) instead of 2 separate O(n) loops)
+  for (const tech of technologies) {
+    // Unlock if not already unlocked
+    if (!unlockedSet.has(tech.id)) {
+      state.techTreeState.unlockedTech.push(tech.id);
+      state.techTreeState.techUnlockedCount++;
+      unlockedSet.add(tech.id); // Keep Set in sync
+    }
+
+    // Deploy (update existing or add new)
+    const existing = deployedMap.get(tech.id);
     if (existing) {
       // Update existing deployment to target level
       existing.deploymentLevel = deploymentLevel;
@@ -319,15 +337,17 @@ function deployAllTech(
       }
     } else {
       // Add new deployment
-      state.techTreeState.regionalDeployment['global'].push({
+      const newDeployment = {
         techId: tech.id,
-        region: 'global',
+        region: 'global' as const,
         deploymentLevel: deploymentLevel,
         monthlyInvestment: 0,
         totalInvested: tech.deploymentCost,
-        deployedBy: ['scenario'],
+        deployedBy: ['scenario'] as const,
         effects: tech.effects,
-      });
+      };
+      state.techTreeState.regionalDeployment['global'].push(newDeployment);
+      deployedMap.set(tech.id, newDeployment); // Keep Map in sync
       state.techTreeState.techDeployedCount++;
     }
   }

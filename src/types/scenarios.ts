@@ -186,17 +186,10 @@ export interface ScenarioDefinition {
   /** Technology deployment strategy */
   techDeployment: TechDeploymentStrategy;
 
-<<<<<<< HEAD
   /** Government priority overrides (applied every month by ApplyScenarioPrioritiesPhase) */
   governmentPriorities?: ScenarioGovernmentPriorities;
 
   /** Government behavior overrides (deprecated, use governmentPriorities instead) */
-=======
-  /** Simple government priorities (used by ApplyScenarioPrioritiesPhase) */
-  governmentPriorities?: ScenarioGovernmentPriorities;
-
-  /** Government behavior overrides (for multi-country scenarios) */
->>>>>>> ff82f3cbd00ced78eae04c2cccbfd566e4d4b187
   governmentOverrides?: GovernmentPriorityOverride[];
 
   /** Comparison baseline scenario (default: 'no-tech' or 'god-mode') */
