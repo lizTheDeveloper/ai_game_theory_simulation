@@ -1587,7 +1587,18 @@ function addSegmentSpecificCrisisDeaths(
   }
   
   // Update population
-  pop.population = Math.max(0, pop.population - totalDeathsApplied);
+  // FIX (Nov 9, 2025): Add assertion to catch NaN propagation
+  const newPopulation = assertFinite(pop.population - totalDeathsApplied, {
+    location: 'applyDeathsWithCap',
+    valueName: 'newPopulation (after deaths)',
+    month: state.currentMonth,
+    additionalInfo: {
+      previousPopulation: pop.population,
+      totalDeathsApplied,
+      category
+    }
+  });
+  pop.population = Math.max(0, newPopulation);
 
   // FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch
   // totalDeathsApplied is in BILLIONS, but monthlyExcessDeaths/cumulativeCrisisDeaths are in MILLIONS
@@ -1700,7 +1711,19 @@ function addUniformCrisisDeaths(
   }
 
   // Apply immediate deaths
-  pop.population = Math.max(0, pop.population - deathsInBillions);
+  // FIX (Nov 9, 2025): Add assertion to catch NaN propagation
+  const newPopulation = assertFinite(pop.population - deathsInBillions, {
+    location: 'applyDeathsWithCapMonthly',
+    valueName: 'newPopulation (after deaths)',
+    month: state.currentMonth,
+    additionalInfo: {
+      previousPopulation: pop.population,
+      deathsInBillions,
+      exposedFraction,
+      mortalityRate
+    }
+  });
+  pop.population = Math.max(0, newPopulation);
 
   // FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch
   // deathsInBillions is in BILLIONS, but monthlyExcessDeaths/cumulativeCrisisDeaths are in MILLIONS
@@ -1819,10 +1842,18 @@ export function addAcuteCrisisDeaths(
     return;
   }
 
-  if (isNaN(pop.population)) {
-    console.warn(`⚠️  Population is NaN before crisis deaths (${reason}), resetting to 0.1B`);
-    pop.population = 0.1; // Small survival population as fallback
-  }
+  // FIX (Nov 9, 2025): Fail loudly on NaN instead of silent fallback
+  pop.population = assertFinite(pop.population, {
+    location: 'addAcuteCrisisDeaths',
+    valueName: 'pop.population (before applying deaths)',
+    month: state.currentMonth,
+    additionalInfo: {
+      reason,
+      mortalityRate,
+      exposedFraction,
+      category
+    }
+  });
 
 
   // P2.3 UPDATE (Oct 16, 2025): Route to segment-specific or uniform mortality

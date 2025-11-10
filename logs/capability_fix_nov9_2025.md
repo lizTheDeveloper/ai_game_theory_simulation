@@ -142,6 +142,34 @@ Even deploying ALL 73 technologies at month 0 results in catastrophic system fai
 
 ---
 
+## Follow-Up: NaN Population Bug (Nov 9, 2025)
+
+**Symptom:** God mode test crashes with `Population = NaN` around month 48-49
+
+**Root Causes Found:**
+
+1. **Units mismatch** (`regionalPopulations.ts:583`):
+   - Bug: Assigned millions to `pop.population` (should be billions)
+   - Fix: Added `/1000` conversion with assertion
+
+2. **Silent fallback** (`populationDynamics.ts:1845-1847`):
+   - Bug: NaN masked with `pop.population = 0.1` fallback
+   - Fix: Replaced with `assertFinite` that fails loudly
+
+3. **Silent fallback** (`regionalPopulations.ts:478-483`):
+   - Bug: Invalid regional population fell back to `previousPopulation * 0.99`
+   - Fix: Replaced with `assertFinite` on calculation
+
+4. **Missing assertions** on population mutations:
+   - Added `assertFinite` to `applyDeathsWithCap` (line 1590)
+   - Added `assertFinite` to `applyDeathsWithCapMonthly` (line 1714)
+
+**Status:** Assertions added, but NaN still occurs. Root cause not yet traced - no assertions fired, suggesting NaN originates outside tracked paths.
+
+**Investigation doc:** `logs/nan_investigation_nov9_2025.md`
+
+---
+
 ## Lessons for Future Maintainers
 
 1. **Question defensive assertions** - Just because a value CAN be capped doesn't mean it SHOULD be

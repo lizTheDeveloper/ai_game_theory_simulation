@@ -353,8 +353,23 @@ const probability = assertProbability(riskScore, {
 3. Geometric means have MIN_FLOOR (prevent division by zero)
 4. No circular dependencies (read → transform → write back)
 5. Division operations protected from zero denominators
+6. Access population from correct source (see below)
 
-**Why this matters:** The Oct 2025 ecology NaN bug was hidden for months by a `?? 50` fallback. Silent fallbacks mask bugs.
+**Accessing Population (Nov 2025 fix):**
+```typescript
+// ❌ WRONG - This field doesn't exist on GameState
+const pop = state.population;
+
+// ✅ CORRECT - Access from humanPopulationSystem
+const pop = state.humanPopulationSystem.population;
+
+// ✅ DEFENSIVE - Guard against undefined in test scripts
+const pop = state.humanPopulationSystem?.population ?? 0;
+```
+
+**Context:** `state.population` doesn't exist on GameState. There's a legacy `state.globalMetrics.population` field (initialized to 8.0) but it's never synced after initialization. Always use `humanPopulationSystem.population` as the source of truth.
+
+**Why this matters:** The Oct 2025 ecology NaN bug was hidden for months by a `?? 50` fallback. The Nov 2025 god mode NaN was a test script reading from wrong location (`undefined / 1e9 = NaN`). Silent fallbacks mask bugs.
 
 ### State Mutation & Logging
 
