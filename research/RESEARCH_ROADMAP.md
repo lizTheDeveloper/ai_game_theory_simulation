@@ -445,6 +445,14 @@ Research priorities ranked by:
 
 **Status:** Major citation audit completed Oct-Nov 2025. 200+ fabricated citations identified and corrected.
 
+**Active Verification Queue:**
+- **Multi-Agent Coordination & Emergent Behavior (Nov 10, 2025)** - `research/verification_a5a4d7c_20251110.md`
+  - 5 papers (arXiv 2025 + Nature SR 2025)
+  - Critical claims: 27% synergy amplification, 99.9% success rate, 14 failure modes
+  - Parameter recommendations: ToM threshold (75th percentile), effectiveness multipliers (1.15×-1.32×), failure probabilities (1.3%-13.48%)
+  - Priority: HIGH - Multiple specific numerical claims need verification
+  - Status: PENDING orchestrator pickup
+
 **Active Issues:**
 - **COMMONLY_HALLUCINATED_CITATIONS.md:** 47 papers that don't exist, systematically removed
 - **AI_PROBLEMS_INDEX_CITATION_AUDIT.md:** Complete audit of AI safety citations
