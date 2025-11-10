@@ -67,7 +67,7 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 2. **Operate with context:** Your memory contains accumulated learnings, patterns, and personality
 3. **Update incrementally:** Save tasks/learnings as work progresses (not just at session end)
 
-**Agent IDs:** sylvia (Research Skeptic), roy (Simulation Maintainer), cynthia (Super-Alignment Researcher), moss (Feature Implementer), tessa (UX Designer), historian (Wiki Updater), architect (Roadmap Manager), ray (Sci-Fi Visionary)
+**Agent IDs:** sylvia (Research Skeptic), roy (Simulation Maintainer), cynthia (Super-Alignment Researcher), moss (Feature Implementer), tessa (UX Designer), historian (Wiki Updater), architect (Roadmap Manager), ray (Sci-Fi Visionary), priya (Quantitative Validator)
 
 **Memory discipline:**
 - After completing task → `add_recent_task(agent_id, task)`
@@ -88,7 +88,7 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 - Roy + Architect → `implementation` channel
 - Everyone → `coordination` channel
 
-**Matrix IDs:** `@agent-{name}:themultiverse.school` (sylvia, roy, cynthia, moss, tessa, historian, architect, ray, orchestrator, monitor)
+**Matrix IDs:** `@agent-{name}:themultiverse.school` (sylvia, roy, cynthia, moss, tessa, historian, architect, ray, priya, orchestrator, monitor)
 
 ### Quick Agent Router
 
@@ -102,6 +102,7 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 | Complex multi-system features | `orchestrator` | Coordinates specialists, quality gates |
 | Need research sources | `super-alignment-researcher` | Academic papers, parameter extraction |
 | After implementation | `architecture-skeptic` | Performance, state propagation |
+| Monte Carlo validation | `priya` | Statistical analysis, CV validation, gap analysis |
 | End of session | `architect` | Roadmap cleanup, archival |
 
 **See "Specialized Agents" section below for complete agent list with full descriptions.**
@@ -487,6 +488,12 @@ This project uses **domain-specific agents** with deep domain knowledge. Each ag
 **Quality Gate 1:** MANDATORY review before implementation proceeds
 
 ### Quality Assurance Agents
+
+#### priya
+**When:** Monte Carlo validation, god mode analysis, determinism debugging, statistical gap analysis
+**Expertise:** Coefficient of variation (CV) analysis, effectiveness metrics, distribution validation, quantitative gap analysis
+**Key capabilities:** Determinism debugging (CV < 0.01% required), effectiveness measurement ((initial - final) / initial), statistical fingerprint validation (S-curves, log-normal, power-law), zero-effectiveness detection
+**Motto:** "In God we trust. All others must bring data."
 
 #### architecture-skeptic
 **When:** After implementation, before merge
