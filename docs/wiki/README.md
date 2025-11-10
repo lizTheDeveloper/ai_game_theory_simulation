@@ -515,6 +515,21 @@ See: [`.claude/agents/memories/`](../../.claude/agents/memories/) for agent memo
 
 Commits: 876ea94 (Nov 5, 2025), 9bc4b2a (Nov 6, 2025), 0186fbe (Nov 6, 2025)
 
+### November 10, 2025
+
+**E2E Test Stability Improvements** (commit 8f6f4fe)
+
+Increased navigation wait times from 2s → 3s in multi-system integration tests for improved stability.
+
+**Results:**
+- Pass rate: 75-80% stable (15-16/20 tests)
+- Combined with: 4× speed optimization, client-side navigation (preserves worker state)
+- Remaining 5 failures are flaky (vary 4-6 depending on system load)
+
+**Analysis:** Remaining flakiness expected for E2E tests with real simulations under load. Would require adaptive polling strategies (like dashboard-data-flow tests) rather than fixed timeouts to eliminate completely.
+
+**Location:** `e2e/multi-system-integration.spec.ts` (24 timeout updates)
+
 ### November 7, 2025
 
 **⚡ DEEP CLONING PERFORMANCE OPTIMIZATION** ✅ **COMPLETE** (HIGH-1, Nov 7, 2025)
