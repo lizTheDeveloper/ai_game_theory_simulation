@@ -169,6 +169,7 @@ import { GovernanceSystemPhase } from './engine/phases/GovernanceSystemPhase';  
 import { SocialStabilitySystemPhase } from './engine/phases/SocialStabilitySystemPhase';  // Consolidated social cohesion, trust recovery, paranoia, stability
 import { CooperativeSystemsPhase } from './engine/phases/CooperativeSystemsPhase';  // Consolidated collective formation/actions, upward/cooperative spirals, cooperative ownership
 import { InternationalRelationsPhase } from './engine/phases/InternationalRelationsPhase';  // Consolidated conflict resolution, diplomatic AI, MAD deterrence, flash wars
+import { ApplyScenarioPrioritiesPhase } from './engine/phases/ApplyScenarioPrioritiesPhase';  // Scenario testing (Nov 10, 2025): Government priority overrides for systematic testing
 import { assertStateProperty } from './utils/assertions';  // Defensive fallback audit (Nov 6, 2025)
 
 /**
@@ -479,6 +480,9 @@ export class SimulationEngine {
     this.orchestrator = new PhaseOrchestrator();
 
     // Register all phase implementations
+    // Order 1.5: Scenario priority overrides (Nov 10, 2025)
+    this.orchestrator.registerPhase(new ApplyScenarioPrioritiesPhase());  // Applies government priority overrides for scenario testing
+
     // Batch 1: Simple calculations (30.x)
     this.orchestrator.registerPhase(new AIWelfareUpdatePhase());  // Phase 0 (Oct 20, 2025): AI QoL measurement (order 2.5)
     this.orchestrator.registerPhase(new UnemploymentPhase());

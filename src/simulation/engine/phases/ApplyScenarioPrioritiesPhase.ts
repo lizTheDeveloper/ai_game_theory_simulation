@@ -34,7 +34,7 @@
  */
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
-import { ScenarioGovernmentPriorities } from '@/types/scenario';
+import { ScenarioGovernmentPriorities } from '@/types/scenarios';
 import {
   assertFinite,
   assertProbability,
