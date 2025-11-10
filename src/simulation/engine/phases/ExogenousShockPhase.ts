@@ -806,10 +806,9 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
     // War zones experience 5× higher mortality
     if (state.countryPopulationSystem) {
       const affectedCount = Math.floor(1 + rng() * 3);
-      // FIX (Nov 7, 2025): Sort by name first for deterministic base order (Issue #11)
+      // PERF FIX (Nov 10, 2025): Single shuffle, no pre-sort needed (Phase 3 optimization)
       const shuffled = Object.values(state.countryPopulationSystem.countries)
-        .sort((a, b) => a.name.localeCompare(b.name)) // Deterministic base order
-        .sort(() => rng() - 0.5); // THEN randomize deterministically
+        .sort(() => rng() - 0.5); // Deterministic shuffle with RNG
       for (let i = 0; i < affectedCount && i < shuffled.length; i++) {
         const country = shuffled[i];
         addMortalityRisk(state.humanPopulationSystem, {
@@ -967,11 +966,12 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
  * Historical: 4 transformative breakthroughs (transistor, IC, internet, transformers)
  */
 function applyTechBreakthroughShock(state: GameState, rng: RNGFunction): GameEvent[] {
-  // Find locked high-difficulty technologies
-  const completedSet = new Set(state.technologyTree.filter(t => t.completed).map(t => t.id));
+  // PERF FIX (Nov 10, 2025): Single filter pass instead of creating Set first (Phase 3 optimization)
+  // Before: 2 passes (filter for completed + map to Set, then filter for candidates)
+  // After: 1 pass (filter for non-completed high-difficulty directly)
   const candidateTechs = state.technologyTree ?
     state.technologyTree.filter(tech =>
-      !completedSet.has(tech.id) &&
+      !tech.completed &&
       (tech.difficulty === 'high' || tech.difficulty === 'very_high')
     ) : [];
 
