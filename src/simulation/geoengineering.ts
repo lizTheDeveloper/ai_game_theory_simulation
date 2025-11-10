@@ -26,7 +26,8 @@ import {
 import {
   assertFinite,
   assertProbability,
-  assertInRange
+  assertInRange,
+  assertPlanetaryBoundary
 } from './utils/assertions';
 
 // Helper to add events
@@ -144,7 +145,15 @@ function updateIronFertilization(state: GameState, tech: IronFertilizationState)
   
   // Sequester CO2
   const co2Removal = 0.008 * deploymentFactor * qualityFactor; // Up to 0.8% per month
-  resources.co2.atmosphericCO2 = Math.max(280, resources.co2.atmosphericCO2 - co2Removal * 10); // ppm
+  resources.co2.atmosphericCO2 = assertPlanetaryBoundary(
+    resources.co2.atmosphericCO2 - co2Removal * 10,
+    'co2',
+    {
+      location: 'updateIronFertilization',
+      valueName: 'atmosphericCO2',
+      month: state.currentMonth
+    }
+  ); // ppm, bounded [280, 1000] per RCP8.5 (Xia et al. 2022, IPCC AR6)
   
   // Track cumulative impact
   tech.cumulativeImpact += phytoBoost + co2Removal;
@@ -223,7 +232,15 @@ function updateOceanAlkalinity(state: GameState, tech: OceanAlkalinityState): vo
   ocean.pH = Math.min(8.2, ocean.pH + pHRecovery);
   
   const co2Sequestration = 0.01 * deploymentFactor * qualityFactor; // 1% per month
-  resources.co2.atmosphericCO2 = Math.max(280, resources.co2.atmosphericCO2 - co2Sequestration * 10);
+  resources.co2.atmosphericCO2 = assertPlanetaryBoundary(
+    resources.co2.atmosphericCO2 - co2Sequestration * 10,
+    'co2',
+    {
+      location: 'updateOceanAlkalinity',
+      valueName: 'atmosphericCO2',
+      month: state.currentMonth
+    }
+  ); // ppm, bounded [280, 1000] per RCP8.5 (Xia et al. 2022, IPCC AR6)
   
   // Track alkalinity added (PERMANENT!)
   tech.totalAlkalinityAdded += deploymentFactor * 0.01;

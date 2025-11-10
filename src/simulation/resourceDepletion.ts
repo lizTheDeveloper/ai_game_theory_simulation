@@ -22,7 +22,7 @@ import {
   TimberResource,
   CO2System,
 } from '../types/resources';
-import { assertEconomicStage, assertStateProperty, assertFinite } from './utils/assertions';
+import { assertEconomicStage, assertStateProperty, assertFinite, assertPlanetaryBoundary } from './utils/assertions';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 // Helper to add events to state
@@ -915,13 +915,13 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
     month: state.currentMonth
   });
 
-  co2.atmosphericCO2 = assertFinite(
+  co2.atmosphericCO2 = assertPlanetaryBoundary(
     co2.atmosphericCO2 + ppmIncrease,
+    'co2',
     {
       location: 'updateCO2System',
-      valueName: 'atmosphericCO2 (after increase)',
-      month: state.currentMonth,
-      additionalInfo: { oldValue: co2.atmosphericCO2, ppmIncrease }
+      valueName: 'atmosphericCO2',
+      month: state.currentMonth
     }
   );
 
