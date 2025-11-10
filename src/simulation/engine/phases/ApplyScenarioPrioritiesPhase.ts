@@ -192,9 +192,9 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       gov.consensusBuildingEfficiency = value;
       gov.minorityProtectionStrength = value;
 
-      // Also set backward compatibility fields
-      state.government.democracy = value;
-      state.government.democracyQuality = value;
+      // FIX (Nov 10, 2025): Removed readonly property assignments
+      // state.government.democracy and democracyQuality are computed getters (initialization.ts:682-690)
+      // They automatically calculate from governanceQuality fields, so we don't need to set them
 
       overridesApplied.push(
         `Democracy: ${(oldParticipation * 100).toFixed(0)}% → ${(value * 100).toFixed(0)}% (participation, transparency, consensus)`
