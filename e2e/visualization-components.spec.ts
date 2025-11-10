@@ -17,6 +17,10 @@ async function initializeSimulation(page: any) {
   await page.goto('/');
   await page.getByRole('button', { name: /configure.*start/i }).click();
   await page.waitForSelector('role=dialog', { timeout: 2000 });
+
+  // Select 4x speed for faster tests (7.5s/month instead of 30s/month)
+  await page.getByLabel(/simulation speed/i).selectOption('4.0');
+
   await page.getByRole('button', { name: /^initialize$/i }).click();
   await page.waitForSelector('role=dialog', { state: 'hidden', timeout: 15000 });
   await page.waitForTimeout(5000);
