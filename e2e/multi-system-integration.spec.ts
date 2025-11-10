@@ -34,8 +34,10 @@ async function initializeAndRunSimulation(page: any, durationMs: number = 30000)
 test.describe('AI Systems → QoL Integration', () => {
 
   test('should show relationship between AI capability and quality of life', async ({ page }) => {
-    await initializeAndRunSimulation(page, 40000);
-    await page.goto('/dashboard');
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
+
+    // Navigate using client-side navigation to preserve worker state
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(2000);
 
     // Get AI capability value
@@ -50,15 +52,15 @@ test.describe('AI Systems → QoL Integration', () => {
   });
 
   test('should reflect AI agent count across Overview and AI Agents dashboards', async ({ page }) => {
-    await initializeAndRunSimulation(page, 20000);
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
 
-    // Check Overview
-    await page.goto('/dashboard');
-    await page.waitForTimeout(1000);
+    // Check Overview - use client-side navigation
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
+    await page.waitForTimeout(2000);
     const overviewAgentText = await page.getByText(/ai agents/i).locator('..').textContent();
 
-    // Check AI Agents dashboard
-    await page.goto('/ai-agents');
+    // Check AI Agents dashboard - use client-side navigation
+    await page.getByRole('link', { name: /ai.*agents/i }).click();
     await page.waitForTimeout(2000);
 
     // Should show consistent agent data
@@ -68,8 +70,10 @@ test.describe('AI Systems → QoL Integration', () => {
   });
 
   test('should show alignment score impact on system stability', async ({ page }) => {
-    await initializeAndRunSimulation(page, 40000);
-    await page.goto('/dashboard');
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
+
+    // Navigate using client-side navigation
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(2000);
 
     // Get alignment score
@@ -87,8 +91,10 @@ test.describe('AI Systems → QoL Integration', () => {
 test.describe('Environmental Systems → Population Integration', () => {
 
   test('should show climate impact on population metrics', async ({ page }) => {
-    await initializeAndRunSimulation(page, 50000);
-    await page.goto('/dashboard');
+    await initializeAndRunSimulation(page, 12000); // ~1.6 months at 4x speed
+
+    // Navigate using client-side navigation
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(2000);
 
     // Get population
@@ -103,15 +109,15 @@ test.describe('Environmental Systems → Population Integration', () => {
   });
 
   test('should reflect environmental metrics consistently across dashboards', async ({ page }) => {
-    await initializeAndRunSimulation(page, 30000);
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
 
-    // Check Overview environmental panel
-    await page.goto('/dashboard');
-    await page.waitForTimeout(1000);
+    // Check Overview environmental panel - use client-side navigation
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
+    await page.waitForTimeout(2000);
     const overviewClimate = await page.getByText(/climate stability/i).locator('..').textContent();
 
-    // Check Environment dashboard
-    await page.goto('/environment');
+    // Check Environment dashboard - use client-side navigation
+    await page.getByRole('link', { name: /environment/i }).click();
     await page.waitForTimeout(2000);
 
     // Should show consistent environmental data
@@ -120,8 +126,10 @@ test.describe('Environmental Systems → Population Integration', () => {
   });
 
   test('should show biodiversity impact on ecological paradigm score', async ({ page }) => {
-    await initializeAndRunSimulation(page, 40000);
-    await page.goto('/dashboard');
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
+
+    // Navigate using client-side navigation
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(2000);
 
     // Get biodiversity
@@ -139,16 +147,16 @@ test.describe('Environmental Systems → Population Integration', () => {
 test.describe('Crisis Events → Multi-System Impact', () => {
 
   test('should show crisis events affecting multiple metrics', async ({ page }) => {
-    await initializeAndRunSimulation(page, 60000);
+    await initializeAndRunSimulation(page, 18000); // ~2.4 months at 4x speed (give crises time to occur)
 
     // Check for active crises
-    await page.goto('/crises');
+    await page.getByRole('link', { name: /crisis|crises/i }).click();
     await page.waitForTimeout(2000);
 
     const hasCrisisData = await page.locator('text=/crisis|event|active/i').first().isVisible();
 
     // Check impact on Overview metrics
-    await page.goto('/dashboard');
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(1000);
 
     // Metrics should reflect crisis impacts (if any occurred)
@@ -157,15 +165,15 @@ test.describe('Crisis Events → Multi-System Impact', () => {
   });
 
   test('should reflect crisis impacts in environmental dashboard', async ({ page }) => {
-    await initializeAndRunSimulation(page, 60000);
+    await initializeAndRunSimulation(page, 18000); // ~2.4 months at 4x speed
 
     // Check crises
-    await page.goto('/crises');
+    await page.getByRole('link', { name: /crisis|crises/i }).click();
     await page.waitForTimeout(2000);
     const crisisContent = await page.content();
 
     // Check environmental impact
-    await page.goto('/environment');
+    await page.getByRole('link', { name: /environment/i }).click();
     await page.waitForTimeout(2000);
 
     // Environment should show data (potentially affected by crises)
@@ -174,8 +182,8 @@ test.describe('Crisis Events → Multi-System Impact', () => {
   });
 
   test('should show extinction risk correlating with crisis severity', async ({ page }) => {
-    await initializeAndRunSimulation(page, 60000);
-    await page.goto('/dashboard');
+    await initializeAndRunSimulation(page, 18000); // ~2.4 months at 4x speed
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(2000);
 
     // Get extinction risk
@@ -190,15 +198,15 @@ test.describe('Crisis Events → Multi-System Impact', () => {
 test.describe('Technology Impact Integration', () => {
 
   test('should show technology tree state affecting system capabilities', async ({ page }) => {
-    await initializeAndRunSimulation(page, 40000);
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
 
     // Check tech tree
-    await page.goto('/tech-tree');
+    await page.getByRole('link', { name: /tech/i }).click();
     await page.waitForTimeout(2000);
     const hasTechData = await page.locator('text=/tech|research|breakthrough/i').first().isVisible();
 
     // Check if capabilities reflect tech progress
-    await page.goto('/dashboard');
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(1000);
 
     const aiCapability = await page.getByText(/ai capability/i).locator('..').textContent();
@@ -206,13 +214,13 @@ test.describe('Technology Impact Integration', () => {
   });
 
   test('should reflect breakthrough technologies in environmental metrics', async ({ page }) => {
-    await initializeAndRunSimulation(page, 50000);
+    await initializeAndRunSimulation(page, 12000); // ~1.6 months at 4x speed
 
     // Tech breakthroughs might affect environment
-    await page.goto('/tech-tree');
+    await page.getByRole('link', { name: /tech/i }).click();
     await page.waitForTimeout(2000);
 
-    await page.goto('/environment');
+    await page.getByRole('link', { name: /environment/i }).click();
     await page.waitForTimeout(2000);
 
     // Environment should show current state (potentially improved by tech)
@@ -224,8 +232,8 @@ test.describe('Technology Impact Integration', () => {
 test.describe('Paradigm → System Behavior Integration', () => {
 
   test('should show all four paradigm perspectives with different scores', async ({ page }) => {
-    await initializeAndRunSimulation(page, 40000);
-    await page.goto('/dashboard');
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(2000);
 
     // Get all paradigm scores
@@ -242,19 +250,19 @@ test.describe('Paradigm → System Behavior Integration', () => {
 
     // They should not all be exactly the same (indicating real differences)
     const allSame = western === development && development === ecological && ecological === indigenous;
-    // It's possible they're all the same, but unlikely after 40s of simulation
+    // It's possible they're all the same, but unlikely after simulation
   });
 
   test('should reflect paradigm scores consistently on Paradigms dashboard', async ({ page }) => {
-    await initializeAndRunSimulation(page, 30000);
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
 
     // Get scores from Overview
-    await page.goto('/dashboard');
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(1000);
     const overviewWestern = await page.getByText(/western liberal/i).locator('..').locator('text=/\\d+\\.\\d+/').first().textContent();
 
     // Check Paradigms dashboard
-    await page.goto('/paradigms');
+    await page.getByRole('link', { name: /paradigms/i }).click();
     await page.waitForTimeout(2000);
 
     // Should show paradigm data
@@ -263,8 +271,8 @@ test.describe('Paradigm → System Behavior Integration', () => {
   });
 
   test('should show paradigm influence on policy priorities', async ({ page }) => {
-    await initializeAndRunSimulation(page, 40000);
-    await page.goto('/paradigms');
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
+    await page.getByRole('link', { name: /paradigms/i }).click();
     await page.waitForTimeout(2000);
 
     // Paradigm scores should indicate different priorities
@@ -276,22 +284,22 @@ test.describe('Paradigm → System Behavior Integration', () => {
 test.describe('Cross-Dashboard State Consistency', () => {
 
   test('should maintain month consistency across all dashboards', async ({ page }) => {
-    await initializeAndRunSimulation(page, 30000);
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
 
     // Get month from navigation
     const navMonth = await page.locator('text=/Month \\d+/i').first().textContent();
 
-    // Check multiple dashboards
+    // Check multiple dashboards using client-side navigation
     const dashboards = [
-      '/dashboard',
-      '/paradigms',
-      '/environment',
-      '/ai-agents',
-      '/crises',
+      { name: /overview|dashboard/i },
+      { name: /paradigms/i },
+      { name: /environment/i },
+      { name: /ai.*agents/i },
+      { name: /crisis|crises/i },
     ];
 
     for (const dashboard of dashboards) {
-      await page.goto(dashboard);
+      await page.getByRole('link', { name: dashboard.name }).first().click();
       await page.waitForTimeout(1000);
 
       // Month should be consistent in navigation
@@ -301,13 +309,13 @@ test.describe('Cross-Dashboard State Consistency', () => {
   });
 
   test('should show synchronized simulation state across tabs', async ({ page }) => {
-    await initializeAndRunSimulation(page, 20000);
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
 
     // Check running state is consistent
-    await page.goto('/dashboard');
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     const status1 = await page.getByText(/(running|paused)/i).first().textContent();
 
-    await page.goto('/paradigms');
+    await page.getByRole('link', { name: /paradigms/i }).click();
     const status2 = await page.getByText(/(running|paused)/i).first().textContent();
 
     // Status should be the same (simulation is paused)
@@ -327,13 +335,13 @@ test.describe('Cross-Dashboard State Consistency', () => {
     await page.waitForTimeout(5000);
 
     // Check seed on different pages
-    await page.goto('/dashboard');
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await expect(page.getByText(testSeed.toString())).toBeVisible();
 
-    await page.goto('/paradigms');
+    await page.getByRole('link', { name: /paradigms/i }).click();
     await expect(page.getByText(testSeed.toString())).toBeVisible();
 
-    await page.goto('/environment');
+    await page.getByRole('link', { name: /environment/i }).click();
     await expect(page.getByText(testSeed.toString())).toBeVisible();
   });
 });
@@ -341,15 +349,15 @@ test.describe('Cross-Dashboard State Consistency', () => {
 test.describe('Regional Data Integration', () => {
 
   test('should show regional breakdowns affecting global metrics', async ({ page }) => {
-    await initializeAndRunSimulation(page, 40000);
+    await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
 
     // Check global metrics
-    await page.goto('/dashboard');
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(1000);
     const globalPop = await page.locator('text=/\\d+\\.\\d+B/').first().textContent();
 
     // Check regional data
-    await page.goto('/regions');
+    await page.getByRole('link', { name: /regions/i }).click();
     await page.waitForTimeout(2000);
 
     // Regions should show detailed breakdowns
@@ -361,15 +369,15 @@ test.describe('Regional Data Integration', () => {
 test.describe('Timeline Integration', () => {
 
   test('should show events in timeline matching dashboard state changes', async ({ page }) => {
-    await initializeAndRunSimulation(page, 50000);
+    await initializeAndRunSimulation(page, 12000); // ~1.6 months at 4x speed
 
     // Get current state
-    await page.goto('/dashboard');
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(1000);
     const currentMonth = await page.locator('text=/Month \\d+/i').first().textContent();
 
     // Check timeline
-    await page.goto('/timeline');
+    await page.getByRole('link', { name: /timeline/i }).click();
     await page.waitForTimeout(2000);
 
     // Timeline should show events up to current month
@@ -378,15 +386,15 @@ test.describe('Timeline Integration', () => {
   });
 
   test('should correlate timeline events with metric changes', async ({ page }) => {
-    await initializeAndRunSimulation(page, 60000);
+    await initializeAndRunSimulation(page, 15000); // ~2 months at 4x speed
 
     // Check timeline for major events
-    await page.goto('/timeline');
+    await page.getByRole('link', { name: /timeline/i }).click();
     await page.waitForTimeout(2000);
     const timelineContent = await page.content();
 
     // Check if metrics reflect those events
-    await page.goto('/dashboard');
+    await page.getByRole('link', { name: /overview|dashboard/i }).click();
     await page.waitForTimeout(1000);
 
     // Metrics should be present and valid

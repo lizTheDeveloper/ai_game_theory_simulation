@@ -240,6 +240,24 @@ Achieved 94% pass rate (17/18 tests) through timing and navigation fixes:
 
 **Commit**: b42af8e7 (November 9, 2025)
 
+## Multi-System Integration Test Fixes (November 9, 2025)
+
+**Problem**: All 20 multi-system integration tests were failing with timeouts
+
+**Root causes**:
+1. **Simulation durations too long**: Tests requested 20-60s runtime but test timeout was 30s
+2. **Full page reloads destroying worker**: Tests used `page.goto()` which reloaded page and destroyed worker state
+
+**Fixes**:
+1. **Optimized durations for 4x speed**: Reduced from 20-60s to 10-18s (≈1.3-2.4 simulated months)
+2. **Client-side navigation**: Replaced all `page.goto('/dashboard')` with `page.getByRole('link', { name: /dashboard/i }).click()`
+
+**Results**: 16/20 passing (80%), up from 1/20 (5%)
+
+**Remaining issues**: 4 tests timeout on first navigation after simulation - need longer stabilization wait
+
+**Key lesson**: At 4x speed, durations can be 75% shorter. Navigation must preserve worker state.
+
 ## Troubleshooting
 
 ### "0 console messages captured"
