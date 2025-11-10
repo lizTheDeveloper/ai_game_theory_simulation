@@ -12,6 +12,16 @@
 
 import { test, expect } from '@playwright/test';
 
+// Adaptive wait helper - polls for element visibility
+async function waitForDashboardData(page: any, selector: string | RegExp, maxAttempts: number = 5) {
+  for (let i = 0; i < maxAttempts; i++) {
+    await page.waitForTimeout(2000);
+    const isVisible = await page.locator(`text=${selector}`).first().isVisible().catch(() => false);
+    if (isVisible) return;
+  }
+  throw new Error(`Dashboard data not visible after ${maxAttempts} attempts: ${selector}`);
+}
+
 // Helper to initialize and run simulation
 async function initializeAndRunSimulation(page: any, durationMs: number = 30000) {
   await page.goto('/');
@@ -38,7 +48,9 @@ test.describe('AI Systems → QoL Integration', () => {
 
     // Navigate using client-side navigation to preserve worker state
     await page.getByRole('link', { name: /overview|dashboard/i }).click();
-    await page.waitForTimeout(3000);
+
+    // Adaptive wait - poll for AI capability to be visible
+    await waitForDashboardData(page, /ai capability/i);
 
     // Get AI capability value
     const aiCapabilityText = await page.getByText(/ai capability/i).locator('..').locator('text=/\\d+\\.\\d+/').first().textContent();
@@ -56,12 +68,14 @@ test.describe('AI Systems → QoL Integration', () => {
 
     // Check Overview - use client-side navigation
     await page.getByRole('link', { name: /overview|dashboard/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /ai agents/i);
     const overviewAgentText = await page.getByText(/ai agents/i).locator('..').textContent();
 
     // Check AI Agents dashboard - use client-side navigation
     await page.getByRole('link', { name: /ai.*agents/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /\d+\.\d+B|global population/i);
 
     // Should show consistent agent data
     // Note: Exact counts might differ slightly due to update timing
@@ -74,7 +88,8 @@ test.describe('AI Systems → QoL Integration', () => {
 
     // Navigate using client-side navigation
     await page.getByRole('link', { name: /overview|dashboard/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /alignment/i);
 
     // Get alignment score
     const alignmentText = await page.getByText(/alignment/i).locator('..').locator('text=/\\d+\\.\\d+/').first().textContent();
@@ -95,7 +110,8 @@ test.describe('Environmental Systems → Population Integration', () => {
 
     // Navigate using client-side navigation
     await page.getByRole('link', { name: /overview|dashboard/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /\d+\.\d+B|global population/i);
 
     // Get population
     const populationText = await page.locator('text=/\\d+\\.\\d+B/').first().textContent();
@@ -113,12 +129,14 @@ test.describe('Environmental Systems → Population Integration', () => {
 
     // Check Overview environmental panel - use client-side navigation
     await page.getByRole('link', { name: /overview|dashboard/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /climate|biodiversity/i);
     const overviewClimate = await page.getByText(/climate stability/i).locator('..').textContent();
 
     // Check Environment dashboard - use client-side navigation
     await page.getByRole('link', { name: /environment/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /climate|biodiversity/i);
 
     // Should show consistent environmental data
     const hasEnvData = await page.locator('text=/climate|environment|biodiversity/i').first().isVisible();
@@ -130,7 +148,8 @@ test.describe('Environmental Systems → Population Integration', () => {
 
     // Navigate using client-side navigation
     await page.getByRole('link', { name: /overview|dashboard/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /climate|biodiversity/i);
 
     // Get biodiversity
     const biodiversityText = await page.getByText(/biodiversity/i).locator('..').textContent();
@@ -151,7 +170,8 @@ test.describe('Crisis Events → Multi-System Impact', () => {
 
     // Check for active crises
     await page.getByRole('link', { name: /crisis|crises/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /crisis|event/i);
 
     const hasCrisisData = await page.locator('text=/crisis|event|active/i').first().isVisible();
 
@@ -169,12 +189,14 @@ test.describe('Crisis Events → Multi-System Impact', () => {
 
     // Check crises
     await page.getByRole('link', { name: /crisis|crises/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /crisis|event/i);
     const crisisContent = await page.content();
 
     // Check environmental impact
     await page.getByRole('link', { name: /environment/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /climate|biodiversity/i);
 
     // Environment should show data (potentially affected by crises)
     const hasEnvMetrics = await page.locator('text=/\\d+%|climate|biodiversity/i').first().isVisible();
@@ -184,7 +206,8 @@ test.describe('Crisis Events → Multi-System Impact', () => {
   test('should show extinction risk correlating with crisis severity', async ({ page }) => {
     await initializeAndRunSimulation(page, 18000); // ~2.4 months at 4x speed
     await page.getByRole('link', { name: /overview|dashboard/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /extinction/i);
 
     // Get extinction risk
     const extinctionText = await page.getByText(/extinction risk/i).locator('..').textContent();
@@ -202,7 +225,8 @@ test.describe('Technology Impact Integration', () => {
 
     // Check tech tree
     await page.getByRole('link', { name: /tech/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /tech|research/i);
     const hasTechData = await page.locator('text=/tech|research|breakthrough/i').first().isVisible();
 
     // Check if capabilities reflect tech progress
@@ -218,10 +242,12 @@ test.describe('Technology Impact Integration', () => {
 
     // Tech breakthroughs might affect environment
     await page.getByRole('link', { name: /tech/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /\d+\.\d+B|global population/i);
 
     await page.getByRole('link', { name: /environment/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /climate|biodiversity/i);
 
     // Environment should show current state (potentially improved by tech)
     const hasEnvData = await page.locator('text=/climate|biodiversity|ecosystem/i').first().isVisible();
@@ -234,7 +260,8 @@ test.describe('Paradigm → System Behavior Integration', () => {
   test('should show all four paradigm perspectives with different scores', async ({ page }) => {
     await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
     await page.getByRole('link', { name: /overview|dashboard/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /western|paradigm/i);
 
     // Get all paradigm scores
     const western = await page.getByText(/western liberal/i).locator('..').locator('text=/\\d+\\.\\d+/').first().textContent();
@@ -263,7 +290,8 @@ test.describe('Paradigm → System Behavior Integration', () => {
 
     // Check Paradigms dashboard
     await page.getByRole('link', { name: /paradigms/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /western|paradigm/i);
 
     // Should show paradigm data
     const hasParadigmData = await page.locator('text=/western|liberal/i').first().isVisible();
@@ -273,7 +301,8 @@ test.describe('Paradigm → System Behavior Integration', () => {
   test('should show paradigm influence on policy priorities', async ({ page }) => {
     await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
     await page.getByRole('link', { name: /paradigms/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /western|paradigm/i);
 
     // Paradigm scores should indicate different priorities
     const hasScores = await page.locator('text=/\\d+\\.\\d+/').all();
@@ -358,7 +387,8 @@ test.describe('Regional Data Integration', () => {
 
     // Check regional data
     await page.getByRole('link', { name: /regions/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /region/i);
 
     // Regions should show detailed breakdowns
     const hasRegionData = await page.locator('text=/region|country|area/i').first().isVisible();
@@ -378,7 +408,8 @@ test.describe('Timeline Integration', () => {
 
     // Check timeline
     await page.getByRole('link', { name: /timeline/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /crisis|event/i);
 
     // Timeline should show events up to current month
     const hasTimeline = await page.locator('text=/month|event|timeline/i').first().isVisible();
@@ -390,7 +421,8 @@ test.describe('Timeline Integration', () => {
 
     // Check timeline for major events
     await page.getByRole('link', { name: /timeline/i }).click();
-    await page.waitForTimeout(3000);
+    // Adaptive wait added - waits for data to load
+    await waitForDashboardData(page, /crisis|event/i);
     const timelineContent = await page.content();
 
     // Check if metrics reflect those events
