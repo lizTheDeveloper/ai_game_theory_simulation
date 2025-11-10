@@ -39,6 +39,11 @@ const CRITICAL_MASS_HIGH = 0.35;
 /** Network effects bonus during critical mass transition (+2%/month) */
 const NETWORK_EFFECTS_BONUS = 0.02;
 
+/** Minimum adoption floor (innovators + early adopters always exist)
+ * Research: Rogers (1962) - 2.5% innovators + 2.5% early adopters minimum
+ * FIX (Nov 10, 2025): Prevent crash to 0% in high-resistance scenarios */
+const MIN_ADOPTION_FLOOR = 0.05; // 5% minimum (innovators never stop)
+
 /**
  * Resistance parameters
  * Research: McKinsey (2024) - 70% of failures are people/process issues
@@ -118,7 +123,23 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
     month: state.currentMonth
   });
   const educationQuality = Math.min(1.0, socialStability / 2.0); // Normalize to [0,1]
-  const skillGapResistance = Math.max(0, SKILL_GAP_RESISTANCE_MAX * (1 - educationQuality));
+
+  // FIX (Nov 10, 2025): Government research investment reduces skill gap resistance
+  // High research budget → retraining programs → lower skill gaps
+  // Research: OECD (2024) - active labor market policies reduce transition friction
+  const researchBudget = assertFinite(
+    state.government.researchInvestments.totalBudget,
+    {
+      location: 'updateWorkflowAdaptation',
+      valueName: 'government.researchInvestments.totalBudget',
+      month: state.currentMonth
+    }
+  );
+  // $50B+ research → 50% skill gap reduction, $100B+ → 75% reduction
+  const retrainingBonus = Math.min(0.75, researchBudget / 100);
+
+  const baseSkillGapResistance = SKILL_GAP_RESISTANCE_MAX * (1 - educationQuality);
+  const skillGapResistance = Math.max(0, baseSkillGapResistance * (1 - retrainingBonus));
 
   const totalResistance = unemploymentResistance + inertiaResistance + skillGapResistance;
 
@@ -157,8 +178,10 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
   // Research: Real adoption doesn't follow smooth curves - random events matter
   const shock = (rng() - 0.5) * 0.2 * Math.abs(netGrowth);
 
-  // Apply growth with bounds [0, 1]
-  const newAdaptation = Math.max(0, Math.min(1, current + netGrowth + shock));
+  // Apply growth with bounds [MIN_ADOPTION_FLOOR, 1]
+  // FIX (Nov 10, 2025): Enforce minimum floor - innovators always exist
+  // Research: Rogers (1962) - 2.5% innovators + 2.5% early adopters are immune to resistance
+  const newAdaptation = Math.max(MIN_ADOPTION_FLOOR, Math.min(1, current + netGrowth + shock));
 
   // Update state
   state.society.workflowAdaptation = newAdaptation;
@@ -167,9 +190,12 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
   if (state.currentMonth % 12 === 0) {
     const growthPct = ((newAdaptation - current) * 100).toFixed(1);
     console.log(`\n📊 WORKFLOW ADAPTATION UPDATE (Month ${state.currentMonth})`);
-    console.log(`   Adoption Rate: ${(newAdaptation * 100).toFixed(1)}% (Δ ${growthPct}%)`);
+    console.log(`   Adoption Rate: ${(newAdaptation * 100).toFixed(1)}% (Δ ${growthPct}%)${newAdaptation === MIN_ADOPTION_FLOOR ? ' [AT FLOOR]' : ''}`);
     console.log(`   Logistic Growth: +${(logisticGrowth * 100).toFixed(2)}%`);
     console.log(`   Total Resistance: -${(totalResistance * 100).toFixed(2)}% (unemployment: ${(unemploymentResistance * 100).toFixed(1)}%, inertia: ${(inertiaResistance * 100).toFixed(1)}%, skills: ${(skillGapResistance * 100).toFixed(1)}%)`);
+    if (retrainingBonus > 0) {
+      console.log(`   💡 Retraining Programs: -${(retrainingBonus * 100).toFixed(0)}% skill gap resistance ($${researchBudget.toFixed(0)}B research)`);
+    }
     if (networkBonus > 0) {
       console.log(`   🚀 Network Effects Active: +${(networkBonus * 100).toFixed(1)}% (critical mass: ${CRITICAL_MASS_LOW * 100}-${CRITICAL_MASS_HIGH * 100}%)`);
     }
