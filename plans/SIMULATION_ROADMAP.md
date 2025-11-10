@@ -38,6 +38,21 @@
 ## 🎯 ACTIVE PRIORITIES
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
+   - **Montreal Protocol Effectiveness for Novel Entities Prevention** - TIER 1 CRITICAL (Added Nov 10, 2025)
+     - **Research:** Production ban achieved 99% ODS emission reduction (10-25 years), 10⁵-10⁸× more cost-effective than cleanup
+     - **Key Claims to Verify:**
+       - 99% emission reduction timeline (9-13 years policy to peak reduction)
+       - $20-40B vs. $10¹⁵+ cost comparison (production ban vs. cleanup)
+       - Production ban 100× more effective than emission monitoring
+       - PFAS timeline projections (2025-2027 policy → 2032-2035 50% reduction)
+       - Thermodynamic cleanup infeasibility (10¹² kWh/tonne)
+     - **Simulation Impact:** TIER 0 PFAS Production Ban (before cleanup tech), `irreversible: true` flag for Novel Entities boundary
+     - **Verification File:** research/verification_536e700_20251110.md
+     - **Status:** READY FOR ORCHESTRATOR - Start at VALIDATION phase (research file exists)
+     - **Workflow:** Citation verification → Claim verification → Parameter implementation → Monte Carlo validation
+     - **Priority:** TIER 1 CRITICAL - Addresses Novel Entities 0% effectiveness gap from god mode test
+     - **See:** research/montreal_protocol_effectiveness_novel_entities_20251110.md (509 lines, A- quality)
+
    - **AI Capability Scaling Parameters** - CRITICAL parameter mismatch identified
      - **Issue:** Current model assumes 2.4× AI growth/decade, research shows 1,000-10,000×
      - **Discrepancy:** 100-1000× underestimation in capability growth

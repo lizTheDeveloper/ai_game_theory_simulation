@@ -144,6 +144,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Sylvia's Skeptical Analysis (commit f33340f, November 9, 2025):** Thermodynamic analysis of effectiveness gaps reveals fundamental constraints:
 - **Novel Entities (0%):** PFAS destruction energy = 4-40% of global production; cleanup may be thermodynamically infeasible at environmental scales (ng/L → mg/L requires 6-9 orders of magnitude concentration)
+  - **Montreal Protocol Research (commit 536e700, Nov 10, 2025):** Production ban achieved 99% ODS emission reduction in 10-25 years, 10⁵-10⁸× more cost-effective than cleanup ($20-40B vs. $10¹⁵+). PFAS analog suggests **prevention-first approach** (TIER 0 production ban) before cleanup tech (TIER 2). Projected timeline: Policy (2025-2027) → 50% reduction (2032-2035) → Full phase-out (2034-2050). Research quality: A- (95% peer-reviewed/government sources). See research/montreal_protocol_effectiveness_novel_entities_20251110.md
 - **Climate (5.5%):** DAC at 10 GtCO₂/year needs 10,000-22,000 TWh/year (50-110% of global electricity); tech works but energy requirements collapse civilization
 - **Biogeochemical (10%):** Lake Erie case study shows 50 years of controls → re-eutrophication from legacy phosphorus; 60% nitrogen reduction = cutting food for ~3B people
 - **Biosphere (81.5% - SUSPICIOUS):** May conflate species counts (easy) with ecosystem function (hard); 50% species ≠ 50% functionality if keystone species gone
@@ -4863,7 +4864,7 @@ The simulation runs via a **phase-based architecture** with **95 phases** execut
 - PhosphorusPhase (26.5): Phosphorus depletion crisis
 - FreshwaterPhase (26.7): Freshwater crisis, Day Zero
 - OceanAcidificationPhase (26.8): Marine ecosystem collapse
-- NovelEntitiesPhase (26.9): PFAS, persistent pollutants
+- NovelEntitiesPhase (26.9): PFAS, persistent pollutants (Montreal Protocol research Nov 10: production ban 100-1000× more effective than cleanup)
 - HumanPopulationPhase (27.0): Population dynamics, mortality
 - RefugeeCrisisPhase (27.2): Refugee flows, resettlement
 - CountryPopulationPhase (27.3): Regional population tracking
