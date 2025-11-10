@@ -174,7 +174,18 @@ export interface GameState {
    * Expected impact: Fixes non-determinism in event logging, agent actions, policy generation
    */
   eventIdCounter: number;
-  
+
+  /**
+   * Active Scenario (Nov 10, 2025)
+   *
+   * Enables systematic testing of governance/social sufficiency scenarios.
+   * When set, ApplyScenarioPrioritiesPhase applies government priority overrides each month.
+   *
+   * Research: God mode diagnostics (Phase 1) revealed governance/social bottlenecks
+   * Expected impact: Infrastructure for testing "If we force government to prioritize X, do spirals activate?"
+   */
+  scenario?: import('./scenarios').ScenarioDefinition;
+
   // Agents
   aiAgents: AIAgent[];
   government: GovernmentAgent;

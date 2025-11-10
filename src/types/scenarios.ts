@@ -46,6 +46,30 @@ export interface ScenarioStartingConditions {
 }
 
 /**
+ * Government priority overrides for scenario testing
+ * Used by ApplyScenarioPrioritiesPhase to force specific government behaviors
+ */
+export interface ScenarioGovernmentPriorities {
+  /** Research investment (billions/month) */
+  researchInvestment?: number;
+
+  /** Climate spending (0-1, fraction of GDP) */
+  climateSpending?: number;
+
+  /** Redistribution rate (0-1, fraction of GDP) - activates/adjusts UBI */
+  redistributionRate?: number;
+
+  /** AI safety budget (billions/month) */
+  aiSafetyBudget?: number;
+
+  /** Democracy level (0-1) - sets transparency, participation, etc. */
+  democracyLevel?: number;
+
+  /** Government type */
+  governmentType?: 'democratic' | 'authoritarian' | 'mixed';
+}
+
+/**
  * Technology deployment strategy for scenarios
  */
 export interface TechDeploymentStrategy {
@@ -143,7 +167,10 @@ export interface ScenarioDefinition {
   /** Technology deployment strategy */
   techDeployment: TechDeploymentStrategy;
 
-  /** Government behavior overrides */
+  /** Government priority overrides (applied every month by ApplyScenarioPrioritiesPhase) */
+  governmentPriorities?: ScenarioGovernmentPriorities;
+
+  /** Government behavior overrides (deprecated, use governmentPriorities instead) */
   governmentOverrides?: GovernmentPriorityOverride[];
 
   /** Comparison baseline scenario (default: 'no-tech' or 'god-mode') */
@@ -339,6 +366,185 @@ export const SCENARIO_CATALOG = {
       prioritizedConfig: {
         priorities: ['climate', 'energy', 'environment', 'governance', 'social'],
         gapMonths: 6,
+      },
+    },
+  },
+
+  /** === GOVERNMENT PRIORITY SCENARIOS (Phase 2) === */
+
+  /** Climate First: Maximize climate tech spending */
+  'climate-first': {
+    id: 'climate-first',
+    name: 'Climate First',
+    description: 'Government maximizes climate tech spending (10% GDP/month)',
+    hypothesis: 'Tests whether maximal climate investment enables environmental spiral activation',
+    techDeployment: { mode: 'immediate' as const },
+    governmentPriorities: {
+      climateSpending: 0.10, // 10% of GDP per month (extreme but testable)
+      researchInvestment: 50, // $50B/month research (above spiral thresholds)
+    },
+  },
+
+  /** Equality First: Maximize redistribution (Gini <0.30 target) */
+  'equality-first': {
+    id: 'equality-first',
+    name: 'Equality First',
+    description: 'Government maximizes redistribution targeting Gini <0.30 (Nordic levels)',
+    hypothesis: 'Tests whether reducing inequality enables social spiral activation',
+    techDeployment: { mode: 'immediate' as const },
+    governmentPriorities: {
+      redistributionRate: 0.15, // 15% of GDP per month (aggressive UBI)
+      researchInvestment: 50, // $50B/month research
+    },
+  },
+
+  /** AI Alignment First: Max alignment research + strict controls */
+  'ai-alignment-first': {
+    id: 'ai-alignment-first',
+    name: 'AI Alignment First',
+    description: 'Government maximizes AI alignment research ($100B/month) with strict controls',
+    hypothesis: 'Tests whether prioritizing alignment enables trust/safety spirals',
+    techDeployment: { mode: 'immediate' as const },
+    governmentPriorities: {
+      aiSafetyBudget: 100, // $100B/month on alignment research
+      researchInvestment: 50, // $50B/month general research
+    },
+  },
+
+  /** Democratic Participation: Max transparency + participation */
+  'democratic-participation': {
+    id: 'democratic-participation',
+    name: 'Democratic Participation',
+    description: 'Government maximizes transparency and participation (democracy = 0.9)',
+    hypothesis: 'Tests whether high democracy enables governance spiral activation',
+    techDeployment: { mode: 'immediate' as const },
+    governmentPriorities: {
+      democracyLevel: 0.9, // Very high democracy
+      researchInvestment: 50, // $50B/month research
+    },
+  },
+
+  /** Scientific Acceleration: Max research investment */
+  'scientific-acceleration': {
+    id: 'scientific-acceleration',
+    name: 'Scientific Acceleration',
+    description: 'Government maximizes research investment ($200B/month)',
+    hypothesis: 'Tests whether massive research spending enables breakthrough cascades',
+    techDeployment: { mode: 'immediate' as const },
+    governmentPriorities: {
+      researchInvestment: 200, // $200B/month (2x current max spend)
+    },
+  },
+
+  /** Authoritarian Efficiency: Rapid deployment, low democracy */
+  'authoritarian-efficiency': {
+    id: 'authoritarian-efficiency',
+    name: 'Authoritarian Efficiency',
+    description: 'Government prioritizes rapid deployment with low democracy (0.3)',
+    hypothesis: 'Tests whether authoritarian coordination enables faster tech adoption',
+    techDeployment: { mode: 'immediate' as const },
+    governmentPriorities: {
+      governmentType: 'authoritarian',
+      democracyLevel: 0.3, // Low democracy
+      researchInvestment: 50, // $50B/month research
+    },
+  },
+
+  /** === STARTING CONDITION SCENARIOS (Phase 2) === */
+
+  /** High Trust Start: Trust in AI=0.8, institutions=0.7 */
+  'high-trust-start': {
+    id: 'high-trust-start',
+    name: 'High Trust Start',
+    description: 'Start with high trust in AI (0.8) and institutions (0.7)',
+    hypothesis: 'Tests whether high initial trust enables spiral activation',
+    techDeployment: { mode: 'immediate' as const },
+    startingConditions: {
+      trustInAI: 0.8,
+      institutionalCapacity: 0.7,
+      governanceQuality: 0.7,
+    },
+  },
+
+  /** Low Inequality Start: Gini=0.25 (Nordic levels) */
+  'low-inequality-start': {
+    id: 'low-inequality-start',
+    name: 'Low Inequality Start',
+    description: 'Start with Gini=0.25 (Nordic levels of equality)',
+    hypothesis: 'Tests whether low initial inequality enables social spirals',
+    techDeployment: { mode: 'immediate' as const },
+    startingConditions: {
+      qolBoosts: {
+        // Boost dimensions affected by low inequality
+        materialAbundance: 0.7,
+        politicalFreedom: 0.8,
+        mentalHealth: 0.7,
+      },
+    },
+    governmentPriorities: {
+      redistributionRate: 0.10, // 10% GDP redistribution to maintain low Gini
+    },
+  },
+
+  /** Strong Institutions Start: Governance quality=0.8 */
+  'strong-institutions-start': {
+    id: 'strong-institutions-start',
+    name: 'Strong Institutions Start',
+    description: 'Start with strong institutions (governance quality=0.8)',
+    hypothesis: 'Tests whether strong institutions enable governance spirals',
+    techDeployment: { mode: 'immediate' as const },
+    startingConditions: {
+      governanceQuality: 0.8,
+      institutionalCapacity: 0.8,
+      physicalSafety: 0.8,
+      informationIntegrity: 0.8,
+    },
+  },
+
+  /** === TECHNOLOGY DEPLOYMENT STRATEGIES (Phase 2) === */
+
+  /** Renewable Energy First: Energy tech deployed month 0, rest sequenced */
+  'renewable-first': {
+    id: 'renewable-first',
+    name: 'Renewable Energy First',
+    description: 'Deploy renewable energy tech immediately, then sequence other tech',
+    hypothesis: 'Tests whether energy abundance unlocks other tech effectiveness',
+    techDeployment: {
+      mode: 'prioritized' as const,
+      prioritizedConfig: {
+        priorities: ['energy', 'climate', 'environment', 'governance', 'social'],
+        gapMonths: 6,
+      },
+    },
+  },
+
+  /** Carbon Removal First: DAC/BECCS deployed month 0, rest sequenced */
+  'carbon-removal-first': {
+    id: 'carbon-removal-first',
+    name: 'Carbon Removal First',
+    description: 'Deploy carbon removal tech (DAC/BECCS) immediately, then sequence other tech',
+    hypothesis: 'Tests whether removing climate threat enables other interventions',
+    techDeployment: {
+      mode: 'prioritized' as const,
+      prioritizedConfig: {
+        priorities: ['climate', 'energy', 'environment', 'governance', 'social'],
+        gapMonths: 6,
+      },
+    },
+  },
+
+  /** Adaptive Deployment: Real-time effectiveness-based deployment */
+  'adaptive-deployment': {
+    id: 'adaptive-deployment',
+    name: 'Adaptive Deployment',
+    description: 'Deploy tech adaptively based on governance quality and safety thresholds',
+    hypothesis: 'Tests whether adaptive deployment allows institutions to absorb tech gradually',
+    techDeployment: {
+      mode: 'adaptive' as const,
+      adaptiveConfig: {
+        governanceThreshold: 0.6, // Deploy when governance > 0.6
+        safetyThreshold: 0.7, // Deploy when safety > 0.7
+        maxTechsPerMonth: 3, // Gradual rollout
       },
     },
   },
