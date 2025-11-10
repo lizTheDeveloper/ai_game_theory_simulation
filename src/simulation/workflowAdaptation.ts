@@ -70,7 +70,15 @@ const SKILL_GAP_RESISTANCE_MAX = 0.2;
  * @param rng Random number generator (for stochastic shocks)
  */
 export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): void {
-  const current = state.society.workflowAdaptation || 0.21;
+  // FIX (Nov 10, 2025): Protect inputs with assertions - NaN propagation blocks scientific spiral
+  const current = assertProbability(
+    state.society.workflowAdaptation ?? 0.21,
+    {
+      location: 'updateWorkflowAdaptation',
+      valueName: 'society.workflowAdaptation',
+      month: state.currentMonth
+    }
+  );
 
   // === 1. LOGISTIC GROWTH POTENTIAL ===
   // S-curve: slow start, rapid middle, slow end
@@ -83,7 +91,16 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
   // A. Unemployment resistance (job loss fears)
   // Research: White House CEA (2024) - AI substitutes middle-class jobs
   // Higher unemployment → more fear → more resistance to AI adoption
-  const unemploymentResistance = state.society.unemploymentLevel * UNEMPLOYMENT_RESISTANCE_COEFFICIENT;
+  // FIX (Nov 10, 2025): Assert unemploymentLevel is finite
+  const unemploymentLevel = assertProbability(
+    state.society.unemploymentLevel,
+    {
+      location: 'updateWorkflowAdaptation',
+      valueName: 'society.unemploymentLevel',
+      month: state.currentMonth
+    }
+  );
+  const unemploymentResistance = unemploymentLevel * UNEMPLOYMENT_RESISTANCE_COEFFICIENT;
 
   // B. Organizational inertia (middle management resistance)
   // Research: McKinsey (2024) - middle layer most resistant
@@ -117,9 +134,20 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
 
   // AI capability acceleration (higher AI → faster workflow redesign possible)
   // Research: McKinsey (2024) - AI tools enable faster organizational transformation
-  const avgAICapability = state.aiAgents.length > 0
-    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
-    : 0;
+  // FIX (Nov 10, 2025): Assert AI capabilities are finite before averaging
+  let avgAICapability = 0;
+  if (state.aiAgents.length > 0) {
+    const capabilitySum = state.aiAgents.reduce((sum, ai) => {
+      const capability = assertFinite(ai.capability, {
+        location: 'updateWorkflowAdaptation',
+        valueName: `aiAgent[${ai.id}].capability`,
+        month: state.currentMonth,
+        additionalInfo: { agentId: ai.id }
+      });
+      return sum + capability;
+    }, 0);
+    avgAICapability = capabilitySum / state.aiAgents.length;
+  }
   const aiCapabilityBonus = avgAICapability > 4.0 ? 0.01 : 0;  // +1%/month if high AI capability
 
   // === 4. NET GROWTH CALCULATION ===
