@@ -393,7 +393,7 @@ export const SCENARIO_CATALOG = {
     hypothesis: 'Tests whether reducing inequality enables social spiral activation',
     techDeployment: { mode: 'immediate' as const },
     governmentPriorities: {
-      redistributionRate: 0.15, // 15% of GDP per month (aggressive UBI)
+      redistributionRate: 0.025, // 2.5% of GDP per month (30% annually = Nordic level)
       researchInvestment: 50, // $50B/month research
     },
   },
