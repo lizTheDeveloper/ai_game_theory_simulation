@@ -225,6 +225,21 @@ Currently validates 12 dashboards:
 | Environmental | Phosphorus Depletion | `phosphorusDepletion` | 2 |
 ```
 
+## Test Stability Improvements (November 2025)
+
+**Dashboard Data Flow Tests (e2e/dashboard-data-flow.spec.ts)**
+
+Achieved 94% pass rate (17/18 tests) through timing and navigation fixes:
+
+1. **4x Speed Selection in Manual Init**: Added speed selection to manual initialization test to ensure consistent timing
+2. **Client-Side Navigation**: Changed from `page.goto()` to client-side navigation (preserves simulation worker across page transitions)
+3. **Adaptive Wait Strategy**: Replaced fixed timeouts with polling loop (checks every 5s up to 25s for month changes)
+4. **Fixed Selectors**: Updated month/day display selectors to match current UI
+
+**Key Lesson**: E2E tests must account for system load variations. Fixed timeouts fail under load; adaptive polling succeeds.
+
+**Commit**: b42af8e7 (November 9, 2025)
+
 ## Troubleshooting
 
 ### "0 console messages captured"
