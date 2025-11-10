@@ -59,6 +59,36 @@
      - **Confidence:** B+ overall (8 A-grade, 14 B-grade, 4 C-grade citations)
      - **See:** research/*_20251110.md (5 files: prevention, rapid_deployment, energy, nitrogen, tier_2)
 
+   - **Workflow Adaptation Bug Fix Citations** - HIGH priority (Nov 10, 2025)
+     - **Context:** Commit d336915 - Two CRITICAL spiral activation blockers resolved
+     - **Issue:** OECD (2024) active labor market policies citation lacks specificity
+     - **Status:** ❌ NOT VERIFIED
+       - ✅ Rogers (1962) citation exists - needs claim verification (2.5%+2.5% resistance immunity)
+       - ❌ OECD (2024) - no paper title/URL, generic reference
+       - ❓ Quantitative claims ($50B→50%, $100B→75%) need backing
+     - **New Mechanics:**
+       - MIN_ADOPTION_FLOOR = 5% (prevents crash to 0%)
+       - Government research investment → retraining programs → skill gap reduction
+     - **Verification File:** research/verification_d336915_20251110.md
+     - **Workflow:** Find OECD 2024 paper → Verify claims → Adjust parameters if needed
+     - **Priority:** HIGH - Affects spiral activation pathways (scientific spiral requires workflowAdaptation ≥25%)
+     - **Blockers:** Need paper title/URL for OECD 2024 active labor market policies
+
+   - **Government Priority Override Citations** - MEDIUM priority (Nov 10, 2025)
+     - **Context:** Scenario Analysis Framework Phase 2 (commit 91b4264)
+     - **Issue:** References V-Dem v14 and WGI 2024 as foundation for government priority types
+     - **Status:** ⚠️ PARTIAL VERIFICATION
+       - ✅ Citation existence verified (V-Dem v14, WGI 2024 accessible)
+       - ✅ WGI → institutional capacity mapping verified
+       - ❓ V-Dem → priority type mapping needs verification
+     - **Priority Types to Validate:**
+       - climateMitigation, inequalityReduction, aiSafety
+       - economicGrowth, socialStability, environmentalProtection
+     - **Verification File:** research/verification_91b4264_20251110.md
+     - **Workflow:** V-Dem indicator mapping → conceptual validation → parameter extraction
+     - **Priority:** MEDIUM - Testing infrastructure only, no parameter values extracted yet
+     - **Note:** Phase 3 scenarios can proceed with manual overrides while research completes
+
    - **AI Capability Scaling Parameters** - CRITICAL parameter mismatch identified
      - **Issue:** Current model assumes 2.4× AI growth/decade, research shows 1,000-10,000×
      - **Discrepancy:** 100-1000× underestimation in capability growth
