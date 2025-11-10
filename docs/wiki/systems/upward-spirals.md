@@ -1,12 +1,19 @@
 # Upward Spirals System
 
-**Version:** 2.1
-**Last Updated:** October 2025
+**Version:** 2.2
+**Last Updated:** November 2025
 **Code Reference:** `src/simulation/upwardSpirals.ts`
+**Research:** [`research/upward_spirals_virtuous_cycles_20251110.md`](../../../research/upward_spirals_virtuous_cycles_20251110.md)
 
 ## Overview
 
 The upward spirals system models **virtuous cascades** - positive feedback loops that make success self-reinforcing. Just as crisis cascades amplify failures (3.0x degradation), upward spirals amplify successes (1.6x improvement).
+
+**Research Foundation (Nov 2025):** Now backed by 9 peer-reviewed sources (2021-2025). Key findings:
+- **Social tipping threshold:** ~25% population activation triggers cascades (Lenton et al. 2025, *Earth System Dynamics*)
+- **Multi-domain requirement:** 4+ interconnected systems create resilient virtuous cycles (Nobre & Griggs 2024)
+- **Timeframes:** Real-world tipping points show 5-15 year acceleration (Norway EVs, UK coal phase-out)
+- **Cascade mechanics:** Both positive AND negative feedbacks required for stability (Leigh et al. 2022, *Frontiers*)
 
 **Core Mechanic:** When 4+ spirals activate simultaneously, they cross-amplify each other, creating exponential positive growth. This is the **opposite** of cascading failures.
 
