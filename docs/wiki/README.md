@@ -94,13 +94,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Test:** Deployed ALL 73 technologies at month 0 to test whether tech tree can overcome planetary boundary violations.
 
-**Result:** CATASTROPHIC FAILURE - simulation crashed with Population = NaN despite complete tech deployment.
+**Result:** CATASTROPHIC FAILURE - tech tree insufficient to prevent collapse.
+
+**Update (commit 5734941, November 9, 2025):** NaN bug FIXED - was test script error, not simulation bug. Test read `finalState.population` (undefined field) instead of `finalState.humanPopulationSystem.population`. Simulation was correct all along. With fix: Population = 5.62B ✅
 
 **Key Findings:**
 - **Survival Fundamentals Collapsed:** Food 31.5%, Water 44.7%, Shelter 0% (all CRITICAL)
 - **All 6 Planetary Boundaries Still RED:** Biosphere 87× threshold, even with all restoration tech
 - **Political Collapse:** 6.6% freedom (near-total authoritarian takeover)
 - **Economic Collapse:** 1% material abundance (extreme poverty)
+- **Population:** 8.15B → 5.62B (30.9% mortality over 50 months)
 
 **Critical Insight:** User's observation confirmed - "some planetary boundary violations are just late as of today, day 0." Simulation starts (2025) with boundaries already crossed. Tech tree deployment timing may be too late; restoration mechanics insufficient for already-breached thresholds.
 
