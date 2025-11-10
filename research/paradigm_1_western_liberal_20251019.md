@@ -1,7 +1,14 @@
+---
+oldest_source: 1971
+newest_source: 2025
+last_verified: 2025-11-10
+---
+
 # Paradigm 1: Western Liberal (Freedom-Focused) Framework for Dystopia/Utopia Assessment
 
-**Research Date:** October 19, 2025
+**Research Date:** October 19, 2025 (Updated: November 10, 2025)
 **Lead Researcher:** super-alignment-researcher-1
+**Last Update:** Autonomous Researcher (V-Dem 2025 Report integration)
 **Total Sources:** 12 peer-reviewed + 4 authoritative datasets
 **Status:** Phase 1 - Multiple Paradigms DUI Initiative
 
@@ -9,7 +16,9 @@
 
 ## Executive Summary
 
-The Western Liberal paradigm evaluates societal outcomes through the lens of individual autonomy, political rights, and economic freedom. This 12,000-word research document establishes operational criteria for utopia (free society thresholds) and dystopia (authoritarianism triggers) based on empirical data from V-Dem Democracy Reports (2024), Freedom House assessments (2024-2025), and the philosophical foundations of Rawls, Nozick, and Sen.
+The Western Liberal paradigm evaluates societal outcomes through the lens of individual autonomy, political rights, and economic freedom. This 12,000-word research document establishes operational criteria for utopia (free society thresholds) and dystopia (authoritarianism triggers) based on empirical data from V-Dem Democracy Reports (2024-2025), Freedom House assessments (2024-2025), and the philosophical foundations of Rawls, Nozick, and Sen.
+
+**2025 Update:** V-Dem Democracy Report 2025 reveals historic democratic decline - autocracies (91) now outnumber democracies (88) for first time since 2002, with 72% of global population (5.8B) living under autocratic rule and liberal democracies reduced to just 29 countries worldwide.
 
 **Key Finding:** While this paradigm provides robust measurement infrastructure (V-Dem tracks 500+ indicators across 202 countries from 1789-2023), it faces three fundamental contradictions: (1) 0.89 correlation between freedom metrics and GDP reveals Western/wealth bias (Kelley & Simmons 2015), (2) climate externalities from liberal capitalism threaten long-term viability, and (3) surveillance capitalism erodes the very freedoms the paradigm prioritizes.
 
@@ -119,11 +128,12 @@ The Western Liberal paradigm evaluates societal outcomes through the lens of ind
 
 ## 2. Operational Criteria: Data-Driven Thresholds
 
-### 2.1 V-Dem Democracy Indices (2024)
+### 2.1 V-Dem Democracy Indices (2024-2025)
 
-**Source:** Varieties of Democracy (V-Dem) Democracy Report 2024: *Democracy Winning and Losing at the Ballot*
-**Published:** March 2024
-**Data Coverage:** 202 countries, 1789-2023, 31 million data points
+**Source:** Varieties of Democracy (V-Dem) Democracy Reports
+- **2024 Report:** *Democracy Winning and Losing at the Ballot* (March 2024)
+- **2025 Report:** *25 Years of Autocratization – Democracy Trumped?* (March 2025)
+**Data Coverage:** 202 countries, 1789-2024, 31+ million data points
 
 **Five Core Democracy Indices:**
 
@@ -141,9 +151,14 @@ The Western Liberal paradigm evaluates societal outcomes through the lens of ind
 **Utopia Threshold:** ≥0.85 (top decile globally)
 **Dystopia Threshold:** <0.30 (autocracy range)
 
-**Current Global Status (2024):**
-- 71% of world population (5.7 billion people) live in autocracies
-- 42 countries (35% of world population, 2.8 billion people) experiencing democratic backsliding
+**Current Global Status (2024-2025):**
+- **Historic shift:** More autocracies (N=91) than democracies (N=88) for first time since 2002
+- **72% of world population (5.8 billion people)** live under autocratic rule (up from 71%/5.7B in 2024)
+- **45 countries** experiencing ongoing autocratization episodes
+- **19 countries** experiencing ongoing democratization episodes
+- **Liberal democracies down to 29 countries** (least common regime type)
+- Democracy levels regressed to 1996 (country averages), 1985 (population-weighted), 50-year minimum (GDP-weighted)
+- Freedom of expression worsening in nearly 25% of countries (record decline)
 - Median Electoral Democracy Index: 0.45 (mid-range)
 
 **Examples:**
@@ -975,7 +990,15 @@ Rawls argues basic liberties have "lexical priority"—they cannot be traded off
 
 ### 10.2 Empirical Data Sources (2024-2025)
 
-4. **V-Dem Institute (2024). *Democracy Report 2024: Democracy Winning and Losing at the Ballot.***
+4. **V-Dem Institute (2025). *Democracy Report 2025: 25 Years of Autocratization – Democracy Trumped?***
+   - Published March 2025
+   - 202 countries, 1789-2024, 31+ million data points
+   - Key finding: 91 autocracies vs 88 democracies (historic shift), 72% of population (5.8B) under autocratic rule
+   - 45 countries in ongoing autocratization episodes, 19 in democratization
+   - Available at: https://www.v-dem.net/publications/democracy-reports/
+   - **Credibility:** Peer-reviewed methodology, University of Gothenburg, 50+ international scholars
+
+4b. **V-Dem Institute (2024). *Democracy Report 2024: Democracy Winning and Losing at the Ballot.***
    - Published March 2024
    - 202 countries, 1789-2023, 31 million data points
    - 3,500+ country experts
