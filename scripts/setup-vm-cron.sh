@@ -55,10 +55,10 @@ echo "📋 Current Crontab"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-if crontab -l 2>/dev/null | grep -q "autonomous-worker\|merge-orchestrator\|worker-watcher"; then
+if crontab -l 2>/dev/null | grep -q "autonomous-worker\|merge-orchestrator\|worker-watcher\|research-agent"; then
   echo "Found existing autonomous system cron jobs:"
   echo ""
-  crontab -l | grep -E "autonomous-worker|merge-orchestrator|worker-watcher" || echo "None"
+  crontab -l | grep -E "autonomous-worker|merge-orchestrator|worker-watcher|research-agent" || echo "None"
   echo ""
   echo "⚠️  WARNING: Existing cron jobs found!"
   echo "Would you like to REPLACE them? (y/n)"
@@ -81,7 +81,7 @@ echo ""
 TEMP_CRON=$(mktemp)
 
 # Preserve existing cron jobs (except autonomous system ones)
-crontab -l 2>/dev/null | grep -v -E "autonomous-worker|merge-orchestrator|worker-watcher" > "$TEMP_CRON" || true
+crontab -l 2>/dev/null | grep -v -E "autonomous-worker|merge-orchestrator|worker-watcher|research-agent" > "$TEMP_CRON" || true
 
 # Add autonomous system jobs
 cat >> "$TEMP_CRON" << CRON_JOBS
@@ -96,6 +96,9 @@ cat >> "$TEMP_CRON" << CRON_JOBS
 
 # :15 - Health check (monitors previous hour's worker)
 15 * * * * cd $PROJECT_ROOT && ./scripts/autonomous-worker-watcher.sh >> logs/cron_watcher.log 2>&1
+
+# :30 - Research agent runs (systematic research roadmap execution)
+30 * * * * cd $PROJECT_ROOT && ./scripts/research-agent.sh >> logs/cron_research.log 2>&1
 
 # :45 - Merge orchestrator (processes pending branches)
 45 * * * * cd $PROJECT_ROOT && ./scripts/merge-orchestrator.sh >> logs/cron_merge.log 2>&1
@@ -113,7 +116,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "📋 New Crontab"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
-crontab -l | grep -E "autonomous-worker|merge-orchestrator|worker-watcher"
+crontab -l | grep -E "autonomous-worker|merge-orchestrator|worker-watcher|research-agent"
 echo ""
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -122,6 +125,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 echo "  :00  Autonomous Worker      (implementation work)"
 echo "  :15  Worker Watcher         (health check & auto-fix)"
+echo "  :30  Research Agent         (research roadmap execution)"
 echo "  :45  Merge Orchestrator     (process branches)"
 echo ""
 
@@ -154,5 +158,6 @@ echo ""
 echo "Monitor with:"
 echo "  tail -f logs/cron_worker.log"
 echo "  tail -f logs/cron_watcher.log"
+echo "  tail -f logs/cron_research.log"
 echo "  tail -f logs/cron_merge.log"
 echo ""
