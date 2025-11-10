@@ -1,11 +1,12 @@
 # Alignment Dynamics System
 
-**Status:** ✅ Implemented (October 23, 2025)
+**Status:** ✅ Implemented (October 23, 2025, updated November 10, 2025)
 
 **Location:**
 - Types: `src/types/alignment-dynamics.ts`
 - Core: `src/simulation/alignmentDynamics.ts`
 - Phase: `src/simulation/engine/phases/AlignmentDynamicsPhase.ts`
+- **Milestones:** `src/simulation/engine/phases/AlignmentMilestonesPhase.ts` (Nov 10, 2025)
 - UI: `src/components/tabs/ControlsTab.tsx`
 
 ## Overview
@@ -165,6 +166,84 @@ if (capabilityExcess > 0) {
 ```
 
 **Key Insight:** Above capability threshold, external measurements become unreliable. AI may know this and strategically exploit our blindness.
+
+## Alignment Milestones System (November 10, 2025)
+
+**Phase:** `AlignmentMilestonesPhase.ts` (Phase order: 15.6, after alignment research)
+
+### Overview
+
+The Alignment Milestones system detects institutional achievements in AI safety and triggers **social trust cascades** that reinforce alignment investment. This addresses the scenario analysis finding that god mode failed despite full tech deployment: institutional quality matters as much as technology.
+
+**Core Mechanism:** Milestone detection → trust accumulation → alignment investment feedback loop
+
+### Four Milestone Types
+
+**1. Regulatory Framework Adoption**
+- **Trigger:** Policy strength ≥60% AND transparency ≥70%
+- **Meaning:** Strong AI governance laws with transparent enforcement
+- **Research:** Acemoglu & Robinson 2001 (institutions → trust), Putnam 2000 (social capital accumulation)
+
+**2. International Coordination**
+- **Trigger:** ≥4 cooperative relationships among nations
+- **Meaning:** Global coordination on AI safety standards
+- **Research:** Ostrom 2009 (common-pool resource governance success factors)
+
+**3. Capability Certification**
+- **Trigger:** Evaluation rigor ≥70%
+- **Meaning:** Robust evaluation systems for AI capabilities/alignment
+- **Research:** Anthropic 2024 (evaluation frameworks), OpenAI 2024 (model cards)
+
+**4. Public Safety Demonstrations**
+- **Trigger:** Institutional trust ≥0.7 AND alignment research investment ≥2%
+- **Meaning:** Visible evidence of safety prioritization builds public confidence
+- **Research:** Putnam 2000 (trust → social capital → cooperation)
+
+### Trust Cascade Dynamics
+
+**Formula:**
+```typescript
+trustBonus = 0.02 × milestonesAchieved
+trustMultiplier = 1.0 + trustBonus  // [1.0, 1.08] for 0-4 milestones
+```
+
+**Effects:**
+- Each milestone: +0.02 institutional trust
+- Trust feeds alignment investment: Trust ≥0.65 → +15% research allocation
+- Multiplicative accumulation enables virtuous cycles
+
+**Example Trajectory:**
+- Month 0: 0 milestones, trust 0.6, alignment investment 1.5%
+- Month 6: Regulatory framework + coordination achieved (2 milestones)
+- → Trust bonus +0.04 → trust 0.64
+- Month 12: Certification + safety demos achieved (4 milestones)
+- → Trust bonus +0.08 → trust 0.68 → alignment investment +15% → 1.73%
+- → Higher investment → better alignment → more public confidence → further milestones
+
+**Integration:** Works with upward spirals system (cooperation spiral requires trust ≥0.6)
+
+### Research Backing
+
+**Social Capital Theory:**
+- Putnam 2000: Institutional quality → social capital accumulation
+- Mechanism: Trust enables cooperation, cooperation builds institutions, institutions reinforce trust
+
+**Institutional Economics:**
+- Acemoglu & Robinson 2001: Inclusive institutions → trust → economic growth
+- Mechanism: Transparent governance reduces uncertainty, enables long-term coordination
+
+**Collective Action:**
+- Ostrom 2009: Common-pool resource governance success factors
+- Key insight: Monitoring, graduated sanctions, conflict resolution → sustainable cooperation
+
+### Scenario Impact
+
+**Alignment-First Scenario:**
+- **Before (Oct 2025):** No milestone system → trust stagnant → alignment investment plateaus
+- **After (Nov 2025):** Milestone detection → trust cascade → sustained high investment
+- **Expected outcome:** First virtuous cascade (4+ spirals) achievable
+
+**See:** `/plans/completed/scenario_analysis_blockers_fixed_20251110.md`
 
 ## Meta-Uncertainty
 
