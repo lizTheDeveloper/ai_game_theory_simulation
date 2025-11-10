@@ -39,6 +39,42 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Phase 3 Scenario Parameter Verification** - NEW (Added Nov 10, 2025)
+     - **Context:** Scenario Analysis Framework Phase 3 - Core Scenarios (commit 6e7b480)
+     - **Issue:** 9 scenarios defined with government priority parameters requiring research validation
+     - **Status:** ⏳ PENDING VERIFICATION
+       - ✅ Implementation complete (type checking passes, single scenario test passes)
+       - ❌ Research verification incomplete
+       - ⏳ Monte Carlo N=10 batch testing pending (90 simulations)
+     - **Parameters Requiring Verification:**
+       1. **Climate spending 35% GDP** (HIGH priority - has citation)
+          - Claim: 35% GDP represents research-backed maximum for climate spending
+          - Citation: research/government_climate_priorities_20251024.md
+          - Needs: Verify claim accuracy + context (wartime vs sustained)
+       2. **Nordic inequality Gini <0.30, 25% GDP redistribution** (HIGH priority - has citation)
+          - Claim: Nordic countries achieve Gini <0.30 via 25% GDP redistribution
+          - Citation: research/policy-interventions-systemic-inequality-validation_20251016.md
+          - Needs: Verify actual Nordic Gini + spending levels
+       3. **Democracy thresholds (0.9 vs 0.2)** (HIGH priority - core hypothesis)
+          - Claim: Democracy necessary for spiral activation
+          - Citation: Implicit (V-Dem, WGI governance indicators)
+          - Needs: Empirical backing for democracy/collective action thresholds
+       4. **AI safety $50B/month** (MEDIUM priority - no citation)
+          - Claim: Aggressive alignment investment scenario
+          - Citation: NONE - may be exploratory parameter
+          - Needs: Research backing OR reclassify as exploratory
+       5. **Research investment $100B/month** (MEDIUM priority - no citation)
+          - Claim: Scientific acceleration scenario
+          - Citation: NONE - may be exploratory parameter
+          - Needs: Research backing OR reclassify as exploratory
+     - **Research Hypothesis:**
+       > Technology alone insufficient (god mode: 1/6 spirals active). Spiral activation requires specific governance/social conditions. Phase 3 identifies which dimensions are necessary vs. sufficient.
+     - **Verification File:** research/verification_6e7b480_20251110.md
+     - **Status:** READY FOR ORCHESTRATOR - Start at VALIDATION phase (research file created)
+     - **Workflow:** Citation existence → Claim verification → Parameter validation/adjustment → Monte Carlo testing
+     - **Priority:** HIGH - Core hypothesis testing for sustainable flourishing pathways
+     - **Files:** src/types/scenarios.ts (+158 lines), scripts/runPhase3Scenarios.ts (409 lines)
+
    - **God Mode Gap Closure Technologies** - NEW (Added Nov 10, 2025)
      - **Issue:** Planetary boundary effectiveness 0-10% despite deploying all technologies (god mode test)
      - **Root Cause:** Missing critical technology categories (prevention, rapid deployment, nitrogen decoupling, energy breakthroughs)
