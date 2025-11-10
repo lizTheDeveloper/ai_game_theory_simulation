@@ -633,8 +633,15 @@ addAcuteCrisisDeaths(
 - 1.7x overshoot in 2025
 - Technology-dependent capacity
 
+**Climate Migration & Trapped Populations:**
+- npj Climate Action (2024): 143M affected Global South by 2050
+- World Migration Report (2024): 216M internal climate migrants by 2050
+- Involuntary immobility: Wealth-bifurcated migration responses
+- See: research/water_scarcity_migration_immobility_20251020.md (2024-2025 sources)
+
 ---
 
-**Last Updated:** October 13, 2025
+**Last Updated:** November 10, 2025 (climate migration sources added)
 **Implementation Status:** ✅ Complete and validated
+**Research Status:** ✅ Current (migration research updated Nov 10, 2025)
 **Next Steps:** Regional population system (requires multipolar framework)

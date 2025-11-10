@@ -6,6 +6,33 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 10, 2025)
 
+**📚 WATER SCARCITY RESEARCH: 2024-2025 Update** (Nov 10, 2025, commit 244f5ba)
+
+**Summary:** Updated water_scarcity_migration_immobility_20251020.md with latest peer-reviewed sources (2024-2025), replacing outdated citations while maintaining theoretical framework on involuntary immobility.
+
+**NEW SOURCES:**
+- **Jasechko et al. (Nature 2024):** Largest groundwater study ever - 170K wells, 1,693 aquifers
+  - 71% of aquifers declining, 30% accelerating
+  - 90% of accelerating aquifers in drying regions
+- **Abdelmohsen et al. (GRL 2025):** Colorado River Basin depletion MORE THAN DOUBLED (5mm/yr → 12mm/yr, 2015-2024)
+- **Loaiciga (Groundwater 2024):** 2050 depletion 887 km³ (61% larger than 2021)
+- **Zhang et al. (Nature Comms 2025):** North China Plain groundwater recovery (proof of reversibility)
+- **npj Climate Action (2024):** 143M people affected in Global South by 2050
+- **World Migration Report 2024:** 216M internal climate migrants by 2050
+
+**FRONTMATTER ADDED:**
+- Oldest source: Hendricks & Peterson (2012) - still relevant for threshold mechanics
+- Newest source: Nature Communications (2025)
+- Last verified: 2025-11-10
+- Status: ✅ Current
+
+**IMPACT:** File used in trappedPopulations.ts simulation code - maintained critical findings on wealth-bifurcated migration responses (poor populations trapped, wealthy populations mobile) while updating empirical evidence base to 2024-2025.
+
+**Files:**
+- research/water_scarcity_migration_immobility_20251020.md (updated)
+
+---
+
 **🤖 AUTONOMOUS RESEARCH AGENT: VM Cron Integration** (Nov 10, 2025, commit 5e605b3)
 
 **Summary:** Added autonomous research agent to VM cron system, enabling systematic execution of research roadmap in parallel with implementation work.

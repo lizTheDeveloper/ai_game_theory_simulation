@@ -314,7 +314,16 @@ materialAbundance -= foodImpact;
 
 **Primary Sources:**
 
-- **Nature (2023):** Jasechko et al. - Rapid groundwater decline >0.5 m/year in dry croplands
+- **Nature (2024):** Jasechko et al. - Largest groundwater study ever (170K wells, 1,693 aquifers)
+  - 71% of aquifers declining, 30% accelerating
+  - 90% of accelerating aquifers in drying regions
+- **GRL (2025):** Abdelmohsen et al. - Colorado River Basin depletion MORE THAN DOUBLED
+  - 5mm/yr (2002-2014) → 12mm/yr (2015-2024)
+  - 27.8M acre-feet lost 2002-2024
+- **Groundwater (2024):** Loaiciga - Global projections to 2050
+  - 2050 depletion: 887 km³ (61% larger than 2021)
+- **Nature Comms (2025):** Zhang et al. - North China Plain groundwater recovery
+  - Rising at ~0.7 m/yr since 2020 (proof of reversibility)
 - **LA Times (Sept 2025):** 368 billion metric tons/year global water loss
 - **Nature (2025):** "Day Zero Drought" - Time of First Emergence within 10-20 years
 - **WWF (2024):** 41% of population in water-stressed basins
@@ -322,11 +331,14 @@ materialAbundance -= foodImpact;
 - **US EPA (2024):** $109B/year water infrastructure investment needed
 
 **Key Findings:**
-1. **68% of water loss is groundwater** (irreversible on human timescales)
-2. **Compound extremes** (Day Zero) are the real danger (not single droughts)
-3. **Technology exists** but deployment is slow (economic/political barriers)
-4. **Regional inequality** - Middle East, North Africa, South Asia hit first
-5. **Agricultural dependency** - 70% of use means food security direct threat
+1. **71% of aquifers declining, 30% accelerating** - global depletion widespread
+2. **Depletion rates MORE THAN DOUBLING** in stressed regions (Colorado River Basin: 5→12mm/yr)
+3. **Recovery possible with intervention** - North China Plain proves reversibility
+4. **Compound extremes** (Day Zero) are the real danger (not single droughts)
+5. **Technology exists** but deployment is slow (economic/political barriers)
+6. **Regional inequality** - Middle East, North Africa, South Asia hit first
+7. **Agricultural dependency** - 70% of use means food security direct threat
+8. **Climate migration scale** - 143M affected Global South by 2050, 216M internal migrants
 
 ---
 
@@ -416,7 +428,11 @@ materialAbundance -= foodImpact;
 - Per-nation water reserves and dependencies
 - Transboundary water conflicts (Nile, Mekong, Indus)
 - Water wars and international treaties
-- Regional migration from water scarcity
+- **Regional migration from water scarcity:**
+  - Involuntary immobility (trapped populations): Poor populations unable to migrate despite water stress
+  - Wealth-bifurcated responses: Wealthy populations mobile, poor populations trapped
+  - Climate captivity: When adaptation AND migration both become impossible
+  - See: research/water_scarcity_migration_immobility_20251020.md (2024-2025 sources)
 
 ### Advanced Technology Modeling
 - Energy-water nexus (desalination requires power)
@@ -459,9 +475,14 @@ materialAbundance -= foodImpact;
 ## References
 
 **Academic Sources:**
-- Nature (2023): Jasechko et al. - Groundwater decline rates
+- Nature (2024): Jasechko et al. - Largest groundwater study (170K wells, 71% declining, 30% accelerating)
+- GRL (2025): Abdelmohsen et al. - Colorado River Basin depletion doubled (5→12mm/yr)
+- Groundwater (2024): Loaiciga - 2050 projections (887 km³ depletion)
+- Nature Comms (2025): Zhang et al. - North China Plain recovery (proof of reversibility)
 - Nature (2025): "Day Zero Drought" - Time of First Emergence
 - AGU (2025): Peak groundwater concept
+- npj Climate Action (2024): 143M people affected Global South by 2050
+- World Migration Report (2024): 216M internal climate migrants by 2050
 
 **Government & NGO Reports:**
 - WWF (2024): 41% population in water-stressed basins
@@ -475,6 +496,7 @@ materialAbundance -= foodImpact;
 
 ---
 
-**Last Updated:** October 11, 2025
+**Last Updated:** November 10, 2025 (research sources updated to 2024-2025)
 **Implementation Status:** ✅ Complete and validated
+**Research Status:** ✅ Current (water_scarcity_migration_immobility_20251020.md updated Nov 10, 2025)
 **Next Steps:** Regional dynamics (requires TIER 1.4 Multipolar system)
