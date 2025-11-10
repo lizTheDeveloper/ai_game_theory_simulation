@@ -57,11 +57,13 @@ test.describe('AI Systems → QoL Integration', () => {
     // Adaptive wait - poll for AI capability to be visible
     await waitForDashboardData(page, /ai capability/i);
 
-    // Get AI capability value
-    const aiCapabilityText = await page.getByText(/ai capability/i).locator('..').locator('text=/\\d+\\.\\d+/').first().textContent();
+    // Get AI capability value - find card by label, then get value
+    const aiCapabilityCard = page.locator('.metric-card').filter({ hasText: /ai capability/i });
+    const aiCapabilityText = await aiCapabilityCard.locator('.metric-value').textContent();
 
     // Get QoL value
-    const qolText = await page.getByText(/quality of life/i).locator('..').locator('text=/\\d+\\.\\d+|\\d+%/').first().textContent();
+    const qolCard = page.locator('.metric-card').filter({ hasText: /quality of life/i });
+    const qolText = await qolCard.locator('.metric-value').textContent();
 
     // Both should have valid values
     expect(aiCapabilityText).toMatch(/\d+\.\d+/);
@@ -80,8 +82,8 @@ test.describe('AI Systems → QoL Integration', () => {
 
     // Check AI Agents dashboard - use client-side navigation
     await page.getByRole('link', { name: /ai.*agents/i }).click();
-    // Adaptive wait added - waits for data to load
-    await waitForDashboardData(page, /\d+\.\d+B|global population/i);
+    // Adaptive wait for AI-specific content (not population which may not be on this page)
+    await waitForDashboardData(page, /agent|capability|alignment/i);
 
     // Should show consistent agent data
     // Note: Exact counts might differ slightly due to update timing
@@ -97,8 +99,9 @@ test.describe('AI Systems → QoL Integration', () => {
     // Adaptive wait added - waits for data to load
     await waitForDashboardData(page, /alignment/i);
 
-    // Get alignment score
-    const alignmentText = await page.getByText(/alignment/i).locator('..').locator('text=/\\d+\\.\\d+/').first().textContent();
+    // Get alignment score - find card by label, then get value
+    const alignmentCard = page.locator('.metric-card').filter({ hasText: /alignment/i });
+    const alignmentText = await alignmentCard.locator('.metric-value').textContent();
 
     // Get system status
     const systemStatus = await page.getByText(/system status/i).locator('..').textContent();
