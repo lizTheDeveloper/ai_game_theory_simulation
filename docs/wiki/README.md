@@ -121,7 +121,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Status:** Empirical finding from test execution. Reveals fundamental model limitation - tech tree alone cannot overcome initial conditions. May require: (1) earlier scenario start dates, (2) stronger restoration mechanics, or (3) acknowledgment that some futures are unrecoverable from 2025 baseline.
 
-**See:** logs/capability_fix_nov9_2025.md
+**Sylvia's Skeptical Analysis (commit f33340f, November 9, 2025):** Thermodynamic analysis of effectiveness gaps reveals fundamental constraints:
+- **Novel Entities (0%):** PFAS destruction energy = 4-40% of global production; cleanup may be thermodynamically infeasible at environmental scales (ng/L → mg/L requires 6-9 orders of magnitude concentration)
+- **Climate (5.5%):** DAC at 10 GtCO₂/year needs 10,000-22,000 TWh/year (50-110% of global electricity); tech works but energy requirements collapse civilization
+- **Biogeochemical (10%):** Lake Erie case study shows 50 years of controls → re-eutrophication from legacy phosphorus; 60% nitrogen reduction = cutting food for ~3B people
+- **Biosphere (81.5% - SUSPICIOUS):** May conflate species counts (easy) with ecosystem function (hard); 50% species ≠ 50% functionality if keystone species gone
+
+**Core hypothesis:** Some problems may be thermodynamically irreversible at scale. Solutions compete for energy/resources needed to keep civilization alive. Model may need "irreversibility flags" for one-way doors and triage mechanics instead of heroic recovery.
+
+**See:** logs/capability_fix_nov9_2025.md, reviews/god_mode_gaps_research_roadmap_20251109.md
 
 **🔍 KEY FINDING - ARCHITECTURAL HONESTY** (commit 8462f30, November 7, 2025)
 
@@ -5794,6 +5802,22 @@ state.history.exogenousShocks?: Array<{
 
 ## 📚 Recent Research & Plans Reference (Oct 16-30, 2025)
 
+### Research Coordination (Nov 9, 2025)
+
+**Master Research Roadmap Created** ✅ DOCUMENTED (Nov 9, 2025)
+- **Purpose**: Single source of truth for all research coordination across AI alignment, climate mitigation, planetary boundaries, and post-scarcity pathways
+- **File**: `research/RESEARCH_ROADMAP.md` (617 lines)
+- **Integration**: Combines Sylvia's god mode gaps analysis with complete research index (335+ files)
+- **Priority Structure** (from Priya's quantitative analysis):
+  - **TIER 1 CRITICAL**: Novel Entities (0% effectiveness) - thermodynamic energy constraints, PFAS cleanup requires 4-40% global energy
+  - **TIER 2 HIGH**: Climate (5.5%), Biogeochemical (10%) - deployment physics, irreversibility (DAC needs 50-110% global electricity)
+  - **TIER 3 MEDIUM**: Biosphere outlier (81.5% - suspiciously good?) - functionality vs species counts investigation
+- **Research Index**: 335+ research files organized by domain (AI alignment, climate mortality, planetary boundaries, citation quality)
+- **Links**: Sylvia's roadmap (`reviews/god_mode_gaps_research_roadmap_20251109.md`), irreversibility evidence (Lake Erie case study)
+- **Agent Coordination**: Cynthia (literature search), Sylvia (citation verification), communication via research/coordination channels
+- **Active Questions**: Energy trap analysis, deployment timescales, legacy contamination modeling, nitrogen-food coupling
+- Commit: 91f567a (Nov 9, 2025)
+
 ### Development Workflow Updates (Oct 30-Nov 7, 2025)
 
 **Token Efficiency Emphasis** ✅ DOCUMENTED (Nov 7, 2025)
@@ -6013,6 +6037,28 @@ state.history.exogenousShocks?: Array<{
 - **Logs**: `logs/worker_watcher/watcher_TIMESTAMP.log`
 - Commits: 4fd9d55 (Nov 5, 2025 - initial), 418c9c4 (Nov 6, 2025 - researcher + merge orchestrator monitoring)
 
+**Priya - Quantitative Validator** ✅ DOCUMENTED
+- **Purpose**: Statistical analysis, Monte Carlo validation, and quantitative gap analysis specialist
+- **When to invoke**: God mode analysis, determinism debugging, effectiveness measurement, distribution validation
+- **Expertise**:
+  - Monte Carlo validation (CV < 0.01% requirement for deterministic simulations)
+  - Statistical gap analysis (effectiveness = (initial - final) / initial)
+  - Determinism debugging (nuclear option: required parameters, RNG tracing)
+  - Distribution validation (S-curves, log-normal, power-law patterns)
+- **Key capabilities**:
+  - Quantify intervention effectiveness with confidence intervals
+  - Identify zero-effectiveness systems (e.g., Novel Entities 0% → critical gap)
+  - Calculate monthly rates and distributions
+  - Rank gaps by severity × ineffectiveness for triage
+- **Working relationships**:
+  - Roy (simulation-maintainer): Finds bugs with CV analysis, Roy fixes with assertions
+  - Cynthia (researcher): Validates if research numbers match simulation reality
+  - Sylvia (skeptic): Questions assumptions, Priya validates with statistics
+- **Motto**: "In God we trust. All others must bring data."
+- **Model**: Sonnet (precise quantitative analysis)
+- **Files**: `.claude/agents/priya.md` (248 lines)
+- Commit: 66159b9 (Nov 9, 2025)
+
 **GameState Field Editor Agent** ✅ DOCUMENTED
 - **Purpose**: Haiku micro-agent for mechanical GameState field edits with FULL GameState type context (900 lines)
 - **Spawned by**: `simulation-maintainer` (Sonnet) for simple field access changes
@@ -6033,13 +6079,14 @@ state.history.exogenousShocks?: Array<{
 
 **Matrix MCP Configuration** ✅ DOCUMENTED
 - **Purpose**: Matrix real-time messaging integration for multi-agent coordination
-- **Agent identity**: Per-agent bot tokens in `~/.superalignment-env` (11 agents total)
+- **Agent identity**: Per-agent bot tokens in `~/.superalignment-env` (12 agents total)
 - **Configuration**: `.claude/agents/mcp-configs/matrix-test.json` - Test config for Matrix tool validation
 - **Architecture**: All agents use same Matrix MCP server - identity comes from which bot token is used, not separate MCP configs
 - **Channel access patterns**:
-  - **Coordination** (Universal): All 11 agents (orchestrator, cynthia, sylvia, roy, moss, tessa, historian, architect, ray, monitor)
+  - **Coordination** (Universal): All 12 agents (orchestrator, cynthia, sylvia, roy, moss, tessa, historian, architect, ray, priya, monitor)
   - **Research** (Specialists monitor): Cynthia + Sylvia monitor, others can post questions
   - **Implementation** (Specialists monitor): Roy + Architect monitor implementation tasks and roadmap sync
+  - **Validation** (Specialist monitors): Priya monitors for statistical analysis requests
   - Other channels as needed: research-critique, architecture, testing, documentation, roadmap, triggers, alerts, status
 - **CLI sub-agent pattern**: Matrix tools available via CLI-spawned sub-agents (main context requires restart after `claude mcp add`)
 - **Usage example**: `claude --dangerously-skip-permissions --model haiku --mcp-config .claude/agents/mcp-configs/matrix-test.json --print "Post 'message' to channel as agent"`
