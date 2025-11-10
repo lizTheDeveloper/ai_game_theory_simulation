@@ -58,35 +58,37 @@ function applyStartingConditions(
   state: GameState,
   conditions: ScenarioStartingConditions
 ): void {
-  // Boost governance quality across all countries
+  // Boost governance quality
+  // FIX (Nov 10, 2025): Set at correct state location for spiral activation
+  // Spirals check state.government.governanceQuality, not country.vDemIndicators
   if (conditions.governanceQuality !== undefined) {
     console.log(`    Governance quality boost: ${(conditions.governanceQuality * 100).toFixed(0)}%`);
-    const countries = (state as any).countries || {};
-    for (const country of Object.values(countries)) {
-      // Apply to V-Dem indicators (scale 0-1)
-      if ((country as any).vDemIndicators) {
-        (country as any).vDemIndicators.v2x_polyarchy = Math.max(
-          (country as any).vDemIndicators.v2x_polyarchy || 0,
-          conditions.governanceQuality
-        );
-        (country as any).vDemIndicators.v2x_liberal = Math.max(
-          (country as any).vDemIndicators.v2x_liberal || 0,
-          conditions.governanceQuality
-        );
-        (country as any).vDemIndicators.v2x_partipdem = Math.max(
-          (country as any).vDemIndicators.v2x_partipdem || 0,
-          conditions.governanceQuality
-        );
-        (country as any).vDemIndicators.v2x_delibdem = Math.max(
-          (country as any).vDemIndicators.v2x_delibdem || 0,
-          conditions.governanceQuality
-        );
-        (country as any).vDemIndicators.v2x_egaldem = Math.max(
-          (country as any).vDemIndicators.v2x_egaldem || 0,
-          conditions.governanceQuality
-        );
-      }
-    }
+
+    // Set governance quality fields directly (used by democratic spiral)
+    state.government.governanceQuality.decisionQuality = Math.max(
+      state.government.governanceQuality.decisionQuality,
+      conditions.governanceQuality
+    );
+    state.government.governanceQuality.transparency = Math.max(
+      state.government.governanceQuality.transparency,
+      conditions.governanceQuality
+    );
+    state.government.governanceQuality.participationRate = Math.max(
+      state.government.governanceQuality.participationRate,
+      conditions.governanceQuality
+    );
+    state.government.governanceQuality.institutionalCapacity = Math.max(
+      state.government.governanceQuality.institutionalCapacity,
+      conditions.governanceQuality
+    );
+    state.government.governanceQuality.consensusBuildingEfficiency = Math.max(
+      state.government.governanceQuality.consensusBuildingEfficiency,
+      conditions.governanceQuality
+    );
+    state.government.governanceQuality.minorityProtectionStrength = Math.max(
+      state.government.governanceQuality.minorityProtectionStrength,
+      conditions.governanceQuality
+    );
   }
 
   // Boost institutional capacity
@@ -164,6 +166,40 @@ function applyStartingConditions(
     // For now, we'll document this in the scenario result
     state.currentMonth = conditions.techDeploymentStartMonth;
   }
+
+  // FIX (Nov 10, 2025): Initialize missing spiral-required fields for god mode scenarios
+  // These fields are required for spiral activation but not initialized in default state
+  console.log('  🔧 Initializing spiral-required fields for god mode scenario...');
+
+  // Workflow adaptation (scientific spiral requires >= 0.25)
+  // Default: 0.21 (MDPI 2024), boost to 0.3 for god mode activation
+  if (!state.society.workflowAdaptation || state.society.workflowAdaptation < 0.25) {
+    state.society.workflowAdaptation = 0.3;
+    console.log(`    workflowAdaptation: ${state.society.workflowAdaptation.toFixed(2)} (above scientific spiral threshold)`);
+  }
+
+  // Cultural adaptation (meaning spiral requires > 0.7)
+  // Default: 0.10 (minimal post-work culture), boost to 0.75 for god mode activation
+  if (state.socialAccumulation.culturalAdaptation < 0.7) {
+    state.socialAccumulation.culturalAdaptation = 0.75;
+    console.log(`    culturalAdaptation: ${state.socialAccumulation.culturalAdaptation.toFixed(2)} (above meaning spiral threshold)`);
+  }
+
+  // Economic transition stage (abundance spiral requires >= 3)
+  // Default: 0 (capitalist), boost to 3 (post-scarcity) for god mode activation
+  if (state.globalMetrics.economicTransitionStage < 3) {
+    state.globalMetrics.economicTransitionStage = 3;
+    console.log(`    economicTransitionStage: ${state.globalMetrics.economicTransitionStage} (post-scarcity stage)`);
+  }
+
+  // Unemployment level (abundance spiral requires > 0.6)
+  // Default: 0.049 (ILO 2024), boost to 0.7 for god mode activation
+  if (state.society.unemploymentLevel < 0.6) {
+    state.society.unemploymentLevel = 0.7;
+    console.log(`    unemploymentLevel: ${state.society.unemploymentLevel.toFixed(2)} (above abundance spiral threshold)`);
+  }
+
+  console.log('  ✅ Spiral-required fields initialized\n');
 }
 
 /**
