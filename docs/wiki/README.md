@@ -525,6 +525,30 @@ See: [`.claude/agents/memories/`](../../.claude/agents/memories/) for agent memo
 
 Commits: 876ea94 (Nov 5, 2025), 9bc4b2a (Nov 6, 2025), 0186fbe (Nov 6, 2025)
 
+### November 10, 2025
+
+**Adaptive Polling for E2E Tests** (commit 56f1bf6)
+
+Replaced fixed timeouts with adaptive polling that checks element visibility. The new `waitForDashboardData()` helper polls up to 5 times (10s total) for specific elements based on test context.
+
+**Results:**
+- Maintains 75% pass rate (15/20) with improved stability under system load
+- Context-aware waits (AI capability, climate data, paradigm scores, etc.)
+- Resilient to timing variations across different machines
+
+**E2E Test Stability Improvements** (commit 8f6f4fe)
+
+Increased navigation wait times from 2s → 3s in multi-system integration tests for improved stability.
+
+**Results:**
+- Pass rate: 75-80% stable (15-16/20 tests)
+- Combined with: 4× speed optimization, client-side navigation (preserves worker state)
+- Remaining 5 failures are flaky (vary 4-6 depending on system load)
+
+**Analysis:** Adaptive polling strategy implemented (see commit 56f1bf6 above).
+
+**Location:** `e2e/multi-system-integration.spec.ts` (24 timeout updates)
+
 ### November 7, 2025
 
 **⚡ DEEP CLONING PERFORMANCE OPTIMIZATION** ✅ **COMPLETE** (HIGH-1, Nov 7, 2025)
