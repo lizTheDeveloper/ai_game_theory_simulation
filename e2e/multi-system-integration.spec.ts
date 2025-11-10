@@ -20,7 +20,7 @@ test.setTimeout(40000);
 async function waitForDashboardData(page: any, selector: string | RegExp, maxAttempts: number = 8) {
   for (let i = 0; i < maxAttempts; i++) {
     await page.waitForTimeout(2000);
-    const isVisible = await page.locator(`text=${selector}`).first().isVisible().catch(() => false);
+    const isVisible = await page.getByText(selector).first().isVisible().catch(() => false);
     if (isVisible) return;
   }
   throw new Error(`Dashboard data not visible after ${maxAttempts} attempts: ${selector}`);

@@ -89307,7 +89307,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 36,
+    "line": 37,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -89315,7 +89315,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 37,
+    "line": 38,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -89323,7 +89323,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 46,
+    "line": 47,
     "type": "function",
     "name": "updateGeoengineering",
     "currentDoc": "(none)",
@@ -89331,7 +89331,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 85,
+    "line": 86,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89339,7 +89339,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 86,
+    "line": 87,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89347,7 +89347,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 87,
+    "line": 88,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89355,7 +89355,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 106,
+    "line": 107,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89363,7 +89363,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 107,
+    "line": 108,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89371,7 +89371,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 108,
+    "line": 109,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89379,7 +89379,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 119,
+    "line": 120,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89387,7 +89387,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 120,
+    "line": 121,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89395,7 +89395,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 121,
+    "line": 122,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89403,7 +89403,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 122,
+    "line": 123,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89411,7 +89411,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 131,
+    "line": 132,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89419,7 +89419,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 132,
+    "line": 133,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89427,7 +89427,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 133,
+    "line": 134,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89435,7 +89435,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 134,
+    "line": 135,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89443,7 +89443,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 139,
+    "line": 140,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89451,7 +89451,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 140,
+    "line": 141,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89459,7 +89459,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 141,
+    "line": 142,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89467,7 +89467,31 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 165,
+    "line": 152,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateIronFertilization',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
+    "line": 153,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'atmosphericCO2',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
+    "line": 154,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
+    "line": 174,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -89475,7 +89499,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 166,
+    "line": 175,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -89483,7 +89507,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 167,
+    "line": 176,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -89491,7 +89515,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 168,
+    "line": 177,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -89499,7 +89523,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 169,
+    "line": 178,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -89507,7 +89531,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 170,
+    "line": 179,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -89515,7 +89539,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 200,
+    "line": 209,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89523,7 +89547,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 201,
+    "line": 210,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89531,7 +89555,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 202,
+    "line": 211,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89539,7 +89563,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 212,
+    "line": 221,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89547,7 +89571,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 213,
+    "line": 222,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89555,7 +89579,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 214,
+    "line": 223,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89563,7 +89587,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 215,
+    "line": 224,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89571,7 +89595,31 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 246,
+    "line": 239,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateOceanAlkalinity',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
+    "line": 240,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'atmosphericCO2',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
+    "line": 241,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
+    "line": 263,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -89579,7 +89627,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 247,
+    "line": 264,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -89587,7 +89635,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 248,
+    "line": 265,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -89595,7 +89643,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 249,
+    "line": 266,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -89603,7 +89651,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 250,
+    "line": 267,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -89611,7 +89659,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 251,
+    "line": 268,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -89619,7 +89667,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 274,
+    "line": 291,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89627,7 +89675,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 275,
+    "line": 292,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89635,7 +89683,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 276,
+    "line": 293,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89643,7 +89691,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 286,
+    "line": 303,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89651,7 +89699,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 287,
+    "line": 304,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89659,7 +89707,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 288,
+    "line": 305,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89667,7 +89715,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 289,
+    "line": 306,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89675,7 +89723,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 305,
+    "line": 322,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -89683,7 +89731,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 306,
+    "line": 323,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -89691,7 +89739,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 307,
+    "line": 324,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -89699,7 +89747,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 308,
+    "line": 325,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -89707,7 +89755,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 309,
+    "line": 326,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -89715,7 +89763,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 310,
+    "line": 327,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -89723,7 +89771,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 344,
+    "line": 361,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -89731,7 +89779,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 345,
+    "line": 362,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -89739,7 +89787,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 346,
+    "line": 363,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -89747,7 +89795,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 347,
+    "line": 364,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -89755,7 +89803,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 348,
+    "line": 365,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -89763,7 +89811,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 349,
+    "line": 366,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -89771,7 +89819,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 371,
+    "line": 388,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89779,7 +89827,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 372,
+    "line": 389,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89787,7 +89835,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 373,
+    "line": 390,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89795,7 +89843,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 380,
+    "line": 397,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89803,7 +89851,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 381,
+    "line": 398,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89811,7 +89859,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 382,
+    "line": 399,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89819,7 +89867,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 392,
+    "line": 409,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89827,7 +89875,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 393,
+    "line": 410,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89835,7 +89883,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 394,
+    "line": 411,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89843,7 +89891,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 395,
+    "line": 412,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89851,7 +89899,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 399,
+    "line": 416,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -89859,7 +89907,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 400,
+    "line": 417,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -89867,7 +89915,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 401,
+    "line": 418,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -89875,7 +89923,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 402,
+    "line": 419,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -89883,7 +89931,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 442,
+    "line": 459,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -89891,7 +89939,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 443,
+    "line": 460,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -89899,7 +89947,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 444,
+    "line": 461,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -89907,7 +89955,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 445,
+    "line": 462,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -89915,7 +89963,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 446,
+    "line": 463,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -89923,7 +89971,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 447,
+    "line": 464,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -89931,7 +89979,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 456,
+    "line": 473,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -89939,7 +89987,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 457,
+    "line": 474,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -89947,7 +89995,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 458,
+    "line": 475,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -89955,7 +90003,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 459,
+    "line": 476,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -89963,7 +90011,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 460,
+    "line": 477,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -89971,7 +90019,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 461,
+    "line": 478,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -89979,7 +90027,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 470,
+    "line": 487,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -89987,7 +90035,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 471,
+    "line": 488,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -89995,7 +90043,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 472,
+    "line": 489,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -90003,7 +90051,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 473,
+    "line": 490,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -90011,7 +90059,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 474,
+    "line": 491,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -90019,7 +90067,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 475,
+    "line": 492,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -90027,7 +90075,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 501,
+    "line": 518,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -90035,7 +90083,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 502,
+    "line": 519,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -90043,7 +90091,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 503,
+    "line": 520,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -90051,7 +90099,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 504,
+    "line": 521,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -90059,7 +90107,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 505,
+    "line": 522,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -90067,7 +90115,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 506,
+    "line": 523,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -90075,7 +90123,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 570,
+    "line": 587,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -90083,7 +90131,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 571,
+    "line": 588,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -90091,7 +90139,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 572,
+    "line": 589,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -90099,7 +90147,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 573,
+    "line": 590,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -90107,7 +90155,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 574,
+    "line": 591,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -90115,7 +90163,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 575,
+    "line": 592,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -135171,7 +135219,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/resourceDepletion.ts",
-    "line": 921,
+    "line": 922,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135179,27 +135227,19 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/resourceDepletion.ts",
-    "line": 922,
+    "line": 923,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'atmosphericCO2 (after increase)',"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/resourceDepletion.ts",
-    "line": 923,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
+    "context": "valueName: 'atmosphericCO2',"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/resourceDepletion.ts",
     "line": 924,
     "type": "property",
-    "name": "additionalInfo",
+    "name": "month",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { oldValue: co2.atmosphericCO2, ppmIncrease }"
+    "context": "month: state.currentMonth"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/resourceDepletion.ts",
@@ -157339,7 +157379,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 466,
+    "line": 467,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157347,7 +157387,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 467,
+    "line": 468,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157355,7 +157395,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 468,
+    "line": 469,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157363,7 +157403,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 483,
+    "line": 484,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157371,7 +157411,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 484,
+    "line": 485,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157379,7 +157419,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 485,
+    "line": 486,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157387,7 +157427,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 502,
+    "line": 503,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157395,7 +157435,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 503,
+    "line": 504,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157403,7 +157443,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 504,
+    "line": 505,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157411,7 +157451,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 517,
+    "line": 519,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157419,7 +157459,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 518,
+    "line": 520,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157427,7 +157467,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 519,
+    "line": 521,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157435,7 +157475,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 564,
+    "line": 566,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157443,7 +157483,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 565,
+    "line": 567,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157451,7 +157491,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 566,
+    "line": 568,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157459,7 +157499,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 622,
+    "line": 625,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157467,7 +157507,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 623,
+    "line": 626,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157475,7 +157515,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 624,
+    "line": 627,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157483,7 +157523,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 634,
+    "line": 637,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157491,7 +157531,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 635,
+    "line": 638,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157499,7 +157539,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 636,
+    "line": 639,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157507,7 +157547,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 646,
+    "line": 649,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157515,7 +157555,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 647,
+    "line": 650,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157523,7 +157563,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 648,
+    "line": 651,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157531,7 +157571,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 661,
+    "line": 664,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157539,7 +157579,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 662,
+    "line": 665,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157547,7 +157587,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 663,
+    "line": 666,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157555,7 +157595,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 682,
+    "line": 685,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157563,7 +157603,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 683,
+    "line": 686,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157571,7 +157611,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 684,
+    "line": 687,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157579,7 +157619,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 699,
+    "line": 702,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157587,7 +157627,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 700,
+    "line": 703,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157595,7 +157635,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 701,
+    "line": 704,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157603,7 +157643,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 713,
+    "line": 716,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157611,7 +157651,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 714,
+    "line": 717,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157619,7 +157659,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 715,
+    "line": 718,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157627,7 +157667,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 729,
+    "line": 732,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157635,7 +157675,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 730,
+    "line": 733,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157643,7 +157683,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 731,
+    "line": 734,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157651,7 +157691,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 743,
+    "line": 746,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157659,7 +157699,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 744,
+    "line": 747,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157667,7 +157707,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 745,
+    "line": 748,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157675,7 +157715,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 760,
+    "line": 763,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157683,7 +157723,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 761,
+    "line": 764,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157691,7 +157731,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 762,
+    "line": 765,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157699,7 +157739,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 774,
+    "line": 777,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157707,7 +157747,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 775,
+    "line": 778,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157715,7 +157755,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 776,
+    "line": 779,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157723,7 +157763,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 788,
+    "line": 791,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157731,7 +157771,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 789,
+    "line": 792,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157739,7 +157779,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 790,
+    "line": 793,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157747,7 +157787,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 804,
+    "line": 807,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157755,7 +157795,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 805,
+    "line": 808,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157763,7 +157803,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 806,
+    "line": 809,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157771,7 +157811,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 819,
+    "line": 822,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157779,7 +157819,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 820,
+    "line": 823,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157787,7 +157827,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 821,
+    "line": 824,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157795,7 +157835,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 834,
+    "line": 837,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157803,7 +157843,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 835,
+    "line": 838,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157811,7 +157851,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 836,
+    "line": 839,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157819,7 +157859,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 857,
+    "line": 860,
     "type": "property",
     "name": "gameState",
     "currentDoc": "(none)",
@@ -157827,7 +157867,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 858,
+    "line": 861,
     "type": "property",
     "name": "regionalEffects",
     "currentDoc": "(none)",
@@ -157835,7 +157875,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 873,
+    "line": 876,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157843,7 +157883,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 874,
+    "line": 877,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157851,7 +157891,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 875,
+    "line": 878,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157859,7 +157899,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 876,
+    "line": 879,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -157867,7 +157907,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 887,
+    "line": 890,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157875,7 +157915,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 888,
+    "line": 891,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157883,7 +157923,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 889,
+    "line": 892,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157891,7 +157931,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 890,
+    "line": 893,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -157899,7 +157939,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 914,
+    "line": 917,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157907,7 +157947,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 915,
+    "line": 918,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157915,7 +157955,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 916,
+    "line": 919,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157923,7 +157963,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 917,
+    "line": 920,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -157931,7 +157971,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 937,
+    "line": 940,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157939,7 +157979,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 938,
+    "line": 941,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157947,7 +157987,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 939,
+    "line": 942,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157955,7 +157995,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 940,
+    "line": 943,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -157963,7 +158003,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 951,
+    "line": 954,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -157971,7 +158011,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 952,
+    "line": 955,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -157979,7 +158019,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 953,
+    "line": 956,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -157987,7 +158027,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 954,
+    "line": 957,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -157995,7 +158035,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 970,
+    "line": 973,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158003,7 +158043,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 971,
+    "line": 974,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158011,7 +158051,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 972,
+    "line": 975,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158019,7 +158059,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 973,
+    "line": 976,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -158027,7 +158067,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 982,
+    "line": 985,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158035,7 +158075,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 983,
+    "line": 986,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158043,7 +158083,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 984,
+    "line": 987,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158051,7 +158091,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 985,
+    "line": 988,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -158059,7 +158099,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1000,
+    "line": 1003,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158067,7 +158107,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1001,
+    "line": 1004,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158075,7 +158115,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1002,
+    "line": 1005,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158083,7 +158123,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1003,
+    "line": 1006,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -158091,7 +158131,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1012,
+    "line": 1015,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158099,7 +158139,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1013,
+    "line": 1016,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158107,7 +158147,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1014,
+    "line": 1017,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158115,7 +158155,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1015,
+    "line": 1018,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -158123,7 +158163,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1030,
+    "line": 1033,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158131,7 +158171,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1031,
+    "line": 1034,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158139,7 +158179,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1032,
+    "line": 1035,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158147,7 +158187,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1046,
+    "line": 1049,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158155,7 +158195,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1047,
+    "line": 1050,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158163,7 +158203,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1048,
+    "line": 1051,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158171,7 +158211,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1061,
+    "line": 1064,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158179,7 +158219,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1062,
+    "line": 1065,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158187,7 +158227,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1063,
+    "line": 1066,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158195,7 +158235,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1070,
+    "line": 1073,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158203,7 +158243,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1071,
+    "line": 1074,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158211,7 +158251,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1072,
+    "line": 1075,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158219,7 +158259,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1086,
+    "line": 1089,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158227,7 +158267,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1087,
+    "line": 1090,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158235,7 +158275,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1088,
+    "line": 1091,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158243,7 +158283,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1161,
+    "line": 1164,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158251,7 +158291,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1162,
+    "line": 1165,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158259,7 +158299,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1163,
+    "line": 1166,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158267,7 +158307,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1200,
+    "line": 1203,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158275,7 +158315,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1201,
+    "line": 1204,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158283,7 +158323,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1202,
+    "line": 1205,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158291,7 +158331,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1220,
+    "line": 1223,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158299,7 +158339,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1221,
+    "line": 1224,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158307,7 +158347,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1222,
+    "line": 1225,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158315,7 +158355,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1234,
+    "line": 1237,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158323,7 +158363,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1235,
+    "line": 1238,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158331,7 +158371,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1236,
+    "line": 1239,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158339,7 +158379,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1248,
+    "line": 1251,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158347,7 +158387,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1249,
+    "line": 1252,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158355,7 +158395,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1250,
+    "line": 1253,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158363,7 +158403,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1265,
+    "line": 1268,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158371,7 +158411,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1266,
+    "line": 1269,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158379,7 +158419,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1267,
+    "line": 1270,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158387,7 +158427,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1273,
+    "line": 1276,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158395,7 +158435,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1274,
+    "line": 1277,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158403,7 +158443,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1275,
+    "line": 1278,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158411,7 +158451,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1288,
+    "line": 1291,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158419,7 +158459,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1289,
+    "line": 1292,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158427,7 +158467,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1290,
+    "line": 1293,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158435,7 +158475,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1297,
+    "line": 1300,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158443,7 +158483,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1298,
+    "line": 1301,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158451,7 +158491,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1299,
+    "line": 1302,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158459,7 +158499,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1306,
+    "line": 1309,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158467,7 +158507,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1307,
+    "line": 1310,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158475,7 +158515,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1308,
+    "line": 1311,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158483,7 +158523,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1320,
+    "line": 1323,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158491,7 +158531,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1321,
+    "line": 1324,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158499,7 +158539,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1322,
+    "line": 1325,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158507,7 +158547,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1328,
+    "line": 1331,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158515,7 +158555,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1329,
+    "line": 1332,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158523,7 +158563,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1330,
+    "line": 1333,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158531,7 +158571,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1342,
+    "line": 1345,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158539,7 +158579,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1343,
+    "line": 1346,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158547,7 +158587,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1344,
+    "line": 1347,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158555,7 +158595,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1351,
+    "line": 1354,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158563,7 +158603,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1352,
+    "line": 1355,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158571,7 +158611,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1353,
+    "line": 1356,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158579,7 +158619,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1365,
+    "line": 1368,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158587,7 +158627,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1366,
+    "line": 1369,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158595,7 +158635,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1367,
+    "line": 1370,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158603,7 +158643,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1374,
+    "line": 1377,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158611,7 +158651,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1375,
+    "line": 1378,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158619,7 +158659,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1376,
+    "line": 1379,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158627,7 +158667,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1389,
+    "line": 1392,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158635,7 +158675,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1390,
+    "line": 1393,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158643,7 +158683,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1391,
+    "line": 1394,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158651,7 +158691,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1401,
+    "line": 1404,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158659,7 +158699,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1402,
+    "line": 1405,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158667,7 +158707,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1403,
+    "line": 1406,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158675,7 +158715,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1416,
+    "line": 1419,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158683,7 +158723,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1417,
+    "line": 1420,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158691,7 +158731,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1418,
+    "line": 1421,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158699,7 +158739,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1425,
+    "line": 1428,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158707,7 +158747,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1426,
+    "line": 1429,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158715,7 +158755,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1427,
+    "line": 1430,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158723,7 +158763,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1500,
+    "line": 1503,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158731,7 +158771,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1501,
+    "line": 1504,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158739,7 +158779,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1502,
+    "line": 1505,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158747,7 +158787,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1548,
+    "line": 1551,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158755,7 +158795,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1549,
+    "line": 1552,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158763,7 +158803,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1550,
+    "line": 1553,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158771,7 +158811,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1562,
+    "line": 1565,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158779,7 +158819,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1563,
+    "line": 1566,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158787,7 +158827,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1564,
+    "line": 1567,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158795,7 +158835,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1582,
+    "line": 1585,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158803,7 +158843,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1583,
+    "line": 1586,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158811,7 +158851,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1584,
+    "line": 1587,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158819,7 +158859,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1596,
+    "line": 1599,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158827,7 +158867,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1597,
+    "line": 1600,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158835,7 +158875,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1598,
+    "line": 1601,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158843,7 +158883,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1607,
+    "line": 1610,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158851,7 +158891,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1608,
+    "line": 1611,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158859,7 +158899,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1609,
+    "line": 1612,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158867,7 +158907,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1622,
+    "line": 1625,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158875,7 +158915,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1623,
+    "line": 1626,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158883,7 +158923,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1624,
+    "line": 1627,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158891,7 +158931,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1636,
+    "line": 1639,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158899,7 +158939,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1637,
+    "line": 1640,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158907,7 +158947,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1638,
+    "line": 1641,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158915,7 +158955,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1647,
+    "line": 1650,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158923,7 +158963,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1648,
+    "line": 1651,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158931,7 +158971,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1649,
+    "line": 1652,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158939,7 +158979,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1668,
+    "line": 1671,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158947,7 +158987,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1669,
+    "line": 1672,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158955,7 +158995,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1670,
+    "line": 1673,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158963,7 +159003,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1683,
+    "line": 1686,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158971,7 +159011,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1684,
+    "line": 1687,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -158979,7 +159019,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1685,
+    "line": 1688,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -158987,7 +159027,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1697,
+    "line": 1700,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -158995,7 +159035,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1698,
+    "line": 1701,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159003,7 +159043,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1699,
+    "line": 1702,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159011,7 +159051,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1712,
+    "line": 1715,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159019,7 +159059,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1713,
+    "line": 1716,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159027,7 +159067,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1714,
+    "line": 1717,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159035,7 +159075,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1727,
+    "line": 1730,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159043,7 +159083,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1728,
+    "line": 1731,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159051,7 +159091,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1729,
+    "line": 1732,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159059,7 +159099,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1741,
+    "line": 1744,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159067,7 +159107,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1742,
+    "line": 1745,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159075,7 +159115,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1743,
+    "line": 1746,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159083,7 +159123,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1762,
+    "line": 1765,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159091,7 +159131,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1763,
+    "line": 1766,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159099,7 +159139,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1764,
+    "line": 1767,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159107,7 +159147,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1777,
+    "line": 1780,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159115,7 +159155,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1778,
+    "line": 1781,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159123,7 +159163,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1779,
+    "line": 1782,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159131,7 +159171,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1786,
+    "line": 1789,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159139,7 +159179,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1787,
+    "line": 1790,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159147,7 +159187,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1788,
+    "line": 1791,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159155,7 +159195,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1801,
+    "line": 1804,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159163,7 +159203,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1802,
+    "line": 1805,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159171,7 +159211,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1803,
+    "line": 1806,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159179,7 +159219,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1817,
+    "line": 1820,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159187,7 +159227,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1818,
+    "line": 1821,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159195,7 +159235,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1819,
+    "line": 1822,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159203,7 +159243,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1832,
+    "line": 1835,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159211,7 +159251,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1833,
+    "line": 1836,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159219,7 +159259,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1834,
+    "line": 1837,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159227,7 +159267,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1846,
+    "line": 1849,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159235,7 +159275,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1847,
+    "line": 1850,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159243,7 +159283,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1848,
+    "line": 1851,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159251,7 +159291,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1860,
+    "line": 1863,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159259,7 +159299,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1861,
+    "line": 1864,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159267,7 +159307,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1862,
+    "line": 1865,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159275,7 +159315,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1876,
+    "line": 1879,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159283,7 +159323,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1877,
+    "line": 1880,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159291,7 +159331,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1878,
+    "line": 1881,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159299,7 +159339,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1890,
+    "line": 1893,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159307,7 +159347,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1891,
+    "line": 1894,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159315,7 +159355,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1892,
+    "line": 1895,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159323,7 +159363,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1922,
+    "line": 1925,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159331,7 +159371,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1923,
+    "line": 1926,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159339,7 +159379,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1924,
+    "line": 1927,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159347,7 +159387,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1938,
+    "line": 1941,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159355,7 +159395,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1939,
+    "line": 1942,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159363,7 +159403,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1940,
+    "line": 1943,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159371,7 +159411,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1952,
+    "line": 1955,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159379,7 +159419,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1953,
+    "line": 1956,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159387,7 +159427,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1954,
+    "line": 1957,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159395,7 +159435,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1966,
+    "line": 1969,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159403,7 +159443,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1967,
+    "line": 1970,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159411,7 +159451,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1968,
+    "line": 1971,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159419,7 +159459,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1981,
+    "line": 1984,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159427,7 +159467,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1982,
+    "line": 1985,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159435,7 +159475,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1983,
+    "line": 1986,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159443,7 +159483,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1995,
+    "line": 1998,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159451,7 +159491,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1996,
+    "line": 1999,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159459,7 +159499,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 1997,
+    "line": 2000,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159467,7 +159507,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2011,
+    "line": 2014,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159475,7 +159515,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2012,
+    "line": 2015,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159483,7 +159523,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2013,
+    "line": 2016,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159491,7 +159531,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2020,
+    "line": 2023,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159499,7 +159539,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2021,
+    "line": 2024,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159507,7 +159547,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2022,
+    "line": 2025,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159515,7 +159555,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2035,
+    "line": 2038,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159523,7 +159563,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2036,
+    "line": 2039,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159531,7 +159571,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2037,
+    "line": 2040,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159539,7 +159579,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2057,
+    "line": 2060,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159547,7 +159587,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2058,
+    "line": 2061,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159555,7 +159595,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2059,
+    "line": 2062,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159563,7 +159603,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2065,
+    "line": 2068,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159571,7 +159611,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2066,
+    "line": 2069,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159579,7 +159619,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2067,
+    "line": 2070,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159587,7 +159627,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2079,
+    "line": 2082,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159595,7 +159635,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2080,
+    "line": 2083,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159603,7 +159643,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2081,
+    "line": 2084,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159611,7 +159651,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2091,
+    "line": 2094,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159619,7 +159659,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2092,
+    "line": 2095,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159627,7 +159667,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2093,
+    "line": 2096,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159635,7 +159675,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2104,
+    "line": 2107,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159643,7 +159683,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2105,
+    "line": 2108,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159651,7 +159691,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2106,
+    "line": 2109,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159659,7 +159699,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2134,
+    "line": 2137,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159667,7 +159707,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2135,
+    "line": 2138,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159675,7 +159715,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2136,
+    "line": 2139,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159683,7 +159723,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2150,
+    "line": 2153,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159691,7 +159731,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2151,
+    "line": 2154,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159699,7 +159739,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2152,
+    "line": 2155,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159707,7 +159747,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2166,
+    "line": 2169,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159715,7 +159755,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2167,
+    "line": 2170,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159723,7 +159763,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2168,
+    "line": 2171,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159731,7 +159771,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2181,
+    "line": 2184,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159739,7 +159779,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2182,
+    "line": 2185,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159747,7 +159787,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2183,
+    "line": 2186,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159755,7 +159795,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2198,
+    "line": 2201,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159763,7 +159803,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2199,
+    "line": 2202,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159771,7 +159811,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2200,
+    "line": 2203,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159779,7 +159819,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2205,
+    "line": 2208,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159787,7 +159827,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2206,
+    "line": 2209,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159795,7 +159835,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2207,
+    "line": 2210,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159803,7 +159843,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2210,
+    "line": 2213,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159811,7 +159851,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2211,
+    "line": 2214,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159819,7 +159859,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2212,
+    "line": 2215,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159827,7 +159867,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2215,
+    "line": 2218,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159835,7 +159875,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2216,
+    "line": 2219,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159843,7 +159883,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2217,
+    "line": 2220,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159851,7 +159891,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2236,
+    "line": 2239,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159859,7 +159899,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2237,
+    "line": 2240,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159867,7 +159907,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2238,
+    "line": 2241,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159875,7 +159915,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2239,
+    "line": 2242,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -159883,7 +159923,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2244,
+    "line": 2247,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -159891,7 +159931,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2245,
+    "line": 2248,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -159899,7 +159939,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2246,
+    "line": 2249,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -159907,7 +159947,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2247,
+    "line": 2250,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -159915,7 +159955,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2249,
+    "line": 2252,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -159923,7 +159963,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2252,
+    "line": 2255,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159931,7 +159971,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2253,
+    "line": 2256,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -159939,7 +159979,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2268,
+    "line": 2271,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -159947,7 +159987,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2269,
+    "line": 2272,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -159955,7 +159995,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2270,
+    "line": 2273,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -159963,7 +160003,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2271,
+    "line": 2274,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -159971,7 +160011,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2276,
+    "line": 2279,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -159979,7 +160019,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2277,
+    "line": 2280,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -159987,7 +160027,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2278,
+    "line": 2281,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -159995,7 +160035,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2280,
+    "line": 2283,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -160003,7 +160043,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2282,
+    "line": 2285,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -160011,7 +160051,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2283,
+    "line": 2286,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -160019,7 +160059,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2298,
+    "line": 2301,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -160027,7 +160067,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2299,
+    "line": 2302,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -160035,7 +160075,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2300,
+    "line": 2303,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -160043,7 +160083,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2301,
+    "line": 2304,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -160051,7 +160091,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2306,
+    "line": 2309,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -160059,7 +160099,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2307,
+    "line": 2310,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -160067,7 +160107,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2308,
+    "line": 2311,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -160075,7 +160115,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2313,
+    "line": 2316,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -160083,7 +160123,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2314,
+    "line": 2317,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -160091,7 +160131,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2329,
+    "line": 2332,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -160099,7 +160139,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2330,
+    "line": 2333,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -160107,7 +160147,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2331,
+    "line": 2334,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -160115,7 +160155,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2332,
+    "line": 2335,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -160123,7 +160163,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2337,
+    "line": 2340,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -160131,7 +160171,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2338,
+    "line": 2341,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -160139,7 +160179,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2339,
+    "line": 2342,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -160147,7 +160187,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2342,
+    "line": 2345,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -160155,7 +160195,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2343,
+    "line": 2346,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -160163,7 +160203,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2345,
+    "line": 2348,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -160171,7 +160211,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2346,
+    "line": 2349,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -160179,7 +160219,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2361,
+    "line": 2364,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -160187,7 +160227,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2362,
+    "line": 2365,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -160195,7 +160235,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2363,
+    "line": 2366,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -160203,7 +160243,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2364,
+    "line": 2367,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -160211,7 +160251,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2369,
+    "line": 2372,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -160219,7 +160259,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2370,
+    "line": 2373,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -160227,7 +160267,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2375,
+    "line": 2378,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -160235,7 +160275,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2376,
+    "line": 2379,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -160243,7 +160283,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2427,
+    "line": 2430,
     "type": "property",
     "name": "gameState",
     "currentDoc": "(none)",
@@ -160251,7 +160291,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/effectsEngine.ts",
-    "line": 2428,
+    "line": 2431,
     "type": "property",
     "name": "techTreeState",
     "currentDoc": "(none)",

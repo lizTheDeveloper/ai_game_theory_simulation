@@ -2,11 +2,13 @@
 
 **Purpose:** Single source of truth for all research coordination across AI alignment, climate mitigation, planetary boundaries, and post-scarcity pathways.
 
-**Last Updated:** November 9, 2025
+**Last Updated:** November 10, 2025
 
 **Primary Maintainer:** Sylvia (Research Skeptic) + Cynthia (Super-Alignment Researcher)
 
 **Integration:** This roadmap integrates quantitative gap analysis from god mode testing (Priya's simulation diagnostics) with systematic research needs identified by research agents.
+
+**Comprehensive Analysis:** Full technology gap analysis with 26 new tech candidates and 9 modeling paradigm shifts documented in `TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (15,000+ words).
 
 ---
 
@@ -64,12 +66,57 @@ Research priorities ranked by:
 - **PFAS/Microplastic Pyrolysis (Keller 2024):** >99% PFAS removal, 91-97% microplastic removal at 400-600°C (BUT only for concentrated biosolids)
 - **Citation Verified:** `research/planetary_boundary_reversibility_empirical_verification_20251101.md` (B+ grade, 78% verified)
 
+#### Missing Technologies - Solution Space
+
+**Prevention Over Cleanup (TIER 0-1 - CRITICAL PRIORITY):**
+1. **Global PFAS Production Ban** (TIER 0, 10-20 year timeline)
+   - Type: Policy + industrial transition
+   - Effect: Stop 4.4M tons/year production flow
+   - Analog: Montreal Protocol CFC phase-out (12 years)
+   - Research Needed: Montreal Protocol effectiveness ratios (production ban vs. cleanup contribution)
+
+2. **Plastic Production Phase-Out 80%** (TIER 1, 20-30 year timeline)
+   - Type: Circular economy transition
+   - Effect: Reduce virgin plastic, shift to bio-based alternatives (PHA, PLA)
+   - Dependencies: Substitute materials, waste infrastructure
+   - Research Needed: Historical phase-out timelines (lead, asbestos)
+
+3. **Chemical Substitution Acceleration** (TIER 1, 5-15 year per class)
+   - Type: Green chemistry R&D + regulatory push
+   - Effect: Replace persistent chemicals with biodegradable alternatives
+   - Research Needed: Substitution success rates
+
+**Dilute-Stream Remediation (TIER 2 - HIGH PRIORITY):**
+4. **Membrane Cascade Systems** (TIER 2, 10-15 year timeline)
+   - Type: Multi-stage concentration (ng/L → mg/L)
+   - Effect: Concentrate dilute contamination with minimal energy
+   - Target: <1,000 kWh/kg vs. current 10⁶ kWh/kg
+   - Research Needed: Theoretical limits of selective membrane separation
+
+5. **Biomimetic Filtration (Kidney Analog)** (TIER 3, 15-25 year timeline)
+   - Type: Bio-inspired selective extraction at environmental concentrations
+   - Effect: Passive or low-energy targeted removal
+   - Research Needed: Biological analogues for dilute contaminant removal
+
+6. **Photocatalytic Degradation at Scale** (TIER 2-3, 10-20 year timeline)
+   - Type: Sunlight-driven in-situ breakdown
+   - Effect: No concentration step required
+   - Target: Quantum efficiency >50% (current <10%)
+   - Research Needed: Quantum efficiency improvements
+
+**Paradigm Shifts Required:**
+- Energy-Constrained Cleanup: Gate effectiveness by `renewableSurplus`, add `energyRequirement` and `minimumConcentration` properties
+- Irreversible Stock: Model as asymptotic approach (never zero), add `irreversible: true` flag
+- Rebound Effects: Cleanup increases production rate (moral hazard) - net effectiveness = cleanup - induced production
+
 #### Next Steps
 
 1. **Diagnostic Run:** Deploy all 7 pollution techs individually in simulation, track Novel Entities delta per tech to identify if ANY work
 2. **Energy Analysis:** Model energy requirements for cleanup vs. available energy surplus (constraint system)
 3. **Literature Search:** Find peer-reviewed studies on environmental-scale (not lab-scale) PFAS/microplastic remediation costs and effectiveness
 4. **Irreversibility Flag:** Consider adding `irreversible: true` property to Novel Entities boundary (like extinctions)
+5. **Prevention Tech Research:** Quantify Montreal Protocol effectiveness ratios (production ban vs. cleanup)
+6. **Add Missing Technologies:** Integrate 6 new prevention/remediation technologies into tech tree
 
 ---
 
@@ -123,12 +170,80 @@ Research priorities ranked by:
   - **Timeline:** "On order of decades" to return below 1.5°C after overshoot
   - **Citation Verified:** B+ grade (78% verified, one journal misattribution corrected)
 
+#### Missing Technologies - Solution Space
+
+**Rapid Deployment Technologies (TIER 0-1 - CRITICAL PRIORITY):**
+1. **Modular DAC Units (SpaceX Starship Model)** (TIER 1, 10-15 year to factory-scale)
+   - Type: Mass-manufactured, rapidly deployed modules
+   - Effect: 1,000× faster deployment than custom engineering
+   - Scale: Factory produces 100-1,000 units/year vs. 1-2 custom plants/decade
+   - Analogy: SpaceX reduced rocket costs 10× via manufacturing-first approach
+   - Research Needed: Learning curve analysis (cost reduction with volume)
+
+2. **Automated Construction Systems** (TIER 1, 5-10 year timeline)
+   - Type: AI-assisted robotic construction
+   - Effect: 3-5× faster buildout of renewable infrastructure
+   - Dependencies: AI robotics, supply chain coordination
+   - Research Needed: Historical construction acceleration examples
+
+3. **Institutional Automation (Permitting AI)** (TIER 1, 3-7 year timeline)
+   - Type: AI-streamlined regulatory approval
+   - Effect: Reduce planning phase from 2-7 years to 6-18 months
+   - Research Needed: Regulatory bottleneck quantification
+
+**Energy System Breakthroughs (TIER 1-2 - CRITICAL PRIORITY):**
+4. **Early Fusion Deployment** (Move from TIER 4 to TIER 2, 2035-2040 target)
+   - Current: Fusion in TIER 4 (2040-2050+)
+   - Needed: Move to TIER 2 (2030-2040) with aggressive investment
+   - Effect: Massive clean energy for DAC and industrial decarbonization
+   - Pathway: Manhattan Project-scale public investment
+   - Timeline: ITER (2025) → DEMO (2030s) → Commercial (2035-2040)
+   - Research Needed: Realistic acceleration timelines with 10× funding boost
+
+5. **Advanced Solar (Perovskite + Tandem)** (TIER 1, 5-10 year timeline)
+   - Type: Next-gen high-efficiency solar (40-50% vs. current 20-25%)
+   - Effect: Halves land/material requirements for same output
+   - Research Needed: Commercialization barriers (stability, manufacturing)
+
+6. **Carbon-Negative Materials** (TIER 2, 10-20 year timeline)
+   - Type: Building materials that sequester more CO₂ than emitted in production
+   - Examples: Biochar concrete, engineered wood, carbon-mineralized cement
+   - Effect: Construction sector becomes carbon sink
+   - Research Needed: Life-cycle carbon accounting standards
+
+**Enhanced Carbon Sinks (TIER 2 - HIGH PRIORITY):**
+7. **Ocean Iron Fertilization (Controlled)** (TIER 2-3, 10-20 year timeline)
+   - Type: Targeted phytoplankton growth
+   - Effect: 0.5-2.0 GtCO₂/year sequestration
+   - Risks: Ecosystem disruption, monitoring required
+   - Research Needed: Safe deployment protocols
+
+8. **Coastal Blue Carbon Restoration** (TIER 2, 20-30 year timeline)
+   - Type: Mangrove/seagrass/salt marsh restoration at scale
+   - Effect: 0.5-1.5 GtCO₂/year + coastal protection
+   - Co-benefits: Fisheries, storm protection, biodiversity
+   - Research Needed: Optimal restoration strategies by region
+
+9. **Soil Carbon Injection (Biochar)** (TIER 2, 10-20 year timeline)
+   - Type: Pyrolyzed biomass deep injection
+   - Effect: Permanent carbon storage (millennium timescales)
+   - Scale: 1-3 GtCO₂/year potential
+   - Research Needed: Long-term stability, soil fertility impacts
+
+**Paradigm Shifts Required:**
+- Phased Deployment: Tech has deployment phases (planning, construction, scale-up, maturity) with effectiveness scaling 0% → 10-30% → 30-80% → 80-100%
+- Energy Budget Constraints: All energy-consuming tech gated by `renewableEnergySurplus`, partition among competing demands
+- Temperature-Dependent Degradation: Carbon sink capacity -5% per 1°C, adaptation energy demand +10% per 1°C
+
 #### Next Steps
 
 1. **Add Deployment Timescales:** Tech should have `deploymentPhases` with planning, construction, scale-up, maturity (2-50 year timelines)
 2. **Energy Constraint System:** DAC/mitigation tech gated by `renewableEnergySurplus` (can't consume more than available)
 3. **Feedback Loops:** Temperature-dependent penalties to mitigation effectiveness (-5% per 1°C for carbon sinks, adaptation energy demand increases)
 4. **Monte Carlo Validation:** Run N=100 with deployment timescales, confirm 2050 outcomes match IEA projections (60-80% renewable electricity, 3-12 GtCO₂/year capture)
+5. **Rapid Deployment Tech Research:** Learning curve analysis, modular manufacturing feasibility
+6. **Early Fusion Acceleration:** Research realistic timelines with 10× funding boost
+7. **Add Missing Technologies:** Integrate 9 new deployment/energy/sink technologies into tech tree
 
 ---
 
@@ -166,12 +281,60 @@ Research priorities ranked by:
 - **Planetary Boundary Reversibility (Oct 20, 2025):** Lake Erie eutrophication case study (Paerl 2024) showing dual P/N reduction needed, legacy phosphorus persists for decades
   - **Citation Status:** Verified (Paerl 2024 in Limnology and Oceanography exists, phosphorus claim verified with minor conflation corrected)
 
+#### Missing Technologies - Solution Space
+
+**Biological Nitrogen Fixation (TIER 1-2 - CRITICAL PRIORITY):**
+1. **Nitroplast Integration (Cereal Crops)** (TIER 2, 10-20 year timeline)
+   - Type: Genetic engineering of nitrogen-fixing organelles into wheat/rice/corn
+   - Effect: Crops fix atmospheric N₂ like legumes (eliminate 50-70% fertilizer need)
+   - Status: Named World Economic Forum "Top 10 Emerging Technologies 2025"
+   - Timeline: Proof of concept 2024 → field trials → commercial deployment
+   - Research Needed: Field trial effectiveness, yield impacts
+
+2. **Rhizosphere Engineering** (TIER 2, 5-15 year timeline)
+   - Type: Soil microbiome optimization for nitrogen fixation
+   - Effect: Enhance natural N-fixing bacteria populations by 2-5×
+   - Dependencies: Microbiome mapping, delivery systems
+   - Research Needed: Long-term soil health impacts
+
+3. **Precision Fermentation (Protein Shift)** (TIER 1-2, 10-20 year to mass adoption)
+   - Type: Microbial protein production (less N-intensive than animal agriculture)
+   - Effect: Reduce agricultural N demand by 30-50% via dietary shift
+   - Co-benefits: Land use reduction, water savings
+   - Research Needed: Consumer adoption barriers, nutritional equivalence
+
+**Legacy Nutrient Removal (TIER 2 - HIGH PRIORITY):**
+4. **Active Sediment Management** (TIER 2-3, 20-40 year timeline)
+   - Type: Dredging + nutrient extraction from legacy sediments
+   - Effect: Remove decades of accumulated P/N from aquatic systems
+   - Scale: Massive infrastructure (Great Lakes alone: 100+ years at current rates)
+   - Research Needed: Cost-effectiveness vs. waiting for natural decay
+
+5. **Phytoremediation Networks** (TIER 2, 10-30 year timeline)
+   - Type: Engineered wetlands that extract and harvest nutrients
+   - Effect: Intercept agricultural runoff, harvest biomass (nutrient removal)
+   - Co-benefits: Habitat restoration, flood control
+   - Research Needed: Optimal plant species by climate zone
+
+6. **Soil Nutrient Drawdown (Cover Cropping++)** (TIER 1-2, 10-30 year timeline)
+   - Type: Intensive cover cropping to draw down legacy soil nutrients
+   - Effect: Gradually reduce soil P/N over 10-30 years
+   - Trade-off: Temporarily sequesters nutrients (doesn't remove from system)
+   - Research Needed: Timescales and effectiveness by soil type
+
+**Paradigm Shifts Required:**
+- Legacy Stock Mechanics: Track `legacyStock` with exponential decay (half-life 20-50 years), effective pollution = current input + legacy release
+- Nitrogen-Food Coupling: Nitrogen requirement = population × dietType.nitrogenPerCapita, aggressive cuts trigger famine
+- Saturating Effect Flag: Some tech provides one-time improvement (e.g., soil carbon builds then plateaus)
+
 #### Next Steps
 
 1. **Add Legacy Stock Mechanic:** Biogeochemical boundaries track accumulated contamination with exponential decay (half-life 10-50 years)
 2. **Nitrogen-Food Coupling:** Nutrient reduction tech should trigger food production penalties if deployed too aggressively
 3. **Literature Search:** Find peer-reviewed studies on global legacy nutrient stocks and minimum N requirements for food security
 4. **Validation Target:** 10% effectiveness may be CORRECT if problem is fundamentally constrained by food production needs
+5. **Nitroplast Research:** Validate field trial effectiveness, deployment timelines
+6. **Add Missing Technologies:** Integrate 6 new biological/remediation technologies into tech tree
 
 ---
 
@@ -221,12 +384,58 @@ Research priorities ranked by:
   - **Wildlife Carbon Capture:** Restoring 9 key species captures 6.4 GtCO₂/year = 15% of current emissions (verified, Nature Climate Change 2023)
   - **Rewilding Resilience:** 70% of observations show increased ecosystem resilience (verified, 2024 meta-analysis)
 
+#### Missing Technologies - Solution Space
+
+**Functional Group Conservation (TIER 1 - CRITICAL PRIORITY):**
+1. **Pollinator Corridor Networks** (TIER 1, 10-20 year timeline)
+   - Type: Linked habitats specifically for pollinators
+   - Effect: Maintain pollination services (affects 75% of crops)
+   - Priority: Higher impact than large carnivore conservation
+   - Research Needed: Corridor design principles, effectiveness metrics
+
+2. **Decomposer Habitat Protection** (TIER 1, 5-15 year timeline)
+   - Type: Soil biodiversity conservation (fungi, bacteria, invertebrates)
+   - Effect: Maintain nutrient cycling (ecosystem foundation)
+   - Priority: Invisible but critical functional group
+   - Research Needed: Soil biodiversity metrics, restoration methods
+
+3. **Keystone Species Prioritization** (TIER 0-1, ongoing)
+   - Type: Focus on species with disproportionate ecosystem impact
+   - Examples: Sea otters (kelp forests), wolves (trophic cascades), beavers (wetland creation)
+   - Effect: Maximum ecosystem function per conservation dollar
+   - Research Needed: Keystone species identification by biome
+
+**Long-Timescale Recovery Modeling (TIER 2 - HIGH PRIORITY):**
+4. **Genetic Rescue Programs** (TIER 2, 50-100 year programs)
+   - Type: Address extinction debt via genetic diversity preservation
+   - Effect: Keep "living dead" populations viable
+   - Dependencies: Genetic monitoring, captive breeding
+   - Research Needed: Minimum viable population thresholds by taxon
+
+5. **Assisted Migration** (TIER 2, ongoing over 50-100 years)
+   - Type: Relocate species to climate-suitable habitats
+   - Effect: Prevent extinction from climate-driven range shifts
+   - Risks: Invasive species potential
+   - Research Needed: Risk assessment frameworks
+
+6. **Ecosystem Function Monitoring (Not Just Species Counts)** (TIER 1, 5-10 year deployment)
+   - Type: Track pollination rates, nutrient cycling, carbon sequestration
+   - Effect: Measure actual ecosystem services, not biodiversity proxies
+   - Research Needed: Function-based metrics vs. species-based
+
+**Paradigm Shifts Required:**
+- Functional Group Weighting: Weight pollinators (10×), decomposers (8×), keystones (5×), megafauna (1×) by ecosystem function
+- Extinction Debt Integration: 50-400 year continued decline even after threat removal
+- Tipping Point Mechanics: Nonlinear state shift at 50-90% habitat transformation (hysteresis in recovery)
+
 #### Next Steps
 
 1. **Diagnostic Run:** Examine which biosphere improvements drive 81.5% effectiveness (species counts vs. ecosystem function metrics)
 2. **Add Extinction Debt:** Biosphere losses should continue for 50-100 years after threats removed (legacy effect)
 3. **Functional Group Weighting:** Weight pollinators/decomposers/primary producers higher than megafauna in biosphere score
 4. **Tipping Point Investigation:** Research habitat transformation thresholds for ecosystem state shifts
+5. **Function-Based Metrics Research:** Pollination rates, nutrient cycling rates vs. species counts
+6. **Add Missing Technologies:** Integrate 6 new functional conservation technologies into tech tree
 
 ---
 
@@ -434,30 +643,184 @@ Research priorities ranked by:
 
 ### Current Research Assignments (November 2025)
 
-**Unassigned - Needs Owner:**
+**TIER 1: CRITICAL (Must Complete Before Implementing New Tech)**
+
 1. **Novel Entities Energy Analysis** (CRITICAL priority)
    - **Question:** Energy requirements for environmental-scale PFAS/microplastic cleanup
-   - **Deliverable:** Peer-reviewed sources on dilute-stream remediation costs vs. concentrated-stream
-   - **Target:** Find studies showing cost scaling with contamination concentration
+   - **Deliverable:** Peer-reviewed sources on dilute-stream (ng/L to μg/L) remediation costs
+   - **Target:** Quantify if 0% effectiveness is thermodynamic limit or implementation bug
+   - **Owner:** UNASSIGNED
    - **Deadline:** Before implementing additional pollution tech
 
-2. **Climate Deployment Timescales Integration** (HIGH priority)
-   - **Question:** How to model 30-50 year deployment phases in simulation?
-   - **Deliverable:** Tech property schema with `deploymentPhases: { planning, construction, scaleUp, maturity }`
-   - **Existing Research:** Already comprehensive (`climate_mitigation_deployment_rates_20251021.md`)
-   - **Deadline:** Before next major tech tier implementation
+2. **Climate Deployment Timescale Integration** (CRITICAL priority)
+   - **Question:** How to model 30-50 year deployment phases?
+   - **Deliverable:** `DeploymentPhases` schema with empirical timescales per tech tier
+   - **Existing Research:** `climate_mitigation_deployment_rates_20251021.md` (comprehensive)
+   - **Owner:** UNASSIGNED
+   - **Deadline:** Before next tech tier implementation
 
-3. **Nitrogen-Food Coupling Constraints** (HIGH priority)
-   - **Question:** Minimum nitrogen requirements for global food security at population/diet levels
-   - **Deliverable:** Constraint function linking nitrogen reduction to food production capacity
-   - **Target:** Find studies quantifying N requirements for different dietary scenarios (omnivore, vegetarian, vegan)
+3. **Irreversibility Framework** (CRITICAL priority)
+   - **Question:** Which of 9 planetary boundaries are reversible vs. irreversible?
+   - **Deliverable:** Categorization (fully/partially/irreversible) with recovery half-lives
+   - **Target:** Add `irreversible: true` flags and asymptotic recovery mechanics
+   - **Owner:** UNASSIGNED
+   - **Deadline:** Before modeling recovery pathways
+
+**TIER 2: HIGH (Prevent Misleading Outcomes)**
+
+4. **Nitrogen-Food Production Coupling Constraints** (HIGH priority)
+   - **Question:** Minimum nitrogen requirements for food security at population/diet levels
+   - **Deliverable:** Constraint function linking N reduction to food production capacity
+   - **Target:** Prevent unrealistic N cuts that trigger unmodeled famine
+   - **Owner:** UNASSIGNED
    - **Deadline:** Before implementing aggressive biogeochemical restoration tech
 
-4. **Biosphere Functional Group Analysis** (MEDIUM priority)
+5. **Extinction Debt Timescales** (HIGH priority)
+   - **Question:** How long do population losses continue after threat removal?
+   - **Deliverable:** Timescale parameters (50-400 years) by taxon
+   - **Target:** Integrate extinction debt into biosphere recovery projections
+   - **Owner:** UNASSIGNED
+   - **Deadline:** Before claiming rapid ecosystem recovery
+
+6. **Energy Budget Constraint System** (HIGH priority)
+   - **Question:** How to partition clean energy among competing demands?
+   - **Deliverable:** Energy allocation algorithm (transport, industry, heating, DAC, cleanup)
+   - **Target:** Gate all energy-consuming tech by available surplus
+   - **Owner:** UNASSIGNED
+   - **Deadline:** Before scaling energy-intensive tech (DAC, cleanup)
+
+**TIER 3: MEDIUM (Investigation Priorities, Not Blocking)**
+
+7. **Biosphere Functional Group Analysis** (MEDIUM priority)
    - **Question:** Which species losses cause ecosystem state shifts vs. cosmetic impacts?
-   - **Deliverable:** Functional group importance weighting for biosphere score
-   - **Target:** Pollinator/decomposer/primary producer sensitivity vs. megafauna
-   - **Deadline:** Investigation priority, not blocking
+   - **Deliverable:** Functional group importance weighting (pollinators > megafauna)
+   - **Target:** Weight biosphere score by ecosystem services, not species counts
+   - **Owner:** UNASSIGNED
+   - **Deadline:** Investigation priority (validate 81.5% effectiveness outlier)
+
+8. **Prevention Technology Effectiveness Ratios** (MEDIUM priority)
+   - **Question:** How much did Montreal Protocol production ban contribute vs. cleanup?
+   - **Deliverable:** Quantify prevention vs. remediation effectiveness (target: 90%+ ban, <10% cleanup)
+   - **Target:** Justify prevention-over-cleanup paradigm shift
+   - **Owner:** UNASSIGNED
+   - **Deadline:** Before implementing production phase-out tech
+
+9. **Learning Curve Analysis** (MEDIUM priority)
+   - **Question:** How do tech costs decline with cumulative deployment?
+   - **Deliverable:** Cost reduction rates (typically 15-25% per doubling) for each tech tier
+   - **Target:** Model cost dynamics, not just static deployment
+   - **Owner:** UNASSIGNED
+   - **Deadline:** Before Monte Carlo cost-effectiveness validation
+
+---
+
+## TIER 7A: Technology Solution Space Catalog
+
+**Total Missing Technologies Identified:** 26 new technology candidates across 8 categories
+
+### Prevention Technologies (5 technologies)
+
+**Novel Entities - Production Phase-Out:**
+1. Global PFAS Production Ban (TIER 0, 10-20 year timeline)
+2. Plastic Production Phase-Out 80% (TIER 1, 20-30 year timeline)
+3. Chemical Substitution Acceleration (TIER 1, 5-15 year per class)
+
+**Climate - Prevention Over Mitigation:**
+4. Fossil Fuel Production Phase-Out (TIER 0-1, 20-40 year timeline)
+5. Methane Leak Prevention at Scale (TIER 0, 5-10 year timeline)
+
+### Rapid Deployment Technologies (3 technologies)
+
+6. Modular DAC Units (SpaceX Model) (TIER 1, 10-15 year to factory-scale)
+7. Automated Construction Systems (AI-assisted) (TIER 1, 5-10 year timeline)
+8. Institutional Automation (Permitting AI) (TIER 1, 3-7 year timeline)
+
+### Energy Breakthroughs (3 technologies)
+
+9. Early Fusion Deployment (move from TIER 4 to TIER 2) (2035-2040 target)
+10. Advanced Solar (Perovskite Tandem) (TIER 1, 5-10 year timeline)
+11. Carbon-Negative Materials (TIER 2, 10-20 year timeline)
+
+### Biological Nitrogen Fixation (3 technologies)
+
+12. Nitroplast Integration (cereal crops) (TIER 2, 10-20 year timeline)
+13. Rhizosphere Engineering (TIER 2, 5-15 year timeline)
+14. Precision Fermentation Protein (TIER 1-2, 10-20 year to mass adoption)
+
+### Functional Ecosystem Technologies (3 technologies)
+
+15. Pollinator Corridor Networks (TIER 1, 10-20 year timeline)
+16. Decomposer Habitat Protection (TIER 1, 5-15 year timeline)
+17. Keystone Species Prioritization (TIER 0-1, ongoing)
+
+### Dilute-Stream Remediation (3 technologies)
+
+18. Membrane Cascade Systems (TIER 2, 10-15 year timeline)
+19. Biomimetic Filtration (Kidney Analog) (TIER 3, 15-25 year timeline)
+20. Photocatalytic Degradation at Scale (TIER 2-3, 10-20 year timeline)
+
+### Enhanced Carbon Sinks (3 technologies)
+
+21. Ocean Iron Fertilization (Controlled) (TIER 2-3, 10-20 year timeline)
+22. Coastal Blue Carbon Restoration (TIER 2, 20-30 year timeline)
+23. Soil Carbon Injection (Biochar) (TIER 2, 10-20 year timeline)
+
+### Legacy Remediation (3 technologies)
+
+24. Active Sediment Management (TIER 2-3, 20-40 year timeline)
+25. Phytoremediation Networks (TIER 2, 10-30 year timeline)
+26. Soil Nutrient Drawdown (TIER 1-2, 10-30 year timeline)
+
+---
+
+## TIER 7B: Modeling Paradigm Shifts Summary
+
+**Total Paradigm Shifts Identified:** 9 fundamental modeling changes required
+
+### 1. Energy-Constrained Cleanup
+- **Current:** Tech deployed → effectiveness applies
+- **Needed:** effectiveness = f(available_energy_surplus, contamination_concentration)
+- **Implementation:** Add `energyRequirement` and `minimumConcentration` properties, gate by `renewableSurplus`
+
+### 2. Phased Deployment
+- **Current:** `deployed: true` → immediate full effect
+- **Needed:** Planning (2-7y) → Construction (3-10y) → Scale-up (10-30y) → Maturity (30-50y)
+- **Implementation:** Add `DeploymentPhases` interface, effectiveness scales 0% → 10-30% → 30-80% → 80-100%
+
+### 3. Irreversible Boundaries
+- **Current:** All boundaries modeled as reversible flows
+- **Needed:** Some boundaries are effectively permanent (extinctions, atmospheric contamination)
+- **Implementation:** Add `irreversible: boolean` flag, model as asymptotic approach (never reaches zero)
+
+### 4. Energy Budget Partitioning
+- **Current:** Tech uses energy, no explicit budget constraint
+- **Needed:** All energy-consuming tech competes for same limited clean energy
+- **Implementation:** Track `renewableSurplus` globally, allocate among transport/industry/heating/DAC/cleanup
+
+### 5. Legacy Stock Mechanics
+- **Current:** Pollution as simple flow (inputs → outputs)
+- **Needed:** Stock + flow with legacy decay (decades to centuries)
+- **Implementation:** Track `legacyStock` with exponential decay (half-life 20-50 years)
+
+### 6. Rebound Effects
+- **Current:** Cleanup tech only reduces contamination
+- **Needed:** Cleanup increases production rate (moral hazard)
+- **Implementation:** Net effectiveness = (cleanup rate) - (induced production increase)
+
+### 7. Functional Group Weighting
+- **Current:** Biosphere score weights all species equally
+- **Needed:** Weight by ecosystem function (pollinators >> megafauna)
+- **Implementation:** Weight pollinators (10×), decomposers (8×), keystones (5×), megafauna (1×)
+
+### 8. Nitrogen-Food Coupling
+- **Current:** Nutrient reduction independent of food production
+- **Needed:** Aggressive N cuts trigger famine
+- **Implementation:** Nitrogen requirement = population × dietType.nitrogenPerCapita, gate by food security
+
+### 9. Tipping Point Mechanics
+- **Current:** Linear recovery
+- **Needed:** Nonlinear state shift at habitat transformation threshold (50-90%)
+- **Implementation:** Hysteresis mechanics (recovery path ≠ degradation path)
 
 ---
 
