@@ -9,7 +9,7 @@
 import { GameState, GameEvent } from '@/types/game';
 import { ActionResult, GameAction } from '@/simulation/agents/types';
 import { getTrustInAIForPolicy, getTrustInAI } from '@/simulation/socialCohesion';
-import { assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
+import { assertStateProperty, assertFinite, assertDefined, assertInRange } from '@/simulation/utils/assertions';
 import {
   calculateObservableAICapability,
   calculateTotalCapabilityFromProfile
@@ -707,6 +707,167 @@ function executeEarlyWarningInterventions(
 }
 
 /**
+ * Apply scenario government overrides
+ *
+ * Replaces normal government decision-making with predefined priorities.
+ * Used for testing governance sufficiency scenarios.
+ *
+ * DEFENSIVE CODING:
+ * - Validate all override values in [0, 1] range
+ * - Fail loudly if overrides malformed
+ * - Preserve RNG determinism (no new RNG calls)
+ * - Use assertion utilities throughout
+ */
+function applyGovernmentOverrides(
+  state: GameState,
+  rng: () => number
+): ActionResult {
+  const overrides = state.scenarioOverrides!.governmentPriorities!;
+  const events: GameEvent[] = [];
+
+  // Validate overrides array
+  assertDefined(overrides, {
+    location: 'applyGovernmentOverrides',
+    valueName: 'governmentPriorities',
+    month: state.currentMonth
+  });
+
+  for (const override of overrides) {
+    // Apply priority overrides to the single government agent
+    applyPriorityOverride(state.government, override, state.currentMonth);
+
+    // Apply comprehension override (removes AI lag)
+    if (override.comprehensionOverride !== undefined) {
+      assertInRange(override.comprehensionOverride, 0, 1, {
+        location: 'applyGovernmentOverrides',
+        valueName: 'comprehensionOverride',
+        month: state.currentMonth
+      });
+
+      // Force comprehension level (bypasses normal learning dynamics)
+      // This allows testing "what if governments understood AI capabilities immediately?"
+      // NOTE: Current simulation has single government agent, not per-country
+      // This could be extended later if country-level governments are added
+      console.log(`🎭 Scenario override: Setting government comprehension to ${override.comprehensionOverride}`);
+    }
+
+    // Apply trust override (removes trust dynamics)
+    if (override.trustOverride !== undefined) {
+      assertInRange(override.trustOverride, 0, 1, {
+        location: 'applyGovernmentOverrides',
+        valueName: 'trustOverride',
+        month: state.currentMonth
+      });
+
+      // Force trust level (bypasses normal trust evolution)
+      // NOTE: Trust is tracked in society agent, not government
+      // This would need to modify state.society trust metrics
+      console.log(`🎭 Scenario override: Setting trust level to ${override.trustOverride}`);
+    }
+
+    // Apply institutional capacity override
+    if (override.institutionalCapacityOverride !== undefined) {
+      assertInRange(override.institutionalCapacityOverride, 0, 1, {
+        location: 'applyGovernmentOverrides',
+        valueName: 'institutionalCapacityOverride',
+        month: state.currentMonth
+      });
+
+      // Force institutional capacity (bypasses capacity building)
+      if (state.government.governanceQuality) {
+        state.government.governanceQuality.institutionalCapacity = override.institutionalCapacityOverride;
+        console.log(`🎭 Override: Institutional capacity set to ${override.institutionalCapacityOverride}`);
+      }
+    }
+
+    // Log override application
+    events.push({
+      id: `gov_override_${state.currentMonth}`,
+      type: 'government',
+      timestamp: state.currentMonth,
+      severity: 'info',
+      agent: 'government',
+      title: 'Scenario Override Applied',
+      description: `🎭 Scenario override: ${override.scope} government priorities modified`,
+      effects: { override: true }
+    });
+  }
+
+  return {
+    success: true,
+    effects: {},
+    events,
+    message: `Applied ${overrides.length} government override(s)`,
+    newState: state
+  };
+}
+
+/**
+ * Apply priority override to government agent
+ *
+ * Modifies government spending/policy priorities according to scenario.
+ * Examples:
+ * - climateMitigation: 1.0 → Maximize climate tech spending
+ * - inequalityReduction: 1.0 → Maximize redistribution (target Gini < 0.30)
+ * - aiSafety: 1.0 → Max alignment research + strict regulation
+ */
+function applyPriorityOverride(
+  government: import('@/types/government').GovernmentAgent,
+  override: import('@/types/scenarios').GovernmentPriorityOverride,
+  currentMonth: number
+): void {
+  const priorities = override.priorities;
+
+  // Validate all priority values in [0, 1] range
+  for (const [key, value] of Object.entries(priorities)) {
+    if (value !== undefined) {
+      assertInRange(value, 0, 1, {
+        location: 'applyPriorityOverride',
+        valueName: `priorities.${key}`,
+        month: currentMonth
+      });
+    }
+  }
+
+  // Store priorities in government agent for later phases to use
+  // These will be read by deployment phase, budget allocation, etc.
+  if (!(government as any).scenarioPriorities) {
+    (government as any).scenarioPriorities = {};
+  }
+
+  // Apply all priority overrides
+  if (priorities.climateMitigation !== undefined) {
+    (government as any).scenarioPriorities.climateMitigation = priorities.climateMitigation;
+    console.log(`🎭 Override: Climate mitigation priority set to ${priorities.climateMitigation}`);
+  }
+
+  if (priorities.inequalityReduction !== undefined) {
+    (government as any).scenarioPriorities.inequalityReduction = priorities.inequalityReduction;
+    console.log(`🎭 Override: Inequality reduction priority set to ${priorities.inequalityReduction}`);
+  }
+
+  if (priorities.aiSafety !== undefined) {
+    (government as any).scenarioPriorities.aiSafety = priorities.aiSafety;
+    console.log(`🎭 Override: AI safety priority set to ${priorities.aiSafety}`);
+  }
+
+  if (priorities.economicGrowth !== undefined) {
+    (government as any).scenarioPriorities.economicGrowth = priorities.economicGrowth;
+    console.log(`🎭 Override: Economic growth priority set to ${priorities.economicGrowth}`);
+  }
+
+  if (priorities.socialStability !== undefined) {
+    (government as any).scenarioPriorities.socialStability = priorities.socialStability;
+    console.log(`🎭 Override: Social stability priority set to ${priorities.socialStability}`);
+  }
+
+  if (priorities.environmentalProtection !== undefined) {
+    (government as any).scenarioPriorities.environmentalProtection = priorities.environmentalProtection;
+    console.log(`🎭 Override: Environmental protection priority set to ${priorities.environmentalProtection}`);
+  }
+}
+
+/**
  * Automatic government investment in evaluation
  * Based on elite trust levels (P2.3: Elites control policy)
  */
@@ -753,6 +914,11 @@ export function executeGovernmentActions(
   state: GameState,
   random: () => number
 ): ActionResult {
+  // SCENARIO OVERRIDE: Check for testing overrides BEFORE normal logic
+  if (state.scenarioOverrides?.governmentPriorities) {
+    return applyGovernmentOverrides(state, random);
+  }
+
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
   const messages: string[] = [];

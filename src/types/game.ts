@@ -777,4 +777,28 @@ export interface GameState {
   previousQoL?: number; // Previous month's QoL for trend calculation (initialized in globalMetrics)
   previousAICapability?: number; // Previous month's average AI capability
   previousMisalignedCount?: number; // Previous month's misaligned AI count
+
+  /**
+   * Scenario Testing Overrides (Nov 10, 2025)
+   *
+   * Applied in GovernmentActionsPhase BEFORE normal decision logic.
+   * Allows testing governance sufficiency scenarios:
+   * - "Climate First": Force all governments to maximize climate spending
+   * - "Equality First": Force redistribution priorities
+   * - "AI Alignment First": Force alignment research + strict controls
+   *
+   * Research foundation:
+   * - V-Dem v14 (2024): Government priority indicators
+   * - WGI (2024): Institutional capacity baselines
+   * - research/verification_P0_government_baselines_20251031.md
+   *
+   * IMPORTANT: Used for testing scenarios only, NOT normal gameplay.
+   */
+  scenarioOverrides?: {
+    /**
+     * Government priority overrides
+     * Applied globally or to specific countries
+     */
+    governmentPriorities?: import('./scenarios').GovernmentPriorityOverride[];
+  };
 }

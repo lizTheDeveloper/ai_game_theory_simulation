@@ -32,6 +32,8 @@ export class GovernmentActionsPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Execute government actions using new modular structure
+    // NOTE: If state.scenarioOverrides exists, this will apply scenario overrides
+    // instead of normal government decision logic (for testing scenarios)
     setDeterministicRng(rng);
     const govResult = executeGovernmentActions(state, rng);
 
