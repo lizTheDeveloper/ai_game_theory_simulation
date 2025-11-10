@@ -33,7 +33,7 @@
 import { GameState } from '@/types/game';
 import { TechTreeState } from './engine';
 import { getTechById } from './comprehensiveTechTree';
-import { assertFinite, assertStateProperty } from '../utils/assertions';
+import { assertFinite, assertStateProperty, assertPlanetaryBoundary } from '../utils/assertions';
 
 /**
  * Type-safe helper to set dynamic properties on objects
@@ -442,14 +442,15 @@ function applyGlobalEffects(
       case 'carbonRemoval':
         // Remove CO2 from atmosphere
         if (gameState.resourceEconomy?.co2) {
-          gameState.resourceEconomy.co2.atmosphericCO2 = assertFinite(Math.max(
-            280, // Pre-industrial baseline
-            gameState.resourceEconomy.co2.atmosphericCO2 - value * 0.1
-          ), {
-        location: 'applyRegionalEffects:carbonRemoval',
-        valueName: 'atmosphericCO2',
-        month: gameState.currentMonth
-      });
+          gameState.resourceEconomy.co2.atmosphericCO2 = assertPlanetaryBoundary(
+            gameState.resourceEconomy.co2.atmosphericCO2 - value * 0.1,
+            'co2',
+            {
+              location: 'applyRegionalEffects:carbonRemoval',
+              valueName: 'atmosphericCO2',
+              month: gameState.currentMonth
+            }
+          ); // Bounded [280, 1000] ppm per RCP8.5 (IPCC AR6)
           // INTEGRATION FIX (Oct 29, 2025): Trigger planetary boundary recovery
           // Carbon removal improves climate_change boundary → start recovery clock
           triggerBoundaryRecovery(gameState, 'climate_change');
@@ -495,14 +496,15 @@ function applyGlobalEffects(
         // Reduce greenhouse gas emissions from agriculture
         if (gameState.resourceEconomy?.co2) {
           // Reduce atmospheric CO2 directly
-          gameState.resourceEconomy.co2.atmosphericCO2 = assertFinite(Math.max(
-            280,
-            gameState.resourceEconomy.co2.atmosphericCO2 - value * 0.5
-          ), {
-        location: 'applyRegionalEffects:greenhouseGasReduction',
-        valueName: 'atmosphericCO2',
-        month: gameState.currentMonth
-      });
+          gameState.resourceEconomy.co2.atmosphericCO2 = assertPlanetaryBoundary(
+            gameState.resourceEconomy.co2.atmosphericCO2 - value * 0.5,
+            'co2',
+            {
+              location: 'applyRegionalEffects:greenhouseGasReduction',
+              valueName: 'atmosphericCO2',
+              month: gameState.currentMonth
+            }
+          ); // Bounded [280, 1000] ppm per RCP8.5 (IPCC AR6)
         }
         break;
 
@@ -557,14 +559,15 @@ function applyGlobalEffects(
         // Habitat restoration provides carbon sequestration
         // Reduces atmospheric CO2 accumulation
         if (gameState.resourceEconomy?.co2) {
-          gameState.resourceEconomy.co2.atmosphericCO2 = assertFinite(Math.max(
-            280, // Pre-industrial baseline
-            gameState.resourceEconomy.co2.atmosphericCO2 - value * 0.1
-          ), {
-        location: 'applyRegionalEffects:carbonSequestration',
-        valueName: 'atmosphericCO2',
-        month: gameState.currentMonth
-      });
+          gameState.resourceEconomy.co2.atmosphericCO2 = assertPlanetaryBoundary(
+            gameState.resourceEconomy.co2.atmosphericCO2 - value * 0.1,
+            'co2',
+            {
+              location: 'applyRegionalEffects:carbonSequestration',
+              valueName: 'atmosphericCO2',
+              month: gameState.currentMonth
+            }
+          ); // Bounded [280, 1000] ppm per RCP8.5 (IPCC AR6)
           // INTEGRATION FIX (Oct 29, 2025): Carbon sequestration → climate recovery
           triggerBoundaryRecovery(gameState, 'climate_change');
         }
