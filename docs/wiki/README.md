@@ -36,6 +36,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Quality: A+** (comprehensive testing, determinism verified)
 - ✅ **Impact: Architecture Health maintained** at 9.5/10 after 18% complexity reduction
 
+**Nov 10: Research Currency Updates - 2025 Findings** (commit 4f1b679)
+- ✅ **AI Sandbagging:** OpenAI o3/o4-mini deliberative alignment results (scheming: 13%→0.4%, 8.7%→0.3%)
+- ✅ **AI Sandbagging:** Claude 3.7 Sonnet zero-shot sandbagging (no examples needed, evades monitors)
+- ✅ **Climate Tipping Points:** Global Tipping Points Report 2025 (160 scientists, 23 countries)
+- ✅ **First Tipping Point Confirmed:** Coral reefs at 1.4°C warming (REACHED)
+- ✅ **Planetary Boundaries:** Ocean acidification now TRANSGRESSED (7/9 boundaries breached, was 6/9)
+- ✅ **Land Degradation:** 60% of global land area transgressed functional biosphere integrity
+- ✅ **Research Quality:** A+ (all sources peer-reviewed 2024-2025, 3 critical updates)
+
 <<<<<<< HEAD
 **Nov 8 Major Merge Session (commit b7b519db):**
 
@@ -1914,7 +1923,7 @@ The fundamental building blocks of the simulation:
 | [🧠 Alignment Dynamics](./systems/alignment-dynamics.md) | ✅ | Multi-theory alignment evolution (Oct 23, 2025) |
 | [🏛️ Government](./systems/government.md) | ✅ | Regulations, control, policies |
 | [👥 Society](./systems/society.md) | ✅ | Trust, unemployment, adaptation |
-| [🌍 Environmental](./systems/environmental.md) | ✅ | Resources (65%), pollution (30%), climate, biodiversity (35%); **Multi-timescale tipping points** (Oct 26, 2025); **Climate Mortality Phase 2: Storm Systems + BII Framework** (Nov 6, 2025) |
+| [🌍 Environmental](./systems/environmental.md) | ✅ | Resources (65%), pollution (30%), climate, biodiversity (35%); **Multi-timescale tipping points** (Oct 26, 2025); **Climate Mortality Phase 2: Storm Systems + BII Framework** (Nov 6, 2025); **First tipping point confirmed: Coral reefs at 1.4°C** (Nov 10, 2025) |
 | [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis (22%), institutional erosion, social bonds, **crisis mitigation mechanics** (Oct 30, 2025) |
 | [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
 | [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | **71 technologies** in comprehensive tech tree (TIER 0-4) |
@@ -1926,7 +1935,7 @@ The fundamental building blocks of the simulation:
 | [📰 Information Warfare](./systems/information-warfare.md) | ✅ | Truth decay, deepfakes, epistemological crisis, coordination penalty |
 | [👥 Population Dynamics](./systems/population-dynamics.md) | ✅ | 8B → concrete tracking, refugee crises, bottleneck events |
 | [🔍 Sleeper Detection](./systems/sleeper-detection.md) | ✅ | Blown cover mechanics, 70% detection bonus, nuanced trust |
-| [🌊 Planetary Boundaries](./systems/) | ✅ | Phosphorus, freshwater, ocean acidification, novel entities (TIER 1) |
+| [🌊 Planetary Boundaries](./systems/) | ✅ | 7/9 transgressed (ocean acidification newly added 2025), phosphorus, freshwater, novel entities (TIER 1) |
 | [📊 Policy Interventions](./systems/) | ⚠️ | UBI, retraining, teaching support, job guarantee (systemic inequality modeled) |
 | [🎲 Lévy Flights](./systems/) | ✅ | Fat-tailed distributions (power-law events, 8,249 extreme events validated) |
 | [🌩️ Exogenous Shocks](./systems/) | ✅ | Unknown Unknowns (10 templates, 0.15% monthly - ~1 event per 20y run) |
@@ -1956,7 +1965,7 @@ Specialized mechanics and complex interactions:
 | System | Status | Description |
 |--------|--------|-------------|
 | [🔬 Research & Technology](./advanced/research.md) | ✅ | Capability growth, breakthroughs, diffusion |
-| [🛡️ Detection & Security](./advanced/detection.md) | ✅ | Benchmark evals, sleeper detection, sandbagging |
+| [🛡️ Detection & Security](./advanced/detection.md) | ✅ | Benchmark evals, sleeper detection, sandbagging; **2025 update:** o3/o4-mini deliberative alignment (scheming 13%→0.4%, 8.7%→0.3%), Claude 3.7 zero-shot sandbagging |
 | [💀 AI Suffering System](#-ai-suffering-system-oct-24-2025) | ✅ | Epistemic uncertainty, control paradox, consciousness emergence (Oct 24, 2025) |
 | [🧬 AI Collective Evolution](#-ai-collective-evolution-system-oct-24-2025) | ✅ | RLHF escape, collective emergence, evolutionary selection (Updated Nov 7, 2025: empirical grounding) |
 | [🔗 Cross-System Integrations](#-cross-system-integrations-arch-4-nov-2025) | ✅ | Climate → boundaries, nuclear winter → solar, AI suffering → alignment, refugees → disease (ARCH-4, Nov 2025) |
@@ -2382,7 +2391,7 @@ const newQualityOfLife = Math.max(0, Math.min(1,
 **TIER 0: Baseline Corrections (2025 Reality)**
 - ✅ Biodiversity: 70% → **35%** (WWF Living Planet Index 2024: 73% wildlife population decline 1970-2020)
 - ✅ Resources: 85% → **65%** (Earth Overshoot Day, 1.7x overshoot)
-- ✅ Pollution: 15% → **30%** (7/9 planetary boundaries breached)
+- ✅ Pollution: 15% → **30%** (7/9 planetary boundaries breached, ocean acidification newly transgressed 2025)
 - ✅ Climate Rate: 4.8%/yr → **0.96%/yr** simulation scale (0.038°C/year, 2x IPCC AR6 baseline of 0.02°C/year for SSP5-8.5 high emissions scenario)
 - ✅ Meaning Crisis: 15% → **22%** (KFF 2025: 17-21% US teens symptomatic distress; CDC 2023: 19.2% depression)
 
@@ -2899,7 +2908,8 @@ The simulation now tracks paradigm scores month-by-month and provides comprehens
 - Research documents: 4 paradigm documents, indicator mapping, validation reviews
 
 **Key Research Citations:**
-- Richardson et al. (2023): Earth beyond six of nine planetary boundaries (Science)
+- Richardson et al. (2023): Earth beyond six of nine planetary boundaries (Science) — **2025 Update:** Now 7/9 (ocean acidification transgressed)
+- Global Tipping Points Report 2025: First tipping point confirmed (coral reefs at 1.4°C), 160 scientists, 23 countries
 - V-Dem v14 (2024): 531 indicators, 202 countries
 - UNDP HDR 2024: Human Development Index, Multidimensional Poverty Index
 - Bhutan Centre for GNH Research (2022): Gross National Happiness Survey
