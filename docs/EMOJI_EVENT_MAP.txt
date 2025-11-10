@@ -178,3 +178,4 @@
 🟡 | Warning/caution indicator
 🔗 | Cascade failure linkage
 🚶 | Migration/relocation
+🎬 | Scenario event (scenario start/configuration changes)
