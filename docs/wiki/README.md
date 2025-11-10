@@ -28,6 +28,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 10: CRITICAL Bug Fixes - Spiral Activation Blockers Resolved** (commit d336915)
+- ✅ **Bug 1 Fixed:** workflowAdaptation crash to 0% (blocked scientific spiral activation)
+- ✅ **MIN_ADOPTION_FLOOR = 5%:** Innovators + early adopters immune to resistance (Rogers 1962)
+- ✅ **Retraining Programs:** Government research investment → skill gap reduction (OECD 2024 - PENDING VERIFICATION)
+- ✅ **Formula:** $50B research → 50% skill gap reduction, $100B → 75% cap
+- ✅ **Bug 2 Fixed:** democratic-participation scenario crash (readonly property violation)
+- ✅ **Root Cause:** democracy/democracyQuality are computed getters, removed invalid assignments
+- ✅ **Validation:** Monte Carlo N=3, god mode test, governance-first scenario (24 months)
+- ⚠️ **Research Verification:** OECD 2024 active labor market policies citation needs verification (see research/verification_d336915_20251110.md)
+
 **Nov 10: Scenario Analysis Framework Phase 2 - Government Override System** (commit 91b4264)
 - ✅ **Government Override System:** Forces specific governance priorities for systematic testing
 - ✅ **GameState Extension:** Added `scenarioOverrides` field with government priority overrides
