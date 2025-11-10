@@ -251,8 +251,8 @@ test.describe('Technology Impact Integration', () => {
 
     // Tech breakthroughs might affect environment
     await page.getByRole('link', { name: /tech/i }).click();
-    // Adaptive wait added - waits for data to load
-    await waitForDashboardData(page, /\d+\.\d+B|global population/i);
+    // Adaptive wait for tech-specific content (not population)
+    await waitForDashboardData(page, /technology|breakthrough|tier/i);
 
     await page.getByRole('link', { name: /environment/i }).click();
     // Adaptive wait added - waits for data to load
@@ -324,8 +324,11 @@ test.describe('Cross-Dashboard State Consistency', () => {
   test('should maintain month consistency across all dashboards', async ({ page }) => {
     await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
 
-    // Get month from navigation
-    const navMonth = await page.locator('text=/Month \\d+/i').first().textContent();
+    // Wait for month indicator to be visible
+    await waitForDashboardData(page, /month/i);
+
+    // Get month from navigation (format: "Month 0" or "Month: 0")
+    const navMonth = await page.getByText(/month/i).first().textContent();
 
     // Check multiple dashboards using client-side navigation
     const dashboards = [
@@ -341,7 +344,7 @@ test.describe('Cross-Dashboard State Consistency', () => {
       await page.waitForTimeout(1000);
 
       // Month should be consistent in navigation
-      const currentMonth = await page.locator('text=/Month \\d+/i').first().textContent();
+      const currentMonth = await page.getByText(/month/i).first().textContent();
       expect(currentMonth).toBe(navMonth);
     }
   });
