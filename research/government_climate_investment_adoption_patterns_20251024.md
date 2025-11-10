@@ -1,8 +1,9 @@
 # Government Climate Policy Adoption Patterns and Investment Scaling
 ## Research Report for Super-Alignment Simulation
 
-**Date:** 2025-10-24
-**Researcher:** super-alignment-researcher-1
+**Date:** 2025-10-24 (Original), 2025-11-10 (Updated)
+**Last Updated:** 2025-11-10 (Autonomous Researcher - added 2025 IEA World Energy Investment data)
+**Original Researcher:** super-alignment-researcher-1
 **Purpose:** Validate government behavior model for ecology recovery simulation
 **Simulation Context:** Modeling government climate investment scaling from baseline ($1.4T/year) toward net-zero target ($3.5T/year) over 2025-2055 timeframe
 
@@ -31,11 +32,13 @@ Empirical evidence from 2020-2025 shows that government climate investment is **
 - **2022:** $1.46 trillion/year (CPI Global Landscape 2024)
 - **2023:** $1.9 trillion (all-time high, Climate Policy Initiative)
 - **2024:** >$2 trillion (early data, Climate Policy Initiative)
+- **2025:** $3.3 trillion projected total energy investment, with $2.2 trillion to clean energy (IEA World Energy Investment 2025)
 
-**Key Finding:** Climate finance **doubled in 4 years** (2018-2022), representing 11% annual growth rate. However, this remains far below the **5× scaling required by 2030** to reach $7.4 trillion/year for 1.5°C scenarios.
+**Key Finding:** Climate finance **doubled in 4 years** (2018-2022), representing 11% annual growth rate. By 2025, clean energy investment ($2.2T) now **exceeds fossil fuel investment ($1.1T) by 2:1 ratio** - a historic milestone (six years ago this ratio was 1:1). However, this remains far below the **5× scaling required by 2030** to reach $7.4 trillion/year for 1.5°C scenarios.
 
 **Source:**
 - Climate Policy Initiative (2024). *Global Landscape of Climate Finance 2024*. https://www.climatepolicyinitiative.org/publication/global-landscape-of-climate-finance-2024/
+- International Energy Agency (2025). *World Energy Investment 2025*. https://www.iea.org/reports/world-energy-investment-2025
 - Currently represents 1% of global GDP; EMDEs may need 6.5% GDP allocation by 2030
 
 ### 1.2 Government-Led Investment (Post-2020)
@@ -49,9 +52,20 @@ Empirical evidence from 2020-2025 shows that government climate investment is **
 - First half of 2024: 40+ countries earmarked $290 billion in clean energy support
 - Clean energy investment grew **60% globally** since 2020
 
+**2025 Projections & Commitments:**
+- **Global energy investment:** $3.3 trillion (2% real growth over 2024)
+- **Clean energy:** $2.2 trillion (renewables, nuclear, grids, storage, efficiency, electrification)
+- **Fossil fuels:** $1.1 trillion (oil, gas, coal)
+- **Solar dominance:** $450 billion projected for solar (largest single investment category)
+- **Battery storage:** $66 billion globally
+- **Nuclear comeback:** 50% increase in nuclear investment over past 5 years
+- **COP29 commitment (November 2024):** Developed countries agreed to mobilize $300 billion/year by 2035, within broader goal of $1.3 trillion/year for developing countries by 2035
+
 **Source:**
 - International Energy Agency (2024). *World Energy Investment 2024*. https://www.iea.org/reports/world-energy-investment-2024
+- International Energy Agency (2025). *World Energy Investment 2025*. https://www.iea.org/reports/world-energy-investment-2025
 - IEA notes: "Since 2020, clean energy investment grew 60% globally"
+- COP29 Baku to Belém Roadmap (November 2024)
 
 **Critical Context:**
 - Advanced economies **increased fossil fuel investments by 28%** between 2020-2022
@@ -517,6 +531,11 @@ To strengthen the government behavior model, consider investigating:
 
 10. **International Energy Agency (2024).** *World Energy Investment 2024*. https://www.iea.org/reports/world-energy-investment-2024
     - Authoritative data on energy investment trends
+    - Credibility: Very High (IEA is UN-affiliated, government-backed data)
+
+10a. **International Energy Agency (2025).** *World Energy Investment 2025*. https://www.iea.org/reports/world-energy-investment-2025
+    - 2025 projections showing $3.3T total energy investment, $2.2T clean energy (2:1 ratio over fossil fuels)
+    - Key findings: Solar at $450B (largest category), battery storage $66B, nuclear investment up 50% over 5 years
     - Credibility: Very High (IEA is UN-affiliated, government-backed data)
 
 11. **IPCC AR6 Working Group III (2022).** *Chapter 15: Investment and Finance*. https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-15/

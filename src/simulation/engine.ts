@@ -149,6 +149,7 @@ import {
   EventCollectionPhase,
   TimeAdvancementPhase
 } from './engine/phases';
+import { ApplyScenarioPrioritiesPhase } from './engine/phases/ApplyScenarioPrioritiesPhase';  // Phase 2 (Nov 10, 2025): Scenario system
 // TIER 2 Interventions (Oct 27, 2025)
 // TIER 2 Consolidated Phases (Batch 1 consolidation: 9 → 3, Nov 9, 2025)
 import { Tier2SocialSystemsPhase } from './engine/phases/Tier2SocialSystemsPhase';
@@ -606,6 +607,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TechnologyDiffusionPhase());
     this.orchestrator.registerPhase(new EventCollectionPhase());
     this.orchestrator.registerPhase(new TimeAdvancementPhase());
+    this.orchestrator.registerPhase(new ApplyScenarioPrioritiesPhase());  // Phase 2 (Nov 10, 2025): Order 1.5
   }
 
   /**

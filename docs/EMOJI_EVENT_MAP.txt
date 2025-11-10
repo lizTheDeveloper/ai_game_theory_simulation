@@ -18,6 +18,9 @@
 💬 | Diplomatic failure
 🤝 | AI cooperation formed / Worker cooperative ownership
 🔻 | Cooperation collapsed
+
+# Scenario Events
+🎬 | Scenario started
 📜 | Treaty signed
 🌐 | International coordination
 

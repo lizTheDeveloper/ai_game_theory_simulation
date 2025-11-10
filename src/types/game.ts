@@ -174,7 +174,21 @@ export interface GameState {
    * Expected impact: Fixes non-determinism in event logging, agent actions, policy generation
    */
   eventIdCounter: number;
-  
+
+  /**
+   * Active Scenario (Phase 2: Scenario Definition System, Nov 10, 2025)
+   *
+   * Enables systematic testing of governance interventions.
+   * When set, ApplyScenarioPrioritiesPhase overrides government priorities each month.
+   *
+   * Purpose: Phase 1 diagnostics revealed god mode failures due to governance gaps.
+   * Technology alone insufficient - need to test governance + tech combinations.
+   *
+   * @see src/types/scenario.ts - ScenarioDefinition interface
+   * @see src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts - Application logic
+   */
+  scenario?: import('./scenario').ActiveScenario;
+
   // Agents
   aiAgents: AIAgent[];
   government: GovernmentAgent;
