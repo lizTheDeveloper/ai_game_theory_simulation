@@ -198,6 +198,17 @@ export interface GameState {
    */
   emergencyManagement?: import('../simulation/emergencyManagement').EmergencyManagementState;
 
+  /**
+   * Scenario Testing Framework (Nov 10, 2025)
+   *
+   * Testing infrastructure for systematic governance/social scenarios.
+   * Allows overriding government priorities and starting conditions to test hypotheses.
+   *
+   * Research: reviews/god_mode_spiral_diagnostics_20251110.md
+   * Expected impact: Enables systematic testing of "what if government spent $100B/month on research?"
+   */
+  scenario?: import('./scenarios').ScenarioDefinition;
+
   // Global state
   globalMetrics: GlobalMetrics;
   qualityOfLifeSystems: QualityOfLifeSystems; // Multi-dimensional QoL tracking

@@ -86,6 +86,25 @@ export interface TechDeploymentStrategy {
 }
 
 /**
+ * Direct government budget/priority specification for testing
+ * (Simpler alternative to GovernmentPriorityOverride array)
+ */
+export interface ScenarioGovernmentPriorities {
+  /** Research investment (billions/month) */
+  researchInvestment?: number;
+  /** Climate spending (% of GDP) */
+  climateSpending?: number;
+  /** Redistribution rate (% of GDP) */
+  redistributionRate?: number;
+  /** AI safety budget (billions/month) */
+  aiSafetyBudget?: number;
+  /** Democracy level (0-1) */
+  democracyLevel?: number;
+  /** Government type */
+  governmentType?: 'democratic' | 'authoritarian' | 'mixed' | 'technocratic';
+}
+
+/**
  * Government decision override for scenario testing
  */
 export interface GovernmentPriorityOverride {
@@ -143,7 +162,10 @@ export interface ScenarioDefinition {
   /** Technology deployment strategy */
   techDeployment: TechDeploymentStrategy;
 
-  /** Government behavior overrides */
+  /** Simple government priorities (used by ApplyScenarioPrioritiesPhase) */
+  governmentPriorities?: ScenarioGovernmentPriorities;
+
+  /** Government behavior overrides (for multi-country scenarios) */
   governmentOverrides?: GovernmentPriorityOverride[];
 
   /** Comparison baseline scenario (default: 'no-tech' or 'god-mode') */
