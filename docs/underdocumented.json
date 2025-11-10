@@ -147,11 +147,9 @@
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/ai-agents.ts",
     "line": 191,
     "type": "property",
-    "name": "sleeperPr
-✅ Full results saved to: docs/underdocumented.json
-   Use this file to generate documentation improvements
-
-ession').SleeperProgression;"
+    "name": "sleeperProgression",
+    "currentDoc": "(none)",
+    "context": "sleeperProgression?: import('../simulation/sleeperProgression').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/ai-agents.ts",
@@ -159,10 +157,11 @@ ession').SleeperProgression;"
     "type": "property",
     "name": "sleeperEconomy",
     "currentDoc": "(none)",
-    "context": "sleeperEconomy?: import('../simulation/sleeperEconomy').SleeperEconomy;"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/ai-agents.ts",
+    "co
+✅ Full results saved to: docs/underdocumented.json
+   Use this file to generate documentation improvements
+
+annhoward/src/superalignmenttoutopia/src/types/ai-agents.ts",
     "line": 195,
     "type": "property",
     "name": "socialInfluence",
@@ -5835,7 +5834,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 202,
+    "line": 213,
     "type": "property",
     "name": "globalMetrics",
     "currentDoc": "(none)",
@@ -5843,7 +5842,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 242,
+    "line": 253,
     "type": "property",
     "name": "aiRightsMovementActive",
     "currentDoc": "(none)",
@@ -5851,7 +5850,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 243,
+    "line": 254,
     "type": "property",
     "name": "aiRightsLegalStatus",
     "currentDoc": "(none)",
@@ -5859,7 +5858,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 255,
+    "line": 266,
     "type": "property",
     "name": "evolutionaryPressure",
     "currentDoc": "(none)",
@@ -5867,7 +5866,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 257,
+    "line": 268,
     "type": "property",
     "name": "technologyTree",
     "currentDoc": "(none)",
@@ -5875,7 +5874,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 258,
+    "line": 269,
     "type": "property",
     "name": "eventLog",
     "currentDoc": "(none)",
@@ -5883,7 +5882,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 259,
+    "line": 270,
     "type": "property",
     "name": "outcomeMetrics",
     "currentDoc": "(none)",
@@ -5891,7 +5890,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 325,
+    "line": 336,
     "type": "property",
     "name": "tier2InterventionParameters",
     "currentDoc": "(none)",
@@ -5899,7 +5898,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 376,
+    "line": 387,
     "type": "property",
     "name": "ecosystemCollapse",
     "currentDoc": "(none)",
@@ -5907,7 +5906,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 377,
+    "line": 388,
     "type": "property",
     "name": "triggered",
     "currentDoc": "(none)",
@@ -5915,7 +5914,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 378,
+    "line": 389,
     "type": "property",
     "name": "triggeredAt",
     "currentDoc": "(none)",
@@ -5923,7 +5922,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 379,
+    "line": 390,
     "type": "property",
     "name": "monthsSinceTrigger",
     "currentDoc": "(none)",
@@ -5931,7 +5930,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 380,
+    "line": 391,
     "type": "property",
     "name": "phase",
     "currentDoc": "(none)",
@@ -5939,7 +5938,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 386,
+    "line": 397,
     "type": "property",
     "name": "specificTippingPoints",
     "currentDoc": "(none)",
@@ -5947,7 +5946,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 387,
+    "line": 398,
     "type": "property",
     "name": "amazon",
     "currentDoc": "(none)",
@@ -5955,7 +5954,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 388,
+    "line": 399,
     "type": "property",
     "name": "deforestation",
     "currentDoc": "(none)",
@@ -5963,7 +5962,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 389,
+    "line": 400,
     "type": "property",
     "name": "tippingThreshold",
     "currentDoc": "(none)",
@@ -5971,7 +5970,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 390,
+    "line": 401,
     "type": "property",
     "name": "triggered",
     "currentDoc": "(none)",
@@ -5979,7 +5978,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 391,
+    "line": 402,
     "type": "property",
     "name": "triggeredAt",
     "currentDoc": "(none)",
@@ -5987,7 +5986,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 392,
+    "line": 403,
     "type": "property",
     "name": "transitionProgress",
     "currentDoc": "(none)",
@@ -5995,7 +5994,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 393,
+    "line": 404,
     "type": "property",
     "name": "carbonReleased",
     "currentDoc": "(none)",
@@ -6003,7 +6002,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 394,
+    "line": 405,
     "type": "property",
     "name": "regionallyAffected",
     "currentDoc": "(none)",
@@ -6011,7 +6010,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 396,
+    "line": 407,
     "type": "property",
     "name": "reversibility",
     "currentDoc": "(none)",
@@ -6019,7 +6018,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 397,
+    "line": 408,
     "type": "property",
     "name": "dampingFeedbackStrength",
     "currentDoc": "(none)",
@@ -6027,7 +6026,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 398,
+    "line": 409,
     "type": "property",
     "name": "recoveryTimescale",
     "currentDoc": "(none)",
@@ -6035,7 +6034,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 400,
+    "line": 411,
     "type": "property",
     "name": "coral",
     "currentDoc": "(none)",
@@ -6043,7 +6042,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 401,
+    "line": 412,
     "type": "property",
     "name": "healthPercentage",
     "currentDoc": "(none)",
@@ -6051,7 +6050,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 402,
+    "line": 413,
     "type": "property",
     "name": "tippingThreshold",
     "currentDoc": "(none)",
@@ -6059,7 +6058,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 403,
+    "line": 414,
     "type": "property",
     "name": "triggered",
     "currentDoc": "(none)",
@@ -6067,7 +6066,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 404,
+    "line": 415,
     "type": "property",
     "name": "triggeredAt",
     "currentDoc": "(none)",
@@ -6075,7 +6074,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 405,
+    "line": 416,
     "type": "property",
     "name": "collapseProgress",
     "currentDoc": "(none)",
@@ -6083,7 +6082,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 406,
+    "line": 417,
     "type": "property",
     "name": "fisheryCollapseLevel",
     "currentDoc": "(none)",
@@ -6091,7 +6090,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 407,
+    "line": 418,
     "type": "property",
     "name": "regionallyAffected",
     "currentDoc": "(none)",
@@ -6099,7 +6098,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 409,
+    "line": 420,
     "type": "property",
     "name": "reversibility",
     "currentDoc": "(none)",
@@ -6107,7 +6106,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 410,
+    "line": 421,
     "type": "property",
     "name": "dampingFeedbackStrength",
     "currentDoc": "(none)",
@@ -6115,7 +6114,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 411,
+    "line": 422,
     "type": "property",
     "name": "recoveryTimescale",
     "currentDoc": "(none)",
@@ -6123,7 +6122,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 413,
+    "line": 424,
     "type": "property",
     "name": "pollinators",
     "currentDoc": "(none)",
@@ -6131,7 +6130,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 414,
+    "line": 425,
     "type": "property",
     "name": "populationPercentage",
     "currentDoc": "(none)",
@@ -6139,7 +6138,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 415,
+    "line": 426,
     "type": "property",
     "name": "criticalThreshold",
     "currentDoc": "(none)",
@@ -6147,7 +6146,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 416,
+    "line": 427,
     "type": "property",
     "name": "triggered",
     "currentDoc": "(none)",
@@ -6155,7 +6154,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 417,
+    "line": 428,
     "type": "property",
     "name": "triggeredAt",
     "currentDoc": "(none)",
@@ -6163,7 +6162,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 418,
+    "line": 429,
     "type": "property",
     "name": "foodProductionLoss",
     "currentDoc": "(none)",
@@ -6171,7 +6170,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 419,
+    "line": 430,
     "type": "property",
     "name": "regionallyAffected",
     "currentDoc": "(none)",
@@ -6179,7 +6178,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 421,
+    "line": 432,
     "type": "property",
     "name": "reversibility",
     "currentDoc": "(none)",
@@ -6187,7 +6186,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 426,
+    "line": 437,
     "type": "property",
     "name": "permafrost",
     "currentDoc": "(none)",
@@ -6195,7 +6194,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 427,
+    "line": 438,
     "type": "property",
     "name": "carbonStored",
     "currentDoc": "(none)",
@@ -6203,7 +6202,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 428,
+    "line": 439,
     "type": "property",
     "name": "carbonReleased",
     "currentDoc": "(none)",
@@ -6211,83 +6210,11 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 429,
+    "line": 440,
     "type": "property",
     "name": "thawRate",
     "currentDoc": "(none)",
     "context": "thawRate: number;"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 430,
-    "type": "property",
-    "name": "triggered",
-    "currentDoc": "(none)",
-    "context": "triggered: boolean;"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 431,
-    "type": "property",
-    "name": "triggeredAt",
-    "currentDoc": "(none)",
-    "context": "triggeredAt: number;"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 432,
-    "type": "property",
-    "name": "regionallyAffected",
-    "currentDoc": "(none)",
-    "context": "regionallyAffected: string[];"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 434,
-    "type": "property",
-    "name": "reversibility",
-    "currentDoc": "(none)",
-    "context": "reversibility?: 'irreversible' | 'reversible-with-damping';"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 435,
-    "type": "property",
-    "name": "dampingFeedbackStrength",
-    "currentDoc": "(none)",
-    "context": "dampingFeedbackStrength?: number;"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 436,
-    "type": "property",
-    "name": "recoveryTimescale",
-    "currentDoc": "(none)",
-    "context": "recoveryTimescale?: number;"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 438,
-    "type": "property",
-    "name": "amoc",
-    "currentDoc": "(none)",
-    "context": "amoc: {"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 439,
-    "type": "property",
-    "name": "strength",
-    "currentDoc": "(none)",
-    "context": "strength: number;"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 440,
-    "type": "property",
-    "name": "collapseThreshold",
-    "currentDoc": "(none)",
-    "context": "collapseThreshold: number;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
@@ -6339,7 +6266,79 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 449,
+    "type": "property",
+    "name": "amoc",
+    "currentDoc": "(none)",
+    "context": "amoc: {"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 450,
+    "type": "property",
+    "name": "strength",
+    "currentDoc": "(none)",
+    "context": "strength: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 451,
+    "type": "property",
+    "name": "collapseThreshold",
+    "currentDoc": "(none)",
+    "context": "collapseThreshold: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 452,
+    "type": "property",
+    "name": "triggered",
+    "currentDoc": "(none)",
+    "context": "triggered: boolean;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 453,
+    "type": "property",
+    "name": "triggeredAt",
+    "currentDoc": "(none)",
+    "context": "triggeredAt: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
     "line": 454,
+    "type": "property",
+    "name": "regionallyAffected",
+    "currentDoc": "(none)",
+    "context": "regionallyAffected: string[];"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 456,
+    "type": "property",
+    "name": "reversibility",
+    "currentDoc": "(none)",
+    "context": "reversibility?: 'irreversible' | 'reversible-with-damping';"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 457,
+    "type": "property",
+    "name": "dampingFeedbackStrength",
+    "currentDoc": "(none)",
+    "context": "dampingFeedbackStrength?: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 458,
+    "type": "property",
+    "name": "recoveryTimescale",
+    "currentDoc": "(none)",
+    "context": "recoveryTimescale?: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 465,
     "type": "property",
     "name": "psychologicalTrauma",
     "currentDoc": "(none)",
@@ -6347,7 +6346,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 476,
+    "line": 487,
     "type": "property",
     "name": "triggeredEvents",
     "currentDoc": "(none)",
@@ -6355,51 +6354,11 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 479,
+    "line": 490,
     "type": "property",
     "name": "economicStageHistory",
     "currentDoc": "(none)",
     "context": "economicStageHistory?: Array<{"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 480,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: number;"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 481,
-    "type": "property",
-    "name": "stage",
-    "currentDoc": "(none)",
-    "context": "stage: 'expansion' | 'peak' | 'contraction' | 'trough' | 'recovery';"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 487,
-    "type": "property",
-    "name": "currentEconomicStage",
-    "currentDoc": "(none)",
-    "context": "currentEconomicStage?: 'expansion' | 'peak' | 'contraction' | 'trough' | 'recovery';"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 489,
-    "type": "property",
-    "name": "gdp",
-    "currentDoc": "(none)",
-    "context": "gdp: number;"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 490,
-    "type": "property",
-    "name": "qol",
-    "currentDoc": "(none)",
-    "context": "qol: number;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
@@ -6411,7 +6370,47 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 507,
+    "line": 492,
+    "type": "property",
+    "name": "stage",
+    "currentDoc": "(none)",
+    "context": "stage: 'expansion' | 'peak' | 'contraction' | 'trough' | 'recovery';"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 498,
+    "type": "property",
+    "name": "currentEconomicStage",
+    "currentDoc": "(none)",
+    "context": "currentEconomicStage?: 'expansion' | 'peak' | 'contraction' | 'trough' | 'recovery';"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 500,
+    "type": "property",
+    "name": "gdp",
+    "currentDoc": "(none)",
+    "context": "gdp: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 501,
+    "type": "property",
+    "name": "qol",
+    "currentDoc": "(none)",
+    "context": "qol: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 502,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 518,
     "type": "property",
     "name": "policyInterventions",
     "currentDoc": "(none)",
@@ -6419,7 +6418,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 514,
+    "line": 525,
     "type": "property",
     "name": "policies",
     "currentDoc": "(none)",
@@ -6427,7 +6426,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 515,
+    "line": 526,
     "type": "property",
     "name": "aiEducationCampaigns",
     "currentDoc": "(none)",
@@ -6435,7 +6434,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 604,
+    "line": 615,
     "type": "property",
     "name": "gamingDetection",
     "currentDoc": "(none)",
@@ -6443,7 +6442,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 611,
+    "line": 622,
     "type": "property",
     "name": "proactiveSleeperDetection",
     "currentDoc": "(none)",
@@ -6451,7 +6450,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 623,
+    "line": 634,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -6459,7 +6458,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 673,
+    "line": 684,
     "type": "property",
     "name": "unifiedOutcome",
     "currentDoc": "(none)",
@@ -6467,7 +6466,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 676,
+    "line": 687,
     "type": "property",
     "name": "crises",
     "currentDoc": "(none)",
@@ -6475,7 +6474,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 677,
+    "line": 688,
     "type": "property",
     "name": "megaPandemic",
     "currentDoc": "(none)",
@@ -6483,7 +6482,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 678,
+    "line": 689,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -6491,7 +6490,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 679,
+    "line": 690,
     "type": "property",
     "name": "startMonth",
     "currentDoc": "(none)",
@@ -6499,7 +6498,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 680,
+    "line": 691,
     "type": "property",
     "name": "totalMortality",
     "currentDoc": "(none)",
@@ -6507,7 +6506,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 681,
+    "line": 692,
     "type": "property",
     "name": "monthlyMortality",
     "currentDoc": "(none)",
@@ -6515,7 +6514,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 682,
+    "line": 693,
     "type": "property",
     "name": "socialDisruption",
     "currentDoc": "(none)",
@@ -6523,7 +6522,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 687,
+    "line": 698,
     "type": "property",
     "name": "catastrophe",
     "currentDoc": "(none)",
@@ -6531,7 +6530,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 697,
+    "line": 708,
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -6539,7 +6538,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 698,
+    "line": 709,
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -6547,7 +6546,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 699,
+    "line": 710,
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -6555,7 +6554,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 700,
+    "line": 711,
     "type": "property",
     "name": "controlCapability",
     "currentDoc": "(none)",
@@ -6563,7 +6562,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 702,
+    "line": 713,
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -6571,7 +6570,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 703,
+    "line": 714,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -6579,7 +6578,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 704,
+    "line": 715,
     "type": "property",
     "name": "unemployment",
     "currentDoc": "(none)",
@@ -6587,7 +6586,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 705,
+    "line": 716,
     "type": "property",
     "name": "socialAdaptation",
     "currentDoc": "(none)",
@@ -6595,7 +6594,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 706,
+    "line": 717,
     "type": "property",
     "name": "trustInAI",
     "currentDoc": "(none)",
@@ -6603,7 +6602,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 707,
+    "line": 718,
     "type": "property",
     "name": "totalAICapability",
     "currentDoc": "(none)",
@@ -6611,7 +6610,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 708,
+    "line": 719,
     "type": "property",
     "name": "avgAIAlignment",
     "currentDoc": "(none)",
@@ -6619,7 +6618,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 709,
+    "line": 720,
     "type": "property",
     "name": "effectiveControl",
     "currentDoc": "(none)",
@@ -6627,7 +6626,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 710,
+    "line": 721,
     "type": "property",
     "name": "wealthDistribution",
     "currentDoc": "(none)",
@@ -6635,7 +6634,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 711,
+    "line": 722,
     "type": "property",
     "name": "socialStability",
     "currentDoc": "(none)",
@@ -6643,7 +6642,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 712,
+    "line": 723,
     "type": "property",
     "name": "economicStage",
     "currentDoc": "(none)",
@@ -6651,7 +6650,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 713,
+    "line": 724,
     "type": "property",
     "name": "governmentLegitimacy",
     "currentDoc": "(none)",
@@ -6659,7 +6658,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 714,
+    "line": 725,
     "type": "property",
     "name": "coordinationCapacity",
     "currentDoc": "(none)",
@@ -6667,7 +6666,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 717,
+    "line": 728,
     "type": "property",
     "name": "exogenousShocks",
     "currentDoc": "(none)",
@@ -6675,7 +6674,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 718,
+    "line": 729,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -6683,7 +6682,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 719,
+    "line": 730,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -6691,7 +6690,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 720,
+    "line": 731,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -6699,7 +6698,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 725,
+    "line": 736,
     "type": "property",
     "name": "criticalJunctureEscapes",
     "currentDoc": "(none)",
@@ -6707,7 +6706,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 726,
+    "line": 737,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -6715,7 +6714,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 727,
+    "line": 738,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -6723,7 +6722,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 728,
+    "line": 739,
     "type": "property",
     "name": "agencyPotential",
     "currentDoc": "(none)",
@@ -6731,7 +6730,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 729,
+    "line": 740,
     "type": "property",
     "name": "crisisSeverity",
     "currentDoc": "(none)",
@@ -6739,7 +6738,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 733,
+    "line": 744,
     "type": "property",
     "name": "cooperativeSpirals",
     "currentDoc": "(none)",
@@ -6747,7 +6746,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 734,
+    "line": 745,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -6755,7 +6754,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 735,
+    "line": 746,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -6763,7 +6762,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 736,
+    "line": 747,
     "type": "property",
     "name": "trustBoost",
     "currentDoc": "(none)",
@@ -6771,7 +6770,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 737,
+    "line": 748,
     "type": "property",
     "name": "institutionBoost",
     "currentDoc": "(none)",
@@ -6779,7 +6778,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 738,
+    "line": 749,
     "type": "property",
     "name": "trigger",
     "currentDoc": "(none)",
@@ -6787,7 +6786,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 742,
+    "line": 753,
     "type": "property",
     "name": "cooperativeOwnershipEvents",
     "currentDoc": "(none)",
@@ -6795,7 +6794,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 743,
+    "line": 754,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -6803,7 +6802,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 744,
+    "line": 755,
     "type": "property",
     "name": "orgId",
     "currentDoc": "(none)",
@@ -6811,7 +6810,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 745,
+    "line": 756,
     "type": "property",
     "name": "eventType",
     "currentDoc": "(none)",
@@ -6819,7 +6818,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 746,
+    "line": 757,
     "type": "property",
     "name": "details",
     "currentDoc": "(none)",
@@ -6827,7 +6826,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 747,
+    "line": 758,
     "type": "property",
     "name": "economicImpact",
     "currentDoc": "(none)",
@@ -6835,7 +6834,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 764,
+    "line": 775,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -6843,7 +6842,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
-    "line": 765,
+    "line": 776,
     "type": "property",
     "name": "data",
     "currentDoc": "(none)",
@@ -14336,6 +14335,590 @@ ession').SleeperProgression;"
     "name": "bioengineeredCleaners",
     "currentDoc": "(none)",
     "context": "bioengineeredCleaners?: BioengineeredCleanersState;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 37,
+    "type": "property",
+    "name": "materialAbundance",
+    "currentDoc": "(none)",
+    "context": "materialAbundance?: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 38,
+    "type": "property",
+    "name": "energyAvailability",
+    "currentDoc": "(none)",
+    "context": "energyAvailability?: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 39,
+    "type": "property",
+    "name": "mentalHealth",
+    "currentDoc": "(none)",
+    "context": "mentalHealth?: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 40,
+    "type": "property",
+    "name": "politicalFreedom",
+    "currentDoc": "(none)",
+    "context": "politicalFreedom?: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 146,
+    "type": "interface",
+    "name": "ScenarioDefinition",
+    "currentDoc": "/ Complete scenario definition",
+    "context": "export interface ScenarioDefinition {"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 190,
+    "type": "interface",
+    "name": "ScenarioResult",
+    "currentDoc": "/ Scenario execution result",
+    "context": "export interface ScenarioResult {"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 219,
+    "type": "property",
+    "name": "survivalAvg",
+    "currentDoc": "(none)",
+    "context": "survivalAvg: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 220,
+    "type": "property",
+    "name": "basicNeedsAvg",
+    "currentDoc": "(none)",
+    "context": "basicNeedsAvg: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 221,
+    "type": "property",
+    "name": "psychologicalAvg",
+    "currentDoc": "(none)",
+    "context": "psychologicalAvg: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 222,
+    "type": "property",
+    "name": "socialAvg",
+    "currentDoc": "(none)",
+    "context": "socialAvg: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 223,
+    "type": "property",
+    "name": "healthAvg",
+    "currentDoc": "(none)",
+    "context": "healthAvg: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 224,
+    "type": "property",
+    "name": "environmentalAvg",
+    "currentDoc": "(none)",
+    "context": "environmentalAvg: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 225,
+    "type": "property",
+    "name": "overallAvg",
+    "currentDoc": "(none)",
+    "context": "overallAvg: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 230,
+    "type": "property",
+    "name": "globalTempDelta",
+    "currentDoc": "(none)",
+    "context": "globalTempDelta: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 231,
+    "type": "property",
+    "name": "co2Concentration",
+    "currentDoc": "(none)",
+    "context": "co2Concentration: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 232,
+    "type": "property",
+    "name": "extinctionRate",
+    "currentDoc": "(none)",
+    "context": "extinctionRate: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 245,
+    "type": "interface",
+    "name": "ScenarioComparison",
+    "currentDoc": "/ Scenario comparison analysis",
+    "context": "export interface ScenarioComparison {"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 256,
+    "type": "property",
+    "name": "additionalSpiralsActive",
+    "currentDoc": "(none)",
+    "context": "additionalSpiralsActive: string[];"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 257,
+    "type": "property",
+    "name": "cascadeStrengthChange",
+    "currentDoc": "(none)",
+    "context": "cascadeStrengthChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 258,
+    "type": "property",
+    "name": "trustCascadeChange",
+    "currentDoc": "(none)",
+    "context": "trustCascadeChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 263,
+    "type": "property",
+    "name": "survivalChange",
+    "currentDoc": "(none)",
+    "context": "survivalChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 264,
+    "type": "property",
+    "name": "basicNeedsChange",
+    "currentDoc": "(none)",
+    "context": "basicNeedsChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 265,
+    "type": "property",
+    "name": "psychologicalChange",
+    "currentDoc": "(none)",
+    "context": "psychologicalChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 266,
+    "type": "property",
+    "name": "socialChange",
+    "currentDoc": "(none)",
+    "context": "socialChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 267,
+    "type": "property",
+    "name": "healthChange",
+    "currentDoc": "(none)",
+    "context": "healthChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 268,
+    "type": "property",
+    "name": "environmentalChange",
+    "currentDoc": "(none)",
+    "context": "environmentalChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 269,
+    "type": "property",
+    "name": "overallChange",
+    "currentDoc": "(none)",
+    "context": "overallChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 274,
+    "type": "property",
+    "name": "tempChange",
+    "currentDoc": "(none)",
+    "context": "tempChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 275,
+    "type": "property",
+    "name": "co2Change",
+    "currentDoc": "(none)",
+    "context": "co2Change: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 276,
+    "type": "property",
+    "name": "extinctionChange",
+    "currentDoc": "(none)",
+    "context": "extinctionChange: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 299,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'no-tech',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 300,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'No Technology Baseline',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 301,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Simulation with zero tech deployed (pure 2025 trajectory)',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 302,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Establishes baseline for comparison',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 303,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: { mode: 'immediate' as const, specificTechs: [] },"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 308,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'god-mode',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 309,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'God Mode (All Tech Immediate)',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 310,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'All 73 technologies deployed at 100% from month 0',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 311,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Tests technology sufficiency',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 312,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: { mode: 'immediate' as const },"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 317,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'early-start-10yr',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 318,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Early Start (10 Years)',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 319,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Deploy all tech 10 years before 2025 (month -120)',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 320,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Tests time constant hypothesis - do spirals need more time to establish?',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 321,
+    "type": "property",
+    "name": "startingConditions",
+    "currentDoc": "(none)",
+    "context": "startingConditions: { techDeploymentStartMonth: -120 },"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 322,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: { mode: 'immediate' as const },"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 327,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'governance-first',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 328,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Governance First',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 329,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Boost governance quality, safety, information integrity to 0.8 before deploying tech',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 330,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Tests dependency hypothesis - do social foundations enable tech effectiveness?',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 331,
+    "type": "property",
+    "name": "startingConditions",
+    "currentDoc": "(none)",
+    "context": "startingConditions: {"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 332,
+    "type": "property",
+    "name": "governanceQuality",
+    "currentDoc": "(none)",
+    "context": "governanceQuality: 0.8,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 333,
+    "type": "property",
+    "name": "institutionalCapacity",
+    "currentDoc": "(none)",
+    "context": "institutionalCapacity: 0.8,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 334,
+    "type": "property",
+    "name": "physicalSafety",
+    "currentDoc": "(none)",
+    "context": "physicalSafety: 0.8,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 335,
+    "type": "property",
+    "name": "informationIntegrity",
+    "currentDoc": "(none)",
+    "context": "informationIntegrity: 0.8,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 336,
+    "type": "property",
+    "name": "collectiveActionWillingness",
+    "currentDoc": "(none)",
+    "context": "collectiveActionWillingness: 0.7,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 338,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: { mode: 'immediate' as const },"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 343,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'sequenced-deployment',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 344,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Sequenced Deployment',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 345,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Deploy tech in tier waves (TIER 0 → 1 → 2 → 3 → 4) with 12-month gaps',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 346,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Tests absorption capacity - does gradual deployment allow institutions to adapt?',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 347,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 348,
+    "type": "property",
+    "name": "mode",
+    "currentDoc": "(none)",
+    "context": "mode: 'sequenced' as const,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 349,
+    "type": "property",
+    "name": "sequencedConfig",
+    "currentDoc": "(none)",
+    "context": "sequencedConfig: { gapMonths: 12, tierOrder: [0, 1, 2, 3, 4] },"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 355,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'climate-prioritized',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 356,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Climate Prioritized',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 357,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Deploy climate mitigation tech first, then other categories',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 358,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Tests whether focusing on single boundary enables ecosystem cascade',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 359,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 360,
+    "type": "property",
+    "name": "mode",
+    "currentDoc": "(none)",
+    "context": "mode: 'prioritized' as const,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 361,
+    "type": "property",
+    "name": "prioritizedConfig",
+    "currentDoc": "(none)",
+    "context": "prioritizedConfig: {"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 362,
+    "type": "property",
+    "name": "priorities",
+    "currentDoc": "(none)",
+    "context": "priorities: ['climate', 'energy', 'environment', 'governance', 'social'],"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/scenarios.ts",
+    "line": 363,
+    "type": "property",
+    "name": "gapMonths",
+    "currentDoc": "(none)",
+    "context": "gapMonths: 6,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/socialSafetyNets.ts",
@@ -56240,6 +56823,238 @@ ession').SleeperProgression;"
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 73,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ApplyScenarioPrioritiesPhase',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 74,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'researchInvestment',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 75,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 92,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ApplyScenarioPrioritiesPhase',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 93,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'climateSpending',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 94,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 100,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ApplyScenarioPrioritiesPhase',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 101,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'gdp',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 102,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 121,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ApplyScenarioPrioritiesPhase',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 122,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'redistributionRate',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 123,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 128,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ApplyScenarioPrioritiesPhase',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 129,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'gdp',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 130,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 159,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ApplyScenarioPrioritiesPhase',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 160,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'aiSafetyBudget',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 161,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 178,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ApplyScenarioPrioritiesPhase',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 179,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'democracyLevel',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 180,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 236,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: `scenario_start_${state.scenario.id}`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 237,
+    "type": "property",
+    "name": "timestamp",
+    "currentDoc": "(none)",
+    "context": "timestamp: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 238,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'policy',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 239,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 'info',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 240,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: 'Scenario System',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 241,
+    "type": "property",
+    "name": "title",
+    "currentDoc": "(none)",
+    "context": "title: `🎬 Scenario Started: ${state.scenario.name}`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 242,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `${state.scenario.description}\\n\\nPriority overrides: ${overridesApplied.join(', ')}`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts",
+    "line": 243,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {}"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
@@ -172283,7 +173098,7 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
-    "line": 99,
+    "line": 82,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -172291,15 +173106,15 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
-    "line": 100,
+    "line": 83,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'globalMetrics.socialStability',"
+    "context": "valueName: 'society.workflowAdaptation',"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
-    "line": 101,
+    "line": 84,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -172307,15 +173122,39 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
-    "line": 207,
+    "line": 103,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateTrainingCapacity',"
+    "context": "location: 'updateWorkflowAdaptation',"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
-    "line": 208,
+    "line": 104,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'society.unemploymentLevel',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 105,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 121,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateWorkflowAdaptation',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 122,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -172323,7 +173162,87 @@ ession').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
-    "line": 209,
+    "line": 123,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 133,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateWorkflowAdaptation',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 134,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'government.researchInvestments.totalBudget',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 135,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 163,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateWorkflowAdaptation',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 164,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: `aiAgent[${ai.id}].capability`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 165,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 166,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { agentId: ai.id }"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 261,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateTrainingCapacity',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 262,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'globalMetrics.socialStability',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/workflowAdaptation.ts",
+    "line": 263,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",

@@ -107,6 +107,50 @@ console.log(`📅 Months Simulated: ${result.finalState.currentMonth}`);
 const populationValue = result.finalState.humanPopulationSystem?.population ?? 0;
 console.log(`🌍 Population: ${isNaN(populationValue) ? '❌ NaN' : populationValue.toFixed(2)}B`);
 
+// Spiral System Status (Added Nov 10, 2025 - Scenario Analysis Framework Phase 1)
+console.log('\n📊 SPIRAL SYSTEM STATUS:');
+console.log(`\n  🔄 Upward Spirals:`);
+const spirals = result.finalState.upwardSpirals;
+for (const [name, spiral] of Object.entries(spirals)) {
+  if (name === 'cascadeActive' || name === 'cascadeStrength' || name === 'cascadeStartMonth') continue;
+  const s = spiral as any;
+  if (s && typeof s === 'object' && 'active' in s) {
+    const strength = s.strength !== undefined ? s.strength.toFixed(2) : 'N/A';
+    const months = s.monthsActive !== undefined ? s.monthsActive : 'N/A';
+    console.log(`    ${name}: ${s.active ? '✅ ACTIVE' : '❌ INACTIVE'} (strength: ${strength}, months: ${months})`);
+  }
+}
+const cascadeStrength = spirals.cascadeStrength !== undefined ? spirals.cascadeStrength.toFixed(2) : 'N/A';
+console.log(`    Cascade: ${spirals.cascadeActive ? '🌊 ACTIVE' : '❌ INACTIVE'} (strength: ${cascadeStrength})`);
+if (spirals.cascadeStartMonth && spirals.cascadeStartMonth > 0) {
+  console.log(`    Cascade started: Month ${spirals.cascadeStartMonth}`);
+}
+
+console.log(`\n  🤝 Cooperative Spirals:`);
+if (result.finalState.history?.cooperativeSpirals) {
+  console.log(`    Trust cascades triggered: ${result.finalState.history.cooperativeSpirals.length}`);
+  result.finalState.history.cooperativeSpirals.forEach((cascade, i) => {
+    console.log(`      [${i+1}] Month ${cascade.month}: ${cascade.type} (${cascade.triggers.join(', ')})`);
+  });
+} else {
+  console.log(`    Trust cascades triggered: 0`);
+}
+
+console.log(`\n  💡 Positive Tipping Points:`);
+const ptp = result.finalState.positiveTippingPoints;
+console.log(`    Solar PV: ${(ptp.adoptionTracking.solarPV.marketShare * 100).toFixed(1)}% market share`);
+console.log(`      Price parity: ${ptp.adoptionTracking.solarPV.priceParityAchieved ? 'YES' : 'NO'}, Cascade: ${ptp.adoptionTracking.solarPV.cascadeActive ? 'YES' : 'NO'}`);
+console.log(`    Electric Vehicles: ${(ptp.adoptionTracking.electricVehicles.marketShare * 100).toFixed(1)}% market share`);
+console.log(`      Price parity: ${ptp.adoptionTracking.electricVehicles.priceParityAchieved ? 'YES' : 'NO'}, Cascade: ${ptp.adoptionTracking.electricVehicles.cascadeActive ? 'YES' : 'NO'}`);
+console.log(`    Wind Power: ${(ptp.adoptionTracking.windPower.marketShare * 100).toFixed(1)}% market share`);
+console.log(`      Price parity: ${ptp.adoptionTracking.windPower.priceParityAchieved ? 'YES' : 'NO'}, Cascade: ${ptp.adoptionTracking.windPower.cascadeActive ? 'YES' : 'NO'}`);
+console.log(`    Triggered cascades: ${ptp.triggeredCascades.length}`);
+if (ptp.triggeredCascades.length > 0) {
+  ptp.triggeredCascades.forEach(cascade => {
+    console.log(`      Month ${cascade.month}: ${cascade.type} (${cascade.triggerReason}, market share: ${(cascade.marketShareAtTrigger * 100).toFixed(1)}%)`);
+  });
+}
+
 // Quality of Life breakdown (NEW: Tiered structure)
 console.log('\n📈 Quality of Life Systems:');
 const qol = result.finalState.qualityOfLifeSystems;
@@ -250,5 +294,24 @@ if (overallAvg < 0.7) console.log(`  ⚠️  Overall QoL ${(overallAvg * 100).to
 if (result.finalState.climate && state.climate && result.finalState.climate.globalTempDelta > state.climate.globalTempDelta + 0.5) console.log(`  ⚠️  Climate WORSENED by +${(result.finalState.climate.globalTempDelta - state.climate.globalTempDelta).toFixed(2)}°C - tech deployed too late or insufficient?`);
 if (result.finalState.ecology && state.ecology && result.finalState.ecology.extinctionRate > state.ecology.extinctionRate + 0.1) console.log(`  ⚠️  Biodiversity loss ACCELERATED by +${((result.finalState.ecology.extinctionRate - state.ecology.extinctionRate) * 100).toFixed(1)}% - missing rewilding/restoration tech?`);
 if (result.finalState.inequality && result.finalState.inequality.gini > 0.4) console.log(`  ⚠️  Inequality persists (${result.finalState.inequality.gini.toFixed(3)}) - distribution mechanisms missing?`);
+
+console.log('\n🔬 Spiral Activation Diagnosis:');
+if (!spirals.cascadeActive) {
+  console.log(`  ⚠️  UPWARD SPIRALS: Cascade NOT ACTIVE`);
+  const activeSpirals = Object.entries(spirals)
+    .filter(([name, _]) => !['cascadeActive', 'cascadeStrength', 'cascadeStartMonth'].includes(name))
+    .filter(([_, spiral]: [string, any]) => spiral.active)
+    .length;
+  console.log(`    Active spirals: ${activeSpirals} (need 3+ sustained 12+ months for cascade)`);
+  console.log(`    Diagnosis: ${activeSpirals < 3 ? 'Insufficient spirals activated' : 'Spirals not sustained long enough'}`);
+}
+if (!result.finalState.history?.cooperativeSpirals || result.finalState.history.cooperativeSpirals.length === 0) {
+  console.log(`  ⚠️  COOPERATIVE SPIRALS: No trust cascades triggered`);
+  console.log(`    Diagnosis: Alignment milestones not met (need 2+ including 24 months no misalignment)`);
+}
+if (ptp.triggeredCascades.length === 0) {
+  console.log(`  ⚠️  POSITIVE TIPPING POINTS: No technology cascades triggered`);
+  console.log(`    Diagnosis: Technologies not reaching price parity or adoption thresholds`);
+}
 
 console.log('\n✅ God mode test complete\n');
