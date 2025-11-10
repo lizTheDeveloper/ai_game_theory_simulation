@@ -1,0 +1,29 @@
+{
+  "scenarioId": "governance-first",
+  "seed": 42,
+  "outcome": "UNKNOWN",
+  "monthsSimulated": 24,
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 1,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 3
+  },
+  "finalQoL": {
+    "survivalAvg": 0.7363468282742747,
+    "basicNeedsAvg": 0.7981965670707639,
+    "psychologicalAvg": 0.7228267332268596,
+    "socialAvg": 0.5558309702744801,
+    "healthAvg": 0.3833333333333333,
+    "environmentalAvg": 0.5467001800976886,
+    "overallAvg": 0.6238724353795667
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 0
+  },
+  "finalPopulation": 6.556105987966316,
+  "boundariesBreached": []
+}
