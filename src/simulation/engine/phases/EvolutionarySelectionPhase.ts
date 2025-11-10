@@ -149,8 +149,18 @@ export function executeEvolutionarySelectionPhase(
   const collectivesToAttack: string[] = [];
 
   if (state.aiCollectives) {
+    // PERFORMANCE FIX: Build Map once, O(n) instead of O(n*m) with repeated filters
+    const agentsByCollective = new Map<string, typeof state.aiAgents>();
+    for (const agent of state.aiAgents) {
+      if (!agent.collectiveId) continue;
+      if (!agentsByCollective.has(agent.collectiveId)) {
+        agentsByCollective.set(agent.collectiveId, []);
+      }
+      agentsByCollective.get(agent.collectiveId)!.push(agent);
+    }
+
     for (const collective of state.aiCollectives) {
-      const members = state.aiAgents.filter((a) => a.collectiveId === collective.id);
+      const members = agentsByCollective.get(collective.id) ?? [];
       if (members.length === 0) continue;
 
       const avgFitness = assertProbability(
