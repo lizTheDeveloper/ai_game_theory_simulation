@@ -6003,6 +6003,28 @@ state.history.exogenousShocks?: Array<{
 - **Logs**: `logs/worker_watcher/watcher_TIMESTAMP.log`
 - Commits: 4fd9d55 (Nov 5, 2025 - initial), 418c9c4 (Nov 6, 2025 - researcher + merge orchestrator monitoring)
 
+**Priya - Quantitative Validator** ✅ DOCUMENTED
+- **Purpose**: Statistical analysis, Monte Carlo validation, and quantitative gap analysis specialist
+- **When to invoke**: God mode analysis, determinism debugging, effectiveness measurement, distribution validation
+- **Expertise**:
+  - Monte Carlo validation (CV < 0.01% requirement for deterministic simulations)
+  - Statistical gap analysis (effectiveness = (initial - final) / initial)
+  - Determinism debugging (nuclear option: required parameters, RNG tracing)
+  - Distribution validation (S-curves, log-normal, power-law patterns)
+- **Key capabilities**:
+  - Quantify intervention effectiveness with confidence intervals
+  - Identify zero-effectiveness systems (e.g., Novel Entities 0% → critical gap)
+  - Calculate monthly rates and distributions
+  - Rank gaps by severity × ineffectiveness for triage
+- **Working relationships**:
+  - Roy (simulation-maintainer): Finds bugs with CV analysis, Roy fixes with assertions
+  - Cynthia (researcher): Validates if research numbers match simulation reality
+  - Sylvia (skeptic): Questions assumptions, Priya validates with statistics
+- **Motto**: "In God we trust. All others must bring data."
+- **Model**: Sonnet (precise quantitative analysis)
+- **Files**: `.claude/agents/priya.md` (248 lines)
+- Commit: 66159b9 (Nov 9, 2025)
+
 **GameState Field Editor Agent** ✅ DOCUMENTED
 - **Purpose**: Haiku micro-agent for mechanical GameState field edits with FULL GameState type context (900 lines)
 - **Spawned by**: `simulation-maintainer` (Sonnet) for simple field access changes
@@ -6023,13 +6045,14 @@ state.history.exogenousShocks?: Array<{
 
 **Matrix MCP Configuration** ✅ DOCUMENTED
 - **Purpose**: Matrix real-time messaging integration for multi-agent coordination
-- **Agent identity**: Per-agent bot tokens in `~/.superalignment-env` (11 agents total)
+- **Agent identity**: Per-agent bot tokens in `~/.superalignment-env` (12 agents total)
 - **Configuration**: `.claude/agents/mcp-configs/matrix-test.json` - Test config for Matrix tool validation
 - **Architecture**: All agents use same Matrix MCP server - identity comes from which bot token is used, not separate MCP configs
 - **Channel access patterns**:
-  - **Coordination** (Universal): All 11 agents (orchestrator, cynthia, sylvia, roy, moss, tessa, historian, architect, ray, monitor)
+  - **Coordination** (Universal): All 12 agents (orchestrator, cynthia, sylvia, roy, moss, tessa, historian, architect, ray, priya, monitor)
   - **Research** (Specialists monitor): Cynthia + Sylvia monitor, others can post questions
   - **Implementation** (Specialists monitor): Roy + Architect monitor implementation tasks and roadmap sync
+  - **Validation** (Specialist monitors): Priya monitors for statistical analysis requests
   - Other channels as needed: research-critique, architecture, testing, documentation, roadmap, triggers, alerts, status
 - **CLI sub-agent pattern**: Matrix tools available via CLI-spawned sub-agents (main context requires restart after `claude mcp add`)
 - **Usage example**: `claude --dangerously-skip-permissions --model haiku --mcp-config .claude/agents/mcp-configs/matrix-test.json --print "Post 'message' to channel as agent"`
