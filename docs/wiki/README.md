@@ -535,9 +535,19 @@ Increased navigation wait times from 2s → 3s in multi-system integration tests
 - Combined with: 4× speed optimization, client-side navigation (preserves worker state)
 - Remaining 5 failures are flaky (vary 4-6 depending on system load)
 
-**Analysis:** Adaptive polling strategy implemented (see commit 56f1bf6 above).
+**E2E Test Stability - Additional Improvements** (commit 3bd44b1)
 
-**Location:** `e2e/multi-system-integration.spec.ts` (24 timeout updates)
+Further stability enhancements targeting 80%+ pass rate on slower systems:
+
+**Changes:**
+- Test timeout: 30s → 40s (accounts for init + simulation + navigation)
+- Adaptive polling: 5 attempts → 8 attempts (10s → 16s total polling time)
+- Added 1s stabilization wait after pausing simulation
+- Fixed selector specificity for AI Agents test (scoped to main content)
+
+**Expected improvement:** Reduces flaky timeouts on high-load systems by allowing more time for dashboard data to load and stabilize.
+
+**Location:** `e2e/multi-system-integration.spec.ts`
 
 ### November 7, 2025
 
