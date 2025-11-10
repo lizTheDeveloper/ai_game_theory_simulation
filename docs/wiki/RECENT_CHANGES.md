@@ -4,6 +4,50 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 10, 2025)
+
+**🤖 AUTONOMOUS RESEARCH AGENT: VM Cron Integration** (Nov 10, 2025, commit 5e605b3)
+
+**Summary:** Added autonomous research agent to VM cron system, enabling systematic execution of research roadmap in parallel with implementation work.
+
+**Research Agent (`scripts/research-agent.sh`):**
+- Runs hourly at `:30` (between implementation worker at `:00` and merge at `:45`)
+- Systematically works through research/RESEARCH_ROADMAP.md
+- Executes full research workflow: super-alignment-researcher + research-skeptic
+- Extracts parameters, mechanisms, justifications from peer-reviewed sources
+- Saves comprehensive research documents to research/ directory
+- Updates roadmap with completion status
+- Creates PRs with research findings
+- Posts completion announcements to research channel
+- 30-45 minute budget per task
+
+**VM Cron Schedule:**
+```
+:00 - Implementation worker (roadmap tasks)
+:15 - Health watcher (monitors all systems)
+:30 - Research agent (research roadmap execution) ← NEW
+:45 - Merge orchestrator (processes branches)
+```
+
+**Benefits:**
+- Research runs in parallel with implementation (no blocking)
+- Systematic progress through research backlog
+- Priority-based execution (Priority 1 → Priority 2 → Priority 3 → Priority 4)
+- Separate log file: logs/cron_research.log
+- Branch naming: auto/research-YYYYMMDD_HHMMSS
+
+**Additional Changes:**
+- Updated memory audit logs
+- Added skeptical analysis of doom predictions (Sylvia's work)
+- Fixed test stability in multi-system integration spec
+
+**Files:**
+- scripts/research-agent.sh (new)
+- scripts/setup-vm-cron.sh (updated with :30 slot)
+- research/SKEPTICAL_ANALYSIS_doom_predictions_20251110.md (new)
+
+---
+
 ## ✅ Recent Changes (November 8, 2025)
 
 **🤖 AUTONOMOUS RESEARCHER: Session Complete** (Nov 8, 2025, commit f71f42e)

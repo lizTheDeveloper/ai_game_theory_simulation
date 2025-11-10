@@ -545,9 +545,38 @@ Increased navigation wait times from 2s → 3s in multi-system integration tests
 - Combined with: 4× speed optimization, client-side navigation (preserves worker state)
 - Remaining 5 failures are flaky (vary 4-6 depending on system load)
 
-**Analysis:** Adaptive polling strategy implemented (see commit 56f1bf6 above).
+**E2E Test Stability - Additional Improvements** (commit 3bd44b1)
 
-**Location:** `e2e/multi-system-integration.spec.ts` (24 timeout updates)
+Further stability enhancements targeting 80%+ pass rate on slower systems:
+
+**Changes:**
+- Test timeout: 30s → 40s (accounts for init + simulation + navigation)
+- Adaptive polling: 5 attempts → 8 attempts (10s → 16s total polling time)
+- Added 1s stabilization wait after pausing simulation
+- Fixed selector specificity for AI Agents test (scoped to main content)
+
+**Expected improvement:** Reduces flaky timeouts on high-load systems by allowing more time for dashboard data to load and stabilize.
+
+**Location:** `e2e/multi-system-integration.spec.ts`
+
+**E2E Test Stability - DOM Structure Fixes** (commit 18dd05c, Nov 10, 2025)
+
+Fixed all 5 failing multi-system integration tests by correcting DOM selectors and wait conditions.
+
+**Root causes:**
+1. **Broken DOM navigation:** Tests used `.locator('..')` assuming parent-child structure, but MetricCard has label/value as siblings
+2. **Wrong wait selectors:** Tests waited for "Global Population" on AI Agents and Tech Tree pages where that metric doesn't exist
+3. **Missing adaptive waits:** Month consistency test tried to read month immediately without waiting for render
+
+**Fixes:**
+- Use `.metric-card` with `.filter({ hasText })` + `.metric-value` pattern
+- Wait for page-appropriate content (AI/capability on AI page, not population)
+- Add adaptive wait before reading month display (`getByText(/month/i)`)
+- Use `getByText()` instead of complex locator chains
+
+**Result:** 100% pass rate (20/20 tests) ✅
+
+**Location:** `e2e/multi-system-integration.spec.ts`
 
 ### November 7, 2025
 
@@ -1653,16 +1682,60 @@ See: Commit 05ea749
 
 ---
 
+**Autonomous Research Agent: VM Cron Integration** ✅ OPERATIONAL (Nov 10, 2025)
+
+Systematic research agent that works through research/RESEARCH_ROADMAP.md in parallel with implementation work:
+
+**What it does:**
+- Runs hourly at `:30` (between implementation worker at `:00` and merge at `:45`)
+- Executes full research workflow: super-alignment-researcher + research-skeptic
+- Extracts parameters, mechanisms, justifications from peer-reviewed sources
+- Saves comprehensive research documents to research/ directory
+- Updates roadmap with completion status
+- Creates PRs with research findings
+- Posts completion announcements to research channel
+
+**Features:**
+- Priority-based execution (Priority 1 → Priority 2 → Priority 3 → Priority 4)
+- 30-45 minute budget per complete research task
+- Branch naming: auto/research-YYYYMMDD_HHMMSS
+- Separate log file: logs/cron_research.log
+- Chatroom integration (posts to research channel)
+
+**Complete VM Cron Schedule:**
+```
+:00 - Implementation worker (roadmap tasks)
+:15 - Health watcher (monitors all systems)
+:30 - Research agent (research roadmap execution) ← ADDED NOV 10
+:45 - Merge orchestrator (processes branches)
+```
+
+**Benefits:**
+- Research runs in parallel with implementation (no blocking)
+- Systematic progress through research backlog
+- Quality Gates 1 validation built-in (research-skeptic review)
+- Continuous research progress without manual intervention
+
+**Files:**
+- Script: `scripts/research-agent.sh` (369 lines)
+- Setup: `scripts/setup-vm-cron.sh` (updated with :30 slot)
+- Documentation: Updated `docs/AUTONOMOUS_SETUP.md`
+
+See: Commit 5e605b3
+
+---
+
 **Enhanced Autonomous Infrastructure Monitoring**
 
-Watcher script now monitors all three autonomous systems (worker + researcher + merge orchestrator):
+Watcher script now monitors all four autonomous systems (implementation worker + research agent + merge orchestrator + health watcher):
 
-**New coverage:**
-- **Autonomous researcher** monitoring (lines 206-268): Checks for recent runs, script errors, timeouts, 2+ hour staleness
-- **Merge orchestrator** validation documented in remediation task (already existed at lines 183-204)
-- **Enhanced remediation** task covers all three systems with specific troubleshooting (script not found, branch accumulation, cron issues)
+**Coverage:**
+- **Implementation worker** (lines 128-182): Execution frequency, log analysis for errors/timeouts/failures, branch count/merge status
+- **Research agent** (lines 206-268): Run frequency (90 min window), script existence checks, error detection (not found, timeout, failures), 2-hour staleness alerts
+- **Merge orchestrator** (lines 183-204): Recent run validation, branch accumulation detection, conflict/test failure tracking
+- **Enhanced remediation** task covers all systems with specific troubleshooting (script not found, branch accumulation, cron issues)
 
-**Complete infrastructure visibility:** No blind spots in autonomous operations. Watcher validates worker execution, research coordination, and branch merging with auto-remediation for all three systems.
+**Complete infrastructure visibility:** No blind spots in autonomous operations. Watcher validates implementation execution, research coordination, and branch merging with auto-remediation for all systems.
 
 **Health Check Bug Fix (Nov 7, 2025)**: Watcher was failing with "integer expression expected" errors due to bash scripting anti-pattern. Root cause: `grep -c "pattern" || echo "0"` fallback was producing multi-line output (e.g., "0\n0") when grep found zero matches. Fix (commit a7103fd): Replaced with proper bash idiom `grep "pattern" | wc -l` + `${VAR:-0}` fallback at lines 74 and 163. This implements defensive programming guidance from CLAUDE.md:366-371. Impact: Watcher now runs without errors, prevents multi-instance contention, eliminates git lock conflicts. See: RECENT_CHANGES.md for full incident details.
 
