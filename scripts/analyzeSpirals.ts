@@ -95,10 +95,32 @@ console.log('KEY FINDINGS');
 console.log(`${'='.repeat(80)}\n`);
 
 console.log('From scenario result JSON:');
-console.log(`  Active upward spirals: ${result.spiralActivation?.activeUpwardSpirals?.length || 0}`);
-console.log(`  Cascade active: ${result.spiralActivation?.cascadeActive || false}`);
-console.log(`  Trust cascades triggered: ${result.spiralActivation?.trustCascadesTriggered || 0}`);
-console.log(`  Positive tipping cascades: ${result.spiralActivation?.tippingPointCascades || 0}\n`);
+// FIX (Nov 10, 2025): Replace defensive fallbacks with proper validation
+// If spiralActivation data is missing, fail loudly rather than hiding with || 0
+if (!result.spiralActivation) {
+  console.log(`  ❌ ERROR: result.spiralActivation is missing from JSON`);
+  console.log(`  This indicates scenario runner didn't extract spiral data correctly.`);
+} else {
+  if (!result.spiralActivation.activeUpwardSpirals) {
+    throw new Error(
+      `❌ Missing result.spiralActivation.activeUpwardSpirals in ${scenarioFile}\n` +
+      `   This field is required for spiral analysis.\n` +
+      `   Check extractScenarioResult() in scenarioRunner.ts.`
+    );
+  }
+  console.log(`  Active upward spirals: ${result.spiralActivation.activeUpwardSpirals.length}`);
+  console.log(`  Cascade active: ${result.spiralActivation.cascadeActive ?? false}`);
+
+  if (result.spiralActivation.trustCascadesTriggered === undefined) {
+    throw new Error(
+      `❌ Missing result.spiralActivation.trustCascadesTriggered in ${scenarioFile}\n` +
+      `   This field is required for spiral analysis.\n` +
+      `   Check extractScenarioResult() in scenarioRunner.ts.`
+    );
+  }
+  console.log(`  Trust cascades triggered: ${result.spiralActivation.trustCascadesTriggered}`);
+  console.log(`  Positive tipping cascades: ${result.spiralActivation.tippingPointCascades ?? 0}\n`);
+}
 
 console.log('QoL Averages (from result JSON):');
 if (result.finalQoL) {

@@ -249,7 +249,18 @@ function captureSpiralDiagnostic(state: any): SpiralDiagnostic {
   const mentalHealthy = qol.diseasesBurden < 0.3 && qol.healthcareQuality > 0.8;
   const purposeful = social.meaningCrisisLevel < 0.3;
   // Simplified trust check (avoiding calculateComprehensiveTrustInAI complexity)
-  const trustInAI = state.globalMetrics.trustInAI || 0;
+  // FIX (Nov 10, 2025): Replace defensive fallback with proper validation
+  // trustInAI may be undefined in test scenarios - fail loudly if missing
+  const trustInAI = state.globalMetrics.trustInAI !== undefined
+    ? state.globalMetrics.trustInAI
+    : (() => {
+        throw new Error(
+          `❌ Missing state.globalMetrics.trustInAI in captureSpiralDiagnostic\n` +
+          `   Month: ${state.currentMonth}\n` +
+          `   This field is required for spiral diagnostics.\n` +
+          `   Check initialization or scenario setup.`
+        );
+      })();
   const demonstratedBenefits = state.globalMetrics.qualityOfLife > 0.5;
   const TRUST_THRESHOLD = 0.6; // Approximation
   const cognitiveEnhanced = demonstratedBenefits && trustInAI > TRUST_THRESHOLD;
@@ -275,7 +286,18 @@ function captureSpiralDiagnostic(state: any): SpiralDiagnostic {
   const avgAICapability = state.aiAgents.length > 0 ?
     state.aiAgents.reduce((sum: number, ai: any) => sum + (ai.capability || 0), 0) / state.aiAgents.length : 0;
   const aiAccelerated = avgAICapability > 1.2;
-  const workflowAdaptation = social.workflowAdaptation || 0;
+  // FIX (Nov 10, 2025): Replace defensive fallback with proper validation
+  // workflowAdaptation is required for scientific spiral activation
+  const workflowAdaptation = social.workflowAdaptation !== undefined
+    ? social.workflowAdaptation
+    : (() => {
+        throw new Error(
+          `❌ Missing social.workflowAdaptation in captureSpiralDiagnostic\n` +
+          `   Month: ${state.currentMonth}\n` +
+          `   This field is required for scientific spiral diagnostics.\n` +
+          `   Check initialization (should be set in initialization.ts).`
+        );
+      })();
   const workflowAdapted = workflowAdaptation >= 0.25;
   const deploymentThreshold = avgAICapability > 4.0 ? 3 : 4;
   const deployedCheck = deployedCount >= deploymentThreshold;

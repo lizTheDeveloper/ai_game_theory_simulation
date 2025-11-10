@@ -97,8 +97,17 @@ function applyStartingConditions(
     const countries = (state as any).countries || {};
     for (const country of Object.values(countries)) {
       if ((country as any).government) {
+        // FIX (Nov 10, 2025): Replace defensive fallback with proper check
+        const currentCapacity = (country as any).government.institutionalCapacity;
+        if (currentCapacity === undefined || currentCapacity === null) {
+          throw new Error(
+            `❌ Missing government.institutionalCapacity for country\n` +
+            `   Context: applyStartingConditions (scenario setup)\n` +
+            `   This field should be initialized in country setup.`
+          );
+        }
         (country as any).government.institutionalCapacity = Math.max(
-          (country as any).government.institutionalCapacity || 0,
+          currentCapacity,
           conditions.institutionalCapacity
         );
       }
@@ -139,8 +148,17 @@ function applyStartingConditions(
     console.log(`    Collective action willingness boost: ${(conditions.collectiveActionWillingness * 100).toFixed(0)}%`);
     // Apply to global cooperation metrics
     if ((state as any).cooperativeSpirals) {
+      // FIX (Nov 10, 2025): Replace defensive fallback with proper check
+      const current = (state as any).cooperativeSpirals.collectiveActionWillingness;
+      if (current === undefined || current === null) {
+        throw new Error(
+          `❌ Missing cooperativeSpirals.collectiveActionWillingness\n` +
+          `   Context: applyStartingConditions (scenario setup)\n` +
+          `   This field should be initialized if cooperativeSpirals exists.`
+        );
+      }
       (state as any).cooperativeSpirals.collectiveActionWillingness = Math.max(
-        (state as any).cooperativeSpirals.collectiveActionWillingness || 0,
+        current,
         conditions.collectiveActionWillingness
       );
     }
@@ -151,8 +169,17 @@ function applyStartingConditions(
     console.log(`    QoL dimension boosts: ${Object.keys(conditions.qolBoosts).length} dimensions`);
     for (const [dimension, value] of Object.entries(conditions.qolBoosts)) {
       if (value !== undefined && dimension in state.qualityOfLifeSystems) {
+        // FIX (Nov 10, 2025): Replace defensive fallback with proper check
+        const current = (state.qualityOfLifeSystems as any)[dimension];
+        if (current === undefined || current === null) {
+          throw new Error(
+            `❌ Missing qualityOfLifeSystems.${dimension}\n` +
+            `   Context: applyStartingConditions (scenario setup)\n` +
+            `   QoL dimension should be initialized in createDefaultInitialState.`
+          );
+        }
         (state.qualityOfLifeSystems as any)[dimension] = Math.max(
-          (state.qualityOfLifeSystems as any)[dimension] || 0,
+          current,
           value
         );
       }
@@ -466,25 +493,83 @@ function extractQoLMetrics(state: GameState): {
 
 /**
  * Extract environmental metrics
+ * FIX (Nov 10, 2025): Fail loudly if environmental state missing (not just in extinction scenarios)
  */
 function extractEnvironmentMetrics(state: GameState): {
   globalTempDelta: number;
   co2Concentration: number;
   extinctionRate: number;
 } {
+  // If state has no climate/ecology, this indicates a critical bug (not just extinction)
+  if (!(state as any).climate) {
+    throw new Error(
+      `❌ Missing state.climate in extractEnvironmentMetrics\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   Climate state should always exist (initialized in createDefaultInitialState).\n` +
+      `   Check for state corruption or initialization bug.`
+    );
+  }
+  if (!(state as any).ecology) {
+    throw new Error(
+      `❌ Missing state.ecology in extractEnvironmentMetrics\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   Ecology state should always exist (initialized in createDefaultInitialState).\n` +
+      `   Check for state corruption or initialization bug.`
+    );
+  }
+
+  const climate = (state as any).climate;
+  const ecology = (state as any).ecology;
+
+  if (climate.globalTempDelta === undefined || climate.globalTempDelta === null) {
+    throw new Error(
+      `❌ Missing climate.globalTempDelta in extractEnvironmentMetrics\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   Check ClimatePhase initialization.`
+    );
+  }
+  if (climate.co2Concentration === undefined || climate.co2Concentration === null) {
+    throw new Error(
+      `❌ Missing climate.co2Concentration in extractEnvironmentMetrics\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   Check ClimatePhase initialization.`
+    );
+  }
+  if (ecology.extinctionRate === undefined || ecology.extinctionRate === null) {
+    throw new Error(
+      `❌ Missing ecology.extinctionRate in extractEnvironmentMetrics\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   Check EcologyPhase initialization.`
+    );
+  }
+
   return {
-    globalTempDelta: (state as any).climate?.globalTempDelta || 0,
-    co2Concentration: (state as any).climate?.co2Concentration || 0,
-    extinctionRate: (state as any).ecology?.extinctionRate || 0
+    globalTempDelta: climate.globalTempDelta,
+    co2Concentration: climate.co2Concentration,
+    extinctionRate: ecology.extinctionRate
   };
 }
 
 /**
  * Count positive tipping point cascades
+ * FIX (Nov 10, 2025): Fail loudly if state structure incorrect
  */
 function countTippingPointCascades(state: GameState): number {
-  if (!state.positiveTippingPoints) return 0;
-  return state.positiveTippingPoints.triggeredCascades?.length || 0;
+  if (!state.positiveTippingPoints) {
+    throw new Error(
+      `❌ Missing state.positiveTippingPoints in countTippingPointCascades\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   This state should always exist (initialized in createDefaultInitialState).`
+    );
+  }
+  if (!state.positiveTippingPoints.triggeredCascades) {
+    throw new Error(
+      `❌ Missing positiveTippingPoints.triggeredCascades array\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   This array should be initialized (even if empty) in createDefaultInitialState.`
+    );
+  }
+  return state.positiveTippingPoints.triggeredCascades.length;
 }
 
 /**
@@ -539,13 +624,25 @@ function extractScenarioResult(
 ): ScenarioResult {
   const finalState = result.finalState;
 
+  // FIX (Nov 10, 2025): Extinction case is the ONLY place where defensive zeros are valid
+  // When simulation ends catastrophically, there IS no state - these zeros represent reality
   if (!finalState) {
-    // Game ended early (extinction/collapse)
+    // Game ended early (extinction/collapse) - this is expected for catastrophic outcomes
+    // Use monthsSimulated from result if available, otherwise fail
+    if (result.monthsSimulated === undefined) {
+      throw new Error(
+        `❌ Missing result.monthsSimulated in extractScenarioResult\n` +
+        `   Scenario: ${scenario.id}, Seed: ${seed}\n` +
+        `   No finalState but also no monthsSimulated.\n` +
+        `   This indicates engine.run() returned incomplete result.`
+      );
+    }
+
     return {
       scenarioId: scenario.id,
       seed,
       outcome: result.outcome || 'EXTINCTION',
-      monthsSimulated: result.monthsSimulated || 0,
+      monthsSimulated: result.monthsSimulated,
       spiralActivation: {
         activeUpwardSpirals: [],
         cascadeActive: false,
@@ -572,6 +669,48 @@ function extractScenarioResult(
     };
   }
 
+  // FIX (Nov 10, 2025): With valid finalState, fail loudly if required fields missing
+  // No defensive fallbacks - if these fields don't exist, that's a bug to fix
+
+  if (!finalState.upwardSpirals) {
+    throw new Error(
+      `❌ Missing finalState.upwardSpirals in extractScenarioResult\n` +
+      `   Scenario: ${scenario.id}, Seed: ${seed}, Month: ${finalState.currentMonth}\n` +
+      `   This state should exist (initialized in createDefaultInitialState).`
+    );
+  }
+  if (finalState.upwardSpirals.cascadeActive === undefined) {
+    throw new Error(
+      `❌ Missing upwardSpirals.cascadeActive in extractScenarioResult\n` +
+      `   Scenario: ${scenario.id}, Seed: ${seed}, Month: ${finalState.currentMonth}`
+    );
+  }
+  if (finalState.upwardSpirals.cascadeStrength === undefined) {
+    throw new Error(
+      `❌ Missing upwardSpirals.cascadeStrength in extractScenarioResult\n` +
+      `   Scenario: ${scenario.id}, Seed: ${seed}, Month: ${finalState.currentMonth}`
+    );
+  }
+  if (!finalState.history) {
+    throw new Error(
+      `❌ Missing finalState.history in extractScenarioResult\n` +
+      `   Scenario: ${scenario.id}, Seed: ${seed}, Month: ${finalState.currentMonth}`
+    );
+  }
+  if (!finalState.history.cooperativeSpirals) {
+    throw new Error(
+      `❌ Missing history.cooperativeSpirals array in extractScenarioResult\n` +
+      `   Scenario: ${scenario.id}, Seed: ${seed}, Month: ${finalState.currentMonth}`
+    );
+  }
+  if (!finalState.humanPopulationSystem || finalState.humanPopulationSystem.population === undefined) {
+    throw new Error(
+      `❌ Missing humanPopulationSystem.population in extractScenarioResult\n` +
+      `   Scenario: ${scenario.id}, Seed: ${seed}, Month: ${finalState.currentMonth}\n` +
+      `   Check initialization or phase corruption.`
+    );
+  }
+
   return {
     scenarioId: scenario.id,
     seed,
@@ -579,14 +718,14 @@ function extractScenarioResult(
     monthsSimulated: finalState.currentMonth,
     spiralActivation: {
       activeUpwardSpirals: extractActiveSpirals(finalState),
-      cascadeActive: finalState.upwardSpirals?.cascadeActive || false,
-      cascadeStrength: finalState.upwardSpirals?.cascadeStrength || 0,
-      trustCascadesTriggered: finalState.history?.cooperativeSpirals?.length || 0,
+      cascadeActive: finalState.upwardSpirals.cascadeActive,
+      cascadeStrength: finalState.upwardSpirals.cascadeStrength,
+      trustCascadesTriggered: finalState.history.cooperativeSpirals.length,
       tippingPointCascades: countTippingPointCascades(finalState)
     },
     finalQoL: extractQoLMetrics(finalState),
     finalEnvironment: extractEnvironmentMetrics(finalState),
-    finalPopulation: finalState.humanPopulationSystem?.population || 0,
+    finalPopulation: finalState.humanPopulationSystem.population,
     boundariesBreached: extractBoundariesBreached(finalState)
   };
 }
