@@ -549,6 +549,25 @@ Further stability enhancements targeting 80%+ pass rate on slower systems:
 
 **Location:** `e2e/multi-system-integration.spec.ts`
 
+**E2E Test Stability - DOM Structure Fixes** (commit 18dd05c, Nov 10, 2025)
+
+Fixed all 5 failing multi-system integration tests by correcting DOM selectors and wait conditions.
+
+**Root causes:**
+1. **Broken DOM navigation:** Tests used `.locator('..')` assuming parent-child structure, but MetricCard has label/value as siblings
+2. **Wrong wait selectors:** Tests waited for "Global Population" on AI Agents and Tech Tree pages where that metric doesn't exist
+3. **Missing adaptive waits:** Month consistency test tried to read month immediately without waiting for render
+
+**Fixes:**
+- Use `.metric-card` with `.filter({ hasText })` + `.metric-value` pattern
+- Wait for page-appropriate content (AI/capability on AI page, not population)
+- Add adaptive wait before reading month display (`getByText(/month/i)`)
+- Use `getByText()` instead of complex locator chains
+
+**Result:** 100% pass rate (20/20 tests) ✅
+
+**Location:** `e2e/multi-system-integration.spec.ts`
+
 ### November 7, 2025
 
 **⚡ DEEP CLONING PERFORMANCE OPTIMIZATION** ✅ **COMPLETE** (HIGH-1, Nov 7, 2025)
