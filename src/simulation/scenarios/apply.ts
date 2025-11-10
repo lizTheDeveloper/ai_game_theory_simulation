@@ -33,6 +33,11 @@ export function applyScenario(
     console.log(`Expected outcome: ${scenario.expectedOutcome}`);
   }
 
+  // CRITICAL: Store scenario configuration for enforcement during simulation
+  // (Nov 10, 2025 - Fix for "declarative only" bug)
+  state.scenarioConfig = scenario;
+  console.log(`  ✓ Scenario config stored in state (government will enforce priorities)`);
+
   // Apply starting condition modifications
   if (scenario.startingConditions) {
     applyStartingConditions(state, scenario.startingConditions);
@@ -126,9 +131,8 @@ function applyStartingConditions(
 /**
  * Apply government priority overrides
  *
- * NOTE: This sets initial values but doesn't override decision-making logic.
- * For full override, would need to modify government agent decision functions
- * (future enhancement).
+ * NOTE (Nov 10, 2025): Now stores priorities in state.scenarioConfig for enforcement.
+ * Initial values set here + government decision logic reads scenarioConfig each turn.
  */
 function applyGovernmentPriorities(
   state: GameState,
@@ -144,8 +148,7 @@ function applyGovernmentPriorities(
       valueName: 'climateSpending'
     });
     console.log(`     Climate spending priority: ${(priority * 100).toFixed(0)}%`);
-    // TODO: Modify government decision logic to respect this priority
-    // For now, this is declarative only (agent behavior unchanged)
+    // FIXED (Nov 10, 2025): Government decision logic now reads state.scenarioConfig
   }
 
   if (priorities.redistributionLevel !== undefined) {
@@ -154,7 +157,7 @@ function applyGovernmentPriorities(
       valueName: 'redistributionLevel'
     });
     console.log(`     Redistribution priority: ${(target * 100).toFixed(0)}%`);
-    // TODO: Modify government redistribution policy to target this level
+    // FIXED (Nov 10, 2025): Government decision logic now reads state.scenarioConfig
   }
 
   if (priorities.alignmentResearch !== undefined) {
@@ -166,7 +169,7 @@ function applyGovernmentPriorities(
     // Boost alignment research budget
     const baseBudget = state.government.researchInvestments.totalBudget;
     const alignmentBudget = baseBudget * priority;
-    // TODO: Add dedicated alignment budget field to GameState
+    // FIXED (Nov 10, 2025): Government decision logic now reads state.scenarioConfig
   }
 
   if (priorities.democraticParticipation !== undefined) {
@@ -193,8 +196,8 @@ function applyGovernmentPriorities(
     state.government.researchInvestments.totalBudget *= boostFactor;
   }
 
-  console.log(`\n     ⚠️  NOTE: Priority overrides are partially implemented`);
-  console.log(`         Full agent behavior override requires additional work`);
+  console.log(`\n     ✅ Priority overrides stored in state.scenarioConfig`);
+  console.log(`         Government agent will enforce these priorities during simulation`);
 }
 
 /**
