@@ -126,10 +126,10 @@ if (scenario) {
     const cond = scenario.startingConditions;
 
     if (cond.trustInAI !== undefined) {
-      // Trust in AI isn't a direct GameState field in current impl
-      // May need to map to socialCohesion.trust or similar
-      console.log(`   🔹 Trust in AI: default → ${(cond.trustInAI * 100).toFixed(0)}%`);
-      // TODO: Map to appropriate state field when trust tracking is added
+      const oldTrustInAI = state.society.trustInAI;
+      state.society.trustInAI = cond.trustInAI;
+      state.globalMetrics.trustInAI = cond.trustInAI; // Also update global metrics for consistency
+      console.log(`   🔹 Trust in AI: ${(oldTrustInAI * 100).toFixed(0)}% → ${(cond.trustInAI * 100).toFixed(0)}%`);
     }
 
     if (cond.institutionalCapacity !== undefined) {
@@ -150,10 +150,10 @@ if (scenario) {
     }
 
     if (cond.socialCohesion !== undefined) {
-      const oldTrust = state.socialCohesion.trust;
-      state.socialCohesion.trust = cond.socialCohesion;
-      state.socialCohesion.communityBonds = cond.socialCohesion;
-      console.log(`   🔹 Social cohesion: ${(oldTrust * 100).toFixed(0)}% → ${(cond.socialCohesion * 100).toFixed(0)}%`);
+      const oldTrust = state.socialAccumulation.socialCohesion.trust;
+      state.socialAccumulation.socialCohesion.trust = cond.socialCohesion * 100; // Convert [0,1] to [0,100]
+      state.socialAccumulation.socialCohesion.communityBonds = cond.socialCohesion * 100;
+      console.log(`   🔹 Social cohesion: ${oldTrust.toFixed(0)}% → ${(cond.socialCohesion * 100).toFixed(0)}%`);
     }
   }
 
