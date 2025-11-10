@@ -48,13 +48,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Foundation:** V-Dem v14 (2024), WGI (2024) governance indicators
 - 📊 **Next:** Phase 3 - Comparative scenario testing (climate-first, equality-first, AI-alignment-first)
 
-**Nov 10: Scenario Analysis Framework Phase 1 - Diagnostic Infrastructure** (commit a7349644)
-- ✅ **Spiral Activation Logging:** Enhanced god mode test to track why spirals activate/deactivate
-- ✅ **Scenario Definition System:** Type definitions for government priority scenarios, tech deployment strategies
-- ✅ **Key Finding:** Only 1 of 6 upward spirals active (cognitive) with ALL tech deployed
-- ✅ **Time Constant Diagnosis:** 12 months insufficient for cascade (need 3 spirals × 12 months)
-- ✅ **Dependency Gap Identified:** Physical safety 0%, information integrity 0% despite all tech
-- ✅ **Research Foundation:** reviews/god_mode_spiral_diagnostics_20251110.md (diagnostic results)
+**Nov 10: Scenario Analysis Framework Phase 1 - Diagnostic Infrastructure** (commit 7d26273)
+- ✅ **Spiral Diagnostics:** Comprehensive monthly tracking of 6 spiral types with failure reason analysis
+- ✅ **Scenario System:** 12 predefined scenarios for systematic testing (src/types/scenarios.ts)
+  - 6 Government Priority Scenarios: climate-first, equality-first, ai-alignment-first, democratic-participation, scientific-acceleration, authoritarian-efficiency
+  - 3 Starting Condition Scenarios: high-trust-start, low-inequality-start, strong-institutions-start
+  - 3 Tech Deployment Strategies: renewable-first, carbon-removal-first, adaptive-deployment
+- ✅ **ApplyScenarioPrioritiesPhase:** New phase (order 1.5) applies government priority overrides each month
+- ✅ **God Mode Test Enhancement:** Scenario parameter support, diagnostic logging to logs/god_mode_spiral_diagnostics_*.log
+- ✅ **Key Finding:** Only 1/6 spirals activate in god mode (tech alone insufficient for cascade)
+- ✅ **Research Foundation:** Green New Deal, Nordic social democracy, participatory budgeting, Singapore/China rapid deployment
+- ✅ **Next:** Phase 2 - Monte Carlo N=10 per scenario to identify spiral activation enablers
 
 **Nov 9: Phase Consolidation Project COMPLETE** (commit 7d3f7e6b)
 - ✅ **Phase Reduction: 116 → 95** (-21 phases, -33 files, -18% complexity)
@@ -144,19 +148,40 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Anti-Pattern Discovered:** Efficiency assertions had [1,100] caps preventing multiplicative accumulation (Moore's Law compounds beyond 100× over decades). Fixed to use unbounded assertFinite.
 
-**🔬 Phase 1 Diagnostic Analysis** (commit a7349644, November 10, 2025)
+**🔬 Phase 1 Diagnostic Infrastructure** (commit 7d26273, November 10, 2025)
 
-**Enhanced god mode test now tracks spiral activation mechanics:**
-- **Upward Spirals:** Only 1 of 6 active (cognitive), cascade INACTIVE
-- **Cooperative Spirals:** 0 trust cascades (requires 24 months by design)
-- **Positive Tipping Points:** 3 cascades active (solar/EV/wind) - **WORKING AS EXPECTED**
-- **Time Constant Problem:** 12 months insufficient for cascade (need 3 spirals sustained 12+ months)
-- **Governance Gap:** Physical safety 0%, information integrity 0% despite tech deployment
-- **Validated Hypothesis:** Technology alone insufficient - spiral activation requires specific social/governance conditions
+**Comprehensive spiral activation diagnostics now implemented:**
+- **Monthly Tracking:** 6 spiral types with failure reason analysis
+- **Cascade Detection:** Tracks cascade potential (need 4+ active spirals sustained)
+- **First Activation Times:** Records when each spiral first activates (if ever)
+- **Peak Performance:** Tracks maximum simultaneous spiral activation
+- **Hypothesis Generation:** Automated diagnostic insights based on failure patterns
 
-**Research Foundation:** reviews/god_mode_spiral_diagnostics_20251110.md
+**Scenario Testing System (12 predefined scenarios):**
+- **Government Priorities:** climate-first (10% GDP/mo), equality-first (15% GDP/mo redistribution), ai-alignment-first ($100B/mo), democratic-participation (democracy=0.9), scientific-acceleration ($200B/mo research), authoritarian-efficiency (democracy=0.3)
+- **Starting Conditions:** high-trust-start (AI trust=0.8), low-inequality-start (Gini=0.25), strong-institutions-start (governance=0.8)
+- **Tech Strategies:** renewable-first, carbon-removal-first, adaptive-deployment
 
-**Status:** Diagnostic infrastructure complete. Phase 2 will test scenarios: early-start (tech deployed 10 years earlier), governance-first (boost social foundations before tech), sequenced-deployment (gradual tier rollout), climate-prioritized (focus on single boundary). Scenario definition system created (src/types/scenarios.ts) with 6 predefined test scenarios.
+**New Phase: ApplyScenarioPrioritiesPhase** (order 1.5, src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts)
+- Applies government priority overrides each month for scenario testing
+- All values validated with assertInRange(value, 0, 1)
+- No new RNG calls, preserves determinism
+
+**God Mode Test Enhancement (scripts/godModeTest.ts):**
+- Usage: `npx tsx scripts/godModeTest.ts [seed] [maxMonths] [scenario]`
+- Example: `npx tsx scripts/godModeTest.ts 42 120 equality-first`
+- Diagnostics saved to: logs/god_mode_spiral_diagnostics_[scenario]_YYYY-MM-DD.log
+- Output includes: monthly snapshots, failure reasons, cascade analysis, hypothesis generation
+
+**Key Finding:** Only 1/6 spirals activate in god mode (tech alone insufficient)
+- Authoritarian government blocks democratic spiral
+- Zero workflow adaptation blocks scientific spiral
+- Meaning crisis blocks meaning spiral
+- Technology deployment alone does NOT trigger governance/social/cultural evolution
+
+**Research Foundation:** Green New Deal, Nordic social democracy, participatory budgeting, Singapore/China rapid deployment models
+
+**Status:** Diagnostic infrastructure complete. Phase 2: Monte Carlo N=10 per scenario to identify spiral activation enablers.
 
 **Sylvia's Skeptical Analysis (commit f33340f, November 9, 2025):** Thermodynamic analysis of effectiveness gaps reveals fundamental constraints:
 - **Novel Entities (0%):** PFAS destruction energy = 4-40% of global production; cleanup may be thermodynamically infeasible at environmental scales (ng/L → mg/L requires 6-9 orders of magnitude concentration)
@@ -6324,14 +6349,67 @@ Recent critical evaluations:
 
 #### God Mode Test (November 2025)
 
-**Purpose:** Diagnostic tool that deploys ALL 73 breakthrough technologies at simulation start (month 0) to identify coverage gaps in the tech tree and model.
+**Purpose:** Diagnostic tool that deploys ALL 73 breakthrough technologies at simulation start (month 0) to identify coverage gaps in the tech tree and model. Now includes comprehensive spiral activation diagnostics and scenario testing capabilities.
 
 **What it tests:**
 - Are technologies sufficient to prevent catastrophic failure even when all deployed?
 - Which planetary boundaries remain crossed despite full tech deployment?
 - What survival/QoL dimensions collapse even with unlimited technological intervention?
+- Why do upward spirals fail to activate even with full tech deployment?
+- Which governance/social conditions enable spiral activation?
 
-**Recent Findings** (Commit c6fc3cc, November 9, 2025):
+**Enhanced Capabilities** (Commit 7d26273, November 10, 2025):
+
+**Spiral Activation Diagnostics:**
+- **Monthly tracking:** 6 spiral types (abundance, cognitive, democratic, scientific, meaning, ecological)
+- **Failure analysis:** Detailed logging of threshold conditions blocking inactive spirals
+- **Cascade detection:** Tracks when 4+ spirals activate simultaneously for virtuous cascade
+- **First activation times:** Records when each spiral first activates (if ever)
+- **Peak performance:** Maximum simultaneous spiral activation
+- **Hypothesis generation:** Automated diagnostic insights based on failure patterns
+
+**Scenario Testing System:**
+- **12 predefined scenarios** for systematic testing (see src/types/scenarios.ts)
+- **Government Priority Scenarios:** climate-first, equality-first, ai-alignment-first, democratic-participation, scientific-acceleration, authoritarian-efficiency
+- **Starting Condition Scenarios:** high-trust-start, low-inequality-start, strong-institutions-start
+- **Technology Deployment Strategies:** renewable-first, carbon-removal-first, adaptive-deployment
+
+**Key Finding** (November 10, 2025):
+**Only 1/6 upward spirals activate in baseline god mode** - Technology deployment alone is insufficient for spiral cascade. Root causes:
+- **Authoritarian government** blocks democratic spiral (no governance reforms despite tech)
+- **Zero workflow adaptation** blocks scientific spiral (no organizational changes)
+- **Meaning crisis** blocks meaning spiral (no cultural evolution)
+- **Technology alone doesn't trigger:** governance reforms, organizational adaptation, or cultural evolution
+
+**Diagnostic Output:**
+Saves comprehensive diagnostics to `logs/god_mode_spiral_diagnostics_[scenario]_YYYY-MM-DD.log` including:
+- Monthly spiral snapshots with activation state and strength
+- Threshold conditions blocking each inactive spiral
+- Cascade potential analysis (need 4+ active spirals sustained)
+- First activation times and peak performance metrics
+- Automated hypothesis generation based on failure patterns
+
+**Usage:**
+```bash
+# Basic god mode test (no scenario)
+npx tsx scripts/godModeTest.ts 42 120
+
+# Test with specific scenario
+npx tsx scripts/godModeTest.ts 42 120 equality-first
+
+# Test climate-prioritized scenario
+npx tsx scripts/godModeTest.ts 42 120 climate-first
+
+# Available scenarios:
+# Government priorities: climate-first, equality-first, ai-alignment-first,
+#                        democratic-participation, scientific-acceleration,
+#                        authoritarian-efficiency
+# Starting conditions: high-trust-start, low-inequality-start,
+#                     strong-institutions-start
+# Tech strategies: renewable-first, carbon-removal-first, adaptive-deployment
+```
+
+**Previous Findings** (Commit c6fc3cc, November 9, 2025):
 
 **🚨 CATASTROPHIC FAILURE even with full tech deployment** (Seed 42, 120 months):
 - **Population:** NaN (simulation crashed before completion)
@@ -6345,29 +6423,13 @@ Recent critical evaluations:
 - **6 Planetary boundaries still RED:** biogeochemical, biosphere, climate, freshwater, land, novel entities
 - **Early Warning System:** All boundaries flagged as 'LATE' interventions (too late to prevent crossing)
 
-**Key improvements in test (c6fc3cc):**
-- Fixed QoL field access to use tiered structure (survivalFundamentals, materialAbundance, etc.)
-- Added initial vs final planetary boundary comparison
-- Added defensive checks for undefined/NaN in crashed simulations
-- Shows tier-by-tier QoL breakdown (6 tiers: Survival → Environmental)
-
 **Implications:**
 1. **Tech tree has CRITICAL COVERAGE GAPS** - technologies insufficient even when all deployed
-2. **OR deployment timing wrong** - need technologies deployed earlier than 2025 start (month -60, -120?)
+2. **Spiral activation requires specific conditions** - governance quality, trust, organizational adaptation
 3. **OR missing distribution/implementation mechanisms** - tech exists but can't reach people fast enough
-4. **OR simulation has NaN propagation bugs** - cascading failures corrupt state
+4. **Technology alone is necessary but insufficient** - social/governance/cultural evolution required
 
-**Why this matters:** Simulation starts in 2025 with some planetary boundaries already crossed (late start). God mode reveals the limits of what's modeled - if deploying everything still fails catastrophically, either:
-- Missing critical intervention types (distribution, implementation, social acceptance)
-- Missing earlier intervention windows (pre-2025 baseline)
-- Model has propagation bugs hiding behind tech deployment logic
-
-**Usage:**
-```bash
-npx tsx scripts/godModeTest.ts --seed=42 --months=120
-```
-
-**Status:** 🟡 DIAGNOSTIC - Not for production Monte Carlo runs. For identifying model gaps only.
+**Status:** 🟡 DIAGNOSTIC - Not for production Monte Carlo runs. For identifying model gaps and testing interventions.
 
 ### Devlogs (Recent Key Findings)
 - `devlogs/monte-carlo-analysis-oct-9-action-fix.md` - Comprehensive blocker analysis
