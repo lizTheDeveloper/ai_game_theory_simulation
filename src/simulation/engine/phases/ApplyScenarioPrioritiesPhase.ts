@@ -202,7 +202,7 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     }
 
     if (priorities.governmentType !== undefined) {
-      const validTypes = ['democratic', 'authoritarian', 'mixed'] as const;
+      const validTypes = ['democratic', 'authoritarian', 'mixed', 'technocratic'] as const;
       if (!validTypes.includes(priorities.governmentType)) {
         throw new Error(`❌ Invalid governmentType: ${priorities.governmentType}`);
       }
@@ -210,7 +210,9 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       // Map scenario governmentType to GameState governmentType
       // 'mixed' in scenario → 'technocratic' in GameState (closest match)
       const mappedType: 'democratic' | 'authoritarian' | 'technocratic' =
-        priorities.governmentType === 'mixed' ? 'technocratic' : priorities.governmentType;
+        priorities.governmentType === 'mixed' ? 'technocratic' :
+        priorities.governmentType === 'technocratic' ? 'technocratic' :
+        priorities.governmentType;
 
       // Apply government type override (this field DOES exist)
       const oldType = state.government.governmentType;
