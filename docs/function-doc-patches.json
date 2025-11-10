@@ -61,7 +61,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
-    "line": 46,
+    "line": 47,
     "name": "updateGeoengineering",
     "doc": "Updates geoengineering based on current state and modifiers."
   },

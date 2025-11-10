@@ -66,28 +66,30 @@ cd ~/ai_game_theory_simulation
 ## How It Works
 
 ### Schedule
-<<<<<<< HEAD:docs/AUTONOMOUS_SETUP.md
 
 **Implementation Worker** (`autonomous-worker.sh`):
 - Runs hourly at `:00` past each hour
 - Handles roadmap implementation tasks
 - 45-minute timeout for complex features
 
-**Research Worker** (`researcher-worker.sh`):
+**Research Agent** (`scripts/research-agent.sh`):
 - Runs hourly at `:30` past each hour
-- Monitors Matrix `research` channel for questions from Sylvia/Cynthia
-- Updates research files with current 2024-2025 sources
-- 30-minute timeout (less intensive than implementation)
-- Runs research age audit to prioritize CRITICAL/HIGH items
+- Systematically works through research/RESEARCH_ROADMAP.md
+- Uses super-alignment-researcher + research-skeptic workflow
+- Extracts parameters, mechanisms, justifications from peer-reviewed sources
+- Saves research documents to research/ directory
+- Creates PRs with findings and posts to research channel
+- 30-45 minute budget per task
+- Creates branches: auto/research-YYYYMMDD_HHMMSS
 
 **Health Watcher** (`autonomous-worker-watcher.sh`):
 - Runs at `:15` to monitor all autonomous systems
-- Auto-remediates issues including researcher-worker health
+- Auto-remediates issues including research agent health
 
 **Merge Orchestrator** (`merge-orchestrator.sh`):
-- Runs at `:45` to process branches from both workers
+- Runs at `:45` to process branches from all workers
 - Processes up to 15 branches per run
-- Merges auto/* branches created by workers and researcher
+- Merges auto/* branches created by implementation worker and research agent
 - Auto-cleans up merged branches
 - **Auto-remediation fix (Nov 7, 2025)**: Fixed critical command name issue (`claude-code` → `claude`) that prevented auto-remediation from spawning Claude Code to fix conflicts/test failures
 - **Test gate enhancement (Nov 7, 2025)**: Gracefully skips test gate when no test framework available (VM environments now validate with TypeScript only)
@@ -236,25 +238,25 @@ The autonomous worker system now includes automated health monitoring with self-
 
 **Recommended Cron Schedule:**
 ```bash
-# :00 - Autonomous worker runs (main implementation work)
+# :00 - Implementation worker (main roadmap work)
 0 * * * * cd ~/ai_game_theory_simulation && ./autonomous-worker.sh >> logs/cron_worker.log 2>&1
 
 # :15 - Health check & auto-fix (monitors all autonomous systems)
 15 * * * * cd ~/ai_game_theory_simulation && ./scripts/autonomous-worker-watcher.sh >> logs/cron_watcher.log 2>&1
 
-# :30 - Research worker (research updates, paper verification)
-30 * * * * cd ~/ai_game_theory_simulation && ./researcher-worker.sh >> logs/cron_researcher.log 2>&1
+# :30 - Research agent (systematic research roadmap execution)
+30 * * * * cd ~/ai_game_theory_simulation && ./scripts/research-agent.sh >> logs/cron_research.log 2>&1
 
 # :45 - Merge orchestrator (processes pending branches)
 45 * * * * cd ~/ai_game_theory_simulation && ./scripts/merge-orchestrator.sh >> logs/cron_merge.log 2>&1
 ```
 
 **What it monitors:**
-- Worker execution frequency (detects stuck/stopped workers)
+- Implementation worker execution frequency (detects stuck/stopped workers)
 - Error patterns in recent logs
 - Timeout detection (45-minute limit, with 5-minute cleanup)
 - Worker branch accumulation
-- **Researcher worker health** (script existence, execution, cron job status)
+- **Research agent health** (script existence, execution, cron job status)
 - Merge orchestrator health
 - Cron service status (VM only)
 

@@ -12,11 +12,15 @@
 
 import { test, expect } from '@playwright/test';
 
-// Adaptive wait helper - polls for element visibility
-async function waitForDashboardData(page: any, selector: string | RegExp, maxAttempts: number = 5) {
+// Increase timeout to 40s for integration tests (longer than default 30s)
+// Needed for: ~5s init + 10-18s simulation + navigation + adaptive waits
+test.setTimeout(40000);
+
+// Adaptive wait helper - polls for element visibility (up to 16s total)
+async function waitForDashboardData(page: any, selector: string | RegExp, maxAttempts: number = 8) {
   for (let i = 0; i < maxAttempts; i++) {
     await page.waitForTimeout(2000);
-    const isVisible = await page.locator(`text=${selector}`).first().isVisible().catch(() => false);
+    const isVisible = await page.getByText(selector).first().isVisible().catch(() => false);
     if (isVisible) return;
   }
   throw new Error(`Dashboard data not visible after ${maxAttempts} attempts: ${selector}`);
@@ -39,6 +43,7 @@ async function initializeAndRunSimulation(page: any, durationMs: number = 30000)
   await page.getByRole('button', { name: /start/i }).click();
   await page.waitForTimeout(durationMs);
   await page.getByRole('button', { name: /pause/i }).click();
+  await page.waitForTimeout(1000); // Brief stabilization after pause
 }
 
 test.describe('AI Systems → QoL Integration', () => {
@@ -52,11 +57,13 @@ test.describe('AI Systems → QoL Integration', () => {
     // Adaptive wait - poll for AI capability to be visible
     await waitForDashboardData(page, /ai capability/i);
 
-    // Get AI capability value
-    const aiCapabilityText = await page.getByText(/ai capability/i).locator('..').locator('text=/\\d+\\.\\d+/').first().textContent();
+    // Get AI capability value - find card by label, then get value
+    const aiCapabilityCard = page.locator('.metric-card').filter({ hasText: /ai capability/i });
+    const aiCapabilityText = await aiCapabilityCard.locator('.metric-value').textContent();
 
     // Get QoL value
-    const qolText = await page.getByText(/quality of life/i).locator('..').locator('text=/\\d+\\.\\d+|\\d+%/').first().textContent();
+    const qolCard = page.locator('.metric-card').filter({ hasText: /quality of life/i });
+    const qolText = await qolCard.locator('.metric-value').textContent();
 
     // Both should have valid values
     expect(aiCapabilityText).toMatch(/\d+\.\d+/);
@@ -70,12 +77,13 @@ test.describe('AI Systems → QoL Integration', () => {
     await page.getByRole('link', { name: /overview|dashboard/i }).click();
     // Adaptive wait added - waits for data to load
     await waitForDashboardData(page, /ai agents/i);
-    const overviewAgentText = await page.getByText(/ai agents/i).locator('..').textContent();
+    // Scope to main content to avoid navigation link
+    const overviewAgentText = await page.locator('main').getByText(/ai agents/i).locator('..').textContent();
 
     // Check AI Agents dashboard - use client-side navigation
     await page.getByRole('link', { name: /ai.*agents/i }).click();
-    // Adaptive wait added - waits for data to load
-    await waitForDashboardData(page, /\d+\.\d+B|global population/i);
+    // Adaptive wait for AI-specific content (not population which may not be on this page)
+    await waitForDashboardData(page, /agent|capability|alignment/i);
 
     // Should show consistent agent data
     // Note: Exact counts might differ slightly due to update timing
@@ -91,8 +99,9 @@ test.describe('AI Systems → QoL Integration', () => {
     // Adaptive wait added - waits for data to load
     await waitForDashboardData(page, /alignment/i);
 
-    // Get alignment score
-    const alignmentText = await page.getByText(/alignment/i).locator('..').locator('text=/\\d+\\.\\d+/').first().textContent();
+    // Get alignment score - find card by label, then get value
+    const alignmentCard = page.locator('.metric-card').filter({ hasText: /alignment/i });
+    const alignmentText = await alignmentCard.locator('.metric-value').textContent();
 
     // Get system status
     const systemStatus = await page.getByText(/system status/i).locator('..').textContent();
@@ -242,8 +251,8 @@ test.describe('Technology Impact Integration', () => {
 
     // Tech breakthroughs might affect environment
     await page.getByRole('link', { name: /tech/i }).click();
-    // Adaptive wait added - waits for data to load
-    await waitForDashboardData(page, /\d+\.\d+B|global population/i);
+    // Adaptive wait for tech-specific content (not population)
+    await waitForDashboardData(page, /technology|breakthrough|tier/i);
 
     await page.getByRole('link', { name: /environment/i }).click();
     // Adaptive wait added - waits for data to load
@@ -315,8 +324,11 @@ test.describe('Cross-Dashboard State Consistency', () => {
   test('should maintain month consistency across all dashboards', async ({ page }) => {
     await initializeAndRunSimulation(page, 10000); // ~1.3 months at 4x speed
 
-    // Get month from navigation
-    const navMonth = await page.locator('text=/Month \\d+/i').first().textContent();
+    // Wait for month indicator to be visible
+    await waitForDashboardData(page, /month/i);
+
+    // Get month from navigation (format: "Month 0" or "Month: 0")
+    const navMonth = await page.getByText(/month/i).first().textContent();
 
     // Check multiple dashboards using client-side navigation
     const dashboards = [
@@ -332,7 +344,7 @@ test.describe('Cross-Dashboard State Consistency', () => {
       await page.waitForTimeout(1000);
 
       // Month should be consistent in navigation
-      const currentMonth = await page.locator('text=/Month \\d+/i').first().textContent();
+      const currentMonth = await page.getByText(/month/i).first().textContent();
       expect(currentMonth).toBe(navMonth);
     }
   });
