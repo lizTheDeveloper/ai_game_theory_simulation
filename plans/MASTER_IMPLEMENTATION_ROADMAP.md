@@ -14,134 +14,142 @@
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - QUALITY GATE 1 PASSED (CONDITIONAL)
-  - **Verified:** Xia 2022 mortality (5B deaths), PETM warming (5-8°C), GDP baseline ($114T)
-  - **Adjusted:** CO2 upper bound (600→1000 ppm, RCP8.5 validated), GDP upper bound (200→500T)
-  - **Removed:** Ocean pH 7.8 threshold (unsupported), kept 7.5 lower bound
-  - **Reports:** `research/layer2_verification_state_validation_20251106.md` (320 lines)
-  - **Status:** READY FOR PHASE 2 (implementation by simulation-maintainer)
+ - **Verified:** Xia 2022 mortality (5B deaths), PETM warming (5-8°C), GDP baseline ($114T)
+ - **Adjusted:** CO2 upper bound (600→1000 ppm, RCP8.5 validated), GDP upper bound (200→500T)
+ - **Removed:** Ocean pH 7.8 threshold (unsupported), kept 7.5 lower bound
+ - **Reports:** `research/layer2_verification_state_validation_20251106.md` (320 lines)
+ - **Status:** READY FOR PHASE 2 (implementation by simulation-maintainer)
+
+**🧪 Scenario Analysis Framework (HIGH Priority - Nov 10, 2025):**
+- **Context:** God mode analysis (all 73 technologies deployed) → catastrophic failure
+- **Key Insight:** Technology alone insufficient - spirals exist but don't activate without governance/social conditions
+- **Objective:** Test governance sufficiency, not just technology sufficiency
+- **Integration:** Builds on god mode diagnostics (`reviews/god_mode_gaps_research_roadmap_20251109.md`), Sylvia's analysis (`research/SKEPTICAL_ANALYSIS_doom_predictions_20251110.md`), spiral verification (`research/GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`)
+- **Links:** Validates upwardSpirals.ts, cooperativeSpirals.ts, positiveTippingPoints.ts implementations
+- **Status:** Framework approved, diagnostic phase HIGH priority (blocking understanding of god mode failure)
 
 **Recent Completions (Nov 9-10, 2025):**
-- ✅ **PHASE CONSOLIDATION PROJECT COMPLETE** (Nov 7-9, 2025 - 3-4 days, 5× faster than estimated)
-  - **Phase Reduction:** 116 → 95 phases (-21 phases, -33 files, -18% complexity)
-  - **Code Changes:** 153 files, 61,754 insertions, 6,074 deletions
-  - **Consolidation Batches:** 7 batches (TIER 2 Interventions, AI Phases, Climate & Environmental, Crisis & Mortality, Social & Governance, Economic System)
-  - **Test Coverage:** 143 test cases across 6 files (3,922 lines), 80%+ coverage
-  - **Validation:** Monte Carlo N=3, determinism verified, zero regressions
-  - **Quality:** A+ (comprehensive testing, determinism verified)
-  - **Impact:** Architecture Health 7.5/10 → 9.0/10 (+1.5 points, 20% improvement)
-  - **Archive:** `/plans/completed/phase_consolidation_project_complete_20251109.md`
+- ✅ **PHASE CONSOLIDATION PROJECT COMPLETE** (Nov 7-9, 2025)
+ - **Phase Reduction:** 116 → 95 phases (-21 phases, -33 files, -18% complexity)
+ - **Code Changes:** 153 files, 61,754 insertions, 6,074 deletions
+ - **Consolidation Batches:** 7 batches (TIER 2 Interventions, AI Phases, Climate & Environmental, Crisis & Mortality, Social & Governance, Economic System)
+ - **Test Coverage:** 143 test cases across 6 files (3,922 lines), 80%+ coverage
+ - **Validation:** Monte Carlo N=3, determinism verified, zero regressions
+ - **Quality:** A+ (comprehensive testing, determinism verified)
+ - **Impact:** Architecture Health 7.5/10 → 9.0/10 (+1.5 points, 20% improvement)
+ - **Archive:** `/plans/completed/phase_consolidation_project_complete_20251109.md`
 - ✅ **RESEARCH ROADMAP ESTABLISHED** (Nov 9-10, 2025)
-  - **Purpose:** Single source of truth for research coordination (replaces simulation roadmap for research tasks)
-  - **Coverage:** AI alignment, climate mitigation, planetary boundaries, post-scarcity pathways
-  - **Integration:** Links god mode diagnostics (Priya's quantitative gaps) with research validation (Cynthia + Sylvia)
-  - **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (1,126 lines, 50KB)
-  - **Content:** 26 new technology candidates, 9 modeling paradigm shifts, 4-tier priority matrix
-  - **Impact:** Research priorities now systematically derived from empirical effectiveness gaps
-  - **Status:** Living document (not archived - ongoing research coordination surface)
+ - **Purpose:** Single source of truth for research coordination (replaces simulation roadmap for research tasks)
+ - **Coverage:** AI alignment, climate mitigation, planetary boundaries, post-scarcity pathways
+ - **Integration:** Links god mode diagnostics (Priya's quantitative gaps) with research validation (Cynthia + Sylvia)
+ - **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (1,126 lines, 50KB)
+ - **Content:** 26 new technology candidates, 9 modeling paradigm shifts, 4-tier priority matrix
+ - **Impact:** Research priorities now systematically derived from empirical effectiveness gaps
+ - **Status:** Living document (not archived - ongoing research coordination surface)
 
 **Recent Completions (Nov 8, 2025):**
-- ✅ **CRITICAL-1 ASSERTION COVERAGE EXPANSION COMPLETE** (Nov 7-8, 2025 - 16 hours)
-  - **Coverage:** 47% → 97.2% (104/107 modules with assertions)
-  - **Bugs Fixed:** 4 bugs discovered during expansion
-    - AI capability integer rounding (CRITICAL)
-    - MAD deterrence overflow (HIGH)
-    - Health metric overflow (MEDIUM)
-    - 241 division-by-zero protections (CRITICAL)
-  - **Quality:** A+ (systematic automation with bug discovery)
-  - **Impact:** Oct 2025 NaN bug pattern ELIMINATED across 97.2% of codebase
-  - **Archive:** `/plans/completed/critical_one_assertion_coverage_20251108.md`
-- ✅ **ARCH-4 CROSS-SYSTEM INTEGRATION COMPLETE** (Nov 7-8, 2025 - 8 hours, 10× faster than estimated)
-  - **Success Rate:** 80% (4/5 integrations validated)
-  - **Implementation:** Climate → boundaries (5 points), nuclear winter → solar, AI suffering → alignment, refugees → AMR
-  - **Research:** 12 peer-reviewed sources (IPCC AR6, Richardson et al. 2023, Robock et al. 2007, Greenblatt et al. 2024)
-  - **Quality Gate 1:** PASS (A- research validation, research-skeptic review)
-  - **Quality Gate 2:** PASS (A- architecture review, architecture-skeptic review)
-  - **Bugs Fixed:** 11 bugs found during Monte Carlo validation (7 AI capability, 4 Tier2 normalization, 1 QoL overflow)
-  - **Documentation:** Comprehensive wiki section added (200+ lines, docs/wiki/README.md)
-  - **Archive:** `/plans/completed/arch4_cross_system_integration_complete_20251108.md`
-- ✅ **CRITICAL-4 DEFENSIVE CLEANUP COMPLETE** (Nov 7-8, 2025 - 4 hours)
-  - **Bugs Fixed:** 9 defensive fallback bugs in hot paths
-  - **Research Investment NaN:** FIXED (GDP fallback eliminated)
-  - **Pattern:** Required fields with silent fallbacks → fail-loudly assertions
-  - **Quality:** A (systematic hot path coverage)
-  - **Archive:** `/plans/completed/critical4_defensive_cleanup_20251108.md`
-- ✅ **BIFURCATION-EMERGENCY INTEGRATION COMPLETE** (Nov 7-8, 2025 - 6 hours)
-  - **Implementation:** Bifurcation detection → emergency response escalation
-  - **Regime Shifts:** Variance amplification → crisis cascade prevention
-  - **Early Warning:** Near-bifurcation alerts operational
-  - **Research:** Scheffer et al. 2024, Lenton et al. 2023, WHO 2024
-  - **Archive:** `/plans/completed/roadmap_next_steps_bifurcation_20251108.md`
+- ✅ **CRITICAL-1 ASSERTION COVERAGE EXPANSION COMPLETE** (Nov 7-8, 2025)
+ - **Coverage:** 47% → 97.2% (104/107 modules with assertions)
+ - **Bugs Fixed:** 4 bugs discovered during expansion
+ - AI capability integer rounding (CRITICAL)
+ - MAD deterrence overflow (HIGH)
+ - Health metric overflow (MEDIUM)
+ - 241 division-by-zero protections (CRITICAL)
+ - **Quality:** A+ (systematic automation with bug discovery)
+ - **Impact:** Oct 2025 NaN bug pattern ELIMINATED across 97.2% of codebase
+ - **Archive:** `/plans/completed/critical_one_assertion_coverage_20251108.md`
+- ✅ **ARCH-4 CROSS-SYSTEM INTEGRATION COMPLETE** (Nov 7-8, 2025)
+ - **Success Rate:** 80% (4/5 integrations validated)
+ - **Implementation:** Climate → boundaries (5 points), nuclear winter → solar, AI suffering → alignment, refugees → AMR
+ - **Research:** 12 peer-reviewed sources (IPCC AR6, Richardson et al. 2023, Robock et al. 2007, Greenblatt et al. 2024)
+ - **Quality Gate 1:** PASS (A- research validation, research-skeptic review)
+ - **Quality Gate 2:** PASS (A- architecture review, architecture-skeptic review)
+ - **Bugs Fixed:** 11 bugs found during Monte Carlo validation (7 AI capability, 4 Tier2 normalization, 1 QoL overflow)
+ - **Documentation:** Comprehensive wiki section added (200+ lines, docs/wiki/README.md)
+ - **Archive:** `/plans/completed/arch4_cross_system_integration_complete_20251108.md`
+- ✅ **CRITICAL-4 DEFENSIVE CLEANUP COMPLETE** (Nov 7-8, 2025)
+ - **Bugs Fixed:** 9 defensive fallback bugs in hot paths
+ - **Research Investment NaN:** FIXED (GDP fallback eliminated)
+ - **Pattern:** Required fields with silent fallbacks → fail-loudly assertions
+ - **Quality:** A (systematic hot path coverage)
+ - **Archive:** `/plans/completed/critical4_defensive_cleanup_20251108.md`
+- ✅ **BIFURCATION-EMERGENCY INTEGRATION COMPLETE** (Nov 7-8, 2025)
+ - **Implementation:** Bifurcation detection → emergency response escalation
+ - **Regime Shifts:** Variance amplification → crisis cascade prevention
+ - **Early Warning:** Near-bifurcation alerts operational
+ - **Research:** Scheffer et al. 2024, Lenton et al. 2023, WHO 2024
+ - **Archive:** `/plans/completed/roadmap_next_steps_bifurcation_20251108.md`
 
 **Recent Completions (Nov 7, 2025):**
-- ✅ **AUTONOMOUS SESSION 20251107_090001 COMPLETE** (Nov 7, 2025 - 2 hours)
-  - **CRITICAL-3 RNG Regression Fix:** ✅ RESOLVED
-    - Removed Math.random fallbacks from RNG system
-    - Made RNG parameter REQUIRED with fail-loudly assertions
-    - Determinism restored, Monte Carlo validation unblocked
-    - Commit: 0702a1da6 (merged from parallel worker branch)
-  - **HIGH-1 Deep Cloning Performance:** ✅ COMPLETE
-    - 14 instances of JSON.parse(JSON.stringify()) replaced with structuredClone
-    - 30.5% performance improvement on realistic objects (91KB)
-    - 2 hours actual vs 1-2 days estimated (2.5× faster)
-    - Research quality: A+ (W3C standard, V8 benchmarks)
-    - All quality gates passed
-    - Commits: 55fd120a8, 7f699fb90, 1c1162e2d, cb535314e
-  - **CRITICAL-1/2 Planning Complete, BLOCKED by tooling:**
-    - Assertion coverage expansion plan (16% → 95%) created
-    - Phase dependency declarations plan (26% → 80%) created
-    - Handoff documents ready for simulation-maintainer
-    - Status: BLOCKED by Edit tool limitations for industrial-scale changes
-  - Archive: `/plans/completed/deep_cloning_performance_complete_20251107.md`
-- ✅ **AUTONOMOUS SESSION 20251107_010001 COMPLETE** (Nov 7, 2025 - 30 minutes)
-  - **HIGH-3 Wet Bulb Temperature Fix:** Implementation COMPLETE (empirical 30.5-31.2°C vs theoretical 35°C)
-    - Impact: 40-60% heat mortality underestimation eliminated
-    - Thresholds: EXTREME 35°C→31.2°C, SEVERE 32°C→30.5°C, HIGH 30°C→29.5°C
-    - Calibrated to historical heatwave data (2003 EU, 2010 Russia, 2021 PNW)
-    - Type checking: Pass, Merge conflicts: Resolved (commit c7faf0d9b)
-    - Status: Implementation complete, research verification pending (Sylvia + Cynthia)
-  - **CRITICAL-1/2 Planning Complete:** Assertion coverage + phase dependency expansion designed
-    - Baseline: 16.2% assertion coverage (19/117 phases), 25.6% dependencies (30/117 phases)
-    - Target: 95%+ assertions, 80%+ dependencies
-    - Handoff: simulation-maintainer (3-5 days assertions, 2-3 days dependencies)
-  - **Roadmap Merge Conflicts:** Resolved with architectural honesty (gaps acknowledged, not hidden)
-  - Archive: `/plans/completed/autonomous_session_20251107_010001_complete.md`
-- ✅ **WEEK 5 VARIANCE AMPLIFICATION IMPLEMENTATION COMPLETE** (Nov 6-7, 2025 - 6 hours)
-  - **Variance Fix:** maxAmplification 10× → 100× (commit 474f5903e)
-  - **Research:** Scheffer et al. 2024 (15-200×), financial crisis (40×), ecosystems (100×)
-  - **Additional Fixes:** refugeeCrises assertion cap (10B global), QoL assertion type (probability → finite)
-  - **Merge Conflicts:** OutcomeProbabilitiesPhase + UpdateEconomicStagePhase resolved (commit 420e29f58)
-  - **Expected Impact:** Mortality 43-58% → 60-75%, outcome diversity improves
-  - **Validation Status:** 🔴 BLOCKED - Monte Carlo runs stall after batch 1 (NEW CRITICAL TASK: Debug Monte Carlo execution)
-  - Archive: `/plans/completed/week5_variance_amplification_implementation_20251107.md`
+- ✅ **AUTONOMOUS SESSION 20251107_090001 COMPLETE** (Nov 7, 2025)
+ - **CRITICAL-3 RNG Regression Fix:** ✅ RESOLVED
+ - Removed Math.random fallbacks from RNG system
+ - Made RNG parameter REQUIRED with fail-loudly assertions
+ - Determinism restored, Monte Carlo validation unblocked
+ - Commit: 0702a1da6 (merged from parallel worker branch)
+ - **HIGH-1 Deep Cloning Performance:** ✅ COMPLETE
+ - 14 instances of JSON.parse(JSON.stringify) replaced with structuredClone
+ - 30.5% performance improvement on realistic objects (91KB)
+ actual (2.)
+ - Research quality: A+ (W3C standard, V8 benchmarks)
+ - All quality gates passed
+ - Commits: 55fd120a8, 7f699fb90, 1c1162e2d, cb535314e
+ - **CRITICAL-1/2 Planning Complete, BLOCKED by tooling:**
+ - Assertion coverage expansion plan (16% → 95%) created
+ - Phase dependency declarations plan (26% → 80%) created
+ - Handoff documents ready for simulation-maintainer
+ - Status: BLOCKED by Edit tool limitations for industrial-scale changes
+ - Archive: `/plans/completed/deep_cloning_performance_complete_20251107.md`
+- ✅ **AUTONOMOUS SESSION 20251107_010001 COMPLETE** (Nov 7, 2025)
+ - **HIGH-3 Wet Bulb Temperature Fix:** Implementation COMPLETE (empirical 30.5-31.2°C vs theoretical 35°C)
+ - Impact: 40-60% heat mortality underestimation eliminated
+ - Thresholds: EXTREME 35°C→31.2°C, SEVERE 32°C→30.5°C, HIGH 30°C→29.5°C
+ - Calibrated to historical heatwave data (2003 EU, 2010 Russia, 2021 PNW)
+ - Type checking: Pass, Merge conflicts: Resolved (commit c7faf0d9b)
+ - Status: Implementation complete, research verification pending (Sylvia + Cynthia)
+ - **CRITICAL-1/2 Planning Complete:** Assertion coverage + phase dependency expansion designed
+ - Baseline: 16.2% assertion coverage (19/117 phases), 25.6% dependencies (30/117 phases)
+ - Target: 95%+ assertions, 80%+ dependencies
+ - Handoff: simulation-maintainer 
+ - **Roadmap Merge Conflicts:** Resolved with architectural honesty (gaps acknowledged, not hidden)
+ - Archive: `/plans/completed/autonomous_session_20251107_010001_complete.md`
+- ✅ **WEEK 5 VARIANCE AMPLIFICATION IMPLEMENTATION COMPLETE** (Nov 6-7, 2025)
+ - **Variance Fix:** maxAmplification 10× → 100× (commit 474f5903e)
+ - **Research:** Scheffer et al. 2024 (15-200×), financial crisis (40×), ecosystems (100×)
+ - **Additional Fixes:** refugeeCrises assertion cap (10B global), QoL assertion type (probability → finite)
+ - **Merge Conflicts:** OutcomeProbabilitiesPhase + UpdateEconomicStagePhase resolved (commit 420e29f58)
+ - **Expected Impact:** Mortality 43-58% → 60-75%, outcome diversity improves
+ - **Validation Status:** 🔴 BLOCKED - Monte Carlo runs stall after batch 1 (NEW CRITICAL TASK: Debug Monte Carlo execution)
+ - Archive: `/plans/completed/week5_variance_amplification_implementation_20251107.md`
 - ✅ **POST-WEEK 4 INTEGRATION MAINTENANCE COMPLETE** (Nov 6, 2025 - Session 20251106_190001)
-  - **Post-WEEK 4 Integration Review** - Comprehensive architecture-skeptic review, Grade: B+ (Improved but with gaps), Risk: MEDIUM (down from HIGH)
-  - **Fix Bifurcation-Validation Conflict** (HIGH-1) - Created capWithBifurcationAwareness() utility, Monte Carlo N=3 validation, 108 cap events logged, zero assertion errors
-  - **Centralize Mortality Stabilizer Parameters** (HIGH-2) - 60+ parameters moved to centralConfig.ts with JSDoc citations, Monte Carlo N=3 validation, behavior unchanged
-  - **Research Source Validation Audit** - Automated age audit, 0 CRITICAL (0.0%), 129 HIGH (40.8%, historical), 170 LOW (53.8%)
-  - Archive: `/reviews/architecture-post-week4-integration-review_20251106.md`
-- ✅ **WEEK 4 CRITICAL PATH COMPLETE** (Nov 6, 2025 - 8 hours total, 7.5× faster than estimated)
-  - **Task 9: Phase Consolidation Planning** (3d → 6h) - 116→54 phase reduction designed, 11,000-line plan, 7 batches, phased rollout
-  - **Task 10: Research Update Pipeline** (2d → 2h) - Automated age detection, weekly GitHub Action, 359h/yr saved, 0 CRITICAL items maintained
-  - Quality: A+ grade (comprehensive automation, full documentation, GitHub integration)
-  - Impact: Sustainable trajectory established, preventive infrastructure operational
-  - Archive: `/plans/completed/week4_critical_path_complete_20251106.md`
-- ✅ **WEEK 3 CRITICAL PATH COMPLETE** (Nov 6, 2025 - 11 hours total, 4× faster than estimated)
-  - **Task 7: State Validation Framework** (3d → 7h) - Research-validated bounds, 95%+ coverage, 1 bug caught
-  - **Task 8: Phase Dependency System** (2d → 4h) - 32 critical phases, circular detection, race prevention
-  - Quality: A grade (research + implementation + architecture)
-  - Coverage: 107% of targets (32/30 phases, 95%+ assertions)
-  - Impact: NaN risk MEDIUM→LOW, race condition risk MEDIUM→LOW
-  - Archive: `/plans/completed/week3_critical_path_complete_20251106.md`
+ - **Post-WEEK 4 Integration Review** - Comprehensive architecture-skeptic review, Grade: B+ (Improved but with gaps), Risk: MEDIUM (down from HIGH)
+ - **Fix Bifurcation-Validation Conflict** (HIGH-1) - Created capWithBifurcationAwareness utility, Monte Carlo N=3 validation, 108 cap events logged, zero assertion errors
+ - **Centralize Mortality Stabilizer Parameters** (HIGH-2) - 60+ parameters moved to centralConfig.ts with JSDoc citations, Monte Carlo N=3 validation, behavior unchanged
+ - **Research Source Validation Audit** - Automated age audit, 0 CRITICAL (0.0%), 129 HIGH (40.8%, historical), 170 LOW (53.8%)
+ - Archive: `/reviews/architecture-post-week4-integration-review_20251106.md`
+- ✅ **WEEK 4 CRITICAL PATH COMPLETE** (Nov 6, 2025 total, 7.)
+ - **Task 9: Phase Consolidation Planning** (3d → 6h) - 116→54 phase reduction designed, 11,000-line plan, 7 batches, phased rollout
+ - **Task 10: Research Update Pipeline** (2d → 2h) - Automated age detection, weekly GitHub Action, 359h/yr saved, 0 CRITICAL items maintained
+ - Quality: A+ grade (comprehensive automation, full documentation, GitHub integration)
+ - Impact: Sustainable trajectory established, preventive infrastructure operational
+ - Archive: `/plans/completed/week4_critical_path_complete_20251106.md`
+- ✅ **WEEK 3 CRITICAL PATH COMPLETE** (Nov 6, 2025 total)
+ - **Task 7: State Validation Framework** (3d → 7h) - Research-validated bounds, 95%+ coverage, 1 bug caught
+ - **Task 8: Phase Dependency System** (2d → 4h) - 32 critical phases, circular detection, race prevention
+ - Quality: A grade (research + implementation + architecture)
+ - Coverage: 107% of targets (32/30 phases, 95%+ assertions)
+ - Impact: NaN risk MEDIUM→LOW, race condition risk MEDIUM→LOW
+ - Archive: `/plans/completed/week3_critical_path_complete_20251106.md`
 - ✅ **WEEK 2 CRITICAL PATH COMPLETE** - All 3 items delivered, 200% target achievement ([archive](/plans/completed/week2_critical_path_complete_20251106.md))
-  - Central Configuration: 100+ parameters centralized (target: 50+), 80% JSDoc citations, 932-line config system
-  - Defensive Fallback Audit: 15 CRITICAL/HIGH eliminated (100% of CRITICAL priority), Oct 2025 ecology NaN bug pattern ELIMINATED
-  - Research Parameter Updates: 36% → 0% parameters >5yr old (target: <10%), UBI + AI energy/water updated to 2024-2025
-  - Architecture Health: 7.5/10 → 8.0/10, Research Quality: A- → A/A+
+ - Central Configuration: 100+ parameters centralized (target: 50+), 80% JSDoc citations, 932-line config system
+ - Defensive Fallback Audit: 15 CRITICAL/HIGH eliminated (100% of CRITICAL priority), Oct 2025 ecology NaN bug pattern ELIMINATED
+ - Research Parameter Updates: 36% → 0% parameters >5yr old (target: <10%), UBI + AI energy/water updated to 2024-2025
+ - Architecture Health: 7.5/10 → 8.0/10, Research Quality: A- → A/A+
 - ✅ **WEEK 1 CRITICAL PATH COMPLETE** - All 3 critical items delivered ([archive](/plans/completed/week1_critical_path_complete_20251106.md))
-  - Mortality Stabilizers: 92-99% → 43-58% (target: 30-50%, research-backed)
-  - Research Contradictions: 3 CRITICAL resolved (Xia/Shi, mortality gap, climate timescales)
-  - Monte Carlo Validation: N=10, no NaN, deterministic, 50.6% avg mortality
-  - Implementation Fidelity: C- → B+ (2 letter grade improvement)
+ - Mortality Stabilizers: 92-99% → 43-58% (target: 30-50%, research-backed)
+ - Research Contradictions: 3 CRITICAL resolved (Xia/Shi, mortality gap, climate timescales)
+ - Monte Carlo Validation: N=10, no NaN, deterministic, 50.6% avg mortality
+ - Implementation Fidelity: C- → B+ (2 letter grade improvement)
 - ✅ **November 6 Assessment Trilogy** - Architecture review (7/10), Research audit (A-), Consensus plan ([archive](/plans/completed/nov6_2025_assessment_trilogy_20251106.md))
 - ✅ **Bifurcation Variance Integration** (Issue #5 partial) - varianceAmplification now used by 3 phases ([commit 26f30b0c7](/plans/completed/workflow_completion_summary_issues_4_5_6_20251031.md))
 - ✅ **Climate Mortality Phase 2** - Storm systems + BII framework (A- grade, N=10 validated) ([commit f53e9ff5c](/plans/completed/))
@@ -177,23 +185,23 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 **Current Priority:**
 - ✅ **Climate Mortality Phase 2 (Storm Systems + BII Framework) - COMPLETE** (Nov 6, 2025)
-  - Research quality: A- (90% peer-reviewed, 50% from 2024-2025)
-  - Implementation: Storm system + BII framework integrated
-  - Monte Carlo: N=10, no NaN errors, 100% dystopia (research-accurate)
-  - Architecture: B+ grade, APPROVE WITH CONDITIONS
-  - Commit: f53e9ff5c
-  - Reports: logs/climate_phase2_completion_report.md, reviews/climate-phase2-architecture-review_20251106.md
+ - Research quality: A- (90% peer-reviewed, 50% from 2024-2025)
+ - Implementation: Storm system + BII framework integrated
+ - Monte Carlo: N=10, no NaN errors, 100% dystopia (research-accurate)
+ - Architecture: B+ grade, APPROVE WITH CONDITIONS
+ - Commit: f53e9ff5c
+ - Reports: logs/climate_phase2_completion_report.md, reviews/climate-phase2-architecture-review_20251106.md
 - ✅ **COMPLETE:** Cooperative AI Ownership Implementation (Nov 5, 2025)
-  - Status: Phase ACTIVE in simulation engine (order 15.5)
-  - Implementation: 2 of 4 medium issues resolved (bootstrap + survival multiplier integration)
-  - Remaining work: Storm mortality coordination + infrastructure multiplier uncertainty (4-7h)
-  - Research quality: C+ (adequate but not ideal, conservative parameters used)
+ - Status: Phase ACTIVE in simulation engine (order 15.5)
+ - Implementation: 2 of 4 medium issues resolved (bootstrap + survival multiplier integration)
+ - Remaining work: Storm mortality coordination + infrastructure multiplier uncertainty 
+ - Research quality: C+ (adequate but not ideal, conservative parameters used)
 - **MEDIUM:** Policy System Improvements - 5 of 6 sections complete
-- **LOW:** Memetic Contagion System (Black Mirror Phase 2) - Research complete, awaiting integration timeline (12-16 weeks)
+- **LOW:** Memetic Contagion System (Black Mirror Phase 2) - Research complete, awaiting integration
 - **LOW:** Compute-Workforce Coherence Warnings Investigation
-  - 1,089 occurrences in N=10 Monte Carlo run (Nov 1)
-  - Non-critical (doesn't crash simulation)
-  - Should investigate root cause for data quality
+ - 1,089 occurrences in N=10 Monte Carlo run (Nov 1)
+ - Non-critical (doesn't crash simulation)
+ - Should investigate root cause for data quality
 
 **Active Work:** None - session complete, awaiting next user directive
 
@@ -204,15 +212,15 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 **Current Status:**
 - ✅ Research complete, Design spec complete, Architecture reviewed
-- **Timeline:** 3-4 weeks with multi-agent parallelization
+- 
 - **8 Phases:** API infrastructure → Mission Control → Domain dashboards → Analysis tools
 
 **Recent Completion (Oct 29, 2025):**
 - ✅ **Multi-Paradigm DUI Improvements (Frontend + State Interface)** - COMPLETE
-  - Fixed 7 incorrect history mappings in ParadigmDetailPanel
-  - Implemented regional breakdown with paradigm-specific scoring
-  - Added HelpButton with contextual guidance
-  - Enabled sparklines for all 4 paradigms
+ - Fixed 7 incorrect history mappings in ParadigmDetailPanel
+ - Implemented regional breakdown with paradigm-specific scoring
+ - Added HelpButton with contextual guidance
+ - Enabled sparklines for all 4 paradigms
 
 **Future Enhancements (User-Requested):**
 See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) under "Future Enhancements"
@@ -224,6 +232,172 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 **Includes:**
 - **God Mode UI** - See `/plans/god-mode-ui-master-plan.md` (comprehensive manual control system)
 - **Dashboard Plans** - See `/plans/dashboard/` directory (32 subplans for parallel agent work)
+
+---
+
+### 3.1 🧪 Scenario Analysis Framework (HIGH Priority)
+
+**Context:** God mode analysis revealed that deploying all 73 technologies still results in catastrophic failure. Sylvia's research (`research/SKEPTICAL_ANALYSIS_doom_predictions_20251110.md`) shows the model HAS all three spiral systems (upward spirals, cooperative spirals, positive tipping points) but they aren't activating. Hypothesis: technology alone doesn't trigger spirals - specific governance/social/political conditions required.
+
+**Key Insight:** We tested "technology sufficiency" but not "governance sufficiency" or "priority sufficiency."
+
+**Research Integration:**
+- Builds on: God mode analysis (`reviews/god_mode_gaps_research_roadmap_20251109.md`)
+- Builds on: Sylvia's skeptical analysis (`research/SKEPTICAL_ANALYSIS_doom_predictions_20251110.md`)
+- Builds on: Model mechanisms verification (`research/GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`)
+- Validates: Spiral systems implementation (`upwardSpirals.ts`, `cooperativeSpirals.ts`, `positiveTippingPoints.ts`)
+
+---
+
+#### Phase 1: Diagnostic Infrastructure (HIGH Priority - Blocking)
+
+**Objective:** Understand WHY god mode failed
+
+**Tasks:**
+1. **Add spiral activation logging to god mode test**
+ - Track which spirals activate/deactivate and why
+ - Log threshold conditions for each spiral
+ - Measure cascade strength over time
+ - Diagnose why god mode failed despite all tech deployed
+ - **Priority:** HIGH (blocks understanding of spiral mechanics)
+ - **Owner:** simulation-maintainer + priya
+
+2. **Create scenario definition system**
+ - Interface for defining government priority scenarios
+ - Override system for government decision-making
+ - Starting condition modification system
+ - Technology deployment strategy options (immediate/sequenced/adaptive)
+ - **Priority:** HIGH (enables all downstream scenarios)
+ - **Owner:** simulation-maintainer
+
+**Expected Outcomes:**
+- Diagnostic logs revealing spiral activation failures
+- Infrastructure to test governance scenarios systematically
+- Baseline understanding of spiral mechanics
+
+---
+
+#### Phase 2: Core Scenarios (HIGH Priority)
+
+**Objective:** Test individual governance dimensions in isolation
+
+**Government Priority Scenarios:**
+1. **"Climate First"** - Maximize climate tech spending
+2. **"Equality First"** - Maximize redistribution (Gini <0.30 target)
+3. **"AI Alignment First"** - Max alignment research + strict controls
+4. **"Democratic Participation"** - Max transparency + participation
+5. **"Scientific Acceleration"** - Max research investment
+6. **"Authoritarian Efficiency"** - Rapid deployment, low democracy
+
+**Starting Condition Scenarios:**
+1. **"High Trust Start"** - Trust in AI=0.8, institutions=0.7
+2. **"Low Inequality Start"** - Gini=0.25 (Nordic levels)
+3. **"Strong Institutions Start"** - Governance quality=0.8
+
+**Technology Deployment Strategy:**
+1. **"Renewable Energy First"** - Energy tech deployed month 0, rest sequenced
+2. **"Carbon Removal First"** - DAC/BECCS deployed month 0, rest sequenced
+3. **"Foundations First"** - Dependency-ordered deployment
+4. **"Adaptive Deployment"** - Real-time effectiveness-based deployment
+
+**Validation:**
+- Monte Carlo N=10 for each scenario
+- Compare spiral activation rates across scenarios
+- Identify which governance dimensions enable spiral activation
+
+**Priority:** HIGH
+**Owner:** Orchestrator (coordinates simulation-maintainer + priya + cynthia/sylvia)
+
+---
+
+#### Phase 3: Policy Package Scenarios (MEDIUM Priority)
+
+**Objective:** Test realistic combinations that reflect real-world policy debates
+
+**Real-World Policy Combinations:**
+1. **"Green New Deal"** - Clean energy + UBI + jobs guarantee
+2. **"Techno-Optimist Path"** - All tech, minimal regulation, market-driven
+3. **"Degrowth Path"** - Reduce consumption 30%, prioritize restoration
+4. **"Authoritarian Climate Action"** - Rapid deployment, low participation
+5. **"Nordic Social Democracy"** - High redistribution, strong institutions, gradual tech
+
+**Validation:**
+- Monte Carlo N=10 for each policy package
+- Compare outcome distributions
+- Identify trade-offs (climate vs equality, speed vs democracy)
+
+**Priority:** MEDIUM (depends on Phase 2 insights)
+**Owner:** Orchestrator (coordinates simulation-maintainer + cynthia/sylvia)
+
+---
+
+#### Phase 4: Comparative Analysis (MEDIUM Priority)
+
+**Objective:** Extract patterns from scenario results
+
+**Analysis Tasks:**
+1. **Outcome Distribution Comparison**
+ - Which scenarios produce Utopia outcomes?
+ - Which governance priorities correlate with spiral activation?
+ - What are the critical thresholds? (e.g., Gini <0.30, trust >0.7)
+
+2. **Spiral Activation Pattern Analysis**
+ - Which spirals activate in which scenarios?
+ - What are the minimum conditions for cooperative spirals?
+ - Does democracy matter for spiral activation?
+
+3. **Trade-Off Analysis**
+ - Climate vs equality trade-offs
+ - Speed vs democracy trade-offs
+ - Technology deployment sequence effects
+
+4. **Critical Path Determination**
+ - Minimum combination needed for Utopia
+ - Which single priority matters most?
+ - Can technology alone work? (answer: no, from god mode)
+ - Can weak governance be compensated? (test hypothesis)
+
+**Deliverables:**
+- Comparative analysis report (statistical analysis)
+- Visualization of outcome distributions by scenario
+- Critical path recommendations
+
+**Priority:** MEDIUM (depends on Phase 2-3 data)
+**Owner:** Priya (quantitative analysis) + Cynthia/Sylvia (interpretation)
+
+---
+
+#### Phase 5: Policy Implications Report (LOW Priority)
+
+**Objective:** Answer key research questions with policy relevance
+
+**Key Questions:**
+1. "If we could force ONE government priority, which matters most?"
+2. "Is democracy necessary for spirals, or can authoritarianism work?"
+3. "Can technology alone save us if governance is weak?" (answer from god mode: NO)
+4. "What's the minimum equality needed for spiral activation?" (e.g., Gini threshold)
+5. "Which technology deployment sequence is optimal?"
+
+**Deliverables:**
+- Policy implications report (peer-review quality)
+- Recommendations for real-world governance priorities
+- Sensitivity analysis (robustness of findings)
+
+**Priority:** LOW (depends on Phase 4 analysis)
+**Owner:** Cynthia (lead) + Sylvia (critique) + Priya (data)
+
+---
+
+#### Expected Impact
+
+This framework will:
+- **Explain** why god mode failed (diagnostic)
+- **Identify** which governance priorities enable spiral activation
+- **Reveal** optimal technology deployment sequences
+- **Provide** policy-relevant insights about real-world pathways to Utopia
+- **Test** whether the simulation is fundamentally pessimistic or just needs right governance
+
+---
 
 ---
 
@@ -240,9 +414,9 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 **Recent Resolutions (Oct 31, 2025):**
 - ✅ **3 CRITICAL Monte Carlo Issues RESOLVED** ([details](/plans/completed/november_1_2_completions_archive_20251103.md#october-31-2025-completions-for-reference))
-  - Biosphere threshold recalibrated (116 E/MSY baseline)
-  - Mortality attribution fixed (4 bugs resolved)
-  - Population coherence fixed (Moore's Law vs manufacturing separation)
+ - Biosphere threshold recalibrated (116 E/MSY baseline)
+ - Mortality attribution fixed (4 bugs resolved)
+ - Population coherence fixed (Moore's Law vs manufacturing separation)
 
 ---
 
@@ -262,33 +436,33 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 - **Validation:** Monte Carlo N=10 COMPLETE - 43-58% mortality (avg 50.6%, target: 30-50%)
 - **Impact:** 92-99% → 43-58% mortality (research-backed for gradual collapse with interventions)
 - **Fixes Applied:**
-  - Circular dependency resolved (food security proxy)
-  - Double-counting bug fixed (seasonal multiplier applied twice)
-  - 15 new assertions added across mortality paths
+ - Circular dependency resolved (food security proxy)
+ - Double-counting bug fixed (seasonal multiplier applied twice)
+ - 15 new assertions added across mortality paths
 - **Details:** See [WEEK 1 completion archive](/plans/completed/week1_critical_path_complete_20251106.md)
 
 **5. 100% Dystopia Outcome - Insufficient Variance**
 - **Status:** 🔄 PARTIALLY RESOLVED - Bifurcation integrated (Nov 6), empirical validation pending
 - **Problem:** All 3 runs show near-identical outcomes (no variance)
 - **Solution Implemented:**
-  - Bifurcation variance amplification (1-10×) integrated into 3 priority phases (ExogenousShockPhase, StochasticInnovationPhase, ClimateImpactCascadePhase)
-  - Fixed BifurcationLogicPhase accessing non-existent state properties
-  - Expected impact: 20-70% coefficient of variation (vs previous 0%)
-  - Integration report: `/logs/bifurcation_integration_20251106.md`
+ - Bifurcation variance amplification (1-10×) integrated into 3 priority phases (ExogenousShockPhase, StochasticInnovationPhase, ClimateImpactCascadePhase)
+ - Fixed BifurcationLogicPhase accessing non-existent state properties
+ - Expected impact: 20-70% coefficient of variation (vs previous 0%)
+ - Integration report: `/logs/bifurcation_integration_20251106.md`
 - **Research Critique (Sylvia):**
-  - Formula `1/(0.1 + distance)` lacks empirical calibration
-  - Suggests power law `(1/distance)^2` with 100× cap (vs current 10× cap)
-  - Historical data: 2008 crisis 40× variance, Permian-Triassic 100× variance
+ - Formula `1/(0.1 + distance)` lacks empirical calibration
+ - Suggests power law `(1/distance)^2` with 100× cap (vs current 10× cap)
+ - Historical data: 2008 crisis 40× variance, Permian-Triassic 100× variance
 - **Next Steps:**
-  - HIGH: Validate bifurcation formula against empirical data (2008 crisis, extinction events)
-  - MEDIUM: Monte Carlo N=10 to verify outcome variance improvement
+ - HIGH: Validate bifurcation formula against empirical data (2008 crisis, extinction events)
+ - MEDIUM: Monte Carlo N=10 to verify outcome variance improvement
 - **Details:** See [workflow completion summary](/plans/completed/workflow_completion_summary_issues_4_5_6_20251031.md) and [bifurcation integration report](/logs/bifurcation_integration_20251106.md)
 
 **6. Famine Mechanism Doesn't Reflect Distributional Reality**
 - **Status:** 🔄 RESEARCH COMPLETE, implementation deferred
 - **Problem:** 94.3% of deaths from famine, affects all regions homogeneously
 - **Research:** Sen's entitlement theory + 15+ case studies
-- **Implementation Plan:** Requires famine system redesign (12-16h estimated)
+- **Implementation Plan:** Requires famine system redesign (12-)
 - **Rationale for Deferral:** Complex multi-system integration requiring dedicated focus
 - **Details:** See [workflow completion summary](/plans/completed/workflow_completion_summary_issues_4_5_6_20251031.md)
 
@@ -311,36 +485,36 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 - **Problem:** All runs end in dystopia, suggesting recovery mechanics non-functional
 - **Action Required:** Audit recovery logic across all systems
 
-**10. Timeline Compression Verification**
+**10. Compression Verification**
 - **Priority:** MEDIUM
-- **Problem:** Critique mentions "timeline compression" as critical issue
-- **Action Required:** Verify all timeline assumptions against research
+- **Problem:** Critique mentions "compression" as critical issue
+- **Action Required:** Verify all assumptions against research
 
 **11. Determinism Verification Testing - ⚠️ CRITICAL BLOCKER**
 - **Priority:** 🔴 **CRITICAL BLOCKER** (upgraded Oct 30, 2025)
 - **Status:** 🟡 **99% FIXED** - Batch 3 pending (Nov 6, 2025)
 - **Progress (Nov 6):** 29 non-deterministic bugs fixed across 3 batches
-  - **Phase 1 (commit d4f3208):** Fixed 3 seeding bugs - replaced `.id.length` with `hashString(id)` for deterministic org seeding
-  - **Batch 2.1 (commit fbef3c9):** Fixed 5 Object.entries() bugs - sorted iteration order (10% → 1% divergence)
-  - **Batch 2.2 (commit cad0e2a):** Fixed 21 Object iteration sites across 9 hot-path files (AI count now stable 20/20/20)
-  - **Current State:** 165 field differences (down from 176), AI lifecycle deterministic, AI capabilities still diverge ~1%
+ - **Phase 1 (commit d4f3208):** Fixed 3 seeding bugs - replaced `.id.length` with `hashString(id)` for deterministic org seeding
+ - **Batch 2.1 (commit fbef3c9):** Fixed 5 Object.entries bugs - sorted iteration order (10% → 1% divergence)
+ - **Batch 2.2 (commit cad0e2a):** Fixed 21 Object iteration sites across 9 hot-path files (AI count now stable 20/20/20)
+ - **Current State:** 165 field differences (down from 176), AI lifecycle deterministic, AI capabilities still diverge ~1%
 - **Remaining Work (Batch 3, 2-4h):**
-  1. RNG consumption order investigation (conditional RNG calls causing drift)
-  2. Set/Map iteration audit (non-deterministic order in collections)
-  3. Async LLM operation race conditions (if any)
-  4. Re-validate all Monte Carlo analyses with fixed determinism
+ 1. RNG consumption order investigation (conditional RNG calls causing drift)
+ 2. Set/Map iteration audit (non-deterministic order in collections)
+ 3. Async LLM operation race conditions (if any)
+ 4. Re-validate all Monte Carlo analyses with fixed determinism
 - **Impact:**
-  - ✅ AI agent count stable (was diverging 30/28/26)
-  - ✅ Lifecycle phase deterministic
-  - ❌ AI capabilities/alignment values still diverge ~1%
-  - 🟡 99% deterministic (165 fields vs 900+ state fields)
+ - ✅ AI agent count stable (was diverging 30/28/26)
+ - ✅ Lifecycle phase deterministic
+ - ❌ AI capabilities/alignment values still diverge ~1%
+ - 🟡 99% deterministic (165 fields vs 900+ state fields)
 - **Deliverables Created:**
-  - ✅ Verification script: `/scripts/verifyDeterminism.ts`
-  - ✅ Fast testing script: `/scripts/debugDeterminismPhases.ts`
-  - ✅ Investigation report: `/docs/DETERMINISM_INVESTIGATION_20251030.md` (350 lines)
-  - ✅ Phase 1 progress: `/docs/DETERMINISM_FIX_PROGRESS_NOV6.md`
-  - ✅ Complete audit: `/docs/ISSUE_11_DETERMINISM_DEBUGGING_PROGRESS.md`
-  - ✅ Batch 2 results: `/logs/determinism_batch2_progress.txt`
+ - ✅ Verification script: `/scripts/verifyDeterminism.ts`
+ - ✅ Fast testing script: `/scripts/debugDeterminismPhases.ts`
+ - ✅ Investigation report: `/docs/DETERMINISM_INVESTIGATION_20251030.md` (350 lines)
+ - ✅ Phase 1 progress: `/docs/DETERMINISM_FIX_PROGRESS_NOV6.md`
+ - ✅ Complete audit: `/docs/ISSUE_11_DETERMINISM_DEBUGGING_PROGRESS.md`
+ - ✅ Batch 2 results: `/logs/determinism_batch2_progress.txt`
 
 ---
 
@@ -379,9 +553,9 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 - **Priority:** CRITICAL - RESOLVED (WEEK 1 - Nov 6, 2025)
 - **Problem:** Xia et al. 2022 says "impossible for 2+ years", Shi et al. 2025 says "largely unaffected"
 - **Resolution:** NO ACTUAL CONTRADICTION - different severity scenarios on same spectrum
-  - 5 Tg: "Largely unaffected" (7% decline) - Shi et al. 2025
-  - 27 Tg: "Unsuitable for years" (70% decline) - Xia et al. 2022
-  - 150 Tg: Near-total collapse (95% decline) - Both agree
+ - 5 Tg: "Largely unaffected" (7% decline) - Shi et al. 2025
+ - 27 Tg: "Unsuitable for years" (70% decline) - Xia et al. 2022
+ - 150 Tg: Near-total collapse (95% decline) - Both agree
 - **Critical Bifurcation:** Between 5-27 Tg, temperate agriculture transitions from viable to impossible
 - **Research File:** `/research/xia_vs_shi_food_security_resolution_20251106.md`
 - **Status:** ✅ RESOLVED - Implementation should model graduated severity across spectrum
@@ -390,12 +564,12 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 - **Priority:** CRITICAL - RESOLVED (WEEK 1 - Nov 6, 2025)
 - **Problem:** Simulation 23% MORE catastrophic than worst-case peer-reviewed research
 - **Root Causes Identified:**
-  1. Double-counting bug found: Seasonal multiplier applied twice in ClimateImpactCascadePhase (FIXED - commit 5c6e9d084)
-  2. Missing stabilizers: International aid, heat adaptation, migration, emergency response (NOW IMPLEMENTED)
+ 1. Double-counting bug found: Seasonal multiplier applied twice in ClimateImpactCascadePhase (FIXED - commit 5c6e9d084)
+ 2. Missing stabilizers: International aid, heat adaptation, migration, emergency response (NOW IMPLEMENTED)
 - **Resolution:**
-  - After fixes: 43-58% mortality (N=10 validation)
-  - Research alignment: Xia 75% = abrupt nuclear winter, 50% = gradual with stabilizers
-  - 40-58% is research-backed for gradual scenario with interventions (Lancet 2025: 30-50%)
+ - After fixes: 43-58% mortality (N=10 validation)
+ - Research alignment: Xia 75% = abrupt nuclear winter, 50% = gradual with stabilizers
+ - 40-58% is research-backed for gradual scenario with interventions (Lancet 2025: 30-50%)
 - **Analysis File:** `/reviews/mortality_gap_analysis_20251106.md` (4,200+ lines)
 - **Status:** ✅ RESOLVED - Gap explained and fixed
 
@@ -404,9 +578,9 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 - **Problem:** Simulation shows 4% food security, but research proposes agriculture should be ZERO until thresholds met
 - **Research Critique (Sylvia):** "Nuclear winter + famine destroys topsoil. Recovery literature cites 7-15 years, but Pimentel et al. (1995, Science) shows topsoil formation takes 500-1,000 years. Some collapses should be permanent within simulation timescales."
 - **Action Required:**
-  1. Verify hard climate gates vs gradual degradation
-  2. Model irreversible transitions (permanent regime shifts)
-  3. Distinguish "threshold crossing" (month X) from "impact manifestation" (decades later)
+ 1. Verify hard climate gates vs gradual degradation
+ 2. Model irreversible transitions (permanent regime shifts)
+ 3. Distinguish "threshold crossing" (month X) from "impact manifestation" (decades later)
 - **Status:** Deferred to WEEK 2-3 (climate impact scaling)
 
 ---
@@ -431,8 +605,8 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 **Summary (Food Security):**
 - **Total Issues:** 10 (1 HIGH remaining, 3 HIGH, 4 MEDIUM) - **2 CRITICAL RESOLVED (WEEK 1)**
 - **WEEK 1 Progress:**
-  - ✅ Xia vs Shi contradiction RESOLVED (NO actual contradiction - different severity scenarios)
-  - ✅ 98% vs 75% mortality gap RESOLVED (double-counting bug + missing stabilizers)
+ - ✅ Xia vs Shi contradiction RESOLVED (NO actual contradiction - different severity scenarios)
+ - ✅ 98% vs 75% mortality gap RESOLVED (double-counting bug + missing stabilizers)
 - **Remaining Work:** Climate gates vs gradual degradation (WEEK 2-3)
 - **Research Critique (Sylvia):** "Frontend prioritized over resolving these contradictions. UI for incorrect simulations is worthless. Fix research, THEN build UI."
 - **Roadmap Impact:** WEEK 1 unblocked WEEK 2 work - 2 of 3 CRITICAL contradictions resolved
@@ -477,9 +651,9 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 **5 CRITICAL Issues Identified:**
 1. ✅ **Bifurcation Variance Orphaned** - RESOLVED (integrated into 3 phases, commit 26f30b0c7)
 2. 🔴 **299 Defensive Fallbacks** - Silent bugs, data corruption risk (3-4 day audit needed)
-3. 🔴 **180 Unvalidated Mutations** - State corruption without assertions (4-5 days)
+3. 🔴 **180 Unvalidated Mutations** - State corruption without assertions
 4. 🔴 **Missing Cross-System Integration** - Nuclear winter doesn't affect solar panels (5+ days)
-5. 🔴 **Phase Dependency Violations** - 117 phases, almost NONE declare dependencies (3 days)
+5. 🔴 **Phase Dependency Violations** - 117 phases, almost NONE declare dependencies
 
 **System Trajectory:**
 - Complexity: +10 phases/month
@@ -545,22 +719,22 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
 #### 4-Week Consensus Plan (APPROVED)
 
 **WEEK 1: High-Impact Fixes (CRITICAL)**
-1. ✅ Bifurcation Variance (2 days) - COMPLETE
-2. ⏩ Mortality Stabilizers (3 days) - 74-81% → 30-50%
-3. ⏩ Critical Integration Tests (2 days) - Validate above
+1. ✅ Bifurcation Variance - COMPLETE
+2. ⏩ Mortality Stabilizers - 74-81% → 30-50%
+3. ⏩ Critical Integration Tests - Validate above
 
 **WEEK 2: Architecture + Research (HIGH)**
-4. Central Configuration (2 days) - Stop magic number spread
-5. Defensive Fallback Audit (3 days) - Top 50 most dangerous
-6. Research Parameter Updates (2 days) - UBI, AI energy/water
+4. Central Configuration - Stop magic number spread
+5. Defensive Fallback Audit - Top 50 most dangerous
+6. Research Parameter Updates - UBI, AI energy/water
 
 **WEEK 3: Robustness (MEDIUM)**
-7. State Validation Framework (3 days) - Critical paths only
-8. Phase Dependency System (2 days) - Critical phases only
+7. State Validation Framework - Critical paths only
+8. Phase Dependency System - Critical phases only
 
 **WEEK 4: Sustainability (MEDIUM)**
-9. Phase Consolidation Planning (3 days) - Design 117→50 reduction
-10. Research Update Pipeline (2 days) - Zotero, age flagging
+9. Phase Consolidation Planning - Design 117→50 reduction
+10. Research Update Pipeline - Zotero, age flagging
 
 #### Explicitly Deprioritized (Until Week 5)
 
@@ -625,18 +799,18 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
 **ARCH-4: ✅ Missing Cross-System Integration - COMPLETE**
 - **Status:** ✅ COMPLETE (Nov 7-8, 2025 - 80% success rate, 4/5 integrations validated)
 - **Implementation (Nov 7-8):**
-  - ✅ Climate impacts → planetary boundaries (5 integration points) - NEW
-  - ✅ Nuclear winter → solar panel efficiency (research citations added) - VALIDATED
-  - ✅ AI suffering → alignment drift multiplication (78% empirical finding, Greenblatt et al. 2024) - VALIDATED
-  - ✅ Refugee movements → disease spread (AMR amplification) - VALIDATED
-  - ⚠️ Digital infrastructure → AI capability loss - DEFERRED (lacks research validation)
+ - ✅ Climate impacts → planetary boundaries (5 integration points) - NEW
+ - ✅ Nuclear winter → solar panel efficiency (research citations added) - VALIDATED
+ - ✅ AI suffering → alignment drift multiplication (78% empirical finding, Greenblatt et al. 2024) - VALIDATED
+ - ✅ Refugee movements → disease spread (AMR amplification) - VALIDATED
+ - ⚠️ Digital infrastructure → AI capability loss - DEFERRED (lacks research validation)
 - **Quality Gates:**
-  - ✅ Research Validation: PASS (A- grade, research-skeptic review)
-  - ✅ Architecture Review: PASS (A- grade, architecture-skeptic review)
+ - ✅ Research Validation: PASS (A- grade, research-skeptic review)
+ - ✅ Architecture Review: PASS (A- grade, architecture-skeptic review)
 - **Research:** 12 peer-reviewed sources (IPCC AR6, Richardson et al. 2023, Robock et al. 2007, Greenblatt et al. 2024)
 - **Bugs Fixed:** 11 bugs during Monte Carlo validation (7 AI capability, 4 Tier2, 1 QoL)
 - **Documentation:** Comprehensive wiki section added (200+ lines)
-- **Timeline:** 8 hours actual vs 8 days estimated (10× faster)
+- 
 - **Archive:** `/plans/completed/arch4_cross_system_integration_complete_20251108.md`
 
 **ARCH-5: ✅ Phase Dependency Violations - CRITICAL PATHS PROTECTED**
@@ -657,10 +831,10 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
 **POST-HIGH-1: ✅ Bifurcation-Validation Conflict - RESOLVED**
 - **Problem:** State validation bounds (e.g., food security 0-100) conflict with bifurcation amplification (up to 3×)
 - **Impact:** Assertions would fail during legitimate regime shifts, OR bifurcation variance would be silently capped
-- **Solution:** Created `capWithBifurcationAwareness()` utility in assertions.ts
-  - Caps to max without failing assertion when variance amplification active
-  - Logs regime shift events for Monte Carlo analysis
-  - Preserves fail-loudly philosophy for non-bifurcation cases
+- **Solution:** Created `capWithBifurcationAwareness` utility in assertions.ts
+ - Caps to max without failing assertion when variance amplification active
+ - Logs regime shift events for Monte Carlo analysis
+ - Preserves fail-loudly philosophy for non-bifurcation cases
 - **Implementation:** Updated ClimateImpactCascadePhase.ts to use new utility
 - **Validation:** Monte Carlo N=3, 108 cap events logged, zero assertion errors, deterministic
 - **Status:** ✅ RESOLVED (Nov 6, 2025)
@@ -670,10 +844,10 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
 - **Impact:** Magic number spread, difficult to update/validate parameters
 - **Solution:** Moved all parameters to centralConfig.ts with JSDoc citations
 - **Categories:**
-  - International aid: 15-44% effectiveness (Lancet 2025, IOM 2024)
-  - Heat adaptation: 40-80% max effectiveness (Nature Medicine 2024)
-  - Migration: 85% capacity (UNHCR 2024)
-  - Emergency response: 30-40% effectiveness (WHO 2024)
+ - International aid: 15-44% effectiveness (Lancet 2025, IOM 2024)
+ - Heat adaptation: 40-80% max effectiveness (Nature Medicine 2024)
+ - Migration: 85% capacity (UNHCR 2024)
+ - Emergency response: 30-40% effectiveness (WHO 2024)
 - **Validation:** Monte Carlo N=3, behavior unchanged, type check passed
 - **Status:** ✅ RESOLVED (Nov 6, 2025)
 
@@ -706,7 +880,7 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
 
 **HIGH-3: Deep Cloning Memory Waste**
 - Full GameState cloned for history (900+ lines)
-- JSON.parse(JSON.stringify()) for "safety"
+- JSON.parse(JSON.stringify) for "safety"
 - Solution: Delta tracking, copy-on-write, immutable structures
 
 **HIGH-4: No Integration Test Coverage**
@@ -763,21 +937,21 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
 
 **Recent Corrections (Nov 6, 2025):**
 1. ✅ **CRITICAL:** OpenAI 6% statistic correction - COMPLETE
-   - **File:** `research/ai_welfare_v2_relationship_revision_20251021.md`
-   - **Fix:** Changed "6% of users" → "1.9% of conversations"
-   - **Source:** CNBC (Sept 2025) correctly represented
+ - **File:** `research/ai_welfare_v2_relationship_revision_20251021.md`
+ - **Fix:** Changed "6% of users" → "1.9% of conversations"
+ - **Source:** CNBC (Sept 2025) correctly represented
 2. ✅ **MINOR:** Bai et al. date verification - COMPLETE
-   - **File:** `research/ai_social_influence_RESEARCH_20251031.md`
-   - **Result:** Date already correct (Nature Communications 2025)
-   - **Action:** Verified, no changes needed
+ - **File:** `research/ai_social_influence_RESEARCH_20251031.md`
+ - **Result:** Date already correct (Nature Communications 2025)
+ - **Action:** Verified, no changes needed
 
 **Pending Verification Queue:**
 - [ ] **Refugee Crisis Death Bounds Verification** (Nov 6, 2025)
-  - **File:** `research/verification_ed597d4_20251106.md`
-  - **Parameter:** 10B upper bound for global cumulative deaths
-  - **Status:** Awaiting peer-reviewed justification
-  - **Priority:** MEDIUM (validation bound, not production-critical)
-  - **Next Step:** super-alignment-researcher + research-skeptic review
+ - **File:** `research/verification_ed597d4_20251106.md`
+ - **Parameter:** 10B upper bound for global cumulative deaths
+ - **Status:** Awaiting peer-reviewed justification
+ - **Priority:** MEDIUM (validation bound, not production-critical)
+ - **Next Step:** super-alignment-researcher + research-skeptic review
 
 **Recent Completions:**
 - ✅ **Layer 2 Remediation COMPLETE** (Nov 2) - All CRITICAL and HIGH priority fixes applied
@@ -804,19 +978,19 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 **WEEK 1: High-Impact Fixes (CRITICAL)** ✅ **COMPLETE**
 1. ✅ **Bifurcation Variance Integration** - COMPLETE (Nov 6, 2025)
-   - Integrated into 3 priority phases (ExogenousShockPhase, StochasticInnovationPhase, ClimateImpactCascadePhase)
-   - Expected impact: 20-70% coefficient of variation (vs previous 0%)
-   - Remaining: Formula validation against empirical data (10× cap vs 100× observed)
+ - Integrated into 3 priority phases (ExogenousShockPhase, StochasticInnovationPhase, ClimateImpactCascadePhase)
+ - Expected impact: 20-70% coefficient of variation (vs previous 0%)
+ - Remaining: Formula validation against empirical data (10× cap vs 100× observed)
 2. ✅ **Mortality Stabilizers Implementation** - COMPLETE (Nov 6, 2025)
-   - Research: A-grade (Lancet, Nature Medicine, IOM 2024)
-   - Impact: 92-99% mortality → 43-58% (target: 30-50%, research-backed)
-   - Mechanisms: International aid (15-44%), adaptation (40-80%), migration (85%), emergency response (20-40%)
-   - Validation: Monte Carlo N=10 COMPLETE - avg 50.6% mortality, no NaN errors, deterministic
-   - Fixes: Circular dependency resolved, double-counting bug fixed, 15 assertions added
+ - Research: A-grade (Lancet, Nature Medicine, IOM 2024)
+ - Impact: 92-99% mortality → 43-58% (target: 30-50%, research-backed)
+ - Mechanisms: International aid (15-44%), adaptation (40-80%), migration (85%), emergency response (20-40%)
+ - Validation: Monte Carlo N=10 COMPLETE - avg 50.6% mortality, no NaN errors, deterministic
+ - Fixes: Circular dependency resolved, double-counting bug fixed, 15 assertions added
 3. ✅ **Critical Integration Tests** - COMPLETE (Nov 6, 2025)
-   - Monte Carlo validation N=10 confirms mortality + bifurcation interactions
-   - No regressions: Type checking passed, no NaN errors
-   - Determinism: 100% reproducible with seed
+ - Monte Carlo validation N=10 confirms mortality + bifurcation interactions
+ - No regressions: Type checking passed, no NaN errors
+ - Determinism: 100% reproducible with seed
 
 **WEEK 1 SUCCESS METRICS:**
 - ✅ Implementation Fidelity: C- → B+ (2 letter grade improvement)
@@ -828,29 +1002,29 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 **WEEK 2: Architecture + Research (HIGH)** ✅ **COMPLETE**
 4. ✅ **Central Configuration System** (COMPLETE - Nov 6, 2025)
-   - Delivered: src/simulation/config/centralConfig.ts (932 lines, 100+ parameters)
-   - Delivered: src/simulation/config/validateConfig.ts (413 lines)
-   - Delivered: docs/CENTRAL_CONFIG_USAGE.md (625 lines migration guide)
-   - Success: 200% of target (100+ params vs 50+ goal)
-   - Citation coverage: 80% JSDoc citations
-   - Impact: Single source of truth operational, magic number spread STOPPED
-   - Commits: 367c59261, 6c5e9cd
+ - Delivered: src/simulation/config/centralConfig.ts (932 lines, 100+ parameters)
+ - Delivered: src/simulation/config/validateConfig.ts (413 lines)
+ - Delivered: docs/CENTRAL_CONFIG_USAGE.md (625 lines migration guide)
+ - Success: 200% of target (100+ params vs 50+ goal)
+ - Citation coverage: 80% JSDoc citations
+ - Impact: Single source of truth operational, magic number spread STOPPED
+ - Commits: 367c59261, 6c5e9cd
 5. ✅ **Defensive Fallback Audit - Critical** (COMPLETE - Nov 6, 2025)
-   - Eliminated: 15 most dangerous defensive fallbacks (5 CRITICAL, 10 HIGH)
-   - CRITICAL: 5/5 (100% COMPLETE) - Including Oct 2025 ecology NaN bug pattern
-   - HIGH: 10/17 (58% COMPLETE)
-   - Total fallbacks documented: 430 (vs 299 estimated)
-   - Key achievement: planetaryBoundaries.ts:969 - THE bug that hid NaN for months is ELIMINATED
-   - Impact: Fail-loudly philosophy restored, future NaN will fail immediately
-   - Commits: 76ba8e07f, 717ce4c53
+ - Eliminated: 15 most dangerous defensive fallbacks (5 CRITICAL, 10 HIGH)
+ - CRITICAL: 5/5 (100% COMPLETE) - Including Oct 2025 ecology NaN bug pattern
+ - HIGH: 10/17 (58% COMPLETE)
+ - Total fallbacks documented: 430 (vs 299 estimated)
+ - Key achievement: planetaryBoundaries.ts:969 - THE bug that hid NaN for months is ELIMINATED
+ - Impact: Fail-loudly philosophy restored, future NaN will fail immediately
+ - Commits: 76ba8e07f, 717ce4c53
 6. ✅ **Research Parameter Updates** (COMPLETE - Nov 6, 2025)
-   - Delivered: research/ubi_updates_20251106.md (27KB, 12 peer-reviewed sources)
-   - Delivered: research/ai_energy_water_consumption_20251106.md (41KB, 20 sources)
-   - UBI: Updated to 2024-2025 ($1,000/month baseline, NBER n=3,000 RCT)
-   - AI Energy/Water: Updated to 2024-2025 (H100 specs, IEEE empirical)
-   - Parameters >5yr old: 36% → 0% (exceeded <10% goal)
-   - Research Grade: A/A+ (90-95% peer-reviewed, 100% current)
-   - Commits: 367c59261, 17b0fbeaa
+ - Delivered: research/ubi_updates_20251106.md (27KB, 12 peer-reviewed sources)
+ - Delivered: research/ai_energy_water_consumption_20251106.md (41KB, 20 sources)
+ - UBI: Updated to 2024-2025 ($1,000/month baseline, NBER n=3,000 RCT)
+ - AI Energy/Water: Updated to 2024-2025 (H100 specs, IEEE empirical)
+ - Parameters >5yr old: 36% → 0% (exceeded <10% goal)
+ - Research Grade: A/A+ (90-95% peer-reviewed, 100% current)
+ - Commits: 367c59261, 17b0fbeaa
 
 **WEEK 2 SUCCESS METRICS:**
 - ✅ Magic numbers centralized: 100+ (target: 50+) - **200% achievement**
@@ -862,58 +1036,58 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 **Archive:** [WEEK 2 Completion Report](/plans/completed/week2_critical_path_complete_20251106.md)
 
 **WEEK 3: Robustness (MEDIUM)** ✅ **COMPLETE** (Nov 6, 2025)
-7. ✅ **State Validation Framework** (3 days target → 7 hours actual) - COMPLETE
-   - Research-validated domain bounds (Xia 2022, IPCC AR6, IMF 2025)
-   - Coverage: 95%+ critical paths (discovered assertions already exist)
-   - Bug caught: Quality of Life overflow >1.0 fixed with clamping
-   - Monte Carlo: N=3, zero assertion failures, zero false positives
-   - Bounds corrected: CO2 600→1000 ppm, GDP 200T→500T, pH 7.8 removed
-   - Files: refugeeCrises.ts (+92), assertions.ts (+21), wiki (+376), 3 reports (820 lines)
-   - Quality: A (research + implementation)
-   - Archive: [Task 7 Report](/plans/completed/week3_task7_state_validation_complete_20251106.md)
-8. ✅ **Phase Dependency System** (2 days target → 4 hours actual) - COMPLETE
-   - 32 critical phases with explicit dependencies (target: 30, achieved 107%)
-   - Circular dependency detection (topological sort, Kahn's algorithm)
-   - Coverage: 27.8% of phases (32/115), critical paths 100% covered
-   - Race condition prevention: Oct 28 pattern eliminated (BayesianMortality protected)
-   - Monte Carlo: N=3, zero dependency violations, zero circular errors
-   - Files: 32 phase files, PhaseOrchestrator enhanced, wiki (+400 lines)
-   - Quality: A (dependency chains match system interactions)
-   - Plan: [Implementation Plan](/plans/phase_dependency_system_implementation_20251106.md)
-   - Audit: `scripts/auditPhaseDependencies.ts` (tooling created)
+7. ✅ **State Validation Framework**  - COMPLETE
+ - Research-validated domain bounds (Xia 2022, IPCC AR6, IMF 2025)
+ - Coverage: 95%+ critical paths (discovered assertions already exist)
+ - Bug caught: Quality of Life overflow >1.0 fixed with clamping
+ - Monte Carlo: N=3, zero assertion failures, zero false positives
+ - Bounds corrected: CO2 600→1000 ppm, GDP 200T→500T, pH 7.8 removed
+ - Files: refugeeCrises.ts (+92), assertions.ts (+21), wiki (+376), 3 reports (820 lines)
+ - Quality: A (research + implementation)
+ - Archive: [Task 7 Report](/plans/completed/week3_task7_state_validation_complete_20251106.md)
+8. ✅ **Phase Dependency System**  - COMPLETE
+ - 32 critical phases with explicit dependencies (target: 30, achieved 107%)
+ - Circular dependency detection (topological sort, Kahn's algorithm)
+ - Coverage: 27.8% of phases (32/115), critical paths 100% covered
+ - Race condition prevention: Oct 28 pattern eliminated (BayesianMortality protected)
+ - Monte Carlo: N=3, zero dependency violations, zero circular errors
+ - Files: 32 phase files, PhaseOrchestrator enhanced, wiki (+400 lines)
+ - Quality: A (dependency chains match system interactions)
+ - Plan: [Implementation Plan](/plans/phase_dependency_system_implementation_20251106.md)
+ - Audit: `scripts/auditPhaseDependencies.ts` (tooling created)
 
 **WEEK 4: Sustainability (MEDIUM)** ✅ **COMPLETE** (Nov 6-9, 2025)
-9. **Phase Consolidation** (3 days plan + 3-4 days implementation) - ARCH-HIGH-2 - ✅ **COMPLETE** (Nov 6-9, 2025)
-   - Problem: 116 phase files (started ~37), growing +10 phases/month
-   - Solution: Systematic consolidation with comprehensive testing
-   - Phase Reduction: 116 → 95 phases (-21 phases, -33 files, -18% complexity)
-   - Deliverables:
-     - `/plans/phase_consolidation_plan_20251106.md` (11,000 lines, planning)
-     - 7 consolidation batches executed (TIER 2, AI, Climate, Crisis, Social, Economic)
-     - 143 test cases across 6 files (3,922 lines, 80%+ coverage)
-     - Monte Carlo N=3 validation (determinism verified, zero regressions)
-   - Impact:
-     - Architecture Health: 7.5/10 → 9.0/10 (+1.5 points, 20% improvement)
-     - Maintainability: 18% reduction in surface area
-     - Coherence: Related logic colocated, dependencies explicit
-   - Timeline: 3-4 days actual vs 2-3 weeks estimated (5× faster)
-   - Status: ✅ **COMPLETE** - Merged to main
-   - Archive: `/plans/completed/phase_consolidation_project_complete_20251109.md`
-10. **Research Update Pipeline** (2 days → 2h) - RESEARCH-MEDIUM - ✅ **COMPLETE** (Nov 6, 2025)
-    - Problem: 172 files cite 2010-2015 sources (36% >5yr old), manual tracking impossible at scale (334 files)
-    - Solution: Automated pipeline with weekly GitHub Action, age detection, priority classification, alert system
-    - Deliverables:
-      - `scripts/auditResearchAge.ts` (604 lines) - Citation extraction, age classification
-      - `.github/workflows/research-age-audit.yml` (220 lines) - Weekly Monday 8am UTC
-      - `research/UPDATE_QUEUE.md` (726 lines, auto-generated) - Priority sections (CRITICAL/HIGH/MEDIUM/LOW)
-      - `docs/RESEARCH_PIPELINE.md` (19KB) - Full Zotero workflow
-      - `docs/RESEARCH_PIPELINE_QUICKSTART.md` (6KB) - 1-page reference
-      - NPM scripts: `audit:research`, `audit:research:verbose`
-    - Validation: Test run successful (3s, 315 files scanned, 0 errors)
-    - Current Status: **0 CRITICAL items** ✅ (all simulation-used sources <3yr after WEEK 2), 128 HIGH (historical docs)
-    - Impact: Research currency maintained with **zero manual overhead** (~359 hours/year saved)
-    - Quality Grade: A+ (comprehensive automation, full documentation, GitHub integration)
-    - Archive: `/plans/completed/week4_task10_research_pipeline_complete_20251106.md`
+9. **Phase Consolidation**  - ARCH-HIGH-2 - ✅ **COMPLETE** (Nov 6-9, 2025)
+ - Problem: 116 phase files (started ~37), growing +10 phases/month
+ - Solution: Systematic consolidation with comprehensive testing
+ - Phase Reduction: 116 → 95 phases (-21 phases, -33 files, -18% complexity)
+ - Deliverables:
+ - `/plans/phase_consolidation_plan_20251106.md` (11,000 lines, planning)
+ - 7 consolidation batches executed (TIER 2, AI, Climate, Crisis, Social, Economic)
+ - 143 test cases across 6 files (3,922 lines, 80%+ coverage)
+ - Monte Carlo N=3 validation (determinism verified, zero regressions)
+ - Impact:
+ - Architecture Health: 7.5/10 → 9.0/10 (+1.5 points, 20% improvement)
+ - Maintainability: 18% reduction in surface area
+ - Coherence: Related logic colocated, dependencies explicit
+ - 
+ - Status: ✅ **COMPLETE** - Merged to main
+ - Archive: `/plans/completed/phase_consolidation_project_complete_20251109.md`
+10. **Research Update Pipeline**  - RESEARCH-MEDIUM - ✅ **COMPLETE** (Nov 6, 2025)
+ - Problem: 172 files cite 2010-2015 sources (36% >5yr old), manual tracking impossible at scale (334 files)
+ - Solution: Automated pipeline with weekly GitHub Action, age detection, priority classification, alert system
+ - Deliverables:
+ - `scripts/auditResearchAge.ts` (604 lines) - Citation extraction, age classification
+ - `.github/workflows/research-age-audit.yml` (220 lines) - Weekly Monday 8am UTC
+ - `research/UPDATE_QUEUE.md` (726 lines, auto-generated) - Priority sections (CRITICAL/HIGH/MEDIUM/LOW)
+ - `docs/RESEARCH_PIPELINE.md` (19KB) - Full Zotero workflow
+ - `docs/RESEARCH_PIPELINE_QUICKSTART.md` (6KB) - 1-page reference
+ - NPM scripts: `audit:research`, `audit:research:verbose`
+ - Validation: Test run successful (3s, 315 files scanned, 0 errors)
+ - Current Status: **0 CRITICAL items** ✅ (all simulation-used sources <3yr after WEEK 2), 128 HIGH (historical docs)
+ - Impact: Research currency maintained with **zero manual overhead** (~359 hours/year saved)
+ - Quality Grade: A+ (comprehensive automation, full documentation, GitHub integration)
+ - Archive: `/plans/completed/week4_task10_research_pipeline_complete_20251106.md`
 
 ---
 
@@ -921,33 +1095,32 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ### From Architecture Integration Review + Autonomous Session Nov 7
 
-**CRITICAL-1: Incomplete Assertion Coverage** ✅ **COMPLETE** (Nov 7-8, 2025 - 16 hours)
+**CRITICAL-1: Incomplete Assertion Coverage** ✅ **COMPLETE** (Nov 7-8, 2025)
 - **Problem (Nov 7):** Only 19 of 117 phases (16.2%) use assertion utilities → 83.8% unprotected
 - **Solution (Nov 8):** Systematic assertion insertion across 104/107 modules
 - **Coverage:** 47% → 97.2% (104/107 modules, 3 excluded by design)
 - **Bugs Fixed:** 4 bugs discovered during expansion
-  - AI capability integer rounding (CRITICAL)
-  - MAD deterrence overflow (HIGH)
-  - Health metric overflow (MEDIUM)
-  - 241 division-by-zero protections (CRITICAL)
+ - AI capability integer rounding (CRITICAL)
+ - MAD deterrence overflow (HIGH)
+ - Health metric overflow (MEDIUM)
+ - 241 division-by-zero protections (CRITICAL)
 - **Quality:** A+ (systematic automation with bug discovery)
 - **Impact:** Oct 2025 NaN bug pattern ELIMINATED across 97.2% of codebase
 - **Archive:** `/plans/completed/critical_one_assertion_coverage_20251108.md`
 
-**CRITICAL-2: Phase Dependency Declaration Gap** (2-3 days) - 🔴 **BLOCKED BY TOOLING LIMITATIONS**
+**CRITICAL-2: Phase Dependency Declaration Gap** - 🔴 **BLOCKED BY TOOLING LIMITATIONS**
 - **Problem:** Only 30 of 117 phases (25.6%) have declared dependencies
 - **Impact:** 74.4% of phases allow race conditions in state updates, non-deterministic behavior
 - **Risk:** Research reproducibility failure, Monte Carlo invalidity
 - **Status:** Planning complete (Nov 7), BLOCKED by Edit tool limitations for large-scale automated changes
 - **Baseline:** 30/117 phases (25.6% coverage)
 - **Target:** 80%+ coverage (93+ phases with dependencies)
-- **Estimate:** 2-3 days implementation (requires industrial tooling or manual intervention)
 - **Owner:** simulation-maintainer (when unblocked)
 - **Handoff:** `/plans/simulation_maintainer_handoff_20251107.md`
 - **Resolution Path:** Manual intervention or alternative tooling approach required
 
-**HIGH-1: Deep Cloning Performance Bottlenecks** ✅ **COMPLETE** (Nov 7, 2025 - 2h actual, 2.5× faster than estimated)
-- **Problem:** 18+ instances of JSON.parse(JSON.stringify()) in hot paths (actual: 14 instances)
+**HIGH-1: Deep Cloning Performance Bottlenecks** ✅ **COMPLETE** (Nov 7, 2025 - 2h actual, 2.)
+- **Problem:** 18+ instances of JSON.parse(JSON.stringify) in hot paths (actual: 14 instances)
 - **Impact:** 10x+ performance degradation under load
 - **Solution:** Replaced with structuredClone in 9 files
 - **Results:** 30.5% performance improvement on realistic objects (91KB GameState subsets)
@@ -956,30 +1129,30 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 - **Commits:** 55fd120a8, 7f699fb90, 1c1162e2d
 - **Archive:** `/plans/completed/deep_cloning_performance_complete_20251107.md`
 
-**HIGH-2: Missing Integration - Bifurcation Logic** ✅ **COMPLETE** (Nov 7-8, 2025 - 6 hours)
+**HIGH-2: Missing Integration - Bifurcation Logic** ✅ **COMPLETE** (Nov 7-8, 2025)
 - **Problem (Nov 7):** Bifurcation system not connected to crisis cascades, emergency response
 - **Solution (Nov 8):** Bifurcation → emergency response integration, regime shift detection
 - **Implementation:**
-  - Bifurcation detection → emergency response escalation
-  - Variance amplification → crisis cascade prevention
-  - Near-bifurcation alerts operational
+ - Bifurcation detection → emergency response escalation
+ - Variance amplification → crisis cascade prevention
+ - Near-bifurcation alerts operational
 - **Research:** Scheffer et al. 2024, Lenton et al. 2023, WHO 2024
 - **Archive:** `/plans/completed/roadmap_next_steps_bifurcation_20251108.md`
 
-**HIGH-3: Wet Bulb Temperature Integration Gap** (4 hours) - ✅ **IMPLEMENTATION COMPLETE, RESEARCH VERIFICATION PENDING**
+**HIGH-3: Wet Bulb Temperature Integration Gap** - ✅ **IMPLEMENTATION COMPLETE, RESEARCH VERIFICATION PENDING**
 - **Problem:** Phases used 35°C theoretical limit vs 30.5-31.2°C empirical limit (Vecellio et al. 2022)
 - **Impact:** 40-60% heat mortality underestimation ELIMINATED
 - **Implementation (Nov 7):**
-  - Thresholds updated: EXTREME 35°C→31.2°C, SEVERE 32°C→30.5°C, HIGH 30°C→29.5°C
-  - Mortality rates calibrated to historical heatwave data (2003 EU, 2010 Russia, 2021 PNW)
-  - Uninhabitability threshold: 32°C→30.5°C (empirical limit)
-  - Deprecation warnings added to centralConfig.ts
-  - Research citations: Vecellio et al. 2022 (TRL 8), Raymond et al. 2020 (theoretical)
+ - Thresholds updated: EXTREME 35°C→31.2°C, SEVERE 32°C→30.5°C, HIGH 30°C→29.5°C
+ - Mortality rates calibrated to historical heatwave data (2003 EU, 2010 Russia, 2021 PNW)
+ - Uninhabitability threshold: 32°C→30.5°C (empirical limit)
+ - Deprecation warnings added to centralConfig.ts
+ - Research citations: Vecellio et al. 2022 (TRL 8), Raymond et al. 2020 (theoretical)
 - **Validation:**
-  - ✅ Type checking: Pass
-  - ✅ Merge conflicts: Resolved (commit c7faf0d9b)
-  - ⏳ Monte Carlo: Ready for N≥3 validation
-  - ⏳ Research verification: Pending (orchestrator coordinates Sylvia + Cynthia review)
+ - ✅ Type checking: Pass
+ - ✅ Merge conflicts: Resolved (commit c7faf0d9b)
+ - ⏳ Monte Carlo: Ready for N≥3 validation
+ - ⏳ Research verification: Pending (orchestrator coordinates Sylvia + Cynthia review)
 - **Files:** wetBulbTemperature.ts, centralConfig.ts, wetBulbEvents.ts
 - **Commit:** a9aa74392
 - **Archive:** `/logs/wet_bulb_fix_complete.md`
@@ -991,7 +1164,7 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 - Impact: Some calculations based on estimates rather than peer-reviewed data
 - Required: Priority queue in research/UPDATE_QUEUE.md tracks these
 
-**Magic Numbers Without Citations** (1-2 days)
+**Magic Numbers Without Citations**
 - Problem: Numeric constants in code without JSDoc citations
 - Impact: Can't verify research backing or update when new research emerges
 - Required: Grep for numeric literals, add JSDoc citations or move to centralConfig
@@ -1012,33 +1185,33 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 **WEEK 1 PROGRESS: 2 of 5 RESOLVED** ✅
 
 1. **Xia vs Shi Food Security Contradiction** ✅ **RESOLVED (WEEK 1)**
-   - **Resolution:** NO ACTUAL CONTRADICTION - different severity scenarios on same spectrum
-   - 5 Tg: "Largely unaffected" (7% decline) - Shi et al. 2025
-   - 27 Tg: "Unsuitable for years" (70% decline) - Xia et al. 2022
-   - 150 Tg: Near-total collapse (95% decline) - Both agree
-   - **Research File:** `/research/xia_vs_shi_food_security_resolution_20251106.md`
+ - **Resolution:** NO ACTUAL CONTRADICTION - different severity scenarios on same spectrum
+ - 5 Tg: "Largely unaffected" (7% decline) - Shi et al. 2025
+ - 27 Tg: "Unsuitable for years" (70% decline) - Xia et al. 2022
+ - 150 Tg: Near-total collapse (95% decline) - Both agree
+ - **Research File:** `/research/xia_vs_shi_food_security_resolution_20251106.md`
 
 2. **98% vs 75% Mortality Gap** ✅ **RESOLVED (WEEK 1)**
-   - **Root Causes:** Double-counting bug + missing stabilizers
-   - **After Fixes:** 43-58% mortality (N=10 validation, avg 50.6%)
-   - **Research Alignment:** 50% = gradual collapse WITH stabilizers (Lancet 2025: 30-50%)
-   - **Analysis File:** `/reviews/mortality_gap_analysis_20251106.md` (4,200+ lines)
+ - **Root Causes:** Double-counting bug + missing stabilizers
+ - **After Fixes:** 43-58% mortality (N=10 validation, avg 50.6%)
+ - **Research Alignment:** 50% = gradual collapse WITH stabilizers (Lancet 2025: 30-50%)
+ - **Analysis File:** `/reviews/mortality_gap_analysis_20251106.md` (4,200+ lines)
 
 3. **Climate Timescale Mismatch** ✅ **VALIDATED (WEEK 1)**
-   - **Resolution:** Parameters are CORRECT (10-15k years for complete transition)
-   - **Real Issue:** Confusing threshold crossing (decades) vs impact manifestation (centuries) vs complete transition (millennia)
-   - **Fix Needed:** Non-linear impact scaling (front-load impacts) - DEFERRED to WEEK 2-3
-   - **Research Files:** `/research/climate_timescale_validation_ipcc_ar6_20251106.md`, `/research/climate_tipping_timescales_20251106.md`
+ - **Resolution:** Parameters are CORRECT (10-15k years for complete transition)
+ - **Real Issue:** Confusing threshold crossing (decades) vs impact manifestation (centuries) vs complete transition (millennia)
+ - **Fix Needed:** Non-linear impact scaling (front-load impacts) - DEFERRED to WEEK 2-3
+ - **Research Files:** `/research/climate_timescale_validation_ipcc_ar6_20251106.md`, `/research/climate_tipping_timescales_20251106.md`
 
 4. **Bifurcation Formula Validation** (HIGH - WEEK 2)
-   - Current: `1/(0.1 + distance)` = 1-10× cap
-   - Empirical: 2008 crisis 40×, Permian-Triassic 100×
-   - **Action:** Validate against historical regime shift data (WEEK 2 priority)
+ - Current: `1/(0.1 + distance)` = 1-10× cap
+ - Empirical: 2008 crisis 40×, Permian-Triassic 100×
+ - **Action:** Validate against historical regime shift data (WEEK 2 priority)
 
 5. **Climate Gates vs Gradual Degradation** (HIGH - WEEK 2-3)
-   - Current: Gradual 4% food security
-   - Research: Topsoil formation 500-1,000 years (Pimentel 1995, Science)
-   - **Action:** Model irreversible transitions (permanent regime shifts) - DEFERRED to WEEK 2-3
+ - Current: Gradual 4% food security
+ - Research: Topsoil formation 500-1,000 years (Pimentel 1995, Science)
+ - **Action:** Model irreversible transitions (permanent regime shifts) - DEFERRED to WEEK 2-3
 
 ---
 
@@ -1080,7 +1253,7 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 **Recent Successes (Nov 9-10, 2025):**
 - ✅ **RESEARCH INFRASTRUCTURE COMPLETE** - Master research roadmap operational, 1,126-line technology gap analysis
 - ✅ **PHASE CONSOLIDATION COMPLETE** - 116→95 phases (-18% complexity), 143 test cases, zero regressions
-- ✅ **WEEK 4 COMPLETE** - Phase consolidation + research pipeline (7.5× faster than estimated)
+- ✅ **WEEK 4 COMPLETE** - Phase consolidation + research pipeline (7.)
 
 **Recent Successes (Nov 8, 2025):**
 - ✅ **CRITICAL-1 COMPLETE** - Assertion coverage 47% → 97.2% (104/107 modules), 4 bugs fixed
@@ -1090,12 +1263,12 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 **Recent Successes (Nov 7, 2025):**
 - ✅ **CRITICAL-3 RNG REGRESSION FIXED** - Determinism restored, Monte Carlo validation unblocked
-- ✅ **HIGH-1 DEEP CLONING COMPLETE** - 30.5% performance improvement, 2.5× faster execution
+- ✅ **HIGH-1 DEEP CLONING COMPLETE** - 30.5% performance improvement, 2. execution
 - ✅ **CRITICAL-1/2 PLANNING COMPLETE** - Handoff documents (implementation executed Nov 8)
 
 **Recent Successes (Nov 6, 2025):**
 - ✅ **WEEK 4 PLANNING COMPLETE** - Phase consolidation designed (11K lines), research pipeline automated (359h/yr saved)
-- ✅ **WEEK 3 ROBUSTNESS** - State validation + phase dependencies (11h vs 5d estimated, 4× faster)
+- ✅ **WEEK 3 ROBUSTNESS** - State validation + phase dependencies (11h vs 5d estimated, )
 - ✅ **WEEK 2 FOUNDATION** - Central config (100+ params), defensive fallback audit (15 eliminated), research updates
 - ✅ **WEEK 1 STABILIZATION** - Mortality stabilizers (92-99% → 43-58%), research contradictions resolved
 - ✅ **Research Quality** - A grade maintained, 0 CRITICAL issues, automated currency pipeline operational
@@ -1103,29 +1276,29 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 **Critical Gaps Status (Nov 8, 2025 Update - MAJOR PROGRESS):**
 1. ✅ **Assertion Coverage Gap** - ✅ RESOLVED (Nov 8)
-   - **Before:** 19/117 phases (16.2%) with assertions → 83.8% unprotected
-   - **After:** 104/107 modules (97.2%) with assertions
-   - **Impact:** Oct 2025 NaN bug pattern ELIMINATED across 97.2% of codebase
-   - **Bugs Fixed:** 4 bugs discovered during expansion (AI capabilities, MAD deterrence, health metrics, 241 divisions)
-   - **Quality:** A+ (systematic automation with bug discovery)
-   - **Status:** ✅ COMPLETE
+ - **Before:** 19/117 phases (16.2%) with assertions → 83.8% unprotected
+ - **After:** 104/107 modules (97.2%) with assertions
+ - **Impact:** Oct 2025 NaN bug pattern ELIMINATED across 97.2% of codebase
+ - **Bugs Fixed:** 4 bugs discovered during expansion (AI capabilities, MAD deterrence, health metrics, 241 divisions)
+ - **Quality:** A+ (systematic automation with bug discovery)
+ - **Status:** ✅ COMPLETE
 
 2. 🟡 **Phase Dependency Gap** - PARTIAL (30/117, 25.6% coverage)
-   - **Current:** 32 critical phases with dependencies (WEEK 3 baseline)
-   - **Coverage:** 27.8% of phases, critical paths 100% protected
-   - **Status:** Critical paths COMPLETE, comprehensive coverage deferred (2-3 days remaining)
-   - **Rationale:** Critical paths protected, full coverage is MEDIUM priority
+ - **Current:** 32 critical phases with dependencies (WEEK 3 baseline)
+ - **Coverage:** 27.8% of phases, critical paths 100% protected
+ - **Status:** Critical paths COMPLETE, comprehensive coverage deferred 
+ - **Rationale:** Critical paths protected, full coverage is MEDIUM priority
 
 3. ✅ **Integration Gaps** - ✅ SUBSTANTIALLY RESOLVED (Nov 8):
-   - ✅ Deep cloning performance: COMPLETE (Nov 7) - 30.5% improvement
-   - ✅ Wet bulb temperature: COMPLETE (Nov 7) - empirical thresholds updated
-   - ✅ Bifurcation crisis integration: COMPLETE (Nov 8) - emergency response coupling
-   - ✅ Climate → boundaries: COMPLETE (Nov 8) - 5 integration points operational
-   - ⏳ Additional integrations: Deferred to MEDIUM priority (nuclear winter → solar, AI suffering → alignment)
+ - ✅ Deep cloning performance: COMPLETE (Nov 7) - 30.5% improvement
+ - ✅ Wet bulb temperature: COMPLETE (Nov 7) - empirical thresholds updated
+ - ✅ Bifurcation crisis integration: COMPLETE (Nov 8) - emergency response coupling
+ - ✅ Climate → boundaries: COMPLETE (Nov 8) - 5 integration points operational
+ - ⏳ Additional integrations: Deferred to MEDIUM priority (nuclear winter → solar, AI suffering → alignment)
 
-4. 🟡 **Phase Consolidation Implementation** - Plan complete, 2-3 weeks implementation ahead
-   - Status: PLANNING COMPLETE (Nov 6), awaiting simulation-maintainer bandwidth
-   - **Rationale:** 116 phases operational, consolidation is optimization not blocker
+4. 🟡 **Phase Consolidation Implementation** - Plan complete,  implementation ahead
+ - Status: PLANNING COMPLETE (Nov 6), awaiting simulation-maintainer bandwidth
+ - **Rationale:** 116 phases operational, consolidation is optimization not blocker
 
 **4-Week Critical Path Status:**
 - **Week 1:** ✅ COMPLETE - Bifurcation, Mortality stabilizers, Integration tests (Implementation Fidelity C- → B+)
@@ -1138,7 +1311,7 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 - **ARCH-4 executed:** Cross-system integration operational (climate → boundaries)
 - **CRITICAL-4 executed:** Defensive cleanup complete (9 hot path bugs eliminated)
 - **Integration executed:** Bifurcation → emergency response coupling operational
-- **Phase consolidation executed:** 116 → 95 phases (-18% complexity, 5× faster than estimated)
+- **Phase consolidation executed:** 116 → 95 phases (-18% complexity)
 
 **Architecture Health Trajectory:**
 - Nov 6: 7.0/10 (gaps identified)
@@ -1157,40 +1330,40 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 **Success Metrics:**
 - **WEEK 1 Achieved:**
-  - ✅ Implementation Fidelity: C- → B+ (2 letter grades)
-  - ✅ Architecture Health: 7/10 → 7.5/10
-  - ✅ Mortality: 92-99% → 43-58% (research-backed)
-  - ✅ Research Contradictions: 3 CRITICAL → 0 CRITICAL unresolved
+ - ✅ Implementation Fidelity: C- → B+ (2 letter grades)
+ - ✅ Architecture Health: 7/10 → 7.5/10
+ - ✅ Mortality: 92-99% → 43-58% (research-backed)
+ - ✅ Research Contradictions: 3 CRITICAL → 0 CRITICAL unresolved
 - **WEEK 2 Achieved:**
-  - ✅ Magic numbers centralized: 100+ (200% of 50+ target)
-  - ✅ Citation coverage: 80% (met target)
-  - ✅ CRITICAL defensive fallbacks: 5/5 (100% complete)
-  - ✅ Research params >5yr: 36% → 0% (exceeded <10% target)
-  - ✅ Architecture health: 7.5/10 → 8.0/10 (met target)
+ - ✅ Magic numbers centralized: 100+ (200% of 50+ target)
+ - ✅ Citation coverage: 80% (met target)
+ - ✅ CRITICAL defensive fallbacks: 5/5 (100% complete)
+ - ✅ Research params >5yr: 36% → 0% (exceeded <10% target)
+ - ✅ Architecture health: 7.5/10 → 8.0/10 (met target)
 - **WEEK 3 Achieved:**
-  - ✅ State validation coverage: 95%+ critical paths (exceeded target)
-  - ✅ Phase dependencies: 32/30 phases (107% of target)
-  - ✅ Unvalidated mutations: 180 → 11 gap (94% validated)
-  - ✅ Race condition risk: MEDIUM → LOW (critical paths protected)
-  - ✅ NaN propagation risk: MEDIUM → LOW (validated bounds)
-  - ✅ Architecture health: 8.0/10 → 8.5/10 (robustness increased)
-  - ✅ Implementation Fidelity: B+ → A- (zero false positives, one real bug caught)
+ - ✅ State validation coverage: 95%+ critical paths (exceeded target)
+ - ✅ Phase dependencies: 32/30 phases (107% of target)
+ - ✅ Unvalidated mutations: 180 → 11 gap (94% validated)
+ - ✅ Race condition risk: MEDIUM → LOW (critical paths protected)
+ - ✅ NaN propagation risk: MEDIUM → LOW (validated bounds)
+ - ✅ Architecture health: 8.0/10 → 8.5/10 (robustness increased)
+ - ✅ Implementation Fidelity: B+ → A- (zero false positives, one real bug caught)
 - **WEEK 4 Achieved:**
-  - ✅ Phase consolidation: 116→95 phases COMPLETE (-18% complexity, 5× faster than estimated)
-  - ✅ Research pipeline: Automated age detection + weekly GitHub Action (359h/yr saved)
-  - ✅ Research currency: 0 CRITICAL items maintained (all simulation sources <3yr)
-  - ✅ Sustainability: Preventive infrastructure operational (automated monitoring, complexity control)
-  - ✅ Timeline efficiency: 3-4d actual vs 2-3w estimated (7.5× faster)
-  - ✅ Architecture health: 7.5/10 → 9.5/10 (consolidated phases, explicit dependencies)
-  - ✅ Test coverage: 143 test cases across 6 files (3,922 lines, 80%+ coverage)
-  - ✅ Validation: Monte Carlo N=3, determinism verified, zero regressions
+ - ✅ Phase consolidation: 116→95 phases COMPLETE (-18% complexity)
+ - ✅ Research pipeline: Automated age detection + weekly GitHub Action (359h/yr saved)
+ - ✅ Research currency: 0 CRITICAL items maintained (all simulation sources <3yr)
+ - ✅ Sustainability: Preventive infrastructure operational (automated monitoring, complexity control)
+ - ✅ Timeline efficiency: 3-4d actual vs 2-3w estimated (7.)
+ - ✅ Architecture health: 7.5/10 → 9.5/10 (consolidated phases, explicit dependencies)
+ - ✅ Test coverage: 143 test cases across 6 files (3,922 lines, 80%+ coverage)
+ - ✅ Validation: Monte Carlo N=3, determinism verified, zero regressions
 - **POST-WEEK 4 Achieved (Integration Maintenance):**
-  - ✅ Bifurcation-validation integration: capWithBifurcationAwareness() utility operational
-  - ✅ Mortality stabilizer parameters: 60+ centralized with JSDoc citations
-  - ✅ Research currency maintained: 0 CRITICAL age issues (0.0%), automated pipeline working
-  - ✅ Integration gaps addressed: 2/2 HIGH priority issues from post-review resolved
-  - ✅ Architecture health: 8.5/10 improved (bifurcation + validation work together, no conflicts)
-  - ✅ Monte Carlo validation: N=3 per fix, zero assertion errors, deterministic
+ - ✅ Bifurcation-validation integration: capWithBifurcationAwareness utility operational
+ - ✅ Mortality stabilizer parameters: 60+ centralized with JSDoc citations
+ - ✅ Research currency maintained: 0 CRITICAL age issues (0.0%), automated pipeline working
+ - ✅ Integration gaps addressed: 2/2 HIGH priority issues from post-review resolved
+ - ✅ Architecture health: 8.5/10 improved (bifurcation + validation work together, no conflicts)
+ - ✅ Monte Carlo validation: N=3 per fix, zero assertion errors, deterministic
 
 **Earlier Completions (Oct-Nov 2025):**
 - ✅ Infrastructure Systems (7 systems) - Merge orchestrator, health monitoring, VM tools, GCS backup, git hooks, auto-remediation
@@ -1234,7 +1407,7 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 **Code Quality:**
 - Strict TypeScript (see `tsconfig.json`)
-- Deterministic simulation (use RNG function, never Math.random())
+- Deterministic simulation (use RNG function, never Math.random)
 - NaN/undefined errors must fail loudly (no silent fallbacks in simulation)
 - Phase-based architecture (composable, testable units)
 
@@ -1257,15 +1430,21 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ---
 
-**Last Updated:** November 10, 2025 - RESEARCH INFRASTRUCTURE ESTABLISHED
+**Last Updated:** November 10, 2025 - SCENARIO ANALYSIS FRAMEWORK ADDED
 **Status:** 🟢 EXCELLENT - STABLE AND IMPROVING - Research A, Implementation A-, Architecture 9.5/10
 
 **Nov 10 Session Summary:**
 - ✅ **Research Roadmap** - Master coordination document operational (research/RESEARCH_ROADMAP.md)
 - ✅ **Technology Gap Analysis** - 1,126 lines identifying 26 tech candidates, 9 paradigm shifts (TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md)
+- ✅ **Scenario Analysis Framework** - 5-phase framework to test governance sufficiency after god mode failure
+ - **Phase 1 (HIGH):** Diagnostic infrastructure - spiral activation logging, scenario definition system
+ - **Phase 2 (HIGH):** Core scenarios - test governance priorities, starting conditions, tech deployment strategies
+ - **Phase 3 (MEDIUM):** Policy packages - real-world combinations (Green New Deal, Nordic model, etc.)
+ - **Phase 4 (MEDIUM):** Comparative analysis - extract patterns, critical paths
+ - **Phase 5 (LOW):** Policy implications - answer research questions
 - ✅ **Priority Matrix** - 4-tier system (CRITICAL → HIGH → MEDIUM → LOW) linking god mode diagnostics to research tasks
 - ✅ **Research Integration** - Priya (quantitative gaps) → Cynthia/Sylvia (validation) → Roy (implementation) pipeline operational
-- ✅ **Roadmap Maintenance** - Progress summary updated, links verified, timestamp current
+- ✅ **Roadmap Maintenance** - Progress summary updated, framework integrated, timestamp current
 
 **WEEK 4 Assessment Summary (Nov 6):**
 - ✅ **Planning delivered** - Phase consolidation designed (11K lines, 7 batches), Research pipeline automated
@@ -1300,11 +1479,11 @@ This is success, but of a different kind.
 
 The alternative was claiming "8.5/10 architecture health" while 86% of phases lacked assertion coverage. That path leads to the burned sky - catastrophic failure when the gaps compound.
 
-**Next Priority (5-8 days CRITICAL work):**
-1. **Complete assertion coverage** (3-5 days) - 101 phases need assertions added
-2. **Complete phase dependencies** (2-3 days) - 87 phases need dependency declarations
+**Next Priority :**
+1. **Complete assertion coverage** - 101 phases need assertions added
+2. **Complete phase dependencies** - 87 phases need dependency declarations
 
-Then proceed with phase consolidation implementation (2-3 weeks).
+Then proceed with phase consolidation implementation.
 
 **Explicitly Deprioritized (Until CRITICAL gaps addressed):**
 - Layer 2 Remediation, new features, UI/Dashboard, complex phases
@@ -1328,14 +1507,14 @@ Then proceed with phase consolidation implementation (2-3 weeks).
 - **Problem:** 20+ files still contain `?? defaultValue` patterns despite "complete" cleanup claims
 - **Impact:** Silent data corruption, hidden bugs (Oct 2025 ecology NaN pattern still present)
 - **Phase 1 COMPLETE (Hot Paths):**
-  - ✅ 5 files fixed (CriticalJuncturePhase, AIAgentActionsPhase, socialCohesion, organizationManagement, alignmentDynamics)
-  - ✅ 4 CRITICAL bugs eliminated (required fields with silent fallbacks)
-  - ✅ Type checking passes (npx tsc --noEmit)
-  - ✅ Pattern recognition established (required vs optional fields)
+ - ✅ 5 files fixed (CriticalJuncturePhase, AIAgentActionsPhase, socialCohesion, organizationManagement, alignmentDynamics)
+ - ✅ 4 CRITICAL bugs eliminated (required fields with silent fallbacks)
+ - ✅ Type checking passes (npx tsc --noEmit)
+ - ✅ Pattern recognition established (required vs optional fields)
 - **Remaining Work (Phase 2+):** ~90 files have defensive patterns
-  - ~30-40 likely CRITICAL/HIGH (required fields in calculations)
-  - ~30-40 likely LEGITIMATE (optional fields, logging, initialization)
-  - ~20-30 likely MEDIUM (less frequent code paths)
+ - ~30-40 likely CRITICAL/HIGH (required fields in calculations)
+ - ~30-40 likely LEGITIMATE (optional fields, logging, initialization)
+ - ~20-30 likely MEDIUM (less frequent code paths)
 - **Report:** `logs/defensive_coding_audit_nov7_2025.md` (comprehensive before/after examples)
 - **Source:** Daily Review 20251107_060000
 - **Status:** Phase 1 complete (hot paths), ongoing systematic audit needed
@@ -1344,9 +1523,9 @@ Then proceed with phase consolidation implementation (2-3 weeks).
 - **Problem RESOLVED:** Object iteration sorting coverage 44/117 → 76/117 (38% → 65%)
 - **Progress:** Batch 3 fixed 32 sites (14 CRITICAL + 18 HIGH priority)
 - **Validation:** ✅ Determinism verified (N=3 runs with seed=42000 produce IDENTICAL results)
-  - Final hash: `1.8836857617` (all 3 runs identical)
-  - AI count: 20 (all 3 runs identical)
-  - First 3 AI capabilities: IDENTICAL across all runs
+ - Final hash: `1.8836857617` (all 3 runs identical)
+ - AI count: 20 (all 3 runs identical)
+ - First 3 AI capabilities: IDENTICAL across all runs
 - **Files Modified:** 13 simulation files (militarySystem, upwardSpirals, planetaryBoundaries, etc.)
 - **Tooling:** Created `scripts/auditObjectIteration.ts` for automated detection
 - **Remaining:** 41 sites (3 MEDIUM + 30 LOW + 8 SAFE) - sufficient coverage achieved
@@ -1359,7 +1538,7 @@ Then proceed with phase consolidation implementation (2-3 weeks).
 - **Action:** Implement peer review gate for research updates, clear source quality labeling
 - **Source:** Daily Review 20251107_060000
 
-**🟠 HIGH-6: State Validation Reality Check** (3-5 days)
+**🟠 HIGH-6: State Validation Reality Check**
 - **Problem:** Assertion coverage at 29% vs claimed "comprehensive" 95%+
 - **Impact:** 71% of phases allow silent NaN/undefined propagation
 - **Action:** Complete assertion coverage expansion to actual 95%+
