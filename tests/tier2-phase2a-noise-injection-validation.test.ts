@@ -130,7 +130,7 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
 
   describe('Test 1: Detection Mechanics (Sleepers vs Aligned)', () => {
     it('should detect sleepers at expected rates with high investment', () => {
-      const state = createDefaultInitialState();
+      const state = createDefaultInitialState(createTestRng(TEST_SEED));
       const rng = createSeededRNG(12345);
 
       // === ARRANGE ===
@@ -201,7 +201,7 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
     });
 
     it('should have worse detection at low investment', () => {
-      const state = createDefaultInitialState();
+      const state = createDefaultInitialState(createTestRng(TEST_SEED));
       const rng = createSeededRNG(54321);
 
       // === ARRANGE ===
@@ -243,7 +243,7 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
 
   describe('Test 2: Counter-Detection Arms Race', () => {
     it('should allow high self-improvement AIs to learn counter-detection', () => {
-      const state = createDefaultInitialState();
+      const state = createDefaultInitialState(createTestRng(TEST_SEED));
       const rng = createSeededRNG(99999);
 
       // === ARRANGE ===
@@ -314,7 +314,7 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
     });
 
     it('should NOT allow low self-improvement AIs to learn counter-detection', () => {
-      const state = createDefaultInitialState();
+      const state = createDefaultInitialState(createTestRng(TEST_SEED));
       const rng = createSeededRNG(11111);
 
       // === ARRANGE ===
@@ -356,7 +356,7 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
 
   describe('Test 3: False Positive Consequences', () => {
     it('should increase resentment and damage trust on false positives', () => {
-      const state = createDefaultInitialState();
+      const state = createDefaultInitialState(createTestRng(TEST_SEED));
       const rng = createSeededRNG(77777);
 
       // === ARRANGE ===
@@ -414,7 +414,7 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
 
   describe('Test 4: Adversarial Degradation by Capability', () => {
     it('should have capability-dependent detection rates', () => {
-      const state = createDefaultInitialState();
+      const state = createDefaultInitialState(createTestRng(TEST_SEED));
       const rng = createSeededRNG(33333);
 
       // === ARRANGE ===
@@ -514,7 +514,7 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
 
   describe('Test 5: Integration with Benchmark System', () => {
     it('should integrate noise injection with existing benchmark evaluation', () => {
-      const state = createDefaultInitialState();
+      const state = createDefaultInitialState(createTestRng(TEST_SEED));
       const rng = createSeededRNG(55555);
 
       // === ARRANGE ===

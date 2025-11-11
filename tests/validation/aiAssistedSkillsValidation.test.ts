@@ -37,7 +37,7 @@ import { runStep } from '../../src/simulation/engine/PhaseOrchestrator';
 describe('Phase 5.1: Historical Comparison - Automation Patterns', () => {
 
   it('should match ATM adoption timeline (complementarity → substitution over 5-10 years)', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
     const rng = () => 0.5;
 
     // Track phase transitions over 120 months (10 years)
@@ -81,7 +81,7 @@ describe('Phase 5.1: Historical Comparison - Automation Patterns', () => {
   });
 
   it('should show employment displacement in substitution phase', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
 
     // Set AI capability high enough for substitution (AI cap > 1.5 × task complexity)
     // Average task complexity ~1.5, so AI cap 2.5 should trigger substitution
@@ -121,7 +121,7 @@ describe('Phase 5.1: Historical Comparison - Automation Patterns', () => {
 describe('Phase 5.2: Wage Decoupling Validation', () => {
 
   it('should match BLS productivity-wage gap (65% divergence over 50 years)', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
 
     // Simulate 50% productivity growth from AI (conservative estimate)
     state.aiAgents.forEach(ai => ai.capability = 1.5);
@@ -153,7 +153,7 @@ describe('Phase 5.2: Wage Decoupling Validation', () => {
   });
 
   it('should show policy interventions reduce wage gap', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
 
     // Simulate productivity growth
     state.aiAgents.forEach(ai => ai.capability = 1.5);
@@ -198,7 +198,7 @@ describe('Phase 5.2: Wage Decoupling Validation', () => {
 describe('Phase 5.3: Skill Retention Validation', () => {
 
   it('should match educational retention rates (40% AI-only vs 80% with scaffolding)', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
     state.aiAgents.forEach(ai => ai.capability = 1.5);
 
     // Initialize skills
@@ -226,7 +226,7 @@ describe('Phase 5.3: Skill Retention Validation', () => {
   });
 
   it('should show performance-competence gap grows with AI reliance', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
     state.aiAgents.forEach(ai => ai.capability = 1.5);
 
     // Run 36 months with high AI capability
@@ -267,7 +267,7 @@ describe('Phase 5.4: Sensitivity Analysis', () => {
     const testCapabilities = [0.1, 0.5, 1.0, 1.5, 2.0, 3.0, 5.0];
 
     for (const cap of testCapabilities) {
-      const state = createDefaultInitialState();
+      const state = createDefaultInitialState(createTestRng(TEST_SEED));
       state.aiAgents.forEach(ai => ai.capability = cap);
 
       expect(() => {
@@ -287,7 +287,7 @@ describe('Phase 5.4: Sensitivity Analysis', () => {
   });
 
   it('should handle policy strength range 0 to 1.0', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
     state.aiAgents.forEach(ai => ai.capability = 1.5);
     updateAIAssistedSkills(state);
     const prod = calculateProductivityMultiplierFromAIAssistedSkills(state);
@@ -328,7 +328,7 @@ describe('Phase 5.4: Sensitivity Analysis', () => {
 describe('Phase 5.5: Edge Case Testing', () => {
 
   it('should handle superintelligence (AI cap 10.0) gracefully', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
     state.aiAgents.forEach(ai => ai.capability = 10.0);
 
     expect(() => {
@@ -347,7 +347,7 @@ describe('Phase 5.5: Edge Case Testing', () => {
   });
 
   it('should show maximum inequality with zero policy intervention', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
     state.aiAgents.forEach(ai => ai.capability = 2.0);
     updateAIAssistedSkills(state);
     const prod = calculateProductivityMultiplierFromAIAssistedSkills(state);
@@ -371,7 +371,7 @@ describe('Phase 5.5: Edge Case Testing', () => {
   });
 
   it('should show minimum inequality with maximum policy intervention', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
     state.aiAgents.forEach(ai => ai.capability = 2.0);
     updateAIAssistedSkills(state);
     const prod = calculateProductivityMultiplierFromAIAssistedSkills(state);
@@ -404,7 +404,7 @@ describe('Phase 5.5: Edge Case Testing', () => {
 describe('Phase 5.6: Event Trigger Validation', () => {
 
   it('should trigger competence warnings at 30% gap and crisis at 50%', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
 
     // Create artificial 35% gap (should trigger warning)
     if (state.society.segments) {
@@ -438,7 +438,7 @@ describe('Phase 5.6: Event Trigger Validation', () => {
   });
 
   it('should trigger wage inequality warnings at 20% gap and crisis at 40%', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
 
     if (state.laborCapitalDistribution) {
       // Create artificial 25% gap (should trigger warning)
@@ -475,7 +475,7 @@ describe('Phase 5.6: Event Trigger Validation', () => {
 describe('Phase 5.7: Full Integration Test', () => {
 
   it('should run complete 10-year simulation with all Phase 1-4 mechanics', () => {
-    const state = createDefaultInitialState();
+    const state = createDefaultInitialState(createTestRng(TEST_SEED));
     const rng = () => 0.5;
 
     const timeline: Array<{

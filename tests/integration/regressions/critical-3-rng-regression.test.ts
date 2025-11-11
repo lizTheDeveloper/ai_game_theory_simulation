@@ -196,7 +196,7 @@ describe('CRITICAL-3 RNG Regression Prevention', () => {
       // This is verified by TypeScript type system + runtime assertions.
       //
       // If RNG were optional (rng?: () => number), this would compile:
-      // createDefaultInitialState();  // No RNG provided
+      // createDefaultInitialState(createTestRng(TEST_SEED));  // No RNG provided
       //
       // But since RNG is required (rng: () => number), this won't compile.
       // The runtime assertion ensures it also fails at runtime.

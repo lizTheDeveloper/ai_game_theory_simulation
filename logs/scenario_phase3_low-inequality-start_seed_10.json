@@ -1,0 +1,29 @@
+{
+  "scenarioId": "low-inequality-start",
+  "seed": 10,
+  "outcome": "utopia",
+  "monthsSimulated": 5,
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 0,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 5
+  },
+  "finalQoL": {
+    "survivalAvg": 0.6923547379273132,
+    "basicNeedsAvg": 0.7754973908015943,
+    "psychologicalAvg": 0.7123237108460858,
+    "socialAvg": 0.8407529435274482,
+    "healthAvg": 0.3833333333333333,
+    "environmentalAvg": 0.5273333333333333,
+    "overallAvg": 0.6552659082948514
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 0
+  },
+  "finalPopulation": 5.762784328194945,
+  "boundariesBreached": []
+}
