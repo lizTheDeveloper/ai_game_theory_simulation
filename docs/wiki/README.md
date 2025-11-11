@@ -28,6 +28,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 11: Planetary Boundaries 2023 Framework Research Update** (commit a9c5a91)
+- 📚 **New Research:** Richardson et al. (2023) planetary boundaries framework documented
+- 📊 **Key Finding:** 6 of 9 boundaries transgressed (vs previous 7/9 - status clarification needed)
+- 🔬 **Updated Thresholds:** Quantitative values for all 9 boundaries from 2023 peer-reviewed update
+- 🆕 **New Metric:** HANPP (Human Appropriation of Net Primary Production) replaces BII for functional biosphere
+- ⏰ **Historical Insight:** Freshwater transgression occurred 1905-1929 (earlier than recognized)
+- ⚠️ **Verification Pending:** research/verification_a9c5a91_20251111.md created for claim validation
+- 📖 **Research File:** research/planetary_boundaries_2023_update_20251111.md (362 lines, 40+ quantitative parameters)
+
 **Nov 11: Scenario Phase 3 Tech Deployment Bug Fix** (commit a71590b)
 - ✅ **Bug Fixed:** simplifiedScenarioRunner.ts line 105 accessed non-existent `state.deployedTech[tech.id]`
 - ✅ **Root Cause:** Incorrect techTree access pattern (should use `state.techTreeState.unlockedTech`, `regionalDeployment`)

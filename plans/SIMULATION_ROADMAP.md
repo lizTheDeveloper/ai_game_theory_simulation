@@ -39,6 +39,31 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Planetary Boundaries 2023 Framework Update** - MEDIUM (Added Nov 11, 2025)
+     - **Context:** Commit a9c5a91 - Richardson et al. (2023) planetary boundaries framework update
+     - **Research File:** research/planetary_boundaries_2023_update_20251111.md (362 lines, 40+ quantitative parameters)
+     - **Key Claims:**
+       - 6 of 9 boundaries transgressed (vs. current code: 7/9) - status clarification needed
+       - NEW METRIC: HANPP (Human Appropriation of NPP) = 30% vs 10% safe (replaces BII)
+       - Updated thresholds: CO₂ 417 ppm, N fixation 190 Tg/year, P flow 22.6 Tg/year
+       - Freshwater transgression 1905-1929 (earlier than recognized)
+       - Ocean acidification at margin (81% vs 80%) - safe or transgressed?
+       - All transgressed boundaries worsened since 2015 (zero improvement except ozone)
+     - **Critical Discrepancies:**
+       - Research says 6/9 transgressed, code/wiki says 7/9 - which boundaries differ?
+       - Ocean acidification: research "at margin/safe", wiki "Beyond Boundary 1.05x"
+       - Freshwater: research "in risk zone", wiki "Beyond Boundary 1.15x"
+       - CO₂: research 417 ppm (2023), code 425 ppm (2025 projection?)
+     - **Status:** ⚠️ VERIFICATION PENDING
+     - **Verification File:** research/verification_a9c5a91_20251111.md
+     - **Assignments:**
+       - Research-skeptic: TWO-LAYER verification (citation exists + claims accurate)
+       - Super-alignment-researcher: Extract additional parameters if validation passes
+       - Simulation-maintainer: Update implementation (BLOCKED until verification)
+     - **Workflow:** Citation verification → Claim validation (quote passages) → Implementation updates
+     - **Priority:** MEDIUM - Documentation update, not blocking simulation
+     - **Impact:** May require updating planetary boundary thresholds, adding HANPP metric
+
    - **AI Coordination & Transition Management** - CRITICAL (Added Nov 10, 2025)
      - **Context:** God mode 30% mortality finding (8.15B → 5.71B) - commit 90d0957
      - **Key Finding:** Current "god mode" models chaos (instant tech deployment) not coordination (AI-managed transition)
