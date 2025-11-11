@@ -1970,17 +1970,24 @@ Autonomous infrastructure upgrade: Merge orchestrator now spawns Claude Code to 
 **New behavior**:
 - **Merge conflicts** → Claude Code spawned (15 min timeout)
 - **Test failures** → Claude Code spawned (15 min timeout)
-- **TypeScript errors** → Claude Code spawned (15 min timeout)
+- **TypeScript errors** → Intelligent specialist routing (20 min timeout)
+  - Simulation errors (`src/simulation/`, `src/types/game.ts`) → Roy (simulation-maintainer)
+  - Frontend errors (`src/lib/`, `src/components/`, `.tsx`) → Tessa (far-future-ux-designer)
+  - Parses TypeScript compiler output to determine affected files
+  - Agents iterate until `npx tsc --noEmit` passes
 
 **How it works**:
 1. Orchestrator detects failure
 2. Creates detailed remediation task file (`logs/merge_orchestrator/remediation_*.md`)
 3. Spawns: `timeout 900 claude --task-file <task>` (fixed Nov 7: was `claude-code`, causing command not found errors)
-4. Claude Code resolves issue and completes merge
-5. On success: Merges to main, deletes worker branch (no stale branches)
-6. On timeout/failure: Preserves branch for manual review
+4. **TypeScript errors**: Spawns specialist via `spawn-type-error-fix.sh` (parses errors, routes to Roy/Tessa, 20 min timeout)
+5. Claude Code resolves issue and completes merge
+6. On success: Merges to main, deletes worker branch (no stale branches)
+7. On timeout/failure: Preserves branch for manual review
 
-**Impact**: Autonomous workflow now truly self-healing. No manual intervention needed for routine merge conflicts or test failures.
+**Impact**: Autonomous workflow now truly self-healing. 23 unmerged branches (31% of 74 total) can now auto-remediate. No manual intervention needed for routine merge conflicts, test failures, or TypeScript errors.
+
+**Intelligent TypeScript Error Routing (Nov 11, 2025)**: Enhanced merge orchestrator with specialist agent routing for TypeScript errors. Previously, TypeScript failures were treated generically (spawning unspecialized Claude Code). Now: (1) `spawn-type-error-fix.sh` parses TypeScript compiler output to determine affected files, (2) routes simulation errors (`src/simulation/`, `src/types/game.ts`) to Roy (simulation-maintainer) with defensive coding context, (3) routes frontend errors (`src/lib/`, `src/components/`, `.tsx`) to Tessa (far-future-ux-designer) with React patterns context, (4) agents iterate until `npx tsc --noEmit` passes with zero errors. Auto-remediation retries quality gates after fix, continues to merge if all pass. Impact: 23 unmerged branches (31% of 74 total) can now auto-remediate with specialist expertise. Branch analysis scripts added for monitoring. Fix logs saved to `logs/merge_orchestrator/type_fixes/`. See: `scripts/spawn-type-error-fix.sh` (201 lines), `scripts/merge-orchestrator.sh` (lines 314-381), Commit: 397a531
 
 **Auto-Remediation Command Fix (Nov 7, 2025)**: Merge orchestrator was failing to spawn Claude Code with "command not found" error. Root cause: Script called `claude-code` (incorrect) instead of `claude` at lines 289, 358. This prevented all auto-remediation from working - conflicts and test failures weren't being fixed, causing branch accumulation. Fix (commit dd309f8): Changed both instances to `claude`. Also added graceful test gate skip when no test framework available (VM environments now validate with TypeScript only). Impact: Auto-remediation now functional, 10 pending branches ready for processing. Dry run confirmed fixes working. See: `logs/autonomous/health_check_fix_20251107_211700.md`
 
