@@ -6,6 +6,33 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 11, 2025)
 
+**🐛 BUG FIX: Wet Bulb Mortality Cap for Population Collapse Edge Cases** (Nov 11, 2025, commit a3df82a)
+
+**Summary:** Fixed assertion failure where wet bulb mortality calculation could exceed 100% during extreme population collapse scenarios.
+
+**Problem:** Regional populations in `regionalClimates[]` are STATIC (initialized at game start), while global population is DYNAMIC (crashes during extreme scenarios). This caused mortality rate calculations to exceed 100% (e.g., 9.12M deaths / 9M global population = 101.2%).
+
+**Research-Backed Solution:**
+- Cap mortality at 10% (10× worst historical heat wave)
+- Ballester et al. (2024): Largest heat waves cause 0.1-0.5% excess mortality
+- 2003 European heatwave: 0.0094% mortality
+- 2010 Russian heatwave: 0.038% mortality
+
+**Defensive Coding:**
+- NO silent fallback - logs when capping occurs with full diagnostic context
+- Preserves fail-loudly semantics for impossible conditions
+- Indicates either severe population collapse OR calculation bug
+
+**Validation:** Seed 3, 360 months (original failing case) now completes successfully.
+
+**TODO:** Implement dynamic regional population tracking to eliminate this edge case entirely.
+
+**Files:**
+- `src/simulation/wetBulbEvents.ts` (lines 732-784)
+- Documentation: `docs/wiki/MORTALITY_STABILIZERS.md` (new section added)
+
+---
+
 **🔧 INFRASTRUCTURE: Intelligent TypeScript Error Auto-Remediation** (Nov 11, 2025, commit 397a531)
 
 **Summary:** Enhanced merge orchestrator with specialist agent routing for TypeScript compilation errors.

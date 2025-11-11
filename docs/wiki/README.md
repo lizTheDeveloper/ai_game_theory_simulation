@@ -28,6 +28,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 11: Wet Bulb Mortality Cap Fix** (commit a3df82a)
+- ✅ **Critical Bug Fixed:** Wet bulb mortality calculation could exceed 100% under extreme population collapse
+- ✅ **Root Cause:** Static regional populations (1900M South Asia) divided by dynamic crashed global population (<9M at month 359) = 101.2% mortality
+- ✅ **Research-Backed Fix:** Cap mortality at 10% (10× worst historical heat wave per Ballester et al. 2024)
+- ✅ **Historical Context:** 2003 European heatwave 0.0094% mortality, 2010 Russian heatwave 0.038% mortality
+- ✅ **Defensive Coding:** NO silent fallback - logs when capping with full diagnostic context
+- ✅ **Validation:** Seed 3, 360 months (original failing case) now completes successfully
+- ⚠️ **TODO:** Implement dynamic regional population tracking to eliminate edge case
+- 📖 **Context:** Part of assertion-based validation - fail-loudly caught calculation overflow
+
 **Nov 11: Scenario Phase 3 Tech Deployment Bug Fix** (commit a71590b)
 - ✅ **Bug Fixed:** simplifiedScenarioRunner.ts line 105 accessed non-existent `state.deployedTech[tech.id]`
 - ✅ **Root Cause:** Incorrect techTree access pattern (should use `state.techTreeState.unlockedTech`, `regionalDeployment`)
