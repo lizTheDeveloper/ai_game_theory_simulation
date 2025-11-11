@@ -2438,13 +2438,15 @@ When auditing or writing simulation code:
   - Bug discovery: QoL overflow caught at month 13
   - Monte Carlo validation: N=3, zero failures after fix
 
-- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 7, 2025)
+- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 11, 2025)
   - Maximum mortality rates for catastrophic scenarios (pandemics, nuclear winter, famine)
   - **Updated 2024-2025 research:**
-    - COVID-19 excess mortality (JAMA Health Forum May 2025, Int'l J. Epidemiology June 2025)
-    - Nuclear winter validation (IIASA May 2025, US National Academies ongoing review)
-  - **Key findings:** 23% of US deaths in 2023 were excess mortality, nuclear winter consensus reaffirmed (Xia 2022)
-  - Research quality: A- (75% peer-reviewed, 30% from 2024-2025)
+    - **COVID-19 excess mortality:** Bor et al. (2025) JAMA Health Forum - 705K excess US deaths in 2023, 14.7M cumulative 1980-2023
+    - **Nuclear winter:** Shi et al. (2025) Environmental Research Letters - 80% corn yield reduction, first UV-B damage estimates
+    - Vilhelmsson & Baum (2023) Journal of Public Health Policy - public health response framework
+  - **Key findings:** 23% of US deaths in 2023 were excess mortality, 80% agricultural collapse in worst-case nuclear scenario
+  - Research quality: A (80% peer-reviewed, 35% from 2024-2025)
+  - Metadata: oldest_source improved from 2006 → 2008
 
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 
