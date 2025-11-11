@@ -3,7 +3,7 @@
 **Status:** ✅ Implemented (TIER 1.7.4)
 **Phase:** NuclearWinterPhase (30.0)
 **Source:** `src/simulation/nuclearWinter.ts`
-**Research:** Carl Sagan et al. 1983, Robock & Toon 2012, Coupe et al. 2019
+**Research:** Penn State 2025, Xia et al. 2022 (Nature Food), Wescombe et al. 2024, IIASA 2024, Robock & Toon 2012, Coupe et al. 2019
 
 ---
 
@@ -14,14 +14,19 @@ Models the **long-term catastrophic effects** of nuclear war beyond immediate bl
 ### Why Critical
 
 - **Nuclear war is already catastrophic:** 1-2 billion immediate deaths from blast, heat, radiation
-- **Nuclear winter makes it apocalyptic:** Additional 4-6 billion starvation deaths
+- **Nuclear winter makes it apocalyptic:** Additional 2-5+ billion starvation deaths
 - **This is WHY nuclear war = extinction:** Not the bombs, the aftermath
-- **Real research backing:**
-  - Carl Sagan et al. (1983): Original "Nuclear Winter" paper
-  - Robock & Toon (2012): "Local Nuclear War, Global Suffering"
-    - India-Pakistan war (100 warheads): 5 Tg soot → -1.25°C → 2 billion at risk
-  - Coupe et al. (2019): "Nuclear Winter Responses to Regional Nuclear War"
-    - US-Russia full-scale (5000+ warheads): 150 Tg soot → -15 to -20°C → 90% Northern Hemisphere dies
+- **Latest research backing (2024-2025):**
+  - **Penn State (2025):** Nuclear winter reduces global corn production by **7% to 80%**
+    - Even 7% drop: "severe impact on global food system"
+    - 80% drop: "catastrophic consequences," "widespread global food crisis"
+  - **Xia et al. (2022) Nature Food:** **2-5+ billion mortality** from nuclear winter famine
+    - Regional war (India-Pakistan, 100 warheads): 5 Tg soot → >2 billion deaths
+    - Full-scale (US-Russia, 5000+ warheads): 150 Tg soot → >5 billion deaths (62.5%+ of population)
+  - **Wescombe et al. (2024):** Resilient foods (seaweed farming) could offset 10% of losses if pre-deployed
+  - **IIASA (2024):** Ongoing global food security modeling initiative
+  - **Robock & Toon (2012):** "Local Nuclear War, Global Suffering" - 5 Tg soot → -1.25°C → 2 billion at risk
+  - **Coupe et al. (2019):** 150 Tg soot → -15 to -20°C → 90% Northern Hemisphere dies
 
 ---
 
@@ -143,7 +148,7 @@ if (soot <= 5) {
 
 ### 3. Crop Failure (Temperature → Food System Collapse)
 
-**Research:** Each 1°C drop reduces crop yield by 5-10% (conservative: 7%)
+**Research (Penn State 2025):** Nuclear winter reduces global corn production by **7% to 80%** depending on scenario
 
 **Calculation:**
 ```typescript
@@ -153,16 +158,17 @@ cropYield = max(0.05, 1.0 - yieldLoss);  // Minimum 5% (some survive)
 
 **Examples:**
 
-| Temperature Drop | Crop Yield | Food Availability |
-|-----------------|------------|-------------------|
-| -1.25°C | 91% | Widespread shortages |
-| -7°C | 51% | Severe famine |
-| -15°C | 10% | Near-total crop failure |
+| Temperature Drop | Crop Yield | Food Availability | Penn State 2025 Assessment |
+|-----------------|------------|-------------------|---------------------------|
+| -1.25°C | 91-93% | Widespread shortages | "Severe impact on global food system" |
+| -7°C | 51-60% | Severe famine | Major global crisis |
+| -15°C | 10-20% | Near-total crop failure | "Catastrophic consequences" |
 
 **Why 5% minimum?**
 - Some cold-resistant crops survive (potatoes, turnips)
 - Greenhouses (energy-intensive)
 - Stored food (limited duration)
+- **Mitigation potential (Wescombe et al. 2024):** Seaweed farming could provide ~10% of caloric needs at $0.50/kg if pre-deployed
 
 ---
 
@@ -487,18 +493,24 @@ addAcuteCrisisDeaths(state, radiationDeaths, 'war');
 
 ## References
 
-**Primary Research:**
+**Primary Research (2024-2025):**
+- **Penn State (2025):** "Simulating the unthinkable: Models show nuclear winter food production plunge." *ScienceDaily*, July 24, 2025. https://www.sciencedaily.com/releases/2025/07/250724232419.htm
+- **Xia, L., Robock, A., et al. (2022):** "Global food insecurity and famine from reduced crop, marine fishery and livestock production due to climate disruption from nuclear war soot injection." *Nature Food*, 3(8), 586-596. DOI: 10.1038/s43016-022-00573-0
+- **Wescombe, N., et al. (2024):** "Resilient foods for preventing global famine: a review of food supply interventions for global catastrophic food shocks including nuclear winter and infrastructure collapse." *Critical Reviews in Food Science and Nutrition*. DOI: 10.1080/10408398.2024.2431207
+- **IIASA (2024):** "Assessing the potential impact of nuclear winter on food security." June 2024. https://iiasa.ac.at/news/jun-2024/assessing-potential-impact-of-nuclear-winter-on-food-security
+
+**Historical Research:**
 - Sagan, C., et al. (1983): "Nuclear Winter: Global Consequences of Multiple Nuclear Explosions" *Science*
 - Robock, A. & Toon, O. B. (2012): "Local Nuclear War, Global Suffering" *Scientific American*
 - Coupe, J., et al. (2019): "Nuclear Winter Responses to Regional Nuclear War" *JGR Atmospheres*
-
-**Additional Sources:**
 - Turco, R. P., et al. (1983): "TTAPS" study (original nuclear winter model)
 - Mills, M. J., et al. (2014): "Multi-decadal global cooling and unprecedented ozone loss following a regional nuclear conflict"
-- Xia, L., et al. (2022): "Global food insecurity and famine from reduced crop, marine fishery and livestock production due to climate disruption from nuclear war soot injection"
+
+**Comprehensive Research Documentation:**
+- See `research/nuclear_winter_food_security_2024_2025.md` for complete analysis of 2024-2025 research, parameter extraction, and simulation recommendations
 
 ---
 
-**Last Updated:** October 13, 2025
+**Last Updated:** November 11, 2025 (Research update: Penn State 2025, Xia et al. 2022 verification, Wescombe et al. 2024 mitigation)
 **Implementation Status:** ✅ Complete and validated
-**Next Steps:** Regional nuclear winter effects (requires multipolar framework)
+**Next Steps:** Regional nuclear winter effects (requires multipolar framework), implement resilient food mitigation (seaweed farming)

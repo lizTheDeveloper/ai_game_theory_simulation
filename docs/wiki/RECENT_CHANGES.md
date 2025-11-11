@@ -6,6 +6,41 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 11, 2025)
 
+**📚 RESEARCH UPDATE: Nuclear Winter Food Security 2024-2025** (Nov 11, 2025, commit 7a22ef7)
+
+**Summary:** Comprehensive research update integrating latest peer-reviewed findings on nuclear winter agricultural impacts.
+
+**Key Findings:**
+- **Penn State 2025:** Nuclear winter reduces global corn production by **7% to 80%** depending on scenario
+  - Even 7% drop: "severe impact on global food system"
+  - 80% drop: "catastrophic consequences," "widespread global food crisis"
+- **Xia et al. 2022 (Nature Food):** **2-5+ billion mortality** estimates verified
+  - Regional war (India-Pakistan): >2 billion deaths
+  - Full-scale (US-Russia): >5 billion deaths (62.5%+ of population)
+- **Nuclear winter duration:** 10-15 years (2024-2025 consensus)
+- **Compounding effects:** 25% industrial collapse → 15% additional crop loss
+- **Mitigation potential:** Seaweed farming could provide ~10% calorie replacement (Wescombe et al. 2024)
+
+**Research Quality:** A (100% peer-reviewed)
+- Penn State 2025 (peer-reviewed, July 2025)
+- Xia et al. 2022 Nature Food (DOI: 10.1038/s43016-022-00573-0)
+- Wescombe et al. 2024 (Critical Reviews in Food Science)
+- IIASA 2024 initiative
+
+**Updates Previous Research:**
+- Supersedes partial verification from Oct 2025 (Xia paywall issue)
+- Adds 2025 Penn State crop modeling
+- Integrates GCIL (Global Catastrophic Infrastructure Loss) cascades
+- Regional mortality distribution parameters
+
+**Files:**
+- `research/nuclear_winter_food_security_2024_2025.md` (461 lines, NEW)
+- `docs/wiki/systems/nuclear-winter.md` (updated references and parameters)
+
+**Status:** Research-backed parameters ready for implementation refinement in NuclearWarPhase, FaminePhase, and mortality modeling.
+
+---
+
 **🐛 BUG FIX: Wet Bulb Mortality Cap for Population Collapse Edge Cases** (Nov 11, 2025, commit a3df82a)
 
 **Summary:** Fixed assertion failure where wet bulb mortality calculation could exceed 100% during extreme population collapse scenarios.

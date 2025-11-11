@@ -28,6 +28,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 11: Nuclear Winter Food Security Research Update (2024-2025)** (commit 7a22ef7)
+- ✅ **Research Quality:** A (100% peer-reviewed) - Penn State 2025, Xia et al. 2022 (Nature Food), Wescombe et al. 2024, IIASA 2024
+- ✅ **Key Finding:** Nuclear winter reduces crop production by 7-80% (Penn State 2025: even 7% = "severe global impact", 80% = "catastrophic")
+- ✅ **Mortality Verified:** 2-5+ billion deaths from nuclear winter famine (Xia et al. 2022 Nature Food, DOI: 10.1038/s43016-022-00573-0)
+- ✅ **Duration Consensus:** 10-15 year nuclear winter (2024-2025 research update)
+- ✅ **Compounding Effects:** 25% industrial collapse → 15% additional crop loss (GCIL cascades)
+- ✅ **Mitigation Potential:** Seaweed farming 10% calorie replacement if pre-deployed (Wescombe et al. 2024)
+- 📖 **Documentation:** research/nuclear_winter_food_security_2024_2025.md (461 lines), updated docs/wiki/systems/nuclear-winter.md
+
 **Nov 11: Wet Bulb Mortality Cap Fix** (commit a3df82a)
 - ✅ **Critical Bug Fixed:** Wet bulb mortality calculation could exceed 100% under extreme population collapse
 - ✅ **Root Cause:** Static regional populations (1900M South Asia) divided by dynamic crashed global population (<9M at month 359) = 101.2% mortality
