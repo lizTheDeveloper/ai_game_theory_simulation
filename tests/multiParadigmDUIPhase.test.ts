@@ -17,7 +17,11 @@ describe('Multi-Paradigm DUI Update Phase', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -49,7 +53,11 @@ describe('Multi-Paradigm DUI Update Phase', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -79,7 +87,11 @@ describe('Multi-Paradigm DUI Update Phase', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -110,7 +122,11 @@ describe('Multi-Paradigm DUI Update Phase', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -142,7 +158,11 @@ describe('Multi-Paradigm DUI Update Phase', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -169,7 +189,11 @@ describe('Multi-Paradigm DUI Update Phase', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -197,7 +221,11 @@ describe('Multi-Paradigm DUI Update Phase', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes

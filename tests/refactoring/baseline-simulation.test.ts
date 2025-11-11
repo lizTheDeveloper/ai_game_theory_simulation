@@ -31,7 +31,11 @@ describe('Baseline Simulation Tests', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       // const initialState = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      // const initialState = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       // const initialState = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -61,7 +65,11 @@ describe('Baseline Simulation Tests', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       // const initialState = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      // const initialState = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       // const initialState = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -105,7 +113,11 @@ describe('Baseline Simulation Tests', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       // const initialState = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      // const initialState = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       // const initialState = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes

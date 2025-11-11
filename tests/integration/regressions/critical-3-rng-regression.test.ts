@@ -200,7 +200,11 @@ describe('CRITICAL-3 RNG Regression Prevention', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       // createDefaultInitialState(createTestRng(TEST_SEED));  // No RNG provided
+=======
+      // createDefaultInitialState(createSeededRng(12345), 'historical');  // No RNG provided
+>>>>>>> Stashed changes
 =======
       // createDefaultInitialState(createSeededRng(12345), 'historical');  // No RNG provided
 >>>>>>> Stashed changes
