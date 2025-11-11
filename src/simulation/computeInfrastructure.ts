@@ -7,6 +7,7 @@
 
 import { ComputeInfrastructure, DataCenter, GameState } from '../types/game';
 import * as Assertions from './utils/assertions';
+import { RATES } from './config/centralConfig';
 
 /**
  * Initialize compute infrastructure for January 2025
@@ -688,15 +689,23 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
     });
   }
 
-  // P0.1 FIX: Moore's Law based on Epoch AI empirical data
-  // Compute doubling every 8 months (conservative middle estimate)
-  // Math.pow(2, 1/8) = 1.0905 = 9.05% per month
-  // Results: 2x in 8 months, 10x in 26 months, 100x in 52 months, 7,943x in 120 months
+  // === PHASE 4A: HARDWARE EFFICIENCY (COMPUTE SCALING) ===
+  // CRITICAL FIX (Nov 11, 2025): Use research-backed AI scaling parameters from centralConfig
+  //
+  // Research: Sevilla & Roldán (2024) - Training compute growth: 4.1× per year (90% CI: 3.7× to 4.6×)
+  // Math: 4.1× per year = ln(4.1)/ln(2) = 2.04 doublings/year → 12/2.04 = 5.88 month doubling
+  //
+  // IMPORTANT: RATES.AI_CAPABILITY_DOUBLING_TIME (3.6 months) is the COMBINED rate (compute × algorithmic)
+  // Here we apply them SEPARATELY because infra tracks hardwareEfficiency and algorithmsEfficiency as separate multipliers
+  // - Hardware (compute): 4.1× per year
+  // - Algorithmic: 2.5× per year (applied separately below)
+  // - Combined: 4.1 × 2.5 = 10.25× per year (matches 3.6-month doubling)
+  //
   // FIX (Oct 30, 2025 v4): Moore's Law is a TECHNOLOGICAL TREND, not workforce-dependent
   // The frontier efficiency continues advancing regardless of population
   // What DOES break with population loss: ability to MANUFACTURE chips at the frontier
   // This is modeled via:
-  // (1) DC efficiency degradation (maintenance failure) - lines 520-526
+  // (1) DC efficiency degradation (maintenance failure) - earlier in this function
   // (2) Manufacturing capacity gates frontier growth (population loss halts fab production)
   //
   // CRITICAL: Manufacturing capacity is HIGHLY non-linear (requires intact supply chains)
@@ -704,20 +713,32 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   // - 80% population → 64% manufacturing capacity (supply chain stress)
   // - 50% population → 25% manufacturing capacity (critical shortages)
   // - 20% population → 4% manufacturing capacity (near-total collapse)
-  const MOORES_LAW_RATE = Assertions.assertFinite(
-    Math.pow(2, 1/8) - 1, // 9.05% per month (doubles every 8 months)
-    { location: 'applyComputeGrowth_moores', valueName: 'MOORES_LAW_RATE', month: state.currentMonth }
+
+  // Validate compute growth rate parameter
+  const computeGrowthRate = Assertions.assertInRange(
+    RATES.COMPUTE_GROWTH_RATE,
+    0.0, // Minimum 0 (no growth, pessimistic)
+    5.0, // Maximum ln(148) = 5.0 → 148× per year (unrealistically fast, defensive)
+    { location: 'applyComputeGrowth_hardware', valueName: 'RATES.COMPUTE_GROWTH_RATE', month: state.currentMonth }
+  );
+
+  // Convert annual growth rate (natural log scale) to monthly growth rate
+  // Math: If annual rate R (natural log scale), monthly rate = exp(R/12) - 1
+  // Example: R=1.41 (4.1× per year) → exp(1.41/12) - 1 = 0.1232 = 12.32% per month
+  const HARDWARE_GROWTH_RATE = Assertions.assertFinite(
+    Math.exp(computeGrowthRate / 12) - 1,
+    { location: 'applyComputeGrowth_hardware', valueName: 'HARDWARE_GROWTH_RATE', month: state.currentMonth }
   );
   const manufacturingCapacity = Assertions.assertProbability(
     Math.pow(globalPopFraction, 2.0), // Highly non-linear (fabs need EVERYTHING)
     { location: 'applyComputeGrowth_moores', valueName: 'manufacturingCapacity', month: state.currentMonth }
   );
-  const effectiveMooresLaw = Assertions.assertFinite(
-    MOORES_LAW_RATE * manufacturingCapacity, // Gate by manufacturing
-    { location: 'applyComputeGrowth_moores', valueName: 'effectiveMooresLaw', month: state.currentMonth }
+  const effectiveHardwareGrowth = Assertions.assertFinite(
+    HARDWARE_GROWTH_RATE * manufacturingCapacity, // Gate by manufacturing
+    { location: 'applyComputeGrowth_moores', valueName: 'effectiveHardwareGrowth', month: state.currentMonth }
   );
   infra.hardwareEfficiency = Assertions.assertFinite(
-    infra.hardwareEfficiency * (1 + effectiveMooresLaw),
+    infra.hardwareEfficiency * (1 + effectiveHardwareGrowth),
     { location: 'applyComputeGrowth_moores', valueName: 'hardwareEfficiency', month: state.currentMonth }
   );
 
@@ -741,16 +762,31 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
     { location: 'applyComputeGrowth_rdDrag', valueName: 'rdDrag', month: state.currentMonth }
   );
 
-  // AI Capability Baseline Recalibration (Oct 17, 2025)
-  // Research skeptic 2025 reality check: Add CONTINUOUS algorithmic improvement (not just random breakthroughs)
-  // Evidence: Transformers (10-100x gain), Flash Attention (2-3x), MoE (2-4x) - all on SAME hardware
+  // === PHASE 4B: ALGORITHMIC EFFICIENCY ===
+  // CRITICAL FIX (Nov 11, 2025): Use research-backed algorithmic efficiency from Epoch AI
+  //
+  // Research: Epoch AI (2024) - Algorithmic efficiency doubles every 9 months → 2.5× per year
+  // Previous: Hardcoded 10% annual (1.1×/year) - MASSIVELY underestimated
+  // Current: 2.5× per year = 150% annual improvement
+  //
+  // Evidence: Transformers (10-100× gain), Flash Attention (2-3×), MoE (2-4×) - all on SAME hardware
   // Historical: 2017-2025 saw major algorithmic breakthroughs every 2-3 years
-  // Conservative estimate: 10% annual continuous improvement (separate from compute scaling)
-  // Math.pow(1.10, 1/12) = 1.00797 = 0.797% per month
-  // FIX (Oct 30, 2025 v4): Algorithmic frontier also advances independently
+  //
+  // Math: 2.5× per year = ln(2.5) = 0.916 natural log scale
+  // Monthly: exp(0.916/12) - 1 = 0.0794 = 7.94% per month
+  //
+  // FIX (Oct 30, 2025 v4): Algorithmic frontier advances independently of population
   // BUT: (1) R&D drag from precautionary costs affects this (policy choice)
   //      (2) Deployment capacity scales with workforce (need engineers to implement)
-  let CONTINUOUS_ALGO_RATE = Math.pow(1.10, 1/12) - 1; // 10% annual → 0.797% monthly
+
+  // Calculate algorithmic efficiency growth rate (2.5× per year)
+  const ALGORITHMIC_EFFICIENCY_ANNUAL = 2.5; // 2.5× per year (Epoch AI 2024)
+  const ALGORITHMIC_GROWTH_RATE_BASELINE = Assertions.assertFinite(
+    Math.exp(Math.log(ALGORITHMIC_EFFICIENCY_ANNUAL) / 12) - 1, // Convert annual to monthly
+    { location: 'applyComputeGrowth_algo', valueName: 'ALGORITHMIC_GROWTH_RATE_BASELINE', month: state.currentMonth }
+  );
+
+  let CONTINUOUS_ALGO_RATE = ALGORITHMIC_GROWTH_RATE_BASELINE;
 
   // Apply R&D drag to continuous algorithmic improvement (policy effect, not population)
   CONTINUOUS_ALGO_RATE = Assertions.assertFinite(
