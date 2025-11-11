@@ -1,7 +1,15 @@
+---
+oldest_source: 2021
+newest_source: 2025
+last_verified: 2025-11-11
+verification_status: UPDATED
+---
+
 # Planetary Boundary Reversibility: Empirical Evidence
-**Date:** October 20, 2025
+**Date:** October 20, 2025 (Updated: November 11, 2025)
 **Question:** Which planetary boundaries can ACTUALLY be reversed once breached?
 **Answer:** Mixed - some reversible on decade timescales, some effectively permanent
+**Latest Update:** Seven of nine planetary boundaries now transgressed (Richardson et al. 2023; Findlay et al. 2025)
 
 ---
 
@@ -98,13 +106,43 @@
 - **Whole-ocean acidity:** Even at pre-industrial CO₂, ocean is **15-18% more acidic** than pre-industrial baseline
 - **Carbonate saturation:** Aragonite/calcite saturation states decline ongoing
 
+### 2025 UPDATE: Ocean Acidification - Seventh Boundary Crossed
+
+**Source:** Findlay, H.S., Feely, R.A., Jiang, L., Pelletier, G., Bednaršek, N. (2025). "Ocean Acidification: Another Planetary Boundary Crossed." *Global Change Biology*, 31(6), e70238. DOI: 10.1111/gcb.70238
+
+**Key Findings:**
+- **Boundary officially crossed by 2020:** >40% of global surface ocean exceeded 20% reduction threshold from pre-industrial aragonite saturation (ΩArag)
+- **Subsurface worse:** Up to 60% of subsurface ocean (0-200m depth) crossed the boundary
+- **Regional breakdown:** Four of seven ocean regions crossed by 2020:
+  - Arctic Ocean: 26% reduction
+  - North Pacific: 22% reduction
+  - Southern Ocean: 22% reduction
+  - North Atlantic: 20% reduction
+- **Arctic surface undersaturation:** Increased fourfold (5% pre-industrial → 21% in 2020)
+
+**Habitat Loss (Irreversible Consequences):**
+- **Tropical/subtropical coral reefs:** 43% reduction in suitable habitat
+- **Polar pteropods (sea butterflies):** Up to 61% habitat loss
+- **Coastal bivalves (shellfish):** 13% reduction in suitable habitat
+
+**Reversibility Assessment:**
+- **Primary reversal mechanism:** Atmospheric CO₂ reduction ONLY
+- **Low emissions scenario (SSP1-2.6):** Some ocean areas might remain within limits
+- **Intermediate/high emissions:** 100% of surface ocean projected to cross threshold by 2100
+- **Timeline:** Surface recovery decades, deep ocean centuries
+
+**Revised Boundary Proposal:**
+Authors suggest 10% reduction (rather than 20%) as more protective - this threshold was "surpassed by year 2000 across the entire surface ocean."
+
 ### What This Means
 1. **Temperature is reversible** with massive CDR (hundreds of gigatons)
 2. **Ocean acidification is NOT fully reversible** on human timescales
 3. **Deep ocean recovery:** 300+ years even with atmospheric CO₂ removal
 4. **Tipping points:** Ice sheet collapse, AMOC shutdown may be irreversible
+5. **[2025 UPDATE] Habitat loss accelerating:** 43-61% habitat loss for calcifying species already observed
+6. **[2025 UPDATE] Subsurface more impacted:** 60% of subsurface vs 40% of surface crossed boundary
 
-**Lesson:** Partial reversibility on century timescales, but deep ocean and tipping points are one-way.
+**Lesson:** Partial reversibility on century timescales, but deep ocean and tipping points are one-way. By 2025, ocean acidification officially recognized as seventh planetary boundary transgressed.
 
 ---
 
@@ -151,6 +189,35 @@
 - **Global spread:** Detected in Arctic ice, deep ocean, human blood
 
 **Lesson:** Once released, effectively permanent. Prevention is the only strategy.
+
+---
+
+## 2023-2025 Planetary Boundary Status Update
+
+### Richardson et al. (2023): Six of Nine Boundaries Transgressed
+
+**Source:** Richardson, K., et al. (2023). "Earth beyond six of nine planetary boundaries." *Science Advances*, 9(37), eadh2458. DOI: 10.1126/sciadv.adh2458
+
+**Transgressed Boundaries (as of 2023):**
+1. **Climate Change:** CO₂ at 417 ppm (boundary: 350 ppm) - 19% overshoot
+2. **Biosphere Integrity (Genetic):** >100 E/MSY extinctions (boundary: <10 E/MSY) - 10× overshoot
+3. **Biosphere Integrity (Functional):** 30% HANPP (boundary: <10%) - 3× overshoot
+4. **Land System Change:** 60% forest cover remaining (boundary: 75%) - approaching critical
+5. **Biogeochemical Flows (Nitrogen):** 190 Tg N/year (boundary: 62 Tg N/year) - 3× overshoot
+6. **Biogeochemical Flows (Phosphorus):** 22.6 Tg P/year (boundary: 11 Tg P/year) - 2× overshoot
+
+**Approaching Transgression:**
+- **Ocean Acidification:** Ωarag at 2.8 (boundary: 2.75) - [UPDATED 2025: Now officially crossed, see Findlay et al. above]
+
+**Within Safe Zone:**
+- **Stratospheric Ozone:** 284.6 DU (boundary: 276 DU) - recovering post-Montreal Protocol
+- **Freshwater Use:** [Regional variation - some basins transgressed]
+- **Atmospheric Aerosol:** [Not transgressed globally, local exceedances]
+
+**Key Implication for Reversibility:**
+Richardson et al. note that modeling shows "respecting land system boundaries could provide substantial carbon sinks," suggesting that land restoration could contribute to reversing climate boundary transgression through natural carbon sequestration.
+
+**2025 Status:** Seven of nine boundaries now transgressed (ocean acidification added).
 
 ---
 
@@ -235,6 +302,10 @@ if (phosphorusLevel > 0.7 && inputReduction > 0.4) {
 ---
 
 ## Research Citations
+
+**Planetary Boundaries Framework (2023-2025):**
+- Richardson, K., et al. (2023). "Earth beyond six of nine planetary boundaries." *Science Advances*, 9(37), eadh2458. DOI: 10.1126/sciadv.adh2458
+- Findlay, H.S., et al. (2025). "Ocean Acidification: Another Planetary Boundary Crossed." *Global Change Biology*, 31(6), e70238. DOI: 10.1111/gcb.70238 [PMID: 40485607]
 
 **Ozone Layer:**
 - WMO (2024): Ozone Bulletin shows successful recovery of ozone layer
