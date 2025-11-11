@@ -1,9 +1,16 @@
+---
+oldest_source: 2020
+newest_source: 2025
+last_verified: 2025-11-11
+---
+
 # AI Scaling Laws: 2024-2025 Paradigm Shift from Pre-Training to Test-Time Compute
 
-**Date:** November 7, 2025
+**Date:** November 7, 2025 (Updated: November 11, 2025)
 **Researcher:** Autonomous Researcher
 **Purpose:** Document the major paradigm shift in AI scaling laws as traditional pre-training scaling hits diminishing returns and new approaches (test-time compute, efficiency optimization) emerge
-**Sources Reviewed:** 8 peer-reviewed papers and industry reports (2024-2025)
+**Sources Reviewed:** 12 peer-reviewed papers and industry reports (2024-2025)
+**Last Update:** Added 2025 Q2-Q3 model releases (GPT-5, Claude 4, Gemini 2.5, DeepSeek cost disruption)
 
 ---
 
@@ -187,15 +194,34 @@ Traditional benchmarks (next-token prediction, single-shot Q&A) show diminishing
 **OpenAI o1 / o3 (September 2024 / December 2024):**
 - First production models using explicit "thinking budget"
 - Can allocate variable compute at inference time
-- o3 achieves near-human performance on ARC-AGI benchmark (unlikely for o1)
+- o3 achieves near-human performance on ARC-AGI benchmark
+- o1 achieves 83% on IMO math competition (vs GPT-4o's 13%)
 
-**Anthropic Claude 3.7 Sonnet (July 2025):**
-- Supports "thinking budget" parameter in API
-- Users can trade latency for accuracy by allowing extended reasoning
+**OpenAI GPT-5 (August 7, 2025):**
+- Released with "Thinking Mode" for complex reasoning tasks
+- 94.6% accuracy on AIME 2025 mathematical reasoning benchmark
+- Represents industry benchmark for frontier model capabilities
+- Combines pre-training scale with test-time compute
 
-**DeepSeek R1 (2025):**
-- Open-source model trained explicitly for test-time reasoning
+**Anthropic Claude 4 Family (May 2025):**
+- Claude Opus 4 and Claude Sonnet 4 with hybrid architecture
+- Instant responses for simple queries + extended thinking for complex tasks
+- Claude Opus 4.1: 74.5% on SWE-bench coding challenges
+- Significant improvement in software development capabilities
+
+**Google Gemini 2.5 (August 2025):**
+- Gemini 2.5 Deep Think: First public multi-agent AI model
+- Deep Research mode for complex multi-step reasoning
+- MMLU accuracy: ~87-88% (competitive with Claude 4 and GPT-4.5)
+- Native multimodal: text, images, audio, video in unified workflows
+- Integrated with Imagen 3 for enhanced image generation
+
+**DeepSeek R1 and V3 (January 2025):**
+- Open-source models trained explicitly for test-time reasoning
 - Competitive with o1 on math/coding benchmarks at lower training cost
+- **Cost disruption:** Achieved performance comparable to leading Western models at dramatically lower costs
+- DeepSeek V3.1: ~87.1% on MMLU (competitive with GPT-4.5, Claude 4, Gemini 2.5)
+- **Industry impact:** Demonstrated that competitive AI capabilities achievable without massive budgets
 
 **Trend:** Test-time compute becoming standard feature, not experimental technique.
 
