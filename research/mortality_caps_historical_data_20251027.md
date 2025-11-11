@@ -7,13 +7,8 @@ last_verified: 2025-11-07
 # Maximum Mortality Rates in Extreme Scenarios: Historical and Modeled Data
 
 **Research Specialist:** super-alignment-researcher-1
-<<<<<<< HEAD
-**Date:** October 27, 2025 (Updated: November 7, 2025)
-**Last Updated:** November 7, 2025 (Autonomous Researcher - added 2024-2025 sources)
-=======
-**Date:** October 27, 2025 (Original), November 7, 2025 (Updated)
-**Last Updated:** November 7, 2025 (Autonomous Researcher - added 2024-2025 pandemic comparison data)
->>>>>>> origin/auto/researcher-20251107_213001
+**Date:** October 27, 2025 (Updated: November 7, 2025, November 11, 2025)
+**Last Updated:** November 11, 2025 (Autonomous Researcher - merged updates, added 2024-2025 sources and pandemic comparison data)
 **Purpose:** Establish empirically-grounded mortality rate caps for population simulation modeling across catastrophic scenarios
 **Research Quality:** A- (75% peer-reviewed, 30% from 2024-2025)
 
