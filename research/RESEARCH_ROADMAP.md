@@ -120,6 +120,95 @@ Research priorities ranked by:
 
 ---
 
+## TIER 1B: CRITICAL - AI Coordination & Transition Management (God Mode Interpretation Gap)
+
+### 0. Coordinated Technology Deployment (30% God Mode Mortality Finding)
+
+**God Mode Finding:** Deploying all 73 technologies at month 0 results in 30% population mortality (8.15B → 5.71B). This is not a bug but reveals a fundamental model assumption gap.
+
+**Priority:** CRITICAL - Affects interpretation of "post-alignment success." Current model shows tech unlock without coordination, not optimal AI-managed transition.
+
+#### Active Research Questions
+
+1. **CRITICAL: Transition Mortality (Managed vs Unmanaged)**
+   - **Question:** What are historical mortality rates during rapid technology transitions - coerced vs coordinated?
+   - **Evidence Gap:** China's Great Leap Forward (~15-55M deaths, rushed), USSR collectivization (5-8M deaths, forced) vs. peaceful transitions with governance support
+   - **Model Impact:** Current "god mode" models instant tech unlock without coordination - worst-case scenario. Need to distinguish uncoordinated deployment from AI-managed transition
+   - **Research Needed:** Peer-reviewed studies on transition mortality rates: coerced vs. supported vs. AI-coordinated
+   - **Status:** Coffee-talk discussion (Nov 10, 2025) identified gap, needs systematic research
+
+2. **CRITICAL: AI Coordination Mechanisms**
+   - **Question:** What mechanisms does aligned AI use to coordinate technology deployment?
+   - **Evidence Gap:** We model "AI unlocks tech" but not "AI manages rollout." Current assumption: humans deploy without AI coordination
+   - **Model Impact:** Need new phase/system: CoordinatedDeploymentPhase that models rollout pacing, regional capacity assessment, transition support
+   - **Research Needed:** AI coordination literature, optimal deployment scheduling, adaptive rollout based on regional readiness
+   - **Status:** Hypothesis formed, no implementation yet
+
+3. **CRITICAL: Transition Support Systems**
+   - **Question:** What support systems mitigate mortality during rapid economic/technological disruption?
+   - **Evidence:** UBI, retraining programs, food security during change, healthcare access during transition
+   - **Model Impact:** Mortality during deployment should scale inversely with support system quality. Strong support → low mortality, weak support → high mortality
+   - **Research Needed:** Empirical studies on social safety net effectiveness during economic transitions
+   - **Status:** Conceptual framework exists (coffee-talk), needs quantification
+
+4. **IMPORTANT: Deployment Pacing Physics**
+   - **Question:** What is the optimal deployment rate that maximizes benefit while minimizing disruption casualties?
+   - **Hypothesis:** There's a "safe deployment rate" constrained by retraining capacity, economic adaptation speed, infrastructure buildout
+   - **Model Impact:** Tech should have deployment curves (gradual rollout) rather than instant activation
+   - **Research Needed:** Technology diffusion rates, economic adaptation timescales, workforce transition capacity
+   - **Status:** Overlaps with climate deployment timescales research (TIER 2), needs transition mortality focus
+
+5. **IMPORTANT: Regional Capacity Assessment**
+   - **Question:** How does deployment readiness vary by region (infrastructure, governance, economic capacity)?
+   - **Evidence:** Advanced economies can absorb change faster than developing regions; uneven deployment creates winners/losers
+   - **Model Impact:** Tech effectiveness should vary by region; instant global deployment is unrealistic
+   - **Research Needed:** Regional readiness metrics, infrastructure capacity constraints, governance effectiveness
+   - **Status:** Not currently modeled, needs investigation
+
+#### Existing Research
+
+- **Coffee-Talk Discussion (Nov 10, 2025):** Roy, Priya, Sylvia, Cynthia identified that "god mode" tests chaos (instant deployment) not coordination (AI-managed transition)
+- **Historical Analogies:** Great Leap Forward, USSR collectivization (coerced), Industrial Revolution (uncoordinated) as baseline mortality rates
+- **Gap:** No existing research in repository on AI-coordinated transition management
+
+#### Missing Systems - Solution Space
+
+**Coordination Mechanics (NEW PHASE - TIER 0 PRIORITY):**
+1. **CoordinatedDeploymentPhase** (Implementation priority: CRITICAL)
+   - Type: New phase that manages tech rollout pacing
+   - Effect: AI system assesses regional capacity, schedules deployment, provides transition support
+   - Inputs: Available tech, regional readiness, population capacity, economic stability
+   - Outputs: Deployment rate per tech per region, support system activation, mortality mitigation
+   - Research Needed: AI coordination mechanisms, optimal pacing algorithms
+
+2. **Transition Support System** (Implementation priority: CRITICAL)
+   - Type: Economic safety net during technological disruption
+   - Components: UBI activation, retraining programs, food security, healthcare access
+   - Effect: Reduces transition mortality from 30% (unsupported) to <5% (supported)
+   - Dependencies: Economic capacity, governance effectiveness, AI coordination quality
+   - Research Needed: Safety net effectiveness during rapid change
+
+3. **Regional Capacity Modeling** (Implementation priority: HIGH)
+   - Type: Differentiate deployment readiness by region
+   - Effect: Tech deploys faster in high-capacity regions, slower in low-capacity (prevents collapse)
+   - Metrics: Infrastructure quality, governance effectiveness, economic resilience
+   - Research Needed: Regional readiness assessment frameworks
+
+**Paradigm Shifts Required:**
+- **God Mode Redefinition:** Current "god mode" = chaos mode (instant deployment, no coordination). Need "coordinated mode" = AI-managed optimal transition
+- **Deployment as Process:** Tech deployment is not binary (deployed: true/false) but continuous (deploymentProgress: 0-100%, paced by coordination quality)
+- **Mortality as Function:** Transition mortality = f(deployment_rate, support_quality, regional_capacity, coordination_effectiveness)
+
+#### Next Steps
+
+1. **Research Assignment:** Cynthia to find peer-reviewed studies on transition mortality (managed vs unmanaged), safety net effectiveness
+2. **Validation:** Sylvia to verify historical mortality claims (Great Leap Forward, USSR collectivization) with academic sources
+3. **Design:** Roy + Orchestrator to design CoordinatedDeploymentPhase architecture
+4. **God Mode Reinterpretation:** Clarify what "god mode" tests - current (chaos) vs needed (coordination)
+5. **Monte Carlo Validation:** Run N=10 with/without coordination, measure mortality delta (target: 30% chaos → <5% coordinated)
+
+---
+
 ## TIER 2: HIGH - Severe Effectiveness Gaps (Prevent Misleading Outcomes)
 
 ### 2. Climate Change Boundary (5.5% effectiveness in god mode)
