@@ -15729,6 +15729,326 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "context": "adaptiveConfig: {"
   },
   {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 590,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'green-new-deal',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 591,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Green New Deal',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 592,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Progressive climate + social policy: 10% GDP climate, 2.5% redistribution, $100B research, democracy=0.8 (US GND 2019, EU Green Deal 2020, IEA Net Zero 2024)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 593,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Tests whether combining climate action + UBI + jobs guarantee enables both environmental AND social spirals',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 594,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 595,
+    "type": "property",
+    "name": "mode",
+    "currentDoc": "(none)",
+    "context": "mode: 'prioritized' as const,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 596,
+    "type": "property",
+    "name": "prioritizedConfig",
+    "currentDoc": "(none)",
+    "context": "prioritizedConfig: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 597,
+    "type": "property",
+    "name": "priorities",
+    "currentDoc": "(none)",
+    "context": "priorities: ['climate', 'energy', 'social', 'governance', 'environment'],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 601,
+    "type": "property",
+    "name": "governmentPriorities",
+    "currentDoc": "(none)",
+    "context": "governmentPriorities: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 611,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'techno-optimist',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 612,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Techno-Optimist Path',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 613,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Market-driven tech acceleration: all tech immediate, minimal government, democracy=0.7, R&D only (Andreessen 2023, Cowen 2018, Acemoglu & Johnson 2023)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 614,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Tests whether technology + markets alone (without redistribution/climate spending) can enable spirals',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 615,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 618,
+    "type": "property",
+    "name": "governmentPriorities",
+    "currentDoc": "(none)",
+    "context": "governmentPriorities: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 627,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'degrowth',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 628,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Degrowth Path',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 629,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Ecological restoration + reduced consumption: 10% climate, 2.5% redistribution, $10B research, democracy=0.9, limited tech (Hickel 2020, Raworth 2017, Kallis 2020)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 630,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Tests whether ecological focus + low growth enables environmental spirals without advanced tech',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 631,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 632,
+    "type": "property",
+    "name": "mode",
+    "currentDoc": "(none)",
+    "context": "mode: 'prioritized' as const,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 633,
+    "type": "property",
+    "name": "prioritizedConfig",
+    "currentDoc": "(none)",
+    "context": "prioritizedConfig: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 639,
+    "type": "property",
+    "name": "governmentPriorities",
+    "currentDoc": "(none)",
+    "context": "governmentPriorities: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 649,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'authoritarian-climate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 650,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Authoritarian Climate Action',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 651,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'China-style rapid deployment: 10% climate, democracy=0.2, no redistribution, immediate tech (Xi 2020, V-Dem 2024, Kostka & Zhang 2018)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 652,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Tests whether authoritarian efficiency enables faster climate action at cost of social spirals',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 653,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 656,
+    "type": "property",
+    "name": "governmentPriorities",
+    "currentDoc": "(none)",
+    "context": "governmentPriorities: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 660,
+    "type": "property",
+    "name": "governmentType",
+    "currentDoc": "(none)",
+    "context": "governmentType: 'authoritarian',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 667,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'nordic-social-democracy',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 668,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Nordic Social Democracy',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 669,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Scandinavian model: 3.5% redistribution, 3% climate, $150B research, democracy=0.85, sequenced tech (OECD 2024, V-Dem 2024, IEA 2024)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 670,
+    "type": "property",
+    "name": "hypothesis",
+    "currentDoc": "(none)",
+    "context": "hypothesis: 'Tests whether gradual tech + strong institutions + high equality enables sustained spiral activation',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 671,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 672,
+    "type": "property",
+    "name": "mode",
+    "currentDoc": "(none)",
+    "context": "mode: 'sequenced' as const,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 673,
+    "type": "property",
+    "name": "sequencedConfig",
+    "currentDoc": "(none)",
+    "context": "sequencedConfig: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 678,
+    "type": "property",
+    "name": "governmentPriorities",
+    "currentDoc": "(none)",
+    "context": "governmentPriorities: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 684,
+    "type": "property",
+    "name": "startingConditions",
+    "currentDoc": "(none)",
+    "context": "startingConditions: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/scenarios.ts",
+    "line": 686,
+    "type": "property",
+    "name": "institutionalCapacity",
+    "currentDoc": "(none)",
+    "context": "institutionalCapacity: 0.75,"
+  },
+  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/socialSafetyNets.ts",
     "line": 16,
     "type": "property",
