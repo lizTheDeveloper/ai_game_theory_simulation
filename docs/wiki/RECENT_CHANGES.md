@@ -6,6 +6,43 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 11, 2025)
 
+**🔧 INFRASTRUCTURE: Intelligent TypeScript Error Auto-Remediation** (Nov 11, 2025, commit 397a531)
+
+**Summary:** Enhanced merge orchestrator with specialist agent routing for TypeScript compilation errors.
+
+**Enhancement:** Previously, TypeScript failures were treated generically. Now the orchestrator intelligently routes errors to domain specialists:
+- **Simulation errors** (`src/simulation/`, `src/types/game.ts`) → Roy (simulation-maintainer)
+  - Defensive coding patterns (assertion utilities, no silent fallbacks)
+  - Emoji conventions, RNG determinism
+- **Frontend errors** (`src/lib/`, `src/components/`, `.tsx`) → Tessa (far-future-ux-designer)
+  - React/Next.js patterns, delta updates
+  - Data visualization, UI component architecture
+
+**Implementation:**
+1. `spawn-type-error-fix.sh` (201 lines) parses TypeScript compiler output
+2. Determines affected files to route to appropriate specialist
+3. Spawns agent with full error context + domain expertise
+4. Agents iterate until `npx tsc --noEmit` passes
+5. Orchestrator retries quality gates after fix
+6. Continues to merge if all gates pass
+
+**Impact:**
+- 23 unmerged branches (31% of 74 total) can now auto-remediate
+- Specialist context ensures fixes follow project patterns
+- Reduces manual intervention for TypeScript errors
+- Branch analysis scripts added for monitoring
+
+**Files:**
+- `scripts/spawn-type-error-fix.sh` (NEW, 201 lines)
+- `scripts/merge-orchestrator.sh` (enhanced lines 314-381)
+- `check-all-branches.sh` (NEW, 25 lines)
+- `check-merged-branches.sh` (NEW, 23 lines)
+- Fix logs: `logs/merge_orchestrator/type_fixes/`
+
+**Research Basis:** Based on established simulation-maintainer patterns (defensive coding, NaN handling, assertion utilities)
+
+---
+
 **📚 RESEARCH UPDATE: Climate Tipping Cascades 2024-2025 Analysis** (Nov 11, 2025, commit 9494215)
 
 **Summary:** Autonomous researcher documented latest climate tipping point research, confirming first tipping point crossed (coral reefs, 2024-2025).
