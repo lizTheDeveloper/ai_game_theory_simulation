@@ -4,6 +4,43 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 11, 2025)
+
+**📚 RESEARCH UPDATE: Climate Tipping Cascades 2024-2025 Analysis** (Nov 11, 2025, commit 9494215)
+
+**Summary:** Autonomous researcher documented latest climate tipping point research, confirming first tipping point crossed (coral reefs, 2024-2025).
+
+**Critical Finding:** Warm-water coral reefs crossed thermal tipping point at ~1.4°C warming (threshold: ~1.2°C), marking humanity's first confirmed Earth system tipping point breach.
+
+**Key Research Findings:**
+- **Coral reefs:** CROSSED at current 1.4°C warming (irreversible without cooling to <0.8°C)
+- **AMOC collapse:** Risk "within our lifetimes" at <2°C warming
+- **Rate-induced tipping:** Fast GIS melt can trigger AMOC collapse even below AMOC's intrinsic threshold
+- **Ice sheets decisive:** Alter cascade probability by >2× (most uncertain component)
+- **Tipping cascade pathways:** GIS → AMOC → Amazon → Antarctic (domino effects)
+
+**Sources:** 12 peer-reviewed papers + Global Tipping Points Report 2025
+- van Westen et al. (2024) *Earth System Dynamics* - Rate-induced tipping cascades
+- Anonymous (2024) *Communications Earth & Environment* - Ice sheets decisive for cascades
+- Global Tipping Points Report 2025 - Comprehensive assessment
+- Multiple Nature studies (2024-2025)
+
+**Simulation Implications:**
+- Non-linear tipping dynamics (not gradual degradation)
+- Hysteresis (systems don't recover when cooling below threshold)
+- Stochastic timing (probability distributions, not fixed thresholds)
+- Cascade propagation (tipping in one system affects others)
+- Rate-induced tipping (speed of change matters independently)
+
+**Research Quality:** HIGH confidence (Nature, ESD, multiple independent groups, 2024-2025 sources)
+
+**Files:**
+- research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
+
+**Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
+
+---
+
 ## ✅ Recent Changes (November 10, 2025)
 
 **🤖 AUTONOMOUS RESEARCH AGENT: VM Cron Integration** (Nov 10, 2025, commit 5e605b3)
