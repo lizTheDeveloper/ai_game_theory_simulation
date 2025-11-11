@@ -1,0 +1,29 @@
+{
+  "scenarioId": "democratic-participation",
+  "seed": 8,
+  "outcome": "UNKNOWN",
+  "monthsSimulated": 49,
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 1,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 5
+  },
+  "finalQoL": {
+    "survivalAvg": 0.6365724441836653,
+    "basicNeedsAvg": 0.6356814197027284,
+    "psychologicalAvg": 0.6598921658315146,
+    "socialAvg": 0.5887345892893521,
+    "healthAvg": 0.37833333333333335,
+    "environmentalAvg": 0.5506666666666667,
+    "overallAvg": 0.5749801031678767
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 0
+  },
+  "finalPopulation": 5.552164420483789,
+  "boundariesBreached": []
+}
