@@ -43,6 +43,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Review:** Architecture skeptic review in reviews/scenario_system_architecture_review_20251111.md
 - 📖 **Context:** scenarioRunner.ts:32 - ApplyScenarioPrioritiesPhase requires state.scenario
 
+**Nov 11: Extinction Rate Minimum Correction** (commit 3b4dbdd)
+- ✅ **Bug Fixed:** assertInRange rejected extinctionRate=9.67 (below min=10) - system prevented biodiversity improvements
+- ✅ **Root Cause:** Lower extinction rates are BETTER - MIN_EXTINCTION_RATE=10.0 E/MSY (safe boundary) blocked tech from improving to background rate (1.0 E/MSY)
+- ✅ **Solution:** Changed MIN_EXTINCTION_RATE from 10.0 to 1.0 E/MSY in planetaryBoundaries.ts:486-490, 1244-1252
+- ✅ **Rationale:** Safe boundary = 10 E/MSY (10× background), background rate = 1 E/MSY (natural) - technologies should be able to restore biodiversity beyond safe threshold toward natural levels
+- ✅ **Impact:** Unblocks Phase 3 Monte Carlo (3 of 10 runs were failing)
+- 📖 **Context:** Part of assertion-based validation sweep - fail-loudly caught logic error
+
 **Nov 10: HIGH-1 Tech Deployment O(n²) Bottleneck Fixed** (commit bbb2ad2)
 - ✅ **Scenario Initialization: 50% faster** (5,329 → 73 operations for 73 tech, 73× reduction)
 - ✅ **Root Cause:** Double iteration + `includes()` O(m) filtering + `find()` O(n) lookup = O(n²)
