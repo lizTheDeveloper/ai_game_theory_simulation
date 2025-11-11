@@ -1,4 +1,5 @@
 /**
+import { createSeededRng } from '@/simulation/rng';
  * Integration Test: CRITICAL-3 RNG Regression Prevention
  *
  * Bug: Commit 9c6f25dde introduced Math.random fallback in RNG initialization
@@ -196,7 +197,11 @@ describe('CRITICAL-3 RNG Regression Prevention', () => {
       // This is verified by TypeScript type system + runtime assertions.
       //
       // If RNG were optional (rng?: () => number), this would compile:
+<<<<<<< Updated upstream
       // createDefaultInitialState(createTestRng(TEST_SEED));  // No RNG provided
+=======
+      // createDefaultInitialState(createSeededRng(12345), 'historical');  // No RNG provided
+>>>>>>> Stashed changes
       //
       // But since RNG is required (rng: () => number), this won't compile.
       // The runtime assertion ensures it also fails at runtime.

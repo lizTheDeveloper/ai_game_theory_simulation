@@ -28,7 +28,11 @@ describe('Baseline Simulation Tests', () => {
     test.skip('seed 42000 produces consistent state at month 12', () => {
       // TODO: Implement when simulation is properly importable
       // const engine = new SimulationEngine({ seed: TEST_SEEDS.UTOPIA_PATH, maxMonths: 12 });
+<<<<<<< Updated upstream
       // const initialState = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      // const initialState = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
       // const result = engine.run(initialState);
       //
       // Snapshot key metrics at month 12
@@ -46,7 +50,11 @@ describe('Baseline Simulation Tests', () => {
   describe('Medium simulation consistency (50 months)', () => {
     test.skip('seed 42000 produces consistent metrics at month 50', () => {
       // const engine = new SimulationEngine({ seed: TEST_SEEDS.UTOPIA_PATH, maxMonths: 50 });
+<<<<<<< Updated upstream
       // const initialState = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      // const initialState = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
       // const result = engine.run(initialState);
       //
       // expect(result.summary.totalMonths).toBeLessThanOrEqual(50);
@@ -78,7 +86,11 @@ describe('Baseline Simulation Tests', () => {
       // when used within actual simulation
       //
       // const engine = new SimulationEngine({ seed: 42000, maxMonths: 20 });
+<<<<<<< Updated upstream
       // const initialState = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      // const initialState = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
       // const result = engine.run(initialState);
       //
       // Verify utility calculations
