@@ -1,15 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-**Generated:** 11/10/2025, 10:30:05 PM
-=======
-**Generated:** 11/10/2025, 11:30:21 PM
->>>>>>> Stashed changes
-**Files Scanned:** 348
-=======
-**Generated:** 11/11/2025, 12:30:05 AM
-**Files Scanned:** 347
->>>>>>> Stashed changes
+**Generated:** 11/11/2025, 1:30:13 AM
+**Files Scanned:** 350
 
 ---
 
@@ -21,11 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< Updated upstream
-**Count:** 134 (38.5%)
-=======
-**Count:** 134 (38.6%)
->>>>>>> Stashed changes
+**Count:** 134 (38.3%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -701,7 +688,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 19 (5.5%)
+**Count:** 19 (5.4%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -727,11 +714,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< Updated upstream
-**Count:** 195 (56.0%)
-=======
-**Count:** 194 (55.9%)
->>>>>>> Stashed changes
+**Count:** 197 (56.3%)
 
 All sources <3 years old. No action required.
 
@@ -741,45 +724,26 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< Updated upstream
-| Total files | 348 |
+| Total files | 350 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 134 (38.5%) |
-| MEDIUM | 19 (5.5%) |
-| LOW | 195 (56.0%) |
+| HIGH | 134 (38.3%) |
+| MEDIUM | 19 (5.4%) |
+| LOW | 197 (56.3%) |
 | Average age | 8.6 years |
-=======
-| Total files | 347 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 134 (38.6%) |
-| MEDIUM | 19 (5.5%) |
-| LOW | 194 (55.9%) |
-| Average age | 8.7 years |
->>>>>>> Stashed changes
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< Updated upstream
-| Current (<3yr) | 195 | 56.0% |
-| Warning (3-5yr) | 19 | 5.5% |
-| Critical (>5yr) | 134 | 38.5% |
-=======
-| Current (<3yr) | 194 | 55.9% |
-| Warning (3-5yr) | 19 | 5.5% |
-| Critical (>5yr) | 134 | 38.6% |
->>>>>>> Stashed changes
+| Current (<3yr) | 197 | 56.3% |
+| Warning (3-5yr) | 19 | 5.4% |
+| Critical (>5yr) | 134 | 38.3% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< Updated upstream
-- **Current:** 38.5% critical (>5yr)
-=======
-- **Current:** 38.6% critical (>5yr)
->>>>>>> Stashed changes
+- **Current:** 38.3% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
