@@ -1,0 +1,29 @@
+{
+  "scenarioId": "high-trust-start",
+  "seed": 10,
+  "outcome": "utopia",
+  "monthsSimulated": 5,
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 0,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 5
+  },
+  "finalQoL": {
+    "survivalAvg": 0.5892359567889731,
+    "basicNeedsAvg": 0.694129111529862,
+    "psychologicalAvg": 0.6998601180264628,
+    "socialAvg": 0.6603668828531457,
+    "healthAvg": 0.37833333333333335,
+    "environmentalAvg": 0.524,
+    "overallAvg": 0.5909875670886294
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 0
+  },
+  "finalPopulation": 5.369964816397117,
+  "boundariesBreached": []
+}

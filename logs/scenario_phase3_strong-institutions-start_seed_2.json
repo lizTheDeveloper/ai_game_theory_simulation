@@ -1,0 +1,29 @@
+{
+  "scenarioId": "strong-institutions-start",
+  "seed": 2,
+  "outcome": "utopia",
+  "monthsSimulated": 5,
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 0,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 4
+  },
+  "finalQoL": {
+    "survivalAvg": 0.6997939150845567,
+    "basicNeedsAvg": 0.7877025229295533,
+    "psychologicalAvg": 0.7215748503624849,
+    "socialAvg": 0.6669635454594169,
+    "healthAvg": 0.3833333333333333,
+    "environmentalAvg": 0.5206666666666667,
+    "overallAvg": 0.6300058056393353
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 0
+  },
+  "finalPopulation": 5.622194912253451,
+  "boundariesBreached": []
+}

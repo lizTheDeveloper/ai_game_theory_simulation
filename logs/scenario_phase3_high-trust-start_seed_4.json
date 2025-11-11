@@ -1,0 +1,31 @@
+{
+  "scenarioId": "high-trust-start",
+  "seed": 4,
+  "outcome": "extinction",
+  "monthsSimulated": 2,
+  "spiralActivation": {
+    "activeUpwardSpirals": [
+      "democratic"
+    ],
+    "cascadeActive": false,
+    "cascadeStrength": 0,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 3
+  },
+  "finalQoL": {
+    "survivalAvg": 0.8394390368250007,
+    "basicNeedsAvg": 1.3862392979404803,
+    "psychologicalAvg": 0.6232281193692141,
+    "socialAvg": 0.5070518952932831,
+    "healthAvg": 1,
+    "environmentalAvg": 0.5579999999999999,
+    "overallAvg": 0.8189930582379964
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 0
+  },
+  "finalPopulation": 6.82438851575062,
+  "boundariesBreached": []
+}

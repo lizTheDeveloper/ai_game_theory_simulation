@@ -1,0 +1,29 @@
+{
+  "scenarioId": "low-inequality-start",
+  "seed": 4,
+  "outcome": "extinction",
+  "monthsSimulated": 3,
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 0,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 3
+  },
+  "finalQoL": {
+    "survivalAvg": 0.8233707387183655,
+    "basicNeedsAvg": 1.4048540672258631,
+    "psychologicalAvg": 0.607945971785631,
+    "socialAvg": 0.3853980149909346,
+    "healthAvg": 0.9933333333333333,
+    "environmentalAvg": 0.5840000000000001,
+    "overallAvg": 0.7998170210090212
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 0
+  },
+  "finalPopulation": 6.483634344836796,
+  "boundariesBreached": []
+}

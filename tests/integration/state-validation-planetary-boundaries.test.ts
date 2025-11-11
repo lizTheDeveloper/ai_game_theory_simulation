@@ -36,7 +36,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
 
   describe('Fail-Loudly Behavior: Invalid Inputs', () => {
     test('should throw on NaN climate stability input', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -50,7 +50,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should throw on Infinity biodiversity index', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -64,7 +64,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should throw on undefined planetary boundaries system', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -78,7 +78,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should throw on out-of-range probability (climateStability > 1)', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -92,7 +92,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should throw on negative biodiversity index', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -108,7 +108,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
 
   describe('Valid Input Processing', () => {
     test('should successfully process valid initial state', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -121,7 +121,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should maintain all boundary values as finite numbers', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -142,7 +142,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should process multiple consecutive steps without errors', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -163,7 +163,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
 
   describe('Oct 2025 NaN Bug Regression Test (CRITICAL)', () => {
     test('should NOT use silent fallback for NaN biosphere integrity', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -178,7 +178,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should NOT use silent fallback for undefined climate data', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -193,7 +193,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should NOT mask calculation errors with defensive fallbacks', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -211,7 +211,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should validate all intermediate calculations, not just final outputs', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -226,7 +226,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should fail on aragonite saturation NaN (ocean acidification)', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -248,7 +248,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
         maxMonths: 12
       });
 
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Run full simulation for 1 year
       const result = engine.run(state, {
@@ -270,7 +270,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should propagate climate changes to boundary values', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -291,7 +291,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
     });
 
     test('should handle boundary cascades without NaN propagation', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 
@@ -317,7 +317,7 @@ describe('PlanetaryBoundariesPhase: State Validation Integration', () => {
 
   describe('Tipping Point Risk Calculation Validation', () => {
     test('should calculate tipping point risk as probability [0,1]', () => {
-      const state = createDefaultInitialState('historical');
+      const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
       const rng = createTestRng(TEST_SEED);
       const phase = new PlanetaryBoundariesPhase();
 

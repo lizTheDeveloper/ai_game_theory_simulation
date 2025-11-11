@@ -1,0 +1,2254 @@
+{
+  "climate-first": [
+    {
+      "scenarioId": "climate-first",
+      "seed": 1,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "cognitive"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5934104814233138,
+        "basicNeedsAvg": 1.0848913170477081,
+        "psychologicalAvg": 0.665383159769672,
+        "socialAvg": 0.5917368053653216,
+        "healthAvg": 0.7173347813896044,
+        "environmentalAvg": 0.6073333333333334,
+        "overallAvg": 0.7100149797214922
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.590266606122602,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "climate-first",
+      "seed": 2,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7135726559995333,
+        "basicNeedsAvg": 0.8221058480172236,
+        "psychologicalAvg": 0.7244310828151812,
+        "socialAvg": 0.6969569662079796,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6446222032844308
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.778668944312605,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "climate-first",
+      "seed": 3,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6062228324807708,
+        "basicNeedsAvg": 0.837080909027493,
+        "psychologicalAvg": 0.7081708033953239,
+        "socialAvg": 0.8440782264027575,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5429186079607728,
+        "overallAvg": 0.6528007854334086
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.614222602643568,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "climate-first",
+      "seed": 4,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 3
+      },
+      "finalQoL": {
+        "survivalAvg": 0.8233707387183655,
+        "basicNeedsAvg": 1.4048540672246617,
+        "psychologicalAvg": 0.6079459708856497,
+        "socialAvg": 0.3853980140545542,
+        "healthAvg": 0.9933333333333333,
+        "environmentalAvg": 0.5840000000000001,
+        "overallAvg": 0.7998170207027607
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 6.483634344836796,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "climate-first",
+      "seed": 5,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7063933749283269,
+        "basicNeedsAvg": 0.8204380807833106,
+        "psychologicalAvg": 0.6449980314995287,
+        "socialAvg": 0.5826130949144684,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.6064070970209391
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.857016442472841,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "climate-first",
+      "seed": 6,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5931049685026535,
+        "basicNeedsAvg": 0.8118893696667214,
+        "psychologicalAvg": 0.7156057681599471,
+        "socialAvg": 0.8254559630143017,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.504,
+        "overallAvg": 0.6380649004461595
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.061941638650872,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "climate-first",
+      "seed": 7,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6852177742663277,
+        "basicNeedsAvg": 0.7438308988388241,
+        "psychologicalAvg": 0.6881214644677243,
+        "socialAvg": 0.6026861382490905,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5073333333333333,
+        "overallAvg": 0.6017538237481056
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.820150150164273,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "climate-first",
+      "seed": 9,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.622782305983397,
+        "basicNeedsAvg": 0.6891152481716478,
+        "psychologicalAvg": 0.664281045996072,
+        "socialAvg": 0.5640702928105856,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.534,
+        "overallAvg": 0.5754303710491726
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.2549604361628806,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "climate-first",
+      "seed": 10,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6923547379273132,
+        "basicNeedsAvg": 0.7754973907981162,
+        "psychologicalAvg": 0.712323709930138,
+        "socialAvg": 0.8407529425906819,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.655265907985486
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.762784328194945,
+      "boundariesBreached": []
+    }
+  ],
+  "equality-first": [
+    {
+      "scenarioId": "equality-first",
+      "seed": 1,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "cognitive"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5934104814233138,
+        "basicNeedsAvg": 1.0848913170477081,
+        "psychologicalAvg": 0.665383159769672,
+        "socialAvg": 0.5917368053653216,
+        "healthAvg": 0.7173347813896044,
+        "environmentalAvg": 0.6073333333333334,
+        "overallAvg": 0.7100149797214922
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.590266606122602,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 2,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7135726559995333,
+        "basicNeedsAvg": 0.8221058480172236,
+        "psychologicalAvg": 0.7244310828151812,
+        "socialAvg": 0.6969569662079796,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6446222032844308
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.778668944312605,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 3,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6062228324807708,
+        "basicNeedsAvg": 0.837080909027493,
+        "psychologicalAvg": 0.7081708033953239,
+        "socialAvg": 0.8440782264027575,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5429186079607728,
+        "overallAvg": 0.6528007854334086
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.614222602643568,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 4,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 3
+      },
+      "finalQoL": {
+        "survivalAvg": 0.8233707387183655,
+        "basicNeedsAvg": 1.4048540672246617,
+        "psychologicalAvg": 0.6079459708856497,
+        "socialAvg": 0.3853980140545542,
+        "healthAvg": 0.9933333333333333,
+        "environmentalAvg": 0.5840000000000001,
+        "overallAvg": 0.7998170207027607
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 6.483634344836796,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 5,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7063933749283269,
+        "basicNeedsAvg": 0.8204380807833106,
+        "psychologicalAvg": 0.6449980314995287,
+        "socialAvg": 0.5826130949144684,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.6064070970209391
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.857016442472841,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 6,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5931049685026535,
+        "basicNeedsAvg": 0.8118893696667214,
+        "psychologicalAvg": 0.7156057681599471,
+        "socialAvg": 0.8254559630143017,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.504,
+        "overallAvg": 0.6380649004461595
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.061941638650872,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 7,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6852177742663277,
+        "basicNeedsAvg": 0.7438308988388241,
+        "psychologicalAvg": 0.6881214644677243,
+        "socialAvg": 0.6026861382490905,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5073333333333333,
+        "overallAvg": 0.6017538237481056
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.820150150164273,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 9,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.622782305983397,
+        "basicNeedsAvg": 0.6891152481716478,
+        "psychologicalAvg": 0.664281045996072,
+        "socialAvg": 0.5640702928105856,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.534,
+        "overallAvg": 0.5754303710491726
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.2549604361628806,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 10,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6923547379273132,
+        "basicNeedsAvg": 0.7754973907981162,
+        "psychologicalAvg": 0.712323709930138,
+        "socialAvg": 0.8407529425906819,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.655265907985486
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.762784328194945,
+      "boundariesBreached": []
+    }
+  ],
+  "ai-alignment-first": [
+    {
+      "scenarioId": "ai-alignment-first",
+      "seed": 1,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "cognitive"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5934104814233138,
+        "basicNeedsAvg": 1.0848913170477081,
+        "psychologicalAvg": 0.665383159769672,
+        "socialAvg": 0.5917368053653216,
+        "healthAvg": 0.7173347813896044,
+        "environmentalAvg": 0.6073333333333334,
+        "overallAvg": 0.7100149797214922
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.590266606122602,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "ai-alignment-first",
+      "seed": 2,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7135726559995333,
+        "basicNeedsAvg": 0.8221058480172236,
+        "psychologicalAvg": 0.7244310828151812,
+        "socialAvg": 0.6969569662079796,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6446222032844308
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.778668944312605,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "ai-alignment-first",
+      "seed": 3,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6062228324807708,
+        "basicNeedsAvg": 0.837080909027493,
+        "psychologicalAvg": 0.7081708033953239,
+        "socialAvg": 0.8440782264027575,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5429186079607728,
+        "overallAvg": 0.6528007854334086
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.614222602643568,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "ai-alignment-first",
+      "seed": 4,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 3
+      },
+      "finalQoL": {
+        "survivalAvg": 0.8233707387183655,
+        "basicNeedsAvg": 1.4048540672246617,
+        "psychologicalAvg": 0.6079459708856497,
+        "socialAvg": 0.3853980140545542,
+        "healthAvg": 0.9933333333333333,
+        "environmentalAvg": 0.5840000000000001,
+        "overallAvg": 0.7998170207027607
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 6.483634344836796,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "ai-alignment-first",
+      "seed": 5,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7063933749283269,
+        "basicNeedsAvg": 0.8204380807833106,
+        "psychologicalAvg": 0.6449980314995287,
+        "socialAvg": 0.5826130949144684,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.6064070970209391
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.857016442472841,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "ai-alignment-first",
+      "seed": 6,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5931049685026535,
+        "basicNeedsAvg": 0.8118893696667214,
+        "psychologicalAvg": 0.7156057681599471,
+        "socialAvg": 0.8254559630143017,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.504,
+        "overallAvg": 0.6380649004461595
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.061941638650872,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "ai-alignment-first",
+      "seed": 7,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6852177742663277,
+        "basicNeedsAvg": 0.7438308988388241,
+        "psychologicalAvg": 0.6881214644677243,
+        "socialAvg": 0.6026861382490905,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5073333333333333,
+        "overallAvg": 0.6017538237481056
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.820150150164273,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "ai-alignment-first",
+      "seed": 9,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.622782305983397,
+        "basicNeedsAvg": 0.6891152481716478,
+        "psychologicalAvg": 0.664281045996072,
+        "socialAvg": 0.5640702928105856,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.534,
+        "overallAvg": 0.5754303710491726
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.2549604361628806,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "ai-alignment-first",
+      "seed": 10,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6923547379273132,
+        "basicNeedsAvg": 0.7754973907981162,
+        "psychologicalAvg": 0.712323709930138,
+        "socialAvg": 0.8407529425906819,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.655265907985486
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.762784328194945,
+      "boundariesBreached": []
+    }
+  ],
+  "democratic-participation": [
+    {
+      "scenarioId": "democratic-participation",
+      "seed": 1,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "cognitive"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5934104814233138,
+        "basicNeedsAvg": 1.0848913170477081,
+        "psychologicalAvg": 0.665383159769672,
+        "socialAvg": 0.5917368053653216,
+        "healthAvg": 0.7173347813896044,
+        "environmentalAvg": 0.6073333333333334,
+        "overallAvg": 0.7100149797214922
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.590266606122602,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "democratic-participation",
+      "seed": 2,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7135726559995333,
+        "basicNeedsAvg": 0.8221058480172236,
+        "psychologicalAvg": 0.7244310828151812,
+        "socialAvg": 0.6969569662079796,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6446222032844308
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.778668944312605,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "democratic-participation",
+      "seed": 3,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6062228324807708,
+        "basicNeedsAvg": 0.837080909027493,
+        "psychologicalAvg": 0.7081708033953239,
+        "socialAvg": 0.8440782264027575,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5429186079607728,
+        "overallAvg": 0.6528007854334086
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.614222602643568,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "democratic-participation",
+      "seed": 4,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 3
+      },
+      "finalQoL": {
+        "survivalAvg": 0.8233707387183655,
+        "basicNeedsAvg": 1.4048540672246617,
+        "psychologicalAvg": 0.6079459708856497,
+        "socialAvg": 0.3853980140545542,
+        "healthAvg": 0.9933333333333333,
+        "environmentalAvg": 0.5840000000000001,
+        "overallAvg": 0.7998170207027607
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 6.483634344836796,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "democratic-participation",
+      "seed": 5,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7063933749283269,
+        "basicNeedsAvg": 0.8204380807833106,
+        "psychologicalAvg": 0.6449980314995287,
+        "socialAvg": 0.5826130949144684,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.6064070970209391
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.857016442472841,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "democratic-participation",
+      "seed": 6,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5931049685026535,
+        "basicNeedsAvg": 0.8118893696667214,
+        "psychologicalAvg": 0.7156057681599471,
+        "socialAvg": 0.8254559630143017,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.504,
+        "overallAvg": 0.6380649004461595
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.061941638650872,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "democratic-participation",
+      "seed": 7,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6852177742663277,
+        "basicNeedsAvg": 0.7438308988388241,
+        "psychologicalAvg": 0.6881214644677243,
+        "socialAvg": 0.6026861382490905,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5073333333333333,
+        "overallAvg": 0.6017538237481056
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.820150150164273,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "democratic-participation",
+      "seed": 9,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.622782305983397,
+        "basicNeedsAvg": 0.6891152481716478,
+        "psychologicalAvg": 0.664281045996072,
+        "socialAvg": 0.5640702928105856,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.534,
+        "overallAvg": 0.5754303710491726
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.2549604361628806,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "democratic-participation",
+      "seed": 10,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6923547379273132,
+        "basicNeedsAvg": 0.7754973907981162,
+        "psychologicalAvg": 0.712323709930138,
+        "socialAvg": 0.8407529425906819,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.655265907985486
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.762784328194945,
+      "boundariesBreached": []
+    }
+  ],
+  "scientific-acceleration": [
+    {
+      "scenarioId": "scientific-acceleration",
+      "seed": 1,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "cognitive"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5934104814233138,
+        "basicNeedsAvg": 1.0848913170477081,
+        "psychologicalAvg": 0.665383159769672,
+        "socialAvg": 0.5917368053653216,
+        "healthAvg": 0.7173347813896044,
+        "environmentalAvg": 0.6073333333333334,
+        "overallAvg": 0.7100149797214922
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.590266606122602,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "scientific-acceleration",
+      "seed": 2,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7135726559995333,
+        "basicNeedsAvg": 0.8221058480172236,
+        "psychologicalAvg": 0.7244310828151812,
+        "socialAvg": 0.6969569662079796,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6446222032844308
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.778668944312605,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "scientific-acceleration",
+      "seed": 3,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6062228324807708,
+        "basicNeedsAvg": 0.837080909027493,
+        "psychologicalAvg": 0.7081708033953239,
+        "socialAvg": 0.8440782264027575,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5429186079607728,
+        "overallAvg": 0.6528007854334086
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.614222602643568,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "scientific-acceleration",
+      "seed": 4,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 3
+      },
+      "finalQoL": {
+        "survivalAvg": 0.8233707387183655,
+        "basicNeedsAvg": 1.4048540672246617,
+        "psychologicalAvg": 0.6079459708856497,
+        "socialAvg": 0.3853980140545542,
+        "healthAvg": 0.9933333333333333,
+        "environmentalAvg": 0.5840000000000001,
+        "overallAvg": 0.7998170207027607
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 6.483634344836796,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "scientific-acceleration",
+      "seed": 5,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7063933749283269,
+        "basicNeedsAvg": 0.8204380807833106,
+        "psychologicalAvg": 0.6449980314995287,
+        "socialAvg": 0.5826130949144684,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.6064070970209391
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.857016442472841,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "scientific-acceleration",
+      "seed": 6,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5931049685026535,
+        "basicNeedsAvg": 0.8118893696667214,
+        "psychologicalAvg": 0.7156057681599471,
+        "socialAvg": 0.8254559630143017,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.504,
+        "overallAvg": 0.6380649004461595
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.061941638650872,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "scientific-acceleration",
+      "seed": 7,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6852177742663277,
+        "basicNeedsAvg": 0.7438308988388241,
+        "psychologicalAvg": 0.6881214644677243,
+        "socialAvg": 0.6026861382490905,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5073333333333333,
+        "overallAvg": 0.6017538237481056
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.820150150164273,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "scientific-acceleration",
+      "seed": 9,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.622782305983397,
+        "basicNeedsAvg": 0.6891152481716478,
+        "psychologicalAvg": 0.664281045996072,
+        "socialAvg": 0.5640702928105856,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.534,
+        "overallAvg": 0.5754303710491726
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.2549604361628806,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "scientific-acceleration",
+      "seed": 10,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6923547379273132,
+        "basicNeedsAvg": 0.7754973907981162,
+        "psychologicalAvg": 0.712323709930138,
+        "socialAvg": 0.8407529425906819,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.655265907985486
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.762784328194945,
+      "boundariesBreached": []
+    }
+  ],
+  "authoritarian-efficiency": [
+    {
+      "scenarioId": "authoritarian-efficiency",
+      "seed": 1,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "cognitive"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5934104814233138,
+        "basicNeedsAvg": 1.0848913170477081,
+        "psychologicalAvg": 0.665383159769672,
+        "socialAvg": 0.5917368053653216,
+        "healthAvg": 0.7173347813896044,
+        "environmentalAvg": 0.6073333333333334,
+        "overallAvg": 0.7100149797214922
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.590266606122602,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "authoritarian-efficiency",
+      "seed": 2,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7135726559995333,
+        "basicNeedsAvg": 0.8221058480172236,
+        "psychologicalAvg": 0.7244310828151812,
+        "socialAvg": 0.6969569662079796,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6446222032844308
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.778668944312605,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "authoritarian-efficiency",
+      "seed": 3,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6062228324807708,
+        "basicNeedsAvg": 0.837080909027493,
+        "psychologicalAvg": 0.7081708033953239,
+        "socialAvg": 0.8440782264027575,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5429186079607728,
+        "overallAvg": 0.6528007854334086
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.614222602643568,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "authoritarian-efficiency",
+      "seed": 4,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 3
+      },
+      "finalQoL": {
+        "survivalAvg": 0.8233707387183655,
+        "basicNeedsAvg": 1.4048540672246617,
+        "psychologicalAvg": 0.6079459708856497,
+        "socialAvg": 0.3853980140545542,
+        "healthAvg": 0.9933333333333333,
+        "environmentalAvg": 0.5840000000000001,
+        "overallAvg": 0.7998170207027607
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 6.483634344836796,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "authoritarian-efficiency",
+      "seed": 5,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7063933749283269,
+        "basicNeedsAvg": 0.8204380807833106,
+        "psychologicalAvg": 0.6449980314995287,
+        "socialAvg": 0.5826130949144684,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.6064070970209391
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.857016442472841,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "authoritarian-efficiency",
+      "seed": 6,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5931049685026535,
+        "basicNeedsAvg": 0.8118893696667214,
+        "psychologicalAvg": 0.7156057681599471,
+        "socialAvg": 0.8254559630143017,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.504,
+        "overallAvg": 0.6380649004461595
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.061941638650872,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "authoritarian-efficiency",
+      "seed": 7,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6852177742663277,
+        "basicNeedsAvg": 0.7438308988388241,
+        "psychologicalAvg": 0.6881214644677243,
+        "socialAvg": 0.6026861382490905,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5073333333333333,
+        "overallAvg": 0.6017538237481056
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.820150150164273,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "authoritarian-efficiency",
+      "seed": 9,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.622782305983397,
+        "basicNeedsAvg": 0.6891152481716478,
+        "psychologicalAvg": 0.664281045996072,
+        "socialAvg": 0.5640702928105856,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.534,
+        "overallAvg": 0.5754303710491726
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.2549604361628806,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "authoritarian-efficiency",
+      "seed": 10,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6923547379273132,
+        "basicNeedsAvg": 0.7754973907981162,
+        "psychologicalAvg": 0.712323709930138,
+        "socialAvg": 0.8407529425906819,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.655265907985486
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.762784328194945,
+      "boundariesBreached": []
+    }
+  ],
+  "high-trust-start": [
+    {
+      "scenarioId": "high-trust-start",
+      "seed": 1,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7020975196965223,
+        "basicNeedsAvg": 0.776821046205928,
+        "psychologicalAvg": 0.7266596022145692,
+        "socialAvg": 0.72937438420075,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.640936536497406
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.5961779015431095,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "high-trust-start",
+      "seed": 2,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7037044254320508,
+        "basicNeedsAvg": 0.8045900827445785,
+        "psychologicalAvg": 0.7481764629269074,
+        "socialAvg": 0.8226577383114514,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6649658960136092
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.837826250437681,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "high-trust-start",
+      "seed": 3,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.502594051454062,
+        "basicNeedsAvg": 0.7344915224519794,
+        "psychologicalAvg": 0.7003732615630915,
+        "socialAvg": 0.6581224174374091,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.524,
+        "overallAvg": 0.5838190977066459
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.970439243309171,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "high-trust-start",
+      "seed": 4,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "democratic"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 3
+      },
+      "finalQoL": {
+        "survivalAvg": 0.8394390368250007,
+        "basicNeedsAvg": 1.3862392979404803,
+        "psychologicalAvg": 0.6232281193692141,
+        "socialAvg": 0.5070518952932831,
+        "healthAvg": 1,
+        "environmentalAvg": 0.5579999999999999,
+        "overallAvg": 0.8189930582379964
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 6.82438851575062,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "high-trust-start",
+      "seed": 5,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.697843427557436,
+        "basicNeedsAvg": 0.6765257669635591,
+        "psychologicalAvg": 0.7128359196152765,
+        "socialAvg": 0.7172826563693844,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.494,
+        "overallAvg": 0.6136368506398315
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.718208310834719,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "high-trust-start",
+      "seed": 7,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.4564155506862715,
+        "basicNeedsAvg": 0.7397917637351705,
+        "psychologicalAvg": 0.7473752500091408,
+        "socialAvg": 0.7937011822651516,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.504,
+        "overallAvg": 0.6032695133381779
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.74529140413639,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "high-trust-start",
+      "seed": 8,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6300906950248244,
+        "basicNeedsAvg": 0.7414791391179983,
+        "psychologicalAvg": 0.702993464849609,
+        "socialAvg": 0.7058327044119611,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5106666666666667,
+        "overallAvg": 0.611566000567399
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.513794787215774,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "high-trust-start",
+      "seed": 9,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6250047726647104,
+        "basicNeedsAvg": 0.7167934379511024,
+        "psychologicalAvg": 0.7106962718180372,
+        "socialAvg": 0.7232486517556621,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6135683001426965
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.649208217333608,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "high-trust-start",
+      "seed": 10,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5892359567889731,
+        "basicNeedsAvg": 0.694129111529862,
+        "psychologicalAvg": 0.6998601180264628,
+        "socialAvg": 0.6603668828531457,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.524,
+        "overallAvg": 0.5909875670886294
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.369964816397117,
+      "boundariesBreached": []
+    }
+  ],
+  "low-inequality-start": [
+    {
+      "scenarioId": "low-inequality-start",
+      "seed": 1,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "cognitive"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5934104814233138,
+        "basicNeedsAvg": 1.0848913170490764,
+        "psychologicalAvg": 0.6653831607986791,
+        "socialAvg": 0.5917368064301103,
+        "healthAvg": 0.7173347813896044,
+        "environmentalAvg": 0.6073333333333334,
+        "overallAvg": 0.7100149800706862
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.590266606122602,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "low-inequality-start",
+      "seed": 2,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7135726559384598,
+        "basicNeedsAvg": 0.8221058478967453,
+        "psychologicalAvg": 0.7244310830359542,
+        "socialAvg": 0.6969569669567809,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6446222034157678
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.778668944283319,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "low-inequality-start",
+      "seed": 3,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6062228324807708,
+        "basicNeedsAvg": 0.8370809090308855,
+        "psychologicalAvg": 0.7081708036830214,
+        "socialAvg": 0.8440782273881762,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5429186079607728,
+        "overallAvg": 0.6528007856461601
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.614222602643568,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "low-inequality-start",
+      "seed": 4,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 3
+      },
+      "finalQoL": {
+        "survivalAvg": 0.8233707387183655,
+        "basicNeedsAvg": 1.4048540672258631,
+        "psychologicalAvg": 0.607945971785631,
+        "socialAvg": 0.3853980149909346,
+        "healthAvg": 0.9933333333333333,
+        "environmentalAvg": 0.5840000000000001,
+        "overallAvg": 0.7998170210090212
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 6.483634344836796,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "low-inequality-start",
+      "seed": 5,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7063933749283269,
+        "basicNeedsAvg": 0.8204380807853507,
+        "psychologicalAvg": 0.6449980317249907,
+        "socialAvg": 0.5826130956641089,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.6064070971837962
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.857016442472841,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "low-inequality-start",
+      "seed": 6,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5931049685026535,
+        "basicNeedsAvg": 0.8118893696698364,
+        "psychologicalAvg": 0.7156057684333947,
+        "socialAvg": 0.8254559639510226,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.504,
+        "overallAvg": 0.6380649006483735
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.061941638650872,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "low-inequality-start",
+      "seed": 7,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6852177742663277,
+        "basicNeedsAvg": 0.7438308988434587,
+        "psychologicalAvg": 0.6881214653841067,
+        "socialAvg": 0.6026861391860779,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5073333333333333,
+        "overallAvg": 0.601753824057773
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.820150150164273,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "low-inequality-start",
+      "seed": 9,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.622782305983397,
+        "basicNeedsAvg": 0.6891152481756594,
+        "psychologicalAvg": 0.6642810469037557,
+        "socialAvg": 0.5640702937474871,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.534,
+        "overallAvg": 0.575430371357272
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.2549604361628806,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "low-inequality-start",
+      "seed": 10,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6923547379273132,
+        "basicNeedsAvg": 0.7754973908015943,
+        "psychologicalAvg": 0.7123237108460858,
+        "socialAvg": 0.8407529435274482,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6552659082948514
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.762784328194945,
+      "boundariesBreached": []
+    }
+  ],
+  "strong-institutions-start": [
+    {
+      "scenarioId": "strong-institutions-start",
+      "seed": 1,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6919866260169523,
+        "basicNeedsAvg": 0.7443994033126974,
+        "psychologicalAvg": 0.7156511465805494,
+        "socialAvg": 0.63208249478249,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5206666666666667,
+        "overallAvg": 0.6146866117821148
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.594945673356037,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "strong-institutions-start",
+      "seed": 2,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 4
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6997939150845567,
+        "basicNeedsAvg": 0.7877025229295533,
+        "psychologicalAvg": 0.7215748503624849,
+        "socialAvg": 0.6669635454594169,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5206666666666667,
+        "overallAvg": 0.6300058056393353
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.622194912253451,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "strong-institutions-start",
+      "seed": 3,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6707325721055704,
+        "basicNeedsAvg": 0.7603045159828966,
+        "psychologicalAvg": 0.7351426842808445,
+        "socialAvg": 0.7435551979988795,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6367336061724763
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.847585417209609,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "strong-institutions-start",
+      "seed": 4,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "democratic"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 3
+      },
+      "finalQoL": {
+        "survivalAvg": 0.8279212393413171,
+        "basicNeedsAvg": 1.3658183235626515,
+        "psychologicalAvg": 0.6219466890977146,
+        "socialAvg": 0.49039275890016654,
+        "healthAvg": 1,
+        "environmentalAvg": 0.5626666666666668,
+        "overallAvg": 0.811457612928086
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 6.465029276329685,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "strong-institutions-start",
+      "seed": 5,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.7115213064431734,
+        "basicNeedsAvg": 0.8217454530643219,
+        "psychologicalAvg": 0.7487246488295777,
+        "socialAvg": 0.8513109683159512,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.6695503961088374
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.96759661571434,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "strong-institutions-start",
+      "seed": 6,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "cognitive"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6990902831876065,
+        "basicNeedsAvg": 0.8270095508547332,
+        "psychologicalAvg": 0.714318848449287,
+        "socialAvg": 0.6360728279000425,
+        "healthAvg": 0.42551943610956017,
+        "environmentalAvg": 0.5742793273158489,
+        "overallAvg": 0.646048378969513
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.466213896297659,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "strong-institutions-start",
+      "seed": 7,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6037829430371228,
+        "basicNeedsAvg": 0.8159146282975928,
+        "psychologicalAvg": 0.7327628664883306,
+        "socialAvg": 0.8406679177072764,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.494,
+        "overallAvg": 0.6442436148106093
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.346353741689758,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "strong-institutions-start",
+      "seed": 8,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5969526562507793,
+        "basicNeedsAvg": 0.7233172693238051,
+        "psychologicalAvg": 0.7242046256815977,
+        "socialAvg": 0.7798070883151196,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.514,
+        "overallAvg": 0.6194358288174392
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.260432079963346,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "strong-institutions-start",
+      "seed": 9,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6810656703620477,
+        "basicNeedsAvg": 0.6894229030358542,
+        "psychologicalAvg": 0.705574749083037,
+        "socialAvg": 0.6242409395533584,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5273333333333333,
+        "overallAvg": 0.6018284881168273
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.64238569930773,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "strong-institutions-start",
+      "seed": 10,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 0,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6995749625867773,
+        "basicNeedsAvg": 0.8064113913721497,
+        "psychologicalAvg": 0.7222366577777662,
+        "socialAvg": 0.6966730753629053,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.524,
+        "overallAvg": 0.6387049034054887
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 0,
+        "co2Concentration": 0,
+        "extinctionRate": 0
+      },
+      "finalPopulation": 5.731072397872489,
+      "boundariesBreached": []
+    }
+  ]
+}

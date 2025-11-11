@@ -1,0 +1,27 @@
+{
+  "scenarioId": "strong-institutions-start",
+  "seed": 7,
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 0,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 5
+  },
+  "finalQoL": {
+    "survivalAvg": 0.6037829430371228,
+    "basicNeedsAvg": 0.8159146282975928,
+    "psychologicalAvg": 0.7327628664883306,
+    "socialAvg": 0.8406679177072764,
+    "healthAvg": 0.37833333333333335,
+    "environmentalAvg": 0.494,
+    "overallAvg": 0.6442436148106093
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 0
+  },
+  "finalPopulation": 5.346353741689758,
+  "boundariesBreached": []
+}
