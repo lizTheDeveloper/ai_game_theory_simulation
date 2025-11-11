@@ -40,7 +40,11 @@ describe('Phase 5.1: Historical Comparison - Automation Patterns', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -96,7 +100,11 @@ describe('Phase 5.1: Historical Comparison - Automation Patterns', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -148,7 +156,11 @@ describe('Phase 5.2: Wage Decoupling Validation', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -192,7 +204,11 @@ describe('Phase 5.2: Wage Decoupling Validation', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -249,7 +265,11 @@ describe('Phase 5.3: Skill Retention Validation', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -289,7 +309,11 @@ describe('Phase 5.3: Skill Retention Validation', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -342,7 +366,11 @@ describe('Phase 5.4: Sensitivity Analysis', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -374,7 +402,11 @@ describe('Phase 5.4: Sensitivity Analysis', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -427,7 +459,11 @@ describe('Phase 5.5: Edge Case Testing', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -458,7 +494,11 @@ describe('Phase 5.5: Edge Case Testing', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -494,7 +534,11 @@ describe('Phase 5.5: Edge Case Testing', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -539,7 +583,11 @@ describe('Phase 5.6: Event Trigger Validation', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -585,7 +633,11 @@ describe('Phase 5.6: Event Trigger Validation', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -634,7 +686,11 @@ describe('Phase 5.7: Full Integration Test', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
