@@ -60,7 +60,38 @@ export function updateNovelEntitiesSystem(state: GameState): void {
   const manufacturingCap = state.globalMetrics.manufacturingCapability;
   
   ne.exposureMonths++;
-  
+
+  // === STOCK vs FLOW TRACKING (Nov 11, 2025: Architecture fix) ===
+  // Update absolute megatonne stock alongside normalized [0,1] load
+  // Research: Sörengård 2024 ($20-7T trillion/year cleanup cost at current emissions)
+  if (ne.annualEmissions !== undefined && ne.accumulatedStock !== undefined && ne.naturalDecayHalfLife !== undefined) {
+    const monthlyEmissions = ne.annualEmissions / 12;  // Convert annual → monthly (Mt/month)
+
+    // Natural decay (C-F bonds: 500-year half-life for PFAS, Cousins 2022)
+    // Half-life decay: N(t) = N₀ × e^(-λt) where λ = ln(2) / t_half
+    // Monthly decay rate: λ_month = 0.693 / (half_life_years × 12)
+    const monthlyDecayRate = 0.693 / (ne.naturalDecayHalfLife * 12);
+    const monthlyDecay = ne.accumulatedStock * monthlyDecayRate;
+
+    // Net accumulation (emissions - decay)
+    // NOTE: This tracks absolute stock (Mt) independent of cleanup effectiveness
+    // Cleanup effectiveness is applied via syntheticChemicalLoad [0,1] below
+    ne.accumulatedStock += (monthlyEmissions - monthlyDecay);
+
+    // SATURATION CAP: Total synthetic chemical production bounded by industrial output
+    // Research: Persson 2022 (>1 Mt/year novel entities), global plastics ~400M Mt cumulative (Geyer 2017)
+    // Estimate: 2 billion Mt total synthetic chemicals as hard cap (all industrial production ever)
+    const MAX_CHEMICAL_STOCK = 2_000_000_000;  // 2 billion Mt (research-backed ceiling)
+    ne.accumulatedStock = Math.min(ne.accumulatedStock, MAX_CHEMICAL_STOCK);
+
+    // ASSERTION: Catch unrealistic accumulation (>100M Mt = 5x current estimate)
+    if (ne.accumulatedStock > 100_000_000) {
+      console.log(`⚠️ Novel Entities stock exceeds 100M Mt: ${(ne.accumulatedStock / 1_000_000).toFixed(1)}M Mt (Month ${state.currentMonth})`);
+      console.log(`   Annual emissions: ${ne.annualEmissions.toFixed(0)} Mt/year`);
+      console.log(`   Approaching saturation cap (2B Mt)`);
+    }
+  }
+
   // === SYNTHETIC CHEMICAL LOAD ACCUMULATION ===
   // More production = more chemicals
   let chemicalAccumulationRate = (economicStage * 0.002) + (manufacturingCap * 0.001);
