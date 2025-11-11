@@ -24,7 +24,7 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 export class PlayerDecisionPhase implements SimulationPhase {
   readonly id = 'player-decision';
   readonly name = 'Player Decision Processing';
-  readonly order = 8.5;
+  readonly order = 8.51;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];

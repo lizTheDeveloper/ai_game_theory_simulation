@@ -17,7 +17,7 @@ import { assertFinite } from '@/simulation/utils/assertions';
 export class HumanPopulationPhase implements SimulationPhase {
   readonly id = 'human_population';
   readonly name = 'Human Population Dynamics';
-  readonly order = 20.5;
+  readonly order = 20.52;
 
   // DEPENDENCIES (Nov 6, 2025): Requires quality of life for birth rate calculation
   readonly dependencies = [
@@ -25,7 +25,7 @@ export class HumanPopulationPhase implements SimulationPhase {
   ];
 
   // DEPENDENCY NOTE (Nov 6, 2025): This phase runs BEFORE BayesianMortalityResolutionPhase
-  // HumanPopulation order: 20.5, BayesianMortality order: 35.0
+  // HumanPopulation order: 20.52, BayesianMortality order: 35.0
   // No dependency needed - phases that run AFTER Bayesian should not overwrite population
   // See Oct 28, 2025 bug fix: CountryPopulation phase was DELETED to prevent overwrites
 

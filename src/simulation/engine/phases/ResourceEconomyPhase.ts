@@ -23,7 +23,7 @@ import { assertFinite } from '@/simulation/utils/assertions'; // Module uses ass
 export class ResourceEconomyPhase implements SimulationPhase {
   readonly id = 'resource-economy';
   readonly name = 'Resource Economy Update';
-  readonly order = 17.0;
+  readonly order = 17.00; // Resource production - first
   readonly dependencies = ['ai-agent-actions', 'tech-tree']; // Resource tech depends on AI actions
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {

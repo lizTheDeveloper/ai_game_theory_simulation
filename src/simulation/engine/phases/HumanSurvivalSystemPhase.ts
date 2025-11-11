@@ -42,7 +42,7 @@ import { THRESHOLDS, RATES, MULTIPLIERS, BASELINES } from '@/simulation/config/c
 export class HumanSurvivalSystemPhase implements SimulationPhase {
   readonly id = 'human-survival-system';
   readonly name = 'Human Survival System';
-  readonly order = 21.5;
+  readonly order = 21.51;
 
   readonly dependencies = [
     'quality-of-life',          // Order 19.5: Food baseline calculated

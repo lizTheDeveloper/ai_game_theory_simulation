@@ -35,7 +35,7 @@ import {
 export class HumanEnhancementPhase implements SimulationPhase {
   readonly id = 'ai-assisted-skills-metrics';
   readonly name = 'AI-Assisted Skills Metrics';
-  readonly order = 17.0; // After social systems (UBI, safety nets), before QoL calculation
+  readonly order = 17.01; // Human enhancement effects - second (after social systems, before QoL)
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];

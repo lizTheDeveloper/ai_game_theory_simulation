@@ -29,7 +29,7 @@ import {
 export class InternationalRelationsPhase implements SimulationPhase {
   readonly id = 'international-relations';
   readonly name = 'International Relations Update';
-  readonly order = 20.5;  // Batch 5: moved from 13.0 due to nuclear_command_control (20) dependency
+  readonly order = 20.51;  // Batch 5: moved from 13.0 due to nuclear_command_control (20) dependency
   dependencies = ['ai-agent-actions', 'nuclear_command_control'];
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {

@@ -11,7 +11,7 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 export class NationalAIPhase implements SimulationPhase {
   readonly id = 'national-ai';
   readonly name = 'National AI Update';
-  readonly order = 15.0;
+  readonly order = 15.00; // National AI development - first
   dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {

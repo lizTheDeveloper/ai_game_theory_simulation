@@ -28,7 +28,7 @@ import { assertFinite, assertInRange } from '@/simulation/utils/assertions';
 export class AntimicrobialResistancePhase implements SimulationPhase {
   readonly id = 'antimicrobial_resistance';
   readonly name = 'Antimicrobial Resistance';
-  readonly order = 15.0; // After environmental hazards (14.x), before QoL (16+)
+  readonly order = 15.01; // AMR crisis detection - second (after environmental hazards, before QoL)
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Update entire AMR system

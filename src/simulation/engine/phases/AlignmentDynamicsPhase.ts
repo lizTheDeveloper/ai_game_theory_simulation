@@ -24,7 +24,7 @@ import { assertFinite, assertInRange, assertStateProperty, assertDefined } from 
 export class AlignmentDynamicsPhase implements SimulationPhase {
   id = 'alignment_dynamics';
   name = 'Alignment Dynamics Update';
-  order = 3.5; // After agent actions, before outcome calculations
+  order = 3.51; // After agent actions, before outcome calculations
 
   // DEPENDENCIES (Nov 6, 2025): Requires compute capability for AI development context
   readonly dependencies = [

@@ -13,7 +13,7 @@ import { assertFinite, assertDefined, assertProbability } from '@/simulation/uti
 export class DystopiaProgressionPhase implements SimulationPhase {
   readonly id = 'dystopia-progression';
   readonly name = 'Dystopia Progression Update';
-  readonly order = 21.0;
+  readonly order = 21.01; // Dystopia state calculation - second (uses boundaries)
 
   // DEPENDENCIES (Nov 6, 2025): Must run after defensive AI
   readonly dependencies = [
