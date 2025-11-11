@@ -38,7 +38,11 @@ describe('Phase 5.1: Historical Comparison - Automation Patterns', () => {
 
   it('should match ATM adoption timeline (complementarity → substitution over 5-10 years)', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -86,7 +90,11 @@ describe('Phase 5.1: Historical Comparison - Automation Patterns', () => {
 
   it('should show employment displacement in substitution phase', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -130,7 +138,11 @@ describe('Phase 5.2: Wage Decoupling Validation', () => {
 
   it('should match BLS productivity-wage gap (65% divergence over 50 years)', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -166,7 +178,11 @@ describe('Phase 5.2: Wage Decoupling Validation', () => {
 
   it('should show policy interventions reduce wage gap', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -215,7 +231,11 @@ describe('Phase 5.3: Skill Retention Validation', () => {
 
   it('should match educational retention rates (40% AI-only vs 80% with scaffolding)', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -247,7 +267,11 @@ describe('Phase 5.3: Skill Retention Validation', () => {
 
   it('should show performance-competence gap grows with AI reliance', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -292,7 +316,11 @@ describe('Phase 5.4: Sensitivity Analysis', () => {
 
     for (const cap of testCapabilities) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -316,7 +344,11 @@ describe('Phase 5.4: Sensitivity Analysis', () => {
 
   it('should handle policy strength range 0 to 1.0', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -361,7 +393,11 @@ describe('Phase 5.5: Edge Case Testing', () => {
 
   it('should handle superintelligence (AI cap 10.0) gracefully', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -384,7 +420,11 @@ describe('Phase 5.5: Edge Case Testing', () => {
 
   it('should show maximum inequality with zero policy intervention', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -412,7 +452,11 @@ describe('Phase 5.5: Edge Case Testing', () => {
 
   it('should show minimum inequality with maximum policy intervention', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -449,7 +493,11 @@ describe('Phase 5.6: Event Trigger Validation', () => {
 
   it('should trigger competence warnings at 30% gap and crisis at 50%', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -487,7 +535,11 @@ describe('Phase 5.6: Event Trigger Validation', () => {
 
   it('should trigger wage inequality warnings at 20% gap and crisis at 40%', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -528,7 +580,11 @@ describe('Phase 5.7: Full Integration Test', () => {
 
   it('should run complete 10-year simulation with all Phase 1-4 mechanics', () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+    const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
     const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
