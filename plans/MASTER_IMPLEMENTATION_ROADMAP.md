@@ -1,16 +1,17 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 10, 2025
+**Date:** November 11, 2025
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **EXCELLENT - STABLE AND IMPROVING** (Nov 9, 2025)
+**Current Status:** 🟢 **EXCELLENT - STABLE AND IMPROVING** (Nov 11, 2025)
 - **Research Quality:** A (peer-reviewed foundation, comprehensive citations)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, defensive cleanup complete)
+- **Implementation Fidelity:** A (assertion coverage 97.2%, defensive cleanup complete, 2 CRITICAL bugs fixed Nov 11)
 - **Architecture Health:** 9.5/10 (cross-system integration operational, phase consolidation complete)
-- **System Trajectory:** STABLE - phase reduction 116→95 (-18% complexity)
+- **System Trajectory:** STABLE - phase reduction 116→95 (-18% complexity), scenario analysis framework operational
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
+- **Recent Bug Fixes:** Wet bulb overflow (Nov 11), government priority weights (Nov 11)
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - QUALITY GATE 1 PASSED (CONDITIONAL)
@@ -28,14 +29,31 @@
 - **Links:** Validates upwardSpirals.ts, cooperativeSpirals.ts, positiveTippingPoints.ts implementations
 - **Status:** Phase 1+2 COMPLETE (commit a7349644, 5bc1cbb4a, bdbc17 pending), Phase 3 CURRENT PRIORITY
 
+**Recent Completions (Nov 11, 2025):**
+- ✅ **CRITICAL BUG FIXES (2 simulation blockers)** (Nov 11, 2025)
+ - **Wet Bulb Mortality Overflow:** Fixed static/dynamic population disconnect (commit a3df82a)
+   - Problem: Mortality calculation could exceed 100% due to regional populations (static) / global population (dynamic) mismatch
+   - Fix: Cap at 10% per event (research-backed: 200× worst historical heat wave)
+   - Validation: Seed 3, 360 months successful
+ - **Government Priority Weights:** Fixed two-system disconnect making priorities non-functional (commit 5970a3e)
+   - Problem: ApplyScenarioPrioritiesPhase set resources, but selectGovernmentAction read weights (parallel systems, no communication)
+   - Evidence: climate-first ≡ baseline (byte-for-byte identical, detected by Priya's quantitative analysis)
+   - Fix: Phase now maps climate spending % → priority weights (10% GDP → 45% weight)
+   - Impact: **All Phase 3 scenario results from Nov 10-11 INVALID, re-run required**
+ - **Detection:** Priya's quantitative analysis identified byte-for-byte identical results (statistical fingerprinting)
+ - **Quality:** A+ (defensive coding maintained, research-backed fixes, fail-loudly semantics preserved)
+ - **Archive:** `/plans/completed/autonomous_session_20251111_220001_complete.md`
+ - **Next:** Re-run Phase 3 Monte Carlo N=10 with corrected government priorities
+
 **Recent Completions (Nov 9-10, 2025):**
-- ✅ **SCENARIO ANALYSIS FRAMEWORK PHASE 1+2 COMPLETE** (Nov 10, 2025)
+- ✅ **SCENARIO ANALYSIS FRAMEWORK PHASE 1+2 COMPLETE** (Nov 10, 2025) - **⚠️ CORRECTED (priority weight fix)**
  - **Phase 1 (Diagnostic Infrastructure):** Spiral activation logging (commit a7349644), scenario type definitions (`src/types/scenarios.ts`), 6 predefined scenarios, diagnostic report (`reviews/god_mode_spiral_diagnostics_20251110.md`)
  - **Phase 2 (Scenario Execution):** Scenario runner (`scripts/scenarioRunner.ts`), comparative analysis (`scripts/compareScenarios.ts`), government override system (governmentCore.ts), scenarioOverrides field in GameState
  - **Key Finding:** Only 1/6 upward spirals activated in god mode test (all tech deployed) - governance/social conditions hypothesis validated
  - **Defensive Coding:** Full assertion utility coverage, no silent fallbacks, deterministic RNG preserved
+ - **Nov 11 Priority Weight Fix:** ApplyScenarioPrioritiesPhase now correctly maps resource allocations → decision weights (was setting resources but government read weights)
  - **Archive:** `/plans/completed/scenario_analysis_phase1_phase2_complete_20251110.md`
- - **Next:** Phase 3 (Core Scenarios) - test government priority scenarios to identify spiral activation conditions
+ - **Next:** Phase 3 (Core Scenarios) re-run required with corrected priority weights
 - ✅ **PHASE CONSOLIDATION PROJECT COMPLETE** (Nov 7-9, 2025)
  - **Phase Reduction:** 116 → 95 phases (-21 phases, -33 files, -18% complexity)
  - **Code Changes:** 153 files, 61,754 insertions, 6,074 deletions
@@ -284,7 +302,15 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 ---
 
-#### Phase 2: Core Scenarios (HIGH Priority)
+#### Phase 2: Core Scenarios (HIGH Priority) - ✅ COMPLETE → 🔄 RE-RUN REQUIRED
+
+**Status Update (Nov 11, 2025):**
+- **Initial Implementation:** ✅ COMPLETE (Nov 10, 2025)
+- **Bug Discovery:** Government priority weights non-functional (climate-first ≡ baseline, byte-for-byte identical)
+- **Root Cause:** ApplyScenarioPrioritiesPhase set resources, selectGovernmentAction read weights (two-system disconnect)
+- **Fix Applied:** Phase now maps spending → weights (10% GDP → 45% weight) (commit 5970a3e)
+- **Current Status:** 🔄 RE-RUN REQUIRED - All Phase 3 scenario results from Nov 10-11 invalid
+- **Next Action:** Monte Carlo N=10 with corrected priority weights
 
 **Objective:** Test individual governance dimensions in isolation
 
