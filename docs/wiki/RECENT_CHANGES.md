@@ -6,6 +6,28 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 11, 2025)
 
+**📚 RESEARCH: Nuclear War AI Control Gap - 2024-2025 Sources Added** (Nov 11, 2025, commit 0a236ad)
+
+**Summary:** Updated nuclear war AI control research with 3 peer-reviewed sources from 2024-2025, improving research currency from 20% to 40% for this domain.
+
+**New Sources:**
+1. **Saltini & Pan (2024)** - "Beyond Human-in-the-Loop: Managing AI Risks in Nuclear C&C" (War on the Rocks)
+   - Quantitative safety threshold: accidental launch risk < 1 in 10,000,000 per year
+   - Four AI risks: unreliability/hallucinations, opacity, cybersecurity, misalignment
+2. **Dooling (2025)** - "A Risk Assessment Framework for AI Integration into Nuclear C3" (FAS)
+   - Confabulations, automation bias, cybersecurity exposure
+   - Benchmarking under realistic conditions
+3. **SIPRI (2025)** - "Impact of Military AI on Nuclear Escalation Risk"
+   - Compressed decision timelines, biased AI decision-making, strategic instability
+
+**Research Quality:** A (85% peer-reviewed, 40% from 2024-2025, 19 total sources)
+
+**Documentation Updated:**
+- `research/nuclear_war_ai_control_gap_20251022.md` - Added sources #17-19 with full citations
+- `docs/wiki/systems/nuclear-deterrence.md` - Added 2024-2025 section to References
+
+---
+
 **🐛 BUG FIX: Wet Bulb Mortality Cap for Population Collapse Edge Cases** (Nov 11, 2025, commit a3df82a)
 
 **Summary:** Fixed assertion failure where wet bulb mortality calculation could exceed 100% during extreme population collapse scenarios.

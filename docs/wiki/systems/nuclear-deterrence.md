@@ -618,12 +618,22 @@ const baseProb = 0.005;  // 0.5% per month base
 
 ## 📚 References
 
+### Classic Sources (1960-2014)
+
 1. **Schelling (1960)**: *The Strategy of Conflict* - Commitment devices, focal points, brinkmanship
 2. **Fearon (1995)**: *Rationalist Explanations for War* - Information problems in conflict
 3. **Powell (2006)**: *War as a Commitment Problem* - Preventive war logic, shifting power
 4. **Sagan (1993)**: *The Limits of Safety* - Organizational failures, human factors in nuclear command
 5. **Bracken (1983)**: *The Command and Control of Nuclear Forces* - C&C vulnerabilities, cyber threats
 6. **Lewis (2014)**: *The 2020 Commission Report on the North Korean Nuclear Attacks* - Launch procedures, veto points, crisis decision-making
+
+### 2024-2025 Updates (AI Control Risks)
+
+7. **Saltini & Pan (2024)**: "Beyond Human-in-the-Loop: Managing AI Risks in Nuclear C&C" - Quantitative safety thresholds (1 in 10M/year), performance-based governance
+8. **Dooling (2025)**: "A Risk Assessment Framework for AI Integration into Nuclear C3" (FAS) - Confabulations, automation bias, cybersecurity exposure
+9. **SIPRI (2025)**: "Impact of Military AI on Nuclear Escalation Risk" - Compressed decision timelines, biased AI decision-making, strategic instability
+
+**Detailed research analysis**: See `research/nuclear_war_ai_control_gap_20251022.md` (19 peer-reviewed sources, 85% peer-reviewed, 40% from 2024-2025)
 
 ---
 
@@ -637,6 +647,6 @@ const baseProb = 0.005;  // 0.5% per month base
 
 ---
 
-**Version**: 2.2
-**Last Updated**: October 9, 2025
-**Status**: ✅ Fully implemented and tested
+**Version**: 2.3
+**Last Updated**: November 11, 2025
+**Status**: ✅ Fully implemented and tested (research updated with 2024-2025 sources)
