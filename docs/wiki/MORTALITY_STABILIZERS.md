@@ -102,6 +102,31 @@ if (majorEconomiesCollapsed / totalMajorEconomies > 0.5) {
 
 **Combined Effect:** Empirical maximum 80% reduction (European data)
 
+**CRITICAL FIX (Nov 11, 2025): Mortality Rate Cap for Population Collapse Edge Cases**
+
+**Problem:** Wet bulb mortality calculation could exceed 100% during extreme population collapse scenarios.
+
+**Root Cause:**
+- Regional populations in `regionalClimates[]` are STATIC (initialized at game start: South Asia = 1900M)
+- Global population is DYNAMIC (crashes during extreme scenarios: 8B → <2B by month 359)
+- Mortality rate = regional deaths / global population can exceed 100%
+- Example: 9.12M deaths / 9M global population = 101.2% ❌
+
+**Research-Backed Solution:**
+- Cap mortality at 10% (10× worst historical heat wave)
+- Ballester et al. (2024): Largest heat waves cause 0.1-0.5% excess mortality
+- 2003 European heatwave: 0.0094% mortality
+- 2010 Russian heatwave: 0.038% mortality
+- 10% cap prevents calculation overflow while preserving fail-loudly semantics
+
+**Defensive Coding:**
+- NO silent fallback - logs when capping occurs with full diagnostic context
+- Indicates either severe population collapse OR calculation bug requiring investigation
+
+**TODO:** Implement dynamic regional population tracking to eliminate this edge case entirely
+
+**File:** `src/simulation/wetBulbEvents.ts:732-784`
+
 **CRITICAL LIMIT (Sylvia's Quality Gate 1 Fix, Updated Nov 7, 2025):**
 
 Wet bulb temperature **30.5°C** (empirical survivability limit from Vecellio et al. 2022), NOT 35°C (theoretical from Raymond et al. 2020).
