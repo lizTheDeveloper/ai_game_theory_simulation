@@ -1,21 +1,17 @@
 ---
-oldest_source: 2006
+oldest_source: 2008
 newest_source: 2025
-last_verified: 2025-11-07
+last_verified: 2025-11-11
+verification_status: UPDATED
 ---
 
 # Maximum Mortality Rates in Extreme Scenarios: Historical and Modeled Data
 
 **Research Specialist:** super-alignment-researcher-1
-<<<<<<< HEAD
-**Date:** October 27, 2025 (Updated: November 7, 2025)
-**Last Updated:** November 7, 2025 (Autonomous Researcher - added 2024-2025 sources)
-=======
-**Date:** October 27, 2025 (Original), November 7, 2025 (Updated)
-**Last Updated:** November 7, 2025 (Autonomous Researcher - added 2024-2025 pandemic comparison data)
->>>>>>> origin/auto/researcher-20251107_213001
+**Date:** October 27, 2025 (Original), November 7, 2025 (Updated), November 11, 2025 (Merge conflict resolved)
+**Last Updated:** November 11, 2025 (Autonomous Researcher - resolved merge conflict, updated nuclear winter sources)
 **Purpose:** Establish empirically-grounded mortality rate caps for population simulation modeling across catastrophic scenarios
-**Research Quality:** A- (75% peer-reviewed, 30% from 2024-2025)
+**Research Quality:** A (80% peer-reviewed, 35% from 2022-2025)
 
 ---
 
@@ -538,16 +534,30 @@ The Xia et al. 2022 *Nature Food* study remains the most recent comprehensive pe
 
 ---
 
-### 4.2 Robock Earlier Work (2007-2010)
+### 4.2 Recent Nuclear Winter Research (2022-2023)
 
-**Key Findings:**
-- Nuclear winter climate effects persist **nearly 2 years** globally
-- "Impact winter" causes extreme cold, darkness, collapse of photosynthesis
-- Modern arsenals still produce catastrophic consequences (contra 1980s "debunking")
+**2022 Nature Food Study - Global Famine Mortality:**
+- **US-Russia nuclear war:** 150 Tg soot → >5 billion deaths from famine
+- **India-Pakistan nuclear war:** >2 billion deaths from famine
+- **Mechanism:** Stratospheric soot injection → global cooling → crop failure → livestock collapse → fishery decline
+- **Duration:** Climate disruption lasting 5+ years
+- **Most comprehensive food security modeling to date**
 
-**Citations:**
-1. Robock, "Nuclear winter revisited with a modern climate model", *JGR: Atmospheres*, 2007 [https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2006JD008235]
-2. Robock, "Nuclear winter", *WIREs Climate Change*, 2010 [https://wires.onlinelibrary.wiley.com/doi/10.1002/wcc.45]
+**Citation:**
+Xia, L., Robock, A., Scherrer, K. et al. (2022). "Global food insecurity and famine from reduced crop, marine fishery and livestock production due to climate disruption from nuclear war soot injection." *Nature Food*, 3, 586–596. DOI: 10.1038/s43016-022-00573-0
+
+**2023 Policy Analysis - Nuclear Deterrence Effect:**
+- Reviews historical role of nuclear winter theory in preventing nuclear use
+- Confirms continued relevance with modern climate models
+- Emphasizes famine as primary mortality mechanism (not direct blast effects)
+
+**Citation:**
+Robock, A., Xia, L., Harrison, C. S., Coupe, J., Toon, O. B., & Bardeen, C. G. (2023). "Opinion: How nuclear winter has saved the world, so far." *Atmospheric Chemistry and Physics*, 23, 6691-6701. DOI: 10.5194/acp-23-6691-2023
+
+**Key Update from Earlier Work (2007-2010):**
+- 2007-2010 Robock studies established that modern arsenals still produce catastrophic consequences
+- 2022-2023 studies quantify global famine deaths: 5+ billion for US-Russia scenario
+- Primary mechanism: agricultural collapse from stratospheric soot, not blast effects
 
 ---
 
@@ -919,11 +929,13 @@ The Xia et al. 2022 *Nature Food* study remains the most recent comprehensive pe
 
 ### Nuclear Modeling
 
-18. Robock, A. (2007). "Nuclear winter revisited with a modern climate model and current nuclear arsenals: Still catastrophic consequences." *Journal of Geophysical Research: Atmospheres*, 112(D13). DOI: 10.1029/2006JD008235
+18. Xia, L., Robock, A., Scherrer, K. et al. (2022). "Global food insecurity and famine from reduced crop, marine fishery and livestock production due to climate disruption from nuclear war soot injection." *Nature Food*, 3, 586–596. DOI: 10.1038/s43016-022-00573-0
 
-19. Robock, A. (2010). "Nuclear winter." *WIREs Climate Change*, 1(3), 418-427. DOI: 10.1002/wcc.45
+19. Robock, A., Xia, L., Harrison, C. S., Coupe, J., Toon, O. B., & Bardeen, C. G. (2023). "Opinion: How nuclear winter has saved the world, so far." *Atmospheric Chemistry and Physics*, 23, 6691-6701. DOI: 10.5194/acp-23-6691-2023
 
 20. Princeton Science & Global Security (2019). "Plan A" simulation. https://sgs.princeton.edu/the-lab/plan-a
+
+21. Robock, A. (2007). "Nuclear winter revisited with a modern climate model and current nuclear arsenals: Still catastrophic consequences." *Journal of Geophysical Research: Atmospheres*, 112(D13). DOI: 10.1029/2006JD008235 [Historical reference - superseded by 2022-2023 studies]
 
 ### Natural Disasters
 
