@@ -4,6 +4,51 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 11, 2025)
+
+**📚 RESEARCH UPDATE: AI Scaling Laws Updated with 2025 Q2-Q3 Model Releases** (Nov 11, 2025, commit 07ebd2d)
+
+**Summary:** Updated AI scaling laws research with empirical data from actual 2025 frontier model releases.
+
+**Research Quality:** A+ (newest source Aug 2025 GPT-5/Gemini 2.5 releases, oldest 2020 Kaplan et al. foundational paper)
+
+**Key Additions:**
+
+1. **GPT-5 (Aug 7, 2025)**
+   - Released with "Thinking Mode" for complex reasoning
+   - 94.6% accuracy on AIME 2025 mathematical reasoning benchmark
+   - Industry benchmark for frontier capabilities
+   - Validates test-time compute paradigm shift
+
+2. **Claude 4 Family (May 2025)**
+   - Hybrid architecture: instant responses + extended thinking
+   - Claude Opus 4.1: 74.5% on SWE-bench coding challenges
+   - Significant software development capability improvement
+
+3. **Gemini 2.5 (Aug 2025)**
+   - First public multi-agent AI model (Deep Think mode)
+   - MMLU accuracy: ~87-88% (competitive with Claude 4 and GPT-4.5)
+   - Native multimodal: text, images, audio, video
+
+4. **DeepSeek R1/V3 (Jan 2025)**
+   - Cost disruption: competitive performance at dramatically lower costs
+   - DeepSeek V3.1: ~87.1% on MMLU
+   - Demonstrates competitive AI achievable without massive budgets
+
+**Key Finding:** Test-time compute + reasoning now standard across frontier models, validating Nov 2024 prediction of paradigm shift from pre-training scaling to inference-time reasoning.
+
+**Documentation Impact:**
+- Updated BIBLIOGRAPHY.md with new AI Scaling Laws section
+- Documented empirical model releases (GPT-5, Claude 4, Gemini 2.5, DeepSeek)
+- Added industry evidence for 2024-2025 scaling wall
+
+**Research File:** `research/ai_scaling_laws_paradigm_shift_20251107.md`
+- Added frontmatter (oldest: 2020, newest: 2025, verified: 2025-11-11)
+- Expanded industry adoption section with actual release data
+- Documented DeepSeek cost disruption impact
+
+---
+
 ## ✅ Recent Changes (November 10, 2025)
 
 **🤖 AUTONOMOUS RESEARCH AGENT: VM Cron Integration** (Nov 10, 2025, commit 5e605b3)

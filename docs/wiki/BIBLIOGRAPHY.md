@@ -43,6 +43,49 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 
 ## AI Safety & Capabilities
 
+### AI Scaling Laws & Paradigm Shifts (2020-2025)
+
+**Kaplan, J., McCandlish, S., Henighan, T., Brown, T. B., Chess, B., Child, R., et al. (2020).** Scaling Laws for Neural Language Models. arXiv:2001.08361
+- **Used for**: AI capabilities modeling foundation
+- **Key findings**: Power-law relationships between loss and model size (N), dataset size (D), compute (C); larger models are more sample-efficient
+
+**Hoffmann, J., Borgeaud, S., Mensch, A., et al. (2022).** Training Compute-Optimal Large Language Models. arXiv:2203.15556
+- **Used for**: Chinchilla scaling laws, optimal data-to-compute ratios
+- **Key findings**: Model size and dataset size should scale together; 70B model on 1.4T tokens outperforms 175B on 300B tokens
+
+**Anonymous (2025).** The Race to Efficiency: A New Perspective on AI Scaling Laws. arXiv:2501.02156
+- **Used for**: Diminishing returns quantification, efficiency requirements
+- **Key findings**: Without efficiency gains, advanced performance requires millennia of training or unrealistic GPU fleets
+
+**Anonymous (2025).** The Illusion of Diminishing Returns: Measuring Long Horizon Execution in LLMs. arXiv:2509.09677
+- **Used for**: Test-time compute scaling, multi-step reasoning
+- **Key findings**: Small step accuracy improvements yield hyperbolic gains in long-horizon task success
+
+**Anonymous (2024).** Hardware Scaling Trends and Diminishing Returns in Large-Scale Distributed Training. arXiv:2411.13055
+- **Used for**: Infrastructure bottlenecks, communication overhead
+- **Key findings**: Communication overhead dominant at >10K GPUs, GPU underutilization in extreme-scale training
+
+**Anonymous (2025).** CarbonScaling: Extending Neural Scaling Laws for Carbon Footprint in Large Language Models. arXiv:2508.06524
+- **Used for**: Environmental impact of AI scaling
+- **Key findings**: Carbon cost per unit of performance improvement increasing for frontier models
+
+**Anonymous (2025).** Sub-Scaling Laws: On the Role of Data Density and Training Strategies in LLMs. arXiv:2507.10613
+- **Used for**: Optimal data scaling strategies
+- **Key findings**: Over-training leads to sub-scaling with diminishing returns; D_optimal ∝ C^0.5
+
+**Industry Evidence (2024-2025):**
+- Newton, C. (2024). "AI companies hit a scaling wall." Platformer
+- Wiggers, K. (2024). "AI scaling laws showing diminishing returns." TechCrunch
+- Stripe (2025). "The Scaling Era: An Oral History of AI, 2019-2025"
+
+**Empirical Model Releases (2025):**
+- GPT-5 (Aug 2025): 94.6% AIME, thinking mode
+- Claude 4 (May 2025): 74.5% SWE-bench, hybrid architecture
+- Gemini 2.5 (Aug 2025): 87-88% MMLU, multimodal Deep Think
+- DeepSeek R1/V3 (Jan 2025): Cost disruption, competitive performance at lower training cost
+
+**Research file**: `research/ai_scaling_laws_paradigm_shift_20251107.md`
+
 ### Multi-Agent AI Coordination & Alignment (2024-2025)
 
 **Hammond, L., Chan, A., Clifton, J., Hoelscher-Obermaier, J., Khan, A., et al. (2025).** Multi-Agent Risks from Advanced AI. *Cooperative AI Foundation, Technical Report #1*. arXiv:2502.14143
