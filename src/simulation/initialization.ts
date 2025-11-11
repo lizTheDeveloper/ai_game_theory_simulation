@@ -1172,7 +1172,12 @@ export function createDefaultInitialState(
       qualityOfLife: [],
       outcomeProbs: [],
       controlCapability: [],
-      metrics: []
+      metrics: [],
+      // Phase 2 tracking arrays (Oct-Nov 2025)
+      exogenousShocks: [],
+      criticalJunctureEscapes: [],
+      cooperativeSpirals: [],
+      cooperativeOwnershipEvents: []
     }
   };
   

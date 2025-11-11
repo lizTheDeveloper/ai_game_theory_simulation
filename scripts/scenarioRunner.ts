@@ -498,60 +498,70 @@ function extractQoLMetrics(state: GameState): {
 
 /**
  * Extract environmental metrics
- * FIX (Nov 10, 2025): Fail loudly if environmental state missing (not just in extinction scenarios)
+ * FIX (Nov 11, 2025): Use correct state paths after Oct 2025 refactor
+ * - Temperature: state.resourceEconomy.co2.temperatureAnomaly (not state.climate.globalTempDelta)
+ * - CO2: state.resourceEconomy.co2.atmosphericCO2 (not state.climate.co2Concentration)
+ * - Extinction: state.biosphereIntegrityIndex.currentExtinctionRate (not state.ecology.extinctionRate)
  */
 function extractEnvironmentMetrics(state: GameState): {
   globalTempDelta: number;
   co2Concentration: number;
   extinctionRate: number;
 } {
-  // If state has no climate/ecology, this indicates a critical bug (not just extinction)
-  if (!(state as any).climate) {
+  // Verify resource economy system exists
+  if (!state.resourceEconomy || !state.resourceEconomy.co2) {
     throw new Error(
-      `❌ Missing state.climate in extractEnvironmentMetrics\n` +
+      `❌ Missing state.resourceEconomy.co2 in extractEnvironmentMetrics\n` +
       `   Month: ${state.currentMonth}\n` +
-      `   Climate state should always exist (initialized in createDefaultInitialState).\n` +
-      `   Check for state corruption or initialization bug.`
-    );
-  }
-  if (!(state as any).ecology) {
-    throw new Error(
-      `❌ Missing state.ecology in extractEnvironmentMetrics\n` +
-      `   Month: ${state.currentMonth}\n` +
-      `   Ecology state should always exist (initialized in createDefaultInitialState).\n` +
+      `   Resource economy should always exist (initialized in initialization.ts).\n` +
       `   Check for state corruption or initialization bug.`
     );
   }
 
-  const climate = (state as any).climate;
-  const ecology = (state as any).ecology;
+  // Verify biosphere integrity index exists
+  if (!state.biosphereIntegrityIndex) {
+    throw new Error(
+      `❌ Missing state.biosphereIntegrityIndex in extractEnvironmentMetrics\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   Biosphere integrity index should always exist (initialized in initialization.ts).\n` +
+      `   Check for state corruption or initialization bug.`
+    );
+  }
 
-  if (climate.globalTempDelta === undefined || climate.globalTempDelta === null) {
+  const co2System = state.resourceEconomy.co2;
+  const biosphere = state.biosphereIntegrityIndex;
+
+  // Validate temperature anomaly
+  if (co2System.temperatureAnomaly === undefined || co2System.temperatureAnomaly === null) {
     throw new Error(
-      `❌ Missing climate.globalTempDelta in extractEnvironmentMetrics\n` +
+      `❌ Missing resourceEconomy.co2.temperatureAnomaly in extractEnvironmentMetrics\n` +
       `   Month: ${state.currentMonth}\n` +
-      `   Check ClimatePhase initialization.`
+      `   Check ResourceEconomyPhase or ClimateSystemPhase initialization.`
     );
   }
-  if (climate.co2Concentration === undefined || climate.co2Concentration === null) {
+
+  // Validate atmospheric CO2
+  if (co2System.atmosphericCO2 === undefined || co2System.atmosphericCO2 === null) {
     throw new Error(
-      `❌ Missing climate.co2Concentration in extractEnvironmentMetrics\n` +
+      `❌ Missing resourceEconomy.co2.atmosphericCO2 in extractEnvironmentMetrics\n` +
       `   Month: ${state.currentMonth}\n` +
-      `   Check ClimatePhase initialization.`
+      `   Check ResourceEconomyPhase initialization.`
     );
   }
-  if (ecology.extinctionRate === undefined || ecology.extinctionRate === null) {
+
+  // Validate extinction rate
+  if (biosphere.currentExtinctionRate === undefined || biosphere.currentExtinctionRate === null) {
     throw new Error(
-      `❌ Missing ecology.extinctionRate in extractEnvironmentMetrics\n` +
+      `❌ Missing biosphereIntegrityIndex.currentExtinctionRate in extractEnvironmentMetrics\n` +
       `   Month: ${state.currentMonth}\n` +
-      `   Check EcologyPhase initialization.`
+      `   Check BiospherePhase initialization.`
     );
   }
 
   return {
-    globalTempDelta: climate.globalTempDelta,
-    co2Concentration: climate.co2Concentration,
-    extinctionRate: ecology.extinctionRate
+    globalTempDelta: co2System.temperatureAnomaly,
+    co2Concentration: co2System.atmosphericCO2,
+    extinctionRate: biosphere.currentExtinctionRate
   };
 }
 
