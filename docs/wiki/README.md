@@ -2431,13 +2431,15 @@ When auditing or writing simulation code:
   - Bug discovery: QoL overflow caught at month 13
   - Monte Carlo validation: N=3, zero failures after fix
 
-- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 7, 2025)
+- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 11, 2025 - Nuclear winter sources upgraded to 2022-2023)
   - Maximum mortality rates for catastrophic scenarios (pandemics, nuclear winter, famine)
   - **Updated 2024-2025 research:**
     - COVID-19 excess mortality (JAMA Health Forum May 2025, Int'l J. Epidemiology June 2025)
     - Nuclear winter validation (IIASA May 2025, US National Academies ongoing review)
+  - **Nuclear winter sources (2022-2023):**
+    - Xia et al. (2022) Nature Food: 5+ billion famine deaths from US-Russia nuclear war
+    - Robock et al. (2023) ACP: Policy analysis on nuclear deterrence
   - **Key findings:** 23% of US deaths in 2023 were excess mortality, nuclear winter consensus reaffirmed (Xia 2022)
-  - Research quality: A- (75% peer-reviewed, 30% from 2024-2025)
 
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 

@@ -1,7 +1,7 @@
 # Bayesian Mortality System
 
 **Status:** ✅ Implemented (October 27, 2025)
-**Research:** [/research/mortality_caps_historical_data_20251027.md](/research/mortality_caps_historical_data_20251027.md) (21 sources)
+**Research:** [/research/mortality_caps_historical_data_20251027.md](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 11, 2025 - Nuclear winter sources upgraded to 2022-2023)
 **Implementation:** `/src/simulation/bayesianMortality.ts`
 **Types:** `/src/types/bayesianMortality.ts`
 
