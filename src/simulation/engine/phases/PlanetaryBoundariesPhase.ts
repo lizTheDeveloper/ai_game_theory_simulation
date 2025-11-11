@@ -17,7 +17,7 @@ import { assertPlanetaryBoundary } from '@/simulation/utils/assertions';
 export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly id = 'planetary_boundaries';
   readonly name = 'Planetary Boundaries System';
-  readonly order = 21.0;
+  readonly order = 21.00; // Planetary boundary tracking - first
 
   // DEPENDENCIES (Nov 6, 2025): Requires environmental state from earlier phases
   readonly dependencies = [

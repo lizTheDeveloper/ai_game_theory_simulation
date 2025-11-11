@@ -28,7 +28,7 @@ import { assertProbability, assertFinite } from '@/simulation/utils/assertions';
 export class Tier2SocialSystemsPhase implements SimulationPhase {
   id = 'tier2_social_systems';
   name = 'TIER 2: Social Systems';
-  order = 12.6; // Earliest intervention (Centaur Systems)
+  order = 12.61; // Earliest intervention (Centaur Systems)
   dependencies = ['tech-tree'];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
@@ -62,7 +62,7 @@ export class Tier2SocialSystemsPhase implements SimulationPhase {
 
   /**
    * Human-AI Centaur Systems
-   * Original order: 12.6
+   * Original order: 12.61
    */
   private executeCentaurSystems(state: GameState, rng: RNGFunction, events: GameEvent[]): void {
     if (!state.tier2Interventions || !state.tier2InterventionParameters) return;

@@ -21,7 +21,7 @@ import { assertAICapability, assertAIAggregateCapability } from '@/simulation/ut
 export const LLMWeightUpdatePhase: SimulationPhase = {
   id: 'llm_weight_update',
   name: 'LLM Weight Update',
-  order: 2.5, // After time advancement (0-1), before agent actions (3+)
+  order: 2.51, // After time advancement (0-1), before agent actions (3+)
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Note: This phase is synchronous but checkAndUpdateAgentWeights internally handles async LLM calls

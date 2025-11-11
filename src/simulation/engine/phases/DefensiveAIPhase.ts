@@ -12,7 +12,7 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 export class DefensiveAIPhase implements SimulationPhase {
   readonly id = 'defensive-ai';
   readonly name = 'Defensive AI Update';
-  readonly order = 20.0;
+  readonly order = 20.01; // Defensive AI systems - second (after nuclear C2)
   dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {

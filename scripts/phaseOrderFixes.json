@@ -1,0 +1,73 @@
+{
+  "Order 2.5 (3 phases)": {
+    "AIWelfareUpdatePhase.ts": { "old": 2.5, "new": 2.50, "reason": "AI welfare measurement - runs first" },
+    "LLMWeightUpdatePhase.ts": { "old": 2.5, "new": 2.51, "reason": "Uses welfare to update weights - second" },
+    "TriggeredEventsPhase.ts": { "old": 2.5, "new": 2.52, "reason": "External event injection - third" }
+  },
+  "Order 3.5 (2 phases)": {
+    "AIAlignmentEvolutionPhase.ts": { "old": 3.5, "new": 3.50, "reason": "Consolidated alignment phase - primary" },
+    "AlignmentDynamicsPhase.ts": { "old": 3.5, "new": 3.51, "reason": "Legacy phase (should be consolidated) - second" }
+  },
+  "Order 8.5 (2 phases)": {
+    "StochasticInnovationPhase.ts": { "old": 8.5, "new": 8.50, "reason": "Innovation events - first" },
+    "PlayerDecisionPhase.ts": { "old": 8.5, "new": 8.51, "reason": "Player decisions - second (may override innovation)" }
+  },
+  "Order 12.6 (2 phases)": {
+    "CooperativeSystemsPhase.ts": { "old": 12.6, "new": 12.60, "reason": "Consolidated cooperative phase - primary" },
+    "Tier2SocialSystemsPhase.ts": { "old": 12.6, "new": 12.61, "reason": "Tier 2 tech deployment - second" }
+  },
+  "Order 15 (2 phases)": {
+    "NationalAIPhase.ts": { "old": 15, "new": 15.00, "reason": "National AI development - first" },
+    "AntimicrobialResistancePhase.ts": { "old": 15, "new": 15.01, "reason": "AMR crisis detection - second" }
+  },
+  "Order 17 (3 phases)": {
+    "ResourceEconomyPhase.ts": { "old": 17, "new": 17.00, "reason": "Resource production - first" },
+    "HumanEnhancementPhase.ts": { "old": 17, "new": 17.01, "reason": "Human enhancement effects - second" },
+    "ResentmentRecoveryPhase.ts": { "old": 17, "new": 17.02, "reason": "AI resentment recovery - third" }
+  },
+  "Order 18.5 (2 phases)": {
+    "Tier2PhysicalSystemsPhase.ts": { "old": 18.5, "new": 18.50, "reason": "Tier 2 physical tech deployment - first" },
+    "MemeticEvolutionPhase.ts": { "old": 18.5, "new": 18.51, "reason": "Memetic dynamics - second" }
+  },
+  "Order 20 (2 phases)": {
+    "NuclearCommandControlPhase.ts": { "old": 20, "new": 20.00, "reason": "Nuclear C2 integrity - first (prevent accidents)" },
+    "DefensiveAIPhase.ts": { "old": 20, "new": 20.01, "reason": "Defensive AI systems - second" }
+  },
+  "Order 20.1 (2 phases)": {
+    "DemocracyDynamicsPhase.ts": { "old": 20.1, "new": 20.10, "reason": "Democracy metrics - first" },
+    "ResourceSoilPhase.ts": { "old": 20.1, "new": 20.11, "reason": "Soil health (phosphorus, novel entities) - second" }
+  },
+  "Order 20.5 (3 phases)": {
+    "PositiveTippingPointsPhase.ts": { "old": 20.5, "new": 20.50, "reason": "Positive tipping points - first" },
+    "InternationalRelationsPhase.ts": { "old": 20.5, "new": 20.51, "reason": "Diplomatic relations - second" },
+    "HumanPopulationPhase.ts": { "old": 20.5, "new": 20.52, "reason": "Population dynamics - third (uses relations)" }
+  },
+  "Order 21 (2 phases)": {
+    "PlanetaryBoundariesPhase.ts": { "old": 21, "new": 21.00, "reason": "Planetary boundary tracking - first" },
+    "DystopiaProgressionPhase.ts": { "old": 21, "new": 21.01, "reason": "Dystopia state calculation - second (uses boundaries)" }
+  },
+  "Order 21.5 (2 phases)": {
+    "FamineSystemPhase.ts": { "old": 21.5, "new": 21.50, "reason": "Famine crisis detection - first" },
+    "HumanSurvivalSystemPhase.ts": { "old": 21.5, "new": 21.51, "reason": "Survival system updates - second (uses famine state)" }
+  },
+  "Order 22 (2 phases)": {
+    "BenchmarkEvaluationsPhase.ts": { "old": 22, "new": 22.00, "reason": "AI benchmark testing - first" },
+    "InformationWarfarePhase.ts": { "old": 22, "new": 22.01, "reason": "Info warfare dynamics - second" }
+  },
+  "Order 35 (2 phases)": {
+    "BayesianMortalityResolutionPhase.ts": { "old": 35, "new": 35.00, "reason": "Centralized mortality resolution - first (CRITICAL)" },
+    "OutcomeProbabilitiesPhase.ts": { "old": 35, "new": 35.01, "reason": "Outcome probability calculation - second (uses mortality)" }
+  },
+  "Order 36 (2 phases)": {
+    "CrisisDetectionPhase.ts": { "old": 36, "new": 36.00, "reason": "Crisis detection - first" },
+    "EnsembleMetaLearningPhase.ts": { "old": 36, "new": 36.01, "reason": "Meta-learning updates - second" }
+  },
+  "Order 37 (2 phases)": {
+    "ExtinctionTriggersPhase.ts": { "old": 37, "new": 37.00, "reason": "Extinction trigger detection - first" },
+    "ExtinctionSystemPhase.ts": { "old": 37, "new": 37.01, "reason": "Extinction system state - second (uses triggers)" }
+  },
+  "Order 252 (2 phases)": {
+    "NuclearCrisisPhase.ts": { "old": 252, "new": 252.00, "reason": "Nuclear crisis management - first" },
+    "NuclearWinterPhase.ts": { "old": 252, "new": 252.01, "reason": "Nuclear winter effects - second (cascades from crisis)" }
+  }
+}

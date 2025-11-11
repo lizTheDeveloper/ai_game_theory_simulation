@@ -16,7 +16,7 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 export class MemeticEvolutionPhase implements SimulationPhase {
   readonly id = 'memetic-evolution';
   readonly name = 'Memetic Evolution';
-  readonly order = 18.5; // After human enhancement (17.0), before social QoL calculation (19.0)
+  readonly order = 18.51; // After human enhancement (17.0), before social QoL calculation (19.0)
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

@@ -21,7 +21,7 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 export class ResourceSoilPhase implements SimulationPhase {
   readonly id = 'resource-soil';
   readonly name = 'Resource Soil Update';
-  readonly order = 20.1;
+  readonly order = 20.11;
   readonly dependencies = ['defensive-ai']; // Both original phases ran after AI actions
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {

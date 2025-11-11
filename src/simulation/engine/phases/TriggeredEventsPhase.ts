@@ -15,7 +15,7 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 export class TriggeredEventsPhase implements SimulationPhase {
   id = 'triggered-events';
   name = 'Triggered Events';
-  order = 2.5;
+  order = 2.52;
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Stub implementation - no triggered events yet

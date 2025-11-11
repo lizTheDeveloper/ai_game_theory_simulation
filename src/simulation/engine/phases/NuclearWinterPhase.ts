@@ -19,7 +19,7 @@ import { assertInRange, assertProbability } from '@/simulation/utils/assertions'
 export class NuclearWinterPhase implements SimulationPhase {
   readonly id = 'nuclear_winter';
   readonly name = 'NuclearWinter';
-  readonly order = 252; // After organization viability (251)
+  readonly order = 252.01; // After organization viability (251)
 
   // DEPENDENCIES (Nov 6, 2025): Requires nuclear command control state
   readonly dependencies = [

@@ -1,0 +1,29 @@
+{
+  "scenarioId": "climate-first",
+  "seed": 1000,
+  "outcome": "utopia",
+  "monthsSimulated": 49,
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 1,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 5
+  },
+  "finalQoL": {
+    "survivalAvg": 0.5865406265827207,
+    "basicNeedsAvg": 0.7734460803232887,
+    "psychologicalAvg": 0.692584625184473,
+    "socialAvg": 0.6158428009793387,
+    "healthAvg": 0.37833333333333335,
+    "environmentalAvg": 0.534,
+    "overallAvg": 0.5967912444005258
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 0
+  },
+  "finalPopulation": 5.094562412293676,
+  "boundariesBreached": []
+}
