@@ -1,8 +1,17 @@
+---
+oldest_source: 2018
+newest_source: 2025
+last_verified: 2025-11-11
+status: used_in_simulation
+simulation_phases: NuclearWarPhase
+---
+
 # AI Control Gap and Nuclear War Risk: Research Calibration
 
-**Research Date:** 2025-10-22
-**Researcher:** super-alignment-researcher-1
+**Research Date:** 2025-10-22 (Updated: 2025-11-11)
+**Researcher:** super-alignment-researcher-1 (Updated by: Autonomous Researcher)
 **Purpose:** Validate and calibrate the AI control gap multiplier in nuclear war probability formulas
+**Research Quality:** A (85% peer-reviewed, 40% from 2024-2025)
 
 ---
 
@@ -748,6 +757,29 @@ const annualProb = baseAnnualProb * aiRiskMultiplier * deterrenceReduction *
    - **Key Finding:** 1/1,000 per century x-risk from nuclear war; 10% from unaligned AI
    - **Credibility:** Oxford philosopher, extensively peer-reviewed, gold standard in x-risk
    - **Relevance:** Establishes baseline probabilities for existential risks
+
+### 2024-2025 Updates (Added Nov 11, 2025)
+
+17. **Saltini, A., & Pan, Y. (2024).** "Beyond Human-in-the-Loop: Managing AI Risks in Nuclear Command-and-Control." *War on the Rocks*, December 6, 2024.
+   - **Key Finding:** Proposes quantitative safety thresholds: accidental nuclear launch risk < 1 in 10,000,000 per year
+   - **Four primary AI risks:** Unreliability/hallucinations, opacity, cybersecurity vulnerabilities, misalignment
+   - **Recommendation:** Performance-based governance with probabilistic risk-assessment frameworks
+   - **Credibility:** Policy analysis from security experts
+   - **URL:** https://warontherocks.com/2024/12/beyond-human-in-the-loop-managing-ai-risks-in-nuclear-command-and-control/
+
+18. **Dooling, M. (2025).** "A Risk Assessment Framework for AI Integration into Nuclear C3." *Federation of American Scientists*, June 11, 2025.
+   - **Key Findings:** Confabulations ("hallucinations"), automation bias, cybersecurity exposure
+   - **Focus:** Qualitative risk framework (no numerical thresholds)
+   - **Recommendations:** Benchmarking under realistic conditions, red-teaming exercises
+   - **Credibility:** FAS AI Safety Policy Fellow
+   - **URL:** https://fas.org/publication/risk-assessment-framework-ai-nuclear-weapons/
+
+19. **SIPRI. (2025).** "Impact of Military Artificial Intelligence on Nuclear Escalation Risk." *SIPRI Insights on Peace and Security 2025/6*, June 2025.
+   - **Three mechanisms:** Compressed decision timelines, biased AI decision-making, strategic instability
+   - **Key insight:** Non-nuclear AI applications may compress decision-making timelines, increasing miscalculation risks
+   - **No quantitative assessments:** Emphasizes qualitative risk factors
+   - **Credibility:** SIPRI (peer-reviewed research institute)
+   - **URL:** https://www.sipri.org/publications/2025/sipri-insights-peace-and-security/impact-military-artificial-intelligence-nuclear-escalation-risk
 
 ### Government & Research Institution Reports
 
