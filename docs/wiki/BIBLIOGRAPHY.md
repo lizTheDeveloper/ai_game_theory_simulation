@@ -1,7 +1,7 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 7, 2025
-**Total Sources**: 163+ peer-reviewed citations
+**Last Updated**: November 11, 2025
+**Total Sources**: 164+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 60% from 2024-2025
 
@@ -260,6 +260,13 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Confidence**: VERY HIGH (RCT, N=444 professionals, published in Science)
 
 ### Implementation Science
+
+**Poon, E. G., Lemak, C. H., Rojas, J. C., et al. (2025).** Adoption of artificial intelligence in healthcare: survey of health system priorities, successes, and challenges. *Journal of the American Medical Informatics Association*, 32(7), 1093-1100. DOI: 10.1093/jamia/ocaf065
+- **Used for**: Empirical AI deployment timelines post-ChatGPT (organizational vs individual adoption gap)
+- **Key finding**: 2 years post-breakthrough shows partial deployment (51-90%), not full adoption; primary barriers are immature tools (77%), financial concerns (47%), regulatory uncertainty (40%)
+- **Validation**: Confirms 2-4 year baseline for organizational deployment despite AI breakthroughs
+- **Confidence**: VERY HIGH (peer-reviewed in JAMIA, published January 2025, captures current state)
+- **Note**: Technology maturity and regulation rate-limiting, not organizational readiness
 
 **Fixsen, D. L., Naoom, S. F., Blase, K. A., Friedman, R. M., & Wallace, F. (2005).** *Implementation Research: A Synthesis of the Literature.* University of South Florida.
 - **Used for**: Organizational deployment timelines (2-4 years full implementation)
