@@ -62,17 +62,31 @@ export interface NovelEntitiesSystem {
   exposureMonths: number;
   
   // === TECHNOLOGY DEPLOYMENT ===
-  
+
   /** Green chemistry adoption (non-toxic alternatives) */
   greenChemistryDeployment: number; // [0,1]
-  
+
   /** Circular economy (reduce new chemical production) */
   circularEconomyDeployment: number; // [0,1]
-  
+
   /** Chemical bans (worst offenders removed) */
   chemicalBansDeployment: number; // [0,1]
-  
+
   /** Bioremediation (microbes break down chemicals) */
   bioremediationDeployment: number; // [0,1]
+
+  // === CRITICAL FIX (Nov 11, 2025): Stock vs Flow Tracking (Ling 2024, Cousins 2022) ===
+
+  /** Annual emissions rate (Mt/year) - NEW pollution entering environment */
+  annualEmissions?: number;
+
+  /** Accumulated stock (Mt) - Legacy contamination from decades of production */
+  accumulatedStock?: number;
+
+  /** Atmospheric distribution flag - If true, local cleanup is futile (Cousins 2022) */
+  atmosphericDistribution?: boolean;
+
+  /** Natural decay half-life (years) - Time for 50% degradation (500+ for PFAS) */
+  naturalDecayHalfLife?: number;
 }
 

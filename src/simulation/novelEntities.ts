@@ -40,6 +40,12 @@ export function initializeNovelEntitiesSystem(): NovelEntitiesSystem {
     circularEconomyDeployment: 0.10,     // Some programs
     chemicalBansDeployment: 0.15,        // Some chemicals banned (e.g., some pesticides)
     bioremediationDeployment: 0.0,       // Emerging technology
+
+    // CRITICAL FIX (Nov 11, 2025): Stock vs flow tracking (Ling 2024)
+    annualEmissions: 60000,              // 60,000 Mt/year (mid-range: 20,000-100,000 Mt/yr from Ling 2024)
+    accumulatedStock: 1800000,           // 1.8M Mt (30 years × 60k/yr - decades of accumulation)
+    atmosphericDistribution: true,       // PFAS in rainwater globally (Cousins 2022: all continents + Antarctica)
+    naturalDecayHalfLife: 500,           // 500 years (PFAS "forever chemicals" persist centuries)
   };
 }
 

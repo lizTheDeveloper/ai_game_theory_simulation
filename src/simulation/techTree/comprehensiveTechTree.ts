@@ -66,6 +66,26 @@ export interface TechDefinition {
       boost: number;
     }[];
   };
+
+  // CRITICAL FIX (Nov 11, 2025): Energy/concentration constraints for cleanup tech
+  /** Energy requirements for cleanup technologies (Fennell 2024, Ling 2024) */
+  energyRequirement?: {
+    kWhPerM3?: number;           // Energy per cubic meter treated (water/air)
+    kWhPerKg?: number;           // Energy per kg removed (solid waste)
+    annualTWhRequired?: number;   // Annual energy requirement (if calculable)
+  };
+
+  /** Minimum concentration threshold for technology effectiveness (Fennell 2024) */
+  minimumConcentration?: {
+    ngPerL: number;              // Minimum concentration (ng/L) for tech to work
+    optimalNgPerL?: number;       // Optimal concentration for full efficiency
+  };
+
+  /** Technology type: prevention vs cleanup (Ling 2024 conclusion) */
+  techType?: 'prevention' | 'cleanup' | 'hybrid';
+
+  /** Flag: Does this tech target irreversible environmental stock? (Cousins 2022) */
+  targetsIrreversibleStock?: boolean;
 }
 
 /**
@@ -159,6 +179,15 @@ const ALL_TECH: TechDefinition[] = [
     effects: {
       pollutionReduction: 0.02,
     },
+    // CRITICAL FIX (Nov 11, 2025): AI optimization reduces energy but doesn't eliminate constraints
+    energyRequirement: {
+      kWhPerM3: 100,  // Optimized routing/targeting reduces wasted energy
+    },
+    minimumConcentration: {
+      ngPerL: 50000,  // 0.05 mg/L - still needs detectable concentrations
+    },
+    techType: 'cleanup',
+    targetsIrreversibleStock: false,  // Optimization tech, not direct cleanup
   },
   
   // Social (1)
@@ -545,6 +574,15 @@ const ALL_TECH: TechDefinition[] = [
       healthBonus: 0.05,
       pollutionReduction: 0.10,
     },
+    // CRITICAL FIX (Nov 11, 2025): Energy/concentration constraints (Fennell 2024)
+    energyRequirement: {
+      kWhPerM3: 420,  // 370 kWh destruction + 50 kWh concentration (Fennell 2024)
+    },
+    minimumConcentration: {
+      ngPerL: 1000000,  // 1 mg/L = 1,000,000 ng/L threshold (Fennell 2024)
+    },
+    techType: 'cleanup',
+    targetsIrreversibleStock: true,  // PFAS persist centuries (Cousins 2022)
   },
   {
     id: 'plastic_eating_enzymes',
@@ -564,6 +602,15 @@ const ALL_TECH: TechDefinition[] = [
       oceanHealthBonus: 0.10,
       pollutionReduction: 0.15,
     },
+    // CRITICAL FIX (Nov 11, 2025): Energy/concentration constraints
+    energyRequirement: {
+      kWhPerKg: 500,  // Enzyme production + distribution + mechanical collection
+    },
+    minimumConcentration: {
+      ngPerL: 500000,  // 0.5 mg/L - needs concentrated plastic waste streams
+    },
+    techType: 'cleanup',
+    targetsIrreversibleStock: false,  // Targets recent plastic, not legacy microplastics
   },
   {
     id: 'green_chemistry',
@@ -583,6 +630,88 @@ const ALL_TECH: TechDefinition[] = [
       newPollutionPrevention: 0.60,
       healthBonus: 0.08,
     },
+  },
+
+  // CRITICAL FIX (Nov 11, 2025): Prevention >> Cleanup (Ling 2024, Cousins 2022)
+  // Three prevention technologies (Montreal Protocol-style production bans)
+  {
+    id: 'global_pfas_ban',
+    name: 'Global PFAS Production Ban',
+    description: 'Montreal Protocol-style international agreement to phase out PFAS production. Prevention 500× more effective than cleanup.',
+    category: 'pollution',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.5,  // Political coordination, not advanced AI
+    minEconomicStage: 2.5,
+    minMonth: 12,  // Crisis must be recognized first
+    researchMonthsRequired: 24,  // 2 years to negotiate treaty
+    researchCost: 50,  // Minimal research - mostly political
+    deploymentCost: 200,  // Enforcement costs (minimal vs cleanup)
+    deploymentMonthsRequired: 120,  // 10 years median phase-out
+    deploymentLevel: 0,
+    effects: {
+      novelEntitiesEmissionReduction: 0.99,  // 99% reduction in NEW PFAS emissions
+      pollutionReduction: 0.05,  // Only 5% impact on existing stock (legacy contamination persists)
+    },
+    // Prevention tech properties
+    techType: 'prevention',
+    targetsIrreversibleStock: false,  // Prevents NEW emissions, doesn't clean existing stock
+    citations: [
+      'Cousins, I. T., et al. (2022). Environmental Science & Technology, 56(16), 11172-11179',
+      'Ling, A. L. (2024). Science of the Total Environment, 918, 170647'
+    ],
+  },
+  {
+    id: 'plastic_production_phaseout',
+    name: 'Plastic Production 80% Phase-Out',
+    description: 'Global agreement to reduce virgin plastic production by 80%, transition to biodegradable alternatives. Prevents NEW microplastic contamination.',
+    category: 'pollution',
+    status: 'unlockable',
+    prerequisites: ['global_pfas_ban'],  // Requires prior treaty success
+    minAICapability: 2.0,  // AI-designed biodegradable alternatives
+    minEconomicStage: 3.0,
+    minMonth: 18,
+    researchMonthsRequired: 36,  // 3 years to develop alternatives
+    researchCost: 80,
+    deploymentCost: 500,  // Industry transition costs
+    deploymentMonthsRequired: 240,  // 20 years median (longer - entrenched industry)
+    deploymentLevel: 0,
+    effects: {
+      novelEntitiesEmissionReduction: 0.80,  // 80% reduction in NEW plastic emissions
+      microplasticReduction: 0.10,  // Legacy microplastics persist for centuries
+      pollutionReduction: 0.08,
+    },
+    techType: 'prevention',
+    targetsIrreversibleStock: false,
+    citations: [
+      'Ling, A. L. (2024). Science of the Total Environment, 918, 170647'
+    ],
+  },
+  {
+    id: 'green_chemistry_substitution',
+    name: 'Chemical Substitution Acceleration',
+    description: 'AI-designed non-toxic alternatives to hazardous industrial chemicals. Prevents need for remediation by stopping pollution at source.',
+    category: 'pollution',
+    status: 'unlockable',
+    prerequisites: ['global_pfas_ban'],
+    minAICapability: 2.5,  // Advanced AI for molecular design
+    minEconomicStage: 3.0,
+    minMonth: 24,
+    researchMonthsRequired: 12,  // 1 year (AI-accelerated design)
+    researchCost: 120,
+    deploymentCost: 300,  // Industry adoption
+    deploymentMonthsRequired: 60,  // 5 years (faster - tech solution)
+    deploymentLevel: 0,
+    effects: {
+      novelEntitiesEmissionReduction: 0.70,  // 70% reduction in NEW chemical contamination
+      pollutionReduction: 0.08,
+      healthBonus: 0.05,
+    },
+    techType: 'prevention',
+    targetsIrreversibleStock: false,
+    citations: [
+      'Ling, A. L. (2024). Science of the Total Environment, 918, 170647'
+    ],
   },
   {
     id: 'pesticide_alternatives',
@@ -623,6 +752,15 @@ const ALL_TECH: TechDefinition[] = [
       oceanHealthBonus: 0.10,
       marineLifeBonus: 0.05,
     },
+    // CRITICAL FIX (Nov 11, 2025): Energy/concentration constraints
+    energyRequirement: {
+      kWhPerM3: 150,  // Magnetic capture + filtration + electrocoagulation
+    },
+    minimumConcentration: {
+      ngPerL: 100000,  // 0.1 mg/L - needs ocean gyres with concentrated microplastics
+    },
+    techType: 'cleanup',
+    targetsIrreversibleStock: false,  // Ocean microplastics can be targeted with energy
   },
   {
     id: 'endocrine_disruptor_removal',
@@ -642,6 +780,15 @@ const ALL_TECH: TechDefinition[] = [
       fertilityBonus: 0.10,
       healthBonus: 0.05,
     },
+    // CRITICAL FIX (Nov 11, 2025): Energy/concentration constraints
+    energyRequirement: {
+      kWhPerM3: 200,  // Advanced oxidation + membrane filtration
+    },
+    minimumConcentration: {
+      ngPerL: 50000,  // 0.05 mg/L - municipal wastewater concentrations
+    },
+    techType: 'cleanup',
+    targetsIrreversibleStock: false,  // Point-source treatment at municipal facilities
   },
   {
     id: 'nanomaterial_safety',
@@ -660,6 +807,15 @@ const ALL_TECH: TechDefinition[] = [
       nanomaterialRisk: -0.70,
       healthBonus: 0.03,
     },
+    // CRITICAL FIX (Nov 11, 2025): Prevention focus, not cleanup
+    energyRequirement: {
+      kWhPerKg: 100,  // Containment + lifecycle tracking (lower than cleanup)
+    },
+    minimumConcentration: {
+      ngPerL: 10000,  // 0.01 mg/L - industrial sources only
+    },
+    techType: 'hybrid',  // Prevention (containment) + limited cleanup
+    targetsIrreversibleStock: false,  // Prevents future contamination
   },
   
   // ============================================================================
@@ -1094,6 +1250,15 @@ const ALL_TECH: TechDefinition[] = [
       resourceConservation: 0.20,
       pollutionReduction: 0.10,
     },
+    // CRITICAL FIX (Nov 11, 2025): Hybrid prevention/cleanup
+    energyRequirement: {
+      kWhPerKg: 300,  // Depolymerization energy (lower than cleanup, higher than prevention)
+    },
+    minimumConcentration: {
+      ngPerL: 1000000,  // 1 mg/L - needs concentrated waste streams
+    },
+    techType: 'hybrid',  // Prevents NEW pollution via circular economy
+    targetsIrreversibleStock: false,  // Targets post-consumer plastic, not environmental microplastics
   },
   {
     id: 'rare_earth_recycling',
