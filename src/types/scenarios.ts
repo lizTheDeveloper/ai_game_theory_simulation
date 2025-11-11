@@ -582,4 +582,109 @@ export const SCENARIO_CATALOG = {
       },
     },
   },
+
+  /** === POLICY PACKAGE SCENARIOS (Phase 3) === */
+
+  /** Green New Deal: Progressive climate + social policy */
+  'green-new-deal': {
+    id: 'green-new-deal',
+    name: 'Green New Deal',
+    description: 'Progressive climate + social policy: 10% GDP climate, 2.5% redistribution, $100B research, democracy=0.8 (US GND 2019, EU Green Deal 2020, IEA Net Zero 2024)',
+    hypothesis: 'Tests whether combining climate action + UBI + jobs guarantee enables both environmental AND social spirals',
+    techDeployment: {
+      mode: 'prioritized' as const,
+      prioritizedConfig: {
+        priorities: ['climate', 'energy', 'social', 'governance', 'environment'],
+        gapMonths: 3,  // Faster deployment than sequenced (3 months vs 12)
+      },
+    },
+    governmentPriorities: {
+      climateSpending: 0.10,  // 10% GDP/month (climate action)
+      redistributionRate: 0.025,  // 2.5% GDP/month (UBI - Nordic level)
+      researchInvestment: 100,  // $100B/month (job guarantee via R&D investment)
+      democracyLevel: 0.8,  // High democratic participation
+    },
+  },
+
+  /** Techno-Optimist Path: Market-driven tech acceleration */
+  'techno-optimist': {
+    id: 'techno-optimist',
+    name: 'Techno-Optimist Path',
+    description: 'Market-driven tech acceleration: all tech immediate, minimal government, democracy=0.7, R&D only (Andreessen 2023, Cowen 2018, Acemoglu & Johnson 2023)',
+    hypothesis: 'Tests whether technology + markets alone (without redistribution/climate spending) can enable spirals',
+    techDeployment: {
+      mode: 'immediate' as const,  // Deploy all tech at once
+    },
+    governmentPriorities: {
+      researchInvestment: 50,  // $50B/month (baseline R&D only)
+      democracyLevel: 0.7,  // Liberal democracy (not authoritarian)
+      // NO climateSpending, NO redistributionRate (market handles)
+    },
+  },
+
+  /** Degrowth Path: Ecological restoration + reduced consumption */
+  'degrowth': {
+    id: 'degrowth',
+    name: 'Degrowth Path',
+    description: 'Ecological restoration + reduced consumption: 10% climate, 2.5% redistribution, $10B research, democracy=0.9, limited tech (Hickel 2020, Raworth 2017, Kallis 2020)',
+    hypothesis: 'Tests whether ecological focus + low growth enables environmental spirals without advanced tech',
+    techDeployment: {
+      mode: 'prioritized' as const,
+      prioritizedConfig: {
+        priorities: ['environment', 'climate', 'governance', 'social'],  // NO energy/advanced
+        gapMonths: 12,  // Slow deployment (absorption capacity)
+      },
+      deploymentLevel: 0.4,  // 40% deployment level (proxy for limited tech)
+    },
+    governmentPriorities: {
+      climateSpending: 0.10,  // 10% GDP/month (ecological restoration)
+      redistributionRate: 0.025,  // 2.5% GDP/month (social foundation)
+      researchInvestment: 10,  // $10B/month (low growth, reduced R&D)
+      democracyLevel: 0.9,  // Very high democracy (participatory)
+    },
+  },
+
+  /** Authoritarian Climate Action: China-style rapid deployment */
+  'authoritarian-climate': {
+    id: 'authoritarian-climate',
+    name: 'Authoritarian Climate Action',
+    description: 'China-style rapid deployment: 10% climate, democracy=0.2, no redistribution, immediate tech (Xi 2020, V-Dem 2024, Kostka & Zhang 2018)',
+    hypothesis: 'Tests whether authoritarian efficiency enables faster climate action at cost of social spirals',
+    techDeployment: {
+      mode: 'immediate' as const,  // Top-down rapid deployment
+    },
+    governmentPriorities: {
+      climateSpending: 0.10,  // 10% GDP/month (authoritarian climate action)
+      researchInvestment: 50,  // $50B/month (state-directed R&D)
+      democracyLevel: 0.2,  // Very low (below authoritarian-efficiency 0.3)
+      governmentType: 'authoritarian',
+      // NO redistributionRate (authoritarian states don't prioritize equality)
+    },
+  },
+
+  /** Nordic Social Democracy: Scandinavian model */
+  'nordic-social-democracy': {
+    id: 'nordic-social-democracy',
+    name: 'Nordic Social Democracy',
+    description: 'Scandinavian model: 3.5% redistribution, 3% climate, $150B research, democracy=0.85, sequenced tech (OECD 2024, V-Dem 2024, IEA 2024)',
+    hypothesis: 'Tests whether gradual tech + strong institutions + high equality enables sustained spiral activation',
+    techDeployment: {
+      mode: 'sequenced' as const,
+      sequencedConfig: {
+        gapMonths: 12,  // Gradual absorption (12-month gaps)
+        tierOrder: [0, 1, 2, 3, 4],  // Tier-ordered deployment
+      },
+    },
+    governmentPriorities: {
+      redistributionRate: 0.035,  // 3.5% GDP/month = 42% annually (Nordic + UBI)
+      climateSpending: 0.03,  // 3% GDP/month (realistic Nordic climate spending)
+      researchInvestment: 150,  // $150B/month (Nordic R&D intensity)
+      democracyLevel: 0.85,  // High Nordic democracy
+    },
+    startingConditions: {
+      governanceQuality: 0.75,  // Strong Nordic institutions
+      institutionalCapacity: 0.75,
+      trustInAI: 0.6,  // Higher trust baseline
+    },
+  },
 } as const;
