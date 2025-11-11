@@ -953,6 +953,14 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
  - **Action:** Verified, no changes needed
 
 **Pending Verification Queue:**
+- [ ] **Planetary Boundary Reversibility Update Verification** (Nov 11, 2025)
+ - **File:** `research/verification_e8951e3_20251111.md`
+ - **Source Commit:** e8951e3 (planetary_boundary_reversibility_empirical_20251020.md)
+ - **Papers:** Richardson et al. (2023) - 6/9 boundaries; Findlay et al. (2025) - ocean acidification
+ - **Claims:** 7/9 boundaries transgressed, 43-61% habitat loss, regional ocean impacts
+ - **Status:** Layer 1 (citation existence) + Layer 2 (claim verification) needed
+ - **Priority:** MEDIUM (literature review, will inform future parameter tuning)
+ - **Next Step:** orchestrator workflow starting at validation phase (research file exists)
 - [ ] **Refugee Crisis Death Bounds Verification** (Nov 6, 2025)
  - **File:** `research/verification_ed597d4_20251106.md`
  - **Parameter:** 10B upper bound for global cumulative deaths
