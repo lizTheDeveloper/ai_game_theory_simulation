@@ -1,7 +1,7 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 7, 2025
-**Total Sources**: 163+ peer-reviewed citations
+**Last Updated**: November 11, 2025
+**Total Sources**: 166+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 60% from 2024-2025
 
@@ -124,6 +124,24 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Working Group III**: Mitigation of Climate Change
 - **Used for**: Climate rate (0.96%/yr), tipping points, carbon budgets
 - **Confidence**: VERY HIGH (consensus of 234+ countries, 1000+ scientists)
+
+**Global Tipping Points Report (2025).** University of Exeter et al., comprehensive multi-institution assessment.
+- **Used for**: First crossed tipping point (coral reefs 2024-2025), AMOC collapse risk timelines, cascade probability analysis
+- **Key finding**: Coral reefs crossed thermal tipping point at ~1.4°C warming (threshold ~1.2°C), AMOC collapse risk "within our lifetimes" at <2°C
+- **Confidence**: HIGH (synthesis of multiple Nature studies, peer-reviewed papers, coordinated by leading climate institutions)
+- **Added**: November 11, 2025
+
+**van Westen, R. M., et al. (2024).** Rate-induced tipping cascades arising from interactions between the Greenland Ice Sheet and the Atlantic Meridional Overturning Circulation. *Earth System Dynamics*, 15, 635-656. DOI: 10.5194/esd-15-635-2024
+- **Used for**: Rate-induced tipping mechanisms, GIS-AMOC cascade dynamics
+- **Key finding**: Fast ice loss can trigger AMOC collapse even below AMOC's intrinsic tipping point threshold (rate matters independently of magnitude)
+- **Confidence**: HIGH (peer-reviewed ESD, novel mathematical framework for rate-induced tipping)
+- **Added**: November 11, 2025
+
+**Anonymous (2024).** Polar ice sheets are decisive contributors to uncertainty in climate tipping projections. *Communications Earth & Environment*. DOI: 10.1038/s43247-024-01799-5
+- **Used for**: Ice sheet uncertainty amplification, cascade probability modeling
+- **Key finding**: Ice sheets alter expected tipped element count by >2× at 1.5°C; most decisive uncertainty factor
+- **Confidence**: HIGH (Nature portfolio journal, quantitative cascade analysis)
+- **Added**: November 11, 2025
 
 **Lenton, T. M., Rockström, J., Gaffney, O., et al. (2019).** Climate tipping points — too risky to bet against. *Nature*, 575, 592-595.
 - **Used for**: Tipping point cascades, irreversibility thresholds
