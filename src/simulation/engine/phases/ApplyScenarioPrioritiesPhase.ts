@@ -209,10 +209,14 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
 
       // Map scenario governmentType to GameState governmentType
       // 'mixed' in scenario → 'technocratic' in GameState (closest match)
-      const mappedType: 'democratic' | 'authoritarian' | 'technocratic' =
-        priorities.governmentType === 'mixed' ? 'technocratic' :
-        priorities.governmentType === 'technocratic' ? 'technocratic' :
-        priorities.governmentType;
+      let mappedType: 'democratic' | 'authoritarian' | 'technocratic';
+      if (priorities.governmentType === 'mixed' || priorities.governmentType === 'technocratic') {
+        mappedType = 'technocratic';
+      } else if (priorities.governmentType === 'democratic') {
+        mappedType = 'democratic';
+      } else {
+        mappedType = 'authoritarian';
+      }
 
       // Apply government type override (this field DOES exist)
       const oldType = state.government.governmentType;
