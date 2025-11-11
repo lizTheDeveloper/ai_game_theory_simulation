@@ -113,8 +113,70 @@ export function applyAllTechEffects(
       // FIX: Sort effects for deterministic iteration order
       const sortedEffects = Object.entries(deployment.effects).sort((a, b) => a[0].localeCompare(b[0]));
       for (const [effectName, effectValue] of sortedEffects) {
-        const scaledValue = effectValue * deployment.deploymentLevel;
-        
+        let scaledValue = effectValue * deployment.deploymentLevel;
+
+        // CRITICAL FIX (Nov 11, 2025): Energy/concentration constraints for cleanup tech
+        // Apply constraints BEFORE aggregating effects
+        if (tech.techType === 'cleanup' && effectName === 'pollutionReduction') {
+          const boundary = gameState.planetaryBoundariesSystem?.boundaries?.novel_entities;
+
+          if (boundary && tech.energyRequirement) {
+            // ENERGY CONSTRAINT: Check renewable energy availability
+            // Renewable surplus = total generation × renewable % - existing demand
+            const totalGen = gameState.powerGenerationSystem?.totalElectricityGeneration || 0;
+            const renewablePct = gameState.powerGenerationSystem?.renewablePercentage || 0;
+            const renewableGen = totalGen * renewablePct;
+            const dataCenterDemand = gameState.powerGenerationSystem?.dataCenterPower || 0;
+            const energyAvailable = Math.max(0, renewableGen - dataCenterDemand * 0.5);  // Assume 50% of data center can be displaced
+
+            const energyRequired = tech.energyRequirement.annualTWhRequired ||
+                                 ((tech.energyRequirement.kWhPerM3 || 0) * 4000) / 1e9;  // 4000 km³ freshwater → TWh
+
+            if (energyRequired > 0) {
+              const energyRatio = assertFinite(energyAvailable / Math.max(0.01, energyRequired), {
+                location: 'applyAllTechEffects:energyConstraint',
+                valueName: 'energyRatio',
+                month: gameState.currentMonth
+              });
+              const constraintFactor = Math.min(1.0, energyRatio);
+              scaledValue *= constraintFactor;
+
+              if (energyRatio < 0.01) {
+                console.log(`⚠️ ${tech.name}: Energy-constrained (need ${energyRequired.toFixed(0)} TWh, have ${energyAvailable.toFixed(0)} TWh) - ${(energyRatio * 100).toFixed(1)}% effective`);
+              }
+            }
+          }
+
+          // CONCENTRATION CONSTRAINT: Check if contamination is concentrated enough
+          if (boundary && tech.minimumConcentration) {
+            const currentConcentration = assertFinite(boundary.currentValue * 1000000, {  // Convert to ng/L scale
+              location: 'applyAllTechEffects:concentrationCheck',
+              valueName: 'currentConcentration',
+              month: gameState.currentMonth
+            });
+            const minConcentration = tech.minimumConcentration.ngPerL;
+
+            if (minConcentration > 0 && currentConcentration < minConcentration) {
+              const concentrationRatio = assertFinite(currentConcentration / minConcentration, {
+                location: 'applyAllTechEffects:concentrationRatio',
+                valueName: 'concentrationRatio',
+                month: gameState.currentMonth
+              });
+              scaledValue *= concentrationRatio;
+
+              if (concentrationRatio < 0.01) {
+                console.log(`⚠️ ${tech.name}: Concentration too low (${currentConcentration.toFixed(0)} ng/L, need ${minConcentration} ng/L) - ${(concentrationRatio * 100).toFixed(1)}% effective`);
+              }
+            }
+          }
+
+          // IRREVERSIBILITY: Targets legacy stock with centennial decay timescales
+          if (tech.targetsIrreversibleStock) {
+            scaledValue *= 0.10;  // Max 10% impact on irreversible contamination
+            console.log(`⚠️ ${tech.name}: Targeting irreversible stock - 90% reduction in effectiveness`);
+          }
+        }
+
         // Determine if effect is global or regional
         if (isGlobalEffect(effectName)) {
           // Global effects (e.g., alignment, climate)
@@ -130,7 +192,7 @@ export function applyAllTechEffects(
           regionMap.set(effectName, (regionMap.get(effectName) ?? 0) + scaledValue);
         }
       }
-      
+
       // NEW: Apply capability dimension boosts from this tech
       if (tech.capabilityEffects && deployment.deploymentLevel > 0) {
         applyCapabilityBoosts(gameState, tech.capabilityEffects, deployment.deploymentLevel);
@@ -1209,6 +1271,33 @@ function applyRegionalEffects(
             const newFactor = gameState.environmentalAccumulation.pollutionPreventionFactor;
             const preventionPercent = (1 - newFactor) * 100;
             console.log(`  🧪 Green Chemistry Prevention: factor ${oldFactor.toFixed(3)} → ${newFactor.toFixed(3)} (${preventionPercent.toFixed(1)}% prevention) | Month ${gameState.currentMonth}`);
+          }
+          break;
+
+        case 'novelEntitiesEmissionReduction':
+          // CRITICAL FIX (Nov 11, 2025): Prevention >> Cleanup (Ling 2024, Cousins 2022)
+          // Production bans reduce NEW emissions (flow), not existing contamination (stock)
+          // This is 100-1,000× more effective than cleanup (Ling 2024)
+          if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
+            const oldValue = boundary.currentValue;
+
+            // Prevention reduces accumulation rate (not direct cleanup)
+            // Effect scales slower than cleanup because it prevents NEW pollution
+            // But it's far more cost-effective (doesn't require energy/concentration)
+            boundary.currentValue = assertFinite(Math.max(
+              0,
+              boundary.currentValue - value * 0.005  // 0.5% per month per effect point (slower than cleanup but works!)
+            ), {
+              location: 'applyGlobalEffects:novelEntitiesEmissionReduction',
+              valueName: 'currentValue',
+              month: gameState.currentMonth
+            });
+
+            console.log(`  🌍💡 Prevention (${(value * 100).toFixed(0)}% emission reduction): novel_entities ${oldValue.toFixed(3)} → ${boundary.currentValue.toFixed(3)} | Prevention >> Cleanup | Month ${gameState.currentMonth}`);
+
+            // Trigger boundary recovery (prevention shows improvement over time)
+            triggerBoundaryRecovery(gameState, 'novel_entities');
           }
           break;
 
