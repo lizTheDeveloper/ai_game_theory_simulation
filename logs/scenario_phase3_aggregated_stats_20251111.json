@@ -1,0 +1,221 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-11T09-11-57",
+    "monteCarloN": 10,
+    "baseSeed": 1000,
+    "maxMonths": 360,
+    "scenarios": [
+      "climate-first",
+      "equality-first",
+      "ai-alignment-first",
+      "democratic-participation",
+      "scientific-acceleration",
+      "authoritarian-efficiency"
+    ]
+  },
+  "aggregatedStats": {
+    "climate-first": {
+      "spiralActivationRate": {
+        "Cognitive": 0,
+        "Abundance": 0,
+        "Democratic": 0,
+        "Scientific": 0,
+        "Meaning": 0,
+        "Ecological": 0
+      },
+      "cascadeActivationRate": 0,
+      "avgCascadeStrength": 1,
+      "avgTrustCascades": 0,
+      "avgFinalPopulation": 5.559310666685029,
+      "avgQoL": 0.6321978933335269,
+      "avgTempDelta": 0,
+      "outcomeDistribution": {
+        "utopia": 9,
+        "extinction": 1
+      },
+      "coefficientOfVariation": {
+        "cascadeStrength": 0,
+        "population": 9.271543660953885,
+        "qol": 6.966627824461134
+      }
+    },
+    "equality-first": {
+      "spiralActivationRate": {
+        "Cognitive": 0.1,
+        "Abundance": 0,
+        "Democratic": 0,
+        "Scientific": 0,
+        "Meaning": 0,
+        "Ecological": 0
+      },
+      "cascadeActivationRate": 0,
+      "avgCascadeStrength": 1,
+      "avgTrustCascades": 0,
+      "avgFinalPopulation": 5.626426298432304,
+      "avgQoL": 0.634554450978079,
+      "avgTempDelta": 0,
+      "outcomeDistribution": {
+        "utopia": 9,
+        "extinction": 1
+      },
+      "coefficientOfVariation": {
+        "cascadeStrength": 0,
+        "population": 9.089690505230594,
+        "qol": 6.670933085979108
+      }
+    },
+    "democratic-participation": {
+      "spiralActivationRate": {
+        "Cognitive": 0,
+        "Abundance": 0,
+        "Democratic": 0.42857142857142855,
+        "Scientific": 0,
+        "Meaning": 0,
+        "Ecological": 0
+      },
+      "cascadeActivationRate": 0,
+      "avgCascadeStrength": 1,
+      "avgTrustCascades": 0,
+      "avgFinalPopulation": 5.777647247479292,
+      "avgQoL": 0.6394182239028241,
+      "avgTempDelta": 0,
+      "outcomeDistribution": {
+        "utopia": 7
+      },
+      "coefficientOfVariation": {
+        "cascadeStrength": 0,
+        "population": 2.208639998251869,
+        "qol": 5.824773153010461
+      }
+    },
+    "scientific-acceleration": {
+      "spiralActivationRate": {
+        "Cognitive": 0,
+        "Abundance": 0,
+        "Democratic": 0,
+        "Scientific": 0,
+        "Meaning": 0,
+        "Ecological": 0
+      },
+      "cascadeActivationRate": 0,
+      "avgCascadeStrength": 1,
+      "avgTrustCascades": 0,
+      "avgFinalPopulation": 5.559310666685029,
+      "avgQoL": 0.6321978933335269,
+      "avgTempDelta": 0,
+      "outcomeDistribution": {
+        "utopia": 9,
+        "extinction": 1
+      },
+      "coefficientOfVariation": {
+        "cascadeStrength": 0,
+        "population": 9.271543660953885,
+        "qol": 6.966627824461134
+      }
+    },
+    "authoritarian-efficiency": {
+      "spiralActivationRate": {
+        "Cognitive": 0,
+        "Abundance": 0,
+        "Democratic": 0,
+        "Scientific": 0,
+        "Meaning": 0,
+        "Ecological": 0
+      },
+      "cascadeActivationRate": 0,
+      "avgCascadeStrength": 1,
+      "avgTrustCascades": 0,
+      "avgFinalPopulation": 5.807011050868223,
+      "avgQoL": 0.6630293050933651,
+      "avgTempDelta": 0,
+      "outcomeDistribution": {
+        "utopia": 7,
+        "extinction": 2
+      },
+      "coefficientOfVariation": {
+        "cascadeStrength": 0,
+        "population": 10.439011264891523,
+        "qol": 12.124405805886418
+      }
+    }
+  },
+  "rankings": {
+    "spiralActivation": [
+      {
+        "scenario": "democratic-participation",
+        "maxRate": 0.42857142857142855,
+        "topSpiral": "Democratic"
+      },
+      {
+        "scenario": "equality-first",
+        "maxRate": 0.1,
+        "topSpiral": "Cognitive"
+      },
+      {
+        "scenario": "climate-first",
+        "maxRate": 0,
+        "topSpiral": "Cognitive"
+      },
+      {
+        "scenario": "scientific-acceleration",
+        "maxRate": 0,
+        "topSpiral": "Cognitive"
+      },
+      {
+        "scenario": "authoritarian-efficiency",
+        "maxRate": 0,
+        "topSpiral": "Cognitive"
+      }
+    ],
+    "population": [
+      {
+        "scenario": "authoritarian-efficiency",
+        "avgPop": 5.807011050868223
+      },
+      {
+        "scenario": "democratic-participation",
+        "avgPop": 5.777647247479292
+      },
+      {
+        "scenario": "equality-first",
+        "avgPop": 5.626426298432304
+      },
+      {
+        "scenario": "climate-first",
+        "avgPop": 5.559310666685029
+      },
+      {
+        "scenario": "scientific-acceleration",
+        "avgPop": 5.559310666685029
+      }
+    ],
+    "qol": [
+      {
+        "scenario": "authoritarian-efficiency",
+        "avgQoL": 0.6630293050933651
+      },
+      {
+        "scenario": "democratic-participation",
+        "avgQoL": 0.6394182239028241
+      },
+      {
+        "scenario": "equality-first",
+        "avgQoL": 0.634554450978079
+      },
+      {
+        "scenario": "climate-first",
+        "avgQoL": 0.6321978933335269
+      },
+      {
+        "scenario": "scientific-acceleration",
+        "avgQoL": 0.6321978933335269
+      }
+    ]
+  },
+  "criticalIssues": [
+    "climate-first: ZERO spiral activation (government priority ineffective)",
+    "ai-alignment-first: ZERO RUNS COMPLETED",
+    "scientific-acceleration: ZERO spiral activation (government priority ineffective)",
+    "authoritarian-efficiency: ZERO spiral activation (government priority ineffective)"
+  ]
+}
