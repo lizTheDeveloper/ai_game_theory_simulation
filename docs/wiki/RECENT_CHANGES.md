@@ -6,6 +6,39 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 11, 2025)
 
+**📚 RESEARCH UPDATE: Energy Breakthroughs - 2024-2025 Empirical Progress** (Nov 11, 2025, commit aba12fe)
+
+**Summary:** Updated energy breakthroughs research with empirical fusion and DAC progress from 2024-2025.
+
+**Research Quality:** A (newest source 2025, empirical validation from NIF, ITER, EAST, Climeworks)
+
+**Key Additions:**
+
+1. **Fusion Energy - Physics Proven (2024-2025)**
+   - NIF: 120% energy gain in repeated experiments (2024) - fusion ignition now reproducible
+   - ITER: 90% construction complete, first plasma late 2026
+   - China EAST: 158M°C sustained 15+ minutes (2024) - long-duration stability demonstrated
+   - SPARC: Magnetic confinement complete, plasma ops end-2025
+   - Pacific Fusion: Predicts net facility gain by 2030
+   - Commercial timeline: 2040s (physics proven, engineering scale-up phase)
+
+2. **Direct Air Capture (Climeworks Gen3)**
+   - Energy consumption: Cut in half (50% reduction vs Gen2)
+   - Capture capacity: Doubled per module
+   - Cost target: $250-350/ton by 2030 (down from $600-1,000)
+   - Scaling: 873% capacity increase 2024→2025 (59kt → 569kt CO₂/year)
+   - Validation: 1,300+ cycles tested (May 2024 - Jan 2025)
+   - Deployment: Project Cypress (Louisiana), construction starts 2026
+
+**Key Finding:** Fusion physics fundamentally proven (NIF repeated ignition, EAST long-duration stability). DAC energy efficiency doubled, making gigatonne-scale removal economically viable when coupled with fusion energy abundance by 2035-2040.
+
+**Research File:** `research/energy_breakthroughs_fusion_solar_20251110.md`
+- Added frontmatter (oldest: 2020, newest: 2025, verified: 2025-11-11)
+- Expanded fusion section with 2024-2025 breakthroughs
+- Added new DAC Gen3 section (Climeworks)
+
+---
+
 **📚 RESEARCH UPDATE: AI Scaling Laws Updated with 2025 Q2-Q3 Model Releases** (Nov 11, 2025, commit 07ebd2d)
 
 **Summary:** Updated AI scaling laws research with empirical data from actual 2025 frontier model releases.

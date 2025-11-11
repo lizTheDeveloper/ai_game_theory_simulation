@@ -1,6 +1,6 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 7, 2025
+**Last Updated**: November 11, 2025
 **Total Sources**: 163+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 60% from 2024-2025
@@ -171,6 +171,38 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **Lenton, T. M., Rockström, J., Gaffney, O., et al. (2019).** Climate tipping points — too risky to bet against. *Nature*, 575, 592-595.
 - **Used for**: Tipping point cascades, irreversibility thresholds
 - **Key finding**: 9 tipping elements may cascade at 1.5-2°C warming
+
+### Energy Technologies & Carbon Removal
+
+**National Ignition Facility (NIF) / Lawrence Livermore National Laboratory (2024-2025).**
+- **Achievement**: Repeated fusion ignition experiments achieving 120% energy gain (2024)
+- **Used for**: Fusion energy timeline validation, physics verification
+- **Key finding**: Fusion ignition reproducible (not one-time fluke), physics fundamentally proven
+- **Status**: Mid-2025 focus on reliability and replicability at scale
+
+**ITER Organization (2025).**
+- **Status**: 90% construction completion of first-phase milestones
+- **Timeline**: First plasma late 2026, D-T operation 2039
+- **Used for**: Commercial fusion timeline (2040s engineering scale-up)
+
+**China EAST Tokamak (2024).**
+- **Achievement**: Sustained plasma at 158M°C for 15+ minutes
+- **Used for**: Long-duration fusion stability validation
+- **Key finding**: Commercial-relevant plasma duration achieved
+
+**Climeworks (2024-2025).** Generation 3 Direct Air Capture Technology.
+- **Energy efficiency**: 50% reduction vs Gen2 (1,000-2,200 → ~500-1,000 kWh/ton CO₂)
+- **Capacity**: Doubled per module vs Gen2
+- **Cost trajectory**: $600-1,000/ton (2023) → $250-350/ton target (2030)
+- **Validation**: 1,300+ cycles tested (May 2024 - Jan 2025), Muttenz facility
+- **Scaling**: 873% global capacity increase 2024→2025 (59kt → 569kt CO₂/year)
+- **Deployment**: Project Cypress (Louisiana), construction begins 2026
+- **Used for**: Carbon removal timeline, energy-climate coupling
+- **Research confidence**: A (empirical validation at scale, $1B financing secured)
+
+**Pacific Fusion (2025).**
+- **Prediction**: "1,000-fold leap" in performance, net facility gain by 2030
+- **Used for**: Private sector fusion timeline validation
 
 ---
 
