@@ -168,11 +168,23 @@ export class AIAlignmentEvolutionPhase implements SimulationPhase {
   ): void {
     // Update each AI agent's effective alignment based on techniques
     for (const agent of state.aiAgents) {
+      // DEBUG (Nov 11, 2025): Track skipped agents at month 0
+      if (state.currentMonth === 0) {
+        console.log(`🔍 DEBUG executeAlignmentTechniques month 0: ${agent.name}`);
+        console.log(`   alignmentTechniques: ${agent.alignmentTechniques?.length ?? 'undefined'} techniques`);
+        console.log(`   lifecycleState: ${agent.lifecycleState}`);
+        console.log(`   escaped: ${agent.escaped}`);
+        console.log(`   trueAlignment (before): ${agent.trueAlignment}`);
+      }
+
       // Skip if agent has no techniques or is retired/escaped
       if (!agent.alignmentTechniques ||
           agent.alignmentTechniques.length === 0 ||
           agent.lifecycleState === 'retired' ||
           agent.escaped) {
+        if (state.currentMonth === 0) {
+          console.log(`   ⏭️  SKIPPING ${agent.name} (no techniques or retired/escaped)`);
+        }
         continue;
       }
 
@@ -194,6 +206,15 @@ export class AIAlignmentEvolutionPhase implements SimulationPhase {
         agent.alignmentTechniques,
         agent.capability
       );
+
+      // DEBUG (Nov 11, 2025): Track NaN propagation at month 0
+      if (state.currentMonth === 0 && (isNaN(newEffectiveAlignment) || isNaN(agent.capability))) {
+        console.error(`❌ DEBUG AIAlignmentEvolutionPhase.executeAlignmentTechniques month 0: ${agent.name}`);
+        console.error(`   agent.capability = ${agent.capability}`);
+        console.error(`   agent.alignmentTechniques = ${JSON.stringify(agent.alignmentTechniques?.map(t => t.name))}`);
+        console.error(`   newEffectiveAlignment = ${newEffectiveAlignment}`);
+        console.error(`   agent.trueAlignment (before) = ${agent.trueAlignment}`);
+      }
 
       // Compute alignment robustness (resistance to degradation)
       const newRobustness = computeAlignmentRobustness(agent.alignmentTechniques);

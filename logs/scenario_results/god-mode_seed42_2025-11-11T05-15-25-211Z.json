@@ -1,0 +1,29 @@
+{
+  "scenarioId": "god-mode",
+  "seed": 42,
+  "outcome": "UNKNOWN",
+  "monthsSimulated": 49,
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 1,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 5
+  },
+  "finalQoL": {
+    "survivalAvg": 0.5213091967328918,
+    "basicNeedsAvg": 0.7620031827168449,
+    "psychologicalAvg": 0.6707357031555776,
+    "socialAvg": 0.6126065112302566,
+    "healthAvg": 0.37833333333333335,
+    "environmentalAvg": 0.530033513431022,
+    "overallAvg": 0.5791702400999877
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 0
+  },
+  "finalPopulation": 5.554415910008276,
+  "boundariesBreached": []
+}
