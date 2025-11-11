@@ -133,7 +133,11 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
     it('should detect sleepers at expected rates with high investment', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -212,7 +216,11 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
     it('should have worse detection at low investment', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -262,7 +270,11 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
     it('should allow high self-improvement AIs to learn counter-detection', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -341,7 +353,11 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
     it('should NOT allow low self-improvement AIs to learn counter-detection', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -391,7 +407,11 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
     it('should increase resentment and damage trust on false positives', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -457,7 +477,11 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
     it('should have capability-dependent detection rates', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes
@@ -565,7 +589,11 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
     it('should integrate noise injection with existing benchmark evaluation', () => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const state = createDefaultInitialState(createTestRng(TEST_SEED));
+=======
+      const state = createDefaultInitialState(createSeededRng(12345), 'historical');
+>>>>>>> Stashed changes
 =======
       const state = createDefaultInitialState(createSeededRng(12345), 'historical');
 >>>>>>> Stashed changes

@@ -199,7 +199,11 @@ describe('CRITICAL-3 RNG Regression Prevention', () => {
       // If RNG were optional (rng?: () => number), this would compile:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       // createDefaultInitialState(createTestRng(TEST_SEED));  // No RNG provided
+=======
+      // createDefaultInitialState(createSeededRng(12345), 'historical');  // No RNG provided
+>>>>>>> Stashed changes
 =======
       // createDefaultInitialState(createSeededRng(12345), 'historical');  // No RNG provided
 >>>>>>> Stashed changes
