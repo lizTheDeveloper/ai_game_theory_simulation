@@ -29,6 +29,10 @@ function applyScenario(
 ): void {
   console.log('🔧 Applying scenario modifications...');
 
+  // CRITICAL FIX (Nov 11, 2025): Attach scenario object to state
+  // ApplyScenarioPrioritiesPhase checks for state.scenario and returns early if missing
+  (state as any).scenario = scenario;
+
   // 1. Apply starting condition boosts
   if (scenario.startingConditions) {
     console.log('  📋 Applying starting conditions...');
