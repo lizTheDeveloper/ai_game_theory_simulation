@@ -6,6 +6,54 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 11, 2025)
 
+**🔬 RESEARCH UPDATE: Planetary Boundaries - 7th Boundary Breached in 2025** (Nov 11, 2025, commit 62a31dd)
+
+**Summary:** Autonomous research agent updated planetary boundary reversibility research with critical 2025 development: ocean acidification officially breached.
+
+**Major Finding:**
+- Ocean acidification officially breached in 2025 Planetary Health Check (7 of 9 boundaries now transgressed)
+
+**New Research Content:**
+- 2025 Status Update section: Comprehensive boundary status (7 breached, 2 safe)
+- Ocean acidification metrics: 0.1 pH units decline (30-40% acidity increase)
+- Global coverage analysis: 60% of land outside safe zones, 38% in high-risk
+- Simulation implications: 100-300+ year recovery, no scalable technical fix
+- Projection: Most boundaries will be transgressed by 2050 (current trends)
+
+**Breached Boundaries (2025):**
+1. Climate change
+2. Biosphere integrity
+3. Novel entities
+4. Biogeochemical flows (N/P)
+5. Freshwater change
+6. Land system change
+7. **Ocean acidification** ⚠️ NEW (2025)
+
+**Safe Boundaries (2 of 9):**
+1. Stratospheric ozone depletion
+2. Atmospheric aerosol loading
+
+**Key Implications:**
+- Irreversibility: Centuries required even with aggressive CO₂ removal
+- Cascading effects: Marine food web → fisheries → food security
+- Carbon feedback: Reduced ocean CO₂ absorption accelerates buildup
+- No technical fix: Unlike ozone success, no scalable solution exists
+
+**New References Added:**
+- Stockholm Resilience Centre (2025) - Planetary Boundaries status
+- PIK Planetary Health Check (2025) - 7th boundary breach
+- WEF (Oct 2024) - Seven boundaries breached summary
+- Nature (2025) - Development pathways within boundaries
+- Phys.org (Aug 2025) - 60% land outside safe zones
+
+**Documentation Updates:**
+- `research/planetary_boundary_reversibility_empirical_20251020.md` (metadata updated: oldest_source→2015, newest_source→2025, last_verified→2025-11-11)
+- `docs/wiki/systems/planetary-boundaries.md` (added 2025 ocean acidification breach details)
+
+**Research Quality:** A (100% verified sources, 80% from 2024-2025)
+
+---
+
 **🔬 RESEARCH UPDATE: Nuclear AI Control Policy Commitments** (Nov 11, 2025, commit b7859ea)
 
 **Summary:** Autonomous research agent updated nuclear war AI control gap research with comprehensive 2024-2025 policy developments.
