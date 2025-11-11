@@ -186,17 +186,10 @@ export interface ScenarioDefinition {
   /** Technology deployment strategy */
   techDeployment: TechDeploymentStrategy;
 
-<<<<<<< HEAD
   /** Government priority overrides (applied every month by ApplyScenarioPrioritiesPhase) */
   governmentPriorities?: ScenarioGovernmentPriorities;
 
-  /** Government behavior overrides (deprecated, use governmentPriorities instead) */
-=======
-  /** Simple government priorities (used by ApplyScenarioPrioritiesPhase) */
-  governmentPriorities?: ScenarioGovernmentPriorities;
-
   /** Government behavior overrides (for multi-country scenarios) */
->>>>>>> ff82f3cbd00ced78eae04c2cccbfd566e4d4b187
   governmentOverrides?: GovernmentPriorityOverride[];
 
   /** Comparison baseline scenario (default: 'no-tech' or 'god-mode') */
@@ -555,6 +548,21 @@ export const SCENARIO_CATALOG = {
       prioritizedConfig: {
         priorities: ['climate', 'energy', 'environment', 'governance', 'social'],
         gapMonths: 6,
+      },
+    },
+  },
+
+  /** Foundations First: Dependency-ordered deployment */
+  'foundations-first': {
+    id: 'foundations-first',
+    name: 'Foundations First (Dependency-Ordered)',
+    description: 'Deploy in dependency order: governance → energy → climate → social → advanced',
+    hypothesis: 'Tests whether respecting tech dependencies maximizes effectiveness',
+    techDeployment: {
+      mode: 'prioritized' as const,
+      prioritizedConfig: {
+        priorities: ['governance', 'energy', 'climate', 'social', 'environment'],
+        gapMonths: 12,
       },
     },
   },
