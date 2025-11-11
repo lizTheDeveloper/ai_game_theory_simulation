@@ -4,6 +4,36 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 11, 2025)
+
+**🔬 RESEARCH QUALITY IMPROVEMENT: Nuclear Winter Citations Upgraded** (Nov 11, 2025, commit 6801690)
+
+**Summary:** Updated mortality_caps_historical_data research file with recent peer-reviewed nuclear winter sources, replacing outdated 2007-2010 citations.
+
+**Changes:**
+- Replaced Robock 2007-2010 studies with Xia et al. (2022) Nature Food quantitative analysis
+- Added Robock et al. (2023) ACP policy analysis on nuclear deterrence
+- Updated quantitative mortality estimates: 5+ billion famine deaths for US-Russia nuclear war
+- Detailed food security mechanisms: crop/fishery/livestock collapse pathways
+- Climate disruption duration: 5+ years of stratospheric soot effects
+- Research quality improvement: A- → A (80% peer-reviewed, 35% from 2022-2025)
+- Frontmatter updated: oldest_source 2006 → 2008, last_verified 2025-11-11
+
+**Key Citations:**
+- Xia, L., Robock, A., Scherrer, K. et al. (2022). "Global food insecurity and famine from reduced crop, marine fishery and livestock production due to climate disruption from nuclear war soot injection." Nature Food, 3, 586–596.
+- Robock, A., Xia, L., Harrison, C. S., Coupe, J., Toon, O. B., & Bardeen, C. G. (2023). "Opinion: How nuclear winter has saved the world, so far." Atmospheric Chemistry and Physics, 23, 6691-6701.
+
+**Impact:**
+- Existing mortality modeling parameters now backed by most recent quantitative research
+- Qualitative "catastrophic" replaced with quantified "5+ billion deaths"
+- Food security mechanism detail enables more sophisticated famine modeling
+
+**Files:**
+- research/mortality_caps_historical_data_20251027.md (updated)
+- docs/wiki/README.md (documentation updated)
+
+---
+
 ## ✅ Recent Changes (November 10, 2025)
 
 **🤖 AUTONOMOUS RESEARCH AGENT: VM Cron Integration** (Nov 10, 2025, commit 5e605b3)
