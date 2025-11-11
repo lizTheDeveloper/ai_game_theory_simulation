@@ -39,6 +39,31 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **AI Coordination & Transition Management** - CRITICAL (Added Nov 10, 2025)
+     - **Context:** God mode 30% mortality finding (8.15B → 5.71B) - commit 90d0957
+     - **Key Finding:** Current "god mode" models chaos (instant tech deployment) not coordination (AI-managed transition)
+     - **Issue:** Missing systems for coordinated technology rollout, transition support, regional capacity
+     - **Status:** ⚠️ RESEARCH PHASE - Claims identified, need peer-reviewed backing
+     - **Claims Requiring Verification:**
+       - Historical mortality rates: Great Leap Forward (15-55M), USSR collectivization (5-8M)
+       - Transition mortality varies by coordination quality (coerced vs. supported)
+       - AI coordination reduces deployment mortality
+       - Support systems (UBI, retraining, food security) mitigate transition casualties
+       - Safe deployment rate exists (constrained by retraining/adaptation capacity)
+       - Regional capacity varies by infrastructure/governance/economic factors
+     - **Missing Systems (Implementation BLOCKED until research complete):**
+       - CoordinatedDeploymentPhase (CRITICAL) - AI manages tech rollout pacing
+       - Transition Support System (CRITICAL) - Safety nets during change
+       - Regional Capacity Modeling (HIGH) - Deployment readiness differentiation
+     - **Verification File:** research/verification_90d0957_20251110.md
+     - **Assignments:**
+       - Sylvia: Validate historical mortality claims (Great Leap Forward, USSR)
+       - Cynthia: Research transition mortality, AI coordination, support systems, pacing, regional capacity
+       - Roy + Orchestrator: Design phases (BLOCKED until Phase 2 complete)
+     - **Workflow:** Historical validation → Research literature search → Implementation design → Monte Carlo validation
+     - **Priority:** CRITICAL - Affects interpretation of "post-alignment success" (chaos vs. coordination)
+     - **Paradigm Shift:** Deployment as process (0-100%) not binary, mortality = f(coordination_quality)
+
    - **God Mode Gap Closure Technologies** - NEW (Added Nov 10, 2025)
      - **Issue:** Planetary boundary effectiveness 0-10% despite deploying all technologies (god mode test)
      - **Root Cause:** Missing critical technology categories (prevention, rapid deployment, nitrogen decoupling, energy breakthroughs)
