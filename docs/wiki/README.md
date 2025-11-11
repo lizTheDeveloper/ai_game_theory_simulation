@@ -28,6 +28,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 11: Scenario System Type Safety Fix** (commit 9a617d4)
+- ✅ **Type Cast Removed:** `(state as any).scenario` → `state.scenario` (properly typed in GameState:187)
+- ✅ **Architecture Grade:** B- → A- (type safety maintained, unnecessary cast eliminated)
+- ✅ **Impact:** Government priority scenarios fully operational, cleaner type safety patterns
+- ✅ **Review:** Architecture skeptic review in reviews/scenario_system_architecture_review_20251111.md
+- 📖 **Context:** scenarioRunner.ts:32 - ApplyScenarioPrioritiesPhase requires state.scenario
+
 **Nov 10: HIGH-1 Tech Deployment O(n²) Bottleneck Fixed** (commit bbb2ad2)
 - ✅ **Scenario Initialization: 50% faster** (5,329 → 73 operations for 73 tech, 73× reduction)
 - ✅ **Root Cause:** Double iteration + `includes()` O(m) filtering + `find()` O(n) lookup = O(n²)
