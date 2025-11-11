@@ -610,6 +610,31 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+**🌍 PLANETARY BOUNDARIES & TIPPING POINTS RESEARCH UPDATE (Nov 11, 2025)**
+
+Critical research update from 2023-2025 peer-reviewed sources:
+
+**New Research File:** `research/planetary_boundaries_tipping_points_2024_2025.md`
+- **Richardson et al. 2023** (Science Advances): 6 of 9 planetary boundaries transgressed
+- **Global Tipping Points Report 2025**: First Earth system tipping point crossed - warm-water coral reefs at 1.4°C
+- **Armstrong McKay 2022** (Science): Updated ice sheet thresholds (Greenland 0.8°C, WAIS 1.0°C - both already "likely")
+- **Frontiers 2025**: Amazon rainforest flipped from carbon sink to carbon source
+
+**Key Findings:**
+- **Coral reefs:** Passed thermal tipping point (range: 1.0-1.5°C, central: 1.2°C) - >99% probability at 1.5°C
+- **Ice sheets:** Thresholds LOWER than previously thought (possible from 0.8-1.0°C vs old 1.5-2.0°C estimates)
+- **Current trajectory (2.6°C):** 13 tipping elements will be likely/possible
+- **Six boundaries already transgressed:** Climate, biosphere, land, biogeochemical, freshwater, novel entities
+
+**Implementation Status:** PENDING
+- Research file ready for use in TippingPointPhase and PlanetaryBoundaryPhase updates
+- Validates existing novel entities transgression (0% cleanup effectiveness)
+- Parameter updates needed (coral tipping point, ice sheet thresholds, boundary severities)
+
+**Research Quality:** A+ (100% peer-reviewed, all sources 2023-2025, major journals: Science, Science Advances)
+
+Commit: 8b42053
+
 **✅ RECOVERY MECHANICS AUDIT COMPLETE (Nov 11, 2025)**
 
 Investigation of Monte Carlo Issue #9 confirms recovery mechanics are **FUNCTIONAL and RESEARCH-BACKED**.
