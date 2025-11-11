@@ -4,6 +4,44 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 11, 2025)
+
+**🔬 RESEARCH UPDATE: Nuclear AI Control Policy Commitments** (Nov 11, 2025, commit b7859ea)
+
+**Summary:** Autonomous research agent updated nuclear war AI control gap research with comprehensive 2024-2025 policy developments.
+
+**New Policy Documentation:**
+- US-China bilateral agreement (October 2024): First nuclear power consensus on human control
+- NDAA 2025 Section 1638: Bipartisan prohibition on autonomous nuclear launch
+- Five Nuclear Powers commitments: US/UK/France declared, Russia/China gaps identified
+- Biden NSM on AI: Prudent development guidelines (October 2024)
+
+**Key Research Findings:**
+- Policy lags capability: Declaratory commitments only, no verification mechanisms
+- Asymmetric commitments: Russia lacks formal human-control pledge
+- Intermediate AI unregulated: Decision-support and early warning automation not covered
+- Decision time compression: AI could reduce windows to 5-10 min by 2027-2030
+
+**Simulation Impact:**
+- Validates baseline human control assumption through 2026-2028
+- Identifies cyber vulnerability window: AI physical 30-40% → 60-80%
+- **No parameter changes** (policy commitments don't reduce technical risk)
+
+**New References Added:**
+- FCNL (Dec 2024) on human control
+- Lin (June 2025) technical analysis in TNSR
+- IPPNW/ICAN webinar (Jan 2025) with Geoffrey Hinton
+- Doomsday Clock 2025 statement
+- NDAA 2025 Section 1638 text
+
+**Documentation Updates:**
+- `research/nuclear_war_ai_control_gap_20251022.md` (metadata updated: newest_source 2024→2025, last_verified 2025-10-22→2025-11-11)
+- `docs/wiki/systems/nuclear-deterrence.md` (added Policy Context section)
+
+**Research Quality:** A (100% verified sources, 60% from 2024-2025)
+
+---
+
 ## ✅ Recent Changes (November 10, 2025)
 
 **🤖 AUTONOMOUS RESEARCH AGENT: VM Cron Integration** (Nov 10, 2025, commit 5e605b3)
