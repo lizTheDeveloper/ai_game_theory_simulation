@@ -483,10 +483,11 @@ function initializeLandUseSystem(rng?: RNGFunction): LandUseSystem {
 
     const scaleFactor = globalExtinctionRate / baselineGlobalRate;
     // Scale regional rates proportionally
-    // DETERMINISM FIX (Nov 5, 2025): Clamp scaled rates to [10, 1000] E/MSY range
+    // DETERMINISM FIX (Nov 5, 2025): Clamp scaled rates to [1, 1000] E/MSY range
+    // BUG FIX (Nov 11, 2025): Changed min from 10 to 1 E/MSY to allow tech improvements below safe boundary
     // Prevents assertion errors when sampling high global extinction rates
     const MAX_EXTINCTION_RATE = 1000.0;
-    const MIN_EXTINCTION_RATE = 10.0;
+    const MIN_EXTINCTION_RATE = 1.0;  // Background extinction rate (~1 E/MSY), allow improvement below safe boundary (10 E/MSY)
     tropical.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, tropical.extinctionRate * scaleFactor));
     temperate.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, temperate.extinctionRate * scaleFactor));
     grasslands.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, grasslands.extinctionRate * scaleFactor));
@@ -1242,12 +1243,13 @@ function updateLandUseSystem(state: GameState): void {
 
     // 1C. UPDATE REGIONAL EXTINCTION RATE
     // BUG FIX v3 (Oct 30, 2025): BLOCKER-2 - Update caps for absolute E/MSY scale
+    // BUG FIX (Nov 11, 2025): Changed min from 10 to 1 E/MSY to allow tech improvements below safe boundary
     // Research: IPBES (2019) - extinction rates increase ~10-30% per decade under BAU
     // Use percentage-based growth with saturation to prevent runaway accumulation
     // Mass extinction threshold: 1000 E/MSY (100× safe boundary = >75% species loss)
 
     const MAX_EXTINCTION_RATE = 1000.0; // HARD CAP: 1000 E/MSY (mass extinction, top of IPBES range)
-    const MIN_EXTINCTION_RATE = 10.0;  // Minimum 10 E/MSY (safe boundary floor)
+    const MIN_EXTINCTION_RATE = 1.0;  // Background extinction rate (~1 E/MSY), allow improvement below safe boundary (10 E/MSY)
 
     // Ensure extinction rate never drops to zero (percentage growth would get stuck)
     const currentRate = assertInRange(
