@@ -1,0 +1,310 @@
+{
+  "results": [
+    {
+      "scenarioId": "equality-first",
+      "seed": 1,
+      "outcome": "UNKNOWN",
+      "monthsSimulated": 49,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 1,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6738525829432389,
+        "basicNeedsAvg": 0.6751723726861142,
+        "psychologicalAvg": 0.6858868587902414,
+        "socialAvg": 0.5895038719166751,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.514,
+        "overallAvg": 0.5869581699449338
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 1.6366132831644538,
+        "co2Concentration": 408.6780017273091,
+        "extinctionRate": 245370.37037037036
+      },
+      "finalPopulation": 5.228917041731131,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 2,
+      "outcome": "UNKNOWN",
+      "monthsSimulated": 22,
+      "spiralActivation": {
+        "activeUpwardSpirals": [
+          "cognitive"
+        ],
+        "cascadeActive": false,
+        "cascadeStrength": 1,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 3
+      },
+      "finalQoL": {
+        "survivalAvg": 0.8196648035934364,
+        "basicNeedsAvg": 1.3568581937009432,
+        "psychologicalAvg": 0.6122662861503924,
+        "socialAvg": 0.44579392816323116,
+        "healthAvg": 1,
+        "environmentalAvg": 0.5753333333333334,
+        "overallAvg": 0.8016527574902227
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 1.7021982554646462,
+        "co2Concentration": 414.91800000000137,
+        "extinctionRate": 560846.5608465609
+      },
+      "finalPopulation": 6.612638960807092,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 3,
+      "outcome": "UNKNOWN",
+      "monthsSimulated": 49,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 1,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6847846783682079,
+        "basicNeedsAvg": 0.8089835286903678,
+        "psychologicalAvg": 0.7120929655221083,
+        "socialAvg": 0.7074718854562393,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5106666666666667,
+        "overallAvg": 0.6345555096728206
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 1.6366328082776682,
+        "co2Concentration": 408.6798453838049,
+        "extinctionRate": 245370.37037037036
+      },
+      "finalPopulation": 5.735838184092716,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 4,
+      "outcome": "UNKNOWN",
+      "monthsSimulated": 49,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 1,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5039727875687849,
+        "basicNeedsAvg": 0.7228924078383736,
+        "psychologicalAvg": 0.7407261695171867,
+        "socialAvg": 0.7131657268057091,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.5941261819550091
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 1.6363335266788042,
+        "co2Concentration": 408.65158666768036,
+        "extinctionRate": 245370.37037037036
+      },
+      "finalPopulation": 5.757022155906243,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 5,
+      "outcome": "UNKNOWN",
+      "monthsSimulated": 49,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 1,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6089345154455422,
+        "basicNeedsAvg": 0.7703406900215416,
+        "psychologicalAvg": 0.750713601046532,
+        "socialAvg": 0.677102620885595,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.6143485712332019
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 1.636158445153451,
+        "co2Concentration": 408.6350560556448,
+        "extinctionRate": 245370.37037037036
+      },
+      "finalPopulation": 5.352168598849908,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 6,
+      "outcome": "UNKNOWN",
+      "monthsSimulated": 120,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 1,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.31555936818948216,
+        "basicNeedsAvg": 0.3346187086491621,
+        "psychologicalAvg": 0.7439696535274256,
+        "socialAvg": 0.8370133467006466,
+        "healthAvg": 0.3773333333333333,
+        "environmentalAvg": 0.4809958501138594,
+        "overallAvg": 0.514915043418985
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 1.4542790912971644,
+        "co2Concentration": 391.8187735280003,
+        "extinctionRate": 98972.92250233427
+      },
+      "finalPopulation": 1.8383191497544604,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 7,
+      "outcome": "UNKNOWN",
+      "monthsSimulated": 120,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 1,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5370494446378112,
+        "basicNeedsAvg": 0.3482121993814246,
+        "psychologicalAvg": 0.6865257418352438,
+        "socialAvg": 0.6035388340967637,
+        "healthAvg": 0.38233333333333336,
+        "environmentalAvg": 0.4578637776504298,
+        "overallAvg": 0.502587221822501
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 1.457523592670852,
+        "co2Concentration": 392.1126062793747,
+        "extinctionRate": 98972.92250233427
+      },
+      "finalPopulation": 1.767090729322737,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 8,
+      "outcome": "UNKNOWN",
+      "monthsSimulated": 49,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 1,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.6133507402344385,
+        "basicNeedsAvg": 0.7343091058025321,
+        "psychologicalAvg": 0.7423592662169902,
+        "socialAvg": 0.7274961697201097,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5473333333333333,
+        "overallAvg": 0.6238636581067895
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 1.6363783890660257,
+        "co2Concentration": 408.6558225318594,
+        "extinctionRate": 245370.37037037036
+      },
+      "finalPopulation": 4.689029485597183,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 9,
+      "outcome": "UNKNOWN",
+      "monthsSimulated": 49,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 1,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5982228277923751,
+        "basicNeedsAvg": 0.7672569762843048,
+        "psychologicalAvg": 0.6871657598619979,
+        "socialAvg": 0.6913262571055463,
+        "healthAvg": 0.37833333333333335,
+        "environmentalAvg": 0.5006666666666667,
+        "overallAvg": 0.6038286368407041
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 1.6366450361136797,
+        "co2Concentration": 408.68100000000305,
+        "extinctionRate": 245370.37037037036
+      },
+      "finalPopulation": 5.5047239225748825,
+      "boundariesBreached": []
+    },
+    {
+      "scenarioId": "equality-first",
+      "seed": 10,
+      "outcome": "UNKNOWN",
+      "monthsSimulated": 120,
+      "spiralActivation": {
+        "activeUpwardSpirals": [],
+        "cascadeActive": false,
+        "cascadeStrength": 1,
+        "trustCascadesTriggered": 0,
+        "tippingPointCascades": 5
+      },
+      "finalQoL": {
+        "survivalAvg": 0.5250719484765725,
+        "basicNeedsAvg": 0.31765089003208913,
+        "psychologicalAvg": 0.6874652135481141,
+        "socialAvg": 0.6050288075893312,
+        "healthAvg": 0.3833333333333333,
+        "environmentalAvg": 0.4703580032474492,
+        "overallAvg": 0.4981513660378149
+      },
+      "finalEnvironment": {
+        "globalTempDelta": 1.4583398168957862,
+        "co2Concentration": 392.18656092211216,
+        "extinctionRate": 98972.92250233427
+      },
+      "finalPopulation": 2.2644806576090017,
+      "boundariesBreached": []
+    }
+  ],
+  "aggregate": {
+    "meanSpiralsActive": 0.1,
+    "spiralActivationRate": {
+      "cognitive": 0.1
+    },
+    "cascadeActivationRate": 0,
+    "meanCascadeStrength": 1,
+    "meanQoL": 0.5974987116522983,
+    "meanPopulation": 4.475022888624535,
+    "meanTempDelta": 1.5891102244782533,
+    "outcomeDistribution": {
+      "UNKNOWN": 1
+    }
+  }
+}
