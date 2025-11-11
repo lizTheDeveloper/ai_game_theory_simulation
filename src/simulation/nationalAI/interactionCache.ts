@@ -60,6 +60,16 @@ export function createInteractionCache(state: GameState): CountryInteractionCach
   const cooperationPotential = new Map<string, number>();
   const tensionLevels = new Map<string, number>();
 
+  // PERFORMANCE FIX (Nov 11, 2025): Build tension lookup Map first
+  // This eliminates O(n²) find() calls inside the nation pair loop
+  // Before: O(n²) pairs × O(n²) find = O(n⁴)
+  // After: O(n²) map build + O(n²) pairs × O(1) lookup = O(n²)
+  const tensionMap = new Map<string, number>();
+  for (const tension of state.bilateralTensions) {
+    const key = getBilateralKey(tension.nationA as NationName, tension.nationB as NationName);
+    tensionMap.set(key, tension.tensionLevel);
+  }
+
   // Build cooperation potential matrix (sparse - only store non-zero)
   for (let i = 0; i < natAI.nations.length; i++) {
     for (let j = i + 1; j < natAI.nations.length; j++) {
@@ -75,13 +85,8 @@ export function createInteractionCache(state: GameState): CountryInteractionCach
       const capabilityGap = Math.abs(nationA.effectiveCapability - nationB.effectiveCapability);
       const similarityFactor = 1 - Math.min(1, capabilityGap);
 
-      // Get bilateral tension
-      const tension = state.bilateralTensions.find(t =>
-        (t.nationA === nationA.nation && t.nationB === nationB.nation) ||
-        (t.nationA === nationB.nation && t.nationB === nationA.nation)
-      );
-
-      const tensionLevel = tension?.tensionLevel || 0.5;
+      // Get bilateral tension from pre-built Map (O(1) lookup)
+      const tensionLevel = tensionMap.get(key) || 0.5;
       const tensionFactor = 1 - tensionLevel;
 
       // Cooperation potential (0-1)
