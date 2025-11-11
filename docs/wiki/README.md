@@ -594,6 +594,30 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+**✅ RECOVERY MECHANICS AUDIT COMPLETE (Nov 11, 2025)**
+
+Investigation of Monte Carlo Issue #9 confirms recovery mechanics are **FUNCTIONAL and RESEARCH-BACKED**.
+
+**Finding:** "All dystopia" outcomes are EXPECTED given:
+- 2025 start with 6 planetary boundaries already breached
+- 30-year simulation timeframe (insufficient for most recovery timescales)
+- Damage accumulates 10-100× faster than recovery (empirically grounded)
+- Recovery requires sustained coordination rarely achieved in Monte Carlo runs
+
+**Recovery systems validated:**
+1. **AI Resentment Recovery** (6 mechanisms, 1.4-16.7 year timeline) - Trust literature backed
+2. **Food Security Recovery** (2%/month max, 0.8-4.2 years) - Nuclear winter models backed
+3. **Environmental Recovery** (3-tier system, 10-100 year timescales) - IPCC/IPBES backed
+4. **Economic Recovery** (NBER methodology) - IMF data backed
+
+**Verdict:** Model accurately reflects empirical recovery timescales. Dystopia outcomes are CORRECT, not bugs.
+
+**Priority:** MEDIUM (improves understanding, confirms model validity)
+
+**See:** `reviews/recovery_mechanics_audit_20251111.md` (431 lines, comprehensive audit)
+
+Commit: b98fb83
+
 **🔬 GOD MODE GAP CLOSURE RESEARCH COMPLETE (Nov 10, 2025)**
 
 Comprehensive technology research addressing planetary boundary effectiveness gaps (0-10% → 30-60%).
