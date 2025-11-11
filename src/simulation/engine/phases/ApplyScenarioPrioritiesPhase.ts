@@ -111,8 +111,39 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       }
       state.government.resources += monthlyClimateSpending;
 
+      // FIX (Nov 11, 2025): ALSO update state.config.climatePriority.weights
+      // This is what selectGovernmentAction actually reads when choosing actions
+      // Map climate spending to priority weight:
+      // - 0.01-0.02 (1-2% GDP) → 0.10-0.20 weight (baseline/moderate)
+      // - 0.05-0.07 (5-7% GDP) → 0.30-0.35 weight (ambitious)
+      // - 0.10+ (10%+ GDP) → 0.45 weight (crisis mode)
+      let climateWeight: number;
+      if (value >= 0.10) {
+        climateWeight = 0.45; // Crisis mode (opt-crisis level)
+      } else if (value >= 0.07) {
+        climateWeight = 0.35; // Ambitious (opt-ambitious/pes-maximum)
+      } else if (value >= 0.05) {
+        climateWeight = 0.30; // Moderate-ambitious
+      } else if (value >= 0.02) {
+        climateWeight = 0.20; // Moderate (opt-moderate)
+      } else {
+        climateWeight = 0.10 + (value / 0.02) * 0.10; // Scale from baseline (0.10) to moderate (0.20)
+      }
+
+      // Rebalance other weights proportionally (keep total ~1.0)
+      const oldClimateWeight = state.config.climatePriority.weights.climate;
+      const otherWeightsTotal = 1.0 - oldClimateWeight;
+      const otherWeightsNew = 1.0 - climateWeight;
+      const rebalanceFactor = otherWeightsNew / otherWeightsTotal;
+
+      state.config.climatePriority.weights.climate = climateWeight;
+      state.config.climatePriority.weights.economic *= rebalanceFactor;
+      state.config.climatePriority.weights.geopolitical *= rebalanceFactor;
+      state.config.climatePriority.weights.social *= rebalanceFactor;
+      state.config.climatePriority.weights.technological *= rebalanceFactor;
+
       overridesApplied.push(
-        `Climate: ${(value * 100).toFixed(1)}% GDP (+$${monthlyClimateSpending.toFixed(1)}B to resources)`
+        `Climate: ${(value * 100).toFixed(1)}% GDP (+$${monthlyClimateSpending.toFixed(1)}B to resources, weight ${(oldClimateWeight * 100).toFixed(0)}% → ${(climateWeight * 100).toFixed(0)}%)`
       );
     }
 
