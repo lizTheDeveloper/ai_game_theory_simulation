@@ -84,6 +84,31 @@
      - **Confidence:** B+ overall (8 A-grade, 14 B-grade, 4 C-grade citations)
      - **See:** research/*_20251110.md (5 files: prevention, rapid_deployment, energy, nitrogen, tier_2)
 
+   - **Unknown Unknowns: Vulnerable World & AI Risk Research** - MEDIUM-HIGH priority (Nov 11, 2025)
+     - **Context:** Commit ff945fe - Research update for unknownUnknowns.ts system (addresses TODO line 45-47)
+     - **Key Findings:** AI progress 1.5-2× faster than 2018 forecasts, accumulative risk framework, correlated risks, weak governance coordination (0.3)
+     - **Status:** 🟡 VERIFICATION PENDING
+     - **4 Citations to Verify:**
+       - Bostrom (2019) - Vulnerable World Hypothesis: "black ball" metaphor, Type-1/2a/2b vulnerabilities
+       - Kasirzadeh (2025) - Accumulative AI X-Risk: Decisive vs. accumulative framework, gradual capability-safety gap
+       - Epoch AI (2024) - Compute scaling: 4-5×/year (2015-2024) vs. 2-3× projected
+       - Grace et al. (2018) - AI forecasts: HLMI by 2061 (now appears conservative)
+     - **Quantitative Claims Requiring Review:**
+       - 1.5-2× AI progress multiplier (calculated from 4-5× vs. 2-3× scaling?)
+       - Governance coordination = 0.3 (researcher judgment, NOT from cited source)
+       - Event probabilities: 3%/decade accumulative risk, 10%/decade emergent capabilities, 2%/decade AI-bio dual-use
+       - AI_PROGRESS_MULTIPLIER = 1.5 for probability adjustments
+     - **Implementation Recommendations:**
+       - Add AI-driven unknown unknown event types (accumulative risk threshold, emergent capability surprises, AI-bio dual-use)
+       - Track accumulative risk over time (capability-safety gap, governance lag)
+       - Model correlated risks (not just independent shocks)
+       - Adjust probabilities for faster AI progress (1.5× multiplier)
+     - **Verification File:** research/verification_ff945fe_20251111.md
+     - **Research File:** research/vulnerable_world_hypothesis_ai_risk_20251111.md (487 lines)
+     - **Wiki Updated:** docs/wiki/README.md:4181-4207 (research update section added)
+     - **Workflow:** Citation existence → Claim verification (quote passages) → Parameter validation (Priya) → Implementation planning → Monte Carlo validation
+     - **Priority:** MEDIUM-HIGH - Improves realism of unknown unknown system, addresses TODO in active code
+
    - **Workflow Adaptation Bug Fix Citations** - HIGH priority (Nov 10, 2025)
      - **Context:** Commit d336915 - Two CRITICAL spiral activation blockers resolved
      - **Issue:** OECD (2024) active labor market policies citation lacks specificity
