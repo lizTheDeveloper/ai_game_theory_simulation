@@ -131,20 +131,28 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       }
 
       // Rebalance other weights proportionally (keep total ~1.0)
-      const oldClimateWeight = state.config.climatePriority.weights.climate;
-      const otherWeightsTotal = 1.0 - oldClimateWeight;
-      const otherWeightsNew = 1.0 - climateWeight;
-      const rebalanceFactor = otherWeightsNew / otherWeightsTotal;
+      // Guard: only update weights if climatePriority is configured
+      if (state.config.climatePriority) {
+        const oldClimateWeight = state.config.climatePriority.weights.climate;
+        const otherWeightsTotal = 1.0 - oldClimateWeight;
+        const otherWeightsNew = 1.0 - climateWeight;
+        const rebalanceFactor = otherWeightsNew / otherWeightsTotal;
 
-      state.config.climatePriority.weights.climate = climateWeight;
-      state.config.climatePriority.weights.economic *= rebalanceFactor;
-      state.config.climatePriority.weights.geopolitical *= rebalanceFactor;
-      state.config.climatePriority.weights.social *= rebalanceFactor;
-      state.config.climatePriority.weights.technological *= rebalanceFactor;
+        state.config.climatePriority.weights.climate = climateWeight;
+        state.config.climatePriority.weights.economic *= rebalanceFactor;
+        state.config.climatePriority.weights.geopolitical *= rebalanceFactor;
+        state.config.climatePriority.weights.social *= rebalanceFactor;
+        state.config.climatePriority.weights.technological *= rebalanceFactor;
 
-      overridesApplied.push(
-        `Climate: ${(value * 100).toFixed(1)}% GDP (+$${monthlyClimateSpending.toFixed(1)}B to resources, weight ${(oldClimateWeight * 100).toFixed(0)}% → ${(climateWeight * 100).toFixed(0)}%)`
-      );
+        overridesApplied.push(
+          `Climate: ${(value * 100).toFixed(1)}% GDP (+$${monthlyClimateSpending.toFixed(1)}B to resources, weight ${(oldClimateWeight * 100).toFixed(0)}% → ${(climateWeight * 100).toFixed(0)}%)`
+        );
+      } else {
+        // climatePriority not configured - just log resource change
+        overridesApplied.push(
+          `Climate: ${(value * 100).toFixed(1)}% GDP (+$${monthlyClimateSpending.toFixed(1)}B to resources)`
+        );
+      }
     }
 
     if (priorities.redistributionRate !== undefined) {
