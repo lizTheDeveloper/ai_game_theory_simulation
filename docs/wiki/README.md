@@ -2160,6 +2160,19 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 - **Medium-Priority Gaps:** Optimistic AI scenarios, recovery capacity, mortality stabilizer stochasticity
 - See: [`reviews/research_source_validation_20251106.md`](/reviews/research_source_validation_20251106.md) (946 lines)
 
+**📚 2025 Research Updates** (November 12, 2025):
+- **AI Scaling Laws 2025 Update** ([`research/ai_scaling_laws_2025_update_20251112.md`](/research/ai_scaling_laws_2025_update_20251112.md))
+  - Test-time compute paradigm (OpenAI o1/o3: $5 → $1,000+ per task for 200x cost increase)
+  - Efficiency-doubling imperative (Lu 2025: 23x algorithmic gains vs 30% hardware cost decline)
+  - Three-component scaling model: pre-training + test-time + efficiency multipliers
+  - Sources: arXiv:2501.02156, OpenAI announcements, ARC Prize, NVIDIA, Hugging Face (8 sources)
+- **Planetary Boundaries & Tipping Points 2025** ([`research/planetary_boundaries_tipping_points_2025_update_20251112.md`](/research/planetary_boundaries_tipping_points_2025_update_20251112.md))
+  - CRITICAL: First tipping point crossed (coral reefs at 1.2°C, current 1.4°C)
+  - Seven of nine boundaries breached (NEW: ocean acidification in 2025)
+  - AMOC collapse risk within human lifetime, cascading tipping mechanisms
+  - Current decade (2025-2035) identified as critical window
+  - Sources: Stockholm Resilience Centre, IPBES, PIK, Global Tipping Points Report 2025 (10 sources)
+
 **🔬 Tier 2 Threshold Research Update** (November 7, 2025):
 - **File:** `research/threshold_tier2_historical_ranges_20251026.md` → Updated with **25+ peer-reviewed 2024-2025 sources**
 - **Impact:** Oldest source: 1970 → 2022 (52-year improvement)
@@ -6551,6 +6564,20 @@ state.history.exogenousShocks?: Array<{
 - 8,249 extreme events validated
 
 ### Recent Research Documents
+
+**AI Scaling Laws 2025 Update (Nov 12, 2025)**:
+- Location: `research/ai_scaling_laws_2025_update_20251112.md` (14KB, 8 sources)
+- Topic: Test-time compute, efficiency-doubling imperative, three-component scaling
+- Key Findings: o3 costs 200x more than o1 ($1,000 vs $5/task), 23x algorithmic efficiency gains
+- Sources: Lu 2025 (arXiv), OpenAI, ARC Prize, NVIDIA, Hugging Face
+- Application: Future AI capability modeling should use three axes (pre-training, test-time, efficiency)
+
+**Planetary Boundaries & Tipping Points 2025 (Nov 12, 2025)**:
+- Location: `research/planetary_boundaries_tipping_points_2025_update_20251112.md` (21KB, 10 sources)
+- Topic: First confirmed tipping point crossed, seven boundaries breached, cascading risks
+- CRITICAL Findings: Coral reefs crossed at 1.2°C (current 1.4°C), ocean acidification NEW breach
+- Sources: Stockholm Resilience Centre, IPBES, PIK, Global Tipping Points Report 2025
+- Application: Simulation now in "tipping points crossed" phase, not just "approaching"
 
 **Contingency & Agency Debate (Oct 17, 2025)**:
 - Location: `research/modeling-contingency-and-agency-debate_20251017.md` (50KB)
