@@ -39,6 +39,37 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Climate Technology Deployment Constraints** - TIER 1 CRITICAL (Added Nov 12, 2025)
+     - **Context:** God mode 5.5% climate effectiveness gap (commit a26daaa)
+     - **Key Finding:** Current simulation models instant deployment - missing 20-30 year scaling timescales, energy prerequisites, climate feedback delays
+     - **Issue:** Tech unlock should trigger multi-decade deployment process (not instant full-scale)
+     - **Status:** ⚠️ READY FOR VALIDATION - Research complete, verification spec created
+     - **Research Delivered:** 699 lines detailed analysis + 235 line executive summary (16 peer-reviewed sources)
+     - **Key Claims Requiring Verification:**
+       - Deployment timescales: 20-30 years breakthrough → gigatonne scale (Nature Communications 15, 6352 2024)
+       - Energy prerequisite: 40%+ renewable grid penetration required for DAC/BECCS (IEA 2024)
+       - Temperature lag: 25-50 years ocean thermal inertia (PNAS 114(4):657-662 2017)
+       - S-curve growth: 10% early → 30% rapid → 5% mature (RMI 2024)
+       - Governance quadratic penalty (Montreal Protocol analysis PMC 11459323 2024)
+       - Historical analogs: Montreal 9-23 years, China solar 45% growth, COVID 3-5× crisis acceleration
+     - **Verification File:** research/verification_a26daaa_20251112.md (TWO-LAYER: citation existence + claim accuracy)
+     - **Research Files:** research/climate_deployment_constraints_20251112.md, research/RESEARCH_SUMMARY_climate_deployment_20251112.md
+     - **Assignments:**
+       - Sylvia (research-skeptic): Layer 1 (citation existence) + Layer 2 (claim verification - quote passages supporting each claim)
+       - Cynthia: Parameter refinement if issues found
+       - Roy + Moss: Implementation (BLOCKED until validation complete)
+       - Priya: Monte Carlo validation after implementation
+     - **Implementation Changes Required:**
+       - Add TechnologyDeployment state interface (deploymentProgress 0-1)
+       - S-curve growth function (varies by phase)
+       - Energy constraint multiplier: min(1.0, renewableShare / 0.40)
+       - Temperature lag: 30-year time constant
+       - Governance quality gate: deploymentEffectiveness *= governanceScore^2
+     - **Expected Impact:** God mode effectiveness 0.5% year 1 → 3% year 5 → 40% year 25 → 65% year 35 (vs. 5.5% instant currently)
+     - **Workflow:** Citation verification (Sylvia) → Parameter refinement (if needed) → Implementation (Roy/Moss) → Monte Carlo validation (Priya)
+     - **Priority:** TIER 1 CRITICAL - Blocks realistic climate modeling, affects all climate-first scenarios
+     - **Confidence:** 16 citations (Nature, IPCC AR6, IEA, PNAS), but needs claim-level verification
+
    - **AI Coordination & Transition Management** - CRITICAL (Added Nov 10, 2025)
      - **Context:** God mode 30% mortality finding (8.15B → 5.71B) - commit 90d0957
      - **Key Finding:** Current "god mode" models chaos (instant tech deployment) not coordination (AI-managed transition)
