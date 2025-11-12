@@ -464,6 +464,34 @@ The Multi-Paradigm DUI draws on **100+ peer-reviewed sources** across:
 
 **Solution:** Conservative thresholds used, sensitivity analysis planned
 
+### 5. Mortality Effects on Institutional Metrics (⚠️ UNDER INVESTIGATION)
+
+**Problem:** Western Liberal paradigm shows high scores (58-77/100) during extreme mortality events (92%+ deaths)
+- Root cause: Paradigm uses per-capita/structural metrics (democracy, civil liberties, rule of law) that aren't directly affected by absolute population mortality
+- Result: "Elite utopia" pattern - surviving 8% can maintain high institutional scores despite catastrophic mortality
+- **Status:** Investigation completed (Nov 12, 2025), research validation pending
+
+**Investigation findings:**
+- Western Liberal components (electoral democracy, civil liberties, rule of law, economic freedom, privacy) measure institutional quality, not population size
+- No historical precedent for institutional persistence during 50%+ mortality (Black Death at 50% → authority collapse)
+- Functional collapse likely: Electoral systems, judiciary, free press require minimum staffing/infrastructure
+- Development paradigm DOES capture mortality effects (QoL plummets), distinguishing welfare from institutions
+
+**Proposed solutions:**
+- **Option A:** Add mortality-weighted penalty with research-backed thresholds (<5%: no penalty, 5-20%: partial, 20-50%: severe, 50%+: near-total)
+- **Option B:** Preserve current behavior, add explanatory logging to clarify "elite utopia" vs mass flourishing
+- **Option C:** Distinguish per-capita (institutional quality) vs absolute (functional capacity) metrics
+
+**Research needed:**
+- Historical case studies: Democracy/rule of law during 20-50% mortality (Black Death, Thirty Years' War, modern conflicts)
+- Functional thresholds: Minimum population/infrastructure for elections, courts, free press
+- Validation: Does upstream democracy erosion (DemocracyDynamicsPhase) already handle this?
+
+**Files:**
+- Investigation log: `logs/paradigm_scoring_investigation_20251112.md` (380 lines)
+- Diagnostic script: `scripts/diagnosticParadigmMortality.ts` (ready to run)
+- Research verification: `research/verification_2a54f2f_20251112.md` (pending creation)
+
 ---
 
 ## Future Enhancements (Phase 7 - Documentation)

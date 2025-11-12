@@ -511,10 +511,17 @@ This framework will:
 
 #### 🟡 MEDIUM Priority Issues (Calibration & Methodology)
 
-**7. Western Paradigm High Scores During Collapse**
-- **Priority:** MEDIUM
+**7. Western Paradigm High Scores During Collapse - ⚠️ INVESTIGATION COMPLETE**
+- **Priority:** MEDIUM → HIGH (upgraded to research verification)
+- **Status:** ✅ Investigation complete (Nov 12, 2025), ⏳ Research verification pending
 - **Problem:** Western Liberal scores show 58-77 during 92% mortality events
-- **Action Required:** Audit scoring logic - should catastrophic mortality lower these scores?
+- **Root Cause:** Paradigm uses per-capita/structural metrics (democracy, civil liberties, rule of law) that aren't directly affected by absolute population mortality → "Elite utopia" pattern
+- **Action Required:** Research validation of mortality-institution thresholds
+- **Files:**
+  - Investigation: `logs/paradigm_scoring_investigation_20251112.md` (380 lines)
+  - Diagnostic: `scripts/diagnosticParadigmMortality.ts` (ready to run)
+  - Research spec: `research/verification_2a54f2f_20251112.md` (verification claims identified)
+- **Next Steps:** Orchestrator workflow → research-skeptic validation → super-alignment-researcher literature review → decision on Option A/B/C
 
 **8. "Inconclusive" Phantom Outcome Investigation**
 - **Priority:** MEDIUM
