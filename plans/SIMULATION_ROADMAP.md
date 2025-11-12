@@ -39,6 +39,25 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Novel Entities Energy Trap Constraints** - CRITICAL (Added Nov 12, 2025)
+     - **Context:** Commit 660b714 - Heterogeneous contamination model with energy/concentration physics
+     - **Implementation:** Complete (industrial vs environmental split, atmospheric cycling, biological degradation)
+     - **Status:** ⚠️ VALIDATION PHASE - Core logic implemented, citations need verification
+     - **File:** research/verification_660b714_20251112.md
+     - **Citations Requiring Verification:**
+       - Fennell 2024: Energy requirements (420 kWh/m³), minimum concentration (1 mg/L)
+       - Ling 2024: Energy trap thermodynamics, concentration barriers
+       - Cousins 2022: Atmospheric redeposition, futility of local cleanup
+       - "2024 research": Biological degradation pathway (needs specific citation)
+       - "Sylvia 2025": Uncertainty range extrapolations (needs research backing)
+     - **Parameters Needing Justification:**
+       - 15%/35% industrial/environmental contamination split
+       - 180,000 Mt atmospheric reservoir stock
+       - 100× cleanup effectiveness difference (industrial vs environmental)
+       - 1% concentration penalty (energy trap floor)
+       - 1% monthly atmospheric redeposition rate
+     - **Next:** Research-skeptic validation → parameter adjustment → Monte Carlo testing
+
    - **AI Coordination & Transition Management** - CRITICAL (Added Nov 10, 2025)
      - **Context:** God mode 30% mortality finding (8.15B → 5.71B) - commit 90d0957
      - **Key Finding:** Current "god mode" models chaos (instant tech deployment) not coordination (AI-managed transition)
