@@ -38,6 +38,12 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📖 **Files:** PhaseOrchestrator.ts (timing collection), engine.ts (config integration), config.ts (flags), testPerformanceProfiling.ts (validation)
 - 📊 **Impact:** Enables systematic bottleneck identification (complements PERFORMANCE_BOTTLENECK_ANALYSIS_20251112.md)
 
+**Nov 12: governmentInvestment Normalization Fix Applied** (commit 67058ce)
+- ✅ **Bug Fix:** Actually applied governmentInvestment normalization divisor fix (100 not 10) in Tier2SocialSystemsPhase:77
+- 📋 **Context:** Previous commit c4ec37c2d claimed this fix but didn't actually edit the file
+- 📊 **Impact:** Fixes ai-alignment-first scenario 100% failure rate (governmentInvestment was 10 instead of 0-1 range)
+- 📖 **File:** src/simulation/engine/phases/Tier2SocialSystemsPhase.ts
+
 **Nov 12: Architecture Integration Review COMPLETE** (commit 030faa8)
 - 📊 **Overall Health:** 9.0/10 (improved from 7.5/10 post-Week 4)
 - ✅ **Phase Consolidation:** 116→95 phases (-18% complexity)
