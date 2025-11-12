@@ -100,8 +100,12 @@ const BREAKTHROUGHS: Breakthrough[] = [
     effects: (state) => {
       // Boost alignment of all existing AIs
       state.aiAgents.forEach(ai => {
+        // DEFENSIVE: Clamp trueAlignment to [0, 1] before adding (defense in depth)
+        // Root cause fixed Nov 2025: aiWelfare.ts, lifecycle.ts, aiAgent.ts now clamp to [0, 1]
+        // This remains as secondary safeguard in case new code violates bounds
+        const currentAlignment = Math.max(0.0, Math.min(1.0, ai.trueAlignment));
         ai.trueAlignment = assertProbability(
-          Math.min(1.0, ai.trueAlignment + 0.30),
+          Math.min(1.0, currentAlignment + 0.30),
           {
             location: 'StochasticInnovationPhase.ai_alignment_solution',
             valueName: `trueAlignment_${ai.id}`,
