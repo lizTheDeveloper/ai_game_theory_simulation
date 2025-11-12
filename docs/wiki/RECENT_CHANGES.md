@@ -4,6 +4,31 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 12, 2025)
+
+**🔧 INFRASTRUCTURE: Autonomous Worker PATH and Network Error Handling** (Nov 12, 2025, commit 903cb3b)
+
+**Summary:** Fixed cron environment issues and improved network resilience for autonomous worker scripts.
+
+**Issues Fixed:**
+1. **Missing PATH in worker scripts** - `claude` command not found when running from cron (cron has minimal PATH)
+2. **Network errors misdiagnosed as merge conflicts** - DNS failures triggered conflict resolution instead of graceful skip
+3. **Researcher failing to distinguish transient failures from real conflicts**
+
+**Changes:**
+- Add explicit PATH export (`/usr/bin:/usr/local/bin:/bin`) to both worker scripts
+- Improve error detection in `researcher-worker.sh` - pattern match for network errors vs conflicts
+- Network errors now skip run gracefully (will retry next cron cycle)
+- Only invoke Claude for actual merge conflicts (CONFLICT markers in git output)
+
+**Impact:** Workers can now handle transient network issues gracefully and have proper access to claude CLI when running from cron.
+
+**Files:**
+- `autonomous-worker.sh` (lines 1-9)
+- `researcher-worker.sh` (lines 1-9, 135-176)
+
+---
+
 ## ✅ Recent Changes (November 11, 2025)
 
 **🐛 BUG FIX: Wet Bulb Mortality Cap for Population Collapse Edge Cases** (Nov 11, 2025, commit a3df82a)
