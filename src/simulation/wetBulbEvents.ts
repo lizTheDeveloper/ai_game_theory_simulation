@@ -732,13 +732,30 @@ function applyWetBulbMortality(state: GameState, event: WetBulbEvent): void {
     additionalInfo: { region: event.region }
   });
 
+  // FIX (Nov 12, 2025): Check for population collapse before calculating mortality rate
+  // If population has collapsed to <100M globally, mortality rates become meaningless
+  // (civilization has already ended - no point tracking individual heat events)
+  if (populationMillions < 100) {
+    console.warn(`\n⚠️ POPULATION COLLAPSE: ${populationMillions.toFixed(1)}M remaining`);
+    console.warn(`   Skipping wetbulb mortality tracking (civilization already ended)`);
+    return; // Skip mortality calculation - population model is in extinction state
+  }
+
   // Calculate mortality rate and validate it's a probability
+  // This can still fail if regional deaths exceed global population (physically impossible)
+  // but provides better error context than silent division by near-zero
   const mortalityRate = assertProbability(
     deathsMillions / populationMillions,
     {
       location: 'applyWetBulbMortality',
       valueName: 'mortalityRate',
       month: state.currentMonth,
+      additionalInfo: {
+        deathsMillions,
+        populationMillions,
+        region: event.region,
+        message: 'Regional event deaths exceed global population - check event calculation or population model'
+      }
     }
   );
 

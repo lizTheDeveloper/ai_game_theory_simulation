@@ -74,7 +74,9 @@ export class Tier2SocialSystemsPhase implements SimulationPhase {
     if (!centaurState.unlocked) {
       const unemployment = state.globalMetrics.unemployment || 0;
       const meaningCrisis = state.socialAccumulation.meaningCrisisLevel;
-      const governmentInvestment = state.government.alignmentResearchInvestment / 100;
+      // FIX (Nov 12, 2025): alignmentResearchInvestment is [0,10+], not [0,100]
+      // Convert to [0,1] probability range for assertion validation
+      const governmentInvestment = Math.min(1.0, state.government.alignmentResearchInvestment / 10);
 
       // Validate metrics
       assertProbability(unemployment, {
