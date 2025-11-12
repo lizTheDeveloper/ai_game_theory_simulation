@@ -6,6 +6,25 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 12, 2025)
 
+**🔧 INFRASTRUCTURE: Researcher Lock File Merge Conflict Resolved** (Nov 12, 2025, commit 4e1699b)
+
+**Summary:** Cleaned up stale `.researcher-worker.lock` file that was blocking merge orchestrator.
+
+**Issue:** The researcher worker completed successfully but left a merge conflict with `.researcher-worker.lock` when returning to main branch. This prevented the merge orchestrator from running.
+
+**Resolution:**
+- Removed `.researcher-worker.lock` (deleted by remote, modified locally)
+- Staged researcher status update (`status_current.txt`: COMPLETE - 469s)
+- Resolved merge conflict cleanly
+
+**Impact:** Autonomous worker system can continue operating without manual intervention.
+
+**Files:**
+- `.researcher-worker.lock` (deleted)
+- `logs/autonomous/researcher/status_current.txt` (status update)
+
+---
+
 **🔧 INFRASTRUCTURE: PID-Based Locking for Autonomous Workers** (Nov 12, 2025, commit f5afdf2)
 
 **Summary:** Added PID-based locking mechanism to prevent race conditions and concurrent worker runs.
