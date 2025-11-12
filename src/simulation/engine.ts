@@ -780,8 +780,21 @@ export class SimulationEngine {
     // Consider reducing snapshot frequency or implementing max history size (BUG-14, Oct 16 2025)
     // Current: 12-month interval = ~100 snapshots per 1200 months (~1-2GB RAM)
 
+    // DEBUG (Nov 12, 2025): Month 49 termination bug investigation
+    const DEBUG_SCENARIO_BUG = state.scenario !== undefined;
+
     for (let month = 0; month < maxMonths; month++) {
+      // DEBUG: Log loop entry for scenario runs
+      if (DEBUG_SCENARIO_BUG && month >= 48 && month <= 51) {
+        console.log(`\n[ENGINE DEBUG] Loop iteration ${month} starting (currentMonth=${state.currentMonth}, maxMonths=${maxMonths})`);
+      }
+
       const stepResult = this.step(state);
+
+      // DEBUG: Log after step
+      if (DEBUG_SCENARIO_BUG && month >= 48 && month <= 51) {
+        console.log(`[ENGINE DEBUG] step() completed for iteration ${month} (currentMonth=${stepResult.state.currentMonth})`);
+      }
 
       // Snapshot state at configured intervals to preserve history
       // This is expensive, so we do it sparingly (default: every 12 months)
@@ -790,9 +803,19 @@ export class SimulationEngine {
           ...stepResult,
           state: this.snapshotState(state)
         });
+
+        // DEBUG: Log snapshot
+        if (DEBUG_SCENARIO_BUG && month >= 48 && month <= 51) {
+          console.log(`[ENGINE DEBUG] Snapshot saved for iteration ${month}`);
+        }
       }
 
       state = stepResult.state;
+
+      // DEBUG: Log state assignment
+      if (DEBUG_SCENARIO_BUG && month >= 48 && month <= 51) {
+        console.log(`[ENGINE DEBUG] State updated for iteration ${month} (currentMonth=${state.currentMonth})`);
+      }
       
       // Attach aggregator to state for phases to use
       (state as any).eventAggregator = eventAggregator;
@@ -826,6 +849,9 @@ export class SimulationEngine {
           console.log(`\n🎭 END-GAME RESOLVED: ${endGameOutcome.outcome.toUpperCase()}`);
           console.log(`   Reason: ${endGameOutcome.reason}`);
           console.log(`   Month: ${month}\n`);
+          if (DEBUG_SCENARIO_BUG) {
+            console.log(`[ENGINE DEBUG] Breaking due to END-GAME outcome at month ${month}`);
+          }
           break;
         }
       }
@@ -847,10 +873,13 @@ export class SimulationEngine {
         console.log(`   Mortality: ${((1 - population / state.humanPopulationSystem.peakPopulation) * 100).toFixed(1)}%`);
         console.log(`   Primary Cause: ${state.extinctionState.mechanism || 'Cascading crises'}`);
         console.log(`   Month: ${month}`);
-        
+
         const { determinePopulationOutcome } = require('./populationDynamics');
         const popOutcome = determinePopulationOutcome(state);
         console.log(`\n   ${popOutcome.outcomeNarrative}\n`);
+        if (DEBUG_SCENARIO_BUG) {
+          console.log(`[ENGINE DEBUG] Breaking due to TRUE EXTINCTION at month ${month}`);
+        }
         break;
       }
       
@@ -920,9 +949,22 @@ export class SimulationEngine {
           console.log(`   Reason: ${outcomeCheck.reason}`);
           console.log(`   Confidence: ${(outcomeCheck.confidence * 100).toFixed(0)}%`);
           console.log(`   Month: ${month}\n`);
+          if (DEBUG_SCENARIO_BUG) {
+            console.log(`[ENGINE DEBUG] Breaking due to ACTUAL OUTCOME at month ${month}: ${outcomeCheck.outcome}`);
+          }
           break;
         }
       }
+
+      // DEBUG: Log if we're about to exit the loop
+      if (DEBUG_SCENARIO_BUG && month >= 48 && month <= 51) {
+        console.log(`[ENGINE DEBUG] Loop iteration ${month} completed, checking continuation (month < maxMonths: ${month} < ${maxMonths} = ${month < maxMonths})`);
+      }
+    }
+
+    // DEBUG: Log loop exit
+    if (DEBUG_SCENARIO_BUG) {
+      console.log(`\n[ENGINE DEBUG] Loop exited normally. Final iteration was ${maxMonths - 1}, state.currentMonth=${state.currentMonth}`);
     }
     
     // Log if reached max months without definitive outcome

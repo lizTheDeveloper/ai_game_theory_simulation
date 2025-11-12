@@ -151,7 +151,7 @@
       "scenarioId": "equality-first",
       "seed": 6,
       "outcome": "UNKNOWN",
-      "monthsSimulated": 120,
+      "monthsSimulated": 360,
       "spiralActivation": {
         "activeUpwardSpirals": [],
         "cascadeActive": false,
@@ -160,27 +160,27 @@
         "tippingPointCascades": 5
       },
       "finalQoL": {
-        "survivalAvg": 0.31555936818948216,
-        "basicNeedsAvg": 0.3346187086491621,
-        "psychologicalAvg": 0.7439696535274256,
-        "socialAvg": 0.8370133467006466,
-        "healthAvg": 0.3773333333333333,
-        "environmentalAvg": 0.4809958501138594,
-        "overallAvg": 0.514915043418985
+        "survivalAvg": 0.25713398342468907,
+        "basicNeedsAvg": 0.26425007213178403,
+        "psychologicalAvg": 0.7527801650088349,
+        "socialAvg": 0.864362860124273,
+        "healthAvg": 0.37666666666666665,
+        "environmentalAvg": 0.31458370734478414,
+        "overallAvg": 0.47162957578350523
       },
       "finalEnvironment": {
-        "globalTempDelta": 1.4542790912971644,
-        "co2Concentration": 391.8187735280003,
-        "extinctionRate": 98972.92250233427
+        "globalTempDelta": 0.6929944849219722,
+        "co2Concentration": 328.6210711719305,
+        "extinctionRate": 32807.18043949242
       },
-      "finalPopulation": 1.8383191497544604,
+      "finalPopulation": 0.0029485599031931365,
       "boundariesBreached": []
     },
     {
       "scenarioId": "equality-first",
       "seed": 7,
       "outcome": "UNKNOWN",
-      "monthsSimulated": 120,
+      "monthsSimulated": 360,
       "spiralActivation": {
         "activeUpwardSpirals": [],
         "cascadeActive": false,
@@ -189,20 +189,20 @@
         "tippingPointCascades": 5
       },
       "finalQoL": {
-        "survivalAvg": 0.5370494446378112,
-        "basicNeedsAvg": 0.3482121993814246,
-        "psychologicalAvg": 0.6865257418352438,
-        "socialAvg": 0.6035388340967637,
-        "healthAvg": 0.38233333333333336,
-        "environmentalAvg": 0.4578637776504298,
-        "overallAvg": 0.502587221822501
+        "survivalAvg": 0.26489413551014834,
+        "basicNeedsAvg": 0.2640150480558951,
+        "psychologicalAvg": 0.6761114323547911,
+        "socialAvg": 0.6058381747223959,
+        "healthAvg": 0.37666666666666665,
+        "environmentalAvg": 0.29679285323589605,
+        "overallAvg": 0.4140530517576322
       },
       "finalEnvironment": {
-        "globalTempDelta": 1.457523592670852,
-        "co2Concentration": 392.1126062793747,
-        "extinctionRate": 98972.92250233427
+        "globalTempDelta": 0.7739198015413145,
+        "co2Concentration": 334.8233388375253,
+        "extinctionRate": 32807.18043949242
       },
-      "finalPopulation": 1.767090729322737,
+      "finalPopulation": 0.003897811669133173,
       "boundariesBreached": []
     },
     {
@@ -267,7 +267,7 @@
       "scenarioId": "equality-first",
       "seed": 10,
       "outcome": "UNKNOWN",
-      "monthsSimulated": 120,
+      "monthsSimulated": 360,
       "spiralActivation": {
         "activeUpwardSpirals": [],
         "cascadeActive": false,
@@ -276,20 +276,20 @@
         "tippingPointCascades": 5
       },
       "finalQoL": {
-        "survivalAvg": 0.5250719484765725,
-        "basicNeedsAvg": 0.31765089003208913,
-        "psychologicalAvg": 0.6874652135481141,
-        "socialAvg": 0.6050288075893312,
-        "healthAvg": 0.3833333333333333,
-        "environmentalAvg": 0.4703580032474492,
-        "overallAvg": 0.4981513660378149
+        "survivalAvg": 0.26339362540748384,
+        "basicNeedsAvg": 0.26668796356403984,
+        "psychologicalAvg": 0.677110954126516,
+        "socialAvg": 0.6074057046014602,
+        "healthAvg": 0.37666666666666665,
+        "environmentalAvg": 0.3054431068327655,
+        "overallAvg": 0.4161180035331553
       },
       "finalEnvironment": {
-        "globalTempDelta": 1.4583398168957862,
-        "co2Concentration": 392.18656092211216,
-        "extinctionRate": 98972.92250233427
+        "globalTempDelta": 0.7746235235475836,
+        "co2Concentration": 334.8777836327534,
+        "extinctionRate": 32807.18043949242
       },
-      "finalPopulation": 2.2644806576090017,
+      "finalPopulation": 0.00517873215321467,
       "boundariesBreached": []
     }
   ],
@@ -300,9 +300,9 @@
     },
     "cascadeActivationRate": 0,
     "meanCascadeStrength": 1,
-    "meanQoL": 0.5974987116522983,
-    "meanPopulation": 4.475022888624535,
-    "meanTempDelta": 1.5891102244782533,
+    "meanQoL": 0.5761134116317974,
+    "meanPopulation": 3.8892363453284693,
+    "meanTempDelta": 1.37624975539296,
     "outcomeDistribution": {
       "UNKNOWN": 1
     }

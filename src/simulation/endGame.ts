@@ -68,7 +68,16 @@ export function checkEndGameTransition(state: GameState): boolean {
   if (state.endGameState?.active) {
     return false; // Already in end-game
   }
-  
+
+  // FIX (Nov 12, 2025): Disable end-game for scenario runs
+  // CRITICAL-1 regression: Phase 3 scenarios with immediate tech deployment
+  // trigger end-game at month 0-1, then timeout after 48 months → ALL runs terminate at month 49
+  // Scenarios are testing spiral dynamics, not end-game competition.
+  // End-game should only activate in normal (non-scenario) gameplay.
+  if (state.scenario) {
+    return false; // Don't trigger end-game during scenario testing
+  }
+
   const totalCapability = calculateTotalAICapability(state.aiAgents);
   const maxCapability = Math.max(...state.aiAgents.map(ai => ai.capability), 0);
   const effectiveControl = calculateEffectiveControl(state);
