@@ -110,15 +110,25 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ⚠️ **Status:** Research complete, awaiting Quality Gate 1 validation (research-skeptic)
 - 📊 **Expected Impact:** Show delta between chaos mode (30% mortality) vs coordinated mode (<5% mortality)
 
-**Nov 11: Wet Bulb Mortality Cap Fix** (commit a3df82a)
+**Nov 12: Wet Bulb Mortality Rate Root Cause Fix** (commit 0b1ab17)
+- ✅ **CRITICAL BUG FIXED:** Mortality rate >100% under extreme population collapse (regional vs global population bug)
+- ✅ **Root Cause #1:** Event generation used 2025 baseline regional populations (1900M South Asia) without scaling for global population decline
+- ✅ **Root Cause #2:** Mortality rate calculated as `deaths / globalPopulation` instead of `deaths / regionalPopulation`
+- ✅ **Fix #1:** Scale regional populations by global population fraction: `currentRegionalPop = baseline × (currentGlobalPop / 8.0B)`
+- ✅ **Fix #2:** Calculate mortality rate using regional population: `mortalityRate = deaths / (exposedPop / exposureFraction)`
+- ✅ **Assertion Coverage:** `assertInRange` for globalPopFraction [0.001, 2.0], `assertProbability` for mortality rate [0, 1]
+- ✅ **Validation:** Extreme scenarios tested (99% die-off, +6°C warming), Monte Carlo N=10 in progress
+- 📖 **Impact:** Eliminates need for Nov 11 mortality cap workaround - root cause resolved
+- 📖 **Files:** src/simulation/wetBulbEvents.ts (lines 492-535, 728-799), devlogs/2025-11-12_wetbulb_mortality_fix.md
+
+**Nov 11: Wet Bulb Mortality Cap Fix** (commit a3df82a) - **SUPERSEDED by Nov 12 fix**
 - ✅ **Critical Bug Fixed:** Wet bulb mortality calculation could exceed 100% under extreme population collapse
 - ✅ **Root Cause:** Static regional populations (1900M South Asia) divided by dynamic crashed global population (<9M at month 359) = 101.2% mortality
 - ✅ **Research-Backed Fix:** Cap mortality at 10% (10× worst historical heat wave per Ballester et al. 2024)
 - ✅ **Historical Context:** 2003 European heatwave 0.0094% mortality, 2010 Russian heatwave 0.038% mortality
 - ✅ **Defensive Coding:** NO silent fallback - logs when capping with full diagnostic context
 - ✅ **Validation:** Seed 3, 360 months (original failing case) now completes successfully
-- ⚠️ **TODO:** Implement dynamic regional population tracking to eliminate edge case
-- 📖 **Context:** Part of assertion-based validation - fail-loudly caught calculation overflow
+- ⚠️ **SUPERSEDED:** Nov 12 fix addresses root cause (dynamic regional population scaling) - mortality cap no longer needed
 
 **Nov 11: Scenario Phase 3 Tech Deployment Bug Fix** (commit a71590b)
 - ✅ **Bug Fixed:** simplifiedScenarioRunner.ts line 105 accessed non-existent `state.deployedTech[tech.id]`
@@ -956,7 +966,22 @@ Updated Development Needs paradigm research with 2024-2025 empirical evidence on
 
 ---
 
-**🌡️ WET BULB TEMPERATURE THRESHOLD FIX** (commit a9aa743)
+**🌡️ WET BULB TEMPERATURE SYSTEM**
+
+**Mortality Calculation Fix (Nov 12, 2025 - commit 0b1ab17):**
+
+Fixed critical bug where mortality rates could exceed 100% under extreme population collapse scenarios. Two-part root cause:
+
+1. **Event generation:** Used 2025 baseline regional populations (e.g., 1900M South Asia) without scaling for global population decline
+2. **Mortality rate:** Divided regional deaths by global population instead of regional population
+
+**Fix implementation:**
+- Scale regional populations: `currentRegionalPop = baseline × (currentGlobalPop / 8.0B)`
+- Calculate mortality rate: `deaths / regionalPopulation` (not global population)
+- Assertion coverage: `assertInRange` for globalPopFraction [0.001, 2.0], `assertProbability` for mortality rate [0, 1]
+- Handles extreme scenarios: 99% die-off (80M remaining) validated successfully
+
+**Threshold Fix (commit a9aa743):**
 
 Fixed critical threshold mismatch: simulation used theoretical 35°C limit instead of empirical 30.5-31.2°C from Vecellio et al. (2022), underestimating heat mortality by 40-60%.
 
@@ -968,7 +993,7 @@ Fixed critical threshold mismatch: simulation used theoretical 35°C limit inste
 
 **Research:** Vecellio et al. (2022) empirical experiments (TRL 8) vs Raymond et al. (2020) theoretical 35°C. People die at 30.5°C in practice, not 35°C in theory.
 
-**Files:** `src/types/wetBulbTemperature.ts`, `src/simulation/wetBulbEvents.ts`, `src/simulation/config/centralConfig.ts`
+**Files:** `src/simulation/wetBulbEvents.ts`, `src/types/wetBulbTemperature.ts`, `src/simulation/config/centralConfig.ts`
 
 ### November 6, 2025
 
