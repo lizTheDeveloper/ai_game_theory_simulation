@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { GameState, GameAction, AIAgent, GovernmentAgent, HumanSocietyAgent, GlobalMetrics, TechnologyNode, OutcomeMetrics, ConfigurationSettings } from '@/types/game';
+import { GameState, GameAction, AIAgent, GovernmentAgent, HumanSocietyAgent, GlobalMetrics, TechnologyNode, OutcomeMetrics, ConfigurationSettings, ScenarioMode } from '@/types/game';
 import { globalEventQueue, EventQueue } from './eventSystem';
 import { ActionSelector, ActionExecutor, AI_ACTIONS, GOVERNMENT_ACTIONS, SOCIETY_ACTIONS } from './actionSystem';
 import { format, getDaysInMonth as getDateFnsDaysInMonth, addMonths, startOfMonth, addDays } from 'date-fns';
@@ -114,13 +114,23 @@ const createInitialOutcomeMetrics = (): OutcomeMetrics => ({
   lockInStrength: 0,
 });
 
-const createInitialConfig = (): ConfigurationSettings => ({
-  governmentActionFrequency: 0.08, // Realistic: ~1 action per year (once every 12 months)
-  socialAdaptationRate: 0.3,
-  aiCoordinationMultiplier: 1.0,
-  economicTransitionRate: 0.5,
-  scenarioMode: 'historical', // Default to historical scenario
-});
+const createInitialConfig = (): ConfigurationSettings => {
+  const scenarioMode: ScenarioMode = 'historical'; // Default to historical scenario
+
+  // CRITICAL (Nov 11, 2025): scenarioParameters is REQUIRED, not optional
+  // Must import getScenarioParameters to populate based on scenarioMode
+  const { getScenarioParameters } = require('../simulation/scenarioParameters');
+  const scenarioParameters = getScenarioParameters(scenarioMode);
+
+  return {
+    governmentActionFrequency: 0.08, // Realistic: ~1 action per year (once every 12 months)
+    socialAdaptationRate: 0.3,
+    aiCoordinationMultiplier: 1.0,
+    economicTransitionRate: 0.5,
+    scenarioMode,
+    scenarioParameters, // REQUIRED field, populated from scenarioMode
+  };
+};
 
 // Technology tree will be loaded separately
 const createInitialTechTree = (): TechnologyNode[] => [

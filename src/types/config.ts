@@ -35,7 +35,7 @@ export interface ConfigurationSettings {
 
   // P0.7 (Oct 16, 2025): Scenario mode selection
   scenarioMode: ScenarioMode; // 'historical' or 'unprecedented'
-  scenarioParameters?: ScenarioParameters; // Computed parameters for selected scenario
+  scenarioParameters: ScenarioParameters; // Computed parameters for selected scenario (REQUIRED - always populated by initialization)
 
   // Alignment Dynamics System (Oct 23, 2025)
   // Multi-theory modeling of alignment change (static vs drift vs epicycles vs unknowable)
