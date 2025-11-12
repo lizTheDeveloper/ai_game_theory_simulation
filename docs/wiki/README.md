@@ -28,6 +28,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 12: Bifurcation Empirical Validation Research** (commit b16ebe2)
+- ✅ **Issue #5 HIGH - Research Phase COMPLETE:** Empirically validated bifurcation variance amplification formula
+- 📊 **Findings:** System-dependent amplification (4-100× range) - Financial crisis 4-5×, ecosystem shifts 2-10×, climate tipping variance detected
+- ✅ **Research Validation:** Sylvia grade B+ (adequate with modifications required)
+- 🔧 **Implementation:** System-specific multipliers (1.0-3.5×) with bifurcation-theory base (1/√d) - Environmental 1.5×, Social 2.5×, Economic 3.5×
+- 🔴 **Blocker:** AI alignment bug (negative probabilities) blocks Monte Carlo validation
+- 📖 **Research:** research/bifurcation_empirical_validation_20251112.md (12 peer-reviewed sources)
+- 📖 **Critique:** reviews/bifurcation_empirical_critique_20251112.md (Sylvia's detailed methodological review)
+- 📖 **Status:** logs/SESSION_STATUS_20251112_230000.md (full session tracking)
+- 🎯 **Next:** Fix AI alignment bug, complete Monte Carlo N=30, architecture review (Quality Gate 2)
+
 **Nov 12: Performance Instrumentation Infrastructure** (commit 1732d61)
 - ✅ **HIGH-2 COMPLETE:** Built-in phase-level performance profiling in PhaseOrchestrator
 - ✅ **Metrics:** Track min/max/p95 per phase (not just avg), 50ms threshold logging for slow steps
@@ -1625,40 +1636,51 @@ Commit: 5c6e9d0 (Nov 6, 2025)
 
 ---
 
-**📈 VARIANCE AMPLIFICATION CAP INCREASED: 10× → 100×**
+**📈 VARIANCE AMPLIFICATION: EMPIRICAL VALIDATION & SYSTEM-DEPENDENT SCALING**
 
-**WEEK 5 Implementation (Nov 6-7, 2025):** Fixed ROOT CAUSE of 100% dystopia convergence.
+**Nov 12, 2025:** Completed empirical validation of bifurcation variance amplification formula (Issue #5 HIGH priority).
 
-**Problem Identified:** 10× variance cap was artificially constraining outcome diversity, preventing research-backed variance in crisis outcomes.
+**Research Phase COMPLETE** (Quality Gate 1 PASSED, Grade B+):
+- **Financial crisis (2008):** VIX 4-5× overall, credit markets 10-40× sector-specific
+- **Ecosystem regime shifts:** 2-10× variance increase before transitions (Scheffer et al. 2024, Dakos et al. 2012)
+- **Climate tipping points:** AMOC variance signals detected (qualitative, magnitude not quantified)
+- **Extinction events:** P-T two-phase collapse pattern (quantitative variance data sparse)
+- **Key finding:** Amplification is **system-dependent** (4-100× range), not universal
 
-**Research Evidence (Sylvia + Cynthia consensus):**
-- Scheffer et al. 2024: 15-200× observed amplification in real regime shifts
-- Financial crisis 2008: 40× documented amplification
-- Ecosystem collapses: 100× amplification in biodiversity cascades
-- Disaster cascades: 200× amplification in compound crises
+**Implementation COMPLETE** (Commit b16ebe2):
+1. **BifurcationLogicPhase.ts (lines 209-318):**
+   - **Old formula:** `1/(0.01 + d)` (simple inverse, lacks empirical grounding)
+   - **New formula:** `1/√(0.01 + d) × systemMultiplier` (bifurcation-theory base + domain calibration)
+   - **System multipliers:** Environmental 1.5×, Social 2.5×, Economic 3.5×, Governance 2.0×, Flourishing 1.0×, Technology 1.5×
+   - **Justification:** Saddle-node bifurcation theory (1/√d), calibrated to financial crisis and ecosystem data
 
-**Changes (Commit 474f5903e):**
-1. **BifurcationLogicPhase.ts (line 245, 252):**
-   - maxAmplification: 10 → 100
-   - Formula divisor: 0.1 → 0.01
-   - Expected impact: Mortality 43-58% → 60-75%, outcome diversity improves
+2. **Amplification values** (new vs old):
+   - At d=0.0: Economic 35× (was 100× capped), Environmental 15×, Social 25×
+   - At d=0.1: Economic 11.2× (was 9.1×), Environmental 4.8×, Social 8.0×
+   - At d=0.5: Economic 4.9× (was 2.0×), Environmental 2.1×, Social 3.5×
+   - **Key improvement:** Mid-range amplification increased, system-specific behavior
 
-2. **refugeeCrises.ts + bayesianMortality.ts:**
-   - Fixed assertion cap bug (exposed by higher variance)
-   - assertPopulationMillion (1B regional) → assertInRange (10B global)
-   - Applies to: deathsByCategory, cumulativeCrisisDeaths (global cumulative tracking)
+**Validation Status:** 🔴 BLOCKED by AI alignment bug (negative probabilities crash at month 30)
+- **Blocker:** StochasticInnovationPhase.ts:103 - `trueAlignment_ai_gen_3_4 = -0.2745`
+- **Impact:** Cannot run Monte Carlo N=30 validation
+- **Next:** simulation-maintainer must fix root cause
 
-**Validation Status:** 🔴 BLOCKED - Monte Carlo N=20 runs stall after batch 1 (technical issue, not research issue)
-
-**Expected Outcomes:**
-- Outcome distribution: 100% dystopia → 70-80% dystopia, 15-25% mixed, 0-10% good
-- Coefficient of variation: ~2% → 20-40% (meaningful variance)
+**Research Quality (Sylvia's assessment - Grade B+):**
+- ✅ **Strengths:** Honest about uncertainty, challenges previous claims, identifies critical gaps
+- ❌ **Weaknesses:** VIX metric mismatch (measures peak not pre-crisis), temporal confusion, missing high-frequency data
+- ⚠️ **Recommendations:** System-dependent multipliers (implemented), Monte Carlo N=30 (blocked), sensitivity analysis (future)
 
 **Research Files:**
-- `/research/outcome_variance_mechanisms_20251030.md` (990 lines, A-grade)
-- `/reviews/research-debate-synthesis_nov6_evening.md` (Action plan)
+- `/research/bifurcation_empirical_validation_20251112.md` (340 lines, 12 peer-reviewed sources)
+- `/reviews/bifurcation_empirical_critique_20251112.md` (425 lines, detailed methodological review)
+- `/logs/bifurcation_orchestration_summary_20251112.md` (289 lines, full workflow)
 
-Commit: 474f5903e (Nov 6, 2025)
+**Previous Implementation (Nov 6-7, 2025):**
+- maxAmplification: 10 → 100 (commit 474f5903e)
+- Formula divisor: 0.1 → 0.01
+- Enabled by Scheffer et al. 2024 research (15-200× observed in real systems)
+
+Commits: b16ebe2 (Nov 12), 474f5903e (Nov 6, 2025)
 
 ---
 
