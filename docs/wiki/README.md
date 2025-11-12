@@ -2610,6 +2610,16 @@ When auditing or writing simulation code:
   - **Key findings:** 23% of US deaths in 2023 were excess mortality, nuclear winter consensus reaffirmed (Xia 2022)
   - Research quality: A- (75% peer-reviewed, 30% from 2024-2025)
 
+- [`research/international_ai_governance_cooperation_20251112.md`](/research/international_ai_governance_cooperation_20251112.md) (Nov 12, 2025)
+  - International cooperation mechanisms for AI governance and safety (2024-2025)
+  - **Key findings:**
+    - UN Global Digital Compact (Sept 2024, 193 member states)
+    - AI Safety Institutes Network (Nov 2024, 9 countries + EU)
+    - Council of Europe AI Framework Convention (May 2024, first binding treaty)
+    - Conditional AI Safety Treaty (CAST) research framework (2025)
+  - **Simulation parameters:** Cooperation probability 0.35 baseline (0.70 post-catastrophe), technical cooperation 0.60, geopolitical tension penalty -0.25 to -0.40, treaty adoption 2-5 year negotiation + 5-12 year implementation, verification difficulty 0.75, coverage 40-60% of global AI development
+  - Research quality: A- (90% authoritative sources, 100% from 2023-2025, UN/CoE documents + peer-reviewed papers)
+
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 
 ### Implementation Reports
