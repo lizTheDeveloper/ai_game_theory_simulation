@@ -24,7 +24,27 @@ export class TimeAdvancementPhase implements SimulationPhase {
     // Track previous control level for next step (used by resentmentRecovery.ts)
     // This must happen BEFORE advancing time, so next step can compare
     const currentControl = state.government.capabilityToControl;
-    const previousControl = state.government.previousControlLevel ?? currentControl;
+
+    // CRITICAL FIX (Nov 12, 2025): Remove silent fallback - fail loudly if field missing
+    // At Month 0, previousControlLevel was initialized in initialization.ts to match current control
+    // If it's undefined here, that's a real initialization bug that must be fixed
+    if (state.government.previousControlLevel === undefined) {
+      // DEFENSIVE: Only allow undefined at Month 0 (initialization race condition)
+      // After Month 0, this field MUST exist
+      if (state.currentMonth === 0) {
+        console.warn(`⚠️ TimeAdvancementPhase: previousControlLevel undefined at Month 0, initializing to ${currentControl}`);
+        state.government.previousControlLevel = currentControl;
+      } else {
+        throw new Error(
+          `❌ CRITICAL: government.previousControlLevel is undefined at Month ${state.currentMonth}\n` +
+          `   This indicates an initialization bug or corrupted state.\n` +
+          `   This field MUST be initialized in initialization.ts and updated by TimeAdvancementPhase.\n` +
+          `   Current control: ${currentControl}`
+        );
+      }
+    }
+
+    const previousControl = state.government.previousControlLevel;
 
     // Track when control last INCREASED (for resentment recovery natural decay)
     if (currentControl > previousControl) {
