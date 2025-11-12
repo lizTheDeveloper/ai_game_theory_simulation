@@ -43,41 +43,53 @@ The Mortality Stabilizers system implements **four research-backed mechanisms** 
 
 ### 1. International Aid Systems
 
-**Research:** Cavalcanti et al. (2025), *The Lancet*
+**Research:** Cavalcanti et al. (2025), *The Lancet* + OCHA (2024) humanitarian funding data
 
-**Quantitative Impact:**
-- **All-age mortality reduction:** 15-44% (funding-dependent)
+**⚠️ November 12, 2025 Research Clarification:**
+
+**Two Separate Mechanisms:**
+1. **Aid Effectiveness** (Cavalcanti 2025) = How well funding → mortality reduction
+2. **Donor Availability** (OCHA 2024) = How much funding available during crisis overload
+
+**Aid Effectiveness (Cavalcanti et al. 2025):**
+- **All-age mortality reduction:** 6%/9%/15% at low/intermediate/high funding
+- **Under-5 mortality reduction:** 21%/28%/32% (children benefit 2-3× more)
 - **Historical impact (2001-2021):** 91.8 million deaths prevented
-- **Under-five mortality:** 32% reduction
 - **Disease-specific effectiveness:**
   - HIV/AIDS: 65% reduction (25.5M deaths prevented)
   - Malaria: 51% reduction (8.0M deaths prevented)
+  - NTDs: 50% reduction
 
 **Funding-Mortality Relationship:**
-| Funding Level | Per Capita | Mortality Reduction |
-|--------------|------------|-------------------|
-| High | $7.10+ | 15-44% |
-| Medium | $3.97-7.09 | 9-28% |
-| Low | $1.97-3.96 | 6-10% |
-| None | $0-1.96 | 0% (baseline) |
+| Funding Level | Mortality Reduction (All-Age) | Under-5 |
+|--------------|-------------------------------|---------|
+| High | 15% (RR 0.85) | 32% |
+| Intermediate | 9% (RR 0.91) | 28% |
+| Low | 6% (RR 0.94) | 21% |
+| None | 0% (baseline) | 0% |
 
-**CRITICAL CONSTRAINT (Sylvia's Quality Gate 1 Fix):**
+**Donor Availability (OCHA 2024):**
+- **Baseline:** 60-70% of appeals funded (single crisis, 2010-2019)
+- **2023:** 45% funded (multiple simultaneous crises)
+- **2024 May:** 16.1% funded (crisis overload)
+- **Donor Fatigue:** ~25% reduction per additional simultaneous crisis
+
+**CRITICAL CONSTRAINT:**
 
 Aid requires functioning wealthy donor countries. **Fails completely during global catastrophes** when all major economies affected simultaneously.
 
 **Implementation:**
 ```typescript
+// Actual mortality reduction = (Aid effectiveness) × (Donor availability)
+const effectiveness = getEffectivenessByFunding(fundingLevel); // 6%, 9%, or 15%
+const availability = getDonorAvailability(simultaneousCrises); // 100% → 25% degradation
+const actualReduction = effectiveness × availability;
+
 // Global catastrophe detection
 if (majorEconomiesCollapsed / totalMajorEconomies > 0.5) {
-  // No donors exist
-  aid.effectivenessLevel = 'none';
-  aid.mortalityReduction = 0.0;
+  availability = 0.0; // No donors exist
 }
 ```
-
-**Donor Fatigue:** 25% reduction per additional simultaneous crisis
-- 1 crisis: 100% aid response
-- 2 simultaneous: 50% response
 - 3+ simultaneous: <20% response
 
 ---

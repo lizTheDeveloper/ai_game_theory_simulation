@@ -6,6 +6,51 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 12, 2025)
 
+**🔬 RESEARCH: Climate Tipping Points and Humanitarian Aid Updates** (Nov 12, 2025, commit 951322e)
+
+**Summary:** Updated outdated research sources (2007-2008) with 2024-2025 peer-reviewed findings, clarified humanitarian aid parameter interpretation, fixed citation year error.
+
+**Climate Tipping Points Update:**
+- **New source:** Armstrong McKay et al. (2022) *Science* - comprehensive 2008-2022 reassessment
+- **16 tipping elements** identified (up from 9 in 2008 Lenton review)
+- **5 already at risk** at current 1.1°C warming (coral reefs, Greenland/WAIS, Labrador Sea, permafrost)
+- **Multi-timescale framework:** Fast (10-50yr), medium (50-200yr), slow (1000+yr)
+- **Cascade analysis:** Wunderling et al. (2024) *ESD* - first comprehensive cascade review
+- **Key finding:** Cascades "cannot be ruled out" at 1.5-2.0°C, mostly destabilizing feedbacks
+- **Replaces:** Outdated 2007-2008 sources (Lenton, Scheffer)
+
+**Humanitarian Aid Clarification:**
+- **New source:** Cavalcanti et al. (2025) *The Lancet* - 20-year longitudinal study, 71 countries
+- **Clarified two mechanisms:**
+  1. **Aid effectiveness** (Cavalcanti): 6%/9%/15% mortality reduction by funding level
+  2. **Donor availability** (OCHA 2024): 25% degradation per simultaneous crisis
+- **Age-specific effects:** Children benefit 2-3× more (21%/28%/32% under-5 mortality reduction)
+- **Historical impact:** 91.8M deaths prevented 2001-2021
+- **Disease-specific:** 65% HIV/AIDS reduction, 51% malaria reduction, 50% NTDs
+
+**Citation Fix:**
+- **Acemoglu & Restrepo:** Corrected year 2022 → 2019 across 6 files
+- **Correct citation:** "Automation and New Tasks" (2019), *JEP* 33(2):3-30
+
+**Research Quality Impact:**
+- Sources >5 years old: 38.2% → 37.7%
+- 2 HIGH-priority outdated files fixed (climate sources from 2007)
+- Research documentation: 2 new files, 768 combined lines
+
+**Documentation Updated:**
+- `docs/wiki/README.md` - added commit summary, updated research quality status
+- `docs/wiki/BIBLIOGRAPHY.md` - added Armstrong McKay, Wunderling, Cavalcanti, OCHA entries
+- `docs/wiki/MORTALITY_STABILIZERS.md` - clarified two-mechanism structure
+- `docs/wiki/systems/environmental.md` - updated tipping point research foundation
+
+**Research Files:**
+- `research/climate_tipping_points_2024_update.md` (436 lines)
+- `research/humanitarian_aid_mortality_effectiveness_2025.md` (332 lines)
+
+**Impact:** Addresses CRITICAL research validation issues from verification_594d120_20251112.md. Reduces research currency gap. Provides implementation roadmap for multi-timescale tipping system and separated aid effectiveness/donor availability parameters.
+
+---
+
 **🔧 INFRASTRUCTURE: Researcher Lock File Merge Conflict Resolved** (Nov 12, 2025, commit 4e1699b)
 
 **Summary:** Cleaned up stale `.researcher-worker.lock` file that was blocking merge orchestrator.
