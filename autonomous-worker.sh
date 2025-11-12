@@ -6,6 +6,28 @@ export PATH="/usr/bin:/usr/local/bin:/bin:$PATH"
 
 PROJECT_DIR="/home/lizthedeveloper_gmail_com/ai_game_theory_simulation"
 
+# Lock file to prevent concurrent runs
+LOCK_FILE="$PROJECT_DIR/.autonomous-worker.lock"
+
+# Check for existing lock
+if [ -f "$LOCK_FILE" ]; then
+    LOCK_PID=$(cat "$LOCK_FILE" 2>/dev/null || echo "")
+    # Check if process is still running
+    if [ -n "$LOCK_PID" ] && kill -0 "$LOCK_PID" 2>/dev/null; then
+        echo "⚠️  Another worker is running (PID: $LOCK_PID). Exiting."
+        exit 0
+    else
+        # Stale lock file
+        rm -f "$LOCK_FILE"
+    fi
+fi
+
+# Create lock file with current PID
+echo $$ > "$LOCK_FILE"
+
+# Ensure lock is removed on exit
+trap "rm -f '$LOCK_FILE'" EXIT INT TERM
+
 # Source .env file to get API key
 if [ -f "$PROJECT_DIR/.env" ]; then
     source "$PROJECT_DIR/.env"
@@ -459,6 +481,11 @@ Claude Code execution failed with non-zero exit code. Check logs for error detai
     if [ "$PUSH_SUCCESS" = true ] && [ "$COMMITS_MADE" -gt 0 ]; then
         log_info "Creating pull request..."
 
+        # Calculate duration for PR body
+        PR_CREATION_TIME=$(date +%s)
+        PR_TOTAL_DURATION=$((PR_CREATION_TIME - START_TIME))
+        PR_CLAUDE_DURATION=${CLAUDE_DURATION:-0}
+
         # Generate PR title and body
         FIRST_COMMIT_MSG=$(git log main..HEAD --oneline | tail -1 | cut -d' ' -f2-)
         PR_TITLE="[Autonomous] $FIRST_COMMIT_MSG"
@@ -469,8 +496,8 @@ Claude Code execution failed with non-zero exit code. Check logs for error detai
 
 **Run:** $TIMESTAMP
 **Branch:** \`$BRANCH_NAME\`
-**Duration:** $(($TOTAL_DURATION / 60))m $(($TOTAL_DURATION % 60))s
-**Claude Time:** $(($CLAUDE_DURATION / 60))m $(($CLAUDE_DURATION % 60))s
+**Duration:** $(($PR_TOTAL_DURATION / 60))m $(($PR_TOTAL_DURATION % 60))s
+**Claude Time:** $(($PR_CLAUDE_DURATION / 60))m $(($PR_CLAUDE_DURATION % 60))s
 
 ### Changes
 

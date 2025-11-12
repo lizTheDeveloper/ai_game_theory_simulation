@@ -6,6 +6,28 @@ export PATH="/usr/bin:/usr/local/bin:/bin:$PATH"
 
 PROJECT_DIR="/home/lizthedeveloper_gmail_com/ai_game_theory_simulation"
 
+# Lock file to prevent concurrent runs
+LOCK_FILE="$PROJECT_DIR/.researcher-worker.lock"
+
+# Check for existing lock
+if [ -f "$LOCK_FILE" ]; then
+    LOCK_PID=$(cat "$LOCK_FILE" 2>/dev/null || echo "")
+    # Check if process is still running
+    if [ -n "$LOCK_PID" ] && kill -0 "$LOCK_PID" 2>/dev/null; then
+        echo "⚠️  Another researcher is running (PID: $LOCK_PID). Exiting."
+        exit 0
+    else
+        # Stale lock file
+        rm -f "$LOCK_FILE"
+    fi
+fi
+
+# Create lock file with current PID
+echo $$ > "$LOCK_FILE"
+
+# Ensure lock is removed on exit
+trap "rm -f '$LOCK_FILE'" EXIT INT TERM
+
 # Source .env file to get API key
 if [ -f "$PROJECT_DIR/.env" ]; then
     source "$PROJECT_DIR/.env"
