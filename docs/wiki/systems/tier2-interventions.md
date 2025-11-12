@@ -112,11 +112,13 @@ costPerSpecies: LogNormal(μ=17.4, σ=0.8) → [$10M, $100M]
 
 **Deployment:** 24-72 months, focus on benefit-cost >1 sites
 **Scale:** 0.01 hectare typical projects (small but proven)
+**Unlock condition:** Ocean health <60% OR (ocean health 60-70% AND government investment ≥40%)
 
 **Parameters:**
 ```typescript
 effectiveness: Triangular(0.15, 0.20, 0.25) of ocean crisis
 costPerHectare: LogNormal(μ=12.9, σ=1.2) → [$13K, $1M]
+governmentInvestmentThreshold: 40% (normalized from alignmentResearchInvestment/100)
 ```
 
 ---

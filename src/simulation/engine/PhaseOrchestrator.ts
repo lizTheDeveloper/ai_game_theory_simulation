@@ -218,12 +218,16 @@ export class PhaseOrchestrator {
           };
 
           // Update statistics
+          // Use circular buffer for samples (max 1000) to prevent memory leak
+          const newSamples = [...existing.samples, elapsed];
+          const samples = newSamples.length > 1000 ? newSamples.slice(-1000) : newSamples;
+
           this.phaseTimings.set(phase.name, {
             totalMs: existing.totalMs + elapsed,
             callCount: existing.callCount + 1,
             minMs: Math.min(existing.minMs, elapsed),
             maxMs: Math.max(existing.maxMs, elapsed),
-            samples: [...existing.samples, elapsed]
+            samples
           });
 
           // Warn on slow phases (>10ms threshold)
@@ -281,6 +285,10 @@ export class PhaseOrchestrator {
     if (this.enableTiming) {
       const stepElapsed = performance.now() - stepStartTime;
       this.stepTimings.push({ month: state.currentMonth, totalMs: stepElapsed });
+      // Keep only last 1000 step timings to prevent memory leak
+      if (this.stepTimings.length > 1000) {
+        this.stepTimings = this.stepTimings.slice(-1000);
+      }
 
       // Log step summary (minimal overhead)
       if (stepElapsed > 50) {  // Only log if step took >50ms

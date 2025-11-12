@@ -4,7 +4,29 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
-<<<<<<< HEAD
+## ✅ Recent Changes (November 12, 2025)
+
+**🐛 BUG FIX: Government Investment Normalization for Coastal Protection** (Nov 12, 2025, commit 2418e0a)
+
+**Summary:** Fixed inconsistent government investment normalization in Tier2PhysicalSystemsPhase - coastal protection unlock threshold was 10x too lenient.
+
+**Issue:** Tier2PhysicalSystemsPhase used `/10` normalization while Tier2SocialSystemsPhase and Tier2AIGovernancePhase used `/100`, making coastal protection unlock at 4% government investment instead of the intended 40%.
+
+**Fix:** Changed `governmentInvestment = state.government.alignmentResearchInvestment / 10` to `/100` for consistency.
+
+**Impact:**
+- Coastal protection now correctly requires 40% government investment (not 4%) when ocean health is moderate (60-70%)
+- Aligns with research-backed intervention thresholds
+- Makes government investment requirements consistent across all Tier 2 interventions
+
+**Source:** Architecture review HIGH-4 finding (reviews/architecture_review_20251112_wet_bulb_fixes.md)
+
+**Files:**
+- src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts:374 (normalization fix)
+- docs/wiki/systems/tier2-interventions.md (unlock condition documented)
+
+---
+
 ## ✅ Recent Changes (November 12, 2025)
 
 **🔧 INFRASTRUCTURE: Researcher Lock File Merge Conflict Resolved** (Nov 12, 2025, commit 4e1699b)
@@ -181,7 +203,9 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
-=======
+
+---
+
 ## ✅ Recent Changes (November 11, 2025)
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
@@ -214,7 +238,6 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
->>>>>>> origin/auto/researcher-20251111_003001
 
 ---
 
