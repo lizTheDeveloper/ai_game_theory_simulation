@@ -28,6 +28,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 12: Novel Entities Energy Trap Constraints** (commit 660b714)
+- ✅ **Implementation:** Heterogeneous contamination model (industrial vs environmental)
+- ✅ **Energy Physics:** Concentration-dependent cleanup effectiveness (Fennell 2024, Ling 2024)
+- ✅ **Atmospheric Cycling:** PFAS redeposition makes local cleanup futile (Cousins 2022)
+- ✅ **Biological Degradation:** Slow enzymatic pathway bypasses energy trap (2024 research)
+- ✅ **Type Changes:** industrialContamination/environmentalContamination fields, atmosphericRedepositionRate, biologicalDegradationRate
+- ✅ **Tech Tree:** uncertaintyRange (100× factor), concentrationPenalty (1% floor), optimalNgPerL thresholds
+- ✅ **Effects Engine:** Concentration scaling with penalty floor + linear ramp to optimal
+- ⚠️ **Research Verification:** Created verification_660b714_20251112.md - needs validation of Fennell, Ling, Cousins claims
+- 📊 **Status:** Core logic complete, needs Monte Carlo validation + citation verification
+
 **Nov 12: Performance Instrumentation Infrastructure** (commit 1732d61)
 - ✅ **HIGH-2 COMPLETE:** Built-in phase-level performance profiling in PhaseOrchestrator
 - ✅ **Metrics:** Track min/max/p95 per phase (not just avg), 50ms threshold logging for slow steps

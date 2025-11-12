@@ -40,6 +40,10 @@ interface NovelEntitiesSystem {
   microplasticConcentration: number;    // [0,1] Plastic fragments
   pfasPrevalence: number;               // [0,1] Forever chemicals
 
+  // Heterogeneous Contamination (Nov 12, 2025)
+  industrialContamination?: number;     // [0,1] Point sources (mg/L, treatable)
+  environmentalContamination?: number;  // [0,1] Diffuse (ng/L-pg/L, energy trap)
+
   // Health Impacts
   endocrineDisruption: number;          // [0,1] Hormone damage
   reproductiveHealthDecline: number;    // [0,1] Fertility loss
@@ -54,6 +58,13 @@ interface NovelEntitiesSystem {
 
   // Timeline
   exposureMonths: number;               // Cumulative exposure tracking
+
+  // PFAS Stock Tracking
+  accumulatedStock?: number;            // Mt of PFAS accumulated
+  atmosphericReservoirStock?: number;   // Mt in atmospheric reservoir (Cousins 2022)
+  atmosphericRedepositionRate?: number; // [0,1] Monthly redeposition rate
+  naturalDecayHalfLife?: number;        // Years for 50% degradation
+  biologicalDegradationRate?: number;   // [0,1] Monthly enzymatic breakdown (2024 research)
 
   // Technology Solutions
   greenChemistryDeployment: number;     // [0,1] Non-toxic alternatives
@@ -75,23 +86,43 @@ interface NovelEntitiesSystem {
 - Production scales with economy + manufacturing
 - Once released, persist for decades to millennia
 
-**Accumulation Rate:**
+**Heterogeneous Contamination Model (Nov 12, 2025):**
+The simulation now distinguishes two contamination types with different energy physics:
+
+**Industrial Point Sources (15%):**
+- High concentration (mg/L range)
+- Treatable with conventional methods
+- Examples: Factory effluent, landfill leachate, wastewater treatment plant outflow
+- Cleanup rate: 0.5%/month at full bioremediation deployment
+
+**Environmental Diffuse Contamination (35%):**
+- Low concentration (ng/L to pg/L range)
+- **Energy trap** - thermodynamically constrained cleanup (Ling 2024)
+- Examples: Atmospheric fallout, groundwater contamination, ocean background levels
+- Cleanup rate: 0.01%/month at full deployment (100× worse than industrial)
+
+**Accumulation Rates:**
 ```typescript
-chemicalAccumulationRate = (economicStage * 0.002) + (manufacturingCap * 0.001);
+// Industrial contamination (point sources)
+industrialAccumulationRate = (economicStage * 0.001) + (manufacturingCap * 0.0005);
+industrialAccumulationRate *= (1.0 - greenChemistry * 0.7);    // -70% at full deployment
+industrialAccumulationRate *= (1.0 - chemicalBans * 0.5);      // -50% at full deployment
 
-// Mitigation:
-chemicalAccumulationRate *= (1.0 - greenChemistry * 0.6);      // -60% at full deployment
-chemicalAccumulationRate *= (1.0 - circularEconomy * 0.4);     // -40% at full deployment
-chemicalAccumulationRate *= (1.0 - chemicalBans * 0.3);        // -30% at full deployment
+// Environmental contamination (diffuse + atmospheric fallout)
+environmentalAccumulationRate = industrialContamination * 0.0005;  // Dilution from point sources
+environmentalAccumulationRate += atmosphericRedeposition * 0.01;   // Cousins 2022: global cycling
+environmentalAccumulationRate *= (1.0 - circularEconomy * 0.6);   // -60% at full deployment
 
-// Remediation (very slow):
-bioremediationRate = bioremediationDeployment * 0.001;          // -0.1%/month at full deployment
+// Aggregate load (weighted sum)
+syntheticChemicalLoad = (industrial * 0.3) + (environmental * 0.7);
 ```
 
-**Key Insight:**
-- Production is fast (months to scale)
-- Cleanup is extremely slow (decades to break down)
-- **Prevention >> Cleanup** (by orders of magnitude)
+**Key Insights:**
+- Industrial cleanup IS feasible (high concentration)
+- Environmental cleanup faces **energy trap** (Ling 2024, Fennell 2024)
+- Atmospheric redeposition makes local cleanup futile (Cousins 2022)
+- Biological degradation provides slow bypass pathway (0.01%/month)
+- **Prevention >> Cleanup** (by 100× for environmental contamination)
 
 ---
 
@@ -157,6 +188,26 @@ pfasRate = economicStage * 0.001; // Industrial use
 pfasRate *= (1.0 - chemicalBans * 0.7); // Bans very effective
 ```
 
+**Atmospheric Cycling (Nov 12, 2025 - Cousins 2022):**
+- PFAS volatilizes from contaminated sites into atmosphere
+- Distributes globally via air currents
+- Re-deposits via precipitation (rain, snow) worldwide
+- Creates persistent atmospheric reservoir (180,000 Mt)
+- Redeposition rate: 1% of atmospheric stock per month
+- **Implication:** Local cleanup is futile - contamination cycles globally
+
+```typescript
+// Atmospheric redeposition continuously re-contaminates
+monthlyRedeposition = atmosphericReservoirStock * atmosphericRedepositionRate;
+accumulatedStock += monthlyRedeposition;
+```
+
+**Biological Degradation (2024 research):**
+- Pseudomonas bacteria and fungi can slowly degrade some PFAS
+- Rate: 0.01% per month (0.12% per year)
+- Enzymatic pathway bypasses energy trap
+- Still extremely slow compared to accumulation
+
 **Health Effects:**
 - Cancer (kidney, testicular)
 - Thyroid disease
@@ -166,10 +217,11 @@ pfasRate *= (1.0 - chemicalBans * 0.7); // Bans very effective
 - High cholesterol
 
 **Key Problem:**
-- Once released, **never breaks down**
+- Once released, **never breaks down** (except via slow biological pathway)
 - Accumulates indefinitely
 - Bioaccumulates up food chain
-- Only solution: Complete ban + containment
+- Atmospheric cycling makes cleanup futile (Cousins 2022)
+- Only real solution: Complete ban + containment
 
 ---
 
@@ -373,13 +425,36 @@ chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (endocrineDisrupt
 - Enzymatic detergents (vs harsh chemicals)
 - Supercritical CO2 (vs toxic solvents)
 
-### 2. Advanced Bioremediation
+### 2. Advanced Bioremediation (PFAS Remediation)
 **Cost:** $200B (engineered microbes + deployment)
-**Effect:** -0.1%/month cleanup (slow but permanent)
+**Effect:** Concentration-dependent effectiveness (energy trap constraints)
 **Timeline:** 15-20 years
 **Details:** Engineered microbes break down PFAS, microplastics, pesticides
 **Unlock:** Biotech synthetic biology > 2.5, Total research > 150, Chemical load > 50%
 **Adoption:** 0.8%/month when chemical load > 60%
+
+**Energy Requirements (Nov 12, 2025 - Fennell 2024):**
+- Base: 420 kWh/m³ (370 kWh destruction + 50 kWh concentration)
+- **Uncertainty range: 110 to 1,100,000 kWh/m³** (2 orders of magnitude)
+  - Optimistic: 110 kWh/m³ (electrochemical breakthrough)
+  - Expected: 11,000 kWh/m³ (electrochemical at environmental dilution)
+  - Pessimistic: 1,100,000 kWh/m³ (thermal destruction at atmospheric levels)
+
+**Concentration Constraints (Fennell 2024, Ling 2024):**
+- **Minimum threshold:** 1 mg/L (1,000,000 ng/L)
+  - Below this: Energy trap activates (99% effectiveness loss)
+  - Cleanup becomes thermodynamically unfavorable
+- **Optimal concentration:** 10 mg/L (10,000,000 ng/L)
+  - Industrial effluent levels
+  - Full technology effectiveness
+- **Concentration scaling:**
+  - Below minimum: 1% effectiveness (energy trap floor)
+  - Between minimum and optimal: Linear scaling 1% → 100%
+  - Above optimal: 100% effectiveness
+
+**Effectiveness by Contamination Type:**
+- **Industrial point sources (mg/L):** High effectiveness (0.5%/month cleanup)
+- **Environmental diffuse (ng/L to pg/L):** Energy trap (0.01%/month cleanup, 100× worse)
 
 **Methods:**
 - CRISPR-engineered bacteria (specific enzyme pathways)
@@ -389,6 +464,8 @@ chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (endocrineDisrupt
 
 **Challenges:**
 - PFAS extremely hard to break (C-F bond strongest in nature)
+- **Energy trap at low concentrations** (Ling 2024) - thermodynamic barrier
+- Atmospheric redeposition continuously re-contaminates (Cousins 2022)
 - Microplastics too small to capture (nanoplastics impossible)
 - Slow: Decades to clean contaminated sites
 - Risk: Engineered microbes in environment (safety testing required)
@@ -655,6 +732,23 @@ chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (endocrineDisrupt
 
 ---
 
-**Last Updated:** October 11, 2025
-**Implementation Status:** ✅ Complete and validated
-**Next Steps:** Per-chemical tracking + multigenerational effects (requires TIER 2+)
+## Recent Updates
+
+**November 12, 2025 - Energy Trap Constraints:**
+- Implemented heterogeneous contamination model (industrial vs environmental)
+- Added energy/concentration physics (Fennell 2024, Ling 2024)
+- Incorporated atmospheric redeposition cycling (Cousins 2022)
+- Added biological degradation pathway (2024 research)
+- Energy requirements now scale with concentration (100× worse at ng/L vs mg/L)
+- Concentration-dependent effectiveness in tech tree
+- Research verification needed (see `research/verification_660b714_20251112.md`)
+
+---
+
+**Last Updated:** November 12, 2025
+**Implementation Status:** ✅ Complete, pending research verification
+**Next Steps:**
+1. Validate energy trap research claims (Fennell, Ling, Cousins)
+2. Verify atmospheric redeposition parameters
+3. Monte Carlo validation of new energy constraints
+4. Per-chemical tracking + multigenerational effects (requires TIER 2+)
