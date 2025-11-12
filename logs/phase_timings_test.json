@@ -1,0 +1,712 @@
+{
+  "phases": {
+    "Compute Growth (Moore's Law)": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.09,
+      "minMs": 0.09,
+      "maxMs": 0.09,
+      "p95Ms": 0.09
+    },
+    "Apply Scenario Priorities": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.01,
+      "minMs": 0.01,
+      "maxMs": 0.01,
+      "p95Ms": 0.01
+    },
+    "Organization Turns": {
+      "totalMs": 1.2,
+      "callCount": 1,
+      "avgMs": 1.17,
+      "minMs": 1.17,
+      "maxMs": 1.17,
+      "p95Ms": 1.17
+    },
+    "AI Welfare Update v2.1": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.05,
+      "minMs": 0.05,
+      "maxMs": 0.05,
+      "p95Ms": 0.05
+    },
+    "Triggered Events": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0,
+      "minMs": 0,
+      "maxMs": 0,
+      "p95Ms": 0
+    },
+    "Compute Allocation": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.25,
+      "minMs": 0.25,
+      "maxMs": 0.25,
+      "p95Ms": 0.25
+    },
+    "AI Alignment Evolution": {
+      "totalMs": 0.5,
+      "callCount": 1,
+      "avgMs": 0.46,
+      "minMs": 0.46,
+      "maxMs": 0.46,
+      "p95Ms": 0.46
+    },
+    "AI Suffering Calculation": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.33,
+      "minMs": 0.33,
+      "maxMs": 0.33,
+      "p95Ms": 0.33
+    },
+    "AI Population Lifecycle": {
+      "totalMs": 1.9,
+      "callCount": 1,
+      "avgMs": 1.9,
+      "minMs": 1.9,
+      "maxMs": 1.9,
+      "p95Ms": 1.9
+    },
+    "Survival Traits": {
+      "totalMs": 0.4,
+      "callCount": 1,
+      "avgMs": 0.37,
+      "minMs": 0.37,
+      "maxMs": 0.37,
+      "p95Ms": 0.37
+    },
+    "Evolutionary Selection": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.09,
+      "minMs": 0.09,
+      "maxMs": 0.09,
+      "p95Ms": 0.09
+    },
+    "Bifurcation Logic": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.04,
+      "minMs": 0.04,
+      "maxMs": 0.04,
+      "p95Ms": 0.04
+    },
+    "Cybersecurity Breaches": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.09,
+      "minMs": 0.09,
+      "maxMs": 0.09,
+      "p95Ms": 0.09
+    },
+    "Sleeper Agent Wake Check": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.28,
+      "minMs": 0.28,
+      "maxMs": 0.28,
+      "p95Ms": 0.28
+    },
+    "AI Agent Actions": {
+      "totalMs": 74,
+      "callCount": 1,
+      "avgMs": 74,
+      "minMs": 74,
+      "maxMs": 74,
+      "p95Ms": 74
+    },
+    "War-Meaning Feedback": {
+      "totalMs": 0.2,
+      "callCount": 1,
+      "avgMs": 0.18,
+      "minMs": 0.18,
+      "maxMs": 0.18,
+      "p95Ms": 0.18
+    },
+    "Climate Justice": {
+      "totalMs": 0.2,
+      "callCount": 1,
+      "avgMs": 0.23,
+      "minMs": 0.23,
+      "maxMs": 0.23,
+      "p95Ms": 0.23
+    },
+    "Stochastic Innovation Breakthroughs": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.02,
+      "minMs": 0.02,
+      "maxMs": 0.02,
+      "p95Ms": 0.02
+    },
+    "Player Decision Processing": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.01,
+      "minMs": 0.01,
+      "maxMs": 0.01,
+      "p95Ms": 0.01
+    },
+    "Government Agent Actions": {
+      "totalMs": 0.9,
+      "callCount": 1,
+      "avgMs": 0.93,
+      "minMs": 0.93,
+      "maxMs": 0.93,
+      "p95Ms": 0.93
+    },
+    "Governance System Update": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.14,
+      "minMs": 0.14,
+      "maxMs": 0.14,
+      "p95Ms": 0.14
+    },
+    "Society Agent Actions": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.04,
+      "minMs": 0.04,
+      "maxMs": 0.04,
+      "p95Ms": 0.04
+    },
+    "Technology Tree Update": {
+      "totalMs": 12.4,
+      "callCount": 1,
+      "avgMs": 12.44,
+      "minMs": 12.44,
+      "maxMs": 12.44,
+      "p95Ms": 12.44
+    },
+    "Cooperative Systems Update": {
+      "totalMs": 0.5,
+      "callCount": 1,
+      "avgMs": 0.48,
+      "minMs": 0.48,
+      "maxMs": 0.48,
+      "p95Ms": 0.48
+    },
+    "TIER 2: Social Systems": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.01,
+      "minMs": 0.01,
+      "maxMs": 0.01,
+      "p95Ms": 0.01
+    },
+    "Meaning Renaissance Update": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.1,
+      "minMs": 0.1,
+      "maxMs": 0.1,
+      "p95Ms": 0.1
+    },
+    "TIER 2: AI Governance": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.02,
+      "minMs": 0.02,
+      "maxMs": 0.02,
+      "p95Ms": 0.02
+    },
+    "National AI Update": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.31,
+      "minMs": 0.31,
+      "maxMs": 0.31,
+      "p95Ms": 0.31
+    },
+    "Antimicrobial Resistance": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.08,
+      "minMs": 0.08,
+      "maxMs": 0.08,
+      "p95Ms": 0.08
+    },
+    "Extreme Weather Events": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.08,
+      "minMs": 0.08,
+      "maxMs": 0.08,
+      "p95Ms": 0.08
+    },
+    "Enhanced UBI Update": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.01,
+      "minMs": 0.01,
+      "maxMs": 0.01,
+      "p95Ms": 0.01
+    },
+    "Social Safety Nets Update": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0,
+      "minMs": 0,
+      "maxMs": 0,
+      "p95Ms": 0
+    },
+    "Resource Economy Update": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.25,
+      "minMs": 0.25,
+      "maxMs": 0.25,
+      "p95Ms": 0.25
+    },
+    "AI-Assisted Skills Metrics": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.07,
+      "minMs": 0.07,
+      "maxMs": 0.07,
+      "p95Ms": 0.07
+    },
+    "Resentment Recovery": {
+      "totalMs": 0.4,
+      "callCount": 1,
+      "avgMs": 0.43,
+      "minMs": 0.43,
+      "maxMs": 0.43,
+      "p95Ms": 0.43
+    },
+    "TIER 2: Physical Systems": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.01,
+      "minMs": 0.01,
+      "maxMs": 0.01,
+      "p95Ms": 0.01
+    },
+    "Memetic Evolution": {
+      "totalMs": 3.2,
+      "callCount": 1,
+      "avgMs": 3.23,
+      "minMs": 3.23,
+      "maxMs": 3.23,
+      "p95Ms": 3.23
+    },
+    "Social Influence Update": {
+      "totalMs": 45.7,
+      "callCount": 1,
+      "avgMs": 45.66,
+      "minMs": 45.66,
+      "maxMs": 45.66,
+      "p95Ms": 45.66
+    },
+    "Quality of Life Systems": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.26,
+      "minMs": 0.26,
+      "maxMs": 0.26,
+      "p95Ms": 0.26
+    },
+    "Nuclear Command & Control": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.03,
+      "minMs": 0.03,
+      "maxMs": 0.03,
+      "p95Ms": 0.03
+    },
+    "Defensive AI Update": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.14,
+      "minMs": 0.14,
+      "maxMs": 0.14,
+      "p95Ms": 0.14
+    },
+    "Democracy Dynamics": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.05,
+      "minMs": 0.05,
+      "maxMs": 0.05,
+      "p95Ms": 0.05
+    },
+    "Resource Soil Update": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.14,
+      "minMs": 0.14,
+      "maxMs": 0.14,
+      "p95Ms": 0.14
+    },
+    "Resource Water Update": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.1,
+      "minMs": 0.1,
+      "maxMs": 0.1,
+      "p95Ms": 0.1
+    },
+    "Wet Bulb Temperature Events": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.09,
+      "minMs": 0.09,
+      "maxMs": 0.09,
+      "p95Ms": 0.09
+    },
+    "Positive Tipping Point Cascades": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.05,
+      "minMs": 0.05,
+      "maxMs": 0.05,
+      "p95Ms": 0.05
+    },
+    "International Relations Update": {
+      "totalMs": 0.4,
+      "callCount": 1,
+      "avgMs": 0.41,
+      "minMs": 0.41,
+      "maxMs": 0.41,
+      "p95Ms": 0.41
+    },
+    "Human Population Dynamics": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.34,
+      "minMs": 0.34,
+      "maxMs": 0.34,
+      "p95Ms": 0.34
+    },
+    "Refugee Crisis System": {
+      "totalMs": 0.4,
+      "callCount": 1,
+      "avgMs": 0.37,
+      "minMs": 0.37,
+      "maxMs": 0.37,
+      "p95Ms": 0.37
+    },
+    "Planetary Boundaries System": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.33,
+      "minMs": 0.33,
+      "maxMs": 0.33,
+      "p95Ms": 0.33
+    },
+    "Dystopia Progression Update": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.06,
+      "minMs": 0.06,
+      "maxMs": 0.06,
+      "p95Ms": 0.06
+    },
+    "Human Survival System": {
+      "totalMs": 1.4,
+      "callCount": 1,
+      "avgMs": 1.45,
+      "minMs": 1.45,
+      "maxMs": 1.45,
+      "p95Ms": 1.45
+    },
+    "Benchmark Evaluations": {
+      "totalMs": 1.7,
+      "callCount": 1,
+      "avgMs": 1.72,
+      "minMs": 1.72,
+      "maxMs": 1.72,
+      "p95Ms": 1.72
+    },
+    "Information Warfare Update": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.02,
+      "minMs": 0.02,
+      "maxMs": 0.02,
+      "p95Ms": 0.02
+    },
+    "Crisis Points Check": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.03,
+      "minMs": 0.03,
+      "maxMs": 0.03,
+      "p95Ms": 0.03
+    },
+    "Psychological Trauma": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.07,
+      "minMs": 0.07,
+      "maxMs": 0.07,
+      "p95Ms": 0.07
+    },
+    "Workflow Adaptation Update": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.03,
+      "minMs": 0.03,
+      "maxMs": 0.03,
+      "p95Ms": 0.03
+    },
+    "Consciousness Governance": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.33,
+      "minMs": 0.33,
+      "maxMs": 0.33,
+      "p95Ms": 0.33
+    },
+    "Government Policy Response": {
+      "totalMs": 0.2,
+      "callCount": 1,
+      "avgMs": 0.18,
+      "minMs": 0.18,
+      "maxMs": 0.18,
+      "p95Ms": 0.18
+    },
+    "Emergency Response": {
+      "totalMs": 0.2,
+      "callCount": 1,
+      "avgMs": 0.16,
+      "minMs": 0.16,
+      "maxMs": 0.16,
+      "p95Ms": 0.16
+    },
+    "Social Stability System Update": {
+      "totalMs": 0.2,
+      "callCount": 1,
+      "avgMs": 0.22,
+      "minMs": 0.22,
+      "maxMs": 0.22,
+      "p95Ms": 0.22
+    },
+    "Early Warning Detection": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.07,
+      "minMs": 0.07,
+      "maxMs": 0.07,
+      "p95Ms": 0.07
+    },
+    "AI Adversarial Detection": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.35,
+      "minMs": 0.35,
+      "maxMs": 0.35,
+      "p95Ms": 0.35
+    },
+    "Exogenous Shock Detection": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.12,
+      "minMs": 0.12,
+      "maxMs": 0.12,
+      "p95Ms": 0.12
+    },
+    "Critical Juncture Agency": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.02,
+      "minMs": 0.02,
+      "maxMs": 0.02,
+      "p95Ms": 0.02
+    },
+    "Unemployment & Skills": {
+      "totalMs": 0.2,
+      "callCount": 1,
+      "avgMs": 0.16,
+      "minMs": 0.16,
+      "maxMs": 0.16,
+      "p95Ms": 0.16
+    },
+    "Unknown Unknown Events": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.02,
+      "minMs": 0.02,
+      "maxMs": 0.02,
+      "p95Ms": 0.02
+    },
+    "Economic System": {
+      "totalMs": 0.2,
+      "callCount": 1,
+      "avgMs": 0.19,
+      "minMs": 0.19,
+      "maxMs": 0.19,
+      "p95Ms": 0.19
+    },
+    "Climate System": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.28,
+      "minMs": 0.28,
+      "maxMs": 0.28,
+      "p95Ms": 0.28
+    },
+    "Multi-Paradigm DUI Update": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.13,
+      "minMs": 0.13,
+      "maxMs": 0.13,
+      "p95Ms": 0.13
+    },
+    "Bayesian Mortality Resolution": {
+      "totalMs": 0.4,
+      "callCount": 1,
+      "avgMs": 0.45,
+      "minMs": 0.45,
+      "maxMs": 0.45,
+      "p95Ms": 0.45
+    },
+    "Outcome Probabilities Calculation": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.05,
+      "minMs": 0.05,
+      "maxMs": 0.05,
+      "p95Ms": 0.05
+    },
+    "Minimal Suffering Indicators": {
+      "totalMs": 0.7,
+      "callCount": 1,
+      "avgMs": 0.71,
+      "minMs": 0.71,
+      "maxMs": 0.71,
+      "p95Ms": 0.71
+    },
+    "Crisis Detection": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.01,
+      "minMs": 0.01,
+      "maxMs": 0.01,
+      "p95Ms": 0.01
+    },
+    "Ensemble Meta-Learning": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.01,
+      "minMs": 0.01,
+      "maxMs": 0.01,
+      "p95Ms": 0.01
+    },
+    "Extinction System": {
+      "totalMs": 0.3,
+      "callCount": 1,
+      "avgMs": 0.3,
+      "minMs": 0.3,
+      "maxMs": 0.3,
+      "p95Ms": 0.3
+    },
+    "Technology Diffusion": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.09,
+      "minMs": 0.09,
+      "maxMs": 0.09,
+      "p95Ms": 0.09
+    },
+    "Event Collection": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.02,
+      "minMs": 0.02,
+      "maxMs": 0.02,
+      "p95Ms": 0.02
+    },
+    "Time Advancement": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0,
+      "minMs": 0,
+      "maxMs": 0,
+      "p95Ms": 0
+    },
+    "Organization Viability": {
+      "totalMs": 0.1,
+      "callCount": 1,
+      "avgMs": 0.13,
+      "minMs": 0.13,
+      "maxMs": 0.13,
+      "p95Ms": 0.13
+    },
+    "Nuclear Crisis": {
+      "totalMs": 0,
+      "callCount": 1,
+      "avgMs": 0.01,
+      "minMs": 0.01,
+      "maxMs": 0.01,
+      "p95Ms": 0.01
+    }
+  },
+  "steps": [
+    {
+      "month": 1,
+      "totalMs": 137.15404799999988
+    },
+    {
+      "month": 2,
+      "totalMs": 146.95419600000014
+    },
+    {
+      "month": 3,
+      "totalMs": 174.17258399999992
+    },
+    {
+      "month": 4,
+      "totalMs": 128.74189800000022
+    },
+    {
+      "month": 5,
+      "totalMs": 135.43418799999972
+    },
+    {
+      "month": 6,
+      "totalMs": 117.73045899999943
+    },
+    {
+      "month": 7,
+      "totalMs": 140.96512699999948
+    },
+    {
+      "month": 8,
+      "totalMs": 156.69915600000058
+    },
+    {
+      "month": 9,
+      "totalMs": 142.36626700000033
+    },
+    {
+      "month": 10,
+      "totalMs": 145.25461599999926
+    },
+    {
+      "month": 11,
+      "totalMs": 148.8167970000004
+    },
+    {
+      "month": 12,
+      "totalMs": 153.96226600000045
+    }
+  ],
+  "summary": {
+    "totalPhases": 81,
+    "totalSteps": 12,
+    "steps": {
+      "avg": 144.02,
+      "min": 117.73,
+      "max": 174.17,
+      "p95": 174.17
+    }
+  }
+}

@@ -37,6 +37,10 @@ export interface ConfigurationSettings {
   scenarioMode: ScenarioMode; // 'historical' or 'unprecedented'
   scenarioParameters: ScenarioParameters; // Computed parameters for selected scenario (REQUIRED - always populated by initialization)
 
+  // PERFORMANCE INSTRUMENTATION (Nov 12, 2025): Phase timing profiling
+  enablePerformanceProfiling?: boolean; // Enable phase timing collection (default: false)
+  slowPhaseThresholdMs?: number; // Warn on phases exceeding this duration (default: 10ms)
+
   // Alignment Dynamics System (Oct 23, 2025)
   // Multi-theory modeling of alignment change (static vs drift vs epicycles vs unknowable)
   // Allows exploring different theories of how AI values evolve

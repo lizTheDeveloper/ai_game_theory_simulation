@@ -1,0 +1,82 @@
+Phase,Avg_ms,P95_ms,Max_ms,Min_ms,Total_ms,Calls
+Compute Growth (Moore's Law),0.09,0.09,0.09,0.09,0.1,1
+Apply Scenario Priorities,0.01,0.01,0.01,0.01,0.0,1
+Organization Turns,1.17,1.17,1.17,1.17,1.2,1
+AI Welfare Update v2.1,0.05,0.05,0.05,0.05,0.1,1
+Triggered Events,0.00,0.00,0.00,0.00,0.0,1
+Compute Allocation,0.25,0.25,0.25,0.25,0.3,1
+AI Alignment Evolution,0.46,0.46,0.46,0.46,0.5,1
+AI Suffering Calculation,0.33,0.33,0.33,0.33,0.3,1
+AI Population Lifecycle,1.90,1.90,1.90,1.90,1.9,1
+Survival Traits,0.37,0.37,0.37,0.37,0.4,1
+Evolutionary Selection,0.09,0.09,0.09,0.09,0.1,1
+Bifurcation Logic,0.04,0.04,0.04,0.04,0.0,1
+Cybersecurity Breaches,0.09,0.09,0.09,0.09,0.1,1
+Sleeper Agent Wake Check,0.28,0.28,0.28,0.28,0.3,1
+AI Agent Actions,74.00,74.00,74.00,74.00,74.0,1
+War-Meaning Feedback,0.18,0.18,0.18,0.18,0.2,1
+Climate Justice,0.23,0.23,0.23,0.23,0.2,1
+Stochastic Innovation Breakthroughs,0.02,0.02,0.02,0.02,0.0,1
+Player Decision Processing,0.01,0.01,0.01,0.01,0.0,1
+Government Agent Actions,0.93,0.93,0.93,0.93,0.9,1
+Governance System Update,0.14,0.14,0.14,0.14,0.1,1
+Society Agent Actions,0.04,0.04,0.04,0.04,0.0,1
+Technology Tree Update,12.44,12.44,12.44,12.44,12.4,1
+Cooperative Systems Update,0.48,0.48,0.48,0.48,0.5,1
+TIER 2: Social Systems,0.01,0.01,0.01,0.01,0.0,1
+Meaning Renaissance Update,0.10,0.10,0.10,0.10,0.1,1
+TIER 2: AI Governance,0.02,0.02,0.02,0.02,0.0,1
+National AI Update,0.31,0.31,0.31,0.31,0.3,1
+Antimicrobial Resistance,0.08,0.08,0.08,0.08,0.1,1
+Extreme Weather Events,0.08,0.08,0.08,0.08,0.1,1
+Enhanced UBI Update,0.01,0.01,0.01,0.01,0.0,1
+Social Safety Nets Update,0.00,0.00,0.00,0.00,0.0,1
+Resource Economy Update,0.25,0.25,0.25,0.25,0.3,1
+AI-Assisted Skills Metrics,0.07,0.07,0.07,0.07,0.1,1
+Resentment Recovery,0.43,0.43,0.43,0.43,0.4,1
+TIER 2: Physical Systems,0.01,0.01,0.01,0.01,0.0,1
+Memetic Evolution,3.23,3.23,3.23,3.23,3.2,1
+Social Influence Update,45.66,45.66,45.66,45.66,45.7,1
+Quality of Life Systems,0.26,0.26,0.26,0.26,0.3,1
+Nuclear Command & Control,0.03,0.03,0.03,0.03,0.0,1
+Defensive AI Update,0.14,0.14,0.14,0.14,0.1,1
+Democracy Dynamics,0.05,0.05,0.05,0.05,0.0,1
+Resource Soil Update,0.14,0.14,0.14,0.14,0.1,1
+Resource Water Update,0.10,0.10,0.10,0.10,0.1,1
+Wet Bulb Temperature Events,0.09,0.09,0.09,0.09,0.1,1
+Positive Tipping Point Cascades,0.05,0.05,0.05,0.05,0.0,1
+International Relations Update,0.41,0.41,0.41,0.41,0.4,1
+Human Population Dynamics,0.34,0.34,0.34,0.34,0.3,1
+Refugee Crisis System,0.37,0.37,0.37,0.37,0.4,1
+Planetary Boundaries System,0.33,0.33,0.33,0.33,0.3,1
+Dystopia Progression Update,0.06,0.06,0.06,0.06,0.1,1
+Human Survival System,1.45,1.45,1.45,1.45,1.4,1
+Benchmark Evaluations,1.72,1.72,1.72,1.72,1.7,1
+Information Warfare Update,0.02,0.02,0.02,0.02,0.0,1
+Crisis Points Check,0.03,0.03,0.03,0.03,0.0,1
+Psychological Trauma,0.07,0.07,0.07,0.07,0.1,1
+Workflow Adaptation Update,0.03,0.03,0.03,0.03,0.0,1
+Consciousness Governance,0.33,0.33,0.33,0.33,0.3,1
+Government Policy Response,0.18,0.18,0.18,0.18,0.2,1
+Emergency Response,0.16,0.16,0.16,0.16,0.2,1
+Social Stability System Update,0.22,0.22,0.22,0.22,0.2,1
+Early Warning Detection,0.07,0.07,0.07,0.07,0.1,1
+AI Adversarial Detection,0.35,0.35,0.35,0.35,0.3,1
+Exogenous Shock Detection,0.12,0.12,0.12,0.12,0.1,1
+Critical Juncture Agency,0.02,0.02,0.02,0.02,0.0,1
+Unemployment & Skills,0.16,0.16,0.16,0.16,0.2,1
+Unknown Unknown Events,0.02,0.02,0.02,0.02,0.0,1
+Economic System,0.19,0.19,0.19,0.19,0.2,1
+Climate System,0.28,0.28,0.28,0.28,0.3,1
+Multi-Paradigm DUI Update,0.13,0.13,0.13,0.13,0.1,1
+Bayesian Mortality Resolution,0.45,0.45,0.45,0.45,0.4,1
+Outcome Probabilities Calculation,0.05,0.05,0.05,0.05,0.1,1
+Minimal Suffering Indicators,0.71,0.71,0.71,0.71,0.7,1
+Crisis Detection,0.01,0.01,0.01,0.01,0.0,1
+Ensemble Meta-Learning,0.01,0.01,0.01,0.01,0.0,1
+Extinction System,0.30,0.30,0.30,0.30,0.3,1
+Technology Diffusion,0.09,0.09,0.09,0.09,0.1,1
+Event Collection,0.02,0.02,0.02,0.02,0.0,1
+Time Advancement,0.00,0.00,0.00,0.00,0.0,1
+Organization Viability,0.13,0.13,0.13,0.13,0.1,1
+Nuclear Crisis,0.01,0.01,0.01,0.01,0.0,1
