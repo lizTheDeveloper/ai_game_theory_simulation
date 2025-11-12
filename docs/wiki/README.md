@@ -28,6 +28,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 12: AI Alignment Bounds Bug FIXED** (commit 0fab12f)
+- ✅ **CRITICAL BUG FIXED:** AI agent trueAlignment could become negative, violating [0, 1] probability constraint
+- 🔧 **Root Causes:** Three locations allowed negative values (aiWelfare.ts:302, lifecycle.ts:347, aiAgent.ts:123)
+- ✅ **Formula Fix:** "alignment - resentment × 0.8" now clamped to Math.max(0.0, ...)
+- ✅ **Validation:** Monte Carlo N=3, 120 months - Zero alignment violations, simulations reach month 120 (previously crashed at month 30)
+- 📊 **Impact:** Unblocks bifurcation empirical validation (HIGH priority), god mode analysis, Monte Carlo analysis
+- 🛡️ **Defense in Depth:** Primary fix at source + secondary safeguard in StochasticInnovationPhase
+- 📖 **Philosophy:** Fail loudly at source of corruption, research simulation rigor (invalid values are bugs to fix, not hide)
+
 **Nov 12: Bifurcation Empirical Validation Research** (commit b16ebe2)
 - ✅ **Issue #5 HIGH - Research Phase COMPLETE:** Empirically validated bifurcation variance amplification formula
 - 📊 **Findings:** System-dependent amplification (4-100× range) - Financial crisis 4-5×, ecosystem shifts 2-10×, climate tipping variance detected
