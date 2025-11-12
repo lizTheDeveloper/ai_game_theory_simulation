@@ -1,10 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 11/12/2025, 7:30:06 AM
-=======
-**Generated:** 11/12/2025, 2:30:46 AM
->>>>>>> Stashed changes
-**Files Scanned:** 356
+**Generated:** 11/12/2025, 2:30:04 PM
+**Files Scanned:** 358
 
 ---
 
@@ -16,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 136 (38.2%)
+**Count:** 137 (38.3%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -172,6 +168,11 @@
 - **Oldest source:** 1991 (34 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/PHASE2_LAYER2_SESSION6_SUMMARY_20251031.md`
+
+### `RESEARCH_SOURCE_VALIDATION_AUDIT_20251112.md`
+- **Oldest source:** 2006 (19 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/RESEARCH_SOURCE_VALIDATION_AUDIT_20251112.md`
 
 ### `ROUND2_SYLVIA_CRITIQUE_20251030.md`
 - **Oldest source:** 2006 (19 years old)
@@ -728,7 +729,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 201 (56.5%)
+**Count:** 202 (56.4%)
 
 All sources <3 years old. No action required.
 
@@ -738,11 +739,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 356 |
+| Total files | 358 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 136 (38.2%) |
+| HIGH | 137 (38.3%) |
 | MEDIUM | 19 (5.3%) |
-| LOW | 201 (56.5%) |
+| LOW | 202 (56.4%) |
 | Average age | 8.5 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -750,21 +751,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 201 | 56.5% |
+| Current (<3yr) | 202 | 56.4% |
 | Warning (3-5yr) | 19 | 5.3% |
-| Critical (>5yr) | 136 | 38.2% |
+| Critical (>5yr) | 137 | 38.3% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 38.2% critical (>5yr)
+- **Current:** 38.3% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 136 HIGH priority file(s) within 1 month
+1. Update 137 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
