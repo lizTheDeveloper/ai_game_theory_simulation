@@ -588,6 +588,92 @@ function countTippingPointCascades(state: GameState): number {
 }
 
 /**
+ * Extract governance metrics
+ * FIX (Nov 12, 2025): Added for Phase 4 analysis - governance hypotheses validation
+ *
+ * NOTE: Gini coefficient is derived from wealthDistribution in globalMetrics
+ * wealthDistribution = 1 - gini (inverted scale)
+ * So: gini = 1 - wealthDistribution
+ */
+function extractGovernanceMetrics(state: GameState): {
+  giniCoefficient: number;
+  globalTrustInAI: number;
+  institutionalTrust: number;
+  democracyIndex: number;
+  governanceQuality: number;
+  politicalStability: number;
+} {
+  // Verify global metrics exist
+  if (!state.globalMetrics || state.globalMetrics.wealthDistribution === undefined) {
+    throw new Error(
+      `❌ Missing state.globalMetrics.wealthDistribution in extractGovernanceMetrics\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   Global metrics should always exist (initialized in initialization.ts).`
+    );
+  }
+
+  if (state.globalMetrics.trustInAI === undefined) {
+    throw new Error(
+      `❌ Missing state.globalMetrics.trustInAI in extractGovernanceMetrics\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   Global metrics should always exist (initialized in initialization.ts).`
+    );
+  }
+
+  // Verify government system exists
+  if (!state.government || !state.government.governanceQuality) {
+    throw new Error(
+      `❌ Missing state.government.governanceQuality in extractGovernanceMetrics\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   Government system should always exist (initialized in initialization.ts).`
+    );
+  }
+
+  const gov = state.government;
+  const govQuality = gov.governanceQuality;
+
+  // Convert wealthDistribution (1=perfect equality, 0=perfect inequality) to Gini coefficient
+  // Gini: 0=perfect equality, 1=perfect inequality
+  const giniCoefficient = 1 - state.globalMetrics.wealthDistribution;
+
+  // Calculate democracy index (average of key democratic metrics)
+  const democracyIndex = (
+    govQuality.transparency +
+    govQuality.participationRate +
+    (1 - (gov.corruptionLevel || 0)) // Invert corruption (low corruption = high democracy)
+  ) / 3;
+
+  // Calculate governance quality (average of core governance metrics)
+  const governanceQuality = (
+    govQuality.decisionQuality +
+    govQuality.institutionalCapacity +
+    govQuality.transparency +
+    govQuality.participationRate +
+    govQuality.consensusBuildingEfficiency +
+    govQuality.minorityProtectionStrength
+  ) / 6;
+
+  // Institutional trust: Use government legitimacy if available, else derive from governance quality
+  const institutionalTrust = gov.legitimacy !== undefined
+    ? gov.legitimacy
+    : governanceQuality * 0.8; // Approximate from governance quality
+
+  // Political stability: Use if available, else derive from social cohesion
+  const politicalStability = (state as any).politicalStability !== undefined
+    ? (state as any).politicalStability
+    : state.socialAccumulation.socialCohesion.civilLiberties / 100; // Normalize to [0,1]
+
+  return {
+    giniCoefficient,
+    globalTrustInAI: state.globalMetrics.trustInAI,
+    institutionalTrust,
+    democracyIndex,
+    governanceQuality,
+    politicalStability
+  };
+}
+
+/**
  * Extract list of breached planetary boundaries
  */
 function extractBoundariesBreached(state: GameState): string[] {
@@ -680,7 +766,15 @@ function extractScenarioResult(
         extinctionRate: 1.0
       },
       finalPopulation: 0,
-      boundariesBreached: []
+      boundariesBreached: [],
+      finalGovernance: {
+        giniCoefficient: 1.0, // Maximum inequality (societal collapse)
+        globalTrustInAI: 0,
+        institutionalTrust: 0,
+        democracyIndex: 0,
+        governanceQuality: 0,
+        politicalStability: 0
+      }
     };
   }
 
@@ -741,7 +835,8 @@ function extractScenarioResult(
     finalQoL: extractQoLMetrics(finalState),
     finalEnvironment: extractEnvironmentMetrics(finalState),
     finalPopulation: finalState.humanPopulationSystem.population,
-    boundariesBreached: extractBoundariesBreached(finalState)
+    boundariesBreached: extractBoundariesBreached(finalState),
+    finalGovernance: extractGovernanceMetrics(finalState)
   };
 }
 
@@ -789,6 +884,14 @@ function printScenarioSummary(result: ScenarioResult): void {
       console.log(`  - ${boundary}`);
     }
   }
+
+  console.log('\n🏛️  Governance Metrics:');
+  console.log(`  Gini coefficient:    ${result.finalGovernance.giniCoefficient.toFixed(3)}`);
+  console.log(`  Trust in AI:         ${(result.finalGovernance.globalTrustInAI * 100).toFixed(1)}%`);
+  console.log(`  Institutional trust: ${(result.finalGovernance.institutionalTrust * 100).toFixed(1)}%`);
+  console.log(`  Democracy index:     ${(result.finalGovernance.democracyIndex * 100).toFixed(1)}%`);
+  console.log(`  Governance quality:  ${(result.finalGovernance.governanceQuality * 100).toFixed(1)}%`);
+  console.log(`  Political stability: ${(result.finalGovernance.politicalStability * 100).toFixed(1)}%`);
 
   console.log('\n' + '='.repeat(80));
 }

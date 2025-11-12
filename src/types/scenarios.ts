@@ -243,6 +243,22 @@ export interface ScenarioResult {
 
   /** Planetary boundaries breached */
   boundariesBreached: string[];
+
+  /** Governance metrics at end (Nov 12, 2025 - Phase 4 analysis requirements) */
+  finalGovernance: {
+    /** Gini coefficient (inequality measure, 0=perfect equality, 1=maximum inequality) */
+    giniCoefficient: number;
+    /** Trust in AI (0-1) */
+    globalTrustInAI: number;
+    /** Institutional trust / legitimacy (0-1) */
+    institutionalTrust: number;
+    /** Democracy index (0-1 aggregate of transparency, participation, etc.) */
+    democracyIndex: number;
+    /** Governance quality (0-1 average of decision quality, capacity, etc.) */
+    governanceQuality: number;
+    /** Political stability (0-1) */
+    politicalStability: number;
+  };
 }
 
 /**

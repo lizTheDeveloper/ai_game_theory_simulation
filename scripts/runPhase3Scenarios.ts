@@ -19,18 +19,14 @@ const PHASE3_SCENARIOS = {
     'climate-first',
     'equality-first',
     'ai-alignment-first',
-    'democratic-participation'
+    'democratic-participation',
+    'scientific-acceleration',
+    'authoritarian-efficiency'
   ],
   initialConditions: [
     'high-trust-start',
     'low-inequality-start',
     'strong-institutions-start'
-  ],
-  techDeployment: [
-    'renewable-first',
-    'carbon-removal-first',
-    'foundations-first',
-    'adaptive-deployment'
   ]
 };
 
@@ -262,7 +258,7 @@ async function main() {
 
   console.log('🚀 Phase 3 Scenario Analysis - Monte Carlo Batch Runner');
   console.log(`📊 Monte Carlo N=${MONTE_CARLO_N}, Max months=${maxMonths}`);
-  console.log(`🎯 Total scenarios: ${Object.values(PHASE3_SCENARIOS).flat().length + 1} (11 test + 1 baseline)\n`);
+  console.log(`🎯 Total scenarios: ${Object.values(PHASE3_SCENARIOS).flat().length + 1} (9 test + 1 baseline)\n`);
 
   // Create output directory
   const outputDir = 'logs/phase3_results';
