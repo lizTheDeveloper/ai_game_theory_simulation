@@ -1,0 +1,29 @@
+{
+  "scenarioId": "climate-first",
+  "seed": 42,
+  "outcome": "UNKNOWN",
+  "monthsSimulated": 49,
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 1,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 5
+  },
+  "finalQoL": {
+    "survivalAvg": 0.5925631433199867,
+    "basicNeedsAvg": 0.762089394987106,
+    "psychologicalAvg": 0.7467131372007387,
+    "socialAvg": 0.7612423082066542,
+    "healthAvg": 0.37833333333333335,
+    "environmentalAvg": 0.5306666666666667,
+    "overallAvg": 0.628601330619081
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 1.6366450361136797,
+    "co2Concentration": 408.68100000000305,
+    "extinctionRate": 245370.37037037036
+  },
+  "finalPopulation": 5.211949661623139,
+  "boundariesBreached": []
+}
