@@ -119,6 +119,12 @@ The worker now exhausts the entire roadmap backlog in priority order, not just C
 
 ### Safety Features
 
+- **PID-based locking** (added Nov 12, 2025)
+  - Prevents concurrent worker runs with lock files (`.autonomous-worker.lock`, `.researcher-worker.lock`)
+  - Detects stale locks from crashed processes using PID validation
+  - Automatic cleanup on exit/interrupt/termination via trap handlers
+  - Fixes git index lock race conditions from simultaneous worker starts
+  - Graceful exit when another worker is running (no silent failures)
 - **45-minute timeout per session** (increased from 25min as of Nov 5, 2025)
   - Main session: 45 minutes (2700s) for task execution
   - Worker now runs hourly (not every 30min) so we have more time
@@ -525,6 +531,44 @@ chmod +x ~/ai_game_theory_simulation/autonomous-worker.sh
 
 # Check file ownership
 ls -la ~/ai_game_theory_simulation/autonomous-worker.sh
+```
+
+### Git index lock errors?
+
+**Fixed as of Nov 12, 2025** with PID-based locking mechanism.
+
+**Symptoms:**
+- `fatal: Unable to create '.git/index.lock': File exists`
+- Multiple workers starting simultaneously (e.g., both at `:00`)
+- Silent failures with no clear error message
+
+**Root cause:**
+Cron can trigger overlapping runs if previous execution exceeds 1 hour, leading to git index lock race conditions.
+
+**Resolution:**
+PID-based lock files (`.autonomous-worker.lock`, `.researcher-worker.lock`) now prevent concurrent runs:
+- Worker checks for existing lock before starting
+- Validates lock PID is still running (detects stale locks from crashes)
+- Gracefully exits if another worker is active
+- Cleanup trap ensures lock removal on exit/interrupt/termination
+
+**Manual fix for stale locks:**
+```bash
+# Remove stale git index lock (if no git operations running)
+rm -f ~/ai_game_theory_simulation/.git/index.lock
+
+# Remove stale worker locks (if no workers running)
+rm -f ~/ai_game_theory_simulation/.autonomous-worker.lock
+rm -f ~/ai_game_theory_simulation/.researcher-worker.lock
+```
+
+**Verify no concurrent workers:**
+```bash
+# Check for running workers
+ps aux | grep -E "autonomous-worker|researcher-worker" | grep -v grep
+
+# Check lock files
+ls -la ~/ai_game_theory_simulation/*.lock
 ```
 
 ## Security Notes
