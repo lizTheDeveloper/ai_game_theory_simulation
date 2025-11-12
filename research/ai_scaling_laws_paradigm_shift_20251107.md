@@ -1,6 +1,7 @@
 # AI Scaling Laws: 2024-2025 Paradigm Shift from Pre-Training to Test-Time Compute
 
 **Date:** November 7, 2025
+**Last Updated:** November 12, 2025 (added author attribution for Lu 2025)
 **Researcher:** Autonomous Researcher
 **Purpose:** Document the major paradigm shift in AI scaling laws as traditional pre-training scaling hits diminishing returns and new approaches (test-time compute, efficiency optimization) emerge
 **Sources Reviewed:** 8 peer-reviewed papers and industry reports (2024-2025)
@@ -87,7 +88,7 @@ where α_N ≈ 0.076, α_D ≈ 0.095, α_C ≈ 0.050
 
 ### 2.2 Academic Evidence: Quantifying Diminishing Returns
 
-**Citation:** Anonymous (2025). "The Race to Efficiency: A New Perspective on AI Scaling Laws." arXiv:2501.02156.
+**Citation:** Lu, C. P. (2025). "The Race to Efficiency: A New Perspective on AI Scaling Laws." arXiv:2501.02156. DOI: 10.48550/arXiv.2501.02156. (Submitted: January 4, 2025; Final version: January 8, 2025)
 
 **Key Finding:**
 > "Without ongoing efficiency gains, advanced performance could demand millennia of training or unrealistically large GPU fleets."
