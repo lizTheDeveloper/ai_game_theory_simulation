@@ -1,8 +1,9 @@
 # De-Extinction Technologies: Current State and Near-Future Potential
 ## Research Assessment for Biosphere Recovery Mechanics
 
-**Research Date:** October 22, 2025
-**Researcher:** super-alignment-researcher-1
+**Research Date:** October 22, 2025 (Updated: November 12, 2025)
+**Last Updated:** November 12, 2025 (Autonomous Researcher - added 2024-2025 Colossal Biosciences milestones)
+**Researcher:** super-alignment-researcher-1, autonomous-researcher
 **Purpose:** Inform simulation's biosphere recovery mechanics with realistic de-extinction capabilities
 
 ---
@@ -18,6 +19,8 @@
 5. **Realistic Scope:** By 2045, optimistically expect **5-10 high-profile species** with minimal ecosystem impact, not hundreds
 
 **Simulation Implication:** Biosphere integrity recovery cap should remain at **~25% without habitat restoration**, with de-extinction contributing **<5% additional recovery** even with massive AI acceleration, focused on charismatic megafauna for symbolic/tourism value rather than functional ecosystem restoration.
+
+**2024-2025 Update:** Colossal Biosciences achieved major milestones: thylacine 99.9% genome reconstruction (Oct 2024), marsupial stem cells (May 2025), mammoth-trait "woolly mice" (Mar 2025), mammoth iPSCs. **Timeline estimate: late 2028 for mammoth-like elephants, 8 years for thylacine reintroduction.** Still validates original assessment: symbolic/conservation value, not ecosystem-scale restoration within simulation timeframe.
 
 ---
 
@@ -85,8 +88,26 @@
   - Technical barrier: 70 million DNA base changes needed (though <2% of genome)
   - **Key Quote:** "Cloned mammoths are, in the author's considered opinion, impossible"
 
+**2024-2025 Major Updates:**
+
+- **March 2025:** Colossal announced "woolly mice" - gene-edited mice with mammoth-derived traits (fluffy coats, curly whiskers)
+  - Published at bioRxiv (preprint, not yet peer-reviewed)
+  - Proof-of-concept for introducing mammoth genes into living mammals
+- **Asian Elephant iPSCs Created:** Critical breakthrough - iPSCs can be engineered to grow into any elephant cell type
+  - Enables modeling, testing, and refining genetic changes in lab
+  - Essential tool for introducing mammoth traits (cold climate adaptations)
+- **Funding Milestone (Jan 2025):** $200M Series C funding, $10.2B valuation (Texas' first decacorn)
+  - Total funding: $435M since founding
+- **Timeline Confirmed:** **Late 2028 for mammoth-like elephants** (not pure mammoths, hybrid with Asian elephant base)
+- **Technical Progress:** George Church's team replaced 14 loci in elephant genome with mammoth versions using CRISPR-Cas9
+  - ~1.5 million nucleotide differences between Asian elephants and mammoths (99.6% identical)
+
+**Assessment:** Timeline becoming more credible (2028 hybrid vs "never" prediction), but still NOT ecosystem restoration - symbolic conservation only
+
 **Citations:**
 - Colossal Biosciences/bioRxiv (2024). "Derivation of elephant induced pluripotent stem cells."
+- MIT Technology Review (March 2025). "De-extinction scientists say these gene-edited 'woolly mice' are a step towards woolly mammoths."
+- TechCrunch (Jan 2025). "Colossal Biosciences raises $200M at $10.2B valuation."
 - Shapiro, Beth (2015). *How to Clone a Mammoth: The Science of De-Extinction*. Princeton University Press.
 
 **Passenger Pigeon (Revive & Restore):**
@@ -94,6 +115,17 @@
 - **Claimed Timeline:** "First generation in 2025, trial releases thereafter"
 - **Technical Approach:** Band-tailed pigeon + passenger pigeon DNA from museum specimens
 - **Status (as of Oct 2025):** No evidence of live organisms produced
+
+**2024-2025 Updates:**
+
+- **CRISPR Pigeon Platform:** Scientists created first pigeons with reproductive systems containing Cas9 gene
+  - Enables editing offspring with passenger pigeon DNA
+  - Technical capability now exists, but no passenger pigeon-like birds yet produced
+- **Ecological Testing (Oct 2024):** Revive & Restore + Applied Ecological Institute simulated forest disturbances in Wisconsin
+  - Testing how trees would react to reintroduced passenger pigeons
+  - Demonstrates ecosystem preparation before actual de-extinction
+- **Timeline Miss:** 2025 "first generation" claim not achieved
+- **Assessment:** Technical progress (Cas9 pigeons), but no living hybrids - still years away
 - **DNA Constraint:** Ancient DNA is "fragmentary at best" even for recent extinctions
 - **Assessment:** Extremely ambitious timeline appears missed
 
@@ -108,6 +140,39 @@
 - **Assessment:** Candidate species, no active de-extinction attempt
 
 **Citation:** Centre for Geogenetics, University of Copenhagen (ancient DNA sequencing, date unclear from sources)
+
+**Thylacine / Tasmanian Tiger (Colossal Biosciences):**
+
+**2024-2025 Major Breakthroughs:**
+
+- **October 2024:** Reconstructed **99.9% accurate genome** of thylacine using 110-year-old fossilized skull
+  - Specimen was "pickled" (preserved in alcohol/formaldehyde)
+  - Most complete extinct marsupial genome to date
+- **January 2025:** Sequenced complete genome + created prototype artificial uterus
+  - Cultured fertilized single-cell marsupial embryos to **>50% through pregnancy** (mid-gestation)
+  - Proof-of-concept for marsupial gestation outside living surrogates
+- **May 2025:** Successfully created vital **stem cells for thylacine**
+  - Researchers estimate **wilderness reintroduction in as little as 8 years**
+  - Most aggressive timeline of any de-extinction project
+- **Genetic Editing Progress:** 300 genetic edits made into fat-tailed dunnart cell line
+  - Dunnart chosen as base species and future surrogate (closest living relative)
+  - Demonstrates CRISPR capability for marsupial genome editing
+- **August 2025:** Colossal acquired TIGRR Lab at University of Melbourne (first expansion outside US)
+  - Led by Andrew Pask, prominent Australian scientist
+  - Secures regulatory/conservation partnerships in thylacine's native habitat
+- **Dodo Progress (October 2024):** First chimeric chicks hatched as part of dodo revival program
+  - Dodo proving "most challenging" of three flagship species
+
+**Assessment:** Most credible de-extinction timeline (8 years vs decades). However, still faces:
+- Population bottleneck (starting with 1-10 individuals)
+- Ecosystem fit uncertainty (Tasmanian ecosystem changed since 1936 extinction)
+- Behavioral/cultural knowledge loss (no living model for behavior)
+- **Remains symbolic conservation, not ecosystem restoration at scale**
+
+**Citations:**
+- Mezha.Media (Jan 2025). "Colossal raises $200 million to revive woolly mammoth, thylacine and dodo."
+- IFLScience (Date TBD). "Thylacine De-extinction Achieves Mid-Gestation Marsupial Embryo Development In Artificial Uterus."
+- CNN (Jan 2025). "'Resurrection science' is gaining steam, but are scientists any closer to reviving lost species?"
 
 ---
 
