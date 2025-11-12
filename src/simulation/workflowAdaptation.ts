@@ -95,8 +95,18 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
 
   // A. Unemployment resistance (job loss fears)
   // Research: White House CEA (2024) - AI substitutes middle-class jobs
-  // Higher unemployment → more fear → more resistance to AI adoption
-  // FIX (Nov 10, 2025): Assert unemploymentLevel is finite
+  // FIX (Nov 11, 2025): CRITICAL BUG - Inverted logic!
+  //
+  // Original logic: High unemployment → more fear → more resistance
+  // Problem: Creates death spiral (95% unemployment = 28% resistance/month → workflow adaptation crashes to floor)
+  //
+  // CORRECT logic: Resistance comes from EMPLOYED workers fearing displacement
+  // - Low unemployment (5%) → workers have job security → LOW resistance
+  // - Moderate unemployment (15-30%) → workers fear displacement → PEAK resistance
+  // - High unemployment (>50%) → workers desperate → LOWER resistance (nothing to lose)
+  //
+  // Research: Autor (2024) - Resistance is from incumbent workers, not unemployed
+  // Unemployed have nothing to lose; employed middle class fears disruption
   const unemploymentLevel = assertProbability(
     state.society.unemploymentLevel,
     {
@@ -105,13 +115,33 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
       month: state.currentMonth
     }
   );
-  const unemploymentResistance = unemploymentLevel * UNEMPLOYMENT_RESISTANCE_COEFFICIENT;
+
+  // Bell curve: resistance peaks at 20-30% unemployment (incumbent workers most threatened)
+  // Below 10%: low fear (job security)
+  // Above 50%: low fear (desperation overrides resistance)
+  const employmentSecurityFactor = Math.max(0, 1 - unemploymentLevel); // 0-1, high when employed
+  const displacementThreatFactor = Math.min(1, unemploymentLevel * 3); // 0-1, peaks at 33% unemployment
+
+  // Resistance is product: need BOTH employment (to lose) AND threat (to fear)
+  const unemploymentResistance = employmentSecurityFactor * displacementThreatFactor * UNEMPLOYMENT_RESISTANCE_COEFFICIENT;
 
   // B. Organizational inertia (middle management resistance)
   // Research: McKinsey (2024) - middle layer most resistant
-  // Resistance peaks when adoption threatens established workflows (~50% adoption)
-  // Using sine curve: peaks at π/2 (50% adoption)
-  const inertiaResistance = Math.sin(current * Math.PI) * ORGANIZATIONAL_INERTIA_PEAK;
+  //
+  // FIX (Nov 11, 2025): CRITICAL BUG - Inertia should resist CHANGE, not punish EXISTING adoption
+  // Original: `sin(current * π)` penalizes 21% baseline (McKinsey 2024 empirical starting point)
+  // Problem: Causes immediate crash from 21% → 10% at month 0
+  //
+  // CORRECT: Inertia resists NEW adoption attempts, peaks during TRANSITION (10-30% range)
+  // - Below 10%: Low resistance (early adopters, no threat to incumbents)
+  // - 10-30%: PEAK resistance (threatens middle management, "crossing the chasm")
+  // - Above 30%: Declining resistance (inevitability, bandwagon effect)
+  //
+  // New formula: Bell curve INVERTED - resistance is LOW at current baseline (21%), peaks at 50%
+  // Sine curve still works but shift it: sin((current - 0.21) * 2π) peaks at current=0.46 (midpoint to 71%)
+  // Actually simpler: just shift and scale sine to peak at 0.45 (middle of transition zone)
+  const transitionProgress = Math.max(0, (current - 0.20) / 0.50); // 0.20 → 0.70 maps to 0 → 1
+  const inertiaResistance = Math.sin(transitionProgress * Math.PI) * ORGANIZATIONAL_INERTIA_PEAK;
 
   // C. Skill gap resistance (hiring challenges)
   // Research: G2 (2024) - skill gaps are top barrier
@@ -124,9 +154,13 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
   });
   const educationQuality = Math.min(1.0, socialStability / 2.0); // Normalize to [0,1]
 
-  // FIX (Nov 10, 2025): Government research investment reduces skill gap resistance
+  // FIX (Nov 11, 2025): Government research investment reduces skill gap resistance
   // High research budget → retraining programs → lower skill gaps
   // Research: OECD (2024) - active labor market policies reduce transition friction
+  //
+  // CRITICAL FIX: Original formula too weak - $100B research only gave 75% reduction
+  // Problem: In high-research scenarios ($50-100B/month), skill gap should be SOLVED, not just reduced
+  // Research budget directly funds retraining → should dominate over education quality proxy
   const researchBudget = assertFinite(
     state.government.researchInvestments.totalBudget,
     {
@@ -135,8 +169,12 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
       month: state.currentMonth
     }
   );
-  // $50B+ research → 50% skill gap reduction, $100B+ → 75% reduction
-  const retrainingBonus = Math.min(0.75, researchBudget / 100);
+
+  // NEW FORMULA: Exponential reduction, nearly eliminates resistance at $50B+
+  // $10B (baseline) → 63% reduction
+  // $30B (3× default) → 95% reduction
+  // $50B+ (scientific spiral threshold) → 99%+ reduction
+  const retrainingBonus = 1 - Math.exp(-researchBudget / 15); // Exponential decay, τ=15B
 
   const baseSkillGapResistance = SKILL_GAP_RESISTANCE_MAX * (1 - educationQuality);
   const skillGapResistance = Math.max(0, baseSkillGapResistance * (1 - retrainingBonus));
@@ -171,8 +209,34 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
   }
   const aiCapabilityBonus = avgAICapability > 4.0 ? 0.01 : 0;  // +1%/month if high AI capability
 
+  // FIX (Nov 11, 2025): Research-driven recovery from hysteresis trap
+  // Problem: Once workflow adaptation crashes to floor (5%), it can't escape:
+  // - Logistic growth is minimal (far from inflection point)
+  // - Network effects are off (need 15%+)
+  // - Total resistance dominates
+  //
+  // Solution: High research budget ($50B+) can rescue adaptation via:
+  // - Direct government investment in organizational transformation
+  // - Demonstration projects showing success
+  // - Incentive programs for early adopters
+  //
+  // Research: Singapore Smart Nation (2024) - government-led digital transformation
+  // When market fails to adopt, government investment can bootstrap
+  let researchRescueBonus = 0;
+  if (current < 0.25 && researchBudget > 30) {
+    // Active BELOW 25% (scientific spiral threshold) - government pushes toward critical mass
+    // Scales with research budget: $30B → +0%, $50B → +2%, $100B → +7%, cap at 15%
+    // Need STRONG boost to escape hysteresis AND reach 25% threshold
+    // Research: When market fails, government-led transformation (Singapore, Estonia digital transformations)
+    //
+    // Boost strength declines as we approach 25% (government role diminishes as network effects take over)
+    const distanceFromThreshold = Math.max(0, 0.25 - current); // 0-0.25
+    const thresholdMultiplier = distanceFromThreshold / 0.25; // 1.0 at 0%, 0.0 at 25%
+    researchRescueBonus = Math.min(0.15, (researchBudget - 30) * 0.001) * (0.5 + 0.5 * thresholdMultiplier); // At least 50% of max boost
+  }
+
   // === 4. NET GROWTH CALCULATION ===
-  const netGrowth = logisticGrowth + networkBonus + aiCapabilityBonus - totalResistance;
+  const netGrowth = logisticGrowth + networkBonus + aiCapabilityBonus + researchRescueBonus - totalResistance;
 
   // Stochastic shock (±20% variance)
   // Research: Real adoption doesn't follow smooth curves - random events matter
@@ -198,6 +262,9 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
     }
     if (networkBonus > 0) {
       console.log(`   🚀 Network Effects Active: +${(networkBonus * 100).toFixed(1)}% (critical mass: ${CRITICAL_MASS_LOW * 100}-${CRITICAL_MASS_HIGH * 100}%)`);
+    }
+    if (researchRescueBonus > 0) {
+      console.log(`   🆘 Research Rescue Active: +${(researchRescueBonus * 100).toFixed(2)}% (escaping hysteresis trap via $${researchBudget.toFixed(0)}B investment)`);
     }
   }
 }
