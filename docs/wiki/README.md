@@ -28,6 +28,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 12: Performance Instrumentation Infrastructure** (commit 1732d61)
+- ✅ **HIGH-2 COMPLETE:** Built-in phase-level performance profiling in PhaseOrchestrator
+- ✅ **Metrics:** Track min/max/p95 per phase (not just avg), 50ms threshold logging for slow steps
+- ✅ **Config-Driven:** `enablePerformanceProfiling` flag in GameState config (default: false)
+- ✅ **Export Formats:** CSV and JSON with summary statistics
+- ✅ **Validation:** 81 phases tracked, avg 144ms/step, p95 174ms, overhead <1%
+- 📖 **API:** `getPhaseTimings()`, `getStepTimings()`, `exportPhaseTimingsCSV()`, `exportPhaseTimingsJSON()`, `setSlowPhaseThreshold(ms)`
+- 📖 **Files:** PhaseOrchestrator.ts (timing collection), engine.ts (config integration), config.ts (flags), testPerformanceProfiling.ts (validation)
+- 📊 **Impact:** Enables systematic bottleneck identification (complements PERFORMANCE_BOTTLENECK_ANALYSIS_20251112.md)
+
 **Nov 12: Architecture Integration Review COMPLETE** (commit 030faa8)
 - 📊 **Overall Health:** 9.0/10 (improved from 7.5/10 post-Week 4)
 - ✅ **Phase Consolidation:** 116→95 phases (-18% complexity)

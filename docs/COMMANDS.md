@@ -243,6 +243,44 @@ Questions must contain `?` and match research-oriented patterns (14 patterns):
 
 ## Profiling & Performance
 
+### Built-in Performance Instrumentation (Added Nov 12, 2025)
+
+**Comprehensive phase-level timing built into PhaseOrchestrator:**
+
+```bash
+# Enable profiling via config flag
+npx tsx scripts/testPerformanceProfiling.ts
+
+# Or in your simulation code:
+const state = createTestState({
+  config: {
+    enablePerformanceProfiling: true,
+    slowPhaseThresholdMs: 10  // warn if phase >10ms (default)
+  }
+});
+
+# Export timing data
+orchestrator.exportPhaseTimingsCSV('logs/phase_timings.csv');
+orchestrator.exportPhaseTimingsJSON('logs/phase_timings.json');
+```
+
+**API Methods:**
+- `orchestrator.getPhaseTimings()` - Returns Map with min/max/p95/samples per phase
+- `orchestrator.getStepTimings()` - Returns per-month total step times
+- `orchestrator.setSlowPhaseThreshold(ms)` - Configure slow phase warnings
+
+**Output Format:**
+- **CSV:** Phase,Avg_ms,P95_ms,Max_ms,Min_ms,Total_ms,Calls
+- **JSON:** Nested structure with summary stats (total phases, avg/p95/max step times)
+
+**Performance:** Profiling overhead <1% (negligible impact on simulation)
+
+**Files:**
+- `src/simulation/engine/PhaseOrchestrator.ts` - Timing collection
+- `src/simulation/engine.ts` - Config flag integration
+- `src/types/config.ts` - enablePerformanceProfiling flag
+- `scripts/testPerformanceProfiling.ts` - Validation test
+
 ### Node.js Built-in Profiler
 
 ```bash
@@ -268,10 +306,12 @@ kill -SIGUSR2 <pid>
 
 ### Performance Considerations
 
-See `plans/performance-optimization-plan.md` for detailed analysis:
-- **Memory:** Deep cloning in hot paths (10-100MB per step)
-- **CPU:** O(n²) array operations (505+ across 70 files)
-- **Parallelization:** No parallel phase execution
+See `reviews/PERFORMANCE_BOTTLENECK_ANALYSIS_20251112.md` for detailed O(n²) analysis:
+- **Current Performance:** ~144ms avg/step, 5-10s for 360-month run (ACCEPTABLE)
+- **Major Fix:** O(n²) organizationManagement.ts bottleneck resolved (Nov 10, 70× improvement)
+- **Remaining Work:** Government agent patterns (10 potential nested loops), profiling infrastructure
+- **Memory:** Deep cloning addressed (HIGH-3 complete)
+- **Target:** <20ms/step for interactive, <5s for 360-month run
 
 ## Git Operations
 
