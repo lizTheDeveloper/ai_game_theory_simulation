@@ -88,5 +88,22 @@ export interface NovelEntitiesSystem {
 
   /** Natural decay half-life (years) - Time for 50% degradation (500+ for PFAS) */
   naturalDecayHalfLife?: number;
+
+  // === CRITICAL FIX (Nov 12, 2025): Energy Trap Constraints (Ling 2024, Fennell 2024, Cousins 2022) ===
+
+  /** Industrial point source contamination [0,1] - High concentration (mg/L), treatable */
+  industrialContamination?: number;
+
+  /** Environmental diffuse contamination [0,1] - Low concentration (ng/L-pg/L), energy trap */
+  environmentalContamination?: number;
+
+  /** Monthly atmospheric redeposition rate [0,1] - PFAS re-rains globally (Cousins 2022) */
+  atmosphericRedepositionRate?: number;
+
+  /** Biological degradation rate per month [0,1] - Pseudomonas, fungal pathways (2024 research) */
+  biologicalDegradationRate?: number;
+
+  /** Legacy stock subject to redeposition (Mt) - Atmospheric reservoir */
+  atmosphericReservoirStock?: number;
 }
 

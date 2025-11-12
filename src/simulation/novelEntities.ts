@@ -46,6 +46,13 @@ export function initializeNovelEntitiesSystem(): NovelEntitiesSystem {
     accumulatedStock: 1800000,           // 1.8M Mt (30 years × 60k/yr - decades of accumulation)
     atmosphericDistribution: true,       // PFAS in rainwater globally (Cousins 2022: all continents + Antarctica)
     naturalDecayHalfLife: 500,           // 500 years (PFAS "forever chemicals" persist centuries)
+
+    // CRITICAL FIX (Nov 12, 2025): Energy trap constraints (Ling 2024, Fennell 2024, Cousins 2022)
+    industrialContamination: 0.15,       // 15% - Industrial point sources (mg/L concentration, treatable)
+    environmentalContamination: 0.35,    // 35% - Diffuse environmental (ng/L-pg/L, energy trap)
+    atmosphericRedepositionRate: 0.01,   // 1% of legacy stock re-rains monthly (Cousins 2022)
+    biologicalDegradationRate: 0.0001,   // 0.01% per month = 0.12% per year (slow but non-zero, 2024 research)
+    atmosphericReservoirStock: 180000,   // 180,000 Mt in atmospheric reservoir (10% of total stock cycles)
   };
 }
 
@@ -73,10 +80,33 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     const monthlyDecayRate = 0.693 / (ne.naturalDecayHalfLife * 12);
     const monthlyDecay = ne.accumulatedStock * monthlyDecayRate;
 
-    // Net accumulation (emissions - decay)
+    // === BIOLOGICAL DEGRADATION (Nov 12, 2025: Sylvia's requirement) ===
+    // Pseudomonas, fungal degradation (2024 research) - Slow but non-zero pathway
+    // Bypasses energy trap via enzymatic breakdown
+    const biologicalDecay = ne.biologicalDegradationRate !== undefined
+      ? ne.accumulatedStock * ne.biologicalDegradationRate
+      : 0;
+
+    // Net accumulation (emissions - natural decay - biological decay)
     // NOTE: This tracks absolute stock (Mt) independent of cleanup effectiveness
     // Cleanup effectiveness is applied via syntheticChemicalLoad [0,1] below
-    ne.accumulatedStock += (monthlyEmissions - monthlyDecay);
+    ne.accumulatedStock += (monthlyEmissions - monthlyDecay - biologicalDecay);
+
+    // === ATMOSPHERIC REDEPOSITION (Nov 12, 2025: Cousins 2022) ===
+    // PFAS cycles through atmosphere - local cleanup is futile
+    // Legacy contamination continuously re-deposits globally
+    if (ne.atmosphericDistribution && ne.atmosphericReservoirStock !== undefined && ne.atmosphericRedepositionRate !== undefined) {
+      const monthlyRedeposition = ne.atmosphericReservoirStock * ne.atmosphericRedepositionRate;
+
+      // Redeposition adds to environmental contamination (NOT industrial point sources)
+      // This makes cleanup effectiveness asymptotically approach zero
+      ne.accumulatedStock += monthlyRedeposition;
+
+      // Log redeposition events (only when significant)
+      if (monthlyRedeposition > 1000) {  // > 1,000 Mt/month
+        console.log(`🌍 Atmospheric PFAS redeposition: ${(monthlyRedeposition / 1000).toFixed(1)}k Mt re-rained globally`);
+      }
+    }
 
     // SATURATION CAP: Total synthetic chemical production bounded by industrial output
     // Research: Persson 2022 (>1 Mt/year novel entities), global plastics ~400M Mt cumulative (Geyer 2017)
@@ -92,25 +122,68 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     }
   }
 
-  // === SYNTHETIC CHEMICAL LOAD ACCUMULATION ===
-  // More production = more chemicals
-  let chemicalAccumulationRate = (economicStage * 0.002) + (manufacturingCap * 0.001);
-  
-  // Green chemistry reduces new chemical load
-  chemicalAccumulationRate *= (1.0 - ne.greenChemistryDeployment * 0.6);
-  
-  // Circular economy reduces need for new chemicals
-  chemicalAccumulationRate *= (1.0 - ne.circularEconomyDeployment * 0.4);
-  
-  // Chemical bans remove worst offenders
-  chemicalAccumulationRate *= (1.0 - ne.chemicalBansDeployment * 0.3);
-  
-  // Bioremediation breaks down existing chemicals (slow)
-  const bioremediationRate = ne.bioremediationDeployment * 0.001; // -0.1%/month at full deployment
-  
-  ne.syntheticChemicalLoad = Math.max(0, Math.min(1.0,
-    ne.syntheticChemicalLoad + chemicalAccumulationRate - bioremediationRate
-  ));
+  // === HETEROGENEOUS CONTAMINATION (Nov 12, 2025: Sylvia's requirement) ===
+  // Industrial point sources (mg/L) vs environmental diffuse (ng/L-pg/L)
+  // Energy constraints apply differently to each
+
+  if (ne.industrialContamination !== undefined && ne.environmentalContamination !== undefined) {
+    // Industrial contamination: New production creates point sources
+    let industrialAccumulationRate = (economicStage * 0.001) + (manufacturingCap * 0.0005);
+
+    // Green chemistry + chemical bans reduce industrial sources
+    industrialAccumulationRate *= (1.0 - ne.greenChemistryDeployment * 0.7);
+    industrialAccumulationRate *= (1.0 - ne.chemicalBansDeployment * 0.5);
+
+    // Industrial cleanup IS feasible (high concentration)
+    const industrialCleanupRate = ne.bioremediationDeployment * 0.005; // 0.5%/month at full deployment
+
+    ne.industrialContamination = Math.max(0, Math.min(1.0,
+      ne.industrialContamination + industrialAccumulationRate - industrialCleanupRate
+    ));
+
+    // Environmental contamination: Dilution from industrial sources + atmospheric fallout
+    let environmentalAccumulationRate = ne.industrialContamination * 0.0005; // Dilution from point sources
+
+    // Atmospheric redeposition adds to environmental (Cousins 2022: futile to clean)
+    if (ne.atmosphericRedepositionRate !== undefined) {
+      environmentalAccumulationRate += ne.atmosphericRedepositionRate * 0.01; // 1% of redeposition rate
+    }
+
+    // Circular economy prevents NEW environmental contamination
+    environmentalAccumulationRate *= (1.0 - ne.circularEconomyDeployment * 0.6);
+
+    // Environmental cleanup faces energy trap (minimal effectiveness)
+    const environmentalCleanupRate = ne.bioremediationDeployment * 0.0001; // 0.01%/month (100x worse than industrial)
+
+    // Biological degradation applies to environmental (slow but non-zero)
+    const biologicalCleanupRate = ne.biologicalDegradationRate !== undefined ? ne.biologicalDegradationRate : 0;
+
+    ne.environmentalContamination = Math.max(0, Math.min(1.0,
+      ne.environmentalContamination + environmentalAccumulationRate - environmentalCleanupRate - biologicalCleanupRate
+    ));
+
+    // Update aggregate syntheticChemicalLoad (weighted sum)
+    ne.syntheticChemicalLoad = (ne.industrialContamination * 0.3) + (ne.environmentalContamination * 0.7);
+  } else {
+    // LEGACY PATH: Old accumulation logic (for backward compatibility)
+    let chemicalAccumulationRate = (economicStage * 0.002) + (manufacturingCap * 0.001);
+
+    // Green chemistry reduces new chemical load
+    chemicalAccumulationRate *= (1.0 - ne.greenChemistryDeployment * 0.6);
+
+    // Circular economy reduces need for new chemicals
+    chemicalAccumulationRate *= (1.0 - ne.circularEconomyDeployment * 0.4);
+
+    // Chemical bans remove worst offenders
+    chemicalAccumulationRate *= (1.0 - ne.chemicalBansDeployment * 0.3);
+
+    // Bioremediation breaks down existing chemicals (slow)
+    const bioremediationRate = ne.bioremediationDeployment * 0.001; // -0.1%/month at full deployment
+
+    ne.syntheticChemicalLoad = Math.max(0, Math.min(1.0,
+      ne.syntheticChemicalLoad + chemicalAccumulationRate - bioremediationRate
+    ));
+  }
   
   // === MICROPLASTICS ===
   // Persistent, everywhere, breaks down into smaller pieces but never disappears
