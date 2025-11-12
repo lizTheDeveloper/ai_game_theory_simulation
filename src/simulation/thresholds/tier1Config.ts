@@ -9,7 +9,7 @@
  * - Trust Recovery: Meta-analysis of trust repair interventions
  * - Climate Sensitivity: IPCC AR6 WG1 (2021) - ECS 3.0°C [2.0-5.0°C likely range]
  * - Government Legitimacy: Historical state collapse analysis
- * - Automation Job Loss: Acemoglu & Restrepo (2022) - labor market disruption
+ * - Automation Job Loss: Acemoglu & Restrepo (2019) - labor market disruption
  */
 
 import {
@@ -97,7 +97,7 @@ export const GOVERNMENT_LEGITIMACY_CRISIS_PARAMS = {
 /**
  * 5. AUTOMATION JOB LOSS THRESHOLD
  *
- * Research: Acemoglu & Restrepo (2022) "Tasks, Automation, and the Rise in US Wage Inequality"
+ * Research: Acemoglu & Restrepo (2019) "Tasks, Automation, and the Rise in US Wage Inequality"
  * Finding: Automation displaces ~35% of routine tasks, ±5% based on policy/adaptation
  * Distribution: Normal(μ=0.35, σ=0.05)
  *
@@ -109,7 +109,7 @@ export const AUTOMATION_JOB_LOSS_THRESHOLD_PARAMS = {
   mean: 0.35,
   stdDev: 0.05,
   bounds: [0.25, 0.45] as [number, number], // Clip to plausible range
-  citation: 'Acemoglu & Restrepo (2022) - automation and labor market disruption'
+  citation: 'Acemoglu & Restrepo (2019) - automation and labor market disruption'
 };
 
 /**

@@ -14,7 +14,7 @@
  * - Gini calculation uses trapezoidal rule for Lorenz curve area
  * - Population weighting by segment.populationFraction
  * - Classification thresholds: <30% baseline, 30-70% moderate, >70% high
- * - Phase transition detection (Acemoglu & Restrepo 2022)
+ * - Phase transition detection (Acemoglu & Restrepo 2019)
  */
 
 import { SocietySegment } from '@/types/game';
@@ -39,7 +39,7 @@ function getTaskComplexity(baselineSkill: number): number {
 /**
  * Determine automation phase for a given AI capability and task complexity
  *
- * **TRL: 9** (Based on Acemoglu & Restrepo 2022 automation economics)
+ * **TRL: 9** (Based on Acemoglu & Restrepo 2019 automation economics)
  *
  * @param aiCapability Global AI capability [0,∞)
  * @param taskComplexity Task complexity [0.5, 4.0]
@@ -126,7 +126,7 @@ export function initializeAIAssistedSkillsMetrics(): AIAssistedSkillsMetrics {
  * - Gini calculation uses trapezoidal rule for Lorenz curve area
  * - Population weighting by segment.populationFraction
  * - Classification thresholds: <30% baseline, 30-70% moderate, >70% high
- * - Phase transition detection (Acemoglu & Restrepo 2022)
+ * - Phase transition detection (Acemoglu & Restrepo 2019)
  *
  * @param segments Population segments with skill profiles
  * @param metrics Aggregate metrics object to update (mutated in-place)
@@ -227,7 +227,7 @@ export function calculateAIAssistedSkillsAggregateMetrics(
   metrics.barriers.educationBarrier = Math.max(0.15, metrics.barriers.educationBarrier - 0.0003);  // -0.36%/year
 
   // === Phase 2: Phase Distribution Tracking ===
-  // Track complementarity → transition → substitution phases (Acemoglu & Restrepo 2022)
+  // Track complementarity → transition → substitution phases (Acemoglu & Restrepo 2019)
   if (aiCapability !== undefined && aiCapability > 0) {
     let phaseComplementarity = 0;
     let phaseTransition = 0;

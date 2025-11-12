@@ -186,7 +186,7 @@ export function calculateUnemployment(state: GameState): number {
     }
   );
 
-  // === REINSTATEMENT EFFECT (Acemoglu & Restrepo 2022) ===
+  // === REINSTATEMENT EFFECT (Acemoglu & Restrepo 2019) ===
   // TIER 0D BUG #2 FIX (Oct 17, 2025): Add missing task creation mechanism
   //
   // **Research Foundation:**
