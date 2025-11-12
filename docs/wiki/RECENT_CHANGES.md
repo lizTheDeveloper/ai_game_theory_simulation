@@ -6,6 +6,40 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 12, 2025)
 
+**🔧 INFRASTRUCTURE: PID-Based Locking for Autonomous Workers** (Nov 12, 2025, commit f5afdf2)
+
+**Summary:** Added PID-based locking mechanism to prevent race conditions and concurrent worker runs.
+
+**Issues Fixed:**
+1. **Git index lock race condition** - Two workers started simultaneously at 08:00, causing git index lock conflicts
+2. **Division by zero error** - PR creation failed when `TOTAL_DURATION`/`CLAUDE_DURATION` variables unset
+3. **No concurrency protection** - Cron could trigger overlapping runs if previous execution exceeded 1 hour
+
+**Changes:**
+
+`autonomous-worker.sh`:
+- Add PID-based lock file (`.autonomous-worker.lock`) with stale lock cleanup
+- Check if existing worker process is running before starting
+- Calculate `PR_TOTAL_DURATION` inline to avoid division by unset variable
+- Add trap to ensure lock cleanup on exit/interrupt/termination
+
+`researcher-worker.sh`:
+- Add same PID-based locking mechanism (`.researcher-worker.lock`)
+- Prevent concurrent researcher runs
+
+**Why This Matters:**
+- Cron can trigger overlapping runs if previous execution exceeds 1 hour
+- Git operations fail when multiple processes access index simultaneously
+- Silent failures accumulate (80 unmerged branches detected prior to fix)
+
+**Impact:** Workers now gracefully exit when another instance is running, preventing git index lock conflicts and ensuring only one worker runs at a time.
+
+**Files:**
+- `autonomous-worker.sh` (PID locking, inline duration calculation)
+- `researcher-worker.sh` (PID locking)
+
+---
+
 **🔧 INFRASTRUCTURE: Autonomous Worker PATH and Network Error Handling** (Nov 12, 2025, commit 903cb3b)
 
 **Summary:** Fixed cron environment issues and improved network resilience for autonomous worker scripts.
