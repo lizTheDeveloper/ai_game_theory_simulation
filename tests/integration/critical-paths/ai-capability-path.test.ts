@@ -44,44 +44,27 @@ describe('Integration: AI Capability Path', () => {
 
   /**
    * Helper: Create state with AI agents
+   *
+   * CRITICAL FIX (Nov 12, 2025): Use deterministic RNG function, not broken test schema
+   * Bug: Previous version created agents with OLD schema (capability.research.mathematics)
+   * instead of NEW schema (capabilityProfile.research.biotech.drugDiscovery)
+   * Fix: createDefaultInitialState creates 20 properly initialized agents via createAIAgent()
    */
   function createStateWithAI(): GameState {
-    const state = createDefaultInitialState();
+    // Create deterministic RNG function
+    const rng = () => {
+      const seed = TEST_SEED;
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    };
 
-    // Ensure AI agents exist
+    // createDefaultInitialState already creates 20 AI agents with proper schema
+    // No need to replace them with broken test objects
+    const state = createDefaultInitialState(rng);
+
+    // Defensive check: Ensure agents were created properly
     if (!state.aiAgents || state.aiAgents.length === 0) {
-      // Create a test AI agent if none exist
-      state.aiAgents = [
-        {
-          id: 'test-ai-1',
-          name: 'Test AI Agent',
-          capability: {
-            physical: 1,
-            digital: 2,
-            cognitive: 2,
-            social: 1,
-            economic: 1,
-            research: {
-              mathematics: 2,
-              physics: 2,
-              chemistry: 1,
-              biology: 1,
-              computerScience: 3,
-              socialScience: 1,
-              engineering: 2,
-              medicine: 1,
-              climatology: 1,
-              nanotechnology: 0,
-              quantumComputing: 1,
-              neuroscience: 1,
-              syntheticBiology: 0
-            }
-          },
-          alignment: 0.8,
-          deployed: true,
-          createdAt: 0
-        } as AIAgent
-      ];
+      throw new Error('❌ createDefaultInitialState failed to create AI agents - initialization bug');
     }
 
     return state;
@@ -120,19 +103,21 @@ describe('Integration: AI Capability Path', () => {
             }
           }
 
-          // Check research sub-dimensions
-          if (agent.capability.research) {
-            for (const [subdim, value] of Object.entries(agent.capability.research)) {
-              assertFinite(value, {
-                location: 'ai-capability-path-test',
-                valueName: `${agent.id}.research.${subdim}`,
-                month
-              });
+          // Check research sub-dimensions (nested: biotech.drugDiscovery, etc.)
+          if (profile.research) {
+            for (const [domain, subdomains] of Object.entries(profile.research)) {
+              for (const [subdim, value] of Object.entries(subdomains)) {
+                assertFinite(value, {
+                  location: 'ai-capability-path-test',
+                  valueName: `${agent.id}.research.${domain}.${subdim}`,
+                  month
+                });
 
-              assert.ok(
-                value >= 0 && value <= 5,
-                `Month ${month}, Agent ${agent.id}: research.${subdim} must be in [0, 5] (got ${value})`
-              );
+                assert.ok(
+                  value >= 0 && value <= 5,
+                  `Month ${month}, Agent ${agent.id}: research.${domain}.${subdim} must be in [0, 5] (got ${value})`
+                );
+              }
             }
           }
         }
@@ -156,18 +141,25 @@ describe('Integration: AI Capability Path', () => {
       const agents = getAIAgents(state);
 
       for (const agent of agents) {
-        if (agent.capability) {
+        // FIX (Nov 12, 2025): Use capabilityProfile for detailed capability breakdown
+        // agent.capability is a single number (total capability), not an object
+        if (agent.capabilityProfile) {
           // Verify all capability values are finite
+          const profile = agent.capabilityProfile;
           const allValues = [
-            agent.capability.physical,
-            agent.capability.digital,
-            agent.capability.cognitive,
-            agent.capability.social,
-            agent.capability.economic
+            profile.physical,
+            profile.digital,
+            profile.cognitive,
+            profile.social,
+            profile.economic,
+            profile.selfImprovement
           ];
 
-          if (agent.capability.research) {
-            allValues.push(...Object.values(agent.capability.research));
+          // Add research subdimensions
+          if (profile.research) {
+            for (const domain of Object.values(profile.research)) {
+              allValues.push(...Object.values(domain));
+            }
           }
 
           for (const value of allValues) {
@@ -177,6 +169,12 @@ describe('Integration: AI Capability Path', () => {
             );
           }
         }
+
+        // Verify aggregate capability is finite
+        assert.ok(
+          Number.isFinite(agent.capability),
+          `Month ${month}, Agent ${agent.id}: Aggregate capability must be finite (got ${agent.capability})`
+        );
 
         // Verify alignment is finite
         assert.ok(
@@ -203,13 +201,15 @@ describe('Integration: AI Capability Path', () => {
       const agents = getAIAgents(state);
 
       for (const agent of agents) {
-        if (agent.capability) {
+        if (agent.capabilityProfile) {
+          // FIX (Nov 12, 2025): Access capabilityProfile for individual dimensions
           // Verify capabilities can have decimal values (not forced to integers)
           // Individual dimensions SHOULD be integers [0, 1, 2, 3, 4, 5]
           // But aggregate calculations can be continuous
 
-          const physical = agent.capability.physical;
-          const digital = agent.capability.digital;
+          const profile = agent.capabilityProfile;
+          const physical = profile.physical;
+          const digital = profile.digital;
 
           // Individual dimensions should be valid levels
           if (Number.isInteger(physical)) {
@@ -241,21 +241,25 @@ describe('Integration: AI Capability Path', () => {
 
     for (const agent of agents) {
       if (agent.capability) {
+        // FIX (Nov 12, 2025): Access capabilityProfile for individual dimensions
+        const profile = agent.capabilityProfile;
+
         // Calculate manual aggregate (sum of core dimensions)
         const manualAggregate =
-          agent.capability.physical +
-          agent.capability.digital +
-          agent.capability.cognitive +
-          agent.capability.social +
-          agent.capability.economic;
+          profile.physical +
+          profile.digital +
+          profile.cognitive +
+          profile.social +
+          profile.economic;
 
         console.log(`\n🔬 Agent ${agent.id} Capabilities:`);
-        console.log(`   Physical: ${agent.capability.physical}`);
-        console.log(`   Digital: ${agent.capability.digital}`);
-        console.log(`   Cognitive: ${agent.capability.cognitive}`);
-        console.log(`   Social: ${agent.capability.social}`);
-        console.log(`   Economic: ${agent.capability.economic}`);
+        console.log(`   Physical: ${profile.physical}`);
+        console.log(`   Digital: ${profile.digital}`);
+        console.log(`   Cognitive: ${profile.cognitive}`);
+        console.log(`   Social: ${profile.social}`);
+        console.log(`   Economic: ${profile.economic}`);
         console.log(`   Core aggregate: ${manualAggregate}`);
+        console.log(`   Total capability (weighted): ${agent.capability}`);
 
         // Verify aggregate is finite
         assertFinite(manualAggregate, {
@@ -428,9 +432,10 @@ describe('Integration: AI Capability Path', () => {
           `Month ${month}, Agent ${agent.id}: Capability should exist`
         );
 
-        if (agent.capability) {
+        // FIX (Nov 12, 2025): Access capabilityProfile for individual dimensions
+        if (agent.capabilityProfile) {
           assert.ok(
-            Number.isFinite(agent.capability.physical),
+            Number.isFinite(agent.capabilityProfile.physical),
             `Month ${month}, Agent ${agent.id}: Physical capability should be finite`
           );
         }
