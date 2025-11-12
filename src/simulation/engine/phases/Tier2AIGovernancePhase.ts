@@ -102,7 +102,7 @@ export class Tier2AIGovernancePhase implements SimulationPhase {
         });
       }
 
-      const governmentInvestment = state.government.alignmentResearchInvestment / 10;
+      const governmentInvestment = state.government.alignmentResearchInvestment / 100;
 
       assertProbability(governmentInvestment, {
         location: 'Tier2AIGovernancePhase.executeCrisisAnticipation',
@@ -236,7 +236,7 @@ export class Tier2AIGovernancePhase implements SimulationPhase {
         });
       }
 
-      const governmentInvestment = state.government.alignmentResearchInvestment / 10;
+      const governmentInvestment = state.government.alignmentResearchInvestment / 100;
 
       assertProbability(governmentInvestment, {
         location: 'Tier2AIGovernancePhase.executeInterpretability',
