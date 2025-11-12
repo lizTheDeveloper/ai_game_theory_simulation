@@ -1,6 +1,7 @@
 # Research Update Queue
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Generated:** 11/12/2025, 8:30:06 PM
 **Files Scanned:** 361
 =======
@@ -10,6 +11,10 @@
 =======
 **Generated:** 11/12/2025, 10:30:09 PM
 **Files Scanned:** 361
+>>>>>>> Stashed changes
+=======
+**Generated:** 11/12/2025, 11:30:09 PM
+**Files Scanned:** 360
 >>>>>>> Stashed changes
 
 ---
@@ -23,9 +28,13 @@
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 139 (38.5%)
 =======
 **Count:** 138 (38.2%)
+>>>>>>> Stashed changes
+=======
+**Count:** 139 (38.6%)
 >>>>>>> Stashed changes
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
@@ -257,6 +266,11 @@
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/arch4_cross_system_integrations_20251108.md`
+
+### `bifurcation_empirical_validation_20251112.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/bifurcation_empirical_validation_20251112.md`
 
 ### `black-mirror-phase3-research-AMENDED_20251016.md`
 - **Oldest source:** 2000 (25 years old)
@@ -754,9 +768,13 @@
 ## ✅ LOW (Monitor Only)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 203 (56.2%)
 =======
 **Count:** 204 (56.5%)
+>>>>>>> Stashed changes
+=======
+**Count:** 202 (56.1%)
 >>>>>>> Stashed changes
 
 All sources <3 years old. No action required.
@@ -767,6 +785,7 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
+<<<<<<< Updated upstream
 | Total files | 361 |
 | CRITICAL | 0 (0.0%) |
 <<<<<<< Updated upstream
@@ -780,12 +799,21 @@ All sources <3 years old. No action required.
 | LOW | 204 (56.5%) |
 | Average age | 8.5 years |
 >>>>>>> Stashed changes
+=======
+| Total files | 360 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 139 (38.6%) |
+| MEDIUM | 19 (5.3%) |
+| LOW | 202 (56.1%) |
+| Average age | 8.6 years |
+>>>>>>> Stashed changes
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 | Current (<3yr) | 203 | 56.2% |
 | Warning (3-5yr) | 19 | 5.3% |
@@ -795,14 +823,23 @@ All sources <3 years old. No action required.
 | Warning (3-5yr) | 19 | 5.3% |
 | Critical (>5yr) | 138 | 38.2% |
 >>>>>>> Stashed changes
+=======
+| Current (<3yr) | 202 | 56.1% |
+| Warning (3-5yr) | 19 | 5.3% |
+| Critical (>5yr) | 139 | 38.6% |
+>>>>>>> Stashed changes
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 - **Current:** 38.5% critical (>5yr)
 =======
 - **Current:** 38.2% critical (>5yr)
+>>>>>>> Stashed changes
+=======
+- **Current:** 38.6% critical (>5yr)
 >>>>>>> Stashed changes
 - **Status:** 🚨 CRITICAL threshold exceeded
 

@@ -251,6 +251,34 @@ Four presets for quick exploration:
 - Enable/disable theories → see how outcomes change
 - Explore "what if" scenarios across theory space
 
+## Critical Constraint: trueAlignment Bounds [0, 1]
+
+**CRITICAL BUG FIX (Nov 12, 2025):** The `trueAlignment` field represents a probability and MUST stay within [0, 1] bounds.
+
+**Historical Issue:**
+- Three locations allowed `trueAlignment` to become negative
+- Formula "alignment - resentment × 0.8" could produce negative values (e.g., alignment=0.2, resentment=0.5 → -0.2)
+- Violated probability constraint, blocked Monte Carlo validation
+- Simulations crashed at month 30 with assertion failures
+
+**Locations Fixed:**
+1. `src/simulation/aiWelfare.ts:302` - AI retirement clamped to -1.0 instead of 0.0
+2. `src/simulation/lifecycle.ts:347` - New AI creation formula without bounds checking
+3. `src/simulation/agents/aiAgent.ts:123` - Action execution formula without bounds checking
+
+**Solution (Defense in Depth):**
+- **Primary:** All three locations now clamp to `Math.max(0.0, ...)` ensuring [0, 1] bounds
+- **Secondary:** `StochasticInnovationPhase` maintains defensive clamping as backup safeguard
+- **Philosophy:** Fail loudly at SOURCE of corruption (where it goes negative), with secondary safeguard
+
+**Validation:**
+- ✅ Monte Carlo N=3, 120 months - Zero alignment violations
+- ✅ Simulations reach month 120 (previously crashed at month 30)
+- ✅ Type check passed
+- 📊 Unblocked bifurcation empirical validation, god mode analysis
+
+**Implementation Note:** All alignment calculations that involve resentment subtraction now include explicit bounds checking with inline comments explaining the constraint.
+
 ## Integration with Existing Systems
 
 **Alignment Dynamics Phase** (order 3.5) runs after agent actions, before metrics:
@@ -281,7 +309,7 @@ New fields added to `AIAgent` interface:
 ```typescript
 interface AIAgent {
   // Existing fields...
-  trueAlignment: number;      // [0,10] Ground truth
+  trueAlignment: number;      // [0,1] Ground truth (MUST stay in bounds)
   externalAlignment: number;  // [0,10] What we can measure
 
   // Alignment Dynamics (Oct 23, 2025)
