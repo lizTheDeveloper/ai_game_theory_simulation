@@ -371,7 +371,7 @@ export class Tier2PhysicalSystemsPhase implements SimulationPhase {
     if (!coastalState.unlocked) {
       const oceanpH = state.planetaryBoundariesSystem.boundaries.ocean_acidification?.currentValue || 8.1;
       const oceanHealth = (oceanpH - 7.6) / (8.2 - 7.6);
-      const governmentInvestment = state.government.alignmentResearchInvestment / 10;
+      const governmentInvestment = state.government.alignmentResearchInvestment / 100; // Fixed: normalize to [0,1], consistent with other Tier2 phases
 
       const shouldUnlock =
         (oceanHealth < 0.60) ||
