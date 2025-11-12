@@ -81,14 +81,14 @@ export const SURVEILLANCE_DYSTOPIA_THRESHOLD_PARAMS = {
  * - Spain youth unemployment (2013): 56.5% → 15M movement protests
  *
  * Expert estimates:
- * - Acemoglu & Restrepo (2022): 40-60% routine task automation = crisis threshold
+ * - Acemoglu & Restrepo (2019): 40-60% routine task automation = crisis threshold
  * - McKinsey (2017): 25%+ unemployment without retraining = crisis
  */
 export const AUTOMATION_DISPLACEMENT_CRISIS_PARAMS = {
   min: 0.40,
   mode: 0.50,
   max: 0.60,
-  citation: 'Industrial Revolution, Great Depression, modern automation (Acemoglu & Restrepo 2022)'
+  citation: 'Industrial Revolution, Great Depression, modern automation (Acemoglu & Restrepo 2019)'
 };
 
 /**

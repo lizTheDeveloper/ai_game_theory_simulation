@@ -364,7 +364,7 @@ export const NUCLEAR_SECURITY_PARAMS = {
  * - Uniform [15%, 45%] reflects "anywhere in this range is equally plausible"
  *
  * Citations:
- * - Acemoglu & Restrepo (2022) "Automation and New Tasks"
+ * - Acemoglu & Restrepo (2019) "Automation and New Tasks"
  * - Brynjolfsson et al. (2023) "Generative AI at Work" (Microsoft case study)
  */
 export const CENTAUR_SYSTEMS_PARAMS = {
@@ -373,7 +373,7 @@ export const CENTAUR_SYSTEMS_PARAMS = {
     min: 0.15,
     max: 0.45,
     note: 'Wide uncertainty - no empirical effect sizes, framework validated',
-    citation: 'Acemoglu & Restrepo (2022) framework + user domain knowledge'
+    citation: 'Acemoglu & Restrepo (2019) framework + user domain knowledge'
   },
   meaningCrisisReduction: {
     distribution: 'uniform' as const,
