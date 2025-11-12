@@ -491,11 +491,11 @@ export function updateWetBulbTemperatureSystem(
 
         // FIX (Nov 12, 2025): Scale regional population by global population fraction
         // Regional populations are 2025 baselines - need to scale down if global population declined
-        // Allow very low fractions (0.001 = 8M remaining, 99.9875% die-off) for extreme scenarios
+        // Allow very low fractions (0.0001 = 800K remaining, 99.99% die-off) for extinction scenarios
         const globalPopFraction = assertInRange(
           state.humanPopulationSystem.population / 8.0,  // 8.0B = 2025 baseline
-          0.001,  // Minimum 8M global population (extreme die-off)
-          2.0,    // Maximum 16B (population doubling - unlikely but theoretically possible)
+          0.0001,  // Minimum 800K global population (near-extinction)
+          2.0,     // Maximum 16B (population doubling - unlikely but theoretically possible)
           {
             location: 'updateWetBulbTemperatureSystem.heatEvent',
             valueName: 'globalPopFraction',
