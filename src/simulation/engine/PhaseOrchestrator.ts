@@ -119,8 +119,17 @@ export class PhaseOrchestrator {
   private sorted: boolean = false;
 
   // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
-  private phaseTimings: Map<string, { totalMs: number; callCount: number }> = new Map();
+  // ENHANCED (Nov 12, 2025): Track min/max/p95 for better analysis
+  private phaseTimings: Map<string, {
+    totalMs: number;
+    callCount: number;
+    minMs: number;
+    maxMs: number;
+    samples: number[];  // For p95 calculation
+  }> = new Map();
   private enableTiming: boolean = false;
+  private slowPhaseThresholdMs: number = 10;  // Warn on phases >10ms
+  private stepTimings: { month: number; totalMs: number }[] = [];  // Per-step totals
 
   /**
    * Register a phase
@@ -163,6 +172,7 @@ export class PhaseOrchestrator {
     };
 
     const allEvents: GameEvent[] = [];
+    const stepStartTime = this.enableTiming ? performance.now() : 0;
 
     for (const phase of this.phases) {
       try {
@@ -196,13 +206,30 @@ export class PhaseOrchestrator {
         const result = phase.execute(state, rng, ctx);
 
         // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+        // ENHANCED (Nov 12, 2025): Track min/max/p95, warn on slow phases
         if (this.enableTiming) {
           const elapsed = performance.now() - startTime;
-          const existing = this.phaseTimings.get(phase.name) || { totalMs: 0, callCount: 0 };
+          const existing = this.phaseTimings.get(phase.name) || {
+            totalMs: 0,
+            callCount: 0,
+            minMs: Infinity,
+            maxMs: -Infinity,
+            samples: []
+          };
+
+          // Update statistics
           this.phaseTimings.set(phase.name, {
             totalMs: existing.totalMs + elapsed,
-            callCount: existing.callCount + 1
+            callCount: existing.callCount + 1,
+            minMs: Math.min(existing.minMs, elapsed),
+            maxMs: Math.max(existing.maxMs, elapsed),
+            samples: [...existing.samples, elapsed]
           });
+
+          // Warn on slow phases (>10ms threshold)
+          if (elapsed > this.slowPhaseThresholdMs) {
+            console.log(`⚠️  [TIMING] Month ${state.currentMonth}: ${phase.name} took ${elapsed.toFixed(2)}ms (threshold: ${this.slowPhaseThresholdMs}ms)`);
+          }
         }
 
         // Collect events
@@ -247,6 +274,17 @@ export class PhaseOrchestrator {
         // Previous behavior: silently continued, causing paradigm scores to stay at 50.0
         // New behavior: throw immediately so bugs can't hide
         throw error;
+      }
+    }
+
+    // PERFORMANCE INSTRUMENTATION (Nov 12, 2025): Log step total
+    if (this.enableTiming) {
+      const stepElapsed = performance.now() - stepStartTime;
+      this.stepTimings.push({ month: state.currentMonth, totalMs: stepElapsed });
+
+      // Log step summary (minimal overhead)
+      if (stepElapsed > 50) {  // Only log if step took >50ms
+        console.log(`📊 [TIMING] Month ${state.currentMonth} - Total: ${stepElapsed.toFixed(1)}ms`);
       }
     }
 
@@ -415,14 +453,43 @@ export class PhaseOrchestrator {
   }
 
   /**
-   * Get phase timing statistics
+   * Set slow phase threshold (PERFORMANCE INSTRUMENTATION Nov 12, 2025)
    */
-  getPhaseTimings(): Map<string, { totalMs: number; callCount: number }> {
+  setSlowPhaseThreshold(thresholdMs: number): void {
+    this.slowPhaseThresholdMs = thresholdMs;
+  }
+
+  /**
+   * Get current slow phase threshold
+   */
+  getSlowPhaseThreshold(): number {
+    return this.slowPhaseThresholdMs;
+  }
+
+  /**
+   * Get phase timing statistics (ENHANCED Nov 12, 2025: includes min/max/p95)
+   */
+  getPhaseTimings(): Map<string, {
+    totalMs: number;
+    callCount: number;
+    minMs: number;
+    maxMs: number;
+    samples: number[];
+  }> {
     return new Map(this.phaseTimings);
   }
 
   /**
+   * Get per-step timing data
+   * PERFORMANCE INSTRUMENTATION (Nov 12, 2025)
+   */
+  getStepTimings(): { month: number; totalMs: number }[] {
+    return [...this.stepTimings];
+  }
+
+  /**
    * Print phase timing report to console
+   * ENHANCED (Nov 12, 2025): Shows min/max/p95 stats
    */
   printPhaseTimings(): void {
     if (this.phaseTimings.size === 0) {
@@ -430,41 +497,79 @@ export class PhaseOrchestrator {
       return;
     }
 
+    // Calculate p95 for each phase
+    const calculateP95 = (samples: number[]): number => {
+      if (samples.length === 0) return 0;
+      const sorted = [...samples].sort((a, b) => a - b);
+      const index = Math.ceil(sorted.length * 0.95) - 1;
+      return sorted[Math.max(0, index)];
+    };
+
     const sorted = Array.from(this.phaseTimings.entries())
       .map(([name, data]) => ({
         phaseName: name,
         totalMs: data.totalMs,
         callCount: data.callCount,
-        avgMs: data.totalMs / data.callCount
+        avgMs: data.totalMs / data.callCount,
+        minMs: data.minMs,
+        maxMs: data.maxMs,
+        p95Ms: calculateP95(data.samples)
       }))
       .sort((a, b) => b.totalMs - a.totalMs);
 
     console.log('\n📊 PHASE TIMING ANALYSIS');
-    console.log('='.repeat(80));
-    console.log('Phase Name'.padEnd(40) + 'Total (ms)'.padStart(12) + 'Calls'.padStart(8) + 'Avg (ms)'.padStart(12));
-    console.log('-'.repeat(80));
+    console.log('='.repeat(100));
+    console.log(
+      'Phase Name'.padEnd(30) +
+      'Avg'.padStart(10) +
+      'P95'.padStart(10) +
+      'Max'.padStart(10) +
+      'Min'.padStart(10) +
+      'Total'.padStart(12) +
+      'Calls'.padStart(8)
+    );
+    console.log('-'.repeat(100));
 
     let totalTime = 0;
     for (const timing of sorted) {
       totalTime += timing.totalMs;
       console.log(
-        timing.phaseName.padEnd(40) +
-        timing.totalMs.toFixed(1).padStart(12) +
-        timing.callCount.toString().padStart(8) +
-        timing.avgMs.toFixed(2).padStart(12)
+        timing.phaseName.padEnd(30) +
+        `${timing.avgMs.toFixed(2)}ms`.padStart(10) +
+        `${timing.p95Ms.toFixed(2)}ms`.padStart(10) +
+        `${timing.maxMs.toFixed(2)}ms`.padStart(10) +
+        `${timing.minMs.toFixed(2)}ms`.padStart(10) +
+        `${timing.totalMs.toFixed(1)}ms`.padStart(12) +
+        timing.callCount.toString().padStart(8)
       );
     }
 
-    console.log('-'.repeat(80));
-    console.log('TOTAL'.padEnd(40) + totalTime.toFixed(1).padStart(12));
-    console.log('='.repeat(80));
+    console.log('-'.repeat(100));
+    console.log('TOTAL'.padEnd(30) + ' '.repeat(40) + `${totalTime.toFixed(1)}ms`.padStart(12));
+    console.log('='.repeat(100));
 
     // Top 5 slowest phases
-    console.log('\n🔴 TOP 5 SLOWEST PHASES:');
+    console.log('\n🔴 TOP 5 SLOWEST PHASES (by total time):');
     sorted.slice(0, 5).forEach((timing, i) => {
       const pct = (timing.totalMs / totalTime * 100).toFixed(1);
       console.log(`  ${i + 1}. ${timing.phaseName}: ${timing.totalMs.toFixed(1)}ms (${pct}%)`);
     });
+
+    // Step timing summary
+    if (this.stepTimings.length > 0) {
+      const stepTotals = this.stepTimings.map(s => s.totalMs);
+      const avgStep = stepTotals.reduce((a, b) => a + b, 0) / stepTotals.length;
+      const maxStep = Math.max(...stepTotals);
+      const minStep = Math.min(...stepTotals);
+      const p95Step = calculateP95(stepTotals);
+
+      console.log('\n📊 PER-STEP TIMING SUMMARY:');
+      console.log(`  Steps: ${this.stepTimings.length}`);
+      console.log(`  Avg: ${avgStep.toFixed(2)}ms`);
+      console.log(`  P95: ${p95Step.toFixed(2)}ms`);
+      console.log(`  Max: ${maxStep.toFixed(2)}ms`);
+      console.log(`  Min: ${minStep.toFixed(2)}ms`);
+    }
   }
 
   /**
@@ -472,5 +577,87 @@ export class PhaseOrchestrator {
    */
   resetPhaseTimings(): void {
     this.phaseTimings.clear();
+    this.stepTimings = [];
+  }
+
+  /**
+   * Export phase timings as CSV for analysis
+   * PERFORMANCE INSTRUMENTATION (Nov 12, 2025)
+   */
+  exportPhaseTimingsCSV(): string {
+    if (this.phaseTimings.size === 0) {
+      return '';
+    }
+
+    // Calculate p95
+    const calculateP95 = (samples: number[]): number => {
+      if (samples.length === 0) return 0;
+      const sorted = [...samples].sort((a, b) => a - b);
+      const index = Math.ceil(sorted.length * 0.95) - 1;
+      return sorted[Math.max(0, index)];
+    };
+
+    const lines = ['Phase,Avg_ms,P95_ms,Max_ms,Min_ms,Total_ms,Calls'];
+
+    for (const [name, data] of this.phaseTimings.entries()) {
+      const avgMs = data.totalMs / data.callCount;
+      const p95Ms = calculateP95(data.samples);
+      lines.push(
+        `${name},${avgMs.toFixed(2)},${p95Ms.toFixed(2)},${data.maxMs.toFixed(2)},${data.minMs.toFixed(2)},${data.totalMs.toFixed(1)},${data.callCount}`
+      );
+    }
+
+    return lines.join('\n');
+  }
+
+  /**
+   * Export phase timings as JSON for programmatic analysis
+   * PERFORMANCE INSTRUMENTATION (Nov 12, 2025)
+   */
+  exportPhaseTimingsJSON(): string {
+    if (this.phaseTimings.size === 0) {
+      return '{}';
+    }
+
+    // Calculate p95
+    const calculateP95 = (samples: number[]): number => {
+      if (samples.length === 0) return 0;
+      const sorted = [...samples].sort((a, b) => a - b);
+      const index = Math.ceil(sorted.length * 0.95) - 1;
+      return sorted[Math.max(0, index)];
+    };
+
+    const result: Record<string, any> = {
+      phases: {},
+      steps: this.stepTimings,
+      summary: {
+        totalPhases: this.phaseTimings.size,
+        totalSteps: this.stepTimings.length
+      }
+    };
+
+    for (const [name, data] of this.phaseTimings.entries()) {
+      result.phases[name] = {
+        totalMs: parseFloat(data.totalMs.toFixed(1)),
+        callCount: data.callCount,
+        avgMs: parseFloat((data.totalMs / data.callCount).toFixed(2)),
+        minMs: parseFloat(data.minMs.toFixed(2)),
+        maxMs: parseFloat(data.maxMs.toFixed(2)),
+        p95Ms: parseFloat(calculateP95(data.samples).toFixed(2))
+      };
+    }
+
+    // Add step summary
+    if (this.stepTimings.length > 0) {
+      const stepTotals = this.stepTimings.map(s => s.totalMs);
+      result.summary.steps = {
+        avg: parseFloat((stepTotals.reduce((a, b) => a + b, 0) / stepTotals.length).toFixed(2)),
+        min: parseFloat(Math.min(...stepTotals).toFixed(2)),
+        max: parseFloat(Math.max(...stepTotals).toFixed(2)),
+        p95: parseFloat(calculateP95(stepTotals).toFixed(2))
+      };
+    }
+
+    return JSON.stringify(result, null, 2);
   }
 }

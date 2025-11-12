@@ -639,6 +639,15 @@ export class SimulationEngine {
     // Shallow copy breaks Set/Map objects in tech tree state
     let newState = state;
 
+    // PERFORMANCE INSTRUMENTATION (Nov 12, 2025): Enable profiling if requested in config
+    if (state.config?.enablePerformanceProfiling) {
+      // Enable timing on first step (idempotent call)
+      this.orchestrator.enablePerformanceTiming();
+      if (state.config.slowPhaseThresholdMs !== undefined) {
+        this.orchestrator.setSlowPhaseThreshold(state.config.slowPhaseThresholdMs);
+      }
+    }
+
     // Use bound RNG for deterministic actions
     const rng = this.rng.next.bind(this.rng);
 
