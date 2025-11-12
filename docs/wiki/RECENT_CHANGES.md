@@ -6,6 +6,38 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 12, 2025)
 
+**🔬 RESEARCH: Crisis Cascade & De-extinction Research Updates** (Nov 12, 2025, commit 3e1f101)
+
+**Summary:** Updated 2 HIGH priority research files from Oct 2025 with current 2024-2025 peer-reviewed sources validating existing simulation parameters.
+
+**Crisis Cascade Multipliers (research/crisis_cascade_multipliers_20251020.md):**
+- **Gambhir et al. (2025) Nature Communications** - Systemic risk assessment framework
+  - 60M additional food crisis victims in 2022 from polycrisis cascade
+  - Energy-food coupling: 40-50% of agricultural costs are energy → cascades amplify
+  - **Validates:** Multiplicative (not additive) crisis dynamics
+- **Undheim & Ahmad (2024) Frontiers** - Extinction thresholds quantified
+  - **Critical finding:** 3-5 co-occurring catastrophes → extinction pathway
+  - Single catastrophe: 25-year recovery. 3-5 catastrophes: no recovery
+  - **Validates:** Simulation's 3-crisis threshold (1.5x) conservative, 5+ crises (2.5-3.0x) aligns with extinction pathways
+- **Assessment:** Current multipliers (1.5-2.5×) well-supported, potentially conservative
+
+**De-extinction Timelines (research/de_extinction_capabilities_timelines_20251022.md):**
+- **Colossal Biosciences 2024-2025 milestones:**
+  - **Thylacine:** 99.9% genome (Oct 2024), stem cells (May 2025), 8yr reintroduction timeline
+  - **Mammoth:** Woolly mice with mammoth traits (Mar 2025), iPSCs created, late 2028 timeline
+  - **Funding:** $435M total, $10.2B valuation (Texas' first decacorn)
+- **Assessment:** Timeline more credible (2028 hybrid vs "never"), but still symbolic conservation only
+
+**Research Quality:** 100% peer-reviewed or reputable industry sources (Oct 2024 - Aug 2025)
+
+**Documentation Updated:**
+- `docs/wiki/mechanics/crisis-cascades.md` - Added research validation section
+- `docs/wiki/systems/tech-tree-system.md` - Updated research citations
+
+**Impact:** Validates existing simulation parameters with 2024-2025 research. No parameter changes needed - conservative multipliers are supported.
+
+---
+
 **🔬 RESEARCH: Climate Tipping Points and Humanitarian Aid Updates** (Nov 12, 2025, commit 951322e)
 
 **Summary:** Updated outdated research sources (2007-2008) with 2024-2025 peer-reviewed findings, clarified humanitarian aid parameter interpretation, fixed citation year error.

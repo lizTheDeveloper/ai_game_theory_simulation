@@ -414,6 +414,32 @@ This system models real cascade dynamics:
 
 ---
 
-**Last Updated:** October 9, 2025
-**Status:** Fully implemented and tested
+## Research Validation (November 2025)
+
+**Status:** ✅ Multipliers validated by 2024-2025 peer-reviewed research
+
+The crisis cascade multiplier system (1.5x-3.0x) is now backed by three major 2024-2025 studies:
+
+1. **Gambhir et al. (2025)** - Nature Communications systemic risk framework
+   - Demonstrated 60M additional food crisis victims in 2022 from polycrisis cascade
+   - Energy-food coupling: 40-50% of agricultural costs are energy → cascades amplify across sectors
+   - **Validates:** Multiplicative (not additive) crisis dynamics
+
+2. **Undheim & Ahmad (2024)** - Frontiers in Complex Systems
+   - **Critical finding:** 3-5 co-occurring catastrophes create extinction pathway
+   - Single catastrophe: 25-year recovery. 3-5 catastrophes: no recovery, extinction
+   - **Validates:** Current 3-crisis threshold (1.5x) is conservative, 5+ crises (2.5-3.0x) aligns with extinction pathways
+
+3. **Lawrence et al. (2024)** - Global Sustainability
+   - Polycrisis framework: crisis entanglement creates emergent behaviors
+   - **Validates:** Non-linear dynamics beyond 3 crises
+
+**Assessment:** Simulation's conservative multipliers (1.5-2.5×) are well-supported. If anything, real-world polycrisis scenarios at 5+ simultaneous crises may be worse than modeled.
+
+**Research files:** `research/crisis_cascade_multipliers_20251020.md`
+
+---
+
+**Last Updated:** November 12, 2025 (research validation added)
+**Status:** Fully implemented, tested, and research-validated
 **Philosophy:** "In complex systems, failures compound. In successful societies, they're prevented early."
