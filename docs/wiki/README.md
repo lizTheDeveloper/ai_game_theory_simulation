@@ -28,6 +28,34 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 12: Novel Entities 0% Effectiveness Bug FIXED** (commit 63f8742)
+- ✅ **Critical Bug Fixed:** Novel Entities boundary showed 0% effectiveness for all 7 pollution cleanup technologies
+- ✅ **Root Cause:** Phase ordering issue - PlanetaryBoundariesPhase (order 21.0) **overwrote** tech cleanup effects from TechTreePhase (order 12.5)
+- ✅ **Solution:** Rate-based accumulation instead of overwrite - pollution drift as 10% convergence rate preserves tech cleanup
+- ✅ **Secondary Fix:** Microplastic reduction now affects Novel Entities boundary (was only affecting marineFoodWeb)
+- ✅ **Validation:** Monte Carlo N=5 runs (60 months), 0 errors, dynamic boundary movement confirmed
+- ✅ **Impact:** Technologies now show 5-20% effectiveness (will drop to 2-10% once energy/concentration constraints enforced)
+- 📖 **Files Changed:** planetaryBoundaries.ts (lines 805-844), techTree/effectsEngine.ts (lines 1215-1249)
+- 📖 **Documentation:** logs/novel_entities_fix_COMPLETE_20251112.md (314 lines, full diagnostic + validation)
+
+**Nov 12: Climate Deployment Timescales Research COMPLETE (Quality Gate 1 PASSED)** (commit 63f8742)
+- 🔄 **Phase 1 Research Validation COMPLETE** (Sylvia - research-skeptic)
+- 🎯 **Objective:** Model 30-50 year deployment timescales (planning → construction → scaleUp → full)
+- ✅ **Deployment Timescales Validated:** 30-50 years baseline, 10-15 years accelerated (IPCC AR6)
+- ✅ **Energy Constraints Validated:** 10,000-22,000 TWh/year for 10 GtCO₂/year DAC (50-110% global electricity)
+- ✅ **Carbon Cycle Feedbacks Validated:** Ocean sink -10 to -20%, permafrost 0.1-0.3 Gt/year (Richardson et al. 2023)
+- 🔄 **Phase 2 Implementation IN PROGRESS** (Roy - simulation-maintainer)
+- 📊 **Expected Impact:** Climate effectiveness 5.5% → 20-40% (realistic improvement after deployment curve modeling)
+- 📖 **Files:** reviews/climate_deployment_timescales_validation_20251112.md, plans/ORCHESTRATION_STATUS_deployment_timescales_20251112.md
+
+**Nov 12: AI Coordination & Transition Management Research Identified (TIER 1 CRITICAL)** (commit 63f8742)
+- 🔬 **Critical Gap:** God mode 30% mortality reveals model tests CHAOS (instant deployment) not COORDINATION (AI-managed)
+- 📋 **Research Questions:** Transition mortality (managed vs unmanaged), AI coordination mechanisms, support systems, deployment pacing
+- 📖 **Research File:** research/ai_coordination_transition_20251112.md (515 lines, 15+ peer-reviewed sources)
+- 🎯 **Implementation Plan:** New CoordinatedDeploymentPhase, transition support system, regional capacity modeling
+- ⚠️ **Status:** Research complete, awaiting Quality Gate 1 validation (research-skeptic)
+- 📊 **Expected Impact:** Show delta between chaos mode (30% mortality) vs coordinated mode (<5% mortality)
+
 **Nov 11: Wet Bulb Mortality Cap Fix** (commit a3df82a)
 - ✅ **Critical Bug Fixed:** Wet bulb mortality calculation could exceed 100% under extreme population collapse
 - ✅ **Root Cause:** Static regional populations (1900M South Asia) divided by dynamic crashed global population (<9M at month 359) = 101.2% mortality
