@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Ensure PATH includes claude (needed for cron execution)
+export PATH="/usr/bin:/usr/local/bin:/bin:$PATH"
+
 PROJECT_DIR="/home/lizthedeveloper_gmail_com/ai_game_theory_simulation"
 
 # Source .env file to get API key
@@ -132,12 +135,21 @@ cd "$PROJECT_DIR"
 
     # Pull latest changes
     log_info "Pulling latest from main..."
-    if ! git pull origin main 2>&1; then
-        log_error "Pull failed - likely merge conflict"
-        log_info "Invoking Claude to resolve merge conflicts..."
+    PULL_OUTPUT=$(git pull origin main 2>&1) || PULL_FAILED=$?
 
-        # Create conflict resolution task
-        cat > /tmp/conflict_resolution_$TIMESTAMP.txt << "CONFLICT_EOF"
+    if [ -n "$PULL_FAILED" ]; then
+        # Check if it's a network error or merge conflict
+        if echo "$PULL_OUTPUT" | grep -q "Could not resolve hostname\|Connection refused\|Network is unreachable"; then
+            log_error "Pull failed due to network error"
+            log_warning "Skipping this run - will retry next time"
+            echo "NETWORK_ERROR" > "$STATUS_FILE"
+            exit 0
+        elif echo "$PULL_OUTPUT" | grep -q "CONFLICT\|Merge conflict"; then
+            log_error "Pull failed - merge conflict detected"
+            log_info "Invoking Claude to resolve merge conflicts..."
+
+            # Create conflict resolution task
+            cat > /tmp/conflict_resolution_$TIMESTAMP.txt << "CONFLICT_EOF"
 There is a merge conflict when pulling from main. Please:
 1. Review the conflicts using git status and git diff
 2. Resolve all conflicts appropriately
@@ -148,10 +160,17 @@ There is a merge conflict when pulling from main. Please:
 Do NOT use git stash - resolve conflicts properly by editing files.
 CONFLICT_EOF
 
-        claude --dangerously-skip-permissions < /tmp/conflict_resolution_$TIMESTAMP.txt 2>&1
-        rm -f /tmp/conflict_resolution_$TIMESTAMP.txt
+            claude --dangerously-skip-permissions < /tmp/conflict_resolution_$TIMESTAMP.txt 2>&1
+            rm -f /tmp/conflict_resolution_$TIMESTAMP.txt
 
-        log_success "Conflicts resolved, continuing..."
+            log_success "Conflicts resolved, continuing..."
+        else
+            log_error "Pull failed with unknown error:"
+            echo "$PULL_OUTPUT"
+            exit 1
+        fi
+    else
+        echo "$PULL_OUTPUT"
     fi
 
     # Get current commit

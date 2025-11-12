@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Ensure PATH includes claude (needed for cron execution)
+export PATH="/usr/bin:/usr/local/bin:/bin:$PATH"
+
 PROJECT_DIR="/home/lizthedeveloper_gmail_com/ai_game_theory_simulation"
 
 # Source .env file to get API key
