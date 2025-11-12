@@ -1264,8 +1264,8 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   // === FISH STOCKS (ecosystem health) ===
   
   // Fish decline with acidification, oxygen loss, pollution
-  const fishDieoff = 
-    (ocean.pH < 7.8 ? 0.01 : 0) + // Acidification
+  const fishDieoff =
+    (ocean.pH < 7.8 ? 0.01 : 0) + // Acidification warning (critical collapse at pH 7.5)
     (ocean.oxygenLevel < 0.6 ? 0.008 : 0) + // Oxygen
     ocean.pollutionLoad * 0.005 + // Pollution
     ocean.deadZoneExtent * 0.01; // Dead zones
@@ -1362,10 +1362,12 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   );
   
   // === CRISIS CHECK ===
-  
+  // Note: pH 7.8 is early warning threshold (ecosystem distress)
+  // Critical collapse threshold is pH 7.5 (aragonite saturation, NOAA 2025)
+
   const wasInCrisis = ocean.inCrisis;
   ocean.inCrisis = (
-    ocean.pH < 7.8 ||
+    ocean.pH < 7.8 ||  // Early warning (ecosystem distress)
     ocean.oxygenLevel < 0.5 ||
     ocean.deadZoneExtent > 0.3
   );
