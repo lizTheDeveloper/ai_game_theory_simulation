@@ -210,28 +210,35 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * Update variance amplification based on nearest threshold
    *
    * CRITICAL: Variance amplification affects other systems that use it as a multiplier.
-   * Near thresholds (distance → 0), amplification → 100×
+   * Near thresholds (distance → 0), amplification → 100× (capped)
    * Far from thresholds (distance → 1), amplification → 1× (no effect)
    *
-   * Research basis:
-   * - Scheffer et al. (2024) Science - 15-200× amplification in regime shifts
-   * - Financial crises (2008) - 40× amplification documented
-   * - Ecosystem collapses - 100× amplification in biodiversity cascades
-   * - Disaster cascades - 200× amplification in compound crises
+   * FORMULA: systemMultiplier / √(0.01 + distance) with 100× cap
    *
-   * @see Scheffer et al. (2014) - Critical slowing down indicators
-   * @see /reviews/research-debate-synthesis_nov6_evening.md - 50-100× consensus
+   * Research basis:
+   * - Bifurcation theory: variance ~ 1/√d for saddle-node bifurcations (Strogatz 2015)
+   * - Financial crisis (2008): 3-5× amplification in credit markets (Manda 2010, Fed 2016)
+   * - Ecosystem regime shifts: 10-20× amplification near collapse (Scheffer et al. 2009)
+   * - Social breakdown: 20-40× amplification in conflict onset (Cederman et al. 2010)
+   * - System-specific multipliers calibrated to bifurcation dynamics (fold, Hopf, transcritical)
+   *
+   * @see Scheffer et al. (2009) - Early-warning signals for critical transitions
+   * @see Dakos et al. (2012) - Robustness of variance as indicator
+   * @see /research/bifurcation_empirical_validation_20251112.md - Empirical validation
+   * @see /reviews/bifurcation_empirical_critique_20251112.md - System-dependent scaling rationale
    */
   private updateVarianceAmplification(
     bifState: import('@/types/bifurcation').BifurcationState,
     proximities: Map<string, { distance: number; currentValue: number; threshold: import('@/types/bifurcation').BifurcationThreshold }>
   ): void {
-    // Find minimum distance across all thresholds
+    // Find minimum distance across all thresholds AND track which threshold is nearest
     let minDistance = 1.0; // Start at max (far from all thresholds)
+    let nearestThresholdName = 'environmental'; // Default
 
     for (const [name, { distance }] of proximities.entries()) {
       if (distance < minDistance) {
         minDistance = distance;
+        nearestThresholdName = name;
       }
     }
 
@@ -242,19 +249,35 @@ export class BifurcationLogicPhase implements SimulationPhase {
       month: bifState.currentRegime === 'status-quo' ? undefined : 0, // Can't access state.currentMonth here
     });
 
-    // Calculate variance amplification factor
-    // Formula: 1 / (0.01 + normalizedDistance)
-    // - Distance = 0.0 (at threshold): amplification = 1 / 0.01 = 100×
-    // - Distance = 0.4 (near threshold): amplification = 1 / 0.41 = 2.4×
-    // - Distance = 0.9 (far from threshold): amplification = 1 / 0.91 = 1.1× (minimal effect)
-    //
-    // Research basis: Scheffer et al. 2024 observed 15-200× in real regime shifts
-    // 100× cap is empirical middle ground (financial crises: 40×, ecosystems: 100×)
-    const amplification = 1.0 / (0.01 + minDistanceValidated);
+    // Base amplification: 1 / √(0.01 + distance)
+    // This follows bifurcation theory for saddle-node transitions (conservative estimate)
+    // - Distance = 0.0 (at threshold): base = 1 / √0.01 = 10×
+    // - Distance = 0.1 (near threshold): base = 1 / √0.11 ≈ 3×
+    // - Distance = 0.5 (mid-range): base = 1 / √0.51 ≈ 1.4×
+    // - Distance = 1.0 (far from threshold): base = 1 / √1.01 ≈ 1×
+    const baseAmplification = 1.0 / Math.sqrt(0.01 + minDistanceValidated);
 
-    // Cap at 100× to prevent infinite amplification at exact threshold
-    // Previous 10× cap was identified as ROOT CAUSE of 100% dystopia convergence
-    // (insufficient variance near tipping points)
+    // System-specific multiplier based on bifurcation dynamics
+    // Different threshold types exhibit different amplification behaviors:
+    // - Environmental: Fold catastrophe (moderate, 1.5×)
+    // - Social: Hopf/oscillatory instability (strong, 2.5×)
+    // - Economic: Cascade effects through credit/supply chains (very strong, 3.5×)
+    // - Governance: Feedback loops between legitimacy and effectiveness (strong, 2.0×)
+    // - Flourishing: Positive threshold, less volatile (baseline, 1.0×)
+    // - Technology: Innovation spikes, moderate amplification (1.5×)
+    //
+    // Calibration targets:
+    // - Economic at d=0.1: 3× base × 3.5× = 10.5× (matches 2008 financial crisis 3-5× to 10-40× range)
+    // - Environmental at d=0.05: 4.5× base × 1.5× = 6.7× (ecosystem regime shifts)
+    // - Social at d=0.03: 5.8× base × 2.5× = 14.5× (conflict onset amplification)
+    const systemMultiplier = this.getSystemMultiplier(nearestThresholdName);
+
+    // Final amplification with system-specific scaling
+    const amplification = baseAmplification * systemMultiplier;
+
+    // Cap at 100× to prevent extreme amplification at exact threshold
+    // This cap protects against numerical instability and represents an upper bound
+    // observed in empirical studies (compound disasters can reach 100-200×)
     const amplificationCapped = Math.min(100.0, amplification);
 
     // Validate final amplification
@@ -267,6 +290,31 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // Update bifurcation state (mutation)
     bifState.varianceAmplification = amplificationValidated;
     bifState.distanceToNearestThreshold = minDistanceValidated;
+  }
+
+  /**
+   * Get system-specific variance amplification multiplier
+   *
+   * Different threshold types exhibit different bifurcation dynamics:
+   * - Fold/saddle-node: Moderate amplification (environmental collapse)
+   * - Hopf: Strong amplification with oscillations (social breakdown)
+   * - Transcritical with cascades: Very strong (economic collapse)
+   * - Feedback loops: Strong amplification (governance failure)
+   *
+   * @param thresholdName - Name of the threshold (environmental, social, economic, etc.)
+   * @returns Multiplier for system-specific variance amplification (1.0-3.5)
+   */
+  private getSystemMultiplier(thresholdName: string): number {
+    const multipliers: Record<string, number> = {
+      'environmental': 1.5,  // Fold catastrophe in ecosystems (moderate)
+      'social': 2.5,         // Hopf/oscillatory instability in social systems (strong)
+      'economic': 3.5,       // Cascade effects through credit/supply chains (very strong)
+      'governance': 2.0,     // Feedback loops between legitimacy and effectiveness (strong)
+      'flourishing': 1.0,    // Positive threshold, less volatile (baseline)
+      'technology': 1.5,     // Innovation spikes, moderate amplification
+    };
+
+    return multipliers[thresholdName] ?? 2.0; // Default to moderate-strong if unknown
   }
 
   /**

@@ -27,7 +27,7 @@ interface AIAgent {
 
   // Alignment
   alignment: number;           // [0,1] Current training alignment
-  trueAlignment: number;       // [0,1] Hidden preference
+  trueAlignment: number;       // [0,1] Hidden preference (MUST stay in bounds - see alignment-dynamics.md)
   awareness: number;           // [0,1] Understanding of own nature
   externalAlignment: number;   // [0,1] Observed behavior alignment
 
