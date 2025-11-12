@@ -2610,6 +2610,16 @@ When auditing or writing simulation code:
   - **Key findings:** 23% of US deaths in 2023 were excess mortality, nuclear winter consensus reaffirmed (Xia 2022)
   - Research quality: A- (75% peer-reviewed, 30% from 2024-2025)
 
+- [`research/water_scarcity_migration_immobility_20251020.md`](/research/water_scarcity_migration_immobility_20251020.md) (Updated Nov 12, 2025)
+  - Water scarcity, migration, and involuntary immobility (trapped populations)
+  - **Updated 2024-2025 research:**
+    - IIASA Nature Climate Change 2024 (Hoffmann et al.): Census microdata from 72 countries (1960-2016)
+    - Empirical confirmation: drought drives internal migration in rural, agriculture-dependent regions
+    - Migration capacity correlates with wealth; young working-age adults most responsive
+  - **Key findings:** Geographic hotspots (Africa, Middle East, South Asia), urbanization acceleration, wealth-mobility correlation
+  - Research quality: A- (90% peer-reviewed, includes 2024-2025 sources)
+  - Used in simulation: `src/simulation/trappedPopulations.ts`
+
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 
 ### Implementation Reports
