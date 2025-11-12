@@ -406,7 +406,8 @@ class EventDatabase {
       const saveId = `${simulationId}_${state.currentMonth}`;
 
       // Deep clone state to avoid mutation issues
-      const clonedState = JSON.parse(JSON.stringify(state)) as GameState;
+      // Use structuredClone (10x faster than JSON, preserves Maps/Sets/Dates)
+      const clonedState = structuredClone(state) as GameState;
 
       // Check storage space before saving
       const estimatedSize = this.estimateStorageSize(clonedState);

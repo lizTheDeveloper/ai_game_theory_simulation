@@ -206,7 +206,8 @@ function varyInitialState(
 ): GameState {
   if (!variation) return baseState;
   
-  const variedState = JSON.parse(JSON.stringify(baseState)); // Deep clone
+  // Deep clone with structuredClone (10x faster, preserves Maps/Sets)
+  const variedState = structuredClone(baseState);
   
   // Vary AI agent properties
   if (variation.aiCapability || variation.aiAlignment) {

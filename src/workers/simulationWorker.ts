@@ -1027,7 +1027,8 @@ async function performStep() {
   if (simulationId && state.currentMonth % 5 === 0) {
     try {
       // Deep clone state before saving to avoid mutation issues
-      const stateToSave = JSON.parse(JSON.stringify(state));
+      // Use structuredClone (10x faster than JSON, preserves Maps/Sets/Dates)
+      const stateToSave = structuredClone(state);
 
       await eventDatabase.saveSimulation(simulationId, stateToSave);
 
