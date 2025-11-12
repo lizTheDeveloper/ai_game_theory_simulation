@@ -489,15 +489,47 @@ export function updateWetBulbTemperatureSystem(
           }
         );
 
-        // Calculate exposed population
+        // FIX (Nov 12, 2025): Scale regional population by global population fraction
+        // Regional populations are 2025 baselines - need to scale down if global population declined
+        // Allow very low fractions (0.001 = 8M remaining, 99.9875% die-off) for extreme scenarios
+        const globalPopFraction = assertInRange(
+          state.humanPopulationSystem.population / 8.0,  // 8.0B = 2025 baseline
+          0.001,  // Minimum 8M global population (extreme die-off)
+          2.0,    // Maximum 16B (population doubling - unlikely but theoretically possible)
+          {
+            location: 'updateWetBulbTemperatureSystem.heatEvent',
+            valueName: 'globalPopFraction',
+            month: state.currentMonth,
+            additionalInfo: {
+              currentPopulation: state.humanPopulationSystem.population,
+              baseline: 8.0
+            }
+          }
+        );
+
+        // Current regional population (scaled from 2025 baseline)
+        const currentRegionalPopulation = assertFinite(
+          regionalClimate.population * globalPopFraction,
+          {
+            location: 'updateWetBulbTemperatureSystem.heatEvent',
+            valueName: 'currentRegionalPopulation',
+            month: state.currentMonth,
+            additionalInfo: {
+              baselinePopulation: regionalClimate.population,
+              scalingFactor: globalPopFraction
+            }
+          }
+        );
+
+        // Calculate exposed population (from current regional population)
         const exposedPopulation = assertFinite(
-          regionalClimate.population * threshold.exposureFraction,
+          currentRegionalPopulation * threshold.exposureFraction,
           {
             location: 'updateWetBulbTemperatureSystem.heatEvent',
             valueName: 'exposedPopulation',
             month: state.currentMonth,
             additionalInfo: {
-              totalPopulation: regionalClimate.population,
+              totalPopulation: currentRegionalPopulation,
               exposureFraction: threshold.exposureFraction
             }
           }
@@ -704,27 +736,16 @@ function applyWetBulbMortality(state: GameState, event: WetBulbEvent): void {
 
   const population = state.humanPopulationSystem;
 
-  // FIX (Nov 6, 2025): Unit mismatch bug - event.deaths is in MILLIONS, population.population is in BILLIONS
-  // Previous calculation: deaths(M) / population(B) = 1000× too high
-  // Correct calculation: deaths(M) / (population(B) × 1000 = population in M)
-  // Research: Ballester et al. (2024) - heat waves cause 0.1-0.5% excess mortality, not 5%
+  // FIX (Nov 12, 2025): Mortality rate exceeding 100% bug
+  // Previous bug: Divided regional deaths by GLOBAL population
+  // When global pop = 1B (1000M), South Asia deaths = 1.38M → rate = 1.38/1000 = 0.138% (WRONG - too low)
+  // But when calculating backwards: deaths already includes proper mortality rate from event generation
+  // The correct regional population is: exposedPopulation / exposureFraction
+  //
+  // Research: Event mortality rates are already calculated correctly (0.1-15% of exposed die)
+  // We need to apply these as regional mortality risks to the global population system
 
-  // Validate population before division
-  const populationBillions = assertFinite(population.population, {
-    location: 'applyWetBulbMortality',
-    valueName: 'population.population',
-    month: state.currentMonth,
-  });
-
-  // Convert to millions for mortality rate calculation
-  const populationMillions = assertFinite(populationBillions * 1000, {
-    location: 'applyWetBulbMortality',
-    valueName: 'populationMillions',
-    month: state.currentMonth,
-    additionalInfo: { populationBillions }
-  });
-
-  // Validate deaths before division
+  // Validate deaths
   const deathsMillions = assertFinite(event.deaths, {
     location: 'applyWetBulbMortality',
     valueName: 'event.deaths',
@@ -732,13 +753,35 @@ function applyWetBulbMortality(state: GameState, event: WetBulbEvent): void {
     additionalInfo: { region: event.region }
   });
 
-  // Calculate mortality rate and validate it's a probability
+  // Calculate regional population from event data
+  // exposedPopulation = regionalPopulation × exposureFraction
+  // → regionalPopulation = exposedPopulation / exposureFraction
+  const regionalPopulationMillions = assertFinite(
+    event.exposedPopulation / event.exposureFraction,
+    {
+      location: 'applyWetBulbMortality',
+      valueName: 'regionalPopulationMillions',
+      month: state.currentMonth,
+      additionalInfo: {
+        exposedPopulation: event.exposedPopulation,
+        exposureFraction: event.exposureFraction,
+        region: event.region
+      }
+    }
+  );
+
+  // Calculate mortality rate as fraction of REGIONAL population (not global)
   const mortalityRate = assertProbability(
-    deathsMillions / populationMillions,
+    deathsMillions / regionalPopulationMillions,
     {
       location: 'applyWetBulbMortality',
       valueName: 'mortalityRate',
       month: state.currentMonth,
+      additionalInfo: {
+        deaths: deathsMillions,
+        regionalPopulation: regionalPopulationMillions,
+        region: event.region
+      }
     }
   );
 
