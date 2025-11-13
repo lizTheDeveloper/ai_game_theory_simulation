@@ -814,7 +814,36 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     month: state.currentMonth,
     additionalInfo: { pollutionLevel }
   });
-  system.boundaries.novel_entities.currentValue = novelEntitiesValue;
+
+  // IRREVERSIBILITY LOGIC (Nov 13, 2025)
+  // Research: Cousins et al. (2022), Kane et al. (2022)
+  // PFAS, microplastics have global atmospheric distribution - cannot clean below ~90% of peak contamination
+  // ⚠️ HIGH UNCERTAINTY: 90% irreversible fraction derived from mechanisms, not measured. Range: 80-95% (Quality Gate 2)
+  const novelEntitiesBoundary = system.boundaries.novel_entities;
+
+  // Track historical peak contamination
+  if (novelEntitiesBoundary.peak === undefined) {
+    novelEntitiesBoundary.peak = novelEntitiesValue;
+  } else {
+    novelEntitiesBoundary.peak = Math.max(novelEntitiesBoundary.peak, novelEntitiesValue);
+  }
+
+  // Irreversible floor: 90% of peak contamination (atmospheric distribution prevents full cleanup)
+  const irreversibleFraction = 0.90; // MODERATE estimate (10% reversible via point-source cleanup)
+  const irreversibleFloor = novelEntitiesBoundary.peak * irreversibleFraction;
+
+  // Apply floor: Cannot clean below 90% of historical peak
+  const flooredValue = Math.max(irreversibleFloor, novelEntitiesValue);
+
+  // Log if floor is active
+  if (flooredValue > novelEntitiesValue && state.currentMonth % 12 === 0) {
+    console.log(`  ☢️ Novel Entities Irreversibility Floor Active:`);
+    console.log(`     Peak: ${novelEntitiesBoundary.peak.toFixed(3)} | Floor (90%): ${irreversibleFloor.toFixed(3)}`);
+    console.log(`     Attempted: ${novelEntitiesValue.toFixed(3)} | Actual: ${flooredValue.toFixed(3)}`);
+    console.log(`     Cousins 2022: Global PFAS distribution prevents full remediation`);
+  }
+
+  system.boundaries.novel_entities.currentValue = flooredValue;
   updateBoundaryStatus(system.boundaries.novel_entities);
 
   // Ocean acidification (ARCH-4 Integration: Direct pH mapping)
