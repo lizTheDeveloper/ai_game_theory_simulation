@@ -28,6 +28,23 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: Bifurcation Time Series Instrumentation (CRITICAL-1)** (commit 95f8ddb)
+- 📊 **Feature Added:** Export month-by-month bifurcation metrics for variance amplification validation
+- 🎯 **Purpose:** Unblocks Priya validation of 87.2% mortality overshoot (+50% vs 43-58% target)
+- 🔧 **Implementation:**
+  1. Add `amplificationTimeSeries` to RunResult interface (scripts/monteCarloSimulation.ts)
+     - Track amplification, threshold distance, nearest system per month
+     - Export in 2 locations: per-run event logs + final results
+  2. New analysis script: scripts/analyzeBifurcationMetrics.ts
+     - System-specific amplification statistics
+     - Distribution analysis (P50, P75, P90, P95, P99)
+     - Calibration recommendations for system multipliers
+- 📈 **Output:** Time series data enables validation of variance amplification patterns
+- ✅ **Validation:** Smoke test (N=1, 12 months) confirms data export, analysis script processes successfully
+- 📊 **Example Finding:** Governance 12.43× avg amplification (consider reducing)
+- 🔬 **Next:** Run N=30 validation for full statistical analysis
+- **Files:** scripts/monteCarloSimulation.ts, scripts/analyzeBifurcationMetrics.ts
+
 **Nov 13: End-Game Extinction Logic Fix** (commit c61a4cb)
 - ✅ **Bug Fixed:** End-game scenarios (AI civil war, misaligned AI dominance) locked outcome to 'extinction' without verifying population actually declined below 10K threshold
 - 🔍 **Root Cause:** 4 lockOutcome('extinction') paths didn't check population, causing assertion failure when population remained high
