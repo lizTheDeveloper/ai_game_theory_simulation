@@ -1007,6 +1007,13 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🔬 **NEW:** Verify biochar and ocean iron fertilization parameters (research/verification_2f9df5b_20251113.md, commit 2f9df5b) - **11 claims requiring Layer 1+2 verification** including:
+  - Biochar: 0.7-1.8 Gt CO₂/year (npj Materials Sustainability 2025, Nature Comm Earth Environ 2025)
+  - Biochar: 61% soil carbon enhancement (Biochar journal 2024, 75-study meta-analysis)
+  - Ocean iron: $7-$4,691/t CO₂ cost range (Emerson et al. 2024, Earth's Future)
+  - Ocean iron: Regional efficiency tiers - Antarctic Shelf <$100/t vs offshore >$1,000/t (Bach et al. 2023, GBC)
+  - **Priority:** HIGH (addresses "Low Confidence" research gaps in climate_deployment_timescales_20251113.md)
+  - **Impact:** Will update TIER 1 climate tech parameters when validated
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)

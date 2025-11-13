@@ -43,6 +43,23 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📖 **Context:** End-game system now respects population-based extinction threshold (events that don't kill >99.9999% of humanity → dystopia, not extinction)
 - **File:** src/simulation/endGame.ts
 
+**Nov 13: Climate Technology Research - Biochar and Ocean Iron Fertilization** (commit 2f9df5b)
+- 📚 **Research Update:** Added two new research documents addressing critical gaps in climate deployment timescales
+- 🔬 **New Sources:** 14 peer-reviewed papers (2023-2025) from Nature family journals, AGU, Springer
+- 📊 **Biochar Sequestration:** Narrowed estimate from 1-3 Gt/yr to **0.7-1.8 Gt CO₂/year** (central)
+  - Based on 2025 Nature synthesis (19 studies) + npj Materials Sustainability review
+  - 61% soil carbon enhancement validated (meta-analysis of 75 studies)
+  - Strong field validation, gigaton-scale potential confirmed
+- 💰 **Ocean Iron Fertilization:** Quantified 100-fold cost variation: **$7-4,691/t CO₂**
+  - Regional tiers: Antarctic Shelf (<$100/t) vs offshore Southern Ocean (>$1,000/t)
+  - Aerial delivery 30-40% cheaper than ship-based (available post-2030)
+  - MRV costs critical: $5-2,000/t depending on regulatory compliance tier
+- ⚠️ **Status:** AWAITING VALIDATION - Research verification file created (research/verification_2f9df5b_20251113.md)
+- 📖 **Research Files:**
+  - `research/biochar_sequestration_potential_20251113.md` (312 lines, 7 citations)
+  - `research/ocean_iron_fertilization_cost_effectiveness_20251113.md` (370 lines, 7 citations)
+  - `research/verification_2f9df5b_20251113.md` (verification spec for orchestrator)
+
 **Nov 13: Deployment Timeline Research Enhancement** (commit 93cbbc4)
 - 📚 **Research Update:** Added 2025 healthcare AI adoption study to organizational deployment timelines
 - 🔬 **New Source:** Poon et al. (2025) - JAMIA peer-reviewed survey of US healthcare AI deployment
