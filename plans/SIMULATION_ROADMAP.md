@@ -950,6 +950,12 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 13):** Verify biodiversity extinction rates + nuclear winter parameters (research/verification_1cd141d_20251113.md, commit 1cd141d) - **13 citations (5 biodiversity + 8 nuclear) requiring Layer 1+2 verification**:
+  - **Biodiversity:** IPBES 2019, Wiens et al. 2022, UN Environment 2024 - Claims: "1M species threatened", "100-10,000× extinction rate", "25% threatened"
+  - **Nuclear Winter:** Xia et al. 2022 (Nature Food), Penn State 2025, Robock 2007-2024, Mills 2014 - Claims: "5-165 Mt soot", "2-5B famine deaths", "0.06°C/Mt cooling"
+  - **Existing Code:** src/simulation/planetaryBoundaries.ts (extinctionRate: 35-180 E/MSY), src/simulation/engine/phases/NuclearWinterPhase.ts (soot 0-150 Mt)
+  - **Priority:** HIGH (backs existing simulation mechanics, 16 priority claims identified)
+  - **Red Flags:** Penn State 2025 accessibility, precise coefficients (0.06°C/Mt, 8%/°C), Wiens year inconsistency (2022 vs 2024)
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)
