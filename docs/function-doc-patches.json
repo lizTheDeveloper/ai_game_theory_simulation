@@ -120,7 +120,11 @@
     "doc": "decayDetectionRisk for social cohesion and trust dynamics."
   },
   {
+<<<<<<< HEAD
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/comprehensiveTechTree.ts",
+=======
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+>>>>>>> origin/auto/researcher-20251111_003001
     "line": 1800,
     "name": "getAllTech",
     "doc": " Returns array of results."
