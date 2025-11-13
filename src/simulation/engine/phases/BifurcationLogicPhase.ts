@@ -44,8 +44,8 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // Calculate proximity to all thresholds
     const proximities = this.calculateProximities(state, bifState);
 
-    // Update variance amplification based on nearest threshold
-    this.updateVarianceAmplification(bifState, proximities);
+    // Update variance amplification based on nearest threshold (pass currentMonth for time-based scaling)
+    this.updateVarianceAmplification(bifState, proximities, state.currentMonth);
 
     // Check for threshold crossings and update regime
     this.checkThresholdCrossings(state, bifState, proximities);
@@ -219,6 +219,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * - Manda (2010), Fed (2016) - Financial crises: cascade effects, 3.5× multiplier (2008 VIX calibrated)
    * - Bifurcation theory - Base amplification: 1/√(distance), governs generic threshold proximity
    * - Permian-Triassic extinction - Max amplification: 100× (empirical upper bound)
+   * - Arumugam et al. (2024) Ecology - Rate-dependent transitions: time-based scaling (Nov 13 2025)
    *
    * System-dependent multipliers account for different bifurcation dynamics:
    * - Environmental: fold catastrophe (Scheffer et al. 2024)
@@ -228,13 +229,18 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * - Flourishing: positive feedback loops (innovation cascades) - INCREASED from 1.0× to 2.0× (Nov 13 2025 - fix dystopia bias)
    * - Technology: innovation spike dynamics - INCREASED from 1.0× to 2.0× (Nov 13 2025 - breakthrough cascades)
    *
+   * Time-based scaling (Nov 13 2025): Multipliers scale from 0.5× (early) to 1.0× (late)
+   * to fix mortality overshoot (87.2% → target 43-58%). Systems build resilience over time.
+   *
    * @see /research/bifurcation_empirical_validation_20251112.md - Grade B+ from Sylvia
+   * @see /research/bifurcation_instrumentation_calibration_20251113.md - Time-based scaling
    * @see Scheffer et al. (2014) - Critical slowing down indicators
    * @see Dakos et al. (2012) - Variance in ecosystem regime shifts
    */
   private updateVarianceAmplification(
     bifState: import('@/types/bifurcation').BifurcationState,
-    proximities: Map<string, { distance: number; currentValue: number; threshold: import('@/types/bifurcation').BifurcationThreshold }>
+    proximities: Map<string, { distance: number; currentValue: number; threshold: import('@/types/bifurcation').BifurcationThreshold }>,
+    currentMonth: number
   ): void {
     // Find minimum distance across all thresholds and track which system
     let minDistance = 1.0; // Start at max (far from all thresholds)
@@ -251,7 +257,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
     const minDistanceValidated = assertInRange(minDistance, 0, 1, {
       location: 'BifurcationLogicPhase.updateVarianceAmplification',
       valueName: 'minDistance',
-      month: bifState.currentRegime === 'status-quo' ? undefined : 0, // Can't access state.currentMonth here
+      month: currentMonth,
     });
 
     // Calculate base amplification using bifurcation theory formula
@@ -265,9 +271,9 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // (Scheffer et al. 2009, standard dynamical systems textbook result)
     const baseAmplification = 1.0 / Math.sqrt(0.01 + minDistanceValidated);
 
-    // Apply system-dependent multiplier
+    // Apply system-dependent multiplier with time-based scaling (Nov 13 2025)
     // Different systems exhibit different amplification dynamics based on bifurcation type
-    const systemMultiplier = this.getSystemMultiplier(nearestThresholdName);
+    const systemMultiplier = this.getSystemMultiplier(nearestThresholdName, currentMonth);
 
     // Final amplification: base × system multiplier
     const amplification = baseAmplification * systemMultiplier;
@@ -299,11 +305,20 @@ export class BifurcationLogicPhase implements SimulationPhase {
       // We don't track n explicitly, so use weighted average with 0.95 decay
       bifState.metrics.avgDistanceToThresholds =
         bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
+
+      // Record time series entry for variance amplification tracking (Nov 13, 2025)
+      // Enables Priya validation of bifurcation dynamics
+      bifState.metrics.amplificationTimeSeries.push({
+        month: currentMonth,
+        amplification: amplificationValidated,
+        distanceToNearest: minDistanceValidated,
+        nearestSystem: nearestThresholdName,
+      });
     }
   }
 
   /**
-   * Get system-dependent amplification multiplier
+   * Get system-dependent amplification multiplier with time-based scaling
    *
    * Different systems exhibit different variance amplification near thresholds
    * based on their underlying bifurcation dynamics.
@@ -316,11 +331,22 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * - Flourishing (2.0×): Positive feedback loops (INCREASED from 1.0×, Nov 13 2025 - fix dystopia bias)
    * - Technology (2.0×): Innovation cascades (INCREASED from 1.0×, Nov 13 2025 - breakthrough amplification)
    *
+   * Time-based scaling (Nov 13 2025 - Arumugam et al. 2024 Ecology):
+   * - Early months (0-60): ~0.5× multipliers (systems build resilience, reduced vulnerability)
+   * - Mid months (60-180): Smooth sigmoid transition (0.5× → 1.0×)
+   * - Late months (180+): ~1.0× multipliers (full vulnerability, accumulated stresses)
+   *
+   * Rationale: Fixes mortality overshoot (87.2% → target 43-58%). Rate-dependent transitions
+   * show different dynamics in fast vs. slow scenarios. Early simulation represents systems
+   * building resilience; late simulation shows accumulated vulnerabilities.
+   *
    * @param thresholdName - Name of threshold system (environmental, social, economic, etc.)
-   * @returns Multiplier for system-specific bifurcation dynamics
+   * @param currentMonth - Current simulation month (0-240+)
+   * @returns Time-scaled multiplier for system-specific bifurcation dynamics
    */
-  private getSystemMultiplier(thresholdName: string): number {
-    const multipliers: Record<string, number> = {
+  private getSystemMultiplier(thresholdName: string, currentMonth: number): number {
+    // Base multipliers (full strength at late-game)
+    const baseMultipliers: Record<string, number> = {
       'environmental': 1.5,  // Fold catastrophe (Scheffer et al. 2024)
       'social': 2.5,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012)
       'economic': 2.5,       // Cascade effects (REDUCED from 3.5× - Nov 13 2025, architecture review)
@@ -330,14 +356,51 @@ export class BifurcationLogicPhase implements SimulationPhase {
     };
 
     // Validate threshold name to catch typos/misconfigurations
-    const multiplier = multipliers[thresholdName];
+    const baseMultiplier = baseMultipliers[thresholdName];
 
-    if (multiplier === undefined) {
+    if (baseMultiplier === undefined) {
       console.log(`⚠️ Unknown threshold name in bifurcation multiplier: ${thresholdName}, defaulting to 2.0`);
-      return 2.0; // Generic default if threshold type not recognized
+      // Still apply time-scaling to unknown thresholds
+      const centerMonth = 120;
+      const transitionWidth = 60;
+      const progress = (currentMonth - centerMonth) / transitionWidth;
+      const timeScaling = 0.5 + 0.5 / (1 + Math.exp(-progress));
+      return 2.0 * timeScaling;
     }
 
-    return multiplier;
+    // Time-based scaling using sigmoid function (Nov 13 2025)
+    // Research basis: Arumugam et al. (2024 Ecology) - Rate-dependent transitions
+    //
+    // Early simulation (months 0-60): ~0.5× multipliers
+    //   Systems are building resilience, infrastructure, institutions
+    //   Vulnerabilities haven't accumulated yet
+    //
+    // Mid simulation (months 60-180): Smooth transition
+    //   Gradual accumulation of stresses and vulnerabilities
+    //
+    // Late simulation (months 180+): 1.0× multipliers (full vulnerability)
+    //   Accumulated environmental debt, social cohesion decay, tech risk
+    //   Systems under maximum stress
+    const centerMonth = 120; // Midpoint of transition (10 years)
+    const transitionWidth = 60; // ±60 months (10-year total transition window)
+    const progress = (currentMonth - centerMonth) / transitionWidth;
+
+    // Sigmoid: smooth S-curve from 0.5 to 1.0
+    // progress = -2 (month 0): exp(2) = 7.4, sigmoid ≈ 0.5 + 0.5/(1+7.4) ≈ 0.56
+    // progress = 0 (month 120): exp(0) = 1, sigmoid ≈ 0.5 + 0.5/2 = 0.75
+    // progress = 2 (month 240): exp(-2) = 0.14, sigmoid ≈ 0.5 + 0.5/1.14 ≈ 0.94
+    const timeScaling = 0.5 + 0.5 / (1 + Math.exp(-progress));
+
+    // Validate time scaling is in expected range [0.5, 1.0]
+    const timeScalingValidated = assertInRange(timeScaling, 0.4, 1.1, {
+      location: 'BifurcationLogicPhase.getSystemMultiplier',
+      valueName: 'timeScaling',
+      month: currentMonth,
+      additionalInfo: { progress, centerMonth, transitionWidth }
+    });
+
+    // Apply time scaling to base multiplier
+    return baseMultiplier * timeScalingValidated;
   }
 
   /**

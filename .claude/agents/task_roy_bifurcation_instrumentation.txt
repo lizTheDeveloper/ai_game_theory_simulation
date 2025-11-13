@@ -1,0 +1,294 @@
+# Task: Bifurcation Instrumentation and Time-Based Scaling
+
+**Assignee:** Roy (simulation-maintainer)
+**Priority:** CRITICAL
+**Status:** Ready for Implementation
+**Research:** /research/bifurcation_instrumentation_calibration_20251113.md
+**Critique:** /reviews/bifurcation_instrumentation_critique_20251113.md (APPROVED ✅)
+
+## Summary
+
+Implement two CRITICAL changes to unblock Monte Carlo validation (Priya grade F → B+):
+
+1. **Time-Based Multiplier Scaling** - Fix 87.2% mortality overshoot (target: 43-58%)
+2. **Per-Run JSON Export** - Enable Priya validation of variance amplification
+
+## 1. Time-Based Multiplier Scaling
+
+**File:** `src/simulation/engine/phases/BifurcationLogicPhase.ts`
+**Location:** Line 322 (`getSystemMultiplier` method)
+
+**Current Code:**
+```typescript
+private getSystemMultiplier(thresholdName: string): number {
+  const multipliers: Record<string, number> = {
+    'environmental': 1.5,
+    'social': 2.5,
+    'economic': 2.5,
+    'governance': 2.0,
+    'flourishing': 2.0,
+    'technology': 2.0,
+  };
+  return multipliers[thresholdName] ?? 2.0;
+}
+```
+
+**New Code (Sylvia's sigmoid recommendation):**
+```typescript
+private getSystemMultiplier(
+  thresholdName: string,
+  currentMonth: number
+): number {
+  // Base multipliers (full strength late-game)
+  const baseMultipliers: Record<string, number> = {
+    'environmental': 1.5,
+    'social': 2.5,
+    'economic': 2.5,
+    'governance': 2.0,
+    'flourishing': 2.0,
+    'technology': 2.0,
+  };
+
+  const baseMultiplier = baseMultipliers[thresholdName] ?? 2.0;
+
+  // Time-based scaling (smooth sigmoid ramp)
+  // Early simulation (months 0-60): ~0.5× multipliers (reduced amplification)
+  // Mid simulation (months 60-180): Smooth transition
+  // Late simulation (months 180+): 1.0× multipliers (full amplification)
+  //
+  // Research basis: Arumugam et al. (2024 Ecology) - Rate-dependent transitions
+  // Fast scenarios (20-year simulation) show different dynamics than slow drift
+  const centerMonth = 120; // Midpoint of transition
+  const transitionWidth = 60; // ±60 months (10 years total transition window)
+  const progress = (currentMonth - centerMonth) / transitionWidth;
+  const timeScaling = 0.5 + 0.5 / (1 + Math.exp(-progress));
+  // Sigmoid ramps from ~0.5 (month 0) to ~1.0 (month 240)
+
+  return baseMultiplier * timeScaling;
+}
+```
+
+**Call Site Update:**
+Line 270 in `updateVarianceAmplification`:
+```typescript
+// OLD:
+const systemMultiplier = this.getSystemMultiplier(nearestThresholdName);
+
+// NEW:
+const currentMonth = bifState.metrics?.amplificationTimeSeries.length ?? 0;
+const systemMultiplier = this.getSystemMultiplier(nearestThresholdName, currentMonth);
+```
+
+**OR** pass currentMonth as parameter to `updateVarianceAmplification`:
+```typescript
+private updateVarianceAmplification(
+  bifState: BifurcationState,
+  proximities: Map<...>,
+  currentMonth: number  // ADD THIS
+): void {
+  // ...
+  const systemMultiplier = this.getSystemMultiplier(nearestThresholdName, currentMonth);
+}
+```
+
+**Call site in `execute` method (add currentMonth argument):**
+```typescript
+this.updateVarianceAmplification(state.bifurcationState, proximities, state.currentMonth);
+```
+
+## 2. Per-Run JSON Export
+
+**File:** `scripts/monteCarloSimulation.ts`
+**Location:** After each simulation run completes
+
+**Add at end of single run (after line ~400+):**
+```typescript
+// Export bifurcation metrics for Priya validation (Nov 13, 2025)
+function exportBifurcationMetrics(
+  finalState: GameState,
+  seed: number,
+  outputDir: string
+): void {
+  if (!finalState.bifurcationState.metrics) {
+    console.warn(`⚠️ Seed ${seed}: No bifurcation metrics available`);
+    return;
+  }
+
+  const metrics = finalState.bifurcationState.metrics;
+  const bifState = finalState.bifurcationState;
+
+  // Build per-domain bifurcation data
+  const domains = {
+    environmental: {
+      occurred: bifState.environmentalCollapseThreshold.crossed,
+      month: bifState.environmentalCollapseThreshold.crossedAt,
+      type: 'fold_catastrophe',
+      threshold: bifState.environmentalCollapseThreshold.location,
+    },
+    social: {
+      occurred: bifState.socialBreakdownThreshold.crossed,
+      month: bifState.socialBreakdownThreshold.crossedAt,
+      type: 'hopf_bifurcation',
+      threshold: bifState.socialBreakdownThreshold.location,
+    },
+    economic: {
+      occurred: bifState.economicCollapseThreshold.crossed,
+      month: bifState.economicCollapseThreshold.crossedAt,
+      type: 'cascade_amplification',
+      threshold: bifState.economicCollapseThreshold.location,
+    },
+    governance: {
+      occurred: bifState.governanceFailureThreshold.crossed,
+      month: bifState.governanceFailureThreshold.crossedAt,
+      type: 'feedback_loop',
+      threshold: bifState.governanceFailureThreshold.location,
+    },
+    technology: {
+      occurred: bifState.technologyBreakthroughThreshold.crossed,
+      month: bifState.technologyBreakthroughThreshold.crossedAt,
+      type: 'innovation_cascade',
+      threshold: bifState.technologyBreakthroughThreshold.location,
+    },
+    flourishing: {
+      occurred: bifState.flourishingThreshold.crossed,
+      month: bifState.flourishingThreshold.crossedAt,
+      type: 'positive_feedback',
+      threshold: bifState.flourishingThreshold.location,
+    },
+  };
+
+  // Extract time series data
+  const amplificationTimeSeries = metrics.amplificationTimeSeries.map(entry => ({
+    month: entry.month,
+    amplification: entry.amplification,
+    distanceToNearest: entry.distanceToNearest,
+    nearestSystem: entry.nearestSystem,
+  }));
+
+  // Build output JSON
+  const output = {
+    seed,
+    months: finalState.currentMonth,
+    outcome: classifyOutcome(finalState), // Use existing outcome classifier
+    finalPopulation: finalState.humanPopulationSystem.population,
+    finalQOL: finalState.qualityOfLifeSystems.aggregate.overall,
+    bifurcations: domains,
+    maxVarianceAmplification: metrics.maxVarianceAmplification,
+    avgDistanceToThresholds: metrics.avgDistanceToThresholds,
+    amplificationTimeSeries,
+    regimeShiftEvents: metrics.regimeShiftEvents,
+  };
+
+  // Write to file
+  const filename = path.join(outputDir, `bifurcation_metrics_seed${seed}.json`);
+  fs.writeFileSync(filename, JSON.stringify(output, null, 2), 'utf8');
+  console.log(`📊 Bifurcation metrics exported: ${filename}`);
+}
+
+// Call after each run:
+exportBifurcationMetrics(finalState, seed, outputDir);
+```
+
+**Helper function (add classifyOutcome if not already exported):**
+```typescript
+// Import from outcome classifier or implement simple version:
+function classifyOutcome(state: GameState): string {
+  const pop = state.humanPopulationSystem.population;
+  const qol = state.qualityOfLifeSystems.aggregate.overall;
+
+  if (pop < 1e8) return 'EXTINCTION';
+  if (pop < 1e9) return 'COLLAPSE';
+  if (qol < 20) return 'DYSTOPIA';
+  if (qol < 40) return 'STATUS_QUO';
+  if (qol < 60) return 'PROGRESS';
+  if (qol < 80) return 'FLOURISHING';
+  return 'UTOPIA';
+}
+```
+
+## 3. Amplification Time Series Recording (ALREADY EXISTS!)
+
+**Good news:** BifurcationState.metrics.amplificationTimeSeries already exists (line 217-222 in bifurcation.ts).
+
+**Verify it's being populated:**
+File: `src/simulation/engine/phases/BifurcationLogicPhase.ts`
+Line: ~290-302
+
+**Current code SHOULD already record time series:**
+```typescript
+if (bifState.metrics) {
+  // Update max amplification
+  if (amplificationValidated > bifState.metrics.maxVarianceAmplification) {
+    bifState.metrics.maxVarianceAmplification = amplificationValidated;
+  }
+
+  // Update average distance
+  bifState.metrics.avgDistanceToThresholds =
+    bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
+}
+```
+
+**ADD time series recording:**
+```typescript
+if (bifState.metrics) {
+  // Existing code...
+
+  // Record time series entry (Nov 13, 2025)
+  bifState.metrics.amplificationTimeSeries.push({
+    month: currentMonth, // Need to pass this as parameter
+    amplification: amplificationValidated,
+    distanceToNearest: minDistanceValidated,
+    nearestSystem: nearestThresholdName,
+  });
+}
+```
+
+**CRITICAL:** Need currentMonth parameter in `updateVarianceAmplification` method.
+
+## Implementation Steps
+
+1. **Modify `BifurcationLogicPhase.ts`:**
+   - Add `currentMonth` parameter to `updateVarianceAmplification` method
+   - Add `currentMonth` parameter to `getSystemMultiplier` method
+   - Implement sigmoid time-scaling (0.5× → 1.0× over 240 months)
+   - Record amplification time series entry each month
+
+2. **Modify `monteCarloSimulation.ts`:**
+   - Add `exportBifurcationMetrics` function
+   - Call after each run completes
+   - Export JSON to `monteCarloOutputs/bifurcation_metrics_seed{seed}.json`
+
+3. **Test:**
+   - Run Monte Carlo N=10 with seeds 42000-42009
+   - Verify JSON files created
+   - Verify mortality drops from 87.2% toward 43-58% range
+   - Verify determinism maintained (same seeds → same results)
+
+## Success Criteria
+
+- ✅ Time-based scaling implemented (sigmoid ramp 0.5× → 1.0×)
+- ✅ Per-run JSON exported (bifurcation_metrics_seed{seed}.json)
+- ✅ Amplification time series recorded per month
+- ✅ Mortality within 43-58% range (or closer than current 87.2%)
+- ✅ Determinism maintained (CV < 0.01% for same seeds)
+
+## Next Steps
+
+After implementation:
+1. Run Monte Carlo N=10 (seeds 42000-42009, 240 months)
+2. Priya validation of exported metrics
+3. Architecture-skeptic review (Quality Gate 2)
+4. Wiki documentation update
+5. Architect archival to /plans/completed/
+
+---
+
+**Research Citations:**
+- Arumugam et al. (2024 Ecology) - Rate-dependent transitions (time-based scaling)
+- Fang & Yan (2022) PMC8728956 - JSON/JData format for scientific Monte Carlo
+- Dakos et al. (2012) Ecology - Autocorrelation more robust than variance
+- Sylvia's critique (Nov 13, 2025) - Sigmoid ramp recommended over binary switch
+
+**Files Modified:**
+- src/simulation/engine/phases/BifurcationLogicPhase.ts (time-scaling, time series recording)
+- scripts/monteCarloSimulation.ts (JSON export)
