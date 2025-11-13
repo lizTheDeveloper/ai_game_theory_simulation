@@ -823,6 +823,10 @@ function runScenario(
   const rng = tempEngine.getRNG().next.bind(tempEngine.getRNG());
   const state = createDefaultInitialState(rng);
 
+  // Attach scenario to state (so ApplyScenarioPrioritiesPhase can read it)
+  // FIX (Nov 11, 2025): This was missing, causing all government priority scenarios to be ignored
+  (state as any).scenario = scenario;
+
   // Apply scenario modifications (cast to mutable type for runtime use)
   applyScenario(state, scenario as ScenarioDefinition, rng);
 

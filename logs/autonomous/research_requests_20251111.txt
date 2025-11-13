@@ -1,0 +1,67 @@
+🔬 RESEARCH REQUESTS FOR PARALLEL EXECUTION (Nov 11, 2025)
+
+**Context:** Scenario Analysis Framework Phase 3 implementation + Novel Entities gap analysis
+
+**TIER 1 CRITICAL - Novel Entities 0% Effectiveness:**
+
+1. **Energy Trap Analysis - PFAS Remediation at Scale**
+   - Need: Peer-reviewed studies on energy requirements for environmental-scale (not lab-scale) PFAS destruction
+   - Specific: Thermal destruction energy consumption (GJ/ton) for ng/L to μg/L concentrations (not concentrated waste streams)
+   - Question: Is cleanup energy requirement exceeding global renewable capacity?
+   - Why: God mode shows 0% Novel Entities improvement despite 7 pollution techs deployed
+   - Timeline: URGENT (blocks correct interpretation of god mode results)
+
+2. **Dilute vs. Concentrated Stream Remediation Economics**
+   - Need: Empirical cost ratios for remediation at environmental concentrations vs. concentrated streams
+   - Specific: Find studies comparing kWh/kg for treating <1 μg/L vs. >1000 mg/L contamination
+   - Question: Do cleanup techs only work on concentrated waste (6-9 orders of magnitude gap)?
+   - Why: May explain 0% god mode effectiveness - techs work in lab, not at environmental scale
+   - Timeline: URGENT
+
+3. **Irreversibility Framework - Novel Entities**
+   - Need: Define what fraction of novel entity contamination is reversible vs. permanently distributed
+   - Specific: Cousins 2022 shows global PFAS in rainwater - atmospheric transport means local cleanup is futile
+   - Question: Should novel entities be modeled as irreversible stock (like extinctions)?
+   - Why: May need paradigm shift from "cleanup tech improves boundary" to "prevention stops worsening"
+   - Timeline: HIGH (affects model architecture)
+
+4. **Montreal Protocol Effectiveness Ratios**
+   - Need: Quantify production ban contribution vs. cleanup contribution in CFC phase-out success
+   - Specific: What % of ozone recovery came from stopping production vs. removing existing CFCs?
+   - Question: Is prevention >>>>> cleanup for novel entities?
+   - Why: May need TIER 0 "Global PFAS Production Ban" tech (currently missing)
+   - Timeline: HIGH
+
+**TIER 2 HIGH - Scenario Analysis Framework Research:**
+
+5. **Transition Mortality - Coordinated vs. Uncoordinated Technology Deployment**
+   - Need: Historical mortality rates during rapid technology transitions
+   - Specific: Great Leap Forward (coerced), USSR collectivization (forced) vs. peaceful transitions with governance support
+   - Question: What's baseline mortality for uncoordinated rapid tech deployment?
+   - Why: God mode shows 30% mortality with all tech deployed month 0 - is this research-backed?
+   - Timeline: HIGH (informs scenario design)
+
+6. **AI Coordination Mechanisms - Optimal Deployment Scheduling**
+   - Need: Literature on coordinated technology rollout, adaptive deployment based on regional readiness
+   - Specific: How does aligned AI manage transition to minimize disruption?
+   - Question: Need to model CoordinatedDeploymentPhase (currently missing)?
+   - Why: Current model has "AI unlocks tech" but not "AI manages rollout"
+   - Timeline: MEDIUM (Phase 3 enhancement)
+
+7. **Governance Sufficiency Thresholds**
+   - Need: Empirical thresholds for trust, institutional quality, democracy that enable cooperative spirals
+   - Specific: What Gini coefficient, trust in AI, government effectiveness enables coordinated action?
+   - Question: Can we define minimum conditions for spiral activation?
+   - Why: Testing governance priority scenarios (Climate First, Equality First, etc.)
+   - Timeline: HIGH (directly supports Phase 3 scenarios)
+
+**DELIVERABLES NEEDED:**
+- Research summaries with parameter extraction (peer-reviewed sources, 2024-2025 preferred)
+- Contradictory evidence identification (Sylvia's role)
+- Mechanism descriptions (not just effects)
+- Implementation recommendations (for Roy)
+
+**COORDINATION:**
+- Cynthia: Literature search and synthesis
+- Sylvia: Critical review and contradiction detection
+- Priority order: 1, 2, 3, 4, 7, 5, 6 (Novel Entities most urgent)
