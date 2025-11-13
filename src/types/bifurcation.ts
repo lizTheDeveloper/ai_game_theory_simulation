@@ -197,6 +197,11 @@ export interface BifurcationState {
    * - Max amplification (100× based on Permian-Triassic extinction)
    * - Amplification distribution (should match historical regime shift patterns)
    *
+   * Time series added Nov 13, 2025 (CRITICAL-2 follow-up) for Priya validation:
+   * - Track amplification month-by-month (not just peak/average)
+   * - Track distance month-by-month (see approach to thresholds)
+   * - Enable pre/post bifurcation variance analysis
+   *
    * @see /reviews/bifurcation_empirical_architecture_review_20251113.md
    */
   metrics?: {
@@ -207,6 +212,14 @@ export interface BifurcationState {
       amplification: number;  // Variance amplification at time of shift
     }>;
     avgDistanceToThresholds: number;  // Average distance across all months
+
+    // Time series (Nov 13, 2025 - for Priya validation)
+    amplificationTimeSeries: Array<{
+      month: number;
+      amplification: number;  // Variance amplification at this month
+      distanceToNearest: number;  // Distance to nearest threshold (0.0 - 1.0)
+      nearestSystem: string;  // Which system is nearest to threshold
+    }>;
   };
 }
 
@@ -296,6 +309,7 @@ export function initializeBifurcationState(rng: () => number): BifurcationState 
       maxVarianceAmplification: 1.0,
       regimeShiftEvents: [],
       avgDistanceToThresholds: 1.0,
+      amplificationTimeSeries: [],  // Nov 13, 2025 - time series tracking
     },
   };
 }
