@@ -13,12 +13,15 @@
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
 
 **🔬 Research Verification Complete:**
-- ✅ **State Validation Domain Bounds** - QUALITY GATE 1 PASSED (CONDITIONAL)
+- ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
  - **Verified:** Xia 2022 mortality (5B deaths), PETM warming (5-8°C), GDP baseline ($114T)
  - **Adjusted:** CO2 upper bound (600→1000 ppm, RCP8.5 validated), GDP upper bound (200→500T)
  - **Removed:** Ocean pH 7.8 threshold (unsupported), kept 7.5 lower bound
  - **Reports:** `research/layer2_verification_state_validation_20251106.md` (320 lines)
- - **Status:** READY FOR PHASE 2 (implementation by simulation-maintainer)
+ - **Implementation:** All bounds implemented in `src/simulation/utils/assertions.ts` (Nov 6, 2025)
+ - **Testing:** Comprehensive test coverage (`tests/integration/domain-bounds-verification.test.ts`, 32 tests pass)
+ - **Verification:** `logs/domain_bounds_implementation_verification_20251113.md` (Nov 13, 2025)
+ - **Status:** ✅ COMPLETE - All validated bounds correctly implemented with regression tests
 
 **🧪 Scenario Analysis Framework (HIGH Priority - Nov 10-12, 2025):**
 - **Context:** God mode analysis (all 73 technologies deployed) → catastrophic failure
@@ -562,25 +565,34 @@ This framework will:
 
 #### 🟡 MEDIUM Priority Issues (Calibration & Methodology)
 
-**7. Western Paradigm High Scores During Collapse**
+**7. Western Paradigm High Scores During Collapse - ✅ RESOLVED (Nov 13, 2025)**
 - **Priority:** MEDIUM
+- **Status:** ✅ **WORKING AS DESIGNED** - Not a bug, research-accurate
 - **Problem:** Western Liberal scores show 58-77 during 92% mortality events
-- **Action Required:** Audit scoring logic - should catastrophic mortality lower these scores?
+- **Resolution:** Western Liberal paradigm measures GOVERNANCE QUALITY (democracy, civil liberties, rule of law), not human welfare. Institutions can persist with small populations (e.g., Iceland with 350k has high democracy score). Development paradigm correctly captures mortality impact via QoL and survival fundamentals.
+- **Investigation:** `/logs/monte_carlo_issues_investigation_20251113.log` (Nov 13, 2025)
 
-**8. "Inconclusive" Phantom Outcome Investigation**
+**8. "Inconclusive" Phantom Outcome Investigation - ✅ RESOLVED (Nov 13, 2025)**
 - **Priority:** MEDIUM
+- **Status:** ✅ **USER CONFUSION** - Not a phantom outcome, metric confusion
 - **Problem:** User mentioned 6.5% mortality "inconclusive" outcome, but log shows only 92.4%, 92.6%, 92.5%
-- **Action Required:** Clarify if this outcome exists or is from different simulation set
+- **Resolution:** "Inconclusive" is a valid outcome type (uncertain trajectory). "6.5%" refers to MONTHLY mortality rate, not total cumulative mortality (92%). Oct 2025 issue (100% inconclusive outcomes) was fixed by mortality stabilizers (Nov 6) and bifurcation variance (Nov 12).
+- **Investigation:** `/logs/monte_carlo_issues_investigation_20251113.log` (Nov 13, 2025)
 
-**9. Recovery Mechanics Investigation**
+**9. Recovery Mechanics Investigation - ✅ RESOLVED (Nov 13, 2025)**
 - **Priority:** MEDIUM
+- **Status:** ✅ **FIXED** - Recovery mechanics now functional
 - **Problem:** All runs end in dystopia, suggesting recovery mechanics non-functional
-- **Action Required:** Audit recovery logic across all systems
+- **Resolution:** Recovery mechanics restored by mortality stabilizers (Nov 6) and bifurcation variance amplification (Nov 12). Scenario analysis (Nov 13) shows 77-89% utopia rates in favorable conditions (high-trust-start: 88.9%, authoritarian-efficiency: 87.5%). Recovery is now CONDITIONAL on initial conditions (trust, institutions), as expected.
+- **Evidence:** `/logs/scenario_phase4_analysis_20251113.log` - 73 runs across 9 scenarios
+- **Investigation:** `/logs/monte_carlo_issues_investigation_20251113.log` (Nov 13, 2025)
 
-**10. Compression Verification**
+**10. Compression Verification - ✅ RESOLVED (Nov 13, 2025)**
 - **Priority:** MEDIUM
+- **Status:** ✅ **ALREADY DOCUMENTED** - Known limitation, not a bug
 - **Problem:** Critique mentions "compression" as critical issue
-- **Action Required:** Verify all assumptions against research
+- **Resolution:** "Compression" refers to TEMPORAL COMPRESSION (1-month timestep simplification), not data compression. Historical events spanning months/years (Leipzig protests: 6-7 months, Montreal Protocol: years) are compressed to single months. This is a documented game design constraint, not an unverified assumption. Already marked as SIGNIFICANT limitation in Phase 3 critique.
+- **Investigation:** `/logs/monte_carlo_issues_investigation_20251113.log` (Nov 13, 2025)
 
 **11. Determinism Verification Testing - ⚠️ CRITICAL BLOCKER**
 - **Priority:** 🔴 **CRITICAL BLOCKER** (upgraded Oct 30, 2025)
