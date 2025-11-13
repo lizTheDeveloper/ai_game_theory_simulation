@@ -192,7 +192,7 @@ EOF
     # Check if claude command is available
     if command -v claude > /dev/null 2>&1; then
       log "🤖 Launching Claude Code..."
-      timeout 300 claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
+      claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
         SPAWN_EXIT=$?
         if [ $SPAWN_EXIT -eq 124 ]; then
           log "⏱️  Claude Code timed out (5 min)"
@@ -385,7 +385,7 @@ EOFT
           # Check if claude command is available
           if command -v claude > /dev/null 2>&1; then
             log "🤖 Launching Claude Code..."
-            timeout 900 claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
+            claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
               SPAWN_EXIT=$?
               if [ $SPAWN_EXIT -eq 124 ]; then
                 log "⏱️  Claude Code timed out (15 min)"
@@ -459,7 +459,7 @@ EOF
       # Check if claude command is available
       if command -v claude > /dev/null 2>&1; then
         log "🤖 Launching Claude Code..."
-        timeout 900 claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
+        claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
           SPAWN_EXIT=$?
           if [ $SPAWN_EXIT -eq 124 ]; then
             log "⏱️  Claude Code timed out (15 min)"
