@@ -34,11 +34,32 @@ export interface ScenarioStartingConditions {
 
   /** QoL dimension boosts (force specific dimensions to threshold levels) */
   qolBoosts?: {
+    // Tier 1: Basic Needs
     materialAbundance?: number;
     energyAvailability?: number;
+    physicalSafety?: number;
+
+    // Tier 2: Psychological Needs
     mentalHealth?: number;
+    meaningAndPurpose?: number;
+    socialConnection?: number;
+    autonomy?: number;
+
+    // Tier 3: Social & Civic
     politicalFreedom?: number;
-    [key: string]: number | undefined;
+    informationIntegrity?: number;
+    communityStrength?: number;
+    culturalVitality?: number;
+
+    // Tier 4: Health & Longevity
+    healthcareQuality?: number;
+    longevityGains?: number;
+    diseasesBurden?: number;
+
+    // Tier 5: Environmental Quality
+    ecosystemHealth?: number;
+    climateStability?: number;
+    pollutionLevel?: number;
   };
 
   /** Start tech deployment X months before 2025 baseline (negative = early start) */
