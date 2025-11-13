@@ -28,6 +28,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: CRITICAL Memory Leak + Normalization Bug Fixes** (commit 2d22c25)
+- 🚨 **CRITICAL FIX 1:** Memory leak in performance instrumentation resolved - unbounded array growth would cause OOM crashes in Monte Carlo runs
+- 🔧 **Root Cause:** PhaseOrchestrator accumulated timing samples indefinitely (95 phases × 1200 steps = 114K samples/run → 8.6 GB for N=100)
+- ✅ **Solution:** Sliding window implementation (1000 samples for phases, 1200 for steps) → 98.9% memory reduction (76 MB for N=100)
+- 🚨 **CRITICAL FIX 2:** governmentInvestment normalization bug (third instance) - division by 10 instead of 100 in Tier2PhysicalSystemsPhase:374
+- 📊 **Impact:** 10× error in coastal protection unlock threshold (alignmentResearchInvestment scale is 0-100, not 0-10)
+- 🔴 **Pattern Recognition:** Same bug fixed twice before (commits e490f5da9, 67058ceb7) indicates incomplete bug search
+- 🟡 **HIGH FIX 3:** internationalCoordination normalization in Tier2AIGovernancePhase:391 (division by 10 → 100 for dark compute unlock)
+- 📊 **Architecture Grade:** C+ (Concerning Trajectory) - recurring patterns of rushed fixes, incomplete testing
+- ✅ **Validation:** Type check PASS, memory leak test PASS, statistics preserved (min/max/p95/avg accurate)
+- 📖 **Files:** PhaseOrchestrator.ts (sliding window), Tier2PhysicalSystemsPhase.ts, Tier2AIGovernancePhase.ts, scripts/testMemoryLeakFix.ts
+- 📖 **Review:** reviews/architecture_review_nov13_20251113.md (205 lines, identified 20+ defensive programming violations)
+- 🎯 **Recommendation:** 2-day stabilization sprint before new features
+
 **Nov 12: Intelligent Auto-Remediation for Stuck Orchestrator States** (commit 9764a32)
 - 🤖 **INFRASTRUCTURE:** Merge orchestrator now uses Claude Code for intelligent recovery from stuck git states
 - ✅ **Stuck Working Tree Recovery:** When stash fails, spawns Claude Code to analyze situation (merge conflicts vs. real uncommitted work)
