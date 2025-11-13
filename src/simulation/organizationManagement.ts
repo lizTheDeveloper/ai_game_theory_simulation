@@ -388,8 +388,10 @@ export function shouldTrainNewModel(
   const capFloorTotal = calculateTotalCapabilityFromProfile(capFloor);
   
   // Note: AIAgent doesn't have createdAt field, use capability as proxy for "newest"
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+  const ownedAISet = new Set(org.ownedAIModels);
   const newestModel = state.aiAgents
-    .filter(ai => org.ownedAIModels.includes(ai.id))
+    .filter(ai => ownedAISet.has(ai.id))
     .sort((a, b) => b.capability - a.capability)[0];
   
   const worthTraining = !newestModel || capFloorTotal > newestModel.capability * 1.2;
@@ -464,8 +466,10 @@ export function startModelTraining(
   const cost = 2 * org.monthlyRevenue;
   
   // Compute reservation: 10-30% of org's compute
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+  const ownedDCSet = new Set(org.ownedDataCenters);
   const ownedCompute = state.computeInfrastructure.dataCenters
-    .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
+    .filter(dc => ownedDCSet.has(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
   
   const computeReserved = ownedCompute * (0.1 + random() * 0.2);
@@ -513,8 +517,10 @@ function calculateRegionalPopulationDecline(org: Organization, state: GameState)
   // Organizations care about their regional market, not individual countries
 
   // Determine org's primary market from data center locations
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+  const ownedDCSet = new Set(org.ownedDataCenters);
   const orgDataCenters = state.computeInfrastructure.dataCenters.filter(dc =>
-    org.ownedDataCenters.includes(dc.id)
+    ownedDCSet.has(dc.id)
   );
 
   // Count data centers by region
@@ -655,10 +661,13 @@ function getCountriesInRegion(region: string): import('@/types/countryPopulation
  */
 export function calculateAIRevenue(org: Organization, state: GameState): number {
   const { calculateTotalCapabilityFromProfile } = require('./capabilities');
-  
+
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+  const ownedAISet = new Set(org.ownedAIModels);
+
   // ONLY closed/proprietary models generate revenue
   const revenueGeneratingModels = state.aiAgents.filter(ai =>
-    org.ownedAIModels.includes(ai.id) &&
+    ownedAISet.has(ai.id) &&
     ai.lifecycleState === 'deployed_closed'
     // deployed_open is EXCLUDED - open weights can't charge
   );
@@ -750,10 +759,12 @@ export function calculateAIRevenue(org: Organization, state: GameState): number 
 export function calculateComputeRevenue(org: Organization, state: GameState): number {
   // Government doesn't sell compute
   if (org.type === 'government') return 0;
-  
+
   // Calculate unused capacity
-  const ownedDCs = state.computeInfrastructure.dataCenters.filter(dc => 
-    org.ownedDataCenters.includes(dc.id) && dc.operational
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+  const ownedDCSet = new Set(org.ownedDataCenters);
+  const ownedDCs = state.computeInfrastructure.dataCenters.filter(dc =>
+    ownedDCSet.has(dc.id) && dc.operational
   );
   
   const totalCapacity = ownedDCs.reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
@@ -764,9 +775,11 @@ export function calculateComputeRevenue(org: Organization, state: GameState): nu
   const allocationValues = allocations instanceof Map
     ? Array.from(allocations.entries()).sort((a, b) => String(a[0]).localeCompare(String(b[0]))).map(e => e[1])
     : Object.entries(allocations).sort((a, b) => a[0].localeCompare(b[0])).map(e => e[1]);
-  
+
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+  const ownedAISet = new Set(org.ownedAIModels);
   const allocatedCompute = allocationValues
-    .filter((alloc: any) => org.ownedAIModels.includes(alloc.aiId))
+    .filter((alloc: any) => ownedAISet.has(alloc.aiId))
     .reduce((sum: number, alloc: any) => sum + alloc.allocated, 0);
   
   const unusedCapacity = Math.max(0, totalCapacity - allocatedCompute);
@@ -877,8 +890,10 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // - Shareholder returns: 5-10% (dividends, buybacks if profitable)
   
   // === DATA CENTER OPERATIONAL COSTS (additional) ===
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+  const ownedDCSet = new Set(org.ownedDataCenters);
   let dcOperational = state.computeInfrastructure.dataCenters
-    .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
+    .filter(dc => ownedDCSet.has(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.operationalCost, 0);
   
   // === PROJECT COSTS (already paid, track for reporting) ===
@@ -1174,8 +1189,10 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
   const shouldDivestAssets = (monthsInDistress >= 4 || monthsOfRunway < 3) && !org.distressMeasuresTaken.includes('asset_sales');
 
   if (shouldDivestAssets) {
+    // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+    const ownedDCSet = new Set(org.ownedDataCenters);
     const ownedDCs = state.computeInfrastructure.dataCenters.filter(dc =>
-      org.ownedDataCenters.includes(dc.id) && dc.operational
+      ownedDCSet.has(dc.id) && dc.operational
     );
 
     // Don't divest if you only have 1 DC (that's core infrastructure)
@@ -1339,9 +1356,13 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
   });
   org.currentProjects = [];
 
+  // O(n²) FIX (Nov 13, 2025): Build Sets once for O(1) membership tests
+  const ownedDCSet = new Set(org.ownedDataCenters);
+  const ownedAISet = new Set(org.ownedAIModels);
+
   // Sell data centers to government or other orgs
   const dcValue = state.computeInfrastructure.dataCenters
-    .filter(dc => org.ownedDataCenters.includes(dc.id))
+    .filter(dc => ownedDCSet.has(dc.id))
     .reduce((sum, dc) => sum + dc.capacity * 5, 0); // $5M per PF
 
   org.capital += dcValue * 0.5; // Firesale: 50% value
@@ -1349,7 +1370,7 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
 
   // Transfer data centers to government
   state.computeInfrastructure.dataCenters
-    .filter(dc => org.ownedDataCenters.includes(dc.id))
+    .filter(dc => ownedDCSet.has(dc.id))
     .forEach(dc => {
       dc.organizationId = 'government_ai';
       dc.restrictedAccess = true;
@@ -1364,7 +1385,7 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
 
   // ENHANCEMENT: Government may purchase high-capability AI models
   // (User suggestion: "some AI models might wanna be purchased by the government")
-  const bankruptAIs = state.aiAgents.filter(ai => org.ownedAIModels.includes(ai.id));
+  const bankruptAIs = state.aiAgents.filter(ai => ownedAISet.has(ai.id));
   let governmentAcquired = 0;
   let retiredCount = 0;
 
@@ -1506,8 +1527,10 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
   // HIGH-4 FIX v2 (Oct 30, 2025): Transfer data centers to government/orgs when organization goes bankrupt
   // Data centers are critical infrastructure - they get sold/transferred, not destroyed
   if (state.computeInfrastructure && org.ownedDataCenters.length > 0) {
+    // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+    const ownedDCSet = new Set(org.ownedDataCenters);
     const bankruptDCs = state.computeInfrastructure.dataCenters
-      .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational);
+      .filter(dc => ownedDCSet.has(dc.id) && dc.operational);
 
     let governmentAcquiredDCs = 0;
     let privateAcquiredDCs = 0;
