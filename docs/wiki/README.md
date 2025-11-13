@@ -28,6 +28,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: Monte Carlo Early Termination Fix (CRITICAL)** (commit f249144)
+- ✅ **Bug Fixed:** Monte Carlo runs terminating after 11-21 months instead of full 240 months
+- 🔍 **Root Cause:** `state.scenario` was undefined in MC runs, causing endGame.ts check (line 77) to fail
+- 🎯 **Impact:** End-game logic triggered when AI capabilities exceeded thresholds, simulations resolved early via timeout
+- 🔧 **Solution:** Default `THRESHOLD_SCENARIO` to 'baseline' when undefined (line 915 in monteCarloSimulation.ts)
+- 📊 **Logic:** Making state.scenario truthy prevents end-game activation (scenarios skip end-game per line 72-79 comment)
+- ✅ **Validation:** Test run (seed 42000, 240 months) completed full duration (was terminating at 11-21 months)
+- 🛡️ **Context:** Monte Carlo runs are research validation, not gameplay - end-game competition logic should only apply to interactive gameplay
+- 📖 **Justification:** 'baseline' is valid ScenarioName type, makes scenario check truthy, preserves research integrity
+- **File:** scripts/monteCarloSimulation.ts
+
 **Nov 13: End-Game Extinction Logic Fix** (commit c61a4cb)
 - ✅ **Bug Fixed:** End-game scenarios (AI civil war, misaligned AI dominance) locked outcome to 'extinction' without verifying population actually declined below 10K threshold
 - 🔍 **Root Cause:** 4 lockOutcome('extinction') paths didn't check population, causing assertion failure when population remained high
