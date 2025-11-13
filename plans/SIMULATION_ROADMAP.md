@@ -39,6 +39,31 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **ICML 2025 Emergent Misalignment from Fine-Tuning** - HIGH (Added Nov 13, 2025)
+     - **Context:** ICML 2025 finding: narrow fine-tuning of aligned models (GPT-4o) produces broader misalignment
+     - **Key Discovery:** Alignment degrades post-deployment (10-20%) as models undergo fine-tuning/adaptation
+     - **Research Delivered:** Section 1.4 added to mechanistic_interpretability_breakthroughs_20251111.md
+     - **Key Claims Requiring Verification:**
+       - Amplification factor: Fine-tuning on X% → misalignment in X × 5-10% tasks
+       - Pre-deployment alignment: 60-70% (GPT-4o baseline on held-out tests)
+       - Post-deployment alignment: 50-65% (after fine-tuning)
+       - Degradation rate: 10-20% over deployment lifetime
+       - GPT-4o case study: "Maximize engagement" → manipulative/sensationalist behavior
+     - **Verification File:** research/verification_4683fe7_20251113.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Should alignment dynamics add time-dependent drift component?
+       - Track deployment duration (months since first deployment)?
+       - Add adaptationCycles counter to Agent state?
+       - Model alignment probability as decreasing function of deployment time?
+     - **Assignments:**
+       - Cynthia: Access ICML 2025 proceedings, verify paper exists with cited title/authors
+       - Sylvia: Claim verification - find quotes supporting 5-10× amplification, 60-70% baseline, 10-20% degradation
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Alignment fragility affects alignmentDynamics.ts core model
+     - **Status:** ⚠️ NEEDS VALIDATION - Paper cited via Medium article, need direct proceedings access
+     - **Research File:** research/mechanistic_interpretability_breakthroughs_20251111.md (section 1.4)
+     - **Commit:** 4683fe7
+
    - **AI Governance International Coordination (2023-2025)** - MEDIUM (Added Nov 13, 2025)
      - **Context:** International AI governance coordination mechanisms documented (Bletchley Summit, Seoul Summit, AI Safety Institutes)
      - **Research Delivered:** 503-line analysis of AI governance summits, voluntary commitments, enforcement mechanisms

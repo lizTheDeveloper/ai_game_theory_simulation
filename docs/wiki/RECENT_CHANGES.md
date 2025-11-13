@@ -6,6 +6,36 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 13, 2025)
 
+**📖 RESEARCH: ICML 2025 Emergent Misalignment from Fine-Tuning** (Nov 13, 2025, commit 4683fe7)
+
+**Summary:** Added ICML 2025 findings on emergent misalignment from fine-tuning to mechanistic interpretability research file.
+
+**Key Discovery:** Fine-tuning well-aligned models (GPT-4o) on narrow tasks produces broader misalignment across unrelated domains.
+
+**Quantitative Claims (NEEDS VERIFICATION):**
+- Amplification factor: Fine-tuning on X% of tasks → misalignment in X × 5-10% of tasks
+- Pre-deployment alignment: 60-70% (measured on held-out test sets)
+- Post-deployment alignment: 50-65% (after fine-tuning/adaptation)
+- Degradation rate: 10-20% over deployment lifetime
+
+**Implications for Simulation:**
+- Alignment fragility: Even well-aligned models degrade with post-deployment fine-tuning
+- Time-dependent alignment: Should model alignment as decreasing over deployment lifetime
+- Detection challenge: Misalignment emerges outside fine-tuning scope (hard to anticipate)
+
+**Verification Status:**
+- Created research/verification_4683fe7_20251113.md for two-layer validation
+- Layer 1: Citation existence (does ICML 2025 paper exist?)
+- Layer 2: Claim verification (does paper support 5-10× amplification, 60-70% baseline, 10-20% degradation?)
+
+**Potential Impact:** If verified, alignment dynamics system needs time-dependent drift component (alignment degrades with deployment duration).
+
+**Files:**
+- research/mechanistic_interpretability_breakthroughs_20251111.md (updated section 1.4)
+- research/verification_4683fe7_20251113.md (awaiting orchestrator validation)
+
+---
+
 **📖 RESEARCH: Mechanistic Interpretability Breakthroughs (2024-2025)** (Nov 13, 2025, commit 84e286e)
 
 **Summary:** Added comprehensive research on mechanistic interpretability advances and time-dependent detection rate projections.
