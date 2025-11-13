@@ -1662,6 +1662,7 @@ Commit: 5c6e9d0 (Nov 6, 2025)
    - **New formula:** `1/√(0.01 + d) × systemMultiplier` (bifurcation-theory base + domain calibration)
    - **System multipliers:** Environmental 1.5×, Social 2.5×, Economic 3.5×, Governance 2.0×, Flourishing 1.0×, Technology 1.5×
    - **Justification:** Saddle-node bifurcation theory (1/√d), calibrated to financial crisis and ecosystem data
+   - **Diagnostic logging:** 📊 Logs amplification details when distance < 0.3 (shows system type, multiplier, amplification) (commit 499e68e)
 
 2. **Amplification values** (new vs old):
    - At d=0.0: Economic 35× (was 100× capped), Environmental 15×, Social 25×
