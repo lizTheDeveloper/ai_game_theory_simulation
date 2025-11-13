@@ -2599,6 +2599,18 @@ When auditing or writing simulation code:
   - Research quality: A (80% peer-reviewed, 35% from 2024-2025)
   - Metadata: oldest_source improved from 2006 → 2008
 
+- [`research/nuclear_winter_food_security_2024_2025.md`](/research/nuclear_winter_food_security_2024_2025.md) (Added Nov 11, 2025)
+  - Comprehensive nuclear winter and food security research with 2024-2025 peer-reviewed sources
+  - **Primary sources:**
+    - **Penn State 2025:** Nuclear winter reduces global corn production by 7-80%
+    - **Xia et al. 2022 (Nature Food):** 2-5+ billion mortality from nuclear winter famine (25-62.5%+ of population)
+    - **Wescombe et al. 2024:** Resilient foods (seaweed farming) could offset 10% of losses at $0.50/kg
+    - **IIASA 2024:** Ongoing global food security modeling initiative
+  - **Key findings:** Even 7% crop reduction = "severe impact", 80% = "catastrophic consequences"
+  - **Scenarios:** Regional (5 Tg soot) → Limited (15 Tg) → Full-scale (50 Tg) → Extinction (150 Tg)
+  - Research quality: A (100% peer-reviewed, 2022-2025 sources)
+  - Used in simulation: `src/simulation/nuclearWinter.ts`, documented in `docs/wiki/systems/nuclear-winter.md`
+
 - [`research/water_scarcity_migration_immobility_20251020.md`](/research/water_scarcity_migration_immobility_20251020.md) (Updated Nov 12, 2025)
   - Water scarcity, migration, and involuntary immobility (trapped populations)
   - **Updated 2024-2025 research:**
