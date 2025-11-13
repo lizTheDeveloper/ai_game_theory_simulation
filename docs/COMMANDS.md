@@ -393,6 +393,11 @@ See CLAUDE.md "Git Safety Protocol" section for detailed commit/PR guidelines.
 7. If all gates pass → merges to main, deletes feature branch
 8. If any gate fails → preserves merge branch with `_FAILED` suffix
 
+**Platform Compatibility (Nov 12, 2025):**
+- Claude spawning no longer uses `timeout` command (GNU coreutils not available on macOS)
+- Auto-remediation now works on both macOS and Linux
+- Claude processes run without artificial time limits (orchestrator manages overall runtime)
+
 **Safety Features:**
 - Lock file prevents concurrent runs (`/tmp/merge-orchestrator.lock`)
 - Protected branches (never deletes main)
