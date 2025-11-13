@@ -8,6 +8,8 @@
 
 **Latest Research (Nov 6, 2025):** Added Greenblatt et al. 2024 (alignment faking: 78% fake rate) and Palisade Research 2025 (unprompted deception: 37% hack rate in o1-preview). These findings strengthen the empirical foundation for behavioral analysis and gaming detection methods.
 
+**Research Update (Nov 13, 2025):** Mechanistic interpretability breakthroughs (2024-2025) suggest detection rates should be **time-dependent**, improving from 30% (2024) → 80% (2027) → 90% (2030) as interpretability tools mature (Anthropic's feature discovery, alignment faking detection). See research/mechanistic_interpretability_breakthroughs_20251111.md. **Awaiting validation:** research/verification_84e286e_20251113.md outlines integration with existing investment-based detection model.
+
 ---
 
 ## 🎯 Overview
