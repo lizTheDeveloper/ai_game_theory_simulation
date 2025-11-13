@@ -176,27 +176,39 @@ if (globalPopFraction < 0.10 && totalCompute > maxCoherentCompute) {
 
 **Files:** `src/simulation/computeInfrastructure.ts:498-653`
 
-### 2. Moore's Law (Automatic)
+### 2. Hardware & Algorithmic Growth (Automatic)
+
+**✅ UPDATED (Nov 13, 2025) - Research-backed parameters:**
 
 ```typescript
-// Every month, existing data centers improve
+// Hardware compute growth (training compute acquisition + efficiency)
+// Research: Sevilla & Roldán (2024) - 4.1× per year (90% CI: 3.7× to 4.6×)
+const HARDWARE_COMPUTE_GROWTH_RATE = Math.pow(3.73, 1/12) - 1;  // 11.54% per month
+// = 3.73× per year, doubles every 6.33 months
+
 dataCenters.forEach(dc => {
   if (dc.operational) {
-    dc.capacity *= 1.03;  // 3% growth per month
-                          // = 2x every 24 months
+    dc.capacity *= (1 + HARDWARE_COMPUTE_GROWTH_RATE);
   }
 });
 
 // Algorithmic efficiency (Chinchilla, FlashAttention, etc.)
-algorithmsEfficiency *= 1.004;  // ~5% per year
+const ALGO_GROWTH = Math.pow(1.10, 1/12) - 1;  // 0.797% per month
+algorithmsEfficiency *= (1 + ALGO_GROWTH);  // 1.10× per year
 
-// Hardware efficiency ($/FLOP improvement)
-hardwareEfficiency *= 1.003;
+// Combined effective compute growth
+// 3.73× (hardware) × 1.10× (algorithms) = 4.10× per year ✅
 ```
+
+**Research Citations:**
+- **Sevilla & Roldán (2024):** Training compute growth 4.1×/year (Epoch AI, 14-year trend)
+  https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
+- **Cottier et al. (2024):** Training cost growth 2.4×/year (arXiv:2405.21015v2)
+  https://arxiv.org/abs/2405.21015
 
 **Efficiency Multipliers:** Hardware and algorithmic efficiency accumulate **multiplicatively** over time with **no upper bound**. Quantum computing, neuromorphic chips, and transformative technologies can push these multipliers well beyond 100x baseline. Previously capped at 100x (removed Nov 9, 2025).
 
-**Result:** 5-10x compute growth over 60 months baseline (if population remains stable), potentially much higher with breakthrough technologies
+**Result:** ~600,000× compute growth over 10 years (research-backed, up from ~85,000× before Nov 13 fix)
 
 ### 3. Data Center Construction
 
@@ -429,3 +441,4 @@ Month 60: 3000-4000 PetaFLOPs (5-6x growth)
 - **v1.3** (Oct 30, 2025): Population → compute scaling, coherence enforcement (commit baaa33e)
 - **v1.4** (Oct 30, 2025): Bankruptcy asset transfer - data centers transferred to government/solvent orgs instead of destroyed (commit bb20927)
 - **v1.5** (Nov 9, 2025): Remove artificial 100x cap on hardware/algorithm efficiency - allow quantum/transformative tech beyond previous limits (commit 3f51ec8)
+- **v1.6** (Nov 13, 2025): Update hardware compute growth to match Epoch AI research - 2.83× → 3.73× per year (commit a3ef2b7)
