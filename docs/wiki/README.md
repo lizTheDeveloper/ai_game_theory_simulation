@@ -28,6 +28,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: AI Governance International Coordination Research (TIER 1B CRITICAL)** (commit 7f001ba)
+- 📚 **Research Complete:** 606-line analysis with 6 primary sources (2024-2025)
+- 🌍 **Key Finding:** Current coordination quality ~0.43 (moderate) - 3/7 major AI firms test catastrophic risks
+- 🤝 **Multilateral Frameworks:** 29 active as of 2024 (UN, OECD, regional bodies)
+- 🔬 **Pre-Deployment Testing:** US AISI agreements with OpenAI/Anthropic (Aug 2024)
+- 🏛️ **UN Governance:** Independent Scientific Panel + Global Dialogue (Sept 2024)
+- ⚖️ **Regime Complex:** Weak (0.35) - fragmented, voluntary compliance, limited enforcement
+- 📉 **Mortality Modifiers:** Uncoordinated 30% → Strong coordination <5% (REQUIRES VALIDATION)
+- 🎯 **God Mode Reinterpretation:** 30% mortality = worst-case uncoordinated deployment (not realistic post-alignment)
+- 🚨 **Critical Gap:** Mortality modifier claim (30% → <5%) lacks direct research backing - empirical validation required
+- 📖 **Research:** research/ai_governance_international_coordination_20251113.md (606 lines, 6 primary sources)
+- ✅ **Verification File:** research/verification_7f001ba_20251113.md (Layer 1: 2/6 verified, Layer 2: PENDING)
+- ⏳ **Status:** Research complete, awaiting validation (15-21 hours estimated) → CoordinatedDeploymentPhase implementation
+
 **Nov 13: Novel Entities Zero-Effectiveness Research (CRITICAL - TIER 1)** (commit 7ac8b8f)
 - 📚 **Research Complete:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
 - 🔬 **Key Finding:** 0% effectiveness is NOT a bug - thermodynamically accurate for unregulated scenario
