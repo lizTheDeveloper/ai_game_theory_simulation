@@ -432,6 +432,14 @@ interface RunResult {
   regimeShiftCount: number;               // Number of regime shifts
   regimeShiftSystems: string[];           // Systems that triggered regime shifts
   finalRegime: string;                    // Final regime type at simulation end
+
+  // === BIFURCATION TIME SERIES (Nov 13, 2025 - CRITICAL-1 INSTRUMENTATION) ===
+  amplificationTimeSeries?: Array<{
+    month: number;
+    amplification: number;              // Variance amplification at this month
+    distanceToNearest: number;          // Distance to nearest threshold (0.0 to 1.0)
+    nearestSystem: string;              // Which system is nearest to threshold
+  }>;
 }
 
 /**
@@ -1111,7 +1119,15 @@ if (nestedMonteCarlo) {
     recoveryTimeline,
     mechanismSummary,
     // NEW (Oct 20, 2025): Add Multi-Paradigm DUI trajectory (month-by-month)
-    paradigmTrajectory
+    paradigmTrajectory,
+    // NEW (Nov 13, 2025): Add bifurcation time series for Priya validation
+    bifurcationMetrics: {
+      maxVarianceAmplification: finalState.bifurcationState?.metrics?.maxVarianceAmplification ?? 1.0,
+      avgDistanceToThresholds: finalState.bifurcationState?.metrics?.avgDistanceToThresholds ?? 1.0,
+      regimeShiftCount: finalState.bifurcationState?.metrics?.regimeShiftEvents?.length ?? 0,
+      regimeShiftEvents: finalState.bifurcationState?.metrics?.regimeShiftEvents ?? [],
+      amplificationTimeSeries: finalState.bifurcationState?.metrics?.amplificationTimeSeries ?? []
+    }
   };
   fs.writeFileSync(runLogFile, JSON.stringify(eventLogData, null, 2), 'utf8');
   
@@ -1913,7 +1929,10 @@ if (nestedMonteCarlo) {
     avgDistanceToThresholds: finalState.bifurcationState?.metrics?.avgDistanceToThresholds ?? 1.0,
     regimeShiftCount: finalState.bifurcationState?.metrics?.regimeShiftEvents?.length ?? 0,
     regimeShiftSystems: finalState.bifurcationState?.metrics?.regimeShiftEvents?.map(e => e.system) ?? [],
-    finalRegime: finalState.bifurcationState?.currentRegime ?? 'status-quo'
+    finalRegime: finalState.bifurcationState?.currentRegime ?? 'status-quo',
+
+    // Bifurcation time series (Nov 13, 2025 - CRITICAL-1 INSTRUMENTATION)
+    amplificationTimeSeries: finalState.bifurcationState?.metrics?.amplificationTimeSeries ?? []
   };
 
   // Push result to appropriate array (aleatoryResults in nested mode, results in single-level mode)
@@ -2089,7 +2108,15 @@ if (nestedMonteCarlo) {
     recoveryTimeline,
     mechanismSummary,
     // NEW (Oct 20, 2025): Add Multi-Paradigm DUI trajectory (month-by-month)
-    paradigmTrajectory
+    paradigmTrajectory,
+    // NEW (Nov 13, 2025): Add bifurcation time series for Priya validation
+    bifurcationMetrics: {
+      maxVarianceAmplification: finalState.bifurcationState?.metrics?.maxVarianceAmplification ?? 1.0,
+      avgDistanceToThresholds: finalState.bifurcationState?.metrics?.avgDistanceToThresholds ?? 1.0,
+      regimeShiftCount: finalState.bifurcationState?.metrics?.regimeShiftEvents?.length ?? 0,
+      regimeShiftEvents: finalState.bifurcationState?.metrics?.regimeShiftEvents ?? [],
+      amplificationTimeSeries: finalState.bifurcationState?.metrics?.amplificationTimeSeries ?? []
+    }
   };
   fs.writeFileSync(runLogFile, JSON.stringify(eventLogData, null, 2), 'utf8');
 
@@ -2924,7 +2951,10 @@ if (nestedMonteCarlo) {
     avgDistanceToThresholds: finalState.bifurcationState?.metrics?.avgDistanceToThresholds ?? 1.0,
     regimeShiftCount: finalState.bifurcationState?.metrics?.regimeShiftEvents?.length ?? 0,
     regimeShiftSystems: finalState.bifurcationState?.metrics?.regimeShiftEvents?.map(e => e.system) ?? [],
-    finalRegime: finalState.bifurcationState?.currentRegime ?? 'status-quo'
+    finalRegime: finalState.bifurcationState?.currentRegime ?? 'status-quo',
+
+    // Bifurcation time series (Nov 13, 2025 - CRITICAL-1 INSTRUMENTATION)
+    amplificationTimeSeries: finalState.bifurcationState?.metrics?.amplificationTimeSeries ?? []
   };
 
       // Progress indicator with per-run timing
