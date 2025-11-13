@@ -4,6 +4,24 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 13, 2025)
+
+**🔧 INFRASTRUCTURE: Fix HOME Export for Cron Authentication** (Nov 13, 2025, commit 6cbc578)
+
+**Summary:** Export HOME environment variable in merge orchestrator to fix Claude CLI authentication when running under cron.
+
+**Changes:**
+- Added `export HOME=${HOME:-/Users/annhoward}` to `scripts/merge-orchestrator.sh`
+- Fixes authentication issues when merge orchestrator runs as cron job
+- HOME variable required for Claude CLI credential lookup
+
+**Impact:** Merge orchestrator can now successfully authenticate when invoked by cron (where HOME may be unset).
+
+**Files:**
+- `scripts/merge-orchestrator.sh` (line 11-12)
+
+---
+
 ## ✅ Recent Changes (November 12, 2025)
 
 **🤖 INFRASTRUCTURE: Intelligent Auto-Remediation for Stuck Orchestrator States** (Nov 12, 2025, commit 9764a32)
