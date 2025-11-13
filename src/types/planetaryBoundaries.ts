@@ -93,6 +93,11 @@ export interface PlanetaryBoundary {
   stabilizing?: boolean;            // True if deterioration stopped (biosphere: extinction rate declining)
   surfaceRecovered?: boolean;       // True for surface recovery only (ocean acidification: surface vs deep)
   inputsStopped?: boolean;          // True if new pollution stopped (novel entities: PFAS/microplastics)
+
+  // === IRREVERSIBLE FLOOR TRACKING (Novel Entities Redesign - Nov 13, 2025) ===
+  // Research: Cousins 2022, Kane 2022, Ling 2024
+  // Track peak contamination to enforce 90% irreversible floor (atmospheric distribution + covalent binding)
+  peakValue?: number;              // Maximum contamination reached (for novel entities 90% irreversible)
 }
 
 /**
