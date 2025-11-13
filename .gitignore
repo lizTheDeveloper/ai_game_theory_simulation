@@ -51,6 +51,9 @@ logs/autonomous/status_current.txt
 logs/autonomous/researcher/status_current.txt
 logs/autonomous/metrics_*.json
 
+# Underdocumented tracking (constantly updating, causes merge conflicts)
+docs/underdocumented_items.json
+
 # Heap profiles
 profiles/
 
