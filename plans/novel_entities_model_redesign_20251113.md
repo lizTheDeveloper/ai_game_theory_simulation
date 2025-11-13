@@ -9,7 +9,13 @@
 God mode testing revealed 0% effectiveness for Novel Entities boundary despite 7 pollution technologies deployed. Research validated this is **NOT a bug** but an accurate representation of thermodynamic and economic reality.
 
 **Research:** `research/novel_entities_zero_effectiveness_20251113.md` (16 peer-reviewed sources, 2024-2025)
-**Validation:** `reviews/novel_entities_research_critique_20251113.md` (Grade B+, Quality Gate 1 PASSED)
+**Validation Quality Gate 1:** `reviews/novel_entities_research_critique_20251113.md` (Grade B+, PASSED)
+**Validation Quality Gate 2:** `reviews/novel_entities_research_critique_20251113_validation.md` (Grade B, CONDITIONAL PASS)
+
+**Quality Gate 2 Requirements (MUST FIX before proceeding):**
+1. Monte Carlo sensitivity analysis on derived parameters (irreversible fraction, rebound effect, time lag)
+2. Code comments flagging HIGH UNCERTAINTY parameters
+3. Justify 30-year time lag or use range (10-30 years) - ADDRESSED via sensitivity analysis
 
 ## Key Research Findings
 
@@ -139,12 +145,18 @@ function calculateNovelEntitiesEffectiveness(
   const concentrationMultiplier = tech.worksOnDiluteStreams ? 0.001 : 1.0;
 
   // Time lag: Decades to deploy at scale
+  // ⚠️ HIGH UNCERTAINTY: 30-year timelag not directly cited. Montreal Protocol achieved CFC phase-out
+  //    in 12 years, but PFAS embedded in 1000+ applications (vs CFCs in ~10). Research-skeptic
+  //    flagged for sensitivity analysis. Sensitivity range: 10-30 years. See Quality Gate 2 review.
   const monthsSinceDeployment = state.currentMonth - (tech.deployedAt || state.currentMonth);
-  const timeLagFactor = Math.min(1.0, monthsSinceDeployment / (30 * 12)); // 30 years to full scale
+  const timeLagFactor = Math.min(1.0, monthsSinceDeployment / (30 * 12)); // 30 years to full scale (CONSERVATIVE estimate)
 
   // Rebound effect: Cleanup increases production (Jevons paradox)
   // Net effectiveness = cleanup - induced production
-  const reboundFactor = tech.triggersRebound ? 0.7 : 1.0; // 30% offset by increased production
+  // ⚠️ HIGH UNCERTAINTY: reboundFactor based on analogous systems (AI hardware, waste generation)
+  //    not direct pollution-remediation data. Research-skeptic flagged for sensitivity analysis.
+  //    Sensitivity range: 0.5 (50% rebound) to 0.9 (10% rebound). See Quality Gate 2 review.
+  const reboundFactor = tech.triggersRebound ? 0.7 : 1.0; // 30% offset by increased production (MODERATE estimate)
 
   // Final effectiveness
   return baseEffectiveness *
@@ -166,7 +178,11 @@ function updateNovelEntities(state: GameState, rng: () => number): void {
   // ... existing accumulation logic ...
 
   // Irreversible floor: 90% of contamination is permanently distributed
-  const irreversibleFraction = 0.90;
+  // ⚠️ HIGH UNCERTAINTY: irreversibleFraction DERIVED from mechanism descriptions, not measured.
+  //    Research-skeptic flagged for sensitivity analysis. Cousins 2022 shows global distribution,
+  //    Kane 2022 shows century-scale persistence, but specific reversible fraction not quantified.
+  //    Sensitivity range: 0.80 (20% reversible) to 0.95 (5% reversible). See Quality Gate 2 review.
+  const irreversibleFraction = 0.90; // MODERATE estimate (10% reversible)
   const reversibleFraction = 1.0 - irreversibleFraction;
 
   // Current contamination level
@@ -233,13 +249,32 @@ function updateNovelEntities(state: GameState, rng: () => number): void {
 
 ### Phase 4: Monte Carlo Validation (2-4 hours)
 **Scripts:**
-- N=30 validation runs
+- N=30 validation runs (increased from N=10 for statistical power on sensitivity analysis)
 - Compare baseline (no prevention) vs regulated (prevention + remediation)
+- **CRITICAL: Sensitivity analysis on HIGH UNCERTAINTY parameters (Quality Gate 2 requirement)**
+
+**Parameter Sensitivity Ranges:**
+1. **irreversibleFraction:** Test 0.80 (20% reversible), 0.90 (10% reversible), 0.95 (5% reversible)
+   - Rationale: DERIVED parameter from mechanism descriptions, not measured (Sylvia critique)
+   - Expected impact: Higher reversibility → better long-term outcomes
+2. **reboundFactor:** Test 0.5 (50% offset), 0.7 (30% offset), 0.9 (10% offset)
+   - Rationale: Based on analogous systems (AI hardware, waste), not direct pollution-remediation data (Sylvia critique)
+   - Expected impact: Higher rebound → lower net effectiveness
+3. **timelagYears:** Test 10 years (Montreal Protocol pace), 20 years (midpoint), 30 years (conservative)
+   - Rationale: Design doc assumes 30 years without specific citation (Sylvia critique)
+   - Expected impact: Faster deployment → earlier effectiveness
+
+**Monte Carlo Test Matrix:**
+- 3 irreversible × 3 rebound × 3 timelag = 27 parameter combinations
+- N=30 runs per combination = 810 total runs
+- **OR** reduced matrix: Baseline (0.90, 0.7, 30) + 6 one-at-a-time variations = 7 combinations × 30 = 210 runs
 
 **Expected results:**
 - Baseline: 0-2% effectiveness (point sources only)
-- Regulated: 5-50% effectiveness over 30-50 years
-- Maximum recovery: 10% (90% irreversible floor)
+- Regulated (pessimistic: 0.95 irreversible, 0.5 rebound, 30yr lag): 3-15% effectiveness
+- Regulated (moderate: 0.90 irreversible, 0.7 rebound, 20yr lag): 5-30% effectiveness
+- Regulated (optimistic: 0.80 irreversible, 0.9 rebound, 10yr lag): 10-50% effectiveness
+- Maximum recovery: 5-20% depending on irreversible fraction
 
 ## Success Criteria
 
