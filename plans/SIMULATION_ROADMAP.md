@@ -39,6 +39,36 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Novel Entities Prevention vs Remediation Gating** - HIGH (Added Nov 13, 2025 - POST-IMPLEMENTATION)
+     - **Context:** IMPLEMENTED in commit 5c9e773 - prevention-gated remediation with 90% irreversibility floor
+     - **Status:** ✅ IMPLEMENTATION COMPLETE, 🔄 VALIDATION PENDING
+     - **Quality Gates:** Research PASSED (Grade B+), Implementation COMPLETE, Monte Carlo testing PENDING
+     - **Key Claims Requiring Verification:**
+       - Ling 2024: $20-7,000 trillion/year cleanup cost at current emissions
+       - Li 2024: 5-7 kWh/m³ electrochemical, 12-47× cost scaling for dilute streams
+       - Newell 2025: "sub-nanogram per litre cost-effectiveness hinders up-scalability" (exact quote?)
+       - Dodds 2024: Montreal Protocol 90-95% ban vs 5-10% destruction → 10:1 ratio (CALCULATED claim)
+       - Cousins 2022: PFAS in ALL rainwater globally
+       - Kane 2022: Centuries recovery time for ocean microplastics
+       - UNEP 2024: Waste +81% (2023-2050) despite technology
+       - Sorrell 2025: AI hardware rebound effects (Jevons paradox)
+     - **Derived Assumptions (NOT verification targets, need sensitivity testing):**
+       - 90% irreversibility floor (asymptotic approach to peak)
+       - 30% rebound factor (moral hazard)
+       - 0.001 concentration multiplier for dilute streams
+     - **Verification File:** research/verification_5c9e773_20251113.md (two-layer: citation existence + claim accuracy)
+     - **Assignments:**
+       - Sylvia: Citation verification (8 sources) + claim accuracy (need exact quotes, especially Newell 2025)
+       - Priya: Monte Carlo validation N≥30 with sensitivity testing
+         - irreversibleFraction: [0.70, 0.90, 0.95]
+         - reboundFactor: [0.5, 0.7, 0.9]
+         - Baseline (no prevention) vs Regulated (prevention + remediation)
+         - Expected: Baseline 0-2%, Regulated 5-50% over 30-50yr, <10% total recovery
+     - **Priority:** HIGH - Already implemented, validation needed for confidence
+     - **Research Foundation:** research/novel_entities_zero_effectiveness_20251113.md (742 lines, 16 sources)
+     - **Architecture:** src/simulation/utils/novelEntitiesEffectiveness.ts (262 lines, 5-stage gating)
+     - **Commit:** 5c9e773
+
    - **AI Governance International Coordination (2023-2025)** - MEDIUM (Added Nov 13, 2025)
      - **Context:** International AI governance coordination mechanisms documented (Bletchley Summit, Seoul Summit, AI Safety Institutes)
      - **Research Delivered:** 503-line analysis of AI governance summits, voluntary commitments, enforcement mechanisms

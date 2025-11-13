@@ -49,19 +49,25 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Final regime: ecological-collapse
 - 📖 **Context:** Infrastructure fix - metrics extraction, not new mechanics
 
-**Nov 13: Novel Entities Zero-Effectiveness Research (CRITICAL - TIER 1)** (commit 7ac8b8f)
-- 📚 **Research Complete:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
-- 🔬 **Key Finding:** 0% effectiveness is NOT a bug - thermodynamically accurate for unregulated scenario
-- 💰 **Energy Trap:** PFAS removal at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP)
-- 🔬 **Concentration Problem:** Tech works at mg/L (labs), environment is pg/L-ng/L (10^6-10^9× dilution)
-- ⏳ **Irreversibility:** <10% reversible fraction, 90% permanently distributed
-- 📊 **Montreal Protocol Lesson:** Production ban = 90-95% recovery, cleanup = 5-10%
-- ♻️ **Rebound Effects:** Waste +81% (2023-2050) despite tech (Jevons paradox)
-- 🎯 **Quality Gate 1:** PASSED (Grade B+) - high-impact journals, strong convergence
-- 📋 **Design Document:** plans/novel_entities_model_redesign_20251113.md (3 prevention techs, gated remediation, 90% floor)
-- 📖 **Research:** research/novel_entities_zero_effectiveness_20251113.md (41KB, 71 sources)
-- ✅ **Verification File:** research/verification_7ac8b8f_20251113.md (tracks citation + claim verification)
-- ⏳ **Status:** Research complete, awaiting validation → implementation (11-16 hours estimated)
+**Nov 13: Novel Entities Prevention vs Remediation Gating (CRITICAL - TIER 1 COMPLETE)** (commit 5c9e773)
+- ✅ **IMPLEMENTED:** Prevention >> Remediation gating system with 90% irreversibility floor
+- 🎯 **Quality Gates:** Research PASSED (Grade B+), Implementation COMPLETE, Testing PENDING
+- 📚 **Research Foundation:** 16 peer-reviewed sources (2024-2025) validating thermodynamic constraints
+- 🔬 **Key Insight:** Without production controls, planetary-scale cleanup is thermodynamically futile (refills as fast as you clean)
+- 💰 **Energy Trap:** PFAS removal at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP) - Ling 2024
+- 🔬 **Concentration Problem:** Lab scale (mg/L) vs environmental (ng/L) = 10^6-10^9× dilution, cost scales 12-47× - Li 2024
+- 📊 **Montreal Protocol Analog:** Production ban = 90-95% recovery, cleanup = 5-10% → 10:1 prevention:remediation ratio - Dodds 2024
+- ⏳ **Irreversibility Floor:** 90% of peak contamination permanently distributed (asymptotic approach to minimum)
+- ♻️ **Rebound Effects:** 30% effectiveness offset when regulation < 80% (Jevons paradox) - UNEP 2024, Sorrell 2025
+- 🏗️ **Architecture:** New module `src/simulation/utils/novelEntitiesEffectiveness.ts` (262 lines)
+- 🔧 **Gating Order:** Regulation (1%-100%) → Energy (optional) → Concentration (0.1%-100%) → Time Lag → Rebound (70%-100%)
+- 🧪 **Prevention Technologies:** global_pfas_ban (99% reduction), plastic_production_phaseout (80%), green_chemistry_substitution (70%)
+- 📈 **Expected Results:** Baseline 0-2% effectiveness (unregulated) → 5-50% over 30-50 years (with prevention), max 10% total recovery
+- 🔬 **Next Step:** Priya (Monte Carlo validation) - N≥30 runs with sensitivity testing on irreversibleFraction [0.70, 0.90, 0.95] and reboundFactor [0.5, 0.7, 0.9]
+- 📖 **Research:** research/novel_entities_zero_effectiveness_20251113.md (742 lines, 16 sources)
+- 📋 **Design:** plans/novel_entities_model_redesign_20251113.md (276 lines)
+- 🔎 **Review:** reviews/novel_entities_research_critique_20251113.md (Grade B+, defensible with noted uncertainties)
+- 📋 **Handoff:** .claude/handoffs/novel_entities_implementation_handoff.md
 
 **Nov 13: CRITICAL Memory Leak + Complete O(n²) Fix** (commit 27e788f)
 - ✅ **Memory Leak Fixed:** PhaseOrchestrator unbounded array growth resolved (2 locations)
