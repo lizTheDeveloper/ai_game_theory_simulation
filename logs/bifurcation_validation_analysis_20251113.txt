@@ -1,0 +1,120 @@
+
+================================================================================
+MONTE CARLO N=30 BIFURCATION VALIDATION REPORT
+================================================================================
+
+Date: 2025-11-13T12:02:03
+Configuration: Dual mode (50% historical, 50% unprecedented)
+Seed range: 42000-42029
+Duration: 240 months (20 years)
+Runs analyzed: 30
+
+Scenario Mode Breakdown:
+  historical: 15/30 (50.0%)
+  unprecedented: 15/30 (50.0%)
+
+================================================================================
+1. MORTALITY STATISTICS
+================================================================================
+
+  Mean: 87.21%
+  Std Dev: 29.73%
+  CV: 34.09%
+  Range: [-1.95%, 98.34%]
+  Median: 97.42%
+
+  Mortality Bands:
+    Negative (<0%): 3 runs (10.0%)
+    Low (<20%): 3 runs (10.0%)
+    Moderate (20-50%): 0 runs (0.0%)
+    High (50-90%): 0 runs (0.0%)
+    Bottleneck (≥90%): 27 runs (90.0%)
+
+================================================================================
+2. FINAL POPULATION STATISTICS
+================================================================================
+
+  Mean: 1.041B
+  Std Dev: 2.420B
+  CV: 232.53%
+  Range: [0.135B, 8.299B]
+  Median: 0.229B
+
+================================================================================
+3. MULTI-PARADIGM DUI SCORES
+================================================================================
+
+  Western Liberal:  42.2 ± 21.4 (CV: 50.6%, range: 13.8-68.6)
+  Development:      45.4 ± 13.7 (CV: 30.3%, range: 38.5-91.7)
+  Ecological:       33.5 ± 2.0 (CV: 6.1%, range: 31.9-39.8)
+  Indigenous:       58.9 ± 11.6 (CV: 19.7%, range: 7.1-72.1)
+
+================================================================================
+4. OUTCOME DISTRIBUTION
+================================================================================
+
+  dystopia       : 27/30 (90.0%) ██████████████████
+  extinction     :  3/30 (10.0%) ██
+
+================================================================================
+5. VARIANCE AMPLIFICATION ASSESSMENT
+================================================================================
+
+Bifurcation Formula Implementation:
+  baseAmplification = 1/√(0.01 + distance) + system multipliers
+  System multipliers: Environmental (1.5×), Social (2.5×), Economic (3.5×), Governance (2.0×)
+  Max amplification: 100× (calibrated to Permian-Triassic extinction)
+
+CV Thresholds:
+  < 5%:   Low variance (deterministic, pre-bifurcation baseline)
+  5-20%:  Moderate variance (some divergence)
+  > 20%:  High variance (strong bifurcation effect)
+
+Results:
+  Mortality           :  34.09% ✓ HIGH
+  Final Population    : 232.53% ✓ HIGH
+  Western Liberal     :  50.59% ✓ HIGH
+  Development         :  30.31% ✓ HIGH
+  Ecological          :   6.12% ~ MODERATE
+  Indigenous          :  19.68% ~ MODERATE
+
+================================================================================
+6. DETERMINISM CHECK
+================================================================================
+
+Unique outcomes: 2/30
+Unique mortality rates (±0.1%): 21/30
+Mortality range: 100.29% (-1.9% to 98.3%)
+
+================================================================================
+7. VALIDATION VERDICT
+================================================================================
+
+✓ PASS: Outcome diversity (2 unique outcomes, expected ≥2)
+✓ PASS: Variance amplification (6/6 metrics with CV > 5%)
+✓ PASS: Non-trivial mortality range (100.3% > 10%)
+✓ PASS: High-variance metrics (4/6 metrics with CV > 20%)
+
+--------------------------------------------------------------------------------
+Overall: 4/4 tests passed
+
+🟢 VALIDATION STATUS: PASS
+   Bifurcation formula successfully increases variance
+   Empirical calibration working as intended
+
+================================================================================
+8. COMPARISON TO PRE-BIFURCATION BASELINE (if available)
+================================================================================
+
+Expected pre-bifurcation metrics (from project context):
+  Mortality CV: < 5% (tight clustering around ~90%)
+  Outcome diversity: Predominantly dystopia (> 90%)
+  Population CV: < 10%
+
+Post-bifurcation results:
+  Mortality CV: 34.09% (✓ INCREASED)
+  Population CV: 232.53% (✓ INCREASED)
+  Dystopia rate: 90.0% (~ SIMILAR)
+
+================================================================================
+
