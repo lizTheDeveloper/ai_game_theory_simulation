@@ -912,7 +912,7 @@ const MAX_MONTHS = maxMonthsValue;
 const SEED_START = 42000;
 const SCENARIO_MODE = scenarioMode; // P0.7: 'historical', 'unprecedented', or 'dual' (50/50 split)
 const TIER3_SCENARIO = tier3Scenario; // Phase 3: Tier 3 named scenario (DEPRECATED)
-const THRESHOLD_SCENARIO = finalThresholdScenario; // Phase 4: Unified threshold scenario
+const THRESHOLD_SCENARIO = finalThresholdScenario || 'baseline'; // Phase 4: Default to 'baseline' for MC runs (prevents early endGame termination)
 
 log(`\n⚙️  CONFIGURATION:`);
 log(`  Runs: ${NUM_RUNS}`);
