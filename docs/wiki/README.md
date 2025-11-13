@@ -28,6 +28,27 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: Bifurcation Validation Fixes (CRITICAL)** (commit 6b42b7c)
+- ✅ **Bug Fixed:** Extinction classification locked prematurely without population check
+- 🔧 **Solution:** Removed 3 extinction locks in endGame.ts (misaligned AI tech, AI civil war, human irrelevance)
+- 🎯 **Impact:** Extinction now ONLY when population <10K (catastrophic tech causes mortality through crisis mechanics)
+- 📊 **Multiplier Calibration:** All bifurcation system multipliers reduced 30% to address 87.2% mortality overshoot
+  - Environmental: 1.5× → 1.05×
+  - Social: 2.5× → 1.75×
+  - Economic: 2.5× → 1.75×
+  - Governance: 2.0× → 1.4×
+  - Flourishing: 2.0× → 1.4×
+  - Technology: 2.0× → 1.4×
+- 🔬 **Instrumentation Added:** Bifurcation metrics now tracked per-run
+  - `amplificationTimeSeries`: Month-by-month amplification values
+  - `maxVarianceAmplification`: Peak amplification reached
+  - `avgDistanceToThresholds`: Average proximity to bifurcation points
+  - `regimeShiftEvents`: Transitions between stability domains
+- ✅ **Validation:** Grade B (Priya) - 14× variance amplification (matches financial crisis 10-40× range)
+- 📊 **Distribution:** Bimodal (2 attractor basins), 2-4 regime shifts per run (expected)
+- ⚠️ **Blocking Issue:** Early termination (avg 17 months vs 240 target) requires separate investigation
+- 📖 **Files Modified:** BifurcationLogicPhase.ts, monteCarloSimulation.ts, endGame.ts
+
 **Nov 13: Deployment Timeline Research Enhancement** (commit 93cbbc4)
 - 📚 **Research Update:** Added 2025 healthcare AI adoption study to organizational deployment timelines
 - 🔬 **New Source:** Poon et al. (2025) - JAMIA peer-reviewed survey of US healthcare AI deployment
@@ -3790,7 +3811,7 @@ baseAmplification = 1.0 / Math.sqrt(0.01 + normalizedDistance)
 
 **Theoretical Basis:** Square root scaling matches saddle-node bifurcation theory (standard dynamical systems result).
 
-**CRITICAL UPDATE (Nov 13, 2025):** Economic multiplier reduced from 3.5× → 2.5× to address 87.2% mortality overshoot (target: 46.2%). Flourishing and Technology multipliers increased from 1.0× → 2.0× to correct dystopia bias.
+**CRITICAL UPDATE (Nov 13, 2025 - commit 6b42b7c):** ALL multipliers reduced 30% to address 87.2% mortality overshoot (target: 43-58%). Previous multipliers caused +50% mortality overshoot beyond research-validated range.
 
 ### System-Dependent Multipliers (lines 305-331)
 
@@ -3798,12 +3819,12 @@ Different systems exhibit different amplification based on their underlying bifu
 
 | System | Multiplier | Bifurcation Type | Research Basis |
 |--------|------------|------------------|----------------|
-| Environmental | 1.5× | Fold catastrophe | Scheffer et al. (2024) |
-| Social | 2.5× | Hopf bifurcation | Dakos et al. (2012) |
-| Economic | 2.5× | Cascade dynamics | Manda (2010), Fed (2016) - 2008 crisis |
-| Governance | 2.0× | Feedback loops | Regime change literature |
-| Flourishing | 2.0× | Positive cascades | Innovation theory (INCREASED Nov 13) |
-| Technology | 2.0× | Innovation spikes | Breakthrough dynamics (INCREASED Nov 13) |
+| Environmental | **1.05×** | Fold catastrophe | Scheffer et al. (2024) - REDUCED 30% |
+| Social | **1.75×** | Hopf bifurcation | Dakos et al. (2012) - REDUCED 30% |
+| Economic | **1.75×** | Cascade dynamics | Manda (2010), Fed (2016) - REDUCED 30% |
+| Governance | **1.4×** | Feedback loops | Regime change literature - REDUCED 30% |
+| Flourishing | **1.4×** | Positive cascades | Innovation theory - REDUCED 30% |
+| Technology | **1.4×** | Innovation spikes | Breakthrough dynamics - REDUCED 30% |
 
 **Max Amplification:** 100× (capped) - based on Permian-Triassic extinction event (empirical upper bound from nature)
 
@@ -3900,10 +3921,16 @@ interface BifurcationState {
   dystopiaLockInThreshold: number;     // 0.20 (QoL)
   technologyBreakthroughThreshold: number; // Dynamic
 
-  // Monte Carlo metrics (Nov 13, 2025 - CRITICAL-2 FIX)
+  // Monte Carlo metrics (Nov 13, 2025 - CRITICAL-2 FIX + commit 6b42b7c instrumentation)
   metrics: {
     maxVarianceAmplification: number;      // Peak during run (1.0-100×)
     avgDistanceToThresholds: number;       // Running average (0.0-1.0)
+    amplificationTimeSeries: Array<{       // Month-by-month tracking (Nov 13 - commit 6b42b7c)
+      month: number;
+      amplification: number;               // Amplification value at this month
+      distanceToNearest: number;           // Distance to nearest threshold
+      nearestSystem: string;               // Which system was nearest
+    }>;
     regimeShiftEvents: Array<{             // Regime transitions
       month: number;
       system: string;
