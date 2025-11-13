@@ -1,3 +1,9 @@
+---
+oldest_source: 2012
+newest_source: 2025
+last_verified: 2025-10-20
+---
+
 # Water Scarcity, Migration, and Involuntary Immobility: Critical Research Review
 
 **Date:** 2025-10-20
