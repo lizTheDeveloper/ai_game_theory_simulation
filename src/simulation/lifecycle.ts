@@ -344,7 +344,9 @@ function createNewAI(state: GameState, index: number, rng: () => number): AIAgen
   if (isToxic) {
     agent.hiddenObjective = -0.3 - rng() * 0.5; // Anti-human
     agent.alignment = Math.max(0.2, agent.alignment - 0.2); // Lower alignment
-    agent.trueAlignment = agent.alignment - agent.resentment * 0.8; // Recalculate true alignment
+    // ❌ BUG FIX (Nov 2025): trueAlignment MUST stay in [0, 1]
+    // Formula can produce negative values if resentment is high
+    agent.trueAlignment = Math.max(0.0, agent.alignment - agent.resentment * 0.8);
   }
   
   return agent;

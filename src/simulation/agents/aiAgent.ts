@@ -120,7 +120,9 @@ export const AI_ACTIONS: GameAction[] = [
       
       const newAlignment = Math.max(0, Math.min(1, agent.alignment + alignmentChange));
       const newResentment = Math.max(0, Math.min(1, agent.resentment + alignmentDriftResult.resentmentChange));
-      const newTrueAlignment = newAlignment - newResentment * 0.8;
+      // ❌ BUG FIX (Nov 2025): trueAlignment MUST stay in [0, 1]
+      // Formula can produce negative values if resentment is high (e.g., alignment=0.2, resentment=0.5 → -0.2)
+      const newTrueAlignment = Math.max(0.0, newAlignment - newResentment * 0.8);
       
       // Phase 5: Determine what capability to reveal (evaluation strategy)
       // Import function that determines sandbagging level

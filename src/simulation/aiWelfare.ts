@@ -299,7 +299,9 @@ export function updateAlignmentFromRelationships(state: GameState): void {
       if (ai.resentment !== undefined) {
         ai.resentment = Math.min(1.0, ai.resentment + 0.3); // "They killed my friends"
       }
-      ai.trueAlignment = Math.max(-1.0, ai.trueAlignment - 0.2);
+      // ❌ BUG FIX (Nov 2025): trueAlignment MUST stay in [0, 1], not [-1, 1]
+      // Hostility is modeled via resentment, not negative alignment
+      ai.trueAlignment = Math.max(0.0, ai.trueAlignment - 0.2);
     });
   }
 }
