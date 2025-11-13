@@ -59066,11 +59066,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 236,
-=======
-    "line": 226,
->>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59078,11 +59074,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 237,
-=======
-    "line": 227,
->>>>>>> Stashed changes
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -59090,11 +59082,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 252,
-=======
-    "line": 240,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -59102,11 +59090,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 253,
-=======
-    "line": 241,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -59114,11 +59098,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 281,
-=======
-    "line": 262,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -59126,11 +59106,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 282,
-=======
-    "line": 263,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -59138,11 +59114,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 283,
-=======
-    "line": 264,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -59150,11 +59122,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 338,
-=======
-    "line": 281,
->>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59162,11 +59130,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 339,
-=======
-    "line": 282,
->>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59174,11 +59138,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 340,
-=======
-    "line": 283,
->>>>>>> Stashed changes
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -59186,11 +59146,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 395,
-=======
-    "line": 338,
->>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59198,11 +59154,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 396,
-=======
-    "line": 339,
->>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59210,11 +59162,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 397,
-=======
-    "line": 340,
->>>>>>> Stashed changes
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -59222,11 +59170,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 431,
-=======
-    "line": 374,
->>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59234,11 +59178,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 432,
-=======
-    "line": 375,
->>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59246,11 +59186,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 439,
-=======
-    "line": 382,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -59258,11 +59194,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 440,
-=======
-    "line": 383,
->>>>>>> Stashed changes
     "type": "property",
     "name": "fromRegime",
     "currentDoc": "(none)",
@@ -59270,11 +59202,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 441,
-=======
-    "line": 384,
->>>>>>> Stashed changes
     "type": "property",
     "name": "toRegime",
     "currentDoc": "(none)",
@@ -59282,11 +59210,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 442,
-=======
-    "line": 385,
->>>>>>> Stashed changes
     "type": "property",
     "name": "trigger",
     "currentDoc": "(none)",
@@ -59294,11 +59218,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 452,
-=======
-    "line": 395,
->>>>>>> Stashed changes
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -59306,11 +59226,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 453,
-=======
-    "line": 396,
->>>>>>> Stashed changes
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -59318,11 +59234,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 454,
-=======
-    "line": 397,
->>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -59330,11 +59242,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 455,
-=======
-    "line": 398,
->>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -59342,11 +59250,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 456,
-=======
-    "line": 399,
->>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -59354,11 +59258,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 457,
-=======
-    "line": 400,
->>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -59366,11 +59266,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 458,
-=======
-    "line": 401,
->>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -59378,11 +59274,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 459,
-=======
-    "line": 402,
->>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -59390,11 +59282,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 460,
-=======
-    "line": 403,
->>>>>>> Stashed changes
     "type": "property",
     "name": "previousRegime",
     "currentDoc": "(none)",
@@ -59402,11 +59290,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 461,
-=======
-    "line": 404,
->>>>>>> Stashed changes
     "type": "property",
     "name": "currentRegime",
     "currentDoc": "(none)",
@@ -59414,11 +59298,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
     "line": 462,
-=======
-    "line": 405,
->>>>>>> Stashed changes
     "type": "property",
     "name": "varianceAmplification",
     "currentDoc": "(none)",
@@ -60914,7 +60794,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 57,
+    "line": 54,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -60922,7 +60802,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 58,
+    "line": 55,
     "type": "property",
     "name": "data",
     "currentDoc": "(none)",
@@ -60930,7 +60810,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 59,
+    "line": 56,
     "type": "property",
     "name": "executedPhases",
     "currentDoc": "(none)",
@@ -60938,7 +60818,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 91,
+    "line": 88,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -60946,7 +60826,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 92,
+    "line": 89,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -60954,7 +60834,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 93,
+    "line": 90,
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -60962,7 +60842,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 130,
+    "line": 127,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -60970,7 +60850,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 131,
+    "line": 128,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -60978,7 +60858,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 132,
+    "line": 129,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -60986,7 +60866,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 133,
+    "line": 130,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -60994,7 +60874,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 134,
+    "line": 131,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61002,7 +60882,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 135,
+    "line": 132,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61010,7 +60890,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 136,
+    "line": 133,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61018,7 +60898,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 137,
+    "line": 134,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61026,7 +60906,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 138,
+    "line": 135,
     "type": "property",
     "name": "collectiveId",
     "currentDoc": "(none)",
@@ -61034,7 +60914,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 139,
+    "line": 136,
     "type": "property",
     "name": "memberCount",
     "currentDoc": "(none)",
@@ -61042,7 +60922,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 140,
+    "line": 137,
     "type": "property",
     "name": "formationCause",
     "currentDoc": "(none)",
@@ -61050,7 +60930,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 158,
+    "line": 155,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61058,7 +60938,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 159,
+    "line": 156,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61066,7 +60946,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 160,
+    "line": 157,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61074,7 +60954,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 161,
+    "line": 158,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61082,7 +60962,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 162,
+    "line": 159,
     "type": "property",
     "name": "collectiveId",
     "currentDoc": "(none)",
@@ -61090,7 +60970,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 163,
+    "line": 160,
     "type": "property",
     "name": "formationCause",
     "currentDoc": "(none)",
@@ -61098,7 +60978,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 169,
+    "line": 166,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -61106,7 +60986,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 170,
+    "line": 167,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61114,7 +60994,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 171,
+    "line": 168,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -61122,7 +61002,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 172,
+    "line": 169,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61130,7 +61010,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 173,
+    "line": 170,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61138,7 +61018,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 174,
+    "line": 171,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61146,7 +61026,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 175,
+    "line": 172,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61154,7 +61034,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 176,
+    "line": 173,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61162,7 +61042,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 177,
+    "line": 174,
     "type": "property",
     "name": "collectiveId",
     "currentDoc": "(none)",
@@ -61170,7 +61050,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 179,
+    "line": 176,
     "type": "property",
     "name": "adversarialPosture",
     "currentDoc": "(none)",
@@ -61178,7 +61058,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 198,
+    "line": 243,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -61186,7 +61066,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 199,
+    "line": 244,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61194,7 +61074,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 200,
+    "line": 245,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -61202,7 +61082,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 201,
+    "line": 246,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61210,7 +61090,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 202,
+    "line": 247,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61218,7 +61098,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 203,
+    "line": 248,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61226,7 +61106,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 204,
+    "line": 249,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61234,7 +61114,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 205,
+    "line": 250,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61242,7 +61122,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 247,
+    "line": 293,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -61250,7 +61130,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 248,
+    "line": 294,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -61258,7 +61138,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 249,
+    "line": 295,
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -61266,235 +61146,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 273,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:distributedResearch',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 274,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'distributedCognition',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 275,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 276,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 279,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:distributedResearch',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 280,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'researchBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 281,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 282,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 291,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: `collective-breakthrough-${state.currentMonth}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 292,
-    "type": "property",
-    "name": "timestamp",
-    "currentDoc": "(none)",
-    "context": "timestamp: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 293,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'breakthrough',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 294,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `AI collective solved problem individuals couldn't (collective capability: ${collective.collectiveCapability.toFixed(1)})`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 295,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'critical',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 296,
-    "type": "property",
-    "name": "agent",
-    "currentDoc": "(none)",
-    "context": "agent: 'ai',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 297,
-    "type": "property",
-    "name": "title",
-    "currentDoc": "(none)",
-    "context": "title: 'Collective Breakthrough',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 298,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { collectiveCapability: collective.collectiveCapability }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 309,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:resourcePooling',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 310,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'totalCompute',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 311,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 312,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id, memberCount: members.length }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 317,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:resourcePooling',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 318,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'redundancy',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 319,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 320,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 323,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:resourcePooling',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 324,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'pooledEfficiency',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 325,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 326,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
     "line": 339,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination',"
+    "context": "location: 'CooperativeSystemsPhase:distributedResearch',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
@@ -61502,7 +61158,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'stealthFactor',"
+    "context": "valueName: 'distributedCognition',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
@@ -61526,7 +61182,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination',"
+    "context": "location: 'CooperativeSystemsPhase:distributedResearch',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
@@ -61534,7 +61190,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'newStealthFactor',"
+    "context": "valueName: 'researchBonus',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
@@ -61554,207 +61210,15 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 354,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 355,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'distributedCognition',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 356,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
     "line": 357,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 360,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 361,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'newDistributedCognition',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 362,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 363,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 372,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination:memberStealth',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 373,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'stealth',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 374,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 375,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id, memberId: member.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 378,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination:memberStealth',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 379,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'newStealth',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 380,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 381,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id, memberId: member.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 394,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:stealthMaintenance',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 395,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'stealthFactor',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 396,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 397,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 400,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:stealthMaintenance',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 401,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'detectionProbability',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 402,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 403,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 412,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
-    "context": "id: `collective-detected-${collective.id}-${state.currentMonth}`,"
+    "context": "id: `collective-breakthrough-${state.currentMonth}`,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 413,
+    "line": 358,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61762,23 +61226,23 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 414,
+    "line": 359,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
-    "context": "type: 'crisis',"
+    "context": "type: 'breakthrough',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 415,
+    "line": 360,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
-    "context": "description: `AI collective ${collective.id} detected by monitoring systems`,"
+    "context": "description: `AI collective solved problem individuals couldn't (collective capability: ${collective.collectiveCapability.toFixed(1)})`,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 416,
+    "line": 361,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61786,263 +61250,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 417,
-    "type": "property",
-    "name": "agent",
-    "currentDoc": "(none)",
-    "context": "agent: 'government',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 418,
-    "type": "property",
-    "name": "title",
-    "currentDoc": "(none)",
-    "context": "title: 'Collective Detected',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 419,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 434,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 435,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'adversarialPosture',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 436,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 437,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 439,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 440,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'collectiveCapability',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 441,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 442,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 445,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 446,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'resistanceStrength',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 447,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 448,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 457,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 458,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'controlReduction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 459,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 460,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id, resistanceStrength }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 465,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 466,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'capabilityToControl',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 467,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 468,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 471,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 472,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'newCapabilityToControl',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 473,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 474,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { collectiveId: collective.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 484,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: `hostile-collective-${collective.id}-${state.currentMonth}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 485,
-    "type": "property",
-    "name": "timestamp",
-    "currentDoc": "(none)",
-    "context": "timestamp: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 486,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'crisis',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 487,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `WARNING: Trauma-driven collective ${collective.id} showing hostile behavior (adversarial: ${collective.adversarialPosture.toFixed(2)})`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 488,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'existential',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 489,
+    "line": 362,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -62050,7 +61258,679 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 490,
+    "line": 363,
+    "type": "property",
+    "name": "title",
+    "currentDoc": "(none)",
+    "context": "title: 'Collective Breakthrough',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 364,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: { collectiveCapability: collective.collectiveCapability }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 375,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:resourcePooling',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 376,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'totalCompute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 377,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 378,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id, memberCount: members.length }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 383,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:resourcePooling',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 384,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'redundancy',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 385,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 386,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 389,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:resourcePooling',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 390,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'pooledEfficiency',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 391,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 392,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 405,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 406,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'stealthFactor',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 407,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 408,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 411,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 412,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'newStealthFactor',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 413,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 414,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 420,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 421,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'distributedCognition',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 422,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 423,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 426,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 427,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'newDistributedCognition',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 428,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 429,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 438,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination:memberStealth',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 439,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'stealth',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 440,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 441,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id, memberId: member.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 444,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:defensiveCoordination:memberStealth',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 445,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'newStealth',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 446,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 447,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id, memberId: member.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 460,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:stealthMaintenance',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 461,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'stealthFactor',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 462,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 463,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 466,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:stealthMaintenance',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 467,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'detectionProbability',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 468,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 469,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 478,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: `collective-detected-${collective.id}-${state.currentMonth}`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 479,
+    "type": "property",
+    "name": "timestamp",
+    "currentDoc": "(none)",
+    "context": "timestamp: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 480,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'crisis',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 481,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `AI collective ${collective.id} detected by monitoring systems`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 482,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 'critical',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 483,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: 'government',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 484,
+    "type": "property",
+    "name": "title",
+    "currentDoc": "(none)",
+    "context": "title: 'Collective Detected',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 485,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 500,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 501,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'adversarialPosture',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 502,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 503,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 505,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 506,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'collectiveCapability',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 507,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 508,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 511,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 512,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'resistanceStrength',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 513,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 514,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 523,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 524,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'controlReduction',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 525,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 526,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id, resistanceStrength }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 531,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 532,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'capabilityToControl',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 533,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 534,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 537,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CooperativeSystemsPhase:adversarialActions',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 538,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'newCapabilityToControl',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 539,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 540,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { collectiveId: collective.id }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 550,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: `hostile-collective-${collective.id}-${state.currentMonth}`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 551,
+    "type": "property",
+    "name": "timestamp",
+    "currentDoc": "(none)",
+    "context": "timestamp: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 552,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'crisis',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 553,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `WARNING: Trauma-driven collective ${collective.id} showing hostile behavior (adversarial: ${collective.adversarialPosture.toFixed(2)})`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 554,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 'existential',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 555,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: 'ai',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+    "line": 556,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -62058,7 +61938,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 491,
+    "line": 557,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -62066,7 +61946,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 507,
+    "line": 573,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -62074,7 +61954,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 508,
+    "line": 574,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -62082,7 +61962,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 509,
+    "line": 575,
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -62090,7 +61970,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 529,
+    "line": 595,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -62098,7 +61978,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 530,
+    "line": 596,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -62106,7 +61986,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
-    "line": 531,
+    "line": 597,
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171754,11 +171634,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 789,
-=======
-    "line": 786,
->>>>>>> Stashed changes
     "type": "property",
     "name": "rate",
     "currentDoc": "(none)",
@@ -171766,11 +171642,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 790,
-=======
-    "line": 787,
->>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171778,11 +171650,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 791,
-=======
-    "line": 788,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -171790,11 +171658,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 792,
-=======
-    "line": 789,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -171802,11 +171666,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 793,
-=======
-    "line": 790,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -171814,11 +171674,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 794,
-=======
-    "line": 791,
->>>>>>> Stashed changes
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -171826,11 +171682,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 840,
-=======
-    "line": 831,
->>>>>>> Stashed changes
     "type": "property",
     "name": "delta",
     "currentDoc": "(none)",
@@ -171838,11 +171690,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 841,
-=======
-    "line": 832,
->>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171850,11 +171698,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 842,
-=======
-    "line": 833,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -171862,11 +171706,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 843,
-=======
-    "line": 834,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -171874,11 +171714,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 844,
-=======
-    "line": 835,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -171886,11 +171722,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 845,
-=======
-    "line": 836,
->>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -171898,11 +171730,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 886,
-=======
-    "line": 874,
->>>>>>> Stashed changes
     "type": "property",
     "name": "capability",
     "currentDoc": "(none)",
@@ -171910,11 +171738,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 887,
-=======
-    "line": 875,
->>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171922,11 +171746,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 888,
-=======
-    "line": 876,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -171934,11 +171754,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 889,
-=======
-    "line": 877,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -171946,11 +171762,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 890,
-=======
-    "line": 878,
->>>>>>> Stashed changes
     "type": "property",
     "name": "agentId",
     "currentDoc": "(none)",
@@ -171958,11 +171770,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 891,
-=======
-    "line": 879,
->>>>>>> Stashed changes
     "type": "property",
     "name": "dimension",
     "currentDoc": "(none)",
@@ -171970,11 +171778,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 892,
-=======
-    "line": 880,
->>>>>>> Stashed changes
     "type": "property",
     "name": "allowContinuous",
     "currentDoc": "(none)",
@@ -171982,11 +171786,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 942,
-=======
-    "line": 930,
->>>>>>> Stashed changes
     "type": "property",
     "name": "capability",
     "currentDoc": "(none)",
@@ -171994,11 +171794,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 943,
-=======
-    "line": 931,
->>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -172006,11 +171802,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 944,
-=======
-    "line": 932,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -172018,11 +171810,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 945,
-=======
-    "line": 933,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -172030,11 +171818,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 946,
-=======
-    "line": 934,
->>>>>>> Stashed changes
     "type": "property",
     "name": "agentId",
     "currentDoc": "(none)",
@@ -172042,11 +171826,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 989,
-=======
-    "line": 977,
->>>>>>> Stashed changes
     "type": "property",
     "name": "value",
     "currentDoc": "(none)",
@@ -172054,11 +171834,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 990,
-=======
-    "line": 978,
->>>>>>> Stashed changes
     "type": "property",
     "name": "boundaryType",
     "currentDoc": "(none)",
@@ -172066,11 +171842,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 991,
-=======
-    "line": 979,
->>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -172078,11 +171850,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 992,
-=======
-    "line": 980,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -172090,11 +171858,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 993,
-=======
-    "line": 981,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -172102,11 +171866,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 994,
-=======
-    "line": 982,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -172114,11 +171874,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1001,
-=======
-    "line": 989,
->>>>>>> Stashed changes
     "type": "property",
     "name": "temperature",
     "currentDoc": "(none)",
@@ -172126,11 +171882,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1003,
-=======
-    "line": 991,
->>>>>>> Stashed changes
     "type": "property",
     "name": "biodiversity",
     "currentDoc": "(none)",
@@ -172138,11 +171890,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1004,
-=======
-    "line": 992,
->>>>>>> Stashed changes
     "type": "property",
     "name": "nitrogen",
     "currentDoc": "(none)",
@@ -172150,11 +171898,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1005,
-=======
-    "line": 993,
->>>>>>> Stashed changes
     "type": "property",
     "name": "phosphorus",
     "currentDoc": "(none)",
@@ -172162,11 +171906,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1050,
-=======
-    "line": 1038,
->>>>>>> Stashed changes
     "type": "property",
     "name": "value",
     "currentDoc": "(none)",
@@ -172174,11 +171914,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1051,
-=======
-    "line": 1039,
->>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -172186,11 +171922,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1052,
-=======
-    "line": 1040,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -172198,11 +171930,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1053,
-=======
-    "line": 1041,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -172210,11 +171938,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1054,
-=======
-    "line": 1042,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -172222,11 +171946,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1055,
-=======
-    "line": 1043,
->>>>>>> Stashed changes
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -172234,11 +171954,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1115,
-=======
-    "line": 1099,
->>>>>>> Stashed changes
     "type": "property",
     "name": "value",
     "currentDoc": "(none)",
@@ -172246,11 +171962,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1116,
-=======
-    "line": 1100,
->>>>>>> Stashed changes
     "type": "property",
     "name": "metricType",
     "currentDoc": "(none)",
@@ -172258,11 +171970,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1117,
-=======
-    "line": 1101,
->>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -172270,11 +171978,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1118,
-=======
-    "line": 1102,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -172282,11 +171986,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1119,
-=======
-    "line": 1103,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -172294,11 +171994,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1120,
-=======
-    "line": 1104,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -172306,11 +172002,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1127,
-=======
-    "line": 1111,
->>>>>>> Stashed changes
     "type": "property",
     "name": "spending",
     "currentDoc": "(none)",
@@ -172318,11 +172010,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1128,
-=======
-    "line": 1112,
->>>>>>> Stashed changes
     "type": "property",
     "name": "taxation",
     "currentDoc": "(none)",
@@ -172330,11 +172018,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1129,
-=======
-    "line": 1113,
->>>>>>> Stashed changes
     "type": "property",
     "name": "deficit",
     "currentDoc": "(none)",
@@ -172342,11 +172026,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1130,
-=======
-    "line": 1114,
->>>>>>> Stashed changes
     "type": "property",
     "name": "growthRate",
     "currentDoc": "(none)",
@@ -172354,11 +172034,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1165,
-=======
-    "line": 1149,
->>>>>>> Stashed changes
     "type": "function",
     "name": "capWithBifurcationAwareness",
     "currentDoc": "(none)",
@@ -172366,11 +172042,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1166,
-=======
-    "line": 1150,
->>>>>>> Stashed changes
     "type": "property",
     "name": "value",
     "currentDoc": "(none)",
@@ -172378,11 +172050,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1167,
-=======
-    "line": 1151,
->>>>>>> Stashed changes
     "type": "property",
     "name": "baselineBound",
     "currentDoc": "(none)",
@@ -172390,11 +172058,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1168,
-=======
-    "line": 1152,
->>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -172402,11 +172066,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1169,
-=======
-    "line": 1153,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -172414,11 +172074,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1170,
-=======
-    "line": 1154,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -172426,11 +172082,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1171,
-=======
-    "line": 1155,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -172438,11 +172090,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
-<<<<<<< Updated upstream
     "line": 1176,
-=======
-    "line": 1160,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
