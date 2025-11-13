@@ -39,10 +39,37 @@ const CRITICAL_MASS_HIGH = 0.35;
 /** Network effects bonus during critical mass transition (+2%/month) */
 const NETWORK_EFFECTS_BONUS = 0.02;
 
-/** Minimum adoption floor (innovators + early adopters always exist)
- * Research: Rogers (1962) - 2.5% innovators + 2.5% early adopters minimum
- * FIX (Nov 10, 2025): Prevent crash to 0% in high-resistance scenarios */
-const MIN_ADOPTION_FLOOR = 0.05; // 5% minimum (innovators never stop)
+/**
+ * Minimum workflow adaptation floor (technical necessity, NOT research-backed)
+ *
+ * Purpose: Prevents division-by-zero and numerical instability in downstream calculations
+ *
+ * Research Status: NO peer-reviewed evidence supports a persistent adoption floor
+ * during economic crisis/job displacement. Rogers (1962) studied voluntary adoption
+ * under normal conditions (agriculture, medicine) and found discontinuance rates of
+ * 10-30%. Crisis research shows unemployment REDUCES adoption probability (PMC4391079).
+ *
+ * Previous INCORRECT citation (REMOVED Nov 13, 2025):
+ * - Code claimed "Rogers (1962) - 2.5% + 2.5% = 5% minimum"
+ * - Actually: Rogers says 2.5% + 13.5% = 16% (innovators + early adopters)
+ * - Rogers NEVER claims these groups are "immune to resistance"
+ * - Rogers studied voluntary adoption, NOT crisis scenarios
+ *
+ * Value Justification: Minimal technical floor (2%) sufficient for numerical stability.
+ * Higher values would be arbitrary without crisis-specific adoption research.
+ * Even 2% is likely too high for severe crisis scenarios (95%+ unemployment).
+ *
+ * Future Work:
+ * - Replace with dynamic floor based on unemployment rate and AI capability
+ * - Find crisis-specific adoption research (Great Depression, 2008 crisis, wartime)
+ * - Consider reducing to 0.5-1% if Monte Carlo validation shows no instability
+ *
+ * @see research/verification_d336915_20251110.md - Comprehensive citation analysis (723 lines)
+ * @see reviews/workflow_adaptation_citations_critique_20251113.md - Skeptical review (C- grade)
+ *
+ * FIX (Nov 13, 2025): Reduced from 5% → 2%, removed misleading Rogers citation
+ */
+const MIN_ADOPTION_FLOOR = 0.02; // 2% technical floor (NO RESEARCH SUPPORT - prevents div/0 only)
 
 /**
  * Resistance parameters
@@ -243,8 +270,8 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
   const shock = (rng() - 0.5) * 0.2 * Math.abs(netGrowth);
 
   // Apply growth with bounds [MIN_ADOPTION_FLOOR, 1]
-  // FIX (Nov 10, 2025): Enforce minimum floor - innovators always exist
-  // Research: Rogers (1962) - 2.5% innovators + 2.5% early adopters are immune to resistance
+  // FIX (Nov 13, 2025): Enforce minimum technical floor - prevents div/0 in downstream calculations
+  // WARNING: No research support for this floor. Unemployment empirically REDUCES adoption (PMC4391079).
   const newAdaptation = Math.max(MIN_ADOPTION_FLOOR, Math.min(1, current + netGrowth + shock));
 
   // Update state
