@@ -1,7 +1,12 @@
 # Research Update Queue
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Generated:** 11/13/2025, 6:30:04 PM
 **Files Scanned:** 372
+=======
+**Generated:** 11/13/2025, 7:30:04 PM
+**Files Scanned:** 373
+>>>>>>> Stashed changes
 =======
 **Generated:** 11/13/2025, 7:30:04 PM
 **Files Scanned:** 373
@@ -18,7 +23,11 @@
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 141 (37.9%)
+=======
+**Count:** 141 (37.8%)
+>>>>>>> Stashed changes
 =======
 **Count:** 141 (37.8%)
 >>>>>>> Stashed changes
@@ -759,7 +768,11 @@
 ## ✅ LOW (Monitor Only)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 212 (57.0%)
+=======
+**Count:** 213 (57.1%)
+>>>>>>> Stashed changes
 =======
 **Count:** 213 (57.1%)
 >>>>>>> Stashed changes
@@ -773,11 +786,19 @@ All sources <3 years old. No action required.
 | Metric | Value |
 |--------|-------|
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 | Total files | 372 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 141 (37.9%) |
 | MEDIUM | 19 (5.1%) |
 | LOW | 212 (57.0%) |
+=======
+| Total files | 373 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 141 (37.8%) |
+| MEDIUM | 19 (5.1%) |
+| LOW | 213 (57.1%) |
+>>>>>>> Stashed changes
 =======
 | Total files | 373 |
 | CRITICAL | 0 (0.0%) |
@@ -793,9 +814,15 @@ All sources <3 years old. No action required.
 | Status | Files | Percentage |
 |--------|-------|------------|
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 | Current (<3yr) | 212 | 57.0% |
 | Warning (3-5yr) | 19 | 5.1% |
 | Critical (>5yr) | 141 | 37.9% |
+=======
+| Current (<3yr) | 213 | 57.1% |
+| Warning (3-5yr) | 19 | 5.1% |
+| Critical (>5yr) | 141 | 37.8% |
+>>>>>>> Stashed changes
 =======
 | Current (<3yr) | 213 | 57.1% |
 | Warning (3-5yr) | 19 | 5.1% |
@@ -806,7 +833,11 @@ All sources <3 years old. No action required.
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 - **Current:** 37.9% critical (>5yr)
+=======
+- **Current:** 37.8% critical (>5yr)
+>>>>>>> Stashed changes
 =======
 - **Current:** 37.8% critical (>5yr)
 >>>>>>> Stashed changes
