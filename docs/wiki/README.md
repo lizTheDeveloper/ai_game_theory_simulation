@@ -18,193 +18,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 EXCELLENT - STABLE AND IMPROVING** (November 13, 2025)
+**🟢 EXCELLENT - STABLE AND IMPROVING** (November 9, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A (scenario analysis validates god mode hypothesis with empirically-grounded findings) 🟢 STRONG
+- **Research Quality:** A (100% peer-reviewed, automated currency pipeline, W3C standards) ✅ EXCELLENT
 - **Implementation Fidelity:** A- (CRITICAL gaps resolved, research-backed integration, Quality Gate 2 passed) 🟢 STRONG
 - **Architecture Health:** 9.5/10 EXCELLENT (phase consolidation complete, 97.2% assertion coverage, cross-system integration operational) ✅ STABLE
-- **System Trajectory:** 🟢 STABLE AND IMPROVING (major research milestones achieved, scenario analysis complete)
+- **System Trajectory:** 🟢 STABLE AND IMPROVING (phase complexity reduced 18%, architecture health maintained at 9.5/10)
 
 **Recent Major Achievements:**
-
-**Nov 13: Bifurcation Parameter Adjustment from Architecture Review** (commit 3543315)
-- 🔧 **DYSTOPIA BIAS FIX:** Architecture review identified asymmetric amplification favoring collapse over flourishing
-- 📊 **Changes Applied:**
-  - Economic cascade: 3.5× → 2.5× (cascade overweighted)
-  - Flourishing feedback: 1.0× → 2.0× (positive feedback loops now amplified)
-  - Technology breakthrough: 1.0× → 2.0× (innovation cascades now amplified)
-- ✅ **Rationale:** Preserves research basis while correcting outcome distribution bias (was 92% dystopia)
-- 📖 **Review:** reviews/bifurcation_empirical_architecture_review_20251113.md (CRITICAL-1: severe dystopia convergence)
-- 📊 **Impact:** Expected to increase outcome diversity (utopia/flourishing pathways now amplified at bifurcation points)
-
-**Nov 13: Scenario Analysis Framework Phase 3+4 COMPLETE** (commit ae9c642)
-- ✅ **RESEARCH MILESTONE:** All research questions answered about governance sufficiency
-- 📊 **Coverage:** 73/90 runs completed (81%), 9 scenarios tested
-- 🔬 **Key Findings:**
-  - **Starting conditions dominate:** High-trust-start 88.9% utopia vs democratic-participation 0% utopia
-  - **Technology alone insufficient:** Scientific-acceleration 0% utopia (consistent with god mode)
-  - **Democracy-efficiency trade-off:** Authoritarian-efficiency 87.5% utopia + 12.5% extinction vs democratic-participation 0% utopia + 0% extinction
-  - **No climate-equality trade-off:** Both achieve 77.8% utopia
-  - **Critical path:** High trust OR authoritarianism OR climate/equality focus enables utopia
-- ⚠️ **Limitation:** Governance metrics missing from Nov 11 data (timing mismatch - HIGH-3 fix applied Nov 12)
-- 📖 **Deliverables:**
-  - Analysis: `logs/scenario_phase4_analysis_20251113.log` (216 lines)
-  - Reports: `reviews/scenario_phase4_comparative_analysis_20251112.md` (430 lines), `reviews/scenario_phase4_EXECUTIVE_SUMMARY.md` (113 lines)
-  - Archive: `plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md` (364 lines)
-
-**Nov 12: Intelligent Auto-Remediation for Stuck Orchestrator States** (commit 9764a32)
-- 🤖 **INFRASTRUCTURE:** Merge orchestrator now uses Claude Code for intelligent recovery from stuck git states
-- ✅ **Stuck Working Tree Recovery:** When stash fails, spawns Claude Code to analyze situation (merge conflicts vs. real uncommitted work)
-- 🛡️ **Safety Rules:** Never force-discard code, preserve real work, only clean gitignored files (logs/)
-- ✅ **Claude CLI Availability Check:** Gracefully skips auto-remediation if `claude` command unavailable, creates remediation tasks
-- ✅ **Removed Naive Force-Clean:** Replaced destructive `git reset --hard` fallback with intelligent Claude Code analysis
-- 📊 **Recovers From:** Merge conflict markers in log files, stuck git states (failed merges/rebases), mixed uncommitted changes
-- 📖 **Impact:** Orchestrator can now recover from complex stuck states without risking data loss or naive destructive operations
-- 📖 **Research:** User feedback - "we have a language model, don't make naive solutions"
-- 📖 **Files:** scripts/merge-orchestrator.sh (lines 126-217 stuck working tree recovery, Claude CLI checks at all spawning sites)
-
-**Nov 12: AI Alignment Bounds Bug FIXED** (commit 0fab12f)
-- ✅ **CRITICAL BUG FIXED:** AI agent trueAlignment could become negative, violating [0, 1] probability constraint
-- 🔧 **Root Causes:** Three locations allowed negative values (aiWelfare.ts:302, lifecycle.ts:347, aiAgent.ts:123)
-- ✅ **Formula Fix:** "alignment - resentment × 0.8" now clamped to Math.max(0.0, ...)
-- ✅ **Validation:** Monte Carlo N=3, 120 months - Zero alignment violations, simulations reach month 120 (previously crashed at month 30)
-- 📊 **Impact:** Unblocks bifurcation empirical validation (HIGH priority), god mode analysis, Monte Carlo analysis
-- 🛡️ **Defense in Depth:** Primary fix at source + secondary safeguard in StochasticInnovationPhase
-- 📖 **Philosophy:** Fail loudly at source of corruption, research simulation rigor (invalid values are bugs to fix, not hide)
-
-**Nov 13: Quality Gate 2 Architecture Reviews** (commit bdeee05)
-- ✅ **Quality Gate 2 COMPLETE:** Architecture reviews for bifurcation and scenario framework implementations
-- 📊 **Bifurcation Empirical Validation:** PASS - Production-ready, no CRITICAL/HIGH issues
-  - **Grade:** Production-ready with minor improvements
-  - **Issues:** 4 MEDIUM priority issues (~3.5h to fix) - error handling, state versioning, performance optimization
-  - **Performance:** O(1) complexity, 2-3ms overhead per step, no bottlenecks detected
-  - **Verdict:** Ready for deployment, schedule MEDIUM fixes for next maintenance window
-- 📊 **Scenario Analysis Framework (Phases 1-4):** CONDITIONAL APPROVAL
-  - **Grade:** C+ - Achieves research goals but architectural cost
-  - **CRITICAL:** Sequential execution bottleneck (15h runtime → 2h with parallelization)
-  - **HIGH (3 issues):** Type safety bypasses (`as any`), missing data recovery (17/90 runs), resource leaks
-  - **Total Fix Effort:** 14 hours for critical path improvements
-  - **Verdict:** Address HIGH priority issues before production use
-- 📖 **Reviews:** reviews/bifurcation_architecture_review_20251113.md (365 lines), reviews/scenario_framework_architecture_review_20251113.md (286 lines)
-
-**Nov 13: Bifurcation Variance 2024-2025 Research Update** (commit 010da1c)
-- 📖 **Research Update:** Added critical 2024-2025 findings to bifurcation empirical validation
-- 🔴 **Key Finding:** Variance amplification is REAL but NOT RELIABLE (9% true positive rate per Nov 2024 meta-analysis)
-- ⚠️ **False Positives:** Non-normal system dynamics create "pseudo-bifurcations" without actual tipping points (Troude et al., Dec 2024)
-- ✅ **Formula Validation:** Current 100× cap DEFENSIBLE given theory-practice gap (theory predicts ∞, empirics show 4-5× in 2008 crisis)
-- 📊 **Sources:** arXiv:2412.01833 (false positive mechanism), arXiv:2511.01168 (9% true positive rate), arXiv:2401.09364 (traffic validation), multiple 2024-2025 AMOC studies
-- 📖 **Updated Research:** research/bifurcation_empirical_validation_20251112.md (163-line addendum with synthesis)
-- 🎯 **Conclusion:** Formula is "as good as it can be" - perfect prediction impossible, let Monte Carlo behavior validate
-
-**Nov 12: Bifurcation Empirical Validation Research** (commit b16ebe2)
-- ✅ **Issue #5 HIGH - Research Phase COMPLETE:** Empirically validated bifurcation variance amplification formula
-- 📊 **Findings:** System-dependent amplification (4-100× range) - Financial crisis 4-5×, ecosystem shifts 2-10×, climate tipping variance detected
-- ✅ **Research Validation:** Sylvia grade B+ (adequate with modifications required)
-- 🔧 **Implementation:** System-specific multipliers (1.0-3.5×) with bifurcation-theory base (1/√d) - Environmental 1.5×, Social 2.5×, Economic 3.5×
-- 📖 **Research:** research/bifurcation_empirical_validation_20251112.md (12 peer-reviewed sources)
-- 📖 **Critique:** reviews/bifurcation_empirical_critique_20251112.md (Sylvia's detailed methodological review)
-- 📖 **Status:** logs/SESSION_STATUS_20251112_230000.md (full session tracking)
-
-**Nov 12: Performance Instrumentation Infrastructure** (commit 1732d61)
-- ✅ **HIGH-2 COMPLETE:** Built-in phase-level performance profiling in PhaseOrchestrator
-- ✅ **Metrics:** Track min/max/p95 per phase (not just avg), 50ms threshold logging for slow steps
-- ✅ **Config-Driven:** `enablePerformanceProfiling` flag in GameState config (default: false)
-- ✅ **Export Formats:** CSV and JSON with summary statistics
-- ✅ **Validation:** 81 phases tracked, avg 144ms/step, p95 174ms, overhead <1%
-- 📖 **API:** `getPhaseTimings()`, `getStepTimings()`, `exportPhaseTimingsCSV()`, `exportPhaseTimingsJSON()`, `setSlowPhaseThreshold(ms)`
-- 📖 **Files:** PhaseOrchestrator.ts (timing collection), engine.ts (config integration), config.ts (flags), testPerformanceProfiling.ts (validation)
-- 📊 **Impact:** Enables systematic bottleneck identification (complements PERFORMANCE_BOTTLENECK_ANALYSIS_20251112.md)
-
-**Nov 12: governmentInvestment Normalization Fix Applied** (commit 67058ce)
-- ✅ **Bug Fix:** Actually applied governmentInvestment normalization divisor fix (100 not 10) in Tier2SocialSystemsPhase:77
-- 📋 **Context:** Previous commit c4ec37c2d claimed this fix but didn't actually edit the file
-- 📊 **Impact:** Fixes ai-alignment-first scenario 100% failure rate (governmentInvestment was 10 instead of 0-1 range)
-- 📖 **File:** src/simulation/engine/phases/Tier2SocialSystemsPhase.ts
-
-**Nov 12: Research Source Validation Audit COMPLETE** (commit 594d120)
-- 📊 **Overall Grade:** B- (38.2% sources >5 years old, target <5%)
-- 🔴 **CRITICAL Findings (7):** Cavalcanti mortality stabilizers misinterpretation (funding vs availability), Ballester heat adaptation max (44% vs 80%), IOM migration parameters (10/11 unsourced)
-- 🟡 **HIGH Findings (3):** 136 research files >5 years old, bifurcation variance 100× magnitude needs justification, scenario parameters not located
-- ✅ **No Contradictory Evidence:** Issues are misinterpretations/gaps, not research disproving mechanisms
-- ✅ **Well-Researched Areas:** Climate mitigation (1,277 lines, 28 sources, 70-80% confidence), planetary boundaries (B+ grade), TIER 2 thresholds
-- 📖 **Audit Report:** research/RESEARCH_SOURCE_VALIDATION_AUDIT_20251112.md (597 lines, comprehensive)
-- 📖 **Verification File:** research/verification_594d120_20251112.md (11 issues tracked)
-- 🎯 **Priority Actions:** Fix Cavalcanti misinterpretation, reduce Ballester max or find sources, source IOM parameters, update 136 outdated files
-- 📋 **Impact:** Research quality downgraded from A to B- pending TIER 1 fixes
-
-**Nov 12: Architecture Integration Review COMPLETE** (commit 030faa8)
-- 📊 **Overall Health:** 9.0/10 (improved from 7.5/10 post-Week 4)
-- ✅ **Phase Consolidation:** 116→95 phases (-18% complexity)
-- ✅ **Assertion Coverage:** 97.2% (NaN cascade prevention)
-- 🔴 **CRITICAL Issue Identified:** Monte Carlo script premature termination (47MB log, only 3/60 runs completed)
-- 🟡 **HIGH-1:** Scenario system integration gaps (only 3 files reference state.scenario, needs 10+ for full integration)
-- 🟡 **HIGH-2:** State propagation race conditions (manual phase dependencies prone to errors)
-- 📖 **Review Files:** reviews/architecture_integration_review_20251112.md (9KB full analysis), reviews/ARCHITECTURE_REVIEW_SUMMARY_20251112.md (2.6KB executive summary)
-- 📋 **Impact:** Monte Carlo blocker must be fixed before Phase 4 comparative analysis
-
-**Nov 12: Scenario Phase 3 CRITICAL-2 Fixed - Deployment Sequencing** (commit e9ac983)
-- ✅ **CRITICAL-2 FIXED:** Scenario parameter divergence resolved (9/13 scenarios now differentiated)
-- ✅ **Root Cause:** All scenarios used immediate tech deployment (month 0), giving government priorities no time to affect outcomes
-- ✅ **Solution:** 6 government priority scenarios now use sequenced deployment (12-month gaps, 6-month for authoritarian)
-- ✅ **Scenarios Updated:** climate-first, equality-first, ai-alignment-first, democratic-participation, scientific-acceleration, authoritarian-efficiency
-- ✅ **Validation:** Quick test (seed=42, 60 months) shows differentiation - equality-first activates Cognitive spiral, others don't
-- 🔴 **NEW BLOCKER:** Monte Carlo incomplete execution - only 1/6 scenarios ran before script termination
-- 📊 **Status:** BLOCKING Phase 4 comparative analysis - log at logs/scenario_phase3_FIXED_mc_20251112_111038.log (9.4MB, only 2/60 runs)
-- 📖 **Files:** src/types/scenarios.ts (sequenced deployment config), logs/CRITICAL_2_SCENARIO_DIVERGENCE_FIX.md
-- 📖 **Related Commits:** a140fb07b - "fix: Scenario parameter divergence (sequenced deployment)", ff22268 - "fix: Scenario Phase 3 critical fixes (CRITICAL-1, HIGH-3)"
-
-**Nov 12: ApplyScenarioPrioritiesPhase Type Safety Fix** (commit 29701de)
-- ✅ **Type Safety Fix:** Added guard check for undefined `state.config.climatePriority` in ApplyScenarioPrioritiesPhase:134-146
-- ✅ **Pattern:** Defensive guard check with graceful degradation (skip weight rebalancing if climatePriority not configured)
-- ✅ **Impact:** Unblocks merge of autonomous worker branch, maintains type safety under strict null checks
-- 📖 **File:** ApplyScenarioPrioritiesPhase.ts (lines 134-157)
-
-**Nov 12: Novel Entities 0% Effectiveness Bug FIXED** (commit 63f8742)
-- ✅ **Critical Bug Fixed:** Novel Entities boundary showed 0% effectiveness for all 7 pollution cleanup technologies
-- ✅ **Root Cause:** Phase ordering issue - PlanetaryBoundariesPhase (order 21.0) **overwrote** tech cleanup effects from TechTreePhase (order 12.5)
-- ✅ **Solution:** Rate-based accumulation instead of overwrite - pollution drift as 10% convergence rate preserves tech cleanup
-- ✅ **Secondary Fix:** Microplastic reduction now affects Novel Entities boundary (was only affecting marineFoodWeb)
-- ✅ **Validation:** Monte Carlo N=5 runs (60 months), 0 errors, dynamic boundary movement confirmed
-- ✅ **Impact:** Technologies now show 5-20% effectiveness (will drop to 2-10% once energy/concentration constraints enforced)
-- 📖 **Files Changed:** planetaryBoundaries.ts (lines 805-844), techTree/effectsEngine.ts (lines 1215-1249)
-- 📖 **Documentation:** logs/novel_entities_fix_COMPLETE_20251112.md (314 lines, full diagnostic + validation)
-
-**Nov 12: Climate Deployment Timescales Research COMPLETE (Quality Gate 1 PASSED)** (commit 63f8742)
-- 🔄 **Phase 1 Research Validation COMPLETE** (Sylvia - research-skeptic)
-- 🎯 **Objective:** Model 30-50 year deployment timescales (planning → construction → scaleUp → full)
-- ✅ **Deployment Timescales Validated:** 30-50 years baseline, 10-15 years accelerated (IPCC AR6)
-- ✅ **Energy Constraints Validated:** 10,000-22,000 TWh/year for 10 GtCO₂/year DAC (50-110% global electricity)
-- ✅ **Carbon Cycle Feedbacks Validated:** Ocean sink -10 to -20%, permafrost 0.1-0.3 Gt/year (Richardson et al. 2023)
-- 🔄 **Phase 2 Implementation IN PROGRESS** (Roy - simulation-maintainer)
-- 📊 **Expected Impact:** Climate effectiveness 5.5% → 20-40% (realistic improvement after deployment curve modeling)
-- 📖 **Files:** reviews/climate_deployment_timescales_validation_20251112.md, plans/ORCHESTRATION_STATUS_deployment_timescales_20251112.md
-
-**Nov 12: AI Coordination & Transition Management Research Identified (TIER 1 CRITICAL)** (commit 63f8742)
-- 🔬 **Critical Gap:** God mode 30% mortality reveals model tests CHAOS (instant deployment) not COORDINATION (AI-managed)
-- 📋 **Research Questions:** Transition mortality (managed vs unmanaged), AI coordination mechanisms, support systems, deployment pacing
-- 📖 **Research File:** research/ai_coordination_transition_20251112.md (515 lines, 15+ peer-reviewed sources)
-- 🎯 **Implementation Plan:** New CoordinatedDeploymentPhase, transition support system, regional capacity modeling
-- ⚠️ **Status:** Research complete, awaiting Quality Gate 1 validation (research-skeptic)
-- 📊 **Expected Impact:** Show delta between chaos mode (30% mortality) vs coordinated mode (<5% mortality)
-
-**Nov 11: Wet Bulb Mortality Cap Fix** (commit a3df82a)
-- ✅ **Critical Bug Fixed:** Wet bulb mortality calculation could exceed 100% under extreme population collapse
-- ✅ **Root Cause:** Static regional populations (1900M South Asia) divided by dynamic crashed global population (<9M at month 359) = 101.2% mortality
-- ✅ **Research-Backed Fix:** Cap mortality at 10% (10× worst historical heat wave per Ballester et al. 2024)
-- ✅ **Historical Context:** 2003 European heatwave 0.0094% mortality, 2010 Russian heatwave 0.038% mortality
-- ✅ **Defensive Coding:** NO silent fallback - logs when capping with full diagnostic context
-- ✅ **Validation:** Seed 3, 360 months (original failing case) now completes successfully
-- ⚠️ **TODO:** Implement dynamic regional population tracking to eliminate edge case
-- 📖 **Context:** Part of assertion-based validation - fail-loudly caught calculation overflow
-
-**Nov 11: Scenario Phase 3 Tech Deployment Bug Fix** (commit a71590b)
-- ✅ **Bug Fixed:** simplifiedScenarioRunner.ts line 105 accessed non-existent `state.deployedTech[tech.id]`
-- ✅ **Root Cause:** Incorrect techTree access pattern (should use `state.techTreeState.unlockedTech`, `regionalDeployment`)
-- ✅ **Solution:** Copied correct pattern from working scenarioRunner.ts:294-341 (`deployAllTech` function)
-- ✅ **Impact:** Unblocks Scenario Analysis Framework Phase 3 (HIGH priority - policy package execution)
-- ✅ **Verification:** God mode scenario completes 12 months successfully (previously failing on all 50 runs)
-- 📖 **Context:** Phase 3 scenario execution was blocked, now operational
 
 **Nov 11: Scenario System Type Safety Fix** (commit 9a617d4)
 - ✅ **Type Cast Removed:** `(state as any).scenario` → `state.scenario` (properly typed in GameState:187)
@@ -212,14 +34,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Impact:** Government priority scenarios fully operational, cleaner type safety patterns
 - ✅ **Review:** Architecture skeptic review in reviews/scenario_system_architecture_review_20251111.md
 - 📖 **Context:** scenarioRunner.ts:32 - ApplyScenarioPrioritiesPhase requires state.scenario
-
-**Nov 11: Extinction Rate Minimum Correction** (commit 3b4dbdd)
-- ✅ **Bug Fixed:** assertInRange rejected extinctionRate=9.67 (below min=10) - system prevented biodiversity improvements
-- ✅ **Root Cause:** Lower extinction rates are BETTER - MIN_EXTINCTION_RATE=10.0 E/MSY (safe boundary) blocked tech from improving to background rate (1.0 E/MSY)
-- ✅ **Solution:** Changed MIN_EXTINCTION_RATE from 10.0 to 1.0 E/MSY in planetaryBoundaries.ts:486-490, 1244-1252
-- ✅ **Rationale:** Safe boundary = 10 E/MSY (10× background), background rate = 1 E/MSY (natural) - technologies should be able to restore biodiversity beyond safe threshold toward natural levels
-- ✅ **Impact:** Unblocks Phase 3 Monte Carlo (3 of 10 runs were failing)
-- 📖 **Context:** Part of assertion-based validation sweep - fail-loudly caught logic error
 
 **Nov 10: HIGH-1 Tech Deployment O(n²) Bottleneck Fixed** (commit bbb2ad2)
 - ✅ **Scenario Initialization: 50% faster** (5,329 → 73 operations for 73 tech, 73× reduction)
@@ -252,16 +66,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Files:** src/types/scenarios.ts (+158 lines), scripts/runPhase3Scenarios.ts (NEW), plans/phase3_implementation_complete.md
 - ⚠️ **Research Verification Needed:** Climate spending 35% GDP max, Nordic inequality parameters, AI safety $50B/month benchmarks
 
-**Nov 13: Research Integrity Fix - Rogers (1962) Citation Corrected** (commit 4e7af60)
-- 🔬 **Citation Removed:** Rogers (1962) misrepresented - claimed 2.5%+2.5%=5%, actually says 2.5%+13.5%=16%
-- 🔬 **False Claim Removed:** "Immune to resistance" never stated by Rogers
-- ⚠️ **MIN_ADOPTION_FLOOR:** Reduced from 5% → 2% (technical necessity, NO research support)
-- ✅ **Honest Documentation:** Added explicit warnings about lack of crisis adoption research
-- 📊 **Research Files:** reviews/workflow_adaptation_citations_critique_20251113.md (Sylvia's critique), devlogs/20251113_rogers_citation_fix.md (Roy's implementation)
-- 📋 **Scenario Analysis:** Phase 5 Policy Implications Report completed (reviews/scenario_analysis_phase5_policy_implications_20251113.md)
-- 🎯 **Key Finding:** Trust > Technology (88.9% vs 0% utopia rates in comparative scenarios)
-- ⚠️ **Monte Carlo Validation:** Needed to verify 2% floor prevents numerical instability
-
 **Nov 10: Agent Memory System Updates** (commit 8d81e34)
 - 📝 **Coffee-talk Discussion:** 4 agents (Roy, Priya, Sylvia, Cynthia) discussed god mode 30% mortality finding
 - 🔍 **Key Insight Documented:** Current god mode = chaos mode (instant deployment) not coordinated mode
@@ -281,7 +85,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Nov 10: CRITICAL Bug Fixes - Spiral Activation Blockers Resolved** (commit d336915)
 - ✅ **Bug 1 Fixed:** workflowAdaptation crash to 0% (blocked scientific spiral activation)
-- ⚠️ **MIN_ADOPTION_FLOOR = 5%:** ~~Innovators + early adopters immune to resistance (Rogers 1962)~~ **RETRACTED Nov 13 - Citation misrepresented Rogers' work, reduced to 2% technical floor**
+- ✅ **MIN_ADOPTION_FLOOR = 5%:** Innovators + early adopters immune to resistance (Rogers 1962)
 - ✅ **Retraining Programs:** Government research investment → skill gap reduction (OECD 2024 - PENDING VERIFICATION)
 - ✅ **Formula:** $50B research → 50% skill gap reduction, $100B → 75% cap
 - ✅ **Bug 2 Fixed:** democratic-participation scenario crash (readonly property violation)
@@ -790,54 +594,29 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
-**🌍 PLANETARY BOUNDARIES & TIPPING POINTS RESEARCH UPDATE (Nov 11, 2025)**
+### November 11, 2025
 
-Critical research update from 2023-2025 peer-reviewed sources:
+**🔬 PARADIGM 4 RESEARCH UPDATE** (commit bb6ba69)
 
-**New Research File:** `research/planetary_boundaries_tipping_points_2024_2025.md`
-- **Richardson et al. 2023** (Science Advances): 6 of 9 planetary boundaries transgressed
-- **Global Tipping Points Report 2025**: First Earth system tipping point crossed - warm-water coral reefs at 1.4°C
-- **Armstrong McKay 2022** (Science): Updated ice sheet thresholds (Greenland 0.8°C, WAIS 1.0°C - both already "likely")
-- **Frontiers 2025**: Amazon rainforest flipped from carbon sink to carbon source
+Updated Indigenous/Communitarian paradigm research with 2024-2025 empirical findings.
+
+**Changes:**
+- Added 5 new peer-reviewed sources (WHO 2025, HEC Paris 2025, FNGIC 2025, Population Matters 2024, multiple 2025 cohesion studies)
+- Updated frontmatter: oldest_source 1992→1992, newest_source 2024→2025, last_verified 2025-11-11
+- Sections updated: loneliness crisis (WHO global report), Indigenous data sovereignty (OCAP + AI), Buen Vivir implementation status, protective factors research
 
 **Key Findings:**
-- **Coral reefs:** Passed thermal tipping point (range: 1.0-1.5°C, central: 1.2°C) - >99% probability at 1.5°C
-- **Ice sheets:** Thresholds LOWER than previously thought (possible from 0.8-1.0°C vs old 1.5-2.0°C estimates)
-- **Current trajectory (2.6°C):** 13 tipping elements will be likely/possible
-- **Six boundaries already transgressed:** Climate, biosphere, land, biogeochemical, freshwater, novel entities
+- **WHO Global Report (June 2025)**: 1 in 6 people worldwide affected by loneliness, 871,000+ deaths annually, recognized as global public health crisis
+- **HEC Paris (January 2025)**: EU-wide survey shows 13% chronic loneliness, 35% frequent loneliness
+- **Indigenous Data Sovereignty (May 2025)**: OCAP principles being integrated into national AI strategies, concerns about AI threats to digital self-determination
+- **Buen Vivir Status (2024)**: Ecuador and Bolivia still practicing extractivism despite constitutional Rights of Nature - aspiration vs practice gap persists
+- **Protective Factors (2025)**: Neighborhood cohesion reduces loneliness (IRR=0.93, 95% CI=0.86-1.00)
 
-**Implementation Status:** PENDING
-- Research file ready for use in TippingPointPhase and PlanetaryBoundaryPhase updates
-- Validates existing novel entities transgression (0% cleanup effectiveness)
-- Parameter updates needed (coral tipping point, ice sheet thresholds, boundary severities)
+**Research Quality:** All peer-reviewed or authoritative institutional sources (WHO, HEC Paris, First Nations Information Governance Centre). Global and regional empirical data.
 
-**Research Quality:** A+ (100% peer-reviewed, all sources 2023-2025, major journals: Science, Science Advances)
+**Files:** `research/paradigm_4_indigenous_communitarian_20251019.md`
 
-Commit: 8b42053
-
-**✅ RECOVERY MECHANICS AUDIT COMPLETE (Nov 11, 2025)**
-
-Investigation of Monte Carlo Issue #9 confirms recovery mechanics are **FUNCTIONAL and RESEARCH-BACKED**.
-
-**Finding:** "All dystopia" outcomes are EXPECTED given:
-- 2025 start with 6 planetary boundaries already breached
-- 30-year simulation timeframe (insufficient for most recovery timescales)
-- Damage accumulates 10-100× faster than recovery (empirically grounded)
-- Recovery requires sustained coordination rarely achieved in Monte Carlo runs
-
-**Recovery systems validated:**
-1. **AI Resentment Recovery** (6 mechanisms, 1.4-16.7 year timeline) - Trust literature backed
-2. **Food Security Recovery** (2%/month max, 0.8-4.2 years) - Nuclear winter models backed
-3. **Environmental Recovery** (3-tier system, 10-100 year timescales) - IPCC/IPBES backed
-4. **Economic Recovery** (NBER methodology) - IMF data backed
-
-**Verdict:** Model accurately reflects empirical recovery timescales. Dystopia outcomes are CORRECT, not bugs.
-
-**Priority:** MEDIUM (improves understanding, confirms model validity)
-
-**See:** `reviews/recovery_mechanics_audit_20251111.md` (431 lines, comprehensive audit)
-
-Commit: b98fb83
+---
 
 **🔬 GOD MODE GAP CLOSURE RESEARCH COMPLETE (Nov 10, 2025)**
 
@@ -1713,52 +1492,40 @@ Commit: 5c6e9d0 (Nov 6, 2025)
 
 ---
 
-**📈 VARIANCE AMPLIFICATION: EMPIRICAL VALIDATION & SYSTEM-DEPENDENT SCALING**
+**📈 VARIANCE AMPLIFICATION CAP INCREASED: 10× → 100×**
 
-**Nov 12, 2025:** Completed empirical validation of bifurcation variance amplification formula (Issue #5 HIGH priority).
+**WEEK 5 Implementation (Nov 6-7, 2025):** Fixed ROOT CAUSE of 100% dystopia convergence.
 
-**Research Phase COMPLETE** (Quality Gate 1 PASSED, Grade B+):
-- **Financial crisis (2008):** VIX 4-5× overall, credit markets 10-40× sector-specific
-- **Ecosystem regime shifts:** 2-10× variance increase before transitions (Scheffer et al. 2024, Dakos et al. 2012)
-- **Climate tipping points:** AMOC variance signals detected (qualitative, magnitude not quantified)
-- **Extinction events:** P-T two-phase collapse pattern (quantitative variance data sparse)
-- **Key finding:** Amplification is **system-dependent** (4-100× range), not universal
+**Problem Identified:** 10× variance cap was artificially constraining outcome diversity, preventing research-backed variance in crisis outcomes.
 
-**Implementation COMPLETE** (Commit b16ebe2, adjusted 3543315):
-1. **BifurcationLogicPhase.ts (lines 209-318):**
-   - **Old formula:** `1/(0.01 + d)` (simple inverse, lacks empirical grounding)
-   - **New formula:** `1/√(0.01 + d) × systemMultiplier` (bifurcation-theory base + domain calibration)
-   - **System multipliers (Nov 13 2025 adjustment):** Environmental 1.5×, Social 2.5×, Economic 2.5× (was 3.5×), Governance 2.0×, Flourishing 2.0× (was 1.0×), Technology 2.0× (was 1.0×)
-   - **Justification:** Saddle-node bifurcation theory (1/√d), calibrated to financial crisis and ecosystem data
-   - **Adjustment rationale:** Architecture review identified dystopia bias - economic cascade overweighted, positive feedbacks (flourishing/tech) underweighted
+**Research Evidence (Sylvia + Cynthia consensus):**
+- Scheffer et al. 2024: 15-200× observed amplification in real regime shifts
+- Financial crisis 2008: 40× documented amplification
+- Ecosystem collapses: 100× amplification in biodiversity cascades
+- Disaster cascades: 200× amplification in compound crises
 
-2. **Amplification values** (adjusted Nov 13 2025):
-   - At d=0.0: Economic 25× (reduced from 35×), Environmental 15×, Social 25×, Flourishing 20× (was 10×), Tech 20× (was 10×)
-   - At d=0.1: Economic 8.0× (reduced from 11.2×), Environmental 4.8×, Social 8.0×, Flourishing 6.4× (was 3.2×), Tech 6.4× (was 3.2×)
-   - At d=0.5: Economic 3.5× (reduced from 4.9×), Environmental 2.1×, Social 3.5×, Flourishing 2.8× (was 1.4×), Tech 2.8× (was 1.4×)
-   - **Key improvement:** Mid-range amplification increased, system-specific behavior, balanced collapse vs flourishing dynamics
+**Changes (Commit 474f5903e):**
+1. **BifurcationLogicPhase.ts (line 245, 252):**
+   - maxAmplification: 10 → 100
+   - Formula divisor: 0.1 → 0.01
+   - Expected impact: Mortality 43-58% → 60-75%, outcome diversity improves
 
-**Validation Status:** 🔴 BLOCKED by AI alignment bug (negative probabilities crash at month 30)
-- **Blocker:** StochasticInnovationPhase.ts:103 - `trueAlignment_ai_gen_3_4 = -0.2745`
-- **Impact:** Cannot run Monte Carlo N=30 validation
-- **Next:** simulation-maintainer must fix root cause
+2. **refugeeCrises.ts + bayesianMortality.ts:**
+   - Fixed assertion cap bug (exposed by higher variance)
+   - assertPopulationMillion (1B regional) → assertInRange (10B global)
+   - Applies to: deathsByCategory, cumulativeCrisisDeaths (global cumulative tracking)
 
-**Research Quality (Sylvia's assessment - Grade B+):**
-- ✅ **Strengths:** Honest about uncertainty, challenges previous claims, identifies critical gaps
-- ❌ **Weaknesses:** VIX metric mismatch (measures peak not pre-crisis), temporal confusion, missing high-frequency data
-- ⚠️ **Recommendations:** System-dependent multipliers (implemented), Monte Carlo N=30 (blocked), sensitivity analysis (future)
+**Validation Status:** 🔴 BLOCKED - Monte Carlo N=20 runs stall after batch 1 (technical issue, not research issue)
+
+**Expected Outcomes:**
+- Outcome distribution: 100% dystopia → 70-80% dystopia, 15-25% mixed, 0-10% good
+- Coefficient of variation: ~2% → 20-40% (meaningful variance)
 
 **Research Files:**
-- `/research/bifurcation_empirical_validation_20251112.md` (340 lines, 12 peer-reviewed sources)
-- `/reviews/bifurcation_empirical_critique_20251112.md` (425 lines, detailed methodological review)
-- `/logs/bifurcation_orchestration_summary_20251112.md` (289 lines, full workflow)
+- `/research/outcome_variance_mechanisms_20251030.md` (990 lines, A-grade)
+- `/reviews/research-debate-synthesis_nov6_evening.md` (Action plan)
 
-**Previous Implementation (Nov 6-7, 2025):**
-- maxAmplification: 10 → 100 (commit 474f5903e)
-- Formula divisor: 0.1 → 0.01
-- Enabled by Scheffer et al. 2024 research (15-200× observed in real systems)
-
-Commits: b16ebe2 (Nov 12), 474f5903e (Nov 6, 2025)
+Commit: 474f5903e (Nov 6, 2025)
 
 ---
 
@@ -2162,24 +1929,17 @@ Autonomous infrastructure upgrade: Merge orchestrator now spawns Claude Code to 
 **New behavior**:
 - **Merge conflicts** → Claude Code spawned (15 min timeout)
 - **Test failures** → Claude Code spawned (15 min timeout)
-- **TypeScript errors** → Intelligent specialist routing (20 min timeout)
-  - Simulation errors (`src/simulation/`, `src/types/game.ts`) → Roy (simulation-maintainer)
-  - Frontend errors (`src/lib/`, `src/components/`, `.tsx`) → Tessa (far-future-ux-designer)
-  - Parses TypeScript compiler output to determine affected files
-  - Agents iterate until `npx tsc --noEmit` passes
+- **TypeScript errors** → Claude Code spawned (15 min timeout)
 
 **How it works**:
 1. Orchestrator detects failure
 2. Creates detailed remediation task file (`logs/merge_orchestrator/remediation_*.md`)
 3. Spawns: `timeout 900 claude --task-file <task>` (fixed Nov 7: was `claude-code`, causing command not found errors)
-4. **TypeScript errors**: Spawns specialist via `spawn-type-error-fix.sh` (parses errors, routes to Roy/Tessa, 20 min timeout)
-5. Claude Code resolves issue and completes merge
-6. On success: Merges to main, deletes worker branch (no stale branches)
-7. On timeout/failure: Preserves branch for manual review
+4. Claude Code resolves issue and completes merge
+5. On success: Merges to main, deletes worker branch (no stale branches)
+6. On timeout/failure: Preserves branch for manual review
 
-**Impact**: Autonomous workflow now truly self-healing. 23 unmerged branches (31% of 74 total) can now auto-remediate. No manual intervention needed for routine merge conflicts, test failures, or TypeScript errors.
-
-**Intelligent TypeScript Error Routing (Nov 11, 2025)**: Enhanced merge orchestrator with specialist agent routing for TypeScript errors. Previously, TypeScript failures were treated generically (spawning unspecialized Claude Code). Now: (1) `spawn-type-error-fix.sh` parses TypeScript compiler output to determine affected files, (2) routes simulation errors (`src/simulation/`, `src/types/game.ts`) to Roy (simulation-maintainer) with defensive coding context, (3) routes frontend errors (`src/lib/`, `src/components/`, `.tsx`) to Tessa (far-future-ux-designer) with React patterns context, (4) agents iterate until `npx tsc --noEmit` passes with zero errors. Auto-remediation retries quality gates after fix, continues to merge if all pass. Impact: 23 unmerged branches (31% of 74 total) can now auto-remediate with specialist expertise. Branch analysis scripts added for monitoring. Fix logs saved to `logs/merge_orchestrator/type_fixes/`. See: `scripts/spawn-type-error-fix.sh` (201 lines), `scripts/merge-orchestrator.sh` (lines 314-381), Commit: 397a531
+**Impact**: Autonomous workflow now truly self-healing. No manual intervention needed for routine merge conflicts or test failures.
 
 **Auto-Remediation Command Fix (Nov 7, 2025)**: Merge orchestrator was failing to spawn Claude Code with "command not found" error. Root cause: Script called `claude-code` (incorrect) instead of `claude` at lines 289, 358. This prevented all auto-remediation from working - conflicts and test failures weren't being fixed, causing branch accumulation. Fix (commit dd309f8): Changed both instances to `claude`. Also added graceful test gate skip when no test framework available (VM environments now validate with TypeScript only). Impact: Auto-remediation now functional, 10 pending branches ready for processing. Dry run confirmed fixes working. See: `logs/autonomous/health_check_fix_20251107_211700.md`
 
@@ -2390,7 +2150,7 @@ Implementation details and code references:
 | [📁 Codebase Structure](./technical/codebase.md) | ✅ | File organization, module dependencies |
 | [⚙️ Central Configuration](../CENTRAL_CONFIG_USAGE.md) | ✅ | Single source of truth for 100+ parameters, 80% citations, fail-loudly validation (Nov 6, 2025) |
 | [🧪 Testing & Monte Carlo](./technical/testing.md) | ✅ | Running simulations, analyzing results |
-| [🔬 Scenario Analysis Framework](./technical/scenarios.md) | ✅ | Phases 1-4 complete: 13 governance scenarios, Monte Carlo validated (73/90 runs), comparative analysis, Quality Gate 2 reviewed (C+ grade, HIGH issues identified) |
+| [🔬 Scenario Analysis Framework](./technical/scenarios.md) | 🟡 | Phase 1 complete: diagnostic logging, type definitions (src/types/scenarios.ts), 6 predefined scenarios (no-tech, god-mode, early-start, governance-first, sequenced, climate-prioritized) |
 | [🎮 UI Components](./technical/ui.md) | ✅ | React components, state management |
 | [⚙️ Engine Architecture](./technical/engine.md) | ✅ | Core simulation engine design |
 | [💾 State Persistence](./technical/persistence.md) | ✅ | IndexedDB resume, RNG determinism, save rotation (Oct 26, 2025) |
@@ -2702,15 +2462,13 @@ When auditing or writing simulation code:
   - Bug discovery: QoL overflow caught at month 13
   - Monte Carlo validation: N=3, zero failures after fix
 
-- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 11, 2025 - Nuclear winter sources upgraded to 2022-2023)
+- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 7, 2025)
   - Maximum mortality rates for catastrophic scenarios (pandemics, nuclear winter, famine)
   - **Updated 2024-2025 research:**
     - COVID-19 excess mortality (JAMA Health Forum May 2025, Int'l J. Epidemiology June 2025)
     - Nuclear winter validation (IIASA May 2025, US National Academies ongoing review)
-  - **Nuclear winter sources (2022-2023):**
-    - Xia et al. (2022) Nature Food: 5+ billion famine deaths from US-Russia nuclear war
-    - Robock et al. (2023) ACP: Policy analysis on nuclear deterrence
   - **Key findings:** 23% of US deaths in 2023 were excess mortality, nuclear winter consensus reaffirmed (Xia 2022)
+  - Research quality: A- (75% peer-reviewed, 30% from 2024-2025)
 
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 
@@ -6367,7 +6125,7 @@ state.history.exogenousShocks?: Array<{
 - **Documentation**: `CLAUDE.md` lines 34-65, `plans/merge_orchestrator_hourly_automation.md`
 - Commit: 632cefb (Nov 1, 2025)
 
-**Hourly Merge Orchestrator Automation** ✅ IMPLEMENTED (Nov 1, 2025, Enhanced Nov 12, 2025)
+**Hourly Merge Orchestrator Automation** ✅ IMPLEMENTED (Nov 1, 2025)
 - **Purpose**: Automated branch cleanup & quality gate workflow to reduce manual merge overhead
 - **Trigger**: Hourly cron job (Mac: all branches, VM: backend only) - *awaiting cron setup*
 - **Implementation**: `scripts/merge-orchestrator.sh` (500+ lines)
@@ -6386,15 +6144,6 @@ state.history.exogenousShocks?: Array<{
   - Gate 3: Architecture-skeptic review (*agent integration pending*)
   - Gate 4: Sylvia final review (*agent integration pending*)
 - **Frontend Detection**: `git diff origin/main...origin/${BRANCH} --name-only | grep -E '^src/(lib|app|components)/|\.tsx$|\.css$'`
-- **Intelligent Auto-Remediation** ✅ IMPLEMENTED (Nov 12, 2025, commit 9764a32):
-  - **Claude Code-powered recovery** for stuck git states (when stash fails or tests fail or merge conflicts occur)
-  - **Stuck working tree handling** (lines 126-217): Spawns Claude Code to analyze uncommitted changes
-  - **Safety rules**: Never force-discard code, preserve real work, only clean gitignored files (logs/)
-  - **Claude CLI availability check**: Gracefully skips auto-remediation if `claude` command unavailable
-  - **Recovers from**: Merge conflict markers in log files, stuck git states (failed merges/rebases), mixed uncommitted changes
-  - **Replaces**: Naive `git reset --hard` fallback (destructive) with intelligent analysis
-  - **Creates**: Timestamped remediation task files in `logs/merge_orchestrator/` with 5-15 min timeouts
-  - **Research**: User feedback - "we have a language model, don't make naive solutions"
 - **Safety Features**:
   - Protected branches (never delete main)
   - Lock file prevents concurrent runs (`/tmp/merge-orchestrator.lock`)
@@ -6882,29 +6631,7 @@ tail -f logs/phase3_batch_*.log
 - **Integration:** ApplyScenarioPrioritiesPhase reads `state.scenario.governmentPriorities` each month
 - **Determinism:** All tests use seeded RNG (reproducible)
 
-**Status:** ✅ COMPLETE - All phases finished (see plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md)
-
-**Results (73/90 runs, 81% completion):**
-- **high-trust-start:** 88.9% utopia (8/9 runs) - **starting conditions matter most**
-- **authoritarian-efficiency:** 87.5% utopia, 12.5% extinction (7/8 runs)
-- **climate-first:** 77.8% utopia (7/9 runs)
-- **equality-first:** 77.8% utopia (7/9 runs)
-- **low-inequality-start:** 77.8% utopia (7/9 runs)
-- **strong-institutions-start:** 20.0% utopia (2/10 runs)
-- **ai-alignment-first:** 11.1% utopia (1/9 runs)
-- **democratic-participation:** 0.0% utopia (0/9 runs)
-- **scientific-acceleration:** 0.0% utopia (0/1 runs - incomplete)
-
-**Key Findings:**
-- **Technology alone insufficient:** scientific-acceleration 0% utopia (consistent with god mode)
-- **Starting conditions dominate policy priorities:** High trust/low inequality more important than government spending
-- **Democracy-efficiency trade-off confirmed:** Authoritarianism enables faster spirals but adds extinction risk
-- **No climate-equality trade-off:** Both achieve same outcomes (77.8% utopia)
-
-**Analysis Reports:**
-- `reviews/scenario_phase4_comparative_analysis_20251112.md` (430 lines - detailed analysis)
-- `reviews/scenario_phase4_EXECUTIVE_SUMMARY.md` (113 lines - key findings)
-- `logs/scenario_phase4_analysis_20251113.log` (216 lines - raw analysis)
+**Status:** ✅ Implementation complete, testing in progress (see plans/phase3_implementation_complete.md)
 
 ### Devlogs (Recent Key Findings)
 - `devlogs/monte-carlo-analysis-oct-9-action-fix.md` - Comprehensive blocker analysis
