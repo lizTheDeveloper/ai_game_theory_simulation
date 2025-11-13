@@ -101,13 +101,14 @@
    - Issue: Cannot validate variance amplification without per-run bifurcation metrics
    - Issue: 87.2% mortality vs 43-58% research target (+50% overshoot)
  - **Remaining Work:**
-   - 🔴 CRITICAL: Add bifurcation instrumentation (per-run tracking, threshold proximity, amplification time series)
-   - 🔴 CRITICAL: Reduce system multipliers by 30% or add time-based scaling
-   - 🟡 NEXT: Re-run Monte Carlo N=10 with same seeds after fixes
-   - 🟡 Complete Priya validation analysis (unblocked by instrumentation)
+   - ✅ COMPLETE: Add bifurcation instrumentation (per-run tracking, threshold proximity, amplification time series)
+   - ✅ COMPLETE: Reduce system multipliers by 30% (Option A chosen over time-based scaling)
+   - ✅ COMPLETE: Monte Carlo N=3 smoke test (60 months) - zero crashes, all runs completed successfully
+   - 🔴 CRITICAL: Re-run Monte Carlo N=30 with instrumentation to validate mortality rates converge to 43-58% target
+   - 🟡 NEXT: Complete Priya validation analysis (unblocked by instrumentation)
    - 🟡 Wiki documentation update
    - 🟡 Archive to /plans/completed/ (after full validation)
- - **Status:** 🟡 IMPLEMENTATION COMPLETE, VALIDATION BLOCKED (instrumentation gap)
+ - **Status:** 🟢 READY FOR FULL VALIDATION (instrumentation complete, multipliers calibrated, smoke test passed)
 
 **Recent Completions (Nov 9-10, 2025):**
 - ✅ **PHASE CONSOLIDATION PROJECT COMPLETE** (Nov 7-9, 2025)
