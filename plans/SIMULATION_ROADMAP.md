@@ -508,6 +508,32 @@
   - **Quality Gate 1:** PENDING (research-skeptic review needed)
   - **Priority:** HIGH (ARCH-4 gap closure depends on validation)
 
+- [ ] **Nuclear Risk Divisor Calibration (RLHF Robustness)** 🆕 **READY FOR ORCHESTRATOR (Nov 13, 2025)**
+  - **Commit:** 033e8e2 (RLHF robustness research + nuclear risk calibration update)
+  - **Status:** Research file created, ready for VALIDATION phase (starts at validation, not research)
+  - **Files Changed:** `research/rlhf_robustness_limitations_20251113.md` (NEW), `research/nuclear_war_ai_control_gap_20251022.md` (Section 8 added)
+  - **Verification File:** `research/verification_033e8e2_20251113.md`
+  - **Citations to Verify:**
+    1. Xiao et al. (2025, JASA) - 29-41% preference collapse in RLHF (peer-reviewed)
+    2. ICLR 2025 - Shallow safety alignment (peer-reviewed)
+    3. Banerjee & Gopalan (2024) - Reward model uncertainty (arXiv, strong theory)
+  - **Parameter Calibration Issue:**
+    - **Current:** `aiControlGap / 4.0` in nuclear war formula (divisor = 4.0)
+    - **Research-Backed:** Divisor should be 30-40 based on Xiao et al. 29-41% constraint degradation
+    - **Impact:** Current divisor implies 100% constraint failure at full misalignment; research shows ~30-40% degradation
+    - **Location:** `src/simulation/engine/phases/MADDeterrencePhase.ts` (presumed)
+  - **Verification Tasks:**
+    - Layer 1: Confirm all 3 papers exist, accessible
+    - Layer 2: Verify 29-41% claim is accurate (quote specific passage)
+    - Layer 3: Validate extrapolation to Constitutional AI is justified
+    - Layer 4: Confirm divisor 30-40 is correct inference from research
+  - **Implementation After Validation:**
+    - Change divisor 4.0 → 40.0 (recommended) with research justification comment
+    - Run N≥10 Monte Carlo validation (compare nuclear war rates)
+    - Update docs/wiki/systems/nuclear-deterrence.md with new example calculations
+  - **Quality Gate 1:** PENDING (research-skeptic Layer 2 verification needed)
+  - **Priority:** MEDIUM (calibration improvement, not critical bug; improves realism + research backing)
+
 - [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
   - **Commit:** 740a914 (Infrastructure degradation in extreme collapse scenarios)
   - **Status:** Bug fixed and validated (N=2 Monte Carlo), but parameters need research backing
