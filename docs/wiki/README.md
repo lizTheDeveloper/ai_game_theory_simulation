@@ -28,6 +28,21 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: End-Game Extinction Logic Fix** (commit c61a4cb)
+- ✅ **Bug Fixed:** End-game scenarios (AI civil war, misaligned AI dominance) locked outcome to 'extinction' without verifying population actually declined below 10K threshold
+- 🔍 **Root Cause:** 4 lockOutcome('extinction') paths didn't check population, causing assertion failure when population remained high
+- 🎯 **Primary Bug:** AI civil war locked 'extinction' even with 8.30B population (should be 'dystopia')
+- 🔧 **Solution:** Added population checks (< 10K threshold) to ALL 4 extinction lock paths:
+  1. Misaligned AI with catastrophic capability (line 278)
+  2. AI civil war mutual destruction (line 289) - PRIMARY BUG
+  3. Humanity became irrelevant (line 297)
+  4. Timeout forced resolution (line 386)
+- 📊 **Logic:** If catastrophic scenario triggered but population ≥ 10K → lock 'dystopia' instead of 'extinction'
+- ✅ **Validation:** Monte Carlo N=10 PASS (no assertion errors), civil war correctly locked to dystopia (runs 2,9: pop 8.30B)
+- 🛡️ **Defensive Assertion Preserved:** engine.ts:1008-1017 fail-loudly assertion remains (catches invalid extinction classification)
+- 📖 **Context:** End-game system now respects population-based extinction threshold (events that don't kill >99.9999% of humanity → dystopia, not extinction)
+- **File:** src/simulation/endGame.ts
+
 **Nov 13: Deployment Timeline Research Enhancement** (commit 93cbbc4)
 - 📚 **Research Update:** Added 2025 healthcare AI adoption study to organizational deployment timelines
 - 🔬 **New Source:** Poon et al. (2025) - JAMIA peer-reviewed survey of US healthcare AI deployment
