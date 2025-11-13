@@ -1,0 +1,21 @@
+Fix verifyDeterminism.ts script for November 7 RNG signature change.
+
+CRITICAL BLOCKER: The script crashes with "RNG required" error because it uses old signature.
+
+File: scripts/verifyDeterminism.ts
+Line 189: const initialState = createDefaultInitialState('balanced', undefined, undefined, undefined, undefined, SEED);
+
+The signature changed (Nov 7, 2025) - RNG is now FIRST parameter and REQUIRED:
+export function createDefaultInitialState(
+  rng: () => number,  // FIRST param, REQUIRED
+  scenarioMode: ScenarioMode = 'historical',
+  ...
+)
+
+Fix:
+1. Import createRNG at top (check if already imported)
+2. Create RNG instance: const rngInstance = createRNG(SEED);
+3. Update call: createDefaultInitialState(rngInstance, 'balanced')
+4. Test: npx tsx scripts/verifyDeterminism.ts (should complete without error)
+
+Note: debugDeterminismPhases.ts already works (100% deterministic). Only this script needs fixing.

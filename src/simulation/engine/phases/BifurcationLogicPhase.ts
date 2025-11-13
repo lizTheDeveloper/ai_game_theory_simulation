@@ -214,24 +214,36 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * Far from thresholds (distance → 1), amplification → 1× (no effect)
    *
    * Research basis:
-   * - Scheffer et al. (2024) Science - 15-200× amplification in regime shifts
-   * - Financial crises (2008) - 40× amplification documented
-   * - Ecosystem collapses - 100× amplification in biodiversity cascades
-   * - Disaster cascades - 200× amplification in compound crises
+   * - Scheffer et al. (2024) Science - Environmental systems: fold catastrophe, 1.5× multiplier
+   * - Dakos et al. (2012) Ecology - Social systems: Hopf bifurcation, oscillatory dynamics, 2.5× multiplier
+   * - Manda (2010), Fed (2016) - Financial crises: cascade effects, 3.5× multiplier (2008 VIX calibrated)
+   * - Bifurcation theory - Base amplification: 1/√(distance), governs generic threshold proximity
+   * - Permian-Triassic extinction - Max amplification: 100× (empirical upper bound)
    *
+   * System-dependent multipliers account for different bifurcation dynamics:
+   * - Environmental: fold catastrophe (Scheffer et al. 2024)
+   * - Social: Hopf bifurcation with oscillations
+   * - Economic: cascade amplification (2008 crisis)
+   * - Governance: feedback loop amplification
+   * - Flourishing: positive threshold, no amplification
+   * - Technology: innovation spike dynamics, minimal amplification
+   *
+   * @see /research/bifurcation_empirical_validation_20251112.md - Grade B+ from Sylvia
    * @see Scheffer et al. (2014) - Critical slowing down indicators
-   * @see /reviews/research-debate-synthesis_nov6_evening.md - 50-100× consensus
+   * @see Dakos et al. (2012) - Variance in ecosystem regime shifts
    */
   private updateVarianceAmplification(
     bifState: import('@/types/bifurcation').BifurcationState,
     proximities: Map<string, { distance: number; currentValue: number; threshold: import('@/types/bifurcation').BifurcationThreshold }>
   ): void {
-    // Find minimum distance across all thresholds
+    // Find minimum distance across all thresholds and track which system
     let minDistance = 1.0; // Start at max (far from all thresholds)
+    let nearestThresholdName = 'unknown';
 
     for (const [name, { distance }] of proximities.entries()) {
       if (distance < minDistance) {
         minDistance = distance;
+        nearestThresholdName = name;
       }
     }
 
@@ -242,19 +254,26 @@ export class BifurcationLogicPhase implements SimulationPhase {
       month: bifState.currentRegime === 'status-quo' ? undefined : 0, // Can't access state.currentMonth here
     });
 
-    // Calculate variance amplification factor
-    // Formula: 1 / (0.01 + normalizedDistance)
-    // - Distance = 0.0 (at threshold): amplification = 1 / 0.01 = 100×
-    // - Distance = 0.4 (near threshold): amplification = 1 / 0.41 = 2.4×
-    // - Distance = 0.9 (far from threshold): amplification = 1 / 0.91 = 1.1× (minimal effect)
+    // Calculate base amplification using bifurcation theory formula
+    // Formula: 1 / √(0.01 + normalizedDistance)
+    // - Distance = 0.0 (at threshold): base = 1 / 0.1 = 10×
+    // - Distance = 0.1 (near threshold): base = 1 / √0.11 ≈ 3×
+    // - Distance = 0.5 (mid-range): base = 1 / √0.51 ≈ 1.4×
+    // - Distance = 1.0 (far from threshold): base = 1 / √1.01 ≈ 1× (minimal effect)
     //
-    // Research basis: Scheffer et al. 2024 observed 15-200× in real regime shifts
-    // 100× cap is empirical middle ground (financial crises: 40×, ecosystems: 100×)
-    const amplification = 1.0 / (0.01 + minDistanceValidated);
+    // Research basis: Bifurcation theory predicts variance scales as 1/√d near saddle-node bifurcations
+    // (Scheffer et al. 2009, standard dynamical systems textbook result)
+    const baseAmplification = 1.0 / Math.sqrt(0.01 + minDistanceValidated);
+
+    // Apply system-dependent multiplier
+    // Different systems exhibit different amplification dynamics based on bifurcation type
+    const systemMultiplier = this.getSystemMultiplier(nearestThresholdName);
+
+    // Final amplification: base × system multiplier
+    const amplification = baseAmplification * systemMultiplier;
 
     // Cap at 100× to prevent infinite amplification at exact threshold
-    // Previous 10× cap was identified as ROOT CAUSE of 100% dystopia convergence
-    // (insufficient variance near tipping points)
+    // Based on Permian-Triassic extinction event (empirical maximum observed in nature)
     const amplificationCapped = Math.min(100.0, amplification);
 
     // Validate final amplification
@@ -267,6 +286,44 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // Update bifurcation state (mutation)
     bifState.varianceAmplification = amplificationValidated;
     bifState.distanceToNearestThreshold = minDistanceValidated;
+  }
+
+  /**
+   * Get system-dependent amplification multiplier
+   *
+   * Different systems exhibit different variance amplification near thresholds
+   * based on their underlying bifurcation dynamics.
+   *
+   * Research basis:
+   * - Environmental (1.5×): Fold catastrophe with hysteresis (Scheffer et al. 2024)
+   * - Social (2.5×): Hopf bifurcation with oscillatory dynamics (Dakos et al. 2012)
+   * - Economic (3.5×): Cascade amplification observed in 2008 crisis (VIX: 4-5× baseline, Manda 2010)
+   * - Governance (2.0×): Feedback loop amplification in regime change
+   * - Flourishing (1.0×): Positive threshold, no destabilizing amplification
+   * - Technology (1.0×): Innovation spike dynamics, minimal variance amplification
+   *
+   * @param thresholdName - Name of threshold system (environmental, social, economic, etc.)
+   * @returns Multiplier for system-specific bifurcation dynamics
+   */
+  private getSystemMultiplier(thresholdName: string): number {
+    const multipliers: Record<string, number> = {
+      'environmental': 1.5,  // Fold catastrophe (Scheffer et al. 2024)
+      'social': 2.5,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012)
+      'economic': 3.5,       // Cascade effects (2008 crisis calibrated, Manda 2010)
+      'governance': 2.0,     // Feedback loops in regime change
+      'flourishing': 1.0,    // Positive threshold, no amplification
+      'technology': 1.0,     // Innovation spike dynamics
+    };
+
+    // Validate threshold name to catch typos/misconfigurations
+    const multiplier = multipliers[thresholdName];
+
+    if (multiplier === undefined) {
+      console.log(`⚠️ Unknown threshold name in bifurcation multiplier: ${thresholdName}, defaulting to 2.0`);
+      return 2.0; // Generic default if threshold type not recognized
+    }
+
+    return multiplier;
   }
 
   /**

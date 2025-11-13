@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/12/2025, 6:30:03 PM
-**Files Scanned:** 359
+**Generated:** 11/13/2025, 2:30:04 AM
+**Files Scanned:** 360
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 138 (38.4%)
+**Count:** 139 (38.6%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -243,6 +243,11 @@
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/arch4_cross_system_integrations_20251108.md`
+
+### `bifurcation_empirical_validation_20251112.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/bifurcation_empirical_validation_20251112.md`
 
 ### `black-mirror-phase3-research-AMENDED_20251016.md`
 - **Oldest source:** 2000 (25 years old)
@@ -734,7 +739,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 202 (56.3%)
+**Count:** 202 (56.1%)
 
 All sources <3 years old. No action required.
 
@@ -744,33 +749,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 359 |
+| Total files | 360 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 138 (38.4%) |
+| HIGH | 139 (38.6%) |
 | MEDIUM | 19 (5.3%) |
-| LOW | 202 (56.3%) |
-| Average age | 8.5 years |
+| LOW | 202 (56.1%) |
+| Average age | 8.6 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 202 | 56.3% |
+| Current (<3yr) | 202 | 56.1% |
 | Warning (3-5yr) | 19 | 5.3% |
-| Critical (>5yr) | 138 | 38.4% |
+| Critical (>5yr) | 139 | 38.6% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 38.4% critical (>5yr)
+- **Current:** 38.6% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 138 HIGH priority file(s) within 1 month
+1. Update 139 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
