@@ -4,6 +4,41 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Recent Changes (November 13, 2025)
+
+**⚡ PERFORMANCE: CooperativeSystemsPhase Optimized from O(n²) to O(n)** (Nov 13, 2025, commit 5780bdd)
+
+**Summary:** Fixed HIGH-1 architecture review issue - eliminated nested filter/find operations in collective formation and actions.
+
+**Problem:**
+- `executeCollectiveActions`: filtered all agents for each collective (O(c×a))
+- `executeCollectiveFormation`: used find() in loops for dissolution (O(c×a))
+- Total: ~500 operations with 50 agents × 10 collectives
+
+**Solution:**
+- Build collective membership Map once at phase start (O(n))
+- Build agent index Map for O(1) lookups (O(n))
+- Reuse maps for all operations (elimination of nested loops)
+- Inline dissolution logic to avoid repeated helper function calls
+- Use Set for collectivesToRemove lookup (O(1) vs O(n))
+
+**Performance:**
+- **Before:** 500 filter operations (50 agents × 10 collectives)
+- **After:** 60 operations (50 Map.set + 10 Map.get) = **8× improvement**
+- **Test:** 100 agents × 10 collectives completes in < 100ms
+
+**Verification:**
+- All 4 regression tests pass (dissolution logic, member updates, stealth coordination)
+- Behavior unchanged (same dissolution criteria, same member tracking)
+- Defensive coding preserved (all assertion utilities maintained)
+- Deterministic RNG usage unchanged
+
+**Files:**
+- `src/simulation/engine/phases/CooperativeSystemsPhase.ts` (Map-based lookups)
+- `tests/integration/regressions/high-1-cooperative-systems-performance.test.ts` (regression coverage)
+
+---
+
 ## ✅ Recent Changes (November 12, 2025)
 
 **🤖 INFRASTRUCTURE: Intelligent Auto-Remediation for Stuck Orchestrator States** (Nov 12, 2025, commit 9764a32)
