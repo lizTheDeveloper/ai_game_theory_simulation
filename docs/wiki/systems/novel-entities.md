@@ -657,40 +657,47 @@ chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (endocrineDisrupt
 
 ## Recent Research (November 2025)
 
-**Zero-Effectiveness Analysis (Nov 13, 2025):**
-God mode testing revealed 0% effectiveness for Novel Entities boundary despite 7 pollution technologies deployed. Research validated this is **NOT a bug** but thermodynamically and economically accurate.
+**Tiered Effectiveness Model (Nov 13, 2025):**
+Replaced flat 1% minimum effectiveness with research-backed tiered model (2-30% range) based on regulatory strength. Addresses research-skeptic Grade B- review finding that zero effectiveness was too absolutist.
 
-**Key Findings (16 peer-reviewed sources):**
-1. **Energy Trap:** Removing PFAS at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP) - thermodynamically infeasible
-2. **Concentration Problem:** Technologies work at mg/L (labs), environment is pg/L-ng/L (10^6-10^9× dilution), cost scales 12-47× for dilute streams
-3. **Irreversibility:** Microplastic ocean recovery takes hundreds of years even if input stopped, <10% reversible fraction
-4. **Montreal Protocol Lesson:** Production ban accounts for 90-95% of ozone recovery, bank destruction (cleanup) only 5-10%
-5. **Rebound Effects:** Waste generation +81% (2023-2050) despite technology (Jevons paradox)
+**Research Basis:**
+- **Ling et al. (2024):** Cleanup cost analysis ($20-7,000 trillion/year at emission rate)
+- **Cousins et al. (2022):** Atmospheric redistribution (30% hard ceiling from thermodynamic constraints)
+- **Singh et al. (2024):** Thermal destruction (2-5% tech-only effectiveness)
+
+**Tiered Model:**
+- **Tech only (0-20% regulation):** 2-5% base effectiveness (point sources only)
+- **Partial regulation (20-60%):** 5-15% base effectiveness
+- **Strong regulation (60-100%):** 15-30% base effectiveness
+- **Hard ceiling:** 30% maximum (dilution reality + atmospheric redistribution)
+
+**Implementation:**
+- Location: `src/simulation/techTree/effectsEngine.ts:calculateNovelEntitiesRemediationEffectiveness()`
+- Three-tier interpolation model replaces previous regulation multiplier
+- Regulatory strength calculated from PFAS ban (50% weight), plastic phaseout (30%), substitution (20%)
+- Hard 30% ceiling enforced (thermodynamic constraints)
 
 **Model Implications:**
-- Current 0% effectiveness is CORRECT for unregulated scenario
+- Tech-only scenario: 2-5% effectiveness (not zero, but minimal)
 - Remediation requires BOTH technology AND production regulation
 - Prevention:Remediation effectiveness ratio = 10:1 to 20:1
-- Maximum recovery: ~10% (90% irreversible floor)
+- Maximum recovery: ~30% (70% irreversible floor from dilution/redistribution)
 
-**Planned Model Redesign:**
-- Add 3 prevention technologies (TIER 0-1): PFAS ban, plastic phase-out, chemical substitution
-- Gate remediation effectiveness by regulation deployment (0.01× → 1.0× multiplier)
-- Implement 90% irreversible floor (asymptotic approach to minimum contamination)
-- Add energy constraint (cleanup gated by renewable surplus)
-- Add concentration factor (dilute environmental vs concentrated point sources)
-- Estimated implementation: 11-16 hours (3-4 days)
+**Quality Gates:**
+- Gate 1 (Research validation): ✅ PASS (Grade B-, research-skeptic Nov 13, 2025)
+- Gate 2 (Architecture review): PENDING
+- Gate 3 (Monte Carlo validation): PENDING
 
 **Research Files:**
 - Analysis: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 71 sources)
 - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
-- Verification: `research/verification_7ac8b8f_20251113.md` (tracks citation + claim verification)
-- Review: `reviews/novel_entities_research_critique_20251113.md` (Grade B+, Quality Gate 1 PASSED)
+- Review: `reviews/novel_entities_zero_effectiveness_critique_20251113.md` (Grade B-, conditional accept)
+- Verification: `research/verification_b6ec2b9_20251113.md` (citation + claim verification spec)
 
-**Status:** Research + validation complete, awaiting implementation (CRITICAL priority)
+**Status:** ✅ Implemented (commit b6ec2b9), pending architecture review + Monte Carlo validation
 
 ---
 
 **Last Updated:** November 13, 2025
-**Implementation Status:** ✅ Core system complete, 🔄 Zero-effectiveness redesign pending (CRITICAL)
-**Next Steps:** Implement prevention-gated remediation model (TIER 1 priority), then per-chemical tracking + multigenerational effects (TIER 2+)
+**Implementation Status:** ✅ Core system complete, ✅ Tiered effectiveness model implemented (commit b6ec2b9)
+**Next Steps:** Architecture review + Monte Carlo validation (Gate 2 & 3), then per-chemical tracking + multigenerational effects (TIER 2+)

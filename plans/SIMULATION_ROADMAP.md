@@ -1007,6 +1007,13 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🔬 **NEW:** Verify tiered Novel Entities effectiveness model (research/verification_b6ec2b9_20251113.md, commit b6ec2b9) - **Research-backed 2-30% effectiveness range** with 3 key citations:
+  - Ling et al. (2024): $20-7,000 trillion/year cleanup cost claim
+  - Cousins et al. (2022): 30% hard ceiling from atmospheric redistribution (verify if DERIVED or direct)
+  - Singh et al. (2024): 2-5% tech-only thermal destruction effectiveness
+  - Tier boundaries (20%, 60%) and weighting (50%/30%/20%) need verification or marking as DERIVED
+  - **Priority:** HIGH (blocks Gate 3 Monte Carlo validation)
+  - **Impact:** Validates novel effectiveness model, enables quality gates 2-3
 - [ ] 🔬 **NEW:** Verify biochar and ocean iron fertilization parameters (research/verification_2f9df5b_20251113.md, commit 2f9df5b) - **11 claims requiring Layer 1+2 verification** including:
   - Biochar: 0.7-1.8 Gt CO₂/year (npj Materials Sustainability 2025, Nature Comm Earth Environ 2025)
   - Biochar: 61% soil carbon enhancement (Biochar journal 2024, 75-study meta-analysis)
