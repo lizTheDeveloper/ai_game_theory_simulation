@@ -28,6 +28,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: CRITICAL Memory Leak + Complete O(n²) Fix** (commit 27e788f)
+- ✅ **Memory Leak Fixed:** PhaseOrchestrator unbounded array growth resolved (2 locations)
+- ✅ **Impact:** Long Monte Carlo runs no longer exhaust memory (12M+ entries → bounded 1000 samples)
+- ✅ **Solution:** Capped `samples` array at 1000 entries, `stepTimings` at 100 (rolling window preserves recent data)
+- ✅ **O(n²) Complete Fix:** All 13 O(n²) patterns in organizationManagement.ts resolved (Issue #120 incomplete - only 1 of 13 fixed)
+- ✅ **Performance Impact:** 200,000+ operations eliminated per step, 5-10× speedup for organization management
+- ✅ **Locations:** 8 AI ownership filters + 5 data center ownership filters using Set-based O(1) lookups
+- ✅ **Root Cause:** `Array.includes()` inside `filter()` creates O(n*m) complexity - replaced with `Set.has()` O(1)
+- 📖 **Review Report:** reviews/architecture-integration-review-20251113.md
+- 📖 **Fix Log:** logs/CRITICAL_FIXES_20251113.md
+- 🎯 **Context:** Architecture-skeptic review caught incomplete Issue #120 fix and memory leak
+
 **Nov 13: Scenario Type Safety Enhancement** (commit 3fb5f9e)
 - ✅ **Type Safety Improved:** qolBoosts interface replaced string indexer with explicit 17 QoL dimension fields
 - ✅ **Compile-Time Validation:** Field name typos now caught at compile time (prevents runtime bugs)
@@ -86,7 +98,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Impact:** Unblocks scaling to 200+ organizations (currently infeasible), Monte Carlo N=100 (too slow)
 - ✅ **Function:** `calculateComputeUtilization()` in organizationManagement.ts (lines 43-74)
 - ✅ **Testing:** TypeScript compiles, zero behavioral changes (same outputs, faster execution)
-- 📊 **Remaining Work:** 4 similar O(n²) patterns in organizationManagement.ts (lower priority, less frequent calls)
+- 📊 **Follow-up (Nov 13):** Remaining 12 O(n²) patterns fixed in commit 27e788f (all 13 patterns now resolved)
 - 📖 **Documentation:** reviews/ARCHITECTURE_REVIEW_O_N2_BOTTLENECKS.md, devlogs/compute_utilization_o_n2_fix_20251110.md
 
 **Nov 10: Scenario Analysis Framework Phase 3 - Core Scenarios** (commit 6e7b480)
@@ -4049,7 +4061,7 @@ deploymentSpeed = baselineSpeed
 - **Solution:** Build ownership Set once (O(n)), use O(1) `Set.has()` instead of O(n) `array.includes()`
 - **Performance gain:** 70× reduction (100,000 → 1,400 operations per step)
 - **Unblocks:** Scaling to 200+ organizations, Monte Carlo N=100 validation, scenario analysis
-- **Remaining work:** 4 similar O(n²) patterns in organizationManagement.ts (lower frequency)
+- **Follow-up (Nov 13):** All 12 remaining O(n²) patterns fixed in commit 27e788f - total 13 patterns resolved
 - **Review:** `reviews/ARCHITECTURE_REVIEW_O_N2_BOTTLENECKS.md`, `devlogs/compute_utilization_o_n2_fix_20251110.md`
 
 **Validation (Nov 5, 2025):**
@@ -5442,7 +5454,7 @@ readonly dependencies = [
 
 The simulation codebase suffered from technical debt concentrated in several large files (1,200-2,800 lines). This created:
 - Merge conflicts on every feature
-- O(n) and O(n²) performance bottlenecks
+- O(n) and O(n²) performance bottlenecks (addressed Oct 2025 refactor + Nov 13 completion)
 - Impossible-to-test monolithic functions
 - Mixed responsibilities and concerns
 - High cognitive load for developers
