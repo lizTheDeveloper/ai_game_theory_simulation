@@ -120,16 +120,30 @@ export class PhaseOrchestrator {
 
   // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
   // ENHANCED (Nov 12, 2025): Track min/max/p95 for better analysis
+  // MEMORY LEAK FIX (Nov 13, 2025): Sliding windows to prevent unbounded growth
+  /**
+   * Maximum samples to keep per phase for p95 calculation.
+   * Keeps last 1000 samples = ~8 hours of simulation at ~120 steps/hour.
+   * Prevents memory leak in long-running Monte Carlo (N=100 × 1200 steps = 120K samples → 1000 samples).
+   */
+  private static readonly MAX_PHASE_SAMPLES = 1000;
+  /**
+   * Maximum step timings to keep.
+   * Keeps last 1200 steps = 100 years of simulation.
+   * Prevents memory leak in long-running Monte Carlo (N=100 × 1200 steps = 120K entries → 1200 entries).
+   */
+  private static readonly MAX_STEP_TIMINGS = 1200;
+
   private phaseTimings: Map<string, {
     totalMs: number;
     callCount: number;
     minMs: number;
     maxMs: number;
-    samples: number[];  // For p95 calculation
+    samples: number[];  // Sliding window, max MAX_PHASE_SAMPLES
   }> = new Map();
   private enableTiming: boolean = false;
   private slowPhaseThresholdMs: number = 10;  // Warn on phases >10ms
-  private stepTimings: { month: number; totalMs: number }[] = [];  // Per-step totals
+  private stepTimings: { month: number; totalMs: number }[] = [];  // Sliding window, max MAX_STEP_TIMINGS
 
   /**
    * Register a phase
@@ -207,6 +221,7 @@ export class PhaseOrchestrator {
 
         // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
         // ENHANCED (Nov 12, 2025): Track min/max/p95, warn on slow phases
+        // MEMORY LEAK FIX (Nov 13, 2025): Sliding window for samples
         if (this.enableTiming) {
           const elapsed = performance.now() - startTime;
           const existing = this.phaseTimings.get(phase.name) || {
@@ -217,13 +232,20 @@ export class PhaseOrchestrator {
             samples: []
           };
 
+          // Sliding window: keep last MAX_PHASE_SAMPLES samples for p95 calculation
+          // Prevents unbounded memory growth in long-running simulations
+          const newSamples = [...existing.samples, elapsed];
+          const samples = newSamples.length > PhaseOrchestrator.MAX_PHASE_SAMPLES
+            ? newSamples.slice(-PhaseOrchestrator.MAX_PHASE_SAMPLES)
+            : newSamples;
+
           // Update statistics
           this.phaseTimings.set(phase.name, {
             totalMs: existing.totalMs + elapsed,
             callCount: existing.callCount + 1,
             minMs: Math.min(existing.minMs, elapsed),
             maxMs: Math.max(existing.maxMs, elapsed),
-            samples: [...existing.samples, elapsed]
+            samples
           });
 
           // Warn on slow phases (>10ms threshold)
@@ -278,9 +300,16 @@ export class PhaseOrchestrator {
     }
 
     // PERFORMANCE INSTRUMENTATION (Nov 12, 2025): Log step total
+    // MEMORY LEAK FIX (Nov 13, 2025): Sliding window for step timings
     if (this.enableTiming) {
       const stepElapsed = performance.now() - stepStartTime;
+
+      // Sliding window: keep last MAX_STEP_TIMINGS entries (100 years)
+      // Prevents unbounded memory growth in long-running simulations
       this.stepTimings.push({ month: state.currentMonth, totalMs: stepElapsed });
+      if (this.stepTimings.length > PhaseOrchestrator.MAX_STEP_TIMINGS) {
+        this.stepTimings = this.stepTimings.slice(-PhaseOrchestrator.MAX_STEP_TIMINGS);
+      }
 
       // Log step summary (minimal overhead)
       if (stepElapsed > 50) {  // Only log if step took >50ms
