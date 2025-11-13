@@ -1,6 +1,11 @@
 # Research Update Queue
+<<<<<<< Updated upstream
 **Generated:** 11/13/2025, 12:30:03 AM
 **Files Scanned:** 367
+=======
+**Generated:** 11/13/2025, 1:30:04 AM
+**Files Scanned:** 360
+>>>>>>> Stashed changes
 
 ---
 
@@ -12,7 +17,11 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
+<<<<<<< Updated upstream
 **Count:** 140 (38.1%)
+=======
+**Count:** 139 (38.6%)
+>>>>>>> Stashed changes
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -744,7 +753,11 @@
 
 ## ✅ LOW (Monitor Only)
 
+<<<<<<< Updated upstream
 **Count:** 208 (56.7%)
+=======
+**Count:** 202 (56.1%)
+>>>>>>> Stashed changes
 
 All sources <3 years old. No action required.
 
@@ -754,33 +767,56 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
+<<<<<<< Updated upstream
 | Total files | 367 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 140 (38.1%) |
 | MEDIUM | 19 (5.2%) |
 | LOW | 208 (56.7%) |
 | Average age | 8.5 years |
+=======
+| Total files | 360 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 139 (38.6%) |
+| MEDIUM | 19 (5.3%) |
+| LOW | 202 (56.1%) |
+| Average age | 8.6 years |
+>>>>>>> Stashed changes
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
+<<<<<<< Updated upstream
 | Current (<3yr) | 208 | 56.7% |
 | Warning (3-5yr) | 19 | 5.2% |
 | Critical (>5yr) | 140 | 38.1% |
+=======
+| Current (<3yr) | 202 | 56.1% |
+| Warning (3-5yr) | 19 | 5.3% |
+| Critical (>5yr) | 139 | 38.6% |
+>>>>>>> Stashed changes
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
+<<<<<<< Updated upstream
 - **Current:** 38.1% critical (>5yr)
+=======
+- **Current:** 38.6% critical (>5yr)
+>>>>>>> Stashed changes
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
+<<<<<<< Updated upstream
 1. Update 140 HIGH priority file(s) within 1 month
+=======
+1. Update 139 HIGH priority file(s) within 1 month
+>>>>>>> Stashed changes
 2. Schedule research update sprint
 3. Coordinate with research team
 
