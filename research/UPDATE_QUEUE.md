@@ -1,4 +1,5 @@
 # Research Update Queue
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 **Generated:** 11/13/2025, 8:30:04 PM
 **Files Scanned:** 373
@@ -6,6 +7,10 @@
 **Generated:** 11/13/2025, 9:30:03 PM
 **Files Scanned:** 374
 >>>>>>> Stashed changes
+=======
+**Generated:** 11/12/2025, 3:30:09 PM
+**Files Scanned:** 357
+>>>>>>> origin/auto/researcher-20251112_153001
 
 ---
 
@@ -17,11 +22,15 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 **Count:** 142 (38.1%)
 =======
 **Count:** 142 (38.0%)
 >>>>>>> Stashed changes
+=======
+**Count:** 137 (38.4%)
+>>>>>>> origin/auto/researcher-20251112_153001
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -771,11 +780,15 @@
 
 ## ✅ LOW (Monitor Only)
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 **Count:** 212 (56.8%)
 =======
 **Count:** 213 (57.0%)
 >>>>>>> Stashed changes
+=======
+**Count:** 201 (56.3%)
+>>>>>>> origin/auto/researcher-20251112_153001
 
 All sources <3 years old. No action required.
 
@@ -785,6 +798,7 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 | Total files | 373 |
 | CRITICAL | 0 (0.0%) |
@@ -799,12 +813,21 @@ All sources <3 years old. No action required.
 | LOW | 213 (57.0%) |
 >>>>>>> Stashed changes
 | Average age | 8.4 years |
+=======
+| Total files | 357 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 137 (38.4%) |
+| MEDIUM | 19 (5.3%) |
+| LOW | 201 (56.3%) |
+| Average age | 8.6 years |
+>>>>>>> origin/auto/researcher-20251112_153001
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 | Current (<3yr) | 212 | 56.8% |
 | Warning (3-5yr) | 19 | 5.1% |
@@ -814,22 +837,35 @@ All sources <3 years old. No action required.
 | Warning (3-5yr) | 19 | 5.1% |
 | Critical (>5yr) | 142 | 38.0% |
 >>>>>>> Stashed changes
+=======
+| Current (<3yr) | 201 | 56.3% |
+| Warning (3-5yr) | 19 | 5.3% |
+| Critical (>5yr) | 137 | 38.4% |
+>>>>>>> origin/auto/researcher-20251112_153001
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 - **Current:** 38.1% critical (>5yr)
 =======
 - **Current:** 38.0% critical (>5yr)
 >>>>>>> Stashed changes
+=======
+- **Current:** 38.4% critical (>5yr)
+>>>>>>> origin/auto/researcher-20251112_153001
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
+<<<<<<< HEAD
 1. Update 142 HIGH priority file(s) within 1 month
+=======
+1. Update 137 HIGH priority file(s) within 1 month
+>>>>>>> origin/auto/researcher-20251112_153001
 2. Schedule research update sprint
 3. Coordinate with research team
 
