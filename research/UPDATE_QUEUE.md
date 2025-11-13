@@ -1,11 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 11/13/2025, 6:30:02 AM
+**Generated:** 11/13/2025, 8:30:04 AM
 **Files Scanned:** 361
-=======
-**Generated:** 11/13/2025, 7:30:04 AM
-**Files Scanned:** 362
->>>>>>> Stashed changes
 
 ---
 
@@ -17,11 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< Updated upstream
 **Count:** 139 (38.5%)
-=======
-**Count:** 140 (38.7%)
->>>>>>> Stashed changes
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -683,11 +674,6 @@
 - **Status:** Not used in simulation
 - **Path:** `research/visionary_ideas_research_validation_2025-10-16.md`
 
-### `vulnerable_world_hypothesis_ai_risk_20251111.md`
-- **Oldest source:** 2019 (6 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/vulnerable_world_hypothesis_ai_risk_20251111.md`
-
 ### `water_scarcity_migration_immobility_20251020.md`
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
@@ -727,13 +713,12 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 20 (5.5%)
+**Count:** 19 (5.3%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
 - `PHASE1_LAYER2_COMPLETION_REPORT.md` - Oldest: 2020 (5 years)
 - `RESEARCH_TRIAGE_FABRICATED_CITATIONS.md` - Oldest: 2020 (5 years)
-- `ai_capability_scaling_20251113.md` - Oldest: 2021 (4 years)
 - `ai_infrastructure_resources_verification_20251031.md` - Oldest: 2021 (4 years)
 - `ai_scaling_laws_paradigm_shift_20251107.md` - Oldest: 2020 (5 years)
 - `citation_verification_tier2_synthetic_ecosystems_20251104.md` - Oldest: 2020 (5 years)
@@ -754,11 +739,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< Updated upstream
 **Count:** 203 (56.2%)
-=======
-**Count:** 202 (55.8%)
->>>>>>> Stashed changes
 
 All sources <3 years old. No action required.
 
@@ -768,19 +749,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< Updated upstream
 | Total files | 361 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 139 (38.5%) |
 | MEDIUM | 19 (5.3%) |
 | LOW | 203 (56.2%) |
-=======
-| Total files | 362 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 140 (38.7%) |
-| MEDIUM | 20 (5.5%) |
-| LOW | 202 (55.8%) |
->>>>>>> Stashed changes
 | Average age | 8.5 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -788,35 +761,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< Updated upstream
 | Current (<3yr) | 203 | 56.2% |
 | Warning (3-5yr) | 19 | 5.3% |
 | Critical (>5yr) | 139 | 38.5% |
-=======
-| Current (<3yr) | 202 | 55.8% |
-| Warning (3-5yr) | 20 | 5.5% |
-| Critical (>5yr) | 140 | 38.7% |
->>>>>>> Stashed changes
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< Updated upstream
 - **Current:** 38.5% critical (>5yr)
-=======
-- **Current:** 38.7% critical (>5yr)
->>>>>>> Stashed changes
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-<<<<<<< Updated upstream
 1. Update 139 HIGH priority file(s) within 1 month
-=======
-1. Update 140 HIGH priority file(s) within 1 month
->>>>>>> Stashed changes
 2. Schedule research update sprint
 3. Coordinate with research team
 
