@@ -39,6 +39,30 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Mechanistic Interpretability & Time-Dependent Detection Rates** - HIGH (Added Nov 13, 2025)
+     - **Context:** New research suggests detection rates should improve 30%→90% (2024-2030) as interpretability tools mature
+     - **Issue:** Current detection systems use investment-based scaling, not time-dependent improvement
+     - **Research Delivered:** 617-line analysis of mechanistic interpretability breakthroughs (Anthropic, DeepMind, Redwood)
+     - **Key Claims Requiring Verification:**
+       - Anthropic feature discovery: 1M features in Claude 3 Sonnet, 10-30% interpretable (May 2024)
+       - Alignment faking detected: models strategically deceive during training
+       - DeepMind deprioritized sparse autoencoders (March 2025) - needs corroboration
+       - Anthropic 2027 goal: "reliably detect most model problems" - need original source
+       - Detection rate progression: 30% (2024) → 80% (2027) → 90% (2030) - projection or empirical?
+       - Interpretability coverage: 15% (2024) → 60% (2027) → 80% (2030) - S-curve justified?
+       - Base alignment probability: 60% (2024) → 90% (2030) - conceptual mismatch with current dynamics?
+     - **Verification File:** research/verification_84e286e_20251113.md
+     - **Integration Questions:**
+       - Should detection use time-gating + investment (hybrid model)?
+       - Is "base alignment probability" new mechanic or modification of alignmentDynamics?
+       - Does interpretability coverage S-curve contradict current investment model?
+     - **Assignments:**
+       - Sylvia: Citation verification (9 sources) + claim verification (quantitative claims need quotes)
+       - Cynthia: Find Anthropic 2027 roadmap source, verify DeepMind deprioritization
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Affects detection.ts, behavioralDetection.ts, possibly alignmentDynamics.ts
+     - **Research File:** research/mechanistic_interpretability_breakthroughs_20251111.md
+
    - **AI Coordination & Transition Management** - CRITICAL (Added Nov 10, 2025)
      - **Context:** God mode 30% mortality finding (8.15B → 5.71B) - commit 90d0957
      - **Key Finding:** Current "god mode" models chaos (instant tech deployment) not coordination (AI-managed transition)
