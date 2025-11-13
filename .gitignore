@@ -83,3 +83,6 @@ research/pdfs/ipcc_2022_climate_change_2022_impacts_adaptation.pdf
 research/embeddings/*.db
 research/embeddings/*.index
 research/embeddings/*.pkl
+
+# Abstract agent team toolkit (belongs in parent directory, not this repo)
+abstract_agent_team/
