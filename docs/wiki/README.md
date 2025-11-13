@@ -67,6 +67,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🛡️ **Defense in Depth:** Primary fix at source + secondary safeguard in StochasticInnovationPhase
 - 📖 **Philosophy:** Fail loudly at source of corruption, research simulation rigor (invalid values are bugs to fix, not hide)
 
+**Nov 13: Biodiversity & Nuclear Winter Research Assessment** (commit 1cd141d)
+- ✅ **Research Files Added:** 2024-2025 peer-reviewed assessments backing existing simulation mechanics
+- 📖 **Biodiversity Extinction Rates:** research/biodiversity_extinction_rates_20251113.md (273 lines, 5 sources)
+  - **Parameters:** 100-10,000× background extinction rate, 1M species at risk (IPBES 2019), 25% threatened, 50-200y timeline to mass extinction
+  - **Sources:** IPBES 2019 (reaffirmed 2024-2025), Wiens et al. 2022 (EMBO Reports), UN Environment 2024
+  - **Existing Code:** src/simulation/planetaryBoundaries.ts (extinctionRate: 35-180 E/MSY by biome)
+- 📖 **Nuclear Winter Climate Effects:** research/nuclear_winter_climate_effects_20251113.md (485 lines, 8 sources)
+  - **Parameters:** 5-165 Mt soot injection, 0.3-12°C cooling, 7-90% crop reduction, 2-5B famine casualties
+  - **Sources:** Xia et al. 2022 (Nature Food), Penn State 2025 agroecosystem model, Robock 2007-2024, Mills et al. 2014 (NCAR)
+  - **Existing Code:** src/simulation/engine/phases/NuclearWinterPhase.ts
+- ⚠️ **Status:** AWAITING VALIDATION - Research verification file required for citation + claim verification
+- 🎯 **Next:** Verification file → orchestrator workflow (validation phase)
+
 **Nov 12: Bifurcation Empirical Validation Research** (commit b16ebe2)
 - ✅ **Issue #5 HIGH - Research Phase COMPLETE:** Empirically validated bifurcation variance amplification formula
 - 📊 **Findings:** System-dependent amplification (4-100× range) - Financial crisis 4-5×, ecosystem shifts 2-10×, climate tipping variance detected
