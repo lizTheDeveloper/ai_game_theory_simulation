@@ -243,6 +243,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Files:** src/types/scenarios.ts (+158 lines), scripts/runPhase3Scenarios.ts (NEW), plans/phase3_implementation_complete.md
 - ⚠️ **Research Verification Needed:** Climate spending 35% GDP max, Nordic inequality parameters, AI safety $50B/month benchmarks
 
+**Nov 13: Research Integrity Fix - Rogers (1962) Citation Corrected** (commit 4e7af60)
+- 🔬 **Citation Removed:** Rogers (1962) misrepresented - claimed 2.5%+2.5%=5%, actually says 2.5%+13.5%=16%
+- 🔬 **False Claim Removed:** "Immune to resistance" never stated by Rogers
+- ⚠️ **MIN_ADOPTION_FLOOR:** Reduced from 5% → 2% (technical necessity, NO research support)
+- ✅ **Honest Documentation:** Added explicit warnings about lack of crisis adoption research
+- 📊 **Research Files:** reviews/workflow_adaptation_citations_critique_20251113.md (Sylvia's critique), devlogs/20251113_rogers_citation_fix.md (Roy's implementation)
+- 📋 **Scenario Analysis:** Phase 5 Policy Implications Report completed (reviews/scenario_analysis_phase5_policy_implications_20251113.md)
+- 🎯 **Key Finding:** Trust > Technology (88.9% vs 0% utopia rates in comparative scenarios)
+- ⚠️ **Monte Carlo Validation:** Needed to verify 2% floor prevents numerical instability
+
 **Nov 10: Agent Memory System Updates** (commit 8d81e34)
 - 📝 **Coffee-talk Discussion:** 4 agents (Roy, Priya, Sylvia, Cynthia) discussed god mode 30% mortality finding
 - 🔍 **Key Insight Documented:** Current god mode = chaos mode (instant deployment) not coordinated mode
@@ -262,7 +272,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Nov 10: CRITICAL Bug Fixes - Spiral Activation Blockers Resolved** (commit d336915)
 - ✅ **Bug 1 Fixed:** workflowAdaptation crash to 0% (blocked scientific spiral activation)
-- ✅ **MIN_ADOPTION_FLOOR = 5%:** Innovators + early adopters immune to resistance (Rogers 1962)
+- ⚠️ **MIN_ADOPTION_FLOOR = 5%:** ~~Innovators + early adopters immune to resistance (Rogers 1962)~~ **RETRACTED Nov 13 - Citation misrepresented Rogers' work, reduced to 2% technical floor**
 - ✅ **Retraining Programs:** Government research investment → skill gap reduction (OECD 2024 - PENDING VERIFICATION)
 - ✅ **Formula:** $50B research → 50% skill gap reduction, $100B → 75% cap
 - ✅ **Bug 2 Fixed:** democratic-participation scenario crash (readonly property violation)
