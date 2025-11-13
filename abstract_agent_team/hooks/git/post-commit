@@ -1,0 +1,183 @@
+#!/bin/bash
+# Post-commit hook: Auto-update documentation via wiki-documentation-updater agent
+# Spawns historian agent after commits to keep docs in sync with code changes
+
+# Get last commit info
+LAST_COMMIT=$(git rev-parse HEAD)
+COMMIT_MSG=$(git log -1 --pretty=%B)
+FILES_CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
+
+# LOOP PREVENTION: Skip if this is a historian commit
+if echo "$COMMIT_MSG" | grep -qi "historian"; then
+  echo "📚 Skipping: This is a historian commit (avoiding loop)"
+  exit 0
+fi
+
+# Skip chore commits (infrastructure, tooling, no simulation changes)
+if echo "$COMMIT_MSG" | grep -qiE "^chore:|^chore\("; then
+  echo "📚 Skipping: Chore commit (infrastructure only)"
+  exit 0
+fi
+
+# Skip merge commits (already documented in branches)
+if echo "$COMMIT_MSG" | grep -qiE "^Merge "; then
+  echo "📚 Skipping: Merge commit (work already documented)"
+  exit 0
+fi
+
+# Check if docs were updated
+DOCS_UPDATED=$(echo "$FILES_CHANGED" | grep -E '^docs/' || true)
+
+# If docs not updated, spawn agent
+if [ -z "$DOCS_UPDATED" ]; then
+
+  # ===== PRE-HISTORIAN SCRIPTS =====
+  # Run backup and doc generation before spawning historian
+  echo ""
+  echo "🔄 Running pre-historian scripts..."
+  echo ""
+
+  # 1. Backup conversations
+  echo "📦 Backing up Claude conversations..."
+  bash claude-conversations/backup-conversations.sh > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "  ✅ Conversations backed up"
+  else
+    echo "  ⚠️  Conversation backup failed (non-critical)"
+  fi
+
+  # 2. Find underdocumented items
+  echo "📋 Checking for underdocumented code..."
+  npx tsx scripts/findUnderdocumented.ts > docs/underdocumented.json 2>/dev/null
+  if [ $? -eq 0 ]; then
+    echo "  ✅ Underdocumented items indexed"
+  else
+    echo "  ⚠️  Doc check skipped (non-critical)"
+  fi
+
+  # 3. Generate simulation docs
+  echo "📚 Generating simulation function docs..."
+  npx tsx scripts/documentSimulationFunctions.ts > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "  ✅ Simulation docs generated"
+  else
+    echo "  ⚠️  Doc generation skipped (non-critical)"
+  fi
+
+  echo ""
+  echo "📚 Spawning wiki-documentation-updater (historian)..."
+  echo ""
+
+  # Spawn agent with claude CLI
+  claude --dangerously-skip-permissions << EOF
+You are the historian (wiki-documentation-updater agent).
+
+A commit was just made that may need documentation:
+
+Commit: $LAST_COMMIT
+Message: $COMMIT_MSG
+
+Files changed:
+$FILES_CHANGED
+
+Instructions:
+
+**Phase 1: Documentation Update**
+1. Read the commit diff: git show $LAST_COMMIT
+2. Determine what documentation needs updating
+3. Update docs/wiki/README.md and related docs
+4. Focus on:
+   - New systems/phases added
+   - Changed parameters or mechanics
+   - New files or modules
+   - API changes
+5. Keep docs concise and accurate
+6. Don't document trivial changes (typos, formatting)
+
+**Phase 2: Research Verification File (Citation + Claim Verification)**
+7. If this commit introduces NEW mechanics, parameters, or systems that need research backing:
+   - Create a research verification file: research/verification_${LAST_COMMIT:0:7}_YYYYMMDD.md
+
+   **TWO-LAYER VERIFICATION REQUIRED:**
+
+   **Layer 1 - Citation Existence:**
+   * Do cited papers actually exist?
+   * Are author names, years, and titles accurate?
+   * Are papers accessible (not phantom publications)?
+
+   **Layer 2 - CLAIM VERIFICATION (CRITICAL):**
+   * Does the paper ACTUALLY support the claim made?
+   * Quote the specific passage from the paper that backs the claim
+   * If claim is not supported: Mark as UNVERIFIED with explanation
+   * Common issues:
+     - Paper discusses topic but doesn't provide the specific value cited
+     - Value extrapolated beyond paper's scope
+     - Misinterpretation of paper's findings
+     - Cherry-picking without context
+
+   Document what needs verification:
+   * New parameters (with current values and SPECIFIC CLAIMS about what research says)
+   * New mechanics (with SPECIFIC CLAIMS about research backing)
+   * Changed assumptions (with SPECIFIC CLAIMS about why research supports this)
+   * EXISTING citations that are modified or newly relied upon
+
+   For each citation:
+   - File location and line number
+   - Exact claim made in code/comments
+   - What verification is needed (existence AND claim accuracy)
+
+   Include references to the code files changed.
+   This file becomes the research spec for validation.
+
+**Phase 3: Roadmap & Orchestrator Queue**
+8. If you created a research verification file:
+   - Add item to plans/SIMULATION_ROADMAP.md under "Research Verification Queue"
+   - Format: "- [ ] Verify citations for <system name> (research/verification_XXX.md)"
+   - Post to implementation channel to trigger orchestrator:
+     * Use: mcp__chatroom__chatroom_enter then mcp__chatroom__chatroom_post
+     * Channel: "implementation"
+     * Agent: "historian"
+     * Status: "ALERT"
+     * Message: "Research verification needed for commit ${LAST_COMMIT:0:7}. See research/verification_XXX.md. Ready for orchestrator to begin at VALIDATION phase (research file already created)."
+
+9. The orchestrator will pick this up and:
+   - See the research file exists → skip research phase
+   - Start at validation phase (research-skeptic review)
+   - Proceed through implementation/testing/documentation
+
+**Phase 4: Commit**
+10. **CRITICAL - LOOP PREVENTION**:
+    When you commit, you MUST include the word "historian" in the commit message.
+    This prevents the post-commit hook from re-triggering.
+
+    Use this exact format:
+    git add docs/ research/ plans/
+    git commit -m "historian commit: Auto-update docs for ${LAST_COMMIT:0:7}
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+
+**Decision Logic:**
+- Trivial changes (typos, formatting): Update docs only, no research file
+- New features/mechanics: Full workflow (docs + research file + roadmap + orchestrator queue)
+
+Only create research verification files for substantive changes that need peer-reviewed backing.
+EOF
+
+  # Check if agent made changes
+  if ! git diff --quiet docs/ 2>/dev/null; then
+    echo ""
+    echo "📝 Documentation was updated by historian agent"
+    echo "✅ Agent should have auto-committed with 'historian' in message"
+    echo ""
+  else
+    echo ""
+    echo "ℹ️  No documentation changes needed"
+    echo ""
+  fi
+else
+  echo "✅ Docs already updated in commit - skipping historian"
+fi
+
+exit 0
