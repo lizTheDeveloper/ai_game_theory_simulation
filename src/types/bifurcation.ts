@@ -185,6 +185,29 @@ export interface BifurcationState {
     toRegime: RegimeType;
     trigger: string; // Which threshold was crossed
   }>;
+
+  /**
+   * Bifurcation metrics for Monte Carlo analysis (Nov 13, 2025)
+   *
+   * Tracks variance amplification patterns for validation against empirical data.
+   * Populated by BifurcationLogicPhase during simulation run.
+   *
+   * Required for validating:
+   * - System multipliers (environmental 1.5×, social 2.5×, economic 2.5×, etc.)
+   * - Max amplification (100× based on Permian-Triassic extinction)
+   * - Amplification distribution (should match historical regime shift patterns)
+   *
+   * @see /reviews/bifurcation_empirical_architecture_review_20251113.md
+   */
+  metrics?: {
+    maxVarianceAmplification: number;  // Peak amplification this run (1.0 to 100.0)
+    regimeShiftEvents: Array<{
+      month: number;
+      system: string;  // Which threshold system (environmental, social, economic, etc.)
+      amplification: number;  // Variance amplification at time of shift
+    }>;
+    avgDistanceToThresholds: number;  // Average distance across all months
+  };
 }
 
 /**
@@ -269,5 +292,10 @@ export function initializeBifurcationState(rng: () => number): BifurcationState 
     varianceAmplification: 1.0,
     distanceToNearestThreshold: 1.0,
     regimeShiftHistory: [],
+    metrics: {
+      maxVarianceAmplification: 1.0,
+      regimeShiftEvents: [],
+      avgDistanceToThresholds: 1.0,
+    },
   };
 }

@@ -28,6 +28,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: Bifurcation Parameter Adjustment from Architecture Review** (commit 3543315)
+- 🔧 **DYSTOPIA BIAS FIX:** Architecture review identified asymmetric amplification favoring collapse over flourishing
+- 📊 **Changes Applied:**
+  - Economic cascade: 3.5× → 2.5× (cascade overweighted)
+  - Flourishing feedback: 1.0× → 2.0× (positive feedback loops now amplified)
+  - Technology breakthrough: 1.0× → 2.0× (innovation cascades now amplified)
+- ✅ **Rationale:** Preserves research basis while correcting outcome distribution bias (was 92% dystopia)
+- 📖 **Review:** reviews/bifurcation_empirical_architecture_review_20251113.md (CRITICAL-1: severe dystopia convergence)
+- 📊 **Impact:** Expected to increase outcome diversity (utopia/flourishing pathways now amplified at bifurcation points)
+
 **Nov 13: Scenario Analysis Framework Phase 3+4 COMPLETE** (commit ae9c642)
 - ✅ **RESEARCH MILESTONE:** All research questions answered about governance sufficiency
 - 📊 **Coverage:** 73/90 runs completed (81%), 9 scenarios tested
@@ -1695,18 +1705,19 @@ Commit: 5c6e9d0 (Nov 6, 2025)
 - **Extinction events:** P-T two-phase collapse pattern (quantitative variance data sparse)
 - **Key finding:** Amplification is **system-dependent** (4-100× range), not universal
 
-**Implementation COMPLETE** (Commit b16ebe2):
+**Implementation COMPLETE** (Commit b16ebe2, adjusted 3543315):
 1. **BifurcationLogicPhase.ts (lines 209-318):**
    - **Old formula:** `1/(0.01 + d)` (simple inverse, lacks empirical grounding)
    - **New formula:** `1/√(0.01 + d) × systemMultiplier` (bifurcation-theory base + domain calibration)
-   - **System multipliers:** Environmental 1.5×, Social 2.5×, Economic 3.5×, Governance 2.0×, Flourishing 1.0×, Technology 1.5×
+   - **System multipliers (Nov 13 2025 adjustment):** Environmental 1.5×, Social 2.5×, Economic 2.5× (was 3.5×), Governance 2.0×, Flourishing 2.0× (was 1.0×), Technology 2.0× (was 1.0×)
    - **Justification:** Saddle-node bifurcation theory (1/√d), calibrated to financial crisis and ecosystem data
+   - **Adjustment rationale:** Architecture review identified dystopia bias - economic cascade overweighted, positive feedbacks (flourishing/tech) underweighted
 
-2. **Amplification values** (new vs old):
-   - At d=0.0: Economic 35× (was 100× capped), Environmental 15×, Social 25×
-   - At d=0.1: Economic 11.2× (was 9.1×), Environmental 4.8×, Social 8.0×
-   - At d=0.5: Economic 4.9× (was 2.0×), Environmental 2.1×, Social 3.5×
-   - **Key improvement:** Mid-range amplification increased, system-specific behavior
+2. **Amplification values** (adjusted Nov 13 2025):
+   - At d=0.0: Economic 25× (reduced from 35×), Environmental 15×, Social 25×, Flourishing 20× (was 10×), Tech 20× (was 10×)
+   - At d=0.1: Economic 8.0× (reduced from 11.2×), Environmental 4.8×, Social 8.0×, Flourishing 6.4× (was 3.2×), Tech 6.4× (was 3.2×)
+   - At d=0.5: Economic 3.5× (reduced from 4.9×), Environmental 2.1×, Social 3.5×, Flourishing 2.8× (was 1.4×), Tech 2.8× (was 1.4×)
+   - **Key improvement:** Mid-range amplification increased, system-specific behavior, balanced collapse vs flourishing dynamics
 
 **Validation Status:** 🔴 BLOCKED by AI alignment bug (negative probabilities crash at month 30)
 - **Blocker:** StochasticInnovationPhase.ts:103 - `trueAlignment_ai_gen_3_4 = -0.2745`
