@@ -425,6 +425,13 @@ interface RunResult {
     tippingCascadeWithoutSpiral: boolean;  // Cascade but no recovery
     failedRecoveryAttempt: boolean;        // Recovered then collapsed
   };
+
+  // === BIFURCATION METRICS (Nov 13, 2025 - CRITICAL-2 FIX) ===
+  maxVarianceAmplification: number;       // Peak amplification this run (1.0 to 100.0×)
+  avgDistanceToThresholds: number;        // Average distance to nearest threshold (0.0 to 1.0)
+  regimeShiftCount: number;               // Number of regime shifts
+  regimeShiftSystems: string[];           // Systems that triggered regime shifts
+  finalRegime: string;                    // Final regime type at simulation end
 }
 
 /**
@@ -1899,7 +1906,14 @@ if (nestedMonteCarlo) {
 
     // Recovery Timeline & Mechanism Analysis (NEW - Oct 17, 2025)
     recoveryTimeline,
-    mechanismSummary
+    mechanismSummary,
+
+    // Bifurcation metrics (Nov 13, 2025 - CRITICAL-2 FIX)
+    maxVarianceAmplification: finalState.bifurcationState?.metrics?.maxVarianceAmplification ?? 1.0,
+    avgDistanceToThresholds: finalState.bifurcationState?.metrics?.avgDistanceToThresholds ?? 1.0,
+    regimeShiftCount: finalState.bifurcationState?.metrics?.regimeShiftEvents?.length ?? 0,
+    regimeShiftSystems: finalState.bifurcationState?.metrics?.regimeShiftEvents?.map(e => e.system) ?? [],
+    finalRegime: finalState.bifurcationState?.currentRegime ?? 'status-quo'
   };
 
   // Push result to appropriate array (aleatoryResults in nested mode, results in single-level mode)
@@ -2903,7 +2917,14 @@ if (nestedMonteCarlo) {
 
     // Recovery Timeline & Mechanism Analysis (NEW - Oct 17, 2025)
     recoveryTimeline,
-    mechanismSummary
+    mechanismSummary,
+
+    // Bifurcation metrics (Nov 13, 2025 - CRITICAL-2 FIX)
+    maxVarianceAmplification: finalState.bifurcationState?.metrics?.maxVarianceAmplification ?? 1.0,
+    avgDistanceToThresholds: finalState.bifurcationState?.metrics?.avgDistanceToThresholds ?? 1.0,
+    regimeShiftCount: finalState.bifurcationState?.metrics?.regimeShiftEvents?.length ?? 0,
+    regimeShiftSystems: finalState.bifurcationState?.metrics?.regimeShiftEvents?.map(e => e.system) ?? [],
+    finalRegime: finalState.bifurcationState?.currentRegime ?? 'status-quo'
   };
 
       // Progress indicator with per-run timing
@@ -4595,6 +4616,67 @@ Object.entries(leaderCounts)
   .forEach(([leader, count]) => {
     log(`    ${leader}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
   });
+
+// ============================================================================
+log('\n\n' + '='.repeat(80));
+log('🌊 BIFURCATION & EARLY WARNING SYSTEM (Nov 13, 2025)');
+log('='.repeat(80));
+
+const avgMaxAmplification = results.reduce((sum, r) => sum + r.maxVarianceAmplification, 0) / results.length;
+const minMaxAmplification = Math.min(...results.map(r => r.maxVarianceAmplification));
+const maxMaxAmplification = Math.max(...results.map(r => r.maxVarianceAmplification));
+const avgDistanceToThresholds = results.reduce((sum, r) => sum + r.avgDistanceToThresholds, 0) / results.length;
+const totalRegimeShifts = results.reduce((sum, r) => sum + r.regimeShiftCount, 0);
+const runsWithRegimeShifts = results.filter(r => r.regimeShiftCount > 0).length;
+
+// Regime shift system breakdown
+const regimeShiftSystemCounts: Record<string, number> = {};
+results.forEach(r => {
+  r.regimeShiftSystems.forEach(system => {
+    regimeShiftSystemCounts[system] = (regimeShiftSystemCounts[system] || 0) + 1;
+  });
+});
+
+// Final regime distribution
+const finalRegimeCounts: Record<string, number> = {};
+results.forEach(r => {
+  finalRegimeCounts[r.finalRegime] = (finalRegimeCounts[r.finalRegime] || 0) + 1;
+});
+
+log(`\n  VARIANCE AMPLIFICATION (1.0× = no amplification, 100× = max):`);
+log(`    Average peak amplification: ${avgMaxAmplification.toFixed(2)}× (range: ${minMaxAmplification.toFixed(2)}× - ${maxMaxAmplification.toFixed(2)}×)`);
+log(`    Average distance to thresholds: ${(avgDistanceToThresholds * 100).toFixed(1)}% (0% = at threshold, 100% = far from all thresholds)`);
+
+log(`\n  REGIME SHIFTS:`);
+log(`    Total regime shifts: ${totalRegimeShifts} across ${NUM_RUNS} runs`);
+log(`    Runs with regime shifts: ${runsWithRegimeShifts} (${(runsWithRegimeShifts/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Average shifts per run: ${(totalRegimeShifts/NUM_RUNS).toFixed(2)}`);
+
+log(`\n  REGIME SHIFT TRIGGERS (which system crossed threshold):`);
+Object.entries(regimeShiftSystemCounts)
+  .sort(([, a], [, b]) => b - a)
+  .slice(0, 10)
+  .forEach(([system, count]) => {
+    log(`    ${system}: ${count} shifts (${(count/totalRegimeShifts*100).toFixed(1)}%)`);
+  });
+
+log(`\n  FINAL REGIME DISTRIBUTION:`);
+Object.entries(finalRegimeCounts)
+  .sort(([, a], [, b]) => b - a)
+  .forEach(([regime, count]) => {
+    log(`    ${regime}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+  });
+
+// Validation check: If max amplification < 2.0 across all runs, system may not be working
+if (maxMaxAmplification < 2.0) {
+  log(`\n  🚨 WARNING: Max amplification = ${maxMaxAmplification.toFixed(2)}× (expected range: 2× - 100×)`);
+  log(`      Bifurcation system may not be engaging properly. Check threshold proximity calculation.`);
+} else if (avgMaxAmplification < 1.5) {
+  log(`\n  ⚠️  WARNING: Average peak amplification = ${avgMaxAmplification.toFixed(2)}× (expected >2× for near-threshold runs)`);
+  log(`      Simulation may not be approaching bifurcation thresholds often enough.`);
+} else {
+  log(`\n  ✅ Bifurcation system active: Peak amplification in expected range (${minMaxAmplification.toFixed(2)}× - ${maxMaxAmplification.toFixed(2)}×)`);
+}
 
 // ============================================================================
 log('\n\n' + '='.repeat(80));
