@@ -275,26 +275,59 @@ function checkEndGameResolution(state: GameState): void {
     });
     
     if (hasCatastrophicCapability) {
-      lockOutcome(endGame, 'extinction', 'Misaligned superintelligent AI deployed catastrophic technology');
+      // FIX (Nov 13, 2025): Verify population actually declined before declaring extinction
+      const currentPop = state.humanPopulationSystem.population * 1e9;
+
+      if (currentPop < 10_000) {
+        // TRUE extinction - population below 10K threshold
+        lockOutcome(endGame, 'extinction', 'Misaligned superintelligent AI deployed catastrophic technology');
+      } else {
+        // Catastrophic capability deployed but humanity survived in reduced numbers
+        console.log(`⚠️  Misaligned AI deployed catastrophic tech but humanity survived (${(currentPop / 1e9).toFixed(2)}B)`);
+        lockOutcome(endGame, 'dystopia', 'Misaligned superintelligent AI deployed catastrophic technology, severe societal damage');
+      }
       return;
     }
   }
   
   // Mutual destruction - ONLY if both sides are extremely powerful and fighting
-  if (totalPower > 8.0 && 
-      endGame.alignedAIPower > 2.0 && 
+  if (totalPower > 8.0 &&
+      endGame.alignedAIPower > 2.0 &&
       endGame.misalignedAIPower > 2.0 &&
       endGame.monthsInEndGame > 18 &&
       Math.abs(endGame.alignedVictories - endGame.misalignedVictories) < 2) { // Actual prolonged war
-    lockOutcome(endGame, 'extinction', 'AI civil war caused catastrophic collateral damage');
+    // FIX (Nov 13, 2025): AI civil war doesn't automatically mean extinction
+    // Check if population actually declined to extinction levels
+    const currentPop = state.humanPopulationSystem.population * 1e9;
+
+    if (currentPop < 10_000) {
+      // TRUE extinction - population below 10K threshold
+      lockOutcome(endGame, 'extinction', 'AI civil war caused catastrophic collateral damage');
+    } else {
+      // Civil war caused severe damage but NOT extinction
+      // Let outcome classification determine dystopia/collapse based on mortality
+      console.log(`⚠️  AI civil war caused severe damage but humanity survived (${(currentPop / 1e9).toFixed(2)}B)`);
+      lockOutcome(endGame, 'dystopia', 'AI civil war caused severe societal damage');
+    }
     return;
   }
   
   // Humans become irrelevant - VERY hard to trigger, requires true superintelligence
-  if (endGame.humanRelevance < 0.01 && 
-      totalPower > 10.0 && 
+  if (endGame.humanRelevance < 0.01 &&
+      totalPower > 10.0 &&
       endGame.misalignedAIPower > 3.0) {
-    lockOutcome(endGame, 'extinction', 'Humanity became irrelevant to superintelligent AI');
+    // FIX (Nov 13, 2025): Irrelevance doesn't automatically mean extinction
+    // Check if population actually declined to extinction levels
+    const currentPop = state.humanPopulationSystem.population * 1e9;
+
+    if (currentPop < 10_000) {
+      // TRUE extinction - population below 10K threshold
+      lockOutcome(endGame, 'extinction', 'Humanity became irrelevant to superintelligent AI');
+    } else {
+      // Humans became irrelevant but still alive
+      console.log(`⚠️  Humanity became irrelevant to AI but survived (${(currentPop / 1e9).toFixed(2)}B)`);
+      lockOutcome(endGame, 'dystopia', 'Humanity became irrelevant to superintelligent AI');
+    }
     return;
   }
 
@@ -382,9 +415,17 @@ function checkEndGameResolution(state: GameState): void {
       lockOutcome(endGame, qol > 0.6 ? 'utopia' : 'dystopia',
         `Aligned AI achieved ${qol > 0.6 ? 'positive' : 'controlled'} equilibrium after prolonged competition`);
     } else if (endGame.misalignedAIPower > endGame.alignedAIPower * 1.5) {
-      // Misaligned winning
-      lockOutcome(endGame, qol > 0.5 ? 'dystopia' : 'extinction',
-        `Misaligned AI ${qol > 0.5 ? 'dominated' : 'destroyed'} aligned opposition`);
+      // Misaligned winning - check if extinction is justified by population
+      const currentPop = state.humanPopulationSystem.population * 1e9;
+
+      if (qol <= 0.5 && currentPop < 10_000) {
+        // TRUE extinction - very low QoL AND population below 10K threshold
+        lockOutcome(endGame, 'extinction', 'Misaligned AI destroyed aligned opposition');
+      } else {
+        // Misaligned won but didn't kill everyone
+        lockOutcome(endGame, 'dystopia',
+          `Misaligned AI dominated aligned opposition (QoL ${qol.toFixed(2)}, pop ${(currentPop / 1e9).toFixed(2)}B)`);
+      }
     } else {
       // True stalemate - force outcome based on QoL
       lockOutcome(endGame, qol > 0.6 ? 'utopia' : 'dystopia',
