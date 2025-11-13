@@ -28,6 +28,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: Time-Based Bifurcation Scaling + JSON Export** (commit a9d14c7)
+- 🎯 **CRITICAL FIX:** Time-based sigmoid scaling to reduce 87.2% mortality overshoot (target: 43-58%)
+- 📈 **Scaling Pattern:** Multipliers ramp 0.5× (early months) → 1.0× (late months) via sigmoid
+- ⏱️ **Transition Window:** Center month 120, width ±60 months (10-year smooth transition)
+- 📊 **Research Basis:** Arumugam et al. (2024 Ecology) - rate-dependent transitions
+- 📁 **JSON Export:** Per-run bifurcation metrics exported to `bifurcation_metrics_seed{N}.json`
+- 📉 **Time Series:** Monthly amplification, distance to threshold, system tracking
+- 🔬 **Format:** JData standard (Fang & Yan 2022 PMC8728956) for scientific Monte Carlo
+- ✅ **Purpose:** Enables Priya statistical validation (CV analysis, determinism debugging)
+- 🎯 **Expected Impact:** Mortality 87.2% → 43-58%, CV 0.7% → 20-70%
+- 📖 **Research:** research/bifurcation_instrumentation_calibration_20251113.md (742 lines, 16 citations)
+- ✅ **Quality Gate 1:** PASSED (reviews/bifurcation_instrumentation_critique_20251113.md, Grade A-)
+
 **Nov 13: Deployment Timeline Research Enhancement** (commit 93cbbc4)
 - 📚 **Research Update:** Added 2025 healthcare AI adoption study to organizational deployment timelines
 - 🔬 **New Source:** Poon et al. (2025) - JAMIA peer-reviewed survey of US healthcare AI deployment
@@ -3790,7 +3803,7 @@ baseAmplification = 1.0 / Math.sqrt(0.01 + normalizedDistance)
 
 **Theoretical Basis:** Square root scaling matches saddle-node bifurcation theory (standard dynamical systems result).
 
-**CRITICAL UPDATE (Nov 13, 2025):** Economic multiplier reduced from 3.5× → 2.5× to address 87.2% mortality overshoot (target: 46.2%). Flourishing and Technology multipliers increased from 1.0× → 2.0× to correct dystopia bias.
+**CRITICAL UPDATE (Nov 13, 2025):** Time-based sigmoid scaling added to prevent early mortality overshoot (87.2% → target 43-58%). Multipliers now scale from 0.5× (early months) → 1.0× (late months) based on rate-dependent transition research (Arumugam et al. 2024 Ecology).
 
 ### System-Dependent Multipliers (lines 305-331)
 
@@ -3802,14 +3815,23 @@ Different systems exhibit different amplification based on their underlying bifu
 | Social | 2.5× | Hopf bifurcation | Dakos et al. (2012) |
 | Economic | 2.5× | Cascade dynamics | Manda (2010), Fed (2016) - 2008 crisis |
 | Governance | 2.0× | Feedback loops | Regime change literature |
-| Flourishing | 2.0× | Positive cascades | Innovation theory (INCREASED Nov 13) |
-| Technology | 2.0× | Innovation spikes | Breakthrough dynamics (INCREASED Nov 13) |
+| Flourishing | 2.0× | Positive cascades | Innovation theory |
+| Technology | 2.0× | Innovation spikes | Breakthrough dynamics |
+
+**Time-Based Scaling (Nov 13, 2025):**
+```typescript
+// Sigmoid ramp from ~0.5 (month 0) to ~1.0 (month 240)
+centerMonth = 120; transitionWidth = 60
+timeScaling = 0.5 + 0.5 / (1 + exp(-(currentMonth - 120)/60))
+```
+
+**Rationale:** Fast scenarios (20-year simulation) show different dynamics than slow drift. Early months: systems building resilience (~0.5× amplification). Late months: accumulated vulnerabilities (1.0× amplification). Research: Arumugam et al. (2024) rate-dependent transitions.
 
 **Max Amplification:** 100× (capped) - based on Permian-Triassic extinction event (empirical upper bound from nature)
 
 **Final Formula:**
 ```typescript
-amplification = baseAmplification × systemMultiplier
+amplification = baseAmplification × systemMultiplier × timeScaling
 amplificationCapped = Math.min(100.0, amplification)
 ```
 
@@ -3848,18 +3870,36 @@ The variance amplification value (`bifurcationState.varianceAmplification`) is c
 
 **Assessment:** Current formula (1/√d with 100× cap) is **as good as possible given fundamental limitations**. Perfect prediction is impossible (9% true positive rate in nature). The question isn't "is the formula right?" but "does it produce plausible outcome variance?"
 
-### Monte Carlo Validation (N=30, Nov 13, 2025)
+### Monte Carlo Validation & Instrumentation (Nov 13, 2025)
 
-**Results:**
-- **Determinism:** 100% verified (CV < 0.01% for identical seeds)
-- **Outcome Distribution:** More variance than previous convergence issue
-- **Mortality:** 87.2% average (ABOVE 46.2% target by 50% - CRITICAL calibration needed)
-- **Max Amplification:** Reached 100× cap in near-threshold scenarios
-- **Completion Rate:** 100% (30/30 seeds complete, 240 months)
+**Per-Run JSON Export (NEW - Nov 13):**
+
+Monte Carlo runs now export detailed bifurcation metrics to `monteCarloOutputs/bifurcation_metrics_seed{N}.json`:
+- **Amplification time series:** Monthly amplification, distance to nearest threshold, system name
+- **Bifurcation events:** Occurrence, timing, type, threshold location per domain
+- **Outcome classification:** Final population, QoL, regime type
+- **Format:** JData standard (Fang & Yan 2022 PMC8728956) for scientific Monte Carlo output
+
+**Purpose:** Enables Priya statistical validation of variance amplification claims (CV analysis, effectiveness metrics, determinism debugging).
 
 **Validation Metrics Tracked:**
 - `bifurcationState.metrics.maxVarianceAmplification` - Peak amplification per run
 - `bifurcationState.metrics.avgDistanceToThresholds` - Average proximity (running average with 0.95 decay)
+- `bifurcationState.metrics.amplificationTimeSeries` - Monthly time series (month, amplification, distance, system)
+- `bifurcationState.metrics.regimeShiftEvents` - Count and triggers
+
+**Monte Carlo Results (N=30, Pre-Time-Scaling):**
+- **Determinism:** 100% verified (CV < 0.01% for identical seeds)
+- **Outcome Distribution:** More variance than previous convergence issue
+- **Mortality:** 87.2% average (ABOVE 43-58% target by +50%)
+- **Max Amplification:** Reached 100× cap in near-threshold scenarios
+- **Completion Rate:** 100% (30/30 seeds complete, 240 months)
+
+**Expected Impact of Time-Scaling:**
+- Target mortality: 43-58% (down from 87.2%)
+- Target CV: 20-70% (variance maintained, mean reduced)
+- Early months: ~0.5× amplification reduces premature mortality
+- Late months: 1.0× amplification preserves collapse dynamics
 
 **Architecture Review:** Grade B+ (APPROVED WITH CONDITIONS)
 - Performance: A (O(1) calculations)
