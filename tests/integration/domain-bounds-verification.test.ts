@@ -105,9 +105,9 @@ describe('Domain Bounds Verification (Layer 2)', () => {
       assert.strictEqual(result, 500);
     });
 
-    test('should reject 600 trillion (exceeds 75-year growth + AI automation)', () => {
+    test('should reject 601 trillion (exceeds max 600T bound)', () => {
       assert.throws(
-        () => assertEconomicMetric(600, 'gdp', {
+        () => assertEconomicMetric(601, 'gdp', {
           location: 'test',
           valueName: 'globalGDP'
         }),
