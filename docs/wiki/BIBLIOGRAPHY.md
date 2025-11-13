@@ -1,7 +1,7 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 11, 2025
-**Total Sources**: 166+ peer-reviewed citations
+**Last Updated**: November 12, 2025
+**Total Sources**: 170+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 60% from 2024-2025
 
@@ -386,6 +386,31 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Population projection**: 3.5 billion in 29°C+ zones by 2070 (SSP3 scenario, absent migration)
 - **Confidence**: HIGH (PNAS, cited by Kemp et al. 2022 and Lenton et al. 2023)
 - **Note**: Defines "human climate niche" as historically conserved temperature range (~13°C mean)
+
+### Famine & Food Insecurity
+
+**Saccone, D., & Vallino, E. (2025).** Global food security in a turbulent world: reviewing the impacts of the pandemic, the war and climate change. *Agricultural and Food Economics*, 13:9. DOI: 10.1186/s40100-025-00388-0
+- **Used for**: Polycrisis analysis (cascading multi-shock effects), entitlement failures during pandemic
+- **Key findings**: COVID-19 created 119-124M new poor (2020), Russia-Ukraine war disrupted 30% global wheat/17% maize/73% sunflower oil trade, combined crises pushed 700M into undernourishment (87M above 2019)
+- **Mechanism**: Multiplicative shock interactions (not additive) - income loss + trade disruption + price inflation = entitlement collapse
+- **Confidence**: HIGH (peer-reviewed, July 2025, quantitative analysis)
+
+**Jaspars, S., & Kuol, L.B.D. (2025).** Famine and food security: new trends and systems or politics as usual? An introduction. *Disasters*, 49(1):e12669. DOI: 10.1111/disa.12669
+- **Used for**: Political economy framework for famine analysis, critique of production-focused approaches
+- **Key findings**: Vulnerability increased through globalization and neoliberal policies; documents elite capture, slow violence, and structural causes of famine beyond technocratic IPC metrics
+- **Critical insight**: Technocratic approaches have displaced critical political analysis; quantitative tools like IPC cannot illuminate social dynamics of famine causation
+- **Confidence**: VERY HIGH (peer-reviewed, Disasters journal special issue, November 2024)
+
+**Sen, A. (1981).** *Poverty and Famines: An Essay on Entitlement and Deprivation.* Oxford University Press.
+- **Used for**: Foundational entitlement theory - distribution failures, not production, cause modern famines
+- **Key finding**: Famine occurs when people cannot access food (entitlement failure), not when food is unavailable
+- **Validation**: Continuously validated 1981-2025 (44 years) - all 2024 IPC Phase 5 famines were conflict/distribution-driven
+- **Confidence**: VERY HIGH (foundational theory, Nobel Prize 1998, empirical validation across decades)
+
+**FAO (2024).** The State of Food Security and Nutrition in the World 2024.
+- **Used for**: Famine thresholds (<0.4 = severe crisis), food insecurity statistics
+- **Key data**: 735M undernourished at baseline (9.2% of 8B), acute food crises affect 250M (3.1%)
+- **Confidence**: VERY HIGH (official UN agency data)
 
 ### Trauma & Recovery
 
