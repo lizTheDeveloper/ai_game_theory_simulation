@@ -28,6 +28,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 12: Intelligent Auto-Remediation for Stuck Orchestrator States** (commit 9764a32)
+- 🤖 **INFRASTRUCTURE:** Merge orchestrator now uses Claude Code for intelligent recovery from stuck git states
+- ✅ **Stuck Working Tree Recovery:** When stash fails, spawns Claude Code to analyze situation (merge conflicts vs. real uncommitted work)
+- 🛡️ **Safety Rules:** Never force-discard code, preserve real work, only clean gitignored files (logs/)
+- ✅ **Claude CLI Availability Check:** Gracefully skips auto-remediation if `claude` command unavailable, creates remediation tasks
+- ✅ **Removed Naive Force-Clean:** Replaced destructive `git reset --hard` fallback with intelligent Claude Code analysis
+- 📊 **Recovers From:** Merge conflict markers in log files, stuck git states (failed merges/rebases), mixed uncommitted changes
+- 📖 **Impact:** Orchestrator can now recover from complex stuck states without risking data loss or naive destructive operations
+- 📖 **Research:** User feedback - "we have a language model, don't make naive solutions"
+- 📖 **Files:** scripts/merge-orchestrator.sh (lines 126-217 stuck working tree recovery, Claude CLI checks at all spawning sites)
+
 **Nov 12: AI Alignment Bounds Bug FIXED** (commit 0fab12f)
 - ✅ **CRITICAL BUG FIXED:** AI agent trueAlignment could become negative, violating [0, 1] probability constraint
 - 🔧 **Root Causes:** Three locations allowed negative values (aiWelfare.ts:302, lifecycle.ts:347, aiAgent.ts:123)
@@ -6296,7 +6307,7 @@ state.history.exogenousShocks?: Array<{
 - **Documentation**: `CLAUDE.md` lines 34-65, `plans/merge_orchestrator_hourly_automation.md`
 - Commit: 632cefb (Nov 1, 2025)
 
-**Hourly Merge Orchestrator Automation** ✅ IMPLEMENTED (Nov 1, 2025)
+**Hourly Merge Orchestrator Automation** ✅ IMPLEMENTED (Nov 1, 2025, Enhanced Nov 12, 2025)
 - **Purpose**: Automated branch cleanup & quality gate workflow to reduce manual merge overhead
 - **Trigger**: Hourly cron job (Mac: all branches, VM: backend only) - *awaiting cron setup*
 - **Implementation**: `scripts/merge-orchestrator.sh` (500+ lines)
@@ -6315,6 +6326,15 @@ state.history.exogenousShocks?: Array<{
   - Gate 3: Architecture-skeptic review (*agent integration pending*)
   - Gate 4: Sylvia final review (*agent integration pending*)
 - **Frontend Detection**: `git diff origin/main...origin/${BRANCH} --name-only | grep -E '^src/(lib|app|components)/|\.tsx$|\.css$'`
+- **Intelligent Auto-Remediation** ✅ IMPLEMENTED (Nov 12, 2025, commit 9764a32):
+  - **Claude Code-powered recovery** for stuck git states (when stash fails or tests fail or merge conflicts occur)
+  - **Stuck working tree handling** (lines 126-217): Spawns Claude Code to analyze uncommitted changes
+  - **Safety rules**: Never force-discard code, preserve real work, only clean gitignored files (logs/)
+  - **Claude CLI availability check**: Gracefully skips auto-remediation if `claude` command unavailable
+  - **Recovers from**: Merge conflict markers in log files, stuck git states (failed merges/rebases), mixed uncommitted changes
+  - **Replaces**: Naive `git reset --hard` fallback (destructive) with intelligent analysis
+  - **Creates**: Timestamped remediation task files in `logs/merge_orchestrator/` with 5-15 min timeouts
+  - **Research**: User feedback - "we have a language model, don't make naive solutions"
 - **Safety Features**:
   - Protected branches (never delete main)
   - Lock file prevents concurrent runs (`/tmp/merge-orchestrator.lock`)
