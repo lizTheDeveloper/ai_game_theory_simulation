@@ -177,6 +177,18 @@ export function createUnifiedOutcomeClassification(params: {
   const deathsAbsolute = initialPopulation - finalPopulation;
   const finalPopulationPeople = finalPopulation * 1_000_000_000;
 
+  // CRITICAL ASSERTION (Nov 13, 2025): Population growth cannot be extinction
+  // Bug found in Monte Carlo N=10 validation - 2 runs showed -2.0% mortality classified as extinction
+  // @see /reviews/bifurcation_mc_n10_validation_20251113.md (CRITICAL-1)
+  if (mortalityRate < 0 && primaryOutcome === 'extinction') {
+    throw new Error(
+      `❌ CRITICAL BUG: Population GROWTH (${(mortalityRate * 100).toFixed(1)}% mortality) cannot be EXTINCTION\n` +
+      `   Initial: ${initialPopulation.toFixed(2)}B → Final: ${finalPopulation.toFixed(2)}B\n` +
+      `   This indicates primaryOutcome was incorrectly set to 'extinction' upstream.\n` +
+      `   Check: ExtinctionSystemPhase, ExtinctionTriggersPhase, or outcome determination logic.`
+    );
+  }
+
   // Determine mortality band
   let mortalityBand: import('@/types/outcomes').MortalityBand;
   if (mortalityRate < 0.20) {
