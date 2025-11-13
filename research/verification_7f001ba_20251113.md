@@ -280,7 +280,7 @@ Possible sources to investigate:
 ## Notes for Orchestrator
 
 **Workflow State:** VALIDATION PHASE (skip research, proceed to validation)
-- Research file exists (this document)
+- Research file exists (research/ai_governance_international_coordination_20251113.md)
 - Ready for super-alignment-researcher + research-skeptic review
 - After validation: feature-implementer for CoordinatedDeploymentPhase
 - After implementation: priya for Monte Carlo validation
