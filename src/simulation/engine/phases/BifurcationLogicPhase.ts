@@ -286,6 +286,20 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // Update bifurcation state (mutation)
     bifState.varianceAmplification = amplificationValidated;
     bifState.distanceToNearestThreshold = minDistanceValidated;
+
+    // Track metrics for Monte Carlo analysis (Nov 13, 2025)
+    if (bifState.metrics) {
+      // Update max amplification if this exceeds previous
+      if (amplificationValidated > bifState.metrics.maxVarianceAmplification) {
+        bifState.metrics.maxVarianceAmplification = amplificationValidated;
+      }
+
+      // Calculate average distance (running average approximation)
+      // avgNew = (avgOld * n + newValue) / (n + 1)
+      // We don't track n explicitly, so use weighted average with 0.95 decay
+      bifState.metrics.avgDistanceToThresholds =
+        bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
+    }
   }
 
   /**
@@ -441,6 +455,24 @@ export class BifurcationLogicPhase implements SimulationPhase {
         toRegime: bifState.currentRegime,
         trigger: `Regime shift: ${bifState.previousRegime} → ${bifState.currentRegime}`,
       });
+
+      // Track regime shift in metrics (Nov 13, 2025)
+      if (bifState.metrics) {
+        // Determine which system triggered the shift based on regime type
+        let systemName = 'unknown';
+        if (bifState.currentRegime === 'ecological-collapse') systemName = 'environmental';
+        else if (bifState.currentRegime === 'social-breakdown') systemName = 'social';
+        else if (bifState.currentRegime === 'economic-collapse') systemName = 'economic';
+        else if (bifState.currentRegime === 'state-failure') systemName = 'governance';
+        else if (bifState.currentRegime === 'flourishing') systemName = 'flourishing';
+        else if (bifState.currentRegime === 'sustainable') systemName = 'technology';
+
+        bifState.metrics.regimeShiftEvents.push({
+          month: state.currentMonth,
+          system: systemName,
+          amplification: bifState.varianceAmplification,
+        });
+      }
 
       console.log(
         `🌀 REGIME SHIFT at Month ${state.currentMonth}: ${bifState.previousRegime} → ${bifState.currentRegime} ` +
