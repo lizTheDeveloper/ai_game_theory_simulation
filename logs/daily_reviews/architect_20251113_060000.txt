@@ -1,0 +1,55 @@
+Perfect! Now let me summarize the work completed:
+
+## Roadmap Update Summary
+
+Based on the daily review findings from November 13, 2025, I've updated the master roadmap as The Architect:
+
+### Actions Taken:
+
+1. **Updated Current Status** (lines 8-18):
+   - Changed from "EXCELLENT - STABLE AND IMPROVING" to "CRITICAL - DETERMINISM BROKEN"
+   - Added merge block warning
+   - Updated metrics to reflect degraded state
+
+2. **Added CRITICAL Priority Section** (lines 20-48):
+   - CRITICAL-5: Determinism broken (Math.random() contamination)
+   - CRITICAL-6: Silent fallback anti-patterns (30+ instances)
+   - CRITICAL-7: Phantom wet bulb bug fix
+   - CRITICAL-8: Bifurcation pathological outcomes
+
+3. **Added HIGH Priority Section** (lines 50-64):
+   - HIGH-4: Performance instrumentation memory growth
+   - HIGH-5: Guard check creates silent behavior branch
+
+4. **Created Tracking File**:
+   - `/plans/daily_review_items_20251113_060000.md`
+   - Contains detailed action items, owners, and acceptance criteria
+
+5. **Added Progress Summary** (end of file):
+   - Overall status: CRITICAL with merge block
+   - Key metrics and immediate actions
+   - Links to tracking documents
+
+### Issues Added:
+- **CRITICAL issues:** 4
+- **HIGH issues:** 2
+- **Total:** 6 actionable items
+
+### Systems Affected:
+- **Simulation Engine:** Determinism, defensive coding, phase logic
+- **Research Integrity:** Parameter justification, citation gaps  
+- **Performance:** Memory growth, CPU cost
+- **Monte Carlo:** Reproducibility broken
+
+### Next Recommended Actions:
+1. **IMMEDIATE:** Spawn simulation-maintainer to eliminate Math.random()
+2. **TODAY:** Address all CRITICAL issues with focused agents
+3. **VALIDATION:** Run Monte Carlo N=30 after fixes
+4. **REVIEW:** Architecture-skeptic review before lifting merge block
+
+---
+
+**ROADMAP_UPDATES:** 6
+**TRACKING_FILE:** /plans/daily_review_items_20251113_060000.md
+
+The roadmap now accurately reflects the critical state discovered by the daily reviews, with clear prioritization and action items for resolution.
