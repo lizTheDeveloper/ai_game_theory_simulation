@@ -1,6 +1,12 @@
+---
+oldest_source: 1988
+newest_source: 2025
+last_verified: 2025-11-12
+---
+
 # AI Welfare Framework for Simulation
-**Date:** October 20, 2025 (Updated November 7, 2025)
-**Last Updated:** November 7, 2025 (Autonomous Researcher - added 2024-2025 neuroscience sources)
+**Date:** October 20, 2025 (Updated November 7, 2025, November 12, 2025)
+**Last Updated:** November 12, 2025 (Autonomous Researcher - added frontmatter metadata)
 **Research Foundation:** Chalmers et al. (2024), Anthropic Model Welfare (2025), Global Workspace Theory (2024-2025), Higher-Order Theory (2024-2025)
 
 ---
