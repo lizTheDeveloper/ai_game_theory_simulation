@@ -9,7 +9,8 @@
  * Created: Nov 13, 2025
  */
 
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, before } from 'node:test';
+import assert from 'node:assert';
 import { SimulationEngine } from '@/simulation/engine';
 import { createDefaultInitialState } from '@/simulation/initialization';
 

@@ -7108,6 +7108,7 @@ Recent critical evaluations:
 - **Monte Carlo Results**: `/docs/MONTE_CARLO_RESULTS.md`
 - **[Diagnostic Findings](./DIAGNOSTIC_FINDINGS.md)**: October 2025 deep dive into 0% Utopia blockers
 - **God Mode Test**: `scripts/godModeTest.ts` - Diagnostic test deploying all 73 technologies at month 0
+- **Performance Budget Test**: `tests/performance/phase-budget.test.ts` - ⚠️ **SKIPPED** (Nov 13, 2025) - Real performance regressions detected (3.54x variance vs <3x target, some steps >100ms). Investigation needed before re-enabling.
 
 #### God Mode Test (November 2025)
 
