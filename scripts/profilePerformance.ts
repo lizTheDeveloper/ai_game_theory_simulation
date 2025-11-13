@@ -1,85 +1,38 @@
 #!/usr/bin/env npx tsx
 /**
- * Performance Profiling Script
+ * Performance Profiling Script (HIGH-1 Phase 1)
  *
- * Identifies O(n²) bottlenecks and performance issues in the simulation.
- * Runs a short simulation with performance timing enabled.
+ * Profiles simulation performance using PhaseOrchestrator's built-in instrumentation.
+ * Runs full 360-month simulation with timing data collection.
+ *
+ * UPDATED: Nov 13, 2025 - Use built-in instrumentation instead of monkey-patching
  */
 
-import { createSimulation, runSimulation } from '../src/simulation/engine';
-import { createTestState } from '../src/simulation/initialization';
-import { PhaseOrchestrator } from '../src/simulation/engine/PhaseOrchestrator';
-import { registerAllPhases } from '../src/simulation/engine/phases';
+import { SimulationEngine } from '../src/simulation/engine';
+import { createDefaultInitialState } from '../src/simulation/initialization';
 import * as fs from 'fs';
 
-// Monkey-patch performance tracking onto PhaseOrchestrator
-const originalExecuteAll = PhaseOrchestrator.prototype.executeAll;
-const phaseTimings = new Map<string, { totalMs: number; callCount: number; maxMs: number; minMs: number }>();
-
-PhaseOrchestrator.prototype.executeAll = function(state: any, rng: any, context?: any) {
-  const enableTiming = true;
-  const startTime = performance.now();
-
-  // Call original with timing wrapper
-  const result = originalExecuteAll.call(this, state, rng, context);
-
-  const elapsed = performance.now() - startTime;
-
-  // Track overall step timing
-  const stepKey = `TOTAL_STEP_${state.currentMonth}`;
-  if (!phaseTimings.has(stepKey)) {
-    phaseTimings.set(stepKey, { totalMs: 0, callCount: 0, maxMs: 0, minMs: Infinity });
-  }
-  const timing = phaseTimings.get(stepKey)!;
-  timing.totalMs += elapsed;
-  timing.callCount++;
-  timing.maxMs = Math.max(timing.maxMs, elapsed);
-  timing.minMs = Math.min(timing.minMs, elapsed);
-
-  return result;
-};
-
-// Monkey-patch phase execution
-const originalRegisterPhase = PhaseOrchestrator.prototype.registerPhase;
-PhaseOrchestrator.prototype.registerPhase = function(phase: any) {
-  const originalExecute = phase.execute;
-  phase.execute = function(state: any, rng: any, context?: any) {
-    const startTime = performance.now();
-    const result = originalExecute.call(this, state, rng, context);
-    const elapsed = performance.now() - startTime;
-
-    // Track phase timing
-    const phaseKey = phase.name || phase.id;
-    if (!phaseTimings.has(phaseKey)) {
-      phaseTimings.set(phaseKey, { totalMs: 0, callCount: 0, maxMs: 0, minMs: Infinity });
-    }
-    const timing = phaseTimings.get(phaseKey)!;
-    timing.totalMs += elapsed;
-    timing.callCount++;
-    timing.maxMs = Math.max(timing.maxMs, elapsed);
-    timing.minMs = Math.min(timing.minMs, elapsed);
-
-    return result;
-  };
-
-  return originalRegisterPhase.call(this, phase);
-};
-
 async function profileSimulation() {
-  console.log('🔍 PERFORMANCE PROFILING STARTED');
-  console.log('================================\n');
+  console.log('🔍 PERFORMANCE PROFILING STARTED (HIGH-1 Phase 1)');
+  console.log('=================================================\n');
 
-  // Create initial state with deterministic seed
-  const config = {
-    seed: 42,
-    runLabel: 'PERF_PROFILE',
-    monthsToSimulate: 12, // Just 1 year for profiling
-    skipLLMQueries: true,
-    enableLogging: false
+  // Parse command-line arguments
+  const args = process.argv.slice(2);
+  const monthsArg = args.find(arg => arg.startsWith('--months='));
+  const monthsToSimulate = monthsArg ? parseInt(monthsArg.split('=')[1]) : 360;
+
+  // Create deterministic seed
+  const seed = 42;
+
+  // Simple RNG function for initialization (DETERMINISM: seeded)
+  let rngSeed = seed;
+  const rngFunction = () => {
+    rngSeed = (rngSeed * 1664525 + 1013904223) % (2**32);
+    return rngSeed / (2**32);
   };
 
-  console.log('Creating initial state...');
-  const initialState = createTestState({ config } as any);
+  console.log(`Creating initial state (seed=${seed})...`);
+  const initialState = createDefaultInitialState(rngFunction);
 
   // Count entities to understand scale
   const entityCounts = {
@@ -109,14 +62,31 @@ async function profileSimulation() {
   console.log(`  Agent-Agent interactions: ${potentialOn2.agentAgentInteractions.toLocaleString()}`);
   console.log(`  Org-Org interactions: ${potentialOn2.orgOrgInteractions.toLocaleString()}`);
 
-  console.log('\nRunning simulation for 12 months...\n');
+  console.log(`\nRunning simulation for ${monthsToSimulate} months...`);
+  console.log('(Built-in PhaseOrchestrator instrumentation enabled)\n');
   const startTime = performance.now();
 
-  // Run simulation
-  const simulation = createSimulation(initialState);
-  const finalState = runSimulation(simulation, 12);
+  // Create simulation engine WITH PROFILING ENABLED
+  const engine = new SimulationEngine({ seed, maxMonths: monthsToSimulate, logLevel: 'summary' });
+
+  // Enable performance timing on orchestrator (uses built-in instrumentation)
+  engine.orchestrator.enablePerformanceTiming();
+  engine.orchestrator.setSlowPhaseThreshold(10); // 10ms budget per phase
+
+  // Run simulation for N months
+  let currentState = initialState;
+  for (let month = 0; month < monthsToSimulate; month++) {
+    const result = engine.step(currentState);
+    currentState = result.state;
+  }
+
+  const finalState = currentState;
 
   const totalTime = performance.now() - startTime;
+
+  // GET TIMING DATA from PhaseOrchestrator's built-in instrumentation
+  const phaseTimings = engine.orchestrator.getPhaseTimings();
+  const stepTimings = engine.orchestrator.getStepTimings();
 
   // Analyze results
   console.log('\n================================');
@@ -124,108 +94,90 @@ async function profileSimulation() {
   console.log('================================\n');
 
   console.log(`Total simulation time: ${totalTime.toFixed(2)}ms (${(totalTime/1000).toFixed(2)}s)`);
-  console.log(`Average per month: ${(totalTime/12).toFixed(2)}ms`);
-  console.log(`Simulated months per second: ${(12000/totalTime).toFixed(2)}`);
+  console.log(`Average per month: ${(totalTime/monthsToSimulate).toFixed(2)}ms`);
+  console.log(`Simulated months per second: ${((monthsToSimulate*1000)/totalTime).toFixed(2)}`);
 
-  // Sort phases by total time
-  const sortedPhases = Array.from(phaseTimings.entries())
-    .filter(([key]) => !key.startsWith('TOTAL_STEP_'))
-    .sort((a, b) => b[1].totalMs - a[1].totalMs)
-    .slice(0, 20); // Top 20
+  // Print built-in timing report
+  engine.orchestrator.printPhaseTimings();
 
-  console.log('\n🔥 TOP 20 SLOWEST PHASES (by total time):');
-  console.log('==========================================');
+  // Additional analysis: Identify phases exceeding 10ms budget
+  const slowPhases: Array<{ name: string; avgMs: number; maxMs: number; p95Ms: number }> = [];
 
-  let totalPhaseTime = 0;
-  sortedPhases.forEach(([name, timing], index) => {
-    const avgMs = timing.totalMs / timing.callCount;
-    const percent = (timing.totalMs / totalTime) * 100;
-    totalPhaseTime += timing.totalMs;
+  for (const [name, data] of phaseTimings.entries()) {
+    const avgMs = data.totalMs / data.callCount;
+    const sorted = [...data.samples].sort((a, b) => a - b);
+    const p95Index = Math.ceil(sorted.length * 0.95) - 1;
+    const p95Ms = sorted[Math.max(0, p95Index)];
 
-    console.log(`\n${index + 1}. ${name}`);
-    console.log(`   Total: ${timing.totalMs.toFixed(2)}ms (${percent.toFixed(1)}% of runtime)`);
-    console.log(`   Avg/call: ${avgMs.toFixed(2)}ms`);
-    console.log(`   Max: ${timing.maxMs.toFixed(2)}ms, Min: ${timing.minMs.toFixed(2)}ms`);
-    console.log(`   Calls: ${timing.callCount}`);
-
-    // Flag potential O(n²) issues
-    if (avgMs > 10) {
-      console.log(`   ⚠️ WARNING: Average >10ms per call - potential O(n²) bottleneck`);
+    if (avgMs > 10 || p95Ms > 10 || data.maxMs > 10) {
+      slowPhases.push({ name, avgMs, maxMs: data.maxMs, p95Ms });
     }
-    if (timing.maxMs > avgMs * 2) {
-      console.log(`   ⚠️ WARNING: High variance (max ${(timing.maxMs/avgMs).toFixed(1)}x avg) - unstable performance`);
-    }
-  });
-
-  // Analyze step timings
-  const stepTimings = Array.from(phaseTimings.entries())
-    .filter(([key]) => key.startsWith('TOTAL_STEP_'))
-    .map(([key, timing]) => ({
-      month: parseInt(key.replace('TOTAL_STEP_', '')),
-      ...timing
-    }))
-    .sort((a, b) => b.totalMs - a.totalMs);
-
-  console.log('\n🐌 SLOWEST INDIVIDUAL STEPS:');
-  console.log('============================');
-
-  stepTimings.slice(0, 5).forEach(step => {
-    console.log(`  Month ${step.month}: ${step.totalMs.toFixed(2)}ms`);
-  });
-
-  // Performance recommendations
-  console.log('\n💡 RECOMMENDATIONS:');
-  console.log('==================');
-
-  const avgStepTime = totalTime / 12;
-  if (avgStepTime > 500) {
-    console.log('❌ CRITICAL: Average step time >500ms will make Monte Carlo infeasible');
-    console.log('   Target: <100ms per step for N=100 Monte Carlo runs');
-  } else if (avgStepTime > 200) {
-    console.log('⚠️ WARNING: Average step time >200ms will make Monte Carlo slow');
-    console.log('   Current: ~' + ((avgStepTime * 360 * 100) / 60000).toFixed(1) + ' minutes for N=100 Monte Carlo');
-  } else {
-    console.log('✅ Performance acceptable for Monte Carlo simulations');
-    console.log('   Current: ~' + ((avgStepTime * 360 * 100) / 60000).toFixed(1) + ' minutes for N=100 Monte Carlo');
   }
 
-  // Check for specific O(n²) patterns
-  const suspectedOn2 = sortedPhases.filter(([name, timing]) => {
-    const avgMs = timing.totalMs / timing.callCount;
-    return avgMs > 5 && name.toLowerCase().includes('agent');
-  });
-
-  if (suspectedOn2.length > 0) {
-    console.log('\n⚠️ SUSPECTED O(n²) BOTTLENECKS (agent-related phases >5ms):');
-    suspectedOn2.forEach(([name]) => {
-      console.log(`  - ${name}`);
+  if (slowPhases.length > 0) {
+    console.log('\n⚠️  PHASES EXCEEDING 10ms BUDGET:');
+    console.log('================================');
+    slowPhases.sort((a, b) => b.avgMs - a.avgMs);
+    slowPhases.forEach(phase => {
+      console.log(`\n  ${phase.name}`);
+      console.log(`    Avg: ${phase.avgMs.toFixed(2)}ms`);
+      console.log(`    P95: ${phase.p95Ms.toFixed(2)}ms`);
+      console.log(`    Max: ${phase.maxMs.toFixed(2)}ms`);
     });
-    console.log('\nRecommendation: Use indexing/caching to avoid nested loops');
+  } else {
+    console.log('\n✅ All phases within 10ms budget');
   }
 
-  // Save detailed report
-  const report = {
-    summary: {
-      totalTimeMs: totalTime,
-      monthsSimulated: 12,
-      avgPerMonthMs: totalTime / 12,
-      entityCounts,
-      potentialOn2
-    },
-    phaseTimings: Object.fromEntries(
-      Array.from(phaseTimings.entries())
-        .filter(([key]) => !key.startsWith('TOTAL_STEP_'))
-    ),
-    stepTimings: stepTimings.map(s => ({
-      month: s.month,
-      timeMs: s.totalMs
-    })),
-    recommendations: []
-  };
+  // Step timing analysis
+  if (stepTimings.length > 0) {
+    const stepTotals = stepTimings.map(s => s.totalMs);
+    const avgStep = stepTotals.reduce((a, b) => a + b, 0) / stepTotals.length;
+    const maxStep = Math.max(...stepTotals);
+    const minStep = Math.min(...stepTotals);
 
-  const reportPath = `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/performance_profile_${Date.now()}.json`;
-  fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
-  console.log(`\n📁 Detailed report saved to: ${reportPath}`);
+    console.log('\n📊 STEP TIMING SUMMARY:');
+    console.log('======================');
+    console.log(`  Avg: ${avgStep.toFixed(2)}ms`);
+    console.log(`  Max: ${maxStep.toFixed(2)}ms (Month ${stepTimings.find(s => s.totalMs === maxStep)?.month})`);
+    console.log(`  Min: ${minStep.toFixed(2)}ms (Month ${stepTimings.find(s => s.totalMs === minStep)?.month})`);
+
+    // Performance assessment
+    console.log('\n💡 PERFORMANCE ASSESSMENT:');
+    console.log('=========================');
+
+    if (avgStep > 500) {
+      console.log('❌ CRITICAL: Average step >500ms makes Monte Carlo infeasible');
+      console.log(`   Current: ~${((avgStep * 360 * 100) / 60000).toFixed(1)} minutes for N=100 Monte Carlo`);
+      console.log('   Target: <100ms per step');
+    } else if (avgStep > 200) {
+      console.log('⚠️  WARNING: Average step >200ms will make Monte Carlo slow');
+      console.log(`   Current: ~${((avgStep * 360 * 100) / 60000).toFixed(1)} minutes for N=100 Monte Carlo`);
+      console.log('   Target: <100ms per step');
+    } else if (avgStep > 50) {
+      console.log('✅ Performance acceptable but could be improved');
+      console.log(`   Current: ~${((avgStep * 360 * 100) / 60000).toFixed(1)} minutes for N=100 Monte Carlo`);
+      console.log('   Target: <50ms per step (stretch goal)');
+    } else {
+      console.log('✅ Excellent performance');
+      console.log(`   Current: ~${((avgStep * 360 * 100) / 60000).toFixed(1)} minutes for N=100 Monte Carlo`);
+    }
+  }
+
+  // Save detailed reports (JSON + CSV)
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+  const jsonPath = `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/performance_profile_${timestamp}.json`;
+  const csvPath = `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/performance_profile_${timestamp}.csv`;
+
+  // Export using built-in methods
+  const jsonData = engine.orchestrator.exportPhaseTimingsJSON();
+  const csvData = engine.orchestrator.exportPhaseTimingsCSV();
+
+  fs.writeFileSync(jsonPath, jsonData);
+  fs.writeFileSync(csvPath, csvData);
+
+  console.log(`\n📁 Detailed reports saved:`);
+  console.log(`   JSON: ${jsonPath}`);
+  console.log(`   CSV: ${csvPath}`);
 }
 
 // Run profiling
