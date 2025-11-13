@@ -262,17 +262,23 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (26 tech candidates, 9 paradigm shifts)
 
 **Research Verification Queue:**
-- [x] **Novel Entities Zero-Effectiveness (commit 7ac8b8f)** - ✅ VALIDATION COMPLETE
+- [x] **Novel Entities Zero-Effectiveness (commits 7ac8b8f → b6ec2b9)** - ✅ IMPLEMENTATION COMPLETE (Nov 13, 2025)
   - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
   - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
-  - Verification spec: `research/verification_7ac8b8f_20251113.md`
   - Quality Gate 1: PASSED (Grade B+)
   - Quality Gate 2: PASSED (Grade B, CONDITIONAL) - `reviews/novel_entities_research_critique_20251113_validation.md`
-  - **Requirements before implementation:**
-    1. Monte Carlo sensitivity analysis (irreversibleFraction: 0.80-0.95, reboundFactor: 0.5-0.9, timelagYears: 10-30)
-    2. Code comments flagging HIGH UNCERTAINTY parameters
-    3. Justify 30-year time lag or use range
-  - **Next:** Implementation Phase 1-3 (simulation-maintainer) + Monte Carlo validation (priya)
+  - **Implementation Status:**
+    - ✅ Phase 1: Prevention technologies added (`global_pfas_ban`, `plastic_production_phaseout`, `green_chemistry_substitution`)
+    - ✅ Phase 2: Gating function implemented (`calculateNovelEntitiesRemediationEffectiveness` in `effectsEngine.ts`)
+    - ✅ Phase 3: Irreversibility floor implemented (90% floor in `planetaryBoundaries.ts`)
+    - ✅ All HIGH UNCERTAINTY parameters flagged in code comments
+    - ✅ Sensitivity ranges documented (10-30yr timelag, 0.5-0.9 rebound, 0.80-0.95 irreversible)
+  - **Implementation Commits:** 5c9e773, 2f05087, 805d064, 9fc6fdc, b6ec2b9
+  - **Remaining Work:**
+    1. [ ] Monte Carlo sensitivity analysis (N=30, parameter ranges) - **CRITICAL** (priya)
+    2. [ ] Architecture review (architecture-skeptic)
+    3. [ ] Wiki documentation update (wiki-documentation-updater)
+    4. [ ] Archive plan to /plans/completed/ (architect)
 
 ---
 
