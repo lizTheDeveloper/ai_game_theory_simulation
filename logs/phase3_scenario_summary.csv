@@ -1,0 +1,6 @@
+scenario,overall_qol,psych_qol,social_qol,env_qol,health_qol,population,temp_delta,spiral_rate
+climate-first,0.4372,0.6902,0.6340,0.3515,0.3870,0.003505,0.6917,0.111
+equality-first,0.4381,0.6887,0.6340,0.3589,0.3865,0.003495,0.6917,0.111
+democratic-participation,0.4635,0.7041,0.6835,0.3532,0.4469,0.003531,0.6795,0.111
+scientific-acceleration,0.4372,0.6902,0.6340,0.3515,0.3870,0.003505,0.6917,0.111
+authoritarian-efficiency,0.4124,0.6551,0.6015,0.3102,0.3809,0.003104,0.7431,0.000
