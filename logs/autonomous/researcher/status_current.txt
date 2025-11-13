@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 COMPLETE - 495s
+=======
+GIT OPERATIONS
+>>>>>>> origin/auto/researcher-20251111_083001
