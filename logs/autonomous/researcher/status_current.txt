@@ -1,1 +1,85 @@
-GIT SYNC
+RESEARCH UPDATE SESSION - November 13, 2025
+
+Session: Auto-researcher run
+Duration: ~30 minutes
+Files Updated: 1 new research file
+
+=== Work Completed ===
+
+1. AI Governance International Coordination (NEW)
+   - File: research/ai_governance_international_coordination_20251113.md
+   - Priority: TIER 1B CRITICAL (from roadmap)
+   - Sources: 6 primary (2024-2025)
+   - Quality: B+ (peer-reviewed + institutional reports)
+   - Key Finding: Current coordination quality ~0.43 (moderate)
+
+   Key Sources:
+   - Radu & Quevedo (2024) - International Affairs - Global AI governance barriers
+   - US NIST (Aug 2024) - Pre-deployment testing agreements (OpenAI, Anthropic)
+   - UN Global Digital Compact (Sept 2024) - International framework
+   - Maas (2024) - AI & Society - NPT+ governance model
+   - AGILE Index 2025 - 40-country governance assessment
+   - Future of Life Institute (2025) - Industry safety testing report
+
+   Simulation Parameters Extracted:
+   - Coordination quality: 0.43 (3/7 firms catastrophic risk testing)
+   - Multilateral frameworks: 29 active (as of 2024)
+   - Pre-deployment testing coverage: 0.43
+   - Regime complex strength: 0.35 (weak, fragmented)
+   - Mortality modifiers: Uncoordinated 30% → Strong coordination <5%
+
+   Implementation Priority: CRITICAL
+   - Addresses god mode 30% mortality finding
+   - Need CoordinatedDeploymentPhase to model AI-managed rollout
+   - Current god mode = worst case (no coordination), not realistic post-alignment
+
+=== Research Context ===
+
+Relates to Research Roadmap TIER 1B: AI Coordination & Transition Management
+- God mode finding: 30% mortality (8.15B → 5.71B population)
+- Interpretation gap: Current model shows uncoordinated chaos, not AI-managed transition
+- Coffee-talk discussion (Nov 10) identified need for coordination modeling
+
+Next Steps (from roadmap):
+1. Research transition mortality (managed vs unmanaged) - PENDING
+2. Design CoordinatedDeploymentPhase - PENDING (Roy + Architect)
+3. Implement coordination quality as variable - PENDING (Roy)
+4. Monte Carlo validation with coordination distributions - PENDING
+
+=== Status ===
+
+UPDATE_QUEUE Analysis:
+- CRITICAL (>5yr + used): 0 files
+- HIGH (>5yr unused OR >3yr used): 139 files
+  - Most are meta-docs (citation verification, session summaries)
+  - Core simulation parameters already updated (recent work on Novel Entities, biodiversity, AI deception)
+
+Research Currency (from UPDATE_QUEUE):
+- 57.2% sources <3 years (GOOD)
+- 5.1% sources 3-5 years (acceptable)
+- 37.7% sources >5 years (mostly meta-docs, not simulation-critical)
+
+Recent Research Verified (this week):
+- Novel Entities zero-effectiveness (Nov 13) - TIER 1 CRITICAL
+- AI governance coordination (Nov 13) - TIER 1B CRITICAL ✅
+- Paradigm 4 Indigenous (Nov 13) - Updated with 2024-2025 sources
+- Mechanistic interpretability (Nov 13) - Dec 2024 breakthroughs
+- Biodiversity restoration (Nov 13) - 2024-2025 effectiveness data
+- Bifurcation variance (Nov 13) - 2024-2025 critical findings
+
+=== Next Priority Topics ===
+
+From Research Roadmap TIER 2 (HIGH):
+1. Climate deployment timescales - Comprehensive research exists (Oct 21), needs integration
+2. Nitrogen-food coupling constraints - Nitroplast research added (Nov 10), needs constraint modeling
+3. Biosphere functional group analysis - Investigate 81.5% effectiveness outlier
+4. Energy budget constraint system - Gate tech by renewable surplus
+
+Recommendation: Next session focus on either:
+- Climate deployment timescales (implementation-ready)
+- Nitrogen-food coupling (research complete, needs parameters)
+
+=== Commit Ready ===
+
+New file: research/ai_governance_international_coordination_20251113.md
+Status: Ready to commit with message about 2024-2025 AI governance coordination research
