@@ -45,7 +45,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
     const proximities = this.calculateProximities(state, bifState);
 
     // Update variance amplification based on nearest threshold
-    this.updateVarianceAmplification(bifState, proximities);
+    this.updateVarianceAmplification(state, bifState, proximities);
 
     // Check for threshold crossings and update regime
     this.checkThresholdCrossings(state, bifState, proximities);
@@ -214,25 +214,26 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * Far from thresholds (distance → 1), amplification → 1× (no effect)
    *
    * Research basis:
-   * - Scheffer et al. (2024) Science - Environmental systems: fold catastrophe, 1.5× multiplier
-   * - Dakos et al. (2012) Ecology - Social systems: Hopf bifurcation, oscillatory dynamics, 2.5× multiplier
-   * - Manda (2010), Fed (2016) - Financial crises: cascade effects, 3.5× multiplier (2008 VIX calibrated)
+   * - Scheffer et al. (2024) Science - Environmental systems: fold catastrophe, 1.05× multiplier (REDUCED 30%)
+   * - Dakos et al. (2012) Ecology - Social systems: Hopf bifurcation, oscillatory dynamics, 1.75× multiplier (REDUCED 30%)
+   * - Manda (2010), Fed (2016) - Financial crises: cascade effects, 1.75× multiplier (REDUCED 30%)
    * - Bifurcation theory - Base amplification: 1/√(distance), governs generic threshold proximity
    * - Permian-Triassic extinction - Max amplification: 100× (empirical upper bound)
    *
-   * System-dependent multipliers account for different bifurcation dynamics:
-   * - Environmental: fold catastrophe (Scheffer et al. 2024)
-   * - Social: Hopf bifurcation with oscillations
-   * - Economic: cascade amplification (2008 crisis) - REDUCED from 3.5× to 2.5× (Nov 13 2025 - architecture review)
-   * - Governance: feedback loop amplification
-   * - Flourishing: positive feedback loops (innovation cascades) - INCREASED from 1.0× to 2.0× (Nov 13 2025 - fix dystopia bias)
-   * - Technology: innovation spike dynamics - INCREASED from 1.0× to 2.0× (Nov 13 2025 - breakthrough cascades)
+   * System-dependent multipliers account for different bifurcation dynamics (ALL REDUCED 30% Nov 13 2025):
+   * - Environmental: fold catastrophe (Scheffer et al. 2024) - 1.5× → 1.05×
+   * - Social: Hopf bifurcation with oscillations - 2.5× → 1.75×
+   * - Economic: cascade amplification - 3.5× → 2.5× → 1.75×
+   * - Governance: feedback loop amplification - 2.0× → 1.4×
+   * - Flourishing: positive feedback loops - 2.0× → 1.4×
+   * - Technology: innovation spike dynamics - 2.0× → 1.4×
    *
    * @see /research/bifurcation_empirical_validation_20251112.md - Grade B+ from Sylvia
    * @see Scheffer et al. (2014) - Critical slowing down indicators
    * @see Dakos et al. (2012) - Variance in ecosystem regime shifts
    */
   private updateVarianceAmplification(
+    state: GameState,
     bifState: import('@/types/bifurcation').BifurcationState,
     proximities: Map<string, { distance: number; currentValue: number; threshold: import('@/types/bifurcation').BifurcationThreshold }>
   ): void {
@@ -251,7 +252,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
     const minDistanceValidated = assertInRange(minDistance, 0, 1, {
       location: 'BifurcationLogicPhase.updateVarianceAmplification',
       valueName: 'minDistance',
-      month: bifState.currentRegime === 'status-quo' ? undefined : 0, // Can't access state.currentMonth here
+      month: state.currentMonth,
     });
 
     // Calculate base amplification using bifurcation theory formula
@@ -260,6 +261,8 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // - Distance = 0.1 (near threshold): base = 1 / √0.11 ≈ 3×
     // - Distance = 0.5 (mid-range): base = 1 / √0.51 ≈ 1.4×
     // - Distance = 1.0 (far from threshold): base = 1 / √1.01 ≈ 1× (minimal effect)
+    //
+    // The 0.01 offset prevents divide-by-zero while maintaining 10× max base amplification at threshold.
     //
     // Research basis: Bifurcation theory predicts variance scales as 1/√d near saddle-node bifurcations
     // (Scheffer et al. 2009, standard dynamical systems textbook result)
@@ -280,7 +283,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
     const amplificationValidated = assertFinite(amplificationCapped, {
       location: 'BifurcationLogicPhase.updateVarianceAmplification',
       valueName: 'amplification',
-      month: undefined,
+      month: state.currentMonth,
     });
 
     // Update bifurcation state (mutation)
@@ -299,6 +302,14 @@ export class BifurcationLogicPhase implements SimulationPhase {
       // We don't track n explicitly, so use weighted average with 0.95 decay
       bifState.metrics.avgDistanceToThresholds =
         bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
+
+      // Add to time series (Nov 13, 2025 - CRITICAL instrumentation for Priya validation)
+      bifState.metrics.amplificationTimeSeries.push({
+        month: state.currentMonth,
+        amplification: amplificationValidated,
+        distanceToNearest: minDistanceValidated,
+        nearestSystem: nearestThresholdName,
+      });
     }
   }
 
@@ -309,32 +320,36 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * based on their underlying bifurcation dynamics.
    *
    * Research basis:
-   * - Environmental (1.5×): Fold catastrophe with hysteresis (Scheffer et al. 2024)
-   * - Social (2.5×): Hopf bifurcation with oscillatory dynamics (Dakos et al. 2012)
-   * - Economic (2.5×): Cascade amplification (REDUCED from 3.5×, Nov 13 2025 - overweighted)
-   * - Governance (2.0×): Feedback loop amplification in regime change
-   * - Flourishing (2.0×): Positive feedback loops (INCREASED from 1.0×, Nov 13 2025 - fix dystopia bias)
-   * - Technology (2.0×): Innovation cascades (INCREASED from 1.0×, Nov 13 2025 - breakthrough amplification)
+   * - Environmental (1.05×): Fold catastrophe with hysteresis (Scheffer et al. 2024) - REDUCED 30% (Nov 13 2025 - mortality overshoot)
+   * - Social (1.75×): Hopf bifurcation with oscillatory dynamics (Dakos et al. 2012) - REDUCED 30% (Nov 13 2025 - mortality overshoot)
+   * - Economic (1.75×): Cascade amplification (REDUCED from 3.5× → 2.5× → 1.75×, Nov 13 2025 - mortality overshoot)
+   * - Governance (1.4×): Feedback loop amplification - REDUCED 30% (Nov 13 2025 - mortality overshoot)
+   * - Flourishing (1.4×): Positive feedback loops - REDUCED 30% (Nov 13 2025 - mortality overshoot)
+   * - Technology (1.4×): Innovation cascades - REDUCED 30% (Nov 13 2025 - mortality overshoot)
+   *
+   * CALIBRATION NOTE (Nov 13 2025):
+   * Previous multipliers caused 87.2% mortality vs 43-58% research target (+50% overshoot).
+   * All multipliers reduced by 30% to bring mortality into research-validated range.
    *
    * @param thresholdName - Name of threshold system (environmental, social, economic, etc.)
    * @returns Multiplier for system-specific bifurcation dynamics
    */
   private getSystemMultiplier(thresholdName: string): number {
     const multipliers: Record<string, number> = {
-      'environmental': 1.5,  // Fold catastrophe (Scheffer et al. 2024)
-      'social': 2.5,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012)
-      'economic': 2.5,       // Cascade effects (REDUCED from 3.5× - Nov 13 2025, architecture review)
-      'governance': 2.0,     // Feedback loops in regime change
-      'flourishing': 2.0,    // Positive feedback loops (INCREASED from 1.0× - Nov 13 2025, fix dystopia bias)
-      'technology': 2.0,     // Innovation cascades (INCREASED from 1.0× - Nov 13 2025, breakthrough amplification)
+      'environmental': 1.05,  // Fold catastrophe (Scheffer et al. 2024) - REDUCED 30%
+      'social': 1.75,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012) - REDUCED 30%
+      'economic': 1.75,       // Cascade effects - REDUCED 30%
+      'governance': 1.4,      // Feedback loops in regime change - REDUCED 30%
+      'flourishing': 1.4,     // Positive feedback loops - REDUCED 30%
+      'technology': 1.4,      // Innovation cascades - REDUCED 30%
     };
 
     // Validate threshold name to catch typos/misconfigurations
     const multiplier = multipliers[thresholdName];
 
     if (multiplier === undefined) {
-      console.log(`⚠️ Unknown threshold name in bifurcation multiplier: ${thresholdName}, defaulting to 2.0`);
-      return 2.0; // Generic default if threshold type not recognized
+      console.log(`⚠️ Unknown threshold name in bifurcation multiplier: ${thresholdName}, defaulting to 1.4`);
+      return 1.4; // Generic default (30% reduced from 2.0)
     }
 
     return multiplier;
