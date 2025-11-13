@@ -1,8 +1,16 @@
+---
+oldest_source: 2019
+newest_source: 2025
+last_verified: 2025-11-13
+verification_status: UPDATED
+---
+
 # Climate-Related Mortality & Biosphere Die-off: Multi-Paradigm Modeling Framework
 
 **Research Synthesis by Cynthia (Super Alignment Researcher)**
-**Date:** October 28, 2025
+**Date:** October 28, 2025 (Updated: November 13, 2025 by autonomous-researcher)
 **Status:** Evidence-based recommendations for replacing random exogenous shocks with predictable climate-driven mortality models
+**Last Verified:** November 13, 2025
 
 ---
 
@@ -16,6 +24,31 @@ This research addresses the need to move from **random exogenous shock models** 
 4. **Emergence indicators** - metrics for "worlds being born" alongside "worlds dying"
 
 **Key Insight:** The critical factor is not just climate change magnitude, but **infrastructure/capacity mismatch** - the gap between environmental conditions and local adaptation resources.
+
+**2024-2025 Research Updates:**
+
+1. **Wilson et al. (2024)** - "Heat disproportionately kills young people: Evidence from wet-bulb temperature in Mexico," *Science Advances*. Key findings:
+   - 75% of heat deaths occur in people under 35 (87% of lost life years)
+   - Peak mortality at wet-bulb 23-24°C (not extreme temperatures)
+   - Uncompensable thresholds: 19-32°C depending on age
+   - Young adult threshold area: 2.2% of land (1994-2023); will triple at 2°C warming
+
+2. **2023 Global Heatwave Attribution (2025)** - 178,486 excess deaths, 54.29% attributable to anthropogenic climate change
+   - Europe 2024: 62,775 heat-related deaths across 654 regions, 32 countries
+   - Demonstrates that >50% of current heat mortality is directly attributable
+
+3. **Lancet Planetary Health (2024)** - UK climate-mortality burden assessment
+   - Refined counterfactual methods addressing changing vulnerability
+   - Expert judgment protocols for emerging health burdens
+
+4. **Nature Reviews Earth & Environment (2025)** - >260,000 heat-related fatalities documented since 2000
+   - 2024 examples: 1,300 deaths during Hajj pilgrimage (52°C), widespread fatalities in US, Thailand, India, Mexico
+   - Acceleration in both frequency and severity
+
+**Implications for modeling:**
+- **Age-specific vulnerability**: Young adults more vulnerable than previously assumed
+- **Non-linear thresholds**: Most deaths occur at moderate wet-bulb temps (23-24°C) due to high frequency
+- **Attribution confidence**: >50% of current heat mortality directly attributable to climate change (not compound/uncertain)
 
 ---
 
