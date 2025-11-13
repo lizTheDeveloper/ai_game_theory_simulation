@@ -1,0 +1,117 @@
+ISSUE #120 FIX: O(n²) COMPLEXITY OPTIMIZATIONS IN organizationManagement.ts
+==============================================================================
+
+Date: Nov 13, 2025
+Priority: HIGH - Performance degradation at scale
+
+PROBLEM
+-------
+4 similar O(n²) patterns identified in organizationManagement.ts after fixing one instance.
+Pattern: .filter(x => array.includes(x.id)) creates nested loops
+Impact: 100,000+ operations per step with 50 agents × 200 orgs
+
+ROOT CAUSE
+----------
+Array.includes(x.id) is O(n) per element, creating O(n²) when called in .filter()
+Example: state.aiAgents.filter(ai => org.ownedAIModels.includes(ai.id))
+- Outer loop: O(m) agents
+- Inner includes(): O(n) per agent
+- Total: O(m × n)
+
+SOLUTION
+--------
+Replace with Set-based lookups for O(1) membership test:
+1. Create Set once: O(n) - const set = new Set(array)
+2. Test membership: O(1) - set.has(id)
+3. Total complexity: O(n) instead of O(n²)
+
+CHANGES MADE
+------------
+
+1. shouldTrainNewModel() [Line 390-396]
+   BEFORE: state.aiAgents.filter(ai => org.ownedAIModels.includes(ai.id))
+   AFTER:  const ownedAISet = new Set(org.ownedAIModels);
+           state.aiAgents.filter(ai => ownedAISet.has(ai.id))
+   Complexity: O(n²) → O(n)
+
+2. startModelTraining() [Line 469-475]
+   BEFORE: state.computeInfrastructure.dataCenters.filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
+   AFTER:  const ownedDCSet = new Set(org.ownedDataCenters);
+           state.computeInfrastructure.dataCenters.filter(dc => ownedDCSet.has(dc.id) && dc.operational)
+   Complexity: O(n²) → O(n)
+
+3. calculateComputeRevenue() [Line 760-781]
+   BEFORE: Two separate .filter() calls with .includes()
+           - dataCenters.filter(dc => org.ownedDataCenters.includes(dc.id))
+           - allocationValues.filter(alloc => org.ownedAIModels.includes(alloc.aiId))
+   AFTER:  const ownedDCSet = new Set(org.ownedDataCenters);
+           const ownedAISet = new Set(org.ownedAIModels);
+           [both filters use Set.has() instead]
+   Complexity: O(n²) → O(n) for both operations
+
+4. calculateTotalExpenses() [Line 891-896]
+   BEFORE: state.computeInfrastructure.dataCenters.filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
+   AFTER:  const ownedDCSet = new Set(org.ownedDataCenters);
+           state.computeInfrastructure.dataCenters.filter(dc => ownedDCSet.has(dc.id) && dc.operational)
+   Complexity: O(n²) → O(n)
+
+5. handleBankruptcy() [Line 1356-1386]
+   BEFORE: Four separate .filter() calls with .includes()
+           - Three DC filters with org.ownedDataCenters.includes(dc.id)
+           - One AI filter with org.ownedAIModels.includes(ai.id)
+   AFTER:  const ownedDCSet = new Set(org.ownedDataCenters);
+           const ownedAISet = new Set(org.ownedAIModels);
+           [all filters use Set.has() instead]
+   Complexity: O(n²) → O(n) for all four operations
+
+6. handleBankruptcy() [Line 1528-1530] (later in same function)
+   BEFORE: state.computeInfrastructure.dataCenters.filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
+   AFTER:  Reused ownedDCSet from above (already created)
+           state.computeInfrastructure.dataCenters.filter(dc => ownedDCSet.has(dc.id) && dc.operational)
+   Complexity: O(n²) → O(n), no duplicate Set creation
+
+PERFORMANCE IMPACT
+------------------
+Assuming 50 AI agents, 200 orgs, 100 data centers:
+
+Before: 
+- shouldTrainNewModel: 50 agents × 10 owned = 500 ops per org
+- calculateComputeRevenue: 100 DCs × 10 owned + 50 AIs × 10 owned = 1,500 ops per org
+- handleBankruptcy: 100 DCs × 10 owned (×4 calls) + 50 AIs × 10 owned = 4,500 ops per bankruptcy
+- Total per step (all orgs): ~400,000 operations
+
+After:
+- shouldTrainNewModel: 10 (Set creation) + 50 (filter) = 60 ops per org
+- calculateComputeRevenue: 10 + 100 + 10 + 50 = 170 ops per org
+- handleBankruptcy: 10 + 10 + 100 (×4) + 50 = 520 ops per bankruptcy
+- Total per step: ~46,000 operations
+
+REDUCTION: ~90% fewer operations (400K → 46K)
+
+VALIDATION
+----------
+✓ TypeScript compilation passes (npx tsc --noEmit)
+✓ All patterns documented with inline comments
+✓ Complexity noted in comments: "// O(n) with O(1) Set lookup"
+✓ Follows existing optimization pattern from calculateComputeUtilization() (lines 43-74)
+
+REFERENCE
+---------
+Similar fix applied to calculateComputeUtilization() on Nov 10, 2025:
+- Before: 100,000 operations per step
+- After: 1,400 operations per step
+- Reduction: 70× fewer operations
+
+This fix applies the same pattern to 8 additional locations.
+
+TESTING RECOMMENDATIONS
+-----------------------
+1. Run Monte Carlo with N=10 to verify no regressions
+2. Profile with large N (500+ orgs) to confirm performance improvement
+3. Monitor logs for any assertion failures related to data center/AI lookups
+
+FUTURE OPTIMIZATION OPPORTUNITIES
+---------------------------------
+- Consider caching Set objects on Organization if called frequently
+- Consider pre-building indexes at GameState level for hot paths
+- Profile other files for similar patterns (search for ".filter.*includes")
