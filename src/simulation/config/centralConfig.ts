@@ -391,17 +391,23 @@ export const RATES = {
   // === AI DEVELOPMENT RATES ===
   /**
    * AI capability doubling time (months)
-   * @research Epoch AI (2024) - Algorithmic progress trends
-   * @value 12 - Capabilities double every 12 months
+   * @status UNUSED - Growth rates are hardcoded in computeInfrastructure.ts
+   * @todo Refactor to use this config value
+   * @research Current implementation: 6.33 months (after Nov 13, 2025 fix)
+   * @calculation 3.73× hardware × 1.10× algorithmic = 4.1× per year
+   * @value 6.33 - Updated to match research-backed implementation
    */
-  AI_CAPABILITY_DOUBLING_TIME: 12,
+  AI_CAPABILITY_DOUBLING_TIME: 6.33,
 
   /**
-   * Compute growth rate (per year)
-   * @research Epoch AI (2024) - 4x every 2 years = 100% per year
-   * @value 1.0 - 100% per year = 2x every year
+   * Compute growth rate (per year, multiplicative)
+   * @status UNUSED - Growth rates are hardcoded in computeInfrastructure.ts
+   * @todo Refactor to use this config value
+   * @research Sevilla & Roldán (2024) - 4.1× per year (90% CI: 3.7× to 4.6×)
+   * @source https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
+   * @value 4.1 - Updated to match Epoch AI research (Nov 13, 2025)
    */
-  COMPUTE_GROWTH_RATE: 1.0,
+  COMPUTE_GROWTH_RATE: 4.1,
 
   // === TECH RISK RATES ===
   /**

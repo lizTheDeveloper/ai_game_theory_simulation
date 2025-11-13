@@ -572,6 +572,10 @@ export function allocateComputeEqually(state: GameState): void {
  * - Applied as drag on algorithmic efficiency growth
  *
  * References:
+ * - Sevilla & Roldán (2024): Training compute growth 4.1×/year (90% CI: 3.7× to 4.6×)
+ *   https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
+ * - Cottier et al. (2024): Training cost growth 2.4×/year (arXiv:2405.21015v2)
+ *   https://arxiv.org/abs/2405.21015
  * - Epoch AI (2024): Training compute doubling every 6-10 months
  * - Sevilla et al. (2022): Compute Trends showing 10x/year since 2020
  */
@@ -704,21 +708,27 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   // - 80% population → 64% manufacturing capacity (supply chain stress)
   // - 50% population → 25% manufacturing capacity (critical shortages)
   // - 20% population → 4% manufacturing capacity (near-total collapse)
-  const MOORES_LAW_RATE = Assertions.assertFinite(
-    Math.pow(2, 1/8) - 1, // 9.05% per month (doubles every 8 months)
-    { location: 'applyComputeGrowth_moores', valueName: 'MOORES_LAW_RATE', month: state.currentMonth }
+  // RESEARCH-BACKED (Nov 13, 2025): Training compute growth rate
+  // Sevilla & Roldán (2024): 4.1× per year (90% CI: 3.7× to 4.6×)
+  // Captures BOTH Moore's Law (chip improvements) AND capital investment (larger clusters)
+  // Math: 4.1× annual / 1.10× algorithmic = 3.73× hardware annual
+  // Monthly: 3.73^(1/12) - 1 = 11.54% per month
+  // Doubling time: 6.33 months
+  const HARDWARE_COMPUTE_GROWTH_RATE = Assertions.assertFinite(
+    Math.pow(3.73, 1/12) - 1, // 11.54% per month = 3.73× per year (research-backed)
+    { location: 'applyComputeGrowth_hardware', valueName: 'HARDWARE_COMPUTE_GROWTH_RATE', month: state.currentMonth }
   );
   const manufacturingCapacity = Assertions.assertProbability(
     Math.pow(globalPopFraction, 2.0), // Highly non-linear (fabs need EVERYTHING)
     { location: 'applyComputeGrowth_moores', valueName: 'manufacturingCapacity', month: state.currentMonth }
   );
-  const effectiveMooresLaw = Assertions.assertFinite(
-    MOORES_LAW_RATE * manufacturingCapacity, // Gate by manufacturing
-    { location: 'applyComputeGrowth_moores', valueName: 'effectiveMooresLaw', month: state.currentMonth }
+  const effectiveHardwareGrowth = Assertions.assertFinite(
+    HARDWARE_COMPUTE_GROWTH_RATE * manufacturingCapacity, // Gate by manufacturing
+    { location: 'applyComputeGrowth_hardware', valueName: 'effectiveHardwareGrowth', month: state.currentMonth }
   );
   infra.hardwareEfficiency = Assertions.assertFinite(
-    infra.hardwareEfficiency * (1 + effectiveMooresLaw),
-    { location: 'applyComputeGrowth_moores', valueName: 'hardwareEfficiency', month: state.currentMonth }
+    infra.hardwareEfficiency * (1 + effectiveHardwareGrowth),
+    { location: 'applyComputeGrowth_hardware', valueName: 'hardwareEfficiency', month: state.currentMonth }
   );
 
   // === PHASE 5: CONSCIOUSNESS GOVERNANCE R&D DRAG ===
