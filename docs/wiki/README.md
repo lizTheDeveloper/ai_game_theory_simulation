@@ -59,19 +59,29 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Final regime: ecological-collapse
 - 📖 **Context:** Infrastructure fix - metrics extraction, not new mechanics
 
-**Nov 13: Novel Entities Zero-Effectiveness Research (CRITICAL - TIER 1)** (commit 7ac8b8f)
-- 📚 **Research Complete:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
-- 🔬 **Key Finding:** 0% effectiveness is NOT a bug - thermodynamically accurate for unregulated scenario
-- 💰 **Energy Trap:** PFAS removal at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP)
-- 🔬 **Concentration Problem:** Tech works at mg/L (labs), environment is pg/L-ng/L (10^6-10^9× dilution)
-- ⏳ **Irreversibility:** <10% reversible fraction, 90% permanently distributed
-- 📊 **Montreal Protocol Lesson:** Production ban = 90-95% recovery, cleanup = 5-10%
-- ♻️ **Rebound Effects:** Waste +81% (2023-2050) despite tech (Jevons paradox)
-- 🎯 **Quality Gate 1:** PASSED (Grade B+) - high-impact journals, strong convergence
-- 📋 **Design Document:** plans/novel_entities_model_redesign_20251113.md (3 prevention techs, gated remediation, 90% floor)
-- 📖 **Research:** research/novel_entities_zero_effectiveness_20251113.md (41KB, 71 sources)
-- ✅ **Verification File:** research/verification_7ac8b8f_20251113.md (tracks citation + claim verification)
-- ⏳ **Status:** Research complete, awaiting validation → implementation (11-16 hours estimated)
+**Nov 13: Novel Entities Gated Remediation Model (TIER 1 CRITICAL - COMPLETE)** (commit 9fc6fdc)
+- ✅ **Implementation Complete:** Prevention-first gated remediation model addressing 0% effectiveness in god mode
+- 🏗️ **Architecture:** 5-gate multiplier system (regulation × concentration × energy × timeLag × rebound)
+- 🚪 **Regulation Gating:** Prevention tech unlocks remediation (1% baseline → 100% with 3 prevention techs)
+- 🌍 **Irreversible Floor:** 90% of peak contamination (atmospheric distribution + covalent binding + ocean persistence)
+- ⚗️ **Concentration Multiplier:** 0.001 (0.1% effectiveness at environmental dilution - mg/L labs vs pg/L environment)
+- ⚡ **Energy Multiplier:** 0.5 placeholder (awaits renewable surplus integration)
+- ⏱️ **Time Lag:** 30-year scale-up (0% → 100% over 360 months from deployment)
+- ♻️ **Rebound Factor:** 0.7 (30% offset by Jevons paradox - increased production)
+- 🧪 **Testing:** 17/17 unit tests passing + integration smoke test
+- 📊 **Type System:** Added `peakValue` tracking to PlanetaryBoundary interface
+- 🎯 **Quality Gate 1:** PASSED (Grade B+) - 16 peer-reviewed sources (Ling 2024, Cousins 2022, Kane 2022, Montreal Protocol)
+- 📖 **Files Modified:**
+  - `src/types/planetaryBoundaries.ts` - Added peakValue field
+  - `src/simulation/techTree/effectsEngine.ts:1143-1277` - Gated remediation logic (135 lines)
+  - `tests/unit/novelEntitiesGatedModelLogic.test.ts` - 17 unit tests
+  - `tests/integration/novelEntitiesSmokeTest.ts` - End-to-end validation
+- 📋 **Documentation:**
+  - `devlogs/novel_entities_gated_model_implementation_20251113.md` - Implementation summary
+  - `reviews/novel_entities_verification_20251113.md` - Research validation (Grade B+)
+  - `.claude/coordination/novel_entities_implementation_handoff_20251113.md` - Handoff doc
+- ⏭️ **Next:** Monte Carlo validation N≥10 to verify effectiveness distributions
+- 📖 **Background Research:** commit 7ac8b8f (742 lines, 16 sources, 0% effectiveness thermodynamically accurate)
 
 **Nov 13: CRITICAL Memory Leak + Complete O(n²) Fix** (commit 27e788f)
 - ✅ **Memory Leak Fixed:** PhaseOrchestrator unbounded array growth resolved (2 locations)
@@ -351,12 +361,12 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **Status:** Diagnostic infrastructure complete. Phase 2: Monte Carlo N=10 per scenario to identify spiral activation enablers.
 
 **Sylvia's Skeptical Analysis (commit f33340f, November 9, 2025):** Thermodynamic analysis of effectiveness gaps reveals fundamental constraints:
-- **Novel Entities (0%):** PFAS destruction energy = 4-40% of global production; cleanup may be thermodynamically infeasible at environmental scales (ng/L → mg/L requires 6-9 orders of magnitude concentration)
+- **Novel Entities (0%):** ✅ **IMPLEMENTED (Nov 13)** - Gated remediation model with 5-gate multiplier system (commit 9fc6fdc). Prevention tech required to unlock remediation effectiveness. PFAS destruction energy = 4-40% of global production; cleanup at environmental scales (ng/L → mg/L requires 6-9 orders of magnitude concentration) now modeled with 0.001 concentration multiplier + 90% irreversible floor.
 - **Climate (5.5%):** DAC at 10 GtCO₂/year needs 10,000-22,000 TWh/year (50-110% of global electricity); tech works but energy requirements collapse civilization
 - **Biogeochemical (10%):** Lake Erie case study shows 50 years of controls → re-eutrophication from legacy phosphorus; 60% nitrogen reduction = cutting food for ~3B people
 - **Biosphere (81.5% - SUSPICIOUS):** May conflate species counts (easy) with ecosystem function (hard); 50% species ≠ 50% functionality if keystone species gone
 
-**Core hypothesis:** Some problems may be thermodynamically irreversible at scale. Solutions compete for energy/resources needed to keep civilization alive. Model may need "irreversibility flags" for one-way doors and triage mechanics instead of heroic recovery.
+**Core hypothesis:** Some problems may be thermodynamically irreversible at scale. Solutions compete for energy/resources needed to keep civilization alive. Model now includes irreversibility mechanics (Novel Entities 90% floor) and gated effectiveness (prevention required for remediation).
 
 **See:** logs/capability_fix_nov9_2025.md, reviews/god_mode_gaps_research_roadmap_20251109.md
 
@@ -6646,7 +6656,7 @@ state.history.exogenousShocks?: Array<{
 - **File**: `research/RESEARCH_ROADMAP.md` (617 lines)
 - **Integration**: Combines Sylvia's god mode gaps analysis with complete research index (335+ files)
 - **Priority Structure** (from Priya's quantitative analysis):
-  - **TIER 1 CRITICAL**: Novel Entities (0% effectiveness) - thermodynamic energy constraints, PFAS cleanup requires 4-40% global energy
+  - **TIER 1 CRITICAL**: Novel Entities (0% effectiveness) - ✅ **COMPLETE** (commit 9fc6fdc, Nov 13) - implemented gated remediation model with 5 multipliers + 90% irreversible floor
   - **TIER 2 HIGH**: Climate (5.5%), Biogeochemical (10%) - deployment physics, irreversibility (DAC needs 50-110% global electricity)
   - **TIER 3 MEDIUM**: Biosphere outlier (81.5% - suspiciously good?) - functionality vs species counts investigation
 - **Research Index**: 335+ research files organized by domain (AI alignment, climate mortality, planetary boundaries, citation quality)
