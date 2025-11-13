@@ -108,6 +108,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Review:** Architecture skeptic review in reviews/scenario_system_architecture_review_20251111.md
 - 📖 **Context:** scenarioRunner.ts:32 - ApplyScenarioPrioritiesPhase requires state.scenario
 
+**Nov 11: Novel Entities Stock Accounting Fix (Architecture CRITICAL-2)** (commit 0dcdc3d2d)
+- ✅ **Bug Fixed:** `accumulatedStock` field stale (initialized once, never updated despite monthly emissions)
+- ✅ **Root Cause:** Normalized `syntheticChemicalLoad` [0,1] was tracked correctly, but absolute stock (Mt) wasn't accumulating
+- ✅ **Solution:** Added monthly stock updates with natural decay (novelEntities.ts:64-93)
+  - Monthly emissions: `annualEmissions / 12`
+  - Natural decay: Half-life based (500 years for PFAS, Cousins 2022)
+  - Saturation cap: 2 billion Mt (based on Persson 2022, Geyer 2017)
+  - Warning threshold: 100M Mt (prevents unrealistic accumulation)
+- ✅ **Research Citations:** Sörengård 2024 ($20-7T trillion/year cleanup cost), Cousins 2022 (C-F bond persistence), Persson 2022 (>1 Mt/year production), Geyer 2017 (~400M Mt cumulative plastics)
+- ✅ **Validation:** 360-month simulation completed, no excessive accumulation warnings
+- ✅ **Architecture Grade:** B+ → A- (9.0/10) - Critical bookkeeping bug resolved
+- 📖 **Review:** logs/architecture_fixes_complete_20251111.md, GitHub issues #117-120 created for remaining HIGH priority items
+
 **Nov 11: Extinction Rate Minimum Correction** (commit 3b4dbdd)
 - ✅ **Bug Fixed:** assertInRange rejected extinctionRate=9.67 (below min=10) - system prevented biodiversity improvements
 - ✅ **Root Cause:** Lower extinction rates are BETTER - MIN_EXTINCTION_RATE=10.0 E/MSY (safe boundary) blocked tech from improving to background rate (1.0 E/MSY)
