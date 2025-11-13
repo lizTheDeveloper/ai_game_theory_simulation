@@ -124,9 +124,96 @@ if ! git diff --quiet || ! git diff --cached --quiet; then
     log "✅ Changes stashed as: $STASH_NAME"
     log "ℹ️  To recover: git stash list | grep '$STASH_NAME'"
   else
-    log "❌ Failed to stash changes"
-    log "⚠️  Manual cleanup required before merge orchestrator can run"
-    exit 1
+    log "❌ Stash failed (likely due to uncommitted changes or merge conflicts)"
+    log "🔧 AUTO-REMEDIATION: Spawning Claude Code to intelligently clean working tree..."
+
+    # Create remediation task file
+    REMEDIATION_TASK="$LOG_DIR/remediation_stuck_worktre_${TIMESTAMP}.md"
+    cat > "$REMEDIATION_TASK" <<EOF
+# Stuck Working Tree Remediation Task
+
+**Timestamp:** $(date)
+
+## Problem
+The merge orchestrator cannot proceed because the working tree has uncommitted changes that cannot be stashed.
+
+## Current State
+Run these commands to analyze:
+\`\`\`bash
+git status
+git diff --stat
+git diff --cached --stat
+git merge --abort 2>&1 || git rebase --abort 2>&1 || echo "No in-progress operation"
+\`\`\`
+
+## Your Task
+Intelligently resolve the stuck state:
+
+1. **Analyze what's uncommitted:**
+   - Is it just merge conflict markers in log files? (safe to abort+clean)
+   - Is it real uncommitted work? (preserve it)
+   - Is there an in-progress merge/rebase? (check git status)
+
+2. **If it's merge conflicts on ignored files (like logs/):**
+   \`\`\`bash
+   git merge --abort || git rebase --abort
+   # If log files still show conflicts:
+   git checkout -- logs/
+   \`\`\`
+
+3. **If it's real uncommitted work:**
+   \`\`\`bash
+   # Analyze what changed:
+   git status --short
+   # Create a rescue commit:
+   git add -A
+   git commit -m "merge-orchestrator: Rescue uncommitted work before processing branches"
+   \`\`\`
+
+4. **Verify clean state:**
+   \`\`\`bash
+   git status
+   # Should show "working tree clean"
+   \`\`\`
+
+5. **Document your decision:** Add a note to logs/merge_orchestrator/cleanup_${TIMESTAMP}.txt explaining what you found and how you fixed it.
+
+## Safety Rules
+- NEVER force-discard code changes without analyzing them
+- Log files in logs/ are safe to clean (they're gitignored)
+- Preserve any real work (stash or commit it)
+- When in doubt, commit with descriptive message
+
+**Timeout:** 5 minutes
+EOF
+
+    log "📝 Remediation task created: $REMEDIATION_TASK"
+
+    # Check if claude command is available
+    if command -v claude > /dev/null 2>&1; then
+      log "🤖 Launching Claude Code..."
+      timeout 300 claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
+        SPAWN_EXIT=$?
+        if [ $SPAWN_EXIT -eq 124 ]; then
+          log "⏱️  Claude Code timed out (5 min)"
+        else
+          log "❌ Claude Code failed (exit code: $SPAWN_EXIT)"
+        fi
+      }
+
+      # Check if working tree is now clean
+      if ! git diff --quiet || ! git diff --cached --quiet; then
+        log "⚠️  Working tree still dirty after Claude Code intervention"
+        log "📋 Exiting - will retry on next run"
+        exit 1
+      else
+        log "✅ Working tree cleaned by Claude Code"
+      fi
+    else
+      log "⚠️  Claude CLI not available - cannot auto-remediate"
+      log "📋 Manual intervention required: $REMEDIATION_TASK"
+      exit 1
+    fi
   fi
 fi
 
@@ -294,17 +381,22 @@ Merge succeeded but tests are failing. Branch cannot be merged to main until tes
 EOFT
 
           log "📝 Remediation task created: $REMEDIATION_TASK"
-          log "🤖 Launching Claude Code..."
 
-          # Spawn Claude Code (timeout 15 minutes)
-          timeout 900 claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
-            SPAWN_EXIT=$?
-            if [ $SPAWN_EXIT -eq 124 ]; then
-              log "⏱️  Claude Code timed out (15 min)"
-            else
-              log "❌ Claude Code failed (exit code: $SPAWN_EXIT)"
-            fi
-          }
+          # Check if claude command is available
+          if command -v claude > /dev/null 2>&1; then
+            log "🤖 Launching Claude Code..."
+            timeout 900 claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
+              SPAWN_EXIT=$?
+              if [ $SPAWN_EXIT -eq 124 ]; then
+                log "⏱️  Claude Code timed out (15 min)"
+              else
+                log "❌ Claude Code failed (exit code: $SPAWN_EXIT)"
+              fi
+            }
+          else
+            log "⚠️  Claude CLI not available - skipping auto-remediation"
+            log "📋 Manual intervention required: $REMEDIATION_TASK"
+          fi
 
           log "📋 Merge branch preserved: $MERGE_BRANCH"
           FAILED=$((FAILED + 1))
@@ -363,17 +455,22 @@ Automatic merge from origin/$BRANCH into main resulted in conflicts.
 EOF
 
       log "📝 Remediation task created: $REMEDIATION_TASK"
-      log "🤖 Launching Claude Code..."
 
-      # Spawn Claude Code (timeout 15 minutes)
-      timeout 900 claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
-        SPAWN_EXIT=$?
-        if [ $SPAWN_EXIT -eq 124 ]; then
-          log "⏱️  Claude Code timed out (15 min)"
-        else
-          log "❌ Claude Code failed (exit code: $SPAWN_EXIT)"
-        fi
-      }
+      # Check if claude command is available
+      if command -v claude > /dev/null 2>&1; then
+        log "🤖 Launching Claude Code..."
+        timeout 900 claude "$(cat "$REMEDIATION_TASK")" >> "$LOG_FILE" 2>&1 || {
+          SPAWN_EXIT=$?
+          if [ $SPAWN_EXIT -eq 124 ]; then
+            log "⏱️  Claude Code timed out (15 min)"
+          else
+            log "❌ Claude Code failed (exit code: $SPAWN_EXIT)"
+          fi
+        }
+      else
+        log "⚠️  Claude CLI not available - skipping auto-remediation"
+        log "📋 Manual intervention required: $REMEDIATION_TASK"
+      fi
 
       log "📋 Merge branch preserved: $MERGE_BRANCH"
       FAILED=$((FAILED + 1))
