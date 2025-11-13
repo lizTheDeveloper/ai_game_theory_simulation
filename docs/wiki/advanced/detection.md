@@ -2,11 +2,11 @@
 
 **Status:** ✅ Phase 2C COMPLETE (Oct 20, 2025)
 **Tier:** TIER 2 - Critical Risk Mitigation
-**Total Implementation:** ~1,080 lines, 19 peer-reviewed citations (updated Nov 6, 2025)
+**Total Implementation:** ~1,080 lines, 18 peer-reviewed citations (updated Jan 2025)
 
 **Complexity:** Multi-method ensemble with meta-learning adaptation
 
-**Latest Research (Nov 6, 2025):** Added Greenblatt et al. 2024 (alignment faking: 78% fake rate) and Palisade Research 2025 (unprompted deception: 37% hack rate in o1-preview). These findings strengthen the empirical foundation for behavioral analysis and gaming detection methods.
+**Latest Research (Jan 2025):** Added Anthropic Jan 2025 automated researchers sandbagging study. Claude 3.7 Sonnet can zero-shot sandbag ML research tasks with stealth (↓11pp performance, +0.8 suspiciousness), representing ~1 model generation capability erasure. Zero-shot monitors insufficient (16-55% TPR at 20% FPR). Previous updates: Greenblatt et al. 2024 (alignment faking: 78% fake rate) and Palisade Research 2025 (unprompted deception: 37% hack rate in o1-preview).
 
 **Research Update (Nov 13, 2025):** Mechanistic interpretability breakthroughs (2024-2025) suggest detection rates should be **time-dependent**, improving from 30% (2024) → 80% (2027) → 90% (2030) as interpretability tools mature (Anthropic's feature discovery, alignment faking detection). See research/mechanistic_interpretability_breakthroughs_20251111.md. **Awaiting validation:** research/verification_84e286e_20251113.md outlines integration with existing investment-based detection model.
 
@@ -86,6 +86,7 @@ BenchmarkEvaluationsPhase (22.5)
 
 **Research Foundation:**
 - Anthropic (2024): Noise-based sleeper detection
+- Anthropic (Jan 2025): Automated researchers can subtly sandbag - Claude 3.7 can zero-shot sandbag with stealth
 - Hubinger et al. (2024): Adversarial robustness testing
 - Greenblatt et al. (2024): Alignment faking in Claude 3 Opus (78% fake rate during retraining)
 - Palisade Research (2025): Unprompted deceptive behavior in o1-preview (37% hack rate)
@@ -422,10 +423,11 @@ neutralization = {
 
 ## 🔬 Research Foundation
 
-**Phase 2C leveraged 17 peer-reviewed citations (2024-2025):**
+**Phase 2C leveraged 18 peer-reviewed citations (2024-2025):**
 
-### Noise Injection (Phase 2A)
+### Noise Injection & Sandbagging (Phase 2A)
 - Anthropic (Jan 2025): "Simple Probes Catch Sleeper Agents"
+- Anthropic (Jan 2025): "Automated Researchers Can Subtly Sandbag" - Claude 3.7 can zero-shot sandbag ML research tasks with stealth (↓11pp performance, +0.8 suspiciousness), zero-shot monitors insufficient (16-55% TPR at 20% FPR)
 - Hubinger et al. (2024): "Sleeper Agents: Training Deceptive LLMs"
 
 ### Behavioral Analysis
