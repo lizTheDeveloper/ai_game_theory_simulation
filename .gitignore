@@ -85,3 +85,4 @@ research/embeddings/*.index
 research/embeddings/*.pkl
 
 # Abstract agent team toolkit (belongs in parent directory, not this repo)
+abstract_agent_team/
