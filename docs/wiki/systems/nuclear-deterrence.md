@@ -373,6 +373,8 @@ const launchProb = baseProb *
                    (aiControlGap / 4.0);
 ```
 
+**⚠️ CALIBRATION ISSUE (Nov 2025):** New RLHF robustness research suggests the divisor of **4.0** is too small. Xiao et al. (2025, JASA) found 29-41% preference collapse in standard RLHF, suggesting Constitutional AI constraints degrade ~30-40% under distribution shift, not the ~100% degradation implied by divisor 4.0. **Recommended range: 30-40** (see `/research/nuclear_war_ai_control_gap_20251022.md` Section 8, `/research/rlhf_robustness_limitations_20251113.md`). This is flagged for implementation.
+
 ### Example Calculations
 
 **Early Game (Strong Deterrence)**
