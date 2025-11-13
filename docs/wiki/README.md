@@ -28,6 +28,27 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: Bifurcation Metrics Monte Carlo Output Fix (CRITICAL-2)** (commit 2e61222)
+- ✅ **Bug Fixed:** Bifurcation system executing but producing ZERO observable metrics in MC output
+- 🔍 **Root Cause:** Metrics object initialized in phase but never extracted to RunResult interface
+- 🎯 **Impact:** Unblocked Issue #5 validation (empirical bifurcation system verification)
+- 🔧 **Solution:** Added 5 bifurcation metrics fields to RunResult interface
+  - `maxVarianceAmplification`: Peak amplification (1.0-100×)
+  - `avgDistanceToThresholds`: Average distance to nearest threshold (0.0-1.0)
+  - `regimeShiftCount`: Number of regime shifts this run
+  - `regimeShiftSystems`: Systems that triggered regime shifts
+  - `finalRegime`: Final regime type at simulation end
+- 📊 **Reporting:** New dedicated bifurcation section in MC output
+  - Variance amplification ranges (avg/min/max)
+  - Regime shift frequency and triggers
+  - Final regime distribution across runs
+  - Validation checks (expected range: 2×-100×)
+- ✅ **Validation:** Test run N=1, 12 months shows non-zero metrics
+  - Peak amplification: 15.98× (within expected range)
+  - Regime shifts: 2 (economic, environmental)
+  - Final regime: ecological-collapse
+- 📖 **Context:** Infrastructure fix - metrics extraction, not new mechanics
+
 **Nov 13: Novel Entities Zero-Effectiveness Research (CRITICAL - TIER 1)** (commit 7ac8b8f)
 - 📚 **Research Complete:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
 - 🔬 **Key Finding:** 0% effectiveness is NOT a bug - thermodynamically accurate for unregulated scenario
@@ -3827,10 +3848,15 @@ interface BifurcationState {
   dystopiaLockInThreshold: number;     // 0.20 (QoL)
   technologyBreakthroughThreshold: number; // Dynamic
 
-  // Monte Carlo metrics (Nov 13, 2025)
+  // Monte Carlo metrics (Nov 13, 2025 - CRITICAL-2 FIX)
   metrics: {
-    maxVarianceAmplification: number;      // Peak during run
-    avgDistanceToThresholds: number;       // Running average
+    maxVarianceAmplification: number;      // Peak during run (1.0-100×)
+    avgDistanceToThresholds: number;       // Running average (0.0-1.0)
+    regimeShiftEvents: Array<{             // Regime transitions
+      month: number;
+      system: string;
+      regime: string;
+    }>;
   };
 }
 ```
@@ -3913,6 +3939,70 @@ System multipliers compound through cross-system interactions:
 **Not Quantified:** Ecological, climate, social (literature describes trends, not magnitudes)
 **Theory vs Practice:** Theory predicts ∞, practice shows 4-100× range
 
+## Monte Carlo Reporting (Nov 13, 2025 - CRITICAL-2 FIX)
+
+**Problem Solved:** Bifurcation system was executing but producing ZERO observable metrics in Monte Carlo output. Metrics object was initialized in phase but never extracted to RunResult interface.
+
+**Solution:** Added dedicated bifurcation section to Monte Carlo output (`scripts/monteCarloSimulation.ts:4617-4677`):
+
+### Metrics Reported
+
+1. **Variance Amplification**
+   - Average peak amplification across runs
+   - Min/max amplification range
+   - Expected range: 2×-100× (validation check included)
+   - Warning if max < 2× (system not engaging)
+
+2. **Threshold Proximity**
+   - Average distance to nearest threshold (0.0-1.0)
+   - 0% = at threshold, 100% = far from all thresholds
+
+3. **Regime Shifts**
+   - Total regime shifts across all runs
+   - Percentage of runs with regime shifts
+   - Average shifts per run
+
+4. **Regime Shift Triggers**
+   - Breakdown by system (which system crossed threshold)
+   - Top 10 most frequent triggers
+   - Percentage of total shifts
+
+5. **Final Regime Distribution**
+   - Count and percentage for each final regime
+   - Tracks convergence patterns (status-quo, ecological-collapse, etc.)
+
+### Validation Checks
+
+The reporting includes automatic validation:
+- ⚠️ Warning if `maxMaxAmplification < 2.0` → System may not be working
+- ⚠️ Warning if `avgMaxAmplification < 1.5` → Not approaching thresholds often enough
+- ✅ Success if peak amplification in expected range (2×-100×)
+
+**Example Output:**
+```
+🌊 BIFURCATION & EARLY WARNING SYSTEM
+  VARIANCE AMPLIFICATION:
+    Average peak: 15.98× (range: 2.3× - 48.7×)
+    Average distance to thresholds: 45.2%
+
+  REGIME SHIFTS:
+    Total: 42 across 30 runs
+    Runs with shifts: 23 (76.7%)
+    Average per run: 1.4
+
+  REGIME SHIFT TRIGGERS:
+    environmental: 18 shifts (42.9%)
+    social: 12 shifts (28.6%)
+    economic: 8 shifts (19.0%)
+
+  FINAL REGIME DISTRIBUTION:
+    ecological-collapse: 15 runs (50.0%)
+    status-quo: 10 runs (33.3%)
+    social-instability: 5 runs (16.7%)
+```
+
+**Impact:** Unblocked Issue #5 empirical validation - now possible to verify bifurcation system behavior at scale.
+
 ## Code Reference
 
 **Core Implementation:**
@@ -3927,6 +4017,12 @@ System multipliers compound through cross-system interactions:
 
 **State Definition:**
 - `src/types/bifurcation.ts` - BifurcationState interface
+
+**Monte Carlo Integration (CRITICAL-2 FIX - Nov 13, 2025):**
+- `monteCarloSimulation.ts:425-434` - RunResult interface fields
+- `monteCarloSimulation.ts:1912-1918` - Metrics extraction (nested mode)
+- `monteCarloSimulation.ts:2923-2929` - Metrics extraction (single-level mode)
+- `monteCarloSimulation.ts:4617-4677` - Bifurcation reporting section
 
 ## Future Work
 
