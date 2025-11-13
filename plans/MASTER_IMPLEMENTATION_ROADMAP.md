@@ -5,12 +5,16 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **EXCELLENT - STABLE AND IMPROVING** (Nov 13, 2025)
+**Current Status:** 🟠 **STABLE WITH CRITICAL ISSUES** (Nov 13, 2025 - Late Evening)
 - **Research Quality:** A (peer-reviewed foundation, comprehensive citations)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, defensive cleanup complete)
-- **Architecture Health:** 9.5/10 (cross-system integration operational, phase consolidation complete)
-- **System Trajectory:** STABLE - phase reduction 116→95 (-18% complexity)
+- **Architecture Health:** 7.5/10 → **DOWNGRADED** (2 CRITICAL issues identified, 3 HIGH priority concerns)
+  - **CRITICAL-1:** Bifurcation race condition breaks Monte Carlo determinism
+  - **CRITICAL-2:** Novel entities not propagating to mortality pipeline
+  - **HIGH:** Memory leak, no parallelization, scenario validation gaps
+- **System Trajectory:** ⚠️ ARCHITECTURAL STRESS - Fix critical issues before new features
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
+- **Action Required:** Fix 2 CRITICAL issues immediately (estimated 4-6 days)
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -1644,9 +1648,83 @@ Then proceed with phase consolidation implementation.
 
 ---
 
-## 🚨 CRITICAL Issues from Daily Review (November 7, 2025)
+## 🚨 CRITICAL Issues (Active)
 
-### From Research Skeptic Review (Sylvia) - 06:00 UTC
+### From Architecture Review (November 13, 2025) - architecture-skeptic
+
+**🔴 CRITICAL-1: Bifurcation Race Condition Breaks Monte Carlo Determinism**
+- **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:305`
+- **Problem:** Weighted average calculation (0.95/0.05 split) depends on phase execution order - non-deterministic
+- **Impact:** Research results unreproducible, Monte Carlo analysis invalid
+- **Root Cause:** Moving average without proper synchronization or phase dependency enforcement
+- **Recommendation:**
+  1. Add explicit phase dependency declarations for all phases reading bifurcation state
+  2. Consider accumulating changes and applying at end of step
+  3. Add determinism tests verifying identical results with different phase orders
+- **Estimated Effort:** MEDIUM (2-3 days)
+- **Status:** 🔴 CRITICAL - Fix before ANY new features
+- **Source:** `reviews/architecture_review_20251113.md`
+
+**🔴 CRITICAL-2: Novel Entities Not Propagating to Mortality Pipeline**
+- **Location:** `src/simulation/novelEntities.ts` → Bayesian mortality integration
+- **Problem:** Novel entities tracks accumulation (line 79) but mortality integration incomplete - `addMortalityRisk` called but risk doesn't propagate through Bayesian network
+- **Impact:** Major game mechanic (chemical pollution) has no real effect on outcomes
+- **Root Cause:** Incomplete integration between new novel entities system (Nov 11) and existing mortality pipeline
+- **Recommendation:**
+  1. Add integration tests verifying novel entities → mortality propagation
+  2. Instrument mortality pipeline to log which risks contributed to deaths
+  3. Verify Bayesian network properly weights chemical exposure risks
+- **Estimated Effort:** MEDIUM (2-3 days)
+- **Status:** 🔴 CRITICAL - Fix before ANY new features
+- **Source:** `reviews/architecture_review_20251113.md`
+
+**🟠 HIGH-1: Memory Leak in Bifurcation Time Series**
+- **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:305-310`
+- **Problem:** Unbounded `amplificationTimeSeries` array growth (1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects)
+- **Impact:** Long simulations and Monte Carlo runs exhaust memory
+- **Recommendation:**
+  1. Implement rolling window (keep last 100 data points)
+  2. Add periodic aggregation (compute statistics, discard raw data)
+  3. Make time series optional (only when debugging bifurcation)
+- **Estimated Effort:** SMALL (1 day)
+- **Status:** 🟠 HIGH - Fix before next Monte Carlo run
+- **Source:** `reviews/architecture_review_20251113.md`
+
+**🟠 HIGH-2: 95 Phases Without Parallelization (Performance Bottleneck)**
+- **Location:** `src/simulation/engine/PhaseOrchestrator.ts` and 95 phase files
+- **Problem:** 95 phases execute sequentially despite many having artificial dependencies - no shared state but can't parallelize
+- **Impact:** Simulation performance degrades as features added, impacts Monte Carlo feasibility
+- **Recommendation:**
+  1. Identify truly independent phases that can run in parallel
+  2. Implement phase batching system (run independent phases concurrently)
+  3. Consider further consolidation - target 50-60 phases maximum
+- **Estimated Effort:** LARGE (1-2 weeks)
+- **Status:** 🟠 HIGH - Address before next major system
+- **Source:** `reviews/architecture_review_20251113.md`
+
+**🟠 HIGH-3: Scenario Override System Lacks Validation Boundaries**
+- **Location:** `src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts`
+- **Problem:** Direct state mutation without validation - can create impossible states (line 84: `totalBudget` set without resource check, line 112: `resources` can go infinite)
+- **Impact:** Scenario testing produces invalid results, undermines research validity
+- **Recommendation:**
+  1. Add validation layer ensuring overrides respect system constraints
+  2. Implement maximum bounds based on GDP/population
+  3. Add warnings when overrides create unrealistic states
+- **Estimated Effort:** MEDIUM (3-4 days)
+- **Status:** 🟠 HIGH - Fix before scenario analysis continues
+- **Source:** `reviews/architecture_review_20251113.md`
+
+**Architecture Health Update (Nov 13):**
+- System showing signs of architectural stress at 95 phases with complex dependencies
+- 5 MEDIUM priority technical debt items identified (phase dependency graph complexity, inconsistent state access patterns, missing cross-system integrations, event system performance, configuration complexity)
+- Recommendation: Fix CRITICAL issues before ANY new features, then address HIGH items between features
+- Full review: `reviews/architecture_review_20251113.md`
+
+---
+
+## 🚨 RESOLVED Critical Issues (November 2025)
+
+### From Daily Review (November 7, 2025) - Research Skeptic (Sylvia)
 
 **🔴 CRITICAL-3: RNG Algorithm Regression** ✅ **RESOLVED** (Nov 7, 2025)
 - **Problem:** Commit 9c6f25dde introduced non-deterministic fallback to Math.random when RNG undefined
