@@ -159,6 +159,25 @@
      - **Workflow:** Citation existence → Claim verification (quote passages) → Parameter validation (Priya) → Implementation planning → Monte Carlo validation
      - **Priority:** MEDIUM-HIGH - Improves realism of unknown unknown system, addresses TODO in active code
 
+   - **Death Attribution Methodology 2024-2025 Update** - MEDIUM priority (Nov 12, 2025)
+     - **Context:** Commit ef249d9 - Updated death_attribution_methodology_20251018.md with 2024-2025 literature
+     - **Status:** 🟡 VERIFICATION PENDING
+     - **2 New Citations to Verify:**
+       - Carleton et al. (2025) - Nature Climate Change: "Health losses attributed to anthropogenic climate change"
+       - Carleton et al. (2022) - QJE: "Valuing the Global Mortality Consequences of Climate Change" (extensively cited 2024-2025)
+     - **Key Claims Requiring Verification:**
+       - "Over 20 peer-reviewed studies" conducted end-to-end health attribution
+       - SCC mortality component: $36.6/ton (high emissions) to $17.1/ton (moderate) at 2% discount
+       - Mortality-based SCC "more than 10×" larger than FUND estimates
+       - 40 countries' subnational data, U-shaped mortality-temperature curves
+       - 14% poverty threshold for heat impact differential
+     - **Confidence Upgrades to Validate:**
+       - Climate-poverty compound attribution: MEDIUM → MEDIUM-HIGH
+       - Death attribution framework: MEDIUM (21 sources) → HIGH (23 sources)
+     - **Verification File:** research/verification_ef249d9_20251112.md
+     - **Workflow:** Citation existence → Claim verification (quote passages) → Confidence proportionality review (research-skeptic)
+     - **Priority:** MEDIUM - Research update (not new mechanics), but confidence levels may propagate to code
+
    - **Workflow Adaptation Bug Fix Citations** - HIGH priority (Nov 10, 2025)
      - **Context:** Commit d336915 - Two CRITICAL spiral activation blockers resolved
      - **Issue:** OECD (2024) active labor market policies citation lacks specificity
