@@ -55,7 +55,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
-    "line": 149,
+    "line": 140,
     "name": "enterEndGame",
     "doc": "enterEndGame implementation. See endGame.ts for details."
   },
