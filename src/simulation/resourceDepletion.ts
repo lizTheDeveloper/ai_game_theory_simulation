@@ -1264,8 +1264,13 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   // === FISH STOCKS (ecosystem health) ===
   
   // Fish decline with acidification, oxygen loss, pollution
-  const fishDieoff = 
-    (ocean.pH < 7.8 ? 0.01 : 0) + // Acidification
+  // Research (Nov 13, 2025): No peer-reviewed support for specific pH 7.8 collapse threshold
+  // (layer2_verification_state_validation_20251106.md). Acidification impacts are continuous.
+  // Using continuous acidification damage instead of hard threshold.
+  const acidificationDamage = Math.max(0, (8.1 - ocean.pH) * 0.02); // Linear damage below current baseline (8.1)
+
+  const fishDieoff =
+    acidificationDamage + // Acidification (continuous, not threshold-based)
     (ocean.oxygenLevel < 0.6 ? 0.008 : 0) + // Oxygen
     ocean.pollutionLoad * 0.005 + // Pollution
     ocean.deadZoneExtent * 0.01; // Dead zones
@@ -1362,10 +1367,12 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   );
   
   // === CRISIS CHECK ===
-  
+
   const wasInCrisis = ocean.inCrisis;
+  // Research (Nov 13, 2025): Removed pH 7.8 threshold (unsupported by peer review)
+  // Using pH 7.6 as crisis threshold (significant acidification, approaching 7.5 lower bound)
   ocean.inCrisis = (
-    ocean.pH < 7.8 ||
+    ocean.pH < 7.6 ||
     ocean.oxygenLevel < 0.5 ||
     ocean.deadZoneExtent > 0.3
   );

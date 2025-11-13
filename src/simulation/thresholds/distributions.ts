@@ -285,8 +285,8 @@ export function sampleLogNormal(
  *
  * @example
  * const rng = seedrandom('test-seed');
- * // Ocean pH threshold: most likely 7.8, range [7.6, 8.0]
- * const threshold = sampleTriangular(7.6, 7.8, 8.0, rng);
+ * // Temperature anomaly distribution: most likely 2.5°C, range [1.5, 4.0]
+ * const threshold = sampleTriangular(1.5, 2.5, 4.0, rng);
  */
 export function sampleTriangular(
   min: number,
