@@ -45,7 +45,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
     const proximities = this.calculateProximities(state, bifState);
 
     // Update variance amplification based on nearest threshold
-    this.updateVarianceAmplification(bifState, proximities);
+    this.updateVarianceAmplification(state, bifState, proximities);
 
     // Check for threshold crossings and update regime
     this.checkThresholdCrossings(state, bifState, proximities);
@@ -233,6 +233,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * @see Dakos et al. (2012) - Variance in ecosystem regime shifts
    */
   private updateVarianceAmplification(
+    state: GameState,
     bifState: import('@/types/bifurcation').BifurcationState,
     proximities: Map<string, { distance: number; currentValue: number; threshold: import('@/types/bifurcation').BifurcationThreshold }>
   ): void {
@@ -299,6 +300,14 @@ export class BifurcationLogicPhase implements SimulationPhase {
       // We don't track n explicitly, so use weighted average with 0.95 decay
       bifState.metrics.avgDistanceToThresholds =
         bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
+
+      // Track time series data point (CRITICAL-1 fix: Nov 13, 2025 - enables Priya variance validation)
+      bifState.metrics.amplificationTimeSeries.push({
+        month: state.currentMonth,
+        amplification: amplificationValidated,
+        distanceToNearest: minDistanceValidated,
+        nearestSystem: nearestThresholdName,
+      });
     }
   }
 
@@ -309,24 +318,24 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * based on their underlying bifurcation dynamics.
    *
    * Research basis:
-   * - Environmental (1.5×): Fold catastrophe with hysteresis (Scheffer et al. 2024)
-   * - Social (2.5×): Hopf bifurcation with oscillatory dynamics (Dakos et al. 2012)
-   * - Economic (2.5×): Cascade amplification (REDUCED from 3.5×, Nov 13 2025 - overweighted)
-   * - Governance (2.0×): Feedback loop amplification in regime change
-   * - Flourishing (2.0×): Positive feedback loops (INCREASED from 1.0×, Nov 13 2025 - fix dystopia bias)
-   * - Technology (2.0×): Innovation cascades (INCREASED from 1.0×, Nov 13 2025 - breakthrough amplification)
+   * - Environmental (1.05×): Fold catastrophe with hysteresis (Scheffer et al. 2024) - Nov 13 2025: 30% reduction to achieve 43-58% mortality target
+   * - Social (1.75×): Hopf bifurcation with oscillatory dynamics (Dakos et al. 2012) - Nov 13 2025: 30% reduction (was 2.5×)
+   * - Economic (1.75×): Cascade amplification - Nov 13 2025: 30% reduction (was 2.5×)
+   * - Governance (1.4×): Feedback loop amplification in regime change - Nov 13 2025: 30% reduction (was 2.0×)
+   * - Flourishing (1.4×): Positive feedback loops - Nov 13 2025: 30% reduction (was 2.0×)
+   * - Technology (1.4×): Innovation cascades - Nov 13 2025: 30% reduction (was 2.0×)
    *
    * @param thresholdName - Name of threshold system (environmental, social, economic, etc.)
    * @returns Multiplier for system-specific bifurcation dynamics
    */
   private getSystemMultiplier(thresholdName: string): number {
     const multipliers: Record<string, number> = {
-      'environmental': 1.5,  // Fold catastrophe (Scheffer et al. 2024)
-      'social': 2.5,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012)
-      'economic': 2.5,       // Cascade effects (REDUCED from 3.5× - Nov 13 2025, architecture review)
-      'governance': 2.0,     // Feedback loops in regime change
-      'flourishing': 2.0,    // Positive feedback loops (INCREASED from 1.0× - Nov 13 2025, fix dystopia bias)
-      'technology': 2.0,     // Innovation cascades (INCREASED from 1.0× - Nov 13 2025, breakthrough amplification)
+      'environmental': 1.05,  // Fold catastrophe (Scheffer et al. 2024) - Nov 13 2025: 30% reduction (1.5 × 0.7 = 1.05)
+      'social': 1.75,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012) - Nov 13 2025: 30% reduction (2.5 × 0.7 = 1.75)
+      'economic': 1.75,       // Cascade effects - Nov 13 2025: 30% reduction (2.5 × 0.7 = 1.75)
+      'governance': 1.4,      // Feedback loops in regime change - Nov 13 2025: 30% reduction (2.0 × 0.7 = 1.4)
+      'flourishing': 1.4,     // Positive feedback loops - Nov 13 2025: 30% reduction (2.0 × 0.7 = 1.4)
+      'technology': 1.4,      // Innovation cascades - Nov 13 2025: 30% reduction (2.0 × 0.7 = 1.4)
     };
 
     // Validate threshold name to catch typos/misconfigurations
