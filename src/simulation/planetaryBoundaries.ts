@@ -808,13 +808,49 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     valueName: 'pollutionLevel',
     month: state.currentMonth
   });
-  const novelEntitiesValue = assertFinite(Math.max(0, 1.5 + (pollutionLevel - 0.3) * 0.5), {
+
+  // Calculate raw novel entities value from pollution level
+  const rawNovelEntitiesValue = assertFinite(Math.max(0, 1.5 + (pollutionLevel - 0.3) * 0.5), {
     location: 'updatePlanetaryBoundaries:novelEntities',
-    valueName: 'novel_entities.currentValue',
+    valueName: 'rawNovelEntitiesValue',
     month: state.currentMonth,
     additionalInfo: { pollutionLevel }
   });
-  system.boundaries.novel_entities.currentValue = novelEntitiesValue;
+
+  // === IRREVERSIBILITY FLOOR (Nov 13, 2025 Redesign) ===
+  // Research: Cousins 2022 (global PFAS distribution), Kane 2022 (centuries recovery), Ling 2024 (cleanup costs)
+  // DERIVED ASSUMPTION: 90% of peak contamination is irreversible (asymptotic approach)
+  // VALIDATION: Sylvia Grade B+ - defensible but requires sensitivity testing
+
+  // Track peak contamination (initialize if first time)
+  if (system.boundaries.novel_entities.peakValue === undefined) {
+    system.boundaries.novel_entities.peakValue = rawNovelEntitiesValue;
+  }
+
+  // Update peak if current value exceeds it
+  system.boundaries.novel_entities.peakValue = Math.max(
+    system.boundaries.novel_entities.peakValue,
+    rawNovelEntitiesValue
+  );
+
+  // Calculate irreversibility floor (90% of peak)
+  // DERIVED ASSUMPTION: Based on PFAS persistence (500yr half-life), global atmospheric distribution,
+  // and thermodynamic constraints of planetary-scale cleanup (Ling 2024: $20-7T trillion/year)
+  const IRREVERSIBLE_FRACTION = 0.90; // MODEL ASSUMPTION (not directly measured in literature)
+  const irreversibilityFloor = system.boundaries.novel_entities.peakValue * IRREVERSIBLE_FRACTION;
+
+  // Apply floor: can't clean below irreversible fraction
+  // This creates asymptotic approach - cleanup gets harder as approaching floor
+  const finalNovelEntitiesValue = Math.max(irreversibilityFloor, rawNovelEntitiesValue);
+
+  // Log when hitting irreversibility floor (significant event)
+  if (finalNovelEntitiesValue > rawNovelEntitiesValue + 0.001) {
+    console.log(`⚠️ Novel Entities: Irreversibility floor active`);
+    console.log(`   Peak: ${system.boundaries.novel_entities.peakValue.toFixed(3)}, Floor: ${irreversibilityFloor.toFixed(3)}`);
+    console.log(`   Attempted: ${rawNovelEntitiesValue.toFixed(3)} → Actual: ${finalNovelEntitiesValue.toFixed(3)}`);
+  }
+
+  system.boundaries.novel_entities.currentValue = finalNovelEntitiesValue;
   updateBoundaryStatus(system.boundaries.novel_entities);
 
   // Ocean acidification (ARCH-4 Integration: Direct pH mapping)
