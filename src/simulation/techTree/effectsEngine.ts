@@ -34,6 +34,7 @@ import { GameState } from '@/types/game';
 import { TechTreeState } from './engine';
 import { getTechById } from './comprehensiveTechTree';
 import { assertFinite, assertStateProperty, assertPlanetaryBoundary } from '../utils/assertions';
+import { calculateNovelEntitiesRemediationEffectiveness } from '../utils/novelEntitiesEffectiveness';
 
 /**
  * Type-safe helper to set dynamic properties on objects
@@ -95,8 +96,13 @@ function triggerBoundaryRecovery(
  */
 export function applyAllTechEffects(
   gameState: GameState,
-  techTreeState: TechTreeState
+  techTreeState: TechTreeState,
+  rng: () => number
 ): void {
+  // CRITICAL-3 FIX (Nov 13, 2025): Fail-loudly RNG validation
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic tech effects (applyAllTechEffects)');
+  }
   // Aggregate effects by type
   const globalEffects: Map<string, number> = new Map();
   const regionalEffects: Map<string, Map<string, number>> = new Map();
@@ -115,65 +121,24 @@ export function applyAllTechEffects(
       for (const [effectName, effectValue] of sortedEffects) {
         let scaledValue = effectValue * deployment.deploymentLevel;
 
-        // CRITICAL FIX (Nov 11, 2025): Energy/concentration constraints for cleanup tech
-        // Apply constraints BEFORE aggregating effects
+        // CRITICAL FIX (Nov 13, 2025): Comprehensive gating for Novel Entities remediation
+        // Order of constraints: Regulation → Energy → Concentration → Time Lag → Rebound
         if (tech.techType === 'cleanup' && effectName === 'pollutionReduction') {
-          const boundary = gameState.planetaryBoundariesSystem?.boundaries?.novel_entities;
+          // USE COMPREHENSIVE GATING FUNCTION (Nov 13, 2025)
+          // This replaces ad-hoc constraints with research-backed gating logic
+          // RESEARCH: Ling 2024 ($20-7T trillion/year), Cousins 2022 (global distribution), Dodds 2024 (Montreal Protocol)
+          const gatedEffectiveness = calculateNovelEntitiesRemediationEffectiveness(tech, gameState, rng);
 
-          if (boundary && tech.energyRequirement) {
-            // ENERGY CONSTRAINT: Check renewable energy availability
-            // Renewable surplus = total generation × renewable % - existing demand
-            const totalGen = gameState.powerGenerationSystem?.totalElectricityGeneration || 0;
-            const renewablePct = gameState.powerGenerationSystem?.renewablePercentage || 0;
-            const renewableGen = totalGen * renewablePct;
-            const dataCenterDemand = gameState.powerGenerationSystem?.dataCenterPower || 0;
-            const energyAvailable = Math.max(0, renewableGen - dataCenterDemand * 0.5);  // Assume 50% of data center can be displaced
+          // Apply gated effectiveness to the raw tech effect value
+          // scaledValue already includes (baseEffect × deploymentLevel)
+          // Now multiply by gated effectiveness to get final value
+          const originalValue = scaledValue;
+          scaledValue *= gatedEffectiveness;
 
-            const energyRequired = tech.energyRequirement.annualTWhRequired ||
-                                 ((tech.energyRequirement.kWhPerM3 || 0) * 4000) / 1e9;  // 4000 km³ freshwater → TWh
-
-            if (energyRequired > 0) {
-              const energyRatio = assertFinite(energyAvailable / Math.max(0.01, energyRequired), {
-                location: 'applyAllTechEffects:energyConstraint',
-                valueName: 'energyRatio',
-                month: gameState.currentMonth
-              });
-              const constraintFactor = Math.min(1.0, energyRatio);
-              scaledValue *= constraintFactor;
-
-              if (energyRatio < 0.01) {
-                console.log(`⚠️ ${tech.name}: Energy-constrained (need ${energyRequired.toFixed(0)} TWh, have ${energyAvailable.toFixed(0)} TWh) - ${(energyRatio * 100).toFixed(1)}% effective`);
-              }
-            }
-          }
-
-          // CONCENTRATION CONSTRAINT: Check if contamination is concentrated enough
-          if (boundary && tech.minimumConcentration) {
-            const currentConcentration = assertFinite(boundary.currentValue * 1000000, {  // Convert to ng/L scale
-              location: 'applyAllTechEffects:concentrationCheck',
-              valueName: 'currentConcentration',
-              month: gameState.currentMonth
-            });
-            const minConcentration = tech.minimumConcentration.ngPerL;
-
-            if (minConcentration > 0 && currentConcentration < minConcentration) {
-              const concentrationRatio = assertFinite(currentConcentration / minConcentration, {
-                location: 'applyAllTechEffects:concentrationRatio',
-                valueName: 'concentrationRatio',
-                month: gameState.currentMonth
-              });
-              scaledValue *= concentrationRatio;
-
-              if (concentrationRatio < 0.01) {
-                console.log(`⚠️ ${tech.name}: Concentration too low (${currentConcentration.toFixed(0)} ng/L, need ${minConcentration} ng/L) - ${(concentrationRatio * 100).toFixed(1)}% effective`);
-              }
-            }
-          }
-
-          // IRREVERSIBILITY: Targets legacy stock with centennial decay timescales
-          if (tech.targetsIrreversibleStock) {
-            scaledValue *= 0.10;  // Max 10% impact on irreversible contamination
-            console.log(`⚠️ ${tech.name}: Targeting irreversible stock - 90% reduction in effectiveness`);
+          // Log if effectiveness is significantly reduced (< 10%)
+          if (gatedEffectiveness < 0.10) {
+            console.log(`⚠️ ${tech.name}: Gated effectiveness ${(gatedEffectiveness * 100).toFixed(1)}% (original: ${(originalValue * 100).toFixed(1)}%)`);
+            console.log(`   🛡️ Prevention tech required for planetary-scale remediation`);
           }
         }
 
