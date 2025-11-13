@@ -25,11 +25,13 @@ This commit adds two new primary sources (2023-2025) to the planetary boundary r
 **Location in codebase:** research/planetary_boundary_reversibility_empirical_20251020.md:197-220
 
 ### Layer 1: Citation Existence
-- [ ] Paper exists in *Science Advances* journal
-- [ ] Authors include Richardson, K. as first author
-- [ ] DOI resolves correctly: 10.1126/sciadv.adh2458
-- [ ] Publication year is 2023
-- [ ] Volume 9, Issue 37
+- [x] Paper exists in *Science Advances* journal ✅
+- [x] Authors include Richardson, K. as first author ✅
+- [x] DOI resolves correctly: 10.1126/sciadv.adh2458 ✅
+- [x] Publication year is 2023 ✅
+- [x] Volume 9, Issue 37 ✅
+
+**Status:** ✅ VERIFIED - Paper exists, accessible via PMC10499318
 
 ### Layer 2: Claim Verification
 
