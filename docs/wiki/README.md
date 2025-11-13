@@ -28,12 +28,37 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 11: Planetary Boundaries 2023 Framework Research Update** (commit a9c5a91)
+- 📚 **New Research:** Richardson et al. (2023) planetary boundaries framework documented
+- 📊 **Key Finding:** 6 of 9 boundaries transgressed (vs previous 7/9 - status clarification needed)
+- 🔬 **Updated Thresholds:** Quantitative values for all 9 boundaries from 2023 peer-reviewed update
+- 🆕 **New Metric:** HANPP (Human Appropriation of Net Primary Production) replaces BII for functional biosphere
+- ⏰ **Historical Insight:** Freshwater transgression occurred 1905-1929 (earlier than recognized)
+- ⚠️ **Verification Pending:** research/verification_a9c5a91_20251111.md created for claim validation
+- 📖 **Research File:** research/planetary_boundaries_2023_update_20251111.md (362 lines, 40+ quantitative parameters)
+
+**Nov 11: Scenario Phase 3 Tech Deployment Bug Fix** (commit a71590b)
+- ✅ **Bug Fixed:** simplifiedScenarioRunner.ts line 105 accessed non-existent `state.deployedTech[tech.id]`
+- ✅ **Root Cause:** Incorrect techTree access pattern (should use `state.techTreeState.unlockedTech`, `regionalDeployment`)
+- ✅ **Solution:** Copied correct pattern from working scenarioRunner.ts:294-341 (`deployAllTech` function)
+- ✅ **Impact:** Unblocks Scenario Analysis Framework Phase 3 (HIGH priority - policy package execution)
+- ✅ **Verification:** God mode scenario completes 12 months successfully (previously failing on all 50 runs)
+- 📖 **Context:** Phase 3 scenario execution was blocked, now operational
+
 **Nov 11: Scenario System Type Safety Fix** (commit 9a617d4)
 - ✅ **Type Cast Removed:** `(state as any).scenario` → `state.scenario` (properly typed in GameState:187)
 - ✅ **Architecture Grade:** B- → A- (type safety maintained, unnecessary cast eliminated)
 - ✅ **Impact:** Government priority scenarios fully operational, cleaner type safety patterns
 - ✅ **Review:** Architecture skeptic review in reviews/scenario_system_architecture_review_20251111.md
 - 📖 **Context:** scenarioRunner.ts:32 - ApplyScenarioPrioritiesPhase requires state.scenario
+
+**Nov 11: Extinction Rate Minimum Correction** (commit 3b4dbdd)
+- ✅ **Bug Fixed:** assertInRange rejected extinctionRate=9.67 (below min=10) - system prevented biodiversity improvements
+- ✅ **Root Cause:** Lower extinction rates are BETTER - MIN_EXTINCTION_RATE=10.0 E/MSY (safe boundary) blocked tech from improving to background rate (1.0 E/MSY)
+- ✅ **Solution:** Changed MIN_EXTINCTION_RATE from 10.0 to 1.0 E/MSY in planetaryBoundaries.ts:486-490, 1244-1252
+- ✅ **Rationale:** Safe boundary = 10 E/MSY (10× background), background rate = 1 E/MSY (natural) - technologies should be able to restore biodiversity beyond safe threshold toward natural levels
+- ✅ **Impact:** Unblocks Phase 3 Monte Carlo (3 of 10 runs were failing)
+- 📖 **Context:** Part of assertion-based validation sweep - fail-loudly caught logic error
 
 **Nov 10: HIGH-1 Tech Deployment O(n²) Bottleneck Fixed** (commit bbb2ad2)
 - ✅ **Scenario Initialization: 50% faster** (5,329 → 73 operations for 73 tech, 73× reduction)
@@ -594,29 +619,29 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
-### November 11, 2025
+**✅ RECOVERY MECHANICS AUDIT COMPLETE (Nov 11, 2025)**
 
-**🔬 PARADIGM 4 RESEARCH UPDATE** (commit bb6ba69)
+Investigation of Monte Carlo Issue #9 confirms recovery mechanics are **FUNCTIONAL and RESEARCH-BACKED**.
 
-Updated Indigenous/Communitarian paradigm research with 2024-2025 empirical findings.
+**Finding:** "All dystopia" outcomes are EXPECTED given:
+- 2025 start with 6 planetary boundaries already breached
+- 30-year simulation timeframe (insufficient for most recovery timescales)
+- Damage accumulates 10-100× faster than recovery (empirically grounded)
+- Recovery requires sustained coordination rarely achieved in Monte Carlo runs
 
-**Changes:**
-- Added 5 new peer-reviewed sources (WHO 2025, HEC Paris 2025, FNGIC 2025, Population Matters 2024, multiple 2025 cohesion studies)
-- Updated frontmatter: oldest_source 1992→1992, newest_source 2024→2025, last_verified 2025-11-11
-- Sections updated: loneliness crisis (WHO global report), Indigenous data sovereignty (OCAP + AI), Buen Vivir implementation status, protective factors research
+**Recovery systems validated:**
+1. **AI Resentment Recovery** (6 mechanisms, 1.4-16.7 year timeline) - Trust literature backed
+2. **Food Security Recovery** (2%/month max, 0.8-4.2 years) - Nuclear winter models backed
+3. **Environmental Recovery** (3-tier system, 10-100 year timescales) - IPCC/IPBES backed
+4. **Economic Recovery** (NBER methodology) - IMF data backed
 
-**Key Findings:**
-- **WHO Global Report (June 2025)**: 1 in 6 people worldwide affected by loneliness, 871,000+ deaths annually, recognized as global public health crisis
-- **HEC Paris (January 2025)**: EU-wide survey shows 13% chronic loneliness, 35% frequent loneliness
-- **Indigenous Data Sovereignty (May 2025)**: OCAP principles being integrated into national AI strategies, concerns about AI threats to digital self-determination
-- **Buen Vivir Status (2024)**: Ecuador and Bolivia still practicing extractivism despite constitutional Rights of Nature - aspiration vs practice gap persists
-- **Protective Factors (2025)**: Neighborhood cohesion reduces loneliness (IRR=0.93, 95% CI=0.86-1.00)
+**Verdict:** Model accurately reflects empirical recovery timescales. Dystopia outcomes are CORRECT, not bugs.
 
-**Research Quality:** All peer-reviewed or authoritative institutional sources (WHO, HEC Paris, First Nations Information Governance Centre). Global and regional empirical data.
+**Priority:** MEDIUM (improves understanding, confirms model validity)
 
-**Files:** `research/paradigm_4_indigenous_communitarian_20251019.md`
+**See:** `reviews/recovery_mechanics_audit_20251111.md` (431 lines, comprehensive audit)
 
----
+Commit: b98fb83
 
 **🔬 GOD MODE GAP CLOSURE RESEARCH COMPLETE (Nov 10, 2025)**
 
