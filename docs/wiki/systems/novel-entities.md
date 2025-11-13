@@ -655,42 +655,107 @@ chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (endocrineDisrupt
 
 ---
 
-## Recent Research (November 2025)
+## Recent Implementation (November 2025)
 
-**Zero-Effectiveness Analysis (Nov 13, 2025):**
-God mode testing revealed 0% effectiveness for Novel Entities boundary despite 7 pollution technologies deployed. Research validated this is **NOT a bug** but thermodynamically and economically accurate.
+**Prevention vs Remediation Gating (Nov 13, 2025 - IMPLEMENTED):**
+God mode testing revealed 0% effectiveness for Novel Entities boundary despite 7 pollution technologies deployed. Research validated this is **NOT a bug** but thermodynamically and economically accurate. Full prevention-gated remediation system now implemented.
 
-**Key Findings (16 peer-reviewed sources):**
-1. **Energy Trap:** Removing PFAS at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP) - thermodynamically infeasible
-2. **Concentration Problem:** Technologies work at mg/L (labs), environment is pg/L-ng/L (10^6-10^9× dilution), cost scales 12-47× for dilute streams
-3. **Irreversibility:** Microplastic ocean recovery takes hundreds of years even if input stopped, <10% reversible fraction
-4. **Montreal Protocol Lesson:** Production ban accounts for 90-95% of ozone recovery, bank destruction (cleanup) only 5-10%
-5. **Rebound Effects:** Waste generation +81% (2023-2050) despite technology (Jevons paradox)
+**Research Foundation (16 peer-reviewed sources):**
+1. **Energy Trap:** Removing PFAS at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP) - Ling 2024
+2. **Concentration Problem:** Lab scale (mg/L) vs environmental (ng/L) = 10^6-10^9× dilution, cost scales 12-47× - Li 2024
+3. **Irreversibility:** Microplastic ocean recovery takes centuries even if input stopped, <10% reversible fraction - Kane 2022, Cousins 2022
+4. **Montreal Protocol Analog:** Production ban = 90-95% recovery, cleanup = 5-10% → 10:1 ratio - Dodds 2024
+5. **Rebound Effects:** Waste generation +81% (2023-2050) despite technology (Jevons paradox) - UNEP 2024, Sorrell 2025
 
-**Model Implications:**
-- Current 0% effectiveness is CORRECT for unregulated scenario
-- Remediation requires BOTH technology AND production regulation
-- Prevention:Remediation effectiveness ratio = 10:1 to 20:1
-- Maximum recovery: ~10% (90% irreversible floor)
+**Implementation Architecture:**
 
-**Planned Model Redesign:**
-- Add 3 prevention technologies (TIER 0-1): PFAS ban, plastic phase-out, chemical substitution
-- Gate remediation effectiveness by regulation deployment (0.01× → 1.0× multiplier)
-- Implement 90% irreversible floor (asymptotic approach to minimum contamination)
-- Add energy constraint (cleanup gated by renewable surplus)
-- Add concentration factor (dilute environmental vs concentrated point sources)
-- Estimated implementation: 11-16 hours (3-4 days)
+**New Module:** `src/simulation/utils/novelEntitiesEffectiveness.ts` (262 lines)
+
+**Prevention Technologies (Already in Tech Tree):**
+- `global_pfas_ban`: 99% emission reduction, 120-month deployment (10 years)
+- `plastic_production_phaseout`: 80% emission reduction, 240 months (20 years)
+- `green_chemistry_substitution`: 70% emission reduction, 60 months (5 years)
+
+**Gating Order (5 multipliers):**
+1. **Regulation Gating (CRITICAL):** Without production controls, cleanup is futile (refills as fast as you clean)
+   - No prevention tech: 1% effectiveness (point sources only - concentrated wastewater, industrial sites)
+   - PFAS ban deployed: Up to 50% effectiveness (50% weight - worst offender)
+   - All 3 prevention techs: 100% effectiveness (production controlled, cleanup works)
+   - Research: Montreal Protocol 10:1 prevention:remediation ratio (Dodds 2024)
+
+2. **Energy Constraint (OPTIONAL):** Thermodynamic trap - cleanup requires massive energy
+   - Checks renewable surplus vs tech energy requirements
+   - Graceful degradation if power generation data unavailable
+   - Research: Li 2024 (5-7 kWh/m³), Ling 2024 (850-1200°C thermal destruction)
+
+3. **Concentration Factor (CRITICAL):** Lab scale vs environmental scale dilution
+   - Lab concentrations (mg/L): 100% effectiveness
+   - Environmental dilution (ng/L): 0.1% effectiveness (10^6-10^9× dilution)
+   - Research: Li 2024 (12-47× cost scaling), Newell 2025 (sub-ng/L infeasible)
+
+4. **Time Lag Differentiation:** Prevention faster than remediation
+   - Prevention tech (bans): 10-20 years (Montreal Protocol did 12 years)
+   - Remediation tech (infrastructure): 30-50 years (massive scale-up)
+   - Validation requirement: Sylvia insisted on differentiation
+
+5. **Rebound Effects (Jevons Paradox):** Cleanup success → increased production (moral hazard)
+   - 30% effectiveness offset when regulation < 80%
+   - Research: UNEP 2024 (waste +81%), Sorrell 2025 (AI hardware)
+   - Derived assumption: 30% is CONSERVATIVE (theory: 20-80%)
+
+**Irreversibility Floor (90%):**
+- Modified: `src/simulation/planetaryBoundaries.ts`
+- Added `peakValue` field to track peak contamination
+- Asymptotic approach to 90% of peak (can't clean below this floor)
+- Research basis: Cousins 2022 (global distribution), Kane 2022 (centuries recovery), Ling 2024 (thermodynamic constraints)
+- Derived assumption: Not directly measured, requires sensitivity testing
+
+**Type System Updates:**
+- Modified: `src/types/planetaryBoundaries.ts`
+- Added `peakValue?: number` to PlanetaryBoundary interface
+- Comprehensive JSDoc with research citations
+
+**Integration:**
+- Modified: `src/simulation/techTree/effectsEngine.ts` - Calls `calculateNovelEntitiesRemediationEffectiveness()` for cleanup tech
+- Modified: `src/simulation/techTree/engine.ts` - Pass RNG to applyAllTechEffects (determinism fix)
+
+**Parameter Classification:**
+- **VERIFIED (directly stated in sources):** Ling 2024 costs, Cousins 2022 distribution, Li 2024 energy
+- **CALCULATED (derived from source data):** Montreal Protocol 10:1 ratio (Dodds 2024)
+- **DERIVED ASSUMPTIONS (model assumptions):** 90% irreversible fraction, 30% rebound factor, 0.001 concentration multiplier
+
+**Expected Results:**
+- Baseline (no prevention): 0-2% effectiveness (matches god mode observation)
+- Regulated (prevention + remediation): 5-50% effectiveness over 30-50 years
+- Irreversibility floor: Prevents >10% total recovery
+
+**Quality Gates:**
+- ✅ **Research (Quality Gate 1):** PASSED - Grade B+ (defensible with noted uncertainties)
+- ✅ **Implementation:** COMPLETE
+- 🔄 **Monte Carlo Validation (Priya):** PENDING - N≥30 runs with sensitivity testing
+  - irreversibleFraction: [0.70, 0.90, 0.95]
+  - reboundFactor: [0.5, 0.7, 0.9]
+  - Baseline vs Regulated scenarios
 
 **Research Files:**
-- Analysis: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 71 sources)
+- Analysis: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
 - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
-- Verification: `research/verification_7ac8b8f_20251113.md` (tracks citation + claim verification)
+- Verification: `research/verification_7ac8b8f_20251113.md` (citation + claim verification)
 - Review: `reviews/novel_entities_research_critique_20251113.md` (Grade B+, Quality Gate 1 PASSED)
+- Handoff: `.claude/handoffs/novel_entities_implementation_handoff.md`
 
-**Status:** Research + validation complete, awaiting implementation (CRITICAL priority)
+**Research Citations:**
+- Ling, A. L. (2024). Science of the Total Environment, 918, 170647
+- Cousins, I. T., et al. (2022). Environmental Science & Technology, 56(16), 11172-11179
+- Dodds, K. C., et al. (2024). Nature Geoscience, 17(2), 170-177
+- Li, L., et al. (2024). Water Research, 248, 120850
+- Newell, C. J., et al. (2025). Environmental Science & Technology, 59(1), 234-245
+- Kane, I. A., et al. (2022). Science, 377(6608), 924-927
+- UNEP (2024). Global Waste Management Outlook 2024
+- Sorrell, S., et al. (2025). Energy Policy, 178, 113597
 
 ---
 
 **Last Updated:** November 13, 2025
-**Implementation Status:** ✅ Core system complete, 🔄 Zero-effectiveness redesign pending (CRITICAL)
-**Next Steps:** Implement prevention-gated remediation model (TIER 1 priority), then per-chemical tracking + multigenerational effects (TIER 2+)
+**Implementation Status:** ✅ Prevention-gated remediation COMPLETE, 🔄 Monte Carlo validation PENDING
+**Next Steps:** Priya validation (N≥30 with sensitivity), then per-chemical tracking + multigenerational effects (TIER 2+)
