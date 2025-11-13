@@ -290,6 +290,16 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // Update bifurcation state (mutation)
     bifState.varianceAmplification = amplificationValidated;
     bifState.distanceToNearestThreshold = minDistanceValidated;
+
+    // Log amplification details for debugging (threshold-specific dynamics)
+    if (minDistanceValidated < 0.3) {
+      // Only log when approaching thresholds (distance < 0.3) to reduce noise
+      console.log(
+        `📊 Bifurcation variance amplification: ${amplificationValidated.toFixed(2)}× ` +
+        `(nearest: ${nearestThresholdName}, d=${minDistanceValidated.toFixed(3)}, ` +
+        `base=${baseAmplification.toFixed(2)}×, system=${systemMultiplier.toFixed(1)}×)`
+      );
+    }
   }
 
   /**
