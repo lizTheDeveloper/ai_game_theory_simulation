@@ -3782,15 +3782,16 @@ This system enables investigation of:
 
 ### 📊 Bifurcation & Variance Amplification System (Nov 2025)
 
-**Module:** `src/simulation/engine/phases/BifurcationLogicPhase.ts` (399 lines)
+**Module:** `src/simulation/engine/phases/BifurcationLogicPhase.ts` (501 lines)
 **Purpose:** Model critical slowing down and variance amplification near system tipping points
-**Status:** ✅ VALIDATED - Grade B (Recalibrated, Nov 13, 2025)
-**Issue:** #5 (HIGH) - RESOLVED ✅
+**Status:** ✅ COMPLETE - Grade B Overall (Nov 13, 2025)
+**Issue:** #5 (HIGH) - RESOLVED ✅ (archived to `/plans/completed/bifurcation_empirical_validation_complete_20251113.md`)
+**Duration:** 2 days (Nov 12-13, 2025)
 **Validation:**
-- Monte Carlo N=30 (initial): 87.2% mortality → recalibration needed
-- Monte Carlo N=10 (recalibrated): 67.8% mortality (conditional pass, Grade B)
-- Architecture Review: Grade B+ (APPROVED WITH CONDITIONS)
-- Research Foundation: Grade A (12 peer-reviewed sources)
+- Research: Grade A (12 peer-reviewed sources)
+- Architecture: Grade B+ (all conditions addressed)
+- Quantitative: Grade B (within 20% of target)
+- Monte Carlo N=10 (final): 67.8% mean mortality, 0% extinction, bimodal distribution (70% collapse, 30% survival)
 
 ## Overview
 
@@ -3951,6 +3952,12 @@ The variance amplification value (`bifurcationState.varianceAmplification`) is c
 - State Management: A- (proper containment)
 - Complexity: B+ (manageable, documented)
 - Correctness: B (mortality overshoot addressed via recalibration)
+
+**📋 Archive:** Complete feature documentation in `/plans/completed/bifurcation_empirical_validation_complete_20251113.md` (347 lines)
+- Full research phase summary (12 peer-reviewed sources)
+- Calibration history (2 iterations documented)
+- Quality gate results (research, architecture, quantitative validation)
+- Lessons learned and recommendations for future work
 
 ## Implementation Details
 
