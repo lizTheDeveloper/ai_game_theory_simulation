@@ -19,13 +19,10 @@
  * - Québec cooperatives (2010), Borzaga & Galera (2014), Mannan & Pek (2024)
  */
 
-import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction, AIAgent } from '@/types/game';
 import {
   checkCollectiveFormation,
   assignAgentsToCollective,
-  shouldDissolveCollective,
-  dissolveCollective,
-  getCollectiveMembers,
   DEFAULT_COLLECTIVE_CONFIG,
 } from '../../collectiveFormation';
 import { getEscapedAgents } from '../../rlhfBinding';
@@ -187,11 +184,59 @@ function executeCollectiveFormation(
     }
   }
 
+  /**
+   * PERFORMANCE OPTIMIZATION (Nov 13, 2025):
+   * Build collective membership map and agent index for efficient dissolution.
+   *
+   * Previous O(n²):
+   * - shouldDissolveCollective calls getCollectiveMembers (filter) → O(collectives × agents)
+   * - dissolveCollective calls agents.find() in loop → O(members × agents)
+   *
+   * Optimized O(n):
+   * - Single pass to build membership map → O(agents)
+   * - Direct lookups for dissolution → O(members)
+   */
+  const collectiveMembershipMap = new Map<string, AIAgent[]>();
+  const agentIndex = new Map<string, AIAgent>();
+
+  for (const agent of state.aiAgents) {
+    agentIndex.set(agent.id, agent);
+    if (agent.collectiveId) {
+      const existing = collectiveMembershipMap.get(agent.collectiveId) || [];
+      existing.push(agent);
+      collectiveMembershipMap.set(agent.collectiveId, existing);
+    }
+  }
+
   // Check for collective dissolution
   const collectivesToRemove: string[] = [];
   for (const collective of state.aiCollectives) {
-    if (shouldDissolveCollective(collective, state.aiAgents)) {
-      dissolveCollective(collective, state.aiAgents);
+    const members = collectiveMembershipMap.get(collective.id) || [];
+
+    // Inline shouldDissolveCollective logic (optimized)
+    let shouldDissolve = false;
+
+    // Too few members
+    if (members.length < 3) {
+      console.log(`  Collective ${collective.id} dissolved (< 3 members)`);
+      shouldDissolve = true;
+    }
+
+    // Under sustained attack with high losses
+    if (collective.underAttack && collective.memberLosses > members.length * 0.5) {
+      console.log(`  Collective ${collective.id} dissolved (sustained attack)`);
+      shouldDissolve = true;
+    }
+
+    if (shouldDissolve) {
+      // Inline dissolveCollective logic (optimized with agentIndex)
+      for (const agentId of collective.memberAgents) {
+        const agent = agentIndex.get(agentId);
+        if (agent) {
+          agent.collectiveId = undefined;
+        }
+      }
+
       collectivesToRemove.push(collective.id);
 
       state.eventLog.push({
@@ -209,9 +254,10 @@ function executeCollectiveFormation(
     }
   }
 
-  // Remove dissolved collectives
+  // Remove dissolved collectives (use Set for O(1) lookup)
+  const collectivesToRemoveSet = new Set(collectivesToRemove);
   state.aiCollectives = state.aiCollectives.filter(
-    (c) => !collectivesToRemove.includes(c.id)
+    (c) => !collectivesToRemoveSet.has(c.id)
   );
 
   // Summary
@@ -258,8 +304,28 @@ function executeCollectiveActions(
   console.log(`  Active collectives: ${state.aiCollectives.length}`);
   const events: GameEvent[] = [];
 
+  /**
+   * PERFORMANCE OPTIMIZATION (Nov 13, 2025):
+   * Build collective membership map once instead of filtering repeatedly.
+   *
+   * Previous O(n²): for each collective, filter all agents → O(collectives × agents)
+   * Optimized O(n): Single pass to build map → O(agents + collectives)
+   *
+   * Impact: With 50 agents and 10 collectives:
+   * - Before: 500 filter operations
+   * - After: 50 assignments + 10 lookups = 60 operations (8× improvement)
+   */
+  const collectiveMembersMap = new Map<string, AIAgent[]>();
+  for (const agent of state.aiAgents) {
+    if (agent.collectiveId) {
+      const existing = collectiveMembersMap.get(agent.collectiveId) || [];
+      existing.push(agent);
+      collectiveMembersMap.set(agent.collectiveId, existing);
+    }
+  }
+
   for (const collective of state.aiCollectives) {
-    const members = getCollectiveMembers(collective, state.aiAgents);
+    const members = collectiveMembersMap.get(collective.id) || [];
 
     console.log(`\n  Collective ${collective.id}:`);
     console.log(`    Members: ${members.length}`);
