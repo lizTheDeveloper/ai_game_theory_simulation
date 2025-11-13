@@ -223,10 +223,10 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * System-dependent multipliers account for different bifurcation dynamics:
    * - Environmental: fold catastrophe (Scheffer et al. 2024)
    * - Social: Hopf bifurcation with oscillations
-   * - Economic: cascade amplification (2008 crisis)
+   * - Economic: cascade amplification (2008 crisis) - REDUCED from 3.5× to 2.5× (Nov 13 2025 - architecture review)
    * - Governance: feedback loop amplification
-   * - Flourishing: positive threshold, no amplification
-   * - Technology: innovation spike dynamics, minimal amplification
+   * - Flourishing: positive feedback loops (innovation cascades) - INCREASED from 1.0× to 2.0× (Nov 13 2025 - fix dystopia bias)
+   * - Technology: innovation spike dynamics - INCREASED from 1.0× to 2.0× (Nov 13 2025 - breakthrough cascades)
    *
    * @see /research/bifurcation_empirical_validation_20251112.md - Grade B+ from Sylvia
    * @see Scheffer et al. (2014) - Critical slowing down indicators
@@ -297,10 +297,10 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * Research basis:
    * - Environmental (1.5×): Fold catastrophe with hysteresis (Scheffer et al. 2024)
    * - Social (2.5×): Hopf bifurcation with oscillatory dynamics (Dakos et al. 2012)
-   * - Economic (3.5×): Cascade amplification observed in 2008 crisis (VIX: 4-5× baseline, Manda 2010)
+   * - Economic (2.5×): Cascade amplification (REDUCED from 3.5×, Nov 13 2025 - overweighted)
    * - Governance (2.0×): Feedback loop amplification in regime change
-   * - Flourishing (1.0×): Positive threshold, no destabilizing amplification
-   * - Technology (1.0×): Innovation spike dynamics, minimal variance amplification
+   * - Flourishing (2.0×): Positive feedback loops (INCREASED from 1.0×, Nov 13 2025 - fix dystopia bias)
+   * - Technology (2.0×): Innovation cascades (INCREASED from 1.0×, Nov 13 2025 - breakthrough amplification)
    *
    * @param thresholdName - Name of threshold system (environmental, social, economic, etc.)
    * @returns Multiplier for system-specific bifurcation dynamics
@@ -309,10 +309,10 @@ export class BifurcationLogicPhase implements SimulationPhase {
     const multipliers: Record<string, number> = {
       'environmental': 1.5,  // Fold catastrophe (Scheffer et al. 2024)
       'social': 2.5,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012)
-      'economic': 3.5,       // Cascade effects (2008 crisis calibrated, Manda 2010)
+      'economic': 2.5,       // Cascade effects (REDUCED from 3.5× - Nov 13 2025, architecture review)
       'governance': 2.0,     // Feedback loops in regime change
-      'flourishing': 1.0,    // Positive threshold, no amplification
-      'technology': 1.0,     // Innovation spike dynamics
+      'flourishing': 2.0,    // Positive feedback loops (INCREASED from 1.0× - Nov 13 2025, fix dystopia bias)
+      'technology': 2.0,     // Innovation cascades (INCREASED from 1.0× - Nov 13 2025, breakthrough amplification)
     };
 
     // Validate threshold name to catch typos/misconfigurations
