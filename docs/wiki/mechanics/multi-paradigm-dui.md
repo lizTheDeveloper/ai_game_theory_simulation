@@ -464,6 +464,34 @@ The Multi-Paradigm DUI draws on **100+ peer-reviewed sources** across:
 
 **Solution:** Conservative thresholds used, sensitivity analysis planned
 
+### 5. Catastrophic Mortality Edge Cases
+
+**Problem:** Western Liberal paradigm scores remain relatively high (58-77/100) during catastrophic collapse scenarios (92% mortality)
+
+**Root Cause:** Population mortality is **not a direct input** to Western Liberal scoring. The paradigm measures procedural democracy, civil liberties, rule of law, and economic freedom - institutional metrics that can theoretically persist during population collapse.
+
+**Mechanism:** Mortality affects Western Liberal scores only **indirectly** through crisis pressure:
+- Unemployment → authoritarian demand
+- Nuclear winter → emergency powers
+- Refugee crises → strongman appeal
+
+**Historical Defense:** Procedural democracy CAN persist during severe crisis:
+- Weimar Germany: Democracy maintained during hyperinflation (1923)
+- UK WWII: High democracy scores despite 450k deaths
+- COVID-19: Elections continued globally with 7M deaths
+
+**BUT:** 92% global mortality has **no historical precedent**. Extrapolating from <1% mortality events to 92% is methodologically uncertain.
+
+**Research Question:** Should catastrophic mortality (>50%) directly lower Western Liberal scores? If so, through what mechanism?
+- Direct mortality penalty to score?
+- Mortality → unemployment pathway?
+- Catastrophic multiplier on crisis pressure (nonlinear)?
+- Mortality → governance collapse (disables recovery)?
+
+**Status:** Investigation complete (Nov 11, 2025), awaiting research team input
+**Report:** `/reviews/western_paradigm_collapse_scoring_investigation_20251111.md`
+**Priority:** MEDIUM (model calibration, doesn't block development)
+
 ---
 
 ## Future Enhancements (Phase 7 - Documentation)
