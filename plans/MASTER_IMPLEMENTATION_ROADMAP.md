@@ -247,6 +247,14 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **TIER 2 HIGH:** Nitrogen-food coupling, extinction debt, energy budget constraints
 - **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (26 tech candidates, 9 paradigm shifts)
 
+**Research Verification Queue:**
+- [ ] **Novel Entities Zero-Effectiveness (commit 7ac8b8f)** - Citation + claim verification
+  - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
+  - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
+  - Verification spec: `research/verification_7ac8b8f_20251113.md`
+  - Quality Gate 1: PASSED (Grade B+)
+  - Next: Orchestrator begins at VALIDATION phase (research-skeptic review)
+
 ---
 
 ### 2. 🎮 [Simulation Roadmap](./SIMULATION_ROADMAP.md)

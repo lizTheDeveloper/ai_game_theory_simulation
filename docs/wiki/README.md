@@ -28,6 +28,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: Novel Entities Zero-Effectiveness Research (CRITICAL - TIER 1)** (commit 7ac8b8f)
+- 📚 **Research Complete:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
+- 🔬 **Key Finding:** 0% effectiveness is NOT a bug - thermodynamically accurate for unregulated scenario
+- 💰 **Energy Trap:** PFAS removal at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP)
+- 🔬 **Concentration Problem:** Tech works at mg/L (labs), environment is pg/L-ng/L (10^6-10^9× dilution)
+- ⏳ **Irreversibility:** <10% reversible fraction, 90% permanently distributed
+- 📊 **Montreal Protocol Lesson:** Production ban = 90-95% recovery, cleanup = 5-10%
+- ♻️ **Rebound Effects:** Waste +81% (2023-2050) despite tech (Jevons paradox)
+- 🎯 **Quality Gate 1:** PASSED (Grade B+) - high-impact journals, strong convergence
+- 📋 **Design Document:** plans/novel_entities_model_redesign_20251113.md (3 prevention techs, gated remediation, 90% floor)
+- 📖 **Research:** research/novel_entities_zero_effectiveness_20251113.md (41KB, 71 sources)
+- ✅ **Verification File:** research/verification_7ac8b8f_20251113.md (tracks citation + claim verification)
+- ⏳ **Status:** Research complete, awaiting validation → implementation (11-16 hours estimated)
+
 **Nov 13: CRITICAL Memory Leak + Complete O(n²) Fix** (commit 27e788f)
 - ✅ **Memory Leak Fixed:** PhaseOrchestrator unbounded array growth resolved (2 locations)
 - ✅ **Impact:** Long Monte Carlo runs no longer exhaust memory (12M+ entries → bounded 1000 samples)
