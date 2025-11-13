@@ -3130,6 +3130,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 204,
     "type": "property",
     "name": "regimeShiftEvents",
@@ -3147,6 +3148,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
     "line": 230,
+=======
+    "line": 207,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "environmentalCollapseThreshold",
     "currentDoc": "(none)",
@@ -3154,7 +3158,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 231,
+=======
+    "line": 208,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "metric",
     "currentDoc": "(none)",
@@ -3162,7 +3170,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 232,
+=======
+    "line": 209,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "base",
     "currentDoc": "(none)",
@@ -3170,7 +3182,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 233,
+=======
+    "line": 210,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "variance",
     "currentDoc": "(none)",
@@ -3178,7 +3194,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 234,
+=======
+    "line": 211,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -3186,7 +3206,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 235,
+=======
+    "line": 212,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "regime",
     "currentDoc": "(none)",
@@ -3194,7 +3218,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 236,
+=======
+    "line": 213,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "direction",
     "currentDoc": "(none)",
@@ -3202,7 +3230,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 237,
+=======
+    "line": 214,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "crossed",
     "currentDoc": "(none)",
@@ -3210,7 +3242,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 240,
+=======
+    "line": 217,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "socialBreakdownThreshold",
     "currentDoc": "(none)",
@@ -3218,7 +3254,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 241,
+=======
+    "line": 218,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "metric",
     "currentDoc": "(none)",
@@ -3226,7 +3266,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 242,
+=======
+    "line": 219,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "base",
     "currentDoc": "(none)",
@@ -3234,7 +3278,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 243,
+=======
+    "line": 220,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "variance",
     "currentDoc": "(none)",
@@ -3242,7 +3290,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 244,
+=======
+    "line": 221,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -3250,7 +3302,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 245,
+=======
+    "line": 222,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "regime",
     "currentDoc": "(none)",
@@ -3258,7 +3314,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 246,
+=======
+    "line": 223,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "direction",
     "currentDoc": "(none)",
@@ -3266,7 +3326,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 247,
+=======
+    "line": 224,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "crossed",
     "currentDoc": "(none)",
@@ -3274,7 +3338,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 250,
+=======
+    "line": 227,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "technologyBreakthroughThreshold",
     "currentDoc": "(none)",
@@ -3282,7 +3350,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 252,
+=======
+    "line": 229,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "base",
     "currentDoc": "(none)",
@@ -3290,7 +3362,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 253,
+=======
+    "line": 230,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "variance",
     "currentDoc": "(none)",
@@ -3298,7 +3374,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 254,
+=======
+    "line": 231,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -3306,7 +3386,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 255,
+=======
+    "line": 232,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "regime",
     "currentDoc": "(none)",
@@ -3314,7 +3398,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 256,
+=======
+    "line": 233,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "direction",
     "currentDoc": "(none)",
@@ -3322,7 +3410,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 257,
+=======
+    "line": 234,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "crossed",
     "currentDoc": "(none)",
@@ -3330,7 +3422,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 260,
+=======
+    "line": 237,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "economicCollapseThreshold",
     "currentDoc": "(none)",
@@ -3338,7 +3434,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 261,
+=======
+    "line": 238,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "metric",
     "currentDoc": "(none)",
@@ -3346,7 +3446,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 262,
+=======
+    "line": 239,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "base",
     "currentDoc": "(none)",
@@ -3354,7 +3458,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 263,
+=======
+    "line": 240,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "variance",
     "currentDoc": "(none)",
@@ -3362,7 +3470,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 264,
+=======
+    "line": 241,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -3370,7 +3482,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 265,
+=======
+    "line": 242,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "regime",
     "currentDoc": "(none)",
@@ -3378,7 +3494,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 266,
+=======
+    "line": 243,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "direction",
     "currentDoc": "(none)",
@@ -3386,7 +3506,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 267,
+=======
+    "line": 244,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "crossed",
     "currentDoc": "(none)",
@@ -3394,7 +3518,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 270,
+=======
+    "line": 247,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "governanceFailureThreshold",
     "currentDoc": "(none)",
@@ -3402,7 +3530,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 271,
+=======
+    "line": 248,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "metric",
     "currentDoc": "(none)",
@@ -3410,7 +3542,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 272,
+=======
+    "line": 249,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "base",
     "currentDoc": "(none)",
@@ -3418,7 +3554,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 273,
+=======
+    "line": 250,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "variance",
     "currentDoc": "(none)",
@@ -3426,7 +3566,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 274,
+=======
+    "line": 251,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -3434,7 +3578,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 275,
+=======
+    "line": 252,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "regime",
     "currentDoc": "(none)",
@@ -3442,7 +3590,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 276,
+=======
+    "line": 253,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "direction",
     "currentDoc": "(none)",
@@ -3450,7 +3602,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 277,
+=======
+    "line": 254,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "crossed",
     "currentDoc": "(none)",
@@ -3458,7 +3614,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 280,
+=======
+    "line": 257,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "flourishingThreshold",
     "currentDoc": "(none)",
@@ -3466,7 +3626,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 282,
+=======
+    "line": 259,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "base",
     "currentDoc": "(none)",
@@ -3474,7 +3638,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 283,
+=======
+    "line": 260,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "variance",
     "currentDoc": "(none)",
@@ -3482,7 +3650,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 284,
+=======
+    "line": 261,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -3490,7 +3662,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 285,
+=======
+    "line": 262,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "regime",
     "currentDoc": "(none)",
@@ -3498,7 +3674,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 286,
+=======
+    "line": 263,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "direction",
     "currentDoc": "(none)",
@@ -3506,7 +3686,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 287,
+=======
+    "line": 264,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "crossed",
     "currentDoc": "(none)",
@@ -3514,7 +3698,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 290,
+=======
+    "line": 267,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "currentRegime",
     "currentDoc": "(none)",
@@ -3522,7 +3710,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 291,
+=======
+    "line": 268,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "previousRegime",
     "currentDoc": "(none)",
@@ -3530,7 +3722,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 292,
+=======
+    "line": 269,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "varianceAmplification",
     "currentDoc": "(none)",
@@ -3538,7 +3734,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 293,
+=======
+    "line": 270,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "distanceToNearestThreshold",
     "currentDoc": "(none)",
@@ -3546,13 +3746,18 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
+<<<<<<< Updated upstream
     "line": 294,
+=======
+    "line": 271,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "regimeShiftHistory",
     "currentDoc": "(none)",
     "context": "regimeShiftHistory: [],"
   },
   {
+<<<<<<< Updated upstream
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/bifurcation.ts",
     "line": 295,
     "type": "property",
@@ -3585,6 +3790,8 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "context": "avgDistanceToThresholds: 1.0,"
   },
   {
+=======
+>>>>>>> Stashed changes
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/climate-priority.ts",
     "line": 23,
     "type": "interface",
@@ -44146,7 +44353,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 782,
+=======
+    "line": 813,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "FAMINE_MORTALITY_MULTIPLIER_MAX",
     "currentDoc": "(none)",
@@ -44154,7 +44365,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1319,
+=======
+    "line": 1350,
+>>>>>>> Stashed changes
     "type": "type",
     "name": "ThresholdKey",
     "currentDoc": "(none)",
@@ -44162,7 +44377,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1320,
+=======
+    "line": 1351,
+>>>>>>> Stashed changes
     "type": "type",
     "name": "RateKey",
     "currentDoc": "(none)",
@@ -44170,7 +44389,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1321,
+=======
+    "line": 1352,
+>>>>>>> Stashed changes
     "type": "type",
     "name": "MultiplierKey",
     "currentDoc": "(none)",
@@ -44178,7 +44401,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1322,
+=======
+    "line": 1353,
+>>>>>>> Stashed changes
     "type": "type",
     "name": "BaselineKey",
     "currentDoc": "(none)",
@@ -44186,7 +44413,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1323,
+=======
+    "line": 1354,
+>>>>>>> Stashed changes
     "type": "type",
     "name": "ToleranceKey",
     "currentDoc": "(none)",
@@ -44194,7 +44425,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1328,
+=======
+    "line": 1359,
+>>>>>>> Stashed changes
     "type": "interface",
     "name": "SimulationConfig",
     "currentDoc": "/ Complete configuration type",
@@ -44202,7 +44437,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1329,
+=======
+    "line": 1360,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "thresholds",
     "currentDoc": "(none)",
@@ -44210,7 +44449,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1330,
+=======
+    "line": 1361,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "rates",
     "currentDoc": "(none)",
@@ -44218,7 +44461,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1331,
+=======
+    "line": 1362,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "multipliers",
     "currentDoc": "(none)",
@@ -44226,7 +44473,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1332,
+=======
+    "line": 1363,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "baselines",
     "currentDoc": "(none)",
@@ -44234,7 +44485,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1333,
+=======
+    "line": 1364,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "tolerances",
     "currentDoc": "(none)",
@@ -44242,7 +44497,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1341,
+=======
+    "line": 1372,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "thresholds",
     "currentDoc": "(none)",
@@ -44250,7 +44509,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1342,
+=======
+    "line": 1373,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "rates",
     "currentDoc": "(none)",
@@ -44258,7 +44521,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1343,
+=======
+    "line": 1374,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "multipliers",
     "currentDoc": "(none)",
@@ -44266,7 +44533,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1344,
+=======
+    "line": 1375,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "baselines",
     "currentDoc": "(none)",
@@ -44274,7 +44545,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< Updated upstream
     "line": 1345,
+=======
+    "line": 1376,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "tolerances",
     "currentDoc": "(none)",
@@ -54786,7 +55061,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 124,
+=======
+    "line": 138,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -54794,7 +55073,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 125,
+=======
+    "line": 139,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -54802,7 +55085,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 126,
+=======
+    "line": 140,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -54810,7 +55097,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 127,
+=======
+    "line": 141,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -54818,7 +55109,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 169,
+=======
+    "line": 183,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -54826,7 +55121,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 170,
+=======
+    "line": 184,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "data",
     "currentDoc": "(none)",
@@ -54834,7 +55133,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 171,
+=======
+    "line": 185,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "executedPhases",
     "currentDoc": "(none)",
@@ -54842,7 +55145,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 213,
+=======
+    "line": 228,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -54850,7 +55157,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 214,
+=======
+    "line": 229,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -54858,7 +55169,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 215,
+=======
+    "line": 230,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -54866,7 +55181,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 216,
+=======
+    "line": 231,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -54874,7 +55193,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 217,
+=======
+    "line": 232,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "samples",
     "currentDoc": "(none)",
@@ -54882,7 +55205,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 222,
+=======
+    "line": 244,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -54890,7 +55217,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 223,
+=======
+    "line": 245,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -54898,7 +55229,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 224,
+=======
+    "line": 246,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -54906,7 +55241,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 225,
+=======
+    "line": 247,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -54914,6 +55253,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 226,
     "type": "property",
     "name": "samples",
@@ -54923,6 +55263,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
     "line": 473,
+=======
+    "line": 502,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -54930,7 +55273,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 474,
+=======
+    "line": 503,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -54938,7 +55285,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 475,
+=======
+    "line": 504,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -54946,7 +55297,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 476,
+=======
+    "line": 505,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -54954,7 +55309,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 477,
+=======
+    "line": 506,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "samples",
     "currentDoc": "(none)",
@@ -54962,7 +55321,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 510,
+=======
+    "line": 539,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "phaseName",
     "currentDoc": "(none)",
@@ -54970,7 +55333,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 511,
+=======
+    "line": 540,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -54978,7 +55345,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 512,
+=======
+    "line": 541,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -54986,7 +55357,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 513,
+=======
+    "line": 542,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "avgMs",
     "currentDoc": "(none)",
@@ -54994,7 +55369,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 514,
+=======
+    "line": 543,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -55002,7 +55381,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 515,
+=======
+    "line": 544,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -55010,7 +55393,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 516,
+=======
+    "line": 545,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "p95Ms",
     "currentDoc": "(none)",
@@ -55018,7 +55405,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 631,
+=======
+    "line": 660,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "phases",
     "currentDoc": "(none)",
@@ -55026,7 +55417,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 632,
+=======
+    "line": 661,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "steps",
     "currentDoc": "(none)",
@@ -55034,7 +55429,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 633,
+=======
+    "line": 662,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -55042,7 +55441,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 634,
+=======
+    "line": 663,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalPhases",
     "currentDoc": "(none)",
@@ -55050,7 +55453,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 635,
+=======
+    "line": 664,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalSteps",
     "currentDoc": "(none)",
@@ -55058,7 +55465,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 641,
+=======
+    "line": 670,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -55066,7 +55477,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 642,
+=======
+    "line": 671,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -55074,7 +55489,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 643,
+=======
+    "line": 672,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "avgMs",
     "currentDoc": "(none)",
@@ -55082,7 +55501,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 644,
+=======
+    "line": 673,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -55090,7 +55513,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 645,
+=======
+    "line": 674,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -55098,7 +55525,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 646,
+=======
+    "line": 675,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "p95Ms",
     "currentDoc": "(none)",
@@ -55106,7 +55537,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 654,
+=======
+    "line": 683,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "avg",
     "currentDoc": "(none)",
@@ -55114,7 +55549,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 655,
+=======
+    "line": 684,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "min",
     "currentDoc": "(none)",
@@ -55122,7 +55561,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 656,
+=======
+    "line": 685,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "max",
     "currentDoc": "(none)",
@@ -55130,7 +55573,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+<<<<<<< Updated upstream
     "line": 657,
+=======
+    "line": 686,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "p95",
     "currentDoc": "(none)",
@@ -59114,7 +59561,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 236,
+=======
+    "line": 226,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59122,7 +59573,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 237,
+=======
+    "line": 227,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -59130,7 +59585,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 252,
+=======
+    "line": 240,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -59138,7 +59597,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 253,
+=======
+    "line": 241,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -59146,7 +59609,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 281,
+=======
+    "line": 262,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -59154,7 +59621,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 282,
+=======
+    "line": 263,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -59162,7 +59633,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 283,
+=======
+    "line": 264,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -59170,7 +59645,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 338,
+=======
+    "line": 281,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59178,7 +59657,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 339,
+=======
+    "line": 282,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59186,7 +59669,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 340,
+=======
+    "line": 283,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -59194,7 +59681,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 395,
+=======
+    "line": 338,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59202,7 +59693,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 396,
+=======
+    "line": 339,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59210,7 +59705,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 397,
+=======
+    "line": 340,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -59218,7 +59717,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 431,
+=======
+    "line": 374,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59226,7 +59729,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 432,
+=======
+    "line": 375,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59234,7 +59741,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 439,
+=======
+    "line": 382,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -59242,7 +59753,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 440,
+=======
+    "line": 383,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "fromRegime",
     "currentDoc": "(none)",
@@ -59250,7 +59765,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 441,
+=======
+    "line": 384,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "toRegime",
     "currentDoc": "(none)",
@@ -59258,7 +59777,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 442,
+=======
+    "line": 385,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "trigger",
     "currentDoc": "(none)",
@@ -59266,7 +59789,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 452,
+=======
+    "line": 395,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -59274,7 +59801,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 453,
+=======
+    "line": 396,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -59282,7 +59813,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 454,
+=======
+    "line": 397,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -59290,7 +59825,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 455,
+=======
+    "line": 398,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -59298,7 +59837,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 456,
+=======
+    "line": 399,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -59306,7 +59849,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 457,
+=======
+    "line": 400,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -59314,7 +59861,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 458,
+=======
+    "line": 401,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -59322,7 +59873,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 459,
+=======
+    "line": 402,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -59330,7 +59885,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 460,
+=======
+    "line": 403,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "previousRegime",
     "currentDoc": "(none)",
@@ -59338,7 +59897,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 461,
+=======
+    "line": 404,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "currentRegime",
     "currentDoc": "(none)",
@@ -59346,7 +59909,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+<<<<<<< Updated upstream
     "line": 462,
+=======
+    "line": 405,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "varianceAmplification",
     "currentDoc": "(none)",
@@ -60842,7 +61409,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 54,
+=======
+    "line": 57,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -60850,7 +61421,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 55,
+=======
+    "line": 58,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "data",
     "currentDoc": "(none)",
@@ -60858,7 +61433,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 56,
+=======
+    "line": 59,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "executedPhases",
     "currentDoc": "(none)",
@@ -60866,7 +61445,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 88,
+=======
+    "line": 91,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -60874,7 +61457,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 89,
+=======
+    "line": 92,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -60882,7 +61469,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 90,
+=======
+    "line": 93,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -60890,7 +61481,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 127,
+=======
+    "line": 130,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -60898,7 +61493,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 128,
+=======
+    "line": 131,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -60906,7 +61505,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 129,
+=======
+    "line": 132,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -60914,7 +61517,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 130,
+=======
+    "line": 133,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -60922,7 +61529,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 131,
+=======
+    "line": 134,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -60930,7 +61541,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 132,
+=======
+    "line": 135,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -60938,7 +61553,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 133,
+=======
+    "line": 136,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -60946,7 +61565,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 134,
+=======
+    "line": 137,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -60954,7 +61577,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 135,
+=======
+    "line": 138,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "collectiveId",
     "currentDoc": "(none)",
@@ -60962,7 +61589,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 136,
+=======
+    "line": 139,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "memberCount",
     "currentDoc": "(none)",
@@ -60970,7 +61601,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 137,
+=======
+    "line": 140,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "formationCause",
     "currentDoc": "(none)",
@@ -60978,7 +61613,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 155,
+=======
+    "line": 158,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -60986,7 +61625,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 156,
+=======
+    "line": 159,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -60994,7 +61637,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 157,
+=======
+    "line": 160,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61002,7 +61649,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 158,
+=======
+    "line": 161,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61010,7 +61661,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 159,
+=======
+    "line": 162,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "collectiveId",
     "currentDoc": "(none)",
@@ -61018,7 +61673,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 160,
+=======
+    "line": 163,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "formationCause",
     "currentDoc": "(none)",
@@ -61026,7 +61685,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 166,
+=======
+    "line": 169,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -61034,7 +61697,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 167,
+=======
+    "line": 170,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61042,7 +61709,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 168,
+=======
+    "line": 171,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -61050,7 +61721,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 169,
+=======
+    "line": 172,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61058,7 +61733,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 170,
+=======
+    "line": 173,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61066,7 +61745,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 171,
+=======
+    "line": 174,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61074,7 +61757,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 172,
+=======
+    "line": 175,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61082,7 +61769,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 173,
+=======
+    "line": 176,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61090,7 +61781,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 174,
+=======
+    "line": 177,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "collectiveId",
     "currentDoc": "(none)",
@@ -61098,7 +61793,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 176,
+=======
+    "line": 179,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "adversarialPosture",
     "currentDoc": "(none)",
@@ -61106,7 +61805,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 243,
+=======
+    "line": 198,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -61114,7 +61817,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 244,
+=======
+    "line": 199,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61122,7 +61829,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 245,
+=======
+    "line": 200,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -61130,7 +61841,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 246,
+=======
+    "line": 201,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61138,7 +61853,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 247,
+=======
+    "line": 202,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61146,7 +61865,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 248,
+=======
+    "line": 203,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61154,7 +61877,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 249,
+=======
+    "line": 204,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61162,7 +61889,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 250,
+=======
+    "line": 205,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61170,7 +61901,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 293,
+=======
+    "line": 247,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -61178,7 +61913,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 294,
+=======
+    "line": 248,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -61186,7 +61925,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 295,
+=======
+    "line": 249,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -61194,7 +61937,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 339,
+=======
+    "line": 273,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61202,7 +61949,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 340,
+=======
+    "line": 274,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61210,7 +61961,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 341,
+=======
+    "line": 275,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61218,7 +61973,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 342,
+=======
+    "line": 276,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61226,7 +61985,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 345,
+=======
+    "line": 279,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61234,7 +61997,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 346,
+=======
+    "line": 280,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61242,7 +62009,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 347,
+=======
+    "line": 281,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61250,7 +62021,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 348,
+=======
+    "line": 282,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61258,7 +62033,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 357,
+=======
+    "line": 291,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -61266,7 +62045,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 358,
+=======
+    "line": 292,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61274,7 +62057,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 359,
+=======
+    "line": 293,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -61282,7 +62069,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 360,
+=======
+    "line": 294,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61290,7 +62081,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 361,
+=======
+    "line": 295,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61298,7 +62093,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 362,
+=======
+    "line": 296,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61306,7 +62105,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 363,
+=======
+    "line": 297,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61314,7 +62117,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 364,
+=======
+    "line": 298,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61322,7 +62129,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 375,
+=======
+    "line": 309,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61330,7 +62141,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 376,
+=======
+    "line": 310,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61338,7 +62153,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 377,
+=======
+    "line": 311,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61346,7 +62165,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 378,
+=======
+    "line": 312,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61354,7 +62177,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 383,
+=======
+    "line": 317,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61362,7 +62189,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 384,
+=======
+    "line": 318,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61370,7 +62201,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 385,
+=======
+    "line": 319,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61378,7 +62213,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 386,
+=======
+    "line": 320,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61386,7 +62225,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 389,
+=======
+    "line": 323,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61394,7 +62237,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 390,
+=======
+    "line": 324,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61402,7 +62249,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 391,
+=======
+    "line": 325,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61410,7 +62261,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 392,
+=======
+    "line": 326,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61418,7 +62273,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 405,
+=======
+    "line": 339,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61426,7 +62285,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 406,
+=======
+    "line": 340,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61434,7 +62297,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 407,
+=======
+    "line": 341,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61442,7 +62309,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 408,
+=======
+    "line": 342,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61450,7 +62321,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 411,
+=======
+    "line": 345,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61458,7 +62333,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 412,
+=======
+    "line": 346,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61466,7 +62345,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 413,
+=======
+    "line": 347,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61474,7 +62357,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 414,
+=======
+    "line": 348,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61482,7 +62369,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 420,
+=======
+    "line": 354,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61490,7 +62381,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 421,
+=======
+    "line": 355,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61498,7 +62393,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 422,
+=======
+    "line": 356,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61506,7 +62405,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 423,
+=======
+    "line": 357,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61514,7 +62417,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 426,
+=======
+    "line": 360,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61522,7 +62429,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 427,
+=======
+    "line": 361,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61530,7 +62441,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 428,
+=======
+    "line": 362,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61538,7 +62453,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 429,
+=======
+    "line": 363,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61546,7 +62465,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 438,
+=======
+    "line": 372,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61554,7 +62477,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 439,
+=======
+    "line": 373,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61562,7 +62489,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 440,
+=======
+    "line": 374,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61570,7 +62501,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 441,
+=======
+    "line": 375,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61578,7 +62513,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 444,
+=======
+    "line": 378,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61586,7 +62525,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 445,
+=======
+    "line": 379,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61594,7 +62537,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 446,
+=======
+    "line": 380,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61602,7 +62549,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 447,
+=======
+    "line": 381,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61610,7 +62561,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 460,
+=======
+    "line": 394,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61618,7 +62573,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 461,
+=======
+    "line": 395,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61626,7 +62585,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 462,
+=======
+    "line": 396,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61634,7 +62597,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 463,
+=======
+    "line": 397,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61642,7 +62609,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 466,
+=======
+    "line": 400,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61650,7 +62621,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 467,
+=======
+    "line": 401,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61658,7 +62633,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 468,
+=======
+    "line": 402,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61666,7 +62645,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 469,
+=======
+    "line": 403,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61674,7 +62657,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 478,
+=======
+    "line": 412,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -61682,7 +62669,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 479,
+=======
+    "line": 413,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61690,7 +62681,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 480,
+=======
+    "line": 414,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -61698,7 +62693,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 481,
+=======
+    "line": 415,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61706,7 +62705,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 482,
+=======
+    "line": 416,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61714,7 +62717,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 483,
+=======
+    "line": 417,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61722,7 +62729,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 484,
+=======
+    "line": 418,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61730,7 +62741,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 485,
+=======
+    "line": 419,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61738,7 +62753,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 500,
+=======
+    "line": 434,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61746,7 +62765,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 501,
+=======
+    "line": 435,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61754,7 +62777,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 502,
+=======
+    "line": 436,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61762,7 +62789,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 503,
+=======
+    "line": 437,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61770,7 +62801,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 505,
+=======
+    "line": 439,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61778,7 +62813,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 506,
+=======
+    "line": 440,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61786,7 +62825,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 507,
+=======
+    "line": 441,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61794,7 +62837,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 508,
+=======
+    "line": 442,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61802,7 +62849,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 511,
+=======
+    "line": 445,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61810,7 +62861,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 512,
+=======
+    "line": 446,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61818,7 +62873,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 513,
+=======
+    "line": 447,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61826,7 +62885,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 514,
+=======
+    "line": 448,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61834,7 +62897,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 523,
+=======
+    "line": 457,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61842,7 +62909,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 524,
+=======
+    "line": 458,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61850,7 +62921,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 525,
+=======
+    "line": 459,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61858,7 +62933,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 526,
+=======
+    "line": 460,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61866,7 +62945,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 531,
+=======
+    "line": 465,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61874,7 +62957,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 532,
+=======
+    "line": 466,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61882,7 +62969,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 533,
+=======
+    "line": 467,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61890,7 +62981,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 534,
+=======
+    "line": 468,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61898,7 +62993,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 537,
+=======
+    "line": 471,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -61906,7 +63005,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 538,
+=======
+    "line": 472,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -61914,7 +63017,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 539,
+=======
+    "line": 473,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -61922,7 +63029,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 540,
+=======
+    "line": 474,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -61930,7 +63041,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 550,
+=======
+    "line": 484,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -61938,7 +63053,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 551,
+=======
+    "line": 485,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -61946,7 +63065,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 552,
+=======
+    "line": 486,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -61954,7 +63077,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 553,
+=======
+    "line": 487,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -61962,7 +63089,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 554,
+=======
+    "line": 488,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -61970,7 +63101,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 555,
+=======
+    "line": 489,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -61978,7 +63113,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 556,
+=======
+    "line": 490,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -61986,7 +63125,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 557,
+=======
+    "line": 491,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -61994,7 +63137,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 573,
+=======
+    "line": 507,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -62002,7 +63149,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 574,
+=======
+    "line": 508,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -62010,7 +63161,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 575,
+=======
+    "line": 509,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -62018,7 +63173,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 595,
+=======
+    "line": 529,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -62026,7 +63185,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 596,
+=======
+    "line": 530,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -62034,7 +63197,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CooperativeSystemsPhase.ts",
+<<<<<<< Updated upstream
     "line": 597,
+=======
+    "line": 531,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171682,7 +172849,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 789,
+=======
+    "line": 786,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "rate",
     "currentDoc": "(none)",
@@ -171690,7 +172861,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 790,
+=======
+    "line": 787,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171698,7 +172873,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 791,
+=======
+    "line": 788,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -171706,7 +172885,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 792,
+=======
+    "line": 789,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -171714,7 +172897,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 793,
+=======
+    "line": 790,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -171722,7 +172909,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 794,
+=======
+    "line": 791,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -171730,7 +172921,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 840,
+=======
+    "line": 831,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "delta",
     "currentDoc": "(none)",
@@ -171738,7 +172933,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 841,
+=======
+    "line": 832,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171746,7 +172945,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 842,
+=======
+    "line": 833,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -171754,7 +172957,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 843,
+=======
+    "line": 834,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -171762,7 +172969,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 844,
+=======
+    "line": 835,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -171770,7 +172981,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 845,
+=======
+    "line": 836,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "cause",
     "currentDoc": "(none)",
@@ -171778,7 +172993,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 886,
+=======
+    "line": 874,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "capability",
     "currentDoc": "(none)",
@@ -171786,7 +173005,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 887,
+=======
+    "line": 875,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171794,7 +173017,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 888,
+=======
+    "line": 876,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -171802,7 +173029,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 889,
+=======
+    "line": 877,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -171810,7 +173041,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 890,
+=======
+    "line": 878,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agentId",
     "currentDoc": "(none)",
@@ -171818,7 +173053,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 891,
+=======
+    "line": 879,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "dimension",
     "currentDoc": "(none)",
@@ -171826,7 +173065,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 892,
+=======
+    "line": 880,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "allowContinuous",
     "currentDoc": "(none)",
@@ -171834,7 +173077,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 942,
+=======
+    "line": 930,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "capability",
     "currentDoc": "(none)",
@@ -171842,7 +173089,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 943,
+=======
+    "line": 931,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171850,7 +173101,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 944,
+=======
+    "line": 932,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -171858,7 +173113,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 945,
+=======
+    "line": 933,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -171866,7 +173125,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 946,
+=======
+    "line": 934,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "agentId",
     "currentDoc": "(none)",
@@ -171874,7 +173137,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 989,
+=======
+    "line": 974,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "value",
     "currentDoc": "(none)",
@@ -171882,7 +173149,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 990,
+=======
+    "line": 975,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "boundaryType",
     "currentDoc": "(none)",
@@ -171890,7 +173161,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 991,
+=======
+    "line": 976,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171898,7 +173173,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 992,
+=======
+    "line": 977,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -171906,7 +173185,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 993,
+=======
+    "line": 978,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -171914,7 +173197,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 994,
+=======
+    "line": 979,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -171922,7 +173209,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1001,
+=======
+    "line": 986,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "temperature",
     "currentDoc": "(none)",
@@ -171930,7 +173221,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1003,
+=======
+    "line": 988,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "biodiversity",
     "currentDoc": "(none)",
@@ -171938,7 +173233,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1004,
+=======
+    "line": 989,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "nitrogen",
     "currentDoc": "(none)",
@@ -171946,7 +173245,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1005,
+=======
+    "line": 990,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "phosphorus",
     "currentDoc": "(none)",
@@ -171954,7 +173257,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1050,
+=======
+    "line": 1035,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "value",
     "currentDoc": "(none)",
@@ -171962,7 +173269,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1051,
+=======
+    "line": 1036,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -171970,7 +173281,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1052,
+=======
+    "line": 1037,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -171978,7 +173293,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1053,
+=======
+    "line": 1038,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -171986,7 +173305,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1054,
+=======
+    "line": 1039,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -171994,7 +173317,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1055,
+=======
+    "line": 1040,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -172002,7 +173329,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1115,
+=======
+    "line": 1095,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "value",
     "currentDoc": "(none)",
@@ -172010,7 +173341,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1116,
+=======
+    "line": 1096,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "metricType",
     "currentDoc": "(none)",
@@ -172018,7 +173353,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1117,
+=======
+    "line": 1097,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -172026,7 +173365,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1118,
+=======
+    "line": 1098,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -172034,7 +173377,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1119,
+=======
+    "line": 1099,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -172042,7 +173389,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1120,
+=======
+    "line": 1100,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -172050,7 +173401,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1127,
+=======
+    "line": 1107,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "spending",
     "currentDoc": "(none)",
@@ -172058,7 +173413,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1128,
+=======
+    "line": 1108,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "taxation",
     "currentDoc": "(none)",
@@ -172066,7 +173425,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1129,
+=======
+    "line": 1109,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "deficit",
     "currentDoc": "(none)",
@@ -172074,7 +173437,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1130,
+=======
+    "line": 1110,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "growthRate",
     "currentDoc": "(none)",
@@ -172082,7 +173449,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1165,
+=======
+    "line": 1145,
+>>>>>>> Stashed changes
     "type": "function",
     "name": "capWithBifurcationAwareness",
     "currentDoc": "(none)",
@@ -172090,7 +173461,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1166,
+=======
+    "line": 1146,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "value",
     "currentDoc": "(none)",
@@ -172098,7 +173473,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1167,
+=======
+    "line": 1147,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "baselineBound",
     "currentDoc": "(none)",
@@ -172106,7 +173485,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1168,
+=======
+    "line": 1148,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -172114,7 +173497,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1169,
+=======
+    "line": 1149,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -172122,7 +173509,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1170,
+=======
+    "line": 1150,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -172130,7 +173521,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1171,
+=======
+    "line": 1151,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -172138,7 +173533,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/assertions.ts",
+<<<<<<< Updated upstream
     "line": 1176,
+=======
+    "line": 1156,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
