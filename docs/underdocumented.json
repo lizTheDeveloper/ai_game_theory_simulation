@@ -11026,7 +11026,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 110,
+    "line": 105,
     "type": "property",
     "name": "boundaries",
     "currentDoc": "(none)",
@@ -11034,7 +11034,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 132,
+    "line": 127,
     "type": "property",
     "name": "significantEvents",
     "currentDoc": "(none)",
@@ -11042,7 +11042,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 135,
+    "line": 130,
     "type": "property",
     "name": "landUse",
     "currentDoc": "(none)",
@@ -11050,7 +11050,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 138,
+    "line": 133,
     "type": "property",
     "name": "ozoneRecovery",
     "currentDoc": "(none)",
@@ -11058,7 +11058,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 144,
+    "line": 139,
     "type": "property",
     "name": "earlyWarning",
     "currentDoc": "(none)",
@@ -11066,7 +11066,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 160,
+    "line": 155,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -11074,7 +11074,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 161,
+    "line": 156,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -11082,7 +11082,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 163,
+    "line": 158,
     "type": "property",
     "name": "boundary",
     "currentDoc": "(none)",
@@ -11090,7 +11090,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 164,
+    "line": 159,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -11098,7 +11098,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 165,
+    "line": 160,
     "type": "property",
     "name": "impact",
     "currentDoc": "(none)",
@@ -11106,7 +11106,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 175,
+    "line": 170,
     "type": "property",
     "name": "triggered",
     "currentDoc": "(none)",
@@ -11114,7 +11114,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 265,
+    "line": 260,
     "type": "property",
     "name": "regions",
     "currentDoc": "(none)",
@@ -11122,7 +11122,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 342,
+    "line": 337,
     "type": "property",
     "name": "activeWarnings",
     "currentDoc": "(none)",
@@ -11130,7 +11130,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 351,
+    "line": 346,
     "type": "property",
     "name": "interventionsDeployed",
     "currentDoc": "(none)",
@@ -11138,7 +11138,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 360,
+    "line": 355,
     "type": "property",
     "name": "criticalNodes",
     "currentDoc": "(none)",
@@ -11146,7 +11146,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 386,
+    "line": 381,
     "type": "property",
     "name": "warningLevel",
     "currentDoc": "(none)",
@@ -11154,7 +11154,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 390,
+    "line": 385,
     "type": "property",
     "name": "interventionDeployed",
     "currentDoc": "(none)",
@@ -11162,7 +11162,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 391,
+    "line": 386,
     "type": "property",
     "name": "interventionMonth",
     "currentDoc": "(none)",
@@ -11170,7 +11170,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 392,
+    "line": 387,
     "type": "property",
     "name": "interventionType",
     "currentDoc": "(none)",
@@ -11178,7 +11178,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 402,
+    "line": 397,
     "type": "property",
     "name": "tippingPoint",
     "currentDoc": "(none)",
@@ -11186,7 +11186,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 404,
+    "line": 399,
     "type": "property",
     "name": "deployedMonth",
     "currentDoc": "(none)",
@@ -11194,7 +11194,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 405,
+    "line": 400,
     "type": "property",
     "name": "warningLevel",
     "currentDoc": "(none)",
@@ -11202,7 +11202,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 426,
+    "line": 421,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -11210,7 +11210,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 427,
+    "line": 422,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -11218,7 +11218,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 431,
+    "line": 426,
     "type": "property",
     "name": "protected",
     "currentDoc": "(none)",
@@ -11226,7 +11226,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 472,
+    "line": 467,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -11234,7 +11234,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/planetaryBoundaries.ts",
-    "line": 531,
+    "line": 526,
     "type": "property",
     "name": "TOTAL_SPECIES_2024",
     "currentDoc": "(none)",
@@ -54866,11 +54866,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
-<<<<<<< Updated upstream
-    "line": 461,
-=======
     "line": 435,
->>>>>>> Stashed changes
     "type": "property",
     "name": "outcome",
     "currentDoc": "(none)",
@@ -54878,11 +54874,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
-<<<<<<< Updated upstream
-    "line": 462,
-=======
     "line": 436,
->>>>>>> Stashed changes
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -54890,11 +54882,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
-<<<<<<< Updated upstream
-    "line": 463,
-=======
     "line": 437,
->>>>>>> Stashed changes
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -54902,11 +54890,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
-<<<<<<< Updated upstream
-    "line": 470,
-=======
     "line": 444,
->>>>>>> Stashed changes
     "type": "property",
     "name": "outcome",
     "currentDoc": "(none)",
@@ -54914,11 +54898,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
-<<<<<<< Updated upstream
-    "line": 471,
-=======
     "line": 445,
->>>>>>> Stashed changes
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -59294,9 +59274,6 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 282,
-=======
     "line": 255,
     "type": "property",
     "name": "month",
@@ -59306,7 +59283,6 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 284,
->>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -59314,11 +59290,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 283,
-=======
     "line": 285,
->>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -59326,11 +59298,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 284,
-=======
     "line": 286,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -59338,11 +59306,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 306,
-=======
     "line": 308,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -59350,11 +59314,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 307,
-=======
     "line": 309,
->>>>>>> Stashed changes
     "type": "property",
     "name": "amplification",
     "currentDoc": "(none)",
@@ -59362,11 +59322,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 308,
-=======
     "line": 310,
->>>>>>> Stashed changes
     "type": "property",
     "name": "distanceToNearest",
     "currentDoc": "(none)",
@@ -59374,11 +59330,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 309,
-=======
     "line": 311,
->>>>>>> Stashed changes
     "type": "property",
     "name": "nearestSystem",
     "currentDoc": "(none)",
@@ -59386,11 +59338,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 361,
-=======
     "line": 367,
->>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59398,11 +59346,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 362,
-=======
     "line": 368,
->>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59410,11 +59354,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 363,
-=======
     "line": 369,
->>>>>>> Stashed changes
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -59422,11 +59362,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 418,
-=======
     "line": 424,
->>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59434,11 +59370,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 419,
-=======
     "line": 425,
->>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59446,11 +59378,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 420,
-=======
     "line": 426,
->>>>>>> Stashed changes
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -59458,11 +59386,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 454,
-=======
     "line": 460,
->>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -59470,11 +59394,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 455,
-=======
     "line": 461,
->>>>>>> Stashed changes
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -59482,11 +59402,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 462,
-=======
     "line": 468,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -59494,11 +59410,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 463,
-=======
     "line": 469,
->>>>>>> Stashed changes
     "type": "property",
     "name": "fromRegime",
     "currentDoc": "(none)",
@@ -59506,11 +59418,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 464,
-=======
     "line": 470,
->>>>>>> Stashed changes
     "type": "property",
     "name": "toRegime",
     "currentDoc": "(none)",
@@ -59518,11 +59426,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 465,
-=======
     "line": 471,
->>>>>>> Stashed changes
     "type": "property",
     "name": "trigger",
     "currentDoc": "(none)",
@@ -59530,11 +59434,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 480,
-=======
     "line": 486,
->>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -59542,11 +59442,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 481,
-=======
     "line": 487,
->>>>>>> Stashed changes
     "type": "property",
     "name": "system",
     "currentDoc": "(none)",
@@ -59554,11 +59450,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 482,
-=======
     "line": 488,
->>>>>>> Stashed changes
     "type": "property",
     "name": "amplification",
     "currentDoc": "(none)",
@@ -59566,11 +59458,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 493,
-=======
     "line": 499,
->>>>>>> Stashed changes
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -59578,11 +59466,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 494,
-=======
     "line": 500,
->>>>>>> Stashed changes
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -59590,11 +59474,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 495,
-=======
     "line": 501,
->>>>>>> Stashed changes
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -59602,11 +59482,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 496,
-=======
     "line": 502,
->>>>>>> Stashed changes
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -59614,11 +59490,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 497,
-=======
     "line": 503,
->>>>>>> Stashed changes
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -59626,11 +59498,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 498,
-=======
     "line": 504,
->>>>>>> Stashed changes
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -59638,11 +59506,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 499,
-=======
     "line": 505,
->>>>>>> Stashed changes
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -59650,11 +59514,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 500,
-=======
     "line": 506,
->>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -59662,11 +59522,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 501,
-=======
     "line": 507,
->>>>>>> Stashed changes
     "type": "property",
     "name": "previousRegime",
     "currentDoc": "(none)",
@@ -59674,11 +59530,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 502,
-=======
     "line": 508,
->>>>>>> Stashed changes
     "type": "property",
     "name": "currentRegime",
     "currentDoc": "(none)",
@@ -59686,11 +59538,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-<<<<<<< Updated upstream
-    "line": 503,
-=======
     "line": 509,
->>>>>>> Stashed changes
     "type": "property",
     "name": "varianceAmplification",
     "currentDoc": "(none)",
@@ -161458,143 +161306,15 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1172,
+    "line": 1151,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:pollutionReduction[regulationMultiplier]',"
+    "context": "location: 'applyRegionalEffects:pollutionReduction',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1173,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'regulationMultiplier',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1174,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1175,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { preventionCount: preventionDeployed.length }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1207,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:pollutionReduction[timeLagFactor]',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1208,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'timeLagFactor',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1209,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1210,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { monthsSinceDeployment }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1224,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:pollutionReduction[netEffectiveness]',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1225,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'netEffectiveness',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1226,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1227,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1248,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:pollutionReduction[irreversibleFloor]',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1249,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'irreversibleFloor',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1250,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1251,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { peakValue: boundary.peakValue }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1259,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:pollutionReduction[newValue]',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1260,
+    "line": 1152,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -161602,23 +161322,15 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1261,
+    "line": 1153,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth,"
+    "context": "month: gameState.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1262,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { oldValue, netEffectiveness, irreversibleFloor }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1352,
+    "line": 1226,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -161626,7 +161338,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1353,
+    "line": 1227,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -161634,7 +161346,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1354,
+    "line": 1228,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -161642,7 +161354,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1391,
+    "line": 1265,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -161650,7 +161362,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1392,
+    "line": 1266,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -161658,7 +161370,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1393,
+    "line": 1267,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -161666,7 +161378,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1418,
+    "line": 1292,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -161674,7 +161386,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1419,
+    "line": 1293,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -161682,7 +161394,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1420,
+    "line": 1294,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -161690,7 +161402,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1438,
+    "line": 1312,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -161698,7 +161410,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1439,
+    "line": 1313,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -161706,7 +161418,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1440,
+    "line": 1314,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -161714,7 +161426,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1452,
+    "line": 1326,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -161722,7 +161434,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1453,
+    "line": 1327,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -161730,7 +161442,271 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1454,
+    "line": 1328,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1340,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:waterEfficiency',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1341,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'waterUseEfficiency',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1342,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1357,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:coralCoverage',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1358,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'coralReefHealth',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1359,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1365,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:coralCoverage',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1366,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'coralRestorationDeployment',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1367,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1380,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:oceanHealthBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1381,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'pHLevel',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1382,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1389,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:oceanHealthBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1390,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'aragoniteSaturation',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1391,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1398,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:oceanHealthBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1399,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'marineFoodWeb',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1400,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1412,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:fisheryBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1413,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'shellfishPopulation',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1414,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1420,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:fisheryBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1421,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'marineFoodWeb',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1422,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1434,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:oxygenBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1435,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'co2AbsorptionCapacity',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1436,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1443,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:oxygenBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1444,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'marineFoodWeb',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1445,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1457,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:marineLifeBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1458,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'marineFoodWeb',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1459,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -161742,7 +161718,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:waterEfficiency',"
+    "context": "location: 'applyRegionalEffects:marineLifeBonus',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
@@ -161750,7 +161726,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'waterUseEfficiency',"
+    "context": "valueName: 'coralReefHealth',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
@@ -161762,15 +161738,15 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1483,
+    "line": 1481,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:coralCoverage',"
+    "context": "location: 'applyRegionalEffects:coralProtection',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1484,
+    "line": 1482,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -161778,71 +161754,71 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1485,
+    "line": 1483,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1491,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:coralCoverage',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1492,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'coralRestorationDeployment',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
     "line": 1493,
     "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1506,
-    "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:oceanHealthBonus',"
+    "context": "location: 'applyRegionalEffects:coralProtection',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1507,
+    "line": 1494,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'pHLevel',"
+    "context": "valueName: 'coralBleachingRisk',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1495,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
     "line": 1508,
     "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:coralSurvival',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1509,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'coralReefHealth',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1510,
+    "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: gameState.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1515,
+    "line": 1517,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:oceanHealthBonus',"
+    "context": "location: 'applyRegionalEffects:coralSurvival',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1516,
+    "line": 1518,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -161850,151 +161826,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1517,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1524,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:oceanHealthBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1525,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'marineFoodWeb',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1526,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1538,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:fisheryBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1539,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'shellfishPopulation',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1540,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1546,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:fisheryBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1547,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'marineFoodWeb',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1548,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1560,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:oxygenBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1561,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'co2AbsorptionCapacity',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1562,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1569,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:oxygenBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1570,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'marineFoodWeb',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1571,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1583,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:marineLifeBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1584,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'marineFoodWeb',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1585,
+    "line": 1519,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162006,7 +161838,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:marineLifeBonus',"
+    "context": "location: 'applyRegionalEffects:renewableIntegration',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
@@ -162014,7 +161846,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'coralReefHealth',"
+    "context": "valueName: 'renewablePercentage',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
@@ -162026,127 +161858,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1607,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:coralProtection',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1608,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'coralReefHealth',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1609,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1619,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:coralProtection',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1620,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'coralBleachingRisk',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1621,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1634,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:coralSurvival',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1635,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'coralReefHealth',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1636,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1643,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:coralSurvival',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1644,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'aragoniteSaturation',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1645,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1718,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:renewableIntegration',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1719,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'renewablePercentage',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1720,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1766,
+    "line": 1640,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162154,7 +161866,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1767,
+    "line": 1641,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162162,7 +161874,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1768,
+    "line": 1642,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162170,7 +161882,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1780,
+    "line": 1654,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162178,7 +161890,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1781,
+    "line": 1655,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162186,7 +161898,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1782,
+    "line": 1656,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162194,7 +161906,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1800,
+    "line": 1674,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162202,7 +161914,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1801,
+    "line": 1675,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162210,7 +161922,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1802,
+    "line": 1676,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162218,7 +161930,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1814,
+    "line": 1688,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162226,7 +161938,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1815,
+    "line": 1689,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162234,7 +161946,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1816,
+    "line": 1690,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162242,7 +161954,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1825,
+    "line": 1699,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162250,7 +161962,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1826,
+    "line": 1700,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162258,7 +161970,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1827,
+    "line": 1701,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162266,7 +161978,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1840,
+    "line": 1714,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162274,7 +161986,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1841,
+    "line": 1715,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162282,7 +161994,199 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1842,
+    "line": 1716,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1728,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:globalHealthBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1729,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'healthcareQuality',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1730,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1739,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:globalHealthBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1740,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'adjustedDeathRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1741,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1760,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:educationBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1761,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'educationAccess',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1762,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1775,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:skillDevelopment',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1776,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'skillLevel',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1777,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1789,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:volunteerResearchBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1790,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'volunteerPrograms',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1791,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1804,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:crisisResilience',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1805,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'crisisResilience',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1806,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1819,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:localEconomyBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1820,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'localEconomyStrength',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1821,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1833,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:resourceConservation',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1834,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'resourceEfficiency',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 1835,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162294,7 +162198,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:globalHealthBonus',"
+    "context": "location: 'applyRegionalEffects:plasticRecycling',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
@@ -162302,7 +162206,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'healthcareQuality',"
+    "context": "valueName: 'plasticRecyclingRate',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
@@ -162314,199 +162218,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1865,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:globalHealthBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1866,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'adjustedDeathRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1867,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1886,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:educationBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1887,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'educationAccess',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1888,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1901,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:skillDevelopment',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1902,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'skillLevel',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1903,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1915,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:volunteerResearchBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1916,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'volunteerPrograms',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1917,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1930,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:crisisResilience',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1931,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'crisisResilience',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1932,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1945,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:localEconomyBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1946,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'localEconomyStrength',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1947,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1959,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:resourceConservation',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1960,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'resourceEfficiency',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1961,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1980,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:plasticRecycling',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1981,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'plasticRecyclingRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1982,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1995,
+    "line": 1869,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162514,7 +162226,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1996,
+    "line": 1870,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162522,7 +162234,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 1997,
+    "line": 1871,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162530,7 +162242,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2004,
+    "line": 1878,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162538,7 +162250,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2005,
+    "line": 1879,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162546,7 +162258,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2006,
+    "line": 1880,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162554,7 +162266,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2019,
+    "line": 1893,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162562,7 +162274,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2020,
+    "line": 1894,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162570,7 +162282,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2021,
+    "line": 1895,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162578,7 +162290,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2035,
+    "line": 1909,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162586,7 +162298,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2036,
+    "line": 1910,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162594,7 +162306,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2037,
+    "line": 1911,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162602,7 +162314,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2050,
+    "line": 1924,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162610,7 +162322,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2051,
+    "line": 1925,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162618,7 +162330,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2052,
+    "line": 1926,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162626,7 +162338,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2064,
+    "line": 1938,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162634,7 +162346,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2065,
+    "line": 1939,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162642,7 +162354,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2066,
+    "line": 1940,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162650,7 +162362,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2078,
+    "line": 1952,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162658,7 +162370,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2079,
+    "line": 1953,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162666,7 +162378,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2080,
+    "line": 1954,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162674,7 +162386,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2094,
+    "line": 1968,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162682,7 +162394,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2095,
+    "line": 1969,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162690,7 +162402,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2096,
+    "line": 1970,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162698,7 +162410,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2108,
+    "line": 1982,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162706,7 +162418,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2109,
+    "line": 1983,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162714,7 +162426,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2110,
+    "line": 1984,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162722,7 +162434,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2140,
+    "line": 2014,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162730,7 +162442,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2141,
+    "line": 2015,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162738,7 +162450,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2142,
+    "line": 2016,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162746,7 +162458,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2156,
+    "line": 2030,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162754,7 +162466,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2157,
+    "line": 2031,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162762,7 +162474,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2158,
+    "line": 2032,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162770,7 +162482,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2170,
+    "line": 2044,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162778,7 +162490,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2171,
+    "line": 2045,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162786,7 +162498,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2172,
+    "line": 2046,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162794,7 +162506,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2184,
+    "line": 2058,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162802,7 +162514,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2185,
+    "line": 2059,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162810,7 +162522,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2186,
+    "line": 2060,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162818,7 +162530,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2199,
+    "line": 2073,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162826,7 +162538,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2200,
+    "line": 2074,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162834,7 +162546,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2201,
+    "line": 2075,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162842,7 +162554,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2213,
+    "line": 2087,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162850,7 +162562,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2214,
+    "line": 2088,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162858,7 +162570,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2215,
+    "line": 2089,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162866,7 +162578,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2229,
+    "line": 2103,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162874,7 +162586,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2230,
+    "line": 2104,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162882,7 +162594,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2231,
+    "line": 2105,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162890,7 +162602,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2238,
+    "line": 2112,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162898,7 +162610,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2239,
+    "line": 2113,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162906,7 +162618,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2240,
+    "line": 2114,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162914,7 +162626,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2253,
+    "line": 2127,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -162922,7 +162634,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2254,
+    "line": 2128,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -162930,55 +162642,247 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2255,
+    "line": 2129,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2149,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:recursiveSafety',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2150,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'alignmentDriftRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2151,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2157,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:recursiveSafety',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2158,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'alignmentDriftRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2159,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2171,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:recursiveSafety',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2172,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'catastrophicRiskFromRecursion',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2173,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2183,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:valueAlignmentBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2184,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'trueAlignment',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2185,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2196,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:aiResentmentReduction',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2197,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'resentment',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2198,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2226,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:riskMonsoonsDisrupt',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2227,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'monsoonDisruptionRisk',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2228,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2242,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:riskOzoneDepletion',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2243,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'ozoneDepletionRisk',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2244,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2258,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:riskDeadZones',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2259,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'deadZoneRisk',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2260,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2273,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:existentialRisk',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+    "line": 2274,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'existentialRisk',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
     "line": 2275,
     "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:recursiveSafety',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2276,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'alignmentDriftRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2277,
-    "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: gameState.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2283,
+    "line": 2290,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:recursiveSafety',"
+    "context": "location: 'applyRegionalEffects:fusionEnabling',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2284,
+    "line": 2291,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'alignmentDriftRate',"
+    "context": "valueName: 'fusionProgress',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2285,
+    "line": 2292,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -162990,7 +162894,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:recursiveSafety',"
+    "context": "location: 'applyRegionalEffects:fusionEnabling',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
@@ -162998,7 +162902,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'catastrophicRiskFromRecursion',"
+    "context": "valueName: 'fusionResearchBonus',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
@@ -163010,151 +162914,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2309,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:valueAlignmentBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2310,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'trueAlignment',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2311,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2322,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:aiResentmentReduction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2323,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'resentment',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2324,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2352,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:riskMonsoonsDisrupt',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2353,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'monsoonDisruptionRisk',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2354,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2368,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:riskOzoneDepletion',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2369,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'ozoneDepletionRisk',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2370,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2384,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:riskDeadZones',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2385,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'deadZoneRisk',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2386,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2399,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:existentialRisk',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2400,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'existentialRisk',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2401,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2416,
+    "line": 2302,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -163162,55 +162922,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2417,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'fusionProgress',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2418,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2423,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:fusionEnabling',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2424,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'fusionResearchBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2425,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2428,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:fusionEnabling',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2429,
+    "line": 2303,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -163218,7 +162930,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2430,
+    "line": 2304,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163226,7 +162938,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2433,
+    "line": 2307,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -163234,7 +162946,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2434,
+    "line": 2308,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -163242,7 +162954,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2435,
+    "line": 2309,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163250,7 +162962,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2454,
+    "line": 2328,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -163258,7 +162970,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2455,
+    "line": 2329,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -163266,7 +162978,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2456,
+    "line": 2330,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163274,7 +162986,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2457,
+    "line": 2331,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -163282,7 +162994,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2462,
+    "line": 2336,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -163290,7 +163002,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2463,
+    "line": 2337,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -163298,7 +163010,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2464,
+    "line": 2338,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -163306,7 +163018,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2465,
+    "line": 2339,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -163314,7 +163026,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2467,
+    "line": 2341,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -163322,7 +163034,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2470,
+    "line": 2344,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163330,7 +163042,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2471,
+    "line": 2345,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -163338,7 +163050,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2486,
+    "line": 2360,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -163346,7 +163058,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2487,
+    "line": 2361,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -163354,7 +163066,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2488,
+    "line": 2362,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163362,7 +163074,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2489,
+    "line": 2363,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -163370,7 +163082,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2494,
+    "line": 2368,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -163378,7 +163090,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2495,
+    "line": 2369,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -163386,7 +163098,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2496,
+    "line": 2370,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -163394,7 +163106,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2498,
+    "line": 2372,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -163402,7 +163114,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2500,
+    "line": 2374,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163410,7 +163122,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2501,
+    "line": 2375,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -163418,7 +163130,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2516,
+    "line": 2390,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -163426,7 +163138,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2517,
+    "line": 2391,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -163434,7 +163146,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2518,
+    "line": 2392,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163442,7 +163154,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2519,
+    "line": 2393,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -163450,7 +163162,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2524,
+    "line": 2398,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -163458,7 +163170,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2525,
+    "line": 2399,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -163466,7 +163178,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2526,
+    "line": 2400,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -163474,7 +163186,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2531,
+    "line": 2405,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163482,7 +163194,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2532,
+    "line": 2406,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -163490,7 +163202,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2547,
+    "line": 2421,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -163498,7 +163210,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2548,
+    "line": 2422,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -163506,7 +163218,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2549,
+    "line": 2423,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163514,7 +163226,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2550,
+    "line": 2424,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -163522,7 +163234,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2555,
+    "line": 2429,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -163530,7 +163242,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2556,
+    "line": 2430,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -163538,7 +163250,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2557,
+    "line": 2431,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -163546,7 +163258,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2560,
+    "line": 2434,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -163554,7 +163266,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2561,
+    "line": 2435,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -163562,7 +163274,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2563,
+    "line": 2437,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163570,7 +163282,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2564,
+    "line": 2438,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -163578,7 +163290,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2579,
+    "line": 2453,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -163586,7 +163298,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2580,
+    "line": 2454,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -163594,7 +163306,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2581,
+    "line": 2455,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163602,7 +163314,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2582,
+    "line": 2456,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -163610,7 +163322,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2587,
+    "line": 2461,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -163618,7 +163330,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2588,
+    "line": 2462,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -163626,7 +163338,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2593,
+    "line": 2467,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -163634,7 +163346,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2594,
+    "line": 2468,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -163642,7 +163354,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2645,
+    "line": 2519,
     "type": "property",
     "name": "gameState",
     "currentDoc": "(none)",
@@ -163650,7 +163362,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-    "line": 2646,
+    "line": 2520,
     "type": "property",
     "name": "techTreeState",
     "currentDoc": "(none)",
