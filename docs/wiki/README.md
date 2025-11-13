@@ -88,6 +88,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - **Verdict:** Address HIGH priority issues before production use
 - 📖 **Reviews:** reviews/bifurcation_architecture_review_20251113.md (365 lines), reviews/scenario_framework_architecture_review_20251113.md (286 lines)
 
+**Nov 13: Bifurcation Variance 2024-2025 Research Update** (commit 010da1c)
+- 📖 **Research Update:** Added critical 2024-2025 findings to bifurcation empirical validation
+- 🔴 **Key Finding:** Variance amplification is REAL but NOT RELIABLE (9% true positive rate per Nov 2024 meta-analysis)
+- ⚠️ **False Positives:** Non-normal system dynamics create "pseudo-bifurcations" without actual tipping points (Troude et al., Dec 2024)
+- ✅ **Formula Validation:** Current 100× cap DEFENSIBLE given theory-practice gap (theory predicts ∞, empirics show 4-5× in 2008 crisis)
+- 📊 **Sources:** arXiv:2412.01833 (false positive mechanism), arXiv:2511.01168 (9% true positive rate), arXiv:2401.09364 (traffic validation), multiple 2024-2025 AMOC studies
+- 📖 **Updated Research:** research/bifurcation_empirical_validation_20251112.md (163-line addendum with synthesis)
+- 🎯 **Conclusion:** Formula is "as good as it can be" - perfect prediction impossible, let Monte Carlo behavior validate
+
 **Nov 12: Bifurcation Empirical Validation Research** (commit b16ebe2)
 - ✅ **Issue #5 HIGH - Research Phase COMPLETE:** Empirically validated bifurcation variance amplification formula
 - 📊 **Findings:** System-dependent amplification (4-100× range) - Financial crisis 4-5×, ecosystem shifts 2-10×, climate tipping variance detected
@@ -2693,13 +2702,15 @@ When auditing or writing simulation code:
   - Bug discovery: QoL overflow caught at month 13
   - Monte Carlo validation: N=3, zero failures after fix
 
-- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 7, 2025)
+- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 11, 2025 - Nuclear winter sources upgraded to 2022-2023)
   - Maximum mortality rates for catastrophic scenarios (pandemics, nuclear winter, famine)
   - **Updated 2024-2025 research:**
     - COVID-19 excess mortality (JAMA Health Forum May 2025, Int'l J. Epidemiology June 2025)
     - Nuclear winter validation (IIASA May 2025, US National Academies ongoing review)
+  - **Nuclear winter sources (2022-2023):**
+    - Xia et al. (2022) Nature Food: 5+ billion famine deaths from US-Russia nuclear war
+    - Robock et al. (2023) ACP: Policy analysis on nuclear deterrence
   - **Key findings:** 23% of US deaths in 2023 were excess mortality, nuclear winter consensus reaffirmed (Xia 2022)
-  - Research quality: A- (75% peer-reviewed, 30% from 2024-2025)
 
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 
