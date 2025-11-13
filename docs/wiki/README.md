@@ -28,6 +28,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: Performance Test Framework Update** (commit 38e2d9b)
+- ✅ **Test Framework Migration:** Vitest → Node.js native test runner (import from 'node:test')
+- ✅ **Updated Performance Baselines:** Budgets reflect post-CRITICAL-fix reality (104ms avg, 118ms P95)
+  - Step average: 50ms → 120ms (current baseline after memory leak + O(n²) fixes)
+  - Step max: 100ms → 150ms (P95 tolerance)
+  - Phase P95: 15ms → 60ms (variance allowance)
+- ✅ **Known Slow Phases Documented:** AI Agent Actions (52ms), Social Influence (23ms), Tech Tree (13ms)
+- ✅ **Target Established:** Return to 50ms average via HIGH-1 optimization work
+- 🎯 **Purpose:** Tests now serve as regression detection, not aspirational targets
+- 📖 **Context:** Baselines established after commit 27e788fe9 (memory leak + complete O(n²) fixes)
+
 **Nov 13: Novel Entities Zero-Effectiveness Research (CRITICAL - TIER 1)** (commit 7ac8b8f)
 - 📚 **Research Complete:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
 - 🔬 **Key Finding:** 0% effectiveness is NOT a bug - thermodynamically accurate for unregulated scenario
@@ -6875,6 +6886,7 @@ Recent critical evaluations:
 - **Monte Carlo Results**: `/docs/MONTE_CARLO_RESULTS.md`
 - **[Diagnostic Findings](./DIAGNOSTIC_FINDINGS.md)**: October 2025 deep dive into 0% Utopia blockers
 - **God Mode Test**: `scripts/godModeTest.ts` - Diagnostic test deploying all 73 technologies at month 0
+- **Performance Tests**: `tests/performance/phase-budget.test.ts` - Phase and step performance regression detection
 
 #### God Mode Test (November 2025)
 
@@ -6959,6 +6971,44 @@ npx tsx scripts/godModeTest.ts 42 120 climate-first
 4. **Technology alone is necessary but insufficient** - social/governance/cultural evolution required
 
 **Status:** 🟡 DIAGNOSTIC - Not for production Monte Carlo runs. For identifying model gaps and testing interventions.
+
+#### Performance Budget Tests (November 2025)
+
+**Purpose:** Automated regression detection for simulation performance. Ensures phases stay within performance budgets as codebase evolves.
+
+**File:** `tests/performance/phase-budget.test.ts`
+
+**Test Framework:** Node.js native test runner (migrated from vitest November 13, 2025)
+
+**Performance Budgets** (Updated November 13, 2025):
+- **Step average:** 120ms (baseline: 104ms after memory leak + O(n²) fixes)
+- **Step max (P95):** 150ms (baseline P95: 118ms)
+- **Phase P95:** 60ms (generous variance allowance)
+- **Step variance ratio:** <3× (max/avg ratio)
+
+**Context:** Budgets increased from 50ms/100ms after CRITICAL fixes (commit 27e788fe9) resolved memory leak and 13 O(n²) patterns. Current budgets reflect realistic baselines, not aspirational targets.
+
+**Known Slow Phases** (Documented with Justification):
+1. **AI Agent Actions:** 52ms (complex decision trees over AI agents)
+2. **Social Influence Update:** 23ms (network effects calculation)
+3. **Technology Tree Update:** 13ms (dependency graph traversal)
+
+**Target:** Return to 50ms average step time through HIGH-1 optimization work.
+
+**Test Coverage:**
+- Phase average budget (<10ms average, with documented exceptions)
+- Phase P95 variance (<60ms to catch unpredictable spikes)
+- Step average budget (<120ms regression threshold)
+- Step max budget (<150ms no individual spikes)
+- Step variance ratio (<3× to detect O(n²) scaling issues)
+- Performance report (informational hotspot identification)
+
+**Usage:**
+```bash
+npm test performance
+```
+
+**Status:** 🟢 PASSING - Serves as regression detection baseline post-CRITICAL fixes
 
 #### Phase 3 Scenarios - Government Priority Testing (November 2025)
 
