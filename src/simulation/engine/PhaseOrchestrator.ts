@@ -218,12 +218,14 @@ export class PhaseOrchestrator {
           };
 
           // Update statistics
+          // MEMORY LEAK FIX (Nov 13, 2025): Cap samples array at 1000 most recent entries
+          // Previous: samples grew unbounded (12M entries in 100-run Monte Carlo)
           this.phaseTimings.set(phase.name, {
             totalMs: existing.totalMs + elapsed,
             callCount: existing.callCount + 1,
             minMs: Math.min(existing.minMs, elapsed),
             maxMs: Math.max(existing.maxMs, elapsed),
-            samples: [...existing.samples, elapsed]
+            samples: [...existing.samples.slice(-999), elapsed]
           });
 
           // Warn on slow phases (>10ms threshold)
@@ -281,6 +283,11 @@ export class PhaseOrchestrator {
     if (this.enableTiming) {
       const stepElapsed = performance.now() - stepStartTime;
       this.stepTimings.push({ month: state.currentMonth, totalMs: stepElapsed });
+
+      // MEMORY LEAK FIX (Nov 13, 2025): Cap stepTimings at 100 most recent entries
+      if (this.stepTimings.length > 100) {
+        this.stepTimings.shift();
+      }
 
       // Log step summary (minimal overhead)
       if (stepElapsed > 50) {  // Only log if step took >50ms
