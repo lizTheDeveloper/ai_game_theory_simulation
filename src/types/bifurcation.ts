@@ -220,6 +220,11 @@ export interface BifurcationState {
       distanceToNearest: number;  // Distance to nearest threshold (0.0 - 1.0)
       nearestSystem: string;  // Which system is nearest to threshold
     }>;
+
+    // Total amplification per system (Nov 13, 2025 - HIGH-2 instrumentation)
+    // Tracks cumulative amplification applied by each threshold system
+    // Required for validating mortality calibration (CRITICAL-2 fix validation)
+    totalAmplificationBySystem: Record<string, number>;  // { environmental: 45.2, social: 123.7, ... }
   };
 }
 
@@ -310,6 +315,14 @@ export function initializeBifurcationState(rng: () => number): BifurcationState 
       regimeShiftEvents: [],
       avgDistanceToThresholds: 1.0,
       amplificationTimeSeries: [],  // Nov 13, 2025 - time series tracking
+      totalAmplificationBySystem: {
+        environmental: 0,
+        social: 0,
+        economic: 0,
+        governance: 0,
+        flourishing: 0,
+        technology: 0,
+      },
     },
   };
 }
