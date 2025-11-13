@@ -28,6 +28,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: Scenario Type Safety Enhancement** (commit 3fb5f9e)
+- ✅ **Type Safety Improved:** qolBoosts interface replaced string indexer with explicit 17 QoL dimension fields
+- ✅ **Compile-Time Validation:** Field name typos now caught at compile time (prevents runtime bugs)
+- ✅ **Tier Organization:** Fields grouped by tier (Basic Needs, Psychological, Social, Health, Environmental)
+- ✅ **Editor Support:** Autocomplete now suggests only valid QoL dimensions
+- ✅ **Backward Compatible:** Existing scenario usages continue to work
+- 📖 **Context:** Quality improvement to ScenarioStartingConditions interface in src/types/scenarios.ts
+- 🎯 **Impact:** Fixes Issue #119 - strengthens type safety for scenario configuration
+
 **Nov 11: Planetary Boundaries 2023 Framework Research Update** (commit a9c5a91)
 - 📚 **New Research:** Richardson et al. (2023) planetary boundaries framework documented
 - 📊 **Key Finding:** 6 of 9 boundaries transgressed (vs previous 7/9 - status clarification needed)
