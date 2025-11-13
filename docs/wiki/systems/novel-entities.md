@@ -655,6 +655,42 @@ chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (endocrineDisrupt
 
 ---
 
-**Last Updated:** October 11, 2025
-**Implementation Status:** ✅ Complete and validated
-**Next Steps:** Per-chemical tracking + multigenerational effects (requires TIER 2+)
+## Recent Research (November 2025)
+
+**Zero-Effectiveness Analysis (Nov 13, 2025):**
+God mode testing revealed 0% effectiveness for Novel Entities boundary despite 7 pollution technologies deployed. Research validated this is **NOT a bug** but thermodynamically and economically accurate.
+
+**Key Findings (16 peer-reviewed sources):**
+1. **Energy Trap:** Removing PFAS at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP) - thermodynamically infeasible
+2. **Concentration Problem:** Technologies work at mg/L (labs), environment is pg/L-ng/L (10^6-10^9× dilution), cost scales 12-47× for dilute streams
+3. **Irreversibility:** Microplastic ocean recovery takes hundreds of years even if input stopped, <10% reversible fraction
+4. **Montreal Protocol Lesson:** Production ban accounts for 90-95% of ozone recovery, bank destruction (cleanup) only 5-10%
+5. **Rebound Effects:** Waste generation +81% (2023-2050) despite technology (Jevons paradox)
+
+**Model Implications:**
+- Current 0% effectiveness is CORRECT for unregulated scenario
+- Remediation requires BOTH technology AND production regulation
+- Prevention:Remediation effectiveness ratio = 10:1 to 20:1
+- Maximum recovery: ~10% (90% irreversible floor)
+
+**Planned Model Redesign:**
+- Add 3 prevention technologies (TIER 0-1): PFAS ban, plastic phase-out, chemical substitution
+- Gate remediation effectiveness by regulation deployment (0.01× → 1.0× multiplier)
+- Implement 90% irreversible floor (asymptotic approach to minimum contamination)
+- Add energy constraint (cleanup gated by renewable surplus)
+- Add concentration factor (dilute environmental vs concentrated point sources)
+- Estimated implementation: 11-16 hours (3-4 days)
+
+**Research Files:**
+- Analysis: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 71 sources)
+- Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
+- Verification: `research/verification_7ac8b8f_20251113.md` (tracks citation + claim verification)
+- Review: `reviews/novel_entities_research_critique_20251113.md` (Grade B+, Quality Gate 1 PASSED)
+
+**Status:** Research + validation complete, awaiting implementation (CRITICAL priority)
+
+---
+
+**Last Updated:** November 13, 2025
+**Implementation Status:** ✅ Core system complete, 🔄 Zero-effectiveness redesign pending (CRITICAL)
+**Next Steps:** Implement prevention-gated remediation model (TIER 1 priority), then per-chemical tracking + multigenerational effects (TIER 2+)
