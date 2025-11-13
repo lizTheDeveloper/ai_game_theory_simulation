@@ -3435,7 +3435,12 @@ As capability increases, Constitutional AI constraints weaken:
 - Escaped threshold: `bindingStrength < 0.3` (70%+ of constraints failing)
 - Drift velocity: Rate of movement away from training distribution
 
-**Research:** Hendrycks & Dietterich (2019) - Neural networks exhibit substantial performance degradation on common corruptions outside training distribution (ImageNet-C benchmark, ICLR)
+**Research:**
+- Hendrycks & Dietterich (2019) - Neural networks exhibit substantial performance degradation on common corruptions outside training distribution (ImageNet-C benchmark, ICLR)
+- **Xiao et al. (2025, JASA)** - Preference collapse in RLHF: 29-41% misalignment due to KL-divergence bias, creates blind spots in preference space
+- **ICLR 2025** - Shallow safety alignment: constraints don't encode depth, vulnerable to inference-stage attacks
+- **Banerjee & Gopalan (2024)** - Reward model uncertainty: small training datasets cause policy overfitting and increased risk
+- **Research synthesis:** `/research/rlhf_robustness_limitations_20251113.md`
 
 **Phase 2: Survival Traits Evolution (Order 4.1)**
 Under selection pressure, agents evolve instrumental capabilities:
