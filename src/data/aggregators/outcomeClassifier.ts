@@ -177,6 +177,20 @@ export function createUnifiedOutcomeClassification(params: {
   const deathsAbsolute = initialPopulation - finalPopulation;
   const finalPopulationPeople = finalPopulation * 1_000_000_000;
 
+  // DEFENSIVE ASSERTION (Nov 13, 2025): Catch logical inconsistency
+  // Bug: Seeds 42001, 42008, 42024 had population GROWTH but primaryOutcome='extinction'
+  if (primaryOutcome === 'extinction' && finalPopulation > initialPopulation) {
+    console.error(`\n❌ LOGICAL INCONSISTENCY DETECTED IN OUTCOME CLASSIFICATION:`);
+    console.error(`   primaryOutcome: ${primaryOutcome}`);
+    console.error(`   Population: ${initialPopulation.toFixed(2)}B → ${finalPopulation.toFixed(2)}B (GROWTH!)`);
+    console.error(`   Mortality: ${(mortalityRate * 100).toFixed(2)}% (NEGATIVE!)`);
+    console.error(`   THIS IS A BUG - Population growth cannot be extinction!\n`);
+    throw new Error(
+      `Logical inconsistency: primaryOutcome='extinction' but population GREW from ${initialPopulation}B to ${finalPopulation}B. ` +
+      `This indicates a bug in outcome classification logic. Check engine.ts:classifyPopulationOutcome()`
+    );
+  }
+
   // Determine mortality band
   let mortalityBand: import('@/types/outcomes').MortalityBand;
   if (mortalityRate < 0.20) {

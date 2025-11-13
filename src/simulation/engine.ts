@@ -178,13 +178,23 @@ import { assertStateProperty } from './utils/assertions';  // Defensive fallback
  * Toba Supervolcano (~99.9% mortality, humanity survived)
  */
 function classifyPopulationOutcome(
-  currentPop: number, 
+  currentPop: number,
   initialPop: number,
   state: GameState
 ): OutcomeType {
   const mortality = 1 - (currentPop / initialPop);
   const currentPeople = currentPop * 1_000_000_000;
-  
+
+  // DEFENSIVE ASSERTION (Nov 13, 2025): Catch population growth edge case
+  // Bug: Seeds 42001, 42008, 42024 showed population GROWTH but were classified as extinction
+  if (mortality < 0) {
+    console.log(`   ✅ POPULATION GROWTH DETECTED: ${currentPop.toFixed(2)}B (${(mortality * 100).toFixed(2)}% negative mortality)`);
+    console.log(`      This is NOT extinction - population is increasing!\n`);
+    // Population growth means definitely not extinction - skip to status quo
+    // (will be refined by multi-paradigm classification later)
+    return 'status_quo';
+  }
+
   // EXTINCTION: <10K people OR >99.99% mortality
   if (currentPeople < 10_000 || mortality > 0.9999) {
     console.log(`   💀 EXTINCTION: Humanity extinct (${currentPeople.toFixed(0)} people, ${(mortality * 100).toFixed(2)}% mortality)\n`);
@@ -994,6 +1004,19 @@ export class SimulationEngine {
 
     // If we found an actual outcome during simulation, use that
     if (actualOutcome) {
+      // DEFENSIVE ASSERTION (Nov 13, 2025): Check for extinction with population growth
+      if (actualOutcome === 'extinction' && finalPopulation > savedInitialPopulation) {
+        console.error(`\n❌ BUG DETECTED IN actualOutcome LOGIC:`);
+        console.error(`   actualOutcome: ${actualOutcome}`);
+        console.error(`   actualOutcomeReason: ${actualOutcomeReason}`);
+        console.error(`   Population: ${savedInitialPopulation}B → ${finalPopulation}B (GROWTH!)`);
+        console.error(`   This should NEVER happen - extinction requires population decline!\n`);
+        throw new Error(
+          `Bug in actualOutcome logic: actualOutcome='extinction' but population GREW. ` +
+          `Reason: ${actualOutcomeReason}. Check where actualOutcome is set in run() method.`
+        );
+      }
+
       finalOutcome = actualOutcome;
       // Use the corresponding probability
       if (actualOutcome === 'utopia') finalOutcomeProbability = outcomes.utopiaProbability;
@@ -1008,7 +1031,12 @@ export class SimulationEngine {
       // NEW (Oct 20, 2025): 7-tier + Multi-Paradigm DUI outcome classification
       // PRIMARY: Use population-based 7-tier classification (checks mortality, not just AI risk)
       // SECONDARY: Add multi-paradigm nuance for utopia/dystopia outcomes
+      console.log(`\n[DEBUG] Calling classifyPopulationOutcome:`);
+      console.log(`        finalPopulation: ${finalPopulation}B`);
+      console.log(`        savedInitialPopulation: ${savedInitialPopulation}B`);
+      console.log(`        mortality: ${(1 - (finalPopulation / savedInitialPopulation)) * 100}%`);
       const classifiedOutcome = classifyPopulationOutcome(finalPopulation, savedInitialPopulation, state);
+      console.log(`        classifiedOutcome: ${classifiedOutcome}\n`);
 
       // Map 7-tier classification to final outcomes with multi-paradigm nuance
       if (classifiedOutcome === 'extinction') {
