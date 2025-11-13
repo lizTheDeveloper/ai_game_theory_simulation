@@ -90,13 +90,201 @@ function triggerBoundaryRecovery(
 }
 
 /**
+ * Calculate Novel Entities remediation effectiveness with gating multipliers
+ *
+ * Research: Ling et al. (2024), Cousins et al. (2022), Kane et al. (2022)
+ *
+ * Key findings:
+ * - Remediation WITHOUT prevention is thermodynamically futile (0-2% effectiveness)
+ * - Energy requirements: $20-7,000 trillion/year at current emissions (0.2-66× global GDP)
+ * - Concentration penalty: Technologies work at mg/L, environment is ng/L (10^6-10^9× dilution)
+ * - Time lag: 10-30 years to full deployment scale
+ * - Rebound effect: Cleanup enables increased production (Jevons paradox)
+ *
+ * 5 Multipliers (research-backed):
+ * 1. Regulation multiplier (0.01-1.0): Prevention tech deployed?
+ * 2. Energy constraint (0.0-1.0): Sufficient renewable surplus?
+ * 3. Concentration factor (0.001-1.0): Dilute environmental vs concentrated point sources
+ * 4. Time lag (0.0-1.0): Years to full deployment scale (10-30 years)
+ * 5. Rebound effect (0.3-1.0): Cleanup → increased production offset
+ *
+ * @param baseEffectiveness - Base technology effectiveness (0-1)
+ * @param gameState - Current game state
+ * @param techTreeState - Tech tree state
+ * @param techId - Technology ID (for tech-specific properties)
+ * @param deploymentLevel - Current deployment level (0-1)
+ * @param rng - Deterministic RNG function
+ * @returns Gated effectiveness (0-1)
+ */
+function calculateNovelEntitiesRemediationEffectiveness(
+  baseEffectiveness: number,
+  gameState: GameState,
+  techTreeState: TechTreeState,
+  techId: string,
+  deploymentLevel: number,
+  rng: () => number
+): number {
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation');
+  }
+
+  // 1. REGULATION MULTIPLIER (0.01 → 1.0 based on prevention tech deployed)
+  // Research: Montreal Protocol - prevention 10-20× more effective than cleanup
+  const pfasBanDeployed = isTechDeployed(techTreeState, 'global_pfas_ban');
+  const plasticPhaseoutDeployed = isTechDeployed(techTreeState, 'plastic_production_phaseout');
+  const substitutionDeployed = isTechDeployed(techTreeState, 'green_chemistry_substitution');
+
+  // Weighted contribution from each prevention technology
+  // PFAS ban: 50% weight (addresses flow), Plastic phaseout: 30% (microplastics), Substitution: 20% (other chemicals)
+  const regulationLevel = (
+    (pfasBanDeployed ? 0.5 : 0.0) +
+    (plasticPhaseoutDeployed ? 0.3 : 0.0) +
+    (substitutionDeployed ? 0.2 : 0.0)
+  );
+
+  // Minimum 1% effectiveness (point sources only, without prevention)
+  const regulationMultiplier = assertFinite(Math.max(0.01, regulationLevel), {
+    location: 'calculateNovelEntitiesRemediationEffectiveness:regulationMultiplier',
+    valueName: 'regulationMultiplier',
+    month: gameState.currentMonth,
+    additionalInfo: { pfasBan: pfasBanDeployed, plasticPhaseout: plasticPhaseoutDeployed, substitution: substitutionDeployed }
+  });
+
+  // 2. ENERGY CONSTRAINT MULTIPLIER (0.0-1.0 function of renewable surplus)
+  // Research: Ling 2024 - $20-7,000 trillion/year at current emissions = 4-40% of global energy
+  // Conservative estimate: 10,000 TWh/year for PFAS remediation at scale (~30% of global electricity)
+
+  // Get tech definition for energy requirement
+  const tech = getTechById(techId);
+  const energyRequired = tech?.energyRequirement?.kWhPerM3 ?
+    tech.energyRequirement.kWhPerM3 * 10_000_000 / 1_000_000_000 : // Convert to TWh/year (assuming 10M m³/year treated)
+    10_000; // Default: 10,000 TWh/year (conservative estimate for global-scale remediation)
+
+  // Calculate renewable surplus (renewable capacity - current consumption)
+  // ARCHITECTURAL NOTE: This calculation is simplified. In future iterations, integrate with energy system model.
+  const energySystem = gameState.resourceEconomy?.energy;
+  const totalRenewableCapacity = energySystem ? (
+    (energySystem.capacity.solar || 0) +
+    (energySystem.capacity.wind || 0) +
+    (energySystem.capacity.hydro || 0) +
+    (energySystem.capacity.fusion || 0)
+  ) : 0;
+
+  const renewableCapacity = totalRenewableCapacity > 0 ? totalRenewableCapacity : 1000; // Default: 1,000 TWh total renewable capacity
+  const currentConsumption = energySystem?.totalDemand || 30_000; // Use actual demand or default to 30,000 TWh/year
+  const renewableSurplus = Math.max(0, renewableCapacity - currentConsumption);
+
+  const energyMultiplier = assertFinite(Math.min(1.0, renewableSurplus / energyRequired), {
+    location: 'calculateNovelEntitiesRemediationEffectiveness:energyMultiplier',
+    valueName: 'energyMultiplier',
+    month: gameState.currentMonth,
+    additionalInfo: { renewableSurplus, energyRequired, renewableCapacity }
+  });
+
+  // 3. CONCENTRATION FACTOR (0.001-1.0 dilution penalty)
+  // Research: Fennell 2024 - Technologies work at mg/L (wastewater), environment is pg/L to ng/L (10^6-10^9× dilution)
+  // Wastewater treatment: 74-100% effective BEFORE environmental release (Singh 2024)
+  // Ocean/groundwater cleanup: 0.1-1% effective (dilution + distribution)
+
+  const worksOnDiluteStreams = tech?.minimumConcentration?.ngPerL ?
+    tech.minimumConcentration.ngPerL < 100_000 : // < 0.1 mg/L = dilute stream tech
+    true; // Default: assume dilute stream (conservative)
+
+  // Concentrated sources (wastewater, industrial): 1.0 multiplier
+  // Dilute environmental (ocean, groundwater, atmosphere): 0.001 multiplier (6-9 orders of magnitude penalty)
+  // ⚠️ HIGH UNCERTAINTY: 0.001 derived from concentration ratios, not direct measurement. Range: 0.0001-0.01 (Quality Gate 2)
+  const concentrationMultiplier = worksOnDiluteStreams ? 0.001 : 1.0;
+
+  // 4. TIME LAG FACTOR (0.0-1.0 deployment timescale)
+  // Research: Montreal Protocol took 12 years to full compliance. Plastic phase-out estimated 20-30 years.
+  // ⚠️ HIGH UNCERTAINTY: 30-year timelag assumed for remediation scale-up. Range: 10-30 years (Quality Gate 2)
+
+  // Get deployment start month from tech tree state
+  const deployment = techTreeState.regionalDeployment['global']?.find(d => d.techId === techId);
+  const deploymentStartMonth = (deployment as any)?.deploymentStartMonth || gameState.currentMonth;
+  const monthsSinceDeployment = Math.max(0, gameState.currentMonth - deploymentStartMonth);
+
+  // 30 years to full deployment scale (360 months)
+  // ⚠️ HIGH UNCERTAINTY: Sensitivity range 10-30 years (120-360 months)
+  const timeLagMonths = 360; // 30 years
+  const timeLagFactor = assertFinite(Math.min(1.0, monthsSinceDeployment / timeLagMonths), {
+    location: 'calculateNovelEntitiesRemediationEffectiveness:timeLagFactor',
+    valueName: 'timeLagFactor',
+    month: gameState.currentMonth,
+    additionalInfo: { monthsSinceDeployment, timeLagMonths, deploymentStartMonth }
+  });
+
+  // 5. REBOUND EFFECT (Jevons paradox: 0.3-1.0)
+  // Research: NVIDIA GPU production +1M units 2023→2024 despite efficiency gains
+  // UNEP 2024: Waste generation grows 81% (2023-2050) despite technology
+  // ⚠️ HIGH UNCERTAINTY: Rebound factor based on analogous systems. Range: 0.5-0.9 (Quality Gate 2)
+
+  // If prevention tech deployed, rebound is suppressed (production capped)
+  // If no prevention, cleanup → increased production (70% offset)
+  const reboundFactor = 0.7; // 70% of cleanup offset by induced production (moderate estimate)
+  const reboundMultiplier = 1.0 - (reboundFactor * (1.0 - regulationMultiplier));
+
+  // FINAL EFFECTIVENESS CALCULATION
+  const gatedEffectiveness = assertFinite(
+    baseEffectiveness *
+    regulationMultiplier *
+    energyMultiplier *
+    concentrationMultiplier *
+    timeLagFactor *
+    reboundMultiplier,
+    {
+      location: 'calculateNovelEntitiesRemediationEffectiveness:finalEffectiveness',
+      valueName: 'gatedEffectiveness',
+      month: gameState.currentMonth,
+      additionalInfo: {
+        baseEffectiveness,
+        regulationMultiplier,
+        energyMultiplier,
+        concentrationMultiplier,
+        timeLagFactor,
+        reboundMultiplier,
+        techId
+      }
+    }
+  );
+
+  // DEFENSIVE LOGGING (monthly, if effectiveness differs significantly from base)
+  if (Math.abs(gatedEffectiveness - baseEffectiveness) > 0.05) {
+    console.log(`  ☢️ Novel Entities Gating: ${techId} | Base: ${(baseEffectiveness * 100).toFixed(1)}% → Gated: ${(gatedEffectiveness * 100).toFixed(1)}%`);
+    console.log(`     Regulation: ${(regulationMultiplier * 100).toFixed(0)}% | Energy: ${(energyMultiplier * 100).toFixed(0)}% | Concentration: ${(concentrationMultiplier * 100).toFixed(1)}% | Time: ${(timeLagFactor * 100).toFixed(0)}% | Rebound: ${(reboundMultiplier * 100).toFixed(0)}%`);
+  }
+
+  return gatedEffectiveness;
+}
+
+/**
+ * Check if a technology is deployed globally
+ *
+ * @param techTreeState - Tech tree state
+ * @param techId - Technology ID to check
+ * @returns true if deployed at any level > 0
+ */
+function isTechDeployed(techTreeState: TechTreeState, techId: string): boolean {
+  return techTreeState.regionalDeployment['global']?.some(d => d.techId === techId && d.deploymentLevel > 0) ?? false;
+}
+
+/**
  * Apply all technology effects to game state
  * Called each month after tech deployment actions
+ *
+ * @param gameState - Game state (mutated)
+ * @param techTreeState - Tech tree state
+ * @param rng - Deterministic RNG function (REQUIRED for Novel Entities gating logic)
  */
 export function applyAllTechEffects(
   gameState: GameState,
-  techTreeState: TechTreeState
+  techTreeState: TechTreeState,
+  rng: () => number
 ): void {
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation (applyAllTechEffects)');
+  }
+
   // Aggregate effects by type
   const globalEffects: Map<string, number> = new Map();
   const regionalEffects: Map<string, Map<string, number>> = new Map();
@@ -115,9 +303,30 @@ export function applyAllTechEffects(
       for (const [effectName, effectValue] of sortedEffects) {
         let scaledValue = effectValue * deployment.deploymentLevel;
 
-        // CRITICAL FIX (Nov 11, 2025): Energy/concentration constraints for cleanup tech
-        // Apply constraints BEFORE aggregating effects
-        if (tech.techType === 'cleanup' && effectName === 'pollutionReduction') {
+        // CRITICAL FIX (Nov 13, 2025): Novel Entities remediation gating logic
+        // Research: Ling 2024, Cousins 2022, Kane 2022
+        // Cleanup without prevention is thermodynamically futile (0-2% effectiveness)
+        const isNovelEntitiesRemediation = effectName === 'pfasReduction' ||
+                                          effectName === 'microplasticReduction' ||
+                                          effectName === 'plasticReduction' ||
+                                          (tech.techType === 'cleanup' && tech.category === 'pollution');
+
+        if (isNovelEntitiesRemediation) {
+          // Apply 5-multiplier gating logic for Novel Entities remediation
+          const gatedEffectiveness = calculateNovelEntitiesRemediationEffectiveness(
+            effectValue,
+            gameState,
+            techTreeState,
+            deployment.techId,
+            deployment.deploymentLevel,
+            rng
+          );
+          scaledValue = gatedEffectiveness * deployment.deploymentLevel;
+        }
+
+        // LEGACY: Old energy/concentration constraints for other cleanup tech
+        // TODO: Migrate all cleanup tech to gating logic system
+        else if (tech.techType === 'cleanup' && effectName === 'pollutionReduction') {
           const boundary = gameState.planetaryBoundariesSystem?.boundaries?.novel_entities;
 
           if (boundary && tech.energyRequirement) {

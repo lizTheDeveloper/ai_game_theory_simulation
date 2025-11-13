@@ -93,6 +93,12 @@ export interface PlanetaryBoundary {
   stabilizing?: boolean;            // True if deterioration stopped (biosphere: extinction rate declining)
   surfaceRecovered?: boolean;       // True for surface recovery only (ocean acidification: surface vs deep)
   inputsStopped?: boolean;          // True if new pollution stopped (novel entities: PFAS/microplastics)
+
+  // === IRREVERSIBILITY TRACKING (Nov 13, 2025) ===
+  // Research: Cousins et al. (2022), Kane et al. (2022)
+  // Novel Entities (PFAS, microplastics) have irreversible distribution
+  // Peak contamination sets floor - cannot clean below ~90% of peak
+  peak?: number;                    // Historical maximum value (for irreversibility floor calculation)
 }
 
 /**

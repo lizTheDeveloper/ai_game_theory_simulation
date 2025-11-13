@@ -193,9 +193,9 @@ export function updateTechTree(
   
   // 4. Calculate and apply tech effects
   const { applyAllTechEffects, logTechEffects } = require('./effectsEngine');
-  applyAllTechEffects(gameState, techTreeState);
+  applyAllTechEffects(gameState, techTreeState, rng);
   logTechEffects(gameState, techTreeState);
-  
+
   return unlockEvents;
 }
 
