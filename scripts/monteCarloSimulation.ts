@@ -1111,7 +1111,9 @@ if (nestedMonteCarlo) {
     recoveryTimeline,
     mechanismSummary,
     // NEW (Oct 20, 2025): Add Multi-Paradigm DUI trajectory (month-by-month)
-    paradigmTrajectory
+    paradigmTrajectory,
+    // NEW (Nov 13, 2025): Add bifurcation metrics for validation (Issue #5)
+    bifurcationMetrics: finalState.bifurcationState?.metrics
   };
   fs.writeFileSync(runLogFile, JSON.stringify(eventLogData, null, 2), 'utf8');
   
@@ -2089,7 +2091,9 @@ if (nestedMonteCarlo) {
     recoveryTimeline,
     mechanismSummary,
     // NEW (Oct 20, 2025): Add Multi-Paradigm DUI trajectory (month-by-month)
-    paradigmTrajectory
+    paradigmTrajectory,
+    // NEW (Nov 13, 2025): Add bifurcation metrics for validation (Issue #5)
+    bifurcationMetrics: finalState.bifurcationState?.metrics
   };
   fs.writeFileSync(runLogFile, JSON.stringify(eventLogData, null, 2), 'utf8');
 
