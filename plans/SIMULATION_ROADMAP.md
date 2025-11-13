@@ -39,6 +39,32 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **AI Governance International Coordination (2023-2025)** - MEDIUM (Added Nov 13, 2025)
+     - **Context:** International AI governance coordination mechanisms documented (Bletchley Summit, Seoul Summit, AI Safety Institutes)
+     - **Research Delivered:** 503-line analysis of AI governance summits, voluntary commitments, enforcement mechanisms
+     - **Key Claims Requiring Verification:**
+       - Bletchley Declaration: 28 countries + EU signed (Nov 2023) - need full signatory list, commitment text
+       - Seoul Summit: May 21-22, 2024 outcomes - need outcome documents, compliance data
+       - US AI Safety Institute: Established Nov 2023, ~$10M budget, Elizabeth Kelly director - verify details
+       - Voluntary commitments: Pre-deployment testing, red-teaming, transparency reports - verify compliance
+       - Cooperation propensity: 0.75 (democracies), 0.70 (tech leaders), 0.35 (authoritarian) - DERIVED, needs research backing
+       - Enforcement strength: 0.15 (pre-crisis voluntary) - ANALOGICAL, needs quantitative research
+       - Implementation lag: 6 months (AISI), 12 months (transparency reports) - EMPIRICAL, needs verification
+       - Defection risk: 0.35 (voluntary regime) - REASONING-BASED, needs research support
+     - **Verification File:** research/verification_45fef98_20251113.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Should international cooperation be new phase or extend governanceQuality.ts?
+       - How do cooperation/defection dynamics interact with existing government systems?
+       - Crisis-accelerated governance: How to model shift from voluntary (0.15) to binding (0.80)?
+     - **Assignments:**
+       - Sylvia: Citation verification (government documents, summit outcomes) + claim verification (parameter derivation methodology)
+       - Cynthia: Historical analogies (Montreal Protocol, climate governance), treaty compliance research
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** MEDIUM - Fills gap in government cooperation modeling, NOT YET IMPLEMENTED
+     - **Status:** ⚠️ DRAFT RESEARCH - WebSearch unavailable during creation, all claims need web verification
+     - **Research File:** research/ai_governance_international_coordination_2023_2025.md (503 lines, 60+ claims)
+     - **Commit:** 45fef98
+
    - **Mechanistic Interpretability & Time-Dependent Detection Rates** - HIGH (Added Nov 13, 2025)
      - **Context:** New research suggests detection rates should improve 30%→90% (2024-2030) as interpretability tools mature
      - **Issue:** Current detection systems use investment-based scaling, not time-dependent improvement
