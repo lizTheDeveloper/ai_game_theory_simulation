@@ -4,7 +4,6 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
-<<<<<<< HEAD
 ## ✅ Recent Changes (November 12, 2025)
 
 **🤖 INFRASTRUCTURE: Intelligent Auto-Remediation for Stuck Orchestrator States** (Nov 12, 2025, commit 9764a32)
@@ -219,9 +218,9 @@ Without risking data loss or naive destructive operations.
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
-=======
-=======
->>>>>>> origin/auto/researcher-20251111_003001
+
+---
+
 ## ✅ Recent Changes (November 11, 2025)
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
@@ -254,10 +253,6 @@ Without risking data loss or naive destructive operations.
 - research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
-<<<<<<< HEAD
->>>>>>> origin/auto/researcher-20251111_003001
-=======
->>>>>>> origin/auto/researcher-20251111_003001
 
 ---
 
