@@ -28,6 +28,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 13: Bifurcation Time-Based Scaling Validation (BLOCKED - C-)** (commit e8eda5a)
+- 📊 **Validation Status:** BLOCKED at Quality Gate 2 (mortality overshoot + instrumentation gap)
+- 🔬 **Analysis:** Priya quantitative review of Issue #5 bifurcation time-based scaling (N=10, 240 months)
+- ✅ **Successes:** Time-based scaling working (7.37× early → 2.60× late, 65% dampening), amplification research-realistic (15.85× max within 2-40× bounds), extinction reduced (20% → 10%)
+- ❌ **Critical Failures:** Mortality 96.95% (target: 43-58%, +39pp overshoot), instrumentation gap (9/10 runs missing metrics due to parallel execution bug)
+- 🎯 **Root Cause Hypothesis:** Time-based sigmoid affects amplification variance but NOT mortality calculations (disconnected paths)
+- 🚧 **Blocking Issues:** (1) Mortality overshoot 6× higher than research target, (2) Only 1/10 runs exported bifurcation metrics (parallel execution state isolation bug)
+- 📋 **Next Steps for Roy:** Trace mortality calculation path (verify timeFactor reaches it), disable parallel execution temporarily, raise bifurcation thresholds (prevent month-0 collapse), enable population recovery mechanics
+- 🎓 **Grade:** C- (implementation works correctly, but disconnected from mortality stabilization)
+- 📖 **Full Analysis:** reviews/bifurcation_validation_priya_analysis_20251113.md (504 lines)
+- 📖 **Quick Reference:** reviews/bifurcation_validation_summary.txt
+
 **Nov 13: End-Game Extinction Logic Fix** (commit c61a4cb)
 - ✅ **Bug Fixed:** End-game scenarios (AI civil war, misaligned AI dominance) locked outcome to 'extinction' without verifying population actually declined below 10K threshold
 - 🔍 **Root Cause:** 4 lockOutcome('extinction') paths didn't check population, causing assertion failure when population remained high
@@ -715,25 +727,26 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **November 13, 2025**
 
-**✅ BIFURCATION EMPIRICAL VALIDATION COMPLETE** (commit 48e57e2)
-- **Issue #5 RESOLVED (HIGH):** Bifurcation variance amplification empirically validated with Monte Carlo N=30
-- **Research:** 12 peer-reviewed papers (2012-2025) - Scheffer, Dakos, Manda, Troude, Fang et al.
-- **Key Finding:** 9% true positive rate in nature for variance-based tipping point detection (Fang 2024) - false positives endemic
-- **Formula:** `baseAmplification = 1/√(0.01 + distance)` with system multipliers (Environmental 1.5×, Social 2.5×, Economic 2.5×, Governance 2.0×, Flourishing 2.0×, Technology 2.0×)
-- **Max Amplification:** 100× cap (Permian-Triassic extinction empirical upper bound)
-- **Monte Carlo N=30:** 100% determinism verified, 30/30 seeds complete (240 months)
-- **Architecture Review:** Grade B+ (APPROVED WITH CONDITIONS)
-  - Performance: A (O(1) calculations)
-  - State Management: A- (proper containment)
-  - Complexity: B+ (manageable, documented)
-  - Correctness: C (mortality overshoot 87.2% vs 46.2% target - calibration needed)
-- **Integration:** Variance amplification consumed by ExogenousShockPhase, StochasticInnovationPhase, ClimateImpactCascadePhase
-- **Documentation:** New wiki section ([Bifurcation & Variance Amplification](#-bifurcation--variance-amplification-system-nov-2025)) with 320+ lines
-- **Research File:** `research/bifurcation_empirical_validation_20251112.md` (500+ lines, 12 sources)
+**🔴 BIFURCATION TIME-BASED SCALING BLOCKED AT QUALITY GATE 2** (commit e8eda5a, Nov 13)
+- **Issue #5 STATUS:** BLOCKED (Priya Grade C-, mortality disconnection + instrumentation gap)
+- **Time-Based Scaling:** ✅ WORKING (7.37× early → 2.60× late, 65% dampening confirmed)
+- **Amplification Values:** ✅ RESEARCH-REALISTIC (15.85× max within 2-40× bounds)
+- **CRITICAL FAILURE:** Mortality 96.95% vs target 43-58% (+39pp overshoot, 6× higher monthly rate)
+- **Instrumentation Gap:** ❌ 9/10 runs missing bifurcation metrics (parallel execution state isolation bug)
+- **Root Cause Hypothesis:** Time-based sigmoid affects amplification variance but NOT mortality calculations (disconnected paths)
+- **Blocking Issues for Quality Gate 2:**
+  1. Mortality overshoot - timeFactor not reaching mortality calculations
+  2. Instrumentation gap - 90% data loss prevents validation
+  3. Determinism unverified - only 1 dataset available
+- **Positive Progress:** Extinction reduced (20% → 10%), time-based architecture functional, no oscillation
+- **Next Steps for Roy:** Trace mortality calculation path, disable parallel execution temporarily, raise bifurcation thresholds (prevent month-0 collapse), enable population recovery mechanics
 - **Review Reports:**
-  - `reviews/bifurcation_architecture_review_20251113.md` (Grade B+)
+  - `reviews/bifurcation_validation_priya_analysis_20251113.md` (504 lines, full quantitative analysis)
+  - `reviews/bifurcation_validation_summary.txt` (quick reference)
+  - `reviews/bifurcation_architecture_review_20251113.md` (Grade B+, previous validation)
   - `reviews/bifurcation_empirical_critique_20251112.md` (Research skeptic validation)
-- **Context:** Resolves 100% dystopia convergence issue - variance amplification creates path-dependent trajectories near thresholds
+- **Research File:** `research/bifurcation_empirical_validation_20251112.md` (500+ lines, 12 sources)
+- **Context:** Architecture works correctly, but calibration issues prevent Quality Gate 2 passage
 
 **✅ RECOVERY MECHANICS AUDIT COMPLETE (Nov 11, 2025)**
 
@@ -3736,8 +3749,10 @@ This system enables investigation of:
 
 **Module:** `src/simulation/engine/phases/BifurcationLogicPhase.ts` (399 lines)
 **Purpose:** Model critical slowing down and variance amplification near system tipping points
-**Status:** ✅ VALIDATED (Monte Carlo N=30, Architecture Review Grade B+, Nov 13, 2025)
-**Issue:** #5 (HIGH) - Bifurcation empirical validation
+**Status:** 🔴 BLOCKED at Quality Gate 2 - Time-based scaling working but mortality disconnected (Priya Grade C-, Nov 13, 2025)
+**Issue:** #5 (HIGH) - Bifurcation time-based scaling validation
+**Blocking Issues:** (1) Mortality 96.95% vs target 43-58% (+39pp overshoot), (2) Instrumentation gap (9/10 runs missing metrics)
+**Positive Results:** Time-based dampening confirmed (7.37× early → 2.60× late, 65% reduction), amplification research-realistic (15.85× max)
 
 ## Overview
 
