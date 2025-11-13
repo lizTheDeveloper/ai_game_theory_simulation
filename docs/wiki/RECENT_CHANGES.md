@@ -4,8 +4,45 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
-<<<<<<< HEAD
 ## ✅ Recent Changes (November 12, 2025)
+
+**🤖 INFRASTRUCTURE: Intelligent Auto-Remediation for Stuck Orchestrator States** (Nov 12, 2025, commit 9764a32)
+
+**Summary:** Enhanced merge orchestrator with Claude Code-powered recovery for stuck git states.
+
+**Changes:**
+
+1. **Stuck Working Tree Recovery** (lines 126-217):
+   - When stash fails, spawn Claude Code to analyze situation
+   - Distinguishes merge conflicts vs. real uncommitted work
+   - Safety rules: never force-discard code, preserve real work
+   - Logs are safe to clean (gitignored), code must be preserved
+
+2. **Claude CLI Availability Check** (all spawning sites):
+   - Test failures: check for `claude` command before spawning
+   - Merge conflicts: check for `claude` command before spawning
+   - Gracefully skip auto-remediation if CLI unavailable
+   - Creates remediation tasks for manual review
+
+3. **No More Naive Force-Clean**:
+   - Removed destructive `git reset --hard` fallback
+   - Replaced with intelligent Claude Code analysis
+   - Respects uncommitted work, only cleans when safe
+   - Commits rescue work with timestamped messages
+
+**Impact:** Orchestrator can now recover from:
+- Merge conflict markers in log files
+- Stuck git states (failed merges/rebases)
+- Mixed uncommitted changes (log files + code)
+
+Without risking data loss or naive destructive operations.
+
+**Research:** User feedback - "we have a language model, don't make naive solutions"
+
+**Files:**
+- `scripts/merge-orchestrator.sh` (stuck working tree recovery, Claude CLI checks)
+
+---
 
 **🔧 INFRASTRUCTURE: Researcher Lock File Merge Conflict Resolved** (Nov 12, 2025, commit 4e1699b)
 
