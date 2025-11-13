@@ -94,20 +94,43 @@
    - Strengths: O(1) performance, proper state management, research citations
    - CRITICAL fixes: 3 bugs fixed (extinction classification, bifurcation statistics, metrics extraction)
    - Remaining: 87.2% mortality vs 43-58% target (system multipliers too aggressive)
- - **Monte Carlo Validation:** BLOCKED (Nov 13, 2025)
+ - **Phase 3: Time-Based Scaling + Instrumentation COMPLETE** (Nov 13, 2025 - Commit a9d14c74f)
+   - Time-based sigmoid scaling implemented (0.5× → 1.0× over 240 months)
+   - Per-run JSON export functional (bifurcation_metrics_seed{N}.json)
+   - Amplification time series recording operational
+   - Research: `research/bifurcation_instrumentation_calibration_20251113.md` (16 citations)
+   - Quality Gate 1: PASS (Grade A-, research-skeptic review)
+ - **Phase 4: Monte Carlo Validation BLOCKED** (Nov 13, 2025)
    - N=10 runs complete (seeds 42000-42009, 240 months)
-   - Results: 80% dystopia, 20% extinction, 77.7% mortality
-   - Priya analysis: Grade F - BLOCKED by missing instrumentation
-   - Issue: Cannot validate variance amplification without per-run bifurcation metrics
-   - Issue: 87.2% mortality vs 43-58% research target (+50% overshoot)
- - **Remaining Work:**
-   - 🔴 CRITICAL: Add bifurcation instrumentation (per-run tracking, threshold proximity, amplification time series)
-   - 🔴 CRITICAL: Reduce system multipliers by 30% or add time-based scaling
-   - 🟡 NEXT: Re-run Monte Carlo N=10 with same seeds after fixes
-   - 🟡 Complete Priya validation analysis (unblocked by instrumentation)
-   - 🟡 Wiki documentation update
-   - 🟡 Archive to /plans/completed/ (after full validation)
- - **Status:** 🟡 IMPLEMENTATION COMPLETE, VALIDATION BLOCKED (instrumentation gap)
+   - Priya analysis: Grade C- - BLOCKED by mortality overshoot
+   - Report: `reviews/bifurcation_validation_priya_analysis_20251113.md`
+   - **CRITICAL FAILURE - Mortality Analysis:**
+     - Target: 43-58% (research-backed)
+     - Actual: 96.95% (seed 42000)
+     - Delta: +38.95pp overshoot (87.2% → 96.95% - WORSE)
+     - Root cause: Time-based scaling NOT reaching mortality calculations
+   - **SUCCESS - Amplification Dampening:**
+     - Early game (0-59mo): 7.37× avg amplification
+     - Late game (180-239mo): 2.60× avg amplification
+     - Sigmoid working correctly (65% reduction)
+   - **CRITICAL - Instrumentation Gap:**
+     - Only 1/10 runs exported bifurcation metrics (seed 42000)
+     - Root cause: Parallel execution state isolation bug
+     - Fix: Disable parallel execution or fix worker serialization
+   - **Positive Progress:**
+     - ✅ Amplification values research-realistic (15.85× max vs 10-40× target)
+     - ✅ Extinction reduced (20% → 10%)
+     - ✅ No oscillation (smooth monotonic decay)
+ - **Remaining Work (CRITICAL):**
+   - 🔴 CRITICAL: Trace mortality calculation path (timeFactor not propagating)
+   - 🔴 CRITICAL: Fix instrumentation gap (disable parallel execution)
+   - 🔴 HIGH: Raise bifurcation thresholds (prevent month-0 collapse)
+   - 🔴 HIGH: Enable population recovery mechanics if disabled
+   - 🟡 NEXT: Re-run Monte Carlo N=10 with fixes
+   - 🟡 Complete Priya validation (after fixes)
+   - 🟡 Quality Gate 2: Architecture review
+   - 🟡 Wiki documentation + archive
+ - **Status:** 🔴 BLOCKED - Implementation complete but disconnected from mortality
 
 **Recent Completions (Nov 9-10, 2025):**
 - ✅ **PHASE CONSOLIDATION PROJECT COMPLETE** (Nov 7-9, 2025)
