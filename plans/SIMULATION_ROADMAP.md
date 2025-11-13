@@ -39,6 +39,26 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Time-Based Bifurcation Scaling (Arumugam et al. 2024)** - HIGH (Added Nov 13, 2025)
+     - **Context:** Time-based sigmoid scaling implemented to fix 87.2% mortality overshoot (target: 43-58%)
+     - **Implementation:** Multipliers scale 0.5× (early months) → 1.0× (late months) via sigmoid
+     - **Key Claims Requiring Verification:**
+       - Arumugam et al. (2024 Ecology): "Fast scenarios show different dynamics than slow drift"
+       - Quoted text: "Early warning indicators predict the actual catastrophic transition driven by the explicit rate of change"
+       - Applicability: Does rate-dependent detection justify rate-dependent amplification?
+       - Parameters: Center month=120, width=60, scaling=0.5-1.0 (arbitrary or research-backed?)
+       - Fang & Yan (2022) JData standard: Is JSON export correctly described?
+     - **Verification File:** research/verification_a9d14c7_20251113.md (two-layer verification)
+     - **Risk Assessment:** HIGH - Arumugam may discuss detection, not amplification (misapplication risk)
+     - **Assignments:**
+       - Cynthia: Access Arumugam full text, verify quoted text accuracy, extract timescale data
+       - Sylvia: Check for contradictory evidence, evaluate sigmoid parameter justification
+       - Priya: BLOCKED until validation - Monte Carlo validation of mortality reduction
+     - **Priority:** HIGH - IMPLEMENTED but needs research validation for publication
+     - **Status:** ✅ IMPLEMENTATION COMPLETE, ⚠️ VALIDATION PENDING
+     - **Research File:** research/bifurcation_instrumentation_calibration_20251113.md (742 lines, 16 citations)
+     - **Commit:** a9d14c7
+
    - **AI Governance International Coordination (2023-2025)** - MEDIUM (Added Nov 13, 2025)
      - **Context:** International AI governance coordination mechanisms documented (Bletchley Summit, Seoul Summit, AI Safety Institutes)
      - **Research Delivered:** 503-line analysis of AI governance summits, voluntary commitments, enforcement mechanisms
