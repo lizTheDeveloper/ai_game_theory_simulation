@@ -31,7 +31,6 @@
 import { SimulationEngine } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 import { GameState } from '../src/types/game';
-import { createRNG } from '../src/simulation/utils/rng';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -140,9 +139,10 @@ async function runValidationScenario(
   log(`TEST: ${testName} | Scenario: ${scenario} | Seed: ${seed} | Duration: ${duration}mo`);
   log(`${'='.repeat(80)}`);
 
-  const rng = createRNG(seed);
+  // CRITICAL: Must create engine first to get deterministic RNG
+  const engine = new SimulationEngine({ seed });
+  const rng = engine.getRNG().next.bind(engine.getRNG());
   const state = createDefaultInitialState(rng);
-  const engine = new SimulationEngine(state);
 
   // Record initial Novel Entities value
   const initialNovelEntities = state.planetaryBoundaries.novelEntities.currentValue;
@@ -175,32 +175,23 @@ async function runValidationScenario(
     log(`\nRunning simulation for ${duration} months...`);
 
     const startTime = Date.now();
-    for (let month = 0; month < duration; month++) {
-      engine.simulateMonth();
 
-      const currentNE = state.planetaryBoundaries.novelEntities.currentValue;
-
-      // Check for NaN/Infinity
-      if (!isFinite(currentNE)) {
-        const error = `❌ NaN/Infinity detected at month ${month}: ${currentNE}`;
-        log(error);
-        errors.push(error);
-        break;
-      }
-
-      // Track peak
-      if (currentNE > peakNovelEntities) {
-        peakNovelEntities = currentNE;
-      }
-
-      // Log every 12 months
-      if (month % 12 === 0) {
-        log(`  Month ${month}: Novel Entities = ${currentNE.toFixed(4)}×`);
-      }
-    }
+    // Run simulation using engine.run() method
+    const result = engine.run(state, { maxMonths: duration, checkActualOutcomes: false });
 
     const elapsed = (Date.now() - startTime) / 1000;
     log(`\nSimulation completed in ${elapsed.toFixed(1)}s`);
+
+    // Track peak Novel Entities from final state
+    peakNovelEntities = state.planetaryBoundaries.novelEntities.peakValue || initialNovelEntities;
+
+    // Check for NaN/Infinity
+    const currentNE = state.planetaryBoundaries.novelEntities.currentValue;
+    if (!isFinite(currentNE)) {
+      const error = `❌ NaN/Infinity detected in final state: ${currentNE}`;
+      log(error);
+      errors.push(error);
+    }
 
   } catch (error: any) {
     const errorMsg = `❌ Simulation crashed: ${error.message}`;
