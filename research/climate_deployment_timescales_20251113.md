@@ -2,8 +2,17 @@
 
 **Date:** 2025-11-13
 **Researcher:** Orchestrator (coordinating research phase)
-**Status:** Research complete, pending validation
+**Status:** REVISED - All critical and high-priority revisions addressed (2025-11-13)
 **Context:** TIER 1 CRITICAL - Addressing 5.5% effectiveness gap in climate boundary modeling
+
+## Revision History
+
+**2025-11-13 Revisions (Post-Critique):**
+- ✅ CRITICAL: Separated ocean (4.4%/°C) and land (19.8%/°C) sink degradation rates
+- ✅ CRITICAL: Marked adaptation energy scaling (+10%/°C) as MODEL ASSUMPTION
+- ✅ CRITICAL: Reduced automated construction speedup from 3-5× to 1.5-2× (marked SPECULATIVE)
+- ✅ HIGH: Moved Ocean Iron Fertilization from TIER 2 to TIER 3 (CONDITIONAL)
+- ✅ HIGH: Added fusion timeline caveat (pilot plants 2035-2040 vs. mass deployment 2040-2050+)
 
 ## Executive Summary
 
@@ -114,7 +123,9 @@ Current climate technology modeling shows 5.5% effectiveness despite deploying 1
 - **Regional transformations:** Southeast Asia and Amazon transitioning from sinks to sources [Bioengineer, 2024]
 
 **Quantified Feedback:**
-- **Per 1°C warming:** ~5% reduction in carbon sink capacity (derived from 1.36°C = 6-27% reduction) [Nature Climate Change, 2025]
+- **Ocean sinks per 1°C warming:** 4.4% reduction (6% reduction / 1.36°C warming) [Nature Climate Change, 2025]
+- **Land sinks per 1°C warming:** 19.8% reduction (27% reduction / 1.36°C warming) [Nature Climate Change, 2025]
+- **Note:** Linear approximation - actual degradation may be non-linear and accelerate with warming
 - **Positive feedback loop:** Warming → reduced sink efficiency → higher atmospheric CO₂ → more warming [PNAS, 2024]
 
 **Key Finding:** Natural carbon sinks degrade with warming. Technologies that depend on biological carbon storage (blue carbon, soil carbon) will see reduced effectiveness as temperatures rise.
@@ -128,7 +139,8 @@ Current climate technology modeling shows 5.5% effectiveness despite deploying 1
 
 **Temperature-Driven Energy Increases:**
 - **Marine heatwaves:** More frequent and intense, requiring ocean-based cooling/adaptation [Science Direct, 2024]
-- **Estimated scaling:** +10% energy demand per 1°C for adaptation (extrapolated from current trends)
+- **MODEL ASSUMPTION:** +10% energy demand per 1°C for adaptation (extrapolated from current trends - not peer-reviewed)
+- **Note:** Real adaptation costs vary significantly by region, climate, and infrastructure type (cooling in hot climates, heating in cold climates, water in arid regions)
 
 **Key Finding:** Warming creates dual pressure: reduces mitigation effectiveness AND increases adaptation energy demands. Positive feedback loop on energy partitioning.
 
@@ -165,11 +177,11 @@ Current climate technology modeling shows 5.5% effectiveness despite deploying 1
 - **Total:** 10 years to maturity
 
 **Parameters:**
-- **Construction speedup:** 3-5× faster buildout vs. traditional methods
+- **Construction speedup (SPECULATIVE):** 1.5-2× faster buildout vs. traditional methods (conservative estimate pending empirical validation)
 - **Permitting reduction:** 2-7 years → 1-3 years (less human labor = less regulatory scrutiny)
 - **Effectiveness scaling:** 0% (2025) → 50% (2028) → 90% (2032) → 100% (2035)
 
-**Justification:** Current infrastructure timelines (10 years transmission, 4.5 years NEPA reviews) are the bottleneck. Automation addresses labor shortages and accelerates deployment.
+**Justification:** Current infrastructure timelines (10 years transmission, 4.5 years NEPA reviews) are the bottleneck. Automation addresses labor shortages and accelerates deployment. **Note:** 1.5-2× speedup is conservative - robotics in construction is nascent and not yet proven at climate infrastructure scale. Original 3-5× estimate lacked peer-reviewed support.
 
 **Citations:**
 - McKinsey (2024). "Unlocking US federal permitting: a sustainable growth imperative." https://www.mckinsey.com/industries/public-sector/our-insights/unlocking-us-federal-permitting-a-sustainable-growth-imperative
@@ -201,7 +213,8 @@ Current climate technology modeling shows 5.5% effectiveness despite deploying 1
 - **ITER milestones:** First plasma 2035, D-T operations 2039 [ITER, 2024]
 - **Private sector projections:** 89% expect grid electricity by end of 2030s, 70% by 2035 [Fusion Industry Association, 2024]
 - **Commercial scale-up:** 2040s (DOE Fusion Energy Strategy 2024)
-- **Revised timeline:** 2035-2040 (move from TIER 4 to TIER 2)
+- **Revised timeline:** 2035-2040 pilot plants (move from TIER 4 to TIER 2), 2040-2050+ mass deployment
+- **CRITICAL CAVEAT:** Timeline distinguishes pilot plants (first grid electricity 2035-2040) from large-scale energy generation (unlikely before 2050 per expert consensus). Private sector optimism vs. expert skepticism - model uses conservative middle ground.
 
 **Parameters:**
 - **Effectiveness scaling:** 0% (2025-2034) → 10% (2035) → 50% (2040) → 100% (2050)
@@ -254,9 +267,11 @@ Current climate technology modeling shows 5.5% effectiveness despite deploying 1
 
 **Justification:** Construction industry is 10% of global emissions. Carbon-negative materials can turn this sector from source to sink. Timeline based on building code adoption rates (10-20 years).
 
-### 4.7 Ocean Iron Fertilization (TIER 2)
+### 4.7 Ocean Iron Fertilization (TIER 3 - CONDITIONAL)
 
 **Concept:** Engineered iron delivery to stimulate phytoplankton carbon uptake
+
+**TIER RATIONALE:** Moved from TIER 2 to TIER 3 due to substantial legal/ecological barriers (London Convention restrictions, $2-$1,280/t CO₂ cost uncertainty). Deployment is conditional on regulatory framework changes and successful MRV validation.
 
 **Timeline:**
 - **Current status:** Research phase, legal restrictions under London Convention/CBD [WHOI, 2024]
@@ -291,7 +306,7 @@ Current climate technology modeling shows 5.5% effectiveness despite deploying 1
 - **Sequestration potential:** 0.5-1.5 Gt CO₂/year [IPCC estimates]
 - **Co-benefits:** Coastal protection, fisheries, biodiversity
 - **Effectiveness scaling:** 20% (2025, ongoing) → 40% (2030) → 70% (2040) → 100% (2055)
-- **Temperature degradation:** -5% per 1°C (ocean acidification, temperature stress)
+- **Temperature degradation:** -4.4% per 1°C (ocean acidification, temperature stress - ocean sink degradation rate)
 
 **Justification:** Biological systems have slow establishment times (10-30 years for mature ecosystems). Already partially deployed (20% baseline). High co-benefits justify investment. Temperature-sensitive (ocean acidification).
 
@@ -365,15 +380,23 @@ Available_Energy_for_Mitigation = Renewable_Surplus - (Adaptation_Baseline × (1
 
 ### 5.3 Temperature Degradation Multipliers
 
-**Carbon Sink Technologies (Blue Carbon, Soil Carbon, Natural Sinks):**
+**Ocean-Based Carbon Sink Technologies (Blue Carbon, Ocean Fertilization):**
 ```
-Effectiveness_with_Warming = Base_Effectiveness × (1 - 0.05 × ΔT)
+Effectiveness_with_Warming = Base_Effectiveness × (1 - 0.044 × ΔT)
 ```
 
-**Adaptation Energy Demand:**
+**Land-Based Carbon Sink Technologies (Soil Carbon, Biochar, Natural Land Sinks):**
+```
+Effectiveness_with_Warming = Base_Effectiveness × (1 - 0.198 × ΔT)
+```
+
+**Note:** Linear approximation based on observed degradation at 1.36°C warming. Actual degradation may be non-linear and accelerate with warming. Consider tipping points (Amazon transition at 2-3°C, permafrost at 1.5-2°C).
+
+**Adaptation Energy Demand (MODEL ASSUMPTION):**
 ```
 Adaptation_Energy = Baseline_Adaptation × (1 + 0.10 × ΔT)
 ```
+**Caveat:** Not peer-reviewed. Real adaptation costs vary by region/climate.
 
 **Combined Feedback Loop:**
 - Warming → Increased adaptation demand → Less energy for mitigation → Slower emissions reduction → More warming
@@ -439,16 +462,17 @@ Adaptation_Energy = Baseline_Adaptation × (1 + 0.10 × ΔT)
 - Technologies gated by available energy (effectiveness × energy_availability)
 
 ### 8.3 Temperature Feedback Loops
-- Carbon sink effectiveness: × (1 - 0.05 × ΔT)
-- Adaptation energy demand: × (1 + 0.10 × ΔT)
+- Ocean-based carbon sink effectiveness: × (1 - 0.044 × ΔT)
+- Land-based carbon sink effectiveness: × (1 - 0.198 × ΔT)
+- Adaptation energy demand: × (1 + 0.10 × ΔT) [MODEL ASSUMPTION]
 - Dual squeeze: less mitigation capacity + worse outcomes
 
-### 8.4 New Technologies (TIER 0-2)
+### 8.4 New Technologies (TIER 0-3)
 - Add 9 technologies with deployment timelines
-- Modular DAC, Automated Construction, Institutional Automation: TIER 1 (2025-2035)
-- Fusion: Move to TIER 2 (2035-2040 pilot plants)
-- Perovskite Solar, Biochar, Blue Carbon: TIER 1-2 (2025-2040)
-- Ocean Iron Fertilization, Carbon-Negative Materials: TIER 2 (2030-2045, conditional)
+- **TIER 0:** Institutional Automation (Permitting AI) - 2025-2032
+- **TIER 1:** Modular DAC, Automated Construction, Perovskite Solar, Biochar - 2025-2035
+- **TIER 2:** Fusion (pilot plants), Blue Carbon, Carbon-Negative Materials - 2030-2045
+- **TIER 3 (CONDITIONAL):** Ocean Iron Fertilization - 2035-2045 (requires legal framework changes)
 
 ## 9. Next Steps
 
