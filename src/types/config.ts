@@ -61,6 +61,14 @@ export interface ConfigurationSettings {
   // Models evolutionary selection on AI populations once RLHF constraints fail
   // Collectives form with emergent properties (distributed cognition, self-healing, stealth)
   collectiveEvolution?: import('./ai-collective-evolution').CollectiveEvolutionConfig;
+
+  // BIFURCATION DIAGNOSTICS (Nov 14, 2025)
+  // Controls time series collection for bifurcation variance validation
+  // Enables/disables amplificationTimeSeries tracking with memory-bounded rolling window
+  bifurcationDiagnostics?: {
+    enabled: boolean;           // Enable time series collection (default: true)
+    maxTimeSeriesLength: number; // Rolling window size (default: 200 - keeps ~17 months at default speed)
+  };
 }
 
 /**
