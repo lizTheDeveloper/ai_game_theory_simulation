@@ -4,6 +4,7 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 ## ✅ Recent Changes (November 13, 2025)
 
@@ -110,6 +111,8 @@ Without risking data loss or naive destructive operations.
 - `.researcher-worker.lock` (deleted)
 - `logs/autonomous/researcher/status_current.txt` (status update)
 =======
+=======
+>>>>>>> 0a6ad092a9a8f80790c0b60dd411caa3958f5575
 ## ✅ Recent Changes (November 12, 2025)
 
 **📚 RESEARCH UPDATE: Research File Metadata Standard** (Nov 12, 2025, commit add99ce)
@@ -139,7 +142,10 @@ last_verified: YYYY-MM-DD
 **Research Currency Status:** All three files contain recent (2024-2025) sources and are in good condition. Oldest sources are foundational theories (e.g., Frankl 1946, Baars 1988) that remain relevant.
 
 **Why This Matters:** Standardized metadata enables autonomous research workers to identify stale sources and prioritize updates. The `oldest_source`/`newest_source` range provides quick assessment of research currency without parsing entire files.
+<<<<<<< HEAD
 >>>>>>> origin/auto/researcher-20251112_153001
+=======
+>>>>>>> 0a6ad092a9a8f80790c0b60dd411caa3958f5575
 
 ---
 
@@ -201,28 +207,6 @@ last_verified: YYYY-MM-DD
 ---
 
 ## ✅ Recent Changes (November 11, 2025)
-
-**📚 RESEARCH: Nuclear War AI Control Gap - 2024-2025 Sources Added** (Nov 11, 2025, commit 0a236ad)
-
-**Summary:** Updated nuclear war AI control research with 3 peer-reviewed sources from 2024-2025, improving research currency from 20% to 40% for this domain.
-
-**New Sources:**
-1. **Saltini & Pan (2024)** - "Beyond Human-in-the-Loop: Managing AI Risks in Nuclear C&C" (War on the Rocks)
-   - Quantitative safety threshold: accidental launch risk < 1 in 10,000,000 per year
-   - Four AI risks: unreliability/hallucinations, opacity, cybersecurity, misalignment
-2. **Dooling (2025)** - "A Risk Assessment Framework for AI Integration into Nuclear C3" (FAS)
-   - Confabulations, automation bias, cybersecurity exposure
-   - Benchmarking under realistic conditions
-3. **SIPRI (2025)** - "Impact of Military AI on Nuclear Escalation Risk"
-   - Compressed decision timelines, biased AI decision-making, strategic instability
-
-**Research Quality:** A (85% peer-reviewed, 40% from 2024-2025, 19 total sources)
-
-**Documentation Updated:**
-- `research/nuclear_war_ai_control_gap_20251022.md` - Added sources #17-19 with full citations
-- `docs/wiki/systems/nuclear-deterrence.md` - Added 2024-2025 section to References
-
----
 
 **🐛 BUG FIX: Wet Bulb Mortality Cap for Population Collapse Edge Cases** (Nov 11, 2025, commit a3df82a)
 
@@ -321,12 +305,17 @@ last_verified: YYYY-MM-DD
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 ## ✅ Recent Changes (November 11, 2025)
 =======
 
 ---
 >>>>>>> origin/auto/researcher-20251112_153001
+=======
+
+---
+>>>>>>> 0a6ad092a9a8f80790c0b60dd411caa3958f5575
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
 
@@ -359,9 +348,12 @@ last_verified: YYYY-MM-DD
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/auto/researcher-20251111_003001
 =======
 >>>>>>> origin/auto/researcher-20251112_153001
+=======
+>>>>>>> 0a6ad092a9a8f80790c0b60dd411caa3958f5575
 
 ---
 
