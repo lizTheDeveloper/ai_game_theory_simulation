@@ -18,21 +18,48 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟡 STABLE WITH 1 CRITICAL ISSUE** (November 14, 2025 - Early Morning)
+**🟢 STABLE** (November 14, 2025 - Afternoon)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** A (100% peer-reviewed, automated currency pipeline, W3C standards) ✅ EXCELLENT
 - **Implementation Fidelity:** A- (CRITICAL gaps resolved, research-backed integration, Quality Gate 2 passed) 🟢 STRONG
-- **Architecture Health:** 7.5/10 → **8.0/10 IMPROVING** (1 CRITICAL issue remaining, 3 HIGH priority concerns) ⚠️ ACTIVE REMEDIATION
-  - ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive guards (Nov 14)
-  - **CRITICAL-2:** Novel entities not propagating to mortality pipeline (diagnostic scripts added)
-  - **HIGH:** Memory leak in time series, no phase parallelization, scenario validation gaps
-- **System Trajectory:** 🔧 ACTIVE REMEDIATION - 1 of 2 critical issues resolved, diagnostic tooling for CRITICAL-2 added
+- **Architecture Health:** 7.5/10 → **8.5/10 STRONG** (All CRITICAL issues resolved, 3 HIGH priority concerns remain) ✅ HEALTHY
+  - ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with phase dependencies + validation (Nov 14)
+  - ✅ **CRITICAL-2 RESOLVED:** Novel entities mortality propagation fixed (Nov 14)
+  - **HIGH:** Memory leak RESOLVED, parallelization + scenario validation pending
+- **System Trajectory:** ✅ HEALTHY - All critical issues resolved, ready for new feature development
 
 **Recent Major Achievements:**
 
-**Nov 14: CRITICAL-1 Bifurcation Determinism Fix** (commit bb6cefa)
-- ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive documentation and phase dependencies
+**Nov 14: System Status Upgrade - All Critical Issues Resolved** (commit 8c842e6)
+- 🟢 **Status Change:** STABLE WITH CRITICAL ISSUES → **STABLE**
+- 📊 **Architecture Health:** 7.5/10 → **8.5/10 STRONG**
+- ✅ **CRITICAL-1:** Bifurcation race condition resolved with phase dependencies
+- ✅ **CRITICAL-2:** Novel entities mortality propagation resolved
+- 🎯 **System Trajectory:** ARCHITECTURAL STRESS → **HEALTHY**
+- 📝 **Impact:** Research results now reproducible, Monte Carlo analysis valid, system ready for new feature development
+- **Validation:** `scripts/validateBifurcationDeterminism.ts` confirms bit-identical results across 3 runs with seed=42
+
+**Nov 14: CRITICAL-2 Novel Entities Ongoing Mortality Fix** (commit 6c885d9)
+- ✅ **CRITICAL-2 RESOLVED:** Novel entities crises now add ongoing monthly mortality (not just one-time)
+- 🔧 **Root Cause:** One-time crisis flags prevented ongoing mortality accumulation after initial trigger
+- 📋 **Files Modified:**
+  - `src/simulation/novelEntities.ts` - Separated crisis trigger (one-time) from mortality accumulation (ongoing)
+  - `src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts` - Added 'resource-soil' dependency
+  - `tests/integration/novel-entities-mortality.test.ts` - New regression test (4 test cases)
+- 🎯 **Impact:** Chemical pollution now properly threatens long-term survival
+  - Before: 1 mortality entry over 120 months (only at trigger)
+  - After: 113 mortality entries over 120 months (almost every month)
+  - High pollution (70%+) now causes 50% mortality over 10 years
+- 📊 **Validation:** Diagnostic scripts confirm ongoing monthly mortality from all three crisis types:
+  - Reproductive crisis: 0.08% monthly mortality
+  - Bioaccumulation collapse: 0.15% monthly mortality
+  - Chronic disease epidemic: 0.4% monthly mortality
+- 📖 **Documentation:** `plans/CRITICAL2_FIX_SUMMARY.md` - Complete fix analysis
+- **Architecture Health:** 8.0/10 → 8.5/10 (Last critical issue resolved)
+
+**Nov 14: CRITICAL-1 Bifurcation Determinism Fix** (commit 7233b5a)
+- ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive documentation, phase dependencies, and regression tests
 - 🔒 **Determinism Guarantee:** Single-writer pattern enforced for `bifState.metrics.avgDistanceToThresholds`
 - 📋 **Phase Dependencies Added:** 4 phases now explicitly depend on 'bifurcation-logic'
   - StochasticInnovationPhase.ts (order 8.5)
@@ -40,11 +67,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - ExogenousShockPhase.ts (order 27.5)
   - ClimateSystemPhase.ts (order 34.0)
 - 📝 **Documentation:** Inline guards prevent future multi-writer violations
-- 🔬 **CRITICAL-2 Diagnostics:** Added diagnostic scripts for novel entities mortality investigation
-  - `scripts/diagnosticNovelEntitiesMortality.ts` - Instrumentation to track mortality risk propagation
-  - `scripts/testNovelEntitiesMortalityIntegration.ts` - Integration test for chemical pollution → mortality
+- ✅ **Regression Test Suite:** `tests/integration/regressions/critical-1-bifurcation-race-condition.test.ts`
+  - 6 determinism tests (8 test cases total, all passing, 186ms runtime)
+  - Validates same seed → identical avgDistanceToThresholds
+  - Validates RNG consumption consistency
+  - Prevents future race condition regressions
+- 📊 **Resolution Documents:**
+  - `reviews/critical1_RESOLVED_20251114.md` (287 lines) - Complete resolution summary
+  - `reviews/critical1_race_condition_analysis_20251114.md` (197 lines) - Technical analysis
+- 🔬 **CRITICAL-2 Identified:** Novel entities mortality pipeline bug (see CRITICAL-2 entry above for resolution)
 - 📖 **DevLog:** `devlogs/critical-1-bifurcation-race-condition-fix-20251114.md` (181 lines)
-- **Architecture Health:** 7.5/10 → 8.0/10 (1 critical issue resolved)
 
 **Nov 13: Critical Architecture Review** (commit 4d7bcd5)
 - 🔍 **Review Type:** Integration & Performance Analysis (30 days of commits)
