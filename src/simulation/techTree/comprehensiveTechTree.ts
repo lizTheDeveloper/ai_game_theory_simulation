@@ -68,8 +68,8 @@ export interface TechDefinition {
   };
 
   // CRITICAL FIX (Nov 11, 2025): Energy/concentration constraints for cleanup tech
-  /** Energy requirements for cleanup technologies (Fennell 2024, Ling 2024) */
-  energyRequirement?: {
+  /** Energy requirements - can be simple number (TWh/month) or detailed object for cleanup tech */
+  energyRequirement?: number | {
     kWhPerM3?: number;           // Energy per cubic meter treated (water/air)
     kWhPerKg?: number;           // Energy per kg removed (solid waste)
     annualTWhRequired?: number;   // Annual energy requirement (if calculable)
@@ -96,6 +96,26 @@ export interface TechDefinition {
 
   /** Flag: Does this tech target irreversible environmental stock? (Cousins 2022) */
   targetsIrreversibleStock?: boolean;
+
+  // TIER 1 CRITICAL (Nov 12, 2025): Phased deployment timescales
+  // Research: research/climate_tech_deployment_timescales_20251112.md
+  /** Current deployment phase (planning → pilot → early_deploy → scaling → mature → saturated) */
+  deploymentPhase?: 'planning' | 'pilot' | 'early_deploy' | 'scaling' | 'mature' | 'saturated';
+
+  /** Progress through current phase (0-100%) */
+  phaseProgress?: number;
+
+  /** Timeline in months for each deployment phase */
+  deploymentTimeline?: {
+    planning?: number;      // R&D phase
+    pilot?: number;         // Proof of concept scale
+    early_deploy?: number;  // First commercial scale
+    scaling?: number;       // Rapid expansion phase
+    mature?: number;        // Full-scale deployment
+  };
+
+  /** Energy required during construction/scaling phase (TWh/month) */
+  constructionEnergy?: number;
 }
 
 /**

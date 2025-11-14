@@ -158,7 +158,7 @@ function calculateNovelEntitiesRemediationEffectiveness(
 
   // Get tech definition for energy requirement
   const tech = getTechById(techId);
-  const energyRequired = tech?.energyRequirement?.kWhPerM3 ?
+  const energyRequired = (tech?.energyRequirement && typeof tech.energyRequirement !== 'number' && tech.energyRequirement.kWhPerM3) ?
     tech.energyRequirement.kWhPerM3 * 10_000_000 / 1_000_000_000 : // Convert to TWh/year (assuming 10M m³/year treated)
     10_000; // Default: 10,000 TWh/year (conservative estimate for global-scale remediation)
 
@@ -355,8 +355,9 @@ export function applyAllTechEffects(
             const dataCenterDemand = gameState.powerGenerationSystem?.dataCenterPower || 0;
             const energyAvailable = Math.max(0, renewableGen - dataCenterDemand * 0.5);  // Assume 50% of data center can be displaced
 
-            const energyRequired = tech.energyRequirement.annualTWhRequired ||
-                                 ((tech.energyRequirement.kWhPerM3 || 0) * 4000) / 1e9;  // 4000 km³ freshwater → TWh
+            const energyRequired = (typeof tech.energyRequirement !== 'number' && tech.energyRequirement) ?
+                                 (tech.energyRequirement.annualTWhRequired || ((tech.energyRequirement.kWhPerM3 || 0) * 4000) / 1e9) :
+                                 0;  // 4000 km³ freshwater → TWh
 
             if (energyRequired > 0) {
               const energyRatio = assertFinite(energyAvailable / Math.max(0.01, energyRequired), {
