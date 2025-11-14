@@ -18,18 +18,33 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟠 STABLE WITH CRITICAL ISSUES** (November 13, 2025 - Late Evening)
+**🟡 STABLE WITH 1 CRITICAL ISSUE** (November 14, 2025 - Early Morning)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** A (100% peer-reviewed, automated currency pipeline, W3C standards) ✅ EXCELLENT
 - **Implementation Fidelity:** A- (CRITICAL gaps resolved, research-backed integration, Quality Gate 2 passed) 🟢 STRONG
-- **Architecture Health:** 7.5/10 → **DOWNGRADED** (2 CRITICAL issues, 3 HIGH priority concerns) ⚠️ NEEDS ATTENTION
-  - **CRITICAL-1:** Bifurcation race condition breaks Monte Carlo determinism
-  - **CRITICAL-2:** Novel entities not propagating to mortality pipeline
+- **Architecture Health:** 7.5/10 → **8.0/10 IMPROVING** (1 CRITICAL issue remaining, 3 HIGH priority concerns) ⚠️ ACTIVE REMEDIATION
+  - ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive guards (Nov 14)
+  - **CRITICAL-2:** Novel entities not propagating to mortality pipeline (diagnostic scripts added)
   - **HIGH:** Memory leak in time series, no phase parallelization, scenario validation gaps
-- **System Trajectory:** ⚠️ ARCHITECTURAL STRESS - Fix critical issues before new features (estimated 4-6 days)
+- **System Trajectory:** 🔧 ACTIVE REMEDIATION - 1 of 2 critical issues resolved, diagnostic tooling for CRITICAL-2 added
 
 **Recent Major Achievements:**
+
+**Nov 14: CRITICAL-1 Bifurcation Determinism Fix** (commit bb6cefa)
+- ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive documentation and phase dependencies
+- 🔒 **Determinism Guarantee:** Single-writer pattern enforced for `bifState.metrics.avgDistanceToThresholds`
+- 📋 **Phase Dependencies Added:** 4 phases now explicitly depend on 'bifurcation-logic'
+  - StochasticInnovationPhase.ts (order 8.5)
+  - EmergencyResponsePhase.ts (order 26)
+  - ExogenousShockPhase.ts (order 27.5)
+  - ClimateSystemPhase.ts (order 34.0)
+- 📝 **Documentation:** Inline guards prevent future multi-writer violations
+- 🔬 **CRITICAL-2 Diagnostics:** Added diagnostic scripts for novel entities mortality investigation
+  - `scripts/diagnosticNovelEntitiesMortality.ts` - Instrumentation to track mortality risk propagation
+  - `scripts/testNovelEntitiesMortalityIntegration.ts` - Integration test for chemical pollution → mortality
+- 📖 **DevLog:** `devlogs/critical-1-bifurcation-race-condition-fix-20251114.md` (181 lines)
+- **Architecture Health:** 7.5/10 → 8.0/10 (1 critical issue resolved)
 
 **Nov 13: Critical Architecture Review** (commit 4d7bcd5)
 - 🔍 **Review Type:** Integration & Performance Analysis (30 days of commits)
