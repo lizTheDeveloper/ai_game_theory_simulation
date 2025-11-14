@@ -1,20 +1,20 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 13, 2025 (Updated: End of Autonomous Session - Afternoon)
+**Date:** November 14, 2025 (Updated: CRITICAL Issues Resolved)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟠 **STABLE WITH CRITICAL ISSUES** (Nov 13, 2025 - Late Evening)
+**Current Status:** 🟢 **STABLE** (Nov 14, 2025 - Early Morning)
 - **Research Quality:** A (peer-reviewed foundation, comprehensive citations)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, defensive cleanup complete)
-- **Architecture Health:** 7.5/10 → **DOWNGRADED** (2 CRITICAL issues identified, 3 HIGH priority concerns)
-  - **CRITICAL-1:** Bifurcation race condition breaks Monte Carlo determinism
-  - **CRITICAL-2:** Novel entities not propagating to mortality pipeline
-  - **HIGH:** Memory leak, no parallelization, scenario validation gaps
-- **System Trajectory:** ⚠️ ARCHITECTURAL STRESS - Fix critical issues before new features
-- **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Action Required:** Fix 2 CRITICAL issues immediately (estimated 4-6 days)
+- **Architecture Health:** 8.5/10 (**UPGRADED** - Both CRITICAL issues resolved)
+  - ✅ **CRITICAL-1 RESOLVED:** Bifurcation determinism guards added, regression test created
+  - ✅ **CRITICAL-2 RESOLVED:** False positive - test script bugs fixed, novel entities working correctly
+  - **HIGH:** Memory leak, no parallelization, scenario validation gaps (non-blocking)
+- **System Trajectory:** ✅ STABLE - Architecture stress relieved, ready for new features
+- **Recent Fixes:** CRITICAL-1 (defensive guards), CRITICAL-2 (test infrastructure), wiki updated
+- **Monte Carlo:** N=3 validation passed, zero errors, determinism confirmed
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -51,6 +51,48 @@
   - Starting trust/inequality matter MORE than policy priorities
 - **Archive:** `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
 - **Commits:** ff22268 - "fix: Scenario Phase 3 critical fixes (CRITICAL-1, HIGH-3)", a140fb07b - "fix: Scenario parameter divergence (sequenced deployment)"
+
+**Recent Completions (Nov 14, 2025):**
+
+- ✅ **CRITICAL-1: BIFURCATION DETERMINISM GUARDS** (Nov 14, 2025 - 2h actual vs 2-3d estimated)
+ - **Issue:** Architecture review flagged potential race condition in bifurcation metrics (moving average update)
+ - **Investigation:** Pattern was FRAGILE but no actual race existed - BifurcationLogicPhase is single writer
+ - **Fix Applied (Defensive):**
+   - Added explicit documentation: Single-writer invariant documented in code
+   - Added phase dependencies: All readers declare `dependencies = ['bifurcation-logic']`
+   - Added regression test: `tests/integration/regressions/critical-1-bifurcation-validation.test.ts`
+ - **Test Coverage:**
+   - Single-phase determinism (same seed → identical metrics)
+   - Multiple executions consistency (10 runs → identical)
+   - Multi-step accumulation (10 steps → identical convergence)
+   - RNG consumption consistency
+   - Weighted average stability (0.95/0.05 converges identically)
+ - **Validation:** Monte Carlo N=10, 120 months - All passed, peak amplification 8.25-17.47× (expected range)
+ - **Status:** ✅ RESOLVED - Defensive guards prevent future violations, determinism verified
+ - **Devlog:** `/devlogs/critical-1-bifurcation-race-condition-fix-20251114.md`
+
+- ✅ **CRITICAL-2: NOVEL ENTITIES MORTALITY PROPAGATION** (Nov 14, 2025 - FALSE POSITIVE)
+ - **Issue:** Architecture review flagged novel entities crises not causing mortality
+ - **Investigation:**
+   - **Root Cause 1 (Test bug):** Population displayed as 0.000B due to unit mismatch (double `/1e9` conversion)
+   - **Root Cause 2 (Test bug):** Mortality showed 0% due to timing error (captured initialPop AFTER `engine.run()`)
+ - **Findings (Simulation WORKING CORRECTLY):**
+   - Reproductive crisis DOES trigger
+   - Mortality risks ARE added with correct type='pollution'
+   - Demographics DO have 'pollution' vulnerability
+   - Deaths DO occur: 3,994M (49% mortality over 120 months)
+   - Stabilizers work correctly (44-80% reduction, reasonable range)
+ - **Fixes Applied (Test Script):**
+   - Capture initial population BEFORE `engine.run()` (line 50)
+   - Remove double unit conversion (population already in billions)
+   - Add diagnostic logging for future debugging
+ - **Validation:**
+   - Test now shows: Initial 8.136B → Final 4.142B = 49% mortality
+   - Monte Carlo N=3 passed, zero errors, determinism confirmed
+ - **Key Learning:** Test infrastructure bugs can masquerade as simulation bugs
+ - **Status:** ✅ RESOLVED - Simulation was working all along, test script fixed
+ - **Devlog:** `/devlogs/critical-2-novel-entities-investigation-20251114.md`
+ - **Commits:** 284d14d8b - "fix(critical-2): Novel entities mortality test script bugs"
 
 **Recent Completions (Nov 12, 2025):**
 
