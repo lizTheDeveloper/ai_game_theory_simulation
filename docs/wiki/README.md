@@ -31,6 +31,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 14: Bifurcation Determinism Validation Script Fix** (commit b110436)
+- ✅ **CRITICAL-1 VALIDATION CONFIRMED:** Script now correctly validates that bifurcation race condition is RESOLVED
+- 🔧 **Script Fixes:** `scripts/validateBifurcationDeterminism.ts`
+  - Use SimulationEngine correctly (config object, not initialState + seed)
+  - Use engine's RNG for initialization (Nov 6 2025 determinism fix pattern)
+  - Use result.history instead of result.monthlySnapshots
+  - Add bounds checking for trace comparison
+  - Handle missing/incomplete data gracefully
+- 📊 **Test Results:** All 3 runs with identical seed produced IDENTICAL bifurcation metrics
+  - ✅ varianceAmplification deterministic
+  - ✅ avgDistanceToThresholds deterministic
+  - ✅ currentRegime deterministic
+- 🎯 **Impact:** Confirms Nov 14 dependency declarations successfully fixed CRITICAL-1 race condition
+
 **Nov 14: Bifurcation Merge Conflict Resolution** (commit 4f4c156)
 - 🔧 **Technical Fix:** Resolved merge conflict between two HIGH-1 implementation approaches
 - 📋 **Files Fixed:** `src/types/bifurcation.ts`, `src/simulation/engine/phases/BifurcationLogicPhase.ts`
@@ -1391,21 +1405,28 @@ All determinism patterns now documented in:
    - Statistical analysis: CV (coefficient of variation), first divergence point
    - Usage: `npx tsx scripts/comprehensiveDeterminismValidation.ts`
 
-2. **`scripts/quickDeterminismTest.ts`** - Fast 3-run sanity check
+2. **`scripts/validateBifurcationDeterminism.ts`** - Bifurcation system determinism validator ✅ **FIXED Nov 14**
+   - Configuration: N=3 runs × 60 months with seed=42
+   - Validates bifurcation metrics are bit-identical across runs
+   - Tests: varianceAmplification, avgDistanceToThresholds, currentRegime
+   - **Status:** All tests passing - confirms CRITICAL-1 race condition RESOLVED
+   - Usage: `npx tsx scripts/validateBifurcationDeterminism.ts`
+
+3. **`scripts/quickDeterminismTest.ts`** - Fast 3-run sanity check
    - Configuration: N=5 runs × 2 months with seed=42
    - Quick feedback loop for debugging (5-10 seconds runtime)
    - Usage: `npx tsx scripts/quickDeterminismTest.ts`
 
-3. **`scripts/compareRngSequences.ts`** - RNG sequence divergence finder
+4. **`scripts/compareRngSequences.ts`** - RNG sequence divergence finder
    - Logs RNG calls with phase labels: `[RNG-0] Value: 0.123456 (Phase: ResearchPhase)`
    - Compares RNG sequences across runs to find first divergence point
    - Proven: RNG sequences are IDENTICAL (bug is not in RNG system)
 
-4. **`scripts/debugDivergence.ts`** - Divergence debugging utility
+5. **`scripts/debugDivergence.ts`** - Divergence debugging utility
    - Detailed state inspection at divergence points
    - Compares AI capabilities, research progress, lifecycle state
 
-5. **`scripts/findDivergentPhase.ts`** - Phase-level tracking
+6. **`scripts/findDivergentPhase.ts`** - Phase-level tracking
    - Binary search to identify which phase first causes divergence
    - Instruments PhaseOrchestrator to log per-AI capability after each phase
 
