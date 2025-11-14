@@ -464,33 +464,33 @@ The Multi-Paradigm DUI draws on **100+ peer-reviewed sources** across:
 
 **Solution:** Conservative thresholds used, sensitivity analysis planned
 
-### 5. Catastrophic Mortality Edge Cases
+### 5. Mortality Effects on Institutional Metrics (⚠️ UNDER INVESTIGATION)
 
-**Problem:** Western Liberal paradigm scores remain relatively high (58-77/100) during catastrophic collapse scenarios (92% mortality)
+**Problem:** Western Liberal paradigm shows high scores (58-77/100) during extreme mortality events (92%+ deaths)
+- Root cause: Paradigm uses per-capita/structural metrics (democracy, civil liberties, rule of law) that aren't directly affected by absolute population mortality
+- Result: "Elite utopia" pattern - surviving 8% can maintain high institutional scores despite catastrophic mortality
+- **Status:** Investigation completed (Nov 12, 2025), research validation pending
 
-**Root Cause:** Population mortality is **not a direct input** to Western Liberal scoring. The paradigm measures procedural democracy, civil liberties, rule of law, and economic freedom - institutional metrics that can theoretically persist during population collapse.
+**Investigation findings:**
+- Western Liberal components (electoral democracy, civil liberties, rule of law, economic freedom, privacy) measure institutional quality, not population size
+- No historical precedent for institutional persistence during 50%+ mortality (Black Death at 50% → authority collapse)
+- Functional collapse likely: Electoral systems, judiciary, free press require minimum staffing/infrastructure
+- Development paradigm DOES capture mortality effects (QoL plummets), distinguishing welfare from institutions
 
-**Mechanism:** Mortality affects Western Liberal scores only **indirectly** through crisis pressure:
-- Unemployment → authoritarian demand
-- Nuclear winter → emergency powers
-- Refugee crises → strongman appeal
+**Proposed solutions:**
+- **Option A:** Add mortality-weighted penalty with research-backed thresholds (<5%: no penalty, 5-20%: partial, 20-50%: severe, 50%+: near-total)
+- **Option B:** Preserve current behavior, add explanatory logging to clarify "elite utopia" vs mass flourishing
+- **Option C:** Distinguish per-capita (institutional quality) vs absolute (functional capacity) metrics
 
-**Historical Defense:** Procedural democracy CAN persist during severe crisis:
-- Weimar Germany: Democracy maintained during hyperinflation (1923)
-- UK WWII: High democracy scores despite 450k deaths
-- COVID-19: Elections continued globally with 7M deaths
+**Research needed:**
+- Historical case studies: Democracy/rule of law during 20-50% mortality (Black Death, Thirty Years' War, modern conflicts)
+- Functional thresholds: Minimum population/infrastructure for elections, courts, free press
+- Validation: Does upstream democracy erosion (DemocracyDynamicsPhase) already handle this?
 
-**BUT:** 92% global mortality has **no historical precedent**. Extrapolating from <1% mortality events to 92% is methodologically uncertain.
-
-**Research Question:** Should catastrophic mortality (>50%) directly lower Western Liberal scores? If so, through what mechanism?
-- Direct mortality penalty to score?
-- Mortality → unemployment pathway?
-- Catastrophic multiplier on crisis pressure (nonlinear)?
-- Mortality → governance collapse (disables recovery)?
-
-**Status:** Investigation complete (Nov 11, 2025), awaiting research team input
-**Report:** `/reviews/western_paradigm_collapse_scoring_investigation_20251111.md`
-**Priority:** MEDIUM (model calibration, doesn't block development)
+**Files:**
+- Investigation log: `logs/paradigm_scoring_investigation_20251112.md` (380 lines)
+- Diagnostic script: `scripts/diagnosticParadigmMortality.ts` (ready to run)
+- Research verification: `research/verification_2a54f2f_20251112.md` (pending creation)
 
 ---
 
