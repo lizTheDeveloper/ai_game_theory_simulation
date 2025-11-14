@@ -173,6 +173,19 @@ const ALL_TECH: TechDefinition[] = [
     effects: {
       carbonRemoval: 0.01,
     },
+
+    // Phased deployment (TIER 1 CRITICAL - Climate deployment model)
+    deploymentPhase: 'pilot',  // Currently at pilot scale (36 kt CO2/yr)
+    phaseProgress: 20,         // 20% through pilot phase (84 plants operational 2025)
+    energyRequirement: 1200,   // TWh/month at mature scale (14,400 TWh/year for 10 Gt CO2/yr, IEA 2024)
+    constructionEnergy: 200,   // TWh/month during scaling phase
+    deploymentTimeline: {
+      planning: 24,    // 2 years R&D (already completed)
+      pilot: 36,       // 3 years for 1 Mt/yr (current phase, 2024-2027)
+      early_deploy: 60, // 5 years for 10 Mt/yr (2027-2032)
+      scaling: 120,    // 10 years for 1 Gt/yr (2032-2042)
+      mature: 180,     // 15 years for 10 Gt/yr (2042-2057, IPCC AR6)
+    },
   },
   {
     id: 'ai_pollution_remediation',
@@ -271,6 +284,19 @@ const ALL_TECH: TechDefinition[] = [
     effects: {
       cleanEnergyPercentage: 0.08,
       fossilDependenceReduction: 0.05,
+    },
+
+    // Phased deployment (TIER 1 CRITICAL - Climate deployment model)
+    deploymentPhase: 'early_deploy',  // First GW factory operational 2025
+    phaseProgress: 10,                // 10% through early deployment
+    energyRequirement: -100,          // Negative (generates energy, not consumes) - Adds ~100 TWh/month to renewable surplus at maturity
+    constructionEnergy: 50,           // TWh/month for factory construction
+    deploymentTimeline: {
+      planning: 0,         // Already past planning (GW factory 2025)
+      pilot: 0,            // Already past pilot
+      early_deploy: 60,    // 5 years mass production (2025-2030)
+      scaling: 60,         // 5 years supply chain expansion (2030-2035)
+      mature: 60,          // 5 years full maturity (2035-2040)
     },
   },
   {
@@ -518,6 +544,19 @@ const ALL_TECH: TechDefinition[] = [
         { domain: 'climate', subdomain: 'intervention', boost: 0.12 },
         { domain: 'climate', subdomain: 'modeling', boost: 0.08 }
       ],
+    },
+
+    // Phased deployment (TIER 1 CRITICAL - Climate deployment model)
+    deploymentPhase: 'planning',  // Research phase, small-scale trials
+    phaseProgress: 0,
+    energyRequirement: 50,        // TWh/month for mining, grinding, dispersing olivine
+    constructionEnergy: 100,      // TWh/month for industrial-scale mining/processing infrastructure
+    deploymentTimeline: {
+      planning: 60,        // 5 years pilot trials + monitoring
+      pilot: 60,           // 5 years verification of ocean chemistry effects
+      early_deploy: 120,   // 10 years regional deployment + monitoring
+      scaling: 120,        // 10 years global deployment (if safe)
+      mature: 120,         // 10 years full maturity
     },
   },
   {
@@ -1455,6 +1494,19 @@ const ALL_TECH: TechDefinition[] = [
       powerGeneration: 2.0,
       energyAbundance: 1.0,
     },
+
+    // Phased deployment (TIER 1 CRITICAL - Climate deployment model)
+    deploymentPhase: 'planning',  // Planning/R&D phase
+    phaseProgress: 0,
+    energyRequirement: -500,      // Negative (generates unlimited clean baseload energy)
+    constructionEnergy: 300,      // TWh/month for reactor construction
+    deploymentTimeline: {
+      planning: 120,       // 10 years to first plasma (2025 → 2035)
+      pilot: 60,           // 5 years pilot operations (2035 → 2040)
+      early_deploy: 120,   // 10 years commercial scale (2040 → 2050)
+      scaling: 120,        // 10 years mass deployment (2050 → 2060)
+      mature: 120,         // 10 years full maturity (2060 → 2070)
+    },
   },
   
   // Medical Breakthroughs (4)
@@ -1560,6 +1612,19 @@ const ALL_TECH: TechDefinition[] = [
       emergencyOnly: 1.0,
       geoengDisasterRisk: 2.0,  // FIX (Oct 28, 2025): Tech tree → mortality integration - 2% monthly risk when deployed
     },
+
+    // Phased deployment (TIER 1 CRITICAL - Climate deployment model)
+    deploymentPhase: 'planning',  // EMERGENCY ONLY - planning phase
+    phaseProgress: 0,
+    energyRequirement: 20,        // TWh/month for aerosol deployment (low energy, high-altitude aircraft)
+    constructionEnergy: 10,       // TWh/month for aircraft fleet manufacturing
+    deploymentTimeline: {
+      planning: 36,        // 3 years emergency preparedness + modeling
+      pilot: 24,           // 2 years small-scale tests (RISKY - termination shock if stopped)
+      early_deploy: 36,    // 3 years regional deployment (EMERGENCY ONLY)
+      scaling: 36,         // 3 years global deployment (VERY RISKY)
+      mature: 0,           // No maturity phase (termination shock risk prevents stopping)
+    },
   },
   {
     id: 'marine_cloud_brightening',
@@ -1597,6 +1662,19 @@ const ALL_TECH: TechDefinition[] = [
     effects: {
       carbonRemoval: 0.40,
       negativeEmissions: 1.0,
+    },
+
+    // Phased deployment (TIER 1 CRITICAL - Climate deployment model)
+    deploymentPhase: 'planning',  // R&D phase for net-negative BECCS
+    phaseProgress: 0,
+    energyRequirement: 800,       // TWh/month for biomass processing + CCS infrastructure
+    constructionEnergy: 150,      // TWh/month for industrial-scale facilities
+    deploymentTimeline: {
+      planning: 60,        // 5 years R&D + pilot plants
+      pilot: 60,           // 5 years pilot deployments (10 Mt CO2/yr scale)
+      early_deploy: 96,    // 8 years early deployment (100 Mt CO2/yr)
+      scaling: 120,        // 10 years scaling (1 Gt CO2/yr)
+      mature: 120,         // 10 years full maturity (5 Gt CO2/yr net negative)
     },
   },
   {

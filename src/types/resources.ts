@@ -144,7 +144,7 @@ export interface EnergySystem {
   totalProduction: number;           // Energy units/month
   totalDemand: number;               // Energy needed
   surplus: number;                   // Production - demand (can be negative)
-  
+
   // Sources (% breakdown, must sum to 100%)
   sources: {
     oil: number;                     // % from oil
@@ -156,7 +156,7 @@ export interface EnergySystem {
     hydro: number;                   // % from hydroelectric
     fusion: number;                  // % from fusion (late game)
   };
-  
+
   // Capacity (max production per source)
   capacity: {
     oil: number;
@@ -168,14 +168,22 @@ export interface EnergySystem {
     hydro: number;
     fusion: number;
   };
-  
+
   // Infrastructure
   gridEfficiency: number;            // [0,1] Transmission losses
   storageCapacity: number;           // Battery/grid storage (enables renewables)
-  
+
   // Metrics
   renewablePercentage: number;       // % from clean sources (solar+wind+hydro+fusion)
   carbonIntensity: number;           // kg CO2 per energy unit
+
+  // Renewable surplus tracking (TIER 1 CRITICAL - Climate deployment model)
+  renewableSurplus?: number;         // TWh available after baseline consumption
+  partitioning?: {
+    baseline: number;                // TWh for current civilization needs
+    deployment: number;              // TWh allocated to tech deployment
+    operation: number;               // TWh for operating deployed tech
+  };
 }
 
 // ============================================================================
