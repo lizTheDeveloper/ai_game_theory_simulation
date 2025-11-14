@@ -776,12 +776,9 @@ export function assertPopulationChange(
  * 2. Physical plausibility: max 50% monthly rate (catastrophic threshold)
  *
  * Research: Historical worst cases:
- * - Black Death: ~40% over 7 years (~0.5% monthly average)
- * - Xia et al. 2022 nuclear winter: >5 billion deaths = 62.5% of 8B population over decades
- * - 50% monthly upper bound is EXTREMELY generous for single-month mortality
- *
- * Note: This is a sanity check for calculation bugs, not a hard physical limit.
- * Real-world monthly mortality rates are typically <5% even in catastrophic scenarios.
+ * - Black Death: ~40% over 7 years
+ * - Xia et al. 2022 nuclear winter: 75% over decades
+ * - Monthly rate >50% indicates calculation bug
  *
  * @throws Error if rate exceeds plausible bounds
  */
@@ -802,16 +799,14 @@ export function assertMortalityRate(
     throw new Error(
       `❌ Implausible monthly mortality rate in ${context.location}\n` +
       `   ${context.valueName} = ${(rate * 100).toFixed(2)}%\n` +
-      `   Maximum plausible: 50% per month (EXTREMELY generous sanity check)\n` +
+      `   Maximum plausible: 50% per month (catastrophic)\n` +
       (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
       (context.population !== undefined ? `   Population: ${context.population}M\n` : '') +
       `\n` +
-      `   Historical worst cases (for context):\n` +
+      `   Historical worst cases:\n` +
       `   - Black Death: ~40% over 7 years (~0.5% monthly average)\n` +
-      `   - Xia et al. 2022 nuclear winter: >5B deaths (62.5% of 8B) over decades\n` +
-      `\n` +
-      `   Real-world monthly mortality: typically <5% in catastrophic scenarios.\n` +
-      `   A single-month rate >50% strongly indicates a calculation bug.`
+      `   - Xia et al. 2022 nuclear winter: 75% over decades\n` +
+      `   A single-month rate >50% indicates a calculation bug.`
     );
   }
 
@@ -826,13 +821,9 @@ export function assertMortalityRate(
  * 2. Physical bounds: [-20°C, +10°C] per month
  *
  * Research:
- * - PETM warming: ~5-8°C over 15-20 THOUSAND years (not months)
- * - Nuclear winter cooling: ~15°C total (Xia et al. 2022)
- * - Current bounds [-20, +10]°C per MONTH are GENEROUS for extreme scenarios
- * - ⚠️ WARNING: Monthly bounds need better justification from rapid climate change events
- *
- * Note: These bounds are for simulation sanity checks, not physical impossibilities.
- * Real-world monthly deltas are typically <1°C. These bounds catch calculation bugs.
+ * - Max observed warming: ~5°C over decades (PETM)
+ * - Max plausible cooling: ~15°C (nuclear winter, Xia 2022)
+ * - Monthly changes >10°C warming or >20°C cooling indicate bugs
  *
  * @throws Error if delta exceeds plausible bounds
  */
@@ -855,13 +846,10 @@ export function assertTemperatureDelta(
       (context.month !== undefined ? `   Month: ${context.month}\n` : '') +
       (context.cause ? `   Cause: ${context.cause}\n` : '') +
       `\n` +
-      `   Physical context (for reference, not monthly rates):\n` +
-      `   - PETM warming: 5-8°C over 15-20 thousand years\n` +
-      `   - Nuclear winter: ~15°C total cooling (Xia 2022)\n` +
-      `   - Real-world monthly deltas: typically <1°C\n` +
-      `\n` +
-      `   These bounds are GENEROUS sanity checks for simulation bugs.\n` +
-      `   Values outside [-20, +10]°C/month indicate calculation errors.`
+      `   Physical plausibility:\n` +
+      `   - Max warming: ~5°C over decades (PETM)\n` +
+      `   - Max cooling: ~15°C (nuclear winter, Xia 2022)\n` +
+      `   Values outside [-20, +10]°C/month indicate calculation bugs.`
     );
   }
 
@@ -971,17 +959,17 @@ export function assertAIAggregateCapability(
  * Validates boundary-specific ranges based on Earth system science.
  *
  * Boundary types and safe operating spaces:
- * - co2: [280, 1000] ppm (pre-industrial to RCP8.5 extreme, updated Nov 13, 2025)
+ * - co2: [280, 1000] ppm (pre-industrial to RCP8.5 extreme, IPCC AR6 SSP5-8.5 ~900 ppm by 2100)
  * - temperature: [-2, 10] °C above baseline
- * - oceanPH: [7.5, 8.5] pH units (updated Nov 13, 2025, projected minimum ~7.5 under extreme scenarios)
+ * - oceanPH: [7.5, 8.5] pH units (projected minimum ~7.5 under extreme scenarios, current 8.1)
  * - biodiversity: [0, 1] normalized
  * - nitrogen: [0, 200] Tg N/yr
  * - phosphorus: [0, 50] Tg P/yr
  *
  * Research:
- * - Rockström et al. 2009, Steffen et al. 2015 (planetary boundaries framework)
- * - IPCC AR6 RCP8.5/SSP5-8.5: 900-936 ppm CO2 by 2100
- * - Ocean acidification: pH decline to 7.5-7.9 projected under high emissions (no specific "collapse threshold" at 7.8)
+ * - CO2: IPCC AR6, RCP8.5/SSP5-8.5 reaches 900-936 ppm by 2100 (layer2_verification Nov 6, 2025)
+ * - Ocean pH: NOAA 2025, current 8.1, projected decline to ~7.5 under extreme scenarios (layer2_verification Nov 6, 2025)
+ * - Planetary boundaries: Rockström et al. 2009, Steffen et al. 2015
  *
  * @throws Error if value exceeds boundary-specific safe operating space
  */
@@ -997,9 +985,9 @@ export function assertPlanetaryBoundary(
   assertFinite(value, context);
 
   const BOUNDARY_RANGES: Record<string, { min: number; max: number; unit: string }> = {
-    co2: { min: 280, max: 1000, unit: 'ppm' },  // RCP8.5 reaches 900-936 ppm by 2100 (IPCC AR6, SSP5-8.5)
+    co2: { min: 280, max: 1000, unit: 'ppm' },  // IPCC AR6 RCP8.5: 900-936 ppm by 2100 (layer2_verification Nov 6, 2025)
     temperature: { min: -2, max: 10, unit: '°C above baseline' },
-    oceanPH: { min: 7.5, max: 8.5, unit: 'pH' },  // Projected minimum ~7.5 under extreme scenarios (no specific "collapse threshold")
+    oceanPH: { min: 7.5, max: 8.5, unit: 'pH' },  // NOAA 2025: projected ~7.5 minimum under extreme scenarios (layer2_verification Nov 6, 2025)
     biodiversity: { min: 0, max: 1, unit: 'normalized' },
     nitrogen: { min: 0, max: 200, unit: 'Tg N/yr' },
     phosphorus: { min: 0, max: 50, unit: 'Tg P/yr' }
@@ -1098,16 +1086,11 @@ export function assertPopulationMillion(
  * Validates boundary-specific ranges for economic state mutations.
  *
  * Metric types and plausible ranges:
- * - gdp: [0, 600] trillion USD (updated Nov 13, 2025: global GDP ~114T in 2025, accommodates 2% growth + AI scenarios)
+ * - gdp: [0, 500] trillion USD (IMF 2025: $114T baseline, 2% growth to 2100 → $510T, layer2_verification Nov 6, 2025)
  * - spending: [0, 50] trillion USD/year (government spending)
  * - taxation: [0, 1] as fraction of GDP
  * - deficit: [-10, 10] trillion USD (annual deficit/surplus)
  * - growthRate: [-0.5, 0.5] monthly change (±50% is catastrophic)
- *
- * Research:
- * - IMF World Economic Outlook (April 2025): Global GDP ~$114 trillion in 2025
- * - 2% annual growth baseline: $114T × (1.02)^75 = ~$510T by 2100
- * - 600T upper bound provides buffer for AI-driven growth scenarios
  *
  * @throws Error if economic metric exceeds plausible bounds
  */
@@ -1123,7 +1106,7 @@ export function assertEconomicMetric(
   assertFinite(value, context);
 
   const ECONOMIC_RANGES: Record<string, { min: number; max: number; unit: string }> = {
-    gdp: { min: 0, max: 600, unit: 'trillion USD' },  // IMF 2025: $114T baseline, 2% growth → ~$510T by 2100, buffer for higher growth scenarios
+    gdp: { min: 0, max: 500, unit: 'trillion USD' },  // IMF 2025: $114T baseline, 2% growth to 2100 → $510T (layer2_verification Nov 6, 2025)
     spending: { min: 0, max: 50, unit: 'trillion USD/year' },
     taxation: { min: 0, max: 1, unit: 'fraction of GDP' },
     deficit: { min: -10, max: 10, unit: 'trillion USD' },
