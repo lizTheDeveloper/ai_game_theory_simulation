@@ -339,7 +339,9 @@ export function resolveMortality(
       if (isNaN(risk.baseRisk)) {
         throw new Error(`risk.baseRisk is NaN: type=${risk.type}, proximate=${risk.proximate}, root=${risk.root}, description="${risk.description}", month=${risk.month}`);
       }
-      if (isNaN(vulnerability)) {
+      if (isNaN(vulnerability) || vulnerability === undefined) {
+        console.warn(`⚠️ No vulnerability for risk type '${risk.type}' in demographic '${demo.name}'`);
+        console.warn(`   Available types: ${Object.keys(demo.vulnerability).join(', ')}`);
         throw new Error(`vulnerability is NaN: demographic=${demo.name}, riskType=${risk.type}, vulnerability=${vulnerability}`);
       }
 
@@ -388,9 +390,9 @@ export function resolveMortality(
         // Example: 50% death prob, 40% reduction → 50% × 0.6 = 30% final
         deathProb *= (1 - avgReduction);
 
-        // DIAGNOSTIC: Log stabilizer effect for this demographic
-        if (state.currentMonth % 10 === 0 || deathProbBefore > 0.01) {
-          console.log(`    🛡️ Stabilizers applied to ${demo.name}: ${(deathProbBefore * 100).toFixed(2)}% → ${(deathProb * 100).toFixed(2)}% (${(avgReduction * 100).toFixed(1)}% reduction)`);
+        // DIAGNOSTIC: Log stabilizer effect for this demographic (Phase 2.3 - Nov 14, 2025)
+        if (deathProbBefore > 0.001) {
+          console.log(`🛡️ Stabilizers: ${demo.name} ${(deathProbBefore*100).toFixed(3)}% → ${(deathProb*100).toFixed(3)}% (${(avgReduction*100).toFixed(1)}% reduction)`);
         }
       }
     }
