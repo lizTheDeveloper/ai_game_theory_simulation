@@ -295,9 +295,16 @@ export class BifurcationLogicPhase implements SimulationPhase {
         bifState.metrics.maxVarianceAmplification = amplificationValidated;
       }
 
+      // DETERMINISM GUARD (Nov 14, 2025 - CRITICAL-1 fix):
+      // This moving average calculation is order-dependent and MUST only be updated
+      // by BifurcationLogicPhase. Prevent accidental multi-writer race conditions.
+      // If you need to update bifurcation metrics from another phase, refactor to
+      // accumulate changes and apply atomically at phase boundary.
+
       // Calculate average distance (running average approximation)
       // avgNew = (avgOld * n + newValue) / (n + 1)
       // We don't track n explicitly, so use weighted average with 0.95 decay
+      // WARNING: This is ONLY safe because BifurcationLogicPhase is the single writer
       bifState.metrics.avgDistanceToThresholds =
         bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
 

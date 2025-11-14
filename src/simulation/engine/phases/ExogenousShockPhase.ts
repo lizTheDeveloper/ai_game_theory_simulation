@@ -1223,6 +1223,7 @@ export class ExogenousShockPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 6, 2025): Requires environmental state for shock probability
   readonly dependencies = [
     'planetary_boundaries',     // Order 21.0: Environmental fragility increases shock risk
+    'bifurcation-logic',        // Nov 14, 2025 - CRITICAL-1 fix: explicit bifurcation dependency
   ];
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {

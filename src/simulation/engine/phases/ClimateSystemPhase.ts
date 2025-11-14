@@ -78,6 +78,7 @@ export class ClimateSystemPhase implements SimulationPhase {
     'planetary_boundaries',       // For tipping point detection (order 21.0)
     'resource-water',             // For environmental feedback - ocean acidification (Batch 3: consolidated)
     'resource-soil',              // For environmental feedback - novel entities (Batch 3: consolidated)
+    'bifurcation-logic',          // Nov 14, 2025 - CRITICAL-1 fix: explicit bifurcation dependency
   ] as const;
 
   // Minimum floor for food security to prevent exactly zero
