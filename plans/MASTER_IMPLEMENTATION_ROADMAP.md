@@ -5,16 +5,16 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟠 **STABLE WITH CRITICAL ISSUES** (Nov 13, 2025 - Late Evening)
+**Current Status:** 🟢 **STABLE** (Nov 14, 2025 - Afternoon)
 - **Research Quality:** A (peer-reviewed foundation, comprehensive citations)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, defensive cleanup complete)
-- **Architecture Health:** 7.5/10 → **DOWNGRADED** (2 CRITICAL issues identified, 3 HIGH priority concerns)
-  - **CRITICAL-1:** Bifurcation race condition breaks Monte Carlo determinism
-  - **CRITICAL-2:** Novel entities not propagating to mortality pipeline
-  - **HIGH:** Memory leak, no parallelization, scenario validation gaps
-- **System Trajectory:** ⚠️ ARCHITECTURAL STRESS - Fix critical issues before new features
+- **Architecture Health:** 8.5/10 → **UPGRADED** (All CRITICAL issues resolved, 3 HIGH priority concerns remain)
+  - **CRITICAL-1:** ✅ Bifurcation race condition RESOLVED (phase dependencies + validation)
+  - **CRITICAL-2:** ✅ Novel entities mortality propagation RESOLVED (Nov 14, 2025)
+  - **HIGH:** Memory leak RESOLVED, parallelization + scenario validation pending
+- **System Trajectory:** ✅ HEALTHY - Ready for new feature development
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Action Required:** Fix 2 CRITICAL issues immediately (estimated 4-6 days)
+- **Action Required:** None (all critical issues resolved, HIGH priority items can wait)
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -1652,31 +1652,41 @@ Then proceed with phase consolidation implementation.
 
 ### From Architecture Review (November 13, 2025) - architecture-skeptic
 
-**🔴 CRITICAL-1: Bifurcation Race Condition Breaks Monte Carlo Determinism**
+**✅ CRITICAL-1: Bifurcation Race Condition Breaks Monte Carlo Determinism** [COMPLETE - Nov 14, 2025]
 - **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:305`
 - **Problem:** Weighted average calculation (0.95/0.05 split) depends on phase execution order - non-deterministic
 - **Impact:** Research results unreproducible, Monte Carlo analysis invalid
-- **Root Cause:** Moving average without proper synchronization or phase dependency enforcement
-- **Recommendation:**
-  1. Add explicit phase dependency declarations for all phases reading bifurcation state
-  2. Consider accumulating changes and applying at end of step
-  3. Add determinism tests verifying identical results with different phase orders
-- **Estimated Effort:** MEDIUM (2-3 days)
-- **Status:** 🔴 CRITICAL - Fix before ANY new features
+- **Solution Implemented:**
+  1. ✅ Added explicit phase dependencies on `bifurcation-logic` phase (Nov 14, 2025)
+     - StochasticInnovationPhase (line 201)
+     - ClimateSystemPhase (line 81)
+     - ExogenousShockPhase (line 1226)
+  2. ✅ Single-writer pattern verified (only BifurcationLogicPhase writes `avgDistanceToThresholds`)
+  3. ✅ Determinism validation script fixed and confirms bit-identical results across 3 runs
+- **Testing:** `scripts/validateBifurcationDeterminism.ts` - 3 runs with seed=42 produce IDENTICAL bifurcation metrics
+- **Files Modified:**
+  - `src/simulation/engine/phases/StochasticInnovationPhase.ts`
+  - `src/simulation/engine/phases/ClimateSystemPhase.ts`
+  - `src/simulation/engine/phases/ExogenousShockPhase.ts`
+  - `scripts/validateBifurcationDeterminism.ts` (validation tool)
+- **Status:** ✅ COMPLETE - Monte Carlo determinism restored, research results reproducible
 - **Source:** `reviews/architecture_review_20251113.md`
 
-**🔴 CRITICAL-2: Novel Entities Not Propagating to Mortality Pipeline**
+**✅ CRITICAL-2: Novel Entities Not Propagating to Mortality Pipeline** [COMPLETE - Nov 14, 2025]
 - **Location:** `src/simulation/novelEntities.ts` → Bayesian mortality integration
-- **Problem:** Novel entities tracks accumulation (line 79) but mortality integration incomplete - `addMortalityRisk` called but risk doesn't propagate through Bayesian network
-- **Impact:** Major game mechanic (chemical pollution) has no real effect on outcomes
-- **Root Cause:** Incomplete integration between new novel entities system (Nov 11) and existing mortality pipeline
-- **Recommendation:**
-  1. Add integration tests verifying novel entities → mortality propagation
-  2. Instrument mortality pipeline to log which risks contributed to deaths
-  3. Verify Bayesian network properly weights chemical exposure risks
-- **Estimated Effort:** MEDIUM (2-3 days)
-- **Status:** 🔴 CRITICAL - Fix before ANY new features
+- **Problem:** Novel entities tracks accumulation but mortality integration incomplete - risk didn't propagate through Bayesian network
+- **Impact:** Major game mechanic (chemical pollution) had no real effect on outcomes
+- **Solution Implemented:**
+  1. ✅ Fixed crisis-to-mortality integration (commit 6c885d9e2)
+  2. ✅ Novel entities crises now correctly add ongoing monthly mortality via `addOngoingMortality()`
+  3. ✅ Integration tests added validating novel entities → mortality propagation
+- **Testing:** Validation scripts confirm chemical pollution now affects mortality outcomes
+- **Files Modified:**
+  - `src/simulation/novelEntities.ts` - Fixed mortality integration
+  - Validation scripts - Confirmed propagation working
+- **Status:** ✅ COMPLETE - Chemical pollution now properly affects mortality
 - **Source:** `reviews/architecture_review_20251113.md`
+- **Handoff:** Archived to `/plans/completed/CRITICAL-2_novel_entities_mortality_handoff.md`
 
 **✅ HIGH-1: Memory Leak in Bifurcation Time Series** [COMPLETE - Nov 14, 2025]
 - **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:328-356`
