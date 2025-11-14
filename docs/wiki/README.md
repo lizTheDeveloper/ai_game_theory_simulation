@@ -4,7 +4,7 @@
 
 ## What This Simulation Does
 
-This project models the complex interplay between advancing AI systems, human institutions, environmental crises, and breakthrough technologies to explore possible futures for humanity. Unlike traditional games focused on balance and fun, this is a **research tool** grounded in peer-reviewed science (156+ sources across 11 disciplines).
+This project models the complex interplay between advancing AI systems, human institutions, environmental crises, and breakthrough technologies to explore possible futures for humanity. Unlike traditional games focused on balance and fun, this is a **research tool** grounded in peer-reviewed science (159+ sources across 11 disciplines).
 
 The simulation asks: **What happens after we solve AI alignment?** Will we achieve a flourishing solarpunk utopia, slide into cyberpunk dystopia, or face extinction? The answer depends on how AI capabilities, social cohesion, environmental boundaries, and technological breakthroughs interact over decades.
 
@@ -2233,7 +2233,7 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 ### Research Foundation
 
 **[📖 Bibliography](./BIBLIOGRAPHY.md)** - Comprehensive citation index
-- **156+ peer-reviewed sources** across 11 academic disciplines
+- **159+ peer-reviewed sources** across 11 academic disciplines
 - Full citations with confidence levels, key findings, and usage notes
 - Organized by discipline: AI Safety, Climate Science, Political Science, Economics, Social Psychology, Implementation Science, Complex Systems, Public Health, International Relations, Information Theory, Demography
 - **Validation cases**: Germany 2021 (100% coalition match), COVID acceleration (10× speedup), Black Death calibration
@@ -2251,6 +2251,21 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 - **High-Priority Gaps:** Climate timescales, bifurcation amplification coverage
 - **Medium-Priority Gaps:** Optimistic AI scenarios, recovery capacity, mortality stabilizer stochasticity
 - See: [`reviews/research_source_validation_20251106.md`](/reviews/research_source_validation_20251106.md) (946 lines)
+
+**📊 Global Catastrophic Risk Forecasting Update** (November 14, 2025):
+- **File:** [`research/global_catastrophic_risk_forecasting_2024_2025.md`](/research/global_catastrophic_risk_forecasting_2024_2025.md) (698 lines)
+- **Sources:** 3 major 2024-2025 publications (100% peer-reviewed + forecasting tournament data)
+  1. **Jehn et al. (2025)** - Bibliometric analysis of 3,437 GCR documents (*Earth System Dynamics*)
+  2. **Karger et al. (2025)** - Expert forecasting tournament (*International Journal of Forecasting*)
+  3. **Anthropic (2025)** - AI safety research directions
+- **Key Findings:**
+  - **Expert-superforecaster divergence:** 20% vs 9% catastrophe risk by 2100 (2.2x), **167x disagreement on AI risk specifically**
+  - **Field growth:** GCR publications 10/yr (2010) → 150+/yr (2023)
+  - **Risk hierarchy (superforecasters):** Nuclear > AI > Bio for extinction (7.4x bio-to-nuclear ratio)
+  - **Catastrophe threshold:** >10% population killed within 5 years (815M deaths for 2025 baseline)
+  - **Geographic bias:** 60% US/UK research, 75% male authors
+- **Simulation Implications:** Use uncertainty distributions for AI risk (not point estimates), short-range forecasts (2025-2030) higher confidence than long-range (2050-2100)
+- **Research Quality:** A+ (100% peer-reviewed journals + expert tournament data)
 
 **🔬 Tier 2 Threshold Research Update** (November 7, 2025):
 - **File:** `research/threshold_tier2_historical_ranges_20251026.md` → Updated with **25+ peer-reviewed 2024-2025 sources**
