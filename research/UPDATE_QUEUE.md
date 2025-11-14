@@ -1,7 +1,6 @@
 # Research Update Queue
-**Generated:** 11/13/2025, 1:30:05 PM
-**Files Scanned:** 367
-**Last Autonomous Update:** 11/13/2025, 1:35 PM
+**Generated:** 11/14/2025, 11:30:05 AM
+**Files Scanned:** 394
 
 ---
 
@@ -13,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 139 (37.9%)
+**Count:** 144 (36.5%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -204,6 +203,11 @@
 - **Oldest source:** 2008 (17 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/ai_collective_evolution_verification_20251101.md`
+
+### `ai_governance_international_coordination_20251113.md`
+- **Oldest source:** 1998 (27 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_governance_international_coordination_20251113.md`
 
 ### `ai_safety_climate_crossdomain_verification_20251031.md`
 - **Oldest source:** 2019 (6 years old)
@@ -465,6 +469,16 @@
 - **Status:** Not used in simulation
 - **Path:** `research/mortality_stabilizers_failure_conditions_20251106.md`
 
+### `novel_entities_energy_trap_analysis_20251112.md`
+- **Oldest source:** 2002 (23 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/novel_entities_energy_trap_analysis_20251112.md`
+
+### `nuclear_winter_climate_effects_20251113.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/nuclear_winter_climate_effects_20251113.md`
+
 ### `organizational-technology-deployment-timelines_20251019.md`
 - **Oldest source:** 1990 (35 years old)
 - **Status:** Not used in simulation
@@ -635,6 +649,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/validation-summary-ready-for-implementation-20251101.md`
 
+### `verification_033e8e2_20251113.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_033e8e2_20251113.md`
+
 ### `verification_40a2f34_20251111.md`
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
@@ -649,6 +668,11 @@
 - **Oldest source:** 2013 (12 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/verification_65e0f1c_20251107.md`
+
+### `verification_85bcf6e_20251111.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_85bcf6e_20251111.md`
 
 ### `verification_9f29b05_20251030.md`
 - **Oldest source:** 2004 (21 years old)
@@ -714,7 +738,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 19 (5.2%)
+**Count:** 20 (5.1%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -735,12 +759,13 @@
 - `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
 - `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
 - `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
+- `verification_1cd141d_20251113.md` - Oldest: 2021 (4 years)
 
 ---
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 209 (56.9%)
+**Count:** 230 (58.4%)
 
 All sources <3 years old. No action required.
 
@@ -750,33 +775,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 367 |
+| Total files | 394 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 139 (37.9%) |
-| MEDIUM | 19 (5.2%) |
-| LOW | 209 (56.9%) |
-| Average age | 8.4 years |
+| HIGH | 144 (36.5%) |
+| MEDIUM | 20 (5.1%) |
+| LOW | 230 (58.4%) |
+| Average age | 8.1 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 209 | 56.9% |
-| Warning (3-5yr) | 19 | 5.2% |
-| Critical (>5yr) | 139 | 37.9% |
+| Current (<3yr) | 230 | 58.4% |
+| Warning (3-5yr) | 20 | 5.1% |
+| Critical (>5yr) | 144 | 36.5% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 37.9% critical (>5yr)
+- **Current:** 36.5% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 139 HIGH priority file(s) within 1 month
+1. Update 144 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
