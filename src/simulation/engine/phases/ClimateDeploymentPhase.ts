@@ -26,9 +26,10 @@
  * 7. Update energy partitioning for next month
  */
 
-import { GameState, SimulationPhase, PhaseResult, RNGFunction } from '@/types/game';
+import { GameState, SimulationPhase, PhaseResult, RNGFunction, GameEvent } from '@/types/game';
 import { assertFinite, assertDefined, assertInRange } from '@/simulation/utils/assertions';
-import type { TechnologyNode } from '@/types/technologies';
+import { getTechById, type TechDefinition } from '@/simulation/techTree/comprehensiveTechTree';
+import { addSimulationEvent } from '@/simulation/utils/eventLogger';
 
 export class ClimateDeploymentPhase implements SimulationPhase {
   readonly id = 'climate-deployment';
@@ -36,7 +37,7 @@ export class ClimateDeploymentPhase implements SimulationPhase {
   readonly order = 8.5;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const events: string[] = [];
+    const events: GameEvent[] = [];
 
     // Step 1: Calculate renewable surplus
     const renewableSurplus = this.calculateRenewableSurplus(state);
@@ -48,8 +49,8 @@ export class ClimateDeploymentPhase implements SimulationPhase {
     const climateTechs = this.getClimateTechnologies(state);
 
     for (const tech of climateTechs) {
-      if (!tech.deploymentPhase || !tech.unlocked) {
-        continue; // Skip if no deployment tracking or not unlocked
+      if (!tech.deploymentPhase) {
+        continue; // Skip if no deployment tracking
       }
 
       // Step 3: Check energy availability
@@ -57,11 +58,26 @@ export class ClimateDeploymentPhase implements SimulationPhase {
 
       // Advance phase if energy available
       if (energyAllocated > 0 && tech.deploymentTimeline) {
-        const phaseAdvanced = this.advancePhase(state, tech, energyAllocated, events);
+        const phaseAdvanced = this.advancePhase(state, tech, energyAllocated);
 
         if (phaseAdvanced) {
           // Step 6: Log phase transition
-          events.push(`🌍⚡ ${tech.name}: ${tech.deploymentPhase} phase (${tech.phaseProgress?.toFixed(1)}% progress)`);
+          addSimulationEvent(state, {
+            type: 'deployment',
+            severity: 'info',
+            agent: 'climate-deployment',
+            title: `🌍⚡ ${tech.name}: ${tech.deploymentPhase} phase`,
+            description: `Phase progress: ${tech.phaseProgress?.toFixed(1)}%, energy allocated: ${energyAllocated.toFixed(1)} TWh`,
+            effects: {
+              techId: tech.id,
+              phase: tech.deploymentPhase || 'unknown',
+              progress: tech.phaseProgress || 0,
+              energyAllocated,
+            },
+          });
+          // Event is automatically added to state.eventLog, get the last one
+          const event = state.eventLog[state.eventLog.length - 1];
+          events.push(event);
         }
       }
 
@@ -70,10 +86,9 @@ export class ClimateDeploymentPhase implements SimulationPhase {
       const energyMultiplier = this.getEnergyMultiplier(tech, energyAllocated);
 
       // Apply multipliers to base deployment level
-      // (Base deploymentLevel is set by technology unlock/research)
-      // Phase multiplier scales effectiveness based on deployment stage
+      const baseDeployment = this.getTechDeploymentLevel(state, tech.id);
       const adjustedEffectiveness = assertInRange(
-        tech.deploymentLevel * phaseMultiplier * energyMultiplier,
+        baseDeployment * phaseMultiplier * energyMultiplier,
         0,
         1,
         {
@@ -82,22 +97,15 @@ export class ClimateDeploymentPhase implements SimulationPhase {
           month: state.currentMonth,
           additionalInfo: {
             techId: tech.id,
-            baseDeployment: tech.deploymentLevel,
+            baseDeployment,
             phaseMultiplier,
             energyMultiplier,
           },
         }
       );
 
-      // Step 5: Apply to climate boundary (effects engine handles this)
-      // Note: We update the tech's effective deployment level, effects engine applies it
-      // Store original deploymentLevel if not already stored
-      if (!(tech as any).baseDeploymentLevel) {
-        (tech as any).baseDeploymentLevel = tech.deploymentLevel;
-      }
-
-      // Temporarily update deployment level for effects calculation
-      tech.deploymentLevel = adjustedEffectiveness;
+      // Step 5: Update deployment level in tech tree state
+      this.updateTechDeploymentLevel(state, tech.id, adjustedEffectiveness);
     }
 
     // Step 7: Energy partitioning already updated for next month
@@ -201,14 +209,19 @@ export class ClimateDeploymentPhase implements SimulationPhase {
    * Proportional allocation from deployment/operation budgets
    *
    * @param state Game state
-   * @param tech Technology node
+   * @param tech Technology definition
    * @returns TWh allocated to this tech
    */
-  private allocateEnergy(state: GameState, tech: TechnologyNode): number {
+  private allocateEnergy(state: GameState, tech: TechDefinition): number {
     const { energy } = state.resourceEconomy;
 
     if (!energy.partitioning || !tech.energyRequirement) {
       return 0;
+    }
+
+    // Energy requirement must be a number (TWh/month), not an object
+    if (typeof tech.energyRequirement !== 'number') {
+      return 0; // Cleanup techs use different energy model
     }
 
     // Determine if tech is in deployment phase (building) or operational phase (running)
@@ -231,18 +244,21 @@ export class ClimateDeploymentPhase implements SimulationPhase {
    * Phase progression: planning → pilot → early_deploy → scaling → mature → saturated
    *
    * @param state Game state
-   * @param tech Technology node
+   * @param tech Technology definition
    * @param energyAllocated TWh allocated this month
-   * @param events Event log
    * @returns True if phase advanced
    */
   private advancePhase(
     state: GameState,
-    tech: TechnologyNode,
-    energyAllocated: number,
-    events: string[]
+    tech: TechDefinition,
+    energyAllocated: number
   ): boolean {
     if (!tech.deploymentPhase || !tech.deploymentTimeline || !tech.energyRequirement) {
+      return false;
+    }
+
+    // Energy requirement must be a number for this calculation
+    if (typeof tech.energyRequirement !== 'number') {
       return false;
     }
 
@@ -302,7 +318,7 @@ export class ClimateDeploymentPhase implements SimulationPhase {
           break;
       }
 
-      events.push(`🌍💡 ${tech.name}: Phase transition ${oldPhase} → ${tech.deploymentPhase}`);
+      console.log(`🌍💡 ${tech.name}: Phase transition ${oldPhase} → ${tech.deploymentPhase}`);
       return true;
     }
 
@@ -320,10 +336,10 @@ export class ClimateDeploymentPhase implements SimulationPhase {
    * - Mature: 80% (100GW/100Gt scale, 10 Gt/yr)
    * - Saturated: 100% (planetary scale, maximum effectiveness)
    *
-   * @param tech Technology node
+   * @param tech Technology definition
    * @returns Multiplier [0, 1]
    */
-  private getPhaseMultiplier(tech: TechnologyNode): number {
+  private getPhaseMultiplier(tech: TechDefinition): number {
     if (!tech.deploymentPhase) {
       return 0; // No deployment tracking = no effectiveness
     }
@@ -385,12 +401,12 @@ export class ClimateDeploymentPhase implements SimulationPhase {
    * Linear scaling: energy_allocated / energy_required
    * (Simplified model - future enhancement: threshold effects)
    *
-   * @param tech Technology node
+   * @param tech Technology definition
    * @param energyAllocated TWh allocated
    * @returns Multiplier [0, 1]
    */
-  private getEnergyMultiplier(tech: TechnologyNode, energyAllocated: number): number {
-    if (!tech.energyRequirement || tech.energyRequirement === 0) {
+  private getEnergyMultiplier(tech: TechDefinition, energyAllocated: number): number {
+    if (!tech.energyRequirement || typeof tech.energyRequirement !== 'number' || tech.energyRequirement === 0) {
       return 1.0; // No energy constraint
     }
 
@@ -411,36 +427,98 @@ export class ClimateDeploymentPhase implements SimulationPhase {
   /**
    * Get all climate-related technologies
    *
+   * Climate tech IDs from comprehensiveTechTree.ts:
+   * - direct_air_capture (deployed_2025)
+   * - clean_energy_package (TIER 1)
+   * - fusion_power (TIER 1)
+   * - carbon_mineralization (TIER 2)
+   * - ocean_alkalinity (TIER 2)
+   * - gigatonne_direct_air_capture (TIER 3)
+   * - space_based_solar (TIER 3)
+   * - advanced_carbon_sequestration (TIER 3)
+   * - planetary_carbon_management (TIER 4)
+   * - climate_system_control (TIER 4)
+   *
    * @param state Game state
-   * @returns Array of climate technology nodes
+   * @returns Array of climate technology definitions
    */
-  private getClimateTechnologies(state: GameState): TechnologyNode[] {
-    const techs: TechnologyNode[] = [];
-    const { breakthroughTechnologies } = state;
+  private getClimateTechnologies(state: GameState): TechDefinition[] {
+    const techs: TechDefinition[] = [];
 
-    // Add environmental technologies
-    if (breakthroughTechnologies.carbonCapture) {
-      techs.push(breakthroughTechnologies.carbonCapture);
-    }
-    if (breakthroughTechnologies.cleanEnergy) {
-      techs.push(breakthroughTechnologies.cleanEnergy);
-    }
-    if (breakthroughTechnologies.ecosystemManagement) {
-      techs.push(breakthroughTechnologies.ecosystemManagement);
-    }
-    if (breakthroughTechnologies.sustainableAgriculture) {
-      techs.push(breakthroughTechnologies.sustainableAgriculture);
-    }
-    if (breakthroughTechnologies.fusionPower) {
-      techs.push(breakthroughTechnologies.fusionPower);
-    }
+    // Climate tech IDs (only get unlocked ones)
+    const climateTechIds = [
+      'direct_air_capture',
+      'clean_energy_package',
+      'fusion_power',
+      'carbon_mineralization',
+      'ocean_alkalinity',
+      'gigatonne_direct_air_capture',
+      'space_based_solar',
+      'advanced_carbon_sequestration',
+      'planetary_carbon_management',
+      'climate_system_control',
+    ];
 
-    // Add optional climate technologies (TIER 1+)
-    if (breakthroughTechnologies.advancedDirectAirCapture) {
-      // This is a simple boolean flag, skip for now
-      // Future: convert to TechnologyNode
+    for (const techId of climateTechIds) {
+      // Check if unlocked
+      if (state.techTreeState.unlockedTech.includes(techId)) {
+        const techDef = getTechById(techId);
+        if (techDef) {
+          techs.push(techDef);
+        }
+      }
     }
 
     return techs;
+  }
+
+  /**
+   * Get global deployment level for a technology
+   *
+   * @param state Game state
+   * @param techId Technology ID
+   * @returns Deployment level [0, 1]
+   */
+  private getTechDeploymentLevel(state: GameState, techId: string): number {
+    const globalDeployments = state.techTreeState.regionalDeployment['global'];
+    if (!globalDeployments) {
+      return 0;
+    }
+
+    const deployment = globalDeployments.find(d => d.techId === techId);
+    return deployment ? deployment.deploymentLevel : 0;
+  }
+
+  /**
+   * Update global deployment level for a technology
+   *
+   * @param state Game state
+   * @param techId Technology ID
+   * @param level New deployment level [0, 1]
+   */
+  private updateTechDeploymentLevel(state: GameState, techId: string, level: number): void {
+    // Ensure global deployment array exists
+    if (!state.techTreeState.regionalDeployment['global']) {
+      state.techTreeState.regionalDeployment['global'] = [];
+    }
+
+    const globalDeployments = state.techTreeState.regionalDeployment['global'];
+    const deployment = globalDeployments.find(d => d.techId === techId);
+
+    if (deployment) {
+      // Update existing deployment
+      deployment.deploymentLevel = level;
+    } else {
+      // Create new deployment entry
+      globalDeployments.push({
+        techId,
+        region: 'global',
+        deploymentLevel: level,
+        monthlyInvestment: 0,
+        totalInvested: 0,
+        deployedBy: ['climate-deployment-phase'],
+        effects: {},
+      });
+    }
   }
 }
