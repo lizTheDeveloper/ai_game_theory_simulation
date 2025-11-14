@@ -1,0 +1,20 @@
+{
+  "parameterSet": "baseline",
+  "runIndex": 0,
+  "seed": 155085,
+  "duration": 120,
+  "finalMonth": 120,
+  "initialNovelEntitiesBoundary": 1.5,
+  "finalNovelEntitiesBoundary": 1.425,
+  "reductionAbsolute": 0.07499999999999996,
+  "effectivenessPercent": 4.9999999999999964,
+  "techsDeployed": 12,
+  "remediationTechsDeployed": 0,
+  "preventionTechsDeployed": 0,
+  "initialPopulation": 8.136,
+  "finalPopulation": 4.823444941303443,
+  "populationChange": -3.3125550586965566,
+  "finalQoLOverall": 0.5277840573406912,
+  "outcome": "survival",
+  "extinctionTriggered": false
+}
