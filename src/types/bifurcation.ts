@@ -218,23 +218,18 @@ export interface BifurcationState {
     avgDistanceToThresholds: number;  // Average distance across all months
 
     // Time series (Nov 13, 2025 - for Priya validation)
-<<<<<<< Updated upstream
     // HIGH-1 fix (Nov 14, 2025): Rolling window to prevent memory exhaustion
     //
     // MEMORY TRADEOFF:
     // - Without bound: 1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects → OOM
-    // - With rolling window (default: 200): Bounded memory, sufficient for validation
+    // - With rolling window (default: 100-200): Bounded memory, sufficient for validation
     //
-    // Controlled by state.config.bifurcationDiagnostics:
-    // - enabled: false → no collection (zero memory overhead)
-    // - enabled: true, maxTimeSeriesLength: 200 → rolling window (default)
-    // - enabled: true, maxTimeSeriesLength: Infinity → unbounded (use only for debugging!)
+    // Controlled by enableTimeSeries and maxTimeSeriesLength fields below:
+    // - enableTimeSeries: false → no collection (zero memory overhead)
+    // - enableTimeSeries: true, maxTimeSeriesLength: 100-200 → rolling window (default)
     //
     // Validation impact: Priya can validate variance patterns from rolling window.
     // Full history not required - statistics computed incrementally (maxAmplification, etc.)
-=======
-    // Nov 14, 2025 - HIGH-1 fix: Rolling window prevents memory exhaustion
->>>>>>> Stashed changes
     amplificationTimeSeries: Array<{
       month: number;
       amplification: number;  // Variance amplification at this month
