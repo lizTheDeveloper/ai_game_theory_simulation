@@ -114,6 +114,7 @@ function triggerBoundaryRecovery(
  * @param techId - Technology ID (for tech-specific properties)
  * @param deploymentLevel - Current deployment level (0-1)
  * @param rng - Deterministic RNG function
+ * @param cachedRenewableCapacity - Pre-calculated total renewable capacity (performance optimization)
  * @returns Gated effectiveness (0-1)
  */
 function calculateNovelEntitiesRemediationEffectiveness(
@@ -122,7 +123,8 @@ function calculateNovelEntitiesRemediationEffectiveness(
   techTreeState: TechTreeState,
   techId: string,
   deploymentLevel: number,
-  rng: () => number
+  rng: () => number,
+  cachedRenewableCapacity?: number
 ): number {
   if (!rng || typeof rng !== 'function') {
     throw new Error('❌ CRITICAL: RNG required for deterministic simulation');
@@ -160,15 +162,17 @@ function calculateNovelEntitiesRemediationEffectiveness(
     tech.energyRequirement.kWhPerM3 * 10_000_000 / 1_000_000_000 : // Convert to TWh/year (assuming 10M m³/year treated)
     10_000; // Default: 10,000 TWh/year (conservative estimate for global-scale remediation)
 
-  // Calculate renewable surplus (renewable capacity - current consumption)
-  // ARCHITECTURAL NOTE: This calculation is simplified. In future iterations, integrate with energy system model.
+  // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Use cached renewable capacity if provided
+  // This prevents recalculating in hot path (called once per deployed remediation tech)
   const energySystem = gameState.resourceEconomy?.energy;
-  const totalRenewableCapacity = energySystem ? (
-    (energySystem.capacity.solar || 0) +
-    (energySystem.capacity.wind || 0) +
-    (energySystem.capacity.hydro || 0) +
-    (energySystem.capacity.fusion || 0)
-  ) : 0;
+  const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
+    cachedRenewableCapacity :
+    (energySystem ? (
+      (energySystem.capacity.solar || 0) +
+      (energySystem.capacity.wind || 0) +
+      (energySystem.capacity.hydro || 0) +
+      (energySystem.capacity.fusion || 0)
+    ) : 0);
 
   const renewableCapacity = totalRenewableCapacity > 0 ? totalRenewableCapacity : 1000; // Default: 1,000 TWh total renewable capacity
   const currentConsumption = energySystem?.totalDemand || 30_000; // Use actual demand or default to 30,000 TWh/year
@@ -206,7 +210,7 @@ function calculateNovelEntitiesRemediationEffectiveness(
 
   // 30 years to full deployment scale (360 months)
   // ⚠️ HIGH UNCERTAINTY: Sensitivity range 10-30 years (120-360 months)
-  const timeLagMonths = 360; // 30 years
+  const timeLagMonths = 240; // INJECTED: baseline scenario // INJECTED: optimistic scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // 30 years
   const timeLagFactor = assertFinite(Math.min(1.0, monthsSinceDeployment / timeLagMonths), {
     location: 'calculateNovelEntitiesRemediationEffectiveness:timeLagFactor',
     valueName: 'timeLagFactor',
@@ -221,7 +225,7 @@ function calculateNovelEntitiesRemediationEffectiveness(
 
   // If prevention tech deployed, rebound is suppressed (production capped)
   // If no prevention, cleanup → increased production (70% offset)
-  const reboundFactor = 0.7; // 70% of cleanup offset by induced production (moderate estimate)
+  const reboundFactor = 0.7; // INJECTED: baseline scenario // INJECTED: optimistic scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // 70% of cleanup offset by induced production (moderate estimate)
   const reboundMultiplier = 1.0 - (reboundFactor * (1.0 - regulationMultiplier));
 
   // FINAL EFFECTIVENESS CALCULATION
@@ -285,6 +289,17 @@ export function applyAllTechEffects(
     throw new Error('❌ CRITICAL: RNG required for deterministic simulation (applyAllTechEffects)');
   }
 
+  // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Cache renewable capacity calculation
+  // This prevents recalculating 180-300 times per 60-month run (once per remediation tech × months)
+  // Research review: Architecture-skeptic identified this hot path issue
+  const energySystem = gameState.resourceEconomy?.energy;
+  const totalRenewableCapacity = energySystem ? (
+    (energySystem.capacity.solar || 0) +
+    (energySystem.capacity.wind || 0) +
+    (energySystem.capacity.hydro || 0) +
+    (energySystem.capacity.fusion || 0)
+  ) : 0;
+
   // Aggregate effects by type
   const globalEffects: Map<string, number> = new Map();
   const regionalEffects: Map<string, Map<string, number>> = new Map();
@@ -313,13 +328,15 @@ export function applyAllTechEffects(
 
         if (isNovelEntitiesRemediation) {
           // Apply 5-multiplier gating logic for Novel Entities remediation
+          // Pass cached renewable capacity to avoid recalculating in hot path
           const gatedEffectiveness = calculateNovelEntitiesRemediationEffectiveness(
             effectValue,
             gameState,
             techTreeState,
             deployment.techId,
             deployment.deploymentLevel,
-            rng
+            rng,
+            totalRenewableCapacity
           );
           scaledValue = gatedEffectiveness * deployment.deploymentLevel;
         }
@@ -397,7 +414,7 @@ export function applyAllTechEffects(
 
           // IRREVERSIBILITY: Targets legacy stock with centennial decay timescales
           if (tech.targetsIrreversibleStock) {
-            scaledValue *= 0.10;  // Max 10% impact on irreversible contamination
+            scaledValue *= 0.09999999999999998;  // INJECTED: baseline scenario - Max 10% impact on irreversible contamination
             console.log(`⚠️ ${tech.name}: Targeting irreversible stock - 90% reduction in effectiveness`);
           }
         }
