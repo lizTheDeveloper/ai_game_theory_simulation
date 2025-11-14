@@ -4,8 +4,103 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
-<<<<<<< HEAD
 ## ✅ Recent Changes (November 12, 2025)
+
+**🔬 RESEARCH: Crisis Cascade & De-extinction Research Updates** (Nov 12, 2025, commit 3e1f101)
+
+**Summary:** Updated 2 HIGH priority research files from Oct 2025 with current 2024-2025 peer-reviewed sources validating existing simulation parameters.
+
+**Crisis Cascade Multipliers (research/crisis_cascade_multipliers_20251020.md):**
+- **Gambhir et al. (2025) Nature Communications** - Systemic risk assessment framework
+  - 60M additional food crisis victims in 2022 from polycrisis cascade
+  - Energy-food coupling: 40-50% of agricultural costs are energy → cascades amplify
+  - **Validates:** Multiplicative (not additive) crisis dynamics
+- **Undheim & Ahmad (2024) Frontiers** - Extinction thresholds quantified
+  - **Critical finding:** 3-5 co-occurring catastrophes → extinction pathway
+  - Single catastrophe: 25-year recovery. 3-5 catastrophes: no recovery
+  - **Validates:** Simulation's 3-crisis threshold (1.5x) conservative, 5+ crises (2.5-3.0x) aligns with extinction pathways
+- **Assessment:** Current multipliers (1.5-2.5×) well-supported, potentially conservative
+
+**De-extinction Timelines (research/de_extinction_capabilities_timelines_20251022.md):**
+- **Colossal Biosciences 2024-2025 milestones:**
+  - **Thylacine:** 99.9% genome (Oct 2024), stem cells (May 2025), 8yr reintroduction timeline
+  - **Mammoth:** Woolly mice with mammoth traits (Mar 2025), iPSCs created, late 2028 timeline
+  - **Funding:** $435M total, $10.2B valuation (Texas' first decacorn)
+- **Assessment:** Timeline more credible (2028 hybrid vs "never"), but still symbolic conservation only
+
+**Research Quality:** 100% peer-reviewed or reputable industry sources (Oct 2024 - Aug 2025)
+
+**Documentation Updated:**
+- `docs/wiki/mechanics/crisis-cascades.md` - Added research validation section
+- `docs/wiki/systems/tech-tree-system.md` - Updated research citations
+
+**Impact:** Validates existing simulation parameters with 2024-2025 research. No parameter changes needed - conservative multipliers are supported.
+
+---
+
+**🔬 RESEARCH: Climate Tipping Points and Humanitarian Aid Updates** (Nov 12, 2025, commit 951322e)
+
+**Summary:** Updated outdated research sources (2007-2008) with 2024-2025 peer-reviewed findings, clarified humanitarian aid parameter interpretation, fixed citation year error.
+
+**Climate Tipping Points Update:**
+- **New source:** Armstrong McKay et al. (2022) *Science* - comprehensive 2008-2022 reassessment
+- **16 tipping elements** identified (up from 9 in 2008 Lenton review)
+- **5 already at risk** at current 1.1°C warming (coral reefs, Greenland/WAIS, Labrador Sea, permafrost)
+- **Multi-timescale framework:** Fast (10-50yr), medium (50-200yr), slow (1000+yr)
+- **Cascade analysis:** Wunderling et al. (2024) *ESD* - first comprehensive cascade review
+- **Key finding:** Cascades "cannot be ruled out" at 1.5-2.0°C, mostly destabilizing feedbacks
+- **Replaces:** Outdated 2007-2008 sources (Lenton, Scheffer)
+
+**Humanitarian Aid Clarification:**
+- **New source:** Cavalcanti et al. (2025) *The Lancet* - 20-year longitudinal study, 71 countries
+- **Clarified two mechanisms:**
+  1. **Aid effectiveness** (Cavalcanti): 6%/9%/15% mortality reduction by funding level
+  2. **Donor availability** (OCHA 2024): 25% degradation per simultaneous crisis
+- **Age-specific effects:** Children benefit 2-3× more (21%/28%/32% under-5 mortality reduction)
+- **Historical impact:** 91.8M deaths prevented 2001-2021
+- **Disease-specific:** 65% HIV/AIDS reduction, 51% malaria reduction, 50% NTDs
+
+**Citation Fix:**
+- **Acemoglu & Restrepo:** Corrected year 2022 → 2019 across 6 files
+- **Correct citation:** "Automation and New Tasks" (2019), *JEP* 33(2):3-30
+
+**Research Quality Impact:**
+- Sources >5 years old: 38.2% → 37.7%
+- 2 HIGH-priority outdated files fixed (climate sources from 2007)
+- Research documentation: 2 new files, 768 combined lines
+
+**Documentation Updated:**
+- `docs/wiki/README.md` - added commit summary, updated research quality status
+- `docs/wiki/BIBLIOGRAPHY.md` - added Armstrong McKay, Wunderling, Cavalcanti, OCHA entries
+- `docs/wiki/MORTALITY_STABILIZERS.md` - clarified two-mechanism structure
+- `docs/wiki/systems/environmental.md` - updated tipping point research foundation
+
+**Research Files:**
+- `research/climate_tipping_points_2024_update.md` (436 lines)
+- `research/humanitarian_aid_mortality_effectiveness_2025.md` (332 lines)
+
+**Impact:** Addresses CRITICAL research validation issues from verification_594d120_20251112.md. Reduces research currency gap. Provides implementation roadmap for multi-timescale tipping system and separated aid effectiveness/donor availability parameters.
+
+---
+
+**🔧 INFRASTRUCTURE: Researcher Lock File Merge Conflict Resolved** (Nov 12, 2025, commit 4e1699b)
+
+**Summary:** Cleaned up stale `.researcher-worker.lock` file that was blocking merge orchestrator.
+
+**Issue:** The researcher worker completed successfully but left a merge conflict with `.researcher-worker.lock` when returning to main branch. This prevented the merge orchestrator from running.
+
+**Resolution:**
+- Removed `.researcher-worker.lock` (deleted by remote, modified locally)
+- Staged researcher status update (`status_current.txt`: COMPLETE - 469s)
+- Resolved merge conflict cleanly
+
+**Impact:** Autonomous worker system can continue operating without manual intervention.
+
+**Files:**
+- `.researcher-worker.lock` (deleted)
+- `logs/autonomous/researcher/status_current.txt` (status update)
+
+---
 
 **🔧 INFRASTRUCTURE: PID-Based Locking for Autonomous Workers** (Nov 12, 2025, commit f5afdf2)
 
@@ -162,40 +257,6 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
-=======
-## ✅ Recent Changes (November 11, 2025)
-
-**🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
-
-**Summary:** Updated emergency response research file with 5 new sources from 2024-2025, focusing on FEMA workforce capacity constraints, EMS disaster response standards, and individual disaster preparedness.
-
-**New Sources Added:**
-- GAO-25-108598 (2025): FEMA workforce capacity crisis
-- FEMA Four Years Review (2025): Peak deployment metrics
-- NAEMSP Position Statement (2025): EMS disaster response standards
-- StatPearls (2024): DMAT deployment capabilities
-- Ruderman et al. (2024): Individual disaster preparedness survey (n=2,898)
-
-**Key Findings:**
-- **FEMA workforce exhaustion**: Only 4% availability after major disaster (Nov 2024)
-- **Workforce attrition**: 2,446 employees lost in 6 months (Jan-Jun 2025), 9.5% decrease
-- **EMS staffing crisis**: 39-55% vacancy rates limit surge capacity
-- **Individual preparedness**: Only 55-60% have emergency plans/kits (2024)
-- **Trust deficit**: Only 54.8% confidence in federal disaster assistance
-
-**Simulation Implications (Future Implementation):**
-- Multi-disaster scenarios should model capacity exhaustion (96% depletion after first major disaster)
-- Concurrent disaster response delays: 2-6 months (vs 0-1 month baseline)
-- Preparedness heterogeneity: Model socioeconomic gaps, experience-driven learning (133-233% increase for previous disaster survivors)
-- Trust as response modifier: Affects evacuation compliance, government directive adherence
-
-**Research Quality:** HIGH - All sources from 2024-2025, official GAO reports + peer-reviewed journals
-
-**Files Modified:**
-- research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
-
-**Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
->>>>>>> origin/auto/researcher-20251111_003001
 
 ---
 
