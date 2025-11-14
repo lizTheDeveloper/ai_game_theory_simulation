@@ -6,6 +6,7 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## ✅ Recent Changes (November 13, 2025)
 
+<<<<<<< HEAD
 **📖 RESEARCH: ICML 2025 Emergent Misalignment from Fine-Tuning** (Nov 13, 2025, commit 4683fe7)
 
 **Summary:** Added ICML 2025 findings on emergent misalignment from fine-tuning to mechanistic interpretability research file.
@@ -33,6 +34,43 @@ This file contains the complete history of recent changes to the AI Game Theory 
 **Files:**
 - research/mechanistic_interpretability_breakthroughs_20251111.md (updated section 1.4)
 - research/verification_4683fe7_20251113.md (awaiting orchestrator validation)
+=======
+**📖 RESEARCH: Death Attribution Methodology Updated with 2024-2025 Sources** (Nov 13, 2025, commit 6733c07)
+
+**Summary:** Updated two actively-used research files with current peer-reviewed sources on climate mortality and heat death attribution.
+
+**Changes:**
+1. **death_attribution_methodology_20251018.md**:
+   - Added frontmatter (oldest: 2005, newest: 2025, verified: 2025-11-13)
+   - Added 2024-2025 research section with 5 recent studies
+   - Wilson et al. (2024): Heat mortality demographics - 75% deaths in people <35, peak at wet-bulb 23-24°C
+   - Matthews et al. (2025): >260k heat deaths since 2000, accelerating frequency
+   - Lancet (2024): UK climate-mortality attribution methods with refined counterfactuals
+   - Global heatwave (2025): 178k excess deaths, 54% anthropogenic attribution
+   - Zürich case study (2025): Improved counterfactual derivation addressing changing vulnerability
+
+2. **climate-mortality-biosphere-multiparadigm-framework_20251028.md**:
+   - Added frontmatter (oldest: 2019, newest: 2025, verified: 2025-11-13)
+   - Added 2024-2025 update section with Wilson et al. findings
+   - Young adults (under 35) = 75% of heat deaths (87% of lost life years)
+   - Peak mortality at moderate wet-bulb temps (23-24°C) due to high frequency
+   - Attribution confidence: >50% of heat mortality directly climate-caused
+
+**Key Findings:**
+- **Age-specific vulnerability overturned**: Young adults more vulnerable than previously assumed
+- **Non-linear thresholds**: Most deaths at moderate temperatures (23-24°C wet-bulb), not extremes
+- **Attribution confidence**: >50% of current heat mortality directly attributable to climate change
+- **Threshold geography**: Young adult uncompensable threshold area (19-32°C) will triple at 2°C warming
+
+**Simulation Impact:**
+- Both files actively referenced in deathAttribution.ts, extremeWeatherEvents.ts, climate-mortality pathways
+- Research quality: 2024-2025 peer-reviewed sources from Science Advances, Nature Reviews Earth & Environment, Lancet Planetary Health, Climatic Change
+- No parameter changes (research enhancement only)
+
+**Files:**
+- research/death_attribution_methodology_20251018.md
+- research/climate-mortality-biosphere-multiparadigm-framework_20251028.md
+>>>>>>> origin/auto/researcher-20251113_233001
 
 ---
 
