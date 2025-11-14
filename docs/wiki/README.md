@@ -18,20 +18,38 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟡 STABLE WITH 1 CRITICAL ISSUE** (November 14, 2025 - Early Morning)
+**🟢 STABLE - ALL CRITICAL ISSUES RESOLVED** (November 14, 2025)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** A (100% peer-reviewed, automated currency pipeline, W3C standards) ✅ EXCELLENT
 - **Implementation Fidelity:** A- (CRITICAL gaps resolved, research-backed integration, Quality Gate 2 passed) 🟢 STRONG
-- **Architecture Health:** 7.5/10 → **8.0/10 IMPROVING** (1 CRITICAL issue remaining, 3 HIGH priority concerns) ⚠️ ACTIVE REMEDIATION
+- **Architecture Health:** 7.5/10 → **8.5/10 STRONG** (All CRITICAL issues resolved, 3 HIGH priority concerns remain) ✅ HEALTHY
   - ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive guards (Nov 14)
-  - **CRITICAL-2:** Novel entities not propagating to mortality pipeline (diagnostic scripts added)
+  - ✅ **CRITICAL-2 RESOLVED:** Novel entities ongoing mortality fix (Nov 14)
   - **HIGH:** Memory leak in time series, no phase parallelization, scenario validation gaps
-- **System Trajectory:** 🔧 ACTIVE REMEDIATION - 1 of 2 critical issues resolved, diagnostic tooling for CRITICAL-2 added
+- **System Trajectory:** ✅ HEALTHY - All critical issues resolved, focus on HIGH priority optimizations
 
 **Recent Major Achievements:**
 
-**Nov 14: CRITICAL-1 Bifurcation Determinism Fix + CRITICAL-2 Identified** (commit 7233b5a)
+**Nov 14: CRITICAL-2 Novel Entities Ongoing Mortality Fix** (commit 6c885d9e2)
+- ✅ **CRITICAL-2 RESOLVED:** Novel entities crises now add ongoing monthly mortality (not just one-time)
+- 🔧 **Root Cause:** One-time crisis flags prevented ongoing mortality accumulation after initial trigger
+- 📋 **Files Modified:**
+  - `src/simulation/novelEntities.ts` - Separated crisis trigger (one-time) from mortality accumulation (ongoing)
+  - `src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts` - Added 'resource-soil' dependency
+  - `tests/integration/novel-entities-mortality.test.ts` - New regression test (4 test cases)
+- 🎯 **Impact:** Chemical pollution now properly threatens long-term survival
+  - Before: 1 mortality entry over 120 months (only at trigger)
+  - After: 113 mortality entries over 120 months (almost every month)
+  - High pollution (70%+) now causes 50% mortality over 10 years
+- 📊 **Validation:** Diagnostic scripts confirm ongoing monthly mortality from all three crisis types:
+  - Reproductive crisis: 0.08% monthly mortality
+  - Bioaccumulation collapse: 0.15% monthly mortality
+  - Chronic disease epidemic: 0.4% monthly mortality
+- 📖 **Documentation:** `plans/CRITICAL2_FIX_SUMMARY.md` - Complete fix analysis
+- **Architecture Health:** 8.0/10 → 8.5/10 (Last critical issue resolved)
+
+**Nov 14: CRITICAL-1 Bifurcation Determinism Fix** (commit 7233b5a)
 - ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive documentation, phase dependencies, and regression tests
 - 🔒 **Determinism Guarantee:** Single-writer pattern enforced for `bifState.metrics.avgDistanceToThresholds`
 - 📋 **Phase Dependencies Added:** 4 phases now explicitly depend on 'bifurcation-logic'
@@ -48,20 +66,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Resolution Documents:**
   - `reviews/critical1_RESOLVED_20251114.md` (287 lines) - Complete resolution summary
   - `reviews/critical1_race_condition_analysis_20251114.md` (197 lines) - Technical analysis
-- 🔬 **CRITICAL-2 Identified:** Novel entities mortality pipeline bug
-  - **Problem:** Reproductive/bioaccumulation/chronic disease crises add mortality risk ONCE when triggered, then never again
-  - **Root cause:** Lines 145-173, 187-213, 226-255 in `src/simulation/novelEntities.ts` use one-time crisis flags
-  - **Impact:** Chemical pollution has negligible long-term mortality effect (should be ongoing)
-  - **Plan:** `plans/CRITICAL2_novel_entities_mortality_fix.md` (133 lines)
-  - **Diagnostic scripts:** `scripts/testNovelEntitiesMortalityIntegration.ts`, `scripts/diagnosticNovelEntitiesMortality.ts`
+- 🔬 **CRITICAL-2 Identified:** Novel entities mortality pipeline bug (see Nov 14 entry above for resolution)
 - 📖 **DevLog:** `devlogs/critical-1-bifurcation-race-condition-fix-20251114.md` (181 lines)
-- **Architecture Health:** 7.5/10 → 8.0/10 (1 critical issue resolved, 1 new critical issue identified)
 
 **Nov 13: Critical Architecture Review** (commit 4d7bcd5)
 - 🔍 **Review Type:** Integration & Performance Analysis (30 days of commits)
-- 🚨 **CRITICAL Issues Identified:** 2 system stability risks requiring immediate attention
-  - **CRITICAL-1:** Bifurcation race condition - weighted average depends on phase execution order (non-deterministic)
-  - **CRITICAL-2:** Novel entities mortality integration incomplete - major mechanic has no effect
+- 🚨 **CRITICAL Issues Identified:** 2 system stability risks requiring immediate attention (both now resolved)
+  - ✅ **CRITICAL-1:** Bifurcation race condition (resolved Nov 14)
+  - ✅ **CRITICAL-2:** Novel entities mortality integration incomplete (resolved Nov 14)
 - ⚠️ **HIGH Priority Concerns:** 3 performance/validation issues
   - Memory leak in bifurcation time series (unbounded array growth)
   - 95 phases without parallelization opportunities (O(n) bottleneck)
