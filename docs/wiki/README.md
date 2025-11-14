@@ -31,6 +31,12 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 14: Bifurcation Merge Conflict Resolution** (commit 4f4c156)
+- 🔧 **Technical Fix:** Resolved merge conflict between two HIGH-1 implementation approaches
+- 📋 **Files Fixed:** `src/types/bifurcation.ts`, `src/simulation/engine/phases/BifurcationLogicPhase.ts`
+- ✅ **Resolution:** Chose `bifState.metrics.enableTimeSeries` approach (matches type definitions) over `state.config.bifurcationDiagnostics` (field doesn't exist)
+- 🎯 **Impact:** TypeScript now compiles without merge conflict errors
+
 **Nov 14: CRITICAL-2 Novel Entities Ongoing Mortality Fix** (commit 6c885d9e2)
 - ✅ **CRITICAL-2 RESOLVED:** Novel entities crises now add ongoing monthly mortality (not just one-time)
 - 🔧 **Root Cause:** One-time crisis flags prevented ongoing mortality accumulation after initial trigger
