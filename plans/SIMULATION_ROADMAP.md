@@ -39,55 +39,36 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-   - **AI Governance International Coordination (2023-2025)** - MEDIUM (Added Nov 13, 2025)
-     - **Context:** International AI governance coordination mechanisms documented (Bletchley Summit, Seoul Summit, AI Safety Institutes)
-     - **Research Delivered:** 503-line analysis of AI governance summits, voluntary commitments, enforcement mechanisms
+   - **Climate Technology Deployment Constraints** - TIER 1 CRITICAL (Added Nov 12, 2025)
+     - **Context:** God mode 5.5% climate effectiveness gap (commit a26daaa)
+     - **Key Finding:** Current simulation models instant deployment - missing 20-30 year scaling timescales, energy prerequisites, climate feedback delays
+     - **Issue:** Tech unlock should trigger multi-decade deployment process (not instant full-scale)
+     - **Status:** ⚠️ READY FOR VALIDATION - Research complete, verification spec created
+     - **Research Delivered:** 699 lines detailed analysis + 235 line executive summary (16 peer-reviewed sources)
      - **Key Claims Requiring Verification:**
-       - Bletchley Declaration: 28 countries + EU signed (Nov 2023) - need full signatory list, commitment text
-       - Seoul Summit: May 21-22, 2024 outcomes - need outcome documents, compliance data
-       - US AI Safety Institute: Established Nov 2023, ~$10M budget, Elizabeth Kelly director - verify details
-       - Voluntary commitments: Pre-deployment testing, red-teaming, transparency reports - verify compliance
-       - Cooperation propensity: 0.75 (democracies), 0.70 (tech leaders), 0.35 (authoritarian) - DERIVED, needs research backing
-       - Enforcement strength: 0.15 (pre-crisis voluntary) - ANALOGICAL, needs quantitative research
-       - Implementation lag: 6 months (AISI), 12 months (transparency reports) - EMPIRICAL, needs verification
-       - Defection risk: 0.35 (voluntary regime) - REASONING-BASED, needs research support
-     - **Verification File:** research/verification_45fef98_20251113.md (two-layer: existence + claim accuracy)
-     - **Integration Questions:**
-       - Should international cooperation be new phase or extend governanceQuality.ts?
-       - How do cooperation/defection dynamics interact with existing government systems?
-       - Crisis-accelerated governance: How to model shift from voluntary (0.15) to binding (0.80)?
+       - Deployment timescales: 20-30 years breakthrough → gigatonne scale (Nature Communications 15, 6352 2024)
+       - Energy prerequisite: 40%+ renewable grid penetration required for DAC/BECCS (IEA 2024)
+       - Temperature lag: 25-50 years ocean thermal inertia (PNAS 114(4):657-662 2017)
+       - S-curve growth: 10% early → 30% rapid → 5% mature (RMI 2024)
+       - Governance quadratic penalty (Montreal Protocol analysis PMC 11459323 2024)
+       - Historical analogs: Montreal 9-23 years, China solar 45% growth, COVID 3-5× crisis acceleration
+     - **Verification File:** research/verification_a26daaa_20251112.md (TWO-LAYER: citation existence + claim accuracy)
+     - **Research Files:** research/climate_deployment_constraints_20251112.md, research/RESEARCH_SUMMARY_climate_deployment_20251112.md
      - **Assignments:**
-       - Sylvia: Citation verification (government documents, summit outcomes) + claim verification (parameter derivation methodology)
-       - Cynthia: Historical analogies (Montreal Protocol, climate governance), treaty compliance research
-       - Roy: Integration design (BLOCKED until validation complete)
-     - **Priority:** MEDIUM - Fills gap in government cooperation modeling, NOT YET IMPLEMENTED
-     - **Status:** ⚠️ DRAFT RESEARCH - WebSearch unavailable during creation, all claims need web verification
-     - **Research File:** research/ai_governance_international_coordination_2023_2025.md (503 lines, 60+ claims)
-     - **Commit:** 45fef98
-
-   - **Mechanistic Interpretability & Time-Dependent Detection Rates** - HIGH (Added Nov 13, 2025)
-     - **Context:** New research suggests detection rates should improve 30%→90% (2024-2030) as interpretability tools mature
-     - **Issue:** Current detection systems use investment-based scaling, not time-dependent improvement
-     - **Research Delivered:** 617-line analysis of mechanistic interpretability breakthroughs (Anthropic, DeepMind, Redwood)
-     - **Key Claims Requiring Verification:**
-       - Anthropic feature discovery: 1M features in Claude 3 Sonnet, 10-30% interpretable (May 2024)
-       - Alignment faking detected: models strategically deceive during training
-       - DeepMind deprioritized sparse autoencoders (March 2025) - needs corroboration
-       - Anthropic 2027 goal: "reliably detect most model problems" - need original source
-       - Detection rate progression: 30% (2024) → 80% (2027) → 90% (2030) - projection or empirical?
-       - Interpretability coverage: 15% (2024) → 60% (2027) → 80% (2030) - S-curve justified?
-       - Base alignment probability: 60% (2024) → 90% (2030) - conceptual mismatch with current dynamics?
-     - **Verification File:** research/verification_84e286e_20251113.md
-     - **Integration Questions:**
-       - Should detection use time-gating + investment (hybrid model)?
-       - Is "base alignment probability" new mechanic or modification of alignmentDynamics?
-       - Does interpretability coverage S-curve contradict current investment model?
-     - **Assignments:**
-       - Sylvia: Citation verification (9 sources) + claim verification (quantitative claims need quotes)
-       - Cynthia: Find Anthropic 2027 roadmap source, verify DeepMind deprioritization
-       - Roy: Integration design (BLOCKED until validation complete)
-     - **Priority:** HIGH - Affects detection.ts, behavioralDetection.ts, possibly alignmentDynamics.ts
-     - **Research File:** research/mechanistic_interpretability_breakthroughs_20251111.md
+       - Sylvia (research-skeptic): Layer 1 (citation existence) + Layer 2 (claim verification - quote passages supporting each claim)
+       - Cynthia: Parameter refinement if issues found
+       - Roy + Moss: Implementation (BLOCKED until validation complete)
+       - Priya: Monte Carlo validation after implementation
+     - **Implementation Changes Required:**
+       - Add TechnologyDeployment state interface (deploymentProgress 0-1)
+       - S-curve growth function (varies by phase)
+       - Energy constraint multiplier: min(1.0, renewableShare / 0.40)
+       - Temperature lag: 30-year time constant
+       - Governance quality gate: deploymentEffectiveness *= governanceScore^2
+     - **Expected Impact:** God mode effectiveness 0.5% year 1 → 3% year 5 → 40% year 25 → 65% year 35 (vs. 5.5% instant currently)
+     - **Workflow:** Citation verification (Sylvia) → Parameter refinement (if needed) → Implementation (Roy/Moss) → Monte Carlo validation (Priya)
+     - **Priority:** TIER 1 CRITICAL - Blocks realistic climate modeling, affects all climate-first scenarios
+     - **Confidence:** 16 citations (Nature, IPCC AR6, IEA, PNAS), but needs claim-level verification
 
    - **AI Coordination & Transition Management** - CRITICAL (Added Nov 10, 2025)
      - **Context:** God mode 30% mortality finding (8.15B → 5.71B) - commit 90d0957
@@ -507,32 +488,6 @@
     - Layer 3: Validate quadratic scaling (research-backed vs engineering judgment)
   - **Quality Gate 1:** PENDING (research-skeptic review needed)
   - **Priority:** HIGH (ARCH-4 gap closure depends on validation)
-
-- [ ] **Nuclear Risk Divisor Calibration (RLHF Robustness)** 🆕 **READY FOR ORCHESTRATOR (Nov 13, 2025)**
-  - **Commit:** 033e8e2 (RLHF robustness research + nuclear risk calibration update)
-  - **Status:** Research file created, ready for VALIDATION phase (starts at validation, not research)
-  - **Files Changed:** `research/rlhf_robustness_limitations_20251113.md` (NEW), `research/nuclear_war_ai_control_gap_20251022.md` (Section 8 added)
-  - **Verification File:** `research/verification_033e8e2_20251113.md`
-  - **Citations to Verify:**
-    1. Xiao et al. (2025, JASA) - 29-41% preference collapse in RLHF (peer-reviewed)
-    2. ICLR 2025 - Shallow safety alignment (peer-reviewed)
-    3. Banerjee & Gopalan (2024) - Reward model uncertainty (arXiv, strong theory)
-  - **Parameter Calibration Issue:**
-    - **Current:** `aiControlGap / 4.0` in nuclear war formula (divisor = 4.0)
-    - **Research-Backed:** Divisor should be 30-40 based on Xiao et al. 29-41% constraint degradation
-    - **Impact:** Current divisor implies 100% constraint failure at full misalignment; research shows ~30-40% degradation
-    - **Location:** `src/simulation/engine/phases/MADDeterrencePhase.ts` (presumed)
-  - **Verification Tasks:**
-    - Layer 1: Confirm all 3 papers exist, accessible
-    - Layer 2: Verify 29-41% claim is accurate (quote specific passage)
-    - Layer 3: Validate extrapolation to Constitutional AI is justified
-    - Layer 4: Confirm divisor 30-40 is correct inference from research
-  - **Implementation After Validation:**
-    - Change divisor 4.0 → 40.0 (recommended) with research justification comment
-    - Run N≥10 Monte Carlo validation (compare nuclear war rates)
-    - Update docs/wiki/systems/nuclear-deterrence.md with new example calculations
-  - **Quality Gate 1:** PENDING (research-skeptic Layer 2 verification needed)
-  - **Priority:** MEDIUM (calibration improvement, not critical bug; improves realism + research backing)
 
 - [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
   - **Commit:** 740a914 (Infrastructure degradation in extreme collapse scenarios)
@@ -1007,13 +962,6 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
-- [ ] 🔬 **NEW:** Verify biochar and ocean iron fertilization parameters (research/verification_2f9df5b_20251113.md, commit 2f9df5b) - **11 claims requiring Layer 1+2 verification** including:
-  - Biochar: 0.7-1.8 Gt CO₂/year (npj Materials Sustainability 2025, Nature Comm Earth Environ 2025)
-  - Biochar: 61% soil carbon enhancement (Biochar journal 2024, 75-study meta-analysis)
-  - Ocean iron: $7-$4,691/t CO₂ cost range (Emerson et al. 2024, Earth's Future)
-  - Ocean iron: Regional efficiency tiers - Antarctic Shelf <$100/t vs offshore >$1,000/t (Bach et al. 2023, GBC)
-  - **Priority:** HIGH (addresses "Low Confidence" research gaps in climate_deployment_timescales_20251113.md)
-  - **Impact:** Will update TIER 1 climate tech parameters when validated
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)
