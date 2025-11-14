@@ -1,8 +1,15 @@
+---
+oldest_source: 2019
+newest_source: 2025
+last_verified: 2025-11-12
+---
+
 # Climate-Related Mortality & Biosphere Die-off: Multi-Paradigm Modeling Framework
 
 **Research Synthesis by Cynthia (Super Alignment Researcher)**
-**Date:** October 28, 2025
+**Date:** October 28, 2025 (Updated: 2025-11-12)
 **Status:** Evidence-based recommendations for replacing random exogenous shocks with predictable climate-driven mortality models
+**Last Updated:** 2025-11-12 (Autonomous Researcher - added frontmatter metadata)
 
 ---
 
