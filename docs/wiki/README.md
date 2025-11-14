@@ -2262,7 +2262,7 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 - **Validation cases**: Germany 2021 (100% coalition match), COVID acceleration (10× speedup), Black Death calibration
 - **Quality standards**: Research-skeptic review (40% rejection rate), architecture-skeptic review (mandatory)
 - **📚 Zotero Integration** (October 31, 2025): All papers tracked in centralized Zotero library for citation accuracy, parameter traceability, and cross-agent knowledge continuity. See CLAUDE.md Research Standards for agent-specific workflows.
-- **🔬 Research Update Pipeline** (November 6, 2025): Automated research currency monitoring with weekly age audits, priority-based update queue, GitHub Actions integration. See [RESEARCH_PIPELINE.md](../RESEARCH_PIPELINE.md) for full workflow. **Current status: 0 CRITICAL items** (all simulation-used sources <3yr old).
+- **🔬 Research Update Pipeline** (November 6, 2025): Automated research currency monitoring with weekly age audits, priority-based update queue, GitHub Actions integration. See [RESEARCH_PIPELINE.md](../RESEARCH_PIPELINE.md) for full workflow. **Current status (Nov 14, 2025): 0 CRITICAL items, research quality A grade** (85-95% peer-reviewed, 2024-2025 sources, all simulation-critical files current).
 
 **Research Verification Status**:
 
