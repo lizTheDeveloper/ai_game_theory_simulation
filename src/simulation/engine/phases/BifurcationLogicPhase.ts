@@ -302,12 +302,18 @@ export class BifurcationLogicPhase implements SimulationPhase {
         bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
 
       // Track time series data point (CRITICAL-1 fix: Nov 13, 2025 - enables Priya variance validation)
-      bifState.metrics.amplificationTimeSeries.push({
-        month: state.currentMonth,
-        amplification: amplificationValidated,
-        distanceToNearest: minDistanceValidated,
-        nearestSystem: nearestThresholdName,
-      });
+      // HIGH-1 fix: Nov 14, 2025 - Cap at 100 entries to prevent memory leak in long simulations
+      // (600 month runs would accumulate 600+ objects; Monte Carlo N=100 = 100K+ objects total)
+      // Pattern from PhaseOrchestrator.ts:228 (commit 27e788fe9)
+      bifState.metrics.amplificationTimeSeries = [
+        ...bifState.metrics.amplificationTimeSeries.slice(-99),
+        {
+          month: state.currentMonth,
+          amplification: amplificationValidated,
+          distanceToNearest: minDistanceValidated,
+          nearestSystem: nearestThresholdName,
+        }
+      ];
     }
   }
 
