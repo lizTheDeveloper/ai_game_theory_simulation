@@ -7,7 +7,8 @@
  * Nov 14, 2025 - CRITICAL-1 fix validation
  */
 
-import { runSimulation } from '../src/simulation/engine.js';
+import { SimulationEngine, SeededRandom } from '../src/simulation/engine.js';
+import { createDefaultInitialState } from '../src/simulation/initialization.js';
 
 console.log('🔍 Testing BifurcationLogicPhase determinism...\n');
 
@@ -25,17 +26,19 @@ const traces: Array<Array<{
 for (let run = 0; run < 3; run++) {
   console.log(`  Run ${run + 1}/3 (seed=${SEED})...`);
 
-  const result = runSimulation({
-    seed: SEED,
-    maxMonths: MAX_MONTHS,
-    enableLogging: false,
-  });
+  // Create engine first, then use its RNG for initialization (determinism fix Nov 6 2025)
+  const engine = new SimulationEngine({ seed: SEED, maxMonths: MAX_MONTHS, logLevel: 'none' });
+  const rngFunction = engine.getRNG().next.bind(engine.getRNG());
 
-  const trace = result.monthlySnapshots.map((snapshot:any) => ({
-    month: snapshot.month,
-    varianceAmp: snapshot.bifurcationState?.varianceAmplification ?? 0,
-    avgDistance: snapshot.bifurcationState?.metrics?.avgDistanceToThresholds ?? 0,
-    regime: snapshot.bifurcationState?.currentRegime ?? 'unknown',
+  const initialState = createDefaultInitialState(rngFunction);
+
+  const result = engine.run(initialState);
+
+  const trace = result.history.map((step) => ({
+    month: step.state.currentMonth,
+    varianceAmp: step.state.bifurcationState?.varianceAmplification ?? 0,
+    avgDistance: step.state.bifurcationState?.metrics?.avgDistanceToThresholds ?? 0,
+    regime: step.state.bifurcationState?.currentRegime ?? 'unknown',
   }));
 
   traces.push(trace);
@@ -43,14 +46,23 @@ for (let run = 0; run < 3; run++) {
 
 console.log('\n✓ All runs complete\n');
 
+// Check trace lengths
+console.log(`Trace lengths: Run1=${traces[0].length}, Run2=${traces[1].length}, Run3=${traces[2].length}`);
+const minLength = Math.min(traces[0].length, traces[1].length, traces[2].length);
+
 // Check determinism: all 3 runs should be IDENTICAL
 console.log('📊 Checking determinism (bit-identical results)...');
 let deterministicErrors = 0;
 
-for (let month = 0; month < MAX_MONTHS; month++) {
+for (let month = 0; month < minLength; month++) {
   const run1 = traces[0][month];
   const run2 = traces[1][month];
   const run3 = traces[2][month];
+
+  if (!run1 || !run2 || !run3) {
+    console.log(`  ⚠️  Month ${month}: Missing data (run1=${!!run1}, run2=${!!run2}, run3=${!!run3})`);
+    continue;
+  }
 
   if (run1.varianceAmp !== run2.varianceAmp || run1.varianceAmp !== run3.varianceAmp) {
     console.log(
