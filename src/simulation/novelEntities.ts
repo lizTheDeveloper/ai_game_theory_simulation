@@ -164,6 +164,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // TRULY GLOBAL: PFAS in 99% of human blood = everyone exposed (100% of world)
     // 0.08% mortality rate from despair/failed fertility treatments
     const pop = state.humanPopulationSystem as any;
+    console.log(`💀 Novel Entities: Adding reproductive crisis mortality risk (baseRisk=0.0008)`);
     addMortalityRisk(pop, {
       type: 'pollution',
       baseRisk: 0.0008,
@@ -174,6 +175,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       month: state.currentMonth,
       exposedFraction: 1.00
     });
+    console.log(`  Risks now: ${pop.mortalityRisks?.length || 0}`);
   }
   
   // === BIOACCUMULATION ===
@@ -207,6 +209,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // TRULY GLOBAL: Food chain is globally interconnected (100% of world affected)
     // 0.15% mortality rate from contaminated food poisoning
     const pop = state.humanPopulationSystem as any;
+    console.log(`💀 Novel Entities: Adding bioaccumulation collapse mortality risk (baseRisk=0.0015)`);
     addMortalityRisk(pop, {
       type: 'pollution',
       baseRisk: 0.0015,
@@ -217,6 +220,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       month: state.currentMonth,
       exposedFraction: 1.00
     });
+    console.log(`  Risks now: ${pop.mortalityRisks?.length || 0}`);
   }
   
   // === CHRONIC DISEASE EPIDEMIC ===
@@ -252,6 +256,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // TRULY GLOBAL: Chemical exposure is global (100% of world affected)
     // 0.4% mortality rate from cancer/autoimmune surge
     const pop = state.humanPopulationSystem as any;
+    console.log(`💀 Novel Entities: Adding chronic disease epidemic mortality risk (baseRisk=0.004)`);
     addMortalityRisk(pop, {
       type: 'pollution',
       baseRisk: 0.004,
@@ -262,6 +267,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       month: state.currentMonth,
       exposedFraction: 1.00
     });
+    console.log(`  Risks now: ${pop.mortalityRisks?.length || 0}`);
   }
   
   // === ONGOING HEALTH IMPACTS ===

@@ -202,6 +202,10 @@ export interface BifurcationState {
    * - Track distance month-by-month (see approach to thresholds)
    * - Enable pre/post bifurcation variance analysis
    *
+   * Nov 14, 2025 - HIGH-1 memory fix: Rolling window to prevent unbounded growth
+   * - maxTimeSeriesLength caps array size (default: 100)
+   * - enableTimeSeries flag disables entirely for production runs
+   *
    * @see /reviews/bifurcation_empirical_architecture_review_20251113.md
    */
   metrics?: {
@@ -214,6 +218,7 @@ export interface BifurcationState {
     avgDistanceToThresholds: number;  // Average distance across all months
 
     // Time series (Nov 13, 2025 - for Priya validation)
+<<<<<<< Updated upstream
     // HIGH-1 fix (Nov 14, 2025): Rolling window to prevent memory exhaustion
     //
     // MEMORY TRADEOFF:
@@ -227,12 +232,20 @@ export interface BifurcationState {
     //
     // Validation impact: Priya can validate variance patterns from rolling window.
     // Full history not required - statistics computed incrementally (maxAmplification, etc.)
+=======
+    // Nov 14, 2025 - HIGH-1 fix: Rolling window prevents memory exhaustion
+>>>>>>> Stashed changes
     amplificationTimeSeries: Array<{
       month: number;
       amplification: number;  // Variance amplification at this month
       distanceToNearest: number;  // Distance to nearest threshold (0.0 - 1.0)
       nearestSystem: string;  // Which system is nearest to threshold
     }>;
+
+    // Configuration (Nov 14, 2025 - HIGH-1 memory fix)
+    maxTimeSeriesLength: number;  // Max entries in amplificationTimeSeries (default: 100)
+    enableTimeSeries: boolean;     // Toggle time series collection (default: true for validation, set false for production)
+    _rollingWindowLogged: boolean; // Internal: prevent log spam (set true after first trim)
   };
 }
 
@@ -323,6 +336,9 @@ export function initializeBifurcationState(rng: () => number): BifurcationState 
       regimeShiftEvents: [],
       avgDistanceToThresholds: 1.0,
       amplificationTimeSeries: [],  // Nov 13, 2025 - time series tracking
+      maxTimeSeriesLength: 100,  // Nov 14, 2025 - HIGH-1 fix: cap at 100 entries
+      enableTimeSeries: true,    // Nov 14, 2025 - HIGH-1 fix: enable by default (for validation)
+      _rollingWindowLogged: false,  // Nov 14, 2025 - HIGH-1 fix: prevent log spam
     },
   };
 }

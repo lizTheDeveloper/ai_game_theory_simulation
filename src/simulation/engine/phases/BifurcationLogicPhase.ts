@@ -308,6 +308,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
       bifState.metrics.avgDistanceToThresholds =
         bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
 
+<<<<<<< Updated upstream
       // Track time series data point (CRITICAL-1 fix: Nov 13, 2025 - enables Priya variance validation)
       // HIGH-1 fix (Nov 14, 2025): Implement rolling window to prevent memory exhaustion
       // Context: 1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects
@@ -323,12 +324,23 @@ export class BifurcationLogicPhase implements SimulationPhase {
 
       if (diagnosticsEnabled) {
         bifState.metrics.amplificationTimeSeries.push({
+=======
+      // Track time series data point (Nov 13, 2025 - enables Priya variance validation)
+      // Nov 14, 2025 - HIGH-1 fix: Rolling window prevents unbounded memory growth
+      if (bifState.metrics.enableTimeSeries) {
+        const timeSeries = bifState.metrics.amplificationTimeSeries;
+        const maxLength = bifState.metrics.maxTimeSeriesLength;
+
+        // Add new data point
+        timeSeries.push({
+>>>>>>> Stashed changes
           month: state.currentMonth,
           amplification: amplificationValidated,
           distanceToNearest: minDistanceValidated,
           nearestSystem: nearestThresholdName,
         });
 
+<<<<<<< Updated upstream
         // Enforce rolling window: keep only last maxLength entries
         // This prevents unbounded memory growth in long simulations
         if (bifState.metrics.amplificationTimeSeries.length > maxLength) {
@@ -336,6 +348,36 @@ export class BifurcationLogicPhase implements SimulationPhase {
           // Alternative: circular buffer, but adds complexity for marginal gain
           const excess = bifState.metrics.amplificationTimeSeries.length - maxLength;
           bifState.metrics.amplificationTimeSeries.splice(0, excess);
+=======
+        // Enforce rolling window: keep only last N entries
+        // This prevents 1000-month runs from accumulating 1000+ objects
+        if (timeSeries.length > maxLength) {
+          // Log on first trim only (prevent log spam)
+          if (!bifState.metrics._rollingWindowLogged) {
+            console.log(
+              `🔧 Bifurcation time series rolling window active at Month ${state.currentMonth} ` +
+              `(capped at ${maxLength} entries, prevents memory exhaustion)`
+            );
+            bifState.metrics._rollingWindowLogged = true;
+          }
+
+          // Remove oldest entries to stay within limit
+          // Use slice for performance (creates new array with recent entries only)
+          const excessCount = timeSeries.length - maxLength;
+          bifState.metrics.amplificationTimeSeries = timeSeries.slice(excessCount);
+
+          // Assertion: verify we're at the limit now
+          assertInRange(bifState.metrics.amplificationTimeSeries.length, 0, maxLength, {
+            location: 'BifurcationLogicPhase.updateVarianceAmplification',
+            valueName: 'timeSeriesLength',
+            month: state.currentMonth,
+            additionalInfo: {
+              beforeTrim: timeSeries.length,
+              afterTrim: bifState.metrics.amplificationTimeSeries.length,
+              maxLength,
+            },
+          });
+>>>>>>> Stashed changes
         }
       }
     }
