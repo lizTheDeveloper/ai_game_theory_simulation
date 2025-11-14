@@ -1,3 +1,9 @@
+---
+oldest_source: 2020
+newest_source: 2025
+last_verified: 2025-10-24
+---
+
 # AI Collective Evolution System: Research Validation Report
 
 **Date:** October 24, 2025
