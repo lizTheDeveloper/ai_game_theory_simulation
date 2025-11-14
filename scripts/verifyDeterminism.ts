@@ -15,7 +15,7 @@
  *            Non-deterministic simulation? That's game over for research validity."
  */
 
-import { SimulationEngine } from '../src/simulation/engine';
+import { SimulationEngine, SeededRandom } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 import { GameState } from '../src/types/game';
 import * as fs from 'fs';
@@ -186,7 +186,11 @@ async function runSimulationWithSnapshots(runNumber: number): Promise<StateSnaps
     logLevel: 'none'  // Suppress simulation logs
   });
 
-  const initialState = createDefaultInitialState('balanced', undefined, undefined, undefined, undefined, SEED);
+  // Create RNG function for initialization (CRITICAL: determinism requires seeded RNG)
+  const rng = new SeededRandom(SEED);
+  const rngFunc = () => rng.next();
+
+  const initialState = createDefaultInitialState(rngFunc, 'balanced', undefined, undefined, undefined, undefined);
   const snapshots: StateSnapshot[] = [];
 
   // Capture snapshot of initial state
