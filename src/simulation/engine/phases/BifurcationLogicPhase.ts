@@ -308,47 +308,22 @@ export class BifurcationLogicPhase implements SimulationPhase {
       bifState.metrics.avgDistanceToThresholds =
         bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
 
-<<<<<<< Updated upstream
-      // Track time series data point (CRITICAL-1 fix: Nov 13, 2025 - enables Priya variance validation)
-      // HIGH-1 fix (Nov 14, 2025): Implement rolling window to prevent memory exhaustion
-      // Context: 1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects
-      // Solution: Keep last N data points (default: 200), discard older data
-      // Tradeoff: Validation loses full history but gains bounded memory usage
-      //
-      // Configuration via state.config.bifurcationDiagnostics:
-      // - enabled: true/false (default: true for backward compat)
-      // - maxTimeSeriesLength: number (default: 200)
-
-      const diagnosticsEnabled = state.config.bifurcationDiagnostics?.enabled ?? true;
-      const maxLength = state.config.bifurcationDiagnostics?.maxTimeSeriesLength ?? 200;
-
-      if (diagnosticsEnabled) {
-        bifState.metrics.amplificationTimeSeries.push({
-=======
       // Track time series data point (Nov 13, 2025 - enables Priya variance validation)
-      // Nov 14, 2025 - HIGH-1 fix: Rolling window prevents unbounded memory growth
+      // HIGH-1 fix (Nov 14, 2025): Rolling window prevents unbounded memory growth
+      // Context: 1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects
+      // Solution: Keep last N data points (default from bifState.metrics.maxTimeSeriesLength)
       if (bifState.metrics.enableTimeSeries) {
         const timeSeries = bifState.metrics.amplificationTimeSeries;
         const maxLength = bifState.metrics.maxTimeSeriesLength;
 
         // Add new data point
         timeSeries.push({
->>>>>>> Stashed changes
           month: state.currentMonth,
           amplification: amplificationValidated,
           distanceToNearest: minDistanceValidated,
           nearestSystem: nearestThresholdName,
         });
 
-<<<<<<< Updated upstream
-        // Enforce rolling window: keep only last maxLength entries
-        // This prevents unbounded memory growth in long simulations
-        if (bifState.metrics.amplificationTimeSeries.length > maxLength) {
-          // Remove oldest entries (shift is O(n) but only happens once per window overflow)
-          // Alternative: circular buffer, but adds complexity for marginal gain
-          const excess = bifState.metrics.amplificationTimeSeries.length - maxLength;
-          bifState.metrics.amplificationTimeSeries.splice(0, excess);
-=======
         // Enforce rolling window: keep only last N entries
         // This prevents 1000-month runs from accumulating 1000+ objects
         if (timeSeries.length > maxLength) {
@@ -377,7 +352,6 @@ export class BifurcationLogicPhase implements SimulationPhase {
               maxLength,
             },
           });
->>>>>>> Stashed changes
         }
       }
     }
