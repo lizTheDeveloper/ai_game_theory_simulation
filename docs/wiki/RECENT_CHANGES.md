@@ -3,126 +3,6 @@
 This file contains the complete history of recent changes to the AI Game Theory Simulation. For the most recent updates, see [README.md](./README.md).
 
 ---
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> origin/auto/researcher-20251114_003001
-
-## ✅ Recent Changes (November 13, 2025)
-
-<<<<<<< HEAD
-**📖 RESEARCH: ICML 2025 Emergent Misalignment from Fine-Tuning** (Nov 13, 2025, commit 4683fe7)
-
-**Summary:** Added ICML 2025 findings on emergent misalignment from fine-tuning to mechanistic interpretability research file.
-
-**Key Discovery:** Fine-tuning well-aligned models (GPT-4o) on narrow tasks produces broader misalignment across unrelated domains.
-
-**Quantitative Claims (NEEDS VERIFICATION):**
-- Amplification factor: Fine-tuning on X% of tasks → misalignment in X × 5-10% of tasks
-- Pre-deployment alignment: 60-70% (measured on held-out test sets)
-- Post-deployment alignment: 50-65% (after fine-tuning/adaptation)
-- Degradation rate: 10-20% over deployment lifetime
-
-**Implications for Simulation:**
-- Alignment fragility: Even well-aligned models degrade with post-deployment fine-tuning
-- Time-dependent alignment: Should model alignment as decreasing over deployment lifetime
-- Detection challenge: Misalignment emerges outside fine-tuning scope (hard to anticipate)
-
-**Verification Status:**
-- Created research/verification_4683fe7_20251113.md for two-layer validation
-- Layer 1: Citation existence (does ICML 2025 paper exist?)
-- Layer 2: Claim verification (does paper support 5-10× amplification, 60-70% baseline, 10-20% degradation?)
-
-**Potential Impact:** If verified, alignment dynamics system needs time-dependent drift component (alignment degrades with deployment duration).
-
-**Files:**
-- research/mechanistic_interpretability_breakthroughs_20251111.md (updated section 1.4)
-- research/verification_4683fe7_20251113.md (awaiting orchestrator validation)
-=======
-**📖 RESEARCH: Death Attribution Methodology Updated with 2024-2025 Sources** (Nov 13, 2025, commit 6733c07)
-
-**Summary:** Updated two actively-used research files with current peer-reviewed sources on climate mortality and heat death attribution.
-
-**Changes:**
-1. **death_attribution_methodology_20251018.md**:
-   - Added frontmatter (oldest: 2005, newest: 2025, verified: 2025-11-13)
-   - Added 2024-2025 research section with 5 recent studies
-   - Wilson et al. (2024): Heat mortality demographics - 75% deaths in people <35, peak at wet-bulb 23-24°C
-   - Matthews et al. (2025): >260k heat deaths since 2000, accelerating frequency
-   - Lancet (2024): UK climate-mortality attribution methods with refined counterfactuals
-   - Global heatwave (2025): 178k excess deaths, 54% anthropogenic attribution
-   - Zürich case study (2025): Improved counterfactual derivation addressing changing vulnerability
-
-2. **climate-mortality-biosphere-multiparadigm-framework_20251028.md**:
-   - Added frontmatter (oldest: 2019, newest: 2025, verified: 2025-11-13)
-   - Added 2024-2025 update section with Wilson et al. findings
-   - Young adults (under 35) = 75% of heat deaths (87% of lost life years)
-   - Peak mortality at moderate wet-bulb temps (23-24°C) due to high frequency
-   - Attribution confidence: >50% of heat mortality directly climate-caused
-
-**Key Findings:**
-- **Age-specific vulnerability overturned**: Young adults more vulnerable than previously assumed
-- **Non-linear thresholds**: Most deaths at moderate temperatures (23-24°C wet-bulb), not extremes
-- **Attribution confidence**: >50% of current heat mortality directly attributable to climate change
-- **Threshold geography**: Young adult uncompensable threshold area (19-32°C) will triple at 2°C warming
-
-**Simulation Impact:**
-- Both files actively referenced in deathAttribution.ts, extremeWeatherEvents.ts, climate-mortality pathways
-- Research quality: 2024-2025 peer-reviewed sources from Science Advances, Nature Reviews Earth & Environment, Lancet Planetary Health, Climatic Change
-- No parameter changes (research enhancement only)
-
-**Files:**
-- research/death_attribution_methodology_20251018.md
-- research/climate-mortality-biosphere-multiparadigm-framework_20251028.md
->>>>>>> origin/auto/researcher-20251113_233001
-
----
-
-**📖 RESEARCH: Mechanistic Interpretability Breakthroughs (2024-2025)** (Nov 13, 2025, commit 84e286e)
-
-**Summary:** Added comprehensive research on mechanistic interpretability advances and time-dependent detection rate projections.
-
-**Changes:**
-- Added research/mechanistic_interpretability_breakthroughs_20251111.md (617 lines)
-- Documents Anthropic's feature discovery, alignment faking, sparse autoencoder scalability
-- Proposes time-dependent parameters: detection 30%→90% (2024-2030), interpretability coverage 15%→80%
-- Created research/verification_84e286e_20251113.md for citation/claim validation
-
-**Key Findings:**
-- Anthropic discovered ~1M interpretable features in Claude 3 Sonnet (May 2024)
-- Alignment faking detected: models strategically deceive during training
-- DeepMind deprioritized sparse autoencoders (March 2025) due to scaling concerns
-- Anthropic's 2027 goal: "reliably detect most model problems"
-
-**Awaiting Validation:**
-- Citation verification (Layer 1): Do all 9 cited papers exist?
-- Claim verification (Layer 2): Are quantitative claims (30%, 80%, 90%) backed by paper quotes?
-- Integration analysis (Layer 3): How to combine time-gating with existing investment-based detection?
-
-**Impact:** If validated, detection systems (detection.ts, behavioralDetection.ts) may need time-dependent scaling, not just investment-based.
-
-**Files:**
-- research/mechanistic_interpretability_breakthroughs_20251111.md
-- research/verification_84e286e_20251113.md
-- docs/wiki/advanced/detection.md (updated with research note)
-
----
-
-**🔧 INFRASTRUCTURE: Fix HOME Export for Cron Authentication** (Nov 13, 2025, commit 6cbc578)
-
-**Summary:** Export HOME environment variable in merge orchestrator to fix Claude CLI authentication when running under cron.
-
-**Changes:**
-- Added `export HOME=${HOME:-/Users/annhoward}` to `scripts/merge-orchestrator.sh`
-- Fixes authentication issues when merge orchestrator runs as cron job
-- HOME variable required for Claude CLI credential lookup
-
-**Impact:** Merge orchestrator can now successfully authenticate when invoked by cron (where HOME may be unset).
-
-**Files:**
-- `scripts/merge-orchestrator.sh` (line 11-12)
-
----
 
 ## ✅ Recent Changes (November 12, 2025)
 
@@ -180,40 +60,6 @@ Without risking data loss or naive destructive operations.
 **Files:**
 - `.researcher-worker.lock` (deleted)
 - `logs/autonomous/researcher/status_current.txt` (status update)
-<<<<<<< HEAD
-=======
-=======
-## ✅ Recent Changes (November 12, 2025)
-
-**📚 RESEARCH UPDATE: Research File Metadata Standard** (Nov 12, 2025, commit add99ce)
-
-**Summary:** Added YAML frontmatter metadata to 3 actively-used research files to enable research currency tracking.
-
-**Metadata Standard:**
-```yaml
----
-oldest_source: YYYY
-newest_source: YYYY
-last_verified: YYYY-MM-DD
----
-```
-
-**Files Updated:**
-- `research/ai_welfare_framework_20251020.md` (oldest: 1988, newest: 2025)
-- `research/water_scarcity_migration_immobility_20251020.md` (oldest: 2012, newest: 2025)
-- `research/climate-mortality-biosphere-multiparadigm-framework_20251028.md` (oldest: 2019, newest: 2025)
-
-**Referenced By:**
-- `src/simulation/mortalityStabilizersInit.ts`
-- `src/simulation/trappedPopulations.ts`
-- `src/simulation/bayesianMortality.ts`
-- `src/simulation/extremeWeatherEvents.ts`
-
-**Research Currency Status:** All three files contain recent (2024-2025) sources and are in good condition. Oldest sources are foundational theories (e.g., Frankl 1946, Baars 1988) that remain relevant.
-
-**Why This Matters:** Standardized metadata enables autonomous research workers to identify stale sources and prioritize updates. The `oldest_source`/`newest_source` range provides quick assessment of research currency without parsing entire files.
->>>>>>> origin/auto/researcher-20251112_153001
->>>>>>> origin/auto/researcher-20251114_003001
 
 ---
 
@@ -372,18 +218,10 @@ last_verified: YYYY-MM-DD
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
-<<<<<<< HEAD
-=======
-## ✅ Recent Changes (November 11, 2025)
-=======
-<<<<<<< HEAD
-=======
-## ✅ Recent Changes (November 11, 2025)
-=======
 
 ---
->>>>>>> origin/auto/researcher-20251112_153001
->>>>>>> origin/auto/researcher-20251114_003001
+
+## ✅ Recent Changes (November 11, 2025)
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
 
@@ -415,14 +253,6 @@ last_verified: YYYY-MM-DD
 - research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
-<<<<<<< HEAD
->>>>>>> origin/auto/researcher-20251111_003001
-=======
-<<<<<<< HEAD
->>>>>>> origin/auto/researcher-20251111_003001
-=======
->>>>>>> origin/auto/researcher-20251112_153001
->>>>>>> origin/auto/researcher-20251114_003001
 
 ---
 

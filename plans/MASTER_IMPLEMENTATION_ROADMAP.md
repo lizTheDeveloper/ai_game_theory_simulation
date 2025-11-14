@@ -1,7 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 13, 2025 (Updated: End of Autonomous Session - Afternoon)
+**Date:** November 13, 2025
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -13,39 +13,32 @@
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
 
 **🔬 Research Verification Complete:**
-- ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
+- ✅ **State Validation Domain Bounds** - QUALITY GATE 1 PASSED (CONDITIONAL)
  - **Verified:** Xia 2022 mortality (5B deaths), PETM warming (5-8°C), GDP baseline ($114T)
  - **Adjusted:** CO2 upper bound (600→1000 ppm, RCP8.5 validated), GDP upper bound (200→500T)
  - **Removed:** Ocean pH 7.8 threshold (unsupported), kept 7.5 lower bound
  - **Reports:** `research/layer2_verification_state_validation_20251106.md` (320 lines)
- - **Implementation:** All bounds implemented in `src/simulation/utils/assertions.ts` (Nov 6, 2025)
- - **Testing:** Comprehensive test coverage (`tests/integration/domain-bounds-verification.test.ts`, 32 tests pass)
- - **Verification:** `logs/domain_bounds_implementation_verification_20251113.md` (Nov 13, 2025)
- - **Status:** ✅ COMPLETE - All validated bounds correctly implemented with regression tests
+ - **Status:** READY FOR PHASE 2 (implementation by simulation-maintainer)
 
-**✅ Scenario Analysis Framework COMPLETE (Nov 10-13, 2025):**
+**🧪 Scenario Analysis Framework (HIGH Priority - Nov 10-12, 2025):**
 - **Context:** God mode analysis (all 73 technologies deployed) → catastrophic failure
 - **Key Insight:** Technology alone insufficient - spirals exist but don't activate without governance/social conditions
 - **Objective:** Test governance sufficiency, not just technology sufficiency
 - **Integration:** Builds on god mode diagnostics (`reviews/god_mode_gaps_research_roadmap_20251109.md`), Sylvia's analysis (`research/SKEPTICAL_ANALYSIS_doom_predictions_20251110.md`), spiral verification (`research/GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`)
-- **Status:** ✅ COMPLETE - All phases finished with research questions answered
-- **Phase 3 Results (Nov 11-13):**
-  - ✅ 73/90 runs completed successfully (81% completion)
-  - ✅ Bugs fixed: CRITICAL-1 (early termination), HIGH-3 (governance metrics), CRITICAL-2 (scenario divergence)
-  - ✅ Data location: `logs/phase3_results/scenario_phase3_*.json`
-  - ⚠️ Missing: 17 runs (mostly scientific-acceleration scenario - 7/10 missing)
-  - ⚠️ Limitation: Governance metrics missing from Nov 11 data (HIGH-3 fix applied Nov 12 - timing mismatch)
-- **Phase 4 Analysis (Nov 13):**
-  - ✅ Comparative analysis completed (`logs/scenario_phase4_analysis_20251113.log`)
-  - ✅ Reports: `reviews/scenario_phase4_comparative_analysis_20251112.md`, `reviews/scenario_phase4_EXECUTIVE_SUMMARY.md`
-  - ✅ Orchestration: `logs/scenario_phase4_orchestration_20251113.md`
-- **Key Findings:**
-  - High-trust-start: 88.9% utopia (8/9 runs) - **starting conditions matter most**
-  - Technology alone insufficient: scientific-acceleration 0% utopia (1/1 runs, consistent with god mode)
-  - Democracy vs efficiency trade-off: authoritarian-efficiency 87.5% utopia + 12.5% extinction vs democratic-participation 0% utopia + 0% extinction
-  - Climate vs equality: both 77.8% utopia (no significant difference)
-  - Starting trust/inequality matter MORE than policy priorities
-- **Archive:** `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
+- **Links:** Validates upwardSpirals.ts, cooperativeSpirals.ts, positiveTippingPoints.ts implementations
+- **Status:** Phase 1+2 COMPLETE, Phase 3 IN PROGRESS (3/4 bugs fixed, Monte Carlo validation running)
+- **Phase 3 Progress (Nov 12):**
+  - ✅ CRITICAL-1: Early termination at month 49 fixed (outcome classification in result.summary)
+  - ✅ HIGH-3: Missing governance metrics fixed (finalGovernance: Gini, Trust, Democracy, quality)
+  - ✅ CRITICAL-2: Scenario parameter divergence FIXED (6 government priority scenarios now use sequenced deployment)
+    - Problem: 9/13 scenarios identical (all used immediate tech deployment)
+    - Solution: climate-first, equality-first, ai-alignment-first, democratic-participation, scientific-acceleration, authoritarian-efficiency now use sequenced deployment (12-month gaps, 6-month for authoritarian)
+    - Validation: Quick test shows differentiation (equality-first activates Cognitive spiral, others don't)
+    - Commit: a140fb07b
+  - ✅ UNBLOCKED: Phase 3 Monte Carlo now running successfully
+    - 2 parallel runs executing (started 22:22-22:29 UTC, expected completion ~02:22-02:29 UTC Nov 13)
+    - Earlier misdiagnosis resolved - scripts running normally, just slow (~4 hour runtime)
+    - See: `logs/PHASE3_MONTE_CARLO_STATUS_20251112.md`
 - **Commits:** ff22268 - "fix: Scenario Phase 3 critical fixes (CRITICAL-1, HIGH-3)", a140fb07b - "fix: Scenario parameter divergence (sequenced deployment)"
 
 **Recent Completions (Nov 12, 2025):**
@@ -63,54 +56,56 @@
  - **Unblocks:** Bifurcation validation (Issue #5 - HIGH), god mode analysis, deterministic Monte Carlo
  - **Archive:** Not archived (tactical fix, not planned feature work)
 
-- ✅ **BIFURCATION EMPIRICAL VALIDATION - RESEARCH + IMPLEMENTATION COMPLETE** (Nov 12, 2025 - Issue #5 - HIGH)
+- ✅ **BIFURCATION EMPIRICAL VALIDATION COMPLETE** (Nov 13, 2025 - Issue #5 - HIGH)
  - **Objective:** Validate variance amplification formula against empirical data
- - **Research Phase:** COMPLETE (Commit b16ebe2b4)
+ - **Research Phase (Quality Gate 1):** PASS - Grade B+ (Nov 12)
    - Document: `research/bifurcation_empirical_validation_20251112.md`
-   - Sources: 12 peer-reviewed papers (Scheffer et al. 2024, Dakos et al. 2012, IMF 2008 crisis reports)
-   - Empirical Findings:
-     - Financial crisis (2008): 4-5× VIX (broad market), 10-40× credit markets
-     - Ecosystem regime shifts: 2-10× variance (Scheffer et al.)
-     - Climate tipping points: AMOC variance amplification detected
-     - Key insight: System-dependent (4-100× range, not uniform)
- - **Research Validation (Quality Gate 1):** PASS - Grade B+ (Sylvia)
-   - Critique: `reviews/bifurcation_empirical_critique_20251112.md`
-   - Recommendation: Replace simple inverse formula with bifurcation-theory-grounded approach
-   - Formula: baseAmplification = 1/√(0.01 + distance) + system multipliers
- - **Implementation:** ✅ COMPLETE
-   - File: `src/simulation/engine/phases/BifurcationLogicPhase.ts` (501 lines)
-   - Formula: Bifurcation theory (1/√d) + empirically-calibrated system multipliers
-   - System Multipliers (FINAL CALIBRATION - Nov 13, 2025):
-     - Environmental: 1.05× (fold catastrophe) - 30% reduction
-     - Social: 1.75× (Hopf bifurcation, oscillatory dynamics) - 30% reduction
-     - Economic: 1.75× (cascade effects) - 30% reduction
-     - Governance: 1.4× (feedback loops) - 30% reduction
-     - Flourishing: 1.4× (positive cascades) - 30% reduction
-     - Technology: 1.4× (innovation spikes) - 30% reduction
-   - Max Amplification: 100× (based on Permian-Triassic extinction data)
- - **Architecture Review (Quality Gate 2):** ✅ COMPLETE - Grade B+ (Nov 13, 2025)
-   - Review: `reviews/bifurcation_architecture_review_20251113.md`
-   - Verdict: APPROVED WITH CONDITIONS (all addressed)
-   - Strengths: O(1) performance, proper state management, research citations
-   - Fixes Applied: Extinction classification, bifurcation statistics, metrics extraction, 30% multiplier reduction
- - **Monte Carlo Validation:** ✅ COMPLETE - Grade B (Nov 13, 2025)
-   - N=10 runs recalibrated (seeds 42000-42009, 240 months)
-   - Mean Mortality: 67.8% (down from 87.2%, within 20% of 43-58% target)
-   - Median Mortality: 96.65% (bimodal distribution: 70% collapse, 30% survival)
-   - Outcome Distribution: 70% pyrrhic dystopia, 30% humane dystopia, 0% extinction (vs 20% pre-calibration)
-   - CV: 77% (high variance, outcome diversity validated)
-   - Peak Amplification: 13.47× average (range 8.25× - 17.47×)
-   - Priya analysis: Grade B - `reviews/bifurcation_quantitative_validation_20251113.md`
- - **Instrumentation:** ✅ VALIDATED (Nov 13, 2025)
-   - `bifurcationState.metrics.maxVarianceAmplification` - Peak amplification per run
-   - `bifurcationState.metrics.avgDistanceToThresholds` - Average proximity
-   - `bifurcationState.metrics.amplificationTimeSeries` - Per-month tracking
- - **Wiki Documentation:** ✅ UPDATED (Nov 13, 2025)
-   - Section: Bifurcation & Variance Amplification System
-   - Validation results, calibration history, Grade B summary included
- - **Status:** ✅ **COMPLETE - READY FOR ARCHIVAL**
+   - Sources: 12 peer-reviewed papers (Scheffer et al. 2024, Dakos et al. 2012, IMF 2008 crisis)
+   - Key Findings: System-dependent amplification (4-100× range), 2008 crisis 4-5× VIX
+   - Sylvia critique: `reviews/bifurcation_empirical_critique_20251112.md`
+ - **Implementation:** COMPLETE (Nov 12-13)
+   - File: `src/simulation/engine/phases/BifurcationLogicPhase.ts`
+   - Formula: Bifurcation theory (1/√d) + system-specific multipliers
+   - Multipliers: Environmental 1.5×, Social 2.5×, Economic 2.5×, Governance 2.0×, Flourishing 2.5×, Technology 2.0×
+ - **Monte Carlo Validation:** N=10 PASS (Nov 13) - Determinism verified CV=0.00%
+ - **Architecture Review (Quality Gate 2):** PASS with adjustments (Nov 13, commit 3543315)
+   - Issue: Dystopia bias (economic overweighted, positive feedback suppressed)
+   - Fix: Economic 3.5×→2.5×, Flourishing 1.0×→2.5×, Technology 1.0×→2.0×
+ - **Archive:** `/plans/completed/bifurcation_empirical_validation_complete_20251113.md`
+ - **Follow-up (MEDIUM priority):** Extended validation N=30, sensitivity analysis, wiki docs
+ - **Status:** ✅ COMPLETE
+
+- 🔄 **SCENARIO ANALYSIS FRAMEWORK PHASE 3 PARTIAL** (Nov 12, 2025)
+ - **Bugs Fixed (3/4):**
+   - ✅ CRITICAL-1: Early termination at month 49 (result.summary.finalOutcome extraction)
+   - ✅ HIGH-3: Missing governance metrics (finalGovernance: Gini, Trust, Democracy, quality)
+   - ✅ CRITICAL-2: Scenario parameter divergence (6 government priority scenarios now use sequenced deployment)
+     - Problem: 9/13 scenarios produced identical results because all used immediate tech deployment
+     - Root Cause: When ALL tech deploys at month 0, government priorities (climateSpending, redistributionRate, etc.) have no time to affect outcomes
+     - Solution: Changed 6 government priority scenarios to use sequenced deployment (12-month gaps between tiers, 6-month for authoritarian-efficiency)
+     - Validation: Quick test (seed=42, 60 months) shows differentiation - equality-first activates Cognitive spiral, others don't
+ - **Files Modified:** `scripts/scenarioRunner.ts` (outcome + governance extraction), `src/types/scenarios.ts` (sequenced deployment for 6 scenarios, finalGovernance field), `scripts/quickPhase3Test.ts` (validation), `logs/CRITICAL_2_SCENARIO_DIVERGENCE_FIX.md` (diagnostic report)
+ - **Commits:** ff22268 - "fix: Scenario Phase 3 critical fixes (CRITICAL-1, HIGH-3)", a140fb07b - "fix: Scenario parameter divergence (sequenced deployment)"
+ - **Validation:** Quick test N=2 PASS (exit code 0, differentiation confirmed)
+ - **Phase 3 Monte Carlo Status:**
+   - ✅ UNBLOCKED - Scripts running normally (see `logs/PHASE3_MONTE_CARLO_STATUS_20251112.md`)
+   - 🔄 2 parallel runs executing (PIDs 132453, 132861, started 22:22-22:29 UTC)
+   - Progress: Scenario 3-4 of 6, ~40 minutes elapsed per run
+   - Expected completion: ~02:22-02:29 UTC (Nov 13) - ~4 hours total runtime
+   - Note: Earlier misdiagnosis resolved - these simulations are slow (6 scenarios × 10 runs × ~4 min/run = 4 hours), NOT blocked
+ - **Remaining Work:**
+   - 🔄 Wait for Monte Carlo completion (~3 hours remaining as of 23:00 UTC)
+   - 🟡 Phase 4 comparative analysis (after Monte Carlo completes)
+   - 🟡 MEDIUM-4: ai-alignment-first scenario validation (will complete with Monte Carlo)
+ - **Next Session:** Check Monte Carlo completion, run Phase 4 comparative analysis
 
 **Recent Completions (Nov 9-10, 2025):**
+- ✅ **SCENARIO ANALYSIS FRAMEWORK PHASE 1+2 COMPLETE** (Nov 10, 2025)
+ - **Phase 1 (Diagnostic Infrastructure):** Spiral activation logging (commit a7349644), scenario type definitions (`src/types/scenarios.ts`), 6 predefined scenarios, diagnostic report (`reviews/god_mode_spiral_diagnostics_20251110.md`)
+ - **Phase 2 (Scenario Execution):** Scenario runner (`scripts/scenarioRunner.ts`), comparative analysis (`scripts/compareScenarios.ts`), government override system (governmentCore.ts), scenarioOverrides field in GameState
+ - **Key Finding:** Only 1/6 upward spirals activated in god mode test (all tech deployed) - governance/social conditions hypothesis validated
+ - **Defensive Coding:** Full assertion utility coverage, no silent fallbacks, deterministic RNG preserved
+ - **Archive:** `/plans/completed/scenario_analysis_phase1_phase2_complete_20251110.md`
 - ✅ **PHASE CONSOLIDATION PROJECT COMPLETE** (Nov 7-9, 2025)
  - **Phase Reduction:** 116 → 95 phases (-21 phases, -33 files, -18% complexity)
  - **Code Changes:** 153 files, 61,754 insertions, 6,074 deletions
@@ -261,25 +256,6 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **TIER 2 HIGH:** Nitrogen-food coupling, extinction debt, energy budget constraints
 - **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (26 tech candidates, 9 paradigm shifts)
 
-**Research Verification Queue:**
-- [x] **Novel Entities Zero-Effectiveness (commits 7ac8b8f → b6ec2b9)** - ✅ IMPLEMENTATION COMPLETE (Nov 13, 2025)
-  - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
-  - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
-  - Quality Gate 1: PASSED (Grade B+)
-  - Quality Gate 2: PASSED (Grade B, CONDITIONAL) - `reviews/novel_entities_research_critique_20251113_validation.md`
-  - **Implementation Status:**
-    - ✅ Phase 1: Prevention technologies added (`global_pfas_ban`, `plastic_production_phaseout`, `green_chemistry_substitution`)
-    - ✅ Phase 2: Gating function implemented (`calculateNovelEntitiesRemediationEffectiveness` in `effectsEngine.ts`)
-    - ✅ Phase 3: Irreversibility floor implemented (90% floor in `planetaryBoundaries.ts`)
-    - ✅ All HIGH UNCERTAINTY parameters flagged in code comments
-    - ✅ Sensitivity ranges documented (10-30yr timelag, 0.5-0.9 rebound, 0.80-0.95 irreversible)
-  - **Implementation Commits:** 5c9e773, 2f05087, 805d064, 9fc6fdc, b6ec2b9
-  - **Remaining Work:**
-    1. [ ] Monte Carlo sensitivity analysis (N=30, parameter ranges) - **CRITICAL** (priya)
-    2. [ ] Architecture review (architecture-skeptic)
-    3. [ ] Wiki documentation update (wiki-documentation-updater)
-    4. [ ] Archive plan to /plans/completed/ (architect)
-
 ---
 
 ### 2. 🎮 [Simulation Roadmap](./SIMULATION_ROADMAP.md)
@@ -351,103 +327,121 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 ---
 
-#### Phase 1: Diagnostic Infrastructure ✅ COMPLETE (Nov 10, 2025)
+#### Phase 1: Diagnostic Infrastructure (HIGH Priority - Blocking)
 
 **Objective:** Understand WHY god mode failed
 
-**Status:** ✅ COMPLETE
+**Tasks:**
+1. **Add spiral activation logging to god mode test**
+ - Track which spirals activate/deactivate and why
+ - Log threshold conditions for each spiral
+ - Measure cascade strength over time
+ - Diagnose why god mode failed despite all tech deployed
+ - **Priority:** HIGH (blocks understanding of spiral mechanics)
+ - **Owner:** simulation-maintainer + priya
 
-**Deliverables:**
-- ✅ Spiral activation logging (commit a7349644)
-- ✅ Scenario type definitions (`src/types/scenarios.ts`)
-- ✅ 6 predefined scenarios
-- ✅ Diagnostic report (`reviews/god_mode_spiral_diagnostics_20251110.md`)
+2. **Create scenario definition system**
+ - Interface for defining government priority scenarios
+ - Override system for government decision-making
+ - Starting condition modification system
+ - Technology deployment strategy options (immediate/sequenced/adaptive)
+ - **Priority:** HIGH (enables all downstream scenarios)
+ - **Owner:** simulation-maintainer
 
-**Key Finding:** Only 1/6 upward spirals activated in god mode test - governance/social conditions hypothesis validated
-
-**Archive:** `/plans/completed/scenario_analysis_phase1_phase2_complete_20251110.md`
-
----
-
-#### Phase 2: Scenario Execution Infrastructure ✅ COMPLETE (Nov 10, 2025)
-
-**Objective:** Build scenario execution and comparison infrastructure
-
-**Status:** ✅ COMPLETE
-
-**Deliverables:**
-- ✅ Scenario runner (`scripts/scenarioRunner.ts`)
-- ✅ Comparative analysis script (`scripts/compareScenarios.ts`)
-- ✅ Government override system (governmentCore.ts)
-- ✅ scenarioOverrides field in GameState
-
-**Scenarios Implemented:**
-- Government priorities: climate-first, equality-first, ai-alignment-first, democratic-participation, scientific-acceleration, authoritarian-efficiency
-- Starting conditions: high-trust-start, low-inequality-start, strong-institutions-start
-- Deployment strategies: renewable-first, carbon-removal-first, foundations-first, adaptive-deployment
-
-**Archive:** `/plans/completed/scenario_analysis_phase1_phase2_complete_20251110.md`
+**Expected Outcomes:**
+- Diagnostic logs revealing spiral activation failures
+- Infrastructure to test governance scenarios systematically
+- Baseline understanding of spiral mechanics
 
 ---
 
-#### Phase 3: Monte Carlo Scenario Execution ✅ COMPLETE (Nov 11-13, 2025)
+#### Phase 2: Core Scenarios (HIGH Priority)
 
-**Objective:** Execute scenario framework with Monte Carlo validation
+**Objective:** Test individual governance dimensions in isolation
 
-**Status:** ✅ COMPLETE - 73/90 runs successful (81% completion)
+**Government Priority Scenarios:**
+1. **"Climate First"** - Maximize climate tech spending
+2. **"Equality First"** - Maximize redistribution (Gini <0.30 target)
+3. **"AI Alignment First"** - Max alignment research + strict controls
+4. **"Democratic Participation"** - Max transparency + participation
+5. **"Scientific Acceleration"** - Max research investment
+6. **"Authoritarian Efficiency"** - Rapid deployment, low democracy
 
-**Results:**
-- **Data:** `logs/phase3_results/scenario_phase3_*.json` (Nov 11, 2025)
-- **Coverage:** 9 scenarios × 10 seeds (73 successful runs)
-- **Missing:** 17 runs (mostly scientific-acceleration: 7/10 missing)
-- **Limitation:** Governance metrics missing (timing mismatch - data Nov 11, fix Nov 12)
+**Starting Condition Scenarios:**
+1. **"High Trust Start"** - Trust in AI=0.8, institutions=0.7
+2. **"Low Inequality Start"** - Gini=0.25 (Nordic levels)
+3. **"Strong Institutions Start"** - Governance quality=0.8
 
-**Bugs Fixed:**
-- CRITICAL-1: Early termination at month 49 (commit ff22268)
-- HIGH-3: Missing governance metrics (commit ff22268)
-- CRITICAL-2: Scenario parameter divergence (commit a140fb07b)
+**Technology Deployment Strategy:**
+1. **"Renewable Energy First"** - Energy tech deployed month 0, rest sequenced
+2. **"Carbon Removal First"** - DAC/BECCS deployed month 0, rest sequenced
+3. **"Foundations First"** - Dependency-ordered deployment
+4. **"Adaptive Deployment"** - Real-time effectiveness-based deployment
 
-**Archive:** See Phase 4 archive (combined Phase 3+4 documentation)
+**Validation:**
+- Monte Carlo N=10 for each scenario
+- Compare spiral activation rates across scenarios
+- Identify which governance dimensions enable spiral activation
+
+**Priority:** HIGH
+**Owner:** Orchestrator (coordinates simulation-maintainer + priya + cynthia/sylvia)
 
 ---
 
-#### Phase 4: Comparative Analysis ✅ COMPLETE (Nov 13, 2025)
+#### Phase 3: Policy Package Scenarios (MEDIUM Priority)
+
+**Objective:** Test realistic combinations that reflect real-world policy debates
+
+**Real-World Policy Combinations:**
+1. **"Green New Deal"** - Clean energy + UBI + jobs guarantee
+2. **"Techno-Optimist Path"** - All tech, minimal regulation, market-driven
+3. **"Degrowth Path"** - Reduce consumption 30%, prioritize restoration
+4. **"Authoritarian Climate Action"** - Rapid deployment, low participation
+5. **"Nordic Social Democracy"** - High redistribution, strong institutions, gradual tech
+
+**Validation:**
+- Monte Carlo N=10 for each policy package
+- Compare outcome distributions
+- Identify trade-offs (climate vs equality, speed vs democracy)
+
+**Priority:** MEDIUM (depends on Phase 2 insights)
+**Owner:** Orchestrator (coordinates simulation-maintainer + cynthia/sylvia)
+
+---
+
+#### Phase 4: Comparative Analysis (MEDIUM Priority)
 
 **Objective:** Extract patterns from scenario results
 
-**Status:** ✅ COMPLETE - All research questions answered
+**Analysis Tasks:**
+1. **Outcome Distribution Comparison**
+ - Which scenarios produce Utopia outcomes?
+ - Which governance priorities correlate with spiral activation?
+ - What are the critical thresholds? (e.g., Gini <0.30, trust >0.7)
+
+2. **Spiral Activation Pattern Analysis**
+ - Which spirals activate in which scenarios?
+ - What are the minimum conditions for cooperative spirals?
+ - Does democracy matter for spiral activation?
+
+3. **Trade-Off Analysis**
+ - Climate vs equality trade-offs
+ - Speed vs democracy trade-offs
+ - Technology deployment sequence effects
+
+4. **Critical Path Determination**
+ - Minimum combination needed for Utopia
+ - Which single priority matters most?
+ - Can technology alone work? (answer: no, from god mode)
+ - Can weak governance be compensated? (test hypothesis)
 
 **Deliverables:**
-- ✅ Analysis log: `logs/scenario_phase4_analysis_20251113.log` (216 lines)
-- ✅ Comparative report: `reviews/scenario_phase4_comparative_analysis_20251112.md` (430 lines)
-- ✅ Executive summary: `reviews/scenario_phase4_EXECUTIVE_SUMMARY.md` (113 lines)
-- ✅ Orchestration log: `logs/scenario_phase4_orchestration_20251113.md` (242 lines)
+- Comparative analysis report (statistical analysis)
+- Visualization of outcome distributions by scenario
+- Critical path recommendations
 
-**Key Findings:**
-
-1. **Utopia Outcomes (Research Question 1):**
-   - High-trust-start: 88.9% utopia (8/9 runs) - **starting conditions matter most**
-   - Authoritarian-efficiency: 87.5% utopia (7/8 runs)
-   - Climate-first, equality-first, low-inequality-start: 77.8% utopia each
-   - Democratic-participation: 0% utopia (0/9 runs)
-
-2. **Technology Sufficiency (Research Question 2):**
-   - Scientific-acceleration: 0% utopia (1/1 runs)
-   - **Conclusion:** Technology alone insufficient (consistent with god mode)
-
-3. **Democracy vs Efficiency Trade-off (Research Question 3):**
-   - Authoritarian-efficiency: 87.5% utopia + 12.5% extinction
-   - Democratic-participation: 0% utopia + 0% extinction
-   - **Trade-off:** Speed vs safety confirmed
-
-4. **Climate vs Equality (Research Question 4):**
-   - Both achieve 77.8% utopia - **no trade-off detected**
-
-5. **Critical Path (Research Question 5):**
-   - Starting trust/inequality matters MORE than policy priorities
-   - Minimum for utopia: High trust OR authoritarianism OR climate/equality focus
-
-**Archive:** `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
+**Priority:** MEDIUM (depends on Phase 2-3 data)
+**Owner:** Priya (quantitative analysis) + Cynthia/Sylvia (interpretation)
 
 ---
 
@@ -554,34 +548,25 @@ This framework will:
 
 #### 🟡 MEDIUM Priority Issues (Calibration & Methodology)
 
-**7. Western Paradigm High Scores During Collapse - ✅ RESOLVED (Nov 13, 2025)**
+**7. Western Paradigm High Scores During Collapse**
 - **Priority:** MEDIUM
-- **Status:** ✅ **WORKING AS DESIGNED** - Not a bug, research-accurate
 - **Problem:** Western Liberal scores show 58-77 during 92% mortality events
-- **Resolution:** Western Liberal paradigm measures GOVERNANCE QUALITY (democracy, civil liberties, rule of law), not human welfare. Institutions can persist with small populations (e.g., Iceland with 350k has high democracy score). Development paradigm correctly captures mortality impact via QoL and survival fundamentals.
-- **Investigation:** `/logs/monte_carlo_issues_investigation_20251113.log` (Nov 13, 2025)
+- **Action Required:** Audit scoring logic - should catastrophic mortality lower these scores?
 
-**8. "Inconclusive" Phantom Outcome Investigation - ✅ RESOLVED (Nov 13, 2025)**
+**8. "Inconclusive" Phantom Outcome Investigation**
 - **Priority:** MEDIUM
-- **Status:** ✅ **USER CONFUSION** - Not a phantom outcome, metric confusion
 - **Problem:** User mentioned 6.5% mortality "inconclusive" outcome, but log shows only 92.4%, 92.6%, 92.5%
-- **Resolution:** "Inconclusive" is a valid outcome type (uncertain trajectory). "6.5%" refers to MONTHLY mortality rate, not total cumulative mortality (92%). Oct 2025 issue (100% inconclusive outcomes) was fixed by mortality stabilizers (Nov 6) and bifurcation variance (Nov 12).
-- **Investigation:** `/logs/monte_carlo_issues_investigation_20251113.log` (Nov 13, 2025)
+- **Action Required:** Clarify if this outcome exists or is from different simulation set
 
-**9. Recovery Mechanics Investigation - ✅ RESOLVED (Nov 13, 2025)**
+**9. Recovery Mechanics Investigation**
 - **Priority:** MEDIUM
-- **Status:** ✅ **FIXED** - Recovery mechanics now functional
 - **Problem:** All runs end in dystopia, suggesting recovery mechanics non-functional
-- **Resolution:** Recovery mechanics restored by mortality stabilizers (Nov 6) and bifurcation variance amplification (Nov 12). Scenario analysis (Nov 13) shows 77-89% utopia rates in favorable conditions (high-trust-start: 88.9%, authoritarian-efficiency: 87.5%). Recovery is now CONDITIONAL on initial conditions (trust, institutions), as expected.
-- **Evidence:** `/logs/scenario_phase4_analysis_20251113.log` - 73 runs across 9 scenarios
-- **Investigation:** `/logs/monte_carlo_issues_investigation_20251113.log` (Nov 13, 2025)
+- **Action Required:** Audit recovery logic across all systems
 
-**10. Compression Verification - ✅ RESOLVED (Nov 13, 2025)**
+**10. Compression Verification**
 - **Priority:** MEDIUM
-- **Status:** ✅ **ALREADY DOCUMENTED** - Known limitation, not a bug
 - **Problem:** Critique mentions "compression" as critical issue
-- **Resolution:** "Compression" refers to TEMPORAL COMPRESSION (1-month timestep simplification), not data compression. Historical events spanning months/years (Leipzig protests: 6-7 months, Montreal Protocol: years) are compressed to single months. This is a documented game design constraint, not an unverified assumption. Already marked as SIGNIFICANT limitation in Phase 3 critique.
-- **Investigation:** `/logs/monte_carlo_issues_investigation_20251113.log` (Nov 13, 2025)
+- **Action Required:** Verify all assumptions against research
 
 **11. Determinism Verification Testing - ⚠️ CRITICAL BLOCKER**
 - **Priority:** 🔴 **CRITICAL BLOCKER** (upgraded Oct 30, 2025)
@@ -1041,23 +1026,20 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
  - **Action:** Verified, no changes needed
 
 **Pending Verification Queue:**
-- [x] **Planetary Boundary Reversibility Update Verification** (Nov 11-13, 2025)
+- [ ] **Planetary Boundary Reversibility Update Verification** (Nov 11, 2025)
  - **File:** `research/verification_e8951e3_20251111.md`
  - **Source Commit:** e8951e3 (planetary_boundary_reversibility_empirical_20251020.md)
- - **Papers:** Richardson et al. (2023) - 6/9 boundaries ✅; Findlay et al. (2025) - ocean acidification ✅
+ - **Papers:** Richardson et al. (2023) - 6/9 boundaries; Findlay et al. (2025) - ocean acidification
  - **Claims:** 7/9 boundaries transgressed, 43-61% habitat loss, regional ocean impacts
- - **Status:** ✅ Layer 1 COMPLETE (both papers verified), Layer 2 PENDING (16 claims queued for Sylvia)
+ - **Status:** Layer 1 (citation existence) + Layer 2 (claim verification) needed
  - **Priority:** MEDIUM (literature review, will inform future parameter tuning)
- - **Next Step:** Sylvia review of 16 quantitative claims (task file: `VERIFICATION_TASK_FOR_SYLVIA.md`)
- - **Commits:** a0e605d, 7b2d3f0
-- [x] **Refugee Crisis Death Bounds Verification** (Nov 6-13, 2025)
+ - **Next Step:** orchestrator workflow starting at validation phase (research file exists)
+- [ ] **Refugee Crisis Death Bounds Verification** (Nov 6, 2025)
  - **File:** `research/verification_ed597d4_20251106.md`
- - **Parameter:** 10B → 20B upper bound for global cumulative deaths
- - **Status:** ✅ EMPIRICALLY VALIDATED (single-event verified, multi-cycle extrapolated)
- - **Single-Event:** Xia et al. 2022 verified (6B deaths, 75% mortality, nuclear winter)
- - **Multi-Cycle:** 2-3 cycles × 6B = 12-18B (20B defensive upper bound, 33% margin)
+ - **Parameter:** 10B upper bound for global cumulative deaths
+ - **Status:** Awaiting peer-reviewed justification
  - **Priority:** MEDIUM (validation bound, not production-critical)
- - **Remaining:** Peer-reviewed source for multi-cycle cumulative mortality bounds (optional)
+ - **Next Step:** super-alignment-researcher + research-skeptic review
 
 **Recent Completions:**
 - ✅ **Layer 2 Remediation COMPLETE** (Nov 2) - All CRITICAL and HIGH priority fixes applied
@@ -1347,59 +1329,22 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT - STABLE AND IMPROVING** (Nov 13, 2025 - Roadmap Update)
+**Overall Project Status: 🟢 EXCELLENT - STABLE AND IMPROVING** (Nov 13, 2025)
 
 **System Health (Nov 13, 2025):**
-- **Research Quality:** A 🟢 (scenario analysis validates god mode hypothesis, empirically-grounded findings)
+- **Research Quality:** A 🟢 (bifurcation empirical validation complete, 12 peer-reviewed sources)
 - **Implementation Fidelity:** A- 🟢 (assertion coverage 97.2%, AI alignment bounds enforced, defensive cleanup complete)
-- **Architecture Health:** 9.5/10 🟢 EXCELLENT (phase consolidation complete, research coordination established)
-- **System Trajectory:** STABLE AND IMPROVING - Major research milestones achieved
-- **Current Focus:** Scenario analysis framework COMPLETE, bifurcation validation ready for Monte Carlo
+- **Architecture Health:** 9.5/10 🟢 EXCELLENT (phase consolidation complete, bifurcation dystopia bias corrected)
+- **System Trajectory:** STABLE AND IMPROVING - HIGH priority items completing, research validation operational
+- **Current Focus:** Scenario analysis Phase 3 (Monte Carlo in progress), follow-up validations (bifurcation N=30)
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
 
-**Major Completions (Nov 13, 2025):**
-- ✅ **SCENARIO ANALYSIS FRAMEWORK PHASE 3+4 COMPLETE** - All research questions answered
-  - 73/90 runs completed (81% coverage, 9 scenarios)
-  - Key findings: High-trust-start 88.9% utopia, technology alone insufficient (0% utopia), democracy-efficiency trade-off confirmed
-  - Limitation: Governance metrics missing (timing mismatch - data Nov 11, fix Nov 12)
-  - Archive: `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
-
-**Autonomous Session (Nov 13, 2025 - Afternoon):**
-- ✅ **PLANETARY BOUNDARY VERIFICATION - LAYER 1 COMPLETE** (MEDIUM priority)
-  - Papers verified: Richardson et al. 2023 (Science Advances), Findlay et al. 2025 (Global Change Biology)
-  - Layer 2 pending: 16 quantitative claims queued for Sylvia review
-  - Archive: Research verification pipeline operational
-- ✅ **REFUGEE CRISIS BOUNDS VERIFICATION - EMPIRICALLY VALIDATED** (MEDIUM priority)
-  - Parameter: 10B→20B upper bound documented
-  - Single-event verified: Xia et al. 2022 (6B deaths, 75% mortality)
-  - Multi-cycle extrapolated: 2-3 cycles × 6B = 12-18B (20B defensive bound)
-- ✅ **3 CRITICAL BUG FIXES** (Issue #5 - Bifurcation validation)
-  - CRITICAL-0: Bifurcation statistics added to Monte Carlo summary (commit 738a234ea)
-  - CRITICAL-1: Extinction classification bug fixed (reading wrong population field) (commit 738a234ea)
-  - CRITICAL-2: Bifurcation metrics extraction fixed (RunResult interface) (commit 2e6122257)
-- ⚠️ **BIFURCATION N=10 VALIDATION BLOCKED** (Issue #5 - HIGH priority)
-  - N=10 runs complete (seeds 42000-42009, 240 months): 80% dystopia, 20% extinction, 77.7% mortality
-  - Architecture review: Grade B- (APPROVE WITH CONDITIONS)
-  - Priya validation: Grade F - BLOCKED by missing instrumentation
-  - Critical issues: 87.2% mortality vs 43-58% target (+50% overshoot), no per-run bifurcation tracking
-  - Next: Re-run N=10 after instrumentation + mortality calibration fixes
-  - Archive: `/plans/completed/autonomous_session_20251113_150001_complete.md`
-
-**Tactical Fixes (Nov 13, 2025 - Morning Session):**
-- ✅ **Issue #120 (HIGH)** - O(n²) complexity in organizationManagement.ts (Commit 0ef62bf78)
-  - Replaced nested findIndex loops with Set-based O(n) lookups
-  - Files: organizationManagement.ts (2 locations)
-- ✅ **Issue #119 (HIGH)** - Type safety regression in qolBoosts (Commit 3fb5f9edf)
-  - Replaced unsafe string indexer with explicit QoL field types
-  - Files: scenario system qolBoosts interface
-- ✅ **Issue #117 (MEDIUM)** - Test failures in integration tests (Commit 1b74172c1)
-  - Skipped obsolete tests referencing removed state structure
-  - Fixed domain bounds test assertion format
-
-**Session Successes (Nov 12, 2025):**
-- ✅ **AI ALIGNMENT BOUNDS FIX (CRITICAL)** - Negative trueAlignment bug eliminated (3 root causes fixed, commit 0fab12f4e)
-- ✅ **BIFURCATION EMPIRICAL VALIDATION (Issue #5 - HIGH)** - Research + Sylvia review + implementation COMPLETE (commit b16ebe2b4)
-- ✅ **SCENARIO PHASE 3 BUGS FIXED** - CRITICAL-1 (early termination), HIGH-3 (governance metrics), CRITICAL-2 (scenario divergence)
+**Session Successes (Nov 13, 2025):**
+- ✅ **BIFURCATION EMPIRICAL VALIDATION COMPLETE (Issue #5 - HIGH)** - All quality gates passed, dystopia bias corrected (commit 3543315)
+  - Monte Carlo N=10: Determinism verified CV=0.00%
+  - Architecture review: Parameter adjustments applied (Economic 3.5×→2.5×, Flourishing 1.0×→2.5×, Technology 1.0×→2.0×)
+  - Archive: `/plans/completed/bifurcation_empirical_validation_complete_20251113.md`
+- 🟡 **NEXT PRIORITIES:** Scenario Phase 3 analysis (Monte Carlo complete), bifurcation follow-up (N=30, wiki docs)
 
 **Recent Successes (Nov 9-10, 2025):**
 - ✅ **RESEARCH INFRASTRUCTURE COMPLETE** - Master research roadmap operational, 1,126-line technology gap analysis
@@ -1469,7 +1414,6 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 - Nov 7: 7.5/10 (RNG fixed, deep cloning complete)
 - Nov 8: 9.5/10 (assertions 97.2%, integration operational, defensive cleanup complete)
 - Nov 9: 9.5/10 MAINTAINED (phase consolidation complete, complexity reduced 18%)
-- Nov 13: 9.5/10 MAINTAINED (tactical fixes: O(n²) optimization, type safety, test cleanup)
 
 **4-Week Critical Path Status:** ✅ **COMPLETE** (All 4 weeks delivered)
 
@@ -1582,16 +1526,8 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ---
 
-**Last Updated:** November 13, 2025 - AUTONOMOUS SESSION: VERIFICATION + BIFURCATION VALIDATION
+**Last Updated:** November 10, 2025 - SCENARIO ANALYSIS FRAMEWORK ADDED
 **Status:** 🟢 EXCELLENT - STABLE AND IMPROVING - Research A, Implementation A-, Architecture 9.5/10
-
-**Nov 13 Autonomous Session Summary:**
-- ✅ **Planetary Boundary Verification** - Layer 1 complete (Richardson et al. 2023, Findlay et al. 2025 verified)
-- ✅ **Refugee Crisis Verification** - Empirically validated (Xia et al. 2022 single-event, 20B multi-cycle bound)
-- ✅ **3 Critical Bug Fixes** - Extinction classification, bifurcation statistics, metrics extraction (commits 738a234ea, 2e6122257)
-- ⚠️ **Bifurcation Validation Blocked** - N=10 complete (77.7% mortality), Grade F due to missing instrumentation
-- ✅ **Architecture Review Complete** - Grade B-, 3 CRITICAL fixes applied, mortality calibration needed
-- ✅ **Roadmap Maintenance** - Progress summary updated, verification items marked complete, archive created
 
 **Nov 10 Session Summary:**
 - ✅ **Research Roadmap** - Master coordination document operational (research/RESEARCH_ROADMAP.md)
