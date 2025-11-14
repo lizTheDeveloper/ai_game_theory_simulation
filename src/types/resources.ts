@@ -262,9 +262,9 @@ export interface OceanHealth {
   naturalRecoveryRate: number;       // Base recovery per month (very slow!)
   
   // Crisis
-  inCrisis: boolean;                 // pH < 7.8 OR oxygen < 50% OR dead zones > 30%
+  inCrisis: boolean;                 // pH < 7.8 (early warning) OR oxygen < 50% OR dead zones > 30%
   monthsInCrisis: number;            // Duration counter
-  recoveryPossible: boolean;         // False if past point of no return (pH < 7.5)
+  recoveryPossible: boolean;         // False if past point of no return (pH < 7.5, aragonite saturation)
   
   // Geoengineering intervention
   geoengInterventionActive: boolean; // Any geoeng tech deployed

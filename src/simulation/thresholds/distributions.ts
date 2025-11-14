@@ -285,7 +285,7 @@ export function sampleLogNormal(
  *
  * @example
  * const rng = seedrandom('test-seed');
- * // Ocean pH threshold: most likely 7.8, range [7.6, 8.0]
+ * // Ocean pH crisis threshold: early warning 7.8, range [7.6, 8.0] (critical collapse at 7.5)
  * const threshold = sampleTriangular(7.6, 7.8, 8.0, rng);
  */
 export function sampleTriangular(
