@@ -489,17 +489,23 @@ chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (endocrineDisrupt
 - Ongoing monthly decline with high chemical load
 
 ### Population Dynamics (TIER 1.6)
-- **NEW:** Direct population mortality from pollution crises
-- Three crisis types with escalating mortality:
-  1. Reproductive crisis: 0.08% casualties (despair/failed treatments)
-  2. Bioaccumulation collapse: 0.15% casualties (contaminated food)
-  3. Chronic disease epidemic: 0.40% casualties (cancer/autoimmune surge)
-- All crises are **truly global** (100% exposure fraction)
-  - PFAS in 99% of human blood = everyone exposed
-  - Food chains globally interconnected
-  - Chemical exposure universal
-- Deaths tracked in `pollution` category
-- Integration: Uses `addAcuteCrisisDeaths()` from populationDynamics.ts
+- **BASELINE MORTALITY (Nov 14, 2025):** Ongoing deaths from chemical pollution exposure
+  - **1.8M deaths/year globally** at 2025 baseline (Fuller et al. 2022)
+  - Scales linearly with pollution load (0.0 → 1.0)
+  - Monthly mortality: `load × 0.000046875` (calibrated to Lancet Commission)
+  - Applied **every month**, not just during crises
+  - Global exposure (100% of population - PFAS in 99% of humans)
+  - Confidence: MEDIUM (research-backed but likely undercount)
+  - Integration: Uses `addMortalityRisk()` → Bayesian mortality resolution
+  - File: `src/simulation/novelEntities.ts:270-326`
+- **CRISIS MORTALITY:** Direct population mortality from pollution crises
+  - Three crisis types with escalating mortality:
+    1. Reproductive crisis: 0.08% casualties (despair/failed treatments)
+    2. Bioaccumulation collapse: 0.15% casualties (contaminated food)
+    3. Chronic disease epidemic: 0.40% casualties (cancer/autoimmune surge)
+  - All crises are **truly global** (100% exposure fraction)
+  - Deaths tracked in `pollution` category
+  - Integration: Uses `addAcuteCrisisDeaths()` from populationDynamics.ts
 
 ### Breakthrough Technologies
 - Tech unlocks require AI capability + biotech + research
