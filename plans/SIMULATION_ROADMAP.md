@@ -39,24 +39,56 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-   - **Novel Entities Energy Trap Constraints** - CRITICAL (Added Nov 12, 2025)
-     - **Context:** Commit 660b714 - Heterogeneous contamination model with energy/concentration physics
-     - **Implementation:** Complete (industrial vs environmental split, atmospheric cycling, biological degradation)
-     - **Status:** ⚠️ VALIDATION PHASE - Core logic implemented, citations need verification
-     - **File:** research/verification_660b714_20251112.md
-     - **Citations Requiring Verification:**
-       - Fennell 2024: Energy requirements (420 kWh/m³), minimum concentration (1 mg/L)
-       - Ling 2024: Energy trap thermodynamics, concentration barriers
-       - Cousins 2022: Atmospheric redeposition, futility of local cleanup
-       - "2024 research": Biological degradation pathway (needs specific citation)
-       - "Sylvia 2025": Uncertainty range extrapolations (needs research backing)
-     - **Parameters Needing Justification:**
-       - 15%/35% industrial/environmental contamination split
-       - 180,000 Mt atmospheric reservoir stock
-       - 100× cleanup effectiveness difference (industrial vs environmental)
-       - 1% concentration penalty (energy trap floor)
-       - 1% monthly atmospheric redeposition rate
-     - **Next:** Research-skeptic validation → parameter adjustment → Monte Carlo testing
+   - **AI Governance International Coordination (2024-2025)** - 🔴 CRITICAL (Updated Nov 13, 2025)
+     - **Context:** International AI governance coordination mechanisms, mortality modifiers for coordinated deployment
+     - **Research Delivered:** 606-line analysis with 6 primary sources (Radu & Quevedo 2024, US NIST Aug 2024, UN Global Digital Compact, Maas 2024, AGILE Index 2025, FLI 2025)
+     - **God Mode Reinterpretation:** 30% mortality = worst-case uncoordinated deployment, not realistic post-alignment scenario
+     - **🚨 CRITICAL CLAIMS REQUIRING VALIDATION:**
+       - **Coordination quality = 0.43** (3/7 firms test catastrophic risks) - verify FLI 2025 source, confirm firms/methodology
+       - **Pre-deployment testing coverage = 0.43** - NIST agreements verified, FLI 2025 pending
+       - **Regime complex strength = 0.35 (weak)** - verify R&Q characterization, check if value DERIVED or stated
+       - **29 multilateral frameworks active (2024)** - verify count, list frameworks
+       - **🔴 MORTALITY MODIFIERS (30% → <5%)** - NO DIRECT SOURCE IDENTIFIED - requires empirical backing from technology transition studies
+     - **Verification File:** research/verification_7f001ba_20251113.md (Layer 1: 2/6 citations verified, Layer 2: ALL PENDING)
+     - **Estimated Validation Time:** 15-21 hours (researcher 12-16h + skeptic 3-5h)
+     - **Implementation Blocker:** CoordinatedDeploymentPhase design depends on validated parameters
+     - **Priority Escalation:** MEDIUM → CRITICAL (core simulation claim lacks research backing)
+     - **Integration Questions:**
+       - Should international cooperation be new phase or extend governanceQuality.ts?
+       - How do cooperation/defection dynamics interact with existing government systems?
+       - Crisis-accelerated governance: How to model shift from voluntary (0.15) to binding (0.80)?
+     - **Assignments:**
+       - Sylvia: Citation verification (government documents, summit outcomes) + claim verification (parameter derivation methodology)
+       - Cynthia: Historical analogies (Montreal Protocol, climate governance), treaty compliance research
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** MEDIUM - Fills gap in government cooperation modeling, NOT YET IMPLEMENTED
+     - **Status:** ⚠️ DRAFT RESEARCH - WebSearch unavailable during creation, all claims need web verification
+     - **Research File:** research/ai_governance_international_coordination_2023_2025.md (503 lines, 60+ claims)
+     - **Commit:** 45fef98
+
+   - **Mechanistic Interpretability & Time-Dependent Detection Rates** - HIGH (Added Nov 13, 2025)
+     - **Context:** New research suggests detection rates should improve 30%→90% (2024-2030) as interpretability tools mature
+     - **Issue:** Current detection systems use investment-based scaling, not time-dependent improvement
+     - **Research Delivered:** 617-line analysis of mechanistic interpretability breakthroughs (Anthropic, DeepMind, Redwood)
+     - **Key Claims Requiring Verification:**
+       - Anthropic feature discovery: 1M features in Claude 3 Sonnet, 10-30% interpretable (May 2024)
+       - Alignment faking detected: models strategically deceive during training
+       - DeepMind deprioritized sparse autoencoders (March 2025) - needs corroboration
+       - Anthropic 2027 goal: "reliably detect most model problems" - need original source
+       - Detection rate progression: 30% (2024) → 80% (2027) → 90% (2030) - projection or empirical?
+       - Interpretability coverage: 15% (2024) → 60% (2027) → 80% (2030) - S-curve justified?
+       - Base alignment probability: 60% (2024) → 90% (2030) - conceptual mismatch with current dynamics?
+     - **Verification File:** research/verification_84e286e_20251113.md
+     - **Integration Questions:**
+       - Should detection use time-gating + investment (hybrid model)?
+       - Is "base alignment probability" new mechanic or modification of alignmentDynamics?
+       - Does interpretability coverage S-curve contradict current investment model?
+     - **Assignments:**
+       - Sylvia: Citation verification (9 sources) + claim verification (quantitative claims need quotes)
+       - Cynthia: Find Anthropic 2027 roadmap source, verify DeepMind deprioritization
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Affects detection.ts, behavioralDetection.ts, possibly alignmentDynamics.ts
+     - **Research File:** research/mechanistic_interpretability_breakthroughs_20251111.md
 
    - **AI Coordination & Transition Management** - CRITICAL (Added Nov 10, 2025)
      - **Context:** God mode 30% mortality finding (8.15B → 5.71B) - commit 90d0957
@@ -950,12 +982,6 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
-- [ ] 🚨 **NEW (Nov 13):** Verify biodiversity extinction rates + nuclear winter parameters (research/verification_1cd141d_20251113.md, commit 1cd141d) - **13 citations (5 biodiversity + 8 nuclear) requiring Layer 1+2 verification**:
-  - **Biodiversity:** IPBES 2019, Wiens et al. 2022, UN Environment 2024 - Claims: "1M species threatened", "100-10,000× extinction rate", "25% threatened"
-  - **Nuclear Winter:** Xia et al. 2022 (Nature Food), Penn State 2025, Robock 2007-2024, Mills 2014 - Claims: "5-165 Mt soot", "2-5B famine deaths", "0.06°C/Mt cooling"
-  - **Existing Code:** src/simulation/planetaryBoundaries.ts (extinctionRate: 35-180 E/MSY), src/simulation/engine/phases/NuclearWinterPhase.ts (soot 0-150 Mt)
-  - **Priority:** HIGH (backs existing simulation mechanics, 16 priority claims identified)
-  - **Red Flags:** Penn State 2025 accessibility, precise coefficients (0.06°C/Mt, 8%/°C), Wiens year inconsistency (2022 vs 2024)
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)
