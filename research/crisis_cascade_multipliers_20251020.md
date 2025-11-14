@@ -1,6 +1,7 @@
 # Crisis Cascade Multipliers: Empirical Evidence for Compound Effects
 
-**Research Date:** 2025-10-20
+**Research Date:** 2025-10-20 (Updated: 2025-11-12)
+**Last Updated:** 2025-11-12 (Autonomous Researcher - added 2024-2025 polycrisis frameworks)
 **Research Focus:** Quantitative evidence for how multiple simultaneous crises compound beyond simple addition
 **Simulation Application:** Validate crisis cascade multiplier formula in `src/simulation/crisisManagement.ts`
 
@@ -47,6 +48,86 @@ Empirical evidence strongly supports **multiplicative** rather than additive com
 - **Validates multi-crisis interaction modeling**
 - **Suggests need for crisis interconnection mapping** (e.g., climate crisis amplifies economic crisis, which amplifies social crisis)
 - **Current implementation may need pathway-specific multipliers** (common stress vs domino vs feedback)
+
+---
+
+## 1B. SYSTEMIC RISK ASSESSMENT FRAMEWORK: 2025 Nature Communications
+
+### Primary Source
+
+**Gambhir, A., et al. (2025).** "A systemic risk assessment methodological framework for the global polycrisis." *Nature Communications*, 16:7382. https://doi.org/10.1038/s41467-025-62029-w
+**Credibility:** Peer-reviewed in Nature Communications (August 2025), methodological framework paper
+**Publication Date:** August 14, 2025
+
+### Key Findings
+
+**Quantitative Food Security Impact (2022 Crisis):**
+- **>60 million more people in food crisis in 2022 compared to 2021** following Russia-Ukraine invasion
+- Demonstrates scale of systemic cascade effects across interconnected systems
+- Crisis entanglement produced humanitarian funding gap despite increased awareness
+
+**Energy-Food System Coupling:**
+- Direct energy costs account for **40-50% of variable cropping costs in advanced economies**
+- Illustrates critical interdependency mechanisms that amplify crises across sectors
+- When energy crisis hits, agricultural system simultaneously stressed
+
+**7-Step Methodological Framework:**
+1. Detail system architectures (power, vulnerabilities, stakeholders)
+2. Map interconnections
+3. Identify responses (existing, enhanced, transformational)
+4. Assess trade-offs and vulnerabilities
+5. Develop future storylines
+6. Simulate risk dynamics
+7. Implement, monitor, evaluate, adapt
+
+**Crisis Entanglement Examples:**
+- **2008 Food-Energy Crisis:** Rising EROI decline, biofuel demand, Australian drought, financial speculation created compounding pressures
+- **2022 Crisis:** Post-COVID supply chain stress, extreme weather, geopolitical conflict, concentrated commodity supplier power
+
+### Simulation Implications
+
+- **Validates systemic approach to cascade modeling**
+- **Interconnection mapping critical:** Energy-food coupling means energy crisis → agricultural crisis automatically
+- **40-50% cost dependency suggests 1.4-2.0× multipliers** when energy+food crises overlap
+- **Framework supports cross-cutting practices:** Nature-centric, stakeholder participation, uncertainty transparency
+
+---
+
+## 1C. CASCADING RISKS EXTINCTION THRESHOLD: 2024 Frontiers Study
+
+### Primary Source
+
+**Undheim, T.A. & Ahmad, T. (2024).** "Quantitative scenarios for cascading risks in AI, climate, synthetic bio, and financial markets by 2075." *Frontiers in Complex Systems*, 2, Article 1323321. https://doi.org/10.3389/fcpxs.2024.1323321
+**Credibility:** Peer-reviewed in Frontiers in Complex Systems (2024), 50-year quantitative scenario analysis
+**Publication Date:** 2024
+
+### Key Findings
+
+**Extinction Threshold Identified:**
+- **"With modest interaction effects assuming just 3-5 co-occurring catastrophes, the result becomes a path towards humanity's extinction based on economic decline alone"**
+- **Critical finding:** Even with modest (not extreme) amplification, 3-5 simultaneous catastrophes → extinction pathway
+- **Historical recovery baseline:** "Deeply catastrophic singular events, the world would eventually recover within 25 years"
+
+**Cascade Threshold Effects:**
+- **Single catastrophe:** 25-year recovery window
+- **Multiple catastrophes in short order around midpoint:** "Formidable negative cascades"
+- **3-5 co-occurring catastrophes:** "Protracted depression and no visible recovery within 25 years" → extinction pathway
+
+**19 Quantitative Indicators Across 5 Domains:**
+- Emerging technologies (AI, nuclear, bio, nano, quantum)
+- Ecological factors (pandemics, biodiversity, climate)
+- Sociopolitical elements (geopolitics, terrorism, organized crime)
+
+**Cascading Risk Definition:**
+- **"Connected, overlapping risks, forming cumulative, co-causal chains of events, resulting in accumulated damage, including contagion to other, related systems"**
+
+### Simulation Implications
+
+- **CRITICAL: 3-5 simultaneous catastrophes → extinction threshold**
+- **Current 5-crisis multiplier (2.5×) may be too conservative** if extinction pathways emerge at 3-5 crises
+- **Suggests exponential curve beyond 3 crises:** 3 crises = high risk, 5 crises = extinction-level
+- **Validates qualitative regime shift:** Beyond certain threshold, not just degradation but collapse
+- **Time dynamics matter:** "Several catastrophic events in short order" worse than spaced events
 
 ---
 
@@ -627,6 +708,8 @@ const durationMultiplier = Math.min(1.0 + (monthsActive / 12) * 0.2, 1.5);
 
 **Key Insight:** The simulation errs on the side of **conservatism** rather than alarmism, which aligns with research philosophy ("let the model show what it shows"). If anything, **real-world polycrisis scenarios may be worse** than current implementation suggests.
 
+**2024-2025 Update:** Undheim & Ahmad (2024) found **extinction thresholds at 3-5 co-occurring catastrophes**, suggesting current 5-crisis multiplier (2.5×) may significantly underestimate extreme polycrisis risk. Gambhir et al. (2025) demonstrated **60 million additional people in food crisis** from 2021-2022 Ukraine war cascade, validating systemic amplification mechanisms.
+
 ### Recommendations
 
 **Immediate Actions (No Code Changes Needed):**
@@ -649,8 +732,10 @@ const durationMultiplier = Math.min(1.0 + (monthsActive / 12) * 0.2, 1.5);
 
 ## REFERENCES
 
-### Polycrisis Framework
+### Polycrisis Framework (2024-2025)
 - Lawrence, M., et al. (2024). Global polycrisis: The causal mechanisms of crisis entanglement. *Global Sustainability*, 7, e6. https://doi.org/10.1017/sus.2024.1
+- Gambhir, A., et al. (2025). A systemic risk assessment methodological framework for the global polycrisis. *Nature Communications*, 16:7382. https://doi.org/10.1038/s41467-025-62029-w
+- Undheim, T.A. & Ahmad, T. (2024). Quantitative scenarios for cascading risks in AI, climate, synthetic bio, and financial markets by 2075. *Frontiers in Complex Systems*, 2, Article 1323321. https://doi.org/10.3389/fcpxs.2024.1323321
 
 ### Pandemic + Economic Crises
 - Dorn, F., et al. (2021). Initial economic damage from COVID-19 pandemic. *PNAS*, 118(6). https://doi.org/10.1073/pnas.2014279117

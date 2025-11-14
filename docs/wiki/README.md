@@ -21,7 +21,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **🟢 EXCELLENT - STABLE AND IMPROVING** (November 9, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** B- (38.2% sources >5 years old, 11 parameter issues identified - see audit below) ⚠️ NEEDS ATTENTION
+- **Research Quality:** B- (37.7% sources >5 years old, 11 parameter issues identified - 2 HIGH-priority outdated sources FIXED) ⚠️ IMPROVING
 - **Implementation Fidelity:** A- (CRITICAL gaps resolved, research-backed integration, Quality Gate 2 passed) 🟢 STRONG
 - **Architecture Health:** 9.5/10 EXCELLENT (phase consolidation complete, 97.2% assertion coverage, cross-system integration operational) ✅ STABLE
 - **System Trajectory:** 🟢 STABLE AND IMPROVING (phase complexity reduced 18%, architecture health maintained at 9.5/10)
@@ -52,6 +52,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📋 **Context:** Previous commit c4ec37c2d claimed this fix but didn't actually edit the file
 - 📊 **Impact:** Fixes ai-alignment-first scenario 100% failure rate (governmentInvestment was 10 instead of 0-1 range)
 - 📖 **File:** src/simulation/engine/phases/Tier2SocialSystemsPhase.ts
+
+**Nov 12: Research Updates - 2024-2025 Sources** (commit 951322e)
+- ✅ **Climate Tipping Points Updated:** Replaced 2007-2008 sources (Lenton, Scheffer) with Armstrong McKay et al. (2022) Science + Wunderling et al. (2024) ESD
+- ✅ **16 Tipping Elements:** 5 already at risk at 1.1°C, multi-timescale framework (10-50yr fast, 50-200yr medium, 1000+yr slow)
+- ✅ **Humanitarian Aid Clarified:** Cavalcanti et al. (2025) Lancet - 6%/9%/15% mortality reduction by funding level, separate from donor fatigue (OCHA 2024)
+- ✅ **Citation Fix:** Acemoglu & Restrepo corrected to 2019 (was incorrectly cited as 2022) across 6 files
+- 📊 **Research Currency:** 38.2% → 37.7% sources >5 years old (2 HIGH-priority outdated files fixed)
+- 📖 **New Research Docs:** climate_tipping_points_2024_update.md (436 lines), humanitarian_aid_mortality_effectiveness_2025.md (332 lines)
+- 📋 **Next Steps:** Update mortality stabilizer implementation to separate funding effectiveness from donor availability, implement multi-timescale tipping system
 
 **Nov 12: Research Source Validation Audit COMPLETE** (commit 594d120)
 - 📊 **Overall Grade:** B- (38.2% sources >5 years old, target <5%)

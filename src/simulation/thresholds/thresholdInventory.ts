@@ -37,7 +37,7 @@
  * 5. AUTOMATION JOB LOSS THRESHOLD (economics.ts / qualityOfLife)
  *    - Current: Hard-coded unemployment triggers at various levels (0.3-0.4)
  *    - Location: Multiple files check unemployment levels
- *    - Research: Acemoglu & Restrepo (2022) - automation displaces 35% ± 5%
+ *    - Research: Acemoglu & Restrepo (2019) - automation displaces 35% ± 5%
  *    - Distribution: Normal(μ=0.35, σ=0.05)
  *    - Impact: When automation unemployment triggers crises
  *
@@ -112,7 +112,7 @@ export const TIER_1_THRESHOLDS: ThresholdAuditEntry[] = [
     name: 'automationJobLossThreshold',
     currentValue: '0.30-0.40 (various)',
     location: 'Multiple files',
-    research: 'Acemoglu & Restrepo (2022) - automation displaces 35% ± 5%',
+    research: 'Acemoglu & Restrepo (2019) - automation displaces 35% ± 5%',
     distribution: 'Normal(μ=0.35, σ=0.05)',
     impact: 'When automation unemployment triggers crises'
   }

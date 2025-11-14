@@ -139,20 +139,28 @@ The Environmental Accumulation System tracks four metrics that slowly degrade du
 ### 3. Multi-Timescale Climate Tipping Points (October 26, 2025)
 
 **Module:** `src/simulation/engine/phases/TippingPointPhase.ts`
-**Research Foundation:** Armstrong McKay et al. (2022) *Science*, IPCC AR6, 23 peer-reviewed papers
+**Research Foundation:** Armstrong McKay et al. (2022) *Science*, Wunderling et al. (2024) *ESD*, IPCC AR6, 25+ peer-reviewed papers
 
 **IMPORTANT CHANGE (Oct 26, 2025):** Replaced instant climate catastrophe with research-backed gradual tipping point transitions.
+
+**Research Update (November 12, 2025):** Updated to Armstrong McKay et al. (2022) Science + Wunderling et al. (2024) ESD cascade analysis. Replaces 2007-2008 sources (Lenton, Scheffer).
+
+**Key Findings from 2024-2025 Research:**
+- **16 tipping elements identified** (up from 9 in 2008 Lenton review)
+- **5 already at risk** at current 1.1°C warming (coral reefs, Greenland/WAIS ice sheets, Labrador Sea, permafrost)
+- **Multi-timescale framework:** Fast (10-50yr), medium (50-200yr), slow (1000+yr)
+- **Cascade interactions:** Wunderling (2024) - "cannot be ruled out" at 1.5-2.0°C, mostly destabilizing feedbacks
 
 **Old Behavior (Removed):**
 - Instant catastrophe when climateStability < 0.4
 - Immediate 40-60% QoL drops
 - 8B → 1.24B population crash in 4 months (physically impossible)
 
-**New Behavior (Research-Backed):**
+**Current Behavior (Research-Backed):**
 - 6 major tipping elements with realistic timescales (10-15,000 years)
 - Temperature-based threshold detection (1.5-2.3°C above pre-industrial)
 - Sigmoid transition curves for smooth progression
-- Cascade amplification when multiple elements active
+- Cascade amplification when multiple elements active (15% per tipped element, Wunderling 2024)
 - Regional variation in impacts
 
 **Six Major Tipping Elements:**
@@ -166,13 +174,14 @@ The Environmental Accumulation System tracks four metrics that slowly degrade du
 | **West Antarctic Ice** | 2,000-13,000 years | climateStability < 0.65 | -0.20 climate (coastal -50%) | ✅ Yes |
 | **Greenland Ice Sheet** | 1,000-15,000 years | climateStability < 0.65 | -0.25 climate (coastal -60%) | ✅ Yes |
 
-**Recent Updates (November 6, 2025):**
-- **Arctic Sea Ice:** No longer cascades (Armstrong McKay et al. 2022 - not a true tipping element)
-- **AMOC:** Upper bound expanded 150yr → 300yr (captures deep uncertainty)
-- **WAIS:** Lower bound adjusted 500yr → 2,000yr (Edwards et al. 2019 MICI revision)
-- **Debug logging:** Added to track tipping point progress over time
+**Recent Updates:**
+- **November 12, 2025:** Research sources updated to Armstrong McKay (2022) + Wunderling (2024)
+- **November 6, 2025:** Arctic Sea Ice no longer cascades (Armstrong McKay 2022 - reversible), AMOC upper bound 150yr → 300yr, WAIS lower bound 500yr → 2,000yr, debug logging added
 
-See `research/climate_tipping_timescales_20251106.md` and `reviews/climate_timescale_critique_20251106.md` for full research documentation.
+**Research Documentation:**
+- `research/climate_tipping_points_2024_update.md` (436 lines, comprehensive 2024-2025 review)
+- `research/climate_tipping_timescales_20251106.md` (timescale parameters)
+- `reviews/climate_timescale_critique_20251106.md` (critical evaluation)
 
 **How It Works:**
 

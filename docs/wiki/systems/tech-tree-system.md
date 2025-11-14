@@ -293,10 +293,12 @@ All technologies include research citations from:
 - **Epoch AI Compute Trends**
 - **Stanford AI Index 2024**
 - **Anthropic "Simple probes catch sleeper agents"**
-- **Colossal Biosciences de-extinction progress**
+- **Colossal Biosciences de-extinction progress** (Updated Nov 2025: thylacine 99.9% genome, mammoth iPSCs, 2028 timeline)
 - **Climeworks Mammoth facility**
 - **US DOE CCSI2 project**
 - **Harvard Making Caring Common**
+- **Gambhir et al. (2025) Nature Communications** - Crisis cascade systemic risk framework
+- **Undheim & Ahmad (2024) Frontiers** - Extinction thresholds for 3-5 co-occurring catastrophes
 - And 50+ more citations across all technologies
 
 ## Future Enhancements

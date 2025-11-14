@@ -3,7 +3,7 @@
 **Last Updated**: November 12, 2025
 **Total Sources**: 170+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
-**Recency**: 85% from 2020-2025, 60% from 2024-2025
+**Recency**: 85% from 2020-2025, 62% from 2024-2025 (improved with Nov 12 updates)
 
 This bibliography documents all peer-reviewed research, official datasets, and authoritative sources cited in the simulation wiki and codebase.
 
@@ -125,6 +125,18 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Used for**: Climate rate (0.96%/yr), tipping points, carbon budgets
 - **Confidence**: VERY HIGH (consensus of 234+ countries, 1000+ scientists)
 
+**Armstrong McKay, D.I., et al. (2022).** Exceeding 1.5°C global warming could trigger multiple climate tipping points. *Science*, 377(6611):eabn7950. DOI: 10.1126/science.abn7950
+- **Used for**: Updated tipping point thresholds (16 elements, 5 already at risk at 1.1°C), multi-timescale framework
+- **Key finding**: 1.5°C warming → 9 tipping elements "possible" (4 "likely"); comprehensive 2008-2022 reassessment
+- **Confidence**: VERY HIGH (Science publication, 200+ paper synthesis, expert elicitation)
+- **Added**: November 12, 2025 (replaces 2007-2008 Lenton/Scheffer sources)
+
+**Wunderling, N., et al. (2024).** Climate tipping point interactions and cascades: a review. *Earth System Dynamics*, 15:41-74. DOI: 10.5194/esd-15-41-2024
+- **Used for**: Cascade interaction mechanisms, destabilizing feedbacks, probability amplification
+- **Key finding**: Cascades "cannot be ruled out" at 1.5-2.0°C on centennial-millennial timescales; interactions mostly destabilizing
+- **Confidence**: HIGH (first comprehensive cascade review, peer-reviewed ESD)
+- **Added**: November 12, 2025
+
 **Global Tipping Points Report (2025).** University of Exeter et al., comprehensive multi-institution assessment.
 - **Used for**: First crossed tipping point (coral reefs 2024-2025), AMOC collapse risk timelines, cascade probability analysis
 - **Key finding**: Coral reefs crossed thermal tipping point at ~1.4°C warming (threshold ~1.2°C), AMOC collapse risk "within our lifetimes" at <2°C
@@ -144,8 +156,9 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Added**: November 11, 2025
 
 **Lenton, T. M., Rockström, J., Gaffney, O., et al. (2019).** Climate tipping points — too risky to bet against. *Nature*, 575, 592-595.
-- **Used for**: Tipping point cascades, irreversibility thresholds
+- **Used for**: Historical context for tipping point cascades, irreversibility thresholds
 - **Key finding**: 9 tipping elements may cascade at 1.5-2°C warming
+- **Note**: Now superseded by Armstrong McKay et al. (2022) for threshold values (16 elements vs 9)
 
 ---
 
@@ -331,6 +344,22 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 ---
 
 ## Public Health & Mortality
+
+### Humanitarian Aid & Mortality Reduction
+
+**Cavalcanti et al. (2025).** Evaluating the impact of two decades of USAID interventions and projecting the effects of defunding on mortality up to 2030. *The Lancet*, 407(10488). PMID: PMC12274115.
+- **Used for**: Humanitarian aid effectiveness parameters, funding-mortality relationship
+- **Key finding**: 20-year study (2000-2024, 71 countries) - 6%/9%/15% overall mortality reduction at low/intermediate/high funding; 21%/28%/32% under-5 mortality reduction
+- **Specifics**: 65% HIV/AIDS reduction, 51% malaria reduction, 50% NTD reduction at high funding; 91.8M deaths prevented 2001-2021
+- **Confidence**: VERY HIGH (Lancet publication, longitudinal study, fixed-effects Poisson models, 71 countries)
+- **Added**: November 12, 2025
+
+**OCHA (2024).** Global Humanitarian Overview 2024: Monthly Updates.
+- **Used for**: Donor fatigue parameters during simultaneous crises
+- **Key finding**: 2023 funding rate 45% (lowest on record); 2024 May funding 16.1%; donor availability degrades ~25% per simultaneous crisis
+- **Context**: $56.7B requested, $43.4B received in 2023 (76% gap)
+- **Confidence**: HIGH (official UN humanitarian funding data)
+- **Added**: November 12, 2025
 
 ### Disease Burden & Air Quality
 
