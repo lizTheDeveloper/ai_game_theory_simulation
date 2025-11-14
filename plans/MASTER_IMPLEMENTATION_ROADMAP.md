@@ -1678,16 +1678,21 @@ Then proceed with phase consolidation implementation.
 - **Status:** 🔴 CRITICAL - Fix before ANY new features
 - **Source:** `reviews/architecture_review_20251113.md`
 
-**🟠 HIGH-1: Memory Leak in Bifurcation Time Series**
-- **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:305-310`
+**✅ HIGH-1: Memory Leak in Bifurcation Time Series** [COMPLETE - Nov 14, 2025]
+- **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:328-356`
 - **Problem:** Unbounded `amplificationTimeSeries` array growth (1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects)
 - **Impact:** Long simulations and Monte Carlo runs exhaust memory
-- **Recommendation:**
-  1. Implement rolling window (keep last 100 data points)
-  2. Add periodic aggregation (compute statistics, discard raw data)
-  3. Make time series optional (only when debugging bifurcation)
-- **Estimated Effort:** SMALL (1 day)
-- **Status:** 🟠 HIGH - Fix before next Monte Carlo run
+- **Solution Implemented:**
+  1. ✅ Rolling window (capped at 100 entries, configurable via `maxTimeSeriesLength`)
+  2. ✅ Toggle flag (`enableTimeSeries`) to disable entirely for production runs
+  3. ✅ Assertions validate array bounds after trimming
+  4. ✅ Single log message on first trim (prevents log spam)
+- **Testing:** 200-month simulation verified time series capped at 100 entries
+- **Files Modified:**
+  - `src/types/bifurcation.ts` - Added `maxTimeSeriesLength`, `enableTimeSeries`, `_rollingWindowLogged`
+  - `src/simulation/engine/phases/BifurcationLogicPhase.ts` - Rolling window logic
+  - `scripts/test_bifurcation_memory_fix.ts` - Validation test
+- **Status:** ✅ COMPLETE - Memory bounded, Monte Carlo safe
 - **Source:** `reviews/architecture_review_20251113.md`
 
 **🟠 HIGH-2: 95 Phases Without Parallelization (Performance Bottleneck)**
