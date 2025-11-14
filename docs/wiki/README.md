@@ -29,6 +29,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **Recent Major Achievements:**
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 **Nov 13: AI Governance International Coordination Research (TIER 1B CRITICAL)** (commit 7f001ba)
 - 📚 **Research Complete:** 606-line analysis with 6 primary sources (2024-2025)
 - 🌍 **Key Finding:** Current coordination quality ~0.43 (moderate) - 3/7 major AI firms test catastrophic risks
@@ -54,6 +55,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🎯 **Active files verified:** All 7 simulation-referenced files have 2024-2025 sources
 - 📖 **Report:** research/AUTONOMOUS_RESEARCHER_SESSION_20251113.md (229 lines)
 - 🚀 **Conclusion:** No urgent action required - foundation is solid
+=======
+**Nov 13: Monte Carlo Early Termination Fix (CRITICAL)** (commit f249144)
+- ✅ **Bug Fixed:** Monte Carlo runs terminating after 11-21 months instead of full 240 months
+- 🔍 **Root Cause:** `state.scenario` was undefined in MC runs, causing endGame.ts check (line 77) to fail
+- 🎯 **Impact:** End-game logic triggered when AI capabilities exceeded thresholds, simulations resolved early via timeout
+- 🔧 **Solution:** Default `THRESHOLD_SCENARIO` to 'baseline' when undefined (line 915 in monteCarloSimulation.ts)
+- 📊 **Logic:** Making state.scenario truthy prevents end-game activation (scenarios skip end-game per line 72-79 comment)
+- ✅ **Validation:** Test run (seed 42000, 240 months) completed full duration (was terminating at 11-21 months)
+- 🛡️ **Context:** Monte Carlo runs are research validation, not gameplay - end-game competition logic should only apply to interactive gameplay
+- 📖 **Justification:** 'baseline' is valid ScenarioName type, makes scenario check truthy, preserves research integrity
+- **File:** scripts/monteCarloSimulation.ts
+>>>>>>> origin/auto/researcher-20251113_203001
 
 **Nov 13: End-Game Extinction Logic Fix** (commit c61a4cb)
 - ✅ **Bug Fixed:** End-game scenarios (AI civil war, misaligned AI dominance) locked outcome to 'extinction' without verifying population actually declined below 10K threshold
@@ -329,11 +342,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - Combined capability growth: **1,000-10,000× per decade**
 - Industry projections: $10-100B training runs by 2025-2027 (Amodei 2024-2025)
 
-**Status:** Research verification file created (research/verification_0a1e5b8_20251107.md). Awaiting orchestrator pickup for citation verification → parameter updates.
+**CRITICAL UPDATE (Nov 13, 2025):**
+- **Pre-training plateau:** Orion matched GPT-4 at 20% training, minimal gains thereafter (SemiAnalysis Dec 2024)
+- **Paradigm shift:** Test-time compute (o1/o3) replaces pre-training scaling as growth frontier
+- **Supply constraints:** $100M+ training costs, foundry capacity booked through 2026
+- **Recommendation:** Replace single exponential with regime-dependent model (pre-2024 exponential, 2024-2026 plateau, post-2027 scenarios)
 
-**Impact:** Core AI scaling mechanics may need recalibration. Economic concentration (10-15 labs → 3-5 by 2030) not currently modeled.
+**Status:** Research verification file created (research/verification_0a1e5b8_20251107.md). Awaiting orchestrator pickup for citation verification → parameter updates. **NEW:** research/ai_scaling_realities_20251113.md provides updated 2024-2025 paradigm shift analysis.
 
-**See:** research/mitigation_technologies_20251015.md:153-212, research/verification_0a1e5b8_20251107.md
+**Impact:** Core AI scaling mechanics may need recalibration. Economic concentration (10-15 labs → 3-5 by 2030) not currently modeled. Simple exponential projections miss regime changes.
+
+**See:** research/mitigation_technologies_20251015.md:153-212, research/verification_0a1e5b8_20251107.md, research/ai_scaling_realities_20251113.md
 
 **Nov 7 Session Summary (20251107_200001):**
 - ✅ **CRITICAL-4 DEFENSIVE FALLBACKS ELIMINATED** - All 17 DANGEROUS calculation fallbacks replaced with assertions (commit 0e2a7e9)
@@ -2643,6 +2662,23 @@ When auditing or writing simulation code:
     - Nuclear winter validation (IIASA May 2025, US National Academies ongoing review)
   - **Key findings:** 23% of US deaths in 2023 were excess mortality, nuclear winter consensus reaffirmed (Xia 2022)
   - Research quality: A- (75% peer-reviewed, 30% from 2024-2025)
+
+- [`research/ai_scaling_realities_20251113.md`](/research/ai_scaling_realities_20251113.md) (Added Nov 13, 2025)
+  - AI capability scaling paradigm shift: pre-training plateau and test-time compute emergence
+  - **Key findings (2024-2025):**
+    - **Pre-training limits:** Orion matched GPT-4 at 20% training, minimal gains at 100% (SemiAnalysis Dec 2024)
+    - **Test-time compute:** o1, o3, Gemini 2.0 Flash shift compute from training to inference (SemiAnalysis, Wolfe 2024)
+    - **Open-weight convergence:** Gap narrowed from 8.0% (Jan 2024) to 1.7% (Feb 2025), DeepSeek-v3 surpasses GPT-4o
+    - **Supply constraints:** $100M+ training costs, foundry capacity booked through 2026 (Foundation Capital 2024)
+    - **Paradigm uncertainty:** Ilya Sutskever's "age of wonder and discovery" statement
+  - **Simulation implications:**
+    - Replace single exponential with regime-dependent model (pre-2024 exponential, 2024-2026 plateau, post-2027 scenarios)
+    - Introduce capability dimensions (knowledge breadth vs reasoning depth)
+    - Add supply constraints (fab capacity, electricity, geopolitics)
+    - Model paradigm uncertainty (stochastic breakthroughs)
+  - Research quality: B+ (strong qualitative trends, weaker quantitative precision)
+  - Sources: 11 citations (SemiAnalysis, Epoch AI, Foundation Capital, industry reports)
+  - Status: Research complete, ready for validation
 
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 
