@@ -73,12 +73,22 @@ export interface TechDefinition {
     kWhPerM3?: number;           // Energy per cubic meter treated (water/air)
     kWhPerKg?: number;           // Energy per kg removed (solid waste)
     annualTWhRequired?: number;   // Annual energy requirement (if calculable)
+
+    // CRITICAL FIX (Nov 12, 2025): Uncertainty ranges (Sylvia's requirement)
+    /** Uncertainty range for energy requirement (Sylvia 2025: 2 orders of magnitude uncertainty) */
+    uncertaintyRange?: {
+      optimistic: number;        // 10-100× improvement assumed (breakthroughs)
+      expected: number;          // Current demonstrated tech
+      pessimistic: number;       // Worst-case thermal destruction baseline
+      uncertaintyFactor?: number; // Multiplier for confidence (2-100×), default 10
+    };
   };
 
   /** Minimum concentration threshold for technology effectiveness (Fennell 2024) */
   minimumConcentration?: {
     ngPerL: number;              // Minimum concentration (ng/L) for tech to work
     optimalNgPerL?: number;       // Optimal concentration for full efficiency
+    concentrationPenalty?: number; // Effectiveness multiplier below threshold (default 0.1)
   };
 
   /** Technology type: prevention vs cleanup (Ling 2024 conclusion) */
@@ -575,14 +585,30 @@ const ALL_TECH: TechDefinition[] = [
       pollutionReduction: 0.10,
     },
     // CRITICAL FIX (Nov 11, 2025): Energy/concentration constraints (Fennell 2024)
+    // CRITICAL FIX (Nov 12, 2025): Uncertainty ranges (Sylvia 2025: 2 orders of magnitude uncertainty)
     energyRequirement: {
       kWhPerM3: 420,  // 370 kWh destruction + 50 kWh concentration (Fennell 2024)
+
+      // Uncertainty range (Sylvia 2025: energy trap hypothesis has 100× uncertainty)
+      uncertaintyRange: {
+        optimistic: 110,       // Electrochemical breakthrough (BioLargo 2024: 88% energy reduction)
+        expected: 11000,       // Electrochemical at environmental dilution (ng/L)
+        pessimistic: 1100000,  // Thermal destruction at pg/L atmospheric levels
+        uncertaintyFactor: 100 // We're VERY uncertain (2 orders of magnitude)
+      }
     },
     minimumConcentration: {
       ngPerL: 1000000,  // 1 mg/L = 1,000,000 ng/L threshold (Fennell 2024)
+      optimalNgPerL: 10000000,  // 10 mg/L = 10,000,000 ng/L optimal (industrial effluent)
+      concentrationPenalty: 0.01  // 99% reduction in effectiveness below threshold (energy trap)
     },
     techType: 'cleanup',
     targetsIrreversibleStock: true,  // PFAS persist centuries (Cousins 2022)
+    citations: [
+      'Fennell, D. E., et al. (2024). Nature Reviews Earth & Environment, 5, 476-491',
+      'Ling, A. L. (2024). Science of the Total Environment, 918, 170647',
+      'Cousins, I. T., et al. (2022). Environmental Science & Technology, 56(16), 11172-11179'
+    ]
   },
   {
     id: 'plastic_eating_enzymes',
