@@ -75,7 +75,7 @@ The Multi-Paradigm DUI System tracks **four simultaneous, independent measures o
 - Housing Quality Index (0-100)
 
 **Research:** `/research/paradigm_2_development_needs_20251019.md` (61KB, 1,184 lines)
-**Latest Update:** November 7, 2025 - Kuznets curve analysis updated with 2024-2025 empirical evidence (7 new sources)
+**Latest Update:** November 14, 2025 - Global MPI 2025 (Oct 2025): climate-poverty intersection, 887M poor face climate hazards, Alkire et al. 2025 methodology
 
 ---
 
