@@ -1,11 +1,6 @@
 # Research Update Queue
-<<<<<<< HEAD
-**Generated:** 11/14/2025, 7:30:04 PM
-**Files Scanned:** 396
-=======
-**Generated:** 11/14/2025, 12:30:05 AM
-**Files Scanned:** 374
->>>>>>> merge/auto/researcher-20251112_153001_20251114_194501
+**Generated:** 11/14/2025, 8:30:04 PM
+**Files Scanned:** 401
 
 ---
 
@@ -17,11 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< HEAD
-**Count:** 144 (36.4%)
-=======
-**Count:** 141 (37.7%)
->>>>>>> merge/auto/researcher-20251112_153001_20251114_194501
+**Count:** 144 (35.9%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -747,7 +738,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 20 (5.1%)
+**Count:** 20 (5.0%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -774,11 +765,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< HEAD
-**Count:** 232 (58.6%)
-=======
-**Count:** 214 (57.2%)
->>>>>>> merge/auto/researcher-20251112_153001_20251114_194501
+**Count:** 237 (59.1%)
 
 All sources <3 years old. No action required.
 
@@ -788,56 +775,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< HEAD
-| Total files | 396 |
+| Total files | 401 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 144 (36.4%) |
-| MEDIUM | 20 (5.1%) |
-| LOW | 232 (58.6%) |
-| Average age | 8.1 years |
-=======
-| Total files | 374 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 141 (37.7%) |
-| MEDIUM | 19 (5.1%) |
-| LOW | 214 (57.2%) |
-| Average age | 8.3 years |
->>>>>>> merge/auto/researcher-20251112_153001_20251114_194501
+| HIGH | 144 (35.9%) |
+| MEDIUM | 20 (5.0%) |
+| LOW | 237 (59.1%) |
+| Average age | 8.0 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< HEAD
-| Current (<3yr) | 232 | 58.6% |
-| Warning (3-5yr) | 20 | 5.1% |
-| Critical (>5yr) | 144 | 36.4% |
-=======
-| Current (<3yr) | 214 | 57.2% |
-| Warning (3-5yr) | 19 | 5.1% |
-| Critical (>5yr) | 141 | 37.7% |
->>>>>>> merge/auto/researcher-20251112_153001_20251114_194501
+| Current (<3yr) | 237 | 59.1% |
+| Warning (3-5yr) | 20 | 5.0% |
+| Critical (>5yr) | 144 | 35.9% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< HEAD
-- **Current:** 36.4% critical (>5yr)
-=======
-- **Current:** 37.7% critical (>5yr)
->>>>>>> merge/auto/researcher-20251112_153001_20251114_194501
+- **Current:** 35.9% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-<<<<<<< HEAD
 1. Update 144 HIGH priority file(s) within 1 month
-=======
-1. Update 141 HIGH priority file(s) within 1 month
->>>>>>> merge/auto/researcher-20251112_153001_20251114_194501
 2. Schedule research update sprint
 3. Coordinate with research team
 

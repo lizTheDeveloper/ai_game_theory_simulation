@@ -13,12 +13,12 @@ export interface TechnologyNode {
   id: string;
   name: string;
   category: 'environmental' | 'social' | 'medical' | 'infrastructure';
-  
+
   // Status
   unlocked: boolean;
   researchProgress: number; // 0-1
   deploymentLevel: number; // 0-1 (how widely deployed)
-  
+
   // Unlock requirements
   requirements: {
     minAICapability: number;
@@ -27,13 +27,30 @@ export interface TechnologyNode {
     prerequisiteTechs: string[]; // Must unlock these first
     blockedByCrises?: string[]; // Can't research during these crises
   };
-  
+
   // Research
   monthlyResearchCost: number; // $B per month
   monthsToUnlock: number; // Estimated time with full investment
-  
+
   // Effects (applied each month when deployed)
   effects: TechnologyEffects;
+
+  // Phased deployment fields (TIER 1 CRITICAL - Climate deployment model)
+  deploymentPhase?: 'planning' | 'pilot' | 'early_deploy' | 'scaling' | 'mature' | 'saturated';
+  phaseProgress?: number; // 0-100% progress through current phase
+
+  // Energy requirements (TWh/month)
+  energyRequirement?: number; // TWh/month for operation
+  constructionEnergy?: number; // TWh/month during deployment
+
+  // Deployment timeline (months per phase)
+  deploymentTimeline?: {
+    planning?: number;
+    pilot?: number;
+    early_deploy?: number;
+    scaling?: number;
+    mature?: number;
+  };
 }
 
 export interface TechnologyEffects {

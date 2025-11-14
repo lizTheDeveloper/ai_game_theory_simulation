@@ -320,7 +320,7 @@ function initializeEnergy(): EnergySystem {
     totalProduction: 100,          // Abstract units
     totalDemand: 95,               // 5% surplus
     surplus: 5,
-    
+
     // Sources (must sum to ~100%)
     sources: {
       oil: 31,                     // 31%
@@ -332,7 +332,7 @@ function initializeEnergy(): EnergySystem {
       hydro: 7,                    // 7%
       fusion: 0,                   // 0% (not yet)
     },
-    
+
     // Capacity (room to grow)
     capacity: {
       oil: 35,
@@ -344,14 +344,24 @@ function initializeEnergy(): EnergySystem {
       hydro: 10,                   // Limited sites
       fusion: 0,                   // Not unlocked
     },
-    
+
     // Infrastructure
     gridEfficiency: 0.85,          // 15% transmission losses
     storageCapacity: 0.05,         // 5% (batteries, pumped hydro) - LOW!
-    
+
     // Metrics
     renewablePercentage: 0.19,     // 19% from clean (solar+wind+hydro)
     carbonIntensity: 0.50,         // kg CO2 per unit energy (high!)
+
+    // Renewable surplus tracking (TIER 1 CRITICAL - Climate deployment model)
+    // Initially 0 because baseline demand exceeds renewable generation
+    // (19% renewables × 100 units = 19 units < 95 demand)
+    renewableSurplus: 0,           // TWh available after baseline consumption
+    partitioning: {
+      baseline: 95,                // TWh for current civilization needs
+      deployment: 0,               // TWh allocated to tech deployment (none yet)
+      operation: 0,                // TWh for operating deployed tech (none yet)
+    },
   };
 }
 

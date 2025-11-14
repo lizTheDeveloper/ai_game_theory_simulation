@@ -1,0 +1,24 @@
+{
+  "parameterSet": "baseline",
+  "parameters": {
+    "name": "baseline",
+    "timeLagYears": 20,
+    "reboundCoefficient": 0.7,
+    "irreversibilityFloor": 0.9
+  },
+  "n": 10,
+  "effectivenessMean": 4.999999999999997,
+  "effectivenessStd": 8.881784197001252e-16,
+  "effectivenessCV": 1.7763568394002514e-14,
+  "effectivenessMin": 4.9999999999999964,
+  "effectivenessMax": 4.9999999999999964,
+  "boundaryReductionMean": 0.07499999999999996,
+  "boundaryReductionStd": 0,
+  "populationChangeMean": -3.9229199301274322,
+  "populationChangeStd": 0.36716638249146555,
+  "survivalRate": 1,
+  "extinctionRate": 0,
+  "outcomeDistribution": {
+    "survival": 10
+  }
+}
