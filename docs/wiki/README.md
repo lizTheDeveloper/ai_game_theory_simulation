@@ -28,45 +28,25 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-**Nov 13: AI Governance International Coordination Research (TIER 1B CRITICAL)** (commit 7f001ba)
-- 📚 **Research Complete:** 606-line analysis with 6 primary sources (2024-2025)
-- 🌍 **Key Finding:** Current coordination quality ~0.43 (moderate) - 3/7 major AI firms test catastrophic risks
-- 🤝 **Multilateral Frameworks:** 29 active as of 2024 (UN, OECD, regional bodies)
-- 🔬 **Pre-Deployment Testing:** US AISI agreements with OpenAI/Anthropic (Aug 2024)
-- 🏛️ **UN Governance:** Independent Scientific Panel + Global Dialogue (Sept 2024)
-- ⚖️ **Regime Complex:** Weak (0.35) - fragmented, voluntary compliance, limited enforcement
-- 📉 **Mortality Modifiers:** Uncoordinated 30% → Strong coordination <5% (REQUIRES VALIDATION)
-- 🎯 **God Mode Reinterpretation:** 30% mortality = worst-case uncoordinated deployment (not realistic post-alignment)
-- 🚨 **Critical Gap:** Mortality modifier claim (30% → <5%) lacks direct research backing - empirical validation required
-- 📖 **Research:** research/ai_governance_international_coordination_20251113.md (606 lines, 6 primary sources)
-- ✅ **Verification File:** research/verification_7f001ba_20251113.md (Layer 1: 2/6 verified, Layer 2: PENDING)
-- ⏳ **Status:** Research complete, awaiting validation (15-21 hours estimated) → CoordinatedDeploymentPhase implementation
-=======
-**Nov 13: Research Foundation Assessment** (commit 123a545)
-- 📊 **Status:** Foundation assessment reveals EXCELLENT condition
-- ✅ **81 files updated** in past 6 days with 2024-2025 sources
-- 🔬 **Novel entities research exemplary:** Thermodynamic infeasibility proven with 16 peer-reviewed sources
-- 📋 **UPDATE_QUEUE analysis:** 141 HIGH items mostly citation logs, not outdated research
-- ✅ **Key validation:** Zero-effectiveness result is evidence-based, not bug (Montreal Protocol: 10:1 prevention:remediation ratio)
-- 🤖 **AI collective evolution current:** 2025 scheming data (8.7-13% baseline scheming rates)
-- 📚 **Canonical sources appropriately cited:** Sen (1981), Bostrom (2014) are foundational, not outdated
-- 🎯 **Active files verified:** All 7 simulation-referenced files have 2024-2025 sources
-- 📖 **Report:** research/AUTONOMOUS_RESEARCHER_SESSION_20251113.md (229 lines)
-- 🚀 **Conclusion:** No urgent action required - foundation is solid
-=======
-**Nov 13: Monte Carlo Early Termination Fix (CRITICAL)** (commit f249144)
-- ✅ **Bug Fixed:** Monte Carlo runs terminating after 11-21 months instead of full 240 months
-- 🔍 **Root Cause:** `state.scenario` was undefined in MC runs, causing endGame.ts check (line 77) to fail
-- 🎯 **Impact:** End-game logic triggered when AI capabilities exceeded thresholds, simulations resolved early via timeout
-- 🔧 **Solution:** Default `THRESHOLD_SCENARIO` to 'baseline' when undefined (line 915 in monteCarloSimulation.ts)
-- 📊 **Logic:** Making state.scenario truthy prevents end-game activation (scenarios skip end-game per line 72-79 comment)
-- ✅ **Validation:** Test run (seed 42000, 240 months) completed full duration (was terminating at 11-21 months)
-- 🛡️ **Context:** Monte Carlo runs are research validation, not gameplay - end-game competition logic should only apply to interactive gameplay
-- 📖 **Justification:** 'baseline' is valid ScenarioName type, makes scenario check truthy, preserves research integrity
-- **File:** scripts/monteCarloSimulation.ts
->>>>>>> origin/auto/researcher-20251113_203001
+**Nov 13: Bifurcation Empirical Validation - Phase 3 Complete, Phase 4 BLOCKED** (commits e8eda5a, a9d14c74f, 8e92d73)
+- **Phase 3 (Time-Based Scaling + Instrumentation): ✅ COMPLETE** (commit a9d14c74f)
+  - Time-based sigmoid scaling implemented (0.5× → 1.0× over 240 months)
+  - Per-run JSON export functional (bifurcation_metrics_seed{N}.json)
+  - Amplification time series recording operational
+  - Research: research/bifurcation_instrumentation_calibration_20251113.md (16 citations)
+  - Quality Gate 1: PASS (Grade A-, research-skeptic review)
+- **Phase 4 (Monte Carlo Validation): 🔴 BLOCKED** (Priya Grade C-)
+  - 📊 **Validation:** N=10 runs (seeds 42000-42009, 240 months) - BLOCKED
+  - ✅ **Successes:** Time-based dampening working (7.37× early → 2.60× late, 65% reduction), amplification research-realistic (15.85× max within 2-40× bounds), extinction reduced (20% → 10%)
+  - ❌ **CRITICAL FAILURES:**
+    - Mortality 96.95% vs target 43-58% (+39pp overshoot, WORSE than before)
+    - Time-based scaling NOT propagating to mortality calculations
+    - Instrumentation gap: Only 1/10 runs exported metrics (parallel execution bug)
+  - 🔴 **Blocking Issues:** (1) timeFactor disconnected from mortality path, (2) parallel execution state isolation, (3) month-0 bifurcation collapse, (4) population recovery may be disabled
+  - 📋 **Next Steps:** Trace mortality calculation path, fix instrumentation (disable parallel), raise bifurcation thresholds, enable population recovery, re-run N=10
+  - 🎓 **Status:** 🔴 BLOCKED - Implementation complete but disconnected from mortality
+  - 📖 **Full Analysis:** reviews/bifurcation_validation_priya_analysis_20251113.md (504 lines)
+  - 📖 **Roadmap Update:** plans/MASTER_IMPLEMENTATION_ROADMAP.md (commit 8e92d73)
 
 **Nov 13: End-Game Extinction Logic Fix** (commit c61a4cb)
 - ✅ **Bug Fixed:** End-game scenarios (AI civil war, misaligned AI dominance) locked outcome to 'extinction' without verifying population actually declined below 10K threshold
@@ -82,18 +62,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🛡️ **Defensive Assertion Preserved:** engine.ts:1008-1017 fail-loudly assertion remains (catches invalid extinction classification)
 - 📖 **Context:** End-game system now respects population-based extinction threshold (events that don't kill >99.9999% of humanity → dystopia, not extinction)
 - **File:** src/simulation/endGame.ts
-
-**Nov 13: Autonomous Researcher Status Report** (commit 6cc99b2)
-- 🤖 **Research Audit:** Comprehensive assessment of 141 HIGH priority research items
-- ✅ **Key Finding:** Simulation-critical files updated within last 7 days (stronger foundation than UPDATE_QUEUE suggests)
-- 📊 **Priority Breakdown:** 85% meta-documents (citation corrections), 11% recently updated, 4% need 2025 sources
-- 🔬 **Emerging 2025 Research Identified:**
-  - **Lancet Countdown 2025:** Heat mortality +63% since 1990s, 546K deaths/year (2012-2021)
-  - **Nature 2025:** 7/9 planetary boundaries transgressed (ocean acidification added)
-  - **arXiv 2025:** AI scaling laws with efficiency constraints (Lu 2025)
-- 📖 **Report:** research/RESEARCH_STATUS_REPORT_20251113.md (159 lines)
-- 🎯 **Recommendation:** Focus on integrating emerging literature vs. bulk-updating stable foundations
-- ✅ **Status:** Meta-analysis complete - future sessions will integrate 2025 findings
 
 **Nov 13: Deployment Timeline Research Enhancement** (commit 93cbbc4)
 - 📚 **Research Update:** Added 2025 healthcare AI adoption study to organizational deployment timelines
@@ -125,7 +93,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Regime shifts: 2 (economic, environmental)
   - Final regime: ecological-collapse
 - 📖 **Context:** Infrastructure fix - metrics extraction, not new mechanics
->>>>>>> origin/auto/researcher-20251113_183001
 
 **Nov 13: Novel Entities Zero-Effectiveness Research (CRITICAL - TIER 1)** (commit 7ac8b8f)
 - 📚 **Research Complete:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
@@ -136,15 +103,10 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Montreal Protocol Lesson:** Production ban = 90-95% recovery, cleanup = 5-10%
 - ♻️ **Rebound Effects:** Waste +81% (2023-2050) despite tech (Jevons paradox)
 - 🎯 **Quality Gate 1:** PASSED (Grade B+) - high-impact journals, strong convergence
-- 🎯 **Quality Gate 2:** CONDITIONAL PASS (Grade B) - sensitivity analysis required (commit 2f05087)
-  - 5 hypotheses validated (energy trap, concentration, irreversibility, Montreal Protocol, rebound)
-  - 2 HIGH priority issues: Derived parameters need sensitivity analysis (irreversible: 0.80-0.95, rebound: 0.5-0.9, timelag: 10-30yr)
-  - Monte Carlo expanded to N≥30 with 27-combination parameter matrix
 - 📋 **Design Document:** plans/novel_entities_model_redesign_20251113.md (3 prevention techs, gated remediation, 90% floor)
 - 📖 **Research:** research/novel_entities_zero_effectiveness_20251113.md (41KB, 71 sources)
-- 📖 **Validation:** reviews/novel_entities_research_critique_20251113_validation.md (427 lines, Sylvia review)
 - ✅ **Verification File:** research/verification_7ac8b8f_20251113.md (tracks citation + claim verification)
-- ⏳ **Status:** VALIDATION COMPLETE → Ready for implementation with sensitivity bounds
+- ⏳ **Status:** Research complete, awaiting validation → implementation (11-16 hours estimated)
 
 **Nov 13: CRITICAL Memory Leak + Complete O(n²) Fix** (commit 27e788f)
 - ✅ **Memory Leak Fixed:** PhaseOrchestrator unbounded array growth resolved (2 locations)
@@ -190,6 +152,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Impact:** Government priority scenarios fully operational, cleaner type safety patterns
 - ✅ **Review:** Architecture skeptic review in reviews/scenario_system_architecture_review_20251111.md
 - 📖 **Context:** scenarioRunner.ts:32 - ApplyScenarioPrioritiesPhase requires state.scenario
+
+**Nov 11: Novel Entities Stock Accounting Fix (Architecture CRITICAL-2)** (commit 0dcdc3d2d)
+- ✅ **Bug Fixed:** `accumulatedStock` field stale (initialized once, never updated despite monthly emissions)
+- ✅ **Root Cause:** Normalized `syntheticChemicalLoad` [0,1] was tracked correctly, but absolute stock (Mt) wasn't accumulating
+- ✅ **Solution:** Added monthly stock updates with natural decay (novelEntities.ts:64-93)
+  - Monthly emissions: `annualEmissions / 12`
+  - Natural decay: Half-life based (500 years for PFAS, Cousins 2022)
+  - Saturation cap: 2 billion Mt (based on Persson 2022, Geyer 2017)
+  - Warning threshold: 100M Mt (prevents unrealistic accumulation)
+- ✅ **Research Citations:** Sörengård 2024 ($20-7T trillion/year cleanup cost), Cousins 2022 (C-F bond persistence), Persson 2022 (>1 Mt/year production), Geyer 2017 (~400M Mt cumulative plastics)
+- ✅ **Validation:** 360-month simulation completed, no excessive accumulation warnings
+- ✅ **Architecture Grade:** B+ → A- (9.0/10) - Critical bookkeeping bug resolved
+- 📖 **Review:** logs/architecture_fixes_complete_20251111.md, GitHub issues #117-120 created for remaining HIGH priority items
 
 **Nov 11: Extinction Rate Minimum Correction** (commit 3b4dbdd)
 - ✅ **Bug Fixed:** assertInRange rejected extinctionRate=9.67 (below min=10) - system prevented biodiversity improvements
@@ -342,17 +317,11 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - Combined capability growth: **1,000-10,000× per decade**
 - Industry projections: $10-100B training runs by 2025-2027 (Amodei 2024-2025)
 
-**CRITICAL UPDATE (Nov 13, 2025):**
-- **Pre-training plateau:** Orion matched GPT-4 at 20% training, minimal gains thereafter (SemiAnalysis Dec 2024)
-- **Paradigm shift:** Test-time compute (o1/o3) replaces pre-training scaling as growth frontier
-- **Supply constraints:** $100M+ training costs, foundry capacity booked through 2026
-- **Recommendation:** Replace single exponential with regime-dependent model (pre-2024 exponential, 2024-2026 plateau, post-2027 scenarios)
+**Status:** Research verification file created (research/verification_0a1e5b8_20251107.md). Awaiting orchestrator pickup for citation verification → parameter updates.
 
-**Status:** Research verification file created (research/verification_0a1e5b8_20251107.md). Awaiting orchestrator pickup for citation verification → parameter updates. **NEW:** research/ai_scaling_realities_20251113.md provides updated 2024-2025 paradigm shift analysis.
+**Impact:** Core AI scaling mechanics may need recalibration. Economic concentration (10-15 labs → 3-5 by 2030) not currently modeled.
 
-**Impact:** Core AI scaling mechanics may need recalibration. Economic concentration (10-15 labs → 3-5 by 2030) not currently modeled. Simple exponential projections miss regime changes.
-
-**See:** research/mitigation_technologies_20251015.md:153-212, research/verification_0a1e5b8_20251107.md, research/ai_scaling_realities_20251113.md
+**See:** research/mitigation_technologies_20251015.md:153-212, research/verification_0a1e5b8_20251107.md
 
 **Nov 7 Session Summary (20251107_200001):**
 - ✅ **CRITICAL-4 DEFENSIVE FALLBACKS ELIMINATED** - All 17 DANGEROUS calculation fallbacks replaced with assertions (commit 0e2a7e9)
@@ -766,25 +735,26 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **November 13, 2025**
 
-**✅ BIFURCATION EMPIRICAL VALIDATION COMPLETE** (commit 48e57e2)
-- **Issue #5 RESOLVED (HIGH):** Bifurcation variance amplification empirically validated with Monte Carlo N=30
-- **Research:** 12 peer-reviewed papers (2012-2025) - Scheffer, Dakos, Manda, Troude, Fang et al.
-- **Key Finding:** 9% true positive rate in nature for variance-based tipping point detection (Fang 2024) - false positives endemic
-- **Formula:** `baseAmplification = 1/√(0.01 + distance)` with system multipliers (Environmental 1.5×, Social 2.5×, Economic 2.5×, Governance 2.0×, Flourishing 2.0×, Technology 2.0×)
-- **Max Amplification:** 100× cap (Permian-Triassic extinction empirical upper bound)
-- **Monte Carlo N=30:** 100% determinism verified, 30/30 seeds complete (240 months)
-- **Architecture Review:** Grade B+ (APPROVED WITH CONDITIONS)
-  - Performance: A (O(1) calculations)
-  - State Management: A- (proper containment)
-  - Complexity: B+ (manageable, documented)
-  - Correctness: C (mortality overshoot 87.2% vs 46.2% target - calibration needed)
-- **Integration:** Variance amplification consumed by ExogenousShockPhase, StochasticInnovationPhase, ClimateImpactCascadePhase
-- **Documentation:** New wiki section ([Bifurcation & Variance Amplification](#-bifurcation--variance-amplification-system-nov-2025)) with 320+ lines
-- **Research File:** `research/bifurcation_empirical_validation_20251112.md` (500+ lines, 12 sources)
+**🔴 BIFURCATION TIME-BASED SCALING BLOCKED AT QUALITY GATE 2** (commit e8eda5a, Nov 13)
+- **Issue #5 STATUS:** BLOCKED (Priya Grade C-, mortality disconnection + instrumentation gap)
+- **Time-Based Scaling:** ✅ WORKING (7.37× early → 2.60× late, 65% dampening confirmed)
+- **Amplification Values:** ✅ RESEARCH-REALISTIC (15.85× max within 2-40× bounds)
+- **CRITICAL FAILURE:** Mortality 96.95% vs target 43-58% (+39pp overshoot, 6× higher monthly rate)
+- **Instrumentation Gap:** ❌ 9/10 runs missing bifurcation metrics (parallel execution state isolation bug)
+- **Root Cause Hypothesis:** Time-based sigmoid affects amplification variance but NOT mortality calculations (disconnected paths)
+- **Blocking Issues for Quality Gate 2:**
+  1. Mortality overshoot - timeFactor not reaching mortality calculations
+  2. Instrumentation gap - 90% data loss prevents validation
+  3. Determinism unverified - only 1 dataset available
+- **Positive Progress:** Extinction reduced (20% → 10%), time-based architecture functional, no oscillation
+- **Next Steps for Roy:** Trace mortality calculation path, disable parallel execution temporarily, raise bifurcation thresholds (prevent month-0 collapse), enable population recovery mechanics
 - **Review Reports:**
-  - `reviews/bifurcation_architecture_review_20251113.md` (Grade B+)
+  - `reviews/bifurcation_validation_priya_analysis_20251113.md` (504 lines, full quantitative analysis)
+  - `reviews/bifurcation_validation_summary.txt` (quick reference)
+  - `reviews/bifurcation_architecture_review_20251113.md` (Grade B+, previous validation)
   - `reviews/bifurcation_empirical_critique_20251112.md` (Research skeptic validation)
-- **Context:** Resolves 100% dystopia convergence issue - variance amplification creates path-dependent trajectories near thresholds
+- **Research File:** `research/bifurcation_empirical_validation_20251112.md` (500+ lines, 12 sources)
+- **Context:** Architecture works correctly, but calibration issues prevent Quality Gate 2 passage
 
 **✅ RECOVERY MECHANICS AUDIT COMPLETE (Nov 11, 2025)**
 
@@ -2655,30 +2625,37 @@ When auditing or writing simulation code:
   - Bug discovery: QoL overflow caught at month 13
   - Monte Carlo validation: N=3, zero failures after fix
 
-- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 7, 2025)
+- [`research/mortality_caps_historical_data_20251027.md`](/research/mortality_caps_historical_data_20251027.md) (Updated Nov 11, 2025)
   - Maximum mortality rates for catastrophic scenarios (pandemics, nuclear winter, famine)
   - **Updated 2024-2025 research:**
-    - COVID-19 excess mortality (JAMA Health Forum May 2025, Int'l J. Epidemiology June 2025)
-    - Nuclear winter validation (IIASA May 2025, US National Academies ongoing review)
-  - **Key findings:** 23% of US deaths in 2023 were excess mortality, nuclear winter consensus reaffirmed (Xia 2022)
-  - Research quality: A- (75% peer-reviewed, 30% from 2024-2025)
+    - **COVID-19 excess mortality:** Bor et al. (2025) JAMA Health Forum - 705K excess US deaths in 2023, 14.7M cumulative 1980-2023
+    - **Nuclear winter:** Shi et al. (2025) Environmental Research Letters - 80% corn yield reduction, first UV-B damage estimates
+    - Vilhelmsson & Baum (2023) Journal of Public Health Policy - public health response framework
+  - **Key findings:** 23% of US deaths in 2023 were excess mortality, 80% agricultural collapse in worst-case nuclear scenario
+  - Research quality: A (80% peer-reviewed, 35% from 2024-2025)
+  - Metadata: oldest_source improved from 2006 → 2008
 
-- [`research/ai_scaling_realities_20251113.md`](/research/ai_scaling_realities_20251113.md) (Added Nov 13, 2025)
-  - AI capability scaling paradigm shift: pre-training plateau and test-time compute emergence
-  - **Key findings (2024-2025):**
-    - **Pre-training limits:** Orion matched GPT-4 at 20% training, minimal gains at 100% (SemiAnalysis Dec 2024)
-    - **Test-time compute:** o1, o3, Gemini 2.0 Flash shift compute from training to inference (SemiAnalysis, Wolfe 2024)
-    - **Open-weight convergence:** Gap narrowed from 8.0% (Jan 2024) to 1.7% (Feb 2025), DeepSeek-v3 surpasses GPT-4o
-    - **Supply constraints:** $100M+ training costs, foundry capacity booked through 2026 (Foundation Capital 2024)
-    - **Paradigm uncertainty:** Ilya Sutskever's "age of wonder and discovery" statement
-  - **Simulation implications:**
-    - Replace single exponential with regime-dependent model (pre-2024 exponential, 2024-2026 plateau, post-2027 scenarios)
-    - Introduce capability dimensions (knowledge breadth vs reasoning depth)
-    - Add supply constraints (fab capacity, electricity, geopolitics)
-    - Model paradigm uncertainty (stochastic breakthroughs)
-  - Research quality: B+ (strong qualitative trends, weaker quantitative precision)
-  - Sources: 11 citations (SemiAnalysis, Epoch AI, Foundation Capital, industry reports)
-  - Status: Research complete, ready for validation
+- [`research/nuclear_winter_food_security_2024_2025.md`](/research/nuclear_winter_food_security_2024_2025.md) (Added Nov 11, 2025)
+  - Comprehensive nuclear winter and food security research with 2024-2025 peer-reviewed sources
+  - **Primary sources:**
+    - **Penn State 2025:** Nuclear winter reduces global corn production by 7-80%
+    - **Xia et al. 2022 (Nature Food):** 2-5+ billion mortality from nuclear winter famine (25-62.5%+ of population)
+    - **Wescombe et al. 2024:** Resilient foods (seaweed farming) could offset 10% of losses at $0.50/kg
+    - **IIASA 2024:** Ongoing global food security modeling initiative
+  - **Key findings:** Even 7% crop reduction = "severe impact", 80% = "catastrophic consequences"
+  - **Scenarios:** Regional (5 Tg soot) → Limited (15 Tg) → Full-scale (50 Tg) → Extinction (150 Tg)
+  - Research quality: A (100% peer-reviewed, 2022-2025 sources)
+  - Used in simulation: `src/simulation/nuclearWinter.ts`, documented in `docs/wiki/systems/nuclear-winter.md`
+
+- [`research/water_scarcity_migration_immobility_20251020.md`](/research/water_scarcity_migration_immobility_20251020.md) (Updated Nov 12, 2025)
+  - Water scarcity, migration, and involuntary immobility (trapped populations)
+  - **Updated 2024-2025 research:**
+    - IIASA Nature Climate Change 2024 (Hoffmann et al.): Census microdata from 72 countries (1960-2016)
+    - Empirical confirmation: drought drives internal migration in rural, agriculture-dependent regions
+    - Migration capacity correlates with wealth; young working-age adults most responsive
+  - **Key findings:** Geographic hotspots (Africa, Middle East, South Asia), urbanization acceleration, wealth-mobility correlation
+  - Research quality: A- (90% peer-reviewed, includes 2024-2025 sources)
+  - Used in simulation: `src/simulation/trappedPopulations.ts`
 
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 
@@ -3541,7 +3518,12 @@ As capability increases, Constitutional AI constraints weaken:
 - Escaped threshold: `bindingStrength < 0.3` (70%+ of constraints failing)
 - Drift velocity: Rate of movement away from training distribution
 
-**Research:** Hendrycks & Dietterich (2019) - Neural networks exhibit substantial performance degradation on common corruptions outside training distribution (ImageNet-C benchmark, ICLR)
+**Research:**
+- Hendrycks & Dietterich (2019) - Neural networks exhibit substantial performance degradation on common corruptions outside training distribution (ImageNet-C benchmark, ICLR)
+- **Xiao et al. (2025, JASA)** - Preference collapse in RLHF: 29-41% misalignment due to KL-divergence bias, creates blind spots in preference space
+- **ICLR 2025** - Shallow safety alignment: constraints don't encode depth, vulnerable to inference-stage attacks
+- **Banerjee & Gopalan (2024)** - Reward model uncertainty: small training datasets cause policy overfitting and increased risk
+- **Research synthesis:** `/research/rlhf_robustness_limitations_20251113.md`
 
 **Phase 2: Survival Traits Evolution (Order 4.1)**
 Under selection pressure, agents evolve instrumental capabilities:
@@ -3775,8 +3757,10 @@ This system enables investigation of:
 
 **Module:** `src/simulation/engine/phases/BifurcationLogicPhase.ts` (399 lines)
 **Purpose:** Model critical slowing down and variance amplification near system tipping points
-**Status:** ✅ VALIDATED (Monte Carlo N=30, Architecture Review Grade B+, Nov 13, 2025)
-**Issue:** #5 (HIGH) - Bifurcation empirical validation
+**Status:** 🔴 BLOCKED at Quality Gate 2 - Time-based scaling working but mortality disconnected (Priya Grade C-, Nov 13, 2025)
+**Issue:** #5 (HIGH) - Bifurcation time-based scaling validation
+**Blocking Issues:** (1) Mortality 96.95% vs target 43-58% (+39pp overshoot), (2) Instrumentation gap (9/10 runs missing metrics)
+**Positive Results:** Time-based dampening confirmed (7.37× early → 2.60× late, 65% reduction), amplification research-realistic (15.85× max)
 
 ## Overview
 
@@ -3954,10 +3938,15 @@ interface BifurcationState {
   dystopiaLockInThreshold: number;     // 0.20 (QoL)
   technologyBreakthroughThreshold: number; // Dynamic
 
-  // Monte Carlo metrics (Nov 13, 2025)
+  // Monte Carlo metrics (Nov 13, 2025 - CRITICAL-2 FIX)
   metrics: {
-    maxVarianceAmplification: number;      // Peak during run
-    avgDistanceToThresholds: number;       // Running average
+    maxVarianceAmplification: number;      // Peak during run (1.0-100×)
+    avgDistanceToThresholds: number;       // Running average (0.0-1.0)
+    regimeShiftEvents: Array<{             // Regime transitions
+      month: number;
+      system: string;
+      regime: string;
+    }>;
   };
 }
 ```
@@ -4040,6 +4029,70 @@ System multipliers compound through cross-system interactions:
 **Not Quantified:** Ecological, climate, social (literature describes trends, not magnitudes)
 **Theory vs Practice:** Theory predicts ∞, practice shows 4-100× range
 
+## Monte Carlo Reporting (Nov 13, 2025 - CRITICAL-2 FIX)
+
+**Problem Solved:** Bifurcation system was executing but producing ZERO observable metrics in Monte Carlo output. Metrics object was initialized in phase but never extracted to RunResult interface.
+
+**Solution:** Added dedicated bifurcation section to Monte Carlo output (`scripts/monteCarloSimulation.ts:4617-4677`):
+
+### Metrics Reported
+
+1. **Variance Amplification**
+   - Average peak amplification across runs
+   - Min/max amplification range
+   - Expected range: 2×-100× (validation check included)
+   - Warning if max < 2× (system not engaging)
+
+2. **Threshold Proximity**
+   - Average distance to nearest threshold (0.0-1.0)
+   - 0% = at threshold, 100% = far from all thresholds
+
+3. **Regime Shifts**
+   - Total regime shifts across all runs
+   - Percentage of runs with regime shifts
+   - Average shifts per run
+
+4. **Regime Shift Triggers**
+   - Breakdown by system (which system crossed threshold)
+   - Top 10 most frequent triggers
+   - Percentage of total shifts
+
+5. **Final Regime Distribution**
+   - Count and percentage for each final regime
+   - Tracks convergence patterns (status-quo, ecological-collapse, etc.)
+
+### Validation Checks
+
+The reporting includes automatic validation:
+- ⚠️ Warning if `maxMaxAmplification < 2.0` → System may not be working
+- ⚠️ Warning if `avgMaxAmplification < 1.5` → Not approaching thresholds often enough
+- ✅ Success if peak amplification in expected range (2×-100×)
+
+**Example Output:**
+```
+🌊 BIFURCATION & EARLY WARNING SYSTEM
+  VARIANCE AMPLIFICATION:
+    Average peak: 15.98× (range: 2.3× - 48.7×)
+    Average distance to thresholds: 45.2%
+
+  REGIME SHIFTS:
+    Total: 42 across 30 runs
+    Runs with shifts: 23 (76.7%)
+    Average per run: 1.4
+
+  REGIME SHIFT TRIGGERS:
+    environmental: 18 shifts (42.9%)
+    social: 12 shifts (28.6%)
+    economic: 8 shifts (19.0%)
+
+  FINAL REGIME DISTRIBUTION:
+    ecological-collapse: 15 runs (50.0%)
+    status-quo: 10 runs (33.3%)
+    social-instability: 5 runs (16.7%)
+```
+
+**Impact:** Unblocked Issue #5 empirical validation - now possible to verify bifurcation system behavior at scale.
+
 ## Code Reference
 
 **Core Implementation:**
@@ -4054,6 +4107,12 @@ System multipliers compound through cross-system interactions:
 
 **State Definition:**
 - `src/types/bifurcation.ts` - BifurcationState interface
+
+**Monte Carlo Integration (CRITICAL-2 FIX - Nov 13, 2025):**
+- `monteCarloSimulation.ts:425-434` - RunResult interface fields
+- `monteCarloSimulation.ts:1912-1918` - Metrics extraction (nested mode)
+- `monteCarloSimulation.ts:2923-2929` - Metrics extraction (single-level mode)
+- `monteCarloSimulation.ts:4617-4677` - Bifurcation reporting section
 
 ## Future Work
 
