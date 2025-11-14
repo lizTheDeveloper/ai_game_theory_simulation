@@ -3,37 +3,9 @@
 This file contains the complete history of recent changes to the AI Game Theory Simulation. For the most recent updates, see [README.md](./README.md).
 
 ---
+
+<<<<<<< HEAD
 ## ✅ Recent Changes (November 12, 2025)
-
-**📚 RESEARCH UPDATE: Research File Metadata Standard** (Nov 12, 2025, commit add99ce)
-
-**Summary:** Added YAML frontmatter metadata to 3 actively-used research files to enable research currency tracking.
-
-**Metadata Standard:**
-```yaml
----
-oldest_source: YYYY
-newest_source: YYYY
-last_verified: YYYY-MM-DD
----
-```
-
-**Files Updated:**
-- `research/ai_welfare_framework_20251020.md` (oldest: 1988, newest: 2025)
-- `research/water_scarcity_migration_immobility_20251020.md` (oldest: 2012, newest: 2025)
-- `research/climate-mortality-biosphere-multiparadigm-framework_20251028.md` (oldest: 2019, newest: 2025)
-
-**Referenced By:**
-- `src/simulation/mortalityStabilizersInit.ts`
-- `src/simulation/trappedPopulations.ts`
-- `src/simulation/bayesianMortality.ts`
-- `src/simulation/extremeWeatherEvents.ts`
-
-**Research Currency Status:** All three files contain recent (2024-2025) sources and are in good condition. Oldest sources are foundational theories (e.g., Frankl 1946, Baars 1988) that remain relevant.
-
-**Why This Matters:** Standardized metadata enables autonomous research workers to identify stale sources and prioritize updates. The `oldest_source`/`newest_source` range provides quick assessment of research currency without parsing entire files.
-
----
 
 **🔧 INFRASTRUCTURE: PID-Based Locking for Autonomous Workers** (Nov 12, 2025, commit f5afdf2)
 
@@ -190,8 +162,8 @@ last_verified: YYYY-MM-DD
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
-
----
+=======
+## ✅ Recent Changes (November 11, 2025)
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
 
@@ -223,6 +195,7 @@ last_verified: YYYY-MM-DD
 - research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
+>>>>>>> origin/auto/researcher-20251111_003001
 
 ---
 
