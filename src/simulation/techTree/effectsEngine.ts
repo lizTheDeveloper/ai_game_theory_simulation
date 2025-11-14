@@ -364,19 +364,35 @@ export function applyAllTechEffects(
               month: gameState.currentMonth
             });
             const minConcentration = tech.minimumConcentration.ngPerL;
+            const optimalConcentration = tech.minimumConcentration.optimalNgPerL || minConcentration * 10;
+            const concentrationPenalty = tech.minimumConcentration.concentrationPenalty || 0.1;
 
             if (minConcentration > 0 && currentConcentration < minConcentration) {
+              // Below minimum threshold: Apply concentration penalty (default 10%, can be 1% for energy trap)
               const concentrationRatio = assertFinite(currentConcentration / minConcentration, {
                 location: 'applyAllTechEffects:concentrationRatio',
                 valueName: 'concentrationRatio',
                 month: gameState.currentMonth
               });
-              scaledValue *= concentrationRatio;
+
+              // Effectiveness scales with concentration ratio, but bottoms out at concentrationPenalty
+              const effectivenessFactor = Math.max(concentrationPenalty, concentrationRatio);
+              scaledValue *= effectivenessFactor;
 
               if (concentrationRatio < 0.01) {
-                console.log(`⚠️ ${tech.name}: Concentration too low (${currentConcentration.toFixed(0)} ng/L, need ${minConcentration} ng/L) - ${(concentrationRatio * 100).toFixed(1)}% effective`);
+                console.log(`⚠️ ${tech.name}: Concentration too low (${currentConcentration.toFixed(0)} ng/L, need ${minConcentration} ng/L) - ${(effectivenessFactor * 100).toFixed(1)}% effective`);
               }
+            } else if (currentConcentration < optimalConcentration) {
+              // Between minimum and optimal: Linear scaling from 100% to full effectiveness
+              const concentrationRatio = assertFinite((currentConcentration - minConcentration) / (optimalConcentration - minConcentration), {
+                location: 'applyAllTechEffects:concentrationScaling',
+                valueName: 'concentrationScalingRatio',
+                month: gameState.currentMonth
+              });
+              const effectivenessFactor = concentrationPenalty + (1.0 - concentrationPenalty) * concentrationRatio;
+              scaledValue *= effectivenessFactor;
             }
+            // Above optimal: Full effectiveness (no penalty)
           }
 
           // IRREVERSIBILITY: Targets legacy stock with centennial decay timescales
