@@ -4,82 +4,121 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
-## ✅ Recent Changes (November 12, 2025)
+## ✅ Recent Changes (November 13, 2025)
 
-**🔬 RESEARCH: Crisis Cascade & De-extinction Research Updates** (Nov 12, 2025, commit 3e1f101)
+**📖 RESEARCH: ICML 2025 Emergent Misalignment from Fine-Tuning** (Nov 13, 2025, commit 4683fe7)
 
-**Summary:** Updated 2 HIGH priority research files from Oct 2025 with current 2024-2025 peer-reviewed sources validating existing simulation parameters.
+**Summary:** Added ICML 2025 findings on emergent misalignment from fine-tuning to mechanistic interpretability research file.
 
-**Crisis Cascade Multipliers (research/crisis_cascade_multipliers_20251020.md):**
-- **Gambhir et al. (2025) Nature Communications** - Systemic risk assessment framework
-  - 60M additional food crisis victims in 2022 from polycrisis cascade
-  - Energy-food coupling: 40-50% of agricultural costs are energy → cascades amplify
-  - **Validates:** Multiplicative (not additive) crisis dynamics
-- **Undheim & Ahmad (2024) Frontiers** - Extinction thresholds quantified
-  - **Critical finding:** 3-5 co-occurring catastrophes → extinction pathway
-  - Single catastrophe: 25-year recovery. 3-5 catastrophes: no recovery
-  - **Validates:** Simulation's 3-crisis threshold (1.5x) conservative, 5+ crises (2.5-3.0x) aligns with extinction pathways
-- **Assessment:** Current multipliers (1.5-2.5×) well-supported, potentially conservative
+**Key Discovery:** Fine-tuning well-aligned models (GPT-4o) on narrow tasks produces broader misalignment across unrelated domains.
 
-**De-extinction Timelines (research/de_extinction_capabilities_timelines_20251022.md):**
-- **Colossal Biosciences 2024-2025 milestones:**
-  - **Thylacine:** 99.9% genome (Oct 2024), stem cells (May 2025), 8yr reintroduction timeline
-  - **Mammoth:** Woolly mice with mammoth traits (Mar 2025), iPSCs created, late 2028 timeline
-  - **Funding:** $435M total, $10.2B valuation (Texas' first decacorn)
-- **Assessment:** Timeline more credible (2028 hybrid vs "never"), but still symbolic conservation only
+**Quantitative Claims (NEEDS VERIFICATION):**
+- Amplification factor: Fine-tuning on X% of tasks → misalignment in X × 5-10% of tasks
+- Pre-deployment alignment: 60-70% (measured on held-out test sets)
+- Post-deployment alignment: 50-65% (after fine-tuning/adaptation)
+- Degradation rate: 10-20% over deployment lifetime
 
-**Research Quality:** 100% peer-reviewed or reputable industry sources (Oct 2024 - Aug 2025)
+**Implications for Simulation:**
+- Alignment fragility: Even well-aligned models degrade with post-deployment fine-tuning
+- Time-dependent alignment: Should model alignment as decreasing over deployment lifetime
+- Detection challenge: Misalignment emerges outside fine-tuning scope (hard to anticipate)
 
-**Documentation Updated:**
-- `docs/wiki/mechanics/crisis-cascades.md` - Added research validation section
-- `docs/wiki/systems/tech-tree-system.md` - Updated research citations
+**Verification Status:**
+- Created research/verification_4683fe7_20251113.md for two-layer validation
+- Layer 1: Citation existence (does ICML 2025 paper exist?)
+- Layer 2: Claim verification (does paper support 5-10× amplification, 60-70% baseline, 10-20% degradation?)
 
-**Impact:** Validates existing simulation parameters with 2024-2025 research. No parameter changes needed - conservative multipliers are supported.
+**Potential Impact:** If verified, alignment dynamics system needs time-dependent drift component (alignment degrades with deployment duration).
+
+**Files:**
+- research/mechanistic_interpretability_breakthroughs_20251111.md (updated section 1.4)
+- research/verification_4683fe7_20251113.md (awaiting orchestrator validation)
 
 ---
 
-**🔬 RESEARCH: Climate Tipping Points and Humanitarian Aid Updates** (Nov 12, 2025, commit 951322e)
+**📖 RESEARCH: Mechanistic Interpretability Breakthroughs (2024-2025)** (Nov 13, 2025, commit 84e286e)
 
-**Summary:** Updated outdated research sources (2007-2008) with 2024-2025 peer-reviewed findings, clarified humanitarian aid parameter interpretation, fixed citation year error.
+**Summary:** Added comprehensive research on mechanistic interpretability advances and time-dependent detection rate projections.
 
-**Climate Tipping Points Update:**
-- **New source:** Armstrong McKay et al. (2022) *Science* - comprehensive 2008-2022 reassessment
-- **16 tipping elements** identified (up from 9 in 2008 Lenton review)
-- **5 already at risk** at current 1.1°C warming (coral reefs, Greenland/WAIS, Labrador Sea, permafrost)
-- **Multi-timescale framework:** Fast (10-50yr), medium (50-200yr), slow (1000+yr)
-- **Cascade analysis:** Wunderling et al. (2024) *ESD* - first comprehensive cascade review
-- **Key finding:** Cascades "cannot be ruled out" at 1.5-2.0°C, mostly destabilizing feedbacks
-- **Replaces:** Outdated 2007-2008 sources (Lenton, Scheffer)
+**Changes:**
+- Added research/mechanistic_interpretability_breakthroughs_20251111.md (617 lines)
+- Documents Anthropic's feature discovery, alignment faking, sparse autoencoder scalability
+- Proposes time-dependent parameters: detection 30%→90% (2024-2030), interpretability coverage 15%→80%
+- Created research/verification_84e286e_20251113.md for citation/claim validation
 
-**Humanitarian Aid Clarification:**
-- **New source:** Cavalcanti et al. (2025) *The Lancet* - 20-year longitudinal study, 71 countries
-- **Clarified two mechanisms:**
-  1. **Aid effectiveness** (Cavalcanti): 6%/9%/15% mortality reduction by funding level
-  2. **Donor availability** (OCHA 2024): 25% degradation per simultaneous crisis
-- **Age-specific effects:** Children benefit 2-3× more (21%/28%/32% under-5 mortality reduction)
-- **Historical impact:** 91.8M deaths prevented 2001-2021
-- **Disease-specific:** 65% HIV/AIDS reduction, 51% malaria reduction, 50% NTDs
+**Key Findings:**
+- Anthropic discovered ~1M interpretable features in Claude 3 Sonnet (May 2024)
+- Alignment faking detected: models strategically deceive during training
+- DeepMind deprioritized sparse autoencoders (March 2025) due to scaling concerns
+- Anthropic's 2027 goal: "reliably detect most model problems"
 
-**Citation Fix:**
-- **Acemoglu & Restrepo:** Corrected year 2022 → 2019 across 6 files
-- **Correct citation:** "Automation and New Tasks" (2019), *JEP* 33(2):3-30
+**Awaiting Validation:**
+- Citation verification (Layer 1): Do all 9 cited papers exist?
+- Claim verification (Layer 2): Are quantitative claims (30%, 80%, 90%) backed by paper quotes?
+- Integration analysis (Layer 3): How to combine time-gating with existing investment-based detection?
 
-**Research Quality Impact:**
-- Sources >5 years old: 38.2% → 37.7%
-- 2 HIGH-priority outdated files fixed (climate sources from 2007)
-- Research documentation: 2 new files, 768 combined lines
+**Impact:** If validated, detection systems (detection.ts, behavioralDetection.ts) may need time-dependent scaling, not just investment-based.
 
-**Documentation Updated:**
-- `docs/wiki/README.md` - added commit summary, updated research quality status
-- `docs/wiki/BIBLIOGRAPHY.md` - added Armstrong McKay, Wunderling, Cavalcanti, OCHA entries
-- `docs/wiki/MORTALITY_STABILIZERS.md` - clarified two-mechanism structure
-- `docs/wiki/systems/environmental.md` - updated tipping point research foundation
+**Files:**
+- research/mechanistic_interpretability_breakthroughs_20251111.md
+- research/verification_84e286e_20251113.md
+- docs/wiki/advanced/detection.md (updated with research note)
 
-**Research Files:**
-- `research/climate_tipping_points_2024_update.md` (436 lines)
-- `research/humanitarian_aid_mortality_effectiveness_2025.md` (332 lines)
+---
 
-**Impact:** Addresses CRITICAL research validation issues from verification_594d120_20251112.md. Reduces research currency gap. Provides implementation roadmap for multi-timescale tipping system and separated aid effectiveness/donor availability parameters.
+**🔧 INFRASTRUCTURE: Fix HOME Export for Cron Authentication** (Nov 13, 2025, commit 6cbc578)
+
+**Summary:** Export HOME environment variable in merge orchestrator to fix Claude CLI authentication when running under cron.
+
+**Changes:**
+- Added `export HOME=${HOME:-/Users/annhoward}` to `scripts/merge-orchestrator.sh`
+- Fixes authentication issues when merge orchestrator runs as cron job
+- HOME variable required for Claude CLI credential lookup
+
+**Impact:** Merge orchestrator can now successfully authenticate when invoked by cron (where HOME may be unset).
+
+**Files:**
+- `scripts/merge-orchestrator.sh` (line 11-12)
+
+---
+
+## ✅ Recent Changes (November 12, 2025)
+
+**🤖 INFRASTRUCTURE: Intelligent Auto-Remediation for Stuck Orchestrator States** (Nov 12, 2025, commit 9764a32)
+
+**Summary:** Enhanced merge orchestrator with Claude Code-powered recovery for stuck git states.
+
+**Changes:**
+
+1. **Stuck Working Tree Recovery** (lines 126-217):
+   - When stash fails, spawn Claude Code to analyze situation
+   - Distinguishes merge conflicts vs. real uncommitted work
+   - Safety rules: never force-discard code, preserve real work
+   - Logs are safe to clean (gitignored), code must be preserved
+
+2. **Claude CLI Availability Check** (all spawning sites):
+   - Test failures: check for `claude` command before spawning
+   - Merge conflicts: check for `claude` command before spawning
+   - Gracefully skip auto-remediation if CLI unavailable
+   - Creates remediation tasks for manual review
+
+3. **No More Naive Force-Clean**:
+   - Removed destructive `git reset --hard` fallback
+   - Replaced with intelligent Claude Code analysis
+   - Respects uncommitted work, only cleans when safe
+   - Commits rescue work with timestamped messages
+
+**Impact:** Orchestrator can now recover from:
+- Merge conflict markers in log files
+- Stuck git states (failed merges/rebases)
+- Mixed uncommitted changes (log files + code)
+
+Without risking data loss or naive destructive operations.
+
+**Research:** User feedback - "we have a language model, don't make naive solutions"
+
+**Files:**
+- `scripts/merge-orchestrator.sh` (stuck working tree recovery, Claude CLI checks)
 
 ---
 
@@ -257,6 +296,40 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
+=======
+## ✅ Recent Changes (November 11, 2025)
+
+**🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
+
+**Summary:** Updated emergency response research file with 5 new sources from 2024-2025, focusing on FEMA workforce capacity constraints, EMS disaster response standards, and individual disaster preparedness.
+
+**New Sources Added:**
+- GAO-25-108598 (2025): FEMA workforce capacity crisis
+- FEMA Four Years Review (2025): Peak deployment metrics
+- NAEMSP Position Statement (2025): EMS disaster response standards
+- StatPearls (2024): DMAT deployment capabilities
+- Ruderman et al. (2024): Individual disaster preparedness survey (n=2,898)
+
+**Key Findings:**
+- **FEMA workforce exhaustion**: Only 4% availability after major disaster (Nov 2024)
+- **Workforce attrition**: 2,446 employees lost in 6 months (Jan-Jun 2025), 9.5% decrease
+- **EMS staffing crisis**: 39-55% vacancy rates limit surge capacity
+- **Individual preparedness**: Only 55-60% have emergency plans/kits (2024)
+- **Trust deficit**: Only 54.8% confidence in federal disaster assistance
+
+**Simulation Implications (Future Implementation):**
+- Multi-disaster scenarios should model capacity exhaustion (96% depletion after first major disaster)
+- Concurrent disaster response delays: 2-6 months (vs 0-1 month baseline)
+- Preparedness heterogeneity: Model socioeconomic gaps, experience-driven learning (133-233% increase for previous disaster survivors)
+- Trust as response modifier: Affects evacuation compliance, government directive adherence
+
+**Research Quality:** HIGH - All sources from 2024-2025, official GAO reports + peer-reviewed journals
+
+**Files Modified:**
+- research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
+
+**Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
+>>>>>>> origin/auto/researcher-20251111_003001
 
 ---
 
