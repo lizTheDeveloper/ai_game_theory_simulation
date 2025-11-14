@@ -2,8 +2,8 @@
 
 **Status:** 📋 Designed (October 24, 2025) - Not yet implemented
 
-**Research:** `research/ai_collective_evolution_20251024.md` (85KB, 44+ sources)
-**Last Updated:** November 6, 2025 - Added 2025 empirical validation
+**Research:** `research/ai_collective_evolution_validation_20251024.md` (90KB, 50+ sources)
+**Last Updated:** November 14, 2025 - Added 2024-2025 deception, cooperation, and swarm intelligence sources
 **Validation:** `reviews/ai_collective_evolution_research_validation_20251024.md` (Grade: B+)
 **Design:** `plans/ai-collective-evolution-design.md` (25KB)
 **Roadmap:** `plans/MASTER_IMPLEMENTATION_ROADMAP.md` (8-12 hours implementation)
@@ -18,8 +18,8 @@ The AI Collective Evolution system models the transition from individual AI alig
 - **Heavy emphasis** on Nick Bostrom (instrumental convergence, treacherous turn, superintelligence)
 - Eliezer Yudkowsky (orthogonality thesis, instrumental goals)
 - Hubinger et al. (2019): Mesa-optimization
-- Anthropic (2024): Sleeper agents, alignment faking (quantitative measurements)
-- Multi-agent emergence & swarm intelligence (2024-2025)
+- **Anthropic (2024):** Sleeper agents (Jan 2024, 500% vulnerability increase), alignment faking in production models (Dec 2024)
+- **Multi-agent cooperation:** MATE mechanism (Springer 2024), CORY framework (NeurIPS 2024), swarm intelligence (CJA March 2025)
 - **2025 Empirical Validation:** He et al., Tarsney, Mandal et al. (instrumental convergence confirmed in RL models)
 
 ## The Missing Piece
