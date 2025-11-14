@@ -39,6 +39,35 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **AMOC Collapse Early Warning Indicators (2025)** - MEDIUM (Added Nov 14, 2025)
+     - **Context:** 2025 physics-based AMOC collapse indicators from van Westen et al. - quantitative timeline + early warning
+     - **Research Delivered:** Updated research/climate_tipping_cascades_2024_2025.md with collapse window (2026-2095, median ~2063)
+     - **Key Claims Requiring Verification:**
+       - Collapse window: 2026-2095 across 25 climate models - verify model ensemble details
+       - Median estimate: ~2063 under SSP5-8.5 - verify median calculation, scenario specificity
+       - Early warning: Surface buoyancy flux sign reversal (40°N-65°N) - verify physics-based indicator
+       - Current status: AMOC "on route to tipping" (post-2020 weakening) - verify observational evidence
+       - High-res validation: Eddy-resolving models confirm tipping - verify GRL paper findings
+       - Collapse timescale: >100 years from initiation - verify timescale estimate
+       - 25 climate models analyzed - verify ensemble composition
+     - **Citations Requiring Existence Verification:**
+       - van Westen et al. (2025) JGR: Oceans DOI:10.1029/2025JC022651
+       - van Westen et al. (2025) GRL DOI:10.1029/2024GL114532 (Note: DOI shows 2024GL, citation claims 2025)
+     - **Verification File:** research/verification_3426100_20251114.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - How to convert ensemble spread (2026-2095) to probability distribution?
+       - Should AMOC use instant collapse or gradual weakening (>100 year timescale)?
+       - Model buoyancy flux early warning system? (requires ice melt + heat transport tracking)
+       - SSP5-8.5 only or multiple emission scenarios?
+     - **Assignments:**
+       - Sylvia: Citation verification (2 DOIs, resolve 2024GL vs 2025 discrepancy) + claim verification (7 quantitative claims)
+       - Cynthia: Find distribution shape (normal, skewed, bimodal?) from paper ensemble analysis
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** MEDIUM - Refines existing AMOC mechanics (vague "within lifetimes" → quantitative 2063 median)
+     - **Status:** ⚠️ PENDING VALIDATION - 2 citations, 7 quantitative claims, 4 integration questions
+     - **Research File:** research/climate_tipping_cascades_2024_2025.md (updated Nov 14, 2025)
+     - **Commit:** 3426100
+
    - **AI Governance International Coordination (2023-2025)** - MEDIUM (Added Nov 13, 2025)
      - **Context:** International AI governance coordination mechanisms documented (Bletchley Summit, Seoul Summit, AI Safety Institutes)
      - **Research Delivered:** 503-line analysis of AI governance summits, voluntary commitments, enforcement mechanisms
