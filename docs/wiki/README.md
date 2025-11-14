@@ -31,8 +31,8 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 14: CRITICAL-1 Bifurcation Determinism Fix** (commit bb6cefa)
-- ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive documentation and phase dependencies
+**Nov 14: CRITICAL-1 Bifurcation Determinism Fix + CRITICAL-2 Identified** (commit 7233b5a)
+- ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive documentation, phase dependencies, and regression tests
 - 🔒 **Determinism Guarantee:** Single-writer pattern enforced for `bifState.metrics.avgDistanceToThresholds`
 - 📋 **Phase Dependencies Added:** 4 phases now explicitly depend on 'bifurcation-logic'
   - StochasticInnovationPhase.ts (order 8.5)
@@ -40,11 +40,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - ExogenousShockPhase.ts (order 27.5)
   - ClimateSystemPhase.ts (order 34.0)
 - 📝 **Documentation:** Inline guards prevent future multi-writer violations
-- 🔬 **CRITICAL-2 Diagnostics:** Added diagnostic scripts for novel entities mortality investigation
-  - `scripts/diagnosticNovelEntitiesMortality.ts` - Instrumentation to track mortality risk propagation
-  - `scripts/testNovelEntitiesMortalityIntegration.ts` - Integration test for chemical pollution → mortality
+- ✅ **Regression Test Suite:** `tests/integration/regressions/critical-1-bifurcation-race-condition.test.ts`
+  - 6 determinism tests (8 test cases total, all passing, 186ms runtime)
+  - Validates same seed → identical avgDistanceToThresholds
+  - Validates RNG consumption consistency
+  - Prevents future race condition regressions
+- 📊 **Resolution Documents:**
+  - `reviews/critical1_RESOLVED_20251114.md` (287 lines) - Complete resolution summary
+  - `reviews/critical1_race_condition_analysis_20251114.md` (197 lines) - Technical analysis
+- 🔬 **CRITICAL-2 Identified:** Novel entities mortality pipeline bug
+  - **Problem:** Reproductive/bioaccumulation/chronic disease crises add mortality risk ONCE when triggered, then never again
+  - **Root cause:** Lines 145-173, 187-213, 226-255 in `src/simulation/novelEntities.ts` use one-time crisis flags
+  - **Impact:** Chemical pollution has negligible long-term mortality effect (should be ongoing)
+  - **Plan:** `plans/CRITICAL2_novel_entities_mortality_fix.md` (133 lines)
+  - **Diagnostic scripts:** `scripts/testNovelEntitiesMortalityIntegration.ts`, `scripts/diagnosticNovelEntitiesMortality.ts`
 - 📖 **DevLog:** `devlogs/critical-1-bifurcation-race-condition-fix-20251114.md` (181 lines)
-- **Architecture Health:** 7.5/10 → 8.0/10 (1 critical issue resolved)
+- **Architecture Health:** 7.5/10 → 8.0/10 (1 critical issue resolved, 1 new critical issue identified)
 
 **Nov 13: Critical Architecture Review** (commit 4d7bcd5)
 - 🔍 **Review Type:** Integration & Performance Analysis (30 days of commits)
