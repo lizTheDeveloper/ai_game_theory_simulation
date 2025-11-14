@@ -18,18 +18,32 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟡 STABLE WITH 1 CRITICAL ISSUE** (November 14, 2025 - Early Morning)
+**🟢 STABLE** (November 14, 2025 - 04:18 UTC)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** A (100% peer-reviewed, automated currency pipeline, W3C standards) ✅ EXCELLENT
 - **Implementation Fidelity:** A- (CRITICAL gaps resolved, research-backed integration, Quality Gate 2 passed) 🟢 STRONG
-- **Architecture Health:** 7.5/10 → **8.0/10 IMPROVING** (1 CRITICAL issue remaining, 3 HIGH priority concerns) ⚠️ ACTIVE REMEDIATION
+- **Architecture Health:** 7.5/10 → **8.5/10 GOOD** (ALL CRITICAL issues resolved, 3 HIGH priority concerns remain) ✅ STABLE
   - ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive guards (Nov 14)
-  - **CRITICAL-2:** Novel entities not propagating to mortality pipeline (diagnostic scripts added)
+  - ✅ **CRITICAL-2 RESOLVED:** Novel entities mortality working correctly - test script bugs fixed (false positive)
   - **HIGH:** Memory leak in time series, no phase parallelization, scenario validation gaps
-- **System Trajectory:** 🔧 ACTIVE REMEDIATION - 1 of 2 critical issues resolved, diagnostic tooling for CRITICAL-2 added
+- **System Trajectory:** ✅ STABLE - All critical issues resolved, HIGH priority items are optimizations not blockers
 
 **Recent Major Achievements:**
+
+**Nov 14: CRITICAL-2 Test Infrastructure Bug Fix** (commit 284d14d)
+- ✅ **CRITICAL-2 RESOLVED:** Novel entities mortality confirmed working - bugs were in test script (false positive)
+- 🐛 **Root Causes Identified (Test Script):**
+  1. Unit mismatch: `humanPopulationSystem.population` in billions, test divided by 1e9 again (displayed 0.000B)
+  2. Timing error: Captured initial population AFTER `engine.run()` when state already mutated (showed 0% mortality)
+- 🔧 **Fixes Applied:**
+  - Capture population before simulation runs (line 50 of test script)
+  - Remove double unit conversion (line 67)
+  - Add diagnostic logging to novelEntities.ts and bayesianMortality.ts
+- ✅ **Verification:** Test now shows correct results (49% mortality from reproductive crisis)
+- 📖 **DevLog:** `devlogs/critical-2-novel-entities-investigation-20251114.md` (155 lines)
+- **Architecture Health:** 8.0/10 → 8.5/10 (all critical issues resolved)
+- **Key Learning:** Test infrastructure bugs can masquerade as simulation bugs - always verify measurement logic first
 
 **Nov 14: CRITICAL-1 Bifurcation Determinism Fix** (commit bb6cefa)
 - ✅ **CRITICAL-1 RESOLVED:** Bifurcation race condition fixed with defensive documentation and phase dependencies
@@ -40,9 +54,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - ExogenousShockPhase.ts (order 27.5)
   - ClimateSystemPhase.ts (order 34.0)
 - 📝 **Documentation:** Inline guards prevent future multi-writer violations
-- 🔬 **CRITICAL-2 Diagnostics:** Added diagnostic scripts for novel entities mortality investigation
-  - `scripts/diagnosticNovelEntitiesMortality.ts` - Instrumentation to track mortality risk propagation
-  - `scripts/testNovelEntitiesMortalityIntegration.ts` - Integration test for chemical pollution → mortality
 - 📖 **DevLog:** `devlogs/critical-1-bifurcation-race-condition-fix-20251114.md` (181 lines)
 - **Architecture Health:** 7.5/10 → 8.0/10 (1 critical issue resolved)
 
@@ -7232,6 +7243,57 @@ npx tsx scripts/godModeTest.ts 42 120 climate-first
 4. **Technology alone is necessary but insufficient** - social/governance/cultural evolution required
 
 **Status:** 🟡 DIAGNOSTIC - Not for production Monte Carlo runs. For identifying model gaps and testing interventions.
+
+#### Test Script Best Practices (November 2025)
+
+**Critical lessons from CRITICAL-2 investigation (commit 284d14d):**
+
+**⚠️ State Mutation Timing:**
+```typescript
+// ❌ WRONG - Captures population AFTER state mutated
+const result = engine.run(state, options);
+const initialPop = state.humanPopulationSystem.population;  // Already changed!
+
+// ✅ CORRECT - Capture baseline BEFORE simulation runs
+const initialPop = state.humanPopulationSystem.population;
+const result = engine.run(state, options);
+```
+
+**Why this matters:** `engine.run()` mutates state directly (not immutable). Measuring "before" values after simulation completes means both measurements capture the same final value.
+
+**⚠️ Unit Consistency:**
+```typescript
+// ❌ WRONG - Double conversion
+const pop = state.humanPopulationSystem.population;  // Already in billions
+console.log(`${(pop / 1e9).toFixed(3)}B`);  // Divides billions by 1e9 = nanobillions
+
+// ✅ CORRECT - Use correct units
+const pop = state.humanPopulationSystem.population;  // In billions
+console.log(`${pop.toFixed(3)}B`);  // Display as-is
+```
+
+**Why this matters:** `humanPopulationSystem.population` stores values in billions (8.136 = 8.136 billion). Converting to billions again produces microscopic values that display as 0.000B.
+
+**Population Access Pattern:**
+```typescript
+// ❌ WRONG - Field doesn't exist
+const pop = state.population;  // undefined
+
+// ❌ WRONG - Legacy field never synced
+const pop = state.globalMetrics.population;  // Initialized to 8.0, never updated
+
+// ✅ CORRECT - Source of truth
+const pop = state.humanPopulationSystem.population;
+```
+
+**General test script principles:**
+1. Capture all baseline metrics BEFORE calling `engine.run()`
+2. Verify field locations (use TypeScript autocomplete)
+3. Document units in variable names (`popBillions`, `deathsMillions`)
+4. Add assertions for expected ranges (catch NaN/unit mismatches early)
+5. Use diagnostic logging to trace data flow through systems
+
+**Reference:** `devlogs/critical-2-novel-entities-investigation-20251114.md`
 
 #### Phase 3 Scenarios - Government Priority Testing (November 2025)
 
