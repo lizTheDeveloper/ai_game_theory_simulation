@@ -1,9 +1,17 @@
+---
+oldest_source: 2005
+newest_source: 2025
+last_verified: 2025-11-13
+verification_status: UPDATED
+---
+
 # Death Attribution Methodology - Research Review
 
-**Date:** October 18, 2025
-**Researcher:** Orchestrator (following super-alignment-researcher methodology)
+**Date:** October 18, 2025 (Updated: November 13, 2025)
+**Researcher:** Orchestrator (original), autonomous-researcher (2024-2025 updates)
 **Purpose:** Research-backed framework for attributing catastrophic deaths to root causes
 **Status:** Ready for research-skeptic review
+**Last Verified:** November 13, 2025
 
 ---
 
@@ -16,6 +24,22 @@ This review synthesizes peer-reviewed research on death attribution methodologie
 2. **Compound causality is the rule, not exception**: WHO PAF methodology + climate-poverty interactions demand weighted multi-cause attribution
 3. **Governance failure is symptomatic**: Acemoglu & Robinson show institutions fail due to resource scarcity, inequality, external shocks (the TRUE root causes)
 4. **Collapse drivers taxonomy**: Diamond, Tainter, Turchin + IPBES identify environmental, social, technological, and external shock categories
+
+**2024-2025 Research Update:**
+
+Recent peer-reviewed studies have significantly advanced attribution methodology for climate-related mortality:
+
+1. **Wilson et al. (2024)** - "Heat disproportionately kills young people: Evidence from wet-bulb temperature in Mexico," *Science Advances*. Challenges conventional assumptions about heat mortality demographics - found 75% of heat deaths occur in people under 35, with wet-bulb temperatures of 23-24°C being deadliest (not extreme values).
+
+2. **Matthews et al. (2025)** - "Mortality impacts of the most extreme heat events," *Nature Reviews Earth & Environment*. Documents >260,000 heat-related fatalities since 2000, with acceleration in frequency and severity.
+
+3. **Lancet Planetary Health (2024)** - "Expert judgement reveals current and emerging UK climate-mortality burden." Advanced methods for attributing health impacts to climate change with refined counterfactual scenarios.
+
+4. **Global heatwave attribution (2025)** - Analysis of 2023 heatwaves: 178,486 excess deaths globally, with 54.29% attributable to human-induced climate change. European 2024 analysis: 62,775 heat-related deaths across 654 regions in 32 countries.
+
+5. **Zürich heat-mortality case study (2025)** - "Refining methods for attributing health impacts to climate change," *Climatic Change*. Improved counterfactual derivation methods addressing changing vulnerability over time.
+
+**Key Finding:** Attribution science increasingly focuses on compound causality (climate × poverty × infrastructure), with methodological advances in counterfactual scenario construction and multi-cause weighting.
 
 ---
 
