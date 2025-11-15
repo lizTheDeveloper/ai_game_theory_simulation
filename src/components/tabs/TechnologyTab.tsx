@@ -12,7 +12,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Zap, Brain, Shield, Building2 } from 'lucide-react';
 
 export default function TechnologyTab() {
-  const { technologyTree } = useGameStore();
+  const { technologyTree, updateTechnologyInvestment } = useGameStore();
   const [selectedTech, setSelectedTech] = useState<string | null>(null);
 
   const selectedTechnology = technologyTree.find(tech => tech.id === selectedTech);
@@ -187,11 +187,10 @@ export default function TechnologyTab() {
                     <div>
                       <div className="text-sm font-medium mb-2">Research Investment</div>
                       <div className="space-y-2">
-                        <Slider 
-                          value={[selectedTechnology.investment]} 
+                        <Slider
+                          value={[selectedTechnology.investment]}
                           onValueChange={([value]) => {
-                            // TODO: Update investment in store
-                            console.log(`Setting ${selectedTechnology.name} investment to ${value}%`);
+                            updateTechnologyInvestment(selectedTechnology.id, value);
                           }}
                           max={100}
                           step={5}

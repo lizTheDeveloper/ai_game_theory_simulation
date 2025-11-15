@@ -218,6 +218,8 @@ interface GameStore extends GameState {
   resetGame: () => void;
   // AI Agent Controls
   updateAIAlignment: (agentId: string, hiddenObjective: number) => void;
+  // Technology Controls
+  updateTechnologyInvestment: (techId: string, investment: number) => void;
 }
 
 // Game calculation functions
@@ -797,11 +799,22 @@ export const useGameStore = create<GameStore>()(
         const agent = state.aiAgents.find(ai => ai.id === agentId);
         if (agent) {
           agent.hiddenObjective = Math.max(-1, Math.min(1, hiddenObjective));
-          
+
           // Alignment tends to drift toward hidden objective over time
           // But this gives players immediate control over the "true nature" of AIs
           const alignmentDrift = (hiddenObjective - agent.alignment) * 0.1;
           agent.alignment = Math.max(0, Math.min(1, agent.alignment + alignmentDrift));
+        }
+      });
+    },
+
+    // Technology Controls
+    updateTechnologyInvestment: (techId: string, investment: number) => {
+      set((state) => {
+        const tech = state.technologyTree.find(t => t.id === techId);
+        if (tech) {
+          // Clamp investment between 0 and 100
+          tech.investment = Math.max(0, Math.min(100, investment));
         }
       });
     }
