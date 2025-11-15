@@ -283,11 +283,11 @@ export function calculateDeploymentSpeed(tech: TechDefinition, region: string, g
   let crisisMultiplier = 1.0;
 
   // Check for existential threats
-  const nuclearActive = assertStateProperty(
-    gameState.nuclearWinterState,
-    'active',
+  const nuclearActive = assertDefined(
+    gameState.nuclearWinterState?.active,
     {
       location: 'calculateRegionalDeploymentTimeline',
+      valueName: 'nuclearWinterState.active',
       month: gameState.currentMonth
     }
   );
