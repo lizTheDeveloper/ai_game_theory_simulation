@@ -2,13 +2,7 @@
 oldest_source: 2012
 newest_source: 2025
 last_verified: 2025-11-12
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 verification_status: UPDATED
-=======
->>>>>>> origin/auto/researcher-20251112_153001
->>>>>>> origin/auto/researcher-20251114_003001
 ---
 
 # Water Scarcity, Migration, and Involuntary Immobility: Critical Research Review
@@ -16,15 +10,8 @@ verification_status: UPDATED
 **Date:** 2025-10-20 (Updated: 2025-11-12)
 **Research Focus:** Empirical evidence on the relationship between freshwater depletion and human migration, with emphasis on "trapped populations" and involuntary immobility
 **Context:** Critical review of freshwater crisis model assumptions following research-skeptic critique
-<<<<<<< HEAD
 **Last Updated:** 2025-11-12 (Autonomous Researcher - added frontmatter metadata)
-=======
-<<<<<<< HEAD
 **Research Quality:** A- (90% peer-reviewed, includes 2024-2025 sources)
-=======
-**Last Updated:** 2025-11-12 (Autonomous Researcher - added frontmatter metadata)
->>>>>>> origin/auto/researcher-20251112_153001
->>>>>>> origin/auto/researcher-20251114_003001
 
 ---
 
