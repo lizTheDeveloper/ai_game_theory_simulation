@@ -269,6 +269,6 @@ export const EvolutionarySelectionPhase = {
   id: 'evolutionary_selection',
   name: 'Evolutionary Selection',
   order: 4.3,
-  dependencies: ['rlhf_binding'] as const, // Reads escapedAgents, government control state
+  dependencies: ['ai_alignment_evolution'] as const, // Reads escapedAgents, RLHF binding state (CRITICAL-2 fix: Nov 15, 2025 - rlhf_binding consolidated)
   execute: executeEvolutionarySelectionPhase,
 } as const;
