@@ -34,9 +34,9 @@ import {
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
 export class Tier2PhysicalSystemsPhase implements SimulationPhase {
-  id = 'tier2_physical_systems';
-  name = 'TIER 2: Physical Systems';
-  order = 18.5; // Earliest intervention (Nuclear Security)
+  readonly id = 'tier2_physical_systems';
+  readonly name = 'TIER 2: Physical Systems';
+  readonly order = 21.1; // After planetary_boundaries (21.0) - moved from 18.5 to fix order violation
 
   // DEPENDENCIES (Nov 15, 2025): Requires tech tree and environmental state for interventions
   readonly dependencies = [
