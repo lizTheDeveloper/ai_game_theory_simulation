@@ -104,12 +104,55 @@ export function updateFreshwaterSystem(state: GameState, rng: () => number): voi
     { location: 'updateFreshwaterSystem_groundwater', valueName: 'groundwaterDepletion_climate', month: state.currentMonth }
   );
 
-  // Technology reduces depletion
+  // HIGH-4 INTEGRATION (Nov 15, 2025): Ocean acidification → Desalination efficiency
+  // Research:
+  // - Kim et al. (2020): Ocean acidification increases reverse osmosis membrane fouling
+  // - Remize et al. (2022): pH affects pretreatment costs and membrane lifespan
+  // - Baseline ocean pH: ~8.1 (pre-industrial 8.2)
+  // - Severe acidification: pH < 7.8 (reduces desalination efficiency 20-30%)
+  //
+  // Mechanism: Lower pH → higher ionic concentrations → membrane fouling → reduced efficiency
+  // Impact: Desalination becomes less effective as ocean acidifies
+  //
+  // NOTE: pHLevel in state is NORMALIZED [0.90-1.00]:
+  // - 1.00 = healthy (pH ~8.2)
+  // - 0.95 = baseline (pH ~8.1)
+  // - 0.90 = severe (pH ~7.8)
+  let desalinationEfficiency = 1.0; // Start with 100% efficiency
+
+  if (state.oceanAcidificationSystem) {
+    const pHNormalized = state.oceanAcidificationSystem.pHLevel;
+    const baselinePHNorm = 0.95; // Corresponds to pH 8.1
+
+    // Efficiency penalty when normalized pH drops below baseline
+    if (pHNormalized < baselinePHNorm) {
+      // Linear penalty: 0% at 0.95 (pH 8.1), 50% at 0.90 (pH 7.8)
+      // Formula: penalty = (0.95 - pHNormalized) / 0.05 * 0.5
+      // At 0.92 (~pH 7.9): (0.95 - 0.92) / 0.05 * 0.5 = 0.30 (30% penalty)
+      // At 0.90 (~pH 7.8): (0.95 - 0.90) / 0.05 * 0.5 = 0.50 (50% penalty)
+      const pHDrop = baselinePHNorm - pHNormalized;
+      const efficiencyPenalty = Math.min(0.50, (pHDrop / 0.05) * 0.5);
+      desalinationEfficiency = 1.0 - efficiencyPenalty;
+
+      // Log significant efficiency loss (>10%)
+      if (efficiencyPenalty > 0.10 && state.currentMonth % 12 === 0) {
+        // Convert normalized pH to actual pH for display: pH = 7.8 + (pHNorm - 0.9) * 4
+        const actualPH = 7.8 + (pHNormalized - 0.90) * 4.0;
+        console.log(`\n🌊⚡ OCEAN ACIDIFICATION: Desalination efficiency reduced`);
+        console.log(`   Ocean pH: ${actualPH.toFixed(2)} (baseline 8.1)`);
+        console.log(`   Normalized pH: ${pHNormalized.toFixed(3)}`);
+        console.log(`   Efficiency penalty: ${(efficiencyPenalty * 100).toFixed(0)}%`);
+        console.log(`   Remaining efficiency: ${(desalinationEfficiency * 100).toFixed(0)}%`);
+      }
+    }
+  }
+
+  // Technology reduces depletion (with acidification penalty applied to desalination)
   const techEfficiency = assertProbability(
     1.0 - (
       fw.precisionIrrigationDeployment * 0.3 +  // 30% reduction at full deployment
       fw.recyclingDeployment * 0.2 +            // 20% reduction
-      fw.desalinationDeployment * 0.15          // 15% offset (coastal)
+      fw.desalinationDeployment * 0.15 * desalinationEfficiency  // 15% offset (coastal), reduced by acidification
     ),
     { location: 'updateFreshwaterSystem_groundwater', valueName: 'techEfficiency', month: state.currentMonth }
   );
@@ -177,8 +220,9 @@ export function updateFreshwaterSystem(state: GameState, rng: () => number): voi
   // Different regions collapse at different rates
 
   // Middle East: Highly stressed, fast depletion
+  // HIGH-4 INTEGRATION: Ocean acidification reduces desalination effectiveness here too
   fw.regions.middleEast = assertProbability(
-    Math.max(0, fw.regions.middleEast - 0.008 * (1.0 - fw.desalinationDeployment * 0.5)),
+    Math.max(0, fw.regions.middleEast - 0.008 * (1.0 - fw.desalinationDeployment * 0.5 * desalinationEfficiency)),
     { location: 'updateFreshwaterSystem_regional', valueName: 'middleEast', month: state.currentMonth }
   );
 
