@@ -174,6 +174,24 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Confidence**: HIGH (synthesis of multiple Nature studies, peer-reviewed papers, coordinated by leading climate institutions)
 - **Added**: November 11, 2025
 
+**van Westen, R.M., Kliphuis, M., Dijkstra, H.A. (2024).** Physics-based early warning signal shows that AMOC is on tipping course. *Science Advances*, 10(6):eadk1189. DOI: 10.1126/sciadv.adk1189
+- **Used for**: AMOC collapse early warning signals, present-day observations
+- **Key finding**: Minimum freshwater transport at Atlantic southern boundary indicates present-day AMOC "on route to tipping"
+- **Confidence**: VERY HIGH (Science Advances publication, first successful CESM simulation of AMOC tipping event)
+- **Added**: November 15, 2025
+
+**Boers, N., et al. (2024).** Probability Estimates of a 21st Century AMOC Collapse. arXiv:2406.11738
+- **Used for**: AMOC collapse probability and timeline quantification
+- **Key finding**: 59±17% probability of collapse before 2050, timeline 2037-2064 (10-90% CI)
+- **Confidence**: HIGH (first observationally-based probability estimate using ORAS5/GLORYS/SODA reanalysis)
+- **Added**: November 15, 2025
+
+**van Westen, R.M., et al. (2025).** European Temperature Extremes Under Different AMOC Scenarios in the Community Earth System Model. *Geophysical Research Letters*.
+- **Used for**: AMOC collapse climate impacts on European agriculture and habitability
+- **Key finding**: 10-30°C winter cooling in northern Europe, 123mm precipitation loss in growing season, arable land drops from 32% to 7% in Great Britain
+- **Confidence**: HIGH (peer-reviewed GRL, CESM model quantification of regional impacts)
+- **Added**: November 15, 2025
+
 **van Westen, R. M., et al. (2024).** Rate-induced tipping cascades arising from interactions between the Greenland Ice Sheet and the Atlantic Meridional Overturning Circulation. *Earth System Dynamics*, 15, 635-656. DOI: 10.5194/esd-15-635-2024
 - **Used for**: Rate-induced tipping mechanisms, GIS-AMOC cascade dynamics
 - **Key finding**: Fast ice loss can trigger AMOC collapse even below AMOC's intrinsic tipping point threshold (rate matters independently of magnitude)
