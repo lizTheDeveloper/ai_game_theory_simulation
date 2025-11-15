@@ -4,6 +4,50 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔬 CRITICAL Research Parameter Corrections (November 15, 2025)
+
+**Commit:** c6a67d5 (Nov 15, 2025)
+
+**Summary:** Research audit identified 4 CRITICAL parameter issues. Applied corrections for heat adaptation (82% overestimate) and citation year accuracy.
+
+**Changes:**
+
+**1. Heat Adaptation Maximum (CRITICAL - 82% overestimate):**
+- **Parameter:** `HEAT_ADAPTATION_TOTAL_MAX`
+- **Old Value:** 0.80 (80% mortality reduction)
+- **New Value:** 0.45 (45% mortality reduction)
+- **Source:** Ballester et al. (2024), Nature Medicine
+- **Impact:** Heat mortality will increase 10-20% in extreme scenarios (realistic vs. overly optimistic)
+- **File:** `src/simulation/config/centralConfig.ts:1197`
+
+**2. Citation Year Corrections (Bibliography accuracy):**
+- **Citation:** Acemoglu & Restrepo
+- **Old:** "2022"
+- **New:** "2019"
+- **Correct Title:** "Automation and New Tasks: How Technology Displaces and Reinstates Labor"
+- **Correct Journal:** Journal of Economic Perspectives, 33(2), 3-30
+- **Locations:** `calculations.ts` (2 instances), `skillAmplification.ts` (3 instances)
+- **Impact:** Documentation accuracy only, no simulation behavior change
+
+**Files Modified:**
+- `src/simulation/config/centralConfig.ts` (heat adaptation ceiling)
+- `src/simulation/calculations.ts` (citation year)
+- `src/simulation/aiAssistedSkills/skillAmplification.ts` (citation year, title)
+
+**Documentation Updated:**
+- `docs/wiki/README.md` (added commit entry)
+- `docs/wiki/BIBLIOGRAPHY.md` (marked citation correction as complete)
+- `docs/wiki/RESEARCH_QUESTIONS.md` (6 instances of "2022" → "2019")
+- `docs/wiki/systems/tier2-interventions.md` (1 instance)
+
+**Validation:**
+- ✅ Type checking passed (pre-existing path resolution errors ignored)
+- 📊 **Next Step:** Monte Carlo N≥10 to assess mortality distribution impact
+
+**Source:** Research audit reports (`research/RESEARCH_AUDIT_*_20251115.md`)
+
+---
+
 ## ✅ Defensive Coding Violations RESOLVED (November 15, 2025)
 
 **✅ HIGH PRIORITY: Issue #7 RESOLVED** (Nov 15, 2025, commit 76b0585)

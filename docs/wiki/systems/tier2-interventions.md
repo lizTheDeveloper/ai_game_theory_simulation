@@ -173,7 +173,7 @@ deploymentMonths: Triangular(18, 24, 36)
 ### 7. Human-AI Centaur Systems (🟡 Moderate Evidence)
 
 **What it does:** Shifts from automation (displaces labor) to augmentation (enhances humans)
-**Research backing:** Acemoglu & Restrepo (2022) framework validated, no empirical effect sizes
+**Research backing:** Acemoglu & Restrepo (2019) framework validated, no empirical effect sizes
 **Effectiveness:** 15-45% autonomy preservation (wide uniform - genuine uncertainty)
 **Key insight:** Augmentation preserves autonomy vs automation that replaces it
 
