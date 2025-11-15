@@ -28,6 +28,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 15: Outcome Probability Normalization Fix** (commit 51f78b8)
+- 🐛 **Bug Fix:** Probabilities now sum to exactly 1.0 (previously 0.939)
+- 🔧 **Root Cause:** Baseline (0.1) added to total instead of to each score
+- ✅ **Solution:** Add smaller baseline (0.01) to EACH score before normalization
+- 📊 **Impact:** Mathematical correctness in outcome calculations restored
+- 🛡️ **Discovery:** Defensive fallback assertions in OutcomeProbabilitiesPhase caught the error
+- 🧪 **Validation:** Monte Carlo 12-month run completes without assertion errors
+
 **Nov 15: Montreal Protocol Prevention Effectiveness Case Study** (commit 431a49a)
 - 🔬 **Research:** Comprehensive empirical validation of prevention vs cleanup effectiveness
 - 📊 **Key Finding:** Prevention (production bans) 99:1 more effective than cleanup (bank destruction)
