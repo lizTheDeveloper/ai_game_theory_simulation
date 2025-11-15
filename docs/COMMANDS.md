@@ -106,6 +106,9 @@ npx tsx scripts/validateEmojiConsistency.ts
 
 # Codebase validation (property access, type safety)
 npx tsx scripts/validateCodebase.ts
+
+# Circular dependency check (phase execution graph)
+npx tsx logs/validate_no_cycles.ts
 ```
 
 ## Testing
