@@ -6,6 +6,24 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
 
+**🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
+
+**Summary:** Fixed Tier2PhysicalSystemsPhase order violation caught by runtime validation.
+
+**Issue:** Runtime validation detected that Tier2PhysicalSystemsPhase (order 18.5) depends on planetary_boundaries phase (order 21.0), creating an order violation.
+
+**Fix:**
+- Moved Tier2PhysicalSystemsPhase from order 18.5 → 21.1 (after planetary_boundaries dependency)
+- Added readonly modifiers to id/name/order fields for diagnostic tool compatibility
+
+**Root Cause:** Static dependency analysis missed this violation; runtime validation caught it during execution.
+
+**Validation:** Diagnostic tool confirms 0 violations across all 81 phases.
+
+**Files Changed:** `src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts`
+
+---
+
 **🐛 BUG FIX: Backwards Dependency Removal** (Nov 15, 2025, commit afbffc0)
 
 **Summary:** Fixed 8+ backwards dependencies and 2 invalid phase ID references that blocked Monte Carlo validation.
@@ -20,7 +38,7 @@ This file contains the complete history of recent changes to the AI Game Theory 
 2. `ExtremeWeatherEventsPhase` (15.2) → `climate_system` (34.0) - Removed
 3. `WetBulbTemperaturePhase` (20.45) → `climate_system` (34.0) - Removed
 4. `TechTreePhase` (12.5) → `economic-system` (31.0) - Removed
-5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed
+5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed (Note: Phase order later changed to 21.1 in cb5f2e0)
 6. `StochasticInnovationPhase` (8.5) → `tech-tree` (12.5) - Removed
 7. `CrisisPointsPhase` (23.0) → `crisis-detection` (36.0) - Removed
 8. `climate_system` ID mismatch (hyphen vs underscore) - Fixed
