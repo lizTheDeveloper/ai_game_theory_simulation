@@ -10,7 +10,7 @@
  * - AI literacy matters as much as access (three-tier divide)
  * - Effects are task-specific (programming, writing, learning >> decision-making)
  *
- * **Phase Transitions (Acemoglu & Restrepo 2022):**
+ * **Phase Transitions (Acemoglu & Restrepo 2019):**
  * - Complementarity (ratio < 0.6): AI helps, full amplification
  * - Transition (0.6 ≤ ratio < 1.5): Hybrid collaboration, declining benefit
  * - Substitution (ratio ≥ 1.5): AI replaces, 20% residual benefit
@@ -22,7 +22,7 @@
  *
  * @see Peng et al. (2023) - GitHub Copilot: 55.8% faster, larger gains for novices
  * @see Noy & Zhang (2023) - ChatGPT: 40% time reduction, 18% quality improvement
- * @see Acemoglu & Restrepo (2022) - Automation phase transitions
+ * @see Acemoglu & Restrepo (2019) - "Automation and New Tasks"
  * @see Frontiers in Psychology (2024) - Scaffolding matters: 80% vs 40% retention
  */
 
@@ -318,7 +318,7 @@ function calculateRetentionRate(scaffolding: number, reliance: number): number {
  *      Junior developers showed largest gains (consistent with Peng et al.)
  *      TRL: 9 (deployed across Microsoft, Accenture, Fortune 500)
  *
- * @see Acemoglu & Restrepo (2022) - "Tasks, Automation, and Wage Inequality", Econometrica 90(5)
+ * @see Acemoglu & Restrepo (2019) - "Automation and New Tasks"
  *      Finding: Automation phase transition - complementarity → substitution over time
  *      Effect: 50-70% of US wage structure changes from automation displacing middle-skill
  *      Mechanism: As AI capability exceeds task complexity, jobs shift from augmented to replaced
@@ -511,7 +511,7 @@ export function calculateAIAccess(segment: SocietySegment): number {
  * Combines multiple peer-reviewed mechanisms:
  * - Skill amplification (Peng et al. 2023, Noy & Zhang 2023, Ziegler et al. 2024)
  * - Digital divide (Microsoft 2024, OECD 2024, Bentley et al. 2024)
- * - Phase transition (Acemoglu & Restrepo 2022)
+ * - Phase transition (Acemoglu & Restrepo 2019)
  *
  * **Skills Updated:**
  * - literacy, numeracy, problemSolving (PIAAC core competencies)

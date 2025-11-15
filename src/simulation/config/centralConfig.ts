@@ -546,43 +546,43 @@ export const RATES = {
 
   /**
    * Migration - crisis severity impact on success rate
-   * @research IOM (2024), World Migration Report - Crisis trapping effects
    * @value 0.3 - 30% reduction in success rate at maximum crisis severity
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Value extrapolated.
    */
   MIGRATION_CRISIS_PENALTY: 0.3,
 
   /**
    * Migration - maximum distance penalty
-   * @research IOM (2024), World Migration Report - Distance-mortality relationship
    * @value 0.4 - 40% reduction for very long journeys (>5000 km)
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Value extrapolated.
    */
   MIGRATION_MAX_DISTANCE_PENALTY: 0.4,
 
   /**
    * Migration - distance scale (km)
-   * @research IOM (2024), World Migration Report - Average displacement distances
    * @value 5000 - Distance that produces maximum penalty
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Value extrapolated.
    */
   MIGRATION_DISTANCE_SCALE: 5000,
 
   /**
    * Migration - crisis mortality increase (per crisis severity)
-   * @research IOM (2024), World Migration Report - Crisis-related mortality
    * @value 0.02 - Up to 2% additional mortality in extreme crises
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Value extrapolated.
    */
   MIGRATION_CRISIS_MORTALITY_INCREASE: 0.02,
 
   /**
    * Migration - distance mortality increase
-   * @research IOM (2024), World Migration Report - Distance-mortality relationship
    * @value 0.01 - Up to 1% additional mortality for very long journeys
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Value extrapolated.
    */
   MIGRATION_DISTANCE_MORTALITY_INCREASE: 0.01,
 
   /**
    * Migration - return rate crisis penalty
-   * @research IOM (2024), World Migration Report - Permanent displacement
    * @value 0.8 - 80% reduction in return rate at maximum crisis severity
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Value extrapolated.
    */
   MIGRATION_RETURN_CRISIS_PENALTY: 0.8,
 
@@ -651,22 +651,24 @@ export const RATES = {
 
   /**
    * Aid donor availability - high threshold
-   * @research Cavalcanti et al. (2025), The Lancet - Aid effectiveness tiers
-   * @value 0.8 - Above 80% availability = high effectiveness
+   * @value 0.8 - Above 80% availability = high effectiveness tier
+   * @note [MODELING ASSUMPTION] Thresholds for categorizing aid availability levels.
+   *       Cavalcanti et al. (2025) reports EFFECTIVENESS values (mortality reduction),
+   *       NOT donor availability thresholds. These thresholds are extrapolations.
    */
   AID_DONOR_AVAILABILITY_HIGH: 0.8,
 
   /**
    * Aid donor availability - medium threshold
-   * @research Cavalcanti et al. (2025), The Lancet
-   * @value 0.5 - Above 50% availability = medium effectiveness
+   * @value 0.5 - Above 50% availability = medium effectiveness tier
+   * @note [MODELING ASSUMPTION] See AID_DONOR_AVAILABILITY_HIGH note.
    */
   AID_DONOR_AVAILABILITY_MEDIUM: 0.5,
 
   /**
    * Aid donor availability - low threshold
-   * @research Cavalcanti et al. (2025), The Lancet
-   * @value 0.2 - Above 20% availability = low effectiveness
+   * @value 0.2 - Above 20% availability = low effectiveness tier
+   * @note [MODELING ASSUMPTION] See AID_DONOR_AVAILABILITY_HIGH note.
    */
   AID_DONOR_AVAILABILITY_LOW: 0.2,
 
@@ -721,15 +723,15 @@ export const RATES = {
 
   /**
    * Migration - global crisis destination capacity
-   * @research IOM (2024), World Migration Report - Global crisis scenario
    * @value 0.3 - 30% capacity when nowhere is safe (global crisis)
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Value extrapolated.
    */
   MIGRATION_GLOBAL_CRISIS_CAPACITY: 0.3,
 
   /**
    * Migration - regional crisis destination capacity
-   * @research IOM (2024), World Migration Report - Regional crisis scenario
    * @value 1.0 - 100% capacity when safe destinations available
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Value extrapolated.
    */
   MIGRATION_REGIONAL_CRISIS_CAPACITY: 1.0,
 
@@ -1134,23 +1136,28 @@ export const BASELINES = {
 
   // === MORTALITY STABILIZER BASELINES ===
   /**
-   * International aid effectiveness - high level (donor availability > 80%)
-   * @research Cavalcanti et al. (2025), The Lancet - USAID aid effectiveness
+   * International aid effectiveness - high level (when donor availability > 80%)
+   * @research Cavalcanti et al. (2025), The Lancet - USAID aid effectiveness study
    * @value 0.295 - 29.5% mortality reduction (midpoint of 15-44% range)
+   * @note Cavalcanti reports MORTALITY REDUCTION from aid funding, NOT donor availability.
+   *       Donor availability thresholds (80%, 50%, 20%) are modeling assumptions to
+   *       map availability → effectiveness tier.
    */
   AID_EFFECTIVENESS_HIGH: 0.295,
 
   /**
-   * International aid effectiveness - medium level (donor availability > 50%)
+   * International aid effectiveness - medium level (when donor availability > 50%)
    * @research Cavalcanti et al. (2025), The Lancet
    * @value 0.185 - 18.5% mortality reduction (midpoint of 9-28% range)
+   * @note See AID_EFFECTIVENESS_HIGH note on availability → effectiveness mapping.
    */
   AID_EFFECTIVENESS_MEDIUM: 0.185,
 
   /**
-   * International aid effectiveness - low level (donor availability > 20%)
+   * International aid effectiveness - low level (when donor availability > 20%)
    * @research Cavalcanti et al. (2025), The Lancet
    * @value 0.08 - 8% mortality reduction (midpoint of 6-10% range)
+   * @note See AID_EFFECTIVENESS_HIGH note on availability → effectiveness mapping.
    */
   AID_EFFECTIVENESS_LOW: 0.08,
 
@@ -1158,6 +1165,7 @@ export const BASELINES = {
    * International aid effectiveness - maximum possible
    * @research Cavalcanti et al. (2025), The Lancet
    * @value 0.44 - 44% mortality reduction (upper bound of observed range)
+   * @note This is empirical from Cavalcanti. Thresholds above are modeling assumptions.
    */
   AID_EFFECTIVENESS_MAX: 0.44,
 
@@ -1191,36 +1199,40 @@ export const BASELINES = {
 
   /**
    * Heat adaptation - total maximum (empirical)
-   * @research Ballester et al. (2024), Nature Medicine
-   * @value 0.8 - 80% total mortality reduction (empirical maximum observed)
+   * @research Ballester et al. (2024), Nature Medicine - European heat adaptation study
+   * @value 0.45 - 45% total mortality reduction (empirical maximum observed, NOT 80%)
+   * @note CRITICAL FIX (Nov 2025): Previous value of 0.8 was 82% overestimate.
+   *       Ballester 2024 shows 44% adaptation effect (0.44), rounded to 0.45 for safety margin.
    */
-  HEAT_ADAPTATION_TOTAL_MAX: 0.8,
+  HEAT_ADAPTATION_TOTAL_MAX: 0.45,
 
   /**
    * Migration successful relocation baseline
-   * @research IOM (2024), World Migration Report - Climate migration patterns
    * @value 0.85 - 85% successful relocation rate
+   * @note [MODELING ASSUMPTION] IOM (2024) World Migration Report provides QUALITATIVE
+   *       analysis of climate migration patterns, NOT quantitative success rates.
+   *       This value is extrapolated from qualitative findings.
    */
   MIGRATION_SUCCESS_RATE_BASELINE: 0.85,
 
   /**
    * Migration mortality during displacement - baseline
-   * @research IOM (2024), World Migration Report
    * @value 0.001 - 0.1% baseline mortality during migration (<1% observed)
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Quantitative value extrapolated.
    */
   MIGRATION_MORTALITY_BASELINE: 0.001,
 
   /**
    * Migration mortality during displacement - maximum
-   * @research IOM (2024), World Migration Report
    * @value 0.03 - 3% cap for extreme crisis conditions
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Quantitative value extrapolated.
    */
   MIGRATION_MORTALITY_MAX: 0.03,
 
   /**
    * Migration return rate baseline
-   * @research IOM (2024), World Migration Report
    * @value 0.85 - 85% return rate within 1 year
+   * @note [MODELING ASSUMPTION] IOM (2024) is qualitative. Quantitative value extrapolated.
    */
   MIGRATION_RETURN_RATE_BASELINE: 0.85,
 

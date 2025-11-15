@@ -22,7 +22,7 @@ export class ExtremeWeatherEventsPhase implements SimulationPhase {
   readonly id = 'extreme-weather-events';
   readonly name = 'Extreme Weather Events';
   readonly order = 15.2; // After WetBulbTemperaturePhase (order 15.0), before UBI (15.3)
-  // NOTE: Reads state.resourceEconomy.co2.temperatureAnomaly (set during initialization, no phase dependency needed)
+  readonly dependencies: readonly string[] = []; // Reads temperatureAnomaly (set during initialization, no phase dependency needed)
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Validate temperature state (extreme weather driven by climate)

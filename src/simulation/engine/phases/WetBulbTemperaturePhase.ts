@@ -17,7 +17,7 @@ export class WetBulbTemperaturePhase implements SimulationPhase {
   readonly id = 'wet_bulb_temperature';
   readonly name = 'Wet Bulb Temperature Events';
   readonly order = 20.45;
-  // NOTE: Reads state.resourceEconomy.co2.temperatureAnomaly (set during initialization, no phase dependency needed)
+  readonly dependencies: readonly string[] = []; // Reads temperatureAnomaly (set during initialization, no phase dependency needed)
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateWetBulbTemperatureSystem } = require('../../wetBulbEvents');

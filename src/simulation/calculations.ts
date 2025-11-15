@@ -190,7 +190,7 @@ export function calculateUnemployment(state: GameState): number {
   // TIER 0D BUG #2 FIX (Oct 17, 2025): Add missing task creation mechanism
   //
   // **Research Foundation:**
-  // - Acemoglu & Restrepo (2022): Automation has DISPLACEMENT + REINSTATEMENT effects
+  // - Acemoglu & Restrepo (2019): Automation has DISPLACEMENT + REINSTATEMENT effects
   // - Historical: 1980-2016 US saw 60-80M new jobs created DESPITE automation
   // - Mechanism: New technologies create new industries requiring human labor
   // - Examples: Data scientists, AI trainers, prompt engineers, AI ethicists
