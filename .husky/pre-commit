@@ -4,6 +4,42 @@
 # Emoji validation (existing)
 npm run validate:emojis
 
+# NEW: Provenance validation - check for unmarked parameters
+echo ""
+echo "📋 Checking parameter provenance (Citation Integrity)..."
+
+# Get staged TypeScript files in simulation/platform directories
+STAGED_PROV_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^src/(simulation|platform)/.*\.ts$' | grep -v '__tests__' | grep -v '\.test\.ts$' || true)
+
+if [ -z "$STAGED_PROV_FILES" ]; then
+  echo "   ✅ No simulation/platform files changed"
+else
+  # Run ESLint with provenance rule on staged files
+  echo "   Running provenance linter..."
+  ESLINT_OUTPUT=$(npx eslint $STAGED_PROV_FILES --rule 'provenance/require-provenance: error' 2>&1 || true)
+
+  # Check for provenance violations
+  if echo "$ESLINT_OUTPUT" | grep -q "provenance/require-provenance"; then
+    echo ""
+    echo "❌ PROVENANCE CHECK FAILED"
+    echo ""
+    echo "$ESLINT_OUTPUT" | grep -A 3 "provenance/require-provenance"
+    echo ""
+    echo "All numeric parameters must have provenance metadata:"
+    echo "  ❌ const CO2_BASELINE = 280;"
+    echo "  ✅ const CO2_BASELINE = provenance(280, { name: 'CO2_BASELINE', provenance: ... });"
+    echo ""
+    echo "See eslint-plugin-provenance/README.md for usage."
+    echo ""
+    echo "If this is blocking urgent work:"
+    echo "  git commit --no-verify"
+    echo ""
+    exit 1
+  fi
+
+  echo "   ✅ All parameters have provenance metadata"
+fi
+
 # NEW: Determinism validation - check for unsorted object iterations
 echo ""
 echo "🔍 Checking for unsorted object iterations (determinism)..."
