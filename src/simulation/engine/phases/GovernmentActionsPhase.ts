@@ -30,10 +30,12 @@ export class GovernmentActionsPhase implements SimulationPhase {
   readonly name = 'Government Agent Actions';
   readonly order = 9.0;
 
-  // DEPENDENCIES (Nov 15, 2025): Requires AI agents and economic state for policy decisions
+  // DEPENDENCIES (Nov 15, 2025): Requires AI agents for policy decisions
+  // NOTE: Government actions READ economic state but don't DEPEND on economic-system phase
+  // (economic-system runs at order 31.0, AFTER government-actions at 9.0)
+  // Government uses state.economicModel (initialized once) not phase output
   readonly dependencies = [
     'ai-lifecycle',           // Order 3.0: AI capabilities affect government policy
-    'economic-system',        // Order 31.0: Economic conditions affect government actions
   ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {

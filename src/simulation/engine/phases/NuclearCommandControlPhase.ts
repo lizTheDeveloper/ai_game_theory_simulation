@@ -13,9 +13,9 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite, assertInRange, assertStateProperty } from '@/simulation/utils/assertions';
 
 export class NuclearCommandControlPhase implements SimulationPhase {
-  id = 'nuclear_command_control';
-  name = 'Nuclear Command & Control';
-  order = 20; // After AI actions (2-8), before crisis detection (26-30)
+  readonly id = 'nuclear_command_control';
+  readonly name = 'Nuclear Command & Control';
+  readonly order = 20; // After AI actions (2-8), before crisis detection (26-30)
 
   // DEPENDENCIES (Nov 6, 2025): Requires AI capability and governance state
   readonly dependencies = [

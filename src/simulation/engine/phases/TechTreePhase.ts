@@ -33,10 +33,12 @@ export class TechTreePhase implements SimulationPhase {
   readonly name = 'Technology Tree Update';
   readonly order = 12.5;
 
-  // DEPENDENCIES (Nov 15, 2025): Requires AI capabilities and economic stage for unlock conditions
+  // DEPENDENCIES (Nov 15, 2025): Requires AI capabilities for unlock conditions
+  // NOTE: Tech tree READS state.economicModel.economicStage but doesn't DEPEND on economic-system phase
+  // (economic-system runs at order 31.0, AFTER tech-tree at 12.5)
+  // Economic stage is initialized once and stable (no phase dependency needed)
   readonly dependencies = [
     'ai-lifecycle',           // Order 3.0: AI capabilities affect tech unlocks
-    'economic-system',        // Order 31.0: Economic stage affects unlock conditions
   ] as const;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
