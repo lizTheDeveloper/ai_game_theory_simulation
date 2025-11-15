@@ -1,6 +1,6 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 14, 2025
+**Last Updated**: November 15, 2025
 **Total Sources**: 175+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 62% from 2024-2025 (improved with Nov 12 updates)
@@ -12,7 +12,7 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **Phase 2 Layer 2 verification ongoing.** Recent findings reveal systematic attribution errors in codebase citations:
 
 **Critical Issues Identified:**
-- **Wrong years**: Acemoglu & Restrepo cited as 2022 (should be 2019 for "Automation and New Tasks")
+- ✅ **Wrong years**: Acemoglu & Restrepo cited as 2022 → CORRECTED to 2019 (commit c6a67d5, Nov 15)
 - **False attributions**: Claims attributed to papers that don't contain them (e.g., "meaning crisis" not in Acemoglu)
 - **Inflated effect sizes**: Values 2-3× higher than actual research (e.g., participatory budgeting)
 - **Temporal impossibilities**: 2020 data attributed to 2000 publications

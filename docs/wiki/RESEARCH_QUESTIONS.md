@@ -4517,7 +4517,7 @@ Current work was adding laborCapitalDistribution to GameState and initializing i
 
 **Key Technical Details:**
 - All phases grounded in peer-reviewed research (TRL 8-9)
-- Phase 2: Acemoglu & Restrepo 2022 automation economics
+- Phase 2: Acemoglu & Restrepo 2019 automation economics
 - Phase 3: Educational AI research 2023-2024
 - Phase 4: Economic Policy Institute 2024, 50+ years US data
 - Test simulation showed phase transitions at Month 36 and 48
@@ -4540,7 +4540,7 @@ Just added import for initializeLaborCapitalDistribution in initialization.ts. N
 Summary:
 1. Primary Request and Intent:
    - **Initial:** Update terminology from "bionic" to "AI-assisted" and implement Phase I (terminology, JSDoc citations, TRL documentation)
-   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2022)
+   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2019)
    - **Phase III:** Implement performance vs competence tracking (skill retention, scaffolding quality, AI dependency)
    - **Phase IV:** Implement productivity-wage decoupling (labor-capital distribution, historical 1973-2024 pattern)
    - **Integration:** Integrate all mechanics into game state, connect to economy/unemployment calculations, add event triggers for competence crisis and wage inequality
@@ -16858,7 +16858,7 @@ Current work was adding laborCapitalDistribution to GameState and initializing i
 
 **Key Technical Details:**
 - All phases grounded in peer-reviewed research (TRL 8-9)
-- Phase 2: Acemoglu & Restrepo 2022 automation economics
+- Phase 2: Acemoglu & Restrepo 2019 automation economics
 - Phase 3: Educational AI research 2023-2024
 - Phase 4: Economic Policy Institute 2024, 50+ years US data
 - Test simulation showed phase transitions at Month 36 and 48
@@ -16881,7 +16881,7 @@ Just added import for initializeLaborCapitalDistribution in initialization.ts. N
 Summary:
 1. Primary Request and Intent:
    - **Initial:** Update terminology from "bionic" to "AI-assisted" and implement Phase I (terminology, JSDoc citations, TRL documentation)
-   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2022)
+   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2019)
    - **Phase III:** Implement performance vs competence tracking (skill retention, scaffolding quality, AI dependency)
    - **Phase IV:** Implement productivity-wage decoupling (labor-capital distribution, historical 1973-2024 pattern)
    - **Integration:** Integrate all mechanics into game state, connect to economy/unemployment calculations, add event triggers for competence crisis and wage inequality
@@ -20845,7 +20845,7 @@ Current work was adding laborCapitalDistribution to GameState and initializing i
 
 **Key Technical Details:**
 - All phases grounded in peer-reviewed research (TRL 8-9)
-- Phase 2: Acemoglu & Restrepo 2022 automation economics
+- Phase 2: Acemoglu & Restrepo 2019 automation economics
 - Phase 3: Educational AI research 2023-2024
 - Phase 4: Economic Policy Institute 2024, 50+ years US data
 - Test simulation showed phase transitions at Month 36 and 48
@@ -20868,7 +20868,7 @@ Just added import for initializeLaborCapitalDistribution in initialization.ts. N
 Summary:
 1. Primary Request and Intent:
    - **Initial:** Update terminology from "bionic" to "AI-assisted" and implement Phase I (terminology, JSDoc citations, TRL documentation)
-   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2022)
+   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2019)
    - **Phase III:** Implement performance vs competence tracking (skill retention, scaffolding quality, AI dependency)
    - **Phase IV:** Implement productivity-wage decoupling (labor-capital distribution, historical 1973-2024 pattern)
    - **Integration:** Integrate all mechanics into game state, connect to economy/unemployment calculations, add event triggers for competence crisis and wage inequality
@@ -24695,7 +24695,7 @@ Current work was adding laborCapitalDistribution to GameState and initializing i
 
 **Key Technical Details:**
 - All phases grounded in peer-reviewed research (TRL 8-9)
-- Phase 2: Acemoglu & Restrepo 2022 automation economics
+- Phase 2: Acemoglu & Restrepo 2019 automation economics
 - Phase 3: Educational AI research 2023-2024
 - Phase 4: Economic Policy Institute 2024, 50+ years US data
 - Test simulation showed phase transitions at Month 36 and 48
@@ -24718,7 +24718,7 @@ Just added import for initializeLaborCapitalDistribution in initialization.ts. N
 Summary:
 1. Primary Request and Intent:
    - **Initial:** Update terminology from "bionic" to "AI-assisted" and implement Phase I (terminology, JSDoc citations, TRL documentation)
-   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2022)
+   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2019)
    - **Phase III:** Implement performance vs competence tracking (skill retention, scaffolding quality, AI dependency)
    - **Phase IV:** Implement productivity-wage decoupling (labor-capital distribution, historical 1973-2024 pattern)
    - **Integration:** Integrate all mechanics into game state, connect to economy/unemployment calculations, add event triggers for competence crisis and wage inequality
@@ -31563,7 +31563,7 @@ Current work was adding laborCapitalDistribution to GameState and initializing i
 
 **Key Technical Details:**
 - All phases grounded in peer-reviewed research (TRL 8-9)
-- Phase 2: Acemoglu & Restrepo 2022 automation economics
+- Phase 2: Acemoglu & Restrepo 2019 automation economics
 - Phase 3: Educational AI research 2023-2024
 - Phase 4: Economic Policy Institute 2024, 50+ years US data
 - Test simulation showed phase transitions at Month 36 and 48
@@ -31586,7 +31586,7 @@ Just added import for initializeLaborCapitalDistribution in initialization.ts. N
 Summary:
 1. Primary Request and Intent:
    - **Initial:** Update terminology from "bionic" to "AI-assisted" and implement Phase I (terminology, JSDoc citations, TRL documentation)
-   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2022)
+   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2019)
    - **Phase III:** Implement performance vs competence tracking (skill retention, scaffolding quality, AI dependency)
    - **Phase IV:** Implement productivity-wage decoupling (labor-capital distribution, historical 1973-2024 pattern)
    - **Integration:** Integrate all mechanics into game state, connect to economy/unemployment calculations, add event triggers for competence crisis and wage inequality
@@ -33941,7 +33941,7 @@ Current work was adding laborCapitalDistribution to GameState and initializing i
 
 **Key Technical Details:**
 - All phases grounded in peer-reviewed research (TRL 8-9)
-- Phase 2: Acemoglu & Restrepo 2022 automation economics
+- Phase 2: Acemoglu & Restrepo 2019 automation economics
 - Phase 3: Educational AI research 2023-2024
 - Phase 4: Economic Policy Institute 2024, 50+ years US data
 - Test simulation showed phase transitions at Month 36 and 48
@@ -33964,7 +33964,7 @@ Just added import for initializeLaborCapitalDistribution in initialization.ts. N
 Summary:
 1. Primary Request and Intent:
    - **Initial:** Update terminology from "bionic" to "AI-assisted" and implement Phase I (terminology, JSDoc citations, TRL documentation)
-   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2022)
+   - **Phase II:** Implement phase transition mechanics (complementarity → transition → substitution based on Acemoglu & Restrepo 2019)
    - **Phase III:** Implement performance vs competence tracking (skill retention, scaffolding quality, AI dependency)
    - **Phase IV:** Implement productivity-wage decoupling (labor-capital distribution, historical 1973-2024 pattern)
    - **Integration:** Integrate all mechanics into game state, connect to economy/unemployment calculations, add event triggers for competence crisis and wage inequality
