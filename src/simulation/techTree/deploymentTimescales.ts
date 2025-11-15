@@ -24,6 +24,7 @@ import { GameState } from '@/types/game';
 import { TechTreeState, RegionalTechDeployment } from './engine';
 import { getTechById } from './comprehensiveTechTree';
 import { addSimulationEvent } from '../utils/eventLogger';
+import { assertStateProperty } from '../utils/assertions';
 
 /**
  * Deployment timescale parameters (months to full deployment)
@@ -153,8 +154,12 @@ export function sigmoidDeploymentCurve(
  * - International cooperation: Critical for global tech (climate, AI)
  */
 export function getGovernanceMultiplier(gameState: GameState): number {
-  const enforcement = gameState.government?.governanceQuality?.institutionalCapacity ?? 0.5;
-  const cooperation = gameState.government?.structuralChoices?.internationalCoordination ? 1.0 : 0.5;
+  const enforcement = assertStateProperty(
+    gameState.government.governanceQuality,
+    'institutionalCapacity',
+    { location: 'getGovernanceMultiplier', month: gameState.currentMonth }
+  );
+  const cooperation = gameState.government.structuralChoices.internationalCoordination ? 1.0 : 0.5;
 
   const governanceCapacity = (enforcement + cooperation) / 2;
 
@@ -181,7 +186,12 @@ export function getGovernanceMultiplier(gameState: GameState): number {
  * - >3.0°C: 0.60× (40% penalty, severe feedbacks)
  */
 export function getClimateRecoveryMultiplier(gameState: GameState): number {
-  const globalWarming = gameState.planetaryBoundariesSystem?.boundaries?.['climateChange']?.currentValue ?? 1.2;
+  const climateBoundary = gameState.planetaryBoundariesSystem.boundaries['climate_change'];
+  const globalWarming = assertStateProperty(
+    climateBoundary,
+    'currentValue',
+    { location: 'getClimateRecoveryMultiplier', month: gameState.currentMonth }
+  );
 
   if (globalWarming < 1.5) return 1.0;
   if (globalWarming < 2.0) return 0.95;
@@ -209,13 +219,20 @@ export function getClimateRecoveryMultiplier(gameState: GameState): number {
  */
 export function getInvestmentMultiplier(gameState: GameState): number {
   // Climate investment comes from research investments (climate.mitigation + climate.intervention)
-  const climateResearch = gameState.government?.researchInvestments;
-  if (!climateResearch) return 0.7; // Default to current 2024 baseline
+  const climateResearch = gameState.government.researchInvestments;
 
   // Climate research levels are [0-10]
   // Map to $T/year: 0 → $0B, 5 → $1.4T (baseline), 10 → $3.5T (full)
-  const climateMitigation = climateResearch.climate?.mitigation ?? 0;
-  const climateIntervention = climateResearch.climate?.intervention ?? 0;
+  const climateMitigation = assertStateProperty(
+    climateResearch.climate,
+    'mitigation',
+    { location: 'getInvestmentMultiplier:climateMitigation', month: gameState.currentMonth }
+  );
+  const climateIntervention = assertStateProperty(
+    climateResearch.climate,
+    'intervention',
+    { location: 'getInvestmentMultiplier:climateIntervention', month: gameState.currentMonth }
+  );
 
   // Average of mitigation + intervention
   const avgClimateInvestment = (climateMitigation + climateIntervention) / 2;
