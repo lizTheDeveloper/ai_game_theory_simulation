@@ -61,14 +61,27 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
 
     // Validate probabilities sum to approximately 1.0 (within tolerance)
     const totalProb =
-      (outcomeProbs.utopiaProbability ?? 0) +
-      (outcomeProbs.dystopiaProbability ?? 0) +
-      (outcomeProbs.extinctionProbability ?? 0);
+      assertProbability(outcomeProbs.utopiaProbability, {
+        location: 'OutcomeProbabilitiesPhase.execute',
+        valueName: 'utopiaProbability',
+        month: state.currentMonth
+      }) +
+      assertProbability(outcomeProbs.dystopiaProbability, {
+        location: 'OutcomeProbabilitiesPhase.execute',
+        valueName: 'dystopiaProbability',
+        month: state.currentMonth
+      }) +
+      assertProbability(outcomeProbs.extinctionProbability, {
+        location: 'OutcomeProbabilitiesPhase.execute',
+        valueName: 'extinctionProbability',
+        month: state.currentMonth
+      });
 
     if (Math.abs(totalProb - 1.0) > 0.01) {
       console.warn(
         `⚠️ Outcome probabilities do not sum to 1.0\n` +
         `   Total: ${totalProb.toFixed(3)}\n` +
+        // Display only - already validated above with assertions
         `   Utopia: ${(outcomeProbs.utopiaProbability ?? 0).toFixed(3)}\n` +
         `   Dystopia: ${(outcomeProbs.dystopiaProbability ?? 0).toFixed(3)}\n` +
         `   Extinction: ${(outcomeProbs.extinctionProbability ?? 0).toFixed(3)}\n` +
