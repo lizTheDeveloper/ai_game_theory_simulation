@@ -15,7 +15,7 @@ import { RegionalTechDeployment } from './engine';
 import { getAverageAICapability } from '../utils/ai';
 import { detectCrisis } from '../calculations';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
-import { assertStateProperty } from '../utils/assertions';
+import { assertStateProperty, assertDefined } from '../utils/assertions';
 
 export interface RegionalFactors {
   region: string;
