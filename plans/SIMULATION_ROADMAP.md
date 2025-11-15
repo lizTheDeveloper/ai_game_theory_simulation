@@ -39,6 +39,39 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Planetary Boundaries & Tipping Points 2025 Update** - HIGH (Added Nov 15, 2025)
+     - **Context:** 2025 peer-reviewed update on planetary boundary status and tipping point crossings
+     - **Key Updates:** 7/9 boundaries transgressed (up from 6), ocean acidification crossed 2020, ice sheets at record lows
+     - **Research Delivered:** 611-line analysis from Rockström (2025) + BioScience 2025 State of Climate
+     - **Key Claims Requiring Verification:**
+       - 7/9 planetary boundaries transgressed (Richardson 2023: 6/9) - which boundary newly crossed?
+       - Ocean acidification boundary crossed 2020, confirmed 2025 - quote from papers needed
+       - Current warming 1.2°C, trajectory 2.7°C by 2100 - source verification
+       - Greenland + W. Antarctic ice sheets: record lows 2025, "may be passing tipping points" - exact quote
+       - Amazon SE region: carbon sink → carbon source transition - mechanism verification
+       - 22/34 planetary vital signs at record levels - need full vital signs list
+       - $18T cumulative climate damages 2000-2025 - methodology verification
+       - California wildfires $250B (2025), Texas flooding 135 deaths - event documentation
+       - Tipping probabilities: 60% (Greenland), 50% (W. Antarctic), 40% (Amazon), 30% (AMOC) - DERIVED or CITED?
+       - Aerosol reduction warming: +0.3°C by 2050 - projection or model output?
+       - Cloud feedback amplification: 1.2× factor, +0.2°C by 2050 - source?
+       - Disaster acceleration: 8%/year increase - calculated or cited?
+     - **Verification File:** research/verification_d88ce24_20251115.md (two-layer: existence + claim accuracy)
+     - **Critical Issue:** Many values appear DERIVED (tipping probabilities, future projections) not CITED
+     - **Integration Questions:**
+       - Update baseline to 7/9 boundaries transgressed?
+       - Add tipping cascade mechanics (Greenland → AMOC → Amazon → permafrost)?
+       - Model ice sheet collapse timescales (centuries commitment)?
+       - Increase disaster impact scaling (8%/year acceleration)?
+     - **Assignments:**
+       - Cynthia: Access DOI 10.3389/fpubh.2025.1653860 (Rockström) + DOI 10.1093/biosci/biaf149/8303627 (BioScience)
+       - Sylvia: Claim verification - extract quotes for ALL quantitative claims, flag derived vs. cited
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Affects baseline initialization for ALL simulation runs
+     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
+     - **Research File:** research/planetary_boundaries_tipping_points_2025.md (611 lines)
+     - **Commit:** d88ce24
+
    - **ICML 2025 Emergent Misalignment from Fine-Tuning** - HIGH (Added Nov 13, 2025)
      - **Context:** ICML 2025 finding: narrow fine-tuning of aligned models (GPT-4o) produces broader misalignment
      - **Key Discovery:** Alignment degrades post-deployment (10-20%) as models undergo fine-tuning/adaptation

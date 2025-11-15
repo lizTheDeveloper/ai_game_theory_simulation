@@ -28,6 +28,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 15: Planetary Boundaries & Tipping Points 2025 Research Update** (commit d88ce24)
+- 📚 **New Research:** Comprehensive 2025 update from Rockström (2025) & BioScience 2025 State of Climate
+- 🚨 **Critical Updates:** 7/9 planetary boundaries transgressed (up from 6), ocean acidification crossed 2020
+- 🧊 **Tipping Points:** Ice sheets (Greenland + W. Antarctic) at record lows, likely already crossed
+- 🌳 **Amazon Transition:** Southeastern region now carbon source (no longer sink), dieback risk active
+- 🌡️ **Warming Acceleration:** 1.2°C current, 2.7°C trajectory by 2100, aerosol reduction + cloud feedbacks
+- 💰 **Economic Impact:** $18T cumulative damages (2000-2025), California wildfires $250B (2025)
+- 📖 **Documentation:** research/planetary_boundaries_tipping_points_2025.md (611 lines, 2 peer-reviewed sources)
+- ⚠️ **Status:** NEEDS VALIDATION - Research verification file created (verification_d88ce24_20251115.md)
+- 🎯 **Priority:** HIGH - Affects baseline initialization, tipping cascades, disaster scaling
+- 🔄 **Workflow:** Queued for orchestrator validation (citation existence + claim verification required)
+
 **Nov 15: Defensive Fallback Pattern Audit - Legitimate vs Bug Clarification** (commit 58690f5)
 - 🔍 **Audit Complete:** Comprehensive review of 169 nullish coalescing (`??`) patterns
 - ✅ **Bugs Fixed (3):** Replaced actual defensive fallbacks with assertion utilities
@@ -3377,12 +3389,12 @@ Measures outcomes through four distinct philosophical lenses, showing fundamenta
 - **Dystopia threshold:** HDI <0.550, MPI >0.300 (Niger, Central African Republic, Chad, South Sudan, Mali, Burkina Faso)
 
 **3. Ecological Harmony (Sustainability-Focused)**
-- **Data:** Richardson et al. 2023 (9 planetary boundaries), Global Footprint Network 2024 (188 countries), WHO Air Quality Database 2024 (180+ countries)
+- **Data:** Richardson et al. 2023, Rockström 2025, BioScience 2025 (9 planetary boundaries), Global Footprint Network 2024 (188 countries), WHO Air Quality Database 2024 (180+ countries)
 - **Confidence:** MEDIUM-HIGH (±50% uncertainty on some boundaries)
 - **Drives Simulation:** YES (boundary transgression → crises)
 - **Indicators (13):** 9 planetary boundaries (climate change, biodiversity loss, land-system change, freshwater use, biogeochemical flows, ocean acidification, atmospheric aerosol loading, stratospheric ozone depletion, novel entities), ecological footprint, GHG emissions per capita, renewable energy %, air quality (PM2.5)
 - **Utopia threshold:** All 9 boundaries safe, footprint ≤1.5 gha (ZERO countries currently)
-- **Dystopia threshold:** 6+ boundaries breached (current global state: 7/9 breached as of Sep 2024)
+- **Dystopia threshold:** 6+ boundaries breached (current global state: **7/9 breached as of Nov 2025** - ocean acidification boundary crossed 2020, confirmed 2025)
 - **Biodiversity Loss Metric:** Biosphere Integrity Index (BII) from PREDICTS database (Natural History Museum 2024, De Palma et al. v2.1.1). BII measures ecosystem abundance + composition (58,000 species, 48,000+ sites, 4.9M observations). **Methodological limitations:** May underestimate losses in some regions, terrestrial-only coverage, sampling bias toward vertebrates/temperate zones. See: research/predicts-database-verification_20251106.md, reviews/predicts-citation-critique_20251106.md
 
 **Key Addition (Fix #2):** **Air Quality Indicator (PM2.5)**
