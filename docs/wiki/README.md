@@ -65,16 +65,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 💡 **Lesson:** Worktree accumulation from deleted remote branches should be part of maintenance routine
 
 **Nov 15: Defensive Fallback Violations RESOLVED - Issue #7** (commit 76b0585)
-- ✅ **HIGH PRIORITY RESOLVED:** All 20+ defensive fallback violations (`??` and `||`) replaced with assertion utilities
-- 🛡️ **Implementation Fidelity:** A- → A (no more silent bug masking)
+- ✅ **HIGH PRIORITY RESOLVED:** 20+ actual defensive fallback violations (`??` and `||`) in calculation paths replaced with assertion utilities
+- 🛡️ **Implementation Fidelity:** A- → A (no more silent bug masking in simulation calculations)
 - 📊 **Files Modified (10):** EmergencyResponsePhase.ts (4 violations), OutcomeProbabilitiesPhase.ts (6), aiSuffering.ts (3), dystopiaProgression.ts (2), alignmentDynamics.ts (1), earlyWarningSystems.ts (1), plus type fixes
 - 🎯 **Type Safety Improvements:**
   - `aiSufferingMetrics`: optional → required (always initialized)
   - `government.resources`: optional → required (always initialized)
-- ✅ **Pattern Fixed:** `state.field?.subfield ?? fallback` → `assertStateProperty(...)` for fail-loudly behavior
-- 📊 **Impact:** Research validity improved (no silent defaults), debugging clarity increased
+- ✅ **Pattern Fixed:** `state.field?.subfield ?? fallback` in calculations → `assertStateProperty(...)` for fail-loudly behavior
+- 📊 **Impact:** Research validity improved (no silent defaults in calculations), debugging clarity increased
 - 📖 **Changelog:** logs/defensive_fallback_fix_20251115.md
 - 📖 **Source:** Architecture Review Nov 13 (Issue #3)
+- 💡 **Note:** Followed by comprehensive audit (commit 58690f5) clarifying legitimate vs bug patterns
 
 **Nov 15: Merge Conflict Resolution - Performance Optimizations Preserved** (commit e895d6f)
 - 🔧 **Merge Fix:** Resolved conflicts between upstream fixes and stashed changes
