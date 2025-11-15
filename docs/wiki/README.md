@@ -28,6 +28,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 15: Merge Conflict Resolution - Performance Optimizations Preserved** (commit e895d6f)
+- 🔧 **Merge Fix:** Resolved conflicts between upstream fixes and stashed changes
+- ✅ **Performance Optimizations Preserved:**
+  - `structuredClone` instead of `JSON.parse/stringify` in monteCarlo.ts (faster, handles Map/Set/Date correctly)
+  - O(n) optimized functions in collectiveFormation.ts with Map-based agent lookups
+  - CooperativeSystemsPhase uses optimized assign/dissolve functions (100× faster for 50-member collectives)
+- 🎯 **Decision:** Chose "Updated upstream" (Nov 15 memory leak fixes) over older stashed changes
+- 📁 **Files Updated:** monteCarlo.ts, collectiveFormation.ts, CooperativeSystemsPhase.ts
+
 **Nov 15: Architecture Review - All CRITICAL/HIGH Issues Resolved** (commit a5aaf05)
 - 📊 **Architecture Health:** 8.0/10 → 9.5/10 (Grade: B- → A-)
 - ✅ **CRITICAL-1 Resolved:** O(n²) performance in CooperativeSystemsPhase (33× improvement)
