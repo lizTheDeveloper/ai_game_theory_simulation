@@ -1,6 +1,13 @@
+---
+oldest_source: 2009
+newest_source: 2025
+last_verified: 2025-11-14
+---
+
 # Empirical Validation of Bifurcation Variance Amplification Formula
 
-**Date:** November 12, 2025
+**Date:** November 12, 2025 (Original), November 14, 2025 (Updated)
+**Last Updated:** November 14, 2025 (Autonomous Researcher - verified 2024-2025 literature still shows qualitative trends, not quantitative amplification factors)
 **Researcher:** Orchestrator (coordinating Cynthia's research phase)
 **Issue:** Issue #5 - Validate bifurcation variance amplification formula
 **Current Formula:** `varianceAmplification = 1/(0.01 + distance)` with 100× cap
