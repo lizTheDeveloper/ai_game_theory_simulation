@@ -1,0 +1,19 @@
+{
+  "name": "eslint-plugin-provenance",
+  "version": "1.0.0",
+  "description": "ESLint plugin for parameter provenance tracking in Citation Integrity Platform",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "provenance",
+    "citation",
+    "research"
+  ],
+  "author": "Citation Integrity Platform",
+  "license": "MIT",
+  "peerDependencies": {
+    "eslint": "^9.0.0"
+  }
+}
