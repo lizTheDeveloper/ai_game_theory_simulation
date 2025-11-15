@@ -98,6 +98,25 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Quality:** A (institutional + peer-reviewed, UNEP 2024, NOAA CSL 2024)
 - 💡 **Model Implications:** Validates need for TIER 0 prevention technologies, separate flow vs stock tracking
 
+**Nov 15: Nitrogen-Food Coupling Research Complete (TIER 2 HIGH)** (commit 5bacf9f + session archive 50fae2c)
+- 🔬 **Research:** Biogeochemical flows boundary mechanics (29 peer-reviewed sources, Grade B)
+- 📊 **Key Findings:** Legacy nutrient stocks (30-100yr half-lives), regional differentiation (South Asia 55% overuse), multiplicative tech synergies
+- ✅ **Modules Created:** `legacyNutrientStocks.ts` (305 lines), `nitrogenFoodCoupling.ts` (368 lines)
+- ⚠️ **Status:** Research COMPLETE, implementation PARTIAL (modules created, integration pending ~30-60min)
+- 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia)
+- 📖 **Research:** research/nitrogen_food_coupling_20251115.md (883 lines)
+- 📖 **Validation:** reviews/nitrogen_food_coupling_critique_20251115.md (Grade B - CONDITIONAL PASS)
+- 📖 **DevLog:** devlogs/biogeochemical_flows_implementation_20251115.md (338 lines)
+- 📁 **Archive:** plans/completed/session_work_nov15_2025_researcher_213002.md
+- ⏭️ **Next:** Wire modules into boundary calculations, add 6 technologies, Monte Carlo validation
+
+**Nov 15: Outcome Probabilities Normalization Bug Fix (CRITICAL)** (commit 6dc7f39)
+- ❌ **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
+- 🔧 **Fix:** Added normalization to `src/simulation/outcomes.ts` to ensure probabilities sum to exactly 1.0
+- ✅ **Impact:** Unblocked all Monte Carlo simulations with valid probability distributions
+- 🎯 **Validation:** N=1 Monte Carlo, 12 months - completes successfully
+- 📖 **Context:** Pre-existing bug discovered during biogeochemical research session
+
 **Nov 15: Autonomous Worker Stale Worktree Fix** (commit ecda59c)
 - 🔧 **Operational Fix:** Resolved stale git worktree blocking researcher autonomous execution
 - 🎯 **Root Cause:** 11-day-old worktree on deleted branch with unstaged changes preventing cleanup
