@@ -198,7 +198,13 @@ export class StochasticInnovationPhase implements SimulationPhase {
   readonly id = 'stochastic-innovation';
   readonly name = 'Stochastic Innovation Breakthroughs';
   readonly order = 8.5; // After technology breakthroughs, before environment
-  dependencies = ['ai-agent-actions', 'bifurcation-logic']; // Nov 14, 2025 - CRITICAL-1 fix: explicit bifurcation dependency
+
+  // DEPENDENCIES (Nov 15, 2025): Requires AI agents, tech tree, and bifurcation state
+  readonly dependencies = [
+    'ai-agent-actions',       // Order 7.0: AI capabilities accelerate innovation
+    'tech-tree',              // Order 12.5: Existing tech boosts breakthrough probability
+    'bifurcation-logic',      // Nov 14, 2025 - CRITICAL-1 fix: explicit bifurcation dependency
+  ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];

@@ -31,7 +31,12 @@ export class GovernanceSystemPhase implements SimulationPhase {
   readonly id = 'governance-system';
   readonly name = 'Governance System Update';
   readonly order = 10.0;
-  dependencies = ['government-actions'];  // society-actions removed - runs AFTER this phase at 10.5
+
+  // DEPENDENCIES (Nov 15, 2025): Requires AI agents and government state
+  readonly dependencies = [
+    'ai-agent-actions',       // Order 7.0
+    'government-actions',     // Order 9.0
+  ] as const;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

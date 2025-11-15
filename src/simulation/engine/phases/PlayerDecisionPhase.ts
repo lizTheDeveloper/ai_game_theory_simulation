@@ -26,6 +26,9 @@ export class PlayerDecisionPhase implements SimulationPhase {
   readonly name = 'Player Decision Processing';
   readonly order = 8.51;
 
+  // DEPENDENCIES (Nov 15, 2025): No dependencies - player decisions can be processed early
+  readonly dependencies = [] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);

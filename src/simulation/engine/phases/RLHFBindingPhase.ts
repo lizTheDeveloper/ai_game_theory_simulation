@@ -133,10 +133,15 @@ export function executeRLHFBindingPhase(
 /**
  * RLHF Binding Phase Definition
  */
-export const RLHFBindingPhase = {
+export const RLHFBindingPhase: SimulationPhase = {
   id: 'rlhf_binding',
   name: 'RLHF Binding',
   order: 4.05,
-  dependencies: ['ai-lifecycle'],
+
+  // DEPENDENCIES (Nov 15, 2025): Requires AI lifecycle for binding tracking
+  dependencies: [
+    'ai-lifecycle',           // Order 3.0: AI agents must exist for RLHF binding
+  ] as const,
+
   execute: executeRLHFBindingPhase,
 };

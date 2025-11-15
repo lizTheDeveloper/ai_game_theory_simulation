@@ -17,6 +17,9 @@ export class TriggeredEventsPhase implements SimulationPhase {
   name = 'Triggered Events';
   order = 2.52;
 
+  // DEPENDENCIES (Nov 15, 2025): No dependencies - placeholder for manual event injection
+  readonly dependencies = [] as const;
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Stub implementation - no triggered events yet
     setDeterministicRng(rng);

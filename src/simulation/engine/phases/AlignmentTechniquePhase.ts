@@ -32,7 +32,12 @@ export class AlignmentTechniquePhase implements SimulationPhase {
   id = 'alignment_techniques';
   name = 'Alignment Technique Update';
   order = 3.4; // Before alignment dynamics (3.5), after agent actions
-  dependencies = ['compute-growth'];
+
+  // DEPENDENCIES (Nov 15, 2025): Requires AI lifecycle for agent capabilities
+  readonly dependencies = [
+    'ai-lifecycle',           // Order 3.0: AI agents must exist
+    'compute-growth',         // Order 1.0: Compute affects technique effectiveness
+  ] as const;
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

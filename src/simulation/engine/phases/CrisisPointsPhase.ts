@@ -15,6 +15,12 @@ export class CrisisPointsPhase implements SimulationPhase {
   readonly name = 'Crisis Points Check';
   readonly order = 23.0;
 
+  // DEPENDENCIES (Nov 15, 2025): Requires benchmark evaluations and crisis detection
+  readonly dependencies = [
+    'benchmark-evaluations',  // Order 22.0: Benchmarks detect crisis triggers
+    'crisis-detection',       // Order 26.0: Crisis detection must complete first
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { processCrisisPoints } = require('../../crisisPoints');
     setDeterministicRng(rng);

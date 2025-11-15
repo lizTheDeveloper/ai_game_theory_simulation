@@ -36,7 +36,12 @@ export class Tier2AIGovernancePhase implements SimulationPhase {
   id = 'tier2_ai_governance';
   name = 'TIER 2: AI Governance';
   order = 14.5; // Earliest intervention (Crisis Anticipation)
-  dependencies = ['tech-tree'];
+
+  // DEPENDENCIES (Nov 15, 2025): Requires tech tree for intervention unlocks
+  readonly dependencies = [
+    'tech-tree',              // Order 12.5: Tech unlocks determine intervention availability
+    'ai-agent-actions',       // Order 7.0: AI capabilities affect interventions
+  ] as const;
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

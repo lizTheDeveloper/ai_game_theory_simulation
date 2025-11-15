@@ -37,7 +37,12 @@ export class Tier2PhysicalSystemsPhase implements SimulationPhase {
   id = 'tier2_physical_systems';
   name = 'TIER 2: Physical Systems';
   order = 18.5; // Earliest intervention (Nuclear Security)
-  dependencies = ['tech-tree'];
+
+  // DEPENDENCIES (Nov 15, 2025): Requires tech tree and environmental state for interventions
+  readonly dependencies = [
+    'tech-tree',              // Order 12.5: Tech unlocks determine intervention availability
+    'planetary_boundaries',   // Order 21.0: Environmental state affects physical interventions
+  ] as const;
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

@@ -19,6 +19,10 @@ export class EventCollectionPhase implements SimulationPhase {
   readonly name = 'Event Collection';
   readonly order = 98.0;
 
+  // DEPENDENCIES (Nov 15, 2025): Runs very late (98.0) to collect events from all phases
+  // No explicit dependencies - order ensures it runs after most phases
+  readonly dependencies = [] as const;
+
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(_rng);

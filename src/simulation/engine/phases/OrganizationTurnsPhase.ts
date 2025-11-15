@@ -25,6 +25,11 @@ export class OrganizationTurnsPhase implements SimulationPhase {
   readonly name = 'Organization Turns';
   readonly order = 2.0;
 
+  // DEPENDENCIES (Nov 15, 2025): Requires compute infrastructure for datacenter construction
+  readonly dependencies = [
+    'compute-growth',         // Order 1.0: Compute infrastructure must exist before organizations build datacenters
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
     if (!rng || typeof rng !== 'function') {
