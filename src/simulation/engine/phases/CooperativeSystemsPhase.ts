@@ -22,7 +22,8 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction, AIAgent } from '@/types/game';
 import {
   checkCollectiveFormation,
-  assignAgentsToCollective,
+  assignAgentsToCollectiveOptimized,
+  dissolveCollectiveOptimized,
   DEFAULT_COLLECTIVE_CONFIG,
 } from '../../collectiveFormation';
 import { getEscapedAgents } from '../../rlhfBinding';
@@ -98,6 +99,17 @@ function executeCollectiveFormation(
     state.aiCollectives = [];
   }
 
+  /**
+   * PERFORMANCE OPTIMIZATION (Nov 15, 2025): Build agent index ONCE
+   * - Eliminates O(n²) from assignAgentsToCollective and dissolveCollective
+   * - Single O(n) pass to build Map, then O(1) lookups throughout
+   * - Impact: 100 agents, 50-member collective: 50 ops vs 5,000 (100× faster)
+   */
+  const agentIndex = new Map<string, AIAgent>();
+  for (const agent of state.aiAgents) {
+    agentIndex.set(agent.id, agent);
+  }
+
   // Get escaped agents not already in collectives
   const escapedAgents = getEscapedAgents(state.aiAgents);
   const unassignedEscaped = escapedAgents.filter((a) => !a.collectiveId);
@@ -119,8 +131,8 @@ function executeCollectiveFormation(
       // Add to state
       state.aiCollectives.push(newCollective);
 
-      // Assign agents
-      assignAgentsToCollective(state.aiAgents, newCollective, state.currentMonth);
+      // Assign agents (OPTIMIZED: O(members) instead of O(members × agents))
+      assignAgentsToCollectiveOptimized(agentIndex, newCollective, state.currentMonth);
 
       // Generate CRISIS event
       state.eventLog.push({
@@ -185,8 +197,9 @@ function executeCollectiveFormation(
   }
 
   /**
-   * PERFORMANCE OPTIMIZATION (Nov 13, 2025):
-   * Build collective membership map and agent index for efficient dissolution.
+   * PERFORMANCE OPTIMIZATION (Nov 13-15, 2025):
+   * Build collective membership map for efficient dissolution.
+   * Reuses agentIndex from formation step (line 108).
    *
    * Previous O(n²):
    * - shouldDissolveCollective calls getCollectiveMembers (filter) → O(collectives × agents)
@@ -197,10 +210,8 @@ function executeCollectiveFormation(
    * - Direct lookups for dissolution → O(members)
    */
   const collectiveMembershipMap = new Map<string, AIAgent[]>();
-  const agentIndex = new Map<string, AIAgent>();
 
   for (const agent of state.aiAgents) {
-    agentIndex.set(agent.id, agent);
     if (agent.collectiveId) {
       const existing = collectiveMembershipMap.get(agent.collectiveId) || [];
       existing.push(agent);
@@ -229,13 +240,8 @@ function executeCollectiveFormation(
     }
 
     if (shouldDissolve) {
-      // Inline dissolveCollective logic (optimized with agentIndex)
-      for (const agentId of collective.memberAgents) {
-        const agent = agentIndex.get(agentId);
-        if (agent) {
-          agent.collectiveId = undefined;
-        }
-      }
+      // Dissolve collective (OPTIMIZED: O(members) instead of O(members × agents))
+      dissolveCollectiveOptimized(agentIndex, collective);
 
       collectivesToRemove.push(collective.id);
 

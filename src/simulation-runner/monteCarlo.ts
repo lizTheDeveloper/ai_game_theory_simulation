@@ -199,27 +199,29 @@ function generateParameterCombinations(config: MonteCarloConfig): SimulationConf
 
 /**
  * Add variation to initial state based on configuration
+ * PERFORMANCE FIX (Nov 15, 2025): Use structuredClone instead of JSON.parse/stringify
  */
 function varyInitialState(
   baseState: GameState,
   variation?: MonteCarloConfig['initialStateVariation']
 ): GameState {
   if (!variation) return baseState;
-  
-  const variedState = JSON.parse(JSON.stringify(baseState)); // Deep clone
+
+  // structuredClone is faster and handles Map/Set/Date correctly (vs JSON.parse/stringify)
+  const variedState = structuredClone(baseState);
   
   // Vary AI agent properties
   if (variation.aiCapability || variation.aiAlignment) {
-    variedState.aiAgents = variedState.aiAgents.map((ai: unknown) => {
-      const agent = ai as { capability: number; alignment: number };
+    variedState.aiAgents = variedState.aiAgents.map((ai) => {
+      // Spread operator preserves all AIAgent properties
       return {
-        ...agent,
-        capability: variation.aiCapability 
+        ...ai,
+        capability: variation.aiCapability
           ? gaussianRandom(variation.aiCapability.mean, variation.aiCapability.stdDev)
-          : agent.capability,
+          : ai.capability,
         alignment: variation.aiAlignment
           ? Math.max(0, Math.min(1, gaussianRandom(variation.aiAlignment.mean, variation.aiAlignment.stdDev)))
-          : agent.alignment
+          : ai.alignment
       };
     });
   }

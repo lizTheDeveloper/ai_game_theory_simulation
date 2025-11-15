@@ -184,6 +184,8 @@ export function checkCollectiveFormation(
  * @param agents All agents
  * @param collective Newly formed collective
  * @param currentMonth Current simulation month
+ *
+ * @deprecated Use assignAgentsToCollectiveOptimized() with agentIndex for O(1) lookups
  */
 export function assignAgentsToCollective(
   agents: AIAgent[],
@@ -191,11 +193,35 @@ export function assignAgentsToCollective(
   currentMonth: number
 ): void {
   for (const agentId of collective.memberAgents) {
-    const agent = agents.find((a) => a.id === agentId);
+    const agent = agents.find((a) => a.id === agentId);  // O(n) - PERFORMANCE WARNING
     if (agent) {
       agent.collectiveId = collective.id;
       // Store join month in monthsDeployed as proxy (not perfect but works)
       // Better: Add joinedCollectiveMonth field in Phase 6
+    }
+  }
+}
+
+/**
+ * Update agent membership when collective forms (OPTIMIZED)
+ *
+ * PERFORMANCE: O(members) vs O(members × agents) for original
+ * - 100 agents, 50-member collective: 50 operations vs 5,000
+ * - Uses Map for O(1) agent lookup instead of O(n) find()
+ *
+ * @param agentIndex Map of agent ID → agent object (built once per phase)
+ * @param collective Newly formed collective
+ * @param currentMonth Current simulation month
+ */
+export function assignAgentsToCollectiveOptimized(
+  agentIndex: Map<string, AIAgent>,
+  collective: AICollective,
+  currentMonth: number
+): void {
+  for (const agentId of collective.memberAgents) {
+    const agent = agentIndex.get(agentId);  // O(1) lookup
+    if (agent) {
+      agent.collectiveId = collective.id;
     }
   }
 }
@@ -262,13 +288,37 @@ export function shouldDissolveCollective(
  *
  * @param collective Collective to dissolve
  * @param agents All agents
+ *
+ * @deprecated Use dissolveCollectiveOptimized() with agentIndex for O(1) lookups
  */
 export function dissolveCollective(
   collective: AICollective,
   agents: AIAgent[]
 ): void {
   for (const agentId of collective.memberAgents) {
-    const agent = agents.find((a) => a.id === agentId);
+    const agent = agents.find((a) => a.id === agentId);  // O(n) - PERFORMANCE WARNING
+    if (agent) {
+      agent.collectiveId = undefined;
+    }
+  }
+}
+
+/**
+ * Remove collective and unassign members (OPTIMIZED)
+ *
+ * PERFORMANCE: O(members) vs O(members × agents) for original
+ * - 100 agents, 50-member collective: 50 operations vs 5,000
+ * - Uses Map for O(1) agent lookup instead of O(n) find()
+ *
+ * @param agentIndex Map of agent ID → agent object (built once per phase)
+ * @param collective Collective to dissolve
+ */
+export function dissolveCollectiveOptimized(
+  agentIndex: Map<string, AIAgent>,
+  collective: AICollective
+): void {
+  for (const agentId of collective.memberAgents) {
+    const agent = agentIndex.get(agentId);  // O(1) lookup
     if (agent) {
       agent.collectiveId = undefined;
     }
