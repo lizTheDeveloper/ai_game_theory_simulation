@@ -187,11 +187,11 @@ log_section "🔄 Merge Orchestrator Status"
 
 MERGE_LOG_DIR="$PROJECT_ROOT/logs/merge_orchestrator"
 if [ -d "$MERGE_LOG_DIR" ]; then
-  RECENT_MERGE=$(find "$MERGE_LOG_DIR" -name "merge_orchestrator_*.log" -mmin -${CHECK_WINDOW_MINUTES} -type f 2>/dev/null | wc -l)
+  RECENT_MERGE=$(find "$MERGE_LOG_DIR" -name "merge_*.log" -mmin -${CHECK_WINDOW_MINUTES} -type f 2>/dev/null | wc -l)
   if [ "$RECENT_MERGE" -gt 0 ]; then
     log "✅ Merge orchestrator ran in last ${CHECK_WINDOW_MINUTES} minutes"
   else
-    LAST_MERGE=$(find "$MERGE_LOG_DIR" -name "merge_orchestrator_*.log" -type f 2>/dev/null | sort -r | head -1)
+    LAST_MERGE=$(find "$MERGE_LOG_DIR" -name "merge_*.log" -type f 2>/dev/null | sort -r | head -1)
     if [ -n "$LAST_MERGE" ]; then
       LAST_MERGE_TIME=$(stat -c %Y "$LAST_MERGE" 2>/dev/null || stat -f %m "$LAST_MERGE" 2>/dev/null)
       NOW=$(date +%s)
@@ -254,8 +254,10 @@ if [ -d "$RESEARCHER_LOG_DIR" ]; then
       AGE_MINUTES=$(( (NOW - LAST_RESEARCHER_TIME) / 60 ))
       log "ℹ️  Last researcher run: ${AGE_MINUTES} minutes ago"
 
-      if [ "$AGE_MINUTES" -gt 120 ]; then
-        log "🚨 CRITICAL: Researcher hasn't run in over 2 hours!"
+      # Researcher runs hourly 8am-10pm, so max gap during work hours is ~60min
+      # Overnight gap (10pm-8am) is intentional (10 hours), so use 12h threshold
+      if [ "$AGE_MINUTES" -gt 720 ]; then
+        log "🚨 CRITICAL: Researcher hasn't run in over 12 hours!"
         ISSUE_DETECTED=true
       fi
     else
