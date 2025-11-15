@@ -166658,11 +166658,19 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/regionalDeployment.ts",
-    "line": 290,
+    "line": 289,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
     "context": "location: 'calculateRegionalDeploymentTimeline',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/regionalDeployment.ts",
+    "line": 290,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'nuclearWinterState.active',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/regionalDeployment.ts",
