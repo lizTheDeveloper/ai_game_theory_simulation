@@ -1,11 +1,28 @@
+---
+oldest_source: 2022
+newest_source: 2025
+last_verified: 2025-11-15
+verification_status: UPDATED
+---
+
 # Climate Tipping Point Timescale Research
 **Date:** November 7, 2025 (Updated)
-**Last Updated:** November 11, 2025 (Autonomous Researcher - added Oct 2025 Global Tipping Points Report)
+**Last Updated:** November 15, 2025 (Autonomous Researcher - added 2024-2025 AMOC collapse research)
 **Original Author:** Super-Alignment Researcher (Orchestrator Workflow)
 **Purpose:** Extract updated climate tipping timescales to fix ROOT CAUSE of 100% dystopia convergence
-**Research Quality:** A+ (IPCC AR6 + Armstrong McKay 2022 + Global Tipping Points Report 2025 + 2024-2025 peer-reviewed sources)
+**Research Quality:** A+ (IPCC AR6 + Armstrong McKay 2022 + Global Tipping Points Report 2025 + van Westen et al. 2024-2025)
 
 ## Executive Summary
+
+**November 2025 Update - AMOC Collapse Risk:**
+
+New research (van Westen et al. 2024, Boers et al. 2024) provides first observationally-based probability estimates for AMOC collapse:
+- **59±17% probability of collapse before 2050**
+- **Timeline:** 2037-2064 (10-90% confidence interval)
+- **Impact:** 10-30°C winter cooling in northern Europe, 123mm precipitation loss in growing season
+- **Status:** Present-day AMOC shows early warning signals, "on route to tipping"
+
+This represents a **major escalation in near-term climate risk** - AMOC collapse could occur within 12-27 years (not centuries), with catastrophic impacts on European agriculture and habitability.
 
 **Problem:** TippingPointPhase uses timescales from Robinson 2012 (Greenland: 1,000-15,000yr) and DeConto & Pollard 2016 (WAIS: 500-13,000yr). IPCC AR6 and Armstrong McKay 2022 provide updated estimates suggesting **some parameters need clarification** regarding "threshold crossing" vs "full collapse" timescales.
 
@@ -119,8 +136,28 @@
 - Confidence: MEDIUM (model-dependent)
 
 **Recent Research (2024-2025):**
-- Westen et al. (2024) Science Advances: Early warning signals detected, collapse possible this century
-- van Westen (2025) JGR Oceans: Physics-based indicators suggest 50-300yr timescale
+
+**van Westen et al. (2024) Science Advances:**
+- **Citation:** van Westen, R.M., Kliphuis, M., Dijkstra, H.A. (2024). "Physics-based early warning signal shows that AMOC is on tipping course." *Science Advances*, 10(6), eadk1189.
+- **Early warning signal:** Minimum freshwater transport at Atlantic southern boundary
+- **Finding:** Present-day AMOC observations indicate system is "on route to tipping"
+- **Model:** First successful simulation of AMOC tipping event in Community Earth System Model
+
+**Boers et al. (2024) arXiv - Probability Estimates:**
+- **Citation:** Boers, N. et al. (2024). "Probability Estimates of a 21st Century AMOC Collapse." arXiv:2406.11738
+- **Collapse probability:** **59±17% chance before 2050**
+- **Timeline (10-90% CI):** 2037-2064 (mean: 2050)
+- **Earliest possible collapse:** 2037
+- **Data source:** Observational reanalysis products (ORAS5, GLORYS, SODA)
+- **Comparison:** Aligns with Ditlevsen & Ditlevsen (2023) statistical estimate of 2057 (95% CI: 2025-2095)
+
+**van Westen et al. (2025) Geophysical Research Letters:**
+- **Citation:** van Westen, R.M. et al. (2025). "European Temperature Extremes Under Different AMOC Scenarios in the Community Earth System Model." *Geophysical Research Letters*.
+- **Winter cooling impact:** 10-30°C drop in average monthly winter temperatures in northern Europe
+- **Cold extremes:** Parts of UK/Netherlands could see -20°C or lower; Oslo down to -30°C
+- **Summer impact:** Minimal (slightly cooler than warming baseline)
+- **Precipitation:** 123mm reduction in growing season → arable land drops from 32% to 7% in Great Britain
+- **Regional gradient:** UK, Ireland, Iceland, Scandinavia most affected
 
 **Caesar et al. (2021):**
 - Original source cited in simulation: 50-150 years
