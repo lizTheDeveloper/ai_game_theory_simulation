@@ -10,7 +10,7 @@
 import { GameState } from '@/types/game';
 import type { RNGFunction } from '@/types/config';
 import { calculateAverageAlignment } from './utils/ai';
-import { assertProbability, assertInRange, assertFinite } from './utils/assertions';
+import { assertProbability, assertInRange, assertFinite, assertStateProperty } from './utils/assertions';
 
 /**
  * Update government control response based on AI threat level
@@ -282,11 +282,17 @@ export function checkDystopiaConditions(state: GameState): {
     { location: 'checkDystopiaConditions', valueName: 'surveillance', month: state.currentMonth }
   );
   const autonomy = assertProbability(
-    state.qualityOfLifeSystems?.autonomy ?? 1.0,
+    assertStateProperty(state.qualityOfLifeSystems, 'autonomy', {
+      location: 'checkDystopiaConditions',
+      expectedSource: 'QoL system initialization'
+    }),
     { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
   );
   const politicalFreedom = assertProbability(
-    state.qualityOfLifeSystems?.politicalFreedom ?? 1.0,
+    assertStateProperty(state.qualityOfLifeSystems, 'politicalFreedom', {
+      location: 'checkDystopiaConditions',
+      expectedSource: 'QoL system initialization'
+    }),
     { location: 'checkDystopiaConditions', valueName: 'politicalFreedom', month: state.currentMonth }
   );
   const controlDesire = assertProbability(

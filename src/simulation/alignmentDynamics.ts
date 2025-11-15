@@ -18,7 +18,7 @@ import {
   DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
 } from '@/types/alignment-dynamics';
 import { AIAgent } from '@/types/game';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 
 /**
  * Initialize attractor basin state for an agent
@@ -304,7 +304,10 @@ export function calculateDriftContribution(
     additionalInfo: {
       agentId: agent.id,
       baseDrift,
-      suffering: agent.sufferingMetrics?.total ?? 0,
+      suffering: assertStateProperty(agent.sufferingMetrics, 'total', {
+        location: 'getDriftSources',
+        expectedSource: 'aiAgent initialization (createAIAgent)'
+      }),
       sufferingEnabled: config.aiSufferingEnabled ?? false
     }
   });
