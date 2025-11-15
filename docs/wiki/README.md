@@ -28,6 +28,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 15: Water Scarcity Research Update - 2024-2025 Sources** (commit 8d21b96)
+- 📚 **Enhanced Research Foundation:** Added Ravinandrasana & Franzke (2025) Day Zero Drought study
+- 🌍 **Population Impact:** 753M people globally at risk (467M urban, 286M rural)
+- ⏱️ **Timeline:** 35% of water-scarcity regions will experience first DZD emergence by 2030
+- 🔄 **Recovery Challenge:** Successive DZDs occur faster than recovery periods (compounding crisis)
+- 🗺️ **Geographic Hotspots:** Mediterranean (196M urban), Southern Africa, North America
+- 🌡️ **Climate Link:** Urban vulnerability peaks at 1.5°C warming (488M people exposed)
+- 📖 **Updated Citations:** Jasechko et al. (2024) with full journal details (Nature 625:7996, 715-721)
+- ✅ **Research Quality:** A- (90% peer-reviewed, 5 sources from 2024-2025)
+- 📁 **Documentation:** docs/wiki/systems/freshwater-depletion.md updated with 2025 data
+- 🎯 **Status:** Literature enhancement only - no new parameters or mechanics requiring validation
+
 **Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
 - 📊 **Architecture Review:** Grade B- (stable with localized issues)
   - 2 CRITICAL: Phase dependency gaps (9/97 phases), CoordinatedDeploymentPhase integration risk
