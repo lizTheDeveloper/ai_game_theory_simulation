@@ -374,6 +374,128 @@ export interface PhaseContext {
 }
 ```
 
+## Critical Constraint: No Backwards Dependencies
+
+**Added:** November 15, 2025 (commit afbffc0)
+
+**CRITICAL RULE:** A phase at order X **CANNOT** depend on a phase at order Y where Y > X.
+
+### Why Backwards Dependencies Are Invalid
+
+Phase dependencies represent **read-after-write** relationships. If Phase A (order 10.0) declares a dependency on Phase B (order 20.0), this creates a logical impossibility:
+
+- Phase A needs Phase B's output
+- But Phase A executes BEFORE Phase B (10.0 < 20.0)
+- Phase B's data doesn't exist when Phase A runs
+
+**Result:** Runtime dependency violation error, simulation crashes.
+
+### Historical Bug (November 15, 2025)
+
+**Context:** Commit eda20e125 added readonly dependencies to 26 phases without validating order constraints, introducing 10+ backwards dependencies that blocked Monte Carlo validation.
+
+**Examples of invalid backwards dependencies:**
+- `GovernmentActionsPhase` (9.0) → `economic-system` (31.0) ❌
+- `ExtremeWeatherEventsPhase` (15.2) → `climate_system` (34.0) ❌
+- `TechTreePhase` (12.5) → `economic-system` (31.0) ❌
+- `CrisisPointsPhase` (23.0) → `crisis-detection` (36.0) ❌
+
+**Why these occurred:** Phases were analyzing which state they *read* and declaring dependencies without considering execution order. Reading state from "previous step" is valid; declaring dependency on future phase is not.
+
+### Valid vs Invalid Dependency Patterns
+
+**✅ VALID - Forward dependency (reads from earlier phase):**
+```typescript
+export class MyPhase implements SimulationPhase {
+  readonly order = 36.0;
+  readonly dependencies = ['bayesian_mortality_resolution']; // Order 35.0 - OK!
+
+  execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
+    // Can safely read mortality-adjusted population
+    const pop = state.humanPopulationSystem.population;
+    // ...
+  }
+}
+```
+
+**❌ INVALID - Backwards dependency (reads from later phase):**
+```typescript
+export class MyPhase implements SimulationPhase {
+  readonly order = 15.2;
+  readonly dependencies = ['climate_system']; // Order 34.0 - VIOLATES ORDER!
+
+  execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
+    // climate_system hasn't run yet - this will crash!
+    // ...
+  }
+}
+```
+
+**✅ CORRECT - Read from previous step (no dependency):**
+```typescript
+export class MyPhase implements SimulationPhase {
+  readonly order = 15.2;
+  readonly dependencies: string[] = []; // No dependencies - reads previous step
+
+  execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
+    // Read climate state from PREVIOUS simulation step
+    // climate_system (34.0) wrote this last step - it's already in state
+    const temp = state.resourceEconomy.co2.temperatureAnomaly;
+    // ...
+  }
+}
+```
+
+### Phase ID Naming Conventions
+
+**CRITICAL:** Phase IDs must use **underscores**, not hyphens, to match phase class naming.
+
+**Mismatch Bug (Nov 15, 2025):** `climate_system` phase was referenced as `climate-system` in dependencies, causing runtime errors.
+
+**✅ CORRECT:**
+```typescript
+readonly id = 'climate_system';        // Matches ClimateSystemPhase
+readonly dependencies = ['ai_lifecycle']; // Matches AILifecyclePhase
+```
+
+**❌ WRONG:**
+```typescript
+readonly id = 'climate-system';        // Doesn't match class name
+readonly dependencies = ['climate-system']; // Won't find phase at runtime
+```
+
+### Validation Checklist
+
+When declaring dependencies:
+
+1. ✅ **Order constraint:** Is dependency phase's order < current phase's order?
+2. ✅ **ID accuracy:** Does dependency phase ID actually exist? (Check phase files)
+3. ✅ **Underscore convention:** Using `snake_case` not `kebab-case`?
+4. ✅ **Real dependency:** Does phase actually *write* the state you're reading?
+5. ✅ **Same-step read:** Or are you reading from previous step's state? (No dependency needed)
+
+### Non-Existent Phase IDs
+
+**Also invalid:** Declaring dependencies on phases that don't exist.
+
+**Bug (Nov 15, 2025):** Two phases declared dependency on `technology-deployment`, which doesn't exist in the codebase.
+
+**Fix:**
+```typescript
+// ❌ WRONG - Phase doesn't exist
+readonly dependencies = ['technology-deployment'];
+
+// ✅ CORRECT - Remove invalid dependency
+readonly dependencies: string[] = [];
+```
+
+**Validation:** Grep for phase ID before declaring dependency:
+```bash
+grep -r "readonly id = 'technology-deployment'" src/simulation/engine/phases/
+```
+
+If no results, the phase doesn't exist.
+
 ## Future Work
 
 ### Potential Enhancements
@@ -382,6 +504,8 @@ export interface PhaseContext {
 2. **Circular dependency detection:** Validate at registration time (not just runtime)
 3. **Performance optimization:** Cache dependency validation results
 4. **Automatic ordering:** Topological sort based on dependencies (replace manual order numbers)
+5. **Backwards dependency detection:** Fail at phase registration if dependency.order > phase.order (Nov 15, 2025)
+6. **Phase ID existence check:** Validate dependency IDs exist before execution (Nov 15, 2025)
 
 ### Known Limitations
 
@@ -389,6 +513,8 @@ export interface PhaseContext {
 - No detection of indirect circular dependencies (A → B → C → A)
 - Manual order numbers still required (dependencies don't auto-order phases)
 - No way to declare "this phase must NOT run after X" (only "must run after X")
+- **No backwards dependency detection at registration time** (Nov 15, 2025 - causes runtime crashes)
+- **No validation that dependency phase IDs exist** (Nov 15, 2025 - typos cause crashes)
 
 ## Related Documentation
 
