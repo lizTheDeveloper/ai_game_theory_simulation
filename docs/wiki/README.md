@@ -60,7 +60,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **MEDIUM PRIORITY BATCH 1** (commit de85f55): 11 violations converted
   - Files: EmergencyResponsePhase.ts (6), organizationManagement.ts (2), regionalDeployment.ts (3)
   - Pattern: Required state fields using `??` fallbacks → `assertStateProperty(...)`
-  - **Running total:** 24 fallbacks converted (13 HIGH + 11 MEDIUM)
+- ✅ **MEDIUM PRIORITY BATCH 2** (commit cb1050c): 3 violations converted
+  - Files: deploymentTimescales.ts (3 government/climate state access)
+  - Pattern: Removed defensive fallbacks from government/climate state access
+- ✅ **MEDIUM PRIORITY BATCH 3** (commit 84f9163): 4 violations converted
+  - Files: EmergencyResponsePhase.ts (4 nested assertion fallbacks)
+  - Pattern: `assertFinite(state.field?.prop ?? 0.5, {...})` → `assertFinite(assertStateProperty(...), {...})`
+  - **Key insight:** Fallbacks hidden inside assertFinite() defeat fail-loudly validation
+  - **Running total:** 31 fallbacks converted (13 HIGH + 18 MEDIUM)
 - 🛡️ **Implementation Fidelity:** A- → A (no more silent bug masking)
 - 📊 **Impact:** Research validity improved (no silent defaults), debugging clarity increased
 - 📖 **Changelog:** logs/defensive_fallback_fix_20251115.md
