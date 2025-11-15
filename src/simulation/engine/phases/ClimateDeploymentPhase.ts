@@ -35,7 +35,9 @@ export class ClimateDeploymentPhase implements SimulationPhase {
   readonly id = 'climate-deployment';
   readonly name = 'Climate Technology Deployment';
   readonly order = 8.5;
-  readonly dependencies = ['technology-deployment']; // Reads tech tree, energy system, updates deployment levels
+  // NOTE: No dependencies - reads tech tree and energy state from previous step
+  // Cannot depend on tech-tree (12.5) due to backwards ordering
+  readonly dependencies: string[] = [];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
