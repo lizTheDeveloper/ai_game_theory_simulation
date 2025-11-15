@@ -6805,9 +6805,15 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
    ID is registered. Check for typos or remove the dependency.
 ```
 
-### Coverage Status (Nov 6, 2025)
+### Coverage Status (Nov 15, 2025)
 
-**32 of 115 phases (27.8%)** now have explicit dependencies.
+**88 of 97 phases (90.7%)** now have explicit dependencies.
+
+**Recent improvements (Nov 15):**
+- Phase consolidation reduced total phases from 115 → 97
+- Dependency coverage expanded from 27.8% (Nov 6) → 90.7% (Nov 15)
+- 13 phase dependency bugs fixed (typos, order violations, nonexistent dependencies)
+- 2 phases updated with explicit empty dependencies (ExtremeWeatherEventsPhase, others)
 
 **Critical phases with dependencies:**
 - **Mortality chain:** BayesianMortalityResolutionPhase, MortalityStabilizersPhase, ClimateImpactCascadePhase
@@ -6820,7 +6826,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
 - **Environmental:** PlanetaryBoundariesPhase, TippingPointPhase, EnvironmentalFeedbackPhase
 - **Food security:** FoodSecurityDegradationPhase, FamineSystemPhase
 
-**Remaining phases (83):** Use decimal ordering only (lower risk, fewer interdependencies)
+**Remaining phases (9):** Lack explicit dependency declarations - identified as CRITICAL issue in architecture review (Nov 15)
 
 ### Benefits
 
