@@ -35,7 +35,12 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
   readonly id = 'consciousness-governance';
   readonly name = 'Consciousness Governance';
   readonly order = 24.5; // After memetic evolution (18.5), before dystopia progression (25)
-  dependencies = ['ai-welfare-update'];
+
+  // DEPENDENCIES (Nov 15, 2025): Requires AI welfare and memetic evolution
+  readonly dependencies = [
+    'ai-welfare-update',      // Order 2.5: AI welfare affects governance readiness
+    'memetic-evolution',      // Order 18.5: Cultural evolution affects consciousness recognition
+  ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
   const governance = state.consciousnessGovernanceReadiness;

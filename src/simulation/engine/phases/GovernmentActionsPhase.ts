@@ -30,6 +30,12 @@ export class GovernmentActionsPhase implements SimulationPhase {
   readonly name = 'Government Agent Actions';
   readonly order = 9.0;
 
+  // DEPENDENCIES (Nov 15, 2025): Requires AI agents and economic state for policy decisions
+  readonly dependencies = [
+    'ai-lifecycle',           // Order 3.0: AI capabilities affect government policy
+    'economic-system',        // Order 31.0: Economic conditions affect government actions
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Execute government actions using new modular structure
     setDeterministicRng(rng);

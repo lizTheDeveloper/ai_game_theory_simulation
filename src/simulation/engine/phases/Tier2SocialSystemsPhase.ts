@@ -29,7 +29,11 @@ export class Tier2SocialSystemsPhase implements SimulationPhase {
   id = 'tier2_social_systems';
   name = 'TIER 2: Social Systems';
   order = 12.61; // Earliest intervention (Centaur Systems)
-  dependencies = ['tech-tree'];
+
+  // DEPENDENCIES (Nov 15, 2025): Requires tech tree for social intervention unlocks
+  readonly dependencies = [
+    'tech-tree',              // Order 12.5: Tech unlocks determine intervention availability
+  ] as const;
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

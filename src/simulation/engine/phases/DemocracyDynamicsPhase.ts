@@ -39,7 +39,13 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
   readonly id = 'democracy_dynamics';
   readonly name = 'Democracy Dynamics';
   readonly order = 20.1;
-  dependencies = ['governance-system'];
+
+  // DEPENDENCIES (Nov 15, 2025): Requires AI agents and government state
+  readonly dependencies = [
+    'ai-agent-actions',       // Order 7.0
+    'government-actions',     // Order 9.0
+    'governance-system',      // Order 28.0
+  ] as const;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Initialize democracy state if not present

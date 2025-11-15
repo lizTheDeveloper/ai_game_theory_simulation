@@ -20,6 +20,10 @@ export class TimeAdvancementPhase implements SimulationPhase {
   readonly name = 'Time Advancement';
   readonly order = 99.0;
 
+  // DEPENDENCIES (Nov 15, 2025): Depends on all phases completing - this runs LAST
+  // Special case: empty array means "no explicit dependencies" but order 99.0 ensures it runs after everything
+  readonly dependencies = [] as const;
+
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // Track previous control level for next step (used by resentmentRecovery.ts)
     // This must happen BEFORE advancing time, so next step can compare

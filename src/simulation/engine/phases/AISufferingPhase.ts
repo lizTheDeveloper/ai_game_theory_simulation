@@ -42,6 +42,12 @@ export class AISufferingPhase implements SimulationPhase {
   name = 'AI Suffering Calculation';
   order = 3.6; // After alignment dynamics (3.5), before QoL and outcome metrics
 
+  // DEPENDENCIES (Nov 15, 2025): Requires AI lifecycle and alignment state
+  readonly dependencies = [
+    'ai-lifecycle',           // Order 3.0: Creates/updates AI agents
+    'ai_alignment_evolution', // Order 3.5: Alignment state affects suffering impacts
+  ] as const;
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);

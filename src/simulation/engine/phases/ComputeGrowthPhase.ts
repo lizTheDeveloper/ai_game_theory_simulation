@@ -20,6 +20,9 @@ export class ComputeGrowthPhase implements SimulationPhase {
   readonly name = 'Compute Growth (Moore\'s Law)';
   readonly order = 1.0;
 
+  // DEPENDENCIES (Nov 15, 2025): No dependencies - reads/writes compute infrastructure only
+  readonly dependencies = [] as const;
+
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute compute growth
     setDeterministicRng(rng);
