@@ -12,9 +12,9 @@
  *
  * This phase allows testing: "What if government spent $100B/month on research?"
  *
- * **EXECUTION ORDER:** 1.5 (after time advance, before agent actions)
+ * **EXECUTION ORDER:** 1.5 (early in step, before agent actions)
  * - Must run BEFORE government/AI agent phases (2-8)
- * - Must run AFTER time advance (0)
+ * - Runs early to set priorities for the current month
  *
  * **DEPENDENCIES:**
  * - None (reads scenario from state, writes government priorities)
@@ -47,7 +47,9 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
   readonly id = 'apply-scenario-priorities';
   readonly name = 'Apply Scenario Priorities';
   readonly order = 1.5;
-  readonly dependencies = ['time-advancement']; // Reads scenario config, applies to state
+  // DEPENDENCIES (Nov 15, 2025): None - reads scenario from state (set during initialization)
+  // REMOVED time-advancement dependency (wrong order: phase 1.5 can't depend on phase 99.0)
+  readonly dependencies = [] as const;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
