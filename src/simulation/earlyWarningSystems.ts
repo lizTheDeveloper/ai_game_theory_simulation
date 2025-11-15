@@ -322,6 +322,7 @@ export function protectCriticalInfrastructure(state: GameState): void {
     w => w.warningLevel === 'red' || w.warningLevel === 'orange'
   );
 
+  // OPTIONAL FIELD: gov.resources is optional on GovernmentAgent type (not pre-initialized)
   if (urgentWarnings.length > 0 && (gov.resources ?? 0) > protectionCost) {
     // Protect all unprotected nodes
     for (const node of unprotectedNodes) {
