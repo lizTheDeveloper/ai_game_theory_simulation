@@ -450,6 +450,53 @@ export function updateRefugeeCrises(state: GameState): void {
   });
   state.outcomeMetrics.dystopiaProbability = newDystopiaProbability;
 
+  // HIGH-4 INTEGRATION (Nov 15, 2025): Refugee politicalInstability → Government Legitimacy
+  // Research:
+  // - Rydgren (2008): Immigration and populism - refugee crises erode government legitimacy
+  // - Hatton (2020): Asylum policy and public trust in institutions
+  // - Dennison & Geddes (2019): European refugee crisis impact on government stability
+  //
+  // Mechanism: Political instability from refugee crises (calculated per crisis above)
+  // accumulates and reduces government legitimacy. Large refugee flows test state capacity,
+  // create political polarization, and fuel anti-government sentiment.
+  //
+  // Calculate total political instability from all active refugee crises
+  const totalPoliticalInstability = system.activeRefugeeCrises.reduce(
+    (sum, crisis) => sum + crisis.politicalInstability,
+    0
+  );
+
+  if (totalPoliticalInstability > 0) {
+    // Moderate impact: 0.02 legitimacy loss per unit of political instability
+    // At 0.5 total instability (moderate crisis), this is -0.01 legitimacy per month
+    // At 1.0 total instability (severe), this is -0.02 per month
+    const legitimacyImpact = totalPoliticalInstability * 0.02;
+
+    const newLegitimacy = Math.max(0, Math.min(1,
+      state.government.legitimacy - legitimacyImpact
+    ));
+    assertProbability(newLegitimacy, {
+      location: 'updateRefugeeCrises.governmentLegitimacy',
+      valueName: 'government.legitimacy',
+      month: state.currentMonth,
+      additionalInfo: {
+        previousLegitimacy: state.government.legitimacy,
+        totalPoliticalInstability,
+        legitimacyImpact
+      }
+    });
+    state.government.legitimacy = newLegitimacy;
+
+    // Log significant legitimacy erosion (>1% per month)
+    if (legitimacyImpact > 0.01 && state.currentMonth % 6 === 0) {
+      console.log(`\n🏛️📉 REFUGEE CRISIS: Government legitimacy eroding`);
+      console.log(`   Political instability: ${(totalPoliticalInstability * 100).toFixed(0)}%`);
+      console.log(`   Legitimacy impact: -${(legitimacyImpact * 100).toFixed(1)}% this month`);
+      console.log(`   Current legitimacy: ${(newLegitimacy * 100).toFixed(0)}%`);
+      console.log(`   Active crises: ${system.activeRefugeeCrises.length}`);
+    }
+  }
+
   // Very high refugee crises can trigger dystopian "fortress world" outcome
   if (system.globalRefugeeTension > 0.8 && !system.bordersOpen) {
     // Militarized borders + surveillance = dystopia path

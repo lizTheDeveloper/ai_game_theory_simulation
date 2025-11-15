@@ -995,7 +995,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       console.log(`Posterior risk (Bayesian): ${(posteriorRisk * 100).toFixed(1)}%`);
       console.log(`Survival adjustment: ${(survivalAdjustment * 100).toFixed(0)}% (${monthsSurvivedAtHighRisk} months)`);
       console.log(`Trigger chance: ${(monthlyTriggerChance * 100).toFixed(3)}% per month`);
-      console.warn(`\n⚠️ CASCADING FEEDBACK LOOPS INITIATED`);
+      console.log(`\n⚠️ CASCADING FEEDBACK LOOPS INITIATED`);
       console.log(`Fast killers (water/food): ${(fastRisk * 100).toFixed(0)}%`);
       console.log(`Medium killers (climate/ocean): ${(mediumRisk * 100).toFixed(0)}%`);
       console.log(`Slow killers (biodiversity/land): ${(slowRisk * 100).toFixed(0)}%`);
@@ -1069,7 +1069,7 @@ function updateBoundaryStatus(boundary: PlanetaryBoundary): void {
  */
 export function triggerTippingPointCascade(state: GameState): void {
   // This function is deprecated - cascade now handled in updatePlanetaryBoundaries
-  console.warn('⚠️  Old cascade trigger called - system now uses continuous severity');
+  console.log('⚠️ Old cascade trigger called - system now uses continuous severity');
 }
 
 /**
@@ -1538,7 +1538,7 @@ function updateOzoneRecoverySystem(state: GameState): void {
     console.log(`   Years to full recovery: ${(2066 - year)} years`);
 
     if (ozone.rocketLaunchImpact > 0.05) {
-      console.warn(`   ⚠️  Rocket launch impact: ${(ozone.rocketLaunchImpact * 100).toFixed(2)}% (slowing recovery)`);
+      console.log(`   ⚠️ Rocket launch impact: ${(ozone.rocketLaunchImpact * 100).toFixed(2)}% (slowing recovery)`);
     }
 
     if (ozone.recoveryProgress > 0.90) {

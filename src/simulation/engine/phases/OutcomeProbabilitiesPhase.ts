@@ -35,44 +35,59 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
 
     // Validate all outcome probabilities are valid [0, 1] ranges
     // NOTE: These ARE probabilities (unlike QoL which is a wellbeing score)
-    if (outcomeProbs.utopiaProbability !== undefined) {
-      assertProbability(outcomeProbs.utopiaProbability, {
-        location: 'OutcomeProbabilitiesPhase.execute',
-        valueName: 'outcomeProbs.utopiaProbability',
-        month: state.currentMonth,
-      });
-    }
+    // All fields must be defined - missing probabilities indicate calculation bugs
+    const utopiaProbability = assertDefined(outcomeProbs.utopiaProbability, {
+      location: 'OutcomeProbabilitiesPhase.execute',
+      valueName: 'outcomeProbs.utopiaProbability',
+      month: state.currentMonth,
+      expectedSource: 'calculateOutcomeProbabilities',
+    });
+    assertProbability(utopiaProbability, {
+      location: 'OutcomeProbabilitiesPhase.execute',
+      valueName: 'utopiaProbability',
+      month: state.currentMonth,
+    });
 
-    if (outcomeProbs.dystopiaProbability !== undefined) {
-      assertProbability(outcomeProbs.dystopiaProbability, {
-        location: 'OutcomeProbabilitiesPhase.execute',
-        valueName: 'outcomeProbs.dystopiaProbability',
-        month: state.currentMonth,
-      });
-    }
+    const dystopiaProbability = assertDefined(outcomeProbs.dystopiaProbability, {
+      location: 'OutcomeProbabilitiesPhase.execute',
+      valueName: 'outcomeProbs.dystopiaProbability',
+      month: state.currentMonth,
+      expectedSource: 'calculateOutcomeProbabilities',
+    });
+    assertProbability(dystopiaProbability, {
+      location: 'OutcomeProbabilitiesPhase.execute',
+      valueName: 'dystopiaProbability',
+      month: state.currentMonth,
+    });
 
-    if (outcomeProbs.extinctionProbability !== undefined) {
-      assertProbability(outcomeProbs.extinctionProbability, {
-        location: 'OutcomeProbabilitiesPhase.execute',
-        valueName: 'outcomeProbs.extinctionProbability',
-        month: state.currentMonth,
-      });
-    }
+    const extinctionProbability = assertDefined(outcomeProbs.extinctionProbability, {
+      location: 'OutcomeProbabilitiesPhase.execute',
+      valueName: 'outcomeProbs.extinctionProbability',
+      month: state.currentMonth,
+      expectedSource: 'calculateOutcomeProbabilities',
+    });
+    assertProbability(extinctionProbability, {
+      location: 'OutcomeProbabilitiesPhase.execute',
+      valueName: 'extinctionProbability',
+      month: state.currentMonth,
+    });
 
     // Validate probabilities sum to approximately 1.0 (within tolerance)
-    const totalProb =
-      (outcomeProbs.utopiaProbability ?? 0) +
-      (outcomeProbs.dystopiaProbability ?? 0) +
-      (outcomeProbs.extinctionProbability ?? 0);
+    const totalProb = utopiaProbability + dystopiaProbability + extinctionProbability;
 
+    // Probabilities must sum to 1.0 within tight tolerance - deviation indicates calculation bug
     if (Math.abs(totalProb - 1.0) > 0.01) {
-      console.warn(
-        `⚠️ Outcome probabilities do not sum to 1.0\n` +
+      throw new Error(
+        `❌ Outcome probabilities do not sum to 1.0 in OutcomeProbabilitiesPhase.execute\n` +
         `   Total: ${totalProb.toFixed(3)}\n` +
-        `   Utopia: ${(outcomeProbs.utopiaProbability ?? 0).toFixed(3)}\n` +
-        `   Dystopia: ${(outcomeProbs.dystopiaProbability ?? 0).toFixed(3)}\n` +
-        `   Extinction: ${(outcomeProbs.extinctionProbability ?? 0).toFixed(3)}\n` +
-        `   Month: ${state.currentMonth}`
+        `   Utopia: ${utopiaProbability.toFixed(3)}\n` +
+        `   Dystopia: ${dystopiaProbability.toFixed(3)}\n` +
+        `   Extinction: ${extinctionProbability.toFixed(3)}\n` +
+        `   Month: ${state.currentMonth}\n` +
+        `\n` +
+        `   Outcome probabilities must sum to 1.0 (mutually exclusive, collectively exhaustive).\n` +
+        `   Deviation >0.01 indicates a bug in calculateOutcomeProbabilities.\n` +
+        `   Fix: Check probability calculation and normalization logic.`
       );
     }
 

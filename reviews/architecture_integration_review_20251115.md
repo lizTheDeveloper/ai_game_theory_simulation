@@ -148,26 +148,62 @@ quality-of-life → ubi-system → apply-scenario-priorities → tech-tree
 **Effort:** Large (10-12 hours)
 **Risk:** Medium
 
-### HIGH-4: Missing Cross-System Integration Points
+### HIGH-4: Missing Cross-System Integration Points ✅ RESOLVED
 **Location:** Various phases
 **Severity:** HIGH
 **Impact:** Incomplete simulation dynamics, missed cascading effects
+**Status:** ✅ RESOLVED (Nov 15, 2025)
 
-**Key Missing Integrations:**
-- Nuclear winter doesn't affect solar tech efficiency
-- Ocean acidification doesn't impact water tech
-- AI collectives don't influence international relations
-- Unemployment doesn't feed back to social stability properly
-- Climate refugees don't affect government stability
+**Resolution Summary:**
+Architecture review claimed 5 missing integrations. Audit revealed:
+- ✅ **2 ACTUALLY MISSING** → Implemented with research backing
+- ✅ **2 ALREADY IMPLEMENTED** → False positives (Nov 7, 2025 & earlier)
+- ⏭️ **1 DEFERRED** → Low priority, requires architectural changes
 
-**Recommendation:**
-1. Create integration matrix document
-2. Add integration tests for cross-system effects
-3. Implement missing connections incrementally
-4. Use event system for loose coupling
+**Implementations Completed:**
+1. ✅ **Refugee Crises → Government Legitimacy** (`refugeeCrises.ts:453-498`)
+   - Political instability from refugee crises reduces government legitimacy
+   - Research: Rydgren (2008), Hatton (2020), Dennison & Geddes (2019)
+   - Impact: 2% legitimacy loss per unit of political instability per month
 
-**Effort:** Very Large (20+ hours total)
-**Risk:** Low (additive changes)
+2. ✅ **Ocean Acidification → Desalination Efficiency** (`freshwaterDepletion.ts:107-148`)
+   - pH drop below baseline reduces desalination efficiency
+   - Research: Kim et al. (2020), Remize et al. (2022) [needs validation]
+   - Impact: 30% penalty at pH 7.9, 50% at pH 7.8
+
+**False Positives Identified:**
+3. ✅ **Nuclear Winter → Solar Tech Efficiency** - ALREADY IMPLEMENTED (Nov 7, 2025)
+   - Location: `powerGeneration.ts:411-479`
+   - Research: Xia et al. (2022), Coupe et al. (2019), Robock & Toon (2012)
+
+4. ✅ **Unemployment → Social Stability** - ALREADY IMPLEMENTED
+   - Location: `calculations.ts:calculateSocialStability()`
+   - Multiple pathways: direct stability impact + community bonds + meaning crisis
+
+**Deferred (Low Priority):**
+5. ⏭️ **AI Collectives → International Relations** - Deferred
+   - Requires architectural changes (per-nation collective tracking)
+   - Priority: MEDIUM (nice-to-have, not critical)
+
+**Deliverables:**
+- Integration implementations with research citations
+- Comprehensive cross-system integration matrix (`docs/CROSS_SYSTEM_INTEGRATION_MATRIX.md`)
+- Monte Carlo validation (N=3, 120 months) - ✅ PASSED
+- Implementation summary (`logs/high4_implementation_summary_20251115.md`)
+
+**Files Modified:**
+- `src/simulation/refugeeCrises.ts` (47 lines added)
+- `src/simulation/freshwaterDepletion.ts` (45 lines added + normalization fix)
+- `docs/CROSS_SYSTEM_INTEGRATION_MATRIX.md` (350+ lines, new file)
+
+**Validation:**
+- Monte Carlo N=3, 120 months completed successfully
+- No NaN/Infinity errors from new integrations
+- Refugee legitimacy erosion observable: 99% → 94%
+- Desalination efficiency penalty observable: 50% at severe acidification
+
+**Effort:** 5.5 hours (audit 1.5h, implementation 2.0h, documentation 1.5h, validation 0.5h)
+**Risk:** Low (additive changes, no breaking changes)
 
 ## MEDIUM PRIORITY (Technical debt worth addressing between features)
 
@@ -184,6 +220,16 @@ quality-of-life → ubi-system → apply-scenario-priorities → tech-tree
 **Recommendation:** Standardize on fail-fast with clear error messages
 **Effort:** Medium (4-6 hours)
 **Risk:** Low
+
+**Resolution (Nov 15, 2025):**
+- Created comprehensive error handling guidelines (`docs/ERROR_HANDLING_GUIDELINES.md`)
+- Standardized critical phases (OutcomeProbabilities, PlanetaryBoundaries, Capabilities)
+- Replaced console.warn/console.error with consistent emoji conventions
+- Fixed silent fallbacks in probability calculations
+- **Impact:** Bugs now surface immediately with full diagnostic context
+- **Files:** OutcomeProbabilitiesPhase.ts, planetaryBoundaries.ts, capabilities.ts
+- **Validation:** Type checking ✅ PASSED
+- **Summary:** `docs/ERROR_HANDLING_STANDARDIZATION_SUMMARY.md`
 
 ### MEDIUM-2: Event System Underutilization
 **Location:** Phase implementations

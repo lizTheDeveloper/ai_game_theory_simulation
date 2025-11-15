@@ -164,14 +164,26 @@ export function initializeResearchInvestments(economicStage: number = 0): Resear
  */
 export function calculateResearchTotal(research: AIResearchCapabilities): number {
   // Validate all research subdomain values - fail loudly on NaN
+  // Use assertion utilities for consistency
   const validateValue = (val: number, name: string) => {
     if (val === undefined) {
-      throw new Error(`Research capability ${name} is undefined`);
+      throw new Error(
+        `❌ Research capability ${name} is undefined\n` +
+        `   Full research state: ${JSON.stringify(research, null, 2)}\n` +
+        `\n` +
+        `   This indicates missing initialization or state corruption.\n` +
+        `   Fix: Check AI capability initialization.`
+      );
     }
-    if (isNaN(val)) {
-      console.error(`❌ NaN in research capability: ${name}`);
-      console.error(`   Full research state: ${JSON.stringify(research, null, 2)}`);
-      throw new Error(`NaN in research capability ${name} - trace source of corruption`);
+    if (!isFinite(val)) {
+      throw new Error(
+        `❌ Non-finite value in research capability: ${name}\n` +
+        `   Value: ${val}\n` +
+        `   Full research state: ${JSON.stringify(research, null, 2)}\n` +
+        `\n` +
+        `   This indicates NaN propagation in research capability calculations.\n` +
+        `   Fix: Trace source of NaN in research capability updates.`
+      );
     }
     return val;
   };
@@ -210,10 +222,19 @@ export function calculateResearchTotal(research: AIResearchCapabilities): number
   );
 
   // Final NaN check (should never happen after above validation)
-  if (isNaN(total)) {
-    console.error(`❌ NaN total research capability despite validation`);
-    console.error(`   biotechAvg=${biotechAvg}, materialsAvg=${materialsAvg}, climateAvg=${climateAvg}, computerScienceAvg=${computerScienceAvg}`);
-    throw new Error(`Research total calculation produced NaN - check arithmetic`);
+  if (!isFinite(total)) {
+    throw new Error(
+      `❌ Non-finite total research capability despite validation\n` +
+      `   Total: ${total}\n` +
+      `   Components:\n` +
+      `   - biotechAvg: ${biotechAvg}\n` +
+      `   - materialsAvg: ${materialsAvg}\n` +
+      `   - climateAvg: ${climateAvg}\n` +
+      `   - computerScienceAvg: ${computerScienceAvg}\n` +
+      `\n` +
+      `   This indicates NaN propagation in weighted average calculation.\n` +
+      `   Fix: Check weighting arithmetic (should never reach this point).`
+    );
   }
 
   return total;
@@ -225,14 +246,26 @@ export function calculateResearchTotal(research: AIResearchCapabilities): number
  */
 export function calculateTotalCapabilityFromProfile(profile: AICapabilityProfile): number {
   // Validate all profile dimension values - fail loudly on NaN
+  // Use consistent error format
   const validateValue = (val: number, name: string) => {
     if (val === undefined) {
-      throw new Error(`Capability profile dimension ${name} is undefined`);
+      throw new Error(
+        `❌ Capability profile dimension ${name} is undefined\n` +
+        `   Full profile: ${JSON.stringify(profile, null, 2)}\n` +
+        `\n` +
+        `   This indicates missing initialization or state corruption.\n` +
+        `   Fix: Check AI capability profile initialization.`
+      );
     }
-    if (isNaN(val)) {
-      console.error(`❌ NaN in capability profile dimension: ${name}`);
-      console.error(`   Full profile: ${JSON.stringify(profile, null, 2)}`);
-      throw new Error(`NaN in capability dimension ${name} - trace source of corruption`);
+    if (!isFinite(val)) {
+      throw new Error(
+        `❌ Non-finite value in capability profile dimension: ${name}\n` +
+        `   Value: ${val}\n` +
+        `   Full profile: ${JSON.stringify(profile, null, 2)}\n` +
+        `\n` +
+        `   This indicates NaN propagation in capability calculations.\n` +
+        `   Fix: Trace source of NaN in capability dimension ${name}.`
+      );
     }
     return val;
   };
@@ -250,11 +283,22 @@ export function calculateTotalCapabilityFromProfile(profile: AICapabilityProfile
   );
 
   // Final NaN check (should never happen after above validation)
-  if (isNaN(total)) {
-    console.error(`❌ NaN total capability despite validation`);
-    console.error(`   Components: physical=${profile.physical}, digital=${profile.digital}, cognitive=${profile.cognitive}`);
-    console.error(`   social=${profile.social}, research=${researchTotal}, economic=${profile.economic}, selfImprovement=${profile.selfImprovement}`);
-    throw new Error(`Total capability calculation produced NaN - check arithmetic`);
+  if (!isFinite(total)) {
+    throw new Error(
+      `❌ Non-finite total capability despite validation\n` +
+      `   Total: ${total}\n` +
+      `   Components:\n` +
+      `   - physical: ${profile.physical}\n` +
+      `   - digital: ${profile.digital}\n` +
+      `   - cognitive: ${profile.cognitive}\n` +
+      `   - social: ${profile.social}\n` +
+      `   - research: ${researchTotal}\n` +
+      `   - economic: ${profile.economic}\n` +
+      `   - selfImprovement: ${profile.selfImprovement}\n` +
+      `\n` +
+      `   This indicates NaN propagation in weighted sum calculation.\n` +
+      `   Fix: Check weighting arithmetic (should never reach this point).`
+    );
   }
 
   return total;

@@ -1,6 +1,11 @@
 # Research Update Queue
+<<<<<<< Updated upstream
 **Generated:** 11/15/2025, 2:30:04 PM
 **Files Scanned:** 404
+=======
+**Generated:** 11/15/2025, 3:30:04 PM
+**Files Scanned:** 405
+>>>>>>> Stashed changes
 
 ---
 
@@ -12,7 +17,11 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
+<<<<<<< Updated upstream
 **Count:** 146 (36.1%)
+=======
+**Count:** 146 (36.0%)
+>>>>>>> Stashed changes
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -709,6 +718,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/visionary_ideas_research_validation_2025-10-16.md`
 
+### `vulnerable_world_hypothesis_ai_risk_20251111.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/vulnerable_world_hypothesis_ai_risk_20251111.md`
+
 ### `water_scarcity_migration_immobility_20251020.md`
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
@@ -748,12 +762,13 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 20 (5.0%)
+**Count:** 21 (5.2%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
 - `PHASE1_LAYER2_COMPLETION_REPORT.md` - Oldest: 2020 (5 years)
 - `RESEARCH_TRIAGE_FABRICATED_CITATIONS.md` - Oldest: 2020 (5 years)
+- `ai_capability_scaling_20251113.md` - Oldest: 2021 (4 years)
 - `ai_infrastructure_resources_verification_20251031.md` - Oldest: 2021 (4 years)
 - `ai_scaling_laws_paradigm_shift_20251107.md` - Oldest: 2020 (5 years)
 - `citation_verification_tier2_synthetic_ecosystems_20251104.md` - Oldest: 2020 (5 years)
@@ -775,7 +790,11 @@
 
 ## ✅ LOW (Monitor Only)
 
+<<<<<<< Updated upstream
 **Count:** 238 (58.9%)
+=======
+**Count:** 238 (58.8%)
+>>>>>>> Stashed changes
 
 All sources <3 years old. No action required.
 
@@ -785,26 +804,45 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
+<<<<<<< Updated upstream
 | Total files | 404 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 146 (36.1%) |
 | MEDIUM | 20 (5.0%) |
 | LOW | 238 (58.9%) |
 | Average age | 8.1 years |
+=======
+| Total files | 405 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 146 (36.0%) |
+| MEDIUM | 21 (5.2%) |
+| LOW | 238 (58.8%) |
+| Average age | 8.0 years |
+>>>>>>> Stashed changes
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
+<<<<<<< Updated upstream
 | Current (<3yr) | 238 | 58.9% |
 | Warning (3-5yr) | 20 | 5.0% |
 | Critical (>5yr) | 146 | 36.1% |
+=======
+| Current (<3yr) | 238 | 58.8% |
+| Warning (3-5yr) | 21 | 5.2% |
+| Critical (>5yr) | 146 | 36.0% |
+>>>>>>> Stashed changes
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
+<<<<<<< Updated upstream
 - **Current:** 36.1% critical (>5yr)
+=======
+- **Current:** 36.0% critical (>5yr)
+>>>>>>> Stashed changes
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
