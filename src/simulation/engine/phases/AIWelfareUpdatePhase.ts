@@ -18,10 +18,10 @@ export class AIWelfareUpdatePhase implements SimulationPhase {
   readonly name = 'AI Welfare Update v2.1';
   readonly order = 2.5;
 
-  // DEPENDENCIES (Nov 15, 2025): Requires AI agents and relationships
-  readonly dependencies = [
-    'ai-lifecycle',           // Order 3.0: Creates/updates AI agents
-  ] as const;
+  // DEPENDENCIES (Nov 15, 2025): None - reads AI agents from state
+  // REMOVED ai-lifecycle dependency (wrong order: phase 2.5 can't depend on phase 4.0)
+  // Uses AI agents from initialization or previous step's state
+  readonly dependencies = [] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const month = state.currentMonth;

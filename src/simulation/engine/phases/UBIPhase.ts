@@ -12,9 +12,10 @@ export class UBIPhase implements SimulationPhase {
   readonly id = 'ubi-system';
   readonly order = 15.3; // After extreme weather (15.2), before tier2 interpretability (15.4)
 
-  // DEPENDENCIES (Nov 6, 2025): Requires tech tree and governance for UBI deployment
+  // DEPENDENCIES (Nov 15, 2025): Requires governance for UBI deployment
+  // REMOVED tech-tree dependency - breaks circular dependency chain (HIGH-1)
+  // UBI doesn't read from techTreeState, tech unlocks are checked via government actions
   readonly dependencies = [
-    'tech-tree',                 // Order 12.5: Tech breakthroughs enable UBI programs
     'governance-system',        // Order 10.0: Government capability to implement UBI
   ];
 
