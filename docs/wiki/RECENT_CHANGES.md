@@ -4,6 +4,33 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔧 Worker Lock File Management (November 15, 2025)
+
+**🔧 INFRASTRUCTURE: Lock File Cleanup** (Nov 15, 2025, commit 5e28391)
+
+**Summary:** Fixed worker lock file management to prevent stale PID conflicts.
+
+**Problem:**
+- Lock files (`.autonomous-worker.lock`, `.researcher-worker.lock`) were tracked in git
+- Stale PIDs from previous sessions caused worker execution blocks
+- Git restore operations reintroduced old lock files with invalid PIDs
+
+**Solution:**
+- Removed lock files from git tracking
+- Added `*.lock` to `.gitignore`
+- Lock files now ephemeral runtime state only
+
+**Impact:**
+- Prevents autonomous-worker-watcher health check failures
+- Eliminates lock file git conflicts
+- Cleaner repository state (runtime files not committed)
+
+**Files Changed:**
+- `.gitignore` - Added `*.lock` pattern
+- Deleted `.autonomous-worker.lock` and `.researcher-worker.lock` from tracking
+
+---
+
 ## ✅ Architecture Review and Validation (November 14, 2025)
 
 **🏛️ VALIDATION: Comprehensive Architecture Review** (Nov 14, 2025, commit 8f51488)
