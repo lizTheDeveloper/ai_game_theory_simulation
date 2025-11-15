@@ -18,6 +18,7 @@ import {
   RATES,
   MULTIPLIERS,
   BASELINES,
+  FLOORS,
   TOLERANCES,
 } from './centralConfig';
 
@@ -397,6 +398,44 @@ export function validateSimulationConfig(): void {
     console.log('  ✅ Logical consistency validated');
   } catch (error) {
     validationErrors.push(`Logical consistency validation failed: ${error}`);
+  }
+
+  // === VALIDATE FLOORS (Nov 15, 2025 - NEW CATEGORY) ===
+  // Numerical stability minimums to prevent division by zero
+  try {
+    // Geometric mean floor must be positive and small
+    assertInRange(FLOORS.GEOMETRIC_MEAN_FLOOR, 0.0001, 0.01, {
+      location: 'validateSimulationConfig',
+      valueName: 'FLOORS.GEOMETRIC_MEAN_FLOOR',
+    });
+
+    // Extinction rate bounds must be ordered: MIN < SAFE < MAX
+    assertInRange(FLOORS.MIN_EXTINCTION_RATE, 0.1, 10, {
+      location: 'validateSimulationConfig',
+      valueName: 'FLOORS.MIN_EXTINCTION_RATE',
+    });
+    assertInRange(FLOORS.SAFE_EXTINCTION_RATE, 5, 20, {
+      location: 'validateSimulationConfig',
+      valueName: 'FLOORS.SAFE_EXTINCTION_RATE',
+    });
+    assertInRange(FLOORS.MAX_EXTINCTION_RATE, 100, 10000, {
+      location: 'validateSimulationConfig',
+      valueName: 'FLOORS.MAX_EXTINCTION_RATE',
+    });
+
+    // Logical consistency: MIN < SAFE < MAX
+    if (FLOORS.MIN_EXTINCTION_RATE >= FLOORS.SAFE_EXTINCTION_RATE) {
+      throw new Error(
+        `MIN_EXTINCTION_RATE (${FLOORS.MIN_EXTINCTION_RATE}) must be < SAFE_EXTINCTION_RATE (${FLOORS.SAFE_EXTINCTION_RATE})`
+      );
+    }
+    if (FLOORS.SAFE_EXTINCTION_RATE >= FLOORS.MAX_EXTINCTION_RATE) {
+      throw new Error(
+        `SAFE_EXTINCTION_RATE (${FLOORS.SAFE_EXTINCTION_RATE}) must be < MAX_EXTINCTION_RATE (${FLOORS.MAX_EXTINCTION_RATE})`
+      );
+    }
+  } catch (error) {
+    validationErrors.push(`FLOORS validation failed: ${error}`);
   }
 
   // === FAIL IF ANY ERRORS ===
