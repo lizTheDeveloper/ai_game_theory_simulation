@@ -938,13 +938,19 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
 - **Status:** FIXED via integration (commit 26f30b0c7)
 - **Remaining:** Formula validation against empirical data (10× cap vs 100× observed)
 
-**ARCH-2: ✅ 299 Defensive Fallbacks - CRITICAL PRIORITY COMPLETE**
-- **Status:** ✅ COMPLETE (WEEK 2 + Nov 8 CRITICAL-4 - 24 CRITICAL/HIGH eliminated)
+**ARCH-2: 🟡 Defensive Fallback Migration - PARTIALLY COMPLETE (44/169 violations eliminated)**
+- **Status:** 🟡 PARTIALLY COMPLETE (Nov 15, 2025 - 12% additional progress)
 - **Problem:** Silent fallbacks (`?? 0`, `|| []`, `isNaN(x) ? default`) hide bugs
-- **Solution:** Comprehensive audit completed, Oct 2025 ecology NaN bug pattern ELIMINATED
-- **Impact (WEEK 2):** 5 CRITICAL + 10 HIGH removed from simulation hot paths (planetaryBoundaries.ts:969 THE bug destroyed)
-- **Impact (Nov 8):** 9 additional defensive bugs eliminated (research investment NaN, critical juncture, AI agent actions)
-- **Remaining:** 406 lower-priority fallbacks tracked, non-blocking for simulation integrity
+- **Progress:**
+  - WEEK 2 (Nov 6): 5 CRITICAL + 10 HIGH eliminated from simulation hot paths (planetaryBoundaries.ts:969 bug destroyed)
+  - CRITICAL-4 (Nov 8): 9 additional defensive bugs eliminated (research investment NaN, critical juncture, AI agent actions)
+  - Nov 15 Session: 20 additional violations fixed (CRITICAL + HIGH priority: EmergencyResponsePhase, OutcomeProbabilitiesPhase, aiSuffering, dystopiaProgression, alignmentDynamics, earlyWarningSystems)
+- **Impact:** Oct 2025 ecology NaN bug pattern ELIMINATED in hot paths
+- **Type Fixes:** 2 incorrectly-optional fields made required (`aiSufferingMetrics`, `government.resources`)
+- **Validation:** Monte Carlo 80% success rate (8/10 runs)
+- **Decision Point:** Complete remaining 149 violations or revert for consistency (partial migration creates inconsistent patterns)
+- **Remaining:** 149 violations in MEDIUM priority code paths
+- **Archive:** `plans/completed/session_work_nov15_2025.md`
 
 **ARCH-3: ✅ 180 Unvalidated State Mutations - RESOLVED**
 - **Status:** ✅ COMPLETE (WEEK 3 + Nov 8 CRITICAL-1 - 97.2% coverage)
