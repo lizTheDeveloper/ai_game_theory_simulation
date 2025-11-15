@@ -1,0 +1,22 @@
+{
+  "config": {
+    "runs": 20,
+    "months": 240,
+    "scenarioMode": "dual",
+    "timestamp": "2025-11-15T08:12:19.566Z"
+  },
+  "results": [],
+  "determinismAnalysis": {
+    "summary": "\n═══════════════════════════════════════════════════════\n   DETERMINISM ANALYSIS - 0 Monte Carlo Runs\n═══════════════════════════════════════════════════════\n\n🔴 DETERMINISTIC SYSTEMS: 0/0 metrics (NaN%)\n\n\n\nMetrics with CV < 1% are considered deterministic.\nHealthy stochastic systems should have CV > 5%.\n\nAnalyzed at months: 60, 120, 180, 240\n",
+    "deterministicSystems": [],
+    "totalMetrics": 0,
+    "deterministicCount": 0
+  },
+  "populationStats": {
+    "mean": null,
+    "stdDev": null,
+    "cv": null,
+    "min": null,
+    "max": null
+  }
+}
