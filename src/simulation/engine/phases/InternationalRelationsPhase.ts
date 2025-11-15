@@ -30,7 +30,7 @@ export class InternationalRelationsPhase implements SimulationPhase {
   readonly id = 'international-relations';
   readonly name = 'International Relations Update';
   readonly order = 20.51;  // Batch 5: moved from 13.0 due to nuclear_command_control (20) dependency
-  readonly dependencies = ['ai-agent-actions', 'nuclear_command_control'];
+  readonly dependencies = ['ai-agent-actions'];  // nuclear_command_control phase removed (Nov 15, 2025)
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

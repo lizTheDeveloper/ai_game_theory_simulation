@@ -15,10 +15,10 @@ export class CrisisPointsPhase implements SimulationPhase {
   readonly name = 'Crisis Points Check';
   readonly order = 23.0;
 
-  // DEPENDENCIES (Nov 15, 2025): Requires benchmark evaluations and crisis detection
+  // DEPENDENCIES (Nov 15, 2025): Requires benchmark evaluations
+  // NOTE: crisis-detection runs at order 36.0 (AFTER this phase), so no dependency
   readonly dependencies = [
     'benchmark-evaluations',  // Order 22.0: Benchmarks detect crisis triggers
-    'crisis-detection',       // Order 26.0: Crisis detection must complete first
   ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
