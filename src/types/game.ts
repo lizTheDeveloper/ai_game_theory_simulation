@@ -670,6 +670,77 @@ export interface GameState {
    */
   speculativeThresholds?: import('../simulation/thresholds/tier3Config').Tier3Thresholds;
 
+  /**
+   * Coordinated Technology Deployment System (Nov 15, 2025)
+   *
+   * AI-managed gradual deployment of transformative technologies to minimize transition mortality.
+   * Tracks deployment pacing, regional capacity, support system activation, and transition mortality outcomes.
+   *
+   * Research: /research/transition_mortality_coordination_effectiveness_20251115.md
+   * Critique: /reviews/transition_mortality_research_critique_20251115.md (Grade B-, 70% max effectiveness)
+   *
+   * Historical precedents:
+   * - Chaotic rapid transition (Great Leap Forward, USSR collectivization): 3.5-8.1% population mortality
+   * - Coordinated gradual transition (Green Revolution, Marshall Plan): 0.14-0.53% mortality
+   * - Coordination effectiveness: 50-70% reduction (NOT 96-98% - Sylvia-adjusted)
+   *
+   * Key parameters (research-backed):
+   * - Optimal deployment speed: 4-8% per year (Green Revolution pace)
+   * - Support system effectiveness: 40-60% cumulative protection
+   * - Labor participation penalty: 2-5% reduction from support systems
+   * - Maximum AI coordination: Human best + 20% (NOT 95% - speculative cap)
+   *
+   * Expected impact: Reduces god mode instant deployment mortality from 30% to 9-15% with coordination
+   */
+  coordinatedDeployment?: {
+    // Regional deployment capacity assessment (0-1)
+    regionalCapacity: {
+      highIncome: number;       // OECD countries
+      upperMiddle: number;      // China, Brazil, Russia
+      lowerMiddle: number;      // India, Indonesia, Nigeria
+      lowIncome: number;        // Sub-Saharan Africa, least developed
+    };
+
+    // Support system activation levels (0-1)
+    supportSystems: {
+      universalBasicIncome: number;      // Cash transfer coverage
+      retrainingPrograms: number;        // Worker retraining quality
+      foodSecurity: number;              // Food assistance coverage
+      healthcareAccess: number;          // Healthcare system maintenance
+    };
+
+    // Coordination quality metrics (0-1)
+    globalCoordinationQuality: number;   // AI governance coordination effectiveness (max 0.70 per Sylvia)
+    internationalAlignment: number;      // Cross-border policy harmonization
+    regionalAdaptation: number;          // Local customization capacity
+
+    // Deployment pacing
+    currentDeploymentSpeed: number;      // Fraction per year (0-0.30)
+    optimalDeploymentSpeed: number;      // Calculated optimal rate based on capacity
+
+    // Transition mortality tracking
+    transitionMortality: {
+      annualExcessMortality: number;     // Deaths per 1000 population per year
+      cumulativeTransitionDeaths: number; // Total deaths (millions)
+      mortalityByMechanism: {
+        famine: number;                  // Agricultural disruption mortality
+        unemployment: number;            // Job loss + inadequate support
+        healthcareLoss: number;          // Healthcare system collapse
+        coordinationFailure: number;     // Poor deployment coordination
+        other: number;                   // Infrastructure + other
+      };
+    };
+
+    // Deployment event log
+    deploymentEvents: Array<{
+      month: number;
+      techId: string;
+      deploymentDelta: number;           // Progress this month (0-1)
+      mortalityImpact: number;           // Deaths this month (millions)
+      coordinationQuality: number;       // Coordination effectiveness at deployment
+    }>;
+  };
+
   // Phase 1B Refinement (Oct 17, 2025): Stratified Outcome Classification
   // Distinguishes humane (prosperity without mass death) vs pyrrhic (recovery after catastrophe)
   // Research: Wilkinson & Pickett (2009), Rawls (1971)
