@@ -28,6 +28,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 15: Climate Tipping Points Research Update - Sept/April 2025 ESD Papers** (commit 659da8b)
+- 🔬 **Research Enhancement:** Added 2 critical 2025 papers to climate_tipping_timescales research
+- 📄 **New Sources:**
+  - Ritchie et al. (Sept 2025): Temporary 1.5°C overshoot less dangerous than sustained exceedance - duration matters more than threshold crossing
+  - Deutloff et al. (April 2025): 62% tipping risk under current policies, sustainable pathways significantly reduce risks
+- 📊 **Research Quality:** 85% → 90% from 2022-2025 sources (A+ grade maintained)
+- 💡 **Critical Insight:** Overshoot duration modeling now research-backed (policy value in rapid temperature reduction even after threshold crossing)
+- 📁 **File Updated:** research/climate_tipping_timescales_20251106.md
+
 **Nov 15: Merge Conflict Resolution - Performance Optimizations Preserved** (commit e895d6f)
 - 🔧 **Merge Fix:** Resolved conflicts between upstream fixes and stashed changes
 - ✅ **Performance Optimizations Preserved:**
