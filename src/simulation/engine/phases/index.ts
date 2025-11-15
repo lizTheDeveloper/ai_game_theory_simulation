@@ -59,6 +59,7 @@ export { CrisisDetectionPhase } from './CrisisDetectionPhase';
 // export { UpwardSpiralsPhase } from './UpwardSpiralsPhase';  // CONSOLIDATED into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
 // export { CooperativeSpiralsPhase } from './CooperativeSpiralsPhase';  // CONSOLIDATED into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
 export { TechTreePhase } from './TechTreePhase';
+export { CoordinatedDeploymentPhase } from './CoordinatedDeploymentPhase';  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
 export { MeaningRenaissancePhase } from './MeaningRenaissancePhase';
 // export { ConflictResolutionPhase } from './ConflictResolutionPhase';  // CONSOLIDATED into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
 // export { FlashWarEscalationPhase } from './FlashWarEscalationPhase';  // CONSOLIDATED into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
