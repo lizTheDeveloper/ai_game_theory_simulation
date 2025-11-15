@@ -61,6 +61,7 @@ import {
   // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   TechTreePhase,
+  CoordinatedDeploymentPhase,  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
   MeaningRenaissancePhase,
   // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
@@ -517,6 +518,7 @@ export class SimulationEngine {
     // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
     // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new TechTreePhase());
+    this.orchestrator.registerPhase(new CoordinatedDeploymentPhase());  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
     this.orchestrator.registerPhase(new MeaningRenaissancePhase());
     // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
     // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
