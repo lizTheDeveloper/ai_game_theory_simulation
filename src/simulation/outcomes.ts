@@ -146,12 +146,25 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
       break;
   }
 
-  // Normalize probabilities (add small baseline to prevent division by zero)
-  const total = utopiaScore + dystopiaScore + extinctionScore + 0.1;
-  
-  const utopiaProbability = utopiaScore / total;
-  const dystopiaProbability = dystopiaScore / total;
-  const extinctionProbability = extinctionScore / total;
+  // Normalize probabilities to sum to 1.0
+  const total = utopiaScore + dystopiaScore + extinctionScore;
+
+  // Handle zero case: if all scores are zero, default to equal probabilities
+  let utopiaProbability: number;
+  let dystopiaProbability: number;
+  let extinctionProbability: number;
+
+  if (total < 0.001) {
+    // All scores near zero - default to equal distribution
+    utopiaProbability = 1/3;
+    dystopiaProbability = 1/3;
+    extinctionProbability = 1/3;
+  } else {
+    // Normal case: normalize to sum to 1.0
+    utopiaProbability = utopiaScore / total;
+    dystopiaProbability = dystopiaScore / total;
+    extinctionProbability = extinctionScore / total;
+  }
   
   // Determine active attractor (which outcome is "locked in")
   let activeAttractor: OutcomeMetrics['activeAttractor'] = 'none';
