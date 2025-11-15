@@ -28,7 +28,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-<<<<<<< HEAD
+**Nov 15: Phase Dependency Validation Fixes - CRITICAL-2 Resolution** (commit fe78789)
+- 🔧 **CRITICAL-2 RESOLVED:** Fixed 3 dependency bugs caught by existing validation infrastructure
+- 🛡️ **Bugs Fixed:**
+  1. EnsembleMetaLearningPhase: `adversarial-detection` → `ai-adversarial-detection` (typo)
+  2. AISufferingPhase: Order violation (3.6 → 4.1, must run after ai-lifecycle)
+  3. EvolutionarySelectionPhase: `rlhf_binding` → `ai_alignment_evolution` (consolidated phase ID)
+- 🔍 **Infrastructure Added:**
+  - Build-time validation script (`scripts/validatePhaseOrchestrator.ts`)
+  - Cycle detection unit tests (`PhaseOrchestrator.cycle-detection.test.ts`)
+- ✅ **Validation Results:** 0 circular dependencies, 0 order violations, 81 phases validated
+- 🎯 **Monte Carlo:** N=3 passed (no NaN, no crashes)
+- 📊 **Review:** reviews/critical2_dependency_validation_fix_20251115.md
+- 💡 **Key Insight:** PhaseOrchestrator validation ALREADY WORKS - the 3 bugs prove system working as designed
+
 **Nov 15: Additional Phase Order Violation Fix** (commit cb5f2e0)
 - 🔧 **Bug Fixed:** Tier2PhysicalSystemsPhase order violation (18.5 → 21.1)
 - 🎯 **Issue:** Phase depends on planetary_boundaries (order 21) but was executing at order 18.5
@@ -96,7 +109,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - `src/simulation/techTree/effectsEngine.ts` (type guards for energyRequirement union type)
   - `src/simulation/resourceEconomy.ts` (energy partitioning fields)
   - `src/types/resources.ts`, `src/types/technologies.ts` (deployment tracking)
-=======
+
 **Nov 14: Research Audit - Foundation Current** (commit 4619c71)
 - ✅ **Autonomous Audit:** Comprehensive review of research file currency and quality
 - 📊 **Status:** No critical updates required - foundation is solid
@@ -107,7 +120,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📝 **Action Items:** Add YAML frontmatter to files missing oldest_source/last_verified, archive old verification docs
 - 📅 **Next Review:** Q1 2026 (after 3 months)
 - 📖 **Audit Report:** research/RESEARCH_AUDIT_20251114.md
->>>>>>> origin/auto/researcher-20251114_203001
 
 **Nov 13: Research Base Status Review - EXCELLENT** (commit 6809c02)
 - ✅ **Autonomous Research Session:** Comprehensive review of 10+ simulation-critical research files
