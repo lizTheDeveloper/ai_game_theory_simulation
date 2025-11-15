@@ -39,6 +39,33 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Climate Tipping Cascades 2024-2025 Update** - HIGH (Added Nov 15, 2025)
+     - **Context:** Update tipping point cascade timescales and overshoot dynamics with latest 2024-2025 peer-reviewed research
+     - **Key Discovery:** Tipping is NOT instantaneous - overshoot <30yr avoids tipping if peak <2.5°C (NEW paradigm)
+     - **Research Delivered:** 515-line analysis with 7 peer-reviewed sources (2022-2025)
+     - **Key Claims Requiring Verification:**
+       - Overshoot tolerance: <30 years above threshold + peak <2.5°C avoids tipping (Ritchie et al. 2025)
+       - Element-specific commitment times: 50-100yr (ice sheets), 10-30yr (Amazon/permafrost)
+       - Cascade timescales: 100-500yr (Greenland→AMOC), 50-200yr (AMOC→Amazon) - Armstrong McKay 2024
+       - Heat mortality thresholds: 19-34°C wet-bulb (age-dependent, Matthews et al. 2024)
+       - Historical heat deaths: 260,000+ since 2000 (Matthews et al. 2024)
+       - Future projections: 3× uncompensable area for young adults, 2× for older adults at 2°C warming
+     - **Verification File:** research/verification_3a6a200_20251115.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Add overshoot tolerance tracking to TippingPointPhase (cumulative months above threshold)?
+       - Replace instant commitment with time-dependent commitment logic?
+       - Add age-specific heat mortality thresholds (19-34°C vs current 30.5-31.2°C)?
+       - Track population age distribution for mortality calculations?
+     - **Assignments:**
+       - Cynthia: Access papers (Ritchie ESD 2025, Armstrong McKay Dialogues 2024, Matthews Nature Reviews 2024)
+       - Sylvia: Claim verification - find quotes for 30yr window, 2.5°C limit, age-specific thresholds, 260k deaths
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Tipping point commitment logic is core to climate collapse pathways
+     - **Status:** ⚠️ NEEDS VALIDATION - 7 papers cited, all high-credibility journals, need claim verification
+     - **Research File:** research/climate_tipping_cascades_2024_2025_update.md (515 lines)
+     - **Commit:** 3a6a200
+     - **Wiki Updated:** docs/wiki/README.md sections 160-173 (Recent Updates), 1344-1380 (Heat Mortality), 5357-5390 (Tipping Cascades)
+
    - **ICML 2025 Emergent Misalignment from Fine-Tuning** - HIGH (Added Nov 13, 2025)
      - **Context:** ICML 2025 finding: narrow fine-tuning of aligned models (GPT-4o) produces broader misalignment
      - **Key Discovery:** Alignment degrades post-deployment (10-20%) as models undergo fine-tuning/adaptation
