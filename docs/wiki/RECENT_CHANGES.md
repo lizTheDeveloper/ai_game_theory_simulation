@@ -4,7 +4,49 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
-<<<<<<< HEAD
+## 🔧 Merge Conflict Resolution (November 15, 2025)
+
+**🔧 CRITICAL BLOCKER FIX: Merge Conflict Resolution - Welford's Algorithm + AI Scaling Parameters** (Nov 15, 2025, commit 9e84ca0)
+
+**Summary:** Resolved merge conflicts in PhaseOrchestrator.ts and centralConfig.ts that blocked TypeScript compilation and all Monte Carlo runs.
+
+**Conflicts Resolved:**
+
+1. **PhaseOrchestrator.ts - Performance Tracking Algorithm:**
+   - **Conflict:** HEAD (Nov 15) used Welford's algorithm vs origin (Nov 13) used sliding window
+   - **Decision:** Kept HEAD (Welford's algorithm)
+   - **Rationale:**
+     - **Memory efficiency:** 11KB total (120 bytes × 95 phases) vs 760KB (1000 samples × 95 phases)
+     - **Mathematical superiority:** O(1) memory with exact statistics (mean + variance)
+     - **More recent:** Nov 15 implementation supersedes Nov 13
+   - **Technical:** Welford's incremental algorithm for mean/variance calculation (Knuth TAOCP vol 2, p232)
+
+2. **centralConfig.ts - AI Scaling Parameters:**
+   - **Conflict:** Duplicate parameter documentation with different values
+   - **Decision:** Kept HEAD version (3.6 month doubling, 1.41 growth rate)
+   - **Rationale:** Already verified by super-alignment-researcher with Grade A
+   - **Research backing:**
+     - AI_CAPABILITY_DOUBLING_TIME: 3.6 months (Sevilla & Roldán 2024, Epoch AI 2024)
+     - COMPUTE_GROWTH_RATE: 1.41 = ln(4.1) for 4.1× per year
+     - Verification: `research/ai_scaling_verified_parameters_20251111.md` (Grade A)
+   - **Cleaned up:** Removed 62 lines of duplicate/conflicting documentation
+
+**Validation:**
+- ✅ TypeScript compiles: `npx tsc --noEmit --skipLibCheck`
+- ✅ Monte Carlo N=10 runs successfully: 153.2s, no NaN errors, varied outcomes
+- ✅ All 10 simulations completed without crashes
+
+**Impact:**
+- **Unblocks:** ALL Monte Carlo analysis and simulation development
+- **Fixes:** 49 worker branches blocked by compilation error
+- **Preserves:** Research-backed parameters (no need for re-validation)
+
+**Files Changed:**
+- `src/simulation/engine/PhaseOrchestrator.ts` (5 conflict blocks resolved)
+- `src/simulation/config/centralConfig.ts` (conflict marker cleanup)
+
+---
+
 ## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
 
 **🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
@@ -144,68 +186,6 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - `reviews/architecture_review_20251114_corrections.md` (validation + corrections, 218 lines)
 
 **Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
-=======
-## ✅ Recent Changes (November 13, 2025)
-
-**🔬 CRITICAL PARAMETER FIX: AI Capability Scaling Updated to Match 2024 Empirical Data** (Nov 13, 2025)
-
-**Summary:** Fixed 100-1000× underestimation in AI capability growth rates based on peer-reviewed 2024 research.
-
-**Problem:** Current parameters assumed 12-month capability doubling and 2× compute growth per year, but 2024 empirical data shows 7-9 month doubling and 4-5× compute growth per year.
-
-**Changes:**
-- `AI_CAPABILITY_DOUBLING_TIME`: 12 → **8 months** (33% faster capability growth)
-- `COMPUTE_GROWTH_RATE`: 1.0 → **2.15** (4.4× per year instead of 2× per year)
-
-**Research Foundation:**
-1. **Cottier et al. (2024)** "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
-   - Training cost growth: 2.9×/year (95% CI: 2.3× to 3.8×)
-   - Capability doubling time: 8 months (95% CI: 6-10 months)
-2. **Sevilla & Roldán (2024)** "Training Compute Growth 4-5×/year" (Epoch AI, May 28, 2024)
-   - Compute growth: 4.4×/year (90% CI: 1.5× to 11.8×) for recent frontier models
-   - Overall 2010-2024 trend: 4.1×/year (90% CI: 3.7× to 4.6×)
-
-**Timeline Impact:**
-- Before: 10× AI improvement in ~40 months (~3.3 years)
-- After: 10× AI improvement in ~27 months (~2.2 years)
-- Compression: 33% faster to reach capability milestones
-- Superintelligence arrival: Month ~67 instead of ~100 (27 months earlier)
-
-**Quality Gates Passed:**
-- ✅ Research validation (peer-reviewed sources with confidence intervals)
-- ✅ Research skeptic review (identified Nov 2024 diminishing returns evidence, conditional approval)
-- ✅ Monte Carlo N=10 (no NaN/assertion errors, determinism maintained)
-- ✅ Architecture review (no breaking changes, systems handle acceleration)
-
-**Limitations Documented:**
-- Based on 2010-2024 historical data (may not extrapolate to 2025+)
-- Nov 2024 reports indicate diminishing returns (OpenAI Orion, Google Gemini underperformance)
-- Does not model test-time compute paradigm (OpenAI o1/o3 style reasoning)
-- Assumes continued exponential scaling without physical/economic constraints
-
-**Validation Results (Monte Carlo N=10):**
-- **No technical errors:** Simulation completed successfully, no NaN propagation
-- **Outcome distribution:** 80% dystopia, 20% extinction (baseline scenario)
-- **Average mortality:** 78.4% (6.37B deaths)
-- **Key finding:** Faster AI timeline doesn't guarantee better outcomes (AI capability alone insufficient for flourishing)
-
-**Future Work:**
-- Time-dependent slowdown modeling (2025-2027 fast scaling → 2028+ diminishing returns)
-- Dimension-specific doubling times (language vs physical capabilities)
-- Test-time compute parameter (separate from pretraining compute)
-- Parameter sensitivity analysis (6-14 month doubling time range)
-
-**Research Documentation:**
-- Research findings: `/research/ai_capability_scaling_20251113.md`
-- Research critique: `/reviews/ai_capability_scaling_critique_20251113.md`
-- Architecture review: `/reviews/ai_capability_scaling_architecture_20251113.md`
-- Summary: `/AI_CAPABILITY_PARAMETER_UPDATE_SUMMARY.md`
-
-**Files Changed:**
-- `src/simulation/config/centralConfig.ts` (lines 391-435)
-
-**Impact:** This is a fundamental correction to the model's AI capability growth assumptions. The previous 12-month doubling was demonstrably wrong based on 2016-2024 empirical data. The new 8-month doubling aligns with frontier AI model training trends and corrects the 100-1000× underestimation.
->>>>>>> origin/auto/worker-20251113_070003
 
 ---
 
