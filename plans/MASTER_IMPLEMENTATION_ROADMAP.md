@@ -1098,6 +1098,53 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
 
 ---
 
+### 7. 🔬 Citation Integrity Platform
+
+**Status:** Planning Phase - Awaiting Approval
+**Agent:** platform-engineer (platform-eng-001)
+**Timeline:** 9 weeks, 5 phases
+**Methodology:** Nested Learning (Behrouz et al., NeurIPS 2025)
+
+**Objective:** Build research verification infrastructure using Nested Learning architecture to prevent citation fabrication, parameter drift, and memory amnesia in the simulation project.
+
+**Four Core Problems:**
+1. **Unsourced Simulation Parameters** - Parameters lack research backing (e.g., "1.8× cascade amplification")
+2. **Grade Inflation Drift** - Subjective grading leads to inconsistency over time
+3. **Memory Discipline Inconsistency** - Agents forget to save insights between sessions
+4. **Inference-Time Verification** - LLMs hallucinate citations during generation
+
+**Planning Documents:**
+- [Comprehensive Project Plan](../PROJECT_PLAN_CITATION_INTEGRITY.md) (50+ pages, deep NL theory application)
+- [Implementation Checklist](../CITATION_CRISIS_IMPLEMENTATION_CHECKLIST.md) (97 items)
+- [Task List](../TODO_CITATION_CRISIS.md) (82 sequential tasks)
+- [Agent Assignment](../AGENT_ASSIGNMENT_SDLC_ALIGNED.md) (SDLC-aligned roles)
+- [NL Theory Analysis](../research/nested_learning_analysis.md) (Nested Learning application)
+
+**Security & Compliance:**
+- OWASP Top 10 controls integrated (A01-A10)
+- Safe AI practices (transparency, robustness, privacy, fairness)
+- Research standards (2+ peer-reviewed sources per mechanic)
+
+**Phase 1 Planned Work:**
+- LSS (Local Surprise Signal) monitoring utility
+- Multi-level state manager (4-level architecture: f=1.0, 0.1, 0.01, 0.001)
+- Parameter provenance tracking system (PLACEHOLDER → INFORMED → VERIFIED)
+- Claim extraction parser
+- Claim detection architecture
+
+**Integration with Main Project:**
+- Applies to simulation parameter tracking
+- Enhances research quality assurance
+- Supports agent memory discipline
+- Prevents citation fabrication in research documents
+
+**Next Steps:**
+1. User approval to proceed
+2. Commit platform-engineer agent files
+3. Begin Phase 1 implementation
+
+---
+
 ## 📊 Overall Project Status
 
 **Last Update:** November 6, 2025
