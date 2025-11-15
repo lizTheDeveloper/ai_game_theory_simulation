@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/14/2025, 10:30:04 PM
-**Files Scanned:** 401
+**Generated:** 11/15/2025, 8:30:04 AM
+**Files Scanned:** 403
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 144 (35.9%)
+**Count:** 145 (36.0%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -105,7 +105,7 @@
 - **Path:** `research/FAKE_CITATION_FOUND.md`
 
 ### `GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`
-- **Oldest source:** 1970 (55 years old)
+- **Oldest source:** 2000 (25 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`
 
@@ -534,6 +534,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/policy-interventions-systemic-inequality-validation_20251016.md`
 
+### `positive_tipping_points_2024_2025_20251114.md`
+- **Oldest source:** 1970 (55 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/positive_tipping_points_2024_2025_20251114.md`
+
 ### `post-recalibration-fixes-validation_20251019.md`
 - **Oldest source:** 2003 (22 years old)
 - **Status:** Not used in simulation
@@ -765,7 +770,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 237 (59.1%)
+**Count:** 238 (59.1%)
 
 All sources <3 years old. No action required.
 
@@ -775,11 +780,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 401 |
+| Total files | 403 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 144 (35.9%) |
+| HIGH | 145 (36.0%) |
 | MEDIUM | 20 (5.0%) |
-| LOW | 237 (59.1%) |
+| LOW | 238 (59.1%) |
 | Average age | 8.0 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -787,21 +792,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 237 | 59.1% |
+| Current (<3yr) | 238 | 59.1% |
 | Warning (3-5yr) | 20 | 5.0% |
-| Critical (>5yr) | 144 | 35.9% |
+| Critical (>5yr) | 145 | 36.0% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 35.9% critical (>5yr)
+- **Current:** 36.0% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 144 HIGH priority file(s) within 1 month
+1. Update 145 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
