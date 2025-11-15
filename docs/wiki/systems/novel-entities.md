@@ -916,6 +916,12 @@ The gating function produces **tiered effectiveness** based on prevention deploy
 
 **Montreal Protocol Lessons:**
 - Velders, G.J.M., et al. (2024). "More to offer from the Montreal protocol: how the ozone treaty can secure further significant greenhouse gas emission reductions in the future." *Journal of Integrative Environmental Sciences*, 21(1), 2362124. https://doi.org/10.1080/1943815X.2024.2362124
+- **Prevention Effectiveness Case Study:** `research/montreal_protocol_prevention_effectiveness_20251115.md` (484 lines, 15+ sources)
+  - **Empirical validation:** 99% emission reduction in 20 years (production ban)
+  - **Prevention:Cleanup ratio:** 99:1 (bank destruction only 1-15% additional effectiveness)
+  - **Energy efficiency:** Prevention 100-1000× more effective per unit effort
+  - **Timeline:** 4yr to peak, 12-23yr to phase-out, 40-80yr to recovery
+  - **Key insight:** Cleanup complements prevention but cannot substitute for it
 
 **Concentration Problem:**
 - Newell, C.J., et al. (2025). "A Long Way to Go: Challenges and Strategies for Managing PFAS in Groundwater." *Remediation Journal*, 35(2), 5-24. https://doi.org/10.1002/rem.70028
