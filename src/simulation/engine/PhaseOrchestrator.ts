@@ -120,20 +120,41 @@ export class PhaseOrchestrator {
 
   // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
   // ENHANCED (Nov 12, 2025): Track min/max/p95 for better analysis
+<<<<<<< HEAD
   // MEMORY LEAK FIX (Nov 15, 2025): Use Welford's algorithm for O(1) memory per phase
   // Previous: Stored 1000 samples × 95 phases = 760KB per simulation
   // Current: ~120 bytes per phase (6 numbers) = 11KB total for 95 phases
+=======
+  // MEMORY LEAK FIX (Nov 13, 2025): Sliding windows to prevent unbounded growth
+  /**
+   * Maximum samples to keep per phase for p95 calculation.
+   * Keeps last 1000 samples = ~8 hours of simulation at ~120 steps/hour.
+   * Prevents memory leak in long-running Monte Carlo (N=100 × 1200 steps = 120K samples → 1000 samples).
+   */
+  private static readonly MAX_PHASE_SAMPLES = 1000;
+  /**
+   * Maximum step timings to keep.
+   * Keeps last 1200 steps = 100 years of simulation.
+   * Prevents memory leak in long-running Monte Carlo (N=100 × 1200 steps = 120K entries → 1200 entries).
+   */
+  private static readonly MAX_STEP_TIMINGS = 1200;
+
+>>>>>>> origin/auto/worker-20251113_070003
   private phaseTimings: Map<string, {
     totalMs: number;
     callCount: number;
     minMs: number;
     maxMs: number;
+<<<<<<< HEAD
     mean: number;        // Welford's algorithm: incremental mean
     m2: number;          // Welford's algorithm: sum of squared deviations (for variance)
+=======
+    samples: number[];  // Sliding window, max MAX_PHASE_SAMPLES
+>>>>>>> origin/auto/worker-20251113_070003
   }> = new Map();
   private enableTiming: boolean = false;
   private slowPhaseThresholdMs: number = 10;  // Warn on phases >10ms
-  private stepTimings: { month: number; totalMs: number }[] = [];  // Per-step totals
+  private stepTimings: { month: number; totalMs: number }[] = [];  // Sliding window, max MAX_STEP_TIMINGS
 
   /**
    * Register a phase
@@ -211,7 +232,11 @@ export class PhaseOrchestrator {
 
         // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
         // ENHANCED (Nov 12, 2025): Track min/max/p95, warn on slow phases
+<<<<<<< HEAD
         // MEMORY LEAK FIX (Nov 15, 2025): Use Welford's algorithm for O(1) memory
+=======
+        // MEMORY LEAK FIX (Nov 13, 2025): Sliding window for samples
+>>>>>>> origin/auto/worker-20251113_070003
         if (this.enableTiming) {
           const elapsed = performance.now() - startTime;
           const existing = this.phaseTimings.get(phase.name) || {
@@ -223,6 +248,7 @@ export class PhaseOrchestrator {
             m2: 0
           };
 
+<<<<<<< HEAD
           // Welford's algorithm for incremental mean and variance
           // See: Knuth TAOCP vol 2, 3rd edition, page 232
           const newCount = existing.callCount + 1;
@@ -231,13 +257,27 @@ export class PhaseOrchestrator {
           const delta2 = elapsed - newMean;
           const newM2 = existing.m2 + delta * delta2;
 
+=======
+          // Sliding window: keep last MAX_PHASE_SAMPLES samples for p95 calculation
+          // Prevents unbounded memory growth in long-running simulations
+          const newSamples = [...existing.samples, elapsed];
+          const samples = newSamples.length > PhaseOrchestrator.MAX_PHASE_SAMPLES
+            ? newSamples.slice(-PhaseOrchestrator.MAX_PHASE_SAMPLES)
+            : newSamples;
+
+          // Update statistics
+>>>>>>> origin/auto/worker-20251113_070003
           this.phaseTimings.set(phase.name, {
             totalMs: existing.totalMs + elapsed,
             callCount: newCount,
             minMs: Math.min(existing.minMs, elapsed),
             maxMs: Math.max(existing.maxMs, elapsed),
+<<<<<<< HEAD
             mean: newMean,
             m2: newM2
+=======
+            samples
+>>>>>>> origin/auto/worker-20251113_070003
           });
 
           // Warn on slow phases (>10ms threshold)
@@ -292,9 +332,16 @@ export class PhaseOrchestrator {
     }
 
     // PERFORMANCE INSTRUMENTATION (Nov 12, 2025): Log step total
+    // MEMORY LEAK FIX (Nov 13, 2025): Sliding window for step timings
     if (this.enableTiming) {
       const stepElapsed = performance.now() - stepStartTime;
+
+      // Sliding window: keep last MAX_STEP_TIMINGS entries (100 years)
+      // Prevents unbounded memory growth in long-running simulations
       this.stepTimings.push({ month: state.currentMonth, totalMs: stepElapsed });
+      if (this.stepTimings.length > PhaseOrchestrator.MAX_STEP_TIMINGS) {
+        this.stepTimings = this.stepTimings.slice(-PhaseOrchestrator.MAX_STEP_TIMINGS);
+      }
 
       // MEMORY LEAK FIX (Nov 13, 2025): Cap stepTimings at 100 most recent entries
       if (this.stepTimings.length > 100) {
