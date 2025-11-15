@@ -157,6 +157,21 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📈 **Target:** 76+ phases (80%+ coverage) - 69 phases remaining
 - 🔜 **Next Batch:** Crisis phases, AI/alignment phases, environmental phases
 
+**Nov 15: Climate Tipping Cascades Research Update** (commit 3a6a200)
+- 📚 **Research Update:** Climate tipping points and cascades with 2024-2025 peer-reviewed research
+- 🔬 **New Sources:** 7 peer-reviewed papers (2022-2025), all high-credibility
+  - Ritchie et al. 2025: Overshoot tolerance (<30yr, <2.5°C peak avoids tipping)
+  - Armstrong McKay 2024: Comprehensive two-decade review of tipping point science
+  - Matthews et al. 2024: Heat mortality thresholds (260k+ deaths since 2000, 19-34°C wet-bulb)
+- 🎯 **Key Findings:**
+  - **Overshoot tolerance (NEW):** Temporary overshoot <30 years avoids tipping if peak warming <2.5°C
+  - **Cascade timescales (REFINED):** Centennial-millennial, NOT 50-100yr for individual elements
+  - **Commitment logic (UPDATED):** Track cumulative overshoot duration, not instant commitment
+  - **Heat mortality (NEW):** Uncompensable thresholds 19-32°C wet-bulb (age-dependent)
+- 📖 **Document:** research/climate_tipping_cascades_2024_2025_update.md (515 lines)
+- ⚠️ **Verification Required:** New parameters need validation before implementation
+- **Confidence:** HIGH (all sources peer-reviewed 2022-2025)
+
 **Nov 14: Research Quality Pipeline - Positive Tipping Points Literature Update** (commit d38c921)
 - 🔬 **Autonomous Research Session:** Updated 3 HIGH-priority research files with 2024-2025 peer-reviewed sources
 - 📊 **Files Updated:**
@@ -1325,6 +1340,44 @@ Fixed critical threshold mismatch: simulation used theoretical 35°C limit inste
 **Research:** Vecellio et al. (2022) empirical experiments (TRL 8) vs Raymond et al. (2020) theoretical 35°C. People die at 30.5°C in practice, not 35°C in theory.
 
 **Files:** `src/types/wetBulbTemperature.ts`, `src/simulation/wetBulbEvents.ts`, `src/simulation/config/centralConfig.ts`
+
+**🌡️ HEAT MORTALITY THRESHOLDS - 2024 UPDATE** (research/climate_tipping_cascades_2024_2025_update.md)
+
+**NEW: Age-Dependent Uncompensable Heat Thresholds (Matthews et al. 2024):**
+
+Matthews et al. (2024) identifies wet-bulb temperatures beyond which human core body temperature rises uncontrollably (inability to thermoregulate):
+
+**Uncompensable Thresholds by Age:**
+- **Older adults (65+ years):** 19-28°C wet-bulb (ALREADY exceeded on ~21% of land area 1994-2023)
+- **Middle age (40-65 years):** 28°C wet-bulb
+- **Younger adults (20-40 years):** 32°C wet-bulb (rare, ~2.2% of land area 1994-2023)
+
+**Unsurvivable Thresholds (Lethal within 6 hours):**
+- **Older adults:** 20-34°C wet-bulb (~1.8% of land area exceeded 1994-2023)
+- **Middle age:** 30°C wet-bulb (rare)
+- **Younger adults:** 34°C wet-bulb (never exceeded historically)
+
+**Historical Impact:**
+- **260,000+ heat-related fatalities** in deadliest events since 2000
+- Extreme heat is NOW, not just a future threat
+
+**Future Projections at 2°C Warming:**
+- **Tripling of uncompensable land area** for young adults (2.2% → 6.6%)
+- **Near-doubling** for older adults (21% → 35-40%)
+- Exponential increase in mortality risk for vulnerable populations
+
+**Comparison to Current Simulation Thresholds:**
+- **Current (Vecellio 2022):** 30.5°C SEVERE, 31.2°C EXTREME (young adults, laboratory)
+- **NEW (Matthews 2024):** 19-34°C range (age-dependent, real-world)
+- **Gap:** Current thresholds underestimate older adult vulnerability (19-28°C vs 30.5°C)
+
+**Implementation Considerations:**
+- Track age distribution of population
+- Apply age-specific mortality curves (older adults 2-3× more vulnerable)
+- Model population displacement when land becomes uninhabitable
+- ⚠️ **Verification required** before updating simulation parameters
+
+**Research:** Matthews, T. K. R., et al. (2024). "Mortality impacts of the most extreme heat events." *Nature Reviews Earth & Environment*. DOI: 10.1038/s43017-024-00635-w
 
 ### November 6, 2025
 
@@ -5336,28 +5389,40 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 
 **Why the compression?**
 - Simulation designed for 240-360 month runs (20-30 years)
-- Individual tipping elements have transition times of 50-100 years (Amazon, AMOC; Lenton et al. 2008), but **cascading interactions unfold over centennial to millennial timescales** (Wunderling et al. 2024)
+- Individual tipping elements have transition times of 30-80 years (Amazon dieback, Armstrong McKay 2024) to 200-2,000 years (ice sheet impacts, with complete deglaciation taking 10,000+ years), but **cascading interactions unfold over centennial to millennial timescales** (Wunderling et al. 2024, confirmed by Armstrong McKay 2024 comprehensive review)
 - This represents a **speculative rapid cascade scenario** (3-10× compressed timeline) exploring tail-risk possibilities under multi-boundary transgression—not empirically validated
 
+**NEW: Overshoot Tolerance (Ritchie et al. 2025):**
+- **Key Finding:** Tipping is NOT instantaneous upon crossing thresholds
+- **Tolerance window:** Temporary overshoot <30 years avoids tipping IF peak warming stays below 2.5°C
+- **Element-specific commitment times:**
+  - Slow-tipping (ice sheets, AMOC): 50-100 years cumulative above threshold
+  - Fast-tipping (Amazon, permafrost): 10-30 years cumulative above threshold
+- **Policy implication:** Rapid emissions reductions in next 30 years can avoid locking in tipping points even if we temporarily overshoot 1.5°C
+
 **Remaining Uncertainties:**
-1. **Cascade speed:** Do tipping points trigger faster with multiple simultaneous boundary crossings? **Research shows cascades unfold over 100-1,000+ years** (Wunderling et al. 2024), but acceleration under unprecedented multi-boundary stress remains poorly constrained.
+1. **Cascade speed:** Do tipping points trigger faster with multiple simultaneous boundary crossings? **Research shows cascades unfold over 100-1,000+ years** (Wunderling et al. 2024, Armstrong McKay 2024), but acceleration under unprecedented multi-boundary stress remains poorly constrained.
 2. **Adaptation exclusion:** Simulation may underestimate human adaptation and emergency mitigation responses
 3. **Nonlinear mortality:** Does death rate accelerate or plateau in extreme multi-crisis scenarios? Limited empirical data.
 4. **Timeline compression validity:** No empirical evidence supports cascades proceeding on 30-year timescales. Historical analogues (Dansgaard-Oeschger events) show 1,000-4,000 year transitions.
+5. **Heat mortality thresholds (NEW):** Matthews et al. 2024 identifies uncompensable wet-bulb thresholds (19-34°C, age-dependent), but population displacement dynamics under 35-40% land area becoming uninhabitable remain poorly constrained.
 
 **Validation:**
 - ✅ Framework validity: Planetary boundaries, tipping cascades, agricultural collapse mechanisms (all peer-reviewed)
 - ✅ Magnitude comparability: Death totals match published research at same severity levels
 - ✅ Exploratory modeling legitimacy: Low-probability, high-impact scenarios are valid research tools (Ord 2020, Tonn 2009)
+- ✅ **Overshoot tolerance (NEW):** Ritchie et al. 2025 quantifies commitment timescales (30yr window if peak <2.5°C)
 - ⚠️ **Timeline validity:** Compressed for simulation practicality, not validated against climate models
 
 **Label for outputs:** "Accelerated scenario" or "Compressed timeline model" - NOT "baseline projection"
 
 **Research Foundation:**
 - Richards et al. (2023): Climate collapse mortality projections (extreme 8-12°C scenario, 75-year window)
-- Lenton et al. (2008): Individual tipping element transition times (50-100 years for Amazon, AMOC)
-- Wunderling et al. (2024): Tipping cascade timescales (centennial to millennial scales)
+- **Ritchie et al. (2025): Overshoot duration and tipping commitment (ESD)**
+- **Armstrong McKay (2024): Two decades of tipping point research review (Dialogues on Climate Change)**
+- **Matthews et al. (2024): Heat mortality thresholds (Nature Reviews Earth & Environment)**
 - Armstrong McKay et al. (2022): Comprehensive tipping point review (Science)
+- Wunderling et al. (2024): Tipping cascade timescales (centennial to millennial scales)
 - Steffen et al. (2018): Hothouse Earth trajectory
 - Ord (2020): *The Precipice* - Existential risk methodologies
 - Tonn & Stiefel (2013): Exploratory modeling for catastrophic risks
