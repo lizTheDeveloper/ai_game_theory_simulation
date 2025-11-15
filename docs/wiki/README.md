@@ -28,6 +28,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 15: Circular Dependency Fix** (commit 84ed23e)
+- 🔧 **HIGH-1 RESOLVED:** Eliminated 8-phase circular dependency cycle in phase execution graph
+- 🔄 **Cycle Broken:** ubi-system → tech-tree → economic-system → unemployment → social-stability-system → refugee_crisis → human_population → quality-of-life → ubi-system
+- ⚠️ **Impact:** Prevented unpredictable execution order and non-deterministic behavior
+- 🛠️ **Changes Made:**
+  1. UBIPhase (15.3): Removed tech-tree dependency (UBI doesn't read techTreeState)
+  2. ApplyScenarioPrioritiesPhase (1.5): Removed time-advancement dependency (wrong order: 1.5 can't depend on 99.0)
+  3. AIWelfareUpdatePhase (2.5): Removed ai-lifecycle dependency (wrong order: 2.5 can't depend on 4.0)
+- ✅ **Validation:** Type check PASS, circular dependency ELIMINATED
+- 🔍 **Tool Added:** check_cycles.py (Python script for dependency graph cycle detection)
+- 📊 **Architecture Review:** reviews/architecture_integration_review_20251115.md (173 lines, Grade C+)
+- 🚨 **Note:** Additional backwards dependencies discovered (government-actions 9.0 → economic-system 31.0) - requires comprehensive dependency audit
+
 **Nov 15: Phase Dependency Declaration - Batch 1** (commit eda20e1)
 - 🔧 **CRITICAL-2 Progress:** Added dependency declarations to 26/95 phases (27.4% coverage)
 - 📊 **Phases Updated:** ComputeGrowth, AI lifecycle, Tech/Governance, Tier2 systems, Democracy, Social systems
@@ -6207,9 +6220,38 @@ See `/reviews/architecture-refactoring-plan_20251017.md` for complete analysis.
 
 ---
 
-## 🔗 Circular Dependency Prevention (October 28, 2025)
+## 🔗 Circular Dependency Prevention
 
-**Status**: ✅ COMPLETE - Defensive architecture for AI Suffering → Paradigm Score dependency
+### Phase Execution Graph (November 15, 2025)
+
+**Status**: ✅ RESOLVED - Eliminated 8-phase circular dependency cycle
+
+**Problem**: Phase dependency declarations created circular chain:
+```
+ubi-system → tech-tree → economic-system → unemployment →
+social-stability-system → refugee_crisis → human_population →
+quality-of-life → ubi-system (CYCLE)
+```
+
+**Impact**: Unpredictable execution order, non-deterministic behavior, Monte Carlo validation failures
+
+**Solution**: Removed unnecessary/backwards dependencies:
+1. **UBIPhase (15.3)**: Removed tech-tree dependency (UBI doesn't read techTreeState)
+2. **ApplyScenarioPrioritiesPhase (1.5)**: Removed time-advancement dependency (backwards: 1.5 → 99.0)
+3. **AIWelfareUpdatePhase (2.5)**: Removed ai-lifecycle dependency (backwards: 2.5 → 4.0)
+
+**Detection Tool**: `check_cycles.py` - Python script using DFS to detect cycles in phase dependency graph
+
+**Files**:
+- `src/simulation/engine/phases/UBIPhase.ts`
+- `src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts`
+- `src/simulation/engine/phases/AIWelfareUpdatePhase.ts`
+
+**Related**: Architecture review identified additional backwards dependencies requiring future audit (government-actions 9.0 → economic-system 31.0)
+
+### AI Suffering → Paradigm Scores (October 28, 2025)
+
+**Status**: ✅ COMPLETE - Defensive architecture for one-way dependency flow
 
 ### Motivation
 
