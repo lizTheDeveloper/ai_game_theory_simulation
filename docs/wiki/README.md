@@ -28,6 +28,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 15: Watcher False Positive Fix** (commit 8582485)
+- 🔧 **Bug Fixed:** Eliminated false positive health check failures in autonomous worker watcher
+- 🎯 **Issue 1:** Merge orchestrator detection used wrong log pattern (`merge_orchestrator_*.log` → `merge_*.log`)
+  - Caused "13,300 minutes ago" reports when merge actually ran minutes ago
+- 🎯 **Issue 2:** Researcher staleness threshold too aggressive (120min → 720min)
+  - Researcher runs hourly 8am-10pm with intentional 10h overnight gap
+  - Old threshold triggered false alarms every night at 00:30-07:30
+- ✅ **Impact:** Eliminated unnecessary Claude remediation sessions spawned by false alarms
+
 **Nov 15: Circular Dependency Fix** (commit 84ed23e)
 - 🔧 **HIGH-1 RESOLVED:** Eliminated 8-phase circular dependency cycle in phase execution graph
 - 🔄 **Cycle Broken:** ubi-system → tech-tree → economic-system → unemployment → social-stability-system → refugee_crisis → human_population → quality-of-life → ubi-system
@@ -2151,8 +2160,8 @@ Watcher script now monitors all four autonomous systems (implementation worker +
 
 **Coverage:**
 - **Implementation worker** (lines 128-182): Execution frequency, log analysis for errors/timeouts/failures, branch count/merge status
-- **Research agent** (lines 206-268): Run frequency (90 min window), script existence checks, error detection (not found, timeout, failures), 2-hour staleness alerts
-- **Merge orchestrator** (lines 183-204): Recent run validation, branch accumulation detection, conflict/test failure tracking
+- **Research agent** (lines 206-268): Run frequency (90 min window), script existence checks, error detection (not found, timeout, failures), 12-hour staleness alerts (accounts for intentional 10h overnight gap in 8am-10pm schedule)
+- **Merge orchestrator** (lines 183-204): Recent run validation (correct log pattern: `merge_*.log`), branch accumulation detection, conflict/test failure tracking
 - **Enhanced remediation** task covers all systems with specific troubleshooting (script not found, branch accumulation, cron issues)
 
 **Complete infrastructure visibility:** No blind spots in autonomous operations. Watcher validates implementation execution, research coordination, and branch merging with auto-remediation for all systems.
