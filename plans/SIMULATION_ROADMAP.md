@@ -39,6 +39,37 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
+     - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
+     - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
+     - **Research Delivered:** 213 lines added to research/ai_scaling_verified_parameters_20251111.md
+     - **New Sources:** Wolfe (2025) Substack, Lambert (2025) Substack, Epoch AI (2025) blog, TechCrunch (2024)
+     - **Key Claims Requiring Verification:**
+       - TEST_TIME_COMPUTE_MULTIPLIER: 1.5× per 10× inference compute - WHERE in Wolfe (2025)?
+       - RL sigmoid: 80% gains in 25% compute - EXACT VALUES in Lambert (2025)?
+       - MAX_TRAINING_FLOPS: 3e30 FLOP latency wall - Why not 1e32 upper bound from Epoch AI?
+       - o3 benchmarks: 87.5% ARC-AGI, 2727 Codeforces, 25.2% FrontierMath - VERIFIED?
+       - ScaleRL methodology: 3-constant fit, 4× throughput - DESCRIBED in Lambert?
+       - Epoch AI infrastructure: 1-5 GW campuses, 100M GPUs, "hundreds of billions" - SPECIFIC QUOTES?
+       - Nadella quote "new scaling law" - PRIMARY SOURCE? (currently secondary reference)
+       - Diminishing returns: "plateauing heading into 2025" - TechCrunch article EXACT WORDING?
+       - SATURATION_YEAR: 2030 - Epoch AI says "2e29 FLOP feasible by 2030", not "saturation by 2030"
+     - **Verification File:** research/verification_e344ce5_20251115.md (two-layer: existence + claim accuracy)
+     - **Critical Issue:** Metadata claims "peer_reviewed: true" but NEW sources are Substack/blogs (NOT peer-reviewed)
+     - **Integration Questions:**
+       - Add RL_PERFORMANCE_CURVE (sigmoid) to simulation?
+       - Add TEST_TIME_COMPUTE_MULTIPLIER (inference scaling)?
+       - Add MAX_TRAINING_FLOPS saturation constraint?
+       - Model three scaling axes separately (pre-training, RL, test-time)?
+     - **Assignments:**
+       - Cynthia: Verify URLs accessible, extract specific passages supporting numeric claims
+       - Sylvia: Flag EXTRAPOLATED vs CITED values, assess industry source reliability
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Affects AI capability projection (core simulation mechanic)
+     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
+     - **Research File:** research/ai_scaling_verified_parameters_20251111.md (added 213 lines)
+     - **Commit:** e344ce5
+
    - **Planetary Boundaries & Tipping Points 2025 Update** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 peer-reviewed update on planetary boundary status and tipping point crossings
      - **Key Updates:** 7/9 boundaries transgressed (up from 6), ocean acidification crossed 2020, ice sheets at record lows
