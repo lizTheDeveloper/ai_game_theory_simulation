@@ -44,6 +44,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📁 **Archive:** plans/completed/nov15_architecture_research_fixes_20251115.md
 - ✅ **Status:** Architecture Health B- (from 9.5/10), Research Quality A- (0 CRITICAL age issues)
 
+**Nov 15: AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** (commit e344ce5)
+- 📚 **New Scaling Paradigms:** Test-time compute (o1, o3), RL scaling laws (sigmoid curves), 2030 infrastructure projections
+- 🧠 **Key Findings:** o3 achieves 87.5% on ARC-AGI (human: 85%), RL follows sigmoid (80% gains in 25% compute), 2e29 FLOP feasible by 2030
+- 📊 **Three Scaling Axes:** Pre-training (traditional), RL post-training, test-time inference compute
+- 🎯 **New Parameters:** TEST_TIME_COMPUTE_MULTIPLIER (1.5× per 10× inference), RL_PERFORMANCE_CURVE (sigmoid), MAX_TRAINING_FLOPS (3e30)
+- 📖 **Sources Added (4):** Wolfe (2025) o1/o3 scaling, Lambert (2025) RL methodology, Epoch AI (2025) 2030 feasibility, TechCrunch (2024) diminishing returns
+- ⚠️ **Status:** NEEDS VALIDATION - Research verification file created (verification_e344ce5_20251115.md)
+- 🎯 **Priority:** HIGH - Affects AI capability projection, three new scaling paradigms
+- 📝 **Issue:** Metadata claims "peer_reviewed: true" but new sources are industry/media (Substack, blogs)
+- 🔄 **Workflow:** Queued for orchestrator validation (citation + claim verification for 10+ specific numeric claims)
+
 **Nov 15: Planetary Boundaries & Tipping Points 2025 Research Update** (commit d88ce24)
 - 📚 **New Research:** Comprehensive 2025 update from Rockström (2025) & BioScience 2025 State of Climate
 - 🚨 **Critical Updates:** 7/9 planetary boundaries transgressed (up from 6), ocean acidification crossed 2020
