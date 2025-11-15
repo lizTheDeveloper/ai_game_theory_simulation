@@ -1,6 +1,11 @@
 # Research Update Queue
+<<<<<<< Updated upstream
 **Generated:** 11/15/2025, 9:30:06 AM
 **Files Scanned:** 406
+=======
+**Generated:** 11/15/2025, 10:30:03 AM
+**Files Scanned:** 405
+>>>>>>> Stashed changes
 
 ---
 
@@ -12,7 +17,11 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
+<<<<<<< Updated upstream
 **Count:** 147 (36.2%)
+=======
+**Count:** 146 (36.0%)
+>>>>>>> Stashed changes
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -781,7 +790,11 @@
 
 ## ✅ LOW (Monitor Only)
 
+<<<<<<< Updated upstream
 **Count:** 238 (58.6%)
+=======
+**Count:** 238 (58.8%)
+>>>>>>> Stashed changes
 
 All sources <3 years old. No action required.
 
@@ -791,11 +804,19 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
+<<<<<<< Updated upstream
 | Total files | 406 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 147 (36.2%) |
 | MEDIUM | 21 (5.2%) |
 | LOW | 238 (58.6%) |
+=======
+| Total files | 405 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 146 (36.0%) |
+| MEDIUM | 21 (5.2%) |
+| LOW | 238 (58.8%) |
+>>>>>>> Stashed changes
 | Average age | 8.0 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -803,21 +824,35 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
+<<<<<<< Updated upstream
 | Current (<3yr) | 238 | 58.6% |
 | Warning (3-5yr) | 21 | 5.2% |
 | Critical (>5yr) | 147 | 36.2% |
+=======
+| Current (<3yr) | 238 | 58.8% |
+| Warning (3-5yr) | 21 | 5.2% |
+| Critical (>5yr) | 146 | 36.0% |
+>>>>>>> Stashed changes
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
+<<<<<<< Updated upstream
 - **Current:** 36.2% critical (>5yr)
+=======
+- **Current:** 36.0% critical (>5yr)
+>>>>>>> Stashed changes
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
+<<<<<<< Updated upstream
 1. Update 147 HIGH priority file(s) within 1 month
+=======
+1. Update 146 HIGH priority file(s) within 1 month
+>>>>>>> Stashed changes
 2. Schedule research update sprint
 3. Coordinate with research team
 
