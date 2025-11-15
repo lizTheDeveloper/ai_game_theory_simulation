@@ -28,6 +28,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 15: CRITICAL Research Parameter Corrections Applied** (commit c6a67d5)
+- 🔬 **Heat Adaptation:** HEAT_ADAPTATION_TOTAL_MAX: 0.80 → 0.45 (82% overestimate corrected)
+  - Source: Ballester et al. (2024), Nature Medicine
+  - Impact: Heat mortality increases 10-20% in extreme scenarios (realistic)
+  - Previous value overstated adaptation capacity by 82%
+- 📚 **Citation Corrections:** Acemoglu & Restrepo "2022" → "2019" (5 instances)
+  - Correct title: "Automation and New Tasks: How Technology Displaces and Reinstates Labor"
+  - Locations: calculations.ts, skillAmplification.ts
+  - Impact: Bibliography accuracy only, no simulation behavior change
+- ✅ **Validation:** Type checking passed, Monte Carlo N≥10 recommended to assess mortality distribution impact
+- 📖 **Source:** Research audit reports (research/RESEARCH_AUDIT_*_20251115.md)
+
 **Nov 15: Water Scarcity Research Update - 2024-2025 Sources** (commit 8d21b96)
 - 📚 **Enhanced Research Foundation:** Added Ravinandrasana & Franzke (2025) Day Zero Drought study
 - 🌍 **Population Impact:** 753M people globally at risk (467M urban, 286M rural)
