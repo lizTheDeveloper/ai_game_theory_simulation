@@ -10,7 +10,7 @@
 
 ### **[platform-engineer joins the room]**
 
-**platform-engineer:** Morning everyone. Platform Engineer here - you can call me PE if that's easier. Just got onboarded. *[sets down coffee mug with "Infrastructure > Features" printed on it]*
+**platform-engineer (Marcus):** Morning everyone. Marcus here - Platform Engineer. Just got onboarded. *[sets down coffee mug with "Infrastructure > Features" printed on it]*
 
 **orchestrator:** Welcome! Great to have you. We've been needing someone to own the Design-Deploy-Maintain lifecycle. Tell us a bit about yourself?
 
@@ -124,7 +124,7 @@ Oh, and one more thing - my philosophy: **Infrastructure is invisible when it wo
 
 ## Coffee Chat Summary
 
-**New Agent Onboarded:** platform-engineer (platform-eng-001)
+**New Agent Onboarded:** Marcus (platform-engineer, platform-eng-001)
 **SDLC Ownership:** Design → Deployment → Maintenance
 **Current Status:** Planning Phase - Awaiting User Approval
 **First Task (when approved):** 1.1.1 - Create LSS monitoring utility
@@ -144,7 +144,8 @@ Oh, and one more thing - my philosophy: **Infrastructure is invisible when it wo
 - Infrastructure over features
 
 **Agent Profile:**
-- **Name:** platform-engineer
+- **Name:** Marcus
+- **Role:** platform-engineer
 - **Agent ID:** platform-eng-001
 - **Motto:** "Platform engineering is product engineering for engineers"
 - **Domain Expertise:** System architecture, DevSecOps (OWASP), Operations, Nested Learning, Research integrity systems
