@@ -4,6 +4,25 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 📚 Research Update: AMOC Collapse Risk (November 15, 2025)
+
+**Summary:** Updated climate tipping point research with 2024-2025 AMOC collapse studies.
+
+**Citations Added:**
+1. **van Westen et al. (2024) Science Advances**: Early warning signals detected, AMOC "on route to tipping"
+2. **Boers et al. (2024)**: 59±17% collapse probability before 2050, timeline 2037-2064
+3. **van Westen et al. (2025) GRL**: Climate impacts quantified (10-30°C winter cooling in northern Europe, 123mm precipitation loss, arable land drops from 32% to 7% in Great Britain)
+
+**Key Finding:** AMOC collapse could occur within 12-27 years (not centuries), representing major escalation in near-term climate catastrophic risk.
+
+**Files Changed:**
+- `research/climate_tipping_timescales_20251106.md`
+- `docs/wiki/BIBLIOGRAPHY.md`
+
+**Commit:** a84666f
+
+---
+
 ## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
 
 **🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
