@@ -40,7 +40,7 @@ import {
 export class AISufferingPhase implements SimulationPhase {
   id = 'ai_suffering';
   name = 'AI Suffering Calculation';
-  order = 3.6; // After alignment dynamics (3.5), before QoL and outcome metrics
+  order = 4.1; // After AI lifecycle (4.0), before QoL metrics (CRITICAL-2 fix: Nov 15, 2025 - order violation)
 
   // DEPENDENCIES (Nov 15, 2025): Requires AI lifecycle and alignment state
   readonly dependencies = [
