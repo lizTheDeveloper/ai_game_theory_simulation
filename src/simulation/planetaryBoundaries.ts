@@ -27,11 +27,14 @@ import {
   RegionalBiome,
   OzoneRecoverySystem,
   BiosphereIntegrityIndex,
-  SpeciesGroup
+  SpeciesGroup,
+  LegacyNutrientStock
 } from '@/types/planetaryBoundaries';
 import { assertStateProperty, assertFinite, assertProbability, assertInRange, assertDefined } from './utils/assertions';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { FLOORS } from './config/centralConfig';
+import { initializeLegacyNutrientStock } from './legacyNutrientStocks';
+import { initializeRegionalNitrogenManagement } from './nitrogenFoodCoupling';
 
 /**
  * Sample biosphere extinction rate from log-uniform distribution
@@ -343,6 +346,14 @@ export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): Planetar
     // Research: IPBES (2019) - ~40% of modern extinctions attributed to invasive species
     // Baseline 2025: 0.45 (significant global impact, contributing to extinction crisis)
     invasiveSpeciesImpact: 0.45,
+    // TIER 2 HIGH: Legacy Nutrient Stocks (Nov 15, 2025)
+    // Research: Lake Erie sediment loading, nitrogen half-life studies
+    // Expected impact: Addresses 10% god mode effectiveness gap
+    legacyNutrientStock: initializeLegacyNutrientStock(),
+    // TIER 2 HIGH: Regional Nitrogen Management (Nov 15, 2025)
+    // Research: Regional overuse patterns (55% South Asian rice), yield penalty curves
+    // Expected impact: Realistic nitrogen-food coupling with regional differentiation
+    regionalNitrogenManagement: initializeRegionalNitrogenManagement(),
   };
 }
 
@@ -784,19 +795,41 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   }
   updateBoundaryStatus(system.boundaries.freshwater_change);
 
-  // Biogeochemical flows (from phosphorus system if available)
+  // Biogeochemical flows (from phosphorus system + legacy nutrient stocks - TIER 2 HIGH, Nov 15, 2025)
+  // Research: Lake Erie case study, nitrogen/phosphorus half-life studies
+  // Expected impact: 10% god mode effectiveness gap → legacy stocks create inertia
   if (state.phosphorusSystem) {
     const reserves = assertProbability(state.phosphorusSystem.reserves, {
       location: 'updatePlanetaryBoundaries:biogeochemical',
       valueName: 'phosphorusSystem.reserves',
       month: state.currentMonth
     });
+
+    // Base calculation (depletion factor)
     const depletion = 1 - reserves; // reserves is already 0-1 scale
-    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 + depletion * 0.5), {
+
+    // TIER 2 HIGH: Factor in legacy nutrient stock releases
+    // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
+    let legacyContribution = 0;
+    if (system.legacyNutrientStock) {
+      // Import the update function dynamically to avoid circular dependencies
+      const { getLegacyContributionPercentage } = require('@/simulation/legacyNutrientStocks');
+      const legacyReleases = getLegacyContributionPercentage(state);
+
+      // Legacy releases are in Mt/month - normalize to boundary scale
+      // Baseline (2025): ~120 Mt N/year current input, ~30 Mt/year from legacy stocks = 25% legacy contribution
+      // At boundary value 2.94, legacy contributes ~0.75 to boundary value
+      const LEGACY_SCALING_FACTOR = 0.025;  // Calibrated to match Lake Erie case (50% internal loading)
+      legacyContribution = (legacyReleases.nitrogen + legacyReleases.phosphorus) * LEGACY_SCALING_FACTOR;
+    }
+
+    // Boundary value = baseline depletion + legacy contribution
+    // This means: reducing current inputs helps, but legacy stocks slow recovery dramatically
+    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 + depletion * 0.5 + legacyContribution), {
       location: 'updatePlanetaryBoundaries:biogeochemical',
       valueName: 'biogeochemical_flows.currentValue',
       month: state.currentMonth,
-      additionalInfo: { reserves, depletion }
+      additionalInfo: { reserves, depletion, legacyContribution }
     });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }

@@ -150,6 +150,16 @@ export interface PlanetaryBoundariesSystem {
   // Contributes to biosphere_integrity boundary breach
   // Tech: "Invasive Species Control" reduces this via gene drives, precision targeting
   invasiveSpeciesImpact: number;  // [0, 1] 0 = no impact, 1 = catastrophic
+
+  // === TIER 2 HIGH: LEGACY NUTRIENT STOCKS (Nov 15, 2025) ===
+  // Research: Lake Erie sediment loading, nitrogen half-life studies
+  // Expected impact: Addresses 10% god mode effectiveness gap in biogeochemical flows
+  legacyNutrientStock?: LegacyNutrientStock;
+
+  // === TIER 2 HIGH: REGIONAL NITROGEN MANAGEMENT (Nov 15, 2025) ===
+  // Research: Regional overuse patterns (55% South Asian rice farmers), yield penalty curves
+  // Expected impact: Realistic nitrogen-food coupling with regional differentiation
+  regionalNitrogenManagement?: RegionalNitrogenManagement[];
 }
 
 /**
@@ -571,4 +581,71 @@ export const BII_CONSTANTS = {
   HIGH_RISK_EXTINCTION_RATE: 10.0,      // 100× background (current)
   CATASTROPHIC_EXTINCTION_RATE: 100.0,  // 1000× background
 } as const;
+
+/**
+ * Legacy Nutrient Stock System (TIER 2 HIGH - Nov 15, 2025)
+ *
+ * Tracks accumulated nutrient contamination in environmental reservoirs.
+ * Key insight: Pollution reduction doesn't immediately reduce environmental contamination
+ * because legacy stocks continue releasing nutrients for decades/centuries.
+ *
+ * Research backing:
+ * - Lake Erie case study: Internal sediment loading = 10,000-11,000 MT P/year (equals external inputs)
+ * - Soil nitrogen: ~30 year half-life for accumulated reactive nitrogen
+ * - Aquatic sediment phosphorus: ~100 year half-life
+ * - Atmospheric deposition: Global nitrogen transport from agricultural/industrial sources
+ *
+ * Expected impact: Addresses 10% god mode effectiveness gap in biogeochemical flows boundary
+ *
+ * @see research/nitrogen_food_coupling_20251115.md
+ * @see reviews/nitrogen_food_coupling_critique_20251115.md (Grade B, CONDITIONAL PASS)
+ */
+export interface LegacyNutrientStock {
+  // === SOIL RESERVOIR ===
+  soil: {
+    nitrogen: number;        // Mt N accumulated in agricultural soils
+    phosphorus: number;      // Mt P accumulated in agricultural soils
+    halfLife: number;        // years (soil ~30 years based on research)
+  };
+
+  // === SEDIMENT RESERVOIR ===
+  sediment: {
+    nitrogen: number;        // Mt N accumulated in aquatic sediments
+    phosphorus: number;      // Mt P accumulated in aquatic sediments
+    halfLife: number;        // years (sediment ~100 years, Lake Erie case)
+  };
+
+  // === ATMOSPHERIC TRANSPORT ===
+  atmosphericDeposition: number;  // Mt N/year from atmospheric transport
+
+  // === EFFECTIVE POLLUTION (derived) ===
+  // effectiveNitrogenPollution = currentAnnualInput + legacyRelease
+  // effectivePhosphorusPollution = currentAnnualInput + legacyRelease
+  // legacyRelease = stock × (1 - exp(-ln(2)/halfLife)) per year
+}
+
+/**
+ * Regional Nitrogen Management (TIER 2 HIGH - Nov 15, 2025)
+ *
+ * Tracks nitrogen use efficiency and food production coupling at regional level.
+ * Different regions have different overuse baselines - reduction penalties vary by region.
+ *
+ * Research backing:
+ * - Science Advances (2024): 55% of South Asian rice farmers overuse nitrogen
+ * - Zhang et al. (2021): 30-70% N reduction possible with yield INCREASES of 10-30%
+ * - Regional differentiation: Sub-Saharan Africa has UNDERUSE (penalties start immediately)
+ *
+ * Expected impact: Realistic nitrogen reduction mechanics with regional nuance
+ *
+ * @see research/nitrogen_food_coupling_20251115.md
+ */
+export interface RegionalNitrogenManagement {
+  region: string;                    // 'southAsia' | 'eastAsia' | 'northAmerica' | 'europe' | 'subSaharanAfrica' | 'latinAmerica'
+  currentNitrogenInput: number;      // Mt N/year current fertilizer application
+  optimalNitrogenInput: number;      // Mt N/year research-backed optimal (crop needs only)
+  overusePercentage: number;         // [0, 1] Percentage above optimal (0.55 for South Asia rice)
+  deployedTechnologies: string[];    // IDs of deployed nitrogen-reducing technologies
+  yieldImpact: number;               // [-1, 1] Current yield impact from reduction (negative = penalty)
+  foodProductionIndex: number;       // [0, 2] Regional food production capacity (1.0 = baseline)
+}
 
