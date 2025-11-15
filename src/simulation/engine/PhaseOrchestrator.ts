@@ -7,6 +7,7 @@
 
 import { GameState, GameEvent } from '@/types/game';
 import { logger } from '../utils/asyncLogger';
+import { stateValidator, type StateSnapshot } from '../utils/stateValidation';
 
 /**
  * Random number generator function
@@ -120,18 +121,14 @@ export class PhaseOrchestrator {
 
   // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
   // ENHANCED (Nov 12, 2025): Track min/max/p95 for better analysis
-<<<<<<< HEAD
   // MEMORY LEAK FIX (Nov 15, 2025): Use Welford's algorithm for O(1) memory per phase
   // Previous: Stored 1000 samples × 95 phases = 760KB per simulation
   // Current: ~120 bytes per phase (6 numbers) = 11KB total for 95 phases
-=======
-  // MEMORY LEAK FIX (Nov 13, 2025): Sliding windows to prevent unbounded growth
   /**
-   * Maximum samples to keep per phase for p95 calculation.
-   * Keeps last 1000 samples = ~8 hours of simulation at ~120 steps/hour.
-   * Prevents memory leak in long-running Monte Carlo (N=100 × 1200 steps = 120K samples → 1000 samples).
+   * Maximum samples to keep per phase for p95 calculation (reservoir sampling).
+   * Keeps 100 randomly selected samples for p95 estimation.
    */
-  private static readonly MAX_PHASE_SAMPLES = 1000;
+  private static readonly MAX_PHASE_SAMPLES = 100;
   /**
    * Maximum step timings to keep.
    * Keeps last 1200 steps = 100 years of simulation.
@@ -139,18 +136,14 @@ export class PhaseOrchestrator {
    */
   private static readonly MAX_STEP_TIMINGS = 1200;
 
->>>>>>> origin/auto/worker-20251113_070003
   private phaseTimings: Map<string, {
     totalMs: number;
     callCount: number;
     minMs: number;
     maxMs: number;
-<<<<<<< HEAD
     mean: number;        // Welford's algorithm: incremental mean
     m2: number;          // Welford's algorithm: sum of squared deviations (for variance)
-=======
-    samples: number[];  // Sliding window, max MAX_PHASE_SAMPLES
->>>>>>> origin/auto/worker-20251113_070003
+    samples: number[];   // Reservoir sampling for p95 (max 100 samples)
   }> = new Map();
   private enableTiming: boolean = false;
   private slowPhaseThresholdMs: number = 10;  // Warn on phases >10ms
@@ -225,18 +218,22 @@ export class PhaseOrchestrator {
           }
         }
 
+        // STATE VALIDATION (Nov 15, 2025) - HIGH-3 fix
+        // Pre-condition: Validate state BEFORE phase executes
+        const preSnapshot = stateValidator.validatePreCondition(state, phase.name);
+
         // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
         const startTime = this.enableTiming ? performance.now() : 0;
 
         const result = phase.execute(state, rng, ctx);
 
+        // STATE VALIDATION (Nov 15, 2025) - HIGH-3 fix
+        // Post-condition: Validate state AFTER phase executes
+        stateValidator.validatePostCondition(state, phase.name, preSnapshot);
+
         // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
         // ENHANCED (Nov 12, 2025): Track min/max/p95, warn on slow phases
-<<<<<<< HEAD
         // MEMORY LEAK FIX (Nov 15, 2025): Use Welford's algorithm for O(1) memory
-=======
-        // MEMORY LEAK FIX (Nov 13, 2025): Sliding window for samples
->>>>>>> origin/auto/worker-20251113_070003
         if (this.enableTiming) {
           const elapsed = performance.now() - startTime;
           const existing = this.phaseTimings.get(phase.name) || {
@@ -245,10 +242,10 @@ export class PhaseOrchestrator {
             minMs: Infinity,
             maxMs: -Infinity,
             mean: 0,
-            m2: 0
+            m2: 0,
+            samples: []
           };
 
-<<<<<<< HEAD
           // Welford's algorithm for incremental mean and variance
           // See: Knuth TAOCP vol 2, 3rd edition, page 232
           const newCount = existing.callCount + 1;
@@ -257,27 +254,27 @@ export class PhaseOrchestrator {
           const delta2 = elapsed - newMean;
           const newM2 = existing.m2 + delta * delta2;
 
-=======
-          // Sliding window: keep last MAX_PHASE_SAMPLES samples for p95 calculation
-          // Prevents unbounded memory growth in long-running simulations
-          const newSamples = [...existing.samples, elapsed];
-          const samples = newSamples.length > PhaseOrchestrator.MAX_PHASE_SAMPLES
-            ? newSamples.slice(-PhaseOrchestrator.MAX_PHASE_SAMPLES)
-            : newSamples;
+          // Reservoir sampling for p95 (keep 100 random samples)
+          // Algorithm R from Knuth TAOCP vol 2, section 3.4.2
+          let newSamples = existing.samples;
+          if (newSamples.length < PhaseOrchestrator.MAX_PHASE_SAMPLES) {
+            newSamples = [...newSamples, elapsed];
+          } else {
+            const j = Math.floor(Math.random() * newCount);
+            if (j < PhaseOrchestrator.MAX_PHASE_SAMPLES) {
+              newSamples = [...newSamples];
+              newSamples[j] = elapsed;
+            }
+          }
 
-          // Update statistics
->>>>>>> origin/auto/worker-20251113_070003
           this.phaseTimings.set(phase.name, {
             totalMs: existing.totalMs + elapsed,
             callCount: newCount,
             minMs: Math.min(existing.minMs, elapsed),
             maxMs: Math.max(existing.maxMs, elapsed),
-<<<<<<< HEAD
             mean: newMean,
-            m2: newM2
-=======
-            samples
->>>>>>> origin/auto/worker-20251113_070003
+            m2: newM2,
+            samples: newSamples
           });
 
           // Warn on slow phases (>10ms threshold)
