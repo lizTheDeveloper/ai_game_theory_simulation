@@ -304,31 +304,67 @@ Reasoning State → Claim Detection → Verification Query → Match Result → 
    - Severity classifier can't assign 100% to all claims
    - Memory system can't forget safety-critical learnings
 
-### Mapping to OWASP Top 10 (2021)
+### Applying OWASP Top 10 (2021) Security Controls
 
 **A01: Broken Access Control**
-- **NL Solution**: Hierarchical access - fast levels can't modify slow levels directly
-- **Example**: Engineering placeholders can't override research-verified parameters
+- **OWASP Control**: Implement least privilege access with RBAC (Role-Based Access Control)
+- **Application**: Enforce write permissions by level (fast levels read-only to slow memory)
+- **Implementation**: Use file system permissions, database ACLs, API authentication
+- **Example**: Engineering placeholder updates require different API key than verified parameter updates
 
 **A02: Cryptographic Failures**
-- **NL Solution**: Sensitive data only in slowest level (encrypted core memory)
-- **Example**: API keys stored in Level 3, never in Level 0 logs
+- **OWASP Control**: Encrypt sensitive data at rest and in transit using TLS 1.3+ and AES-256
+- **Application**: Encrypt MCP API keys, database credentials, user tokens
+- **Implementation**: Use environment variables with secrets manager (AWS Secrets Manager, HashiCorp Vault)
+- **Example**: Store API keys encrypted with KMS, decrypt only in memory, never log plaintext
 
 **A03: Injection**
-- **NL Solution**: Each level validates inputs from faster levels
-- **Example**: Claim extraction sanitized before MCP queries
+- **OWASP Control**: Use parameterized queries, input validation, and output encoding
+- **Application**: Sanitize all user inputs and external data before processing
+- **Implementation**: Whitelist validation for DOIs, escape special chars in MCP queries, validate JSON schemas
+- **Example**: Claim text sanitized with DOMPurify before embedding, DOI format validated with regex
 
 **A04: Insecure Design**
-- **NL Solution**: Multi-level architecture is secure by design
-- **Example**: Can't skip verification without explicit bypass at all levels
+- **OWASP Control**: Use threat modeling and security design patterns (defense in depth)
+- **Application**: Multi-layer validation (input validation → business logic validation → output validation)
+- **Implementation**: Fail securely (default deny), validate at boundaries, assume breach mentality
+- **Example**: If MCP verification fails, flag as UNVERIFIED (don't assume verified), require explicit override
 
 **A05: Security Misconfiguration**
-- **NL Solution**: Defaults safe at each level, explicit opt-in for risky behavior
-- **Example**: Default = verify all claims, opt-in to skip low-risk claims
+- **OWASP Control**: Implement secure defaults, minimal configuration, regular updates
+- **Application**: Production configs hardened (disable debug logging, enable HTTPS only, strict CORS)
+- **Implementation**: Use configuration management (dotenv files, config validation at startup)
+- **Example**: Default claim verification = ON, default confidence threshold = HIGH, opt-in to relax
 
-**A09: Security Logging Failures**
-- **NL Solution**: Each level logs its LSS signals (deviations)
-- **Example**: Grade inflation detected by Level 2 surprise signals
+**A06: Vulnerable and Outdated Components**
+- **OWASP Control**: Dependency scanning, regular updates, SBOMs (Software Bill of Materials)
+- **Application**: Automated npm audit in CI/CD, pin dependency versions, quarterly updates
+- **Implementation**: Dependabot PRs, Snyk scanning, lock files committed
+- **Example**: MCP client library pinned to v2.3.1 (known secure), update only after security review
+
+**A07: Identification and Authentication Failures**
+- **OWASP Control**: Multi-factor authentication, secure session management, password policies
+- **Application**: API key rotation, session timeouts, rate limiting
+- **Implementation**: JWT tokens with expiration, refresh token rotation, MFA for admin access
+- **Example**: MCP API key rotated every 90 days, admin dashboard requires 2FA
+
+**A08: Software and Data Integrity Failures**
+- **OWASP Control**: Code signing, integrity checks, secure CI/CD pipelines
+- **Application**: Verify external data sources (MCP responses, research papers)
+- **Implementation**: Check DOI resolves to expected domain, validate JSON schema, checksum downloads
+- **Example**: Verify paper PDFs with SHA-256 hash against publisher, reject if mismatch
+
+**A09: Security Logging and Monitoring Failures**
+- **OWASP Control**: Comprehensive logging, centralized monitoring, alerting
+- **Application**: Log all security events (auth failures, injection attempts, anomalies)
+- **Implementation**: Structured logging (JSON), centralized (ELK/Splunk), retention 90 days
+- **Example**: Log all MCP queries with timestamp/user/result, alert on >10 failures/minute
+
+**A10: Server-Side Request Forgery (SSRF)**
+- **OWASP Control**: Whitelist allowed URLs, validate and sanitize URL inputs, network segmentation
+- **Application**: Restrict MCP endpoints, block internal IPs, validate redirect chains
+- **Implementation**: URL parser validation, IP blacklist (127.0.0.1, 10.x.x.x, 169.254.x.x), timeout 10s
+- **Example**: MCP queries only to https://research.api.trusted.com/*, reject localhost/private IPs
 
 ### Safe AI Principles via Nested Learning
 
