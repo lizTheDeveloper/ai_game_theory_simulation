@@ -158,4 +158,4 @@ export const SurvivalTraitsPhase = {
   order: 4.1,
   dependencies: ['ai-lifecycle', 'ai_alignment_evolution'],  // Nov 2025: rlhf_binding consolidated into ai_alignment_evolution
   execute: executeSurvivalTraitsPhase,
-};
+} as const;

@@ -22,7 +22,7 @@ export class OrganizationViabilityPhase implements SimulationPhase {
   readonly id = 'organization-viability';
   readonly name = 'Organization Viability';
   readonly order = 251; // After country population (250)
-  dependencies = ['organization-turns'];
+  readonly dependencies = ['organization-turns'];
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

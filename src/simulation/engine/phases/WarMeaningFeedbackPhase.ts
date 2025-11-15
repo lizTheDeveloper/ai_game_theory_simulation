@@ -16,7 +16,7 @@ export class WarMeaningFeedbackPhase implements SimulationPhase {
   readonly id = 'war_meaning_feedback';
   readonly name = 'War-Meaning Feedback';
   readonly order = 7.5;
-  dependencies = ['ai-agent-actions'];
+  readonly dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

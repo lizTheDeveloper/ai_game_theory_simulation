@@ -32,7 +32,7 @@ export class EarlyWarningPhase implements SimulationPhase {
   readonly id = 'early-warning';
   readonly name = 'Early Warning Detection';
   readonly order = 26.5;
-  dependencies = ['planetary_boundaries'];
+  readonly dependencies = ['planetary_boundaries'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

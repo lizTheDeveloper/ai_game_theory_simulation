@@ -144,4 +144,4 @@ export const RLHFBindingPhase: SimulationPhase = {
   ] as const,
 
   execute: executeRLHFBindingPhase,
-};
+} as const;

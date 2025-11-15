@@ -19,7 +19,7 @@ export class WorkflowAdaptationPhase implements SimulationPhase {
   readonly id = 'workflow-adaptation';
   readonly name = 'Workflow Adaptation Update';
   readonly order = 24.0;  // After trust/social cohesion (23), before upward spirals (25)
-  dependencies = ['ai-agent-actions'];
+  readonly dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

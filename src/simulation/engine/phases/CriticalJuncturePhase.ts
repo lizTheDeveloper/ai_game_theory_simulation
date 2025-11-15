@@ -494,9 +494,10 @@ export function attemptEscape(
  * Detects critical junctures and attempts agency-based escapes.
  */
 export class CriticalJuncturePhase implements SimulationPhase {
-  id = 'critical_juncture_phase';
-  name = 'Critical Juncture Agency';
-  order = 29;
+  readonly id = 'critical_juncture_phase';
+  readonly name = 'Critical Juncture Agency';
+  readonly order = 29;
+  readonly dependencies = ['crisis-points']; // Reads system state for critical junctures
 
   execute(state: GameState, rng: () => number, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

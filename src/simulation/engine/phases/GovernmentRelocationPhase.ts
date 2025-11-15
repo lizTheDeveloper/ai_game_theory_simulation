@@ -22,6 +22,7 @@ export class GovernmentRelocationPhase implements SimulationPhase {
   readonly id = 'government_relocation';
   readonly name = 'Government Relocation Programs';
   readonly order = 20.7;
+  readonly dependencies = ['refugee-crisis']; // Reads displaced populations, provides managed relocation
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateGovernmentRelocation } = require('../../governmentRelocation');

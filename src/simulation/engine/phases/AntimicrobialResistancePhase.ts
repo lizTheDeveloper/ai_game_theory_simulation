@@ -29,6 +29,7 @@ export class AntimicrobialResistancePhase implements SimulationPhase {
   readonly id = 'antimicrobial_resistance';
   readonly name = 'Antimicrobial Resistance';
   readonly order = 15.01; // AMR crisis detection - second (after environmental hazards, before QoL)
+  readonly dependencies = ['technology-deployment']; // Reads tech tree for AMR mitigation
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Update entire AMR system

@@ -27,7 +27,7 @@ export class RadiationSystemPhase implements SimulationPhase {
   readonly id = 'radiation_system';
   readonly name = 'Radiation Health Effects';
   readonly order = 252.5;
-  dependencies = ['nuclear_winter'];
+  readonly dependencies = ['nuclear_winter'];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     const system = state.radiationSystem;

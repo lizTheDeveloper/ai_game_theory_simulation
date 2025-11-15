@@ -269,6 +269,6 @@ export const EvolutionarySelectionPhase = {
   id: 'evolutionary_selection',
   name: 'Evolutionary Selection',
   order: 4.3,
-  dependencies: [],  // Batch 5: removed cooperative-systems (was collective_formation@4.2, now @12.6) - no longer valid dependency
+  dependencies: ['rlhf_binding'] as const, // Reads escapedAgents, government control state
   execute: executeEvolutionarySelectionPhase,
-};
+} as const;
