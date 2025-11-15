@@ -1293,6 +1293,49 @@ export const BASELINES = {
 } as const;
 
 // ============================================================================
+// FLOOR CONSTANTS
+// Numerical stability minimums to prevent division by zero and calculation errors
+// ============================================================================
+
+export const FLOORS = {
+  // === GEOMETRIC MEAN FLOORS ===
+  /**
+   * Geometric mean floor for resource/climate calculations
+   * @research Standard numerical stability practice - prevent ln(0) in geometric means
+   * @value 0.001 - 0.1% minimum to prevent division by zero
+   * @note Used in environmental.ts and planetaryBoundaries.ts for reserve/climate metrics
+   */
+  GEOMETRIC_MEAN_FLOOR: 0.001,
+
+  // === EXTINCTION RATE BOUNDS ===
+  /**
+   * Minimum extinction rate (background rate)
+   * @research IPBES (2019) - Background extinction rate ~1 E/MSY (extinctions per million species-years)
+   * @value 1.0 - One extinction per million species-years (pre-human baseline)
+   * @note Allow improvement below safe boundary (10 E/MSY) down to background rate
+   */
+  MIN_EXTINCTION_RATE: 1.0,
+
+  /**
+   * Safe extinction rate threshold (planetary boundary)
+   * @research IPBES (2019) - Planetary boundary at 10 E/MSY
+   * @research Rockström et al. (2009) - Biodiversity loss planetary boundary
+   * @value 10.0 - Ten extinctions per million species-years
+   * @note CRITICAL: This is the SAFE boundary, not the background rate (1.0) or mass extinction (1000.0)
+   * @note Fixed Nov 15, 2025: Deduplicated from planetaryBoundaries.ts where it appeared as 1.0 (WRONG)
+   */
+  SAFE_EXTINCTION_RATE: 10.0,
+
+  /**
+   * Maximum extinction rate hard cap (mass extinction event)
+   * @research IPBES (2019) - Current rate 100-1000× background, upper bound ~1000 E/MSY
+   * @value 1000.0 - One thousand extinctions per million species-years (mass extinction)
+   * @note This is the HARD CAP, top of IPBES range, represents catastrophic biodiversity collapse
+   */
+  MAX_EXTINCTION_RATE: 1000.0,
+} as const;
+
+// ============================================================================
 // TOLERANCE CONSTANTS
 // Precision tolerances for floating point comparisons
 // ============================================================================
@@ -1338,6 +1381,7 @@ export type ThresholdKey = keyof typeof THRESHOLDS;
 export type RateKey = keyof typeof RATES;
 export type MultiplierKey = keyof typeof MULTIPLIERS;
 export type BaselineKey = keyof typeof BASELINES;
+export type FloorKey = keyof typeof FLOORS;
 export type ToleranceKey = keyof typeof TOLERANCES;
 
 /**
@@ -1348,6 +1392,7 @@ export interface SimulationConfig {
   rates: typeof RATES;
   multipliers: typeof MULTIPLIERS;
   baselines: typeof BASELINES;
+  floors: typeof FLOORS;
   tolerances: typeof TOLERANCES;
 }
 
@@ -1360,6 +1405,7 @@ export function getSimulationConfig(): SimulationConfig {
     rates: RATES,
     multipliers: MULTIPLIERS,
     baselines: BASELINES,
+    floors: FLOORS,
     tolerances: TOLERANCES,
   };
 }

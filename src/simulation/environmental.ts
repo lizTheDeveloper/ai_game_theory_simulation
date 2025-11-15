@@ -23,6 +23,7 @@ import { calculateClimatePovertyWeights, calculateEcosystemWeights } from './uti
 import { convertClimateSensitivityToRate } from './thresholds/tier1Config';
 import { addMortalityRisk } from './bayesianMortality';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { FLOORS } from './config/centralConfig';
 
 /**
  * Initialize environmental accumulation state
@@ -154,13 +155,11 @@ export function updateEnvironmentalAccumulation(
   // Mitigation from breakthrough technologies (Phase 2A)
   // NOTE: Resource efficiency now handled by TechTreePhase regional effects
   // No additional multiplier needed here
-  
-  // Apply depletion (with MIN_FLOOR to prevent exactly 0, which breaks geometric means)
-  const MIN_RESERVE_FLOOR = 0.001; // 0.1% minimum to prevent geometric mean collapse
 
+  // Apply depletion (with FLOORS.GEOMETRIC_MEAN_FLOOR to prevent exactly 0, which breaks geometric means)
   // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
   env.resourceReserves = assertFinite(
-    Math.max(MIN_RESERVE_FLOOR, env.resourceReserves - resourceDepletionRate),
+    Math.max(FLOORS.GEOMETRIC_MEAN_FLOOR, env.resourceReserves - resourceDepletionRate),
     {
       location: 'updateResourceReserves',
       valueName: 'resourceReserves',
@@ -252,14 +251,12 @@ export function updateEnvironmentalAccumulation(
   
   // Natural stabilization (very slow)
   const naturalStabilization = 0.001; // 0.1% per month
-  
-  // Detect NaN before calculation - fail loudly
-  // Apply climate degradation (with MIN_FLOOR to prevent exactly 0, which breaks geometric means)
-  const MIN_CLIMATE_FLOOR = 0.001; // 0.1% minimum to prevent geometric mean collapse
 
+  // Detect NaN before calculation - fail loudly
+  // Apply climate degradation (with FLOORS.GEOMETRIC_MEAN_FLOOR to prevent exactly 0, which breaks geometric means)
   // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
   env.climateStability = assertFinite(
-    Math.max(MIN_CLIMATE_FLOOR, Math.min(1, env.climateStability - climateDegradationRate + naturalStabilization)),
+    Math.max(FLOORS.GEOMETRIC_MEAN_FLOOR, Math.min(1, env.climateStability - climateDegradationRate + naturalStabilization)),
     {
       location: 'updateClimateStability',
       valueName: 'climateStability',

@@ -31,6 +31,7 @@ import {
 } from '@/types/planetaryBoundaries';
 import { assertStateProperty, assertFinite, assertProbability, assertInRange, assertDefined } from './utils/assertions';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { FLOORS } from './config/centralConfig';
 
 /**
  * Sample biosphere extinction rate from log-uniform distribution
@@ -486,12 +487,11 @@ function initializeLandUseSystem(rng?: RNGFunction): LandUseSystem {
     // DETERMINISM FIX (Nov 5, 2025): Clamp scaled rates to [1, 1000] E/MSY range
     // BUG FIX (Nov 11, 2025): Changed min from 10 to 1 E/MSY to allow tech improvements below safe boundary
     // Prevents assertion errors when sampling high global extinction rates
-    const MAX_EXTINCTION_RATE = 1000.0;
-    const MIN_EXTINCTION_RATE = 1.0;  // Background extinction rate (~1 E/MSY), allow improvement below safe boundary (10 E/MSY)
-    tropical.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, tropical.extinctionRate * scaleFactor));
-    temperate.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, temperate.extinctionRate * scaleFactor));
-    grasslands.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, grasslands.extinctionRate * scaleFactor));
-    borealArctic.extinctionRate = Math.max(MIN_EXTINCTION_RATE, Math.min(MAX_EXTINCTION_RATE, borealArctic.extinctionRate * scaleFactor));
+    // MIGRATION (Nov 15, 2025): Use FLOORS from centralConfig instead of inline constants
+    tropical.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, tropical.extinctionRate * scaleFactor));
+    temperate.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, temperate.extinctionRate * scaleFactor));
+    grasslands.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, grasslands.extinctionRate * scaleFactor));
+    borealArctic.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, borealArctic.extinctionRate * scaleFactor));
   } else {
     // Single run: Use conservative baseline
     globalExtinctionRate =
@@ -729,10 +729,10 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Before (v2): Divided relative ratios (2.2×) by safe threshold (10) → 0.22× (WRONG!)
     // Now (v3): Divide absolute rates (116 E/MSY) by safe threshold (10 E/MSY) → 11.6× (CORRECT!)
     // Research: IPBES (2019) - Safe threshold is 10 E/MSY
-    const SAFE_EXTINCTION_RATE = 10.0; // 10 E/MSY (IPBES planetary boundary)
+    // MIGRATION (Nov 15, 2025): Use FLOORS.SAFE_EXTINCTION_RATE from centralConfig
     const totalExtinctionRateEMSY = baseExtinctionRateEMSY * invasiveMultiplier; // In E/MSY units
 
-    const biosphereBoundaryValue = assertFinite(totalExtinctionRateEMSY / SAFE_EXTINCTION_RATE, {
+    const biosphereBoundaryValue = assertFinite(totalExtinctionRateEMSY / FLOORS.SAFE_EXTINCTION_RATE, {
       location: 'updatePlanetaryBoundaries:biosphere',
       valueName: 'biosphere_integrity.currentValue',
       month: state.currentMonth,
@@ -1276,15 +1276,13 @@ function updateLandUseSystem(state: GameState): void {
     // Research: IPBES (2019) - extinction rates increase ~10-30% per decade under BAU
     // Use percentage-based growth with saturation to prevent runaway accumulation
     // Mass extinction threshold: 1000 E/MSY (100× safe boundary = >75% species loss)
-
-    const MAX_EXTINCTION_RATE = 1000.0; // HARD CAP: 1000 E/MSY (mass extinction, top of IPBES range)
-    const MIN_EXTINCTION_RATE = 1.0;  // Background extinction rate (~1 E/MSY), allow improvement below safe boundary (10 E/MSY)
+    // MIGRATION (Nov 15, 2025): Use FLOORS from centralConfig instead of inline constants
 
     // Ensure extinction rate never drops to zero (percentage growth would get stuck)
     const currentRate = assertInRange(
       region.extinctionRate,
-      MIN_EXTINCTION_RATE,
-      MAX_EXTINCTION_RATE,
+      FLOORS.MIN_EXTINCTION_RATE,
+      FLOORS.MAX_EXTINCTION_RATE,
       {
         location: 'updateLandUseSystem (pre-update)',
         valueName: `${regionName}.extinctionRate`,
@@ -1299,25 +1297,25 @@ function updateLandUseSystem(state: GameState): void {
 
     // Logistic saturation: Growth slows as we approach max
     // Clamped to [0, 1] to prevent negative growth multipliers
-    const saturationFactor = Math.max(0, 1.0 - (currentRate / MAX_EXTINCTION_RATE));
+    const saturationFactor = Math.max(0, 1.0 - (currentRate / FLOORS.MAX_EXTINCTION_RATE));
     const growthMultiplier = 1.0 + (monthlyPercentage * saturationFactor);
 
     const newExtinctionRate = currentRate * growthMultiplier;
 
     // Cap at MAX and log if we hit mass extinction threshold
-    const cappedRate = Math.min(MAX_EXTINCTION_RATE, Math.max(MIN_EXTINCTION_RATE, newExtinctionRate));
+    const cappedRate = Math.min(FLOORS.MAX_EXTINCTION_RATE, Math.max(FLOORS.MIN_EXTINCTION_RATE, newExtinctionRate));
 
-    if (newExtinctionRate >= MAX_EXTINCTION_RATE) {
+    if (newExtinctionRate >= FLOORS.MAX_EXTINCTION_RATE) {
       console.log(
-        `\n🌍💀 MASS EXTINCTION THRESHOLD: ${regionName} extinction rate capped at ${MAX_EXTINCTION_RATE}× ` +
+        `\n🌍💀 MASS EXTINCTION THRESHOLD: ${regionName} extinction rate capped at ${FLOORS.MAX_EXTINCTION_RATE}× ` +
         `(was ${newExtinctionRate.toFixed(1)}×) - >75% species loss, month ${state.currentMonth}`
       );
     }
 
     region.extinctionRate = assertInRange(
       cappedRate,
-      MIN_EXTINCTION_RATE,
-      MAX_EXTINCTION_RATE,
+      FLOORS.MIN_EXTINCTION_RATE,
+      FLOORS.MAX_EXTINCTION_RATE,
       {
         location: 'updateLandUseSystem (post-update)',
         valueName: `${regionName}.extinctionRate`,
@@ -1590,7 +1588,9 @@ export function initializeBiosphereIntegrityIndex(): BiosphereIntegrityIndex {
     AVG_CLIMATE_VELOCITY_TROPICS: 0.3,
     AVG_CLIMATE_VELOCITY_TEMPERATE: 0.8,
     AVG_CLIMATE_VELOCITY_ARCTIC: 2.0,
-    SAFE_EXTINCTION_RATE: 1.0,
+    // BUG FIX (Nov 15, 2025): SAFE_EXTINCTION_RATE is 10.0 E/MSY, not 1.0 (which is BACKGROUND)
+    // MIGRATION (Nov 15, 2025): Use FLOORS from centralConfig - removed inline constant
+    // Line 1654 now uses FLOORS.SAFE_EXTINCTION_RATE instead of BII_CONSTANTS.SAFE_EXTINCTION_RATE
     BACKGROUND_RATE: 0.1,
     FRAGMENTATION_BARRIER_MAX: 1.5,
   } as const;
@@ -1649,9 +1649,10 @@ export function initializeBiosphereIntegrityIndex(): BiosphereIntegrityIndex {
 
   // === PLANETARY BOUNDARY INTEGRATION ===
   // Current rate: 10 E/MSY = 100× background
-  // Boundary threshold: 1.0 = 10× background
-  // Current value: 10.0 (10× the boundary)
-  const boundaryValue = BII_CONSTANTS.CURRENT_RATE_2025 / BII_CONSTANTS.SAFE_EXTINCTION_RATE;
+  // Boundary threshold: 10.0 E/MSY (IPBES planetary boundary)
+  // Current value: 1.0 (at the boundary)
+  // MIGRATION (Nov 15, 2025): Use FLOORS.SAFE_EXTINCTION_RATE from centralConfig (fixes BUG: was using wrong 1.0 value)
+  const boundaryValue = BII_CONSTANTS.CURRENT_RATE_2025 / FLOORS.SAFE_EXTINCTION_RATE;
 
   // Tipping point risk (0-1)
   const tippingPointRisk = Math.min(1.0, boundaryValue / 10.0); // 0.0 at safe, 1.0 at 10× boundary
