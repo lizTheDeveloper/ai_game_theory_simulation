@@ -53,10 +53,10 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 ### Why This Matters
 
 **The project has grown beyond single-context complexity:**
-- **900+ line state interface** with dozens of subsystems
+- **~800 line state interface** with dozens of subsystems
 - **Pictographic event language** (emoji conventions) that must be consistent
 - **Defensive coding requirements** (no silent fallbacks, assertion utilities)
-- **Phase-based architecture** (37 phases, specific execution order)
+- **Phase-based architecture** (96 phase files, ~212 phase classes, specific execution order)
 - **Deterministic simulation** (RNG seeds, Monte Carlo validation)
 - **Research standards** (peer-reviewed sources, parameter justification)
 
@@ -137,9 +137,9 @@ npm run dev
 
 ### Core Concepts
 
-**Pure TypeScript simulation engine** (zero framework dependencies) with ~37 phases per step:
+**Pure TypeScript simulation engine** (zero framework dependencies) with 96 phase files:
 1. **Phase-based architecture:** Composable, testable units (see `src/simulation/engine/PhaseOrchestrator.ts`)
-2. **Single source of truth:** `GameState` interface in `src/types/game.ts` (900+ lines)
+2. **Single source of truth:** `GameState` interface in `src/types/game.ts` (~800 lines)
 3. **Deterministic:** Reproducible with RNG seeds for Monte Carlo analysis
 4. **Mutable state:** Direct mutation for performance (not immutable)
 
@@ -152,17 +152,17 @@ npm run dev
 - **71 breakthrough technologies** (TIER 0-4: crisis response → transformative → clarketech)
 - **7-tier outcome classification** (utopia → status quo → collapse → extinction)
 
-**📖 Complete architecture documentation:** See [`docs/wiki/README.md`](./docs/wiki/README.md) (3,000+ lines) for detailed system documentation.
+**📖 Complete architecture documentation:** See [`docs/wiki/README.md`](./docs/wiki/README.md) (7,500+ lines) for detailed system documentation.
 
 ## File Organization
 
 **Core files:**
 - `src/simulation/` - Pure simulation engine (40+ system modules)
-- `src/types/game.ts` - Single source of truth (900+ lines)
-- `.claude/agents/` - 11 specialized agents
+- `src/types/game.ts` - Single source of truth (~800 lines)
+- `.claude/agents/` - 25+ specialized agents
 - `.claude/chatroom/` - Multi-agent coordination (symlinked to separate repo)
 - `plans/` - Roadmap + archived completed plans
-- `docs/wiki/README.md` - System documentation (3,000+ lines)
+- `docs/wiki/README.md` - System documentation (7,500+ lines)
 
 **Matrix Integration:** Real-time messaging via Matrix FastMCP server. 11 private rooms map to chatroom channels. Agents use per-agent MCP configs in `.claude/agents/mcp-configs/`.
 
@@ -268,6 +268,26 @@ Every mechanic must have:
 
 ### TypeScript Strictness
 This codebase uses **very strict TypeScript** (see `tsconfig.json`). Follow these rules - the type system catches many bugs.
+
+### Phase Dependencies & Execution Order
+
+**CRITICAL: Phases have strict dependency relationships and execution order.**
+
+The simulation uses a phase-based architecture with explicit dependency declarations:
+- **Static dependencies:** Declared in phase files via `dependencies` and `readonly` arrays
+- **Execution order:** Enforced by PhaseOrchestrator based on topological sort
+- **Validation:** Phase dependency violations are caught at compile time and runtime
+
+**Key conventions:**
+- Declare `dependencies: string[]` for phases that modify state this phase reads
+- Declare `readonly: string[]` for phases whose state this phase only reads
+- Phase names must match registered names in PhaseOrchestrator
+- Circular dependencies are prohibited and will cause startup failure
+
+**Recent work (Nov 2025):**
+- Phase dependency static validation complete (14 violations fixed)
+- Assertion coverage: 97.2% (defensive coding cleanup complete)
+- Architecture health: 8.0/10 (2 CRITICAL, 5 HIGH issues identified)
 
 ### Deterministic Simulation
 **Never use `Math.random()` directly.** Always use the RNG function passed to phases for reproducibility:
@@ -416,6 +436,8 @@ console.log(`☢️💥 NUCLEAR DETONATION: ${nation}`);
 9. ❌ **Don't add UI dependencies to simulation** - keep engine pure
 10. ❌ **Don't simplify when nuance matters** - research tool, not a game
 11. ❌ **Don't use defensive fallbacks** - see "Defensive Programming Anti-Patterns" below
+12. ❌ **Don't violate phase dependencies** - declare dependencies/readonly arrays, respect execution order
+13. ❌ **Don't create circular phase dependencies** - will cause startup failure
 
 ### Defensive Programming Anti-Patterns
 
@@ -442,7 +464,7 @@ fi
 
 - **Commands:** [`docs/COMMANDS.md`](./docs/COMMANDS.md) - Complete command reference
 - **Workflow:** [`docs/DEVELOPMENT_WORKFLOW.md`](./docs/DEVELOPMENT_WORKFLOW.md) - Detailed development guide
-- **Wiki:** [`docs/wiki/README.md`](./docs/wiki/README.md) - System documentation (3,000+ lines)
+- **Wiki:** [`docs/wiki/README.md`](./docs/wiki/README.md) - System documentation (7,500+ lines)
 - **Roadmap:** [`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](./plans/MASTER_IMPLEMENTATION_ROADMAP.md) - Priority-based tracking (CRITICAL → HIGH → MEDIUM → LOW)
 - **Chatroom:** [`.claude/chatroom/README.md`](./.claude/chatroom/README.md) - Multi-agent coordination (550+ lines)
 - **DevLogs:** `devlogs/` - Implementation diary
@@ -528,6 +550,11 @@ This project uses **domain-specific agents** with deep domain knowledge. Each ag
 #### nextjs-component-writer
 **When:** Single component creation (simple frontend tasks)
 **Expertise:** React/Next.js component authoring
+
+#### paulo
+**When:** Educational content, course maintenance, multi-agent system pedagogy
+**Expertise:** Making complex multi-agent systems accessible, neurodivergent-friendly documentation, maintaining docs/course/
+**Deep context:** Educational architecture, learning experience design, Multiverse School integration
 
 ### Agent Routing Examples
 
