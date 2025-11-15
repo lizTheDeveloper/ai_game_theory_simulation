@@ -12,7 +12,7 @@ export class MeaningRenaissancePhase implements SimulationPhase {
   readonly id = 'meaning-renaissance';
   readonly name = 'Meaning Renaissance Update';
   readonly order = 12.7;  // Batch 5: moved from 12.0 due to cooperative-systems (12.6) dependency
-  dependencies = ['cooperative-systems'];
+  readonly dependencies = ['cooperative-systems'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

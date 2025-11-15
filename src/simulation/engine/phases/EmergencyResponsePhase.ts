@@ -31,10 +31,10 @@ import {
 } from '../../emergencyManagement';
 
 export class EmergencyResponsePhase implements SimulationPhase {
-  id = 'emergency_response';
-  name = 'Emergency Response';
-  order = 26; // After crisis detection (25), before crisis escalation
-  dependencies = ['crisis-points', 'bifurcation-logic']; // Nov 14, 2025 - CRITICAL-1 fix: explicit bifurcation dependency
+  readonly id = 'emergency_response';
+  readonly name = 'Emergency Response';
+  readonly order = 26; // After crisis detection (25), before crisis escalation
+  readonly dependencies = ['crisis-points', 'bifurcation-logic']; // Nov 14, 2025 - CRITICAL-1 fix: explicit bifurcation dependency
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     if (!state.emergencyManagement) {

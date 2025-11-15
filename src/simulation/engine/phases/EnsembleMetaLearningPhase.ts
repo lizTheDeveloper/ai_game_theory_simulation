@@ -18,6 +18,7 @@ export const EnsembleMetaLearningPhase: SimulationPhase = {
   id: 'ensemble-meta-learning',
   name: 'Ensemble Meta-Learning',
   order: 36.01, // After most systems updates, before final metrics
+  dependencies: ['adversarial-detection'] as const, // Updates ensemble weights based on detection history
   execute: (state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult => {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
     if (!rng || typeof rng !== 'function') {

@@ -27,6 +27,7 @@ export const ResentmentRecoveryPhase = {
   id: 'resentment_recovery',
   name: 'Resentment Recovery',
   order: 17.02, // After AI Suffering (16), before crisis detection (26+)
+  dependencies: ['ai_suffering'] as const, // Reads AI resentment state
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

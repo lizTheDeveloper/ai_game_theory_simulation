@@ -34,6 +34,7 @@ export class GovernmentResponsePhase implements SimulationPhase {
   readonly id = 'government-response';
   readonly name = 'Government Policy Response';
   readonly order = 25.0;
+  readonly dependencies = ['ai-agent-actions']; // Reads AI capability, responds to AI risks
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const defaultContext: PhaseContext = { month: state.currentMonth, data: new Map(), executedPhases: new Set() };

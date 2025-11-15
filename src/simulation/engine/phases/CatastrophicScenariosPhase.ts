@@ -22,7 +22,7 @@ export class CatastrophicScenariosPhase implements SimulationPhase {
   readonly id = 'catastrophic-scenarios';
   readonly name = 'Catastrophic Scenarios';
   readonly order = 40.0;
-  dependencies = ['crisis-detection'];
+  readonly dependencies = ['crisis-detection'];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

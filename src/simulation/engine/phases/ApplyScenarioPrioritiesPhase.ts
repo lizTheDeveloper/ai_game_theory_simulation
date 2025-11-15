@@ -47,6 +47,7 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
   readonly id = 'apply-scenario-priorities';
   readonly name = 'Apply Scenario Priorities';
   readonly order = 1.5;
+  readonly dependencies = ['time-advancement']; // Reads scenario config, applies to state
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
