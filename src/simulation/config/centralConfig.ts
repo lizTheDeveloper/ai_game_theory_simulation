@@ -1192,9 +1192,10 @@ export const BASELINES = {
   /**
    * Heat adaptation - total maximum (empirical)
    * @research Ballester et al. (2024), Nature Medicine
-   * @value 0.8 - 80% total mortality reduction (empirical maximum observed)
+   * @value 0.45 - 44% total mortality reduction (empirical evidence)
+   * @note Previously 0.8 (82% overestimate) - corrected Nov 15, 2025
    */
-  HEAT_ADAPTATION_TOTAL_MAX: 0.8,
+  HEAT_ADAPTATION_TOTAL_MAX: 0.45,
 
   /**
    * Migration successful relocation baseline

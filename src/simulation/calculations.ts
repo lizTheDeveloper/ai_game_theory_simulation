@@ -190,7 +190,7 @@ export function calculateUnemployment(state: GameState): number {
   // TIER 0D BUG #2 FIX (Oct 17, 2025): Add missing task creation mechanism
   //
   // **Research Foundation:**
-  // - Acemoglu & Restrepo (2022): Automation has DISPLACEMENT + REINSTATEMENT effects
+  // - Acemoglu & Restrepo (2019): Automation has DISPLACEMENT + REINSTATEMENT effects
   // - Historical: 1980-2016 US saw 60-80M new jobs created DESPITE automation
   // - Mechanism: New technologies create new industries requiring human labor
   // - Examples: Data scientists, AI trainers, prompt engineers, AI ethicists
@@ -200,7 +200,7 @@ export function calculateUnemployment(state: GameState): number {
   // - This ensures exponential displacement is matched by exponential job creation
   // - Economic stage determines offset ratio (early disruption has HIGHEST job creation)
   //
-  // **Effect Magnitude (Acemoglu 2022):**
+  // **Effect Magnitude (Acemoglu 2019):**
   // - Historical reinstatement: 0.8-1.5x displacement (automation created MORE jobs than destroyed)
   // - Without reinstatement: Model predicts 54% unemployment (unrealistically pessimistic)
   // - With reinstatement: Model predicts 25-45% unemployment (matches historical patterns)
