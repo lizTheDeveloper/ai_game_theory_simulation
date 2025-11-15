@@ -393,7 +393,7 @@ export class Tier2AIGovernancePhase implements SimulationPhase {
         });
       }
 
-      const internationalCoordination = state.government.alignmentResearchInvestment / 10;
+      const internationalCoordination = state.government.alignmentResearchInvestment / 100;
 
       const shouldUnlock =
         avgCapability > 45 &&
