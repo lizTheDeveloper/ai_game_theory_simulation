@@ -1,30 +1,18 @@
 ---
-oldest_source: 2012
+oldest_source: 2020
 newest_source: 2025
-last_verified: 2025-11-12
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
+last_verified: 2025-11-15
 verification_status: UPDATED
-=======
->>>>>>> origin/auto/researcher-20251112_153001
->>>>>>> origin/auto/researcher-20251114_003001
+sources_2024_2025: ["Jasechko et al. 2024 Nature", "Ravinandrasana & Franzke 2025 Nat Comm", "Sahu et al. 2024", "Singh et al. 2025", "World Bank 2024"]
 ---
 
 # Water Scarcity, Migration, and Involuntary Immobility: Critical Research Review
 
-**Date:** 2025-10-20 (Updated: 2025-11-12)
+**Date:** 2025-10-20 (Updated: 2025-11-15)
 **Research Focus:** Empirical evidence on the relationship between freshwater depletion and human migration, with emphasis on "trapped populations" and involuntary immobility
 **Context:** Critical review of freshwater crisis model assumptions following research-skeptic critique
-<<<<<<< HEAD
-**Last Updated:** 2025-11-12 (Autonomous Researcher - added frontmatter metadata)
-=======
-<<<<<<< HEAD
+**Last Updated:** 2025-11-15 (Autonomous Researcher - checking for 2024-2025 updates)
 **Research Quality:** A- (90% peer-reviewed, includes 2024-2025 sources)
-=======
-**Last Updated:** 2025-11-12 (Autonomous Researcher - added frontmatter metadata)
->>>>>>> origin/auto/researcher-20251112_153001
->>>>>>> origin/auto/researcher-20251114_003001
 
 ---
 
@@ -301,9 +289,46 @@ Analysis of **170,000 monitoring wells and 1,693 aquifer systems:**
 - Punjab, India: Groundwater levels dropped **10 meters since 1979**
 - California, Texas: Water tables dropped **hundreds of feet** due to well pumping
 
-**Source:** Jasechko et al. (2024), "Rapid groundwater decline and some cases of recovery in aquifers globally," *Nature*, DOI: 10.1038/s41586-023-06879-8
+**Source:** Jasechko et al. (2024), "Rapid groundwater decline and some cases of recovery in aquifers globally," *Nature*, 625(7996), 715-721. DOI: 10.1038/s41586-023-06879-8
 
 **Credibility:** Published in *Nature* (top-tier), massive dataset (170K wells), rigorous methodology
+
+### Day Zero Drought: Compound Multi-Year Water Scarcity (Nature Communications 2025)
+
+**Definition:** Day Zero Drought (DZD) = acute water scarcity event driven by compound multi-year hydrological drought, when water demand exceeds supply under prolonged drought conditions
+
+**Critical Conditions for DZD:**
+1. SPEI48 ≤ −1.5 (precipitation deficit + increased evapotranspiration)
+2. SRFI48 ≤ −1.5 (depleted river flow)
+3. SWSI48 ≤ 0.6 (demand exceeds supply)
+4. Duration surpasses reservoir depletion time
+
+**Timeline Projections:**
+- **2020-2030:** ~35% of water-scarcity regions will experience first DZD emergence
+- **1-2.5°C warming:** 61% of DZD-affected regions will experience onset
+- **1.5°C threshold:** Peak urban population exposure (~488 million people)
+- **Recovery challenge:** Time between successive DZDs is SHORTER than DZD duration itself → limited recovery periods
+
+**Population Impacts:**
+- **753 million people** globally at risk (~9% of current population)
+  - 467 million urban residents
+  - 286 million rural residents
+- **Mediterranean:** Highest urban vulnerability (196 million urban residents)
+- **14% of major water reservoirs** could dry out during their first DZD event
+
+**Geographic Hotspots (consistent across models/scenarios):**
+- Mediterranean
+- Southern Africa
+- Parts of North America
+
+**Migration Implications:**
+- Urban populations particularly vulnerable at 1.5°C warming
+- Severe impacts on livelihoods → forced displacement likely
+- Compounding effect: DZD + poverty trap = involuntary immobility for poorest populations
+
+**Source:** Ravinandrasana, V.P. & Franzke, C.L.E. (2025). "The first emergence of unprecedented global water scarcity in the Anthropocene." *Nature Communications*, 16, 8281. DOI: 10.1038/s41467-025-63784-6
+
+**Credibility:** Peer-reviewed in Nature Communications (high-tier), rigorous compound drought modeling, SSP scenarios
 
 ### Economic Threshold Model: When Migration Becomes Possible
 
