@@ -4,13 +4,15 @@
  * Roy's paranoia check (Nov 15, 2025)
  */
 
-import { initializeSimulation } from '../src/simulation/initialization.js';
+import { createTestState } from '../src/simulation/initialization.js';
+import { PhaseOrchestrator } from '../src/simulation/engine/PhaseOrchestrator.js';
 
 console.log('🔍 Checking for circular dependencies in phase graph...\n');
 
 try {
   const rng = () => Math.random(); // Simple RNG for validation
-  const { orchestrator } = initializeSimulation({ rng });
+  const initialState = createTestState();
+  const orchestrator = new PhaseOrchestrator();
 
   console.log('✅ Phase orchestrator initialized successfully');
   console.log(`   Registered phases: ${orchestrator.getPhaseCount()}\n`);
