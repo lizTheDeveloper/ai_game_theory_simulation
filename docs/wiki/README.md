@@ -948,6 +948,7 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+<<<<<<< HEAD
 **November 15, 2025 - Defensive Coding Violations RESOLVED (Issue #7)**
 
 **Achievement:** All 20+ defensive fallback violations identified in Nov 13 architecture review have been resolved.
@@ -1008,6 +1009,34 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 **Reviews:**
 - `reviews/climate_deployment_timescales_critique_20251113.md` (Research Skeptic - CONDITIONAL PASS)
 - `reviews/architecture_integration_review_20251115.md` (Architecture Grade: A-)
+=======
+**November 14, 2025**
+
+**🔬 RESEARCH CURRENCY UPDATE: MPI 2025 & MONTREAL PROTOCOL** (commit db802bf)
+
+Updated two HIGH priority research files with latest peer-reviewed sources (2023-2025):
+
+**Paradigm 2 (Development Needs):**
+- **Global MPI 2025** (October 2025 release): "Overlapping Hardships: Poverty and Climate Hazards"
+- **Climate-poverty intersection:** 887M poor people (80.6%) face climate hazards (heat, drought, floods, air pollution)
+- **Concurrent hazards:** 309M poor (28.1%) experience 3-4 hazards simultaneously
+- **Total poverty:** 1.1B in acute multidimensional poverty (18.3% of surveyed population)
+- **Methodology updated:** Alkire et al. 2025 - first MPI integrating climate exposure data
+- **Research quality:** Maintained (peer-reviewed institutional reports)
+- **File:** `research/paradigm_2_development_needs_20251019.md` (last verified: 2025-11-14)
+
+**AI Governance (Montreal Protocol):**
+- **Climate benefits quantified:** 0.5-2.5°C avoided warming by 2100 (Keeble et al. 2023, *Atmospheric Chemistry and Physics*)
+- **Ozone recovery timeline:** 2040 (tropics/midlatitudes), 2045 (Arctic), 2066 (Antarctica) - UNEP/WMO 2025
+- **Emissions avoided:** 80B+ tonnes CO2e by 2050
+- **2025 challenges identified:** EIA analysis pre-40th anniversary (fluorochemical emissions, HFC acceleration, N2O control, chemical bank destruction)
+- **Research quality upgraded:** B+ → A- (peer-reviewed + 2025 institutional updates)
+- **File:** `research/ai_governance_international_coordination_20251113.md` (last verified: 2025-11-14)
+
+**Context:** Autonomous researcher agent maintaining research currency. No simulation mechanics changed - documentation updates only.
+
+Commit: db802bf
+>>>>>>> origin/auto/researcher-20251114_213001
 
 **November 13, 2025**
 
