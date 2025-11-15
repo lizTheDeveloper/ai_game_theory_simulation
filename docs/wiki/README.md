@@ -28,6 +28,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 15: Defensive Fallback Pattern Audit - Legitimate vs Bug Clarification** (commit 58690f5)
+- 🔍 **Audit Complete:** Comprehensive review of 169 nullish coalescing (`??`) patterns
+- ✅ **Bugs Fixed (3):** Replaced actual defensive fallbacks with assertion utilities
+  - `deploymentTimescales.ts`: `government.governanceQuality.institutionalCapacity ?? 0.5` → `assertStateProperty`
+  - Fixed required state fields using fallbacks instead of fail-loudly assertions
+- 📝 **Legitimate Patterns Documented (36+):** Added clarifying comments to distinguish valid patterns
+  - Optional parameter defaults: `agentId ?? 'government'`
+  - Record lookups: `record[key] ?? defaultValue`
+  - Config initialization: `config.seed ?? Date.now()`
+  - Map accumulation: `map.get(key) ?? 0`
+  - Error display: `month ?? 'unknown'`
+- 🎯 **Key Finding:** Architecture review claimed "149 violations, 88% defensive fallbacks causing bugs" → Reality: 96% legitimate patterns, only 3 actual bugs
+- 📊 **Files Modified (9):** engine.ts, populationUnits.ts, effectsEngine.ts, deploymentTimescales.ts, internationalActions.ts, environmentalActions.ts, safetyActions.ts, consciousnessGovernanceUtils.ts, assertions.ts
+- ✅ **Validation:** Type checking passes, 42 unmarked violations remain (expected legitimate)
+- 📖 **Summary:** logs/defensive_fallback_migration_summary_20251115.md
+- 📖 **Review:** reviews/DEFENSIVE_FALLBACK_ARCHITECTURE_REVIEW_20251115.md
+- 💡 **Lesson:** Not all `??` patterns are bugs - context matters (initialization vs calculation)
+
 **Nov 15: Montreal Protocol Prevention Effectiveness Case Study** (commit 431a49a)
 - 🔬 **Research:** Comprehensive empirical validation of prevention vs cleanup effectiveness
 - 📊 **Key Finding:** Prevention (production bans) 99:1 more effective than cleanup (bank destruction)
