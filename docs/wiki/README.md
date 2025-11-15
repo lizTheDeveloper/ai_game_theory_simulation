@@ -38,6 +38,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Quality:** A (institutional + peer-reviewed, UNEP 2024, NOAA CSL 2024)
 - 💡 **Model Implications:** Validates need for TIER 0 prevention technologies, separate flow vs stock tracking
 
+**Nov 15: EffectsEngine Defensive Fallback Cleanup** (commit 3c959e4)
+- 🛡️ **Code Quality:** Replaced 6 energy system fallbacks (`|| 0`) with fail-loudly assertions
+- 🎯 **Files:** effectsEngine.ts lines 167-178, 298-304 (renewable capacity calculations)
+- ✅ **Pattern:** `energySystem?.totalDemand || 30_000` → `assertStateProperty(energySystem, 'totalDemand', context)`
+- 📊 **Impact:** Energy capacity bugs now crash with diagnostic context instead of silently using 0
+- 🔍 **Acceptable Fallbacks Preserved:** getDynamicProperty() (genuinely optional), Map.get() ?? 0 (accumulation pattern)
+
 **Nov 15: Autonomous Worker Stale Worktree Fix** (commit ecda59c)
 - 🔧 **Operational Fix:** Resolved stale git worktree blocking researcher autonomous execution
 - 🎯 **Root Cause:** 11-day-old worktree on deleted branch with unstaged changes preventing cleanup
