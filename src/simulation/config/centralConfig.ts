@@ -391,7 +391,6 @@ export const RATES = {
   // === AI DEVELOPMENT RATES ===
   /**
    * AI capability doubling time (months)
-<<<<<<< HEAD
    *
    * @research Sevilla & Roldán (2024) - Training compute growth: 4.1× per year (90% CI: 3.7× to 4.6×)
    * @research Epoch AI (2024) - Algorithmic efficiency: 2.5× per year (doubles every 9 months)
@@ -421,50 +420,6 @@ export const RATES = {
    * @verification research/ai_scaling_verified_parameters_20251111.md (Grade A)
    */
   COMPUTE_GROWTH_RATE: 1.41,
-=======
-   * How many months until AI capabilities double
-   *
-   * @research Cottier et al. (2024) "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
-   *   - "Doubling time: 8 months (95% CI: 6-10 months)" [Section 3.2, excluding TPU estimates]
-   *   - Cost growth 2.9×/year suggests capability doubling every 8 months
-   * @research Sevilla & Roldán (2024) "Training Compute Growth 4-5×/year" (Epoch AI, May 28, 2024)
-   *   - "4.4×/year (90% CI: 1.5× to 11.8×)" for recent frontier models
-   *   - Implies ~7 month doubling for pure compute scaling
-   *
-   * @value 8 - Conservative estimate from Cottier et al., aligns with Epoch AI 4.4×/year
-   * @previous 12 - Severely underestimated based on 2016-2024 empirical data
-   *
-   * @limitations Based on 2010-2024 historical data. Nov 2024 reports indicate diminishing
-   *   returns may slow growth post-2025 (TechCrunch: "AI scaling laws showing diminishing returns").
-   *   Does not model test-time compute paradigm (OpenAI o1/o3). May require time-dependent
-   *   slowdown modeling for realistic long-term projections.
-   * @uncertainty Range: 7-12 months (95% CI from multiple sources)
-   */
-  AI_CAPABILITY_DOUBLING_TIME: 8,
-
-  /**
-   * Compute growth rate (per year)
-   * Expressed as log2 multiplier (e.g., 2.15 = 4.4× per year)
-   *
-   * @research Sevilla & Roldán (2024) "Training Compute Growth 4-5×/year" (Epoch AI, May 28, 2024)
-   *   - "4.4×/year (90% CI: 1.5× to 11.8×)" for recent frontier models (since Feb 2022)
-   *   - "4.1×/year (90% CI: 3.7× to 4.6×)" overall 2010-2024 trend
-   *   - "About two-thirds of improvements in language models due to increases in model scale"
-   * @research Cottier et al. (2024) "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
-   *   - "2.9×/year (95% CI: 2.3× to 3.8×)" cost growth [arXiv:2405.21015v2, Section 3.2]
-   *   - Cost growth lower than compute growth (reflects efficiency gains + hardware costs)
-   *
-   * @value 2.15 - log2(4.4) for 4.4× per year from Epoch AI recent frontier model data
-   * @previous 1.0 - Severely underestimated (2× vs 4.4× actual, 100-1000× total mismatch)
-   *
-   * @limitations Based on 2010-2024 historical data. Compute growth ≠ capability growth due to
-   *   diminishing returns (Nov 2024: OpenAI Orion, Google Gemini underperformance reports).
-   *   Shift to test-time compute (o1/o3) not modeled. Assumes continued exponential scaling
-   *   without physical/economic constraints.
-   * @uncertainty Range: 1.26-2.20 (2.4×-4.6× per year from multiple source confidence intervals)
-   */
-  COMPUTE_GROWTH_RATE: 2.15,
->>>>>>> origin/auto/worker-20251113_070003
 
   // === TECH RISK RATES ===
   /**
