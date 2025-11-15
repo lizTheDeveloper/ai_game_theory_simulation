@@ -15,6 +15,7 @@ import { RegionalTechDeployment } from './engine';
 import { getAverageAICapability } from '../utils/ai';
 import { detectCrisis } from '../calculations';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { assertStateProperty } from '../utils/assertions';
 
 export interface RegionalFactors {
   region: string;
@@ -261,7 +262,8 @@ export function calculateDeploymentSpeed(tech: TechDefinition, region: string, g
   // Environmental: 1.5x (moderate constraints)
   // Energy/Infrastructure: 1.75x (capital-intensive)
   let categoryModifier = 1.0;
-  const category = tech.category || 'other';
+  // category is required on TechDefinition - no fallback needed
+  const category = tech.category;
 
   if (category === 'alignment' || category === 'social') {
     categoryModifier = 0.3;  // 70% faster (digital scales quickly)
@@ -281,8 +283,22 @@ export function calculateDeploymentSpeed(tech: TechDefinition, region: string, g
   let crisisMultiplier = 1.0;
 
   // Check for existential threats
-  const nuclearActive = gameState.nuclearWinterState?.active || false;
-  const climateChangeCurrent = gameState.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
+  const nuclearActive = assertStateProperty(
+    gameState.nuclearWinterState,
+    'active',
+    {
+      location: 'calculateRegionalDeploymentTimeline',
+      month: gameState.currentMonth
+    }
+  );
+  const climateChangeCurrent = assertStateProperty(
+    gameState.planetaryBoundariesSystem.boundaries.climate_change,
+    'currentValue',
+    {
+      location: 'calculateRegionalDeploymentTimeline',
+      month: gameState.currentMonth
+    }
+  );
   const pandemicActive = gameState.crises?.megaPandemic?.active || false;
   const pandemicSeverity = gameState.crises?.megaPandemic?.socialDisruption || 0;
 
