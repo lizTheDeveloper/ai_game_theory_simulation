@@ -517,7 +517,10 @@ export class EmergencyResponsePhase implements SimulationPhase {
   ): { crisisType: 'climate' | 'social' | 'economic' | 'pandemic' | 'technological' | 'nuclear', name: string } | null {
     // Calculate current values for all thresholds (with assertions)
     const climateStability = assertFinite(
-      state.environmentalAccumulation?.climateStability ?? 0.5,
+      assertStateProperty(state.environmentalAccumulation, 'climateStability', {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        month: state.currentMonth
+      }),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'climateStability',
@@ -526,7 +529,10 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const socialCohesion = assertFinite(
-      state.society?.coordinationCapacity ?? 0.5,
+      assertStateProperty(state.society, 'coordinationCapacity', {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        month: state.currentMonth
+      }),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'socialCohesion',
@@ -535,7 +541,10 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const economicStability = assertFinite(
-      (state.globalMetrics?.economicTransitionStage ?? 2) / 4.0,
+      assertStateProperty(state.globalMetrics, 'economicTransitionStage', {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        month: state.currentMonth
+      }) / 4.0,
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'economicStability',
@@ -544,7 +553,10 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const governanceLegitimacy = assertFinite(
-      state.government?.legitimacy ?? 0.5,
+      assertStateProperty(state.government, 'legitimacy', {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        month: state.currentMonth
+      }),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'governanceLegitimacy',
