@@ -39,6 +39,36 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Multi-Paradigm Wellbeing Frameworks 2024-2025 Update** - HIGH (Added Nov 16, 2025)
+     - **Context:** Indigenous wellbeing + global democracy metrics update for multi-paradigm DUI
+     - **Key Updates:** Country (land/environment) foundational to Indigenous wellbeing, autocracies >democracies
+     - **Research Delivered:** 418-line analysis from Sangha et al. (2024) + V-Dem (2025)
+     - **Key Claims Requiring Verification:**
+       - Country foundational (not peripheral) to Indigenous wellbeing - exact quote needed
+       - Seven interconnected domains - confirm source attribution (Sangha or synthesized?)
+       - Liyan concept (Yawaru) - definition verification
+       - Autocracies 91 vs democracies 88 (first time in 20 years) - V-Dem page reference
+       - 12% global population in liberal democracies (50-year low) - verify claim
+       - 72% (5.8B) under autocratic rule - calculation verification
+       - 45 countries autocratizing - confirm count
+       - Freedom of expression "25-year low" - verify explicit vs inferred
+       - Proposed thresholds (80% Country-connection for utopia) - researcher-defined or research-backed?
+     - **Verification File:** research/verification_f5eb3df_20251116.md (two-layer verification)
+     - **Critical Issue:** Quantitative thresholds likely researcher-proposed, not empirically validated
+     - **Integration Questions:**
+       - Add Country-connection metrics to Paradigm 4?
+       - Add TEK vitality tracking?
+       - Model autocratization waves (45 simultaneous)?
+       - Implement cross-paradigm veto (ecological/indigenous flag unsustainability)?
+     - **Assignments:**
+       - Cynthia: Verify DOI 10.1080/17482631.2024.2321646 (Sangha), V-Dem 2025 report accessible
+       - Sylvia: Extract quotes, verify claims, distinguish research vs interpretation
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Affects multi-paradigm DUI system (actively used in simulation)
+     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
+     - **Research File:** research/multi_paradigm_wellbeing_2024_2025_update.md (418 lines)
+     - **Commit:** f5eb3df
+
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
      - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
