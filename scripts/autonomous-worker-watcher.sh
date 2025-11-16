@@ -92,8 +92,8 @@ if [ "$RECENT_COUNT" -eq 0 ]; then
     fi
   fi
 
-  # Check last worker log
-  LAST_LOG=$(find "$WORKER_LOG_DIR" -name "worker_*.log" -type f 2>/dev/null | sort -r | head -1)
+  # Check last worker log (sort by modification time, not alphabetically)
+  LAST_LOG=$(ls -t "$WORKER_LOG_DIR"/worker_*.log 2>/dev/null | head -1)
   if [ -n "$LAST_LOG" ]; then
     LAST_RUN=$(stat -c %Y "$LAST_LOG" 2>/dev/null || stat -f %m "$LAST_LOG" 2>/dev/null)
     NOW=$(date +%s)
@@ -191,7 +191,7 @@ if [ -d "$MERGE_LOG_DIR" ]; then
   if [ "$RECENT_MERGE" -gt 0 ]; then
     log "✅ Merge orchestrator ran in last ${CHECK_WINDOW_MINUTES} minutes"
   else
-    LAST_MERGE=$(find "$MERGE_LOG_DIR" -name "merge_*.log" -type f 2>/dev/null | sort -r | head -1)
+    LAST_MERGE=$(ls -t "$MERGE_LOG_DIR"/merge_*.log 2>/dev/null | head -1)
     if [ -n "$LAST_MERGE" ]; then
       LAST_MERGE_TIME=$(stat -c %Y "$LAST_MERGE" 2>/dev/null || stat -f %m "$LAST_MERGE" 2>/dev/null)
       NOW=$(date +%s)
@@ -247,7 +247,7 @@ if [ -d "$RESEARCHER_LOG_DIR" ]; then
       ISSUE_DETECTED=true
     fi
   else
-    LAST_RESEARCHER=$(find "$RESEARCHER_LOG_DIR" -name "*.log" -type f 2>/dev/null | sort -r | head -1)
+    LAST_RESEARCHER=$(ls -t "$RESEARCHER_LOG_DIR"/*.log 2>/dev/null | head -1)
     if [ -n "$LAST_RESEARCHER" ]; then
       LAST_RESEARCHER_TIME=$(stat -c %Y "$LAST_RESEARCHER" 2>/dev/null || stat -f %m "$LAST_RESEARCHER" 2>/dev/null)
       NOW=$(date +%s)
