@@ -369,6 +369,16 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling integration (Nov 15-16), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Multi-Paradigm Wellbeing Frameworks 2024-2025 Update** - PENDING (Nov 16, 2025)
+  - **Research:** `research/multi_paradigm_wellbeing_2024_2025_update.md`
+  - **Verification Checklist:** `research/verification_f5eb3df_20251116.md`
+  - **Priority:** HIGH (affects actively-used multi-paradigm DUI system)
+  - **Citations to Verify:**
+    1. Sangha et al. 2024 - Indigenous wellbeing framework (Country-connection foundational, 7 domains, Liyan concept)
+    2. V-Dem 2025 - Democracy Report (autocracies outnumber democracies 91 vs 88, 12% in liberal democracies, 72% under autocratic rule)
+  - **Next Steps:** Orchestrator workflow (super-alignment-researcher fetch papers → research-skeptic verify claims)
+  - **Status:** 🟡 QUEUED - Awaiting orchestrator assignment
+
 - [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
   - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
   - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)
