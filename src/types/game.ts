@@ -548,6 +548,27 @@ export interface GameState {
   // Famine Death Curve System (TIER 1.7 - Crisis Realism)
   famineSystem: import('../types/famine').FamineSystem; // Gradual famine mortality (30-60 days), genocide detection, tech deployment
 
+  /**
+   * Transition Mortality & Coordination System (TIER 1B CRITICAL - Nov 16, 2025)
+   *
+   * Models mortality from rapid technology deployment and economic transitions
+   * based on historical case studies (Great Leap Forward, Green Revolution, Post-Soviet transitions).
+   *
+   * Research: /research/transition_mortality_coordination_effectiveness_20251115.md
+   * - 27 peer-reviewed sources (2009-2025)
+   * - Calibrated against 3 historical cases
+   * - KEY FINDING: 20-50x mortality differential between chaotic and coordinated transitions
+   *
+   * Critical parameters:
+   * - Chaotic rapid transition: 3.5-8.1% mortality (GLF, Soviet collectivization)
+   * - Moderate coordination: 0.5-1.5% mortality (post-Soviet gradualism)
+   * - High coordination + support: <0.5% mortality (Green Revolution, Marshall Plan)
+   * - AI-optimal (extrapolated): 0.05-0.20% mortality (97% reduction vs chaos)
+   *
+   * Expected impact: God mode chaos (30% mortality) → AI-coordinated (<2% mortality)
+   */
+  transitionMortality: import('../types/transitionMortality').TransitionMortalitySystem;
+
   // Nuclear Radiation Health Effects (TIER 1.7 - Crisis Realism)
   radiationSystem: import('../types/radiation').RadiationSystem; // Long-term cancer, birth defects, soil contamination (decades-centuries)
 

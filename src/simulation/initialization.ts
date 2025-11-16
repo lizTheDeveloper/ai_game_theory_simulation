@@ -48,6 +48,7 @@ import { initializePowerGenerationSystem } from '../types/powerGeneration';
 import { initializeRegionalBiodiversitySystem } from '../types/regionalBiodiversity';
 import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
+import { initializeTransitionMortalitySystem } from '../types/transitionMortality';
 import { initializeAMRSystem } from './antimicrobialResistance';
 import { initializeWetBulbTemperatureSystem } from './wetBulbEvents';
 import { initializeMinimalSufferingSystem } from './minimalSufferingTracking';
@@ -982,6 +983,9 @@ export function createDefaultInitialState(
 
     // TIER 1.7: Crisis Realism - Famine Death Curves
     famineSystem: initializeFamineSystem(),
+
+    // TIER 1B CRITICAL: Transition Mortality & Coordination System
+    transitionMortality: initializeTransitionMortalitySystem(),
 
     // TIER 1.7: Crisis Realism - Nuclear Radiation Health Effects
     radiationSystem: initializeRadiationSystem(),
