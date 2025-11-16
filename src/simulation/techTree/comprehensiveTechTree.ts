@@ -118,14 +118,15 @@ export interface TechDefinition {
   constructionEnergy?: number;
 
   // === REBOUND EFFECTS (Jevons Paradox - Nov 16, 2025) ===
-  // Research: Sorrell (2009), Gillingham et al. (2013)
-  /** Rebound coefficient: fraction of cleanup enabling more production (0-1, typ 0.1-0.6) */
+  // Research: novel_entities_irreversibility_20251116.md, Sorrell (2009), Gillingham et al. (2013)
+
+  /** Rebound coefficient: production increase per unit cleanup (0-1, typically 0.1-0.6) */
   reboundCoefficient?: number;
 
-  /** Uncertainty range for rebound coefficient [min, max] (Monte Carlo sampling) */
+  /** Uncertainty range for rebound coefficient [min, max] for Monte Carlo sampling */
   reboundUncertaintyRange?: [number, number];
 
-  /** True if technology avoids rebound (e.g., circular economy, degrowth) */
+  /** True if this tech avoids rebound effects (e.g., production bans, circular economy) */
   avoidsRebound?: boolean;
 }
 
@@ -815,6 +816,12 @@ const ALL_TECH: TechDefinition[] = [
     },
     techType: 'cleanup',
     targetsIrreversibleStock: true,  // PFAS persist centuries (Cousins 2022)
+
+    // Rebound effects (Nov 16, 2025): Cleanup may enable more production (Jevons paradox)
+    reboundCoefficient: 0.15,  // Mid-range estimate (10-20% production increase per unit cleanup)
+    reboundUncertaintyRange: [0.05, 0.50],  // Wide range for Monte Carlo sensitivity testing
+    avoidsRebound: false,  // Cleanup tech subject to moral hazard
+
     citations: [
       'Fennell, D. E., et al. (2024). Nature Reviews Earth & Environment, 5, 476-491',
       'Ling, A. L. (2024). Science of the Total Environment, 918, 170647',
@@ -848,6 +855,11 @@ const ALL_TECH: TechDefinition[] = [
     },
     techType: 'cleanup',
     targetsIrreversibleStock: false,  // Targets recent plastic, not legacy microplastics
+
+    // Rebound effects (Nov 16, 2025)
+    reboundCoefficient: 0.15,
+    reboundUncertaintyRange: [0.05, 0.50],
+    avoidsRebound: false,
   },
   {
     id: 'green_chemistry',
@@ -893,6 +905,8 @@ const ALL_TECH: TechDefinition[] = [
     // Prevention tech properties
     techType: 'prevention',
     targetsIrreversibleStock: false,  // Prevents NEW emissions, doesn't clean existing stock
+    avoidsRebound: true,  // Production bans eliminate moral hazard (no cleanup to offset)
+
     citations: [
       'Cousins, I. T., et al. (2022). Environmental Science & Technology, 56(16), 11172-11179',
       'Ling, A. L. (2024). Science of the Total Environment, 918, 170647'
@@ -920,6 +934,8 @@ const ALL_TECH: TechDefinition[] = [
     },
     techType: 'prevention',
     targetsIrreversibleStock: false,
+    avoidsRebound: true,  // Regulatory phase-out (no moral hazard)
+
     citations: [
       'Ling, A. L. (2024). Science of the Total Environment, 918, 170647'
     ],
@@ -946,6 +962,8 @@ const ALL_TECH: TechDefinition[] = [
     },
     techType: 'prevention',
     targetsIrreversibleStock: false,
+    avoidsRebound: true,  // Substitution (not cleanup)
+
     citations: [
       'Ling, A. L. (2024). Science of the Total Environment, 918, 170647'
     ],
@@ -998,6 +1016,11 @@ const ALL_TECH: TechDefinition[] = [
     },
     techType: 'cleanup',
     targetsIrreversibleStock: false,  // Ocean microplastics can be targeted with energy
+
+    // Rebound effects (Nov 16, 2025)
+    reboundCoefficient: 0.15,
+    reboundUncertaintyRange: [0.05, 0.50],
+    avoidsRebound: false,
   },
   {
     id: 'endocrine_disruptor_removal',

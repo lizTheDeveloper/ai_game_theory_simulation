@@ -30,6 +30,7 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     const { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } = require('../../planetaryBoundaries');
     setDeterministicRng(rng);
     const { updateBoundaryRecovery } = require('../../planetaryBoundaryRecovery');
+    const { updateNovelEntitiesBoundary } = require('../../updateNovelEntitiesBoundary');
 
     // Validate key planetary boundaries before update
     // FIX: state.planetaryBoundaries doesn't exist, use planetaryBoundariesSystem.boundaries
@@ -64,6 +65,9 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
 
     // Update all planetary boundaries (degradation mechanics)
     updatePlanetaryBoundaries(state);
+
+    // Update Novel Entities boundary with energy-constrained cleanup model (Nov 16, 2025)
+    updateNovelEntitiesBoundary(state, rng);
 
     // Update boundary recovery mechanics (Oct 21, 2025 - Ecological Recovery System)
     updateBoundaryRecovery(state, rng);
