@@ -4,6 +4,33 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🛠️ Test Script RNG Fix (November 16, 2025)
+
+**Commit:** 58e770d (Nov 16, 2025)
+
+**Summary:** Fixed regression in singleRunTimed.ts test script after Nov 7 defensive coding update.
+
+**Problem:**
+- `createDefaultInitialState()` now requires RNG as first parameter (fail-loudly pattern)
+- Test script was still calling without RNG → crashed with CRITICAL error
+
+**Fix:**
+- Pass engine's RNG instance to initialization: `engine.getRNG().next.bind(engine.getRNG())`
+- Ensures init + simulation use SAME RNG sequence (determinism)
+- Matches Monte Carlo pattern from `scripts/monteCarloSimulation.ts:1012`
+
+**Files Modified:**
+- `scripts/singleRunTimed.ts` (added RNG parameter to createDefaultInitialState call)
+
+**Impact:**
+- Test script now initializes successfully
+- Demonstrates value of assertion utilities - surface bugs at source with full context
+- No simulation behavior change (test infrastructure only)
+
+**Context:** Part of defensive fallback migration (CRITICAL-3 regression prevention)
+
+---
+
 ## 🔬 CRITICAL Research Parameter Corrections (November 15, 2025)
 
 **Commit:** c6a67d5 (Nov 15, 2025)
