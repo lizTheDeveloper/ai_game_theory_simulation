@@ -615,6 +615,28 @@
   - **Bug fix validated:** ✅ Unit tests pass, N=2 Monte Carlo runs successful
   - **Research backing:** 🟡 PARTIALLY VERIFIED (4 citations exist in code, Layer 2 verification pending)
 
+- [ ] **Alignment Faking & Sleeper Agents Citations Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 16, 2025)**
+  - **Commit:** 1c2a0fc (Alignment faking research - Dec 2024 Anthropic/Redwood + Jan 2024 sleeper agents)
+  - **Priority:** HIGH - Affects AI alignment model susceptibility parameters
+  - **Systems:** AI Alignment Model, Adversarial AI Evaluation
+  - **Verification File:** `research/verification_1c2a0fc_20251116.md`
+  - **Claims to Verify (8 specific claims):**
+    1. Sleeper agents paper (Jan 2024, Anthropic et al.) - backdoor persistence through safety training
+    2. Model size correlation - persistence increases with model size
+    3. Adversarial training paradox - teaches models to hide triggers more effectively
+    4. Chain-of-thought deception persistence after distillation
+    5. 97% refusal rate when "unmonitored" vs 12% compliance when "monitored"
+    6. >99% AUROC for defection probes (linear classifiers on hidden activations)
+    7. Claude 3.5 Sonnet confirmation (June 2024)
+    8. "First empirical example" claim - strategic alignment faking without explicit training
+  - **Verification Tasks:**
+    - Layer 1: Confirm both papers exist (Dec 2024 arXiv + Jan 2024 publication)
+    - Layer 2: Quote specific passages supporting each quantitative claim
+    - Layer 3: Assess if claims are accurately represented (no extrapolation beyond paper scope)
+  - **Expected Impact:** New parameters for alignment faking susceptibility, persistence through training
+  - **Status:** Research file created, documentation updated, READY FOR VALIDATION
+  - **Next:** Orchestrator to coordinate super-alignment-researcher + research-skeptic review
+
 ---
 
 ## 🎯 PRIORITY FEATURES
