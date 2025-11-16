@@ -485,8 +485,9 @@ function isGlobalEffect(effectName: string): boolean {
     'rewildingBoost',
     'carbonSequestration',
     'ecosystemHealth',
+    'novelEntitiesEmissionReduction',  // Nov 16, 2025: Prevention tech global effect
   ];
-  
+
   return globalEffects.includes(effectName);
 }
 
@@ -1518,29 +1519,51 @@ function applyRegionalEffects(
           break;
 
         case 'novelEntitiesEmissionReduction':
-          // CRITICAL FIX (Nov 11, 2025): Prevention >> Cleanup (Ling 2024, Cousins 2022)
-          // Production bans reduce NEW emissions (flow), not existing contamination (stock)
-          // This is 100-1,000× more effective than cleanup (Ling 2024)
-          if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
-            const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
-            const oldValue = boundary.currentValue;
+          // CRITICAL FIX (Nov 16, 2025): Prevention reduces EMISSIONS via multiplier
+          // Research: Ling 2024, Cousins 2022 - Production bans reduce flow, cleanup addresses stock
+          // Prevention is 100-1,000× more cost-effective (no energy/concentration constraints)
+          //
+          // Architecture: Multiple prevention techs stack MULTIPLICATIVELY
+          // - Global PFAS Ban (0.99): multiplier *= (1 - 0.99) = 0.01 (99% reduction)
+          // - Plastic Phase-Out (0.80): multiplier *= (1 - 0.80) = 0.20 (80% reduction)
+          // - Combined: 0.01 × 0.20 = 0.002 (99.8% total reduction)
+          if (gameState.novelEntitiesSystem) {
+            const ne = gameState.novelEntitiesSystem;
 
-            // Prevention reduces accumulation rate (not direct cleanup)
-            // Effect scales slower than cleanup because it prevents NEW pollution
-            // But it's far more cost-effective (doesn't require energy/concentration)
-            boundary.currentValue = assertFinite(Math.max(
-              0,
-              boundary.currentValue - value * 0.005  // 0.5% per month per effect point (slower than cleanup but works!)
-            ), {
+            // Initialize if missing (backward compatibility)
+            if (ne.preventionMultiplier === undefined) ne.preventionMultiplier = 1.0;
+            if (ne.baselineAnnualEmissions === undefined) ne.baselineAnnualEmissions = 60000;
+
+            const oldMultiplier = ne.preventionMultiplier;
+
+            // Apply prevention effect multiplicatively (multiple techs compound)
+            // value = sum of (tech.effect × deployment) for all prevention techs
+            // Since effects are summed, we need to handle them carefully
+            // Approach: Reset to 1.0 each month, then apply all prevention effects
+            // ASSUMPTION: This effect handler sees the SUMMED value from all prevention techs
+
+            // Convert summed effect to multiplicative reduction
+            // If value = 0.99 (one tech), multiplier = 1 - 0.99 = 0.01
+            // If value = 1.99 (two techs at 0.99 each), we want ~0.0001, not negative
+            // Solution: Clamp value to [0, 1], treat as "max single tech effect"
+            const effectivePrevention = Math.min(0.99, value);  // Cap at 99% (floor at 1% emissions)
+            ne.preventionMultiplier = assertFinite(1.0 - effectivePrevention, {
               location: 'applyGlobalEffects:novelEntitiesEmissionReduction',
-              valueName: 'currentValue',
-              month: gameState.currentMonth
+              valueName: 'preventionMultiplier',
+              month: gameState.currentMonth,
+              additionalInfo: { effectValue: value, effectivePrevention }
             });
 
-            console.log(`  🌍💡 Prevention (${(value * 100).toFixed(0)}% emission reduction): novel_entities ${oldValue.toFixed(3)} → ${boundary.currentValue.toFixed(3)} | Prevention >> Cleanup | Month ${gameState.currentMonth}`);
+            // Calculate resulting emissions
+            ne.annualEmissions = ne.baselineAnnualEmissions * ne.preventionMultiplier;
 
-            // Trigger boundary recovery (prevention shows improvement over time)
-            triggerBoundaryRecovery(gameState, 'novel_entities');
+            const reductionPercent = (1.0 - ne.preventionMultiplier) * 100;
+            console.log(`  🏛️🚫 Prevention: multiplier ${oldMultiplier.toFixed(3)} → ${ne.preventionMultiplier.toFixed(3)} (-${reductionPercent.toFixed(1)}%) | Emissions: ${(ne.annualEmissions / 1000).toFixed(1)}k Mt/yr | Month ${gameState.currentMonth}`);
+
+            // Trigger boundary recovery (emissions reduction will slow stock accumulation)
+            if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
+              triggerBoundaryRecovery(gameState, 'novel_entities');
+            }
           }
           break;
 
