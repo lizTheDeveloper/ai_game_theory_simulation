@@ -372,6 +372,35 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Archive:** `plans/completed/session_work_nov15_2025_researcher_213002.md`
   - **Status:** ✅ RESEARCH COMPLETE, ⚠️ IMPLEMENTATION PARTIAL (handoff ready)
 
+- [ ] **Nitrogen-Food Coupling Integration (Commit f5c244b)** - ⚠️ NEEDS VALIDATION (Nov 16, 2025)
+  - **Context:** Partial integration (16% complete) of nitrogen-food coupling into planetary boundaries
+  - **Verification File:** `research/verification_f5c244b_20251116.md`
+  - **Implementation:** Commit f5c244b (partial integration)
+    - ✅ Bug fix: Legacy nutrient stocks now update correctly (planetaryBoundaries.ts)
+    - ✅ New tech: Precision Agriculture (Nitrogen) - 27.5% N reduction (comprehensiveTechTree.ts)
+    - ✅ New effects: nitrogenReduction, biogeochemicalFlowsReduction handlers (effectsEngine.ts)
+  - **Validation Needed (Two-Layer):**
+    - **HIGH Priority (5 items):**
+      - Zhang et al. (2021) claim specificity: VRT/SPAD alone vs all 11 measures?
+      - Science Advances (2024) generalizability: normal conditions vs extreme wet years?
+      - Baseline pollution values: 120 Mt N/year justification (vs 105 Mt from 2015 data)
+      - Half-life values: peer-reviewed sources for 30yr N, 100yr P
+      - Boundary formula: citation for `2.94 * pollutionRatio + depletion * 0.5`
+    - **MEDIUM Priority (3 items):**
+      - Frontiers Plant Science DOI year discrepancy (2024 vs 2025)
+      - Phosphorus efficiency: 10% side benefit citation
+      - Biogeochemical flows reduction: 15% calculation verification
+  - **Quality Gates:**
+    - ⏸️ Research Validation PENDING (orchestrator → super-alignment-researcher → research-skeptic)
+    - ⏸️ Implementation Review PENDING (after validation)
+    - ⏸️ Monte Carlo Validation PENDING (after implementation review)
+  - **Expected Workflow:**
+    - Phase 1: super-alignment-researcher finds papers and extracts quotes
+    - Phase 2: research-skeptic performs two-layer verification (citation exists + claim accuracy)
+    - Phase 3: simulation-maintainer adjusts parameters if claims unsupported
+    - Phase 4: Monte Carlo validation (N≥10 runs)
+  - **Status:** ⚠️ QUEUED FOR ORCHESTRATOR - Verification file ready, awaiting validation workflow
+
 - [x] **Novel Entities Zero-Effectiveness** - ✅ COMPLETE (Nov 13-14, 2025)
   - **Research:** `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources, Grade B+)
   - **Design:** `/plans/completed/novel_entities_model_redesign_COMPLETE_20251114.md` (276 lines)
