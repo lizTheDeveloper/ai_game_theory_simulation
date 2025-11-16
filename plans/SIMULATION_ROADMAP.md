@@ -39,6 +39,34 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Biogeochemical Flows Integration - Citation & Claim Verification** - TIER 2 HIGH (Added Nov 16, 2025)
+     - **Context:** Completed integration of legacy nutrient stocks + nitrogen-food coupling into simulation engine
+     - **Commit:** 71b97c5aa0778889e874390988a5ca940f98a38c
+     - **Research Base:** 29 peer-reviewed sources (Grade B - CONDITIONAL PASS)
+     - **Integration Complete:**
+       - Legacy nutrient stocks (ResourceSoilPhase.ts) - 30yr N half-life, 100yr P half-life
+       - Nitrogen-food coupling (FoodSecurityDegradationPhase.ts) - Regional yield penalties
+       - 6 nitrogen management technologies added to tech tree
+     - **Key Claims Requiring Verification:**
+       - Legacy stock half-lives: 30yr soil N, 100yr sediment P - exact values in papers?
+       - South Asia 55% nitrogen overuse - Science Advances (2024) EXACT metric?
+       - Precision Agriculture 28% N reduction, zero yield penalty - France NUE 40%→58% verified?
+       - Biological N fixation 60% reduction - nitroplast agricultural application speculative?
+       - Baseline inputs: 120 Mt N/year, 25 Mt P/year - sources and year?
+       - Lake Erie case study: 10,000-11,000 MT P/year - citation needed?
+       - Technology effectiveness values (18%, 25%, 15%, 20%) - all research-backed?
+     - **Verification File:** research/verification_71b97c5_20251116.md (9 claims, two-layer verification)
+     - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia)
+     - **Validation Status:** Monte Carlo N=3 completed successfully (no NaN/Infinity failures)
+     - **Priority:** TIER 2 HIGH - Affects planetary boundaries core mechanic
+     - **Status:** ⚠️ NEEDS VALIDATION - Research verification file created, ready for orchestrator at VALIDATION phase
+     - **Assignments:**
+       - Cynthia: Verify Science Advances (2024) citations, extract specific South Asia nitrogen values
+       - Sylvia: Assess nitroplast agricultural application claims (speculative vs verified)
+       - Roy: BLOCKED - waiting for validation before further integration
+     - **Research File:** research/nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
+     - **Critique:** reviews/nitrogen_food_coupling_critique_20251115.md (Grade B)
+
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
      - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
