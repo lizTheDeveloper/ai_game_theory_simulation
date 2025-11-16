@@ -28,27 +28,34 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 16: Defensive Fallback Migration - Batch 1-2 Complete** (commit 56cf4a0)
-- 🔧 **Progress:** 11 real violations fixed, 27 acceptable patterns identified
-- 🎯 **Type Safety:** 2 types made required (`aiSufferingMetrics`, `government.resources`)
+**Nov 16: Defensive Fallback Migration - Session Summary** (commit 6a57629)
+- 🎯 **Complete:** 14 real violations fixed, 55 acceptable patterns categorized with taxonomy
+- 🔧 **Type Safety:** 3 types made required (`aiSufferingMetrics`, `government.resources`, `workflowAdaptation`)
 - ✅ **Fixes Applied:**
   - aiSuffering.ts: 3 fallbacks removed (publicAwarenessOfSuffering, avgSuffering)
   - alignmentDynamics.ts: 1 fallback removed (sufferingMetrics.total)
   - earlyWarningSystems.ts: 1 fallback removed (gov.resources)
-  - EmergencyResponsePhase.ts: 4 fallbacks removed (CORRECTED previous bad fix)
+  - EmergencyResponsePhase.ts: 4 fallbacks removed (CORRECTED previous bad pattern)
   - deploymentTimescales.ts: 2 fallbacks removed (governanceQuality, climateChange boundary)
-- 📝 **Acceptable Patterns Documented (27):**
-  - First month initialization (previousCapability/previousAlignment)
-  - External API responses (token usage estimates)
-  - Optional parameters (agentId ?? 'government')
-  - Dictionary/Map access (Record<string, T>[key], Map.get())
-  - Optional tech nodes (find() results)
-  - Genuinely optional fields (workforceMultiplier after layoffs)
-  - Semantic defaults (becameConsciousMonth ?? Infinity)
-  - Config field access (research investments)
+  - dystopiaProgression.ts: 2 fallbacks removed (CORRECTED previous bad pattern)
+  - workflowAdaptation.ts: 1 fallback removed (workflowAdaptation field)
+- 🚨 **Critical Finding:** Previous session's WRONG pattern identified and corrected in 6 locations
+  - ❌ BAD: `assertFinite(field ?? fallback, ...)` validates the fallback, not the real value
+  - ✅ GOOD: `assertFinite(field, ...)` fails loudly if field is missing
+- 📝 **Acceptable Patterns Taxonomy (55):** Systematic categorization with 9 pattern types
+  - Config initialization (11): `config.field ?? defaultValue`
+  - Dictionary/Map access (20+): `dict[key] ?? default`, `map.get(key) ?? default`
+  - Optional parameters (8): `agentId ?? 'government'`
+  - Display context (6): `context.month ?? 'unknown'` in error messages
+  - First month initialization (2): `previousCapability ?? capability`
+  - External API responses (2): `response.tokens ?? 1200`
+  - Semantic defaults (2): `becameConsciousMonth ?? Infinity`
+  - Optional tech nodes (2): `find() ?? false`
+  - Genuinely optional fields (2): `workforceMultiplier ?? 1.0`
+- 📊 **Progress:** 137 → 120 violations (12% reduction this session, ~29% total from 169)
 - ✅ **Validation:** Type checking passes (0 non-test errors)
-- 📖 **Progress Log:** logs/defensive_fallback_migration_progress_20251116.md
-- ⏭️ **Next:** Batch 3 (utils files), then final summary
+- 📖 **Complete Summary:** devlogs/defensive_fallback_migration_summary_20251116.md (367 lines)
+- 🏁 **Status:** COMPLETE - Core simulation migrated, remaining 120 are acceptable patterns or UI code
 
 **Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
 - 📊 **Architecture Review:** Grade B- (stable with localized issues)
