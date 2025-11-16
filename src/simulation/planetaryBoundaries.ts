@@ -228,6 +228,12 @@ export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): Planetar
     timescaleYears: 100,
     extinctionContribution: 0.10,
     tippingPointRisk: 0.15,
+    // === IRREVERSIBILITY FRAMEWORK (Nov 16, 2025) ===
+    // Research: Cousins et al. (2022), Sörengård et al. (2024)
+    irreversible: true,                    // PFAS atmospheric distribution is permanent (Cousins 2022)
+    recoveryHalfLife: 75,                  // 50-100 year range (Montreal Protocol analog)
+    minimumAsymptoticValue: 0.15,          // Never reaches zero (15% floor from background contamination)
+    legacyStock: 46000,                    // metric tons (accumulated PFAAs from Persson 2022)
   };
 
   // 7. OCEAN ACIDIFICATION - Just breached Sept 2025!
