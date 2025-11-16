@@ -224,7 +224,12 @@ export interface BreakthroughTechState {
     breakthroughYear: number;
     biodiversityBoostPerMonth: number; // +2%/month (research-backed)
   };
-  
+
+  // NOTE: Nitrogen Reduction Technologies (TIER 2 HIGH - Nov 15, 2025)
+  // Have been migrated to comprehensive tech tree (src/simulation/techTree/comprehensiveTechTree.ts)
+  // See: precision_agriculture, biological_nitrogen_fixation, nitrogen_circular_food,
+  //      ecosystem_restoration_nitrogen, nitrogen_monitoring_networks, green_ammonia_production
+
   // Government research priorities
   researchPriorities: {
     environmental: number; // 0-1 allocation

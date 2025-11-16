@@ -437,7 +437,148 @@ const ALL_TECH: TechDefinition[] = [
       foodSecurityBonus: 0.03,
     },
   },
-  
+
+  // Nitrogen Reduction (6) - TIER 2 HIGH (Nov 15, 2025)
+  // Research: Science Advances (2024), Zhang et al. (2021), FAO fertilizer reports
+  // Expected impact: Realistic nitrogen-food coupling, regional differentiation
+  {
+    id: 'precision_agriculture',
+    name: 'Precision Agriculture Systems',
+    description: 'Variable-rate fertilizer application with real-time soil sensing',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 0.5,  // Realistic: Low AI requirement for existing tech
+    minEconomicStage: 1.5,  // Realistic: Early post-industrial
+    minMonth: 6,  // Realistic: 6 months to deploy existing systems
+    researchMonthsRequired: 6,  // Realistic: Tech already exists, needs scaling
+    researchCost: 100,  // Realistic: Low cost for existing tech
+    deploymentCost: 30000,  // Realistic: Software + sensors deployment
+    deploymentMonthsRequired: 12,  // Realistic: Fast software deployment (5-10 years → 12 months at scale)
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.30,  // 30% nitrogen input reduction (research-backed)
+      pollutionReduction: 0.02,
+    },
+  },
+  {
+    id: 'biological_nitrogen_fixation',
+    name: 'Biological Nitrogen Fixation',
+    description: 'Engineered nitrogen-fixing crops with optimized rhizosphere bacteria',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['precision_agriculture'],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.7 }  // CRISPR + synthetic biology
+    ],
+    minEconomicStage: 2.0,  // Realistic: Advanced post-industrial
+    minMonth: 24,  // Realistic: 2 years for genetic engineering + field trials
+    researchMonthsRequired: 36,  // Realistic: Longer biotech development (10-15 years → 36 months at scale)
+    researchCost: 800,  // Realistic: Moderate biotech cost
+    deploymentCost: 100000,  // Realistic: Seed distribution + farmer training
+    deploymentMonthsRequired: 60,  // Realistic: Agricultural deployment takes time
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.25,  // 25% nitrogen input reduction (research-backed)
+      soilHealthBonus: 0.05,
+      biodiversityBonus: 0.02,
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.1 }
+      ],
+    },
+  },
+  {
+    id: 'nitrogen_circular_food',
+    name: 'Nitrogen Circular Food Systems',
+    description: 'Waste-to-fertilizer loops, urban agriculture, closed-loop systems',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['circular_food_systems'],  // Builds on phosphorus circular systems
+    minEconomicStage: 2.5,  // Realistic: Advanced infrastructure required
+    researchMonthsRequired: 30,  // Realistic: 2.5 years for system design
+    researchCost: 1500,  // Realistic: Medium cost for infrastructure planning
+    deploymentCost: 180000,  // Realistic: Urban infrastructure + waste processing
+    deploymentMonthsRequired: 90,  // Realistic: Infrastructure deployment (5-10 years → 90 months)
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.20,  // 20% nitrogen input reduction (research-backed)
+      nitrogenRecovery: 0.15,
+      foodSecurityBonus: 0.02,
+      urbanQoLBonus: 0.01,
+    },
+  },
+  {
+    id: 'ecosystem_restoration_nitrogen',
+    name: 'Ecosystem Restoration for Nitrogen Removal',
+    description: 'Constructed wetlands, riparian buffers, denitrification enhancement',
+    category: 'pollution',  // Nitrogen pollution removal
+    status: 'unlockable',
+    prerequisites: [],
+    minEconomicStage: 2.0,  // Realistic: Moderate infrastructure required
+    researchMonthsRequired: 18,  // Realistic: Ecosystem design + pilot programs
+    researchCost: 500,  // Realistic: Lower cost for ecosystem approaches
+    deploymentCost: 120000,  // Realistic: Land acquisition + restoration
+    deploymentMonthsRequired: 120,  // Realistic: Long ecosystem establishment time (10-20 years)
+    deploymentLevel: 0,
+    effects: {
+      nitrogenRemoval: 0.15,  // 15% nitrogen removal (research-backed)
+      biodiversityBonus: 0.08,
+      waterQualityBonus: 0.10,
+      floodProtectionBonus: 0.05,
+    },
+  },
+  {
+    id: 'nitrogen_monitoring_networks',
+    name: 'Nitrogen Monitoring Networks',
+    description: 'Satellite monitoring, sensor networks, predictive models for precision targeting',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 0.6,  // Realistic: Moderate AI for data analysis
+    minCapabilityDimensions: [
+      { dimension: 'digital', threshold: 0.5 }  // Data systems integration
+    ],
+    minEconomicStage: 1.8,  // Realistic: Early post-industrial
+    minMonth: 3,  // Realistic: Fast deployment of monitoring systems
+    researchMonthsRequired: 6,  // Realistic: Monitoring tech already exists
+    researchCost: 200,  // Realistic: Low cost for software + sensors
+    deploymentCost: 50000,  // Realistic: Network deployment
+    deploymentMonthsRequired: 18,  // Realistic: Fast network rollout (3-5 years)
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.10,  // 10% efficiency gain through better targeting (research-backed)
+      pollutionReduction: 0.01,
+    },
+    capabilityEffects: {
+      dimensions: {
+        digital: 0.05,  // Improves data systems
+      },
+    },
+  },
+  {
+    id: 'green_ammonia_production',
+    name: 'Green Ammonia Production',
+    description: 'Renewable energy-based Haber-Bosch replacement with hydrogen synthesis',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['fusion_power', 'solar_4th_gen'],  // Requires abundant clean energy
+    minAICapability: 3.0,  // Realistic: High AI for process optimization
+    minEconomicStage: 3.5,  // Realistic: Very advanced infrastructure
+    minMonth: 60,  // Realistic: 5 years minimum for fusion-based ammonia
+    researchMonthsRequired: 60,  // Realistic: Long R&D for hydrogen synthesis at scale
+    researchCost: 5000,  // Realistic: High cost for energy transition
+    deploymentCost: 500000,  // Realistic: Massive infrastructure replacement
+    deploymentMonthsRequired: 180,  // Realistic: Very long deployment (15-25 years)
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.40,  // 40% nitrogen input reduction (research-backed)
+      carbonEmissionsReduction: 0.15,  // Haber-Bosch is 1-2% of global emissions
+      energyIndependenceBonus: 0.05,
+    },
+  },
+
   // Freshwater Depletion (4)
   {
     id: 'desalination_advanced',
