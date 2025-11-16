@@ -39,6 +39,40 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Biogeochemical Flows Integration - Nitrogen-Food Coupling & Legacy Stocks** - TIER 2 HIGH (Added Nov 16, 2025)
+     - **Context:** Integration of nitrogen-food coupling + legacy nutrient stocks into ResourceSoilPhase (commit a0c047b)
+     - **Implementation Complete:** 6 technologies added, yield penalties, regional differentiation, legacy stock decay
+     - **Research Claimed:** Grade B, 29 peer-reviewed sources (2021-2024) from research/nitrogen_food_coupling_20251115.md
+     - **Key Claims Requiring Verification:**
+       - Lake Erie sediment loading: 10,000-11,000 MT P/year internal loading (Paerl et al. 2024) - QUOTE NEEDED
+       - Nitrogen half-life: 30 years exponential decay - SOURCE NEEDED
+       - South Asia nitrogen overuse: 55% (can reduce without yield penalty) - SOURCE NEEDED
+       - Yield penalty curve: 3% loss at 15% N reduction - SPECIFIC PAPER?
+       - Food waste reduction: 30% achievable globally - SOURCE?
+       - Rhizosphere engineering: 10-15% efficiency gain - PAPER QUOTE?
+       - Alternative protein: 80× efficiency (insects/algae vs cattle) → 25% N reduction - CALCULATION JUSTIFIED?
+       - **CRITICAL - Nitroplast Integration:** 40-80% fertilizer elimination (Coale et al. 2024 *Science*)
+         - Paper discusses ALGAE nitroplasts (April 2024 discovery)
+         - Implementation claims CEREAL application - LIKELY SPECULATIVE EXTRAPOLATION
+         - 2045+ timeline - NOT RESEARCH-BACKED, pure speculation?
+         - Uses 70% (middle of range) - conservative but is range justified?
+       - Active sediment management: 15% sediment reduction - PAPER?
+       - Phytoremediation: 5% N capture, 8% P capture - SPECIFIC VALUES?
+       - Baseline phosphorus: 25 Mt P/year (2025) - SOURCE?
+       - Baseline nitrogen: 120 Mt N/year (2025) - Zhang et al. (2021) projection or extrapolation?
+       - Nitrogen use efficiency: 46% (40-53% range) - Lassaletta et al. (2024) QUOTE?
+     - **Verification File:** research/verification_a0c047b_20251116.md (two-layer: existence + claim accuracy)
+     - **Expected Issues:** Nitroplast cereals likely speculative, regional overuse may be aggregated not single-source
+     - **Assignments:**
+       - Cynthia: Verify 29 citations exist, access papers, extract specific passages supporting ALL numeric claims
+       - Sylvia: Claim verification - SUPPORTED vs EXTRAPOLATED vs UNVERIFIED, assess nitroplast speculation risk
+       - Roy: Parameter adjustment if claims UNVERIFIED (blocked until validation)
+     - **Priority:** TIER 2 HIGH - Affects biogeochemical boundary effectiveness (currently 10%, expected 30-50% with legacy inertia)
+     - **Status:** ⚠️ NEEDS VALIDATION - Implementation deployed, verification file created, ready for orchestrator
+     - **Research File:** research/nitrogen_food_coupling_20251115.md (883 lines)
+     - **Commit:** a0c047b
+     - **Files Changed:** ResourceSoilPhase.ts, initialization.ts, comprehensiveTechTree.ts
+
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
      - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
