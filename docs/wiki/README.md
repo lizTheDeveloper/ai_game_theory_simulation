@@ -1048,9 +1048,21 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 - dystopiaProgression.ts (2 violations)
 - alignmentDynamics.ts (1 violation)
 - earlyWarningSystems.ts (1 violation)
+- effectsEngine.ts (1 violation - added during Nov 16 merge)
 - Type definitions: game.ts, government.ts
 
 **Changelog:** `logs/defensive_fallback_fix_20251115.md`
+
+---
+
+**November 16, 2025 - Merge: Research + Defensive Coding** (commit 20d4848)
+
+**Merge Summary:** Combined autonomous researcher branch (Nov 14) with defensive coding work (Nov 15).
+
+**Additional Defensive Coding Fix:**
+- **effectsEngine.ts:** Replaced `gameState.resourceEconomy?.energy ?? fallback` pattern with `assertStateProperty(gameState, 'resourceEconomy.energy', {...})`
+- Context: Performance optimization cache (Nov 14) had optional chaining - now properly asserted
+- Aligns with Nov 15 defensive coding initiative (Issue #7)
 
 ---
 
