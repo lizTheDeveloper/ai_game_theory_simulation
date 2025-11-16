@@ -292,13 +292,16 @@ export function applyAllTechEffects(
   // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Cache renewable capacity calculation
   // This prevents recalculating 180-300 times per 60-month run (once per remediation tech × months)
   // Research review: Architecture-skeptic identified this hot path issue
-  const energySystem = gameState.resourceEconomy?.energy;
-  const totalRenewableCapacity = energySystem ? (
-    (energySystem.capacity.solar || 0) +
-    (energySystem.capacity.wind || 0) +
-    (energySystem.capacity.hydro || 0) +
-    (energySystem.capacity.fusion || 0)
-  ) : 0;
+  const energySystem = assertStateProperty(gameState, 'resourceEconomy.energy', {
+    location: 'applyAllTechEffects',
+    month: gameState.currentMonth
+  });
+
+  const totalRenewableCapacity =
+    energySystem.capacity.solar +
+    energySystem.capacity.wind +
+    energySystem.capacity.hydro +
+    energySystem.capacity.fusion;
 
   // Aggregate effects by type
   const globalEffects: Map<string, number> = new Map();
