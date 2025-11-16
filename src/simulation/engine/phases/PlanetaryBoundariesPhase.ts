@@ -13,6 +13,8 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertPlanetaryBoundary } from '@/simulation/utils/assertions';
+import { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } from '../../planetaryBoundaries';
+import { updateBoundaryRecovery } from '../../planetaryBoundaryRecovery';
 
 export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly id = 'planetary_boundaries';
@@ -26,12 +28,7 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     'wet_bulb_temperature',     // Order 20.45: Heat stress events
   ];
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } = require('../../planetaryBoundaries');
-    setDeterministicRng(rng);
-    const { updateBoundaryRecovery } = require('../../planetaryBoundaryRecovery');
-
-    // Validate key planetary boundaries before update
+  execute(state: GameState, rng: RNGFunction): PhaseResult {setDeterministicRng(rng);// Validate key planetary boundaries before update
     // FIX: state.planetaryBoundaries doesn't exist, use planetaryBoundariesSystem.boundaries
     // Validate temperature anomaly (climate change boundary)
     if (state.resourceEconomy?.co2) {

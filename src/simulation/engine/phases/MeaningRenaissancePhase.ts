@@ -7,6 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { updateMeaningRenaissance } from '../../meaningRenaissance';
 
 export class MeaningRenaissancePhase implements SimulationPhase {
   readonly id = 'meaning-renaissance';
@@ -21,10 +22,7 @@ export class MeaningRenaissancePhase implements SimulationPhase {
         `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
         `(Month ${state.currentMonth})`
       );
-    }
-
-    const { updateMeaningRenaissance } = require('../../meaningRenaissance');
-    setDeterministicRng(rng);
+    }setDeterministicRng(rng);
     updateMeaningRenaissance(state);
 
     return { events: [] };

@@ -7,6 +7,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { updateNationalAI } from '../../nationalAI/index';
 
 export class NationalAIPhase implements SimulationPhase {
   readonly id = 'national-ai';
@@ -25,10 +26,7 @@ export class NationalAIPhase implements SimulationPhase {
         `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
         `(Month ${state.currentMonth})`
       );
-    }
-
-    const { updateNationalAI } = require('../../nationalAI/index');
-    setDeterministicRng(rng);
+    }setDeterministicRng(rng);
     updateNationalAI(state);
 
     return { events: [] };

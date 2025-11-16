@@ -23,6 +23,7 @@ import {
   assertInRange,
   assertStateProperty
 } from '@/simulation/utils/assertions';
+import { updateNitrogenFoodCoupling } from '@/simulation/nitrogenFoodCoupling';
 
 export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly id = 'food-security-degradation';
@@ -53,10 +54,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     const nitrogenReductionFromTech = state.globalMetrics?.nitrogenReductionTotal ?? 0;
 
     if (nitrogenReductionFromTech > 0.01 && state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
-      // Import nitrogen-food coupling module
-      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
-
-      // Calculate food production multiplier from nitrogen reduction
+      // Import nitrogen-food coupling module// Calculate food production multiplier from nitrogen reduction
       // This applies regional yield penalties based on overuse zones
       const deployedTechEffectiveness = [nitrogenReductionFromTech]; // Single aggregated effectiveness
       const globalFoodMultiplier = updateNitrogenFoodCoupling(state, deployedTechEffectiveness);

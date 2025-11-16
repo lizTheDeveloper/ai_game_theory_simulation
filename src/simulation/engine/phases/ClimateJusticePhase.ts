@@ -14,6 +14,7 @@ import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/ga
 import type { RNGFunction } from '@/types/config';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite } from '@/simulation/utils/assertions'; // Module uses assertions
+import { updateClimateJustice } from '../../climateJustice';
 
 export class ClimateJusticePhase implements SimulationPhase {
   readonly id = 'climate_justice';
@@ -32,10 +33,7 @@ export class ClimateJusticePhase implements SimulationPhase {
         `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
         `(Month ${state.currentMonth})`
       );
-    }
-
-    const { updateClimateJustice } = require('../../climateJustice');
-    setDeterministicRng(rng);
+    }setDeterministicRng(rng);
 
     // Update climate justice dynamics for all countries
     updateClimateJustice(state);
