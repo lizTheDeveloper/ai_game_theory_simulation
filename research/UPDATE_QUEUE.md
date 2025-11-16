@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/16/2025, 7:30:03 PM
-**Files Scanned:** 412
+**Generated:** 11/16/2025, 9:30:03 PM
+**Files Scanned:** 417
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 148 (35.9%)
+**Count:** 148 (35.5%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -758,7 +758,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 20 (4.9%)
+**Count:** 20 (4.8%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -785,7 +785,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 244 (59.2%)
+**Count:** 249 (59.7%)
 
 All sources <3 years old. No action required.
 
@@ -795,26 +795,26 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 412 |
+| Total files | 417 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 148 (35.9%) |
-| MEDIUM | 20 (4.9%) |
-| LOW | 244 (59.2%) |
-| Average age | 8.0 years |
+| HIGH | 148 (35.5%) |
+| MEDIUM | 20 (4.8%) |
+| LOW | 249 (59.7%) |
+| Average age | 7.9 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 244 | 59.2% |
-| Warning (3-5yr) | 20 | 4.9% |
-| Critical (>5yr) | 148 | 35.9% |
+| Current (<3yr) | 249 | 59.7% |
+| Warning (3-5yr) | 20 | 4.8% |
+| Critical (>5yr) | 148 | 35.5% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 35.9% critical (>5yr)
+- **Current:** 35.5% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
