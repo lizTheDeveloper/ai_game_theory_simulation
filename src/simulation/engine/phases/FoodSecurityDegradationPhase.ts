@@ -167,9 +167,60 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
         month: state.currentMonth
       });
 
-      const newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
+      let newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
         location: 'FoodSecurityDegradationPhase.execute',
-        valueName: `${region.name}.foodSecurity (after)`,
+        valueName: `${region.name}.foodSecurity (after degradation)`,
+        month: state.currentMonth
+      });
+
+      // TIER 2 HIGH (Nov 15, 2025): Apply nitrogen-food coupling penalty
+      // Research: Regional nitrogen reduction → yield penalties (55% South Asian rice farms overuse)
+      // Coupling applies MULTIPLICATIVELY to food security (not additively)
+      if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
+        // Find matching regional nitrogen management (map simulation region names to nitrogen regions)
+        // Nitrogen regions: southAsia, eastAsia, northAmerica, europe, latinAmerica, subSaharanAfrica
+        const nitrogenRegionMap: Record<string, string> = {
+          'South Asia': 'southAsia',
+          'East Asia': 'eastAsia',
+          'North America': 'northAmerica',
+          'Europe': 'europe',
+          'Latin America': 'latinAmerica',
+          'Sub-Saharan Africa': 'subSaharanAfrica',
+          'Middle East & North Africa': 'northAmerica',  // Fallback (no specific data)
+        };
+
+        const nitrogenRegionId = nitrogenRegionMap[region.name] || 'northAmerica'; // Default fallback
+        const nitrogenRegion = state.planetaryBoundariesSystem.regionalNitrogenManagement.find(
+          nr => nr.region === nitrogenRegionId
+        );
+
+        if (nitrogenRegion) {
+          // Food production index: 1.0 = baseline, <1.0 = yield penalties, >1.0 = yield improvements
+          const foodProductionMultiplier = assertProbability(
+            Math.max(0, nitrogenRegion.foodProductionIndex),
+            {
+              location: 'FoodSecurityDegradationPhase.execute',
+              valueName: `${region.name}.foodProductionMultiplier`,
+              month: state.currentMonth,
+              additionalInfo: { nitrogenRegionId, yieldImpact: nitrogenRegion.yieldImpact }
+            }
+          );
+
+          // Apply nitrogen penalty to food security (multiplicative)
+          // Example: 20% yield loss (multiplier = 0.8) → food security × 0.8
+          newFood *= foodProductionMultiplier;
+
+          // Log nitrogen impacts annually (if significant)
+          if (state.currentMonth % 12 === 0 && Math.abs(nitrogenRegion.yieldImpact) > 0.05) {
+            console.log(`  [${region.name}] Nitrogen-food coupling: Yield impact ${(nitrogenRegion.yieldImpact * 100).toFixed(1)}%, Food multiplier ${foodProductionMultiplier.toFixed(3)}`);
+          }
+        }
+      }
+
+      // Final validation
+      newFood = assertProbability(newFood, {
+        location: 'FoodSecurityDegradationPhase.execute',
+        valueName: `${region.name}.foodSecurity (final)`,
         month: state.currentMonth
       });
 

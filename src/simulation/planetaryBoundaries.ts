@@ -808,29 +808,63 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Base calculation (depletion factor)
     const depletion = 1 - reserves; // reserves is already 0-1 scale
 
-    // TIER 2 HIGH: Factor in legacy nutrient stock releases
-    // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
-    let legacyContribution = 0;
-    if (system.legacyNutrientStock) {
-      // Import the update function dynamically to avoid circular dependencies
-      const { getLegacyContributionPercentage } = require('@/simulation/legacyNutrientStocks');
-      const legacyReleases = getLegacyContributionPercentage(state);
+    // TIER 2 HIGH (Nov 15, 2025): Update legacy nutrient stocks and calculate effective pollution
+    // This creates INERTIA - even with 100% input reduction, pollution stays high for decades
+    // Research: Lake Erie (Paerl et al. 2024) - sediment loading equals external inputs
+    let effectiveNitrogen = 0;
+    let effectivePhosphorus = 0;
 
-      // Legacy releases are in Mt/month - normalize to boundary scale
-      // Baseline (2025): ~120 Mt N/year current input, ~30 Mt/year from legacy stocks = 25% legacy contribution
-      // At boundary value 2.94, legacy contributes ~0.75 to boundary value
-      const LEGACY_SCALING_FACTOR = 0.025;  // Calibrated to match Lake Erie case (50% internal loading)
-      legacyContribution = (legacyReleases.nitrogen + legacyReleases.phosphorus) * LEGACY_SCALING_FACTOR;
+    // Initialize legacy stocks if not present
+    if (!system.legacyNutrientStock) {
+      const { initializeLegacyNutrientStock } = require('@/simulation/legacyNutrientStocks');
+      system.legacyNutrientStock = initializeLegacyNutrientStock();
+      console.log('🌾 Initialized legacy nutrient stocks (2025 baseline)');
     }
 
-    // Boundary value = baseline depletion + legacy contribution
-    // This means: reducing current inputs helps, but legacy stocks slow recovery dramatically
-    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 + depletion * 0.5 + legacyContribution), {
-      location: 'updatePlanetaryBoundaries:biogeochemical',
-      valueName: 'biogeochemical_flows.currentValue',
-      month: state.currentMonth,
-      additionalInfo: { reserves, depletion, legacyContribution }
-    });
+    // Calculate current monthly nitrogen/phosphorus inputs from human activity
+    // Baseline (2025): ~120 Mt N/year = 10 Mt N/month, ~25 Mt P/year = 2.08 Mt P/month
+    // Scale by depletion (high depletion = high fertilizer use to maintain yields)
+    const BASELINE_N_INPUT = 10.0;   // Mt N/month (2025 baseline)
+    const BASELINE_P_INPUT = 2.08;   // Mt P/month (2025 baseline)
+    const currentNInput = BASELINE_N_INPUT * (1 + depletion * 0.5);  // Depletion drives overuse
+    const currentPInput = BASELINE_P_INPUT * (1 + depletion * 0.5);
+
+    // Update legacy stocks and get effective pollution (current + legacy releases)
+    const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
+    const effectivePollution = updateLegacyNutrientStocks(
+      state,
+      currentNInput,
+      currentPInput
+    );
+    effectiveNitrogen = effectivePollution.effectiveNitrogen;
+    effectivePhosphorus = effectivePollution.effectivePhosphorus;
+
+    // Convert effective pollution to boundary scale
+    // Boundary value 2.94 (2025 baseline) corresponds to ~10 Mt N/month + ~2 Mt P/month current
+    // Legacy contribution can ADD 50-100% to this (Lake Erie case: 50% internal loading)
+    const BASELINE_BOUNDARY_VALUE = 2.94;
+    const BASELINE_TOTAL_POLLUTION = BASELINE_N_INPUT + BASELINE_P_INPUT;  // 12.08 Mt/month
+    const currentTotalPollution = effectiveNitrogen + effectivePhosphorus;
+
+    // Normalize to boundary scale
+    const biogeochemicalValue = assertFinite(
+      BASELINE_BOUNDARY_VALUE * (currentTotalPollution / BASELINE_TOTAL_POLLUTION),
+      {
+        location: 'updatePlanetaryBoundaries:biogeochemical',
+        valueName: 'biogeochemical_flows.currentValue',
+        month: state.currentMonth,
+        additionalInfo: {
+          reserves,
+          depletion,
+          currentNInput,
+          currentPInput,
+          effectiveNitrogen,
+          effectivePhosphorus,
+          currentTotalPollution,
+        },
+      }
+    );
+
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
