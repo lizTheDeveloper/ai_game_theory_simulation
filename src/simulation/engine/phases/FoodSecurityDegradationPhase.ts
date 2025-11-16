@@ -50,9 +50,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     // TIER 2 HIGH (Nov 15, 2025): Apply nitrogen-food coupling BEFORE crisis degradation
     // Research: research/nitrogen_food_coupling_20251115.md
     // Nitrogen reduction from tech affects crop yields BEFORE crisis degradation compounds the problem
-    const nitrogenReductionFromTech = state.globalMetrics && 'nitrogenReductionTotal' in state.globalMetrics
-      ? (state.globalMetrics as { nitrogenReductionTotal: number }).nitrogenReductionTotal
-      : 0;
+    const nitrogenReductionFromTech = state.globalMetrics?.nitrogenReductionTotal ?? 0;
 
     if (nitrogenReductionFromTech > 0.01 && state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
       // Import nitrogen-food coupling module
@@ -63,13 +61,20 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       const deployedTechEffectiveness = [nitrogenReductionFromTech]; // Single aggregated effectiveness
       const globalFoodMultiplier = updateNitrogenFoodCoupling(state, deployedTechEffectiveness);
 
+      // FIX (HIGH-10, Nov 16, 2025): Build O(1) lookup map for nitrogen regions
+      // Previously: O(n²) nested loop with .find() for each region
+      // Now: O(n) map construction + O(1) lookups
+      const nitrogenRegionMap = new Map<string, typeof state.planetaryBoundariesSystem.regionalNitrogenManagement[0]>();
+      for (const nitrogenRegion of state.planetaryBoundariesSystem.regionalNitrogenManagement) {
+        nitrogenRegionMap.set(nitrogenRegion.region, nitrogenRegion);
+      }
+
       // Apply food production multiplier to regional food security
       // This happens BEFORE crisis degradation, so crises compound on already-reduced food
       for (const region of pop.regionalPopulations) {
-        // Find matching nitrogen management region
-        const nitrogenRegion = state.planetaryBoundariesSystem.regionalNitrogenManagement.find(
-          r => r.region === region.name.toLowerCase().replace(/\s+/g, '')
-        );
+        // O(1) lookup instead of O(n) .find()
+        const regionKey = region.name.toLowerCase().replace(/\s+/g, '');
+        const nitrogenRegion = nitrogenRegionMap.get(regionKey);
 
         if (nitrogenRegion) {
           // Apply regional food production index (from nitrogen-food coupling)
