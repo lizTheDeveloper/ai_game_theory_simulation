@@ -171276,6 +171276,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 498,
 =======
     "line": 524,
@@ -171344,6 +171345,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
     "line": 606,
 >>>>>>> Stashed changes
+=======
+    "line": 529,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "gameState",
     "currentDoc": "(none)",
@@ -171352,9 +171356,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 499,
 =======
     "line": 607,
+>>>>>>> Stashed changes
+=======
+    "line": 530,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "capabilityEffects",
@@ -171364,9 +171372,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 500,
 =======
     "line": 608,
+>>>>>>> Stashed changes
+=======
+    "line": 531,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "dimensions",
@@ -171376,9 +171388,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 501,
 =======
     "line": 609,
+>>>>>>> Stashed changes
+=======
+    "line": 532,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "research",
@@ -171388,9 +171404,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 502,
 =======
     "line": 610,
+>>>>>>> Stashed changes
+=======
+    "line": 533,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "domain",
@@ -171400,9 +171420,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 503,
 =======
     "line": 611,
+>>>>>>> Stashed changes
+=======
+    "line": 534,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "subdomain",
@@ -171412,9 +171436,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 504,
 =======
     "line": 612,
+>>>>>>> Stashed changes
+=======
+    "line": 535,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "boost",
@@ -171424,9 +171452,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 507,
 =======
     "line": 615,
+>>>>>>> Stashed changes
+=======
+    "line": 538,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "deploymentLevel",
@@ -171436,9 +171468,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 531,
 =======
     "line": 639,
+>>>>>>> Stashed changes
+=======
+    "line": 562,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171448,9 +171484,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 532,
 =======
     "line": 640,
+>>>>>>> Stashed changes
+=======
+    "line": 563,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171460,9 +171500,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 533,
 =======
     "line": 641,
+>>>>>>> Stashed changes
+=======
+    "line": 564,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171472,9 +171516,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 534,
 =======
     "line": 642,
+>>>>>>> Stashed changes
+=======
+    "line": 565,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -171484,9 +171532,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 541,
 =======
     "line": 649,
+>>>>>>> Stashed changes
+=======
+    "line": 572,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171496,9 +171548,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 542,
 =======
     "line": 650,
+>>>>>>> Stashed changes
+=======
+    "line": 573,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171508,9 +171564,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 543,
 =======
     "line": 651,
+>>>>>>> Stashed changes
+=======
+    "line": 574,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171520,9 +171580,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 566,
 =======
     "line": 674,
+>>>>>>> Stashed changes
+=======
+    "line": 597,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171532,9 +171596,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 567,
 =======
     "line": 675,
+>>>>>>> Stashed changes
+=======
+    "line": 598,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171544,9 +171612,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 568,
 =======
     "line": 676,
+>>>>>>> Stashed changes
+=======
+    "line": 599,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171556,9 +171628,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 569,
 =======
     "line": 677,
+>>>>>>> Stashed changes
+=======
+    "line": 600,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -171568,9 +171644,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 572,
 =======
     "line": 680,
+>>>>>>> Stashed changes
+=======
+    "line": 603,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171580,9 +171660,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 573,
 =======
     "line": 681,
+>>>>>>> Stashed changes
+=======
+    "line": 604,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171592,9 +171676,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 574,
 =======
     "line": 682,
+>>>>>>> Stashed changes
+=======
+    "line": 605,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171604,9 +171692,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 589,
 =======
     "line": 697,
+>>>>>>> Stashed changes
+=======
+    "line": 620,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171616,9 +171708,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 590,
 =======
     "line": 698,
+>>>>>>> Stashed changes
+=======
+    "line": 621,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171628,9 +171724,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 591,
 =======
     "line": 699,
+>>>>>>> Stashed changes
+=======
+    "line": 622,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171640,9 +171740,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 592,
 =======
     "line": 700,
+>>>>>>> Stashed changes
+=======
+    "line": 623,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -171652,9 +171756,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 595,
 =======
     "line": 703,
+>>>>>>> Stashed changes
+=======
+    "line": 626,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171664,9 +171772,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 596,
 =======
     "line": 704,
+>>>>>>> Stashed changes
+=======
+    "line": 627,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171676,9 +171788,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 597,
 =======
     "line": 705,
+>>>>>>> Stashed changes
+=======
+    "line": 628,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171688,9 +171804,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 612,
 =======
     "line": 720,
+>>>>>>> Stashed changes
+=======
+    "line": 643,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171700,9 +171820,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 613,
 =======
     "line": 721,
+>>>>>>> Stashed changes
+=======
+    "line": 644,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171712,9 +171836,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 614,
 =======
     "line": 722,
+>>>>>>> Stashed changes
+=======
+    "line": 645,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171724,9 +171852,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 615,
 =======
     "line": 723,
+>>>>>>> Stashed changes
+=======
+    "line": 646,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -171736,9 +171868,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 630,
 =======
     "line": 738,
+>>>>>>> Stashed changes
+=======
+    "line": 661,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "gameState",
@@ -171748,9 +171884,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 631,
 =======
     "line": 739,
+>>>>>>> Stashed changes
+=======
+    "line": 662,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "effects",
@@ -171760,9 +171900,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 641,
 =======
     "line": 749,
+>>>>>>> Stashed changes
+=======
+    "line": 672,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171772,9 +171916,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 642,
 =======
     "line": 750,
+>>>>>>> Stashed changes
+=======
+    "line": 673,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171784,9 +171932,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 643,
 =======
     "line": 751,
+>>>>>>> Stashed changes
+=======
+    "line": 674,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171796,9 +171948,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 659,
 =======
     "line": 767,
+>>>>>>> Stashed changes
+=======
+    "line": 690,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171808,9 +171964,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 660,
 =======
     "line": 768,
+>>>>>>> Stashed changes
+=======
+    "line": 691,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171820,9 +171980,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 661,
 =======
     "line": 769,
+>>>>>>> Stashed changes
+=======
+    "line": 692,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171832,9 +171996,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 673,
 =======
     "line": 781,
+>>>>>>> Stashed changes
+=======
+    "line": 704,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171844,9 +172012,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 674,
 =======
     "line": 782,
+>>>>>>> Stashed changes
+=======
+    "line": 705,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171856,9 +172028,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 675,
 =======
     "line": 783,
+>>>>>>> Stashed changes
+=======
+    "line": 706,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171868,9 +172044,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 687,
 =======
     "line": 795,
+>>>>>>> Stashed changes
+=======
+    "line": 718,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171880,9 +172060,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 688,
 =======
     "line": 796,
+>>>>>>> Stashed changes
+=======
+    "line": 719,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171892,9 +172076,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 689,
 =======
     "line": 797,
+>>>>>>> Stashed changes
+=======
+    "line": 720,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171904,9 +172092,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 702,
 =======
     "line": 810,
+>>>>>>> Stashed changes
+=======
+    "line": 733,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171916,9 +172108,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 703,
 =======
     "line": 811,
+>>>>>>> Stashed changes
+=======
+    "line": 734,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171928,9 +172124,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 704,
 =======
     "line": 812,
+>>>>>>> Stashed changes
+=======
+    "line": 735,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171940,9 +172140,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 711,
 =======
     "line": 819,
+>>>>>>> Stashed changes
+=======
+    "line": 742,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171952,9 +172156,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 712,
 =======
     "line": 820,
+>>>>>>> Stashed changes
+=======
+    "line": 743,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -171964,9 +172172,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 713,
 =======
     "line": 821,
+>>>>>>> Stashed changes
+=======
+    "line": 744,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -171976,9 +172188,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 725,
 =======
     "line": 833,
+>>>>>>> Stashed changes
+=======
+    "line": 756,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -171988,9 +172204,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 726,
 =======
     "line": 834,
+>>>>>>> Stashed changes
+=======
+    "line": 757,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172000,9 +172220,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 727,
 =======
     "line": 835,
+>>>>>>> Stashed changes
+=======
+    "line": 758,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172012,9 +172236,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 754,
 =======
     "line": 862,
+>>>>>>> Stashed changes
+=======
+    "line": 785,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172024,9 +172252,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 755,
 =======
     "line": 863,
+>>>>>>> Stashed changes
+=======
+    "line": 786,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172036,9 +172268,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 756,
 =======
     "line": 864,
+>>>>>>> Stashed changes
+=======
+    "line": 787,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172048,9 +172284,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 772,
 =======
     "line": 880,
+>>>>>>> Stashed changes
+=======
+    "line": 803,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172060,9 +172300,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 773,
 =======
     "line": 881,
+>>>>>>> Stashed changes
+=======
+    "line": 804,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172072,9 +172316,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 774,
 =======
     "line": 882,
+>>>>>>> Stashed changes
+=======
+    "line": 805,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172084,9 +172332,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 789,
 =======
     "line": 897,
+>>>>>>> Stashed changes
+=======
+    "line": 820,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172096,9 +172348,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 790,
 =======
     "line": 898,
+>>>>>>> Stashed changes
+=======
+    "line": 821,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172108,9 +172364,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 791,
 =======
     "line": 899,
+>>>>>>> Stashed changes
+=======
+    "line": 822,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172120,9 +172380,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 808,
 =======
     "line": 916,
+>>>>>>> Stashed changes
+=======
+    "line": 839,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172132,9 +172396,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 809,
 =======
     "line": 917,
+>>>>>>> Stashed changes
+=======
+    "line": 840,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172144,9 +172412,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 810,
 =======
     "line": 918,
+>>>>>>> Stashed changes
+=======
+    "line": 841,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172156,9 +172428,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 824,
 =======
     "line": 932,
+>>>>>>> Stashed changes
+=======
+    "line": 855,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172168,9 +172444,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 825,
 =======
     "line": 933,
+>>>>>>> Stashed changes
+=======
+    "line": 856,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172180,9 +172460,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 826,
 =======
     "line": 934,
+>>>>>>> Stashed changes
+=======
+    "line": 857,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172192,9 +172476,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 871,
 =======
     "line": 979,
+>>>>>>> Stashed changes
+=======
+    "line": 902,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172204,9 +172492,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 872,
 =======
     "line": 980,
+>>>>>>> Stashed changes
+=======
+    "line": 903,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172216,9 +172508,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 873,
 =======
     "line": 981,
+>>>>>>> Stashed changes
+=======
+    "line": 904,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172228,9 +172524,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 930,
 =======
     "line": 1038,
+>>>>>>> Stashed changes
+=======
+    "line": 961,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172240,9 +172540,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 931,
 =======
     "line": 1039,
+>>>>>>> Stashed changes
+=======
+    "line": 962,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172252,7 +172556,251 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 932,
+=======
+    "line": 1040,
+>>>>>>> Stashed changes
+=======
+    "line": 963,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 942,
+=======
+    "line": 1050,
+>>>>>>> Stashed changes
+=======
+    "line": 973,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:extinctionRateReduction',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 943,
+=======
+    "line": 1051,
+>>>>>>> Stashed changes
+=======
+    "line": 974,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'habitatLossRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 944,
+=======
+    "line": 1052,
+>>>>>>> Stashed changes
+=======
+    "line": 975,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 954,
+=======
+    "line": 1062,
+>>>>>>> Stashed changes
+=======
+    "line": 985,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:extinctionRateReduction',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 955,
+=======
+    "line": 1063,
+>>>>>>> Stashed changes
+=======
+    "line": 986,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'extinctionAcceleration',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 956,
+=======
+    "line": 1064,
+>>>>>>> Stashed changes
+=======
+    "line": 987,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 969,
+=======
+    "line": 1077,
+>>>>>>> Stashed changes
+=======
+    "line": 1000,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:extinctionRateReduction',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 970,
+=======
+    "line": 1078,
+>>>>>>> Stashed changes
+=======
+    "line": 1001,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'extinctionRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 971,
+=======
+    "line": 1079,
+>>>>>>> Stashed changes
+=======
+    "line": 1002,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 990,
+=======
+    "line": 1098,
+>>>>>>> Stashed changes
+=======
+    "line": 1021,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:oceanPHBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 991,
+=======
+    "line": 1099,
+>>>>>>> Stashed changes
+=======
+    "line": 1022,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'pHLevel',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 992,
+=======
+    "line": 1100,
+>>>>>>> Stashed changes
+=======
+    "line": 1023,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 1007,
+=======
+    "line": 1115,
+>>>>>>> Stashed changes
+=======
+    "line": 1038,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:meaningReduction',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 1008,
+=======
+    "line": 1116,
+>>>>>>> Stashed changes
+=======
+    "line": 1039,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'meaningCrisisLevel',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 1009,
+=======
+    "line": 1117,
+>>>>>>> Stashed changes
 =======
     "line": 1040,
 >>>>>>> Stashed changes
@@ -172264,189 +172812,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
-    "line": 942,
-=======
-    "line": 1050,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:extinctionRateReduction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 943,
-=======
-    "line": 1051,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'habitatLossRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 944,
-=======
-    "line": 1052,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 954,
-=======
-    "line": 1062,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:extinctionRateReduction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 955,
-=======
-    "line": 1063,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'extinctionAcceleration',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 956,
-=======
-    "line": 1064,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 969,
-=======
-    "line": 1077,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:extinctionRateReduction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 970,
-=======
-    "line": 1078,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'extinctionRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 971,
-=======
-    "line": 1079,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 990,
-=======
-    "line": 1098,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:oceanPHBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 991,
-=======
-    "line": 1099,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'pHLevel',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 992,
-=======
-    "line": 1100,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 1007,
-=======
-    "line": 1115,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:meaningReduction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 1008,
-=======
-    "line": 1116,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'meaningCrisisLevel',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 1009,
-=======
-    "line": 1117,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
     "line": 1021,
 =======
     "line": 1129,
+>>>>>>> Stashed changes
+=======
+    "line": 1052,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172456,9 +172828,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1022,
 =======
     "line": 1130,
+>>>>>>> Stashed changes
+=======
+    "line": 1053,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172468,9 +172844,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1023,
 =======
     "line": 1131,
+>>>>>>> Stashed changes
+=======
+    "line": 1054,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172480,9 +172860,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1037,
 =======
     "line": 1145,
+>>>>>>> Stashed changes
+=======
+    "line": 1068,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172492,9 +172876,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1038,
 =======
     "line": 1146,
+>>>>>>> Stashed changes
+=======
+    "line": 1069,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172504,9 +172892,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1039,
 =======
     "line": 1147,
+>>>>>>> Stashed changes
+=======
+    "line": 1070,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172516,9 +172908,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1051,
 =======
     "line": 1159,
+>>>>>>> Stashed changes
+=======
+    "line": 1082,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172528,9 +172924,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1052,
 =======
     "line": 1160,
+>>>>>>> Stashed changes
+=======
+    "line": 1083,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172540,9 +172940,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1053,
 =======
     "line": 1161,
+>>>>>>> Stashed changes
+=======
+    "line": 1084,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172552,9 +172956,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1068,
 =======
     "line": 1176,
+>>>>>>> Stashed changes
+=======
+    "line": 1099,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172564,9 +172972,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1069,
 =======
     "line": 1177,
+>>>>>>> Stashed changes
+=======
+    "line": 1100,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172576,9 +172988,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1070,
 =======
     "line": 1178,
+>>>>>>> Stashed changes
+=======
+    "line": 1101,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172588,9 +173004,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1082,
 =======
     "line": 1190,
+>>>>>>> Stashed changes
+=======
+    "line": 1113,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172600,9 +173020,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1083,
 =======
     "line": 1191,
+>>>>>>> Stashed changes
+=======
+    "line": 1114,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172612,9 +173036,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1084,
 =======
     "line": 1192,
+>>>>>>> Stashed changes
+=======
+    "line": 1115,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172623,11 +173051,15 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 1096,
 =======
     "line": 1204,
 >>>>>>> Stashed changes
+=======
+    "line": 1127,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -172635,11 +173067,15 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 1097,
 =======
     "line": 1205,
 >>>>>>> Stashed changes
+=======
+    "line": 1128,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -172648,9 +173084,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1098,
 =======
     "line": 1206,
+>>>>>>> Stashed changes
+=======
+    "line": 1129,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172660,9 +173100,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1112,
 =======
     "line": 1220,
+>>>>>>> Stashed changes
+=======
+    "line": 1143,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172672,9 +173116,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1113,
 =======
     "line": 1221,
+>>>>>>> Stashed changes
+=======
+    "line": 1144,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172684,9 +173132,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1114,
 =======
     "line": 1222,
+>>>>>>> Stashed changes
+=======
+    "line": 1145,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172696,9 +173148,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1127,
 =======
     "line": 1235,
+>>>>>>> Stashed changes
+=======
+    "line": 1158,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172708,9 +173164,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1128,
 =======
     "line": 1236,
+>>>>>>> Stashed changes
+=======
+    "line": 1159,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172720,9 +173180,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1129,
 =======
     "line": 1237,
+>>>>>>> Stashed changes
+=======
+    "line": 1160,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172732,9 +173196,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1142,
 =======
     "line": 1250,
+>>>>>>> Stashed changes
+=======
+    "line": 1173,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172744,9 +173212,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1143,
 =======
     "line": 1251,
+>>>>>>> Stashed changes
+=======
+    "line": 1174,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172756,9 +173228,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1144,
 =======
     "line": 1252,
+>>>>>>> Stashed changes
+=======
+    "line": 1175,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172768,9 +173244,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1165,
 =======
     "line": 1273,
+>>>>>>> Stashed changes
+=======
+    "line": 1196,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "gameState",
@@ -172780,9 +173260,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1166,
 =======
     "line": 1274,
+>>>>>>> Stashed changes
+=======
+    "line": 1197,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "regionalEffects",
@@ -172792,9 +173276,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1181,
 =======
     "line": 1289,
+>>>>>>> Stashed changes
+=======
+    "line": 1212,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172804,9 +173292,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1182,
 =======
     "line": 1290,
+>>>>>>> Stashed changes
+=======
+    "line": 1213,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172816,9 +173308,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1183,
 =======
     "line": 1291,
+>>>>>>> Stashed changes
+=======
+    "line": 1214,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172828,9 +173324,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1184,
 =======
     "line": 1292,
+>>>>>>> Stashed changes
+=======
+    "line": 1215,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -172840,9 +173340,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1195,
 =======
     "line": 1303,
+>>>>>>> Stashed changes
+=======
+    "line": 1226,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172852,9 +173356,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1196,
 =======
     "line": 1304,
+>>>>>>> Stashed changes
+=======
+    "line": 1227,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172864,9 +173372,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1197,
 =======
     "line": 1305,
+>>>>>>> Stashed changes
+=======
+    "line": 1228,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172876,9 +173388,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1198,
 =======
     "line": 1306,
+>>>>>>> Stashed changes
+=======
+    "line": 1229,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -172888,9 +173404,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1222,
 =======
     "line": 1330,
+>>>>>>> Stashed changes
+=======
+    "line": 1253,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172900,9 +173420,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1223,
 =======
     "line": 1331,
+>>>>>>> Stashed changes
+=======
+    "line": 1254,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172912,9 +173436,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1224,
 =======
     "line": 1332,
+>>>>>>> Stashed changes
+=======
+    "line": 1255,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172924,9 +173452,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1225,
 =======
     "line": 1333,
+>>>>>>> Stashed changes
+=======
+    "line": 1256,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -172936,9 +173468,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1245,
 =======
     "line": 1353,
+>>>>>>> Stashed changes
+=======
+    "line": 1276,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172948,9 +173484,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1246,
 =======
     "line": 1354,
+>>>>>>> Stashed changes
+=======
+    "line": 1277,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -172960,9 +173500,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1247,
 =======
     "line": 1355,
+>>>>>>> Stashed changes
+=======
+    "line": 1278,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -172972,9 +173516,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1248,
 =======
     "line": 1356,
+>>>>>>> Stashed changes
+=======
+    "line": 1279,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -172984,9 +173532,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1259,
 =======
     "line": 1367,
+>>>>>>> Stashed changes
+=======
+    "line": 1290,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -172996,9 +173548,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1260,
 =======
     "line": 1368,
+>>>>>>> Stashed changes
+=======
+    "line": 1291,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173008,9 +173564,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1261,
 =======
     "line": 1369,
+>>>>>>> Stashed changes
+=======
+    "line": 1292,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173020,9 +173580,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1262,
 =======
     "line": 1370,
+>>>>>>> Stashed changes
+=======
+    "line": 1293,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -173032,9 +173596,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1278,
 =======
     "line": 1386,
+>>>>>>> Stashed changes
+=======
+    "line": 1309,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173044,9 +173612,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1279,
 =======
     "line": 1387,
+>>>>>>> Stashed changes
+=======
+    "line": 1310,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173056,9 +173628,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1280,
 =======
     "line": 1388,
+>>>>>>> Stashed changes
+=======
+    "line": 1311,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173068,9 +173644,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1281,
 =======
     "line": 1389,
+>>>>>>> Stashed changes
+=======
+    "line": 1312,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -173080,9 +173660,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1290,
 =======
     "line": 1398,
+>>>>>>> Stashed changes
+=======
+    "line": 1321,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173092,9 +173676,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1291,
 =======
     "line": 1399,
+>>>>>>> Stashed changes
+=======
+    "line": 1322,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173104,9 +173692,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1292,
 =======
     "line": 1400,
+>>>>>>> Stashed changes
+=======
+    "line": 1323,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173116,9 +173708,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1293,
 =======
     "line": 1401,
+>>>>>>> Stashed changes
+=======
+    "line": 1324,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -173128,9 +173724,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1308,
 =======
     "line": 1416,
+>>>>>>> Stashed changes
+=======
+    "line": 1339,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173140,9 +173740,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1309,
 =======
     "line": 1417,
+>>>>>>> Stashed changes
+=======
+    "line": 1340,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173152,9 +173756,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1310,
 =======
     "line": 1418,
+>>>>>>> Stashed changes
+=======
+    "line": 1341,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173164,9 +173772,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1311,
 =======
     "line": 1419,
+>>>>>>> Stashed changes
+=======
+    "line": 1342,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -173176,9 +173788,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1320,
 =======
     "line": 1428,
+>>>>>>> Stashed changes
+=======
+    "line": 1351,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173188,9 +173804,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1321,
 =======
     "line": 1429,
+>>>>>>> Stashed changes
+=======
+    "line": 1352,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173200,9 +173820,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1322,
 =======
     "line": 1430,
+>>>>>>> Stashed changes
+=======
+    "line": 1353,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173212,9 +173836,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1323,
 =======
     "line": 1431,
+>>>>>>> Stashed changes
+=======
+    "line": 1354,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -173224,9 +173852,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1338,
 =======
     "line": 1446,
+>>>>>>> Stashed changes
+=======
+    "line": 1369,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173236,9 +173868,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1339,
 =======
     "line": 1447,
+>>>>>>> Stashed changes
+=======
+    "line": 1370,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173248,9 +173884,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1340,
 =======
     "line": 1448,
+>>>>>>> Stashed changes
+=======
+    "line": 1371,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173260,9 +173900,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1354,
 =======
     "line": 1462,
+>>>>>>> Stashed changes
+=======
+    "line": 1385,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173272,9 +173916,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1355,
 =======
     "line": 1463,
+>>>>>>> Stashed changes
+=======
+    "line": 1386,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173283,11 +173931,15 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 1356,
 =======
     "line": 1464,
 >>>>>>> Stashed changes
+=======
+    "line": 1387,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -173296,9 +173948,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1369,
 =======
     "line": 1477,
+>>>>>>> Stashed changes
+=======
+    "line": 1400,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173308,9 +173964,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1370,
 =======
     "line": 1478,
+>>>>>>> Stashed changes
+=======
+    "line": 1401,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173320,9 +173980,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1371,
 =======
     "line": 1479,
+>>>>>>> Stashed changes
+=======
+    "line": 1402,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173332,9 +173996,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1378,
 =======
     "line": 1486,
+>>>>>>> Stashed changes
+=======
+    "line": 1409,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173344,9 +174012,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1379,
 =======
     "line": 1487,
+>>>>>>> Stashed changes
+=======
+    "line": 1410,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173356,9 +174028,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1380,
 =======
     "line": 1488,
+>>>>>>> Stashed changes
+=======
+    "line": 1411,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173368,9 +174044,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1394,
 =======
     "line": 1502,
+>>>>>>> Stashed changes
+=======
+    "line": 1425,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173380,9 +174060,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1395,
 =======
     "line": 1503,
+>>>>>>> Stashed changes
+=======
+    "line": 1426,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173392,9 +174076,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1396,
 =======
     "line": 1504,
+>>>>>>> Stashed changes
+=======
+    "line": 1427,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173404,9 +174092,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1469,
 =======
     "line": 1577,
+>>>>>>> Stashed changes
+=======
+    "line": 1500,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173416,9 +174108,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1470,
 =======
     "line": 1578,
+>>>>>>> Stashed changes
+=======
+    "line": 1501,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173428,9 +174124,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1471,
 =======
     "line": 1579,
+>>>>>>> Stashed changes
+=======
+    "line": 1502,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173440,9 +174140,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1508,
 =======
     "line": 1616,
+>>>>>>> Stashed changes
+=======
+    "line": 1539,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173452,9 +174156,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1509,
 =======
     "line": 1617,
+>>>>>>> Stashed changes
+=======
+    "line": 1540,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173464,9 +174172,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1510,
 =======
     "line": 1618,
+>>>>>>> Stashed changes
+=======
+    "line": 1541,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173476,9 +174188,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1535,
 =======
     "line": 1643,
+>>>>>>> Stashed changes
+=======
+    "line": 1566,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173488,9 +174204,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1536,
 =======
     "line": 1644,
+>>>>>>> Stashed changes
+=======
+    "line": 1567,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173500,9 +174220,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1537,
 =======
     "line": 1645,
+>>>>>>> Stashed changes
+=======
+    "line": 1568,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173512,9 +174236,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1555,
 =======
     "line": 1663,
+>>>>>>> Stashed changes
+=======
+    "line": 1586,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173524,9 +174252,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1556,
 =======
     "line": 1664,
+>>>>>>> Stashed changes
+=======
+    "line": 1587,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173536,9 +174268,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1557,
 =======
     "line": 1665,
+>>>>>>> Stashed changes
+=======
+    "line": 1588,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173548,9 +174284,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1569,
 =======
     "line": 1677,
+>>>>>>> Stashed changes
+=======
+    "line": 1600,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173560,9 +174300,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1570,
 =======
     "line": 1678,
+>>>>>>> Stashed changes
+=======
+    "line": 1601,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173572,9 +174316,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1571,
 =======
     "line": 1679,
+>>>>>>> Stashed changes
+=======
+    "line": 1602,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173584,9 +174332,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1583,
 =======
     "line": 1691,
+>>>>>>> Stashed changes
+=======
+    "line": 1614,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173596,9 +174348,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1584,
 =======
     "line": 1692,
+>>>>>>> Stashed changes
+=======
+    "line": 1615,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173608,9 +174364,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1585,
 =======
     "line": 1693,
+>>>>>>> Stashed changes
+=======
+    "line": 1616,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173620,9 +174380,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1600,
 =======
     "line": 1708,
+>>>>>>> Stashed changes
+=======
+    "line": 1637,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173632,9 +174396,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1601,
 =======
     "line": 1709,
+>>>>>>> Stashed changes
+=======
+    "line": 1638,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173644,9 +174412,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1602,
 =======
     "line": 1710,
+>>>>>>> Stashed changes
+=======
+    "line": 1639,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173656,9 +174428,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1608,
 =======
     "line": 1716,
+>>>>>>> Stashed changes
+=======
+    "line": 1645,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173668,9 +174444,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1609,
 =======
     "line": 1717,
+>>>>>>> Stashed changes
+=======
+    "line": 1646,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173680,9 +174460,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1610,
 =======
     "line": 1718,
+>>>>>>> Stashed changes
+=======
+    "line": 1647,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173692,9 +174476,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1623,
 =======
     "line": 1731,
+>>>>>>> Stashed changes
+=======
+    "line": 1660,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173704,9 +174492,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1624,
 =======
     "line": 1732,
+>>>>>>> Stashed changes
+=======
+    "line": 1661,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173716,9 +174508,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1625,
 =======
     "line": 1733,
+>>>>>>> Stashed changes
+=======
+    "line": 1662,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173728,9 +174524,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1632,
 =======
     "line": 1740,
+>>>>>>> Stashed changes
+=======
+    "line": 1669,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173740,9 +174540,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1633,
 =======
     "line": 1741,
+>>>>>>> Stashed changes
+=======
+    "line": 1670,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173752,9 +174556,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1634,
 =======
     "line": 1742,
+>>>>>>> Stashed changes
+=======
+    "line": 1671,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173764,9 +174572,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1641,
 =======
     "line": 1749,
+>>>>>>> Stashed changes
+=======
+    "line": 1678,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173776,9 +174588,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1642,
 =======
     "line": 1750,
+>>>>>>> Stashed changes
+=======
+    "line": 1679,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173788,9 +174604,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1643,
 =======
     "line": 1751,
+>>>>>>> Stashed changes
+=======
+    "line": 1680,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173800,9 +174620,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1655,
 =======
     "line": 1763,
+>>>>>>> Stashed changes
+=======
+    "line": 1692,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173812,9 +174636,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1656,
 =======
     "line": 1764,
+>>>>>>> Stashed changes
+=======
+    "line": 1693,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173824,9 +174652,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1657,
 =======
     "line": 1765,
+>>>>>>> Stashed changes
+=======
+    "line": 1694,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173836,9 +174668,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1663,
 =======
     "line": 1771,
+>>>>>>> Stashed changes
+=======
+    "line": 1700,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173848,9 +174684,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1664,
 =======
     "line": 1772,
+>>>>>>> Stashed changes
+=======
+    "line": 1701,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173860,9 +174700,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1665,
 =======
     "line": 1773,
+>>>>>>> Stashed changes
+=======
+    "line": 1702,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173872,9 +174716,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1677,
 =======
     "line": 1785,
+>>>>>>> Stashed changes
+=======
+    "line": 1714,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173884,9 +174732,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1678,
 =======
     "line": 1786,
+>>>>>>> Stashed changes
+=======
+    "line": 1715,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173896,9 +174748,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1679,
 =======
     "line": 1787,
+>>>>>>> Stashed changes
+=======
+    "line": 1716,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173908,9 +174764,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1686,
 =======
     "line": 1794,
+>>>>>>> Stashed changes
+=======
+    "line": 1723,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173920,9 +174780,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1687,
 =======
     "line": 1795,
+>>>>>>> Stashed changes
+=======
+    "line": 1724,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173931,11 +174795,15 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 1688,
 =======
     "line": 1796,
 >>>>>>> Stashed changes
+=======
+    "line": 1725,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -173944,9 +174812,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1700,
 =======
     "line": 1808,
+>>>>>>> Stashed changes
+=======
+    "line": 1737,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173956,9 +174828,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1701,
 =======
     "line": 1809,
+>>>>>>> Stashed changes
+=======
+    "line": 1738,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -173968,9 +174844,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1702,
 =======
     "line": 1810,
+>>>>>>> Stashed changes
+=======
+    "line": 1739,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -173980,9 +174860,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1709,
 =======
     "line": 1817,
+>>>>>>> Stashed changes
+=======
+    "line": 1746,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -173992,9 +174876,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1710,
 =======
     "line": 1818,
+>>>>>>> Stashed changes
+=======
+    "line": 1747,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174003,11 +174891,15 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 1711,
 =======
     "line": 1819,
 >>>>>>> Stashed changes
+=======
+    "line": 1748,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -174016,9 +174908,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1724,
 =======
     "line": 1832,
+>>>>>>> Stashed changes
+=======
+    "line": 1761,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174028,9 +174924,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1725,
 =======
     "line": 1833,
+>>>>>>> Stashed changes
+=======
+    "line": 1762,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174040,9 +174940,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1726,
 =======
     "line": 1834,
+>>>>>>> Stashed changes
+=======
+    "line": 1763,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174052,9 +174956,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1736,
 =======
     "line": 1844,
+>>>>>>> Stashed changes
+=======
+    "line": 1773,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174064,9 +174972,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1737,
 =======
     "line": 1845,
+>>>>>>> Stashed changes
+=======
+    "line": 1774,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174076,9 +174988,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1738,
 =======
     "line": 1846,
+>>>>>>> Stashed changes
+=======
+    "line": 1775,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174088,9 +175004,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1751,
 =======
     "line": 1859,
+>>>>>>> Stashed changes
+=======
+    "line": 1788,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174100,9 +175020,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1752,
 =======
     "line": 1860,
+>>>>>>> Stashed changes
+=======
+    "line": 1789,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174112,9 +175036,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1753,
 =======
     "line": 1861,
+>>>>>>> Stashed changes
+=======
+    "line": 1790,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174124,9 +175052,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1760,
 =======
     "line": 1868,
+>>>>>>> Stashed changes
+=======
+    "line": 1797,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174136,9 +175068,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1761,
 =======
     "line": 1869,
+>>>>>>> Stashed changes
+=======
+    "line": 1798,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174148,9 +175084,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1762,
 =======
     "line": 1870,
+>>>>>>> Stashed changes
+=======
+    "line": 1799,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174160,9 +175100,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1835,
 =======
     "line": 1943,
+>>>>>>> Stashed changes
+=======
+    "line": 1872,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174172,9 +175116,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1836,
 =======
     "line": 1944,
+>>>>>>> Stashed changes
+=======
+    "line": 1873,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174184,9 +175132,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1837,
 =======
     "line": 1945,
+>>>>>>> Stashed changes
+=======
+    "line": 1874,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174196,9 +175148,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1883,
 =======
     "line": 1991,
+>>>>>>> Stashed changes
+=======
+    "line": 1920,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174208,9 +175164,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1884,
 =======
     "line": 1992,
+>>>>>>> Stashed changes
+=======
+    "line": 1921,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174220,9 +175180,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1885,
 =======
     "line": 1993,
+>>>>>>> Stashed changes
+=======
+    "line": 1922,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174232,9 +175196,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1897,
 =======
     "line": 2005,
+>>>>>>> Stashed changes
+=======
+    "line": 1934,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174244,9 +175212,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1898,
 =======
     "line": 2006,
+>>>>>>> Stashed changes
+=======
+    "line": 1935,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174256,9 +175228,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1899,
 =======
     "line": 2007,
+>>>>>>> Stashed changes
+=======
+    "line": 1936,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174268,9 +175244,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1917,
 =======
     "line": 2025,
+>>>>>>> Stashed changes
+=======
+    "line": 1954,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174280,9 +175260,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1918,
 =======
     "line": 2026,
+>>>>>>> Stashed changes
+=======
+    "line": 1955,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174292,9 +175276,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1919,
 =======
     "line": 2027,
+>>>>>>> Stashed changes
+=======
+    "line": 1956,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174304,9 +175292,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1931,
 =======
     "line": 2039,
+>>>>>>> Stashed changes
+=======
+    "line": 1968,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174316,9 +175308,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1932,
 =======
     "line": 2040,
+>>>>>>> Stashed changes
+=======
+    "line": 1969,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174328,9 +175324,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1933,
 =======
     "line": 2041,
+>>>>>>> Stashed changes
+=======
+    "line": 1970,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174340,9 +175340,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1942,
 =======
     "line": 2050,
+>>>>>>> Stashed changes
+=======
+    "line": 1979,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174352,9 +175356,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1943,
 =======
     "line": 2051,
+>>>>>>> Stashed changes
+=======
+    "line": 1980,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174364,9 +175372,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1944,
 =======
     "line": 2052,
+>>>>>>> Stashed changes
+=======
+    "line": 1981,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174376,9 +175388,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1957,
 =======
     "line": 2065,
+>>>>>>> Stashed changes
+=======
+    "line": 1994,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174388,9 +175404,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1958,
 =======
     "line": 2066,
+>>>>>>> Stashed changes
+=======
+    "line": 1995,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174400,9 +175420,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1959,
 =======
     "line": 2067,
+>>>>>>> Stashed changes
+=======
+    "line": 1996,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174412,9 +175436,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1971,
 =======
     "line": 2079,
+>>>>>>> Stashed changes
+=======
+    "line": 2008,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174424,9 +175452,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1972,
 =======
     "line": 2080,
+>>>>>>> Stashed changes
+=======
+    "line": 2009,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174436,9 +175468,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1973,
 =======
     "line": 2081,
+>>>>>>> Stashed changes
+=======
+    "line": 2010,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174448,9 +175484,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1982,
 =======
     "line": 2090,
+>>>>>>> Stashed changes
+=======
+    "line": 2019,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174460,9 +175500,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1983,
 =======
     "line": 2091,
+>>>>>>> Stashed changes
+=======
+    "line": 2020,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174472,9 +175516,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1984,
 =======
     "line": 2092,
+>>>>>>> Stashed changes
+=======
+    "line": 2021,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174484,9 +175532,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2003,
 =======
     "line": 2111,
+>>>>>>> Stashed changes
+=======
+    "line": 2040,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174496,9 +175548,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2004,
 =======
     "line": 2112,
+>>>>>>> Stashed changes
+=======
+    "line": 2041,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174508,9 +175564,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2005,
 =======
     "line": 2113,
+>>>>>>> Stashed changes
+=======
+    "line": 2042,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174520,9 +175580,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2018,
 =======
     "line": 2126,
+>>>>>>> Stashed changes
+=======
+    "line": 2055,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174532,9 +175596,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2019,
 =======
     "line": 2127,
+>>>>>>> Stashed changes
+=======
+    "line": 2056,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174544,9 +175612,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2020,
 =======
     "line": 2128,
+>>>>>>> Stashed changes
+=======
+    "line": 2057,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174556,9 +175628,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2032,
 =======
     "line": 2140,
+>>>>>>> Stashed changes
+=======
+    "line": 2069,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174568,9 +175644,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2033,
 =======
     "line": 2141,
+>>>>>>> Stashed changes
+=======
+    "line": 2070,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174580,9 +175660,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2034,
 =======
     "line": 2142,
+>>>>>>> Stashed changes
+=======
+    "line": 2071,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174592,9 +175676,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2047,
 =======
     "line": 2155,
+>>>>>>> Stashed changes
+=======
+    "line": 2084,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174604,9 +175692,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2048,
 =======
     "line": 2156,
+>>>>>>> Stashed changes
+=======
+    "line": 2085,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174616,9 +175708,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2049,
 =======
     "line": 2157,
+>>>>>>> Stashed changes
+=======
+    "line": 2086,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174628,9 +175724,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2062,
 =======
     "line": 2170,
+>>>>>>> Stashed changes
+=======
+    "line": 2099,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174640,9 +175740,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2063,
 =======
     "line": 2171,
+>>>>>>> Stashed changes
+=======
+    "line": 2100,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174652,9 +175756,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2064,
 =======
     "line": 2172,
+>>>>>>> Stashed changes
+=======
+    "line": 2101,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174664,9 +175772,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2076,
 =======
     "line": 2184,
+>>>>>>> Stashed changes
+=======
+    "line": 2113,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174676,9 +175788,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2077,
 =======
     "line": 2185,
+>>>>>>> Stashed changes
+=======
+    "line": 2114,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174688,9 +175804,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2078,
 =======
     "line": 2186,
+>>>>>>> Stashed changes
+=======
+    "line": 2115,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174700,9 +175820,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2097,
 =======
     "line": 2205,
+>>>>>>> Stashed changes
+=======
+    "line": 2134,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174712,9 +175836,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2098,
 =======
     "line": 2206,
+>>>>>>> Stashed changes
+=======
+    "line": 2135,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174724,9 +175852,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2099,
 =======
     "line": 2207,
+>>>>>>> Stashed changes
+=======
+    "line": 2136,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174736,9 +175868,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2112,
 =======
     "line": 2220,
+>>>>>>> Stashed changes
+=======
+    "line": 2149,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174748,9 +175884,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2113,
 =======
     "line": 2221,
+>>>>>>> Stashed changes
+=======
+    "line": 2150,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174760,9 +175900,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2114,
 =======
     "line": 2222,
+>>>>>>> Stashed changes
+=======
+    "line": 2151,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174772,9 +175916,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2121,
 =======
     "line": 2229,
+>>>>>>> Stashed changes
+=======
+    "line": 2158,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174784,9 +175932,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2122,
 =======
     "line": 2230,
+>>>>>>> Stashed changes
+=======
+    "line": 2159,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174796,9 +175948,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2123,
 =======
     "line": 2231,
+>>>>>>> Stashed changes
+=======
+    "line": 2160,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174808,9 +175964,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2136,
 =======
     "line": 2244,
+>>>>>>> Stashed changes
+=======
+    "line": 2173,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174820,9 +175980,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2137,
 =======
     "line": 2245,
+>>>>>>> Stashed changes
+=======
+    "line": 2174,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174832,9 +175996,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2138,
 =======
     "line": 2246,
+>>>>>>> Stashed changes
+=======
+    "line": 2175,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174844,9 +176012,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2152,
 =======
     "line": 2260,
+>>>>>>> Stashed changes
+=======
+    "line": 2189,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174856,9 +176028,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2153,
 =======
     "line": 2261,
+>>>>>>> Stashed changes
+=======
+    "line": 2190,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174868,9 +176044,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2154,
 =======
     "line": 2262,
+>>>>>>> Stashed changes
+=======
+    "line": 2191,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174880,9 +176060,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2167,
 =======
     "line": 2275,
+>>>>>>> Stashed changes
+=======
+    "line": 2204,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174892,9 +176076,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2168,
 =======
     "line": 2276,
+>>>>>>> Stashed changes
+=======
+    "line": 2205,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174904,9 +176092,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2169,
 =======
     "line": 2277,
+>>>>>>> Stashed changes
+=======
+    "line": 2206,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174916,9 +176108,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2181,
 =======
     "line": 2289,
+>>>>>>> Stashed changes
+=======
+    "line": 2218,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174928,9 +176124,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2182,
 =======
     "line": 2290,
+>>>>>>> Stashed changes
+=======
+    "line": 2219,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174940,9 +176140,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2183,
 =======
     "line": 2291,
+>>>>>>> Stashed changes
+=======
+    "line": 2220,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174952,9 +176156,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2195,
 =======
     "line": 2303,
+>>>>>>> Stashed changes
+=======
+    "line": 2232,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -174964,9 +176172,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2196,
 =======
     "line": 2304,
+>>>>>>> Stashed changes
+=======
+    "line": 2233,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -174976,9 +176188,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2197,
 =======
     "line": 2305,
+>>>>>>> Stashed changes
+=======
+    "line": 2234,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -174988,9 +176204,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2211,
 =======
     "line": 2319,
+>>>>>>> Stashed changes
+=======
+    "line": 2248,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175000,9 +176220,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2212,
 =======
     "line": 2320,
+>>>>>>> Stashed changes
+=======
+    "line": 2249,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175012,9 +176236,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2213,
 =======
     "line": 2321,
+>>>>>>> Stashed changes
+=======
+    "line": 2250,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175024,9 +176252,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2225,
 =======
     "line": 2333,
+>>>>>>> Stashed changes
+=======
+    "line": 2262,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175036,9 +176268,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2226,
 =======
     "line": 2334,
+>>>>>>> Stashed changes
+=======
+    "line": 2263,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175048,9 +176284,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2227,
 =======
     "line": 2335,
+>>>>>>> Stashed changes
+=======
+    "line": 2264,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175060,9 +176300,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2257,
 =======
     "line": 2365,
+>>>>>>> Stashed changes
+=======
+    "line": 2294,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175072,9 +176316,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2258,
 =======
     "line": 2366,
+>>>>>>> Stashed changes
+=======
+    "line": 2295,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175084,9 +176332,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2259,
 =======
     "line": 2367,
+>>>>>>> Stashed changes
+=======
+    "line": 2296,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175096,9 +176348,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2273,
 =======
     "line": 2381,
+>>>>>>> Stashed changes
+=======
+    "line": 2310,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175108,9 +176364,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2274,
 =======
     "line": 2382,
+>>>>>>> Stashed changes
+=======
+    "line": 2311,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175120,9 +176380,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2275,
 =======
     "line": 2383,
+>>>>>>> Stashed changes
+=======
+    "line": 2312,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175132,9 +176396,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2287,
 =======
     "line": 2395,
+>>>>>>> Stashed changes
+=======
+    "line": 2324,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175144,9 +176412,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2288,
 =======
     "line": 2396,
+>>>>>>> Stashed changes
+=======
+    "line": 2325,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175156,9 +176428,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2289,
 =======
     "line": 2397,
+>>>>>>> Stashed changes
+=======
+    "line": 2326,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175168,9 +176444,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2301,
 =======
     "line": 2409,
+>>>>>>> Stashed changes
+=======
+    "line": 2338,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175180,9 +176460,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2302,
 =======
     "line": 2410,
+>>>>>>> Stashed changes
+=======
+    "line": 2339,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175192,9 +176476,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2303,
 =======
     "line": 2411,
+>>>>>>> Stashed changes
+=======
+    "line": 2340,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175204,9 +176492,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2316,
 =======
     "line": 2424,
+>>>>>>> Stashed changes
+=======
+    "line": 2353,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175216,9 +176508,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2317,
 =======
     "line": 2425,
+>>>>>>> Stashed changes
+=======
+    "line": 2354,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175228,9 +176524,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2318,
 =======
     "line": 2426,
+>>>>>>> Stashed changes
+=======
+    "line": 2355,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175240,9 +176540,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2330,
 =======
     "line": 2438,
+>>>>>>> Stashed changes
+=======
+    "line": 2367,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175252,9 +176556,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2331,
 =======
     "line": 2439,
+>>>>>>> Stashed changes
+=======
+    "line": 2368,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175264,9 +176572,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2332,
 =======
     "line": 2440,
+>>>>>>> Stashed changes
+=======
+    "line": 2369,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175276,9 +176588,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2346,
 =======
     "line": 2454,
+>>>>>>> Stashed changes
+=======
+    "line": 2383,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175288,9 +176604,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2347,
 =======
     "line": 2455,
+>>>>>>> Stashed changes
+=======
+    "line": 2384,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175300,9 +176620,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2348,
 =======
     "line": 2456,
+>>>>>>> Stashed changes
+=======
+    "line": 2385,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175312,9 +176636,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2355,
 =======
     "line": 2463,
+>>>>>>> Stashed changes
+=======
+    "line": 2392,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175324,9 +176652,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2356,
 =======
     "line": 2464,
+>>>>>>> Stashed changes
+=======
+    "line": 2393,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175336,7 +176668,251 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2357,
+=======
+    "line": 2465,
+>>>>>>> Stashed changes
+=======
+    "line": 2394,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2370,
+=======
+    "line": 2478,
+>>>>>>> Stashed changes
+=======
+    "line": 2407,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:catastrophicRiskReduction',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2371,
+=======
+    "line": 2479,
+>>>>>>> Stashed changes
+=======
+    "line": 2408,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'catastrophicRisk',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2372,
+=======
+    "line": 2480,
+>>>>>>> Stashed changes
+=======
+    "line": 2409,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2392,
+=======
+    "line": 2500,
+>>>>>>> Stashed changes
+=======
+    "line": 2429,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:recursiveSafety',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2393,
+=======
+    "line": 2501,
+>>>>>>> Stashed changes
+=======
+    "line": 2430,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'alignmentDriftRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2394,
+=======
+    "line": 2502,
+>>>>>>> Stashed changes
+=======
+    "line": 2431,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2400,
+=======
+    "line": 2508,
+>>>>>>> Stashed changes
+=======
+    "line": 2437,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:recursiveSafety',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2401,
+=======
+    "line": 2509,
+>>>>>>> Stashed changes
+=======
+    "line": 2438,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'alignmentDriftRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2402,
+=======
+    "line": 2510,
+>>>>>>> Stashed changes
+=======
+    "line": 2439,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2414,
+=======
+    "line": 2522,
+>>>>>>> Stashed changes
+=======
+    "line": 2451,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:recursiveSafety',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2415,
+=======
+    "line": 2523,
+>>>>>>> Stashed changes
+=======
+    "line": 2452,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'catastrophicRiskFromRecursion',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2416,
+=======
+    "line": 2524,
+>>>>>>> Stashed changes
+=======
+    "line": 2453,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: gameState.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2426,
+=======
+    "line": 2534,
+>>>>>>> Stashed changes
+=======
+    "line": 2463,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:valueAlignmentBonus',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2427,
+=======
+    "line": 2535,
+>>>>>>> Stashed changes
+=======
+    "line": 2464,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'trueAlignment',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2428,
+=======
+    "line": 2536,
+>>>>>>> Stashed changes
 =======
     "line": 2465,
 >>>>>>> Stashed changes
@@ -175348,35 +176924,47 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
-    "line": 2370,
+<<<<<<< Updated upstream
+    "line": 2439,
+=======
+    "line": 2547,
+>>>>>>> Stashed changes
+=======
+    "line": 2476,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyRegionalEffects:aiResentmentReduction',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2440,
+=======
+    "line": 2548,
+>>>>>>> Stashed changes
+=======
+    "line": 2477,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'resentment',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "line": 2441,
+=======
+    "line": 2549,
+>>>>>>> Stashed changes
 =======
     "line": 2478,
 >>>>>>> Stashed changes
     "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:catastrophicRiskReduction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2371,
-=======
-    "line": 2479,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'catastrophicRisk',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2372,
-=======
-    "line": 2480,
->>>>>>> Stashed changes
-    "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: gameState.currentMonth"
@@ -175384,71 +176972,47 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
-    "line": 2392,
+<<<<<<< Updated upstream
+    "line": 2469,
 =======
-    "line": 2500,
+    "line": 2577,
+>>>>>>> Stashed changes
+=======
+    "line": 2506,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:recursiveSafety',"
+    "context": "location: 'applyRegionalEffects:riskMonsoonsDisrupt',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
-    "line": 2393,
+<<<<<<< Updated upstream
+    "line": 2470,
 =======
-    "line": 2501,
+    "line": 2578,
+>>>>>>> Stashed changes
+=======
+    "line": 2507,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'alignmentDriftRate',"
+    "context": "valueName: 'monsoonDisruptionRisk',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
-    "line": 2394,
+<<<<<<< Updated upstream
+    "line": 2471,
 =======
-    "line": 2502,
+    "line": 2579,
 >>>>>>> Stashed changes
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2400,
 =======
     "line": 2508,
 >>>>>>> Stashed changes
     "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:recursiveSafety',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2401,
-=======
-    "line": 2509,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'alignmentDriftRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2402,
-=======
-    "line": 2510,
->>>>>>> Stashed changes
-    "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: gameState.currentMonth"
@@ -175456,31 +177020,43 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
-    "line": 2414,
+<<<<<<< Updated upstream
+    "line": 2485,
+=======
+    "line": 2593,
+>>>>>>> Stashed changes
 =======
     "line": 2522,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:recursiveSafety',"
+    "context": "location: 'applyRegionalEffects:riskOzoneDepletion',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
-    "line": 2415,
+<<<<<<< Updated upstream
+    "line": 2486,
+=======
+    "line": 2594,
+>>>>>>> Stashed changes
 =======
     "line": 2523,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'catastrophicRiskFromRecursion',"
+    "context": "valueName: 'ozoneDepletionRisk',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
-    "line": 2416,
+<<<<<<< Updated upstream
+    "line": 2487,
+=======
+    "line": 2595,
+>>>>>>> Stashed changes
 =======
     "line": 2524,
 >>>>>>> Stashed changes
@@ -175492,153 +177068,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
-    "line": 2426,
-=======
-    "line": 2534,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:valueAlignmentBonus',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2427,
-=======
-    "line": 2535,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'trueAlignment',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2428,
-=======
-    "line": 2536,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2439,
-=======
-    "line": 2547,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:aiResentmentReduction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2440,
-=======
-    "line": 2548,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'resentment',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2441,
-=======
-    "line": 2549,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2469,
-=======
-    "line": 2577,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:riskMonsoonsDisrupt',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2470,
-=======
-    "line": 2578,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'monsoonDisruptionRisk',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2471,
-=======
-    "line": 2579,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2485,
-=======
-    "line": 2593,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyRegionalEffects:riskOzoneDepletion',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2486,
-=======
-    "line": 2594,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'ozoneDepletionRisk',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
-<<<<<<< Updated upstream
-    "line": 2487,
-=======
-    "line": 2595,
->>>>>>> Stashed changes
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: gameState.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
     "line": 2501,
 =======
     "line": 2609,
+>>>>>>> Stashed changes
+=======
+    "line": 2538,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175648,9 +177084,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2502,
 =======
     "line": 2610,
+>>>>>>> Stashed changes
+=======
+    "line": 2539,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175660,9 +177100,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2503,
 =======
     "line": 2611,
+>>>>>>> Stashed changes
+=======
+    "line": 2540,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175672,9 +177116,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2516,
 =======
     "line": 2624,
+>>>>>>> Stashed changes
+=======
+    "line": 2553,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175684,9 +177132,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2517,
 =======
     "line": 2625,
+>>>>>>> Stashed changes
+=======
+    "line": 2554,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175696,9 +177148,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2518,
 =======
     "line": 2626,
+>>>>>>> Stashed changes
+=======
+    "line": 2555,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175708,9 +177164,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2533,
 =======
     "line": 2641,
+>>>>>>> Stashed changes
+=======
+    "line": 2570,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175720,9 +177180,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2534,
 =======
     "line": 2642,
+>>>>>>> Stashed changes
+=======
+    "line": 2571,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175732,9 +177196,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2535,
 =======
     "line": 2643,
+>>>>>>> Stashed changes
+=======
+    "line": 2572,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175744,9 +177212,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2540,
 =======
     "line": 2648,
+>>>>>>> Stashed changes
+=======
+    "line": 2577,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175756,9 +177228,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2541,
 =======
     "line": 2649,
+>>>>>>> Stashed changes
+=======
+    "line": 2578,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175768,9 +177244,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2542,
 =======
     "line": 2650,
+>>>>>>> Stashed changes
+=======
+    "line": 2579,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175780,9 +177260,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2545,
 =======
     "line": 2653,
+>>>>>>> Stashed changes
+=======
+    "line": 2582,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175792,9 +177276,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2546,
 =======
     "line": 2654,
+>>>>>>> Stashed changes
+=======
+    "line": 2583,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175804,9 +177292,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2547,
 =======
     "line": 2655,
+>>>>>>> Stashed changes
+=======
+    "line": 2584,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175816,9 +177308,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2550,
 =======
     "line": 2658,
+>>>>>>> Stashed changes
+=======
+    "line": 2587,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175828,9 +177324,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2551,
 =======
     "line": 2659,
+>>>>>>> Stashed changes
+=======
+    "line": 2588,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175840,9 +177340,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2552,
 =======
     "line": 2660,
+>>>>>>> Stashed changes
+=======
+    "line": 2589,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175852,9 +177356,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2571,
 =======
     "line": 2679,
+>>>>>>> Stashed changes
+=======
+    "line": 2608,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175864,9 +177372,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2572,
 =======
     "line": 2680,
+>>>>>>> Stashed changes
+=======
+    "line": 2609,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -175876,9 +177388,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2573,
 =======
     "line": 2681,
+>>>>>>> Stashed changes
+=======
+    "line": 2610,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175888,9 +177404,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2574,
 =======
     "line": 2682,
+>>>>>>> Stashed changes
+=======
+    "line": 2611,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -175900,9 +177420,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2579,
 =======
     "line": 2687,
+>>>>>>> Stashed changes
+=======
+    "line": 2616,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "type",
@@ -175912,9 +177436,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2580,
 =======
     "line": 2688,
+>>>>>>> Stashed changes
+=======
+    "line": 2617,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "baseRisk",
@@ -175924,9 +177452,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2581,
 =======
     "line": 2689,
+>>>>>>> Stashed changes
+=======
+    "line": 2618,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "proximate",
@@ -175936,9 +177468,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2582,
 =======
     "line": 2690,
+>>>>>>> Stashed changes
+=======
+    "line": 2619,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "root",
@@ -175948,9 +177484,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2584,
 =======
     "line": 2692,
+>>>>>>> Stashed changes
+=======
+    "line": 2621,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "scope",
@@ -175960,9 +177500,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2587,
 =======
     "line": 2695,
+>>>>>>> Stashed changes
+=======
+    "line": 2624,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -175972,9 +177516,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2588,
 =======
     "line": 2696,
+>>>>>>> Stashed changes
+=======
+    "line": 2625,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "description",
@@ -175984,9 +177532,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2603,
 =======
     "line": 2711,
+>>>>>>> Stashed changes
+=======
+    "line": 2640,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -175996,9 +177548,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2604,
 =======
     "line": 2712,
+>>>>>>> Stashed changes
+=======
+    "line": 2641,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -176008,9 +177564,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2605,
 =======
     "line": 2713,
+>>>>>>> Stashed changes
+=======
+    "line": 2642,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -176020,9 +177580,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2606,
 =======
     "line": 2714,
+>>>>>>> Stashed changes
+=======
+    "line": 2643,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -176032,9 +177596,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2611,
 =======
     "line": 2719,
+>>>>>>> Stashed changes
+=======
+    "line": 2648,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "type",
@@ -176044,9 +177612,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2612,
 =======
     "line": 2720,
+>>>>>>> Stashed changes
+=======
+    "line": 2649,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "baseRisk",
@@ -176056,9 +177628,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2613,
 =======
     "line": 2721,
+>>>>>>> Stashed changes
+=======
+    "line": 2650,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "proximate",
@@ -176068,9 +177644,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2615,
 =======
     "line": 2723,
+>>>>>>> Stashed changes
+=======
+    "line": 2652,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "confidence",
@@ -176080,9 +177660,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2617,
 =======
     "line": 2725,
+>>>>>>> Stashed changes
+=======
+    "line": 2654,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -176092,9 +177676,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2618,
 =======
     "line": 2726,
+>>>>>>> Stashed changes
+=======
+    "line": 2655,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "description",
@@ -176104,9 +177692,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2633,
 =======
     "line": 2741,
+>>>>>>> Stashed changes
+=======
+    "line": 2670,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -176116,9 +177708,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2634,
 =======
     "line": 2742,
+>>>>>>> Stashed changes
+=======
+    "line": 2671,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -176128,9 +177724,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2635,
 =======
     "line": 2743,
+>>>>>>> Stashed changes
+=======
+    "line": 2672,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -176140,9 +177740,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2636,
 =======
     "line": 2744,
+>>>>>>> Stashed changes
+=======
+    "line": 2673,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -176152,9 +177756,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2641,
 =======
     "line": 2749,
+>>>>>>> Stashed changes
+=======
+    "line": 2678,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "type",
@@ -176164,9 +177772,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2642,
 =======
     "line": 2750,
+>>>>>>> Stashed changes
+=======
+    "line": 2679,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "baseRisk",
@@ -176176,9 +177788,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2643,
 =======
     "line": 2751,
+>>>>>>> Stashed changes
+=======
+    "line": 2680,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "proximate",
@@ -176188,9 +177804,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2648,
 =======
     "line": 2756,
+>>>>>>> Stashed changes
+=======
+    "line": 2685,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -176200,9 +177820,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2649,
 =======
     "line": 2757,
+>>>>>>> Stashed changes
+=======
+    "line": 2686,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "description",
@@ -176212,9 +177836,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2664,
 =======
     "line": 2772,
+>>>>>>> Stashed changes
+=======
+    "line": 2701,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -176224,9 +177852,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2665,
 =======
     "line": 2773,
+>>>>>>> Stashed changes
+=======
+    "line": 2702,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -176236,9 +177868,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2666,
 =======
     "line": 2774,
+>>>>>>> Stashed changes
+=======
+    "line": 2703,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -176248,9 +177884,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2667,
 =======
     "line": 2775,
+>>>>>>> Stashed changes
+=======
+    "line": 2704,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -176260,9 +177900,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2672,
 =======
     "line": 2780,
+>>>>>>> Stashed changes
+=======
+    "line": 2709,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "type",
@@ -176272,9 +177916,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2673,
 =======
     "line": 2781,
+>>>>>>> Stashed changes
+=======
+    "line": 2710,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "baseRisk",
@@ -176284,9 +177932,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2674,
 =======
     "line": 2782,
+>>>>>>> Stashed changes
+=======
+    "line": 2711,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "proximate",
@@ -176296,9 +177948,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2677,
 =======
     "line": 2785,
+>>>>>>> Stashed changes
+=======
+    "line": 2714,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "scope",
@@ -176308,9 +177964,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2678,
 =======
     "line": 2786,
+>>>>>>> Stashed changes
+=======
+    "line": 2715,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "region",
@@ -176320,9 +177980,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2680,
 =======
     "line": 2788,
+>>>>>>> Stashed changes
+=======
+    "line": 2717,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -176332,9 +177996,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2681,
 =======
     "line": 2789,
+>>>>>>> Stashed changes
+=======
+    "line": 2718,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "description",
@@ -176344,9 +178012,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2696,
 =======
     "line": 2804,
+>>>>>>> Stashed changes
+=======
+    "line": 2733,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -176356,9 +178028,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2697,
 =======
     "line": 2805,
+>>>>>>> Stashed changes
+=======
+    "line": 2734,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -176368,9 +178044,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2698,
 =======
     "line": 2806,
+>>>>>>> Stashed changes
+=======
+    "line": 2735,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -176380,9 +178060,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2699,
 =======
     "line": 2807,
+>>>>>>> Stashed changes
+=======
+    "line": 2736,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
@@ -176392,9 +178076,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2704,
 =======
     "line": 2812,
+>>>>>>> Stashed changes
+=======
+    "line": 2741,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "type",
@@ -176404,9 +178092,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2705,
 =======
     "line": 2813,
+>>>>>>> Stashed changes
+=======
+    "line": 2742,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "baseRisk",
@@ -176416,9 +178108,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2710,
 =======
     "line": 2818,
+>>>>>>> Stashed changes
+=======
+    "line": 2747,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -176428,9 +178124,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2711,
 =======
     "line": 2819,
+>>>>>>> Stashed changes
+=======
+    "line": 2748,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "description",
@@ -176440,9 +178140,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2762,
 =======
     "line": 2870,
+>>>>>>> Stashed changes
+=======
+    "line": 2799,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "gameState",
@@ -176452,9 +178156,13 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/effectsEngine.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 2763,
 =======
     "line": 2871,
+>>>>>>> Stashed changes
+=======
+    "line": 2800,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "techTreeState",

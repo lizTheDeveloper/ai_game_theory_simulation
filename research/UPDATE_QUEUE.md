@@ -1,6 +1,7 @@
 # Research Update Queue
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Generated:** 11/16/2025, 10:30:04 AM
 **Files Scanned:** 413
 =======
@@ -10,6 +11,10 @@
 =======
 **Generated:** 11/16/2025, 12:30:03 PM
 **Files Scanned:** 413
+>>>>>>> Stashed changes
+=======
+**Generated:** 11/16/2025, 1:30:03 PM
+**Files Scanned:** 415
 >>>>>>> Stashed changes
 
 ---
@@ -24,12 +29,16 @@
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 148 (35.8%)
 =======
 **Count:** 148 (35.9%)
 >>>>>>> Stashed changes
 =======
 **Count:** 148 (35.8%)
+>>>>>>> Stashed changes
+=======
+**Count:** 151 (36.4%)
 >>>>>>> Stashed changes
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
@@ -306,6 +315,11 @@
 - **Oldest source:** 2019 (6 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/citation_skeptic_analysis_20251028.md`
+
+### `claim_verification_report_20251116.md`
+- **Oldest source:** 2018 (7 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/claim_verification_report_20251116.md`
 
 ### `climate-mortality-biosphere-multiparadigm-framework_20251028.md`
 - **Oldest source:** 2019 (6 years old)
@@ -727,10 +741,20 @@
 - **Status:** Not used in simulation
 - **Path:** `research/verification_d336915_20251110.md`
 
+### `verification_d3ea8fa_20251116.md`
+- **Oldest source:** 2018 (7 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_d3ea8fa_20251116.md`
+
 ### `verification_d6e80e8_20251106.md`
 - **Oldest source:** 2013 (12 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/verification_d6e80e8_20251106.md`
+
+### `verification_summary_20251116.md`
+- **Oldest source:** 2018 (7 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_summary_20251116.md`
 
 ### `visionary_ideas_research_validation_2025-10-16.md`
 - **Oldest source:** 2014 (11 years old)
@@ -805,12 +829,16 @@
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 245 (59.3%)
 =======
 **Count:** 244 (59.2%)
 >>>>>>> Stashed changes
 =======
 **Count:** 245 (59.3%)
+>>>>>>> Stashed changes
+=======
+**Count:** 244 (58.8%)
 >>>>>>> Stashed changes
 
 All sources <3 years old. No action required.
@@ -821,6 +849,7 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 | Total files | 413 |
@@ -835,6 +864,13 @@ All sources <3 years old. No action required.
 | HIGH | 148 (35.9%) |
 | MEDIUM | 20 (4.9%) |
 | LOW | 244 (59.2%) |
+=======
+| Total files | 415 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 151 (36.4%) |
+| MEDIUM | 20 (4.8%) |
+| LOW | 244 (58.8%) |
+>>>>>>> Stashed changes
 | Average age | 8.0 years |
 >>>>>>> Stashed changes
 =======
@@ -853,6 +889,7 @@ All sources <3 years old. No action required.
 |--------|-------|------------|
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 | Current (<3yr) | 245 | 59.3% |
 | Warning (3-5yr) | 20 | 4.8% |
 | Critical (>5yr) | 148 | 35.8% |
@@ -866,10 +903,16 @@ All sources <3 years old. No action required.
 | Warning (3-5yr) | 20 | 4.8% |
 | Critical (>5yr) | 148 | 35.8% |
 >>>>>>> Stashed changes
+=======
+| Current (<3yr) | 244 | 58.8% |
+| Warning (3-5yr) | 20 | 4.8% |
+| Critical (>5yr) | 151 | 36.4% |
+>>>>>>> Stashed changes
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 - **Current:** 35.8% critical (>5yr)
@@ -879,13 +922,20 @@ All sources <3 years old. No action required.
 =======
 - **Current:** 35.8% critical (>5yr)
 >>>>>>> Stashed changes
+=======
+- **Current:** 36.4% critical (>5yr)
+>>>>>>> Stashed changes
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
+<<<<<<< Updated upstream
 1. Update 148 HIGH priority file(s) within 1 month
+=======
+1. Update 151 HIGH priority file(s) within 1 month
+>>>>>>> Stashed changes
 2. Schedule research update sprint
 3. Coordinate with research team
 
