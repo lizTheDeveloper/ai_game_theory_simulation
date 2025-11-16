@@ -822,9 +822,9 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     }
 
     // Calculate current monthly nitrogen/phosphorus inputs from human activity
-    // Baseline (2025): ~120 Mt N/year = 10 Mt N/month, ~25 Mt P/year = 2.08 Mt P/month
+    // Baseline (2025): ~110 Mt N/year = 9.17 Mt N/month (UNCTAD 2024), ~25 Mt P/year = 2.08 Mt P/month
     // Scale by depletion (high depletion = high fertilizer use to maintain yields)
-    const BASELINE_N_INPUT = 10.0;   // Mt N/month (2025 baseline)
+    const BASELINE_N_INPUT = 9.17;   // Mt N/month (110 Mt N/year, UNCTAD 2024)
     const BASELINE_P_INPUT = 2.08;   // Mt P/month (2025 baseline)
     const currentNInput = BASELINE_N_INPUT * (1 + depletion * 0.5);  // Depletion drives overuse
     const currentPInput = BASELINE_P_INPUT * (1 + depletion * 0.5);
