@@ -41,6 +41,13 @@ The Multi-Paradigm DUI System tracks **four simultaneous, independent measures o
 
 **Research:** `/research/paradigm_1_western_liberal_20251019.md` (55KB, 1,095 lines)
 
+**Latest Research Update (Nov 16, 2025):** V-Dem 2025 democracy metrics VERIFIED
+- 91 autocracies vs 88 democracies (first time in 20+ years)
+- 12% of global population in liberal democracies (50-year low)
+- 72% (5.8 billion) under autocratic rule
+- **Status:** Citation + claim verification complete, pending research-skeptic methodological review
+- **Source:** research/verification_results_20251116.md
+
 ---
 
 ### 2. Development Needs (Survival-Focused)
@@ -139,6 +146,13 @@ The Multi-Paradigm DUI System tracks **four simultaneous, independent measures o
 - Linguistic Diversity Index (0-1)
 
 **Research:** `/research/paradigm_4_indigenous_communitarian_20251019.md` (91KB, 1,817 lines)
+
+**Latest Research Update (Nov 16, 2025):** Sangha et al. 2024 Indigenous wellbeing framework VERIFIED
+- Country (land/environment) confirmed as foundational (not peripheral)
+- Seven interconnected domains verified from Yawuru study
+- Liyan concept (holistic self-Country-community connection) validated with exact quotes
+- **Status:** Citation + claim verification complete (PMC10913715), pending research-skeptic review
+- **Source:** research/verification_results_20251116.md
 
 **NOTE:** This paradigm is the **most difficult to measure** quantitatively, as many Indigenous values resist Western metrics. The simulation uses proxy indicators while acknowledging epistemic humility.
 
