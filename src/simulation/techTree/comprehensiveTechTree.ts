@@ -1763,7 +1763,130 @@ const ALL_TECH: TechDefinition[] = [
       animalWelfareBonus: 1.0,
     },
   },
-  
+
+  // Nitrogen-Food Coupling Technologies (TIER 2 HIGH, Nov 15, 2025)
+  // Research: research/nitrogen_food_coupling_20251115.md
+  // Expected impact: Enable nitrogen reduction without food system collapse
+  {
+    id: 'food_waste_reduction',
+    name: 'Food Waste Reduction Systems',
+    description: 'Supply chain optimization, demand forecasting - 30% waste elimination',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.5,
+    minEconomicStage: 2.5,
+    researchMonthsRequired: 24,
+    researchCost: 2000,
+    deploymentCost: 80000,
+    deploymentMonthsRequired: 48,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.30,  // 30% demand reduction = 30% less nitrogen needed
+      foodProductivity: 0.30,    // Same food from less production
+      greenhouseGasReduction: 0.15,
+    },
+  },
+  {
+    id: 'nitroplast_integration',
+    name: 'Nitroplast Integration',
+    description: 'Nitrogen-fixing organelles in crops - 40-80% fertilizer elimination (TIER 2)',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['genetic_engineering_advanced'],
+    minAICapability: 3.5,
+    minEconomicStage: 3.5,
+    minMonth: 240,  // 2045+ (20 years out, requires major biotech advances)
+    researchMonthsRequired: 84,
+    researchCost: 12000,
+    deploymentCost: 250000,
+    deploymentMonthsRequired: 120,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.60,  // 60% effectiveness (conservative mid-range 40-80%)
+      foodProductivity: 0.20,    // Bonus: healthier crops, reduced soil depletion
+      landUseReduction: 0.10,
+    },
+  },
+  {
+    id: 'rhizosphere_engineering',
+    name: 'Rhizosphere Engineering',
+    description: 'Microbial consortia optimize nutrient uptake - 10-15% efficiency gain',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 2.0,
+    minEconomicStage: 2.5,
+    researchMonthsRequired: 30,
+    researchCost: 3000,
+    deploymentCost: 100000,
+    deploymentMonthsRequired: 60,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.12,  // 12% efficiency improvement (mid-range 10-15%)
+      waterEfficiency: 0.08,     // Bonus: improved soil water retention
+    },
+  },
+  {
+    id: 'alternative_protein_insects',
+    name: 'Alternative Protein - Insects/Algae',
+    description: 'Insect farming, spirulina - 80x nitrogen efficiency vs cattle',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.0,
+    minEconomicStage: 2.0,
+    researchMonthsRequired: 18,
+    researchCost: 1500,
+    deploymentCost: 60000,
+    deploymentMonthsRequired: 36,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.25,  // Partial substitution (not full meat replacement)
+      animalAgricultureReduction: 0.30,
+      landUseReduction: 0.20,
+    },
+  },
+  {
+    id: 'active_sediment_management',
+    name: 'Active Sediment Management',
+    description: 'Dredging, capping, oxidation - legacy phosphorus remediation',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.5,
+    minEconomicStage: 2.5,
+    researchMonthsRequired: 24,
+    researchCost: 2500,
+    deploymentCost: 150000,
+    deploymentMonthsRequired: 72,
+    deploymentLevel: 0,
+    effects: {
+      legacyPhosphorusReduction: 0.40,  // Accelerates sediment legacy stock depletion
+      freshwaterQuality: 0.20,
+    },
+  },
+  {
+    id: 'phytoremediation_networks',
+    name: 'Phytoremediation Networks',
+    description: 'Wetland restoration + nutrient-capturing plants - habitat + cleanup',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.0,
+    minEconomicStage: 2.0,
+    researchMonthsRequired: 18,
+    researchCost: 1800,
+    deploymentCost: 90000,
+    deploymentMonthsRequired: 60,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.10,  // Captures runoff nitrogen
+      biodiversityBonus: 0.15,  // Habitat restoration
+      freshwaterQuality: 0.15,
+    },
+  },
+
   // AI Safety Capstone (2)
   {
     id: 'ai_rights_framework',
