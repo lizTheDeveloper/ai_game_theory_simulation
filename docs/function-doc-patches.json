@@ -121,7 +121,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1927,
+    "line": 1926,
     "name": "getAllTech",
     "doc": " Returns array of results."
   },

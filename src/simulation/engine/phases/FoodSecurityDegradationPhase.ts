@@ -174,7 +174,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       });
 
       // TIER 2 HIGH (Nov 15, 2025): Apply nitrogen-food coupling penalty
-      // Research: Regional nitrogen reduction → yield penalties (55% South Asian rice farms overuse)
+      // Research: Regional nitrogen reduction → yield penalties (55% South Asian rice farms overuse, Bhattarai et al. 2024, Nature Sustainability)
       // Coupling applies MULTIPLICATIVELY to food security (not additively)
       if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
         // Find matching regional nitrogen management (map simulation region names to nitrogen regions)
