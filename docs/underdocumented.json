@@ -73652,7 +73652,10 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 78,
+=======
+    "line": 85,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73660,7 +73663,36 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+    "line": 86,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: `${region.name}.foodSecurity (nitrogen penalty)`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+    "line": 87,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+    "line": 101,
+>>>>>>> Stashed changes
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'FoodSecurityDegradationPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 79,
+=======
+    "line": 102,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73668,7 +73700,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 80,
+=======
+    "line": 103,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "expectedSource",
     "currentDoc": "(none)",
@@ -73676,7 +73712,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 84,
+=======
+    "line": 107,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73684,7 +73724,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 85,
+=======
+    "line": 108,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73692,7 +73736,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 86,
+=======
+    "line": 109,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "expectedSource",
     "currentDoc": "(none)",
@@ -73700,7 +73748,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 90,
+=======
+    "line": 113,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73708,7 +73760,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 91,
+=======
+    "line": 114,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73716,7 +73772,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 92,
+=======
+    "line": 115,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "expectedSource",
     "currentDoc": "(none)",
@@ -73724,7 +73784,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 99,
+=======
+    "line": 122,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73732,7 +73796,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 100,
+=======
+    "line": 123,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73740,7 +73808,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 101,
+=======
+    "line": 124,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73748,7 +73820,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 105,
+=======
+    "line": 128,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73756,7 +73832,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 106,
+=======
+    "line": 129,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73764,7 +73844,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 107,
+=======
+    "line": 130,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73772,7 +73856,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 117,
+=======
+    "line": 140,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73780,7 +73868,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 118,
+=======
+    "line": 141,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73788,7 +73880,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 119,
+=======
+    "line": 142,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73796,7 +73892,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 145,
+=======
+    "line": 168,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73804,7 +73904,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 146,
+=======
+    "line": 169,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73812,7 +73916,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 147,
+=======
+    "line": 170,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73820,7 +73928,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 151,
+=======
+    "line": 174,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73828,7 +73940,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 152,
+=======
+    "line": 175,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73836,7 +73952,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 153,
+=======
+    "line": 176,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73844,7 +73964,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 184,
+=======
+    "line": 207,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73852,7 +73976,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 185,
+=======
+    "line": 208,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73860,7 +73988,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 186,
+=======
+    "line": 209,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73868,7 +74000,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 191,
+=======
+    "line": 214,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73876,7 +74012,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 192,
+=======
+    "line": 215,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73884,7 +74024,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 193,
+=======
+    "line": 216,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73892,7 +74036,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 197,
+=======
+    "line": 220,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73900,7 +74048,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 198,
+=======
+    "line": 221,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73908,7 +74060,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 199,
+=======
+    "line": 222,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73916,7 +74072,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 214,
+=======
+    "line": 237,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73924,7 +74084,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 215,
+=======
+    "line": 238,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73932,7 +74096,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 216,
+=======
+    "line": 239,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73940,7 +74108,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 224,
+=======
+    "line": 247,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73948,7 +74120,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 225,
+=======
+    "line": 248,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73956,7 +74132,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< Updated upstream
     "line": 226,
+=======
+    "line": 249,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129311,6 +129491,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 829,
 =======
     "line": 848,
@@ -129321,6 +129502,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 852,
 >>>>>>> Stashed changes
+=======
+    "line": 870,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129328,6 +129512,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129341,6 +129526,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 853,
 >>>>>>> Stashed changes
+=======
+    "line": 871,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129348,6 +129536,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129361,6 +129550,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 854,
 >>>>>>> Stashed changes
+=======
+    "line": 872,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129368,6 +129560,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129400,6 +129593,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 >>>>>>> Stashed changes
 =======
     "line": 855,
+=======
+    "line": 873,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -129407,7 +129603,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
     "line": 871,
+>>>>>>> Stashed changes
+=======
+    "line": 888,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -129416,6 +129616,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129429,6 +129630,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 872,
 >>>>>>> Stashed changes
+=======
+    "line": 889,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129436,6 +129640,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129449,6 +129654,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 873,
 >>>>>>> Stashed changes
+=======
+    "line": 890,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129456,6 +129664,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129469,6 +129678,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 876,
 >>>>>>> Stashed changes
+=======
+    "line": 893,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129476,6 +129688,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129489,6 +129702,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 877,
 >>>>>>> Stashed changes
+=======
+    "line": 894,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129496,6 +129712,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129509,6 +129726,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 878,
 >>>>>>> Stashed changes
+=======
+    "line": 895,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129516,6 +129736,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129529,6 +129750,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 879,
 >>>>>>> Stashed changes
+=======
+    "line": 896,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -129536,6 +129760,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129549,6 +129774,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 919,
 >>>>>>> Stashed changes
+=======
+    "line": 936,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129556,6 +129784,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129569,6 +129798,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 920,
 >>>>>>> Stashed changes
+=======
+    "line": 937,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129576,6 +129808,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129589,6 +129822,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 921,
 >>>>>>> Stashed changes
+=======
+    "line": 938,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129596,6 +129832,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129609,6 +129846,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 937,
 >>>>>>> Stashed changes
+=======
+    "line": 954,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129616,6 +129856,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129629,6 +129870,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 938,
 >>>>>>> Stashed changes
+=======
+    "line": 955,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129636,6 +129880,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129649,6 +129894,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 939,
 >>>>>>> Stashed changes
+=======
+    "line": 956,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129656,6 +129904,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129669,6 +129918,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 940,
 >>>>>>> Stashed changes
+=======
+    "line": 957,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -129676,6 +129928,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129689,6 +129942,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 980,
 >>>>>>> Stashed changes
+=======
+    "line": 997,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129696,6 +129952,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129709,6 +129966,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 981,
 >>>>>>> Stashed changes
+=======
+    "line": 998,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129716,6 +129976,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129729,6 +129990,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 982,
 >>>>>>> Stashed changes
+=======
+    "line": 999,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129736,6 +130000,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129749,6 +130014,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1155,
 >>>>>>> Stashed changes
+=======
+    "line": 1172,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129756,6 +130024,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129769,6 +130038,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1156,
 >>>>>>> Stashed changes
+=======
+    "line": 1173,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129776,6 +130048,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129789,6 +130062,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1157,
 >>>>>>> Stashed changes
+=======
+    "line": 1174,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "expectedSource",
     "currentDoc": "(none)",
@@ -129796,6 +130072,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129809,6 +130086,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1235,
 >>>>>>> Stashed changes
+=======
+    "line": 1252,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129816,6 +130096,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129829,6 +130110,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1236,
 >>>>>>> Stashed changes
+=======
+    "line": 1253,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129836,6 +130120,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129849,6 +130134,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1237,
 >>>>>>> Stashed changes
+=======
+    "line": 1254,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "expectedSource",
     "currentDoc": "(none)",
@@ -129856,6 +130144,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129869,6 +130158,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1351,
 >>>>>>> Stashed changes
+=======
+    "line": 1368,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129876,6 +130168,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129889,6 +130182,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1352,
 >>>>>>> Stashed changes
+=======
+    "line": 1369,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129896,6 +130192,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129909,6 +130206,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1353,
 >>>>>>> Stashed changes
+=======
+    "line": 1370,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129916,6 +130216,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129929,6 +130230,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1384,
 >>>>>>> Stashed changes
+=======
+    "line": 1401,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129936,6 +130240,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129949,6 +130254,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1385,
 >>>>>>> Stashed changes
+=======
+    "line": 1402,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129956,6 +130264,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129969,6 +130278,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1386,
 >>>>>>> Stashed changes
+=======
+    "line": 1403,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129976,6 +130288,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -129989,6 +130302,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1424,
 >>>>>>> Stashed changes
+=======
+    "line": 1441,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "tropical",
     "currentDoc": "(none)",
@@ -129996,6 +130312,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130009,6 +130326,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1425,
 >>>>>>> Stashed changes
+=======
+    "line": 1442,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "temperate",
     "currentDoc": "(none)",
@@ -130016,6 +130336,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130029,6 +130350,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1426,
 >>>>>>> Stashed changes
+=======
+    "line": 1443,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "grasslands",
     "currentDoc": "(none)",
@@ -130036,6 +130360,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130049,6 +130374,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1427,
 >>>>>>> Stashed changes
+=======
+    "line": 1444,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "borealArctic",
     "currentDoc": "(none)",
@@ -130056,6 +130384,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130069,6 +130398,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1643,
 >>>>>>> Stashed changes
+=======
+    "line": 1660,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "TOTAL_SPECIES_2024",
     "currentDoc": "(none)",
@@ -130076,6 +130408,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130089,6 +130422,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1644,
 >>>>>>> Stashed changes
+=======
+    "line": 1661,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "MIGRATORY_PROPORTION",
     "currentDoc": "(none)",
@@ -130096,6 +130432,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130109,6 +130446,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1645,
 >>>>>>> Stashed changes
+=======
+    "line": 1662,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "NON_MIGRATORY_PROPORTION",
     "currentDoc": "(none)",
@@ -130116,6 +130456,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130129,6 +130470,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1646,
 >>>>>>> Stashed changes
+=======
+    "line": 1663,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "KEYSTONE_PROPORTION",
     "currentDoc": "(none)",
@@ -130136,6 +130480,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130149,6 +130494,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1647,
 >>>>>>> Stashed changes
+=======
+    "line": 1664,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "CURRENT_RATE_2025",
     "currentDoc": "(none)",
@@ -130156,6 +130504,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130169,6 +130518,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1648,
 >>>>>>> Stashed changes
+=======
+    "line": 1665,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "BIRD_DISPERSAL",
     "currentDoc": "(none)",
@@ -130176,6 +130528,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130189,6 +130542,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1649,
 >>>>>>> Stashed changes
+=======
+    "line": 1666,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "TREE_DISPERSAL",
     "currentDoc": "(none)",
@@ -130196,6 +130552,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130209,6 +130566,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1650,
 >>>>>>> Stashed changes
+=======
+    "line": 1667,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "MAMMAL_DISPERSAL",
     "currentDoc": "(none)",
@@ -130216,6 +130576,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130229,6 +130590,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1651,
 >>>>>>> Stashed changes
+=======
+    "line": 1668,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "KEYSTONE_CASCADE",
     "currentDoc": "(none)",
@@ -130236,6 +130600,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130249,6 +130614,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1652,
 >>>>>>> Stashed changes
+=======
+    "line": 1669,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "AVG_CLIMATE_VELOCITY_TROPICS",
     "currentDoc": "(none)",
@@ -130256,6 +130624,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130269,6 +130638,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1653,
 >>>>>>> Stashed changes
+=======
+    "line": 1670,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "AVG_CLIMATE_VELOCITY_TEMPERATE",
     "currentDoc": "(none)",
@@ -130276,6 +130648,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130289,6 +130662,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1654,
 >>>>>>> Stashed changes
+=======
+    "line": 1671,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "AVG_CLIMATE_VELOCITY_ARCTIC",
     "currentDoc": "(none)",
@@ -130296,6 +130672,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130309,6 +130686,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1658,
 >>>>>>> Stashed changes
+=======
+    "line": 1675,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "BACKGROUND_RATE",
     "currentDoc": "(none)",
@@ -130316,6 +130696,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130329,6 +130710,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1659,
 >>>>>>> Stashed changes
+=======
+    "line": 1676,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "FRAGMENTATION_BARRIER_MAX",
     "currentDoc": "(none)",
@@ -130336,6 +130720,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130349,6 +130734,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1666,
 >>>>>>> Stashed changes
+=======
+    "line": 1683,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -130356,6 +130744,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130369,6 +130758,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1667,
 >>>>>>> Stashed changes
+=======
+    "line": 1684,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "count",
     "currentDoc": "(none)",
@@ -130376,6 +130768,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130389,6 +130782,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1669,
 >>>>>>> Stashed changes
+=======
+    "line": 1686,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "isMigratory",
     "currentDoc": "(none)",
@@ -130396,6 +130792,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130409,6 +130806,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1671,
 >>>>>>> Stashed changes
+=======
+    "line": 1688,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "isKeystone",
     "currentDoc": "(none)",
@@ -130416,6 +130816,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130429,6 +130830,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1672,
 >>>>>>> Stashed changes
+=======
+    "line": 1689,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "keystoneMultiplier",
     "currentDoc": "(none)",
@@ -130436,6 +130840,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130449,6 +130854,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1678,
 >>>>>>> Stashed changes
+=======
+    "line": 1695,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -130456,6 +130864,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130469,6 +130878,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1679,
 >>>>>>> Stashed changes
+=======
+    "line": 1696,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "count",
     "currentDoc": "(none)",
@@ -130476,6 +130888,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130489,6 +130902,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1681,
 >>>>>>> Stashed changes
+=======
+    "line": 1698,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "isMigratory",
     "currentDoc": "(none)",
@@ -130496,6 +130912,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130509,6 +130926,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1683,
 >>>>>>> Stashed changes
+=======
+    "line": 1700,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "isKeystone",
     "currentDoc": "(none)",
@@ -130516,6 +130936,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130529,6 +130950,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1684,
 >>>>>>> Stashed changes
+=======
+    "line": 1701,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "keystoneMultiplier",
     "currentDoc": "(none)",
@@ -130536,6 +130960,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130549,6 +130974,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1690,
 >>>>>>> Stashed changes
+=======
+    "line": 1707,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -130556,6 +130984,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130569,6 +130998,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1691,
 >>>>>>> Stashed changes
+=======
+    "line": 1708,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "count",
     "currentDoc": "(none)",
@@ -130576,6 +131008,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130589,6 +131022,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1695,
 >>>>>>> Stashed changes
+=======
+    "line": 1712,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "isKeystone",
     "currentDoc": "(none)",
@@ -130596,6 +131032,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130609,6 +131046,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1725,
 >>>>>>> Stashed changes
+=======
+    "line": 1742,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalSpeciesBaseline",
     "currentDoc": "(none)",
@@ -130616,6 +131056,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130629,6 +131070,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1728,
 >>>>>>> Stashed changes
+=======
+    "line": 1745,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "backgroundExtinctionRate",
     "currentDoc": "(none)",
@@ -130636,6 +131080,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130649,6 +131094,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1729,
 >>>>>>> Stashed changes
+=======
+    "line": 1746,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "currentExtinctionRate",
     "currentDoc": "(none)",
@@ -130656,6 +131104,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130669,6 +131118,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1756,
 >>>>>>> Stashed changes
+=======
+    "line": 1773,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "species",
     "currentDoc": "(none)",
@@ -130676,6 +131128,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130689,6 +131142,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1757,
 >>>>>>> Stashed changes
+=======
+    "line": 1774,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "climateVelocity",
     "currentDoc": "(none)",
@@ -130696,6 +131152,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130709,6 +131166,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1795,
 >>>>>>> Stashed changes
+=======
+    "line": 1812,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "species",
     "currentDoc": "(none)",
@@ -130716,6 +131176,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130729,6 +131190,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1796,
 >>>>>>> Stashed changes
+=======
+    "line": 1813,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "climateVelocity",
     "currentDoc": "(none)",
@@ -130736,6 +131200,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130749,6 +131214,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1797,
 >>>>>>> Stashed changes
+=======
+    "line": 1814,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "habitatFragmentation",
     "currentDoc": "(none)",
@@ -130756,6 +131224,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130769,6 +131238,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1804,
 >>>>>>> Stashed changes
+=======
+    "line": 1821,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -130776,6 +131248,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130789,6 +131262,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1805,
 >>>>>>> Stashed changes
+=======
+    "line": 1822,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -130796,6 +131272,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130809,6 +131286,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1809,
 >>>>>>> Stashed changes
+=======
+    "line": 1826,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -130816,6 +131296,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130829,6 +131310,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1810,
 >>>>>>> Stashed changes
+=======
+    "line": 1827,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -130836,6 +131320,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130849,6 +131334,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1835,
 >>>>>>> Stashed changes
+=======
+    "line": 1852,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -130856,6 +131344,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130869,6 +131358,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1836,
 >>>>>>> Stashed changes
+=======
+    "line": 1853,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -130876,6 +131368,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130889,6 +131382,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1837,
 >>>>>>> Stashed changes
+=======
+    "line": 1854,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -130896,6 +131392,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130909,6 +131406,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1850,
 >>>>>>> Stashed changes
+=======
+    "line": 1867,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -130916,6 +131416,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130929,6 +131430,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1851,
 >>>>>>> Stashed changes
+=======
+    "line": 1868,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -130936,6 +131440,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130949,6 +131454,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1863,
 >>>>>>> Stashed changes
+=======
+    "line": 1880,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -130956,6 +131464,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130969,6 +131478,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1864,
 >>>>>>> Stashed changes
+=======
+    "line": 1881,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -130976,6 +131488,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -130989,6 +131502,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1865,
 >>>>>>> Stashed changes
+=======
+    "line": 1882,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -130996,6 +131512,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131009,6 +131526,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1870,
 >>>>>>> Stashed changes
+=======
+    "line": 1887,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -131016,6 +131536,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131029,6 +131550,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1871,
 >>>>>>> Stashed changes
+=======
+    "line": 1888,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -131036,6 +131560,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131049,6 +131574,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1872,
 >>>>>>> Stashed changes
+=======
+    "line": 1889,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131056,6 +131584,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131069,6 +131598,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1873,
 >>>>>>> Stashed changes
+=======
+    "line": 1890,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -131076,6 +131608,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131089,6 +131622,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1880,
 >>>>>>> Stashed changes
+=======
+    "line": 1897,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -131096,6 +131632,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131109,6 +131646,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1881,
 >>>>>>> Stashed changes
+=======
+    "line": 1898,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -131116,6 +131656,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131129,6 +131670,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1882,
 >>>>>>> Stashed changes
+=======
+    "line": 1899,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131136,6 +131680,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131149,6 +131694,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1883,
 >>>>>>> Stashed changes
+=======
+    "line": 1900,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -131156,6 +131704,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131169,6 +131718,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1893,
 >>>>>>> Stashed changes
+=======
+    "line": 1910,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -131176,6 +131728,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131189,6 +131742,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1894,
 >>>>>>> Stashed changes
+=======
+    "line": 1911,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -131196,6 +131752,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131209,6 +131766,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1895,
 >>>>>>> Stashed changes
+=======
+    "line": 1912,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131216,6 +131776,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131229,6 +131790,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1910,
 >>>>>>> Stashed changes
+=======
+    "line": 1927,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -131236,6 +131800,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131249,6 +131814,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1911,
 >>>>>>> Stashed changes
+=======
+    "line": 1928,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -131256,6 +131824,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131269,6 +131838,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1912,
 >>>>>>> Stashed changes
+=======
+    "line": 1929,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131276,6 +131848,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131289,6 +131862,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1913,
 >>>>>>> Stashed changes
+=======
+    "line": 1930,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -131296,6 +131872,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131309,6 +131886,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1915,
 >>>>>>> Stashed changes
+=======
+    "line": 1932,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "nonMigratoryCount",
     "currentDoc": "(none)",
@@ -131316,6 +131896,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131329,6 +131910,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1921,
 >>>>>>> Stashed changes
+=======
+    "line": 1938,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -131336,6 +131920,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131349,6 +131934,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1922,
 >>>>>>> Stashed changes
+=======
+    "line": 1939,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -131356,6 +131944,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131369,6 +131958,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1923,
 >>>>>>> Stashed changes
+=======
+    "line": 1940,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131376,6 +131968,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131389,6 +131982,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1924,
 >>>>>>> Stashed changes
+=======
+    "line": 1941,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -131396,6 +131992,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131409,6 +132006,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1925,
 >>>>>>> Stashed changes
+=======
+    "line": 1942,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "previousCount",
     "currentDoc": "(none)",
@@ -131416,6 +132016,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131429,6 +132030,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1935,
 >>>>>>> Stashed changes
+=======
+    "line": 1952,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -131436,6 +132040,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131449,6 +132054,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1936,
 >>>>>>> Stashed changes
+=======
+    "line": 1953,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -131456,6 +132064,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131469,6 +132078,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1937,
 >>>>>>> Stashed changes
+=======
+    "line": 1954,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131476,6 +132088,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131489,6 +132102,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1938,
 >>>>>>> Stashed changes
+=======
+    "line": 1955,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -131496,6 +132112,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131509,6 +132126,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1939,
 >>>>>>> Stashed changes
+=======
+    "line": 1956,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "totalSpeciesBaseline",
     "currentDoc": "(none)",
@@ -131516,6 +132136,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131529,6 +132150,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1940,
 >>>>>>> Stashed changes
+=======
+    "line": 1957,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "currentSpeciesCount",
     "currentDoc": "(none)",
@@ -131536,6 +132160,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131549,6 +132174,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1946,
 >>>>>>> Stashed changes
+=======
+    "line": 1963,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -131556,6 +132184,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131569,6 +132198,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1947,
 >>>>>>> Stashed changes
+=======
+    "line": 1964,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -131576,6 +132208,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131589,6 +132222,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1948,
 >>>>>>> Stashed changes
+=======
+    "line": 1965,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131596,6 +132232,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131609,6 +132246,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1949,
 >>>>>>> Stashed changes
+=======
+    "line": 1966,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -131616,6 +132256,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131629,6 +132270,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1954,
 >>>>>>> Stashed changes
+=======
+    "line": 1971,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -131636,6 +132280,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131649,6 +132294,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1955,
 >>>>>>> Stashed changes
+=======
+    "line": 1972,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -131656,6 +132304,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131669,6 +132318,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1956,
 >>>>>>> Stashed changes
+=======
+    "line": 1973,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131676,6 +132328,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131689,6 +132342,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1957,
 >>>>>>> Stashed changes
+=======
+    "line": 1974,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -131696,6 +132352,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131709,6 +132366,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1966,
 >>>>>>> Stashed changes
+=======
+    "line": 1983,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -131716,6 +132376,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131729,6 +132390,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1967,
 >>>>>>> Stashed changes
+=======
+    "line": 1984,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -131736,6 +132400,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131749,6 +132414,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1968,
 >>>>>>> Stashed changes
+=======
+    "line": 1985,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131756,6 +132424,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131769,6 +132438,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1969,
 >>>>>>> Stashed changes
+=======
+    "line": 1986,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -131776,6 +132448,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131789,6 +132462,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1973,
 >>>>>>> Stashed changes
+=======
+    "line": 1990,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -131796,6 +132472,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131809,6 +132486,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1974,
 >>>>>>> Stashed changes
+=======
+    "line": 1991,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -131816,6 +132496,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131829,6 +132510,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 1975,
 >>>>>>> Stashed changes
+=======
+    "line": 1992,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131836,6 +132520,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131849,6 +132534,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 2010,
 >>>>>>> Stashed changes
+=======
+    "line": 2027,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -131856,6 +132544,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131869,6 +132558,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 2013,
 >>>>>>> Stashed changes
+=======
+    "line": 2030,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -131876,6 +132568,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131889,6 +132582,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 2014,
 >>>>>>> Stashed changes
+=======
+    "line": 2031,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -131896,6 +132592,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131909,6 +132606,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 =======
     "line": 2015,
 >>>>>>> Stashed changes
+=======
+    "line": 2032,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -131916,6 +132616,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -131928,6 +132629,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
 >>>>>>> Stashed changes
 =======
     "line": 2016,
+>>>>>>> Stashed changes
+=======
+    "line": 2033,
 >>>>>>> Stashed changes
     "type": "property",
     "name": "description",

@@ -816,6 +816,58 @@ function applyGlobalEffects(
         }
         break;
 
+<<<<<<< Updated upstream
+=======
+      case 'nitrogenReduction':
+        // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food coupling integration
+        // Research: research/nitrogen_food_coupling_20251115.md
+        // Track nitrogen-reducing technologies for nitrogen-food coupling calculations
+        // The actual coupling calculation happens in planetaryBoundaries.ts (legacy stocks)
+        // and affects food production via regional yield penalties
+        if (gameState.globalMetrics) {
+          // Accumulate nitrogen reduction effectiveness (will be used by updateNitrogenFoodCoupling)
+          const currentReduction = gameState.globalMetrics.nitrogenReductionTotal ?? 0;
+
+          // Multiplicative stacking: 1 - (1 - r1)(1 - r2)...(1 - rN)
+          // This prevents >100% reduction and models realistic synergies
+          const combinedReduction = 1 - (1 - currentReduction) * (1 - value);
+
+          gameState.globalMetrics.nitrogenReductionTotal = combinedReduction;
+
+          // Log for diagnostics (annual)
+          if (gameState.currentMonth % 12 === 0 && combinedReduction > 0.01) {
+            console.log(`  🌾 Nitrogen reduction from tech: ${(combinedReduction * 100).toFixed(1)}%`);
+          }
+        }
+        break;
+
+      case 'legacyPhosphorusReduction':
+        // TIER 2 HIGH (Nov 15, 2025): Active sediment management
+        // Accelerates depletion of legacy phosphorus stocks in sediments
+        if (gameState.planetaryBoundariesSystem?.legacyNutrientStock) {
+          const stocks = gameState.planetaryBoundariesSystem.legacyNutrientStock;
+
+          // Reduce sediment phosphorus stock directly
+          // value = 0.40 for active_sediment_management (40% stock depletion)
+          // This accelerates the natural exponential decay
+          const reductionFraction = value * 0.01; // 0.4% per month max (not instant)
+          stocks.sediment.phosphorus = assertFinite(
+            Math.max(0, stocks.sediment.phosphorus * (1 - reductionFraction)),
+            {
+              location: 'applyRegionalEffects:legacyPhosphorusReduction',
+              valueName: 'sediment.phosphorus',
+              month: gameState.currentMonth
+            }
+          );
+
+          // Log annually
+          if (gameState.currentMonth % 12 === 0) {
+            console.log(`  🌊 Legacy P sediment stock: ${stocks.sediment.phosphorus.toFixed(1)} Mt P (active remediation -${(reductionFraction * 100).toFixed(2)}%/mo)`);
+          }
+        }
+        break;
+
+>>>>>>> Stashed changes
       case 'biodiversityBonus':
         // Improve biodiversity
         if (gameState.planetaryBoundariesSystem?.boundaries?.biosphere_integrity) {
