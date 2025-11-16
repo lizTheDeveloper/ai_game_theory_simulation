@@ -96,6 +96,7 @@ import {
   WetBulbTemperaturePhase,  // Oct 17, 2025: Wet bulb temperature deadly heat events
   ExtremeWeatherEventsPhase,  // Oct 28, 2025: Storm intensity-frequency modeling (MDF framework)
   PlanetaryBoundariesPhase,
+  IrreversibilityTrackingPhase,  // TIER 1 CRITICAL (Nov 16, 2025): Environmental & social tipping points with hysteresis
   LegacyNutrientStocksPhase,  // TIER 2 HIGH (Nov 15, 2025): Legacy nutrient stock decay
   NitrogenFoodCouplingPhase,  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food production coupling
   PositiveTippingPointsPhase,  // Oct 17, 2025: Positive technology adoption cascades
@@ -559,6 +560,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new WetBulbTemperaturePhase());  // Oct 17, 2025: Wet bulb temperature deadly heat events
     this.orchestrator.registerPhase(new ExtremeWeatherEventsPhase());  // Oct 28, 2025: Storm intensity-frequency modeling
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
+    this.orchestrator.registerPhase(new IrreversibilityTrackingPhase());  // TIER 1 CRITICAL (Nov 16, 2025): Environmental & social tipping points with hysteresis
     this.orchestrator.registerPhase(new LegacyNutrientStocksPhase());  // TIER 2 HIGH (Nov 15, 2025): Legacy nutrient stock decay
     this.orchestrator.registerPhase(new NitrogenFoodCouplingPhase());  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food production coupling
     this.orchestrator.registerPhase(new PositiveTippingPointsPhase());  // Oct 17, 2025: Positive cascades (solar, EV, wind)

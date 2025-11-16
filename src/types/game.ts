@@ -128,6 +128,20 @@ export type {
 } from './tipping-points';
 
 export type {
+  IrreversibilityState,
+  IceSheetState,
+  PermafrostState,
+  AMOCState,
+  AmazonState,
+  AmazonRegionState,
+  ExtinctionDebtState,
+  ExtinctionDebtEntry,
+  CoralReefState,
+  IndigenousKnowledgeState,
+  InstitutionalState
+} from './irreversibility';
+
+export type {
   ConsciousnessGovernanceReadiness,
   RegionalGovernance,
   ScenarioTrajectory,
@@ -382,6 +396,37 @@ export interface GameState {
    * Expected impact: Eliminates unrealistic instant climate collapse, enables multi-decade scenarios
    */
   tippingPointSystem: TippingPointSystem;
+
+  /**
+   * Irreversibility Framework (Nov 16, 2025) - TIER 1 CRITICAL
+   *
+   * Environmental and social tipping points that cannot fully recover on human
+   * timescales (centuries to millennia). Models hysteresis, extinction debt,
+   * and legacy contamination.
+   *
+   * Research: 41 sources (research/irreversibility_framework_20251116.md)
+   * Critique: Grade B-, CONDITIONAL PASS (reviews/irreversibility_framework_critique_20251116.md)
+   *
+   * Key systems:
+   * - Ice sheet hysteresis (+1.5°C collapse, <+1°C recovery - gap = 0.5°C)
+   * - Permafrost thaw (continuous "dimmer switch", NOT binary)
+   * - AMOC weakening (gradual only, NO collapse before +4°C)
+   * - Amazon dieback (regional heterogeneity: SE 28%, NW <10%)
+   * - Extinction debt (50-150 year time lag)
+   * - Coral reef collapse (thermal + acidification)
+   * - Indigenous knowledge loss (2 languages/month, irreversible)
+   * - Institutional collapse ("Hemingway bankruptcy": gradual → sudden)
+   *
+   * CRITICAL CONDITIONS (Sylvia's critique):
+   * 1. Probabilistic thresholds (ranges, not point estimates)
+   * 2. Permafrost continuous (NOT tipping point)
+   * 3. AMOC gradual weakening (NO early collapse)
+   * 4. Uncertainty ranges for ALL parameters
+   * 5. Empirical vs model-derived flagged
+   *
+   * Expected impact: Realistic irreversibility mechanics, multi-century recovery timescales
+   */
+  tippingPoints?: import('../types/irreversibility').IrreversibilityState;
 
   // Ecosystem Collapse Tracking (Realistic Timeline Recalibration)
   ecosystemCollapse?: {
