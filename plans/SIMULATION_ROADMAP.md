@@ -39,6 +39,34 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Nitrogen-Food Coupling Integration Claims** - HIGH (Added Nov 16, 2025)
+     - **Context:** Commit d3ea8fa integrated nitrogen-food coupling with 3 major systems (legacy stocks, regional penalties, tech effects)
+     - **Implementation Status:** ✅ COMPLETE (type checking passed, Monte Carlo N=1 successful)
+     - **Research Foundation:** 29 peer-reviewed sources (research/nitrogen_food_coupling_20251115.md), Grade B validation
+     - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50%
+     - **Key Claims Requiring Verification:**
+       - **CRITICAL:** 55% South Asian rice farms overuse nitrogen - NOT FOUND in research file
+       - **CRITICAL:** Multiplicative tech synergies (not additive) - modeling assumption, NOT research-backed
+       - **HIGH:** Nitrogen baseline 120 Mt/year vs. research file 107-112 Mt/year (10% discrepancy)
+       - **HIGH:** Vertical farming 60% N reduction (Springmann 2018) - NOT FOUND in research file
+       - Legacy stock half-lives (soil 30yr, sediment 100yr) - need direct quotes from Paerl et al. 2024
+       - Precision fermentation 40% N reduction - research file says "30-50%", code uses average
+     - **Verification File:** research/verification_d3ea8fa_20251116.md (two-layer: existence + claim accuracy)
+     - **Files Modified:**
+       - src/simulation/planetaryBoundaries.ts (legacy stock integration)
+       - src/simulation/engine/phases/FoodSecurityDegradationPhase.ts (regional penalties)
+       - src/simulation/techTree/effectsEngine.ts (nitrogenReduction handler)
+       - src/simulation/techTree/comprehensiveTechTree.ts (tech nitrogen effects)
+     - **Assignments:**
+       - Cynthia: Verify Paerl 2024, Springmann 2018 claims with exact quotes
+       - Sylvia: Flag 55% South Asia claim as UNVERIFIED, assess multiplicative assumption
+       - Roy: Apply parameter corrections after validation (BLOCKED until validation complete)
+     - **Priority:** HIGH - Affects biogeochemical boundary, food security, tech tree effectiveness
+     - **Status:** ⚠️ NEEDS VALIDATION - Implementation complete, verification file created, ready for orchestrator
+     - **Research Files:** research/nitrogen_food_coupling_20251115.md, reviews/nitrogen_food_coupling_critique_20251115.md
+     - **Commit:** d3ea8fa
+     - **Historian Note:** This verification was auto-created by post-commit documentation workflow (Nov 16, 2025)
+
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
      - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
