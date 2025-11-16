@@ -22,11 +22,21 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **SYSTEM HEALTH:**
 - **Research Quality:** A (nitrogen-food coupling integration complete, peer-reviewed foundation) ✅ EXCELLENT
-- **Implementation Fidelity:** A- (assertion coverage 97.8%, defensive fallback migration in progress) ✅ EXCELLENT
+- **Implementation Fidelity:** A- (assertion coverage 98.1%, defensive fallback migration in progress) ✅ EXCELLENT
 - **Architecture Health:** 9.4/10 (2 HIGH issues remain: dynamic require pattern, unsafe property access) ✅ STABLE
 - **System Trajectory:** 🟢 STABLE (Integration milestones achieved, O(n²) performance fix applied)
 
 **Recent Major Achievements:**
+
+**Nov 16: Energy System Capacity Defensive Fallback Migration** (commit a7afa3d)
+- 🔋 **CRITICAL Fix:** Removed phantom 1000 TWh renewable capacity fallback (techTree/effectsEngine.ts)
+- 🚨 **Bug Pattern:** Chained `(capacity.solar || 0)` + `(capacity.wind || 0)` → 0, then `totalRenewable > 0 ? X : 1000` converted missing data to 1000 TWh
+- 🛡️ **Solution:** Replaced 11 fallbacks with `assertFinite(capacity.X)` + `assertStateProperty(powerGenerationSystem, 'field')`
+- 📍 **Fixed Locations:** calculateNovelEntitiesRemediationEffectiveness (lines 173-179), applyAllTechEffects (lines 297-304, 354-369)
+- ✅ **Impact:** Energy infrastructure state MUST exist - missing data now crashes loudly rather than corrupting climate calculations
+- 📊 **Assertion Coverage:** 97.8% → 98.1% (11 anti-patterns removed)
+- 💡 **Philosophy:** If renewable capacity is missing, that's an initialization bug to fix, not hide with phantom defaults
+- 📖 **Context:** Day 1 defensive fallback migration (Issue #7 HIGH priority)
 
 **Nov 16: EmergencyResponsePhase Defensive Fallback Migration** (commit 22b69f8)
 - 🛡️ **Pattern Enforcement:** 8 defensive fallbacks → `assertStateProperty` (planetary boundaries, social metrics, bifurcation thresholds)
