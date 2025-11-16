@@ -996,6 +996,33 @@ assertFinite(property);
 
 ---
 
+**🔧 WATCHER FIX: Log Sorting Bug (False CRITICAL Alerts)** (Nov 16, 2025, commit e78991b)
+
+**Problem:** Watcher was reporting false CRITICAL alerts about researcher not running, even though logs showed successful runs at 23:00.
+
+**Root Cause:** Watcher used `find ... | sort -r` which sorts alphabetically, not by modification time. This caused it to pick up old `session_*.log` files instead of recent `researcher_*.log` files during the researcher's intentional overnight gap (23:00-08:00 UTC).
+
+**Example:**
+- Alphabetically: `session_20251114_033925.log` > `researcher_20251115_223001.log`
+- By modification time: `researcher_20251115_223001.log` (most recent)
+
+**Solution:** Replace `find ... | sort -r` with `ls -t` (sort by modification time) in all three log checking locations:
+- Worker log checking (line 96)
+- Merge orchestrator log checking (line 194)
+- Researcher log checking (line 250)
+
+**Impact:**
+- ✅ Watcher now correctly identifies most recent logs
+- ✅ Eliminates false CRITICAL alerts during researcher's overnight gap
+- ✅ Improved monitoring accuracy
+
+**Test:** Verified `ls -t logs/autonomous/researcher/*.log | head -1` now correctly returns `researcher_20251115_223001.log` instead of `session_20251114_033925.log`.
+
+**Files Modified:**
+- `scripts/autonomous-worker-watcher.sh` - Changed `find | sort -r` → `ls -t` in 3 locations
+
+---
+
 **🔧 WATCHER FIX: Ignore Benign "claude not found" in Health Checks** (Nov 7, 2025, commit 56ea3e9)
 
 **Problem:** Autonomous worker watcher was flagging researcher runs as failed due to false positive error detection.
