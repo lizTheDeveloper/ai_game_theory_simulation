@@ -121,7 +121,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+<<<<<<< Updated upstream
     "line": 2076,
+=======
+    "line": 2050,
+>>>>>>> Stashed changes
     "name": "getAllTech",
     "doc": " Returns array of results."
   },
