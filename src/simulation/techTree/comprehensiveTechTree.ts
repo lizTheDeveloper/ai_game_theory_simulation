@@ -578,6 +578,177 @@ const ALL_TECH: TechDefinition[] = [
       energyIndependenceBonus: 0.05,
     },
   },
+<<<<<<< Updated upstream
+=======
+
+  // Rhizosphere Engineering (TIER 1 CRITICAL - Nov 16, 2025)
+  {
+    id: 'rhizosphere_engineering',
+    name: 'Rhizosphere Engineering',
+    description: 'Plant growth-promoting microorganisms (PGPMs) + N-fixing bacteria - 15-40% N fertilizer reduction',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 0.6 },  // Microbiome engineering
+      { dimension: 'physical', threshold: 0.4 }    // Seed coating/soil inoculation
+    ],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.5 }  // Microbiome engineering uses gene editing tools
+    ],
+    minEconomicStage: 1.8,  // Requires biotech infrastructure
+    minMonth: 36,  // Available 2028+ (research phase 2025-2028)
+    researchMonthsRequired: 24,  // 2 years research to optimize formulations
+    researchCost: 500,  // Moderate - microbiome R&D
+    deploymentCost: 15000,  // Lower than precision ag (biofertilizer production)
+    deploymentMonthsRequired: 36,  // 3 years to scale globally
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.275,  // 27.5% middle of 15-40% range (field-demonstrated)
+      biogeochemicalFlowsReduction: 0.12,  // Reduces N runoff via improved uptake
+    },
+    citations: [
+      'Zhang et al. (2020) - PGPM mechanisms, Frontiers in Plant Science',
+      'Bai et al. (2024) - Mycorrhizal biofertilizers, 15% N reduction in wheat',
+      'Ke et al. (2021) - Sphingobium yanoikuyae, N transporter gene modulation'
+    ],
+  },
+
+  // Nitroplast Integration (TIER 2 HIGH - Nov 16, 2025 - BREAKTHROUGH TECH)
+  {
+    id: 'nitroplast_integration',
+    name: 'Nitroplast Integration',
+    description: 'Nitrogen-fixing organelle (Coale 2024 discovery) engineered into cereal crops - 50-70% N reduction if successful',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['rhizosphere_engineering'],  // Build on microbial N-fixation experience
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 1.5 },  // CRISPR/advanced genetic engineering
+      { dimension: 'physical', threshold: 0.7 },   // Field trials
+      { dimension: 'selfImprovement', threshold: 1.2 }    // Breakthrough research capability
+    ],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.9 },  // CRISPR for organelle integration
+      { domain: 'biotech', subdomain: 'syntheticBiology', threshold: 0.8 }  // Synthetic organelles
+    ],
+    minEconomicStage: 2.5,  // Requires advanced biotech infrastructure
+    minMonth: 180,  // Available 2040+ (15 years from 2025)
+    researchMonthsRequired: 120,  // 10 years research (2030-2040) - uncertain success
+    researchCost: 25000,  // HIGH - genetic engineering R&D
+    deploymentCost: 80000,  // High regulatory costs, GMO approval, seed distribution
+    deploymentMonthsRequired: 120,  // 10 years to scale (2040-2050) - if successful
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.60,  // 60% middle of 50-70% range (SPECULATIVE - marine algae real, cereals hypothetical)
+      biogeochemicalFlowsReduction: 0.40,  // Major reduction in synthetic N runoff
+      energyCostReduction: 0.05,  // Eliminates Haber-Bosch energy (1-2% global energy)
+    },
+    citations: [
+      'Coale et al. (2024) - Nitroplast discovery in Braarudosphaera bigelowii, Science, 2025 AAAS Newcomb Cleveland Prize',
+      'WEF (2025) - Green nitrogen fixation, Top 10 Emerging Technologies 2025',
+      'NSF (2024) - New cellular architecture for farming, https://www.nsf.gov/science-matters'
+    ],
+  },
+
+  // Precision Fermentation (TIER 1 CRITICAL - Nov 16, 2025)
+  {
+    id: 'precision_fermentation_nitrogen',
+    name: 'Precision Fermentation (Nitrogen Pathway)',
+    description: 'Microbial protein production - 100x land efficiency, 30-50% agricultural N demand reduction via animal ag replacement',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 0.7 },   // Metabolic optimization
+      { dimension: 'economic', threshold: 0.8 },    // Cost-competitiveness ($10/kg achieved 2024-2025)
+      { dimension: 'physical', threshold: 0.5 }     // Fermentation infrastructure
+    ],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'syntheticBiology', threshold: 0.6 }
+    ],
+    minEconomicStage: 2.0,  // Requires industrial biotech capacity
+    minMonth: 12,  // Available 2025+ (commercially emerging)
+    researchMonthsRequired: 12,  // 1 year to optimize for scale
+    researchCost: 800,
+    deploymentCost: 40000,  // Moderate - fermentation facilities
+    deploymentMonthsRequired: 60,  // 5 years to scale (2025-2030)
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.40,  // 40% middle of 30-50% range (via animal ag replacement)
+      biogeochemicalFlowsReduction: 0.25,  // Reduces agricultural N demand
+      landUseReduction: 0.50,  // 100x more efficient than animal ag
+      waterEfficiency: 0.30,  // 95% less water than conventional dairy
+      ghgReduction: 0.15,  // 80% lower GHG than conventional dairy
+    },
+    citations: [
+      'CE Delft (2021) - Precision fermentation efficiency gains',
+      'Good Food Institute (2024) - Cost parity $10/kg achieved',
+      'FAO (2024) - Sustainable media feedstocks for cellular agriculture'
+    ],
+  },
+
+  // Phytoremediation (TIER 2 HIGH - Nov 16, 2025)
+  {
+    id: 'phytoremediation_nitrogen',
+    name: 'Phytoremediation Networks (Nitrogen)',
+    description: 'Constructed wetlands (Iris ensata, Vetiveria zizanioides) - 63% N runoff capture, 72% P capture',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minCapabilityDimensions: [
+      { dimension: 'physical', threshold: 0.6 },  // Land conversion, wetland construction
+      { dimension: 'cognitive', threshold: 0.4 }   // Ecological design
+    ],
+    minEconomicStage: 1.5,  // Low-tech, labor-intensive
+    minMonth: 24,  // Available 2027+ (design + initial deployment)
+    researchMonthsRequired: 18,  // 1.5 years to optimize plant species + HRT
+    researchCost: 300,
+    deploymentCost: 20000,  // Moderate - $20k-100k per hectare, 3-8% of agricultural land
+    deploymentMonthsRequired: 60,  // 5 years to scale regionally
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.05,  // 5% via runoff capture (does NOT reduce inputs, prevents legacy accumulation)
+      phosphorusReduction: 0.10,  // 10% via runoff capture (stronger P removal)
+      biogeochemicalFlowsReduction: 0.08,  // Prevents new N/P from entering water bodies
+    },
+    citations: [
+      'Vymazal (2007) - Constructed wetlands for N/P removal, 335 field-scale experiments',
+      'IWA (2024) - Iris ensata >75% TN removal, 85% TP removal',
+      'Springer (2024) - Vetiveria zizanioides 84% N removal, 86% P removal'
+    ],
+  },
+
+  // Sediment Management (TIER 2 HIGH - Nov 16, 2025)
+  {
+    id: 'sediment_management_phosphorus',
+    name: 'Sediment Management (Phosphorus)',
+    description: 'Dredging + alum treatment + aeration - 50-80% reduction in internal P loading from legacy stocks',
+    category: 'freshwater',
+    status: 'unlockable',
+    prerequisites: [],
+    minCapabilityDimensions: [
+      { dimension: 'physical', threshold: 0.7 },  // Dredging, infrastructure
+      { dimension: 'economic', threshold: 0.6 }    // High cost ($50k-500k per km²)
+    ],
+    minEconomicStage: 2.0,  // Requires industrial capacity for large-scale dredging
+    minMonth: 48,  // Available 2029+ (requires planning + regulatory approval)
+    researchMonthsRequired: 24,  // 2 years to optimize alum dosing + capping methods
+    researchCost: 600,
+    deploymentCost: 60000,  // HIGH - $50k-500k per km² sediment treated
+    deploymentMonthsRequired: 120,  // 10 years to treat major eutrophic water bodies globally
+    deploymentLevel: 0,
+    effects: {
+      phosphorusReduction: 0.30,  // 30% middle of 20-40% range (reduces internal loading)
+      biogeochemicalFlowsReduction: 0.18,  // Addresses legacy P stocks
+      legacyStockReduction: 0.20,  // 20% reduction in sediment P legacy stocks over deployment period
+    },
+    citations: [
+      'Smil (2000) - Sediment P dynamics',
+      'Schindler (2012) - Internal loading in eutrophic systems',
+      'NOAA NCCOS (2021) - Lake Erie internal loading, 10,000-11,000 MT P/year'
+    ],
+  },
+>>>>>>> Stashed changes
 
   // Freshwater Depletion (4)
   {
