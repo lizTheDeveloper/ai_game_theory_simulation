@@ -808,6 +808,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Base calculation (depletion factor)
     const depletion = 1 - reserves; // reserves is already 0-1 scale
 
+<<<<<<< Updated upstream
     // TIER 2 HIGH: Update legacy nutrient stocks and nitrogen-food coupling
     // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
 <<<<<<< Updated upstream
@@ -816,6 +817,24 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     let effectivePhosphorus = 0;
     let legacyContribution = 0;
     let globalFoodProductionIndex = 1.0;
+=======
+    // TIER 2 HIGH: Calculate current pollution inputs from regional nitrogen + phosphorus use
+    // Baseline (2025): ~120 Mt N/year global, ~25 Mt P/year global
+    // Convert to monthly: 10 Mt N/month, 2.08 Mt P/month
+    let currentNitrogenInputMonthly = 10.0;  // Mt N/month (2025 baseline)
+    let currentPhosphorusInputMonthly = 2.08; // Mt P/month (2025 baseline)
+
+    // Calculate actual current inputs from regional nitrogen management (if available)
+    if (system.regionalNitrogenManagement && system.regionalNitrogenManagement.length > 0) {
+      const totalNitrogenYearly = system.regionalNitrogenManagement.reduce(
+        (sum, region) => sum + region.currentNitrogenInput, 0
+      );
+      currentNitrogenInputMonthly = totalNitrogenYearly / 12; // Convert yearly to monthly
+
+      // TIER 2 HIGH: Apply nitrogen reduction from deployed technologies
+      // Technologies track total reduction in globalMetrics.nitrogenReductionTotal (effectsEngine.ts)
+      const nitrogenReductionFromTech = state.globalMetrics?.nitrogenReductionTotal ?? 0;
+>>>>>>> Stashed changes
 
     if (system.legacyNutrientStock) {
       // Import update functions dynamically to avoid circular dependencies

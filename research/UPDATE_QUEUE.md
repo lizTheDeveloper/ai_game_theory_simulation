@@ -4,6 +4,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Generated:** 11/16/2025, 10:30:04 AM
 **Files Scanned:** 413
 =======
@@ -26,6 +27,10 @@
 **Generated:** 11/16/2025, 3:30:03 PM
 **Files Scanned:** 413
 >>>>>>> Stashed changes
+=======
+**Generated:** 11/16/2025, 4:30:03 PM
+**Files Scanned:** 413
+>>>>>>> Stashed changes
 
 ---
 
@@ -37,6 +42,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -54,6 +60,9 @@
 >>>>>>> Stashed changes
 =======
 **Count:** 148 (35.9%)
+>>>>>>> Stashed changes
+=======
+**Count:** 148 (35.8%)
 >>>>>>> Stashed changes
 =======
 **Count:** 148 (35.8%)
@@ -850,6 +859,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 245 (59.3%)
 =======
 **Count:** 244 (59.2%)
@@ -866,6 +876,9 @@
 =======
 **Count:** 245 (59.3%)
 >>>>>>> Stashed changes
+=======
+**Count:** 245 (59.3%)
+>>>>>>> Stashed changes
 
 All sources <3 years old. No action required.
 
@@ -875,6 +888,7 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -915,11 +929,18 @@ All sources <3 years old. No action required.
 | Total files | 413 |
 | CRITICAL | 0 (0.0%) |
 >>>>>>> Stashed changes
+=======
+| Total files | 413 |
+| CRITICAL | 0 (0.0%) |
+>>>>>>> Stashed changes
 | HIGH | 148 (35.8%) |
 | MEDIUM | 20 (4.8%) |
 | LOW | 245 (59.3%) |
 | Average age | 7.9 years |
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -929,6 +950,7 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -962,10 +984,16 @@ All sources <3 years old. No action required.
 | Warning (3-5yr) | 20 | 4.8% |
 | Critical (>5yr) | 148 | 35.8% |
 >>>>>>> Stashed changes
+=======
+| Current (<3yr) | 245 | 59.3% |
+| Warning (3-5yr) | 20 | 4.8% |
+| Critical (>5yr) | 148 | 35.8% |
+>>>>>>> Stashed changes
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -987,6 +1015,9 @@ All sources <3 years old. No action required.
 =======
 - **Current:** 35.8% critical (>5yr)
 >>>>>>> Stashed changes
+=======
+- **Current:** 35.8% critical (>5yr)
+>>>>>>> Stashed changes
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
@@ -996,9 +1027,13 @@ All sources <3 years old. No action required.
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 1. Update 148 HIGH priority file(s) within 1 month
 =======
 1. Update 151 HIGH priority file(s) within 1 month
+>>>>>>> Stashed changes
+=======
+1. Update 148 HIGH priority file(s) within 1 month
 >>>>>>> Stashed changes
 =======
 1. Update 148 HIGH priority file(s) within 1 month
