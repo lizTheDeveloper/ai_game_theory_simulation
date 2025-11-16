@@ -3443,12 +3443,13 @@ Measures outcomes through four distinct philosophical lenses, showing fundamenta
 #### Four Paradigms
 
 **1. Western Liberal (Freedom-Focused)**
-- **Data:** V-Dem 2024 (202 countries), Freedom House 2024-2025 (195 countries)
+- **Data:** V-Dem 2024 (202 countries), V-Dem Report 2025, Freedom House 2024-2025 (195 countries)
 - **Confidence:** HIGH
 - **Drives Simulation:** YES (democratic governance affects outcomes)
 - **Indicators (9):** Electoral democracy, political rights, civil liberties, economic freedom, rule of law, press freedom, judicial independence, anti-corruption, property rights
-- **Utopia threshold:** V-Dem ≥0.80, Freedom House ≥90/100 (~8 countries: Norway, Sweden, Finland, Denmark, Iceland, New Zealand, Switzerland, Luxembourg)
-- **Dystopia threshold:** V-Dem <0.30, Freedom House <30/100 (North Korea, Eritrea, Syria, South Sudan, Turkmenistan)
+- **Utopia threshold:** V-Dem ≥0.80, Freedom House ≥90/100 (~29 liberal democracies globally, 12% of world population - 50-year low per V-Dem 2025)
+- **Dystopia threshold:** V-Dem <0.30, Freedom House <30/100 (91 autocracies globally - 72% of world population, 35 closed autocracies including North Korea, Eritrea, Syria)
+- **Key Update (Nov 2025):** V-Dem Report 2025 reveals autocracies outnumber democracies for first time in 20+ years; 45 countries autocratizing; freedom of expression declining in 44 countries (25-year high). See: `research/multi_paradigm_wellbeing_2024_2025_update.md`
 
 **2. Development Needs (Survival-Focused)**
 - **Data:** UNDP HDI 2024 (193 countries), OPHI MPI 2024 (112 countries), WHO, FAO
@@ -3475,19 +3476,20 @@ Measures outcomes through four distinct philosophical lenses, showing fundamenta
 - **Normalization:** Inverted scale (low PM2.5 = high score): `100 - (pm25 / 0.5)`
 
 **4. Indigenous/Communitarian (Harmony-Focused)**
-- **Data:** Bhutan GNH 2024 (1 country, HIGH), WVS Wave 7 (80 countries, MEDIUM), derived from social cohesion (115 countries, LOW)
+- **Data:** Sangha et al. 2024 Indigenous wellbeing framework, Bhutan GNH 2024 (1 country, HIGH), WVS Wave 7 (80 countries, MEDIUM), derived from social cohesion (115 countries, LOW)
 - **Confidence:** LOW-MEDIUM (only 1 country has direct measurement)
 - **Drives Simulation:** NO - uses existing social cohesion mechanics (reporting-only diagnostic lens)
 - **Indicators (7):** Social trust, community belonging, cultural continuity, traditional knowledge transmission, collective purpose, work-life harmony, institutional trust
-- **Utopia threshold:** GNH ≥66%, social trust >60% (~1-2 countries: Bhutan, possibly Costa Rica)
-- **Dystopia threshold:** Social trust <30%, cultural genocide, atomization (USA 35% trust, down from 55% in 1960)
+- **Utopia threshold:** GNH ≥66%, social trust >60%, Country-connection ≥80%, TEK vitality ≥70% (~1-2 countries: Bhutan, possibly Costa Rica)
+- **Dystopia threshold:** Social trust <30%, cultural genocide, atomization, Country-connection <20%, TEK transmission <20% (USA 35% trust, down from 55% in 1960)
+- **Key Update (Nov 2025):** Sangha et al. 2024 establishes *Country* (land/environment) as foundational to Indigenous wellbeing, with seven interconnected domains. *Liyan* concept (holistic connection to self, Country, community) validates environment-spirituality-community nexus. See: `research/multi_paradigm_wellbeing_2024_2025_update.md`
 
 **Key Design:** Indigenous paradigm is **reporting-only**, deriving scores from:
 - 40% existing social cohesion system (already in simulation)
 - 30% WVS proxy data (where available, 80 countries)
-- 30% cultural preservation tracking (UNESCO linguistic diversity, indigenous population data)
+- 30% cultural preservation tracking (UNESCO linguistic diversity, indigenous population data, TEK transmission)
 
-**Advocacy Purpose:** Makes visible the 199/200 country gap in communitarian wellbeing measurement. Only Bhutan has GNH-equivalent framework.
+**Advocacy Purpose:** Makes visible the 199/200 country gap in communitarian wellbeing measurement. Only Bhutan has GNH-equivalent framework. Western frameworks systematically omit Country-connection, traditional ecological knowledge, and kinship network strength (Sangha et al. 2024).
 
 #### Multi-Paradigm Reporting & Visualization (Oct 20, 2025)
 
