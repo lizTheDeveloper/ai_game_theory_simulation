@@ -1783,6 +1783,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
 
   // For now, derive other paradigm components from existing state values
   // TODO: These should eventually come from multiParadigmDUI like Western Liberal
+  // NOTE: UI display values - fallbacks acceptable per CLAUDE.md (not in calculation paths)
   const developmentComponents = {
     gdpPerCapita: state.globalMetrics.qualityOfLife * 100,  // Proxy from QoL
     infrastructureAccess: (state.qualityOfLifeSystems?.energyAvailability ?? 0.5) * 100,
