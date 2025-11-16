@@ -350,6 +350,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Nov 13: Novel Entities Prevention vs Remediation Model - IMPLEMENTATION COMPLETE** (commits 5c9e773 → b6ec2b9, 1647a95)
 - ✅ **STATUS:** Implementation complete, validation passed, awaiting Monte Carlo sensitivity analysis
+- ⚡ **Performance Optimization:** Renewable capacity caching complete (commit d89390d) - 99% reduction in calculations, 5% effectsEngine speedup
 - 📚 **Research Foundation:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
 - 🔬 **Key Finding:** 0% effectiveness is NOT a bug - thermodynamically accurate for unregulated scenario
 - 💰 **Energy Trap:** PFAS removal at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP)
@@ -372,9 +373,10 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
   - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
   - Validation: `reviews/novel_entities_research_critique_20251113_validation.md` (Grade B)
+  - Performance: `reviews/renewable_capacity_caching_verification_20251116.md` (optimization verification)
 - 📂 **Implementation Files:**
   - `src/simulation/utils/novelEntitiesEffectiveness.ts` (262 lines, gating logic)
-  - `src/simulation/techTree/effectsEngine.ts` (lines 119-268, tiered model)
+  - `src/simulation/techTree/effectsEngine.ts` (lines 119-268, tiered model + caching)
   - `src/simulation/planetaryBoundaries.ts` (lines 818-846, irreversibility floor)
   - `src/simulation/techTree/comprehensiveTechTree.ts` (prevention technologies)
 - ⏳ **Remaining Work:**
