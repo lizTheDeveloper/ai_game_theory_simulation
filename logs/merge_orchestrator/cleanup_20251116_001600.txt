@@ -1,0 +1,82 @@
+# Merge Orchestrator Cleanup - Nov 16, 2025 00:16
+
+## Problem Diagnosed
+
+The autonomous worker health check failed because the merge orchestrator was stuck on a merge branch with:
+
+1. **TypeScript compilation errors** preventing merge completion
+2. **Unresolved merge conflicts** in docs/wiki/README.md
+3. **Stuck working tree state** on merge branch `merge/auto/researcher-20251114_213001_20251116_000000`
+
+## Root Causes
+
+### 1. Missing TypeScript Field (src/simulation/initialization.ts:1038)
+- **Error:** Property 'regionalAdaptation' is missing in type 'coordinatedDeployment'
+- **Cause:** coordinatedDeployment initialization missing `regionalAdaptation: 0.0` field
+- **Required by:** src/types/game.ts:715 type definition
+
+### 2. Merge Conflict (docs/wiki/README.md)
+- **Conflict:** Both branches updated Recent Changes section
+  - HEAD: Nov 15 defensive coding + climate deployment updates
+  - researcher branch: Nov 14 research currency updates (MPI 2025, Montreal Protocol)
+- **Resolution:** Combined both changelog entries chronologically
+
+## Actions Taken
+
+### Fix 1: TypeScript Error (initialization.ts:1038)
+```typescript
+// ADDED missing field:
+regionalAdaptation: 0.0,           // No local customization capacity initially
+```
+
+### Fix 2: Merge Conflict Resolution (docs/wiki/README.md)
+- Combined Nov 14 research update entry
+- Combined Nov 15 defensive coding + climate deployment entries
+- Preserved chronological order (Nov 15 → Nov 14 → Nov 13)
+- Added separator `---` between entries
+
+### Fix 3: Commit Merge
+```bash
+git add docs/wiki/README.md src/simulation/initialization.ts
+git commit -m "merge: Resolve researcher branch conflicts and fix TypeScript error"
+```
+
+Historian auto-updated documentation (commit f1d2ad473)
+
+## Verification
+
+### TypeScript Compilation
+✅ All non-test files compile successfully
+⚠️  Pre-existing test errors in PhaseOrchestrator.cycle-detection.test.ts (unrelated to this fix)
+
+### Git State
+- Branch: merge/auto/researcher-20251114_213001_20251116_000000
+- Ahead of origin/main by 4 commits
+- Ready for merge orchestrator to proceed
+
+## Impact
+
+**Autonomous Worker Status:** UNBLOCKED
+
+The merge orchestrator can now proceed with:
+1. Completing this merge branch
+2. Processing remaining worker branches (73 more branches queued)
+3. Resuming normal autonomous worker operations
+
+## Next Steps for Merge Orchestrator
+
+The merge orchestrator should:
+1. Complete TypeScript compilation check (will pass now)
+2. Merge this branch to main
+3. Continue processing remaining branches from queue
+
+## Documentation
+
+- Merge commit: d7cb825c2
+- Historian update: f1d2ad473
+- This cleanup log: logs/merge_orchestrator/cleanup_20251116_001600.txt
+
+---
+
+**Fixed by:** Claude Code manual intervention (autonomous-worker-watcher alert)
+**Timestamp:** 2025-11-16 00:16 UTC
