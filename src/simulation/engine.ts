@@ -164,6 +164,7 @@ import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Conso
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
 // Batch 4 Consolidation: Crisis & Mortality (14 → 5, Nov 9, 2025)
 import { HumanSurvivalSystemPhase } from './engine/phases/HumanSurvivalSystemPhase';  // Consolidated famine, food security, mortality stabilizers
+import { TransitionMortalityPhase } from './engine/phases/TransitionMortalityPhase';  // TIER 1B CRITICAL (Nov 2025): Transition mortality from rapid tech deployment
 import { NuclearCrisisPhase } from './engine/phases/NuclearCrisisPhase';  // Consolidated nuclear winter + radiation
 import { ExtinctionSystemPhase } from './engine/phases/ExtinctionSystemPhase';  // Consolidated extinction triggers/progress, catastrophic scenarios
 // Batch 5 Consolidation: Social & Governance (20 → 8, Nov 9, 2025)
@@ -565,6 +566,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ClimateDeploymentPhase());  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints (order 8.5)
     // === BATCH 4 CONSOLIDATED SURVIVAL SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new HumanSurvivalSystemPhase());  // Consolidated: FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase (order 19.7)
+    this.orchestrator.registerPhase(TransitionMortalityPhase);  // TIER 1B CRITICAL (Nov 16, 2025): Transition mortality from rapid tech deployment (order 26)
     this.orchestrator.registerPhase(new BayesianMortalityResolutionPhase());  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline
     this.orchestrator.registerPhase(new MinimalSufferingPhase());  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering)
