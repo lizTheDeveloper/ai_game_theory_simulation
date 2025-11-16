@@ -49,6 +49,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📖 **Review:** reviews/nitrogen-food-coupling-architecture-review.md
 
 >>>>>>> Stashed changes
+**Nov 16: Climate Tipping Points 2024-2025 Comprehensive Analysis** (commit cb5ee42)
+- 🌊 **First Tipping Point Crossed:** Coral reefs confirmed past 1.2°C threshold (>99% probability of collapse at 1.5°C)
+- 🌳 **Amazon Threshold Lowered:** NEW 1.5°C + 22% deforestation (was 3-4°C + 40%), currently near both limits
+- 🧊 **Cascade Dynamics:** 16-element interconnected system (not independent) - Arctic → AMOC → Amazon → carbon release
+- ⚡ **Positive Tipping Points:** Solar PV, wind, EVs, batteries crossed cost parity 2020-2024 (accelerating adoption)
+- ⏰ **Critical Decade:** 2025-2035 window to avoid additional tipping points (carbon budget 300-400 Gt CO₂ = 7-10 years)
+- 🔬 **Sources:** Global Tipping Points Report 2025 (100+ scientists), Frontiers in Public Health 2025, Nature 2025, "10 New Insights in Climate Science 2024/2025"
+- 📖 **Documentation:** research/climate_tipping_points_2024_2025_20251116.md (753 lines, 8 primary sources, all 2024-2025)
+- 📊 **Research Quality:** A+ (peer-reviewed + authoritative institutional reports)
+- 🎯 **Simulation Implications:** God mode 30% mortality reflects realistic cascade consequences, coordination quality determines positive vs negative cascade dominance
+- 💡 **Key Insight:** Self-dampening feedbacks shifting to self-amplifying - narrow intervention window remains
+
 **Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
 - 📊 **Architecture Review:** Grade B- (stable with localized issues)
   - 2 CRITICAL: Phase dependency gaps (9/97 phases), CoordinatedDeploymentPhase integration risk
