@@ -116,6 +116,17 @@ export interface TechDefinition {
 
   /** Energy required during construction/scaling phase (TWh/month) */
   constructionEnergy?: number;
+
+  // === REBOUND EFFECTS (Jevons Paradox - Nov 16, 2025) ===
+  // Research: Sorrell (2009), Gillingham et al. (2013)
+  /** Rebound coefficient: fraction of cleanup enabling more production (0-1, typ 0.1-0.6) */
+  reboundCoefficient?: number;
+
+  /** Uncertainty range for rebound coefficient [min, max] (Monte Carlo sampling) */
+  reboundUncertaintyRange?: [number, number];
+
+  /** True if technology avoids rebound (e.g., circular economy, degrowth) */
+  avoidsRebound?: boolean;
 }
 
 /**

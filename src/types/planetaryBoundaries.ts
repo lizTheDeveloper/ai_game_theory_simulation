@@ -99,6 +99,12 @@ export interface PlanetaryBoundary {
   // Novel Entities (PFAS, microplastics) have irreversible distribution
   // Peak contamination sets floor - cannot clean below ~90% of peak
   peak?: number;                    // Historical maximum value (for irreversibility floor calculation)
+
+  // === NOVEL ENTITIES SPECIFIC (Nov 16, 2025) ===
+  // Research: Cousins et al. (2022) - PFAS atmospheric transport
+  practicallyIrreversible?: boolean;  // True for PFAS, microplastics (99% cleanup rains back down)
+  decayHalfLife?: number;             // Natural decay half-life in years (100-10,000+ for PFAS)
+  atmosphericTransport?: boolean;     // True if pollutant has global atmospheric distribution
 }
 
 /**
