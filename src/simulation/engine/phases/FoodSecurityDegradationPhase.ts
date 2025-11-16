@@ -47,6 +47,50 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       return { events: [] };
     }
 
+    // TIER 2 HIGH (Nov 15, 2025): Apply nitrogen-food coupling BEFORE crisis degradation
+    // Research: research/nitrogen_food_coupling_20251115.md
+    // Nitrogen reduction from tech affects crop yields BEFORE crisis degradation compounds the problem
+    const nitrogenReductionFromTech = state.globalMetrics && 'nitrogenReductionTotal' in state.globalMetrics
+      ? (state.globalMetrics as { nitrogenReductionTotal: number }).nitrogenReductionTotal
+      : 0;
+
+    if (nitrogenReductionFromTech > 0.01 && state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
+      // Import nitrogen-food coupling module
+      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
+
+      // Calculate food production multiplier from nitrogen reduction
+      // This applies regional yield penalties based on overuse zones
+      const deployedTechEffectiveness = [nitrogenReductionFromTech]; // Single aggregated effectiveness
+      const globalFoodMultiplier = updateNitrogenFoodCoupling(state, deployedTechEffectiveness);
+
+      // Apply food production multiplier to regional food security
+      // This happens BEFORE crisis degradation, so crises compound on already-reduced food
+      for (const region of pop.regionalPopulations) {
+        // Find matching nitrogen management region
+        const nitrogenRegion = state.planetaryBoundariesSystem.regionalNitrogenManagement.find(
+          r => r.region === region.name.toLowerCase().replace(/\s+/g, '')
+        );
+
+        if (nitrogenRegion) {
+          // Apply regional food production index (from nitrogen-food coupling)
+          const regionalMultiplier = nitrogenRegion.foodProductionIndex;
+          region.foodSecurity = assertProbability(
+            Math.max(0, region.foodSecurity * regionalMultiplier),
+            {
+              location: 'FoodSecurityDegradationPhase.execute',
+              valueName: `${region.name}.foodSecurity (nitrogen penalty)`,
+              month: state.currentMonth
+            }
+          );
+
+          // Log annually
+          if (state.currentMonth % 12 === 0 && regionalMultiplier < 0.99) {
+            console.log(`  [${region.name}] Nitrogen-food penalty: ${(regionalMultiplier * 100).toFixed(1)}% production (${(nitrogenReductionFromTech * 100).toFixed(1)}% N reduction)`);
+          }
+        }
+      }
+    }
+
     // Validate required systems (use assertions for cleaner error messages)
     const phosphorusReserves = assertStateProperty(state.phosphorusSystem, 'reserves', {
       location: 'FoodSecurityDegradationPhase.execute',
