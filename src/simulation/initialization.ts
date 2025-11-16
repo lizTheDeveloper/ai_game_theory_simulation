@@ -1050,6 +1050,7 @@ export function createDefaultInitialState(
       },
       globalCoordinationQuality: 0.0,    // No coordination initially
       internationalAlignment: 0.0,       // No international alignment
+      regionalAdaptation: 0.0,           // No regional adaptation initially
       optimalDeploymentSpeed: 0.04,      // 4% per year baseline (pre-AI coordination)
       currentDeploymentSpeed: 0.0,       // No deployment yet
       transitionMortality: {
