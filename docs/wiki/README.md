@@ -18,15 +18,34 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (November 15, 2025)
+**🟢 STABLE** (November 16, 2025)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** A- (4 CRITICAL parameter fixes applied, 0 CRITICAL age issues) ✅ EXCELLENT
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** B- (stable with localized issues - 2 CRITICAL, 3 HIGH identified in Nov 15 review) ⚠️ STABLE
-- **System Trajectory:** 🟢 STABLE (Architecture review complete, research parameters corrected)
+- **Architecture Health:** B- (2 CRITICAL regressions identified, partial migration at 12% creates split-brain condition) ⚠️ REQUIRES ACTION
+- **System Trajectory:** 🟠 ATTENTION REQUIRED (Defensive fallback migration incomplete, 2 critical regressions need immediate hotfix)
 
 **Recent Major Achievements:**
+
+**Nov 16: Defensive Fallback Migration - Comprehensive Architecture Review** (commit 73656d9)
+- 🚨 **CRITICAL FINDING:** Partial migration (12% complete) created dangerous split-brain condition
+- ❌ **2 REGRESSIONS IDENTIFIED:** Previously fixed code reverted
+  - `dystopiaProgression.ts` lines 285, 289: QoL assertions reverted to `?? 1.0` fallbacks
+  - `aiSuffering.ts` lines 188, 225, 415: AI suffering metrics silently defaulting to 0
+- 📊 **Migration Status:** 20/169 violations fixed (12%), 149 remain (88% incomplete)
+- 🎯 **Recommendation:** COMPLETE the migration (Option A) - 2-3 day effort
+  - Performance impact: ~2% overhead (negligible for research simulation)
+  - Risk: Inconsistent error handling worse than either pure approach
+  - Benefit: Prevents silent bugs in research calculations (Oct 2025 ecology NaN was masked for months)
+- 📁 **Implementation Roadmap:**
+  - Phase 1: Critical hotfixes (TODAY - dystopia + AI suffering regressions)
+  - Phase 2: High priority calculations (Day 1 - tech tree, research growth, QoL metrics)
+  - Phase 3: Medium priority state access (Day 2 - simulation worker, government actions)
+  - Phase 4: Cleanup & documentation (Day 3 - Monte Carlo validation N=100)
+- 📖 **Review:** reviews/defensive_fallback_architecture_review_20251116.md (314 lines)
+- ⚠️ **Status:** REQUIRES IMMEDIATE ACTION - 2 critical regressions need hotfix
+- 🔄 **Next:** Roy (simulation-maintainer) for Phase 1 hotfixes
 
 **Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
 - 📊 **Architecture Review:** Grade B- (stable with localized issues)
