@@ -47,6 +47,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       return { events: [] };
     }
 
+<<<<<<< Updated upstream
     // === TIER 2 HIGH: UPDATE NITROGEN-FOOD COUPLING (Nov 15, 2025) ===
     // Calculate regional nitrogen reduction effects from deployed technologies
     // Research: Science Advances (2024), Zhang et al. (2021)
@@ -66,6 +67,32 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
 
       // Call nitrogen coupling update - this updates regionalNitrogenManagement state
       updateNitrogenFoodCoupling(state, nitrogenTechEffectiveness);
+=======
+    // TIER 2 HIGH (Nov 15, 2025): Apply nitrogen-food coupling penalties
+    // Research: Nitrogen reduction affects crop yields (regional differentiation)
+    // This runs BEFORE crisis degradation to set baseline food production capacity
+    if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
+      // TODO: Extract deployed nitrogen-reducing tech effectiveness from tech tree
+      // For now, assume no tech deployed (baseline = no nitrogen reduction penalties)
+      const deployedTechEffectiveness: number[] = [];
+
+      // Import nitrogen-food coupling module
+      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
+
+      // Update regional nitrogen management and get global food production multiplier
+      // This updates state.planetaryBoundariesSystem.regionalNitrogenManagement in-place
+      const globalFoodProductionIndex = updateNitrogenFoodCoupling(state, deployedTechEffectiveness);
+
+      // Apply food production impact to regional food security
+      // Note: This is a BASELINE multiplier, crisis degradation happens after
+      // At baseline (no tech, no reduction), globalFoodProductionIndex = 1.0 (no penalty)
+      // With nitrogen reduction tech, index can be <1.0 (yield penalty) or >1.0 (efficiency gains)
+
+      // Log nitrogen coupling impact annually
+      if (state.currentMonth % 12 === 0 && globalFoodProductionIndex !== 1.0) {
+        console.log(`🌾 Nitrogen-Food Coupling: Global food production index = ${globalFoodProductionIndex.toFixed(3)} (1.0 = baseline, <1.0 = yield penalty)`);
+      }
+>>>>>>> Stashed changes
     }
 
     // Validate required systems (use assertions for cleaner error messages)

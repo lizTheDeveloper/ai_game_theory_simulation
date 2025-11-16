@@ -44,9 +44,11 @@ function setDynamicProperty<T extends object>(obj: T, key: string, value: number
 
 /**
  * Type-safe helper to get dynamic property with default
+ * Map-like usage: explicit conditional for dynamic property access
  */
 function getDynamicProperty(obj: object, key: string, defaultValue: number): number {
-  return (obj as Record<string, number>)[key] ?? defaultValue;
+  const value = (obj as Record<string, number>)[key];
+  return value !== undefined ? value : defaultValue;
 }
 
 /**

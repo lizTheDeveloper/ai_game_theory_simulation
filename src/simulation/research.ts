@@ -312,7 +312,10 @@ export function calculateResearchGrowth(
     }
   };
   
-  const baseGrowth = (growthRates[domain]?.[subfield] || 0.02) * 
+  // Get base growth rate for domain/subfield with explicit check
+  const domainRates = growthRates[domain];
+  const subfieldRate = domainRates?.[subfield];
+  const baseGrowth = (subfieldRate !== undefined ? subfieldRate : 0.02) *
     (developmentMode === 'fast' ? 1.0 : 0.6);
   
   // Diminishing returns
@@ -569,8 +572,11 @@ export function applyResearchGrowth(
     const subfield = selection.researchSubfield;
     const currentValue = newProfile.research[domain][subfield];
 
-    // Get government investment for this specific research
-    const govResearchInvestment = govInvestment[domain]?.[subfield] || 0;
+    // Get government investment for this specific research (explicit check for nested access)
+    const domainInvestment = govInvestment[domain];
+    const govResearchInvestment = (domainInvestment && domainInvestment[subfield] !== undefined)
+      ? domainInvestment[subfield]
+      : 0;
 
     // Calculate AI's research capability (average of cognitive + relevant research domain)
     const domainAvg = Object.values(newProfile.research[domain]).reduce((a, b) => a + b, 0) /
