@@ -437,7 +437,167 @@ const ALL_TECH: TechDefinition[] = [
       foodSecurityBonus: 0.03,
     },
   },
-  
+
+  // Nitrogen Management Technologies (TIER 2 HIGH - Nov 15, 2025)
+  // Research: nitrogen_food_coupling_20251115.md (Grade B, 29 sources)
+  {
+    id: 'precision_agriculture',
+    name: 'Precision Agriculture',
+    description: 'Variable-rate tech, split N application, soil sensors - 25-30% N reduction with zero yield penalty',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minCapabilityDimensions: [
+      { dimension: 'digital', threshold: 0.4 },    // IoT sensors, data systems
+      { dimension: 'cognitive', threshold: 0.3 }   // AI optimization
+    ],
+    minEconomicStage: 1.8,
+    minMonth: 12,
+    researchMonthsRequired: 12,
+    researchCost: 250,
+    deploymentCost: 40000,
+    deploymentMonthsRequired: 36,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.28,           // 28% reduction (research-backed)
+      nitrogenUseEfficiency: 0.25,       // Improves NUE from 40% → 50%
+      foodProductivity: 0.05,            // Slight yield INCREASE (overuse removal)
+    },
+    citations: ['Science Advances (2024): Developed nations (France) improved NUE 40% → 58% via precision ag'],
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.03,  // Improves AI agricultural optimization
+      },
+    },
+  },
+  {
+    id: 'nitrification_inhibitors',
+    name: 'Nitrification Inhibitors',
+    description: 'Slow-release fertilizers, urease inhibitors - 15-20% N reduction via improved uptake timing',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 0.3,
+    minEconomicStage: 1.5,
+    minMonth: 6,
+    researchMonthsRequired: 6,
+    researchCost: 100,
+    deploymentCost: 25000,
+    deploymentMonthsRequired: 24,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.18,           // 18% reduction
+      nitrogenUseEfficiency: 0.20,       // Improves uptake efficiency
+      pollutionReduction: 0.15,          // Reduces N runoff/leaching
+    },
+  },
+  {
+    id: 'biological_nitrogen_fixation',
+    name: 'Biological Nitrogen Fixation Enhancement',
+    description: 'Engineered rhizosphere bacteria, nitroplast organelle transfer (2030s) - 40-80% fertilizer elimination',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['precision_agriculture'],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.9 }  // Advanced CRISPR + organelle transfer
+    ],
+    minEconomicStage: 3.0,
+    minMonth: 60,  // 2030s deployment (5 years from 2025)
+    researchMonthsRequired: 72,
+    researchCost: 12000,
+    deploymentCost: 150000,
+    deploymentMonthsRequired: 120,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.60,           // 60% reduction (nitroplast breakthrough)
+      foodProductivity: -0.05,           // Slight yield penalty (energy cost of N fixation)
+      biodiversityBonus: 0.05,           // Reduces agricultural chemical load
+    },
+    citations: [
+      'WEF Top 10 Emerging Technologies 2025: Green nitrogen fixation',
+      'Coale et al. (2024): Nitroplast organelle discovered in marine algae Braarudosphaera bigelowii'
+    ],
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.15 }
+      ],
+    },
+  },
+  {
+    id: 'phosphorus_wastewater_recovery',
+    name: 'Phosphorus Recovery from Wastewater',
+    description: 'Active sediment management, algae-based P capture - remediate legacy phosphorus stocks',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['struvite_recovery'],
+    minAICapability: 0.8,
+    minEconomicStage: 2.5,
+    minMonth: 24,
+    researchMonthsRequired: 24,
+    researchCost: 800,
+    deploymentCost: 60000,
+    deploymentMonthsRequired: 60,
+    deploymentLevel: 0,
+    effects: {
+      phosphorusRecovery: 0.25,          // 25% additional recovery
+      legacyPhosphorusRemediation: 0.10, // Accelerates sediment stock decay
+      pollutionReduction: 0.20,          // Reduces eutrophication
+    },
+    citations: ['Lake Erie case study: Internal sediment loading = 10,000-11,000 MT P/year'],
+  },
+  {
+    id: 'algae_nutrient_capture',
+    name: 'Algae-Based Nutrient Capture',
+    description: 'Phytoremediation networks, algae bioreactors - habitat restoration + nutrient removal',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 0.6,
+    minEconomicStage: 2.0,
+    minMonth: 18,
+    researchMonthsRequired: 18,
+    researchCost: 400,
+    deploymentCost: 35000,
+    deploymentMonthsRequired: 48,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenRecovery: 0.15,            // Captures atmospheric N deposition
+      phosphorusRecovery: 0.12,          // Captures P runoff
+      biodiversityBonus: 0.08,           // Wetland habitat restoration
+      ecosystemHealth: 0.10,             // Trophic cascade restoration
+    },
+  },
+  {
+    id: 'regional_nitrogen_policies',
+    name: 'Regional Nitrogen Management Policies',
+    description: 'Coordinated regional N reduction targets - South Asia 55% overuse buffer, Sub-Saharan fertilizer access',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['precision_agriculture'],
+    minCapabilityDimensions: [
+      { dimension: 'social', threshold: 0.7 },     // International coordination
+      { dimension: 'economic', threshold: 0.6 }    // Economic incentive design
+    ],
+    minEconomicStage: 2.5,
+    minMonth: 36,
+    researchMonthsRequired: 36,
+    researchCost: 1500,
+    deploymentCost: 80000,
+    deploymentMonthsRequired: 84,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.20,           // 20% global reduction via regional differentiation
+      foodSecurityBonus: 0.05,           // Improves yields in underuse regions
+      trustBonus: 0.05,                  // Equitable policy design
+    },
+    citations: ['Science Advances (2024): 55% of South Asian rice farmers overuse nitrogen'],
+    capabilityEffects: {
+      dimensions: {
+        social: 0.05,  // Improves international cooperation
+      },
+    },
+  },
+
   // Freshwater Depletion (4)
   {
     id: 'desalination_advanced',
