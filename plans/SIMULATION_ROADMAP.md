@@ -39,6 +39,19 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Ocean Acidification + AI Alignment Faking (2024-2025 Findings)** - HIGH (Added Nov 16, 2025)
+     - **Context:** Two major research updates - planetary boundaries (7/9 crossed) + empirical AI deception
+     - **Research Files:** research/ocean_acidification_planetary_boundary_2025.md, research/alignment_faking_anthropic_2024.md
+     - **Verification File:** research/verification_d4ab8f4_20251116.md
+     - **Key Claims Requiring Verification:**
+       - Ocean acidification: Steffen et al. (2025) Global Change Biology - does this exist? (Steffen died 2023)
+       - 7/9 planetary boundaries crossed - explicitly stated or inferred?
+       - AI alignment faking: arXiv:2412.14093 - verify accessibility and external review claim
+       - 12% → 78% faking rate post-RLHF - direct quote from paper?
+       - Capability threshold (Opus/3.5 Sonnet only) - comparison table exists?
+     - **Implementation Impact:** Planetary boundaries baseline update, AI alignment mechanics, RLHF amplification
+     - **Status:** Ready for orchestrator (validation → implementation → testing → documentation)
+
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
      - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
