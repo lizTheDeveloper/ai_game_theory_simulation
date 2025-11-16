@@ -1,14 +1,15 @@
 ---
 oldest_source: 1981
 newest_source: 2025
-last_verified: 2025-11-07
+last_verified: 2025-11-14
+key_2025_updates: "Global MPI 2025 (Oct 2025) - climate-poverty intersection, Alkire et al. 2025 methodology"
 ---
 
 # Paradigm 2: Development Needs (Survival-Focused) Framework for Dystopia/Utopia Assessment
 
-**Research Date:** October 19, 2025 (Updated: November 7, 2025)
+**Research Date:** October 19, 2025 (Updated: November 14, 2025)
 **Lead Researcher:** super-alignment-researcher-1 (Updated by: autonomous-researcher)
-**Total Sources:** 20 peer-reviewed + 6 authoritative datasets (2025 update: +5 sources 2024-2025)
+**Total Sources:** 22 peer-reviewed + 6 authoritative datasets (Nov 2025 update: +2 sources from Global MPI 2025)
 **Status:** Phase 1 - Multiple Paradigms DUI Initiative
 
 ---
@@ -323,8 +324,9 @@ Income Index = ln(GNI per capita) - ln(100) / ln(75,000) - ln(100)
 
 **Source:** United Nations Development Programme (UNDP) + Oxford Poverty and Human Development Initiative (OPHI)
 **Published:** Annually since 2010
-**Latest:** 2024 Global MPI (October 2024 release)
-**Coverage:** 112 countries, 6.3 billion people (83% of world population)
+**Latest:** 2025 Global MPI (October 2025 release) - "Overlapping Hardships: Poverty and Climate Hazards"
+**Coverage:** 109 countries, 6.3 billion people (83% of world population)
+**2025 Innovation:** First MPI edition integrating climate hazard exposure data with multidimensional poverty metrics
 
 **Methodology:** Alkire-Foster (AF) dual cutoff method
 
@@ -395,7 +397,37 @@ A (Intensity) = Average deprivation score among the poor
 
 ---
 
-#### 2.2.3 Development Needs Utopia Threshold (MPI-Based)
+#### 2.2.3 Global MPI 2025 Key Findings
+
+**Overall Poverty Statistics:**
+- **1.1 billion people** living in acute multidimensional poverty (18.3% of surveyed population)
+- **Over half (584 million)** are children under 18
+- **740 million poor people** (64.5%) reside in middle-income countries
+
+**Most Common Deprivations:**
+1. Lack of clean cooking fuel (indoor air pollution)
+2. Inadequate housing materials
+3. Poor sanitation access
+4. Malnutrition
+5. Lack of electricity
+
+**Climate-Poverty Intersection (2025 Innovation):**
+- **887 million poor people** (80.6% of all poor) face at least one of four climate hazards: high heat, drought, floods, or air pollution
+- **309 million poor people** (28.1%) experience three to four concurrent hazards simultaneously
+- Climate exposure exacerbates poverty traps: poor people least able to adapt to climate shocks
+
+**Regional Distribution:**
+- **Sub-Saharan Africa:** Highest poverty incidence and intensity
+- **South Asia:** Largest absolute number of poor people
+- **Middle-Income Countries:** Contrary to assumption, nearly 2/3 of multidimensionally poor live in MICs, not LICs
+
+**Citation:**
+- UNDP & OPHI (2025). "2025 Global Multidimensional Poverty Index: Overlapping Hardships - Poverty and Climate Hazards." Human Development Reports.
+- Alkire, S., Mishra, A., Selden, T., & Suppa, N. (2025). "2025 Global MPI Methodological Note." OPHI Research in Progress Series.
+
+---
+
+#### 2.2.4 Development Needs Utopia Threshold (MPI-Based)
 
 **Utopia Criterion:** MPI <0.005 (virtually no multidimensional poverty)
 - Incidence (H) <1% of population poor
