@@ -15,6 +15,8 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite, assertDefined } from '@/simulation/utils/assertions';
+import { allocateComputeGlobally } from '../../computeInfrastructure';
+import { getTotalEffectiveCompute } from '../../computeInfrastructure';
 
 export class ComputeAllocationPhase implements SimulationPhase {
   readonly id = 'compute-allocation';
@@ -24,19 +26,14 @@ export class ComputeAllocationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute compute allocation
-    setDeterministicRng(rng);
-    const { allocateComputeGlobally } = require('../../computeInfrastructure');
-
-    // Validate compute infrastructure exists before allocation
+    setDeterministicRng(rng);// Validate compute infrastructure exists before allocation
     assertDefined(state.computeInfrastructure, {
       location: 'ComputeAllocationPhase.execute',
       valueName: 'computeInfrastructure',
       month: state.currentMonth,
     });
 
-    // Validate total compute is finite (use helper function)
-    const { getTotalEffectiveCompute } = require('../../computeInfrastructure');
-    const totalCompute = getTotalEffectiveCompute(state.computeInfrastructure);
+    // Validate total compute is finite (use helper function)const totalCompute = getTotalEffectiveCompute(state.computeInfrastructure);
     assertFinite(totalCompute, {
       location: 'ComputeAllocationPhase.execute',
       valueName: 'totalEffectiveCompute',

@@ -17,6 +17,8 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { updatePhosphorusSystem, checkPhosphorusTechUnlocks } from '../../phosphorusDepletion';
+import { updateNovelEntitiesSystem, checkNovelEntitiesTechUnlocks } from '../../novelEntities';
 
 export class ResourceSoilPhase implements SimulationPhase {
   readonly id = 'resource-soil';
@@ -37,21 +39,11 @@ export class ResourceSoilPhase implements SimulationPhase {
 
     // === PHOSPHORUS SYSTEM (TIER 1.1) ===
     // Updates phosphorus reserves, geopolitical tensions, supply shocks, tech breakthroughs
-    const {
-      updatePhosphorusSystem,
-      checkPhosphorusTechUnlocks
-    } = require('../../phosphorusDepletion');
-
     updatePhosphorusSystem(state);
     checkPhosphorusTechUnlocks(state);
 
     // === NOVEL ENTITIES SYSTEM (TIER 1.5) ===
     // Updates synthetic chemical pollution, reproductive health, chronic disease, tech breakthroughs
-    const {
-      updateNovelEntitiesSystem,
-      checkNovelEntitiesTechUnlocks
-    } = require('../../novelEntities');
-
     updateNovelEntitiesSystem(state);
     checkNovelEntitiesTechUnlocks(state);
 
