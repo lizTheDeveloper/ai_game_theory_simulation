@@ -60,6 +60,7 @@
 ☄️ | Exogenous shock
 ☀️ | Solar event/solar flare
 🦁 | Wildlife/species impact
+🧹 | Legacy pollution cleanup/remediation
 
 # Nuclear Events
 ☢️ | Nuclear escalation
