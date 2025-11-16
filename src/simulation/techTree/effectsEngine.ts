@@ -816,8 +816,6 @@ function applyGlobalEffects(
         }
         break;
 
-<<<<<<< Updated upstream
-=======
       case 'nitrogenReduction':
         // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food coupling integration
         // Research: research/nitrogen_food_coupling_20251115.md
@@ -867,7 +865,6 @@ function applyGlobalEffects(
         }
         break;
 
->>>>>>> Stashed changes
       case 'biodiversityBonus':
         // Improve biodiversity
         if (gameState.planetaryBoundariesSystem?.boundaries?.biosphere_integrity) {
