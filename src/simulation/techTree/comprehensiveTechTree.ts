@@ -437,7 +437,48 @@ const ALL_TECH: TechDefinition[] = [
       foodSecurityBonus: 0.03,
     },
   },
-  
+
+  // Nitrogen Management (TIER 2 HIGH - Nov 15, 2025)
+  // Research: nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
+  // Expected impact: God mode effectiveness 10% → 30-50% (legacy stock inertia)
+  {
+    id: 'precision_agriculture_nitrogen',
+    name: 'Precision Agriculture (Nitrogen)',
+    description: 'Variable Rate Technology (VRT) + SPAD sensors - 25-30% N fertilizer reduction without yield loss',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 0.5 },  // ML for VRT optimization
+      { dimension: 'physical', threshold: 0.3 }    // Sensor deployment
+    ],
+    minEconomicStage: 1.5,  // Early post-industrial (tech exists 2025)
+    minMonth: 6,
+    researchMonthsRequired: 6,  // Tech already exists, deployment phase
+    researchCost: 200,
+    deploymentCost: 30000,  // Lower cost (software + sensors)
+    deploymentMonthsRequired: 24,  // 2 years to scale globally
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.275,  // 27.5% average (range 25-30%)
+      phosphorusEfficiency: 0.10,  // Side benefit (precision P application)
+      biogeochemicalFlowsReduction: 0.15,  // Reduces N runoff
+    },
+    citations: [
+      'Zhang et al. (2021) - Meta-analysis 1,521 observations, 30-70% N loss reduction',
+      'Frontiers Plant Science (2024) - VRT/SPAD approaches, DOI: 10.3389/fpls.2025.1543714',
+      'Science Advances (2024) - <3% yield loss at <15% N reduction, PMC: 10901370'
+    ],
+  },
+
+  // TODO (Nov 15, 2025): Add remaining 5 nitrogen-reducing technologies
+  // 1. Rhizosphere Engineering (12-18% N reduction)
+  // 2. Nitroplast Integration (40-80% N reduction, breakthrough tech 2040+)
+  // 3. Precision Fermentation (30-50% agricultural N demand reduction)
+  // 4. Phytoremediation Networks (50-70% runoff N capture)
+  // 5. Active Sediment Management (legacy stock remediation)
+  // See research/nitrogen_food_coupling_20251115.md sections 5.1-5.5
+
   // Freshwater Depletion (4)
   {
     id: 'desalination_advanced',

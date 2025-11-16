@@ -1381,7 +1381,36 @@ function applyRegionalEffects(
       });
           }
           break;
-          
+
+        // ========== NITROGEN (TIER 2 HIGH - Nov 15, 2025) ==========
+        // Research: nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
+        case 'nitrogenReduction':
+          // Reduce nitrogen fertilizer inputs
+          // This effect is tracked and applied via updateLegacyNutrientStocks in planetary boundaries
+          // Here we just log the technology deployment
+          console.log(`  🌾 Nitrogen Reduction Tech: ${(value * 100).toFixed(1)}% reduction | Month ${gameState.currentMonth}`);
+          // TODO: When updateNitrogenFoodCoupling is called, it will use deployed tech effectiveness
+          // For now, this is a placeholder - full integration requires calling updateNitrogenFoodCoupling
+          // with array of deployed tech effectiveness values
+          break;
+
+        case 'biogeochemicalFlowsReduction':
+          // Reduce biogeochemical flows boundary value directly
+          if (gameState.planetaryBoundariesSystem?.boundaries?.biogeochemical_flows) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.biogeochemical_flows;
+            boundary.currentValue = assertFinite(Math.max(
+              0,
+              boundary.currentValue - value * 0.01
+            ), {
+              location: 'applyRegionalEffects:biogeochemicalFlowsReduction',
+              valueName: 'currentValue',
+              month: gameState.currentMonth
+            });
+            // Trigger boundary recovery tracking
+            triggerBoundaryRecovery(gameState, 'biogeochemical_flows');
+          }
+          break;
+
         // ========== POLLUTION ==========
         case 'pollutionReduction':
           // Reduce pollution levels

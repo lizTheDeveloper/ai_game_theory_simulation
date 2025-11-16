@@ -808,28 +808,48 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Base calculation (depletion factor)
     const depletion = 1 - reserves; // reserves is already 0-1 scale
 
-    // TIER 2 HIGH: Factor in legacy nutrient stock releases
+    // TIER 2 HIGH: Update legacy nutrient stocks and get effective pollution
     // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
-    let legacyContribution = 0;
+    // Research: Lake Erie internal loading = external loading (10,000 MT P/year)
+    // Nitrogen soil stocks: 30 year half-life, Phosphorus sediment: 100 year half-life
+    let effectiveNitrogen = 10.0;  // Mt N/month baseline (120 Mt/year ÷ 12)
+    let effectivePhosphorus = 2.1;  // Mt P/month baseline (25 Mt/year ÷ 12)
+
     if (system.legacyNutrientStock) {
       // Import the update function dynamically to avoid circular dependencies
-      const { getLegacyContributionPercentage } = require('@/simulation/legacyNutrientStocks');
-      const legacyReleases = getLegacyContributionPercentage(state);
+      const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
 
-      // Legacy releases are in Mt/month - normalize to boundary scale
-      // Baseline (2025): ~120 Mt N/year current input, ~30 Mt/year from legacy stocks = 25% legacy contribution
-      // At boundary value 2.94, legacy contributes ~0.75 to boundary value
-      const LEGACY_SCALING_FACTOR = 0.025;  // Calibrated to match Lake Erie case (50% internal loading)
-      legacyContribution = (legacyReleases.nitrogen + legacyReleases.phosphorus) * LEGACY_SCALING_FACTOR;
+      // Current monthly inputs (baseline: 120 Mt N/year, 25 Mt P/year)
+      // TODO: Get from actual agricultural nitrogen/phosphorus use when available
+      const currentNitrogenInput = 10.0;  // Mt N/month (baseline)
+      const currentPhosphorusInput = 2.1;  // Mt P/month (baseline)
+
+      // Update stocks and get effective pollution (current + legacy releases)
+      const effectivePollution = updateLegacyNutrientStocks(
+        state,
+        currentNitrogenInput,
+        currentPhosphorusInput
+      );
+
+      effectiveNitrogen = effectivePollution.effectiveNitrogen;
+      effectivePhosphorus = effectivePollution.effectivePhosphorus;
     }
 
-    // Boundary value = baseline depletion + legacy contribution
-    // This means: reducing current inputs helps, but legacy stocks slow recovery dramatically
-    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 + depletion * 0.5 + legacyContribution), {
+    // Boundary value calculation
+    // Baseline (2025): 2.94 (294% of safe boundary)
+    // Scale by effective pollution vs baseline pollution
+    // Baseline total: 12.1 Mt/month (10 N + 2.1 P)
+    const baselinePollution = 12.1;
+    const currentEffectivePollution = effectiveNitrogen + effectivePhosphorus;
+    const pollutionRatio = currentEffectivePollution / baselinePollution;
+
+    // Boundary value = baseline × pollution ratio + depletion factor
+    // Depletion factor: phosphorus reserves declining increases boundary value
+    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 * pollutionRatio + depletion * 0.5), {
       location: 'updatePlanetaryBoundaries:biogeochemical',
       valueName: 'biogeochemical_flows.currentValue',
       month: state.currentMonth,
-      additionalInfo: { reserves, depletion, legacyContribution }
+      additionalInfo: { reserves, depletion, effectiveNitrogen, effectivePhosphorus, pollutionRatio }
     });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
