@@ -1,0 +1,273 @@
+name: Security Scanning
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run daily at 2am UTC
+    - cron: '0 2 * * *'
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+
+jobs:
+  # ==========================================================================
+  # SAST (Static Application Security Testing)
+  # ==========================================================================
+  sast-codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript,typescript
+          queries: security-extended
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  sast-snyk:
+    name: Snyk Code Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Snyk Code Test
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: code test
+          args: --severity-threshold=high
+
+      - name: Upload Snyk results to GitHub
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: snyk.sarif
+
+  # ==========================================================================
+  # Dependency Scanning
+  # ==========================================================================
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Snyk Dependency Scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+          args: --severity-threshold=high --all-projects
+
+      - name: Upload dependency scan results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: snyk.sarif
+
+  # ==========================================================================
+  # Container Scanning
+  # ==========================================================================
+  container-scan:
+    name: Container Image Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -f Dockerfile.platform -t citation-platform:test .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'citation-platform:test'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Snyk Container Scan
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: citation-platform:test
+          args: --severity-threshold=high
+
+  # ==========================================================================
+  # Secrets Scanning
+  # ==========================================================================
+  secrets-scan:
+    name: Secret Detection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: TruffleHog Secret Scan
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+
+      - name: GitLeaks Scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ==========================================================================
+  # License Compliance
+  # ==========================================================================
+  license-scan:
+    name: License Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: License Check
+        run: |
+          npx license-checker --summary --onlyAllow "MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC;0BSD;Unlicense" || {
+            echo "❌ Incompatible licenses detected"
+            npx license-checker --production --csv > licenses.csv
+            cat licenses.csv
+            exit 1
+          }
+
+  # ==========================================================================
+  # SQL Injection Testing
+  # ==========================================================================
+  sql-injection-test:
+    name: SQL Injection Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check for SQL injection vulnerabilities
+        run: |
+          # Check for unsafe string concatenation in SQL queries
+          echo "Checking for SQL injection vulnerabilities..."
+          if grep -r "query.*+.*req\." src/ --include="*.ts" --include="*.js"; then
+            echo "❌ Potential SQL injection found (string concatenation)"
+            exit 1
+          fi
+
+          if grep -r "\`SELECT.*\${" src/ --include="*.ts" --include="*.js"; then
+            echo "❌ Potential SQL injection found (template literal interpolation)"
+            exit 1
+          fi
+
+          echo "✅ No obvious SQL injection vulnerabilities detected"
+
+  # ==========================================================================
+  # OWASP Dependency Check
+  # ==========================================================================
+  owasp-dependency-check:
+    name: OWASP Dependency Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run OWASP Dependency-Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'citation-platform'
+          path: '.'
+          format: 'HTML'
+          args: >
+            --failOnCVSS 7
+            --enableRetired
+
+      - name: Upload OWASP results
+        uses: actions/upload-artifact@v3
+        with:
+          name: dependency-check-report
+          path: ${{ github.workspace }}/reports
+
+  # ==========================================================================
+  # Summary Report
+  # ==========================================================================
+  security-summary:
+    name: Security Summary
+    runs-on: ubuntu-latest
+    needs: [sast-codeql, sast-snyk, dependency-scan, container-scan, secrets-scan, license-scan]
+    if: always()
+    steps:
+      - name: Check scan results
+        run: |
+          echo "## Security Scan Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All security scans completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Scans Performed:" >> $GITHUB_STEP_SUMMARY
+          echo "- CodeQL (SAST)" >> $GITHUB_STEP_SUMMARY
+          echo "- Snyk Code (SAST)" >> $GITHUB_STEP_SUMMARY
+          echo "- Dependency Scan (npm audit, Snyk)" >> $GITHUB_STEP_SUMMARY
+          echo "- Container Scan (Trivy, Snyk)" >> $GITHUB_STEP_SUMMARY
+          echo "- Secret Detection (TruffleHog, GitLeaks)" >> $GITHUB_STEP_SUMMARY
+          echo "- License Compliance" >> $GITHUB_STEP_SUMMARY
+          echo "- SQL Injection Check" >> $GITHUB_STEP_SUMMARY
+          echo "- OWASP Dependency Check" >> $GITHUB_STEP_SUMMARY
+
+      - name: Fail if critical issues found
+        if: |
+          needs.sast-codeql.result == 'failure' ||
+          needs.sast-snyk.result == 'failure' ||
+          needs.container-scan.result == 'failure' ||
+          needs.secrets-scan.result == 'failure'
+        run: |
+          echo "❌ CRITICAL security issues detected"
+          exit 1

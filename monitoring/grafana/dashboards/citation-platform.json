@@ -1,0 +1,138 @@
+{
+  "dashboard": {
+    "title": "Citation Integrity Platform",
+    "tags": ["citation", "platform", "monitoring"],
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 1,
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Request Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total[5m])",
+            "legendFormat": "{{method}} {{path}}"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
+      },
+      {
+        "id": 2,
+        "title": "Error Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total{status=~\"5..\"}[5m])",
+            "legendFormat": "5xx errors"
+          },
+          {
+            "expr": "rate(http_requests_total{status=~\"4..\"}[5m])",
+            "legendFormat": "4xx errors"
+          }
+        ],
+        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+      },
+      {
+        "id": 3,
+        "title": "Response Time (p95)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "p95"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8}
+      },
+      {
+        "id": 4,
+        "title": "Database Connections",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "db_pool_size{state=\"total\"}",
+            "legendFormat": "Total"
+          },
+          {
+            "expr": "db_pool_size{state=\"idle\"}",
+            "legendFormat": "Idle"
+          },
+          {
+            "expr": "db_pool_size{state=\"waiting\"}",
+            "legendFormat": "Waiting"
+          }
+        ],
+        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8}
+      },
+      {
+        "id": 5,
+        "title": "Cache Hit Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "cache_hit_rate",
+            "legendFormat": "{{cache_type}}"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 16, "w": 12, "h": 8}
+      },
+      {
+        "id": 6,
+        "title": "LSS Alerts",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "active_lss_alerts{severity=\"CRITICAL\"}",
+            "legendFormat": "Critical"
+          },
+          {
+            "expr": "active_lss_alerts{severity=\"ERROR\"}",
+            "legendFormat": "Error"
+          },
+          {
+            "expr": "active_lss_alerts{severity=\"WARNING\"}",
+            "legendFormat": "Warning"
+          }
+        ],
+        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 8}
+      },
+      {
+        "id": 7,
+        "title": "Citation Verification Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(citation_verifications_total[5m])",
+            "legendFormat": "{{status}}"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 24, "w": 12, "h": 8}
+      },
+      {
+        "id": 8,
+        "title": "Unverified Citations",
+        "type": "singlestat",
+        "targets": [
+          {
+            "expr": "unverified_citations"
+          }
+        ],
+        "gridPos": {"x": 12, "y": 24, "w": 6, "h": 4}
+      },
+      {
+        "id": 9,
+        "title": "Fabrication Rate",
+        "type": "singlestat",
+        "targets": [
+          {
+            "expr": "fabrication_rate"
+          }
+        ],
+        "gridPos": {"x": 18, "y": 24, "w": 6, "h": 4}
+      }
+    ]
+  }
+}

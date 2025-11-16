@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: citation-prod
+
+bases:
+- ../../base
+
+patchesStrategicMerge:
+- replica-patch.yaml
+- resource-patch.yaml
+
+images:
+- name: citation-platform
+  newTag: v1.0.0
+
+configMapGenerator:
+- name: citation-platform-config
+  behavior: merge
+  literals:
+  - LOG_LEVEL=warn
+  - PGPOOL_MAX=50
+
+replicas:
+- name: citation-platform-api
+  count: 5

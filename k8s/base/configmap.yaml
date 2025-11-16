@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: citation-platform-config
+  labels:
+    app: citation-platform
+data:
+  NODE_ENV: "production"
+  PORT: "4000"
+  PGPOOL_MAX: "20"
+  REDIS_DB: "0"
+  REDIS_KEY_PREFIX: "citation:"
+  ENABLE_METRICS: "true"
+  ENABLE_TRACING: "true"
+  LOG_LEVEL: "info"

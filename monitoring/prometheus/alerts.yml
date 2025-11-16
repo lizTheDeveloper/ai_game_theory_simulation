@@ -1,0 +1,286 @@
+# Prometheus Alert Rules for Citation Integrity Platform
+
+groups:
+  # ============================================================================
+  # Service Health Alerts
+  # ============================================================================
+  - name: service_health
+    interval: 30s
+    rules:
+      - alert: ServiceDown
+        expr: up{job="citation-platform-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: api
+        annotations:
+          summary: "Citation Platform API is down"
+          description: "{{ $labels.instance }} has been down for more than 1 minute."
+
+      - alert: HighErrorRate
+        expr: |
+          rate(http_requests_total{status=~"5.."}[5m]) /
+          rate(http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+        annotations:
+          summary: "High HTTP error rate"
+          description: "Error rate is {{ $value | humanizePercentage }} (threshold: 5%)"
+
+      - alert: SlowResponseTime
+        expr: |
+          histogram_quantile(0.95,
+            rate(http_request_duration_seconds_bucket[5m])
+          ) > 5
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+        annotations:
+          summary: "Slow API response time"
+          description: "95th percentile response time is {{ $value }}s (threshold: 5s)"
+
+  # ============================================================================
+  # Database Alerts
+  # ============================================================================
+  - name: database
+    interval: 30s
+    rules:
+      - alert: DatabaseDown
+        expr: up{job="postgres"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: database
+        annotations:
+          summary: "PostgreSQL is down"
+          description: "Database has been unavailable for more than 1 minute."
+
+      - alert: HighDatabaseConnections
+        expr: db_pool_size{state="total"} > 18
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "High database connection usage"
+          description: "Pool has {{ $value }} connections (max: 20)"
+
+      - alert: SlowQueries
+        expr: rate(db_slow_queries_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "High rate of slow queries"
+          description: "{{ $value }} slow queries/sec detected"
+
+      - alert: DatabaseQueryErrors
+        expr: rate(db_queries_total{status="error"}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "Database query errors detected"
+          description: "{{ $value }} query errors/sec"
+
+  # ============================================================================
+  # Cache Alerts
+  # ============================================================================
+  - name: cache
+    interval: 30s
+    rules:
+      - alert: RedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: warning
+          component: cache
+        annotations:
+          summary: "Redis is down"
+          description: "Redis cache unavailable (fallback to in-memory)"
+
+      - alert: LowCacheHitRate
+        expr: cache_hit_rate < 0.7
+        for: 10m
+        labels:
+          severity: warning
+          component: cache
+        annotations:
+          summary: "Low cache hit rate"
+          description: "Hit rate is {{ $value | humanizePercentage }} (threshold: 70%)"
+
+  # ============================================================================
+  # Citation Verification Alerts
+  # ============================================================================
+  - name: citation_verification
+    interval: 60s
+    rules:
+      - alert: HighVerificationFailureRate
+        expr: |
+          rate(citation_verifications_total{status="failed"}[10m]) /
+          rate(citation_verifications_total[10m]) > 0.2
+        for: 10m
+        labels:
+          severity: warning
+          component: verification
+        annotations:
+          summary: "High citation verification failure rate"
+          description: "{{ $value | humanizePercentage }} of verifications failing"
+
+      - alert: SlowVerification
+        expr: |
+          histogram_quantile(0.95,
+            rate(citation_verification_duration_seconds_bucket[10m])
+          ) > 30
+        for: 10m
+        labels:
+          severity: warning
+          component: verification
+        annotations:
+          summary: "Slow citation verification"
+          description: "95th percentile verification time is {{ $value }}s"
+
+      - alert: HighUnverifiedCitations
+        expr: unverified_citations > 100
+        for: 1h
+        labels:
+          severity: info
+          component: verification
+        annotations:
+          summary: "Many unverified citations"
+          description: "{{ $value }} citations pending verification"
+
+  # ============================================================================
+  # LSS (Learning Surprise Signal) Alerts
+  # ============================================================================
+  - name: lss_monitoring
+    interval: 60s
+    rules:
+      - alert: CriticalLSSAlert
+        expr: active_lss_alerts{severity="CRITICAL"} > 0
+        for: 1m
+        labels:
+          severity: critical
+          component: lss
+        annotations:
+          summary: "Critical LSS alert active"
+          description: "{{ $value }} critical LSS alerts detected"
+
+      - alert: HighLSSAlertRate
+        expr: rate(lss_alerts_total{severity=~"ERROR|CRITICAL"}[10m]) > 0.1
+        for: 10m
+        labels:
+          severity: warning
+          component: lss
+        annotations:
+          summary: "High LSS alert rate"
+          description: "{{ $value }} LSS alerts/sec"
+
+  # ============================================================================
+  # Parameter Drift Alerts
+  # ============================================================================
+  - name: parameter_drift
+    interval: 60s
+    rules:
+      - alert: HighParameterDrift
+        expr: rate(parameter_drift_total{severity="CRITICAL"}[10m]) > 0.01
+        for: 5m
+        labels:
+          severity: warning
+          component: provenance
+        annotations:
+          summary: "High parameter drift detected"
+          description: "{{ $value }} critical drift events/sec"
+
+      - alert: ManyParametersWithoutCitation
+        expr: parameters_without_citation > 10
+        for: 1h
+        labels:
+          severity: info
+          component: provenance
+        annotations:
+          summary: "Parameters missing citations"
+          description: "{{ $value }} parameters lack citation provenance"
+
+  # ============================================================================
+  # Resource Utilization Alerts
+  # ============================================================================
+  - name: resources
+    interval: 30s
+    rules:
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_seconds_total[5m]) > 0.8
+        for: 10m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is {{ $value | humanizePercentage }}"
+
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes / 1e9 > 1.8
+        for: 5m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is {{ $value }}GB (limit: 2GB)"
+
+  # ============================================================================
+  # Queue Alerts
+  # ============================================================================
+  - name: queues
+    interval: 60s
+    rules:
+      - alert: QueueBacklog
+        expr: queue_size > 1000
+        for: 10m
+        labels:
+          severity: warning
+          component: queue
+        annotations:
+          summary: "Queue backlog detected"
+          description: "{{ $labels.queue_name }} has {{ $value }} items"
+
+  # ============================================================================
+  # Business Metrics Alerts
+  # ============================================================================
+  - name: business_metrics
+    interval: 300s  # 5 minutes
+    rules:
+      - alert: HighFabricationRate
+        expr: fabrication_rate > 0.05
+        for: 30m
+        labels:
+          severity: warning
+          component: quality
+        annotations:
+          summary: "High fabrication rate detected"
+          description: "Fabrication rate is {{ $value | humanizePercentage }} (threshold: 5%)"
+
+      - alert: LowProvenanceCoverage
+        expr: provenance_coverage < 0.8
+        for: 1h
+        labels:
+          severity: info
+          component: quality
+        annotations:
+          summary: "Low provenance coverage"
+          description: "Only {{ $value | humanizePercentage }} of parameters have provenance"
+
+      - alert: LowInterRaterReliability
+        expr: inter_rater_reliability < 0.7
+        for: 1h
+        labels:
+          severity: warning
+          component: quality
+        annotations:
+          summary: "Low inter-rater reliability"
+          description: "IRR is {{ $value | humanizePercentage }} (threshold: 70%)"

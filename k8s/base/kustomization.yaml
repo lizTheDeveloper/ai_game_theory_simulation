@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: default
+
+commonLabels:
+  app: citation-platform
+  managed-by: kustomize
+
+resources:
+- deployment.yaml
+- service.yaml
+- hpa.yaml
+- ingress.yaml
+- configmap.yaml
+- secret.yaml
+- serviceaccount.yaml
+
+images:
+- name: citation-platform
+  newTag: latest

@@ -1,0 +1,166 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: citation-platform-api
+  labels:
+    app: citation-platform
+    component: api
+    tier: backend
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: citation-platform
+      component: api
+  template:
+    metadata:
+      labels:
+        app: citation-platform
+        component: api
+        tier: backend
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "4000"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: citation-platform-api
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        fsGroup: 1001
+
+      containers:
+      - name: api
+        image: citation-platform:latest
+        imagePullPolicy: IfNotPresent
+
+        ports:
+        - name: http
+          containerPort: 4000
+          protocol: TCP
+
+        env:
+        - name: NODE_ENV
+          value: production
+        - name: PORT
+          value: "4000"
+
+        # PostgreSQL
+        - name: PGHOST
+          value: postgres-service
+        - name: PGPORT
+          value: "5432"
+        - name: PGDATABASE
+          valueFrom:
+            secretKeyRef:
+              name: citation-platform-secrets
+              key: postgres-database
+        - name: PGUSER
+          valueFrom:
+            secretKeyRef:
+              name: citation-platform-secrets
+              key: postgres-user
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: citation-platform-secrets
+              key: postgres-password
+        - name: PGPOOL_MAX
+          value: "20"
+        - name: PGSSL
+          value: "true"
+
+        # Redis
+        - name: REDIS_HOST
+          value: redis-service
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: citation-platform-secrets
+              key: redis-password
+        - name: REDIS_DB
+          value: "0"
+        - name: REDIS_KEY_PREFIX
+          value: "citation:"
+        - name: REDIS_FALLBACK_ENABLED
+          value: "true"
+
+        # API Security
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: citation-platform-secrets
+              key: api-key
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: citation-platform-secrets
+              key: jwt-secret
+
+        # Observability
+        - name: ENABLE_METRICS
+          value: "true"
+        - name: ENABLE_TRACING
+          value: "true"
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://jaeger-collector:4318
+        - name: OTEL_SERVICE_NAME
+          value: citation-platform-api
+
+        resources:
+          requests:
+            cpu: 250m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 4000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 4000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
+
+        volumeMounts:
+        - name: logs
+          mountPath: /app/logs
+        - name: tmp
+          mountPath: /tmp
+
+      volumes:
+      - name: logs
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - citation-platform
+              topologyKey: kubernetes.io/hostname
