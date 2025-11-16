@@ -24,6 +24,7 @@ import { GameState } from '@/types/game';
 import { TechTreeState, RegionalTechDeployment } from './engine';
 import { getTechById } from './comprehensiveTechTree';
 import { addSimulationEvent } from '../utils/eventLogger';
+import { assertStateProperty } from '../utils/assertions';
 
 /**
  * Deployment timescale parameters (months to full deployment)
@@ -153,8 +154,8 @@ export function sigmoidDeploymentCurve(
  * - International cooperation: Critical for global tech (climate, AI)
  */
 export function getGovernanceMultiplier(gameState: GameState): number {
-  const enforcement = gameState.government?.governanceQuality?.institutionalCapacity ?? 0.5;
-  const cooperation = gameState.government?.structuralChoices?.internationalCoordination ? 1.0 : 0.5;
+  const enforcement = gameState.government.governanceQuality.institutionalCapacity;
+  const cooperation = gameState.government.structuralChoices?.internationalCoordination ? 1.0 : 0.5;
 
   const governanceCapacity = (enforcement + cooperation) / 2;
 
@@ -181,7 +182,11 @@ export function getGovernanceMultiplier(gameState: GameState): number {
  * - >3.0°C: 0.60× (40% penalty, severe feedbacks)
  */
 export function getClimateRecoveryMultiplier(gameState: GameState): number {
-  const globalWarming = gameState.planetaryBoundariesSystem?.boundaries?.['climateChange']?.currentValue ?? 1.2;
+  const climateChangeBoundary = gameState.planetaryBoundariesSystem.boundaries['climateChange'];
+  if (!climateChangeBoundary) {
+    throw new Error(`❌ climateChange boundary not found in planetaryBoundariesSystem at month ${gameState.currentMonth}`);
+  }
+  const globalWarming = climateChangeBoundary.currentValue;
 
   if (globalWarming < 1.5) return 1.0;
   if (globalWarming < 2.0) return 0.95;
