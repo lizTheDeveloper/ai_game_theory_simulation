@@ -22,6 +22,7 @@ import {
   assertResourceAllocation,
   assertProbability,
   assertInRange,
+  assertStateProperty,
 } from '@/simulation/utils/assertions';
 import {
   updateEmergencyResponses,
@@ -111,11 +112,24 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
     // CLIMATE CRISIS (multiple planetary boundaries)
     // FIX #11A: Keep at 0.35 (moderate degradation triggers response)
-    // KEEP LEGITIMATE DEFAULTS - systems may not be initialized yet
-    const climateChangeCurrent = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
+    const climateChangeCurrent = assertStateProperty(
+      state.planetaryBoundariesSystem.boundaries.climate_change,
+      'currentValue',
+      { location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses', month: state.currentMonth }
+    );
+    const waterStress = assertStateProperty(
+      state.freshwaterSystem,
+      'waterStress',
+      { location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses', month: state.currentMonth }
+    );
+    const phosphorusReserves = assertStateProperty(
+      state.phosphorusSystem,
+      'reserves',
+      { location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses', month: state.currentMonth }
+    );
     const climateCrisisActive = (
-      (state.freshwaterSystem?.waterStress || 0) > 0.65 ||
-      (state.phosphorusSystem?.reserves || 1.0) < 0.35 ||
+      waterStress > 0.65 ||
+      phosphorusReserves < 0.35 ||
       climateChangeCurrent > 0.6
     );
 
@@ -137,10 +151,9 @@ export class EmergencyResponsePhase implements SimulationPhase {
       const existing = getActiveResponse(state, 'climate');
       if (!existing) {
         // Estimate severity from planetary boundaries
-        // KEEP LEGITIMATE DEFAULTS - systems may not be initialized yet
         const severity = Math.max(
-          state.freshwaterSystem?.waterStress || 0,
-          1.0 - (state.phosphorusSystem?.reserves || 1.0),
+          waterStress,
+          1.0 - phosphorusReserves,
           climateChangeCurrent
         );
         const response = deployEmergencyResponse(
@@ -217,12 +230,17 @@ export class EmergencyResponsePhase implements SimulationPhase {
       state.socialAccumulation.socialCohesion.civilLiberties
     ) / 300;
 
-    // KEEP LEGITIMATE DEFAULT - institutionalLegitimacy may not be initialized yet
+    const institutionalLegitimacy = assertStateProperty(
+      state.socialAccumulation,
+      'institutionalLegitimacy',
+      { location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses', month: state.currentMonth }
+    );
+
     const socialCrisisDetected = (
       state.socialAccumulation.socialUnrestActive ||
       state.society.trustInAI < 0.30 ||  // Trust SEVERE collapse (was 0.4, too early)
       avgCohesion < 0.35 ||  // Cohesion SEVERE degradation
-      ((state.socialAccumulation.institutionalLegitimacy || 0.7) < 0.30)  // Institutional severe failure
+      institutionalLegitimacy < 0.30  // Institutional severe failure
     );
 
     if (socialCrisisDetected) {
@@ -233,7 +251,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
           state.socialAccumulation.socialUnrestActive ? 0.7 : 0.0,
           1.0 - state.society.trustInAI,
           1.0 - avgCohesion,
-          1.0 - state.socialAccumulation.institutionalLegitimacy
+          1.0 - institutionalLegitimacy
         );
 
         const response = deployEmergencyResponse(
@@ -487,26 +505,35 @@ export class EmergencyResponsePhase implements SimulationPhase {
     bifState: import('@/types/bifurcation').BifurcationState
   ): { crisisType: 'climate' | 'social' | 'economic' | 'pandemic' | 'technological' | 'nuclear', name: string } | null {
     // Calculate current values for all thresholds (with assertions)
-    const climateStability = assertFinite(
-      state.environmentalAccumulation?.climateStability ?? 0.5,
+    const climateStability = assertStateProperty(
+      state.environmentalAccumulation,
+      'climateStability',
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        valueName: 'climateStability',
         month: state.currentMonth
       }
     );
 
-    const socialCohesion = assertFinite(
-      state.society?.coordinationCapacity ?? 0.5,
+    const socialCohesion = assertStateProperty(
+      state.society,
+      'coordinationCapacity',
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        valueName: 'socialCohesion',
+        month: state.currentMonth
+      }
+    );
+
+    const economicTransitionStage = assertStateProperty(
+      state.globalMetrics,
+      'economicTransitionStage',
+      {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
         month: state.currentMonth
       }
     );
 
     const economicStability = assertFinite(
-      (state.globalMetrics?.economicTransitionStage ?? 2) / 4.0,
+      economicTransitionStage / 4.0,
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'economicStability',
@@ -514,11 +541,11 @@ export class EmergencyResponsePhase implements SimulationPhase {
       }
     );
 
-    const governanceLegitimacy = assertFinite(
-      state.government?.legitimacy ?? 0.5,
+    const governanceLegitimacy = assertStateProperty(
+      state.government,
+      'legitimacy',
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        valueName: 'governanceLegitimacy',
         month: state.currentMonth
       }
     );
