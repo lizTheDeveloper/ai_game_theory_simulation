@@ -64,6 +64,9 @@ Boundaries update based on simulation state:
   - **Growth model (Oct 30, 2025):** Percentage-based growth matching IPBES research (10-30% per decade), with logistic saturation at 1000× max to prevent unrealistic exponential accumulation
 - **Freshwater:** Driven by freshwater system (water stress)
 - **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives), nitrogen-food coupling with regional differentiation (Nov 2025)
+  - **Nitrogen-Food Integration (Nov 16, 2025):** Legacy stocks contribute 18.6% baseline pollution (10 Mt N/mo + 2.08 Mt P/mo), tech deployment reduces current inputs but stocks decay slowly (exponential, decades-centuries timescale)
+  - **Regional Penalties:** South Asia 55% nitrogen overuse zones face zero food penalty; moderate zones face 30-40% yield reduction with aggressive N reduction
+  - **Recovery Inertia:** God mode effectiveness expected at 30-50% (vs 10% pre-integration) due to legacy stock half-lives (30yr soil, 100yr sediment)
 - **Novel Entities:** Driven by environmental pollution
 - **Ocean Acidification:** Driven by ocean acidification system
 - **Ozone:** Improving +0.06%/year (Montreal Protocol recovery)
