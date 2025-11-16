@@ -808,19 +808,50 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Base calculation (depletion factor)
     const depletion = 1 - reserves; // reserves is already 0-1 scale
 
-    // TIER 2 HIGH: Factor in legacy nutrient stock releases
+    // TIER 2 HIGH: Update legacy nutrient stocks and nitrogen-food coupling
     // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
+    // Nitrogen-food coupling: reducing nitrogen hurts crop yields (regional nonlinear penalties)
+    let effectiveNitrogen = 0;
+    let effectivePhosphorus = 0;
     let legacyContribution = 0;
+    let globalFoodProductionIndex = 1.0;
+
     if (system.legacyNutrientStock) {
-      // Import the update function dynamically to avoid circular dependencies
-      const { getLegacyContributionPercentage } = require('@/simulation/legacyNutrientStocks');
-      const legacyReleases = getLegacyContributionPercentage(state);
+      // Import update functions dynamically to avoid circular dependencies
+      const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
+      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
+
+      // Get deployed nitrogen-reducing technologies
+      // TODO (TIER 2 HIGH): Connect to actual technology deployment
+      // 6 biogeochemical restoration technologies from research (nitrogen_food_coupling_20251115.md):
+      // 1. Precision agriculture (25-30% N reduction) - TIER 3 or god mode policy
+      // 2. Vertical/indoor farming (60% N reduction) - TIER 3 or god mode policy
+      // 3. Food waste reduction (30% demand reduction) - TIER 3 or god mode policy
+      // 4. Nitroplast integration (20-40% reduction, 2040+, 40% success probability) - TIER 4 breakthrough
+      // 5. Precision fermentation (30-50% agricultural N reduction) - TIER 3 or god mode policy
+      // 6. Dietary shift (protein transition 50:50 A:P ratio) - TIER 3 or god mode policy
+      const deployedTechEffectiveness: number[] = [];
+      // For now, no technologies deployed (baseline scenario)
+
+      // Update nitrogen-food coupling and get global food production impact
+      globalFoodProductionIndex = updateNitrogenFoodCoupling(state, deployedTechEffectiveness);
+
+      // Current nitrogen and phosphorus inputs (Mt/month)
+      // Baseline (2025): ~120 Mt N/year = 10 Mt/month, ~25 Mt P/year = 2.08 Mt/month
+      // Food production index can modify this (lower food production = less nitrogen needed)
+      const currentNInput = 10.0 * globalFoodProductionIndex;  // Mt N/month
+      const currentPInput = 2.08 * Math.sqrt(globalFoodProductionIndex);  // Mt P/month (less elastic than N)
+
+      // Update stocks and get effective pollution (current + legacy releases)
+      const effective = updateLegacyNutrientStocks(state, currentNInput, currentPInput);
+      effectiveNitrogen = effective.effectiveNitrogen;
+      effectivePhosphorus = effective.effectivePhosphorus;
 
       // Legacy releases are in Mt/month - normalize to boundary scale
       // Baseline (2025): ~120 Mt N/year current input, ~30 Mt/year from legacy stocks = 25% legacy contribution
       // At boundary value 2.94, legacy contributes ~0.75 to boundary value
       const LEGACY_SCALING_FACTOR = 0.025;  // Calibrated to match Lake Erie case (50% internal loading)
-      legacyContribution = (legacyReleases.nitrogen + legacyReleases.phosphorus) * LEGACY_SCALING_FACTOR;
+      legacyContribution = (effectiveNitrogen + effectivePhosphorus - currentNInput - currentPInput) * LEGACY_SCALING_FACTOR;
     }
 
     // Boundary value = baseline depletion + legacy contribution
@@ -829,7 +860,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       location: 'updatePlanetaryBoundaries:biogeochemical',
       valueName: 'biogeochemical_flows.currentValue',
       month: state.currentMonth,
-      additionalInfo: { reserves, depletion, legacyContribution }
+      additionalInfo: { reserves, depletion, legacyContribution, effectiveNitrogen, effectivePhosphorus }
     });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
