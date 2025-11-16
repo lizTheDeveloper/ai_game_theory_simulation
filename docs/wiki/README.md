@@ -5375,7 +5375,11 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 - This represents a **speculative rapid cascade scenario** (3-10× compressed timeline) exploring tail-risk possibilities under multi-boundary transgression—not empirically validated
 
 **Remaining Uncertainties:**
-1. **Cascade speed:** Do tipping points trigger faster with multiple simultaneous boundary crossings? **Research shows cascades unfold over 100-1,000+ years** (Wunderling et al. 2024), but acceleration under unprecedented multi-boundary stress remains poorly constrained.
+1. **Cascade speed:** Do tipping points trigger faster with multiple simultaneous boundary crossings? **Research shows cascades unfold over 100-1,000+ years** (Wunderling et al. 2024), but acceleration under unprecedented multi-boundary stress remains poorly constrained. Wunderling et al. (2024) identifies key interaction mechanisms:
+   - **Bipolar seesaw:** WAIS collapse can initially strengthen AMOC via deep-ocean adjustment, then weaken it (non-monotonic coupling)
+   - **Arctic-AMOC feedback:** Sea ice loss propagates southward over multi-decadal timescales, creating fast-slow interactions
+   - **Non-stationarity:** Interaction strengths vary with element states (e.g., GIS-AMOC coupling depends on ice sheet size)
+   - **Destabilizing dominance:** Most interactions appear destabilizing rather than stabilizing (explosive cascade risk)
 2. **Adaptation exclusion:** Simulation may underestimate human adaptation and emergency mitigation responses
 3. **Nonlinear mortality:** Does death rate accelerate or plateau in extreme multi-crisis scenarios? Limited empirical data.
 4. **Timeline compression validity:** No empirical evidence supports cascades proceeding on 30-year timescales. Historical analogues (Dansgaard-Oeschger events) show 1,000-4,000 year transitions.
@@ -5391,7 +5395,7 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 **Research Foundation:**
 - Richards et al. (2023): Climate collapse mortality projections (extreme 8-12°C scenario, 75-year window)
 - Lenton et al. (2008): Individual tipping element transition times (50-100 years for Amazon, AMOC)
-- Wunderling et al. (2024): Tipping cascade timescales (centennial to millennial scales)
+- Wunderling et al. (2024): Tipping cascade timescales (centennial to millennial scales), interaction mechanisms (bipolar seesaw, Arctic-AMOC feedback, non-stationarity, destabilizing dominance)
 - Armstrong McKay et al. (2022): Comprehensive tipping point review (Science)
 - Steffen et al. (2018): Hothouse Earth trajectory
 - Ord (2020): *The Precipice* - Existential risk methodologies
