@@ -47,6 +47,18 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       return { events: [] };
     }
 
+    // === NITROGEN-FOOD COUPLING (TIER 2 HIGH - Nov 15, 2025) ===
+    // Calculate yield penalties from nitrogen reduction technologies
+    // Uses regional differentiation (South Asia 55% overuse → zero penalty)
+    const { updateNitrogenFoodCoupling } = require('../../nitrogenFoodCoupling');
+
+    // Gather deployed nitrogen-reduction tech effectiveness
+    // Placeholder: will be expanded when tech tree integration complete
+    const deployedNitrogenTechs: number[] = [];  // Array of [0, 1] effectiveness values
+
+    // Calculate global food production multiplier from nitrogen constraints
+    const nitrogenFoodMultiplier = updateNitrogenFoodCoupling(state, deployedNitrogenTechs);
+
     // Validate required systems (use assertions for cleaner error messages)
     const phosphorusReserves = assertStateProperty(state.phosphorusSystem, 'reserves', {
       location: 'FoodSecurityDegradationPhase.execute',
@@ -167,9 +179,17 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
         month: state.currentMonth
       });
 
-      const newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
+      let newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
         location: 'FoodSecurityDegradationPhase.execute',
-        valueName: `${region.name}.foodSecurity (after)`,
+        valueName: `${region.name}.foodSecurity (after degradation)`,
+        month: state.currentMonth
+      });
+
+      // Apply nitrogen-food coupling multiplier (yield penalty from N reduction)
+      // Research: Regional overuse allows zero-penalty reductions (South Asia 55%)
+      newFood = assertProbability(Math.max(0, newFood * nitrogenFoodMultiplier), {
+        location: 'FoodSecurityDegradationPhase.execute',
+        valueName: `${region.name}.foodSecurity (after nitrogen coupling)`,
         month: state.currentMonth
       });
 
