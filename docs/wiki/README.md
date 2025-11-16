@@ -117,6 +117,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🎯 **Validation:** N=1 Monte Carlo, 12 months - completes successfully
 - 📖 **Context:** Pre-existing bug discovered during biogeochemical research session
 
+**Nov 16: Autonomous Worker Health Check - Duplicate Scheduling Fix** (commit ed6a6a6)
+- 🔧 **CRITICAL FIX:** Resolved concurrent Claude Code instances causing merge conflicts
+- 🎯 **Root Cause:** merge-orchestrator scheduled TWICE per hour (systemd timer at :00 + cron at :45)
+- ✅ **Solution:** Disabled systemd timer, kept cron-only scheduling (proper :45 separation)
+- 🛡️ **Impact:** Eliminated worker overlap (autonomous-worker at :00, merge-orchestrator at :45)
+- 📊 **Lock Analysis:** Both scripts already had working locks - issue was duplicate scheduling, not missing locks
+- 📖 **Documentation:** AUTONOMOUS_WORKER_FIX_20251116.md, logs/autonomous_worker_diagnosis_20251116.md
+- 💡 **Lesson:** Health checks caught the issue - systemd timers can conflict with cron if not coordinated
+
 **Nov 15: Autonomous Worker Stale Worktree Fix** (commit ecda59c)
 - 🔧 **Operational Fix:** Resolved stale git worktree blocking researcher autonomous execution
 - 🎯 **Root Cause:** 11-day-old worktree on deleted branch with unstaged changes preventing cleanup
