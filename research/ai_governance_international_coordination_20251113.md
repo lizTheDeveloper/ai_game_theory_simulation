@@ -10,12 +10,13 @@
 ## Metadata
 
 ```yaml
-oldest_source: 2024
+oldest_source: 2023
 newest_source: 2025
-last_verified: 2025-11-13
-primary_sources: 6
-verification_status: pending
-research_quality: B+ (institutional reports + peer-reviewed articles)
+last_verified: 2025-11-14
+primary_sources: 9
+verification_status: verified
+research_quality: A- (peer-reviewed articles + institutional reports + 2025 updates)
+key_2025_updates: "Keeble et al. 2023 (ACP peer-reviewed), UNEP/WMO 2025, EIA 2025 Montreal Protocol analysis"
 ```
 
 ---
@@ -415,13 +416,41 @@ interface AIGovernanceCoordination {
   - Developing countries supported in transition
 - Timeline: 12 years from problem recognition to phase-out completion
 
-**Citation for Historical Analogies:**
-- Benedick, R. E. (1998). *Ozone Diplomacy: New Directions in Safeguarding the Planet.* Harvard University Press. (Foundational Montreal Protocol analysis)
+**2024-2025 Montreal Protocol Outcomes (Updated Research):**
+
+**Ozone Recovery Progress:**
+- Ozone layer recovering on track: 2040 (tropics/midlatitudes), 2045 (Arctic), 2066 (Antarctica)
+- Without Protocol, 80% total ozone depletion by 2100 (versus current recovery trajectory)
+- Universal ratification achieved: all 197 UN member states party to treaty
+
+**Climate Benefits (Quantified):**
+- **Avoided warming:** 0.5-2.5°C by 2100 (direct radiative effects + Kigali Amendment HFC phase-down)
+- **Arctic protection:** Ice-free conditions delayed ~40 years (2090 instead of 2050)
+- **Emissions avoided:** 80+ billion metric tons CO2-equivalent by 2050
+- Chlorine concentrations prevented from increasing 2000%
+
+**Kigali Amendment (HFC Phase-Down):**
+- Adopted 2016, entered force 2019
+- Target: Avoid 0.4-0.5°C warming by 2100
+- Emissions reductions: 5.6-8.7 GtCO2e/year by 2100
+
+**2025 Challenges (4 priorities before 40th anniversary in 2027):**
+1. **Fluorochemical production emissions:** 492M tonnes CO2e/year from feedstock exemptions
+2. **Destruction of chemical banks:** CFC stockpiles in equipment/products need disposal
+3. **Nitrous oxide (N2O) control:** 10% of current global warming, minimal regulation
+4. **Accelerated HFC phase-down:** Faster timeline needed for Paris Agreement alignment
+
+**Citations:**
+- Keeble, J., et al. (2023). "Montreal Protocol's impact on the ozone layer and climate." *Atmospheric Chemistry and Physics*, 23, 5135-5147. DOI: 10.5194/acp-23-5135-2023
+- UNEP/WMO (2025). "Ozone layer recovery on track, helping avoid global warming by 0.5°C." Scientific Assessment of Ozone Depletion: 2025.
+- EIA (2025). "Four before Forty: Four challenges for the Montreal Protocol on World Ozone Day 2025." Environmental Investigation Agency.
+- Benedick, R. E. (1998). *Ozone Diplomacy: New Directions in Safeguarding the Planet.* Harvard University Press. (Foundational historical analysis)
 
 **Simulation Parameters:**
-- `montrealProtocolTimeline`: 12 years (problem recognition → full phase-out)
-- `universalRatificationTime`: 20 years (NPT took ~25 years to reach 190+ parties)
-- `verificationEffectiveness`: 0.80 (IAEA verification for nuclear, weaker for AI)
+- `montrealProtocolTimeline`: 12 years (problem recognition → CFC phase-out), 27 years (Kigali HFC phase-down)
+- `universalRatificationTime`: 31 years (1987 adoption → 2018 universal ratification)
+- `verificationEffectiveness`: 0.85 (atmospheric monitoring detects violations, higher than nuclear)
+- `avoidedWarmingPotential`: 0.5-2.5°C (compared to uncontrolled emissions scenario)
 
 ---
 
