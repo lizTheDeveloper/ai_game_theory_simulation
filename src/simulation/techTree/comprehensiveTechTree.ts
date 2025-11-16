@@ -1763,7 +1763,132 @@ const ALL_TECH: TechDefinition[] = [
       animalWelfareBonus: 1.0,
     },
   },
-  
+
+  // Biogeochemical Flows Mitigation (6) - Nov 2025
+  {
+    id: 'food_waste_reduction',
+    name: 'Food Waste Reduction Systems',
+    description: '30% demand reduction via supply chain optimization, redistribution',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.5,
+    minEconomicStage: 2.5,
+    researchMonthsRequired: 24,
+    researchCost: 2000,
+    deploymentCost: 80000,
+    deploymentMonthsRequired: 60,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.30,           // 30% demand reduction
+      phosphorusReduction: 0.30,
+      foodSecurityBonus: 0.20,           // Redistribution improves access
+      economicEfficiency: 0.15,
+    },
+  },
+  {
+    id: 'rhizosphere_engineering',
+    name: 'Rhizosphere Engineering',
+    description: 'Biofertilizers, N-fixing bacteria - 15% fertilizer reduction',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 2.0,
+    minEconomicStage: 2.5,
+    researchMonthsRequired: 30,
+    researchCost: 3000,
+    deploymentCost: 100000,
+    deploymentMonthsRequired: 120,     // 10 years - farmer adoption barrier
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.15,           // 10-20% range, using 15% median
+      soilHealthBonus: 0.25,
+      yieldStability: 0.10,              // Reduced volatility
+    },
+  },
+  {
+    id: 'alternative_protein_systems',
+    name: 'Alternative Protein Systems',
+    description: 'Insects, algae, mycoprotein - 80x efficiency vs cattle',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['precision_fermentation'],
+    minAICapability: 2.5,
+    minEconomicStage: 3.0,
+    researchMonthsRequired: 36,
+    researchCost: 4500,
+    deploymentCost: 150000,
+    deploymentMonthsRequired: 96,      // 8 years - consumer acceptance barrier
+    deploymentLevel: 0,
+    effects: {
+      animalAgricultureReduction: 0.40,  // Stacks with precision fermentation
+      nitrogenReduction: 0.20,           // Lower feed requirements
+      landUseReduction: 0.30,
+      waterEfficiency: 0.40,
+    },
+  },
+  {
+    id: 'nitroplast_integration',
+    name: 'Nitroplast Integration',
+    description: 'N-fixing organelle in crops - 60% fertilizer elimination (TIER 2)',
+    category: 'agriculture',
+    status: 'future',
+    prerequisites: ['rhizosphere_engineering'],
+    minAICapability: 3.5,
+    minEconomicStage: 4.0,
+    researchMonthsRequired: 120,       // 10 years research (2024→2034)
+    researchCost: 15000,
+    deploymentCost: 300000,
+    deploymentMonthsRequired: 180,     // 15 years deployment (2034→2049)
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.60,           // 40-80% range, using 60% conservative
+      cropYieldBonus: -0.05,             // Energy cost to plant (yield penalty)
+      biogeochemicalBoundaryBonus: 0.50, // Major boundary improvement
+    },
+  },
+  {
+    id: 'active_sediment_management',
+    name: 'Active Sediment Management',
+    description: 'Dredging, capping, alum - legacy phosphorus remediation',
+    category: 'pollution',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.5,
+    minEconomicStage: 3.0,
+    researchMonthsRequired: 18,
+    researchCost: 2500,
+    deploymentCost: 250000,            // $50K-500K per km² (high cost)
+    deploymentMonthsRequired: 300,     // 25 years to treat major water bodies
+    deploymentLevel: 0,
+    effects: {
+      legacyPhosphorusReduction: 0.60,   // 50-80% reduction in internal loading
+      waterQualityBonus: 0.40,
+      aquaticEcosystemRestoration: 0.30,
+    },
+  },
+  {
+    id: 'phytoremediation_networks',
+    name: 'Phytoremediation Networks',
+    description: 'Constructed wetlands - 63% N removal, 72% P removal',
+    category: 'pollution',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.0,
+    minEconomicStage: 2.0,
+    researchMonthsRequired: 12,
+    researchCost: 1500,
+    deploymentCost: 120000,
+    deploymentMonthsRequired: 180,     // 15 years to deploy globally
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.63,           // Median from 335 field experiments
+      phosphorusReduction: 0.72,         // Median from field data
+      habitatRestoration: 0.50,
+      biodiversityBonus: 0.25,
+    },
+  },
+
   // AI Safety Capstone (2)
   {
     id: 'ai_rights_framework',
