@@ -5,13 +5,13 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 15, 2025 - Post-researcher session)
+**Current Status:** 🟡 **STABLE - ARCHITECTURAL DECISION REQUIRED** (Nov 16, 2025)
 - **Research Quality:** A (peer-reviewed foundation, 29 sources added Nov 15 - nitrogen-food coupling)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, outcome probabilities bug FIXED, biogeochemical partial)
-- **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, MEDIUM items remain)
-- **System Trajectory:** IMPROVING - Bug fixes unblock validation, biogeochemical research complete
+- **Architecture Health:** 🚨 **DECISION REQUIRED** (Defensive fallback migration 12% complete creates dangerous inconsistency)
+- **System Trajectory:** STABLE - But architectural inconsistency must be resolved (complete migration or revert)
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** Biogeochemical integration (30-60 min handoff), defensive fallback migration (12% complete)
+- **Active Work:** Biogeochemical integration (30-60 min handoff), **CRITICAL: Defensive fallback architectural decision (Nov 16)**
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -75,17 +75,32 @@
   - **Commits:** 6dc7f398b
   - **Status:** ✅ COMPLETE - Monte Carlo validation unblocked
 
-- 🟡 **DEFENSIVE FALLBACK MIGRATION - 12% COMPLETE** (Nov 15, 2025)
+- 🚨 **DEFENSIVE FALLBACK MIGRATION - ARCHITECTURAL DECISION REQUIRED** (Nov 16, 2025)
+  - **Status:** 🟡 12% COMPLETE (20/169 violations fixed) - **CRITICAL ARCHITECTURAL INCONSISTENCY**
   - **Context:** Architecture review identified 169 defensive fallback violations (`??` and `||`)
   - **Work Completed:** 20/169 violations fixed (CRITICAL + HIGH priority)
   - **Files Modified:** 10 files (EmergencyResponsePhase, OutcomeProbabilitiesPhase, aiSuffering, dystopiaProgression, alignmentDynamics, earlyWarningSystems, centralConfig, PhaseOrchestrator, game.ts, government.ts)
   - **Type Fixes:** 2 optional fields made required (`aiSufferingMetrics`, `government.resources`)
   - **Validation:** Type checking ✅ PASS, Monte Carlo 8/10 runs successful (80%)
-  - **Commits:** 76b05851f
-  - **Documentation:** `logs/defensive_fallback_fix_20251115.md` (290 lines)
-  - **Architecture Feedback:** Partial migration creates inconsistent patterns - recommend complete or revert
-  - **Remaining:** 149 violations (MEDIUM priority code paths)
-  - **Status:** 🟡 PARTIALLY COMPLETE - Decision point: complete remaining 88% or revert for consistency
+  - **Commits:** 76b05851f (initial migration), 36d2862 (architectural analysis)
+  - **Documentation:**
+    - `logs/defensive_fallback_fix_20251115.md` (290 lines)
+    - `reviews/defensive_fallback_architecture_analysis_20251116.md` (280 lines) - **CRITICAL ANALYSIS**
+  - **CRITICAL FINDING (Nov 16):** Partial migration creates **schizophrenic codebase**
+    - Core simulation paths use fail-loudly (good)
+    - Infrastructure uses fail-safely (bad)
+    - Same operations behave differently in different modules
+    - "MEDIUM priority" is MISLEADING - includes simulationWorker (14 violations), multiParadigmAggregator (16), dashboard (30+)
+  - **RECOMMENDATION:** COMPLETE THE MIGRATION (Option 1)
+    - 24 hours effort over 3 days (5 phases: infrastructure → data → LLM/gov → dashboard → validation)
+    - Will expose 10-20 hidden bugs (GOOD - research integrity)
+    - Creates architectural consistency
+    - Aligns with fail-loudly philosophy
+  - **Rejected Alternatives:**
+    - Option 2 (Revert): Wastes validated work, perpetuates hidden bugs
+    - Option 3 (Hybrid): Permanent inconsistency, maintenance nightmare
+  - **Remaining:** 149 violations across 30+ files (simulationWorker, aggregators, dashboard, LLM)
+  - **Status:** 🚨 **DECISION REQUIRED** - "Hidden bugs aren't technical debt, they're scientific fraud"
   - **Archive:** `plans/completed/session_work_nov15_2025.md`
 
 - ✅ **DETERMINISM VERIFICATION COMPLETE** (Nov 14-15, 2025)
