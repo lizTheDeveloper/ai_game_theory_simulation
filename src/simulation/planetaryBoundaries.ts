@@ -228,6 +228,12 @@ export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): Planetar
     timescaleYears: 100,
     extinctionContribution: 0.10,
     tippingPointRisk: 0.15,
+
+    // Irreversibility properties (Nov 16, 2025)
+    // Research: novel_entities_irreversibility_20251116.md
+    practicallyIrreversible: true,         // PFAS C-F bonds persist for centuries
+    decayHalfLife: 500,                    // Years (Cousins et al. 2022)
+    atmosphericTransport: true,            // 99% of cleanup rains back down globally
   };
 
   // 7. OCEAN ACIDIFICATION - Just breached Sept 2025!

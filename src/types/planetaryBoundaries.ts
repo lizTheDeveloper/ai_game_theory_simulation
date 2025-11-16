@@ -100,11 +100,17 @@ export interface PlanetaryBoundary {
   // Peak contamination sets floor - cannot clean below ~90% of peak
   peak?: number;                    // Historical maximum value (for irreversibility floor calculation)
 
-  // === NOVEL ENTITIES SPECIFIC (Nov 16, 2025) ===
-  // Research: Cousins et al. (2022) - PFAS atmospheric transport
-  practicallyIrreversible?: boolean;  // True for PFAS, microplastics (99% cleanup rains back down)
-  decayHalfLife?: number;             // Natural decay half-life in years (100-10,000+ for PFAS)
-  atmosphericTransport?: boolean;     // True if pollutant has global atmospheric distribution
+  // === IRREVERSIBILITY PROPERTIES (Nov 16, 2025) ===
+  // Research: novel_entities_irreversibility_20251116.md, Cousins et al. (2022)
+
+  /** True if boundary has very slow decay (centuries timescale) */
+  practicallyIrreversible?: boolean;
+
+  /** Natural decay half-life in years (e.g., 500 for PFAS C-F bonds) */
+  decayHalfLife?: number;
+
+  /** True if atmospheric transport makes local cleanup futile (99% rains back down) */
+  atmosphericTransport?: boolean;
 }
 
 /**

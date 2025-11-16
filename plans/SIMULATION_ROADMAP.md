@@ -1070,6 +1070,15 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 16):** Verify Novel Entities irreversibility framework citations (research/verification_9ffd3b5_20251116.md, commit 9ffd3b5) - **10 citations requiring Layer 1+2 verification** including:
+  - Cousins et al. (2022): 99% atmospheric redeposition claim
+  - EPA (2024): 75 GJ/ton PFAS destruction energy
+  - Fennell (2024): 6-9 orders of magnitude concentration gap
+  - Sorrell (2009), Gillingham et al. (2013): Rebound coefficient 0.1-0.6 range
+  - Tibetan Plateau rainwater: 55 pg/L baseline contamination
+  - PFAS decay half-life: 500+ year environmental persistence
+  - **Priority:** HIGH (TIER 1 CRITICAL system - Novel Entities 0% effectiveness pathway)
+  - **Status:** Research file created by historian, ready for orchestrator → research-skeptic validation
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)

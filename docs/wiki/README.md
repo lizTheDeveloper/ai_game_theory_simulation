@@ -21,21 +21,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **🟢 STABLE** (November 15, 2025)
 
 **SYSTEM HEALTH:**
-<<<<<<< Updated upstream
-- **Research Quality:** A- (4 CRITICAL parameter fixes applied, 0 CRITICAL age issues) ✅ EXCELLENT
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** B- (stable with localized issues - 2 CRITICAL, 3 HIGH identified in Nov 15 review) ⚠️ STABLE
-- **System Trajectory:** 🟢 STABLE (Architecture review complete, research parameters corrected)
-
-**Recent Major Achievements:**
-
-=======
-- **Research Quality:** A (nitrogen-food coupling integration complete, peer-reviewed foundation) ✅ EXCELLENT
+- **Research Quality:** A (nitrogen-food coupling integration complete, Novel Entities irreversibility framework added) ✅ EXCELLENT
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, defensive fallback migration 100% complete) ✅ EXCELLENT
 - **Architecture Health:** 9.4/10 (2 HIGH issues remain: dynamic require pattern, unsafe property access) ✅ STABLE
 - **System Trajectory:** 🟢 STABLE (Integration milestones achieved, O(n²) performance fix applied)
 
 **Recent Major Achievements:**
+
+**Nov 16: Novel Entities Irreversibility Framework Added** (commit 9ffd3b5)
+- ♻️ **Type Definitions:** Added `practicallyIrreversible`, `decayHalfLife`, `atmosphericTransport` to PlanetaryBoundary interface
+- 🔧 **Rebound Effects:** Added `reboundCoefficient`, `reboundUncertaintyRange`, `avoidsRebound` to TechDefinition (Jevons paradox)
+- 📁 **New Files:** `updateNovelEntitiesBoundary.ts`, `utils/energyConstrainedCleanup.ts` (implementation ready)
+- 🔀 **Merge Resolution:** Nitrogen-food coupling conflicts resolved (regional nitrogen management approach chosen)
+- ⚠️ **Status:** NEEDS VALIDATION - Research verification required for new mechanics
 
 **Nov 16: Nitrogen-Food Coupling Integration Complete** (commit 405b0ab)
 - 🌾 **Integration:** Legacy nutrient stocks → planetary boundaries, nitrogen penalties → food security
@@ -47,8 +45,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **HIGH-10 Resolved:** O(n²) region matching in FoodSecurityDegradationPhase (commit 351d6a5) - Map<string, NitrogenRegion> lookup replaces nested .find() loops
 - 📖 **Documentation:** plans/completed/nitrogen_food_coupling_integration_20251116.md
 - 📖 **Review:** reviews/nitrogen-food-coupling-architecture-review.md
-
->>>>>>> Stashed changes
 **Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
 - 📊 **Architecture Review:** Grade B- (stable with localized issues)
   - 2 CRITICAL: Phase dependency gaps (9/97 phases), CoordinatedDeploymentPhase integration risk
@@ -399,6 +395,32 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - `src/simulation/planetaryBoundaries.ts` (lines 818-846, irreversibility floor)
   - `src/simulation/techTree/comprehensiveTechTree.ts` (prevention technologies)
 - ⏳ **Remaining Work:**
+  - ⚠️ **Nov 16 Update:** Irreversibility framework implementation added (commit 9ffd3b5) - see below
+
+**Nov 16: Novel Entities Irreversibility Framework Implementation** (commit 9ffd3b5 - Type Definitions)
+- 📁 **Status:** Type definitions and implementation files added, awaiting research verification
+- 🔧 **New Type Properties (PlanetaryBoundary interface):**
+  - `practicallyIrreversible`: Boolean flag for PFAS/microplastics (99% atmospheric redeposition)
+  - `decayHalfLife`: Natural decay half-life in years (500+ years for PFAS, research: Cousins et al. 2022)
+  - `atmosphericTransport`: Boolean flag for global atmospheric distribution
+- 🔧 **New Tech Properties (TechDefinition interface):**
+  - `reboundCoefficient`: Fraction of cleanup enabling more production (0-1, typ 0.1-0.6, research: Sorrell 2009, Gillingham et al. 2013)
+  - `reboundUncertaintyRange`: [min, max] for Monte Carlo sampling
+  - `avoidsRebound`: Boolean flag for technologies avoiding Jevons paradox (e.g., circular economy, degrowth)
+- 📁 **New Implementation Files:**
+  - `src/simulation/updateNovelEntitiesBoundary.ts` (168 lines) - Slow decay model with energy-constrained cleanup
+  - `src/simulation/utils/energyConstrainedCleanup.ts` (208 lines) - Concentration gap + energy availability gating
+- 📊 **Research Claims (NEED VERIFICATION):**
+  - Cousins et al. (2022): 99% of cleanup rains back down globally (atmospheric cycling)
+  - EPA (2024): 75 GJ/ton median energy requirement for PFAS destruction
+  - Fennell (2024): 6-9 orders of magnitude concentration gap (tech demonstrations at >1000 mg/L, environmental levels at ng/L-pg/L)
+  - Ling (2024): Prevention >> Cleanup effectiveness
+  - Tibetan Plateau rainwater: 55 pg/L minimum (global atmospheric distribution baseline)
+- 🔄 **Integration Points:**
+  - Energy system: `renewableCapacity` and `demand` determine available energy for cleanup
+  - Contamination levels: Rainwater (55 pg/L), surface water (100 ng/L), groundwater (500 ng/L), concentrated waste (1000 mg/L)
+  - Power law scaling: Effectiveness ∝ 1/√(concentration gap)
+- ⚠️ **Status:** Research verification file needed (verification_9ffd3b5_20251116.md) for citation existence + claim accuracy
   - [ ] Monte Carlo sensitivity analysis (N=30, 7 parameter combinations) - CRITICAL (priya)
   - [ ] Architecture review (architecture-skeptic)
   - [ ] Plan archival (architect)
