@@ -1433,7 +1433,71 @@ function applyRegionalEffects(
       });
           }
           break;
+<<<<<<< Updated upstream
           
+=======
+
+        // ========== NITROGEN (TIER 2 HIGH - Nov 15, 2025) ==========
+        // Research: nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
+        case 'nitrogenReduction':
+          // Reduce nitrogen fertilizer inputs
+          // This effect is tracked and applied via updateLegacyNutrientStocks in planetary boundaries
+          // Here we just log the technology deployment
+          console.log(`  🌾 Nitrogen Reduction Tech: ${(value * 100).toFixed(1)}% reduction | Month ${gameState.currentMonth}`);
+          // TODO: When updateNitrogenFoodCoupling is called, it will use deployed tech effectiveness
+          // For now, this is a placeholder - full integration requires calling updateNitrogenFoodCoupling
+          // with array of deployed tech effectiveness values
+          break;
+
+        case 'biogeochemicalFlowsReduction':
+          // Reduce biogeochemical flows boundary value directly
+          if (gameState.planetaryBoundariesSystem?.boundaries?.biogeochemical_flows) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.biogeochemical_flows;
+            boundary.currentValue = assertFinite(Math.max(
+              0,
+              boundary.currentValue - value * 0.01
+            ), {
+              location: 'applyRegionalEffects:biogeochemicalFlowsReduction',
+              valueName: 'currentValue',
+              month: gameState.currentMonth
+            });
+            // Trigger boundary recovery tracking
+            triggerBoundaryRecovery(gameState, 'biogeochemical_flows');
+          }
+          break;
+
+        case 'phosphorusReduction':
+          // Reduce phosphorus inputs (similar to nitrogenReduction)
+          // This effect is tracked and applied via updateLegacyNutrientStocks in planetary boundaries
+          // Here we just log the technology deployment
+          console.log(`  🌾 Phosphorus Reduction Tech: ${(value * 100).toFixed(1)}% reduction | Month ${gameState.currentMonth}`);
+          // TODO: When updatePhosphorusFoodCoupling is called, it will use deployed tech effectiveness
+          // For now, this is a placeholder - full integration requires calling updatePhosphorusFoodCoupling
+          // with array of deployed tech effectiveness values
+          break;
+
+        case 'legacyStockReduction':
+          // Reduce legacy nutrient stocks (sediment P, soil N)
+          // This addresses internal loading from accumulated nutrients
+          if (gameState.planetaryBoundariesSystem?.boundaries?.biogeochemical_flows) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.biogeochemical_flows;
+            // Legacy stock reduction helps boundary recovery over time
+            // Reduce current value by a smaller amount (legacy stocks decay slowly)
+            boundary.currentValue = assertFinite(Math.max(
+              0,
+              boundary.currentValue - value * 0.005  // 50% slower than direct reduction (legacy stocks decay slowly)
+            ), {
+              location: 'applyRegionalEffects:legacyStockReduction',
+              valueName: 'currentValue',
+              month: gameState.currentMonth
+            });
+            console.log(`  🧹 Legacy Nutrient Stock Reduction: ${(value * 100).toFixed(1)}% | Month ${gameState.currentMonth}`);
+            // Trigger boundary recovery tracking
+            triggerBoundaryRecovery(gameState, 'biogeochemical_flows');
+          }
+          break;
+
+>>>>>>> Stashed changes
         // ========== POLLUTION ==========
         case 'pollutionReduction':
           // Reduce pollution levels
