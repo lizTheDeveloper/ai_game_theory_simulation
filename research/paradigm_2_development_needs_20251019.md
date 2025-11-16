@@ -1,14 +1,14 @@
 ---
 oldest_source: 1981
 newest_source: 2025
-last_verified: 2025-11-07
+last_verified: 2025-11-16
 ---
 
 # Paradigm 2: Development Needs (Survival-Focused) Framework for Dystopia/Utopia Assessment
 
-**Research Date:** October 19, 2025 (Updated: November 7, 2025)
+**Research Date:** October 19, 2025 (Updated: November 16, 2025)
 **Lead Researcher:** super-alignment-researcher-1 (Updated by: autonomous-researcher)
-**Total Sources:** 20 peer-reviewed + 6 authoritative datasets (2025 update: +5 sources 2024-2025)
+**Total Sources:** 21 peer-reviewed + 6 authoritative datasets (Nov 2025 update: +1 source from 2024 MPI)
 **Status:** Phase 1 - Multiple Paradigms DUI Initiative
 
 ---
@@ -470,6 +470,54 @@ A (Intensity) = Average deprivation score among the poor
 20. **Comoros: 0.302** (H=57.0%, A=53.0%)
 
 **Total:** ~25 countries with MPI >0.300, representing approximately 5-7% of world population (400-600 million people).
+
+---
+
+#### 2.2.5 Global MPI 2024: Key Statistics
+
+**Source:** OPHI (Oxford Poverty and Human Development Initiative) and UNDP (United Nations Development Programme) (2024). *Global Multidimensional Poverty Index 2024: Poverty amid conflict.*
+
+**Publication Date:** October 2024
+**Authors:** Alkire, S., Kanagaratnam, U., & Suppa, N.
+**Coverage:** 112 countries, 6.3 billion people (92% of population in developing regions)
+
+**Headline Findings:**
+
+**1. Global Poverty Scale:**
+- **1.1 billion people** live in acute multidimensional poverty (18.3% of covered population)
+- **Half are children** - 550 million children under 18 in multidimensional poverty
+- **Nearly 500 million** live in conflict-affected settings
+
+**2. Regional Distribution:**
+The vast majority of multidimensionally poor people live in Sub-Saharan Africa and South Asia, regions that also experience significant conflict exposure.
+
+**3. Conflict Nexus:**
+The 2024 report emphasizes how violent conflict exacerbates poverty. Conflict disrupts:
+- Access to education (schools destroyed, displacement)
+- Healthcare infrastructure (hospitals targeted, medical supply chains severed)
+- Livelihoods (agriculture impossible in war zones, markets collapse)
+- Basic services (water, sanitation, electricity grids damaged)
+
+**4. Children in Poverty:**
+Children are disproportionately affected - while they represent ~30% of global population, they account for 50% of the multidimensionally poor. This reflects:
+- Higher vulnerability to malnutrition and mortality
+- School disruption more severe for children than adult education deficits
+- Intergenerational poverty transmission
+
+**5. Methodology Updates (2024):**
+Three new methodological notes (MN-58, MN-59, MN-60) document:
+- Country-level specifications and results
+- Disaggregation by age, geography, household characteristics
+- Trends analysis across 86 countries (2001-2023 data)
+
+**Simulation Implications:**
+- Current model should distinguish conflict vs non-conflict poverty pathways
+- Child mortality disproportionately affects MPI (both child mortality indicator + education disruption)
+- Poverty reduction requires peace as prerequisite - technological/economic solutions insufficient in conflict zones
+- 1.1B baseline (2024) vs simulation endpoint determines development paradigm success
+
+**Citation:**
+OPHI and UNDP (2024). "Global Multidimensional Poverty Index 2024: Poverty amid conflict." United Nations Development Programme and Oxford Poverty and Human Development Initiative. https://ophi.org.uk/global-mpi/2024
 
 ---
 
