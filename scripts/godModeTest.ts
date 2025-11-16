@@ -415,8 +415,10 @@ engine.step = function(state: any) {
   return result;
 };
 
-// Run simulation
-const result = engine.run(state, { maxMonths, checkActualOutcomes: true });
+// Run simulation (sandbox mode - disable outcome detection to measure full 120-month trajectories)
+// God mode deploys all 71 techs at once, which would trigger immediate utopia/dystopia without this.
+// We need the full duration to validate boundary effectiveness over time.
+const result = engine.run(state, { maxMonths, checkActualOutcomes: false });
 
 console.log('\n' + '='.repeat(80));
 console.log('📊 GOD MODE RESULTS');
