@@ -39,6 +39,37 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **AI Governance 2025 Update - Regime Fragmentation** - HIGH (Added Nov 16, 2025)
+     - **Context:** 2025 update on AI governance international coordination - three-bloc system emergence
+     - **Key Updates:** Paris Summit US/UK defection, EU AI Act implementation, UN governance bodies, regime fragmentation
+     - **Research Delivered:** 296 lines added to research/ai_governance_international_coordination_2023_2025.md
+     - **New Sources:** France ONU, European Commission, European Policy Centre, Open Canada, WEF, Baker McKenzie
+     - **Key Claims Requiring Verification:**
+       - Paris Summit: US and UK did NOT endorse final statement - citation needed
+       - EU AI Act: August 2, 2025 effective date, penalties begin August 2, 2026 - verify
+       - Cooperation propensity: EU 0.85, US 0.40, UK 0.45, China 0.40 - DERIVED or CITED?
+       - Enforcement strength: EU 0.20→0.50→0.75 timeline - methodology?
+       - Defection risk: 0.45 global coordination collapse - statistical basis?
+       - Crisis triggers: 70% coordination renewal, 90% binding treaty - precedent?
+       - Implementation lag: 6→12 months due to fragmentation - evidence?
+       - Brussels Effect: 40% probability - AI-specific analysis?
+       - Three-bloc equilibrium: 60% baseline scenario - expert judgment?
+     - **Verification File:** research/verification_459788c_20251116.md (two-layer: existence + claim accuracy)
+     - **Critical Issue:** Many parameters appear DERIVED (not CITED) - need methodology and uncertainty bounds
+     - **Integration Questions:**
+       - Add three-bloc cooperation system (EU/US/China)?
+       - Add time-varying enforcement strength (EU ramp)?
+       - Add crisis-triggered convergence mechanics?
+       - Model Brussels Effect (40% regulatory convergence)?
+     - **Assignments:**
+       - Cynthia: Verify 12 primary sources accessible, extract specific passages
+       - Sylvia: Flag DERIVED vs CITED values, assess defection claim strength, alternative interpretations
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Affects government cooperation mechanics (core simulation system)
+     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
+     - **Research File:** research/ai_governance_international_coordination_2023_2025.md (upgraded DRAFT→VERIFIED, Quality B→A-)
+     - **Commit:** 459788c
+
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
      - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
