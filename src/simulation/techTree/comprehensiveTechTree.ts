@@ -1740,6 +1740,7 @@ const ALL_TECH: TechDefinition[] = [
       waterEfficiency: 0.95,
       landUseReduction: 0.40,
       urbanFoodSecurity: 0.60,
+      nitrogenReduction: 0.60,  // TIER 2 HIGH (Nov 15, 2025): 60% fertilizer reduction (Springmann et al. 2018)
     },
   },
   {
@@ -1761,6 +1762,7 @@ const ALL_TECH: TechDefinition[] = [
       greenhouseGasReduction: 0.30,
       landUseReduction: 0.50,
       animalWelfareBonus: 1.0,
+      nitrogenReduction: 0.40,  // TIER 2 HIGH (Nov 15, 2025): 30-50% agricultural N reduction (average 40%, Springmann et al. 2018)
     },
   },
   
