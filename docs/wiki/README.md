@@ -28,6 +28,28 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 16: Biogeochemical Flows Integration Complete (TIER 2 HIGH)** (commit 71b97c5)
+- ✅ **Integration:** Legacy nutrient stocks + nitrogen-food coupling wired into simulation engine
+- 🔧 **Legacy Nutrient Stocks:** (ResourceSoilPhase.ts) Monthly update cycle with exponential decay
+  - 30yr soil N half-life, 100yr sediment P half-life (creates INERTIA effect)
+  - Even 100% input reduction → decades to recover (research-realistic)
+- 🌾 **Nitrogen-Food Coupling:** (FoodSecurityDegradationPhase.ts) Regional yield penalty function
+  - South Asia 55% overuse → zero-penalty zone (equity)
+  - Multiplicative technology synergies (prevents >100% effectiveness)
+- 🔬 **Technology Tree:** 6 nitrogen management technologies added
+  - Precision Agriculture (28% N reduction, zero yield penalty)
+  - Nitrification Inhibitors (18% N reduction, improved uptake)
+  - Biological N Fixation (60% reduction, nitroplast breakthrough)
+  - Phosphorus Wastewater Recovery (25% P recovery, legacy remediation)
+  - Algae-Based Nutrient Capture (15% N recovery, habitat restoration)
+  - Regional Nitrogen Policies (20% reduction via coordination)
+- 🐛 **Bug Fix:** (effectsEngine.ts) Fixed assertStateProperty misuse on object field
+- ✅ **Validation:** Monte Carlo N=3, 12mo - all runs completed, no NaN/Infinity failures
+- 📊 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia)
+- 📖 **Research:** 29 peer-reviewed sources (Grade B - CONDITIONAL PASS)
+- ⚠️ **Status:** NEEDS VALIDATION - Research verification file created (verification_71b97c5_20251116.md)
+- 🔄 **Workflow:** Queued for orchestrator validation (citation existence + claim verification required)
+
 **Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
 - 📊 **Architecture Review:** Grade B- (stable with localized issues)
   - 2 CRITICAL: Phase dependency gaps (9/97 phases), CoordinatedDeploymentPhase integration risk
