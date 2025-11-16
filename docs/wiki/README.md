@@ -44,6 +44,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📁 **Archive:** plans/completed/nov15_architecture_research_fixes_20251115.md
 - ✅ **Status:** Architecture Health B- (from 9.5/10), Research Quality A- (0 CRITICAL age issues)
 
+**Nov 16: Coral Bleaching Crisis - November 2025 Data Update** (commit 2d6bf05)
+- 🔬 **Breaking Research:** Updated climate_tipping_timescales_20251106.md with latest coral bleaching findings
+- 🚨 **Crisis Intensifies:** 2023-2025 global mass bleaching event - 80%+ of world's reefs affected
+- 🌡️ **Threshold Crossed:** Coral thermal tipping point (1.2°C) officially exceeded - current warming 1.4-1.5°C
+- 🔴 **Irreversibility Confirmed:** Even at 1.5°C stabilization, reefs continue degrading (recovery requires <1.2°C)
+- 🐟 **Human Impact:** 500M people dependent on reef fisheries at risk, $36B tourism industry threatened
+- 🌊 **Cascading Effects:** Fishery collapse, coastal protection loss (97% wave energy absorption), ocean acidification feedback
+- 📖 **Sources:** NOAA Coral Reef Watch (Nov 2025), Global Tipping Points Report 2025 (Oct), Nature Communications 2024
+- 🎯 **Simulation Implications:** Coral reef collapse IRREVERSIBLE at 1.4°C, marine food web degradation above 1.5°C, coastal vulnerability multiplier 2-5×
+- ✅ **Status:** Research documentation update only (no new mechanics/parameters, no verification needed)
+
 **Nov 15: Planetary Boundaries & Tipping Points 2025 Research Update** (commit d88ce24)
 - 📚 **New Research:** Comprehensive 2025 update from Rockström (2025) & BioScience 2025 State of Climate
 - 🚨 **Critical Updates:** 7/9 planetary boundaries transgressed (up from 6), ocean acidification crossed 2020
