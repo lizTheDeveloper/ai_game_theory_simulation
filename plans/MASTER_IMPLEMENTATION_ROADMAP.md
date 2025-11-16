@@ -6,12 +6,12 @@
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
 **Current Status:** 🟢 **STABLE** (Nov 16, 2025 - Post-autonomous worker session)
-- **Research Quality:** A (peer-reviewed foundation, 29 sources - nitrogen-food coupling complete)
-- **Implementation Fidelity:** A (assertion coverage 97.2%, outcome probabilities FIXED, biogeochemical COMPLETE)
-- **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, MEDIUM items remain)
-- **System Trajectory:** IMPROVING - Nitrogen-food coupling complete, 6 biogeochemical technologies added
+- **Research Quality:** A (peer-reviewed foundation, 30 sources - nitrogen-food coupling complete + citation corrections)
+- **Implementation Fidelity:** A (assertion coverage 97.2%, outcome probabilities FIXED, biogeochemical COMPLETE, Monte Carlo N=10 validated)
+- **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, renewable capacity caching verified complete)
+- **System Trajectory:** IMPROVING - Nitrogen-food coupling complete (6 biogeochemical techs), citation accuracy improved
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** Irreversibility framework planning (TIER 1 CRITICAL), defensive fallback migration (12% complete, decision point)
+- **Active Work:** Irreversibility framework planning (TIER 1 CRITICAL), nitrogen architecture review pending (Quality Gate 2)
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -53,10 +53,10 @@
 
 - ✅ **TIER 2 HIGH: Nitrogen-Food Coupling Integration COMPLETE** (Nov 15-16, 2025)
   - **Scope:** Biogeochemical flows boundary mechanics (legacy nutrient stocks, regional nitrogen-food coupling, 6 breakthrough technologies)
-  - **Research:** `research/nitrogen_food_coupling_20251115.md` (49KB, 883 lines, 29 peer-reviewed sources)
+  - **Research:** `research/nitrogen_food_coupling_20251115.md` (49KB, 883 lines, 30 peer-reviewed sources - Bhattarai et al. 2024 added)
   - **Validation:** `reviews/nitrogen_food_coupling_critique_20251115.md` (Grade B - CONDITIONAL PASS)
   - **Key Findings:** Legacy stocks (30-100 year half-lives), regional overuse zones (South Asia 55%), multiplicative tech synergies
-  - **Implementation:** ✅ COMPLETE (Nov 16, 2025 - Session autonomous-worker-20251116_100000)
+  - **Implementation:** ✅ COMPLETE (Nov 16, 2025 - Session autonomous-worker-20251116_130001)
     - ✅ `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
     - ✅ `src/simulation/nitrogenFoodCoupling.ts` (368 lines) - Regional penalties, 3-zone yield curves
     - ✅ Type error fixed: Added `regionalAdaptation: 0.0` field in initialization
@@ -67,10 +67,33 @@
       4. nitroplast_integration (60% N elimination, TIER 2 future)
       5. active_sediment_management (60% legacy P reduction, TIER 2)
       6. phytoremediation_networks (63% N, 72% P removal, TIER 1)
+    - ✅ **CRITICAL Citation Fixes** (Nov 16, 87eaa359b):
+      - Vertical farming nitrogen reduction: 60% → 30% (Springmann misattribution corrected)
+      - Nitrogen baseline: 120 → 110 Mt/year (UNCTAD 2024 alignment)
+      - South Asia citation: Bhattarai et al. 2024 added (30th source)
+      - Multiplicative synergies: Marked as model assumption (transparency)
+    - ✅ **Monte Carlo Validation** (Nov 16, N=10, seeds 50000-50009):
+      - 10/10 runs SUCCESSFUL (100% completion, 120 months each)
+      - No assertion errors (NaN/Infinity detection working)
+      - Legacy stocks updating correctly (exponential decay verified)
+      - Log: `logs/mc_nitrogen_validation_20251116_132522.log` (46 MB, 1.0M lines)
   - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia creates decades-long recovery)
-  - **Commits:** 5bacf9f4d (research + modules), 610341417 (integration + technologies)
-  - **Archive:** `plans/completed/nitrogen_food_coupling_COMPLETE_20251116.md`
-  - **Status:** ✅ COMPLETE - Ready for Monte Carlo validation and architecture review
+  - **Commits:** d3ea8fa53 (integration), 87eaa359b (citation fixes), 610341417 (prior integration work)
+  - **Archive:** `plans/completed/autonomous_session_nov16_2025_COMPLETE.md`
+  - **Status:** ✅ COMPLETE - Monte Carlo validated, ready for architecture review
+
+- ✅ **HIGH: Renewable Capacity Caching Optimization VERIFIED** (Nov 16, 2025)
+  - **Context:** Novel Entities architecture review (Nov 14) identified HIGH priority performance optimization
+  - **Issue:** Renewable capacity calculated N times per step (once per tech check in gating function)
+  - **Status:** ✅ ALREADY COMPLETE - Implemented Nov 14 (same day as review), verified Nov 16
+  - **Implementation:** Commit d89390d (Nov 14, 2025)
+    - Cache renewable capacity once per step in `effectsEngine.ts:292-301`
+    - Pass cached value to `calculateNovelEntitiesRemediationEffectiveness()`
+    - Single call site verified (type safety maintained)
+  - **Performance Impact:** 99% reduction in renewable capacity calculations (N calls → 1 call per step)
+  - **Verification:** `reviews/renewable_capacity_caching_verification_20251116.md`
+  - **Roadmap Updates:** Commit 314ea36ea - Outstanding issues removed (line 388, 1492)
+  - **Status:** ✅ COMPLETE - No follow-up work required
 
 - ✅ **CRITICAL BUG FIX: Outcome Probabilities Normalization** (Nov 15, 2025)
   - **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
@@ -363,22 +386,24 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Status:** ✅ COMPLETE - Ready for effectiveness validation testing
 
 - [x] **Nitrogen-Food Coupling (Biogeochemical Flows)** - ✅ COMPLETE (Nov 15-16, 2025)
-  - **Research:** `research/nitrogen_food_coupling_20251115.md` (49 KB, 883 lines, 29 peer-reviewed sources)
+  - **Research:** `research/nitrogen_food_coupling_20251115.md` (49 KB, 883 lines, 30 peer-reviewed sources - Bhattarai et al. 2024 added)
   - **DevLog:** `devlogs/biogeochemical_flows_implementation_20251115.md` (338 lines)
   - **Quality Gates:**
     - ✅ Research Validation (Grade B, CONDITIONAL PASS) - `reviews/nitrogen_food_coupling_critique_20251115.md`
     - ✅ Implementation COMPLETE (Nov 16, 2025)
-    - ⚠️ Monte Carlo Validation PENDING (integration complete, validation next)
+    - ✅ Monte Carlo Validation COMPLETE (N=10, seeds 50000-50009, 100% success rate)
     - ⏸️ Architecture Review PENDING (Quality Gate 2)
-  - **Implementation:** Commits 5bacf9f4d (modules), 610341417 (integration)
+  - **Implementation:** Commits d3ea8fa53 (integration), 87eaa359b (citation fixes), 610341417 (prior work)
     - ✅ Legacy nutrient stocks (30-100 year half-lives, exponential decay) - `src/simulation/legacyNutrientStocks.ts`
     - ✅ Nitrogen-food coupling (regional penalties, 3-zone yield curves, multiplicative synergies) - `src/simulation/nitrogenFoodCoupling.ts`
     - ✅ Type definitions (LegacyNutrientStock, RegionalNitrogenManagement) - `src/types/planetaryBoundaries.ts`
     - ✅ Type error fixed (regionalAdaptation field added)
     - ✅ **6 Biogeochemical Technologies** (food waste, rhizosphere engineering, alternative proteins, nitroplast integration, sediment management, phytoremediation)
+    - ✅ **CRITICAL Citation Fixes** (Nov 16): Vertical farming 60%→30%, nitrogen baseline 120→110 Mt/year, South Asia citation added
+  - **Monte Carlo Results:** `logs/mc_nitrogen_validation_20251116_132522.log` (46 MB, 1.0M lines, 10/10 runs successful)
   - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia, decades-long recovery)
-  - **Archive:** `plans/completed/nitrogen_food_coupling_COMPLETE_20251116.md`
-  - **Status:** ✅ COMPLETE - Ready for Monte Carlo validation (N≥10) and architecture review
+  - **Archive:** `plans/completed/autonomous_session_nov16_2025_COMPLETE.md`
+  - **Status:** ✅ COMPLETE - Monte Carlo validated, ready for architecture review (Quality Gate 2)
 
 - [x] **Novel Entities Zero-Effectiveness** - ✅ COMPLETE (Nov 13-14, 2025)
   - **Research:** `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources, Grade B+)
@@ -393,7 +418,7 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
     - ✅ HIGH UNCERTAINTY parameters flagged in code comments with sensitivity ranges
   - **Validation:** N=30 sensitivity analysis (CV=0.00000%, deterministic) - `reviews/novel_entities_sensitivity_analysis_20251114.md`
   - **Documentation:** `docs/wiki/systems/novel-entities.md` updated (205 lines added)
-  - **Outstanding Issues:** 1 HIGH priority performance optimization (renewable capacity caching in gating function)
+  - **Outstanding Issues:** None (renewable capacity caching completed Nov 14, verified Nov 16)
 
 ---
 
@@ -1533,8 +1558,8 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
   - Quality Gates: Research (B+), Architecture (B - APPROVE WITH CONDITIONS)
   - Validation: N=30 sensitivity analysis, CV=0.00000% (deterministic)
   - Documentation: 205 lines added to wiki systems documentation
-  - Outstanding: 1 HIGH priority performance optimization (renewable capacity caching)
-  - Commits: 5c9e773, 2f05087, 805d064, 9fc6fdc, b6ec2b9
+  - Outstanding: None (renewable capacity caching completed Nov 14, verified Nov 16)
+  - Commits: 5c9e773, 2f05087, 805d064, 9fc6fdc, b6ec2b9, d89390d (caching)
   - Archive: `/plans/completed/novel_entities_model_redesign_COMPLETE_20251114.md`
 
 **System Health (Nov 14, 2025):**
