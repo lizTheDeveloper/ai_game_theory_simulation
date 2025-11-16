@@ -44,6 +44,21 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📁 **Archive:** plans/completed/nov15_architecture_research_fixes_20251115.md
 - ✅ **Status:** Architecture Health B- (from 9.5/10), Research Quality A- (0 CRITICAL age issues)
 
+**Nov 16: Multi-Paradigm Wellbeing Frameworks 2024-2025 Update** (commit f5eb3df)
+- 📚 **New Research:** Indigenous wellbeing + global democracy metrics (2 peer-reviewed sources, 2024-2025)
+- 🌏 **Indigenous Wellbeing (Sangha et al. 2024):** *Country* (land/environment) foundational to Indigenous wellbeing
+  - Seven interconnected domains: family, community, Country-connection, self-determination, health, material wellbeing, subjective wellbeing
+  - Liyan concept (Yawaru): holistic self-Country-community connection
+  - Validates Paradigm 4 with empirical Australian Indigenous framework
+- 🗳️ **Democracy Crisis (V-Dem 2025):** Autocracies outnumber democracies for first time in 20 years (91 vs 88)
+  - Only 12% global population in liberal democracies (50-year low)
+  - 72% (5.8B people) under autocratic rule
+  - 45 countries autocratizing, freedom of expression at 25-year low
+- 🎯 **Simulation Implications:** Paradigm 1 utopia is minority condition, Paradigm 4 must center Country-connection, model autocratization waves
+- 📖 **Documentation:** research/multi_paradigm_wellbeing_2024_2025_update.md (418 lines)
+- ⚠️ **Status:** NEEDS VALIDATION - Research verification queued for orchestrator
+- 🔄 **Next:** Update paradigm thresholds, implement Country-connection metrics, model autocratization dynamics
+
 **Nov 15: Planetary Boundaries & Tipping Points 2025 Research Update** (commit d88ce24)
 - 📚 **New Research:** Comprehensive 2025 update from Rockström (2025) & BioScience 2025 State of Climate
 - 🚨 **Critical Updates:** 7/9 planetary boundaries transgressed (up from 6), ocean acidification crossed 2020
