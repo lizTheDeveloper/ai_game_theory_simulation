@@ -1,8 +1,8 @@
 ---
 oldest_source: 2022
 newest_source: 2025
-last_verified: 2025-11-11
-verification_status: CURRENT
+last_verified: 2025-11-16
+verification_status: UPDATED
 topic: climate_tipping_points
 subtopics:
   - tipping_cascades
@@ -320,6 +320,47 @@ GIS fast melt → AMOC collapse → Amazon drought → Antarctic warming
 | Coral Reefs   | OA, coastal systems    | Coral reefs |
 
 **Interpretation:** Most tipping points have **positive feedbacks** (amplifying) rather than negative (stabilizing). This creates explosive cascade risk.
+
+---
+
+### 4.4 Comprehensive Tipping Interactions Review (2024)
+
+**Source:** Wunderling, N., et al. (2024). "Climate tipping point interactions and cascades: a review." *Earth System Dynamics*, 15, 41-74. DOI: 10.5194/esd-15-41-2024
+
+**Key Findings on Interaction Mechanisms:**
+
+**Ocean-Ice Coupling:**
+- Greenland Ice Sheet (GIS) melting weakens AMOC through freshwater discharge disrupting salt-advection feedback
+- Models show "substantial weakening of circulation" when freshwater added to North Atlantic
+- Bidirectional coupling: AMOC collapse cools Northern Hemisphere → stabilizes GIS (paradoxical protective effect)
+- But AMOC collapse simultaneously destabilizes West Antarctic Ice Sheet via Southern Ocean warming
+
+**Bipolar Seesaw Effect:**
+- West Antarctic Ice Sheet (WAIS) collapse produces complex hemispheric effects
+- Weakening Antarctic Bottom Water formation can paradoxically **enhance AMOC** through deep-ocean adjustment
+- Eventually freshwater reaching North Atlantic weakens AMOC (delayed response)
+- Creates non-monotonic interaction: initial stabilization followed by destabilization
+
+**Arctic-AMOC Feedback Loop:**
+- Arctic sea ice loss → warm, fresh anomalies propagate southward (multi-decadal timescales)
+- Southward propagation weakens AMOC
+- Reduced AMOC → increased Arctic sea ice area (1-year timescale)
+- Creates fast-slow interaction: rapid sea ice response to slow AMOC changes
+
+**Cascade Timing Assessment:**
+- **Centennial-millennial timescales:** Tipping cascades "cannot be ruled out" at 1.5-2.0°C warming
+- **Shorter timescales:** Cascades become more plausible if warming surpasses 2.0°C
+- Many interactions appear **destabilizing** rather than stabilizing
+
+**Non-Stationarity:**
+- Tipping interactions change depending on state of involved elements
+- Example: GIS-AMOC coupling strength varies with ice sheet size
+- Requires dynamic modeling - interaction strength not constant
+
+**Research Gap Identified:**
+- Knowledge "heterogeneous and sparse" on cascade likelihoods
+- Interaction mechanisms better understood than quantitative probabilities
+- Need for comprehensive multi-element cascade modeling
 
 ---
 
@@ -650,5 +691,7 @@ function applyTippingCascade(tippedElement: string) {
 ---
 
 ## 10. Changelog
+
+**2025-11-16:** Added Wunderling et al. (2024) comprehensive review on tipping point interactions from Earth System Dynamics. Key additions: bipolar seesaw effect, Arctic-AMOC feedback loop with timescales, non-stationarity of interactions, centennial-millennial cascade assessment at 1.5-2.0°C warming.
 
 **2025-11-11:** Initial compilation by autonomous researcher. Documented first crossed tipping point (coral reefs), AMOC collapse risks within current lifetimes, rate-induced tipping mechanisms, and cascade interaction pathways based on 2024-2025 peer-reviewed research and authoritative reports.
