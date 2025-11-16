@@ -10,7 +10,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Key features:**
 - **Research-backed realism**: Every mechanic justified by peer-reviewed sources (2024-2025)
-- **71 breakthrough technologies**: From crisis response to transformative clarketech
+- **77 breakthrough technologies**: From crisis response to transformative clarketech (6 new biogeochemical technologies added Nov 16)
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
@@ -98,17 +98,26 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Quality:** A (institutional + peer-reviewed, UNEP 2024, NOAA CSL 2024)
 - 💡 **Model Implications:** Validates need for TIER 0 prevention technologies, separate flow vs stock tracking
 
+**Nov 16: Biogeochemical Flows Integration Complete (TIER 2 HIGH)** (commit a0c047b)
+- ✅ **INTEGRATION COMPLETE:** Legacy nutrient stocks + nitrogen-food coupling now live in ResourceSoilPhase
+- 🔧 **Implementation:**
+  - Legacy stock updates (order 20.11): Global N/P input calculation from regional management, accumulation + exponential decay
+  - Nitrogen-food coupling: Regional yield penalties (3% at 15% reduction), zero penalty in overuse zones (South Asia 55% overuse)
+  - 6 new technologies: Food Waste Reduction (30% demand reduction), Rhizosphere Engineering (15% efficiency), Alternative Protein - Insects/Algae (25% reduction), Nitroplast Integration (70% elimination, TIER 2, 2045+), Active Sediment Management (legacy P remediation), Phytoremediation Networks (habitat restoration)
+  - Fixed missing `regionalAdaptation` field (coordinatedDeployment)
+- 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia), recovery timeline decades even with 100% input reduction
+- 📖 **Research:** research/nitrogen_food_coupling_20251115.md (Grade B, 29 peer-reviewed sources, 2021-2024)
+- ⚠️ **Status:** NEEDS VALIDATION - Research verification file created (verification_a0c047b_20251116.md)
+- 🔄 **Workflow:** Queued for orchestrator validation (citation existence + claim verification required)
+
 **Nov 15: Nitrogen-Food Coupling Research Complete (TIER 2 HIGH)** (commit 5bacf9f + session archive 50fae2c)
 - 🔬 **Research:** Biogeochemical flows boundary mechanics (29 peer-reviewed sources, Grade B)
 - 📊 **Key Findings:** Legacy nutrient stocks (30-100yr half-lives), regional differentiation (South Asia 55% overuse), multiplicative tech synergies
 - ✅ **Modules Created:** `legacyNutrientStocks.ts` (305 lines), `nitrogenFoodCoupling.ts` (368 lines)
-- ⚠️ **Status:** Research COMPLETE, implementation PARTIAL (modules created, integration pending ~30-60min)
-- 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia)
 - 📖 **Research:** research/nitrogen_food_coupling_20251115.md (883 lines)
 - 📖 **Validation:** reviews/nitrogen_food_coupling_critique_20251115.md (Grade B - CONDITIONAL PASS)
 - 📖 **DevLog:** devlogs/biogeochemical_flows_implementation_20251115.md (338 lines)
 - 📁 **Archive:** plans/completed/session_work_nov15_2025_researcher_213002.md
-- ⏭️ **Next:** Wire modules into boundary calculations, add 6 technologies, Monte Carlo validation
 
 **Nov 15: Outcome Probabilities Normalization Bug Fix (CRITICAL)** (commit 6dc7f39)
 - ❌ **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
@@ -3186,10 +3195,10 @@ const newQualityOfLife = Math.max(0, Math.min(1,
 - **Golden Age Detection**: Prosperity state tracking, distinct from Utopia outcome
 - **Accumulation Systems**: Environmental, social cohesion, technological risk (realistic 2025 baselines)
 - **Crisis Cascades**: 10+ crisis types with compounding degradation (up to 3.0x)
-- **Breakthrough Technologies**: **71 total** in comprehensive tech tree
+- **Breakthrough Technologies**: **77 total** in comprehensive tech tree (6 biogeochemical technologies added Nov 16)
   - TIER 0 (11): Deployed 2025 at realistic levels (RLHF 95%, DAC 2%, de-extinction 1%)
-  - TIER 1 (18): Planetary boundary crisis tech (phosphorus, freshwater, ocean, pollution)
-  - TIER 2 (22): Major mitigations (social, alignment, energy, recycling, ecosystem)
+  - TIER 1 (20): Planetary boundary crisis tech (phosphorus, freshwater, ocean, pollution) + 2 biogeochemical (Active Sediment Management, Phytoremediation Networks)
+  - TIER 2 (26): Major mitigations (social, alignment, energy, recycling, ecosystem) + 4 biogeochemical (Food Waste Reduction, Rhizosphere Engineering, Alternative Protein, Nitroplast Integration)
   - TIER 3 (15): Transformative (fusion, medical breakthroughs, climate engineering, agriculture)
   - TIER 4 (5): Clarketech (longevity 150+, nanotech, space, brain emulation)
 - **Tech Tree System**: Prerequisites, research costs, deployment timelines, regional effects
