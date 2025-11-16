@@ -3149,7 +3149,8 @@ const newQualityOfLife = Math.max(0, Math.min(1,
   - Medical: AI diagnostics (25%), mRNA vaccines (40%)
   - Energy: 4th gen solar (8%), offshore wind (12%)
 - ✅ **TIER 1 (18)**: Planetary boundary crisis tech (phosphorus recovery, desalination, ocean alkalinity, PFAS remediation, etc.)
-- ✅ **TIER 2 (22)**: Major mitigations (enhanced UBI, AI mental health, scalable oversight, grid batteries, chemical recycling, etc.)
+- ✅ **TIER 2 (28)**: Major mitigations (enhanced UBI, AI mental health, scalable oversight, grid batteries, chemical recycling, **nitrogen-food coupling techs** [Nov 16, 2025], etc.)
+  - **Nitrogen reduction technologies (6 new):** Food waste reduction (30% reduction), rhizosphere engineering (12% efficiency), alternative protein insects/algae (25% reduction via substitution), phytoremediation networks (63% runoff capture), active sediment management (40% legacy P remediation), nitroplast integration (60% fertilizer elimination, TIER 2 breakthrough, 2045+ deployment)
 - ✅ **TIER 3 (15)**: Transformative tech (fusion power, disease elimination, regenerative medicine, vertical farming, AI rights, etc.)
 - ✅ **TIER 4 (5)**: Clarketech (advanced longevity 150+, molecular nanotech, space industrialization, brain emulation)
 
@@ -3186,10 +3187,10 @@ const newQualityOfLife = Math.max(0, Math.min(1,
 - **Golden Age Detection**: Prosperity state tracking, distinct from Utopia outcome
 - **Accumulation Systems**: Environmental, social cohesion, technological risk (realistic 2025 baselines)
 - **Crisis Cascades**: 10+ crisis types with compounding degradation (up to 3.0x)
-- **Breakthrough Technologies**: **71 total** in comprehensive tech tree
+- **Breakthrough Technologies**: **77 total** in comprehensive tech tree (6 nitrogen-food coupling techs added Nov 16, 2025)
   - TIER 0 (11): Deployed 2025 at realistic levels (RLHF 95%, DAC 2%, de-extinction 1%)
   - TIER 1 (18): Planetary boundary crisis tech (phosphorus, freshwater, ocean, pollution)
-  - TIER 2 (22): Major mitigations (social, alignment, energy, recycling, ecosystem)
+  - TIER 2 (28): Major mitigations (social, alignment, energy, recycling, ecosystem, **nitrogen reduction**)
   - TIER 3 (15): Transformative (fusion, medical breakthroughs, climate engineering, agriculture)
   - TIER 4 (5): Clarketech (longevity 150+, nanotech, space, brain emulation)
 - **Tech Tree System**: Prerequisites, research costs, deployment timelines, regional effects
