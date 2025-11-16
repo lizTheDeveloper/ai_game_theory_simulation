@@ -1070,6 +1070,16 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW:** Verify biogeochemical integration parameters (research/verification_0c9e688_20251116.md, commit 0c9e688) - **7 technologies, 20+ claims requiring Layer 2 verification** including:
+  - food_waste_reduction: 30% demand reduction claim
+  - nitroplast_integration: 40-80% fertilizer reduction range (line 168)
+  - rhizosphere_engineering: 10-15% NUE improvement (line 190), 15% fertilizer reduction (line 402)
+  - alternative_protein: 40% animal ag replacement, 35% nitrogen reduction
+  - active_sediment_management: 50-80% phosphorus reduction (line 464), $50k-500k cost (line 463)
+  - phytoremediation_networks: 335 field experiments claim (line 471), 63% N / 72% P removal (line 478)
+  - precision_fermentation: 30-50% nitrogen demand reduction (line 217)
+  - **Research Skeptic concern:** Optimistic bias - need to verify if parameters are conservative or cherry-picked
+  - **Priority:** TIER 2 HIGH (blocks biogeochemical boundary effectiveness validation)
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)
