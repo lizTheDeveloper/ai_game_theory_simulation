@@ -5,13 +5,88 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 17, 2025 - Post-integration validation)
-- **Research Quality:** A (peer-reviewed foundation, 56 sources total - nitrogen-food 29, transition mortality 27)
-- **Implementation Fidelity:** A (assertion coverage 97.2%, nitrogen integration COMPLETE, AI coordination COMPLETE)
-- **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, MEDIUM items remain, defensive fallback decision finalized)
-- **System Trajectory:** IMPROVING - Major integrations validated, Monte Carlo N=3 zero NaN errors
+**Current Status:** 🔴 **CRITICAL INTEGRATION ISSUES** (Nov 17, 2025 - Architecture Review)
+- **Research Quality:** A- (peer-reviewed foundation, 56 sources total - nitrogen-food 29, transition mortality 27)
+- **Implementation Fidelity:** D (assertion coverage 16%, 1,332 defensive fallback violations vs 169 claimed)
+- **Architecture Health:** C- (3 CRITICAL, 4 HIGH, 5 MEDIUM - see Nov 17 architecture-skeptic review)
+- **System Trajectory:** 🔴 UNSTABLE - Feature integration failures, massive technical debt, stability at risk
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** None - integration phase complete, awaiting next user directive
+- **Active Work:** EMERGENCY STABILIZATION REQUIRED - See CRITICAL priorities below
+
+---
+
+## 🚨 EMERGENCY STABILIZATION REQUIRED (Nov 17, 2025)
+
+**Architecture Review Grade: C-** (reviews/architecture_integration_review_20251117_post_nitrogen.md)
+
+### CRITICAL ISSUES (Immediate attention - system stability at risk)
+
+**CRITICAL-1: Nitrogen-Food Coupling Integration Failure** (8 hours)
+- **Problem:** Feature marked complete (Nov 17) but NOT INTEGRATED into simulation loop
+- **Evidence:** `calculateNitrogenYieldPenalty()` exists but never called anywhere in codebase
+- **Impact:** Nitrogen reduction has ZERO effect on food production (completely broken)
+- **Required Fix:**
+  1. Create `NitrogenFoodCouplingPhase` immediately
+  2. Insert at order ~21.5 (after planetary boundaries, before food security)
+  3. Wire legacy nutrient stock updates into phase
+  4. Update `FoodSecurityDegradationPhase` to consume coupling output
+  5. Validate with Monte Carlo - should see 3-5% food security impact
+
+**CRITICAL-2: Massive Defensive Fallback Debt** (40-50 hours)
+- **Problem:** 1,332 instances of `??`, `||`, `isNaN ? fallback` patterns (10× higher than Nov 15 estimate of 169)
+- **Evidence:** Nov 14-15 migration only fixed 20/169 (12% completion), actual count far higher
+- **Impact:** Silent failures produce invalid research results, NaN bugs cascade undetected
+- **Required Fix:**
+  1. HALT all new features immediately
+  2. Complete migration to assertion utilities (40+ hours at ~2 min each)
+  3. Add pre-commit hook to prevent new violations
+  4. Consider automated migration script for common patterns
+
+**CRITICAL-3: Phase Dependency Graph Integrity Violations** (16-20 hours)
+- **Problem:** Multiple phases have incorrect/missing/circular dependencies → race conditions → non-deterministic behavior
+- **Evidence:** `CoordinatedDeploymentPhase` reads `humanPopulationSystem.population` without declaring dependency
+- **Impact:** Different results on different runs (breaks Monte Carlo determinism)
+- **Required Fix:**
+  1. Full dependency audit of all 95 phases
+  2. Automated validation in PhaseOrchestrator
+  3. Fix all missing/incorrect dependencies
+  4. Add circular dependency detection
+
+### HIGH PRIORITY (Significant performance/maintainability concerns)
+
+**HIGH-1: Deep Clone Performance Crisis** (20-24 hours)
+- Every state snapshot uses `structuredClone()` on entire 900+ line GameState (50-100ms per snapshot)
+- Recommendation: Implement copy-on-write or incremental snapshots
+
+**HIGH-2: O(n²) Complexity in Multiple Phases** (12-16 hours)
+- Tech tree processing, organization management have nested loops
+- Recommendation: Pre-compute indices, use Map/Set for lookups
+
+**HIGH-3: Memory Leak in Phase Timing Instrumentation** (2-4 hours)
+- `phaseTimings` Map grows unbounded (never cleared)
+- Recommendation: Implement rolling window (last 100 executions)
+
+**HIGH-4: State Mutation Without Validation** (20-24 hours)
+- Direct mutations bypass validation/audit trail
+- Recommendation: State mutation wrapper with validation
+
+### MEDIUM PRIORITY (Technical debt)
+
+- MEDIUM-1: Energy System Double-Counting Risk (12-16 hours)
+- MEDIUM-2: Regional vs Global State Inconsistency (30+ hours)
+- MEDIUM-3: Event Log Unbounded Growth (4-6 hours)
+- MEDIUM-4: Missing Integration Tests (16-20 hours)
+- MEDIUM-5: Circular Tech Dependency Risk (4-6 hours)
+
+**Total Technical Debt: 200-250 hours (5-6 developer weeks)**
+
+**Recommended Allocation:** 50% of development capacity to debt reduction for next month
+- Week 1: Critical fixes (40 hours)
+- Week 2-3: High priority issues (60 hours)
+- Week 4: Medium priority items (40 hours)
+- Ongoing: 20% capacity for debt prevention
+
+---
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
