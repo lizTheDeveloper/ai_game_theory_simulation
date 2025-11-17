@@ -51,6 +51,21 @@ export interface TechnologyNode {
     scaling?: number;
     mature?: number;
   };
+
+  // === ENERGY-CONSTRAINED CLEANUP (TIER 1 CRITICAL - Nov 16, 2025) ===
+  // Research: Novel Entities irreversibility framework
+  // EPA (2024): 50-100 GJ/ton energy requirements for PFAS destruction
+  // Concentration gap: Tech demonstrations at >1000 mg/L vs. environmental ng/L (6-9 orders of magnitude)
+  cleanupEnergyRequirement?: number; // GJ/ton of contaminant removed (distinct from operation energyRequirement)
+  minimumConcentration?: number; // mg/L - tech only effective above this threshold
+  concentrationType?: 'rainwater' | 'surfaceWater' | 'groundwater' | 'concentratedWaste';
+
+  // === REBOUND EFFECT MECHANICS (Nov 16, 2025) ===
+  // Research: Jevons paradox in AI e-waste (arXiv 2025)
+  // Cleanup efficiency may increase production (moral hazard)
+  reboundCoefficient?: number; // Production increase per unit cleanup
+  reboundUncertaintyRange?: [number, number]; // [min, max] for Monte Carlo sensitivity
+  avoidsRebound?: boolean; // True for production bans (no moral hazard)
 }
 
 export interface TechnologyEffects {
@@ -76,6 +91,14 @@ export interface TechnologyEffects {
   // Other
   trustBoost?: number; // One-time or ongoing
   energyAbundanceBoost?: number; // Raises cap
+
+  // === PLANETARY BOUNDARY EFFECTS (Nov 16, 2025) ===
+  // Research: Novel Entities irreversibility framework
+  // Direct effects on planetary boundaries (0-1 reduction per month)
+  novelEntitiesReduction?: number; // Reduction in novel entities boundary value
+  biogeochemicalReduction?: number; // Reduction in biogeochemical flows (nitrogen, phosphorus)
+  freshwaterReduction?: number; // Reduction in freshwater stress
+  oceanAcidificationReduction?: number; // Reduction in ocean acidification
 }
 
 export interface BreakthroughTechState {
