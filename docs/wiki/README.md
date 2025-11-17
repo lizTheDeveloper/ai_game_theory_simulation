@@ -7677,6 +7677,10 @@ state.history.exogenousShocks?: Array<{
   - Dry-run mode for testing (`--dry-run` flag)
   - Failed merge branches preserved for inspection
   - Comprehensive logging with color output
+  - **Work preservation** (Nov 16, 2025): Force-commit mode instead of force-clean when stash fails
+    - If dirty tree can't be stashed → `git add -A` + auto-commit (preserves all work)
+    - Never uses `git reset --hard` or `git clean -fd` (destructive operations removed)
+    - Philosophy: Research work too valuable to delete - preserve in git history
 - **Configuration**:
   - `IS_VM`: Set to "true" on VM to skip frontend branches
   - `MERGE_ORCHESTRATOR_DRY_RUN`: Test mode (no actual merges)
@@ -7685,7 +7689,7 @@ state.history.exogenousShocks?: Array<{
 - **Logging**: `logs/merge_orchestrator_YYYYMMDD_HHMMSS.log` with detailed per-branch status
 - **Next Steps**: Set up hourly cron job (Mac) and systemd timer (VM), implement full agent spawning for quality gates 3-4
 - **Documentation**: `plans/merge_orchestrator_hourly_automation.md` (428 lines)
-- Commit: a0638db (Nov 1, 2025)
+- Commits: a0638db (Nov 1, 2025 - initial), ae1781a (Nov 16, 2025 - force-commit fix)
 
 **Remote Development Setup** ✅ DOCUMENTED
 - Complete automation for deploying on remote VMs (GCloud instances)
