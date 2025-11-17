@@ -107,6 +107,12 @@ export interface PlanetaryBoundary {
   recoveryHalfLife?: number;        // Years for 50% recovery (novel entities: 50-100, extinctions: Infinity)
   minimumAsymptoticValue?: number;  // Floor value (0.05-0.20 for novel entities, never reaches zero)
   legacyStock?: number;             // Accumulated contamination (metric tons) that releases slowly over decades
+
+  // === SLOW DECAY IRREVERSIBILITY (Nov 16, 2025 - Phase 2B) ===
+  // Additional properties for energy-constrained cleanup model
+  practicallyIrreversible?: boolean; // Very slow decay (centuries) - alternative naming for irreversible
+  decayHalfLife?: number;            // Years - half-life for exponential decay (PFAS: 500 years)
+  atmosphericTransport?: boolean;    // Local cleanup futile (99% redeposition via atmospheric cycling)
 }
 
 /**
