@@ -5,19 +5,11 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-<<<<<<< HEAD
-**Current Status:** 🟢 **STABLE** (Nov 15, 2025 - Post-researcher session)
+**Current Status:** 🟢 **STABLE** (Nov 17, 2025 - Post-researcher session, Citation Integrity archived)
 - **Research Quality:** A (peer-reviewed foundation, 29 sources added Nov 15 - nitrogen-food coupling)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, outcome probabilities bug FIXED, biogeochemical partial)
 - **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, MEDIUM items remain)
 - **System Trajectory:** IMPROVING - Bug fixes unblock validation, biogeochemical research complete
-=======
-**Current Status:** 🟡 **STABLE WITH KNOWN ISSUES** (Nov 17, 2025)
-- **Research Quality:** A (peer-reviewed foundation, comprehensive citations)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, defensive cleanup complete)
-- **Architecture Health:** 8.0/10 (2 CRITICAL, 5 HIGH issues identified in Nov 15 review - down from 9.5/10)
-- **System Trajectory:** STABILIZING - Phase dependency static fixes complete, runtime validation blocked
->>>>>>> efef92c5 (docs: Add Citation Integrity Platform to Archived Case Studies)
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
 - **Active Work:** Biogeochemical integration (30-60 min handoff), defensive fallback migration (12% complete)
 
