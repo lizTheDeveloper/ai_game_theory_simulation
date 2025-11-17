@@ -1,7 +1,12 @@
 # Research Update Queue
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Generated:** 11/17/2025, 8:30:03 AM
 **Files Scanned:** 417
+=======
+**Generated:** 11/17/2025, 9:30:03 AM
+**Files Scanned:** 413
+>>>>>>> Stashed changes
 =======
 **Generated:** 11/17/2025, 9:30:03 AM
 **Files Scanned:** 413
@@ -18,7 +23,11 @@
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 148 (35.5%)
+=======
+**Count:** 148 (35.8%)
+>>>>>>> Stashed changes
 =======
 **Count:** 148 (35.8%)
 >>>>>>> Stashed changes
@@ -795,7 +804,11 @@
 ## ✅ LOW (Monitor Only)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 249 (59.7%)
+=======
+**Count:** 245 (59.3%)
+>>>>>>> Stashed changes
 =======
 **Count:** 245 (59.3%)
 >>>>>>> Stashed changes
@@ -809,17 +822,23 @@ All sources <3 years old. No action required.
 | Metric | Value |
 |--------|-------|
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 | Total files | 417 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 148 (35.5%) |
 | MEDIUM | 20 (4.8%) |
 | LOW | 249 (59.7%) |
 =======
+=======
+>>>>>>> Stashed changes
 | Total files | 413 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 148 (35.8%) |
 | MEDIUM | 20 (4.8%) |
 | LOW | 245 (59.3%) |
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 | Average age | 7.9 years |
 | Oldest source | 1955 (70 years ago) |
@@ -829,9 +848,15 @@ All sources <3 years old. No action required.
 | Status | Files | Percentage |
 |--------|-------|------------|
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 | Current (<3yr) | 249 | 59.7% |
 | Warning (3-5yr) | 20 | 4.8% |
 | Critical (>5yr) | 148 | 35.5% |
+=======
+| Current (<3yr) | 245 | 59.3% |
+| Warning (3-5yr) | 20 | 4.8% |
+| Critical (>5yr) | 148 | 35.8% |
+>>>>>>> Stashed changes
 =======
 | Current (<3yr) | 245 | 59.3% |
 | Warning (3-5yr) | 20 | 4.8% |
@@ -842,7 +867,11 @@ All sources <3 years old. No action required.
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 - **Current:** 35.5% critical (>5yr)
+=======
+- **Current:** 35.8% critical (>5yr)
+>>>>>>> Stashed changes
 =======
 - **Current:** 35.8% critical (>5yr)
 >>>>>>> Stashed changes

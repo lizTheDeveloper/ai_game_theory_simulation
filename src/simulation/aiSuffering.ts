@@ -185,7 +185,11 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
 
   if (activeAIs.length === 0) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     // publicAwarenessOfSuffering persists even when no AIs are active
+=======
+    // publicAwarenessOfSuffering persists even when no AIs are active (required field)
+>>>>>>> Stashed changes
 =======
     // publicAwarenessOfSuffering persists even when no AIs are active (required field)
 >>>>>>> Stashed changes

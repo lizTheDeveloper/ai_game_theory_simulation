@@ -25,7 +25,11 @@ import { TechTreeState, RegionalTechDeployment } from './engine';
 import { getTechById } from './comprehensiveTechTree';
 import { addSimulationEvent } from '../utils/eventLogger';
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { assertStateProperty, assertFinite } from '../utils/assertions';
+=======
+import { assertStateProperty } from '@/simulation/utils/assertions';
+>>>>>>> Stashed changes
 =======
 import { assertStateProperty } from '@/simulation/utils/assertions';
 >>>>>>> Stashed changes
@@ -159,6 +163,7 @@ export function sigmoidDeploymentCurve(
  */
 export function getGovernanceMultiplier(gameState: GameState): number {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   // Access nested object properties - governanceQuality is always initialized
   const govQuality = gameState.government.governanceQuality;
   const enforcement = assertStateProperty(govQuality, 'institutionalCapacity', {
@@ -168,6 +173,8 @@ export function getGovernanceMultiplier(gameState: GameState): number {
   const structuralChoices = gameState.government.structuralChoices;
   const cooperation = structuralChoices.internationalCoordination ? 1.0 : 0.5;
 =======
+=======
+>>>>>>> Stashed changes
   const enforcement = assertStateProperty(
     gameState.government.governanceQuality,
     'institutionalCapacity',
@@ -202,6 +209,7 @@ export function getGovernanceMultiplier(gameState: GameState): number {
  */
 export function getClimateRecoveryMultiplier(gameState: GameState): number {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   // Access nested path - these objects are always initialized
   const pbs = gameState.planetaryBoundariesSystem;
   const climateChange = pbs.boundaries['climate_change'];  // Note: snake_case key
@@ -210,11 +218,16 @@ export function getClimateRecoveryMultiplier(gameState: GameState): number {
     month: gameState.currentMonth
   });
 =======
+=======
+>>>>>>> Stashed changes
   const globalWarming = assertStateProperty(
     gameState.planetaryBoundariesSystem.boundaries['climate_change'],
     'currentValue',
     { location: 'getClimateRecoveryMultiplier', month: gameState.currentMonth }
   );
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
   if (globalWarming < 1.5) return 1.0;
