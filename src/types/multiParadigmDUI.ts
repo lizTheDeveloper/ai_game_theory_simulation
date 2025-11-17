@@ -9,6 +9,11 @@
  * utopia AND Ecological dystopia (oil economy). Paradigm conflicts are
  * diagnostic, not errors.
  *
+ * IMPORTANT: Paradigms are ANALYTICAL TOOLS (evaluative frameworks), not political
+ * actors with agency. They don't "veto" policies - they provide different perspectives
+ * for conflict detection. High paradigm divergence indicates contested outcomes worth
+ * analyzing, not system failures to fix. (CAVEAT 8 clarification, Nov 16, 2025)
+ *
  * Three-Tier Architecture:
  * - Tier 1: Simulation Foundation (what drives outcomes - already exists)
  * - Tier 2A: High-Confidence Paradigms (drive + report)
@@ -18,6 +23,7 @@
  * - Phase 1: 4 paradigm documents (~55,000 words, 100+ sources)
  * - Phase 2: 42 indicators mapped (9 Western, 14 Development, 12 Ecological, 7 Indigenous)
  * - Quality Gates: 73% confidence (Phase 1), 68% confidence (Phase 2)
+ * - Phase 3: Research verification (Sangha et al. 2024, V-Dem 2025) - Nov 16, 2025
  *
  * @module types/multiParadigmDUI
  */
@@ -260,7 +266,24 @@ export interface MultiParadigmDUI {
      * Data: Bhutan GNH 2024 (1 country, HIGH), WVS Wave 7 (80 countries, MEDIUM), derived (115 countries, LOW)
      * Confidence: LOW-MEDIUM (only 1 country has direct measurement)
      * Drives: NO - uses existing social cohesion mechanics
-     * Reports: Community solidarity, cultural continuity, collective purpose
+     * Reports: Seven interconnected domains (Sangha et al. 2024):
+     *   1. Strong family (kinship systems)
+     *   2. Strong community (social networks)
+     *   3. Connection to culture, Country, and identity (bundled concept)
+     *   4. Self-determination (autonomy)
+     *   5. Health (physical/mental wellbeing)
+     *   6. Material wellbeing (economic security)
+     *   7. Subjective wellbeing (Liyan - holistic feeling of connection)
+     *
+     * Liyan (Yawuru): Holistic wellbeing felt in body, mind, spirit - how people FEEL
+     * about themselves, their connections to Country, and family/community (Sangha et al. 2024).
+     *
+     * Country-centrality: Country (land/environment) is foundational - all other domains
+     * are attached to it. Country threats cascade to ALL wellbeing dimensions.
+     *
+     * Geographic specificity: Based on Australian Aboriginal frameworks (Sangha et al. 2024).
+     * Country-centrality likely generalizes to other Indigenous traditions (Māori whenua,
+     * First Nations land relations) but not empirically verified globally.
      *
      * Utopia: GNH ≥66%, social trust >60% (~1-2 countries)
      * Dystopia: Social trust <30%, cultural genocide, atomization

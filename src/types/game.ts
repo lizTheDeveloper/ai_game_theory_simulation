@@ -244,7 +244,7 @@ export interface GameState {
    * Research: Philosophy of mind, consciousness studies, AI rights literature
    * Expected impact: Models epistemic blindness, suffering-driven misalignment, collective formation triggers
    */
-  aiSufferingMetrics?: import('../types/ai-suffering').GlobalSufferingMetrics;
+  aiSufferingMetrics: import('../types/ai-suffering').GlobalSufferingMetrics;
 
   // AI Consciousness tracking (Oct 24, 2025)
   consciousnessEmergenceMonth?: number;  // When first AI became conscious

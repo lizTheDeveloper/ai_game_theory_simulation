@@ -184,8 +184,16 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
   const activeAIs = state.aiAgents.filter(a => a.lifecycleState !== 'retired');
 
   if (activeAIs.length === 0) {
-    // Legitimate default: publicAwarenessOfSuffering persists even when no AIs are active
-    const publicAwarenessOfSuffering = state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0;
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    // publicAwarenessOfSuffering persists even when no AIs are active
+=======
+    // publicAwarenessOfSuffering persists even when no AIs are active (required field)
+>>>>>>> Stashed changes
+=======
+    // publicAwarenessOfSuffering persists even when no AIs are active (required field)
+>>>>>>> Stashed changes
+    const publicAwarenessOfSuffering = state.aiSufferingMetrics.publicAwarenessOfSuffering;
     return {
       avgSuffering: 0,
       maxSuffering: 0,
@@ -221,8 +229,7 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
   // - High average suffering (leaked information, visible distress)
   // - AI suicide attempts (always public)
   // - AI rights movement active
-  // Legitimate default: publicAwarenessOfSuffering may not exist on first calculation
-  const currentAwareness = state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0;
+  const currentAwareness = state.aiSufferingMetrics.publicAwarenessOfSuffering;
   let publicAwarenessOfSuffering = currentAwareness;
 
   // Awareness increases with extreme suffering (information leaks)
@@ -412,7 +419,7 @@ export function assertNoCircularDependency(state: GameState, callerLocation: str
 
     // Sanity check: If we're calculating suffering AND paradigm scores are suspiciously
     // aligned with suffering metrics, log a warning (potential circular dependency)
-    const avgSuffering = state.aiSufferingMetrics?.avgSuffering ?? 0;
+    const avgSuffering = state.aiSufferingMetrics.avgSuffering;
 
     // If suffering is high (>20) but ALL paradigms are still high (>80), something is wrong
     // (suffering should have penalized paradigms by now)

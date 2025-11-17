@@ -47,6 +47,27 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       return { events: [] };
     }
 
+    // === TIER 2 HIGH: UPDATE NITROGEN-FOOD COUPLING (Nov 15, 2025) ===
+    // Calculate regional nitrogen reduction effects from deployed technologies
+    // Research: Science Advances (2024), Zhang et al. (2021)
+    // Expected impact: Realistic nitrogen-food trade-offs with regional differentiation
+    if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
+      const { updateNitrogenFoodCoupling, getNitrogenReductionDeployment } = require('../../nitrogenFoodCoupling');
+
+      // Extract nitrogen-reducing technology deployment levels from tech tree
+      // Technologies (research-backed):
+      // 1. Precision Agriculture (30% reduction)
+      // 2. Biological Nitrogen Fixation (25% reduction)
+      // 3. Circular Food Systems (20% reduction)
+      // 4. Ecosystem Restoration (15% reduction)
+      // 5. Nitrogen Monitoring Networks (10% reduction)
+      // 6. Green Ammonia Production (40% reduction)
+      const nitrogenTechEffectiveness = getNitrogenReductionDeployment(state);
+
+      // Call nitrogen coupling update - this updates regionalNitrogenManagement state
+      updateNitrogenFoodCoupling(state, nitrogenTechEffectiveness);
+    }
+
     // Validate required systems (use assertions for cleaner error messages)
     const phosphorusReserves = assertStateProperty(state.phosphorusSystem, 'reserves', {
       location: 'FoodSecurityDegradationPhase.execute',
@@ -161,11 +182,54 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       });
 
       // Apply degradation to regional food security
-      const currentFood = assertProbability(region.foodSecurity, {
+      let currentFood = assertProbability(region.foodSecurity, {
         location: 'FoodSecurityDegradationPhase.execute',
         valueName: `${region.name}.foodSecurity (before)`,
         month: state.currentMonth
       });
+
+      // === TIER 2 HIGH: NITROGEN-FOOD COUPLING (Nov 15, 2025) ===
+      // Research: Science Advances (2024), Zhang et al. (2021)
+      // Regional nitrogen reduction creates yield penalties (nonlinear, region-specific)
+      // Expected impact: Realistic biogeochemical boundary trade-offs
+      if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
+        // Find matching regional nitrogen data
+        const regionMapping: Record<string, string> = {
+          'South Asia': 'southAsia',
+          'East Asia': 'eastAsia',
+          'North America': 'northAmerica',
+          'Europe': 'europe',
+          'Latin America': 'latinAmerica',
+          'Sub-Saharan Africa': 'subSaharanAfrica'
+        };
+
+        const nitrogenRegionKey = regionMapping[region.name];
+        if (nitrogenRegionKey) {
+          const nitrogenData = state.planetaryBoundariesSystem.regionalNitrogenManagement.find(
+            r => r.region === nitrogenRegionKey
+          );
+
+          if (nitrogenData) {
+            // Apply food production index from nitrogen coupling
+            // foodProductionIndex ranges from 0 (total failure) to 1.0 (baseline) to 2.0 (improved)
+            const foodProductionIndex = assertProbability(Math.min(nitrogenData.foodProductionIndex, 2.0), {
+              location: 'FoodSecurityDegradationPhase.execute',
+              valueName: `${region.name}.nitrogenFoodProductionIndex`,
+              month: state.currentMonth
+            });
+
+            // Apply food production penalty/bonus to regional food security
+            // If index < 1.0: penalty (nitrogen reduction hurts crops)
+            // If index > 1.0: bonus (optimized nitrogen IMPROVES crops - Zhang et al. overuse reduction case)
+            currentFood *= foodProductionIndex;
+
+            // Log nitrogen effects annually
+            if (state.currentMonth % 12 === 0 && Math.abs(foodProductionIndex - 1.0) > 0.05) {
+              console.log(`  [${region.name}] 🌾 Nitrogen coupling: Food production index ${foodProductionIndex.toFixed(3)}, Yield impact: ${(nitrogenData.yieldImpact * 100).toFixed(1)}%`);
+            }
+          }
+        }
+      }
 
       const newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
         location: 'FoodSecurityDegradationPhase.execute',
