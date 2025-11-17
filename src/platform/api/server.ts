@@ -22,6 +22,9 @@ import { createRateLimitMiddleware, RateLimitPresets } from '../middleware/rateL
 import { validateRequest } from '../middleware/validation';
 import { analyzeCitationSchema } from '../schemas/citationSchemas';
 import { updateUserRoleBodySchema, updateUserRoleParamsSchema, deleteUserParamsSchema } from '../schemas/adminSchemas';
+import { createCORSMiddleware, getDefaultCORSConfig } from '../middleware/corsMiddleware';
+import { createSecurityHeadersMiddleware, getDefaultSecurityHeadersConfig, getDevelopmentSecurityHeadersConfig } from '../middleware/securityHeaders';
+import { AuditLogger, createAuditMiddleware } from '../middleware/auditLogger';
 
 // ============================================================================
 // Server Configuration
@@ -76,6 +79,7 @@ export class PlatformServer {
   private redis: Redis;
   private authService: AuthService;
   private jwtMiddleware: JWTMiddleware;
+  private auditLogger: AuditLogger;
   private config: ServerConfig;
   private server: any;
 
@@ -92,6 +96,11 @@ export class PlatformServer {
     });
     this.authService = new AuthService(this.pool, config.auth);
     this.jwtMiddleware = createJWTMiddleware(this.authService);
+    this.auditLogger = new AuditLogger(this.pool, {
+      enableConsoleLogging: true,
+      enableDatabaseLogging: true,
+      minSeverity: 'low',
+    });
 
     this.setupMiddleware();
     this.setupRoutes();
@@ -102,16 +111,23 @@ export class PlatformServer {
    * Setup Express middleware
    */
   private setupMiddleware(): void {
-    // CORS - allow requests from configured origins
-    this.app.use(cors({
-      origin: this.config.corsOrigins,
-      credentials: true,
-    }));
+    // 1. Security Headers (first - apply to all responses)
+    const securityHeadersConfig = process.env.NODE_ENV === 'production'
+      ? getDefaultSecurityHeadersConfig()
+      : getDevelopmentSecurityHeadersConfig();
+    this.app.use(createSecurityHeadersMiddleware(securityHeadersConfig));
 
-    // JSON body parsing
+    // 2. Enhanced CORS with whitelist
+    const corsConfig = getDefaultCORSConfig();
+    this.app.use(createCORSMiddleware(corsConfig));
+
+    // 3. JSON body parsing (before validation middleware)
     this.app.use(express.json());
 
-    // Request logging
+    // 4. Audit logging middleware
+    this.app.use(createAuditMiddleware(this.auditLogger));
+
+    // 5. Request logging
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       const start = Date.now();
       res.on('finish', () => {
@@ -123,10 +139,16 @@ export class PlatformServer {
       next();
     });
 
-    // Rate limiting (if enabled)
+    // 6. Rate limiting (if enabled)
     if (this.config.rateLimiting?.enabled !== false) {
       this.setupRateLimiting();
     }
+
+    console.log('✅ Security middleware initialized:');
+    console.log('   - Security Headers (CSP, HSTS, X-Frame-Options)');
+    console.log('   - CORS whitelist protection');
+    console.log('   - Comprehensive audit logging');
+    console.log('   - Rate limiting');
   }
 
   /**

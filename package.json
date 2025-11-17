@@ -19,7 +19,10 @@
     "secrets:init": "npx tsx scripts/secrets/init-secrets.ts",
     "secrets:validate": "npx tsx scripts/secrets/validate-secrets.ts",
     "secrets:rotate": "npx tsx scripts/secrets/rotate-secrets.ts",
-    "secrets:migrate": "npx tsx scripts/secrets/migrate-secrets.ts"
+    "secrets:migrate": "npx tsx scripts/secrets/migrate-secrets.ts",
+    "security:audit": "npx tsx scripts/security/audit-dependencies.ts",
+    "security:audit:fix": "npx tsx scripts/security/audit-dependencies.ts --fix",
+    "security:test": "npx tsx --test src/platform/tests/securityIntegration.test.ts"
   },
   "dependencies": {
     "@anthropic-ai/claude-code": "^2.0.25",
