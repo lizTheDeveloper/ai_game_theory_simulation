@@ -362,15 +362,18 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
     - ✅ Research Validation (Grade B, CONDITIONAL PASS) - `reviews/nitrogen_food_coupling_critique_20251115.md`
     - ⚠️ Implementation PARTIAL (modules created, integration pending)
     - ⏸️ Monte Carlo Validation PENDING (awaiting integration)
-  - **Implementation:** Commit 5bacf9f4d (partial)
+  - **Implementation:** Commits 5bacf9f4d (modules), b84ddff03 (Phase 1 integration)
     - ✅ Legacy nutrient stocks (30-100 year half-lives, exponential decay) - `src/simulation/legacyNutrientStocks.ts`
     - ✅ Nitrogen-food coupling (regional penalties, 3-zone yield curves, multiplicative synergies) - `src/simulation/nitrogenFoodCoupling.ts`
     - ✅ Type definitions (LegacyNutrientStock, RegionalNitrogenManagement) - `src/types/planetaryBoundaries.ts`
-    - ⚠️ **Integration Required:** Wire into boundary calculations, add initialization, connect to food system, add 6 missing technologies
+    - ✅ **Phase 1 COMPLETE (Nov 17, 2025):** Wire updateLegacyNutrientStocks into PlanetaryBoundariesPhase - Commit b84ddff03
+    - ⚠️ **Phase 2 Required:** Connect updateNitrogenFoodCoupling to food production system
+    - ⚠️ **Phase 3 Required:** Add 6 missing technologies (food waste, nitroplasts, rhizosphere, etc.)
   - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia, decades-long recovery)
-  - **Handoff:** 30-60 minutes integration work
+  - **Handoff Phase 2:** 30-45 minutes (connect nitrogen-food penalties to mortality/QoL systems)
+  - **Handoff Phase 3:** 45-60 minutes (add 6 technologies to comprehensiveTechTree.ts)
   - **Archive:** `plans/completed/session_work_nov15_2025_researcher_213002.md`
-  - **Status:** ✅ RESEARCH COMPLETE, ⚠️ IMPLEMENTATION PARTIAL (handoff ready)
+  - **Status:** ✅ RESEARCH COMPLETE, ⚠️ PHASE 1 COMPLETE, ⏸️ PHASE 2-3 PENDING
 
 - [x] **Novel Entities Zero-Effectiveness** - ✅ COMPLETE (Nov 13-14, 2025)
   - **Research:** `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources, Grade B+)
