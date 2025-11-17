@@ -1,17 +1,17 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 15, 2025 (Updated: End of Autonomous Session)
+**Date:** November 17, 2025 (Updated: End of Session)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 15, 2025 - Post-researcher session)
-- **Research Quality:** A (peer-reviewed foundation, 29 sources added Nov 15 - nitrogen-food coupling)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, outcome probabilities bug FIXED, biogeochemical partial)
-- **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, MEDIUM items remain)
-- **System Trajectory:** IMPROVING - Bug fixes unblock validation, biogeochemical research complete
+**Current Status:** 🟢 **STABLE** (Nov 17, 2025 - Nitrogen-food coupling Phase 1 complete)
+- **Research Quality:** A (peer-reviewed foundation, nitrogen-food coupling parameter verification pending)
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, biogeochemical Phase 1 COMPLETE)
+- **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, defensive fallback analysis complete)
+- **System Trajectory:** IMPROVING - Biogeochemical Phase 1 complete, Phase 2-3 ready for handoff
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** Biogeochemical integration (30-60 min handoff), defensive fallback migration (12% complete)
+- **Active Work:** Biogeochemical Phase 2-3 handoff (75-105 min), parameter verification (phosphorus baseline discrepancy)
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -49,21 +49,31 @@
 - **Archive:** `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
 - **Commits:** ff22268 - "fix: Scenario Phase 3 critical fixes (CRITICAL-1, HIGH-3)", a140fb07b - "fix: Scenario parameter divergence (sequenced deployment)"
 
-**Recent Completions (Nov 15, 2025):**
+**Recent Completions (Nov 17, 2025):**
 
-- ✅ **TIER 2 HIGH: Nitrogen-Food Coupling Research** (Nov 15, 2025 - Session researcher-20251115_213002)
+- ✅ **TIER 2 HIGH: Nitrogen-Food Coupling Phase 1 COMPLETE** (Nov 15-17, 2025)
   - **Scope:** Biogeochemical flows boundary mechanics (legacy nutrient stocks, regional nitrogen-food coupling)
   - **Research:** `research/nitrogen_food_coupling_20251115.md` (49KB, 883 lines, 29 peer-reviewed sources)
   - **Validation:** `reviews/nitrogen_food_coupling_critique_20251115.md` (Grade B - CONDITIONAL PASS)
   - **Key Findings:** Legacy stocks (30-100 year half-lives), regional overuse zones (South Asia 55%), multiplicative tech synergies
-  - **Implementation:** ⚠️ PARTIAL - Modules created but require integration (~30-60 min work)
-    - ✅ `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
-    - ✅ `src/simulation/nitrogenFoodCoupling.ts` (368 lines) - Regional penalties, 3-zone yield curves
-    - ⚠️ **Integration Pending:** Wire into boundary calculations, add initialization, connect food system, add 6 technologies
-  - **Expected Impact:** God mode effectiveness 10% → 30-50% (legacy stock inertia creates decades-long recovery)
-  - **Commits:** 5bacf9f4d (research + partial implementation)
+  - **Implementation Status:**
+    - ✅ **Phase 1 COMPLETE (Nov 17):** Legacy nutrient stocks wired into PlanetaryBoundariesPhase
+      - Module: `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
+      - Integration: `PlanetaryBoundariesPhase.ts` - Monthly stock updates with baseline inputs
+      - Defensive coding: Zero silent fallbacks, `assertFinite` validation
+      - Commits: 5bacf9f4d (modules), b84ddff03 (integration), bc97ab97f (docs)
+    - ✅ **Phase 2 MODULE READY:** `src/simulation/nitrogenFoodCoupling.ts` (368 lines) - Regional penalties, 3-zone yield curves
+    - ⚠️ **Phase 2 PENDING (30-45 min):** Connect nitrogen-food penalties to mortality/QoL systems
+    - ⚠️ **Phase 3 PENDING (45-60 min):** Add 6 technologies to comprehensiveTechTree.ts
+  - **Parameter Verification Required:**
+    - ⚠️ Phosphorus baseline: 25 Mt P/year (code) vs 18.2 Mt P/year (docs) - 37% discrepancy
+    - ⚠️ Nitrogen baseline: 120 Mt N/year - clarify if current or post-reduction target
+    - Report: `research/verification_b84ddff_20251117.md` (historian review)
+  - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia, decades-long recovery)
   - **Archive:** `plans/completed/session_work_nov15_2025_researcher_213002.md`
-  - **Status:** ✅ Research COMPLETE, Implementation PARTIAL (handoff ready)
+  - **Status:** ✅ Phase 1 COMPLETE, ⏸️ Phases 2-3 READY FOR HANDOFF, ⚠️ Parameter verification required before Monte Carlo
+
+**Recent Completions (Nov 15, 2025):**
 
 - ✅ **CRITICAL BUG FIX: Outcome Probabilities Normalization** (Nov 15, 2025)
   - **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
@@ -75,17 +85,24 @@
   - **Commits:** 6dc7f398b
   - **Status:** ✅ COMPLETE - Monte Carlo validation unblocked
 
-- 🟡 **DEFENSIVE FALLBACK MIGRATION - 12% COMPLETE** (Nov 15, 2025)
+- ✅ **DEFENSIVE FALLBACK MIGRATION - ANALYZED (REVERT RECOMMENDED)** (Nov 15-17, 2025)
   - **Context:** Architecture review identified 169 defensive fallback violations (`??` and `||`)
-  - **Work Completed:** 20/169 violations fixed (CRITICAL + HIGH priority)
+  - **Work Completed (12%):** 20/169 violations fixed (CRITICAL + HIGH priority)
   - **Files Modified:** 10 files (EmergencyResponsePhase, OutcomeProbabilitiesPhase, aiSuffering, dystopiaProgression, alignmentDynamics, earlyWarningSystems, centralConfig, PhaseOrchestrator, game.ts, government.ts)
   - **Type Fixes:** 2 optional fields made required (`aiSufferingMetrics`, `government.resources`)
-  - **Validation:** Type checking ✅ PASS, Monte Carlo 8/10 runs successful (80%)
-  - **Commits:** 76b05851f
-  - **Documentation:** `logs/defensive_fallback_fix_20251115.md` (290 lines)
-  - **Architecture Feedback:** Partial migration creates inconsistent patterns - recommend complete or revert
-  - **Remaining:** 149 violations (MEDIUM priority code paths)
-  - **Status:** 🟡 PARTIALLY COMPLETE - Decision point: complete remaining 88% or revert for consistency
+  - **Commits:** 76b05851f (migration), 0f04bef6e (analysis)
+  - **Architecture Analysis (Nov 17):**
+    - Finding: 95% of "violations" are legitimate boolean logic (`||` in conditions), NOT bug-hiding fallbacks
+    - False positive rate: 75-80% of `||` operators are legitimate multi-condition checks
+    - Actual problematic fallbacks: ~5% (50 lines across codebase)
+    - Recommendation: REVERT partial migration + targeted fixes for 5 high-risk patterns
+    - Reports: `reviews/defensive_fallback_architecture_analysis_20251117.md`, `reviews/defensive_fallback_high_risk_targets.md`
+  - **Decision Rationale:**
+    - Effort: 8-12 hours to complete remaining 88% (900+ lines)
+    - Value: <5% actual bug prevention (50 problematic lines)
+    - Risk: HIGH - changing 900+ lines of working code
+    - Priority misalignment: Blocks CRITICAL roadmap items (nuclear winter, AI coordination)
+  - **Status:** ✅ ANALYSIS COMPLETE - Recommendation: REVERT + targeted 5-line fix
   - **Archive:** `plans/completed/session_work_nov15_2025.md`
 
 - ✅ **DETERMINISM VERIFICATION COMPLETE** (Nov 14-15, 2025)
@@ -355,25 +372,29 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Expected Impact:** Climate tech effectiveness 5.5% → 30-50% (typical), 80%+ (optimal)
   - **Status:** ✅ COMPLETE - Ready for effectiveness validation testing
 
-- [x] **Nitrogen-Food Coupling (Biogeochemical Flows)** - ✅ RESEARCH COMPLETE (Nov 15, 2025)
+- [x] **Nitrogen-Food Coupling (Biogeochemical Flows)** - ✅ PHASE 1 COMPLETE (Nov 15-17, 2025)
   - **Research:** `research/nitrogen_food_coupling_20251115.md` (49 KB, 883 lines, 29 peer-reviewed sources)
   - **DevLog:** `devlogs/biogeochemical_flows_implementation_20251115.md` (338 lines)
   - **Quality Gates:**
     - ✅ Research Validation (Grade B, CONDITIONAL PASS) - `reviews/nitrogen_food_coupling_critique_20251115.md`
-    - ⚠️ Implementation PARTIAL (modules created, integration pending)
-    - ⏸️ Monte Carlo Validation PENDING (awaiting integration)
-  - **Implementation:** Commits 5bacf9f4d (modules), b84ddff03 (Phase 1 integration)
-    - ✅ Legacy nutrient stocks (30-100 year half-lives, exponential decay) - `src/simulation/legacyNutrientStocks.ts`
-    - ✅ Nitrogen-food coupling (regional penalties, 3-zone yield curves, multiplicative synergies) - `src/simulation/nitrogenFoodCoupling.ts`
-    - ✅ Type definitions (LegacyNutrientStock, RegionalNitrogenManagement) - `src/types/planetaryBoundaries.ts`
-    - ✅ **Phase 1 COMPLETE (Nov 17, 2025):** Wire updateLegacyNutrientStocks into PlanetaryBoundariesPhase - Commit b84ddff03
-    - ⚠️ **Phase 2 Required:** Connect updateNitrogenFoodCoupling to food production system
-    - ⚠️ **Phase 3 Required:** Add 6 missing technologies (food waste, nitroplasts, rhizosphere, etc.)
+    - ✅ Phase 1 Implementation COMPLETE (legacy stocks wired)
+    - ⚠️ Parameter Verification REQUIRED - `research/verification_b84ddff_20251117.md` (historian review)
+    - ⏸️ Monte Carlo Validation PENDING (awaiting parameter verification + Phase 2-3)
+  - **Implementation:** Commits 5bacf9f4d (modules), b84ddff03 (Phase 1 integration), bc97ab97f (docs)
+    - ✅ **Phase 1 COMPLETE (Nov 17):** Legacy nutrient stocks wired into PlanetaryBoundariesPhase
+      - Module: `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
+      - Integration: Monthly stock updates in `PlanetaryBoundariesPhase.ts` (order 21.0)
+      - Defensive coding: Zero silent fallbacks, `assertFinite` validation
+    - ✅ **Phase 2 MODULE READY:** `src/simulation/nitrogenFoodCoupling.ts` (368 lines) - Regional penalties, 3-zone yield curves
+    - ⚠️ **Phase 2 PENDING (30-45 min):** Connect nitrogen-food penalties to mortality/QoL systems
+    - ⚠️ **Phase 3 PENDING (45-60 min):** Add 6 technologies to comprehensiveTechTree.ts
+  - **Parameter Verification Required (BLOCKER for Monte Carlo):**
+    - ⚠️ Phosphorus baseline: 25 Mt P/year (code) vs 18.2 Mt P/year (docs) - 37% discrepancy
+    - ⚠️ Nitrogen baseline: 120 Mt N/year - clarify if current or post-reduction target
+    - Report: `research/verification_b84ddff_20251117.md` (217 lines, historian)
   - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia, decades-long recovery)
-  - **Handoff Phase 2:** 30-45 minutes (connect nitrogen-food penalties to mortality/QoL systems)
-  - **Handoff Phase 3:** 45-60 minutes (add 6 technologies to comprehensiveTechTree.ts)
   - **Archive:** `plans/completed/session_work_nov15_2025_researcher_213002.md`
-  - **Status:** ✅ RESEARCH COMPLETE, ⚠️ PHASE 1 COMPLETE, ⏸️ PHASE 2-3 PENDING
+  - **Status:** ✅ PHASE 1 COMPLETE, ⏸️ PHASE 2-3 READY, ⚠️ PARAMETER VERIFICATION REQUIRED
 
 - [x] **Novel Entities Zero-Effectiveness** - ✅ COMPLETE (Nov 13-14, 2025)
   - **Research:** `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources, Grade B+)
@@ -1466,7 +1487,30 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT - STABLE AND IMPROVING** (Nov 14, 2025 - End of Session)
+**Overall Project Status: 🟢 EXCELLENT - STABLE AND IMPROVING** (Nov 17, 2025 - End of Session)
+
+**End-of-Session Completions (Nov 17, 2025):**
+- ✅ **NITROGEN-FOOD COUPLING PHASE 1 INTEGRATION COMPLETE** (TIER 2 HIGH)
+  - Implementation: Legacy nutrient stocks wired into PlanetaryBoundariesPhase (order 21.0)
+  - Module: `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
+  - Defensive coding: Zero silent fallbacks, `assertFinite` validation throughout
+  - Expected impact: God mode biogeochemical effectiveness 10% → 30-50%
+  - Validation: Type check PASS, 12-month test PASS
+  - Commits: b84ddff03 (integration), bc97ab97f (docs), 373b2f3dd (historian)
+  - Phases 2-3 remaining: 75-105 min (connect food system + add 6 technologies)
+- ⚠️ **PARAMETER VERIFICATION REQUIRED** (BLOCKER for Monte Carlo)
+  - Finding: Phosphorus baseline discrepancy - 25 Mt P/year (code) vs 18.2 Mt P/year (docs) = 37% difference
+  - Finding: Nitrogen baseline ambiguity - 120 Mt N/year unclear if current or post-reduction target
+  - Report: `research/verification_b84ddff_20251117.md` (217 lines, historian review)
+  - Action required: Research validation to resolve before Monte Carlo testing
+- ✅ **DEFENSIVE FALLBACK MIGRATION - ARCHITECTURE ANALYSIS COMPLETE** (Nov 15-17)
+  - Finding: 95% of "violations" are legitimate boolean logic (`||` in conditions), NOT bug-hiding fallbacks
+  - False positive rate: 75-80% of `||` operators are legitimate multi-condition checks
+  - Actual problematic fallbacks: ~5% (50 lines across codebase)
+  - Recommendation: REVERT partial 12% migration + targeted fixes for 5 high-risk patterns
+  - Reports: `reviews/defensive_fallback_architecture_analysis_20251117.md`, `reviews/defensive_fallback_high_risk_targets.md`
+  - Commits: 0f04bef6e (analysis), ffac615 (historian)
+  - Decision rationale: 8-12h effort for <5% value, blocks CRITICAL roadmap items
 
 **End-of-Session Completions (Nov 14, 2025 - Evening):**
 - ✅ **CLIMATE DEPLOYMENT PHASE TYPE ERRORS FIXED** (TIER 1 CRITICAL)
