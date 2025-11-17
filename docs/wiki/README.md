@@ -2515,6 +2515,8 @@ Autonomous infrastructure upgrade: Merge orchestrator now spawns Claude Code to 
 
 **RECENT_CHANGES.md Merge Conflict Resolution (Nov 8, 2025)**: Autonomous workers stuck in unresolved merge state preventing return to main. Root cause: Concurrent updates to `docs/wiki/RECENT_CHANGES.md` from worker health check fix (a1b6a23) + researcher AI welfare update (811dfa8). Both valid historical entries just needed chronological combination. Fix: Resolved conflict on merge branch `merge/auto/researcher-20251107_223001_20251107_234502` (bb17dc6), reset main to clean state (849bc12). Impact: Workers blocked ~90 minutes at 00:00 run; merge orchestrator stuck at 23:45 attempting auto-remediation. System now unblocked for normal operations. Next worker run validated: create branch → work → return to main cycle restored. See: `logs/autonomous/health_check_fix_20251108_001500.md`, Commit: 6a38bfe
 
+**Intelligent Remediation Restored (Nov 16, 2025)**: Reverted destructive force-clean pattern, restored three-tier remediation strategy with force-commit fallback. **Problem**: Previous version used `git reset --hard` + `git clean -fd` which DESTROYED uncommitted work - unacceptable for research project where uncommitted analysis may exist. **Root cause**: VM had intelligent Claude Code remediation (commit 9764a324) but it wasn't spawning (Nov 12 08:00 log); root cause was `claude` CLI not available in cron environment, but remediation was mistakenly DISABLED (set `if false;` on line 171) instead of fixed. **Solution**: Three-tier remediation strategy: (1) FIRST: Try stash (gentle, reversible), (2) SECOND: Try Claude Code (intelligent analysis with 5-min timeout - creates task file, spawns `claude` CLI, analyzes log conflicts vs real work, decides abort+clean OR preserve via commit), (3) THIRD: Force-commit fallback (if Claude unavailable/failed, commits all changes with explanation - NEVER uses force-clean, no data loss). **Philosophy change**: BEFORE: "Merge orchestrator's job is to merge branches, not preserve local edits" → AFTER: "Preserve all work. Use intelligence to distinguish log conflicts from real work." **Next steps**: Investigate why `claude` CLI not available in cron environment, fix VM authentication/PATH for Claude Code access, test autonomous remediation works end-to-end on VM. See: `scripts/merge-orchestrator.sh` lines 118-260, Commit: 4c5f646
+
 See: [`docs/course/10_AUTONOMOUS_INFRASTRUCTURE.md`](../course/10_AUTONOMOUS_INFRASTRUCTURE.md#auto-remediation-new---nov-6-2025), Commit: d0f85ff
 
 ---
@@ -7725,6 +7727,10 @@ state.history.exogenousShocks?: Array<{
   - Dry-run mode for testing (`--dry-run` flag)
   - Failed merge branches preserved for inspection
   - Comprehensive logging with color output
+  - **Work preservation** (Nov 16, 2025): Force-commit mode instead of force-clean when stash fails
+    - If dirty tree can't be stashed → `git add -A` + auto-commit (preserves all work)
+    - Never uses `git reset --hard` or `git clean -fd` (destructive operations removed)
+    - Philosophy: Research work too valuable to delete - preserve in git history
 - **Configuration**:
   - `IS_VM`: Set to "true" on VM to skip frontend branches
   - `MERGE_ORCHESTRATOR_DRY_RUN`: Test mode (no actual merges)
@@ -7733,7 +7739,7 @@ state.history.exogenousShocks?: Array<{
 - **Logging**: `logs/merge_orchestrator_YYYYMMDD_HHMMSS.log` with detailed per-branch status
 - **Next Steps**: Set up hourly cron job (Mac) and systemd timer (VM), implement full agent spawning for quality gates 3-4
 - **Documentation**: `plans/merge_orchestrator_hourly_automation.md` (428 lines)
-- Commit: a0638db (Nov 1, 2025)
+- Commits: a0638db (Nov 1, 2025 - initial), ae1781a (Nov 16, 2025 - force-commit fix)
 
 **Remote Development Setup** ✅ DOCUMENTED
 - Complete automation for deploying on remote VMs (GCloud instances)
