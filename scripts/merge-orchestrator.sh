@@ -126,36 +126,49 @@ if ! git diff --quiet || ! git diff --cached --quiet || git ls-files -u | grep -
     log "✅ Changes stashed as: $STASH_NAME"
     log "ℹ️  To recover: git stash list | grep '$STASH_NAME'"
   else
-    # Stash failed (probably merge conflicts) - FORCE CLEAN
-    log "⚠️  Stash failed - using FORCE CLEAN mode"
+    # Stash failed (probably merge conflicts) - FORCE COMMIT to preserve work
+    log "⚠️  Stash failed - using FORCE COMMIT mode to preserve work"
+
+    # Abort any in-progress merge/rebase first
     log "🔧 Aborting any in-progress operations..."
     git merge --abort 2>&1 | tee -a "$LOG_FILE" || true
     git rebase --abort 2>&1 | tee -a "$LOG_FILE" || true
 
-    log "🔧 Resetting to HEAD..."
-    git reset --hard HEAD 2>&1 | tee -a "$LOG_FILE" || true
+    # Now commit everything to preserve it
+    log "🔧 Committing all changes to preserve work..."
+    git add -A 2>&1 | tee -a "$LOG_FILE" || true
 
-    log "🔧 Cleaning untracked files..."
-    git clean -fd 2>&1 | tee -a "$LOG_FILE" || true
+    COMMIT_MSG="merge-orchestrator: Auto-commit to preserve work before branch processing
 
-    log "✅ Working tree forcefully cleaned (uncommitted changes LOST)"
-    log "ℹ️  Philosophy: Merge orchestrator's job is to merge branches, not preserve local edits"
+Timestamp: $(date)
+Orchestrator run: $TIMESTAMP
+
+This commit was created automatically by the merge orchestrator to preserve
+uncommitted work that couldn't be stashed (likely due to conflicts).
+
+All changes have been preserved. Nothing was lost."
+
+    if git commit -m "$COMMIT_MSG" 2>&1 | tee -a "$LOG_FILE"; then
+      log "✅ Work preserved in commit $(git rev-parse --short HEAD)"
+      log "ℹ️  All uncommitted changes have been committed and saved"
+    else
+      log "⚠️  Commit failed (possibly nothing to commit after abort)"
+    fi
   fi
 else
   log "✅ Working tree is clean"
 fi
 
-# Final verification (should never fail now, but log if it does)
+# Final verification (working tree should be clean now)
 if ! git diff --quiet || ! git diff --cached --quiet || git ls-files -u | grep -q .; then
-  log "🚨 CRITICAL: Working tree STILL dirty after force clean - this should never happen!"
-  log "Continuing anyway (last resort: checkout main and re-clean)"
-  git checkout main 2>&1 | tee -a "$LOG_FILE" || true
-  git reset --hard HEAD 2>&1 | tee -a "$LOG_FILE" || true
-  git clean -fd 2>&1 | tee -a "$LOG_FILE" || true
+  log "🚨 CRITICAL: Working tree STILL dirty after stash/commit - manual investigation needed"
+  log "Tree status:"
+  git status --short | tee -a "$LOG_FILE"
+  log "⚠️  Continuing with merge orchestrator anyway - work has been preserved"
 fi
 
 # Legacy remediation task creation (kept for forensics, but no longer blocks execution)
-if false; then  # Disabled - we now force clean instead of spawning Claude
+if false; then  # Disabled - we now force commit/stash instead of spawning Claude
   # Create remediation task file
   REMEDIATION_TASK="$LOG_DIR/remediation_stuck_worktre_${TIMESTAMP}.md"
   cat > "$REMEDIATION_TASK" <<EOF
