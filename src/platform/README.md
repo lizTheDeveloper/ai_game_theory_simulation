@@ -2,7 +2,8 @@
 
 **Platform Engineer:** Marcus
 **Created:** 2025-11-17
-**Total Code:** 3,518 lines (Python + TypeScript)
+**Updated:** 2025-11-17 (Added Authentication & Authorization)
+**Total Code:** 10,200+ lines (Python + TypeScript + SQL)
 
 ## Overview
 
@@ -33,6 +34,85 @@ Production-ready platform for orchestrating multi-agent citation integrity analy
     │   PostgreSQL + Redis        │
     └────────────────────────────┘
 ```
+
+## Security & Authentication (NEW - 2025-11-17)
+
+**Production-grade authentication and authorization system implemented.**
+
+### Security Features
+
+- ✅ **Bcrypt password hashing** (12 salt rounds)
+- ✅ **JWT access tokens** (15 minute TTL)
+- ✅ **Refresh tokens** (7 day TTL with rotation)
+- ✅ **Account lockout** (5 failed attempts → 15 min lockout)
+- ✅ **Audit logging** (all authentication events tracked)
+- ✅ **Role-based access control (RBAC)** (admin, operator, viewer)
+- ✅ **SQL injection prevention** (parameterized queries)
+- ✅ **CORS protection**
+- ✅ **Comprehensive tests** (registration, login, token refresh, RBAC)
+
+### User Roles
+
+| Role | Permissions |
+|------|------------|
+| **viewer** | Read-only access to citations, metrics, and agent status |
+| **operator** | Read/write citations, analyze documents, manage agents |
+| **admin** | Full access including user management and system configuration |
+
+### Authentication Endpoints
+
+```
+POST /auth/register     - User registration
+POST /auth/login        - Login (returns JWT)
+POST /auth/refresh      - Refresh access token
+POST /auth/logout       - Logout (revoke refresh token)
+GET  /auth/me           - Get current user info (protected)
+```
+
+### Protected Platform Endpoints
+
+```
+POST /api/citations/analyze           - Analyze citation (operator+)
+GET  /api/metrics                     - Get metrics (viewer+)
+POST /api/admin/agents                - Manage agents (admin only)
+GET  /api/admin/users                 - List users (admin only)
+PUT  /api/admin/users/:id/role        - Update user role (admin only)
+DELETE /api/admin/users/:id           - Deactivate user (admin only)
+```
+
+### Quick Start
+
+**1. Setup database:**
+```bash
+./src/platform/scripts/setup-database.sh
+```
+
+**2. Configure environment:**
+```bash
+cp src/platform/.env.example .env
+# Edit .env with your database credentials and JWT secrets
+```
+
+**3. Start server:**
+```bash
+npx tsx src/platform/api/server.ts
+```
+
+**4. Test authentication:**
+```bash
+# Login with default admin
+curl -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@marcus-platform.local","password":"changeme123!"}'
+
+# Use returned accessToken for authenticated requests
+curl -H "Authorization: Bearer <token>" \
+  http://localhost:3000/auth/me
+```
+
+**⚠️ SECURITY:** Change default admin password immediately in production!
+
+**📖 Complete documentation:** [src/platform/docs/AUTHENTICATION.md](./docs/AUTHENTICATION.md)
 
 ## Files Created
 
@@ -172,6 +252,149 @@ if (result.rowCount === 0) {
 - Scalability tables (agents vs. throughput/latency)
 - Confusion matrix breakdown
 - Summary statistics
+
+### 5. `database/auth-schema.sql` (270 lines)
+
+**PostgreSQL schema for authentication and authorization.**
+
+**Tables:**
+- **users:** User accounts with RBAC (admin, operator, viewer)
+- **refresh_tokens:** JWT refresh tokens with expiration and revocation
+- **auth_audit_log:** Complete audit trail of authentication events
+
+**Functions:**
+- `check_and_lock_account()` - Account lockout after failed login attempts
+- `reset_failed_attempts()` - Reset counter on successful login
+- `cleanup_expired_tokens()` - Remove expired/revoked tokens
+
+**Security:**
+- Email format validation (regex constraint)
+- Role validation (enum constraint)
+- Password hash storage (bcrypt)
+- Automatic timestamps
+- Foreign key cascades
+
+### 6. `auth/authService.ts` (710 lines)
+
+**Core authentication service with production-grade security.**
+
+**Key Features:**
+- User registration with password strength validation
+- Login with JWT generation (access + refresh tokens)
+- Token refresh with rotation (old token revoked)
+- Logout (revoke refresh token)
+- Account lockout after failed attempts
+- Comprehensive audit logging
+- Fail-loudly error handling (no silent fallbacks)
+
+**Security Measures:**
+- Bcrypt password hashing (12 salt rounds)
+- JWT secrets validation (256-bit minimum)
+- Password complexity requirements
+- Account lockout protection
+- Database transaction safety
+
+### 7. `auth/jwtMiddleware.ts` (120 lines)
+
+**Express middleware for JWT token validation.**
+
+**Middleware Functions:**
+- `authenticate()` - Require valid JWT, block if missing/invalid
+- `optionalAuthenticate()` - Set user if token present, don't block otherwise
+
+**Features:**
+- Authorization header parsing (Bearer token)
+- Token signature verification
+- User payload attachment to request
+- Expired token detection with specific error code
+- Comprehensive error messages
+
+### 8. `auth/rbacMiddleware.ts` (230 lines)
+
+**Role-based access control middleware.**
+
+**Permission System:**
+- Granular permissions (citations:read, metrics:write, admin:all, etc.)
+- Role permission mapping (viewer → operator → admin hierarchy)
+- Permission check functions (ANY, ALL, single)
+
+**Middleware Factories:**
+- `requirePermission()` - Single permission check
+- `requireAnyPermission()` - OR logic (any of N permissions)
+- `requireAllPermissions()` - AND logic (all of N permissions)
+- `requireRole()` - Exact role match
+- `requireAnyRole()` - Role list check
+- `requireAdmin()` - Convenience admin-only check
+
+### 9. `api/authRoutes.ts` (290 lines)
+
+**REST API routes for authentication.**
+
+**Endpoints:**
+- `POST /auth/register` - User registration
+- `POST /auth/login` - Login with JWT generation
+- `POST /auth/refresh` - Token refresh with rotation
+- `POST /auth/logout` - Logout (revoke token)
+- `GET /auth/me` - Get current user (protected)
+- `POST /auth/reset-password` - Password reset (placeholder)
+
+**Features:**
+- Request validation
+- IP and user-agent tracking
+- Comprehensive error handling
+- HTTP status code mapping
+- Audit logging integration
+
+### 10. `api/server.ts` (360 lines)
+
+**Production-ready Express API server.**
+
+**Features:**
+- CORS configuration
+- JSON body parsing
+- Request logging with duration tracking
+- Health check endpoint
+- Graceful shutdown (SIGTERM/SIGINT)
+- Database connection pooling
+- Error handling middleware
+
+**Protected Endpoints:**
+- `/api/citations/analyze` - Citation analysis (operator+)
+- `/api/metrics` - Platform metrics (viewer+)
+- `/api/admin/agents` - Agent management (admin only)
+- `/api/admin/users` - User management (admin only)
+
+### 11. `tests/auth.test.ts` (430 lines)
+
+**Comprehensive authentication tests.**
+
+**Test Coverage:**
+- User registration (valid, duplicate, weak password, invalid email)
+- User login (valid, invalid, account lockout)
+- Token refresh (valid, invalid, revoked)
+- User management (get, update role, deactivate)
+- Security (bcrypt hashing, audit logs, JWT signature)
+
+**Test Utilities:**
+- Test database setup/teardown
+- Test configuration (lower bcrypt rounds for speed)
+- Clean state between tests
+
+### 12. `docs/AUTHENTICATION.md` (600+ lines)
+
+**Complete API documentation for authentication system.**
+
+**Sections:**
+- Security features overview
+- User roles and permissions
+- API endpoint reference with examples
+- Authentication flow diagrams
+- Error handling documentation
+- Database setup guide
+- Environment configuration
+- Production deployment checklist
+- Troubleshooting guide
+- Security best practices
 
 ## Key Patterns Demonstrated
 
