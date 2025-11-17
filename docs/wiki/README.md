@@ -75,6 +75,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📖 **Review:** reviews/DEFENSIVE_FALLBACK_ARCHITECTURE_REVIEW_20251115.md
 - 💡 **Lesson:** Not all `??` patterns are bugs - context matters (initialization vs calculation)
 
+**Nov 17: Defensive Fallback Migration REVERT Recommendation** (commit 0f04bef)
+- 🔍 **Architecture Analysis:** Comprehensive review of 12% complete defensive fallback migration
+- 📊 **Finding:** 95% of identified "violations" are legitimate boolean logic, NOT bug-hiding fallbacks
+- 🎯 **Analysis:** 1024 total patterns (|| or ??) → ~970 legitimate (boolean conditions, UI, initialization), ~5 actual risks
+- 🚨 **High-Risk Targets:** 5 specific instances in calculation paths that could hide bugs
+  - outcomes.ts: Golden Age duration calculations (lines 268, 277)
+  - logging.ts: Event counting accumulators (lines 289, 311, 319)
+  - planetaryBoundaries.ts: Current month fallback
+- ✅ **Recommendation:** REVERT partial migration, apply targeted fixes to 5 high-risk patterns
+- 📐 **Rationale:** Partial migration creates 3 inconsistent patterns (12% assertive, 88% defensive), completing migration would "fix" 900+ working boolean conditions
+- ⏱️ **Effort Assessment:** Complete migration 8-12 hours (HIGH risk), targeted fix 2-3 hours (LOW risk)
+- 🎯 **Priority Impact:** Completing migration blocks CRITICAL roadmap items (nuclear winter, multi-agent coordination)
+- 💡 **Key Insight:** Defensive coding philosophy ("fail loudly in calculations") remains correct but must be applied surgically
+- 📖 **Analysis:** reviews/defensive_fallback_architecture_analysis_20251117.md
+- 📖 **Fix List:** reviews/defensive_fallback_high_risk_targets.md
+
 **Nov 15: Coordinated Technology Deployment - Quality Gate 1 Complete** (commit 44bf8ef)
 - 🔬 **Research Validation:** CONDITIONAL PASS with conservative parameter adjustments
 - 📊 **Foundation:** 27 peer-reviewed sources (Great Leap Forward, Soviet Collectivization, Marshall Plan, Green Revolution)
@@ -2974,12 +2990,23 @@ const score = assertStateProperty(state, 'metric', {
 - **Initialization only:** Default values when creating new state
 - **Compatibility layers:** Interfacing with external systems lacking all fields
 - **UI display:** Showing values to users (NOT in simulation calculations)
+- **Boolean logic:** `||` for multi-condition checks (e.g., `if (a || b || c)`)
+- **Optional parameters:** Function parameters with defaults (e.g., `agentId ?? 'government'`)
+- **Record lookups:** Default values for missing keys (e.g., `record[key] ?? defaultValue`)
+- **Map accumulation:** Initializing counters (e.g., `map.get(key) ?? 0`) when properly initialized
 
 **Never Use Fallbacks For:**
-- Core simulation calculations
-- State mutations
-- Mathematical operations that feed other calculations
-- Any value that could propagate to other systems
+- Core simulation calculations (use assertions instead)
+- State mutations (validate before mutating)
+- Mathematical operations that feed other calculations (fail loudly if invalid)
+- Any value that could propagate to other systems (catch bugs at source)
+
+**Key Distinction (Nov 2025 clarification):**
+The `||` and `??` operators serve TWO distinct purposes:
+1. **Boolean logic** - Legitimate use for conditions: `if (x || y || z)`
+2. **Defensive fallbacks** - Bug-hiding in calculations: `const result = getValue() || 0`
+
+Not all uses of `||` or `??` are defensive fallbacks. Context matters. See reviews/defensive_fallback_architecture_analysis_20251117.md for full analysis.
 
 #### NaN Audit Checklist
 
