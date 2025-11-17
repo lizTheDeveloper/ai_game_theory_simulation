@@ -19,6 +19,9 @@ import { JWTMiddleware, createJWTMiddleware } from '../auth/jwtMiddleware';
 import { requirePermission, requireAdmin, requireOperator } from '../auth/rbacMiddleware';
 import { createAuthRoutes } from './authRoutes';
 import { createRateLimitMiddleware, RateLimitPresets } from '../middleware/rateLimiter';
+import { validateRequest } from '../middleware/validation';
+import { analyzeCitationSchema } from '../schemas/citationSchemas';
+import { updateUserRoleBodySchema, updateUserRoleParamsSchema, deleteUserParamsSchema } from '../schemas/adminSchemas';
 
 // ============================================================================
 // Server Configuration
@@ -209,23 +212,16 @@ export class PlatformServer {
       '/api/citations/analyze',
       this.jwtMiddleware.authenticate,
       requirePermission('citations:analyze'),
+      validateRequest(analyzeCitationSchema),
       async (req: Request, res: Response) => {
         try {
           // TODO: Integrate with CitationAgentOrchestrator
-          const { text, claimedSource } = req.body;
-
-          if (!text || !claimedSource) {
-            res.status(400).json({
-              error: 'Bad Request',
-              message: 'text and claimedSource are required',
-            });
-            return;
-          }
+          const { text, claimedSource, metadata } = req.body;
 
           // Placeholder response
           res.status(200).json({
             message: 'Citation analysis not yet implemented',
-            input: { text, claimedSource },
+            input: { text, claimedSource, metadata },
           });
 
         } catch (err) {
@@ -316,18 +312,12 @@ export class PlatformServer {
       '/api/admin/users/:userId/role',
       this.jwtMiddleware.authenticate,
       requireAdmin,
+      validateRequest(updateUserRoleParamsSchema, 'params'),
+      validateRequest(updateUserRoleBodySchema),
       async (req: Request, res: Response) => {
         try {
           const { userId } = req.params;
           const { role } = req.body;
-
-          if (!role || !['admin', 'operator', 'viewer'].includes(role)) {
-            res.status(400).json({
-              error: 'Bad Request',
-              message: 'Valid role required (admin, operator, or viewer)',
-            });
-            return;
-          }
 
           await this.authService.updateUserRole(userId, role);
 
@@ -352,6 +342,7 @@ export class PlatformServer {
       '/api/admin/users/:userId',
       this.jwtMiddleware.authenticate,
       requireAdmin,
+      validateRequest(deleteUserParamsSchema, 'params'),
       async (req: Request, res: Response) => {
         try {
           const { userId } = req.params;
