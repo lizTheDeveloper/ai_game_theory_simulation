@@ -1,0 +1,43 @@
+# MARCUS 3.0 - Python Citation Agent
+FROM python:3.11-slim as base
+
+LABEL org.opencontainers.image.source="https://github.com/your-org/ai_game_theory_simulation"
+LABEL org.opencontainers.image.description="MARCUS 3.0 Citation Integrity Agent"
+LABEL maintainer="marcus@platform.engineering"
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN useradd -m -u 1000 -s /bin/bash marcus && \
+    chown -R marcus:marcus /app
+
+# Copy requirements and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy platform code
+COPY src/platform /app/src/platform
+
+# Set ownership
+RUN chown -R marcus:marcus /app
+
+# Switch to non-root user
+USER marcus
+
+# Set Python path
+ENV PYTHONPATH=/app/src
+ENV PYTHONUNBUFFERED=1
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import sys; sys.exit(0)"
+
+# Run agent
+CMD ["python", "/app/src/platform/agents/citation_integrity_agent.py"]

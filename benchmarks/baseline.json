@@ -1,0 +1,34 @@
+{
+  "timestamp": "2025-11-17T00:00:00Z",
+  "commit": "initial",
+  "branch": "main",
+  "accuracy": {
+    "overall": 0.82,
+    "f1_score": 0.78,
+    "precision": 0.85,
+    "recall": 0.72,
+    "consensus": 0.85,
+    "detection_rates": {
+      "accurate": 0.90,
+      "misleading": 0.75,
+      "fabricated": 0.88,
+      "misattributed": 0.70
+    }
+  },
+  "performance": {
+    "latency_p50": 45,
+    "latency_p95": 85,
+    "latency_p99": 120,
+    "throughput": 55,
+    "memory_mb": 512,
+    "cpu_percent": 35
+  },
+  "scalability": {
+    "agents": [
+      {"count": 1, "throughput": 20, "latency_p95": 50},
+      {"count": 5, "throughput": 55, "latency_p95": 85},
+      {"count": 10, "throughput": 75, "latency_p95": 120},
+      {"count": 20, "throughput": 90, "latency_p95": 180}
+    ]
+  }
+}

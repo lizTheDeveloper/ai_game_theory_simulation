@@ -1,0 +1,146 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: marcus-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-marcus}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-citation_integrity}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/platform/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-marcus}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - marcus-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: marcus-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - marcus-network
+
+  # Citation Integrity Agents (scalable)
+  citation-agent:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.agent
+    image: ghcr.io/your-org/marcus-citation-agent:latest
+    container_name: marcus-agent-${AGENT_ID:-1}
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-marcus}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-citation_integrity}
+      REDIS_URL: redis://redis:6379/0
+      AGENT_ID: ${AGENT_ID:-1}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - marcus-network
+    deploy:
+      replicas: ${NUM_AGENTS:-3}
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  # TypeScript Orchestrator
+  orchestrator:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.orchestrator
+    image: ghcr.io/your-org/marcus-orchestrator:latest
+    container_name: marcus-orchestrator
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-marcus}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-citation_integrity}
+      REDIS_URL: redis://redis:6379/0
+      NUM_AGENTS: ${NUM_AGENTS:-3}
+      API_PORT: 3000
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      citation-agent:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - marcus-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Prometheus Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: marcus-prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - marcus-network
+    restart: unless-stopped
+
+  # Grafana Dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: marcus-grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-changeme}
+      GF_INSTALL_PLUGINS: ''
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./docker/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./docker/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - marcus-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  marcus-network:
+    driver: bridge
