@@ -4,6 +4,17 @@ global:
   external_labels:
     monitor: 'marcus-3.0'
 
+# Alert rules configuration
+rule_files:
+  - '/etc/prometheus/alerts/*.yml'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - 'alertmanager:9093'
+
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
