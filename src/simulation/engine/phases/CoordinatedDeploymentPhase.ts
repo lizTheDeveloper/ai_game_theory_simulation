@@ -58,6 +58,7 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
 
+<<<<<<< HEAD
     // DEFENSIVE CHECK: Fail loudly if state not initialized after bootstrap
     if (!state.coordinatedDeployment) {
       if (state.currentMonth > 1) {
@@ -67,6 +68,10 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
         );
       }
       // Only skip during bootstrap (month 0-1)
+=======
+    // Skip if coordinated deployment not initialized (optional system)
+    if (!state.coordinatedDeployment) {
+>>>>>>> origin/auto/researcher-20251115_093001
       return { events };
     }
 
