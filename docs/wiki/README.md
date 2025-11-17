@@ -369,39 +369,56 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Final regime: ecological-collapse
 - 📖 **Context:** Infrastructure fix - metrics extraction, not new mechanics
 
-**Nov 13: Novel Entities Prevention vs Remediation Model - IMPLEMENTATION COMPLETE** (commits 5c9e773 → b6ec2b9, 1647a95)
-- ✅ **STATUS:** Implementation complete, validation passed, awaiting Monte Carlo sensitivity analysis
-- 📚 **Research Foundation:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
-- 🔬 **Key Finding:** 0% effectiveness is NOT a bug - thermodynamically accurate for unregulated scenario
-- 💰 **Energy Trap:** PFAS removal at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP)
-- 🔬 **Concentration Problem:** Tech works at mg/L (labs), environment is pg/L-ng/L (10^6-10^9× dilution)
-- ⏳ **Irreversibility:** 80-95% permanently distributed (sensitivity range), 90% floor implemented
-- 📊 **Montreal Protocol Lesson:** Production ban = 90-95% recovery, cleanup = 5-10%
-- ♻️ **Rebound Effects:** Waste +81% (2023-2050) despite tech (Jevons paradox), 50-90% rebound factor
-- 🎯 **Quality Gate 1:** PASSED (Grade B+) - high-impact journals, strong convergence
-- 🎯 **Quality Gate 2:** PASSED (Grade B, CONDITIONAL) - uncertainty parameters flagged, sensitivity ranges documented
-- 📋 **Implementation (3 phases):**
-  - ✅ Phase 1: Prevention technologies (`global_pfas_ban`, `plastic_production_phaseout`, `green_chemistry_substitution`)
-  - ✅ Phase 2: Gating function (`calculateNovelEntitiesRemediationEffectiveness` - 5 multipliers: regulation, energy, concentration, timelag, rebound)
-  - ✅ Phase 3: Irreversibility floor (90% of peak contamination, thermodynamic constraint)
-- 📊 **Tiered Effectiveness Model:** Tech-only (2-5%) → Partial regulation (5-15%) → Strong regulation (15-30%) → Hard ceiling (30% thermodynamic maximum)
-- ⚠️ **HIGH UNCERTAINTY Parameters:** All flagged in code comments with sensitivity ranges
-  - `irreversibleFraction`: 0.80-0.95 (code: 90%)
-  - `reboundFactor`: 0.5-0.9 (code: varied by regulation)
-  - `timelagYears`: 10-30 (code: 30yr default)
-- 📖 **Documentation:**
-  - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
-  - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
-  - Validation: `reviews/novel_entities_research_critique_20251113_validation.md` (Grade B)
-- 📂 **Implementation Files:**
-  - `src/simulation/utils/novelEntitiesEffectiveness.ts` (262 lines, gating logic)
-  - `src/simulation/techTree/effectsEngine.ts` (lines 119-268, tiered model)
-  - `src/simulation/planetaryBoundaries.ts` (lines 818-846, irreversibility floor)
-  - `src/simulation/techTree/comprehensiveTechTree.ts` (prevention technologies)
-- ⏳ **Remaining Work:**
-  - [ ] Monte Carlo sensitivity analysis (N=30, 7 parameter combinations) - CRITICAL (priya)
-  - [ ] Architecture review (architecture-skeptic)
-  - [ ] Plan archival (architect)
+**Nov 17: Irreversibility Framework - TIER 1 CRITICAL** (commit 26dba7b)
+- ✅ **STATUS:** Phase 1 (Novel Entities) COMPLETE, Phase 2 (Biosphere) COMPLETE
+- 🎯 **Problem Solved:** God mode tests showing 0% effectiveness for novel entities despite 7 technologies deployed
+- 🔬 **Research Foundation:** Cousins et al. 2022 (PFAS persistence, 50-100yr half-life), Tilman et al. 1994 (extinction debt), Haddad et al. 2015 (habitat fragmentation), IPBES 2019 (biodiversity recovery timescales)
+- ⚡ **Key Insight:** Prevention-first paradigm - chemical bans 20-40% effectiveness, cleanup limited to 5-15% (concentration gap, energy requirements)
+
+**Phase 1: Novel Entities Asymptotic Recovery**
+- 🧪 **Asymptotic recovery mechanics:** Exponential decay toward minimum floor (never reaches zero)
+  - 75-year half-life (Montreal Protocol precedent: 50-100 year range)
+  - 15% permanent floor (background contamination from legacy stocks)
+- 🚫 **Prevention technologies:** Chemical bans + green chemistry (20-40% effectiveness)
+  - Similar to Montreal Protocol: production ban = primary solution
+  - Research: Cousins et al. 2022, Sörengård et al. 2024
+- ⚡ **Energy-gated cleanup:** Requires fusion-scale renewable energy (>100 EJ/year)
+  - Limited to 5-15% effectiveness (concentration gap: 5-9 orders of magnitude)
+  - Theoretical upper bound: 4-40% global energy consumption
+- ♻️ **Deterministic rebound effect:** 10-20% range (not fixed 10%)
+  - Uncertainty flagged (lack of empirical PFAS-specific data)
+- 📊 **Expected effectiveness:** 0% → 25-55% (prevention 20-40% + cleanup 5-15%)
+
+**Phase 2: Biosphere Extinction Debt**
+- ⏳ **Century-scale recovery:** 200-year half-life (ecosystem assembly timescales)
+  - 5% permanent extinction debt floor (extinct species don't return)
+- 🌳 **Habitat restoration:** 40% effectiveness (protection + rewilding)
+  - Prevention (habitat protection) > remediation (restoration)
+- 📚 **Research:** Tilman et al. 1994 (extinction debt concept), Kuussaari et al. 2009 (20-50yr lags), Haddad et al. 2015 (200yr recovery), IPBES 2019 (partial irreversibility)
+
+**Technical Implementation:**
+- 📂 **New utility:** `src/simulation/utils/irreversibility.ts` (asymptoteRecovery function)
+- 🔧 **Updated boundaries:** `src/simulation/planetaryBoundaries.ts` (lines 888-1009 novel entities, lines 148-156/768-832 biosphere)
+- 🧬 **Biogeochemical techs preserved:** 6 nitrogen management technologies (from nitrogen-food coupling work)
+- 🎯 **Type safety:** All properties properly typed, assertion utilities used
+- 🔁 **Deterministic:** Required RNG parameter (no Math.random fallbacks)
+
+**Quality Status:**
+- ✅ **Research validation:** Grade B+ (CONDITIONAL PASS with 3 CRITICAL corrections addressed)
+- ⚠️ **Pending validation:** Monte Carlo N≥10, Architecture Review (Quality Gate 2)
+
+**Next Steps:**
+- [ ] Monte Carlo validation (N≥10 runs) - Priya
+- [ ] God mode effectiveness validation (N=30) - Expected 0% → 25-55%
+- [ ] Architecture review (Quality Gate 2) - architecture-skeptic
+- [ ] Research verification (citation + claim verification) - orchestrator workflow
+
+**Files Modified:** src/simulation/planetaryBoundaries.ts, src/simulation/techTree/comprehensiveTechTree.ts, src/simulation/techTree/effectsEngine.ts, plans/MASTER_IMPLEMENTATION_ROADMAP.md
+
+**Nov 13: Novel Entities Prevention vs Remediation Model - SUPERSEDED BY NOV 17 IMPLEMENTATION**
+- 📖 **Historical context:** Initial implementation with gating function approach
+- 📂 **Research files preserved:** research/novel_entities_zero_effectiveness_20251113.md (742 lines, 16 sources)
+- ⚠️ **Status:** Code replaced by asymptotic recovery framework (Nov 17)
 
 **Nov 13: CRITICAL Memory Leak + Complete O(n²) Fix** (commit 27e788f)
 - ✅ **Memory Leak Fixed:** PhaseOrchestrator unbounded array growth resolved (2 locations)
