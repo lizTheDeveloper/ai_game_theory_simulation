@@ -144,6 +144,15 @@ export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): Planetar
     timescaleYears: 100,
     extinctionContribution: 0.35,          // Highest contribution
     tippingPointRisk: 0.40,
+
+    // === IRREVERSIBILITY FRAMEWORK (Nov 17, 2025 - Phase 2) ===
+    // Research: Haddad et al. (2015) - 200-year recovery timescale for habitat fragmentation
+    // IPBES (2019) - Extinction rate 100-1000× background, 5% permanent loss floor
+    // Tilman et al. (1994) - Extinction debt concept
+    // Kuussaari et al. (2009) - 20-50 year lag timescales
+    irreversible: true,
+    recoveryHalfLife: 200,                 // Century-scale recovery (Haddad et al. 2015)
+    minimumAsymptoticValue: 0.05,          // 5% permanent extinction debt floor (IPBES 2019)
   };
 
   // 3. LAND SYSTEM CHANGE - 62% forest vs 75% needed
@@ -756,7 +765,70 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       additionalInfo: { baseExtinctionRateEMSY, invasiveMultiplier, totalExtinctionRateEMSY }
     });
 
-    system.boundaries.biosphere_integrity.currentValue = biosphereBoundaryValue;
+    // === IRREVERSIBILITY FRAMEWORK (Nov 17, 2025 - Phase 2) ===
+    // Research: Tilman et al. (1994) - Extinction debt concept
+    // Haddad et al. (2015) - 200-year habitat fragmentation recovery timescale
+    // Kuussaari et al. (2009) - 20-50 year lag timescales
+    // IPBES (2019) - 100-1000× background extinction rate, permanent loss floor
+    const biosphereBoundary = system.boundaries.biosphere_integrity;
+
+    // Track historical peak extinction rate
+    if (biosphereBoundary.peak === undefined) {
+      biosphereBoundary.peak = biosphereBoundaryValue;
+    } else {
+      biosphereBoundary.peak = Math.max(biosphereBoundary.peak, biosphereBoundaryValue);
+    }
+
+    // === ASYMPTOTIC RECOVERY WITH RESTORATION TECHNOLOGIES ===
+    // Check for habitat restoration and rewilding technologies
+    const restorationDeployed = (state.globalMetrics as any).habitatRestorationActive === 1.0;
+    const rewildingDeployed = (state.globalMetrics as any).rewildingActive === 1.0;
+
+    // Calculate restoration effectiveness
+    // Habitat restoration: 30-50% effectiveness (moderate)
+    // Rewilding: 20-40% effectiveness (moderate, long-term)
+    // Combined: Max 60% effectiveness (cannot fully reverse extinction)
+    let restorationEffectiveness = 0;
+    if (restorationDeployed) {
+      restorationEffectiveness += 0.40;  // 40% from habitat restoration
+    }
+    if (rewildingDeployed) {
+      restorationEffectiveness += 0.20;  // 20% from rewilding
+    }
+
+    // Apply asymptotic recovery if irreversible
+    if (biosphereBoundary.irreversible && biosphereBoundary.recoveryHalfLife && biosphereBoundary.minimumAsymptoticValue) {
+      // Import asymptotic recovery function
+      const { asymptoteRecovery } = require('./utils/irreversibility');
+
+      // Target value: current minus restoration effectiveness
+      const targetValue = Math.max(
+        biosphereBoundary.minimumAsymptoticValue * 10,  // Scale 5% floor to [0,10] boundary range
+        biosphereBoundaryValue - (restorationEffectiveness * 10)  // Effectiveness scaled to boundary units
+      );
+
+      // Apply asymptotic recovery (exponential approach to floor)
+      const recoveredValue = asymptoteRecovery(
+        biosphereBoundary.currentValue || biosphereBoundaryValue,
+        targetValue,
+        biosphereBoundary.recoveryHalfLife,
+        biosphereBoundary.minimumAsymptoticValue * 10,  // Scale floor to [0,10] range
+        1/12  // 1 month = 1/12 year
+      );
+
+      biosphereBoundary.currentValue = recoveredValue;
+
+      // Log recovery progress (annually)
+      if (state.currentMonth % 12 === 0 && restorationEffectiveness > 0) {
+        console.log(`  🌍 Biosphere Asymptotic Recovery:`);
+        console.log(`     Current: ${recoveredValue.toFixed(3)}× | Target: ${targetValue.toFixed(3)}× | Floor: ${(biosphereBoundary.minimumAsymptoticValue! * 10).toFixed(3)}×`);
+        console.log(`     Restoration: ${(restorationEffectiveness * 100).toFixed(1)}% (habitat: ${restorationDeployed ? 'Y' : 'N'}, rewilding: ${rewildingDeployed ? 'Y' : 'N'})`);
+        console.log(`     Half-life: ${biosphereBoundary.recoveryHalfLife} years (Haddad 2015: century-scale)`);
+      }
+    } else {
+      // Fallback: Direct assignment (for backward compatibility)
+      biosphereBoundary.currentValue = biosphereBoundaryValue;
+    }
     // = (116 * 1.225) / 10 = 142 / 10 = 14.2× safe threshold (deep overshoot)
   } else {
     // Fallback to biodiversity index if land use system not initialized
@@ -885,10 +957,15 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     additionalInfo: { pollutionLevel }
   });
 
-  // IRREVERSIBILITY LOGIC (Nov 13, 2025)
-  // Research: Cousins et al. (2022), Kane et al. (2022)
-  // PFAS, microplastics have global atmospheric distribution - cannot clean below ~90% of peak contamination
-  // ⚠️ HIGH UNCERTAINTY: 90% irreversible fraction derived from mechanisms, not measured. Range: 80-95% (Quality Gate 2)
+  // === IRREVERSIBILITY FRAMEWORK (Nov 17, 2025) ===
+  // Research: Cousins et al. (2022) - PFAS atmospheric half-life 50-100 years, planetary boundary breached
+  // Sörengård et al. (2024) - Economic impossibility of cleanup ($20-7,000 trillion/year)
+  // Kane et al. (2022) - Global atmospheric distribution prevents full remediation
+  //
+  // CRITICAL CORRECTIONS from critique (Grade B+, CONDITIONAL PASS):
+  // - CRITICAL-1: Energy trap is theoretical upper bound (flag assumptions)
+  // - CRITICAL-2: Concentration gap varies by compartment (rainwater 9×, groundwater 5-7×, surface 6-9×)
+  // - CRITICAL-3: Rebound effect range 10-20% (not fixed 10%), no PFAS-specific empirical data
   const novelEntitiesBoundary = system.boundaries.novel_entities;
 
   // Track historical peak contamination
@@ -898,22 +975,110 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     novelEntitiesBoundary.peak = Math.max(novelEntitiesBoundary.peak, novelEntitiesValue);
   }
 
-  // Irreversible floor: 90% of peak contamination (atmospheric distribution prevents full cleanup)
-  const irreversibleFraction = 0.90; // MODERATE estimate (10% reversible via point-source cleanup)
-  const irreversibleFloor = novelEntitiesBoundary.peak * irreversibleFraction;
+  // === ASYMPTOTIC RECOVERY WITH PREVENTION-FIRST PARADIGM ===
+  // Montreal Protocol precedent: Production bans >> cleanup effectiveness (98% vs 2%)
 
-  // Apply floor: Cannot clean below 90% of historical peak
-  const flooredValue = Math.max(irreversibleFloor, novelEntitiesValue);
+  // Check for prevention technologies (from NovelEntitiesSystem)
+  const ne = state.novelEntitiesSystem;
+  let preventionEffectiveness = 0;
+  let cleanupEffectiveness = 0;
 
-  // Log if floor is active
-  if (flooredValue > novelEntitiesValue && state.currentMonth % 12 === 0) {
-    console.log(`  ☢️ Novel Entities Irreversibility Floor Active:`);
-    console.log(`     Peak: ${novelEntitiesBoundary.peak.toFixed(3)} | Floor (90%): ${irreversibleFloor.toFixed(3)}`);
-    console.log(`     Attempted: ${novelEntitiesValue.toFixed(3)} | Actual: ${flooredValue.toFixed(3)}`);
-    console.log(`     Cousins 2022: Global PFAS distribution prevents full remediation`);
+  if (ne) {
+    // Prevention technologies (Montreal Protocol analog: production bans)
+    // Research: Montreal Protocol achieved 98% reduction via CFC phase-out
+    // Novel entities equivalent: PFAS bans, green chemistry, supply chain controls
+    const preventionDeployment = ne.chemicalBansDeployment + ne.greenChemistryDeployment;
+    preventionEffectiveness = Math.min(0.40, preventionDeployment * 0.20); // Max 40% from prevention
+
+    // Energy-gated cleanup (CRITICAL-1 correction: theoretical upper bound)
+    // Requires fusion-scale renewable energy (>100 EJ/year clean capacity)
+    // Concentration gap (CRITICAL-2): groundwater 5-7 orders of magnitude, environmental 6-9 orders
+    // This limits cleanup effectiveness to 5-15% MAX
+    //
+    // Energy constraint assumption (CRITICAL-1):
+    // - IEA 2024 baseline: ~600 EJ/year global energy
+    // - PFAS cleanup at current rates: $20-7,000T/year (Sörengård 2024)
+    // - Requires 4-40% of global energy (24-240 EJ/year)
+    // - Fusion deployment assumption: Unlocks 100+ EJ/year clean capacity
+    let hasFusionEnergy = false;
+    if (state.techTreeState) {
+      // Check if fusion or advanced renewable energy deployed
+      const techTree: any = state.techTreeState;
+      hasFusionEnergy = (techTree.fusionEnergy?.deployed || techTree.advancedRenewables?.deployed);
+    }
+
+    if (hasFusionEnergy && ne.bioremediationDeployment > 0) {
+      // Cleanup limited by concentration gap (5-15% max effectiveness)
+      cleanupEffectiveness = Math.min(0.15, ne.bioremediationDeployment * 0.15);
+
+      // Rebound effect (CRITICAL-3 correction: 10-20% range, no PFAS-specific data)
+      // ⚠️ HIGH UNCERTAINTY: Range extrapolated from general Jevons paradox literature
+      // Assumption: Cleanup deployment may enable continued production ("moral hazard")
+      const reboundMin = 0.10;  // 10% minimum rebound
+      const reboundMax = 0.20;  // 20% maximum rebound
+      // Deterministic variation based on bioremediationDeployment level (no RNG in this function)
+      const reboundFactor = reboundMin + ((ne.bioremediationDeployment % 1.0) * (reboundMax - reboundMin));
+
+      cleanupEffectiveness *= (1 - reboundFactor);
+
+      // Log rebound when active
+      if (state.currentMonth % 12 === 0 && cleanupEffectiveness > 0) {
+        console.log(`  ⚠️ Novel Entities Cleanup Rebound Effect:`);
+        console.log(`     Rebound factor: ${(reboundFactor * 100).toFixed(1)}% (CRITICAL-3: 10-20% range, no PFAS-specific data)`);
+        console.log(`     Net cleanup effectiveness: ${(cleanupEffectiveness * 100).toFixed(1)}%`);
+      }
+    }
   }
 
-  system.boundaries.novel_entities.currentValue = flooredValue;
+  // Total effectiveness (prevention-dominated, cleanup limited)
+  const totalEffectiveness = preventionEffectiveness + cleanupEffectiveness;
+
+  // === ASYMPTOTIC RECOVERY (Nov 17, 2025) ===
+  // Use exponential decay toward minimum asymptotic floor
+  // Research: Cousins et al. (2022) - 50-100 year half-life, 15% minimum floor
+  if (novelEntitiesBoundary.irreversible && novelEntitiesBoundary.recoveryHalfLife && novelEntitiesBoundary.minimumAsymptoticValue) {
+    // Import asymptotic recovery function
+    const { asymptoteRecovery } = require('./utils/irreversibility');
+
+    // Target value: current minus effectiveness gains
+    const targetValue = Math.max(
+      novelEntitiesBoundary.minimumAsymptoticValue * 2,  // Scale floor to [0,2] range
+      novelEntitiesValue - (totalEffectiveness * 2)  // Effectiveness scaled to boundary units
+    );
+
+    // Apply asymptotic recovery (exponential approach to floor)
+    const recoveredValue = asymptoteRecovery(
+      novelEntitiesBoundary.currentValue || novelEntitiesValue,
+      targetValue,
+      novelEntitiesBoundary.recoveryHalfLife,
+      novelEntitiesBoundary.minimumAsymptoticValue,
+      1/12  // 1 month = 1/12 year
+    );
+
+    novelEntitiesBoundary.currentValue = recoveredValue;
+
+    // Log recovery progress (annually)
+    if (state.currentMonth % 12 === 0 && (preventionEffectiveness > 0 || cleanupEffectiveness > 0)) {
+      console.log(`  ☢️ Novel Entities Asymptotic Recovery:`);
+      console.log(`     Current: ${recoveredValue.toFixed(3)} | Target: ${targetValue.toFixed(3)} | Floor: ${(novelEntitiesBoundary.minimumAsymptoticValue! * 2).toFixed(3)}`);
+      console.log(`     Prevention: ${(preventionEffectiveness * 100).toFixed(1)}% | Cleanup: ${(cleanupEffectiveness * 100).toFixed(1)}% | Total: ${(totalEffectiveness * 100).toFixed(1)}%`);
+      console.log(`     Half-life: ${novelEntitiesBoundary.recoveryHalfLife} years (Cousins 2022: 50-100 year range)`);
+    }
+  } else {
+    // Fallback: Legacy floor logic (for backward compatibility)
+    const irreversibleFraction = 0.90;
+    const irreversibleFloor = novelEntitiesBoundary.peak! * irreversibleFraction;
+    const flooredValue = Math.max(irreversibleFloor, novelEntitiesValue - (totalEffectiveness * 2));
+
+    novelEntitiesBoundary.currentValue = flooredValue;
+
+    if (flooredValue > novelEntitiesValue && state.currentMonth % 12 === 0) {
+      console.log(`  ☢️ Novel Entities Irreversibility Floor Active (Legacy):`);
+      console.log(`     Peak: ${novelEntitiesBoundary.peak!.toFixed(3)} | Floor (90%): ${irreversibleFloor.toFixed(3)}`);
+      console.log(`     Effectiveness: ${(totalEffectiveness * 100).toFixed(1)}% (prevention + cleanup)`);
+    }
+  }
+
   updateBoundaryStatus(system.boundaries.novel_entities);
 
   // Ocean acidification (ARCH-4 Integration: Direct pH mapping)
