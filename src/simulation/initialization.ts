@@ -1033,38 +1033,7 @@ export function createDefaultInitialState(
     // This ensures deployment levels and tech state persist correctly across simulation steps
     techTreeState: initializeTechTreeState(),
 
-    // Coordinated Technology Deployment (TIER 1B, Nov 15, 2025)
-    // AI-managed gradual technology deployment to minimize transition mortality
-    coordinatedDeployment: {
-      regionalCapacity: {
-        highIncome: 0.75,      // OECD countries baseline capacity
-        upperMiddle: 0.60,      // China, Brazil, Russia
-        lowerMiddle: 0.45,      // India, Indonesia, Nigeria
-        lowIncome: 0.30,        // Sub-Saharan Africa, fragile states
-      },
-      supportSystems: {
-        universalBasicIncome: 0.0,       // No UBI coverage initially
-        retrainingPrograms: 0.0,         // No retraining programs
-        foodSecurity: 0.0,               // No enhanced food security
-        healthcareAccess: 0.0,           // No enhanced healthcare
-      },
-      globalCoordinationQuality: 0.0,    // No coordination initially
-      internationalAlignment: 0.0,       // No international alignment
-      optimalDeploymentSpeed: 0.04,      // 4% per year baseline (pre-AI coordination)
-      currentDeploymentSpeed: 0.0,       // No deployment yet
-      transitionMortality: {
-        annualExcessMortality: 0,        // Deaths per 1000 per year
-        cumulativeTransitionDeaths: 0,   // Total deaths from transition
-        mortalityByMechanism: {
-          famine: 0,
-          unemployment: 0,
-          healthcareLoss: 0,
-          coordinationFailure: 0,
-          other: 0,
-        },
-      },
-      deploymentEvents: [],
-    },
+    // Coordinated Technology Deployment (TIER 1B, Nov 15, 2025) - See line 1211 for full initialization
 
     outcomeMetrics: {
       utopiaProbability: 0.3,
