@@ -24,7 +24,11 @@ import { GameState } from '@/types/game';
 import { TechTreeState, RegionalTechDeployment } from './engine';
 import { getTechById } from './comprehensiveTechTree';
 import { addSimulationEvent } from '../utils/eventLogger';
+<<<<<<< Updated upstream
 import { assertStateProperty, assertFinite } from '../utils/assertions';
+=======
+import { assertStateProperty } from '@/simulation/utils/assertions';
+>>>>>>> Stashed changes
 
 /**
  * Deployment timescale parameters (months to full deployment)
@@ -154,6 +158,7 @@ export function sigmoidDeploymentCurve(
  * - International cooperation: Critical for global tech (climate, AI)
  */
 export function getGovernanceMultiplier(gameState: GameState): number {
+<<<<<<< Updated upstream
   // Access nested object properties - governanceQuality is always initialized
   const govQuality = gameState.government.governanceQuality;
   const enforcement = assertStateProperty(govQuality, 'institutionalCapacity', {
@@ -162,6 +167,14 @@ export function getGovernanceMultiplier(gameState: GameState): number {
   });
   const structuralChoices = gameState.government.structuralChoices;
   const cooperation = structuralChoices.internationalCoordination ? 1.0 : 0.5;
+=======
+  const enforcement = assertStateProperty(
+    gameState.government.governanceQuality,
+    'institutionalCapacity',
+    { location: 'getGovernanceMultiplier', month: gameState.currentMonth }
+  );
+  const cooperation = gameState.government?.structuralChoices?.internationalCoordination ? 1.0 : 0.5;
+>>>>>>> Stashed changes
 
   const governanceCapacity = (enforcement + cooperation) / 2;
 
@@ -188,6 +201,7 @@ export function getGovernanceMultiplier(gameState: GameState): number {
  * - >3.0°C: 0.60× (40% penalty, severe feedbacks)
  */
 export function getClimateRecoveryMultiplier(gameState: GameState): number {
+<<<<<<< Updated upstream
   // Access nested path - these objects are always initialized
   const pbs = gameState.planetaryBoundariesSystem;
   const climateChange = pbs.boundaries['climate_change'];  // Note: snake_case key
@@ -195,6 +209,13 @@ export function getClimateRecoveryMultiplier(gameState: GameState): number {
     location: 'getClimateRecoveryMultiplier',
     month: gameState.currentMonth
   });
+=======
+  const globalWarming = assertStateProperty(
+    gameState.planetaryBoundariesSystem.boundaries['climate_change'],
+    'currentValue',
+    { location: 'getClimateRecoveryMultiplier', month: gameState.currentMonth }
+  );
+>>>>>>> Stashed changes
 
   if (globalWarming < 1.5) return 1.0;
   if (globalWarming < 2.0) return 0.95;

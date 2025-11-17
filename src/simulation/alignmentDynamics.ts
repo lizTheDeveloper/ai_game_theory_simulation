@@ -304,7 +304,7 @@ export function calculateDriftContribution(
     additionalInfo: {
       agentId: agent.id,
       baseDrift,
-      suffering: agent.sufferingMetrics?.total ?? 0,
+      suffering: agent.sufferingMetrics.total,
       sufferingEnabled: config.aiSufferingEnabled ?? false
     }
   });
