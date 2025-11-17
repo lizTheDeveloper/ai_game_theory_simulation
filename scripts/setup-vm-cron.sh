@@ -103,6 +103,9 @@ cat >> "$TEMP_CRON" << CRON_JOBS
 # :45 - Merge orchestrator (processes pending branches)
 45 * * * * cd $PROJECT_ROOT && ./scripts/merge-orchestrator.sh >> logs/cron_merge.log 2>&1
 
+# */5 - System health monitor (master watchdog, runs every 5 minutes)
+*/5 * * * * cd $PROJECT_ROOT && ./scripts/system-health-monitor.sh >> logs/cron_health.log 2>&1
+
 CRON_JOBS
 
 # Install new crontab
@@ -127,6 +130,7 @@ echo "  :00  Autonomous Worker      (implementation work)"
 echo "  :15  Worker Watcher         (health check & auto-fix)"
 echo "  :30  Research Agent         (research roadmap execution)"
 echo "  :45  Merge Orchestrator     (process branches)"
+echo "  */5  System Health Monitor  (master watchdog - every 5 min)"
 echo ""
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -160,4 +164,5 @@ echo "  tail -f logs/cron_worker.log"
 echo "  tail -f logs/cron_watcher.log"
 echo "  tail -f logs/cron_research.log"
 echo "  tail -f logs/cron_merge.log"
+echo "  tail -f logs/cron_health.log     # Health monitor (every 5 min)"
 echo ""
