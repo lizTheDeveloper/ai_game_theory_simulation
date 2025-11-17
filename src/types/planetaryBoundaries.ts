@@ -99,6 +99,14 @@ export interface PlanetaryBoundary {
   // Novel Entities (PFAS, microplastics) have irreversible distribution
   // Peak contamination sets floor - cannot clean below ~90% of peak
   peak?: number;                    // Historical maximum value (for irreversibility floor calculation)
+
+  // === IRREVERSIBILITY FRAMEWORK (Nov 16, 2025) ===
+  // Research: Cousins et al. (2022) - PFAS planetary boundary, Sörengård et al. (2024) - energy trap economics
+  // Extends irreversibility tracking with recovery mechanics
+  irreversible?: boolean;           // True for boundaries that cannot fully recover (novel entities, extinctions)
+  recoveryHalfLife?: number;        // Years for 50% recovery (novel entities: 50-100, extinctions: Infinity)
+  minimumAsymptoticValue?: number;  // Floor value (0.05-0.20 for novel entities, never reaches zero)
+  legacyStock?: number;             // Accumulated contamination (metric tons) that releases slowly over decades
 }
 
 /**

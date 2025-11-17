@@ -96,6 +96,8 @@ export { RadiationSystemPhase } from './RadiationSystemPhase';
 export { WetBulbTemperaturePhase } from './WetBulbTemperaturePhase';  // Wet Bulb Temperature Events (Oct 17, 2025)
 export { ExtremeWeatherEventsPhase } from './ExtremeWeatherEventsPhase';  // Extreme Weather Events (Oct 28, 2025)
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
+export { LegacyNutrientStocksPhase } from './LegacyNutrientStocksPhase';  // TIER 2 HIGH (Nov 15, 2025): Legacy nutrient stock decay
+export { NitrogenFoodCouplingPhase } from './NitrogenFoodCouplingPhase';  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food production coupling
 export { PositiveTippingPointsPhase } from './PositiveTippingPointsPhase';  // Oct 17, 2025
 // export { TippingPointPhase } from './TippingPointPhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)
 export { FamineSystemPhase } from './FamineSystemPhase';

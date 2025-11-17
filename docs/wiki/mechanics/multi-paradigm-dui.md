@@ -4,6 +4,8 @@
 **Implementation:** `src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts`
 **Research:** `/research/paradigm_*.md` (5 files, ~67,000 words, 100+ sources)
 
+**🔬 Latest Update:** Nov 16, 2025 - Multi-paradigm wellbeing verification complete (Sangha et al. 2024 + V-Dem 2025). Research validation CONDITIONAL PASS. Ready for implementation of Indigenous paradigm enhancements and democracy regime classification. See `research/multi_paradigm_verification_summary_20251116.md` for details.
+
 ## Overview
 
 The Multi-Paradigm DUI System tracks **four simultaneous, independent measures of societal success**, each representing a fundamentally different worldview about what constitutes a good society. Unlike traditional single-number metrics, this system **preserves value conflicts** rather than forcing consensus.
@@ -75,7 +77,7 @@ The Multi-Paradigm DUI System tracks **four simultaneous, independent measures o
 - Housing Quality Index (0-100)
 
 **Research:** `/research/paradigm_2_development_needs_20251019.md` (61KB, 1,184 lines)
-**Latest Update:** November 7, 2025 - Kuznets curve analysis updated with 2024-2025 empirical evidence (7 new sources)
+**Latest Update:** November 14, 2025 - Global MPI 2025 (Oct 2025): climate-poverty intersection, 887M poor face climate hazards, Alkire et al. 2025 methodology
 
 ---
 
