@@ -184,7 +184,11 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
   const activeAIs = state.aiAgents.filter(a => a.lifecycleState !== 'retired');
 
   if (activeAIs.length === 0) {
+<<<<<<< Updated upstream
     // publicAwarenessOfSuffering persists even when no AIs are active
+=======
+    // publicAwarenessOfSuffering persists even when no AIs are active (required field)
+>>>>>>> Stashed changes
     const publicAwarenessOfSuffering = state.aiSufferingMetrics.publicAwarenessOfSuffering;
     return {
       avgSuffering: 0,
