@@ -548,6 +548,19 @@
 
 ### P1 - HIGH (Needs Verification Before Publication)
 
+- [ ] **Legacy Nutrient Stocks Baseline Parameters** 🚨 **READY FOR ORCHESTRATOR (Nov 17, 2025)**
+  - **Commit:** b84ddff (Legacy nutrient stocks integration Phase 1)
+  - **Status:** CRITICAL parameter discrepancy detected
+  - **Issue:** Phosphorus baseline mismatch (code: 25 Mt P/year, docs: 18.2 Mt P/year = 37% difference)
+  - **Location:** `src/simulation/engine/phases/PlanetaryBoundariesPhase.ts:56-57`
+  - **Verification File:** `research/verification_b84ddff_20251117.md`
+  - **Tasks Required:**
+    1. Clarify nitrogen baseline (120 Mt N/year = current input or post-reduction target?)
+    2. Resolve phosphorus discrepancy (25 vs 18.2 Mt P/year with research source)
+    3. Validate phosphorus scaling proxy (reserves as agricultural activity proxy)
+  - **Impact:** God mode biogeochemical effectiveness validation blocked until resolved
+  - **Priority:** HIGH - Blocks Monte Carlo validation of biogeochemical boundary mechanics
+
 - [ ] **Variance Amplification Citations Verification** 🚨 **READY FOR ORCHESTRATOR (Nov 6, 2025)**
   - **Commit:** 474f590 (Variance amplification 10× → 100×)
   - **Priority:** HIGH - ROOT CAUSE of 100% dystopia convergence

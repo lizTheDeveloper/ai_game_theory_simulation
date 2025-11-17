@@ -63,7 +63,7 @@ Boundaries update based on simulation state:
 - **Biosphere:** Driven by biodiversity index and invasive species impact, normalized to safe threshold (10 E/MSY = 10× natural extinction rate)
   - **Growth model (Oct 30, 2025):** Percentage-based growth matching IPBES research (10-30% per decade), with logistic saturation at 1000× max to prevent unrealistic exponential accumulation
 - **Freshwater:** Driven by freshwater system (water stress)
-- **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives), nitrogen-food coupling with regional differentiation (Nov 2025)
+- **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives, ACTIVE as of Nov 17, 2025), nitrogen-food coupling with regional differentiation (Phase 2 pending)
 - **Novel Entities:** Driven by environmental pollution
 - **Ocean Acidification:** Driven by ocean acidification system
 - **Ozone:** Improving +0.06%/year (Montreal Protocol recovery)
@@ -209,7 +209,7 @@ The **stratospheric ozone boundary** is one of only 2 safe boundaries, and it's 
 
 ### Crisis Interactions:
 - **Phosphorus Depletion** → Worsens biogeochemical boundary
-- **Nitrogen-Food Coupling** (Nov 2025) → Legacy nutrient stocks create decades-long recovery timescales, regional food production penalties (⚠️ implementation partial)
+- **Nitrogen-Food Coupling** (Nov 2025) → Legacy nutrient stocks create decades-long recovery timescales (✅ Phase 1 ACTIVE Nov 17), regional food production penalties (Phase 2 pending)
 - **Freshwater Depletion** → Worsens freshwater boundary
 - **Ocean Acidification** → Worsens ocean boundary
 - **Novel Entities** → Worsens pollution boundary
@@ -428,6 +428,46 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
+## 🧪 Legacy Nutrient Stocks (Nov 17, 2025) - TIER 2 HIGH
+
+**Status:** ✅ Phase 1 IMPLEMENTED (stock updates wired)
+**Research Base:** `research/nitrogen_food_coupling_20251115.md` (883 lines, Grade B)
+**Implementation:** `src/simulation/legacyNutrientStocks.ts`, `PlanetaryBoundariesPhase.ts:21.0`
+
+### Problem Addressed
+
+**God mode biogeochemical effectiveness stuck at 10%** (expected 30-50%)
+
+**Root cause:** Legacy nutrient stocks existed but were NEVER updated after initialization. Boundary calculations read static initial values with no decay over time.
+
+### Implementation (Phase 1)
+
+**Monthly Stock Updates:**
+- Added `updateLegacyNutrientStocks()` call to PlanetaryBoundariesPhase (order 21.0)
+- Updates occur BEFORE boundary calculations (creates proper inertia effect)
+- Baseline inputs: 120 Mt N/year (10 Mt N/month), 25 Mt P/year (2.08 Mt P/month)
+- Scaled by phosphorus reserves as proxy for agricultural activity
+- Defensive coding: Uses `assertFinite`, no silent fallbacks
+
+**Expected Impact:**
+- God mode biogeochemical effectiveness: 10% → 30-50% (pending Monte Carlo validation)
+- Recovery timeline: Decades-long exponential decay (30-100 year half-lives)
+- Lake Erie validation: Internal loading equals external inputs (50% benchmark)
+
+**Research Backing:**
+- Lake Erie sediment loading studies (Paerl et al. 2024)
+- Nitrogen half-life in sediments (30-100 years)
+- Legacy contribution: 18.6% at Year 0, decreases exponentially
+
+### Remaining Work
+
+**Phase 2:** Connect to technology deployment + food system for dynamic input calculation
+**Phase 3:** Add 6 biogeochemical technologies (precision agriculture, nitroplasts, etc.)
+
+**Current Status:** Stock updates working, logged annually (e.g., "Year 0: 18.6% legacy contribution")
+
+---
+
 ## 🔬 Future Enhancements (TIER 3.2+)
 
 ### Planned Additions:
@@ -499,11 +539,13 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
-**Last Updated:** November 1, 2025 (Climate Mortality Phase 2 documentation)
-**Implementation Status:** ✅ COMPLETE (Phase 2: Storm Systems + BII Framework)
+**Last Updated:** November 17, 2025 (Legacy Nutrient Stocks Phase 1)
+**Implementation Status:** ✅ ACTIVE (Legacy nutrient stocks updating monthly)
 **Recent Updates:**
+- ✅ Legacy nutrient stocks wired into PlanetaryBoundariesPhase - Nov 17, 2025
+- ✅ Monthly stock updates with baseline N/P inputs (10 Mt N/month, 2.08 Mt P/month) - Nov 17, 2025
 - ✅ Storm intensity-frequency modeling (ExtremeWeatherEventsPhase) - Oct 28, 2025
 - ✅ BII framework with climate velocity tracking (updateBiosphereIntegrityIndex) - Oct 28, 2025
 - ✅ Biosphere boundary normalized to safe threshold (13.7×), polarity corrected - Oct 30, 2025
-**Next Steps:** TIER 3.3+ (Aerosol Dimming, Nitrogen Cycle)
+**Next Steps:** Legacy Nutrient Stocks Phase 2 (food system connection), Phase 3 (6 technologies)
 

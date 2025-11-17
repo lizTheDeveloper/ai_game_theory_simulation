@@ -99,17 +99,28 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Quality:** A (institutional + peer-reviewed, UNEP 2024, NOAA CSL 2024)
 - 💡 **Model Implications:** Validates need for TIER 0 prevention technologies, separate flow vs stock tracking
 
+**Nov 17: Legacy Nutrient Stocks Integration (TIER 2 HIGH Phase 1)** (commit b84ddff)
+- ✅ **Implementation:** Wired `updateLegacyNutrientStocks()` into PlanetaryBoundariesPhase (order 21.0)
+- 🔧 **Fix:** Legacy stocks NOW UPDATE monthly (previously frozen after initialization)
+- 📊 **Parameters:** Baseline N/P inputs (120 Mt N/year, 25 Mt P/year), scaled by phosphorus reserves
+- 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (pending validation)
+- ⏱️ **Recovery Timeline:** Decades-long exponential decay (30-100yr half-lives)
+- 🧪 **Status:** Phase 1 COMPLETE (stock updates active), Phase 2 pending (food system connection)
+- 📖 **DevLog:** Commit message details Lake Erie validation (internal = external loading)
+- ✅ **Validation:** 12-month test simulation, type checking passes, no NaN errors
+- 🔧 **Fixes:** Removed duplicate CoordinatedDeploymentPhase import + initialization (merge conflicts)
+
 **Nov 15: Nitrogen-Food Coupling Research Complete (TIER 2 HIGH)** (commit 5bacf9f + session archive 50fae2c)
 - 🔬 **Research:** Biogeochemical flows boundary mechanics (29 peer-reviewed sources, Grade B)
 - 📊 **Key Findings:** Legacy nutrient stocks (30-100yr half-lives), regional differentiation (South Asia 55% overuse), multiplicative tech synergies
 - ✅ **Modules Created:** `legacyNutrientStocks.ts` (305 lines), `nitrogenFoodCoupling.ts` (368 lines)
-- ⚠️ **Status:** Research COMPLETE, implementation PARTIAL (modules created, integration pending ~30-60min)
+- ⚠️ **Status:** Research COMPLETE, ✅ Phase 1 IMPLEMENTED Nov 17 (stock updates wired)
 - 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia)
 - 📖 **Research:** research/nitrogen_food_coupling_20251115.md (883 lines)
 - 📖 **Validation:** reviews/nitrogen_food_coupling_critique_20251115.md (Grade B - CONDITIONAL PASS)
 - 📖 **DevLog:** devlogs/biogeochemical_flows_implementation_20251115.md (338 lines)
 - 📁 **Archive:** plans/completed/session_work_nov15_2025_researcher_213002.md
-- ⏭️ **Next:** Wire modules into boundary calculations, add 6 technologies, Monte Carlo validation
+- ⏭️ **Next:** Phase 2 (food system connection), Phase 3 (6 technologies), Monte Carlo validation
 
 **Nov 15: Outcome Probabilities Normalization Bug Fix (CRITICAL)** (commit 6dc7f39)
 - ❌ **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
