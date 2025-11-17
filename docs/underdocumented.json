@@ -44442,7 +44442,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 802,
+=======
+    "line": 800,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "FAMINE_MORTALITY_MULTIPLIER_MAX",
     "currentDoc": "(none)",
@@ -44450,7 +44454,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1392,
+=======
+    "line": 1337,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "type",
     "name": "ThresholdKey",
     "currentDoc": "(none)",
@@ -44458,7 +44466,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1393,
+=======
+    "line": 1338,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "type",
     "name": "RateKey",
     "currentDoc": "(none)",
@@ -44466,7 +44478,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1394,
+=======
+    "line": 1339,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "type",
     "name": "MultiplierKey",
     "currentDoc": "(none)",
@@ -44474,7 +44490,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1395,
+=======
+    "line": 1340,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "type",
     "name": "BaselineKey",
     "currentDoc": "(none)",
@@ -44482,6 +44502,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1396,
     "type": "type",
     "name": "FloorKey",
@@ -44491,6 +44512,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
     "line": 1397,
+=======
+    "line": 1341,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "type",
     "name": "ToleranceKey",
     "currentDoc": "(none)",
@@ -44498,7 +44522,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1402,
+=======
+    "line": 1346,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "interface",
     "name": "SimulationConfig",
     "currentDoc": "/ Complete configuration type",
@@ -44506,7 +44534,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1403,
+=======
+    "line": 1347,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "thresholds",
     "currentDoc": "(none)",
@@ -44514,7 +44546,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1404,
+=======
+    "line": 1348,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "rates",
     "currentDoc": "(none)",
@@ -44522,7 +44558,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1405,
+=======
+    "line": 1349,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "multipliers",
     "currentDoc": "(none)",
@@ -44530,7 +44570,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1406,
+=======
+    "line": 1350,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "baselines",
     "currentDoc": "(none)",
@@ -44538,6 +44582,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1407,
     "type": "property",
     "name": "floors",
@@ -44547,6 +44592,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
     "line": 1408,
+=======
+    "line": 1351,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "tolerances",
     "currentDoc": "(none)",
@@ -44554,7 +44602,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1416,
+=======
+    "line": 1359,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "thresholds",
     "currentDoc": "(none)",
@@ -44562,7 +44614,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1417,
+=======
+    "line": 1360,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "rates",
     "currentDoc": "(none)",
@@ -44570,7 +44626,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1418,
+=======
+    "line": 1361,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "multipliers",
     "currentDoc": "(none)",
@@ -44578,7 +44638,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1419,
+=======
+    "line": 1362,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "baselines",
     "currentDoc": "(none)",
@@ -44586,6 +44650,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
+<<<<<<< HEAD
     "line": 1420,
     "type": "property",
     "name": "floors",
@@ -44595,6 +44660,9 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts",
     "line": 1421,
+=======
+    "line": 1363,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "tolerances",
     "currentDoc": "(none)",
@@ -63122,7 +63190,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 148,
+=======
+    "line": 141,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -63130,7 +63202,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 149,
+=======
+    "line": 142,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -63138,7 +63214,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 150,
+=======
+    "line": 143,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -63146,7 +63226,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 151,
+=======
+    "line": 144,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -63154,7 +63238,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 152,
+=======
+    "line": 145,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -63162,7 +63250,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 153,
+=======
+    "line": 146,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -63170,7 +63262,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 154,
+=======
+    "line": 147,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -63178,7 +63274,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 157,
+=======
+    "line": 150,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -63186,7 +63286,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 158,
+=======
+    "line": 151,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "mortality",
     "currentDoc": "(none)",
@@ -63194,7 +63298,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 159,
+=======
+    "line": 152,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "coordination",
     "currentDoc": "(none)",
@@ -63202,7 +63310,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 176,
+=======
+    "line": 169,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "highIncome",
     "currentDoc": "(none)",
@@ -63210,7 +63322,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 177,
+=======
+    "line": 170,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "upperMiddle",
     "currentDoc": "(none)",
@@ -63218,7 +63334,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 178,
+=======
+    "line": 171,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "lowerMiddle",
     "currentDoc": "(none)",
@@ -63226,7 +63346,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 179,
+=======
+    "line": 172,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "lowIncome",
     "currentDoc": "(none)",
@@ -63234,7 +63358,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 193,
+=======
+    "line": 186,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63242,7 +63370,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 194,
+=======
+    "line": 187,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63250,7 +63382,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 195,
+=======
+    "line": 188,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63258,7 +63394,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 199,
+=======
+    "line": 192,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63266,7 +63406,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 200,
+=======
+    "line": 193,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63274,7 +63418,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 201,
+=======
+    "line": 194,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63282,7 +63430,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 205,
+=======
+    "line": 198,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63290,7 +63442,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 206,
+=======
+    "line": 199,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63298,7 +63454,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 207,
+=======
+    "line": 200,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63306,7 +63466,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 211,
+=======
+    "line": 204,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63314,7 +63478,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 212,
+=======
+    "line": 205,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63322,7 +63490,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 213,
+=======
+    "line": 206,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63330,7 +63502,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 238,
+=======
+    "line": 231,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63338,7 +63514,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 239,
+=======
+    "line": 232,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63346,7 +63526,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 240,
+=======
+    "line": 233,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63354,7 +63538,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 251,
+=======
+    "line": 244,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63362,7 +63550,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 252,
+=======
+    "line": 245,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63370,7 +63562,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 253,
+=======
+    "line": 246,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63378,7 +63574,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 262,
+=======
+    "line": 255,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63386,7 +63586,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 263,
+=======
+    "line": 256,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63394,7 +63598,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 264,
+=======
+    "line": 257,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63402,7 +63610,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 273,
+=======
+    "line": 266,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63410,7 +63622,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 274,
+=======
+    "line": 267,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63418,7 +63634,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 275,
+=======
+    "line": 268,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63426,7 +63646,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 320,
+=======
+    "line": 313,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63434,7 +63658,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 321,
+=======
+    "line": 314,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63442,7 +63670,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 322,
+=======
+    "line": 315,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63450,7 +63682,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 334,
+=======
+    "line": 327,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "regionalCapacity",
     "currentDoc": "(none)",
@@ -63458,7 +63694,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 335,
+=======
+    "line": 328,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "coordinationQuality",
     "currentDoc": "(none)",
@@ -63466,7 +63706,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 336,
+=======
+    "line": 329,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "supportSystemQuality",
     "currentDoc": "(none)",
@@ -63474,7 +63718,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 337,
+=======
+    "line": 330,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -63482,7 +63730,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 360,
+=======
+    "line": 353,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63490,7 +63742,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 361,
+=======
+    "line": 354,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63498,7 +63754,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 363,
+=======
+    "line": 356,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63506,7 +63766,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 379,
+=======
+    "line": 372,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63514,7 +63778,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 380,
+=======
+    "line": 373,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63522,7 +63790,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 381,
+=======
+    "line": 374,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63530,7 +63802,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 403,
+=======
+    "line": 396,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "supportSystems",
     "currentDoc": "(none)",
@@ -63538,7 +63814,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 406,
+=======
+    "line": 399,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "populationBillions",
     "currentDoc": "(none)",
@@ -63546,7 +63826,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 407,
+=======
+    "line": 400,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -63554,7 +63838,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 410,
+=======
+    "line": 403,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "byMechanism",
     "currentDoc": "(none)",
@@ -63562,7 +63850,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 411,
+=======
+    "line": 404,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "famine",
     "currentDoc": "(none)",
@@ -63570,7 +63862,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 412,
+=======
+    "line": 405,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "unemployment",
     "currentDoc": "(none)",
@@ -63578,7 +63874,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 413,
+=======
+    "line": 406,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "healthcareLoss",
     "currentDoc": "(none)",
@@ -63586,7 +63886,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 414,
+=======
+    "line": 407,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "coordinationFailure",
     "currentDoc": "(none)",
@@ -63594,7 +63898,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 415,
+=======
+    "line": 408,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "other",
     "currentDoc": "(none)",
@@ -63602,7 +63910,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 476,
+=======
+    "line": 469,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "famine",
     "currentDoc": "(none)",
@@ -63610,7 +63922,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 477,
+=======
+    "line": 470,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63618,7 +63934,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 478,
+=======
+    "line": 471,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63626,7 +63946,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 479,
+=======
+    "line": 472,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63634,7 +63958,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 481,
+=======
+    "line": 474,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "unemployment",
     "currentDoc": "(none)",
@@ -63642,7 +63970,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 482,
+=======
+    "line": 475,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63650,7 +63982,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 483,
+=======
+    "line": 476,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63658,7 +63994,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 484,
+=======
+    "line": 477,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63666,7 +64006,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 486,
+=======
+    "line": 479,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "healthcareLoss",
     "currentDoc": "(none)",
@@ -63674,7 +64018,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 487,
+=======
+    "line": 480,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63682,7 +64030,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 488,
+=======
+    "line": 481,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63690,7 +64042,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 489,
+=======
+    "line": 482,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63698,7 +64054,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 491,
+=======
+    "line": 484,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "coordinationFailure",
     "currentDoc": "(none)",
@@ -63706,7 +64066,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 492,
+=======
+    "line": 485,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63714,7 +64078,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 493,
+=======
+    "line": 486,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63722,7 +64090,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 494,
+=======
+    "line": 487,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63730,7 +64102,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 496,
+=======
+    "line": 489,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "other",
     "currentDoc": "(none)",
@@ -63738,7 +64114,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 497,
+=======
+    "line": 490,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63746,7 +64126,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 498,
+=======
+    "line": 491,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63754,7 +64138,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 499,
+=======
+    "line": 492,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63762,7 +64150,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 509,
+=======
+    "line": 502,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "annualRate",
     "currentDoc": "(none)",
@@ -63770,7 +64162,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 510,
+=======
+    "line": 503,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63778,7 +64174,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 511,
+=======
+    "line": 504,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63786,7 +64186,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 512,
+=======
+    "line": 505,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63794,7 +64198,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 514,
+=======
+    "line": 507,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "byMechanism",
     "currentDoc": "(none)",
@@ -63802,7 +64210,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 515,
+=======
+    "line": 508,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "absoluteDeathsMonthly",
     "currentDoc": "(none)",
@@ -63810,7 +64222,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 516,
+=======
+    "line": 509,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63818,7 +64234,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 517,
+=======
+    "line": 510,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63826,7 +64246,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 518,
+=======
+    "line": 511,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63834,7 +64258,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 527,
+=======
+    "line": 520,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "highIncome",
     "currentDoc": "(none)",
@@ -63842,7 +64270,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 528,
+=======
+    "line": 521,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "upperMiddle",
     "currentDoc": "(none)",
@@ -63850,7 +64282,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 529,
+=======
+    "line": 522,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "lowerMiddle",
     "currentDoc": "(none)",
@@ -63858,7 +64294,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 530,
+=======
+    "line": 523,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "lowIncome",
     "currentDoc": "(none)",
@@ -63866,7 +64306,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 542,
+=======
+    "line": 535,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63874,7 +64318,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 543,
+=======
+    "line": 536,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63882,7 +64330,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 551,
+=======
+    "line": 544,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "universalBasicIncome",
     "currentDoc": "(none)",
@@ -63890,7 +64342,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 552,
+=======
+    "line": 545,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "retrainingPrograms",
     "currentDoc": "(none)",
@@ -63898,7 +64354,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 553,
+=======
+    "line": 546,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "foodSecurity",
     "currentDoc": "(none)",
@@ -63906,7 +64366,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 554,
+=======
+    "line": 547,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "healthcareAccess",
     "currentDoc": "(none)",
@@ -63914,7 +64378,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 560,
+=======
+    "line": 553,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63922,7 +64390,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+<<<<<<< HEAD
     "line": 561,
+=======
+    "line": 554,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -85010,6 +85482,49 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+<<<<<<< HEAD
+=======
+    "line": 480,
+    "type": "property",
+    "name": "seed",
+    "currentDoc": "(none)",
+    "context": "seed: config.seed ?? Date.now(),"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+    "line": 481,
+    "type": "property",
+    "name": "maxMonths",
+    "currentDoc": "(none)",
+    "context": "maxMonths: config.maxMonths ?? 1000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+    "line": 483,
+    "type": "property",
+    "name": "socialAdaptationRate",
+    "currentDoc": "(none)",
+    "context": "socialAdaptationRate: config.socialAdaptationRate ?? 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+    "line": 484,
+    "type": "property",
+    "name": "aiCoordinationMultiplier",
+    "currentDoc": "(none)",
+    "context": "aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+    "line": 485,
+    "type": "property",
+    "name": "economicTransitionRate",
+    "currentDoc": "(none)",
+    "context": "economicTransitionRate: config.economicTransitionRate ?? 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+>>>>>>> origin/auto/researcher-20251115_093001
     "line": 684,
     "type": "property",
     "name": "qualityOfLife",
@@ -107690,7 +108205,91 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1207,
+=======
+    "line": 1178,
+    "type": "property",
+    "name": "coordinatedDeployment",
+    "currentDoc": "(none)",
+    "context": "coordinatedDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+    "line": 1179,
+    "type": "property",
+    "name": "regionalCapacity",
+    "currentDoc": "(none)",
+    "context": "regionalCapacity: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+    "line": 1185,
+    "type": "property",
+    "name": "supportSystems",
+    "currentDoc": "(none)",
+    "context": "supportSystems: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+    "line": 1196,
+    "type": "property",
+    "name": "transitionMortality",
+    "currentDoc": "(none)",
+    "context": "transitionMortality: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+    "line": 1199,
+    "type": "property",
+    "name": "mortalityByMechanism",
+    "currentDoc": "(none)",
+    "context": "mortalityByMechanism: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+    "line": 1200,
+    "type": "property",
+    "name": "famine",
+    "currentDoc": "(none)",
+    "context": "famine: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+    "line": 1201,
+    "type": "property",
+    "name": "unemployment",
+    "currentDoc": "(none)",
+    "context": "unemployment: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+    "line": 1202,
+    "type": "property",
+    "name": "healthcareLoss",
+    "currentDoc": "(none)",
+    "context": "healthcareLoss: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+    "line": 1203,
+    "type": "property",
+    "name": "coordinationFailure",
+    "currentDoc": "(none)",
+    "context": "coordinationFailure: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+    "line": 1204,
+    "type": "property",
+    "name": "other",
+    "currentDoc": "(none)",
+    "context": "other: 0"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+    "line": 1210,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -107698,7 +108297,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1208,
+=======
+    "line": 1211,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -107706,7 +108309,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1209,
+=======
+    "line": 1212,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -107714,7 +108321,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1210,
+=======
+    "line": 1213,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "controlCapability",
     "currentDoc": "(none)",
@@ -107722,7 +108333,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1211,
+=======
+    "line": 1214,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -107730,7 +108345,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1213,
+=======
+    "line": 1216,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "exogenousShocks",
     "currentDoc": "(none)",
@@ -107738,7 +108357,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1214,
+=======
+    "line": 1217,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "criticalJunctureEscapes",
     "currentDoc": "(none)",
@@ -107746,7 +108369,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1215,
+=======
+    "line": 1218,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "cooperativeSpirals",
     "currentDoc": "(none)",
@@ -107754,7 +108381,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1216,
+=======
+    "line": 1219,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "cooperativeOwnershipEvents",
     "currentDoc": "(none)",
@@ -107762,7 +108393,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1271,
+=======
+    "line": 1274,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "aiAgents",
     "currentDoc": "(none)",
@@ -107770,7 +108405,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1272,
+=======
+    "line": 1275,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "government",
     "currentDoc": "(none)",
@@ -107778,7 +108417,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1276,
+=======
+    "line": 1279,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "society",
     "currentDoc": "(none)",
@@ -107786,7 +108429,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1280,
+=======
+    "line": 1283,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "globalMetrics",
     "currentDoc": "(none)",
@@ -107794,7 +108441,11 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
+<<<<<<< HEAD
     "line": 1284,
+=======
+    "line": 1287,
+>>>>>>> origin/auto/researcher-20251115_093001
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
