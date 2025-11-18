@@ -39,6 +39,18 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **AI Safety & N-P Coupling 2025 Sources** - MEDIUM (Added Nov 17, 2025)
+     - **Context:** Two new research files (423 + 538 lines) added with 2024-2025 peer-reviewed sources
+     - **Files:** research/ai_safety_catastrophic_risks_2025.md, research/nitrogen_phosphorus_coupled_cycles_2025.md
+     - **Verification Spec:** research/verification_9515d0f_20251117.md
+     - **Status:** READY FOR VALIDATION (research file already created, start at validation phase)
+     - **Key Claims Requiring Verification:**
+       - International AI Safety Report 2025 (Bengio et al.) - Does it exist? Is Jan 2025 publication accurate?
+       - FLI AI Safety Index Summer 2025 - "3/7 firms test catastrophic risks" - Exact statistic in report?
+       - Frontiers Env Sci 2025 DOI: 10.3389/fenvs.2025.1643879 - Does DOI resolve? Is N-P coupling claim supported?
+       - Nature 2025 planetary boundaries - Need specific citation (no DOI provided in research file)
+     - **Impact:** Research archives only (no code dependencies yet), verification before using in mechanics
+
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
      - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
