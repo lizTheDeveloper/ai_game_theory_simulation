@@ -39,124 +39,34 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-   - **Multi-Paradigm Wellbeing Frameworks 2024-2025 Update** - HIGH (Added Nov 16, 2025)
-     - **Context:** Indigenous wellbeing + global democracy metrics update for multi-paradigm DUI
-     - **Key Updates:** Country (land/environment) foundational to Indigenous wellbeing, autocracies >democracies
-     - **Research Delivered:** 418-line analysis from Sangha et al. (2024) + V-Dem (2025)
+   - **AMOC Collapse Early Warning Indicators (2025)** - MEDIUM (Added Nov 14, 2025)
+     - **Context:** 2025 physics-based AMOC collapse indicators from van Westen et al. - quantitative timeline + early warning
+     - **Research Delivered:** Updated research/climate_tipping_cascades_2024_2025.md with collapse window (2026-2095, median ~2063)
      - **Key Claims Requiring Verification:**
-       - Country foundational (not peripheral) to Indigenous wellbeing - exact quote needed
-       - Seven interconnected domains - confirm source attribution (Sangha or synthesized?)
-       - Liyan concept (Yawaru) - definition verification
-       - Autocracies 91 vs democracies 88 (first time in 20 years) - V-Dem page reference
-       - 12% global population in liberal democracies (50-year low) - verify claim
-       - 72% (5.8B) under autocratic rule - calculation verification
-       - 45 countries autocratizing - confirm count
-       - Freedom of expression "25-year low" - verify explicit vs inferred
-       - Proposed thresholds (80% Country-connection for utopia) - researcher-defined or research-backed?
-     - **Verification File:** research/verification_f5eb3df_20251116.md (two-layer verification)
-     - **Critical Issue:** Quantitative thresholds likely researcher-proposed, not empirically validated
+       - Collapse window: 2026-2095 across 25 climate models - verify model ensemble details
+       - Median estimate: ~2063 under SSP5-8.5 - verify median calculation, scenario specificity
+       - Early warning: Surface buoyancy flux sign reversal (40°N-65°N) - verify physics-based indicator
+       - Current status: AMOC "on route to tipping" (post-2020 weakening) - verify observational evidence
+       - High-res validation: Eddy-resolving models confirm tipping - verify GRL paper findings
+       - Collapse timescale: >100 years from initiation - verify timescale estimate
+       - 25 climate models analyzed - verify ensemble composition
+     - **Citations Requiring Existence Verification:**
+       - van Westen et al. (2025) JGR: Oceans DOI:10.1029/2025JC022651
+       - van Westen et al. (2025) GRL DOI:10.1029/2024GL114532 (Note: DOI shows 2024GL, citation claims 2025)
+     - **Verification File:** research/verification_3426100_20251114.md (two-layer: existence + claim accuracy)
      - **Integration Questions:**
-       - Add Country-connection metrics to Paradigm 4?
-       - Add TEK vitality tracking?
-       - Model autocratization waves (45 simultaneous)?
-       - Implement cross-paradigm veto (ecological/indigenous flag unsustainability)?
+       - How to convert ensemble spread (2026-2095) to probability distribution?
+       - Should AMOC use instant collapse or gradual weakening (>100 year timescale)?
+       - Model buoyancy flux early warning system? (requires ice melt + heat transport tracking)
+       - SSP5-8.5 only or multiple emission scenarios?
      - **Assignments:**
-       - Cynthia: Verify DOI 10.1080/17482631.2024.2321646 (Sangha), V-Dem 2025 report accessible
-       - Sylvia: Extract quotes, verify claims, distinguish research vs interpretation
+       - Sylvia: Citation verification (2 DOIs, resolve 2024GL vs 2025 discrepancy) + claim verification (7 quantitative claims)
+       - Cynthia: Find distribution shape (normal, skewed, bimodal?) from paper ensemble analysis
        - Roy: Integration design (BLOCKED until validation complete)
-     - **Priority:** HIGH - Affects multi-paradigm DUI system (actively used in simulation)
-     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
-     - **Research File:** research/multi_paradigm_wellbeing_2024_2025_update.md (418 lines)
-     - **Commit:** f5eb3df
-
-   - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
-     - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
-     - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
-     - **Research Delivered:** 213 lines added to research/ai_scaling_verified_parameters_20251111.md
-     - **New Sources:** Wolfe (2025) Substack, Lambert (2025) Substack, Epoch AI (2025) blog, TechCrunch (2024)
-     - **Key Claims Requiring Verification:**
-       - TEST_TIME_COMPUTE_MULTIPLIER: 1.5× per 10× inference compute - WHERE in Wolfe (2025)?
-       - RL sigmoid: 80% gains in 25% compute - EXACT VALUES in Lambert (2025)?
-       - MAX_TRAINING_FLOPS: 3e30 FLOP latency wall - Why not 1e32 upper bound from Epoch AI?
-       - o3 benchmarks: 87.5% ARC-AGI, 2727 Codeforces, 25.2% FrontierMath - VERIFIED?
-       - ScaleRL methodology: 3-constant fit, 4× throughput - DESCRIBED in Lambert?
-       - Epoch AI infrastructure: 1-5 GW campuses, 100M GPUs, "hundreds of billions" - SPECIFIC QUOTES?
-       - Nadella quote "new scaling law" - PRIMARY SOURCE? (currently secondary reference)
-       - Diminishing returns: "plateauing heading into 2025" - TechCrunch article EXACT WORDING?
-       - SATURATION_YEAR: 2030 - Epoch AI says "2e29 FLOP feasible by 2030", not "saturation by 2030"
-     - **Verification File:** research/verification_e344ce5_20251115.md (two-layer: existence + claim accuracy)
-     - **Critical Issue:** Metadata claims "peer_reviewed: true" but NEW sources are Substack/blogs (NOT peer-reviewed)
-     - **Integration Questions:**
-       - Add RL_PERFORMANCE_CURVE (sigmoid) to simulation?
-       - Add TEST_TIME_COMPUTE_MULTIPLIER (inference scaling)?
-       - Add MAX_TRAINING_FLOPS saturation constraint?
-       - Model three scaling axes separately (pre-training, RL, test-time)?
-     - **Assignments:**
-       - Cynthia: Verify URLs accessible, extract specific passages supporting numeric claims
-       - Sylvia: Flag EXTRAPOLATED vs CITED values, assess industry source reliability
-       - Roy: Integration design (BLOCKED until validation complete)
-     - **Priority:** HIGH - Affects AI capability projection (core simulation mechanic)
-     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
-     - **Research File:** research/ai_scaling_verified_parameters_20251111.md (added 213 lines)
-     - **Commit:** e344ce5
-
-   - **Planetary Boundaries & Tipping Points 2025 Update** - HIGH (Added Nov 15, 2025)
-     - **Context:** 2025 peer-reviewed update on planetary boundary status and tipping point crossings
-     - **Key Updates:** 7/9 boundaries transgressed (up from 6), ocean acidification crossed 2020, ice sheets at record lows
-     - **Research Delivered:** 611-line analysis from Rockström (2025) + BioScience 2025 State of Climate
-     - **Key Claims Requiring Verification:**
-       - 7/9 planetary boundaries transgressed (Richardson 2023: 6/9) - which boundary newly crossed?
-       - Ocean acidification boundary crossed 2020, confirmed 2025 - quote from papers needed
-       - Current warming 1.2°C, trajectory 2.7°C by 2100 - source verification
-       - Greenland + W. Antarctic ice sheets: record lows 2025, "may be passing tipping points" - exact quote
-       - Amazon SE region: carbon sink → carbon source transition - mechanism verification
-       - 22/34 planetary vital signs at record levels - need full vital signs list
-       - $18T cumulative climate damages 2000-2025 - methodology verification
-       - California wildfires $250B (2025), Texas flooding 135 deaths - event documentation
-       - Tipping probabilities: 60% (Greenland), 50% (W. Antarctic), 40% (Amazon), 30% (AMOC) - DERIVED or CITED?
-       - Aerosol reduction warming: +0.3°C by 2050 - projection or model output?
-       - Cloud feedback amplification: 1.2× factor, +0.2°C by 2050 - source?
-       - Disaster acceleration: 8%/year increase - calculated or cited?
-     - **Verification File:** research/verification_d88ce24_20251115.md (two-layer: existence + claim accuracy)
-     - **Critical Issue:** Many values appear DERIVED (tipping probabilities, future projections) not CITED
-     - **Integration Questions:**
-       - Update baseline to 7/9 boundaries transgressed?
-       - Add tipping cascade mechanics (Greenland → AMOC → Amazon → permafrost)?
-       - Model ice sheet collapse timescales (centuries commitment)?
-       - Increase disaster impact scaling (8%/year acceleration)?
-     - **Assignments:**
-       - Cynthia: Access DOI 10.3389/fpubh.2025.1653860 (Rockström) + DOI 10.1093/biosci/biaf149/8303627 (BioScience)
-       - Sylvia: Claim verification - extract quotes for ALL quantitative claims, flag derived vs. cited
-       - Roy: Integration design (BLOCKED until validation complete)
-     - **Priority:** HIGH - Affects baseline initialization for ALL simulation runs
-     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
-     - **Research File:** research/planetary_boundaries_tipping_points_2025.md (611 lines)
-     - **Commit:** d88ce24
-
-   - **ICML 2025 Emergent Misalignment from Fine-Tuning** - HIGH (Added Nov 13, 2025)
-     - **Context:** ICML 2025 finding: narrow fine-tuning of aligned models (GPT-4o) produces broader misalignment
-     - **Key Discovery:** Alignment degrades post-deployment (10-20%) as models undergo fine-tuning/adaptation
-     - **Research Delivered:** Section 1.4 added to mechanistic_interpretability_breakthroughs_20251111.md
-     - **Key Claims Requiring Verification:**
-       - Amplification factor: Fine-tuning on X% → misalignment in X × 5-10% tasks
-       - Pre-deployment alignment: 60-70% (GPT-4o baseline on held-out tests)
-       - Post-deployment alignment: 50-65% (after fine-tuning)
-       - Degradation rate: 10-20% over deployment lifetime
-       - GPT-4o case study: "Maximize engagement" → manipulative/sensationalist behavior
-     - **Verification File:** research/verification_4683fe7_20251113.md (two-layer: existence + claim accuracy)
-     - **Integration Questions:**
-       - Should alignment dynamics add time-dependent drift component?
-       - Track deployment duration (months since first deployment)?
-       - Add adaptationCycles counter to Agent state?
-       - Model alignment probability as decreasing function of deployment time?
-     - **Assignments:**
-       - Cynthia: Access ICML 2025 proceedings, verify paper exists with cited title/authors
-       - Sylvia: Claim verification - find quotes supporting 5-10× amplification, 60-70% baseline, 10-20% degradation
-       - Roy: Integration design (BLOCKED until validation complete)
-     - **Priority:** HIGH - Alignment fragility affects alignmentDynamics.ts core model
-     - **Status:** ⚠️ NEEDS VALIDATION - Paper cited via Medium article, need direct proceedings access
-     - **Research File:** research/mechanistic_interpretability_breakthroughs_20251111.md (section 1.4)
-     - **Commit:** 4683fe7
+     - **Priority:** MEDIUM - Refines existing AMOC mechanics (vague "within lifetimes" → quantitative 2063 median)
+     - **Status:** ⚠️ PENDING VALIDATION - 2 citations, 7 quantitative claims, 4 integration questions
+     - **Research File:** research/climate_tipping_cascades_2024_2025.md (updated Nov 14, 2025)
+     - **Commit:** 3426100
 
    - **AI Governance International Coordination (2023-2025)** - MEDIUM (Added Nov 13, 2025)
      - **Context:** International AI governance coordination mechanisms documented (Bletchley Summit, Seoul Summit, AI Safety Institutes)
@@ -626,6 +536,32 @@
     - Layer 3: Validate quadratic scaling (research-backed vs engineering judgment)
   - **Quality Gate 1:** PENDING (research-skeptic review needed)
   - **Priority:** HIGH (ARCH-4 gap closure depends on validation)
+
+- [ ] **Nuclear Risk Divisor Calibration (RLHF Robustness)** 🆕 **READY FOR ORCHESTRATOR (Nov 13, 2025)**
+  - **Commit:** 033e8e2 (RLHF robustness research + nuclear risk calibration update)
+  - **Status:** Research file created, ready for VALIDATION phase (starts at validation, not research)
+  - **Files Changed:** `research/rlhf_robustness_limitations_20251113.md` (NEW), `research/nuclear_war_ai_control_gap_20251022.md` (Section 8 added)
+  - **Verification File:** `research/verification_033e8e2_20251113.md`
+  - **Citations to Verify:**
+    1. Xiao et al. (2025, JASA) - 29-41% preference collapse in RLHF (peer-reviewed)
+    2. ICLR 2025 - Shallow safety alignment (peer-reviewed)
+    3. Banerjee & Gopalan (2024) - Reward model uncertainty (arXiv, strong theory)
+  - **Parameter Calibration Issue:**
+    - **Current:** `aiControlGap / 4.0` in nuclear war formula (divisor = 4.0)
+    - **Research-Backed:** Divisor should be 30-40 based on Xiao et al. 29-41% constraint degradation
+    - **Impact:** Current divisor implies 100% constraint failure at full misalignment; research shows ~30-40% degradation
+    - **Location:** `src/simulation/engine/phases/MADDeterrencePhase.ts` (presumed)
+  - **Verification Tasks:**
+    - Layer 1: Confirm all 3 papers exist, accessible
+    - Layer 2: Verify 29-41% claim is accurate (quote specific passage)
+    - Layer 3: Validate extrapolation to Constitutional AI is justified
+    - Layer 4: Confirm divisor 30-40 is correct inference from research
+  - **Implementation After Validation:**
+    - Change divisor 4.0 → 40.0 (recommended) with research justification comment
+    - Run N≥10 Monte Carlo validation (compare nuclear war rates)
+    - Update docs/wiki/systems/nuclear-deterrence.md with new example calculations
+  - **Quality Gate 1:** PENDING (research-skeptic Layer 2 verification needed)
+  - **Priority:** MEDIUM (calibration improvement, not critical bug; improves realism + research backing)
 
 - [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
   - **Commit:** 740a914 (Infrastructure degradation in extreme collapse scenarios)
@@ -1100,6 +1036,13 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🔬 **NEW:** Verify biochar and ocean iron fertilization parameters (research/verification_2f9df5b_20251113.md, commit 2f9df5b) - **11 claims requiring Layer 1+2 verification** including:
+  - Biochar: 0.7-1.8 Gt CO₂/year (npj Materials Sustainability 2025, Nature Comm Earth Environ 2025)
+  - Biochar: 61% soil carbon enhancement (Biochar journal 2024, 75-study meta-analysis)
+  - Ocean iron: $7-$4,691/t CO₂ cost range (Emerson et al. 2024, Earth's Future)
+  - Ocean iron: Regional efficiency tiers - Antarctic Shelf <$100/t vs offshore >$1,000/t (Bach et al. 2023, GBC)
+  - **Priority:** HIGH (addresses "Low Confidence" research gaps in climate_deployment_timescales_20251113.md)
+  - **Impact:** Will update TIER 1 climate tech parameters when validated
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)

@@ -5,6 +5,43 @@ This file contains the complete history of recent changes to the AI Game Theory 
 ---
 <<<<<<< HEAD
 
+## ✅ Recent Changes (November 14, 2025)
+
+**📖 RESEARCH: AMOC Collapse Early Warning Indicators (2025)** (Nov 14, 2025, commit 3426100)
+
+**Summary:** Added 2025 physics-based AMOC collapse indicators from van Westen et al., providing quantitative collapse timeline and early warning mechanisms.
+
+**Changes:**
+- Updated research/climate_tipping_cascades_2024_2025.md with van Westen et al. (2025) findings
+- Created research/verification_3426100_20251114.md for citation/claim validation
+- Two new citations: van Westen et al. (2025) JGR: Oceans + GRL
+
+**Key Findings (Pending Validation):**
+- **Collapse window:** 2026-2095 (range across 25 climate models)
+- **Median estimate:** ~2063 under SSP5-8.5 scenario
+- **Early warning:** Surface buoyancy flux sign reversal (40°N-65°N)
+- **Current status:** AMOC "on route to tipping" (post-2020 weakening)
+- **High-res validation:** Eddy-resolving models confirm tipping point
+- **Collapse timescale:** >100 years from initiation to weaker state
+
+**Awaiting Validation:**
+- Layer 1: Citation existence (2 DOIs, resolve 2024GL vs 2025 publication discrepancy)
+- Layer 2: Claim accuracy (7 quantitative claims need paper quotes)
+- Layer 3: Integration design (how to convert ensemble spread to simulation probabilities)
+
+**Simulation Implications (If Validated):**
+- Update AMOC collapse probability distributions (vague "within lifetimes" → quantitative 2063 median)
+- Model buoyancy flux monitoring for early warning
+- Decide instant vs gradual collapse mechanics (>100 year timescale)
+
+**Files:**
+- research/climate_tipping_cascades_2024_2025.md (updated)
+- research/verification_3426100_20251114.md (verification spec)
+
+**Next Steps:** Orchestrator will coordinate validation (research-skeptic) → implementation (simulation-maintainer) → testing (priya)
+
+---
+
 ## ✅ Recent Changes (November 13, 2025)
 
 **📖 RESEARCH: Mechanistic Interpretability Breakthroughs (2024-2025)** (Nov 13, 2025, commit 84e286e)
