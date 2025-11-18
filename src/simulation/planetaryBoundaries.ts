@@ -1261,15 +1261,12 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       console.log(`Slow killers (biodiversity/land): ${(slowRisk * 100).toFixed(0)}%`);
       console.log(`Mortality now scales with environmental thresholds`);
       console.log(`Recovery possible with aggressive interventions\n`);
-    }
-
     // Once active, severity scales with blended risk
-    if (system.cascadeActive) {
+    } else if (system.cascadeActive) {
       const baseSeverity = Math.pow(Math.max(0, blendedRisk - 0.5) / 0.5, 1.5);
       const stochasticMultiplier = 0.8 + deterministicRandom() * 0.4;
       system.cascadeSeverity = baseSeverity * stochasticMultiplier;
       system.cascadeMultiplier = 1.0 + system.cascadeSeverity;
-    }
   } else if (system.cascadeActive && system.tippingPointRisk < 0.45) {
     // Cascade can REVERSE if risk drops significantly
     system.cascadeActive = false;
