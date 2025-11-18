@@ -163,7 +163,6 @@ import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P
 // Batch 3 Consolidation: Climate & Environmental (17 → 7, Nov 9, 2025)
 import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Consolidated 4 climate phases
 import { ClimateDeploymentPhase } from './engine/phases/ClimateDeploymentPhase';  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints
-import { CoordinatedDeploymentPhase } from './engine/phases/CoordinatedDeploymentPhase';  // TIER 1B CRITICAL (Nov 2025): AI-managed gradual technology deployment
 import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Consolidated phosphorus + novel entities
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
 // Batch 4 Consolidation: Crisis & Mortality (14 → 5, Nov 9, 2025)
