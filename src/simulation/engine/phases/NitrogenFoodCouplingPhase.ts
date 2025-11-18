@@ -57,10 +57,7 @@ export class NitrogenFoodCouplingPhase implements SimulationPhase {
     // This is just a placeholder - real implementation will check state.technologies
 
     // Calculate global food production impact from nitrogen constraints
-    const globalFoodProductionMultiplier = updateNitrogenFoodCoupling(
-      state,
-      deployedTechEffectiveness
-    );
+    const globalFoodProductionMultiplier = updateNitrogenFoodCoupling(state);
 
     // Validate result
     const validatedMultiplier = assertFinite(globalFoodProductionMultiplier, {

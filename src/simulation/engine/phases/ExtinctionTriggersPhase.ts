@@ -49,7 +49,8 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
       return { events: [] };
     }
 
-    // Import and execute extinction trigger detectionconst extinctionCheck = checkExtinctionTriggers(state, rng);
+    // Import and execute extinction trigger detection
+    const extinctionCheck = checkExtinctionTriggers(state, rng);
 
     // Validate extinction check result
     assertDefined(extinctionCheck.newExtinctionState, {
@@ -68,18 +69,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
     if (!wasActive && state.extinctionState.active) {
       const classification = classifyExtinctionType(state);
 
-      // Validate classification confidence is a valid probability
-      assertProbability(classification.confidence, {
-        location: 'ExtinctionTriggersPhase.execute',
-        valueName: 'classification.confidence',
-        month: state.currentMonth,
-        additionalInfo: {
-          extinctionType: classification.type,
-          mechanism: classification.mechanism
-        }
-      });
-
-      // Store classification in extinction state
+      // Store classification (confidence is categorical: HIGH/MEDIUM/LOW)
       state.extinctionState.classification = classification;
       state.extinctionState.type = classification.type;
       state.extinctionState.mechanism = classification.mechanism;

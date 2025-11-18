@@ -37,13 +37,14 @@ export class ExtinctionProgressPhase implements SimulationPhase {
       return { events: [] };
     }
 
-    // Import and execute extinction progressionconst extinctionProgress = progressExtinction(state, rng);
+    // Import and execute extinction progression
+    const extinctionProgress = progressExtinction(state, rng);
 
     // ASSERTIONS (Nov 7, 2025): Validate extinction progress values
-    if (extinctionProgress.newExtinctionState?.progress !== undefined) {
-      assertProbability(extinctionProgress.newExtinctionState.progress, {
+    if (extinctionProgress.newExtinctionState?.phaseProgress !== undefined) {
+      assertProbability(extinctionProgress.newExtinctionState.phaseProgress, {
         location: 'ExtinctionProgressPhase.execute',
-        valueName: 'extinctionProgress.newExtinctionState.progress',
+        valueName: 'extinctionProgress.newExtinctionState.phaseProgress',
         month: state.currentMonth
       });
     }

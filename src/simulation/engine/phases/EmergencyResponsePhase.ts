@@ -559,6 +559,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        valueName: 'climateStability',
         month: state.currentMonth
       }
     );
@@ -574,6 +575,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        valueName: 'socialCohesion',
         month: state.currentMonth
       }
     );
@@ -605,6 +607,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        valueName: 'economicStability',
         month: state.currentMonth
       }
     );

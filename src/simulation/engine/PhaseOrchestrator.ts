@@ -240,7 +240,8 @@ export class PhaseOrchestrator {
             callCount: 0,
             minMs: Infinity,
             maxMs: -Infinity,
-            samples: []
+            mean: 0,
+            m2: 0
           };
 
           // Welford's algorithm for incremental mean and variance
@@ -528,14 +529,15 @@ export class PhaseOrchestrator {
   }
 
   /**
-   * Get phase timing statistics (ENHANCED Nov 12, 2025: includes min/max/p95)
+   * Get phase timing statistics (ENHANCED Nov 12, 2025: includes min/max/stddev)
    */
   getPhaseTimings(): Map<string, {
     totalMs: number;
     callCount: number;
     minMs: number;
     maxMs: number;
-    samples: number[];
+    mean: number;
+    m2: number;
   }> {
     return new Map(this.phaseTimings);
   }
@@ -558,7 +560,14 @@ export class PhaseOrchestrator {
       return;
     }
 
-    // Calculate p95 for each phase
+    // Calculate standard deviation from Welford's m2
+    const calculateStdDev = (m2: number, count: number): number => {
+      if (count < 2) return 0;
+      const variance = m2 / (count - 1);  // Sample variance
+      return Math.sqrt(variance);
+    };
+
+    // Calculate p95 from array of samples (for step timings)
     const calculateP95 = (samples: number[]): number => {
       if (samples.length === 0) return 0;
       const sorted = [...samples].sort((a, b) => a - b);
@@ -574,7 +583,7 @@ export class PhaseOrchestrator {
         avgMs: data.totalMs / data.callCount,
         minMs: data.minMs,
         maxMs: data.maxMs,
-        p95Ms: calculateP95(data.samples)
+        stdDevMs: calculateStdDev(data.m2, data.callCount)
       }))
       .sort((a, b) => b.totalMs - a.totalMs);
 
@@ -583,7 +592,7 @@ export class PhaseOrchestrator {
     console.log(
       'Phase Name'.padEnd(30) +
       'Avg'.padStart(10) +
-      'P95'.padStart(10) +
+      'StdDev'.padStart(10) +
       'Max'.padStart(10) +
       'Min'.padStart(10) +
       'Total'.padStart(12) +
@@ -597,7 +606,7 @@ export class PhaseOrchestrator {
       console.log(
         timing.phaseName.padEnd(30) +
         `${timing.avgMs.toFixed(2)}ms`.padStart(10) +
-        `${timing.p95Ms.toFixed(2)}ms`.padStart(10) +
+        `${timing.stdDevMs.toFixed(2)}ms`.padStart(10) +
         `${timing.maxMs.toFixed(2)}ms`.padStart(10) +
         `${timing.minMs.toFixed(2)}ms`.padStart(10) +
         `${timing.totalMs.toFixed(1)}ms`.padStart(12) +
@@ -650,21 +659,20 @@ export class PhaseOrchestrator {
       return '';
     }
 
-    // Calculate p95
-    const calculateP95 = (samples: number[]): number => {
-      if (samples.length === 0) return 0;
-      const sorted = [...samples].sort((a, b) => a - b);
-      const index = Math.ceil(sorted.length * 0.95) - 1;
-      return sorted[Math.max(0, index)];
+    // Calculate standard deviation from Welford's m2
+    const calculateStdDev = (m2: number, count: number): number => {
+      if (count < 2) return 0;
+      const variance = m2 / (count - 1);  // Sample variance
+      return Math.sqrt(variance);
     };
 
-    const lines = ['Phase,Avg_ms,P95_ms,Max_ms,Min_ms,Total_ms,Calls'];
+    const lines = ['Phase,Avg_ms,StdDev_ms,Max_ms,Min_ms,Total_ms,Calls'];
 
     for (const [name, data] of this.phaseTimings.entries()) {
       const avgMs = data.totalMs / data.callCount;
-      const p95Ms = calculateP95(data.samples);
+      const stdDevMs = calculateStdDev(data.m2, data.callCount);
       lines.push(
-        `${name},${avgMs.toFixed(2)},${p95Ms.toFixed(2)},${data.maxMs.toFixed(2)},${data.minMs.toFixed(2)},${data.totalMs.toFixed(1)},${data.callCount}`
+        `${name},${avgMs.toFixed(2)},${stdDevMs.toFixed(2)},${data.maxMs.toFixed(2)},${data.minMs.toFixed(2)},${data.totalMs.toFixed(1)},${data.callCount}`
       );
     }
 
@@ -680,7 +688,14 @@ export class PhaseOrchestrator {
       return '{}';
     }
 
-    // Calculate p95
+    // Calculate standard deviation from Welford's m2
+    const calculateStdDev = (m2: number, count: number): number => {
+      if (count < 2) return 0;
+      const variance = m2 / (count - 1);  // Sample variance
+      return Math.sqrt(variance);
+    };
+
+    // Calculate p95 from array of samples (for step timings)
     const calculateP95 = (samples: number[]): number => {
       if (samples.length === 0) return 0;
       const sorted = [...samples].sort((a, b) => a - b);
@@ -704,7 +719,7 @@ export class PhaseOrchestrator {
         avgMs: parseFloat((data.totalMs / data.callCount).toFixed(2)),
         minMs: parseFloat(data.minMs.toFixed(2)),
         maxMs: parseFloat(data.maxMs.toFixed(2)),
-        p95Ms: parseFloat(calculateP95(data.samples).toFixed(2))
+        stdDevMs: parseFloat(calculateStdDev(data.m2, data.callCount).toFixed(2))
       };
     }
 
