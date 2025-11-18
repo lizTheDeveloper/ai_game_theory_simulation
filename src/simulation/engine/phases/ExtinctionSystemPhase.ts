@@ -80,7 +80,8 @@ export class ExtinctionSystemPhase implements SimulationPhase {
       return [];
     }
 
-    // Import and execute extinction trigger detectionconst extinctionCheck = checkExtinctionTriggers(state, rng);
+    // Import and execute extinction trigger detection
+    const extinctionCheck = checkExtinctionTriggers(state, rng);
 
     // Validate extinction check result
     assertDefined(extinctionCheck.newExtinctionState, {
@@ -152,7 +153,8 @@ export class ExtinctionSystemPhase implements SimulationPhase {
       return [];
     }
 
-    // Import and execute extinction progressionconst extinctionProgress = progressExtinction(state, rng);
+    // Import and execute extinction progression
+    const extinctionProgress = progressExtinction(state, rng);
 
     // Validate extinction progress values
     if (extinctionProgress.newExtinctionState?.progress !== undefined) {
