@@ -15,6 +15,7 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertPlanetaryBoundary } from '@/simulation/utils/assertions';
 import { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } from '../../planetaryBoundaries';
 import { updateBoundaryRecovery } from '../../planetaryBoundaryRecovery';
+import { updateNovelEntitiesBoundary } from '../../updateNovelEntitiesBoundary';
 
 export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly id = 'planetary_boundaries';
@@ -66,17 +67,8 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     // Species tracking with climate velocity modeling
     updateBiosphereIntegrityIndex(state, rng);
 
-    // Update legacy nutrient stocks (TIER 2 HIGH - Nov 15, 2025)
-    // Exponential decay + new accumulation from pollution inputs
-    const { updateLegacyNutrientStocks } = require('../../legacyNutrientStocks');
-
-    // Calculate current pollution inputs from phosphorus system depletion
-    // Baseline (2025): ~120 Mt N/year, ~25 Mt P/year
-    // Depletion (1-reserves) scales pollution: high depletion = high use = high pollution
-    const currentNInput = state.phosphorusSystem ? (1 - state.phosphorusSystem.reserves) * 10 : 10; // Mt N/month (baseline ~10)
-    const currentPInput = state.phosphorusSystem ? (1 - state.phosphorusSystem.reserves) * 2 : 2;   // Mt P/month (baseline ~2)
-
-    updateLegacyNutrientStocks(state, currentNInput, currentPInput);
+    // NOTE: Legacy nutrient stocks already updated above (line 64)
+    // Duplicate declaration removed to fix esbuild error
 
     // Update all planetary boundaries (degradation mechanics)
     // This now reads legacy nutrient stock releases (via getLegacyContributionPercentage)
