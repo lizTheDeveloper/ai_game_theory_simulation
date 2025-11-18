@@ -33,7 +33,7 @@
 import { GameState } from '@/types/game';
 import { TechTreeState } from './engine';
 import { getTechById } from './comprehensiveTechTree';
-import { assertFinite, assertStateProperty, assertPlanetaryBoundary } from '../utils/assertions';
+import { assertFinite, assertStateProperty, assertPlanetaryBoundary, assertDefined } from '../utils/assertions';
 
 /**
  * Type-safe helper to set dynamic properties on objects
@@ -274,7 +274,15 @@ function calculateNovelEntitiesRemediationEffectiveness(
  * @returns true if deployed at any level > 0
  */
 function isTechDeployed(techTreeState: TechTreeState, techId: string): boolean {
-  return techTreeState.regionalDeployment['global']?.some(d => d.techId === techId && d.deploymentLevel > 0) ?? false;
+  const globalDeployment = assertDefined(
+    techTreeState.regionalDeployment['global'],
+    {
+      location: 'isTechDeployed',
+      valueName: 'regionalDeployment.global',
+      additionalInfo: { techId }
+    }
+  );
+  return globalDeployment.some(d => d.techId === techId && d.deploymentLevel > 0);
 }
 
 /**
