@@ -10,7 +10,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Key features:**
 - **Research-backed realism**: Every mechanic justified by peer-reviewed sources (2024-2025)
-- **77 breakthrough technologies**: From crisis response to transformative clarketech (updated Nov 16, 2025)
+- **71 breakthrough technologies**: From crisis response to transformative clarketech
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
@@ -18,13 +18,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (November 16, 2025)
+**🟢 STABLE** (November 15, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A (peer-reviewed foundation, biogeochemical integration complete) ✅ EXCELLENT
-- **Implementation Fidelity:** A (assertion coverage 97.2%, biogeochemical tech tree complete) ✅ EXCELLENT
+- **Research Quality:** A- (4 CRITICAL parameter fixes applied, 0 CRITICAL age issues) ✅ EXCELLENT
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B- (stable with localized issues - 2 CRITICAL, 3 HIGH identified in Nov 15 review) ⚠️ STABLE
-- **System Trajectory:** 🟢 STABLE (Biogeochemical integration complete, ready for validation)
+- **System Trajectory:** 🟢 STABLE (Architecture review complete, research parameters corrected)
 
 **Recent Major Achievements:**
 
@@ -98,28 +98,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Quality:** A (institutional + peer-reviewed, UNEP 2024, NOAA CSL 2024)
 - 💡 **Model Implications:** Validates need for TIER 0 prevention technologies, separate flow vs stock tracking
 
-**Nov 16: Biogeochemical Integration Complete** (commit 0c9e688)
-- ✅ **Status:** COMPLETE - All 6 nitrogen reduction technologies added to tech tree
-- 🔬 **Technologies Added:**
-  - `food_waste_reduction` (30% demand reduction, TIER 2)
-  - `nitroplast_integration` (60% fertilizer elimination, TIER 2 future tech, 2045+)
-  - `rhizosphere_engineering` (12.5% efficiency boost, TIER 2)
-  - `alternative_protein_insects_algae` (40% animal agriculture replacement, TIER 2)
-  - `active_sediment_management` (65% legacy phosphorus reduction, TIER 2)
-  - `phytoremediation_networks` (63% N removal, 72% P removal, TIER 2)
-- 🔧 **Enhanced:** `precision_fermentation` now includes nitrogen effect (40% demand reduction)
-- 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia creates decades-long recovery)
-- 📖 **Research Backing:** research/nitrogen_food_coupling_20251115.md (883 lines, 29 sources, Grade B)
-- ⏭️ **Next:** Monte Carlo validation (N≥10) to measure biogeochemical boundary effectiveness
-
 **Nov 15: Nitrogen-Food Coupling Research Complete (TIER 2 HIGH)** (commit 5bacf9f + session archive 50fae2c)
 - 🔬 **Research:** Biogeochemical flows boundary mechanics (29 peer-reviewed sources, Grade B)
 - 📊 **Key Findings:** Legacy nutrient stocks (30-100yr half-lives), regional differentiation (South Asia 55% overuse), multiplicative tech synergies
 - ✅ **Modules Created:** `legacyNutrientStocks.ts` (305 lines), `nitrogenFoodCoupling.ts` (368 lines)
+- ⚠️ **Status:** Research COMPLETE, implementation PARTIAL (modules created, integration pending ~30-60min)
+- 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia)
 - 📖 **Research:** research/nitrogen_food_coupling_20251115.md (883 lines)
 - 📖 **Validation:** reviews/nitrogen_food_coupling_critique_20251115.md (Grade B - CONDITIONAL PASS)
 - 📖 **DevLog:** devlogs/biogeochemical_flows_implementation_20251115.md (338 lines)
 - 📁 **Archive:** plans/completed/session_work_nov15_2025_researcher_213002.md
+- ⏭️ **Next:** Wire modules into boundary calculations, add 6 technologies, Monte Carlo validation
 
 **Nov 15: Outcome Probabilities Normalization Bug Fix (CRITICAL)** (commit 6dc7f39)
 - ❌ **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
@@ -127,6 +116,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Impact:** Unblocked all Monte Carlo simulations with valid probability distributions
 - 🎯 **Validation:** N=1 Monte Carlo, 12 months - completes successfully
 - 📖 **Context:** Pre-existing bug discovered during biogeochemical research session
+
+**Nov 16: Autonomous Worker Health Check - Duplicate Scheduling Fix** (commit ed6a6a6)
+- 🔧 **CRITICAL FIX:** Resolved concurrent Claude Code instances causing merge conflicts
+- 🎯 **Root Cause:** merge-orchestrator scheduled TWICE per hour (systemd timer at :00 + cron at :45)
+- ✅ **Solution:** Disabled systemd timer, kept cron-only scheduling (proper :45 separation)
+- 🛡️ **Impact:** Eliminated worker overlap (autonomous-worker at :00, merge-orchestrator at :45)
+- 📊 **Lock Analysis:** Both scripts already had working locks - issue was duplicate scheduling, not missing locks
+- 📖 **Documentation:** AUTONOMOUS_WORKER_FIX_20251116.md, logs/autonomous_worker_diagnosis_20251116.md
+- 💡 **Lesson:** Health checks caught the issue - systemd timers can conflict with cron if not coordinated
 
 **Nov 15: Autonomous Worker Stale Worktree Fix** (commit ecda59c)
 - 🔧 **Operational Fix:** Resolved stale git worktree blocking researcher autonomous execution
@@ -1038,6 +1036,7 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+<<<<<<< HEAD
 **November 15, 2025 - Defensive Coding Violations RESOLVED (Issue #7)**
 
 **Achievement:** All 20+ defensive fallback violations identified in Nov 13 architecture review have been resolved.
@@ -1098,6 +1097,34 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 **Reviews:**
 - `reviews/climate_deployment_timescales_critique_20251113.md` (Research Skeptic - CONDITIONAL PASS)
 - `reviews/architecture_integration_review_20251115.md` (Architecture Grade: A-)
+=======
+**November 14, 2025**
+
+**🔬 RESEARCH CURRENCY UPDATE: MPI 2025 & MONTREAL PROTOCOL** (commit db802bf)
+
+Updated two HIGH priority research files with latest peer-reviewed sources (2023-2025):
+
+**Paradigm 2 (Development Needs):**
+- **Global MPI 2025** (October 2025 release): "Overlapping Hardships: Poverty and Climate Hazards"
+- **Climate-poverty intersection:** 887M poor people (80.6%) face climate hazards (heat, drought, floods, air pollution)
+- **Concurrent hazards:** 309M poor (28.1%) experience 3-4 hazards simultaneously
+- **Total poverty:** 1.1B in acute multidimensional poverty (18.3% of surveyed population)
+- **Methodology updated:** Alkire et al. 2025 - first MPI integrating climate exposure data
+- **Research quality:** Maintained (peer-reviewed institutional reports)
+- **File:** `research/paradigm_2_development_needs_20251019.md` (last verified: 2025-11-14)
+
+**AI Governance (Montreal Protocol):**
+- **Climate benefits quantified:** 0.5-2.5°C avoided warming by 2100 (Keeble et al. 2023, *Atmospheric Chemistry and Physics*)
+- **Ozone recovery timeline:** 2040 (tropics/midlatitudes), 2045 (Arctic), 2066 (Antarctica) - UNEP/WMO 2025
+- **Emissions avoided:** 80B+ tonnes CO2e by 2050
+- **2025 challenges identified:** EIA analysis pre-40th anniversary (fluorochemical emissions, HFC acceleration, N2O control, chemical bank destruction)
+- **Research quality upgraded:** B+ → A- (peer-reviewed + 2025 institutional updates)
+- **File:** `research/ai_governance_international_coordination_20251113.md` (last verified: 2025-11-14)
+
+**Context:** Autonomous researcher agent maintaining research currency. No simulation mechanics changed - documentation updates only.
+
+Commit: db802bf
+>>>>>>> origin/auto/researcher-20251114_213001
 
 **November 13, 2025**
 
@@ -3123,7 +3150,7 @@ const newQualityOfLife = Math.max(0, Math.min(1,
 - ✅ **Novel Entities**: PFAS in 99% of blood, 120-month slow poisoning
 - ✅ **International Competition**: AI race dynamics, first-mover advantage, coordination failure
 
-**Comprehensive Technology Tree (77 technologies)**
+**Comprehensive Technology Tree (71 technologies)**
 - ✅ **TIER 0 (11)**: Deployed 2025 at realistic levels
   - Alignment: Basic RLHF (95%), mechanistic interpretability (15%), adversarial eval (40%)
   - Climate: De-extinction (1%), direct air capture (2%), AI pollution remediation (10%)
@@ -3131,8 +3158,7 @@ const newQualityOfLife = Math.max(0, Math.min(1,
   - Medical: AI diagnostics (25%), mRNA vaccines (40%)
   - Energy: 4th gen solar (8%), offshore wind (12%)
 - ✅ **TIER 1 (18)**: Planetary boundary crisis tech (phosphorus recovery, desalination, ocean alkalinity, PFAS remediation, etc.)
-- ✅ **TIER 2 (28)**: Major mitigations (enhanced UBI, AI mental health, scalable oversight, grid batteries, chemical recycling, **+ 6 biogeochemical technologies**, etc.)
-  - **New (Nov 16):** Food waste reduction, nitroplast integration, rhizosphere engineering, alternative protein (insects/algae), active sediment management, phytoremediation networks
+- ✅ **TIER 2 (22)**: Major mitigations (enhanced UBI, AI mental health, scalable oversight, grid batteries, chemical recycling, etc.)
 - ✅ **TIER 3 (15)**: Transformative tech (fusion power, disease elimination, regenerative medicine, vertical farming, AI rights, etc.)
 - ✅ **TIER 4 (5)**: Clarketech (advanced longevity 150+, molecular nanotech, space industrialization, brain emulation)
 
@@ -3169,10 +3195,10 @@ const newQualityOfLife = Math.max(0, Math.min(1,
 - **Golden Age Detection**: Prosperity state tracking, distinct from Utopia outcome
 - **Accumulation Systems**: Environmental, social cohesion, technological risk (realistic 2025 baselines)
 - **Crisis Cascades**: 10+ crisis types with compounding degradation (up to 3.0x)
-- **Breakthrough Technologies**: **77 total** in comprehensive tech tree (updated Nov 16, 2025)
+- **Breakthrough Technologies**: **71 total** in comprehensive tech tree
   - TIER 0 (11): Deployed 2025 at realistic levels (RLHF 95%, DAC 2%, de-extinction 1%)
   - TIER 1 (18): Planetary boundary crisis tech (phosphorus, freshwater, ocean, pollution)
-  - TIER 2 (28): Major mitigations (social, alignment, energy, recycling, ecosystem, **+ 6 biogeochemical**)
+  - TIER 2 (22): Major mitigations (social, alignment, energy, recycling, ecosystem)
   - TIER 3 (15): Transformative (fusion, medical breakthroughs, climate engineering, agriculture)
   - TIER 4 (5): Clarketech (longevity 150+, nanotech, space, brain emulation)
 - **Tech Tree System**: Prerequisites, research costs, deployment timelines, regional effects
