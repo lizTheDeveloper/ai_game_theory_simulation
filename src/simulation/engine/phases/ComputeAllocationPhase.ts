@@ -26,14 +26,17 @@ export class ComputeAllocationPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute compute allocation
-    setDeterministicRng(rng);// Validate compute infrastructure exists before allocation
+    setDeterministicRng(rng);
+
+    // Validate compute infrastructure exists before allocation
     assertDefined(state.computeInfrastructure, {
       location: 'ComputeAllocationPhase.execute',
       valueName: 'computeInfrastructure',
       month: state.currentMonth,
     });
 
-    // Validate total compute is finite (use helper function)const totalCompute = getTotalEffectiveCompute(state.computeInfrastructure);
+    // Validate total compute is finite (use helper function)
+    const totalCompute = getTotalEffectiveCompute(state.computeInfrastructure);
     assertFinite(totalCompute, {
       location: 'ComputeAllocationPhase.execute',
       valueName: 'totalEffectiveCompute',
