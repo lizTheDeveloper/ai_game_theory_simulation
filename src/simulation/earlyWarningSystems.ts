@@ -322,7 +322,12 @@ export function protectCriticalInfrastructure(state: GameState): void {
     w => w.warningLevel === 'red' || w.warningLevel === 'orange'
   );
 
+<<<<<<< HEAD
   if (urgentWarnings.length > 0 && gov.resources > protectionCost) {
+=======
+  // OPTIONAL FIELD: gov.resources is optional on GovernmentAgent type (not pre-initialized)
+  if (urgentWarnings.length > 0 && (gov.resources ?? 0) > protectionCost) {
+>>>>>>> origin/auto/worker-20251115_130001
     // Protect all unprotected nodes
     for (const node of unprotectedNodes) {
       node.protected = true;

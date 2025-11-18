@@ -74,6 +74,7 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
 
     // Validate probabilities sum to approximately 1.0 (within tolerance)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     const utopiaProbability = assertProbability(outcomeProbs.utopiaProbability, {
       location: 'OutcomeProbabilitiesPhase.execute',
@@ -90,6 +91,24 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
       valueName: 'extinctionProbability',
       month: state.currentMonth
     });
+=======
+    const totalProb =
+      assertProbability(outcomeProbs.utopiaProbability, {
+        location: 'OutcomeProbabilitiesPhase.execute',
+        valueName: 'utopiaProbability',
+        month: state.currentMonth
+      }) +
+      assertProbability(outcomeProbs.dystopiaProbability, {
+        location: 'OutcomeProbabilitiesPhase.execute',
+        valueName: 'dystopiaProbability',
+        month: state.currentMonth
+      }) +
+      assertProbability(outcomeProbs.extinctionProbability, {
+        location: 'OutcomeProbabilitiesPhase.execute',
+        valueName: 'extinctionProbability',
+        month: state.currentMonth
+      });
+>>>>>>> origin/auto/worker-20251115_130001
 
 >>>>>>> origin/auto/worker-20251115_080001
     const totalProb = utopiaProbability + dystopiaProbability + extinctionProbability;
@@ -99,6 +118,7 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
       throw new Error(
         `❌ Outcome probabilities do not sum to 1.0 in OutcomeProbabilitiesPhase.execute\n` +
         `   Total: ${totalProb.toFixed(3)}\n` +
+<<<<<<< HEAD
         `   Utopia: ${utopiaProbability.toFixed(3)}\n` +
         `   Dystopia: ${dystopiaProbability.toFixed(3)}\n` +
         `   Extinction: ${extinctionProbability.toFixed(3)}\n` +
@@ -109,6 +129,11 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
         `   Deviation >0.01 indicates a bug in calculateOutcomeProbabilities.\n` +
         `   Fix: Check probability calculation and normalization logic.`
 =======
+=======
+        `   Utopia: ${(outcomeProbs.utopiaProbability ?? 0).toFixed(3)}\n` +  // Display only - already validated above
+        `   Dystopia: ${(outcomeProbs.dystopiaProbability ?? 0).toFixed(3)}\n` +  // Display only - already validated above
+        `   Extinction: ${(outcomeProbs.extinctionProbability ?? 0).toFixed(3)}\n` +  // Display only - already validated above
+>>>>>>> origin/auto/worker-20251115_130001
         `   Month: ${state.currentMonth}`
 >>>>>>> origin/auto/worker-20251115_080001
       );

@@ -393,8 +393,11 @@ export const RATES = {
    * AI capability doubling time (months)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/auto/worker-20251115_090001
+=======
+>>>>>>> origin/auto/worker-20251115_130001
    * How many months until AI capabilities double
    *
    * @research Cottier et al. (2024) "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
@@ -438,6 +441,7 @@ export const RATES = {
    */
   COMPUTE_GROWTH_RATE: 2.15,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
    *
    * @research Sevilla & Roldán (2024) - Training compute growth: 4.1× per year (90% CI: 3.7× to 4.6×)
@@ -471,6 +475,8 @@ export const RATES = {
 >>>>>>> origin/auto/worker-20251115_080001
 =======
 >>>>>>> origin/auto/worker-20251115_090001
+=======
+>>>>>>> origin/auto/worker-20251115_130001
 
   // === TECH RISK RATES ===
   /**
