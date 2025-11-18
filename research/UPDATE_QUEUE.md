@@ -1,20 +1,818 @@
+# Research Update Queue
+<<<<<<< HEAD
+**Generated:** 11/13/2025, 5:30:04 PM
+**Files Scanned:** 369
+=======
+**Generated:** 11/12/2025, 3:30:09 PM
+**Files Scanned:** 357
+>>>>>>> origin/auto/researcher-20251112_153001
 
-node:internal/modules/run_main:107
-    triggerUncaughtException(
-    ^
-Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/auditResearchCurrency.ts' imported from /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/
-    at finalizeResolution (node:internal/modules/esm/resolve:274:11)
-    at moduleResolve (node:internal/modules/esm/resolve:864:10)
-    at defaultResolve (node:internal/modules/esm/resolve:990:11)
-    at nextResolve (node:internal/modules/esm/hooks:748:28)
-    at resolveBase (file:///home/lizthedeveloper_gmail_com/ai_game_theory_simulation/node_modules/tsx/dist/esm/index.mjs?1763296239491:2:3744)
-    at async resolveDirectory (file:///home/lizthedeveloper_gmail_com/ai_game_theory_simulation/node_modules/tsx/dist/esm/index.mjs?1763296239491:2:4237)
-    at async resolve (file:///home/lizthedeveloper_gmail_com/ai_game_theory_simulation/node_modules/tsx/dist/esm/index.mjs?1763296239491:2:5355)
-    at async nextResolve (node:internal/modules/esm/hooks:748:22)
-    at async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
-    at async handleMessage (node:internal/modules/esm/worker:201:18) {
-  code: 'ERR_MODULE_NOT_FOUND',
-  url: 'file:///home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/auditResearchCurrency.ts'
-}
+---
 
-Node.js v24.11.0
+## 🚨 CRITICAL (Action Required Within 1 Week)
+
+✅ No CRITICAL items
+
+---
+
+## ⚠️ HIGH (Action Required Within 1 Month)
+
+<<<<<<< HEAD
+**Count:** 139 (37.7%)
+=======
+**Count:** 137 (38.4%)
+>>>>>>> origin/auto/researcher-20251112_153001
+
+### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
+
+### `CITATION_CORRECTIONS_APPLIED_PHASE15.md`
+- **Oldest source:** 1981 (44 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE15.md`
+
+### `CITATION_CORRECTIONS_APPLIED_PHASE17.md`
+- **Oldest source:** 1984 (41 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE17.md`
+
+### `CITATION_CORRECTIONS_APPLIED_PHASE19-23.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE19-23.md`
+
+### `CITATION_CORRECTIONS_APPLIED_PHASE2.md`
+- **Oldest source:** 2016 (9 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE2.md`
+
+### `CITATION_CORRECTIONS_APPLIED_PHASE24_FINAL.md`
+- **Oldest source:** 1989 (36 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE24_FINAL.md`
+
+### `CITATION_CORRECTIONS_APPLIED_PHASE3.md`
+- **Oldest source:** 2015 (10 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE3.md`
+
+### `CITATION_CORRECTIONS_APPLIED_PHASE5.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE5.md`
+
+### `CITATION_CORRECTIONS_APPLIED_PHASE6-7.md`
+- **Oldest source:** 2011 (14 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE6-7.md`
+
+### `CITATION_CORRECTIONS_APPLIED_PHASE8.md`
+- **Oldest source:** 2001 (24 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE8.md`
+
+### `CITATION_VERIFICATION_PROGRESS.md`
+- **Oldest source:** 1999 (26 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_VERIFICATION_PROGRESS.md`
+
+### `CITATION_VERIFICATION_SESSION_SUMMARY.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_VERIFICATION_SESSION_SUMMARY.md`
+
+### `CITATION_VERIFICATION_SUMMARY.md`
+- **Oldest source:** 2017 (8 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_VERIFICATION_SUMMARY.md`
+
+### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
+- **Oldest source:** 2001 (24 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
+
+### `DOWNLOADED_PDFS_MANIFEST.md`
+- **Oldest source:** 2016 (9 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/DOWNLOADED_PDFS_MANIFEST.md`
+
+### `FABRICATED_CITATIONS_NEED_REAL_RESEARCH.md`
+- **Oldest source:** 2005 (20 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/FABRICATED_CITATIONS_NEED_REAL_RESEARCH.md`
+
+### `FAKE_CITATIONS_REPLACEMENTS.md`
+- **Oldest source:** 2016 (9 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/FAKE_CITATIONS_REPLACEMENTS.md`
+
+### `FAKE_CITATION_FOUND.md`
+- **Oldest source:** 2016 (9 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/FAKE_CITATION_FOUND.md`
+
+### `GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`
+- **Oldest source:** 1970 (55 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`
+
+### `LAYER2_PHASE2_VERIFICATION_STATUS.md`
+- **Oldest source:** 2016 (9 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/LAYER2_PHASE2_VERIFICATION_STATUS.md`
+
+### `MISATTRIBUTIONS_TRIAGE.md`
+- **Oldest source:** 1993 (32 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/MISATTRIBUTIONS_TRIAGE.md`
+
+### `PDF_MANIFEST.md`
+- **Oldest source:** 1970 (55 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/PDF_MANIFEST.md`
+
+### `PHASE2_LAYER2_SESSION11_SUMMARY_20251031.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/PHASE2_LAYER2_SESSION11_SUMMARY_20251031.md`
+
+### `PHASE2_LAYER2_SESSION12_SUMMARY_20251031.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/PHASE2_LAYER2_SESSION12_SUMMARY_20251031.md`
+
+### `PHASE2_LAYER2_SESSION13_SUMMARY_20251101.md`
+- **Oldest source:** 2007 (18 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/PHASE2_LAYER2_SESSION13_SUMMARY_20251101.md`
+
+### `PHASE2_LAYER2_SESSION14_SUMMARY_20251101.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/PHASE2_LAYER2_SESSION14_SUMMARY_20251101.md`
+
+### `PHASE2_LAYER2_SESSION16_SUMMARY_20251101.md`
+- **Oldest source:** 2002 (23 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/PHASE2_LAYER2_SESSION16_SUMMARY_20251101.md`
+
+### `PHASE2_LAYER2_SESSION18_PLAN_20251102.md`
+- **Oldest source:** 1969 (56 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/PHASE2_LAYER2_SESSION18_PLAN_20251102.md`
+
+### `PHASE2_LAYER2_SESSION4_SUMMARY_20251030.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/PHASE2_LAYER2_SESSION4_SUMMARY_20251030.md`
+
+### `PHASE2_LAYER2_SESSION5_SUMMARY_20251031.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/PHASE2_LAYER2_SESSION5_SUMMARY_20251031.md`
+
+### `PHASE2_LAYER2_SESSION6_SUMMARY_20251031.md`
+- **Oldest source:** 1991 (34 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/PHASE2_LAYER2_SESSION6_SUMMARY_20251031.md`
+
+### `RESEARCH_SOURCE_VALIDATION_AUDIT_20251112.md`
+- **Oldest source:** 2006 (19 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/RESEARCH_SOURCE_VALIDATION_AUDIT_20251112.md`
+
+### `ROUND2_SYLVIA_CRITIQUE_20251030.md`
+- **Oldest source:** 2006 (19 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ROUND2_SYLVIA_CRITIQUE_20251030.md`
+
+### `ROUND5_REMEDIATION_STRATEGY_20251030.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ROUND5_REMEDIATION_STRATEGY_20251030.md`
+
+### `UNVERIFIED_CITATIONS_TRIAGE.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/UNVERIFIED_CITATIONS_TRIAGE.md`
+
+### `ai_collective_evolution_20251024.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_collective_evolution_20251024.md`
+
+### `ai_collective_evolution_validation_verification_20251031.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_collective_evolution_validation_verification_20251031.md`
+
+### `ai_collective_evolution_verification_20251101.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_collective_evolution_verification_20251101.md`
+
+### `ai_safety_climate_crossdomain_verification_20251031.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_safety_climate_crossdomain_verification_20251031.md`
+
+### `ai_welfare_framework_20251020.md`
+- **Oldest source:** 1988 (37 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_welfare_framework_20251020.md`
+
+### `ai_welfare_framework_verification_20251031.md`
+- **Oldest source:** 1988 (37 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_welfare_framework_verification_20251031.md`
+
+### `ai_welfare_redesign_adversarial_resistant_verification_20251031.md`
+- **Oldest source:** 2014 (11 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_welfare_redesign_adversarial_resistant_verification_20251031.md`
+
+### `ai_welfare_v2_relationship_revision_20251021.md`
+- **Oldest source:** 1969 (56 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_welfare_v2_relationship_revision_20251021.md`
+
+### `alignment_dynamics_research_questions_20251024.md`
+- **Oldest source:** 2015 (10 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/alignment_dynamics_research_questions_20251024.md`
+
+### `alignment_technique_network_completion_20251031.md`
+- **Oldest source:** 2018 (7 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/alignment_technique_network_completion_20251031.md`
+
+### `arch4_cross_system_integrations_20251108.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/arch4_cross_system_integrations_20251108.md`
+
+### `bifurcation_empirical_validation_20251112.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/bifurcation_empirical_validation_20251112.md`
+
+### `black-mirror-phase3-research-AMENDED_20251016.md`
+- **Oldest source:** 2000 (25 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/black-mirror-phase3-research-AMENDED_20251016.md`
+
+### `black-mirror-phase3-research_20251016.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/black-mirror-phase3-research_20251016.md`
+
+### `black_mirror_phase3_research_verification_20251101.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/black_mirror_phase3_research_verification_20251101.md`
+
+### `catastrophe-recovery-analysis-phase1c_20251017.md`
+- **Oldest source:** 1989 (36 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/catastrophe-recovery-analysis-phase1c_20251017.md`
+
+### `catastrophe-recovery-timescales_20251017.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/catastrophe-recovery-timescales_20251017.md`
+
+### `catastrophe_recovery_timescales_verification_20251101.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/catastrophe_recovery_timescales_verification_20251101.md`
+
+### `citation_skeptic_analysis_20251028.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/citation_skeptic_analysis_20251028.md`
+
+### `climate-mortality-biosphere-multiparadigm-framework_20251028.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate-mortality-biosphere-multiparadigm-framework_20251028.md`
+
+### `climate-mortality-phase2-validation-cynthia-20251101.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate-mortality-phase2-validation-cynthia-20251101.md`
+
+### `climate_collapse_timelines_20251026.md`
+- **Oldest source:** 2007 (18 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_collapse_timelines_20251026.md`
+
+### `climate_collapse_timelines_verification_20251031.md`
+- **Oldest source:** 2007 (18 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_collapse_timelines_verification_20251031.md`
+
+### `climate_collapse_timelines_verification_20251101.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_collapse_timelines_verification_20251101.md`
+
+### `climate_mortality_sections123_verification_20251030.md`
+- **Oldest source:** 2011 (14 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_mortality_sections123_verification_20251030.md`
+
+### `climate_timescale_validation_ipcc_ar6_20251106.md`
+- **Oldest source:** 2016 (9 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_timescale_validation_ipcc_ar6_20251106.md`
+
+### `climate_tipping_timescales_20251106.md`
+- **Oldest source:** 2016 (9 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_tipping_timescales_20251106.md`
+
+### `competitive_ai_alignment_20251016.md`
+- **Oldest source:** 1995 (30 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/competitive_ai_alignment_20251016.md`
+
+### `competitive_alignment_failure_modes_20251016.md`
+- **Oldest source:** 1995 (30 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/competitive_alignment_failure_modes_20251016.md`
+
+### `competitive_alignment_failure_modes_verification_20251101.md`
+- **Oldest source:** 1995 (30 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/competitive_alignment_failure_modes_verification_20251101.md`
+
+### `cooperative-ownership-validation-cynthia-20251101.md`
+- **Oldest source:** 2014 (11 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/cooperative-ownership-validation-cynthia-20251101.md`
+
+### `cooperative_ai_ownership_economics_verification_20251101.md`
+- **Oldest source:** 2014 (11 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/cooperative_ai_ownership_economics_verification_20251101.md`
+
+### `cooperative_ai_ownership_remediation_complete_20251101.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/cooperative_ai_ownership_remediation_complete_20251101.md`
+
+### `cooperative_ai_ownership_verification_20251030.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/cooperative_ai_ownership_verification_20251030.md`
+
+### `crisis_cascade_multipliers_verification_20251031.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/crisis_cascade_multipliers_verification_20251031.md`
+
+### `dashboard_visualization_best_practices_20251022.md`
+- **Oldest source:** 1997 (28 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/dashboard_visualization_best_practices_20251022.md`
+
+### `de_extinction_capabilities_timelines_verification_20251031.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/de_extinction_capabilities_timelines_verification_20251031.md`
+
+### `death_attribution_methodology_20251018.md`
+- **Oldest source:** 2007 (18 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/death_attribution_methodology_20251018.md`
+
+### `defensive_coding_audit_20251107.md`
+- **Oldest source:** 2011 (14 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/defensive_coding_audit_20251107.md`
+
+### `emergency_response_deployment_times_20251020.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/emergency_response_deployment_times_20251020.md`
+
+### `emergency_response_deployment_times_verification_20251101.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/emergency_response_deployment_times_verification_20251101.md`
+
+### `extinction_rate_uncertainty_bounds_20251102.md`
+- **Oldest source:** 2014 (11 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/extinction_rate_uncertainty_bounds_20251102.md`
+
+### `extracted-research-questions.md`
+- **Oldest source:** 2000 (25 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/extracted-research-questions.md`
+
+### `famine_distribution_mechanisms_20251030.md`
+- **Oldest source:** 1981 (44 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/famine_distribution_mechanisms_20251030.md`
+
+### `famine_distribution_mechanisms_verification_20251102.md`
+- **Oldest source:** 1981 (44 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/famine_distribution_mechanisms_verification_20251102.md`
+
+### `hendrycks_2021_citation_verification.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/hendrycks_2021_citation_verification.md`
+
+### `instrumental_convergence_citation_verification_20251029.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/instrumental_convergence_citation_verification_20251029.md`
+
+### `lenton_2019_tipping_cascades_verification_20251029.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/lenton_2019_tipping_cascades_verification_20251029.md`
+
+### `mayer_1995_trust_restoration_verification_20251029.md`
+- **Oldest source:** 1993 (32 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/mayer_1995_trust_restoration_verification_20251029.md`
+
+### `memetic-contagion-system_20251028.md`
+- **Oldest source:** 2007 (18 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/memetic-contagion-system_20251028.md`
+
+### `memetic_contagion_system_verification_20251101.md`
+- **Oldest source:** 2001 (24 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/memetic_contagion_system_verification_20251101.md`
+
+### `mitigation_technologies_20251015.md`
+- **Oldest source:** 2003 (22 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/mitigation_technologies_20251015.md`
+
+### `modeling-contingency-and-agency-debate_20251017.md`
+- **Oldest source:** 1987 (38 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/modeling-contingency-and-agency-debate_20251017.md`
+
+### `mortality_caps_historical_data_20251027.md`
+- **Oldest source:** 2006 (19 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/mortality_caps_historical_data_20251027.md`
+
+### `mortality_stabilizers_failure_conditions_20251106.md`
+- **Oldest source:** 2010 (15 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/mortality_stabilizers_failure_conditions_20251106.md`
+
+### `organizational-technology-deployment-timelines_20251019.md`
+- **Oldest source:** 1990 (35 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/organizational-technology-deployment-timelines_20251019.md`
+
+### `outcome_variance_mechanisms_20251030.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/outcome_variance_mechanisms_20251030.md`
+
+### `paradigm_1_western_liberal_20251019.md`
+- **Oldest source:** 1999 (26 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/paradigm_1_western_liberal_20251019.md`
+
+### `paradigm_2_development_needs_20251019.md`
+- **Oldest source:** 1955 (70 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/paradigm_2_development_needs_20251019.md`
+
+### `paradigm_4_indigenous_communitarian_20251019.md`
+- **Oldest source:** 1992 (33 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/paradigm_4_indigenous_communitarian_20251019.md`
+
+### `paradigm_conflicts_analysis_20251019.md`
+- **Oldest source:** 2018 (7 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/paradigm_conflicts_analysis_20251019.md`
+
+### `paradigm_metric_mapping_20251019.md`
+- **Oldest source:** 2015 (10 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/paradigm_metric_mapping_20251019.md`
+
+### `phase3-critical-juncture-validation_20251017.md`
+- **Oldest source:** 1989 (36 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/phase3-critical-juncture-validation_20251017.md`
+
+### `phase3-future-scenarios_20251017.md`
+- **Oldest source:** 1972 (53 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/phase3-future-scenarios_20251017.md`
+
+### `policy-economics-debate_20251016.md`
+- **Oldest source:** 1984 (41 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/policy-economics-debate_20251016.md`
+
+### `policy-interventions-systemic-inequality-validation_20251016.md`
+- **Oldest source:** 2011 (14 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/policy-interventions-systemic-inequality-validation_20251016.md`
+
+### `post-recalibration-fixes-validation_20251019.md`
+- **Oldest source:** 2003 (22 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/post-recalibration-fixes-validation_20251019.md`
+
+### `predicts-database-verification_20251106.md`
+- **Oldest source:** 2017 (8 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/predicts-database-verification_20251106.md`
+
+### `psychological_warfare_success_rates_verification_20251101.md`
+- **Oldest source:** 1994 (31 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/psychological_warfare_success_rates_verification_20251101.md`
+
+### `raymond_et_al_2020_wet_bulb_verification_20251030.md`
+- **Oldest source:** 2010 (15 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/raymond_et_al_2020_wet_bulb_verification_20251030.md`
+
+### `robock_citation_clarification_20251030.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/robock_citation_clarification_20251030.md`
+
+### `rousseau_1998_trust_recovery_verification_20251029.md`
+- **Oldest source:** 1998 (27 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/rousseau_1998_trust_recovery_verification_20251029.md`
+
+### `simulation_mortality_validation_20251028.md`
+- **Oldest source:** 2015 (10 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/simulation_mortality_validation_20251028.md`
+
+### `simulation_mortality_verification_20251031.md`
+- **Oldest source:** 2007 (18 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/simulation_mortality_verification_20251031.md`
+
+### `slovic_1993_trust_asymmetry_verification_20251029.md`
+- **Oldest source:** 1993 (32 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/slovic_1993_trust_asymmetry_verification_20251029.md`
+
+### `spanish_flu_1918_historical_validation_20251101.md`
+- **Oldest source:** 2002 (23 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/spanish_flu_1918_historical_validation_20251101.md`
+
+### `swarm_intelligence_citation_verification_20251029.md`
+- **Oldest source:** 1987 (38 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/swarm_intelligence_citation_verification_20251029.md`
+
+### `technology-diffusion-io-psychology_20251019.md`
+- **Oldest source:** 1989 (36 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/technology-diffusion-io-psychology_20251019.md`
+
+### `technology_diffusion_io_psychology_verification_20251101.md`
+- **Oldest source:** 1982 (43 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/technology_diffusion_io_psychology_verification_20251101.md`
+
+### `threshold_tier2_historical_ranges_20251026.md`
+- **Oldest source:** 1970 (55 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/threshold_tier2_historical_ranges_20251026.md`
+
+### `threshold_tier2_historical_ranges_verification_20251101.md`
+- **Oldest source:** 1999 (26 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/threshold_tier2_historical_ranges_verification_20251101.md`
+
+### `threshold_tier3_scenarios_20251026.md`
+- **Oldest source:** 2014 (11 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/threshold_tier3_scenarios_20251026.md`
+
+### `threshold_tier3_scenarios_verification_20251031.md`
+- **Oldest source:** 2014 (11 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/threshold_tier3_scenarios_verification_20251031.md`
+
+### `threshold_uncertainty_modeling_20251021.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/threshold_uncertainty_modeling_20251021.md`
+
+### `threshold_uncertainty_modeling_verification_20251101.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/threshold_uncertainty_modeling_verification_20251101.md`
+
+### `tier2_parameter_validation_20251026.md`
+- **Oldest source:** 2002 (23 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/tier2_parameter_validation_20251026.md`
+
+### `tier2_params_verification_20251031.md`
+- **Oldest source:** 1991 (34 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/tier2_params_verification_20251031.md`
+
+### `ubi_floor_mechanics_verification_20251030.md`
+- **Oldest source:** 2016 (9 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ubi_floor_mechanics_verification_20251030.md`
+
+### `validation-summary-ready-for-implementation-20251101.md`
+- **Oldest source:** 2014 (11 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/validation-summary-ready-for-implementation-20251101.md`
+
+### `verification_40a2f34_20251111.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_40a2f34_20251111.md`
+
+### `verification_594d120_20251112.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_594d120_20251112.md`
+
+### `verification_65e0f1c_20251107.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_65e0f1c_20251107.md`
+
+### `verification_9f29b05_20251030.md`
+- **Oldest source:** 2004 (21 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_9f29b05_20251030.md`
+
+### `verification_a5188f3_20251106.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_a5188f3_20251106.md`
+
+### `verification_d336915_20251110.md`
+- **Oldest source:** 2018 (7 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_d336915_20251110.md`
+
+### `verification_d6e80e8_20251106.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_d6e80e8_20251106.md`
+
+### `visionary_ideas_research_validation_2025-10-16.md`
+- **Oldest source:** 2014 (11 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/visionary_ideas_research_validation_2025-10-16.md`
+
+### `water_scarcity_migration_immobility_20251020.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/water_scarcity_migration_immobility_20251020.md`
+
+### `water_scarcity_migration_immobility_verification_20251101.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/water_scarcity_migration_immobility_verification_20251101.md`
+
+### `water_scarcity_migration_verification_20251031.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/water_scarcity_migration_verification_20251031.md`
+
+### `welfare_quality_of_life_frameworks_20251019.md`
+- **Oldest source:** 2011 (14 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/welfare_quality_of_life_frameworks_20251019.md`
+
+### `welfare_quality_of_life_frameworks_verification_20251101.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/welfare_quality_of_life_frameworks_verification_20251101.md`
+
+### `wet_bulb_temperature_verification_20251107.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/wet_bulb_temperature_verification_20251107.md`
+
+### `xia_vs_shi_food_security_resolution_20251106.md`
+- **Oldest source:** 2007 (18 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/xia_vs_shi_food_security_resolution_20251106.md`
+
+---
+
+## 📋 MEDIUM (Review Within Quarter)
+
+**Count:** 19 (5.1%)
+
+- `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
+- `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
+- `PHASE1_LAYER2_COMPLETION_REPORT.md` - Oldest: 2020 (5 years)
+- `RESEARCH_TRIAGE_FABRICATED_CITATIONS.md` - Oldest: 2020 (5 years)
+- `ai_infrastructure_resources_verification_20251031.md` - Oldest: 2021 (4 years)
+- `ai_scaling_laws_paradigm_shift_20251107.md` - Oldest: 2020 (5 years)
+- `citation_verification_tier2_synthetic_ecosystems_20251104.md` - Oldest: 2020 (5 years)
+- `climate_mortality_parameter_derivation_verification_20251030.md` - Oldest: 2020 (5 years)
+- `crisis_cascade_multipliers_20251020.md` - Oldest: 2021 (4 years)
+- `ensemble-detection-methods_20251020.md` - Oldest: 2021 (4 years)
+- `food_security_recovery_LAYER2_VERIFICATION_20251030.md` - Oldest: 2020 (5 years)
+- `government-modeling-approaches_20251019.md` - Oldest: 2020 (5 years)
+- `government_climate_investment_adoption_patterns_20251024.md` - Oldest: 2020 (5 years)
+- `government_climate_investment_verification_20251031.md` - Oldest: 2020 (5 years)
+- `kangas_ubi_finland_verification_20251030.md` - Oldest: 2020 (5 years)
+- `malthusian-overshoot-causation-attribution_20251018.md` - Oldest: 2020 (5 years)
+- `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
+- `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
+- `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
+
+---
+
+## ✅ LOW (Monitor Only)
+
+<<<<<<< HEAD
+**Count:** 211 (57.2%)
+=======
+**Count:** 201 (56.3%)
+>>>>>>> origin/auto/researcher-20251112_153001
+
+All sources <3 years old. No action required.
+
+---
+
+## 📊 Summary Statistics
+
+| Metric | Value |
+|--------|-------|
+<<<<<<< HEAD
+| Total files | 369 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 139 (37.7%) |
+| MEDIUM | 19 (5.1%) |
+| LOW | 211 (57.2%) |
+| Average age | 8.4 years |
+=======
+| Total files | 357 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 137 (38.4%) |
+| MEDIUM | 19 (5.3%) |
+| LOW | 201 (56.3%) |
+| Average age | 8.6 years |
+>>>>>>> origin/auto/researcher-20251112_153001
+| Oldest source | 1955 (70 years ago) |
+
+### Research Currency
+
+| Status | Files | Percentage |
+|--------|-------|------------|
+<<<<<<< HEAD
+| Current (<3yr) | 211 | 57.2% |
+| Warning (3-5yr) | 19 | 5.1% |
+| Critical (>5yr) | 139 | 37.7% |
+=======
+| Current (<3yr) | 201 | 56.3% |
+| Warning (3-5yr) | 19 | 5.3% |
+| Critical (>5yr) | 137 | 38.4% |
+>>>>>>> origin/auto/researcher-20251112_153001
+
+### Targets
+
+- **Goal:** <5% sources >3 years old, 0% sources >5 years old
+<<<<<<< HEAD
+- **Current:** 37.7% critical (>5yr)
+=======
+- **Current:** 38.4% critical (>5yr)
+>>>>>>> origin/auto/researcher-20251112_153001
+- **Status:** 🚨 CRITICAL threshold exceeded
+
+---
+
+## 🔄 Next Steps
+
+<<<<<<< HEAD
+1. Update 139 HIGH priority file(s) within 1 month
+=======
+1. Update 137 HIGH priority file(s) within 1 month
+>>>>>>> origin/auto/researcher-20251112_153001
+2. Schedule research update sprint
+3. Coordinate with research team
+
+**Documentation:** See `docs/RESEARCH_PIPELINE.md` for update workflow.
