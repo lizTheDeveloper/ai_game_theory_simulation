@@ -167,6 +167,7 @@ function calculateNovelEntitiesRemediationEffectiveness(
   // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Use cached renewable capacity if provided
   // This prevents recalculating in hot path (called once per deployed remediation tech)
 <<<<<<< HEAD
+<<<<<<< HEAD
   const energySystem = gameState.resourceEconomy.energy;
   const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
     cachedRenewableCapacity :
@@ -216,6 +217,30 @@ function calculateNovelEntitiesRemediationEffectiveness(
     }
   );
 >>>>>>> origin/auto/worker-20251116_150001
+=======
+  const energySystem = gameState.resourceEconomy.energy;
+  const energyCapacity = energySystem.capacity;
+  const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
+    cachedRenewableCapacity :
+    (
+      assertFinite(energyCapacity.solar, { location: 'calculateNovelEntitiesRemediationEffectiveness', valueName: 'capacity.solar', month: gameState.currentMonth }) +
+      assertFinite(energyCapacity.wind, { location: 'calculateNovelEntitiesRemediationEffectiveness', valueName: 'capacity.wind', month: gameState.currentMonth }) +
+      assertFinite(energyCapacity.hydro, { location: 'calculateNovelEntitiesRemediationEffectiveness', valueName: 'capacity.hydro', month: gameState.currentMonth }) +
+      assertFinite(energyCapacity.fusion, { location: 'calculateNovelEntitiesRemediationEffectiveness', valueName: 'capacity.fusion', month: gameState.currentMonth })
+    );
+
+  const renewableCapacity = assertFinite(totalRenewableCapacity, {
+    location: 'calculateNovelEntitiesRemediationEffectiveness',
+    valueName: 'renewableCapacity',
+    month: gameState.currentMonth
+  });
+
+  const currentConsumption = assertStateProperty(
+    energySystem,
+    'totalDemand',
+    { location: 'calculateNovelEntitiesRemediationEffectiveness', month: gameState.currentMonth }
+  );
+>>>>>>> origin/auto/worker-20251116_210001
   const renewableSurplus = Math.max(0, renewableCapacity - currentConsumption);
 
   const energyMultiplier = assertFinite(Math.min(1.0, renewableSurplus / energyRequired), {
@@ -333,6 +358,7 @@ export function applyAllTechEffects(
   // This prevents recalculating 180-300 times per 60-month run (once per remediation tech × months)
   // Research review: Architecture-skeptic identified this hot path issue
 <<<<<<< HEAD
+<<<<<<< HEAD
   const energySystem = gameState.resourceEconomy.energy;
   const totalRenewableCapacity = (
     assertStateProperty(energySystem.capacity, 'solar', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth}) +
@@ -355,6 +381,15 @@ export function applyAllTechEffects(
     energySystem.capacity.hydro +
     energySystem.capacity.fusion;
 >>>>>>> origin/auto/worker-20251116_150001
+=======
+  const energySystem = gameState.resourceEconomy.energy;
+  const energyCapacity = energySystem.capacity;
+  const totalRenewableCapacity =
+    assertFinite(energyCapacity.solar, { location: 'applyAllTechEffects', valueName: 'capacity.solar', month: gameState.currentMonth }) +
+    assertFinite(energyCapacity.wind, { location: 'applyAllTechEffects', valueName: 'capacity.wind', month: gameState.currentMonth }) +
+    assertFinite(energyCapacity.hydro, { location: 'applyAllTechEffects', valueName: 'capacity.hydro', month: gameState.currentMonth }) +
+    assertFinite(energyCapacity.fusion, { location: 'applyAllTechEffects', valueName: 'capacity.fusion', month: gameState.currentMonth });
+>>>>>>> origin/auto/worker-20251116_210001
 
   // Aggregate effects by type
   const globalEffects: Map<string, number> = new Map();
@@ -405,6 +440,7 @@ export function applyAllTechEffects(
           if (boundary && tech.energyRequirement) {
             // ENERGY CONSTRAINT: Check renewable energy availability
             // Renewable surplus = total generation × renewable % - existing demand
+<<<<<<< HEAD
             const totalGen = assertFinite(
               assertStateProperty(
                 gameState.powerGenerationSystem,
@@ -434,6 +470,24 @@ export function applyAllTechEffects(
               { location: 'applyAllTechEffects', valueName: 'dataCenterPower', month: gameState.currentMonth }
             );
 
+=======
+            const totalGen = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'totalElectricityGeneration',
+              { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
+            );
+            const renewablePct = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'renewablePercentage',
+              { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
+            );
+            const renewableGen = totalGen * renewablePct;
+            const dataCenterDemand = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'dataCenterPower',
+              { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
+            );
+>>>>>>> origin/auto/worker-20251116_210001
             const energyAvailable = Math.max(0, renewableGen - dataCenterDemand * 0.5);  // Assume 50% of data center can be displaced
 
             // Handle tech.energyRequirement which can be number or object with nested optional fields
