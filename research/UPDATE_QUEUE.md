@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/14/2025, 6:30:04 PM
-**Files Scanned:** 396
+**Generated:** 11/15/2025, 8:16:39 AM
+**Files Scanned:** 406
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 144 (36.4%)
+**Count:** 146 (36.0%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -105,7 +105,7 @@
 - **Path:** `research/FAKE_CITATION_FOUND.md`
 
 ### `GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`
-- **Oldest source:** 1970 (55 years old)
+- **Oldest source:** 2000 (25 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`
 
@@ -534,6 +534,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/policy-interventions-systemic-inequality-validation_20251016.md`
 
+### `positive_tipping_points_2024_2025_20251114.md`
+- **Oldest source:** 1970 (55 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/positive_tipping_points_2024_2025_20251114.md`
+
 ### `post-recalibration-fixes-validation_20251019.md`
 - **Oldest source:** 2003 (22 years old)
 - **Status:** Not used in simulation
@@ -699,6 +704,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/visionary_ideas_research_validation_2025-10-16.md`
 
+### `vulnerable_world_hypothesis_ai_risk_20251111.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/vulnerable_world_hypothesis_ai_risk_20251111.md`
+
 ### `water_scarcity_migration_immobility_20251020.md`
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
@@ -738,12 +748,13 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 20 (5.1%)
+**Count:** 21 (5.2%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
 - `PHASE1_LAYER2_COMPLETION_REPORT.md` - Oldest: 2020 (5 years)
 - `RESEARCH_TRIAGE_FABRICATED_CITATIONS.md` - Oldest: 2020 (5 years)
+- `ai_capability_scaling_20251113.md` - Oldest: 2021 (4 years)
 - `ai_infrastructure_resources_verification_20251031.md` - Oldest: 2021 (4 years)
 - `ai_scaling_laws_paradigm_shift_20251107.md` - Oldest: 2020 (5 years)
 - `citation_verification_tier2_synthetic_ecosystems_20251104.md` - Oldest: 2020 (5 years)
@@ -765,7 +776,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 232 (58.6%)
+**Count:** 239 (58.9%)
 
 All sources <3 years old. No action required.
 
@@ -775,33 +786,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 396 |
+| Total files | 406 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 144 (36.4%) |
-| MEDIUM | 20 (5.1%) |
-| LOW | 232 (58.6%) |
-| Average age | 8.1 years |
+| HIGH | 146 (36.0%) |
+| MEDIUM | 21 (5.2%) |
+| LOW | 239 (58.9%) |
+| Average age | 8.0 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 232 | 58.6% |
-| Warning (3-5yr) | 20 | 5.1% |
-| Critical (>5yr) | 144 | 36.4% |
+| Current (<3yr) | 239 | 58.9% |
+| Warning (3-5yr) | 21 | 5.2% |
+| Critical (>5yr) | 146 | 36.0% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 36.4% critical (>5yr)
+- **Current:** 36.0% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 144 HIGH priority file(s) within 1 month
+1. Update 146 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 

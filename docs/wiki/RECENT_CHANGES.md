@@ -6,8 +6,42 @@ This file contains the complete history of recent changes to the AI Game Theory 
 <<<<<<< HEAD
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## ✅ Recent Changes (November 14, 2025)
 =======
+=======
+## 🔧 Merge Conflict Resolution (November 15, 2025)
+
+**🔧 MERGE RESOLUTION: Keep Nov 15 Superior Fixes** (Nov 15, 2025, commit 01f8a09)
+
+**Summary:** Resolved merge conflicts by keeping HEAD (Nov 15) versions over origin (Nov 13) for AI scaling parameters and memory leak fixes.
+
+**Conflict 1: AI Scaling Parameters (centralConfig.ts lines 394-467)**
+- **KEPT (HEAD):** `AI_CAPABILITY_DOUBLING_TIME = 3.6` months (Nov 11 research-validated)
+- **KEPT (HEAD):** `COMPUTE_GROWTH_RATE = 1.41` (4.1× per year, Epoch AI verified)
+- **REJECTED (origin):** `8` months and `2.15` (pre-research validation values from Nov 13)
+
+**Rationale:** Nov 15 values incorporate **combined compute + algorithmic scaling** (4.1× compute × 2.5× algorithmic = 10.25× effective = 3.6 month doubling). Nov 13 values used compute scaling alone, missing algorithmic efficiency improvements.
+
+**Research backing:** research/ai_scaling_verified_parameters_20251111.md (Grade A verification, all claims checked)
+
+**Conflict 2: Memory Leak Fix (PhaseOrchestrator.ts multiple locations)**
+- **KEPT (HEAD):** Welford's algorithm for O(1) memory per phase (98.9% reduction)
+- **REJECTED (origin):** Sliding windows (MAX_PHASE_SAMPLES=1000, still had unbounded growth)
+
+**Rationale:** Welford's algorithm achieves constant memory (120 bytes/phase = 11KB total) vs sliding windows (~760KB). Performance stats (min/max/p95/avg) preserved with zero memory growth.
+
+**Architecture review:** Confirms HEAD versions superior on both technical merit (efficiency) and research rigor (verification).
+
+**TypeScript compilation:** PASS (test file issues pre-existing, unrelated to merge)
+
+**Files Changed:**
+- `src/simulation/config/centralConfig.ts` (AI scaling parameters)
+- `src/simulation/engine/PhaseOrchestrator.ts` (memory leak fix)
+
+---
+
+>>>>>>> origin/auto/worker-20251115_080001
 ## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
 
 **🐛 BUG FIX: Backwards Dependency Removal** (Nov 15, 2025, commit afbffc0)
@@ -131,6 +165,7 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - research/verification_84e286e_20251113.md
 - docs/wiki/advanced/detection.md (updated with research note)
 
+<<<<<<< HEAD
 ---
 
 **🔧 INFRASTRUCTURE: Fix HOME Export for Cron Authentication** (Nov 13, 2025, commit 6cbc578)
@@ -146,6 +181,9 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 **Files:**
 - `scripts/merge-orchestrator.sh` (line 11-12)
+=======
+**Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
+>>>>>>> origin/auto/worker-20251115_080001
 
 ---
 
