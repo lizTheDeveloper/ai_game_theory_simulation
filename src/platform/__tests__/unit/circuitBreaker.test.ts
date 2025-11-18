@@ -394,12 +394,12 @@ describe('CircuitBreaker', () => {
       expect(breaker.getState()).toBe(CircuitState.OPEN);
     });
 
-    it('should force CLOSED with forceClosed()', () => {
+    it('should force CLOSED with forceClosed()', async () => {
       const breaker = createTestBreaker({ failureThreshold: 1 });
 
       // Open the circuit
       try {
-        breaker.execute(async () => { throw new Error('fail'); });
+        await breaker.execute(async () => { throw new Error('fail'); });
       } catch (e) {
         // Expected
       }

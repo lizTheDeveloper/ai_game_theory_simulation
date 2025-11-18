@@ -51,7 +51,7 @@ export function getCorrelationId(): string | null {
  * Generate correlation ID
  */
 export function generateCorrelationId(): string {
-  return \`\${Date.now()}-\${Math.random().toString(36).substr(2, 9)}\`;
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
 /**
@@ -77,16 +77,16 @@ const consoleFormat = winston.format.combine(
   correlationFormat(),
   winston.format.colorize(),
   winston.format.printf(({ timestamp, level, message, correlationId, ...metadata }) => {
-    let msg = \`\${timestamp} [\${level}]\`;
+    let msg = `${timestamp} [${level}]`;
 
     if (correlationId) {
-      msg += \` [CID:\${correlationId}]\`;
+      msg += ` [CID:${correlationId}]`;
     }
 
-    msg += \`: \${message}\`;
+    msg += `: ${message}`;
 
     if (Object.keys(metadata).length > 0) {
-      msg += \` \${JSON.stringify(metadata)}\`;
+      msg += ` ${JSON.stringify(metadata)}`;
     }
 
     return msg;
@@ -272,7 +272,7 @@ export class PerformanceTimer {
   end(metadata?: Record<string, any>): void {
     const duration = Date.now() - this.startTime;
 
-    logger.info(\`Performance: \${this.name}\`, {
+    logger.info(`Performance: ${this.name}`, {
       ...metadata,
       duration,
       durationMs: duration,
