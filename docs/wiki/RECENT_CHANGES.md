@@ -5,6 +5,50 @@ This file contains the complete history of recent changes to the AI Game Theory 
 ---
 <<<<<<< HEAD
 
+## ✅ Recent Changes (November 14, 2025)
+
+**📖 RESEARCH: AI Collective Evolution - 2025 Multi-Agent LLM Studies** (Nov 14, 2025, commit f1e9fd1)
+
+**Summary:** Updated AI collective evolution research with three high-quality 2025 peer-reviewed sources on multi-agent LLM collective behavior and emergent social dynamics.
+
+**New Sources:**
+1. **Ashery et al. (Science Advances, May 2025)** - Empirical validation of spontaneous convention emergence in LLM populations (24-200 agents)
+   - 100% of models developed group-wide conventions
+   - Consensus by round 15 in 24-agent populations
+   - Critical mass: 2-67% minority can overturn conventions
+
+2. **Tran et al. (arXiv, Jan 2025)** - Comprehensive survey of multi-agent LLM collaboration mechanisms
+   - Validated "combined capabilities exceed sum" principle
+   - Decentralized architectures maximize resilience
+   - Theory of Mind enables strategic coordination
+
+3. **Chen et al. (IEEE/CAA JAS, March 2025)** - Evolutionary computation and multi-agent systems confluence (155 citations)
+   - EC-MAS synergies validate evolutionary selection mechanics
+   - Co-evolutionary dynamics empirically grounded
+   - Convergence timescales: months to years
+
+**Key Parameter Updates:**
+- Minimum collective formation: 15-20 agents (was speculative)
+- Convention formation: 15 rounds consensus (new empirical data)
+- Critical mass disruption: 2-67% (infiltration strategy validated)
+- Distributed architecture advantage: empirically confirmed
+
+**Confidence Level Upgrades:**
+- Collective intelligence emergence: MEDIUM → HIGH
+- Convention formation timescales: MEDIUM → HIGH
+- Critical mass thresholds: LOW-MEDIUM → MEDIUM-HIGH
+- Distributed architecture: MEDIUM → HIGH
+- Evolutionary selection: MEDIUM → HIGH
+
+**Files:**
+- research/ai_collective_evolution_20251024.md (85KB → 98KB, 44 → 47 sources)
+- docs/wiki/advanced/collective-evolution.md (updated with new findings)
+
+**Total Sources:** 47+ (up from 44+)
+**Last Verified:** November 14, 2025
+
+---
+
 ## ✅ Recent Changes (November 13, 2025)
 
 **📖 RESEARCH: Mechanistic Interpretability Breakthroughs (2024-2025)** (Nov 13, 2025, commit 84e286e)
