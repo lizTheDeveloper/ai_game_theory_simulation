@@ -15,6 +15,7 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertPlanetaryBoundary } from '@/simulation/utils/assertions';
 import { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } from '../../planetaryBoundaries';
 import { updateBoundaryRecovery } from '../../planetaryBoundaryRecovery';
+import { updateNovelEntitiesBoundary } from '../../updateNovelEntitiesBoundary';
 
 export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly id = 'planetary_boundaries';

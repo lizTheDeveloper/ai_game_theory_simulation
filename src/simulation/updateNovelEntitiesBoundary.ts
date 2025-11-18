@@ -101,11 +101,11 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
     }
   }
 
-  // === 4. NATURAL DECAY (very slow for practically irreversible) ===
+  // === 4. NATURAL DECAY (very slow for irreversible boundaries) ===
   let decayRate = 0;
-  if (boundary.practicallyIrreversible && boundary.decayHalfLife) {
+  if (boundary.irreversible && boundary.recoveryHalfLife) {
     // Exponential decay: dN/dt = -λN, where λ = ln(2) / half-life
-    const lambda = Math.log(2) / boundary.decayHalfLife;  // per year
+    const lambda = Math.log(2) / boundary.recoveryHalfLife;  // per year
     const monthlyLambda = lambda / 12;  // per month
     decayRate = boundary.currentValue * monthlyLambda;
 
@@ -113,14 +113,15 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
       location: 'updateNovelEntitiesBoundary',
       valueName: 'decayRate',
       month: state.currentMonth,
-      additionalInfo: { halfLife: boundary.decayHalfLife, lambda, monthlyLambda },
+      additionalInfo: { halfLife: boundary.recoveryHalfLife, lambda, monthlyLambda },
     });
   }
 
   // === 5. ATMOSPHERIC REDEPOSITION (counteracts cleanup) ===
+  // Research: Cousins et al. 2022 - 99% of cleanup rains back down globally
+  // Note: This is novel entities specific behavior (PFAS volatilization)
   let redepositionRate = 0;
-  if (boundary.atmosphericTransport && totalCleanup > 0) {
-    // Research: Cousins et al. 2022 - 99% of cleanup rains back down globally
+  if (boundary.name === 'novel_entities' && totalCleanup > 0) {
     redepositionRate = totalCleanup * 0.99;
     totalCleanup *= 0.01;  // Only 1% stays removed
   }
@@ -161,7 +162,7 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
     } else {
       console.log(`  Cleanup (net): -${(totalCleanup * 100).toFixed(4)}%`);
     }
-    console.log(`  Natural Decay: -${(decayRate * 100).toFixed(6)}% (half-life: ${boundary.decayHalfLife} years)`);
+    console.log(`  Natural Decay: -${(decayRate * 100).toFixed(6)}% (half-life: ${boundary.recoveryHalfLife ?? 0} years)`);
     console.log(`  Net Change: ${previousValue.toFixed(4)} → ${boundary.currentValue.toFixed(4)} (Δ${(netChange * 100).toFixed(4)}%)`);
     console.log(`  Peak: ${(boundary.peak ?? 0).toFixed(4)}`);
   }
