@@ -1,0 +1,53 @@
+src/simulation/behavioralDetection.ts:      const safeVal = trueVal ?? 0;
+src/simulation/endGame.ts:      const initialPop = state.initialPopulation ?? 8.0;
+src/simulation/endGame.ts:    const initialPop = state.initialPopulation ?? 8.0;
+src/simulation/endGame.ts:    const initialPop = state.initialPopulation ?? 8.0;
+src/simulation/engine/phases/CriticalJuncturePhase.ts:    stateChanges += escapeResult.metadata?.stateChanges ?? 0;
+src/simulation/engine/phases/IrreversibilityTrackingPhase.ts:    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
+src/simulation/engine/phases/IrreversibilityTrackingPhase.ts:    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
+src/simulation/engine/phases/IrreversibilityTrackingPhase.ts:    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
+src/simulation/engine/phases/IrreversibilityTrackingPhase.ts:      const globalHabitatCover = landUse.globalHabitatCoverPercent ?? 75;
+src/simulation/engine/phases/IrreversibilityTrackingPhase.ts:    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
+src/simulation/engine/phases/IrreversibilityTrackingPhase.ts:    const oceanPH = state.oceanAcidificationSystem?.pHLevel ?? 8.1;
+src/simulation/engine/phases/IrreversibilityTrackingPhase.ts:      const crisisCount = state.planetaryBoundariesSystem?.boundariesBreached ?? 0;
+src/simulation/engine/phases/PlanetaryBoundariesPhase.ts:    const phosphorusReserves = state.phosphorusSystem?.reserves ?? 1.0;
+src/simulation/engine/phases/ResourceSoilPhase.ts:    const phosphorusPollution = state.phosphorusSystem?.pollutionLevel ?? 0.25;
+src/simulation/engine/phases/TransitionMortalityPhase.ts:    ? aiAgents.reduce((sum, a) => sum + (a.capability ?? 0), 0) / aiAgents.length
+src/simulation/engine/phases/TransitionMortalityPhase.ts:  const intlCooperation = state.governmentSystem?.internationalCoordination ?? 0.5;
+src/simulation/engine/phases/TransitionMortalityPhase.ts:  const retrainingLevel = state.policyInterventions?.retrainingLevel ?? 0;
+src/simulation/engine/phases/TransitionMortalityPhase.ts:    state.transitionMortality.supportSystems.retrainingProgramQuality = state.policyInterventions?.retrainingLevel ?? 0;
+src/simulation/engine/phases/TransitionMortalityPhase.ts:    ).length ?? 0;
+src/simulation/engine.ts:      maxMonths: config.maxMonths ?? 1000,
+src/simulation/engine.ts:      governmentActionFrequency: config.governmentActionFrequency ?? 0.5, // Default: 1 action per 2 months
+src/simulation/engine.ts:      socialAdaptationRate: config.socialAdaptationRate ?? 1.0,
+src/simulation/engine.ts:      aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,
+src/simulation/engine.ts:      economicTransitionRate: config.economicTransitionRate ?? 1.0,
+src/simulation/engine.ts:      snapshotInterval: config.snapshotInterval ?? 12  // Default to quarterly snapshots
+src/simulation/engine.ts:    const snapshotInterval = this.config.snapshotInterval ?? 12; // Default: snapshot every 12 months
+src/simulation/llm/client.ts:  const tokensUsed = response.usage?.total_tokens ?? 1200; // Default estimate
+src/simulation/nitrogenFoodCoupling.ts:  const regionalOveruse = REGIONAL_OVERUSE[region] ?? 0.20;  // Default 20% overuse
+src/simulation/organizationManagement.ts:  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
+src/simulation/organizationManagement.ts:  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
+src/simulation/organizationManagement.ts:  const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;
+src/simulation/qualityOfLife/mortality.ts:  const baseProb = scenarioParams?.environmentalShockProbability ?? 0.02;
+src/simulation/qualityOfLife/mortality.ts:  const baseMag = scenarioParams?.environmentalShockMagnitude ?? 2.0;
+src/simulation/scenarios/apply.ts:  const deploymentLevel = deployment.deploymentLevel ?? 1.0;
+src/simulation/techTree/effectsEngine.ts:          globalEffects.set(effectName, (globalEffects.get(effectName) ?? 0) + scaledValue);
+src/simulation/techTree/effectsEngine.ts:          regionMap.set(effectName, (regionMap.get(effectName) ?? 0) + scaledValue);
+src/simulation/techTree/effectsEngine.ts:          const currentReduction = gameState.globalMetrics.nitrogenReductionTotal ?? 0;
+src/simulation/techTree/effectsEngine.ts:            const currentRisk = (gameState.oceanAcidificationSystem as any).coralBleachingRisk ?? 0.5;
+src/simulation/techTree/engine.ts:  const progress = techTreeState.researchProgress[tech.id] ?? 0;
+src/simulation/updateNovelEntitiesBoundary.ts:    const reduction = (tech.effects.novelEntitiesEmissionReduction ?? tech.effects.pollutionReduction ?? 0);
+src/simulation/updateNovelEntitiesBoundary.ts:    console.log(`  Peak: ${(boundary.peak ?? 0).toFixed(4)}`);
+src/simulation/utils/assertions.ts: * Use this instead of `obj.property || 0` or `obj.property ?? 0`
+src/simulation/utils/assertions.ts:  const tolerance = info.tolerance ?? 0.000001;
+src/simulation/utils/consciousnessGovernanceUtils.ts:  const targetPreparedness = allRegions[targetRegion]?.preparedness ?? 0;
+src/simulation/utils/consciousnessGovernanceUtils.ts:  const euPrep = allRegions['eu']?.preparedness ?? 0;
+src/simulation/utils/consciousnessGovernanceUtils.ts:  const usPrep = allRegions['us']?.preparedness ?? 0;
+src/simulation/utils/consciousnessGovernanceUtils.ts:  const chinaPrep = allRegions['china']?.preparedness ?? 0;
+src/simulation/utils/energyConstrainedCleanup.ts:    const baseEffect = (tech.effects.novelEntitiesReduction ?? 0) * (tech.deploymentLevel ?? 0);
+src/simulation/utils/energyConstrainedCleanup.ts:  const baseEffectiveness = (tech.effects.novelEntitiesReduction ?? 0) * (tech.deploymentLevel ?? 0);
+src/simulation/utils/stateValidation.ts:    co2: state.planetaryBoundariesSystem.boundaries['climate_change']?.currentValue ?? 0,
+src/simulation/utils/stateValidation.ts:    temperature: state.planetaryBoundariesSystem.boundaries['climate_change']?.currentValue ?? 0,
+src/simulation/utils/stateValidation.ts:    oceanPH: state.planetaryBoundariesSystem.boundaries['ocean_acidification']?.currentValue ?? 0,
+src/simulation/utils/stateValidation.ts:    biodiversity: state.planetaryBoundariesSystem.boundaries['biosphere_integrity']?.currentValue ?? 0,
