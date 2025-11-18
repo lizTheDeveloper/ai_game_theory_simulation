@@ -100,18 +100,7 @@ export class ExtinctionSystemPhase implements SimulationPhase {
     if (!wasActive && state.extinctionState.active) {
       const classification = classifyExtinctionType(state);
 
-      // Validate classification confidence
-      assertProbability(classification.confidence, {
-        location: 'ExtinctionSystemPhase.executeExtinctionTriggers',
-        valueName: 'classification.confidence',
-        month: state.currentMonth,
-        additionalInfo: {
-          extinctionType: classification.type,
-          mechanism: classification.mechanism
-        }
-      });
-
-      // Store classification in extinction state
+      // Store classification (confidence is categorical: HIGH/MEDIUM/LOW)
       state.extinctionState.classification = classification;
       state.extinctionState.type = classification.type;
       state.extinctionState.mechanism = classification.mechanism;
