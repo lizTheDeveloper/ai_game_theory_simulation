@@ -1,0 +1,4 @@
+Scenario,N,Utopia%,Flourish%,Mixed%,Stagnate%,Dystopia%,Collapse%,Extinct%,Ongoing%,AvgQoL,AvgGini,AvgTemp,AvgGov,AvgResearch,AvgClimate
+Scientific Acceleration,10,0,0,0,0,0,0,0,100,0.685,0.400,1.50,0.500,0.0,0.792
+Equality First,10,0,0,0,0,0,0,0,100,0.671,0.400,1.50,0.500,0.0,0.756
+Climate First,10,0,0,0,0,0,0,0,100,0.632,0.400,1.50,0.500,0.0,0.679
