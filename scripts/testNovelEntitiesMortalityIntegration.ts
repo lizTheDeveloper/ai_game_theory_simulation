@@ -28,7 +28,8 @@ function testNovelEntitiesMortalityPropagation(): void {
   // Create state with severe chemical pollution
   const state = createDefaultInitialState(rngFunction);
 
-  // FIX (Nov 14, 2025): Capture initial population BEFORE engine.run() mutates state
+  // CRITICAL-2 FIX (Nov 14, 2025): Capture initial population BEFORE simulation runs
+  // Bug: Measuring state.population after engine.run() gives mutated value
   const initialPop = state.humanPopulationSystem.population;
 
   console.log(`📊 INITIAL STATE:`);
@@ -47,8 +48,6 @@ function testNovelEntitiesMortalityPropagation(): void {
     console.log(`  Chronic disease: ${(state.novelEntitiesSystem.chronicDiseasePrevalence * 100).toFixed(0)}%`);
     console.log(`  Above all crisis thresholds - should trigger events\n`);
   }
-
-  // Run simulation
   console.log(`🔬 RUNNING SIMULATION (120 months)...\n`);
   const result = engine.run(state, { maxMonths: 120, checkActualOutcomes: true });
 

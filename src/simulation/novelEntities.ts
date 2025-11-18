@@ -236,7 +236,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // TRULY GLOBAL: PFAS in 99% of human blood = everyone exposed (100% of world)
     // 0.08% mortality rate from despair/failed fertility treatments
     const pop = state.humanPopulationSystem as any;
-    addMortalityRisk(pop, {
+    const risk1 = {
       type: 'pollution',
       baseRisk: 0.0008,
       proximate: 'pollution',
@@ -245,7 +245,11 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       description: 'Reproductive crisis - despair/failed treatments (global exposure)',
       month: state.currentMonth,
       exposedFraction: 1.00
-    });
+    };
+    console.log(`💀 NOVEL ENTITIES: Adding mortality risk`);
+    console.log(`   Type: ${risk1.type}, BaseRisk: ${risk1.baseRisk}`);
+    console.log(`   Description: ${risk1.description}`);
+    addMortalityRisk(pop, risk1);
   }
   
   // === BIOACCUMULATION ===
@@ -276,7 +280,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // TRULY GLOBAL: Food chain is globally interconnected (100% of world affected)
     // 0.15% mortality rate from contaminated food poisoning
     const pop = state.humanPopulationSystem as any;
-    addMortalityRisk(pop, {
+    const risk2 = {
       type: 'pollution',
       baseRisk: 0.0015,
       proximate: 'pollution',
@@ -285,7 +289,11 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       description: 'Bioaccumulation collapse - contaminated food chain (global)',
       month: state.currentMonth,
       exposedFraction: 1.00
-    });
+    };
+    console.log(`💀 NOVEL ENTITIES: Adding mortality risk`);
+    console.log(`   Type: ${risk2.type}, BaseRisk: ${risk2.baseRisk}`);
+    console.log(`   Description: ${risk2.description}`);
+    addMortalityRisk(pop, risk2);
   }
   
   // === CHRONIC DISEASE EPIDEMIC ===
@@ -318,7 +326,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // TRULY GLOBAL: Chemical exposure is global (100% of world affected)
     // 0.4% mortality rate from cancer/autoimmune surge
     const pop = state.humanPopulationSystem as any;
-    addMortalityRisk(pop, {
+    const risk3 = {
       type: 'pollution',
       baseRisk: 0.004,
       proximate: 'pollution',
@@ -327,7 +335,11 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       description: 'Chronic disease epidemic - cancer/autoimmune surge (global exposure)',
       month: state.currentMonth,
       exposedFraction: 1.00
-    });
+    };
+    console.log(`💀 NOVEL ENTITIES: Adding mortality risk`);
+    console.log(`   Type: ${risk3.type}, BaseRisk: ${risk3.baseRisk}`);
+    console.log(`   Description: ${risk3.description}`);
+    addMortalityRisk(pop, risk3);
   }
   
   // === ONGOING HEALTH IMPACTS ===
