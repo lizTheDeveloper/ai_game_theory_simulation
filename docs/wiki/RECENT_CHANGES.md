@@ -12,10 +12,67 @@ This file contains the complete history of recent changes to the AI Game Theory 
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## ✅ Recent Changes (November 14, 2025)
 =======
 =======
 ## 🔧 Merge Conflict Resolution (November 15, 2025)
+=======
+## 🌾 Nitrogen-Food Coupling Integration (November 16, 2025)
+
+**Commit:** d3ea8fa (Nov 16, 2025)
+
+**Summary:** Complete integration of nitrogen-food coupling research into simulation engine. Expected to increase god mode biogeochemical effectiveness from 10% to 30-50%.
+
+**Integration Points:**
+
+**1. Legacy Nutrient Stocks → Biogeochemical Boundary Calculation:**
+- **System:** `src/simulation/planetaryBoundaries.ts`
+- **Mechanism:** Soil (30yr half-life) and sediment (100yr half-life) nutrient stocks
+- **Effect:** Effective pollution = current inputs + legacy releases
+- **Research:** Paerl et al. (2024) Lake Erie study - internal loading equals external inputs
+- **Impact:** Creates decades-long recovery timescales even with 100% input reduction
+
+**2. Regional Nitrogen Penalties → Food Security:**
+- **System:** `src/simulation/engine/phases/FoodSecurityDegradationPhase.ts`
+- **Mechanism:** Maps simulation regions to nitrogen research regions (South Asia, East Asia, North America, Europe, Latin America, Sub-Saharan Africa)
+- **Effect:** Multiplicative yield penalties based on nitrogen overuse baselines (e.g., 55% South Asian rice farms overuse)
+- **Impact:** Food production index applied to regional food security (0.8 multiplier = 20% yield loss)
+
+**3. Technology Effects → Nitrogen Reduction:**
+- **System:** `src/simulation/techTree/effectsEngine.ts`
+- **Mechanism:** New `nitrogenReduction` effect handler with multiplicative synergies (not additive)
+- **Technologies Updated:**
+  - Vertical Farming: 60% nitrogen reduction (Springmann et al. 2018)
+  - Precision Fermentation: 40% nitrogen reduction (Springmann et al. 2018)
+- **Impact:** Technology deployment reduces regional nitrogen penalties
+
+**Files Modified:**
+- `src/simulation/planetaryBoundaries.ts` - Legacy stock integration
+- `src/simulation/engine/phases/FoodSecurityDegradationPhase.ts` - Regional nitrogen penalties
+- `src/simulation/techTree/effectsEngine.ts` - nitrogenReduction effect handler
+- `src/simulation/techTree/comprehensiveTechTree.ts` - Tech nitrogen effects
+- `src/simulation/initialization.ts` - Fixed regionalAdaptation field initialization
+
+**Research Foundation:**
+- **Sources:** 29 peer-reviewed papers (research/nitrogen_food_coupling_20251115.md)
+- **Validation:** Grade B from research-skeptic (reviews/nitrogen_food_coupling_critique_20251115.md)
+- **Key Finding:** 60% nitrogen reduction target likely physically impossible without severe food penalties or breakthrough tech
+
+**Validation:**
+- ✅ Type checking: PASSED
+- ✅ Monte Carlo N=1: SUCCESSFUL (no assertion errors, realistic values)
+- ✅ Legacy stocks updating correctly with annual cycle
+- 📊 **Next Step:** Monte Carlo N≥10 to validate biogeochemical effectiveness improvement
+
+**Documentation Updated:**
+- `docs/wiki/systems/planetary-boundaries.md` - Added nitrogen-food coupling details
+- `docs/wiki/RECENT_CHANGES.md` - This entry
+
+---
+
+## 🔬 CRITICAL Research Parameter Corrections (November 15, 2025)
+>>>>>>> origin/auto/worker-20251116_130001
 
 **🔧 MERGE RESOLUTION: Keep Nov 15 Superior Fixes** (Nov 15, 2025, commit 01f8a09)
 

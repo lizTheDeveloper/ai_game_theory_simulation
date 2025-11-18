@@ -2346,6 +2346,7 @@ const ALL_TECH: TechDefinition[] = [
       waterEfficiency: 0.95,
       landUseReduction: 0.40,
       urbanFoodSecurity: 0.60,
+      nitrogenReduction: 0.30,  // TIER 2 HIGH (Nov 16, 2025): 30% NUE improvement (model assumption based on MDPI studies)
     },
   },
   {
@@ -2368,7 +2369,11 @@ const ALL_TECH: TechDefinition[] = [
       landUseReduction: 0.50,
       animalWelfareBonus: 1.0,
 <<<<<<< HEAD
+<<<<<<< HEAD
       nitrogenDemandReduction: 0.35,  // 30-50% agricultural N demand reduction
+=======
+      nitrogenReduction: 0.40,  // TIER 2 HIGH (Nov 15, 2025): 30-50% agricultural N reduction (average 40%, Springmann et al. 2018)
+>>>>>>> origin/auto/worker-20251116_130001
     },
   },
 

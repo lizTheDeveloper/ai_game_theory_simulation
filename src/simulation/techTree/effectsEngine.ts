@@ -447,10 +447,41 @@ export function applyAllTechEffects(
       }
     }
   }
-  
+
+  // TIER 2 HIGH (Nov 16, 2025): Update nitrogen-food coupling with deployed tech
+  // Research: Vertical farming (30%), precision fermentation (40%) nitrogen reduction
+  // Effect is multiplicative across all technologies (model assumption: independent tech effects compound)
+  if (gameState.planetaryBoundariesSystem?.regionalNitrogenManagement) {
+    // Collect all nitrogen-reducing tech deployments
+    const nitrogenReducingTechs: number[] = [];
+    for (const [region, deployments] of Object.entries(techTreeState.regionalDeployment)) {
+      for (const deployment of deployments) {
+        const tech = getTechById(deployment.techId);
+        if (tech && deployment.effects.nitrogenReduction && deployment.deploymentLevel > 0) {
+          const effectiveness = deployment.effects.nitrogenReduction * deployment.deploymentLevel;
+          nitrogenReducingTechs.push(effectiveness);
+        }
+      }
+    }
+
+    // Update nitrogen-food coupling if any nitrogen-reducing techs deployed
+    if (nitrogenReducingTechs.length > 0) {
+      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
+      const globalFoodProductionIndex = updateNitrogenFoodCoupling(
+        gameState,
+        nitrogenReducingTechs
+      );
+
+      // Log nitrogen coupling updates (annually)
+      if (gameState.currentMonth % 12 === 0) {
+        console.log(`🌾 Nitrogen-food coupling updated: ${nitrogenReducingTechs.length} techs deployed, Global food index: ${globalFoodProductionIndex.toFixed(3)}`);
+      }
+    }
+  }
+
   // Apply global effects
   applyGlobalEffects(gameState, globalEffects);
-  
+
   // Apply regional effects
   applyRegionalEffects(gameState, regionalEffects);
 }
@@ -1872,7 +1903,13 @@ function applyRegionalEffects(
       });
           }
           break;
-          
+
+        case 'nitrogenReduction':
+          // TIER 2 HIGH (Nov 16, 2025): Nitrogen reduction handled in applyAllTechEffects
+          // (Before global/regional effects are applied, to collect all deployed tech)
+          // This case is a no-op - nitrogen coupling update happens earlier
+          break;
+
         // ========== OCEAN HEALTH ==========
         // Ocean has TWO systems: oceanHealth (resourceEconomy) and oceanAcidificationSystem
         

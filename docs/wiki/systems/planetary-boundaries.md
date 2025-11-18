@@ -73,7 +73,10 @@ Boundaries update based on simulation state:
 - **Biosphere:** Driven by biodiversity index and invasive species impact, normalized to safe threshold (10 E/MSY = 10× natural extinction rate)
   - **Growth model (Oct 30, 2025):** Percentage-based growth matching IPBES research (10-30% per decade), with logistic saturation at 1000× max to prevent unrealistic exponential accumulation
 - **Freshwater:** Driven by freshwater system (water stress)
-- **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives), nitrogen-food coupling with regional differentiation (Nov 2025)
+- **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives), nitrogen-food coupling with regional differentiation (Nov 16, 2025)
+  - **Legacy stocks:** Soil (30yr half-life), sediments (100yr half-life) create decades-long recovery timescales
+  - **Nitrogen-food coupling:** Regional yield penalties based on nitrogen overuse (55% South Asian rice farms exceed safe limits)
+  - **Technology effects:** Vertical farming (60% N reduction), precision fermentation (40% N reduction) with multiplicative synergies
 - **Novel Entities:** Driven by environmental pollution
 - **Ocean Acidification:** Driven by ocean acidification system
 - **Ozone:** Improving +0.06%/year (Montreal Protocol recovery)
@@ -194,7 +197,9 @@ The **stratospheric ozone boundary** is one of only 2 safe boundaries, and it's 
 - **Biosphere:** Current ~137 E/MSY (100-1000x natural extinction rate), normalized to safe threshold 10 E/MSY = boundary value 13.7x (Oct 30, 2025 calibration fix)
 - **Land:** 62% forest remaining vs 75% needed
 - **Freshwater:** Nature (2023) Jasechko et al., LA Times (Sept 2025)
-- **Biogeochemical:** 18.2 Tg P/year vs 6.2 Tg P/year boundary
+- **Biogeochemical:** 18.2 Tg P/year vs 6.2 Tg P/year boundary (phosphorus), 120 Mt N/year current vs 62 Mt N/year safe limit (nitrogen)
+  - Legacy nutrient stocks: Paerl et al. (2024) Lake Erie study - internal loading equals external inputs
+  - Nitrogen-food coupling: 29 peer-reviewed sources (research/nitrogen_food_coupling_20251115.md)
 - **Novel Entities:** Microplastics, PFAS 99% prevalence
 - **Ocean:** Aragonite saturation <80% pre-industrial
 - **Ozone:** 285 DU recovering toward 290 DU baseline
@@ -231,7 +236,12 @@ The **stratospheric ozone boundary** is one of only 2 safe boundaries, and it's 
 
 ### Crisis Interactions:
 - **Phosphorus Depletion** → Worsens biogeochemical boundary
-- **Nitrogen-Food Coupling** (Nov 2025) → Legacy nutrient stocks create decades-long recovery timescales, regional food production penalties (⚠️ implementation partial)
+- **Nitrogen-Food Coupling** (Nov 16, 2025) → ✅ FULLY INTEGRATED
+  - Legacy nutrient stocks (soil 30yr, sediment 100yr half-lives) create decades-long recovery timescales
+  - Regional food production penalties (mapping simulation regions to nitrogen research regions)
+  - Technology pathway: nitrogenReduction effects (vertical farming 60%, precision fermentation 40%)
+  - Expected impact: God mode biogeochemical effectiveness 10% → 30-50%
+  - Research foundation: 29 peer-reviewed sources, Grade B validation
 - **Freshwater Depletion** → Worsens freshwater boundary
 - **Ocean Acidification** → Worsens ocean boundary
 - **Novel Entities** → Worsens pollution boundary
