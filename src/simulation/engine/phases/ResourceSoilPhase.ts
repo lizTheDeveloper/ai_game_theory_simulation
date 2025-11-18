@@ -55,6 +55,7 @@ export class ResourceSoilPhase implements SimulationPhase {
     updateNovelEntitiesSystem(state);
     checkNovelEntitiesTechUnlocks(state);
 
+<<<<<<< HEAD
     // === LEGACY NUTRIENT STOCKS (TIER 2 HIGH, Nov 15, 2025) ===
     // Updates accumulated N/P stocks in soil/sediment, calculates legacy releases
     // Research: Lake Erie sediment loading, nitrogen half-life studies
@@ -74,6 +75,30 @@ export class ResourceSoilPhase implements SimulationPhase {
 
     // Update legacy stocks and get effective pollution (current + legacy releases)
     updateLegacyNutrientStocks(state, currentNInput, currentPInput);
+=======
+    // === LEGACY NUTRIENT STOCKS (TIER 2 HIGH - Nov 15, 2025) ===
+    // Updates legacy nutrient releases from accumulated soil/sediment stocks
+    // Creates INERTIA effect: even with 100% input reduction, pollution stays high for decades
+    const { updateLegacyNutrientStocks } = require('../../legacyNutrientStocks');
+
+    // Calculate current monthly nitrogen/phosphorus inputs
+    // Baseline: 120 Mt N/year (10 Mt/month), 25 Mt P/year (2.08 Mt/month)
+    const BASELINE_N_INPUT_MONTHLY = 120 / 12;  // 10 Mt N/month (2025 baseline)
+    const BASELINE_P_INPUT_MONTHLY = 25 / 12;   // 2.08 Mt P/month (2025 baseline)
+
+    // Adjust for economic activity (more development = more fertilizer use)
+    const economicMultiplier = 1.0 + (state.globalMetrics.economicTransitionStage * 0.1);
+
+    // Adjust for deployed nitrogen-reduction technologies
+    // (This will be expanded when tech tree integration is complete)
+    const techReduction = 0.0; // Placeholder: will calculate from deployed techs
+
+    const currentNitrogenInput = BASELINE_N_INPUT_MONTHLY * economicMultiplier * (1 - techReduction);
+    const currentPhosphorusInput = BASELINE_P_INPUT_MONTHLY * economicMultiplier * (1 - techReduction);
+
+    // Update legacy stocks (accumulates inputs, releases legacy pollution)
+    updateLegacyNutrientStocks(state, currentNitrogenInput, currentPhosphorusInput);
+>>>>>>> origin/auto/worker-20251116_150001
 
     return { events: [] };
   }

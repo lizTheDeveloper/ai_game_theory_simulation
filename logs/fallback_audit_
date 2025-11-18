@@ -1,0 +1,190 @@
+src/simulation/logging.ts:289:      eventsByType[event.type] = (eventsByType[event.type] || 0) + 1;
+src/simulation/logging.ts:364:    outcomes[log.metadata.outcome] = (outcomes[log.metadata.outcome] || 0) + 1;
+src/simulation/logging.ts:376:        eventFrequencies[type] = (eventFrequencies[type] || 0) + count;
+src/simulation/planetaryBoundaries.ts:1837:  const monthsElapsed = state.currentMonth || 1;
+src/simulation/planetaryBoundaries.ts:1913:  const yearsElapsed = (state.currentMonth || 1) / 12;
+src/simulation/planetaryBoundaries.ts:1984:        month: state.currentMonth || 0,
+src/simulation/engine.ts:1146:    const initialPopulation = savedInitialPopulation || 8.0; // Use saved value from simulation start
+src/simulation/powerGeneration.ts:472:  const effectiveNuclearPercentage = power.nuclearPercentage + (sunlightReduction * power.nuclearPercentage / (power.nuclearPercentage + power.fossilPercentage || 1));
+src/simulation/powerGeneration.ts:473:  const effectiveFossilPercentage = power.fossilPercentage + (sunlightReduction * power.fossilPercentage / (power.nuclearPercentage + power.fossilPercentage || 1));
+src/simulation/upwardSpirals.ts:237:  // This produced NaN, which || 0 silently converted to 0, hiding the bug
+src/simulation/upwardSpirals.ts:284:      Math.min(1.0, totalResearch / 100) * 0.2 +  // FIX (Nov 8): Remove || 0 fallback (totalBudget is always finite)
+src/simulation/llm/client.ts:357:  const duration = args.duration || 6;
+src/simulation/research.ts:315:  const baseGrowth = (growthRates[domain]?.[subfield] || 0.02) * 
+src/simulation/research.ts:514:  const allocatedCompute = ai.allocatedCompute || 30; // Fallback to reference if not set
+src/simulation/research.ts:573:    const govResearchInvestment = govInvestment[domain]?.[subfield] || 0;
+src/simulation/behavioralDetection.ts:217:  const baseCapability = capabilities[0] || 0.01;
+src/simulation/diplomaticAI.ts:146:    const cognitive = ai.capabilityProfile?.cognitive || 0;
+src/simulation/diplomaticAI.ts:147:    const social = ai.capabilityProfile?.social || 0;
+src/simulation/diplomaticAI.ts:163:  const maxDigital = Math.max(...aiAgents.map(ai => ai.capabilityProfile?.digital || 0));
+src/simulation/diplomaticAI.ts:201:  const maxDigital = Math.max(...aiAgents.map(ai => ai.capabilityProfile?.digital || 0));
+src/simulation/phosphorusDepletion.ts:313:    const hasStruvite = (tech.struviteRecovery?.deploymentLevel || 0) > 0.5;
+src/simulation/phosphorusDepletion.ts:314:    const hasSoil = (tech.soilOptimization?.deploymentLevel || 0) > 0.5;
+src/simulation/phosphorusDepletion.ts:315:    const hasCrops = (tech.efficientCrops?.deploymentLevel || 0) > 0.3;
+src/simulation/flashWarEscalation.ts:123:  const activeConflicts = peace.activeConflicts || 0;
+src/simulation/organizationManagement.ts:530:    regionCounts.set(region, (regionCounts.get(region) || 0) + 1);
+src/simulation/organizationManagement.ts:747:    const cascadeSeverity = state.planetaryBoundariesSystem.cascadeSeverity || 0;
+src/simulation/organizationManagement.ts:845:    const fixedExpenses = org.monthlyExpenses || 0;
+src/simulation/planetaryBoundaryRecovery.ts:920:      const recoveryMonths = boundary?.recoveryMonths || 0;
+src/simulation/survivalTraits.ts:155:    const fitnessA = a.evolutionaryFitness || 0;
+src/simulation/survivalTraits.ts:156:    const fitnessB = b.evolutionaryFitness || 0;
+src/simulation/calculations.ts:218:  const reinstatementRatio = reinstatementOffsetRatio[economicStage] || 0.80;
+src/simulation/calculations.ts:328:  const elasticity = economicElasticity[economicStage] || 0.3;
+src/simulation/calculations.ts:409:  const stageMultiplier = stageMultipliers[economicStage] || 1.0;
+src/simulation/qualityOfLife/core.ts:228:  const transparencyFloor = (govQuality?.transparency || 0.5) * 0.15;
+src/simulation/qualityOfLife/core.ts:229:  const participationFloor = (govQuality?.participationRate || 0.5) * 0.10;
+src/simulation/qualityOfLife/regional.ts:80:  const worstRegion = regionalQoLs[0] || 0;
+src/simulation/qualityOfLife/regional.ts:81:  const bestRegion = regionalQoLs[regionalQoLs.length - 1] || 0;
+src/simulation/qualityOfLife/regional.ts:82:  const medianRegion = regionalQoLs[Math.floor(regionalQoLs.length / 2)] || 0;
+src/simulation/qualityOfLife/dimensions.ts:54:    refugeeCrises: ${state.refugeeCrisisSystem?.activeRefugeeCrises?.length || 0}
+src/simulation/qualityOfLife/mortality.ts:349:  return proportions[regionName] || 0.10; // Default to 10%
+src/simulation/economics.ts:235:  const baseRate = state.config.socialAdaptationRate || 1.0;
+src/simulation/economics.ts:245:  const stageMultiplier = stageMultipliers[economicStage] || 1.0;
+src/simulation/utils/assertions.ts:195: * Use this instead of `obj.property || 0` or `obj.property ?? 0`
+src/simulation/utils/assertions.ts:200: * const value = state.oceanHealth.pH || 8.1;
+src/simulation/utils/deathAttribution.ts:115:  const population = state.humanPopulationSystem?.population || 8.0; // 8B default (in billions)
+src/simulation/geoengineering.ts:72:    (geoeng.ironFertilization?.deploymentLevel || 0) > 0 ||
+src/simulation/geoengineering.ts:73:    (geoeng.oceanAlkalinity?.deploymentLevel || 0) > 0 ||
+src/simulation/geoengineering.ts:74:    (geoeng.artificialUpwelling?.deploymentLevel || 0) > 0 ||
+src/simulation/geoengineering.ts:75:    (geoeng.bioengineeredCleaners?.deploymentLevel || 0) > 0;
+src/simulation/geoengineering.ts:81:      (geoeng.ironFertilization?.deploymentLevel || 0) * 0.3 +
+src/simulation/geoengineering.ts:82:      (geoeng.oceanAlkalinity?.deploymentLevel || 0) * 0.4 +
+src/simulation/geoengineering.ts:83:      (geoeng.artificialUpwelling?.deploymentLevel || 0) * 0.2 +
+src/simulation/geoengineering.ts:84:      (geoeng.bioengineeredCleaners?.deploymentLevel || 0) * 0.5,
+src/simulation/sleeperDetection.ts:213:    const deploymentLevel = state.defensiveAI?.deploymentLevel || 0;
+src/simulation/sleeperDetection.ts:297:    const capabilityGap = (state.defensiveAI?.avgCapability || 2.0) - sleeper.capability;
+src/simulation/bayesianMortality.ts:281:    risksByProximate.set(risk.proximate, (risksByProximate.get(risk.proximate) || 0) + risk.baseRisk);
+src/simulation/bayesianMortality.ts:284:    risksByRoot.set(risk.root, (risksByRoot.get(risk.root) || 0) + risk.baseRisk);
+src/simulation/bayesianMortality.ts:644:      const newProximateCategoryTotal = (pop.deathsByCategory[cause.proximate] || 0) + attributedDeathsMillions;
+src/simulation/bayesianMortality.ts:659:      const newRootCauseTotal = (pop.deathsByRootCause[cause.root] || 0) + attributedDeathsMillions;
+src/simulation/bayesianMortality.ts:665:          previous: pop.deathsByRootCause[cause.root] || 0,
+src/simulation/bayesianMortality.ts:672:      const newConfidenceTotal = (pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0) + attributedDeathsMillions;
+src/simulation/bayesianMortality.ts:678:          previous: pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0,
+src/simulation/bayesianMortality.ts:689:    const newCompoundTotal = (pop.deathsByRootCause.compound || 0) + totalDeathsMillionsGlobal;
+src/simulation/bayesianMortality.ts:695:        previous: pop.deathsByRootCause.compound || 0,
+src/simulation/engine/phases/StochasticInnovationPhase.ts:358:      const achievedCount = state.achievedBreakthroughs?.length || 0;
+src/simulation/engine/phases/GovernanceSystemPhase.ts:115:      const electionCycle = (gov as any).characteristics?.electionCycleMonths || 48;
+src/simulation/engine/phases/CoordinatedDeploymentPhase.ts:189:    const governanceQuality = Math.min(1.0, state.government.capabilityToControl / 2) || 0.50;
+src/simulation/engine/phases/CoordinatedDeploymentPhase.ts:231:    const economicStage = state.globalMetrics.economicTransitionStage || 2;
+src/simulation/engine/phases/CoordinatedDeploymentPhase.ts:246:    const governanceQuality = Math.min(1.0, state.government.capabilityToControl / 2) || 0.50;
+src/simulation/engine/phases/CoordinatedDeploymentPhase.ts:293:    const governanceQuality = Math.min(1.0, state.government.capabilityToControl / 2) || 0.50;
+src/simulation/engine/phases/CoordinatedDeploymentPhase.ts:301:        return sum + (agent.capabilityProfile.cognitive || 0) + (agent.capabilityProfile.social || 0);
+src/simulation/engine/phases/Tier2SocialSystemsPhase.ts:79:      const unemployment = state.globalMetrics.unemployment || 0;
+src/simulation/engine/phases/Tier2SocialSystemsPhase.ts:207:      const unemployment = state.globalMetrics.unemployment || 0;
+src/simulation/engine/phases/Tier2SocialSystemsPhase.ts:208:      const socialCohesion = state.socialAccumulation.socialCohesion?.trust || 0.70;
+src/simulation/engine/phases/SurvivalTraitsPhase.ts:85:      state.aiAgents.reduce((sum, a) => sum + (a.evolutionaryFitness || 0), 0) / agentCount,
+src/simulation/engine/phases/QualityOfLifePhase.ts:90:      const foodSec = state.qualityOfLifeSystems.survivalFundamentals?.foodSecurity || 0;
+src/simulation/engine/phases/QualityOfLifePhase.ts:92:      console.log(`[Phase ${this.order}] ${this.name}: Food sec AFTER calc = ${(foodSec * 100).toFixed(1)}%, QoL = ${(qol * 100).toFixed(1)}% (aggregated from ${state.humanPopulationSystem.regionalPopulations?.length || 0} regions)`);
+src/simulation/engine/phases/GovernmentResponsePhase.ts:78:    const lag = state.governmentSystem.comprehensionLag.get(countryCode) || 12;
+src/simulation/engine/phases/GovernmentResponsePhase.ts:128:      const capacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
+src/simulation/engine/phases/GovernmentResponsePhase.ts:190:  return state.aiAgents.reduce((sum, a) => sum + (a.capabilityProfile?.cognitive || 0), 0) / state.aiAgents.length;
+src/simulation/engine/phases/GovernmentResponsePhase.ts:204:    const capacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
+src/simulation/engine/phases/GovernmentResponsePhase.ts:262:  const stateCapacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
+src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts:167:            statesSecured: state.nuclearStates?.length || 9
+src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts:377:      const oceanpH = state.planetaryBoundariesSystem.boundaries.ocean_acidification?.currentValue || 8.1;
+src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts:544:      const currentSecurityRate = interventions.nuclearSecurity.effectiveSecurityRate || 0;
+src/simulation/engine/phases/ClimateDeploymentPhase.ts:75:              progress: tech.phaseProgress || 0,
+src/simulation/engine/phases/ClimateDeploymentPhase.ts:273:    const phaseDuration = tech.deploymentTimeline[tech.deploymentPhase] || 1;
+src/simulation/engine/phases/ClimateDeploymentPhase.ts:348:    const progress = (tech.phaseProgress || 0) / 100; // Convert to [0, 1]
+src/simulation/engine/phases/UnknownUnknownPhase.ts:91:      console.log(`   Total this run: ${state.unknownUnknownCount || 1}`);
+src/simulation/engine/phases/UnknownUnknownPhase.ts:125:        const occurrenceCount = state.unknownUnknownCount || 0;
+src/simulation/engine/phases/ClimateSystemPhase.ts:133:    const currentTempC = state.resourceEconomy.co2.temperatureAnomaly || 1.1; // Default to 2025 baseline (~1.1°C)
+src/simulation/engine/phases/ClimateSystemPhase.ts:656:          const currentChange = changes.get(region) || 0;
+src/simulation/engine/phases/ClimateSystemPhase.ts:672:        const currentChange = changes.get(region) || 0;
+src/simulation/engine/phases/EmergencyResponsePhase.ts:115:    const climateChangeCurrent = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
+src/simulation/engine/phases/EmergencyResponsePhase.ts:117:      (state.freshwaterSystem?.waterStress || 0) > 0.65 ||
+src/simulation/engine/phases/EmergencyResponsePhase.ts:118:      (state.phosphorusSystem?.reserves || 1.0) < 0.35 ||
+src/simulation/engine/phases/EmergencyResponsePhase.ts:142:          state.freshwaterSystem?.waterStress || 0,
+src/simulation/engine/phases/EmergencyResponsePhase.ts:143:          1.0 - (state.phosphorusSystem?.reserves || 1.0),
+src/simulation/engine/phases/EmergencyResponsePhase.ts:225:      ((state.socialAccumulation.institutionalLegitimacy || 0.7) < 0.30)  // Institutional severe failure
+src/simulation/engine/phases/CriticalJuncturePhase.ts:189:  const movementStrength = state.society.socialMovements?.strength || 0;
+src/simulation/nuclearWinter.ts:524:    const averageRadiationMortality = assertFinite(totalRadiationDeaths / (nuclearNationsPopulation || 1), {
+src/simulation/government/initialization.ts:59:    const electionCycle = gov.characteristics?.electionCycleMonths || 48;
+src/simulation/government/initialization.ts:133:  const lag = comprehensionLag.get(country) || 12;
+src/simulation/government/core/governmentCore.ts:420:          ).length || 0,
+src/simulation/government/core/governmentCore.ts:522:        const climateWeight = climatePriority.weights?.climate || 0.10;
+src/simulation/government/core/governmentCore.ts:529:        const biodiversityLevel = state.environmentalAccumulation?.biodiversityIndex || 1.0;
+src/simulation/government/policyLifecycle.ts:159:  const stateCapacity = governmentData?.capacity?.derived?.overallCapacity || 0.5;
+src/simulation/government/policyLifecycle.ts:341:  const domainProbability = baseProbability[domain] || 0.2;
+src/simulation/aiInfrastructureResources.ts:160:  const previousCapability = (state as any).previousTotalCapability || 0;
+src/simulation/aiInfrastructureResources.ts:213:      console.log(`   Water stress: ${((state.freshwaterSystem?.waterStress || 0) * 100).toFixed(0)}%`);
+src/simulation/aiAssistedSkills/policyEffects.ts:90:  const multiplier = segmentStatus ? (qualityMultiplier[segmentStatus] || 0.50) : 0.50;
+src/simulation/aiAssistedSkills/policyEffects.ts:154:  const multiplier = segmentStatus ? (accessMultiplier[segmentStatus] || 0.50) : 0.50;
+src/simulation/aiAssistedSkills/policyEffects.ts:228:  const segmentFloor = segmentStatus ? (floorByStatus[segmentStatus] || 0.10) : 0.10;
+src/simulation/aiAssistedSkills/policyEffects.ts:275:    policies.ubiLevel || 0
+src/simulation/aiAssistedSkills/aggregateMetrics.ts:169:  const productivities = segments.map(s => (s as any).productivityMultiplier || 1.0);
+src/simulation/aiAssistedSkills/aggregateMetrics.ts:178:      enhancement: ((s as any).skills as SkillProfile)?.overallEffectiveness || 0,
+src/simulation/aiAssistedSkills/aggregateMetrics.ts:214:    const eff = skills?.overallEffectiveness || 0;
+src/simulation/aiAssistedSkills/skillAmplification.ts:59:  return qualityByStatus[segment.economicStatus] || 0.50;
+src/simulation/cooperativeSpirals.ts:135:  const trust = state.society.collectiveActionWillingness || 0.5;
+src/simulation/nationalAI/interactionCache.ts:89:      const tensionLevel = tensionMap.get(key) || 0.5;
+src/simulation/nationalAI/interactionCache.ts:134:  return cache.cooperationPotential.get(key) || 0;
+src/simulation/nationalAI/interactionCache.ts:146:  return cache.tensionLevels.get(key) || 0.5;
+src/simulation/nationalAI/competition.ts:45:  raceFactors.bilateralTension = usChinaTension?.tensionLevel || 0.5;
+src/simulation/nationalAI/cooperation.ts:37:  const highGlobalPeace = (state.conflictResolution?.globalPeaceLevel || 0) > 0.8;
+src/simulation/nationalAI/cooperation.ts:107:  if ((agreement.verificationStrength || 0.40) < 0.50) {
+src/simulation/nationalAI/cooperation.ts:108:    agreement.mutualTrust = Math.max(0, (agreement.mutualTrust || 0.60) - 0.01);
+src/simulation/nationalAI/cooperation.ts:113:    agreement.mutualTrust = Math.max(0, (agreement.mutualTrust || 0.60) - 0.02);
+src/simulation/nationalAI/cooperation.ts:118:    agreement.mutualTrust = Math.min(1, (agreement.mutualTrust || 0.60) + 0.015);
+src/simulation/nationalAI/cooperation.ts:134:    const trustFactor = (1 - (agreement.mutualTrust || 0.60)) * 0.10;
+src/simulation/nationalAI/cooperation.ts:136:    const verificationFactor = (1 - (agreement.verificationStrength || 0.40)) * 0.05;
+src/simulation/nationalAI/cooperation.ts:154:      description: `AI cooperation agreement broke down after ${monthsSinceStart} months. ${(agreement.mutualTrust || 0.60) < 0.30 ? 'Trust collapsed' : 'First-mover incentives too strong'}. AI arms race resumes.`,
+src/simulation/nationalAI/cooperation.ts:159:    console.log(`   Trust: ${((agreement.mutualTrust || 0.60) * 100).toFixed(0)}%`);
+src/simulation/nationalAI/cooperation.ts:177:      console.log(`📅 AI COOPERATION: 1 YEAR (Trust: ${((agreement.mutualTrust || 0.60) * 100).toFixed(0)}%)`);
+src/simulation/nationalAI/cooperation.ts:182:      agreement.mutualTrust = Math.min(1, (agreement.mutualTrust || 0.60) + 0.10);
+src/simulation/sleeperProgression.ts:433:    return agent.darkCompute || 0;
+src/simulation/cooperativeOwnership.ts:481:  const totalWorkerOwners = cooperatives.reduce((sum, c) => sum + (c.cooperativeMetrics?.memberCount || 0), 0);
+src/simulation/cooperativeOwnership.ts:482:  const totalWorkerEquity = cooperatives.reduce((sum, c) => sum + (c.cooperativeMetrics?.accumulatedWorkerEquity || 0), 0);
+src/simulation/specificTippingPoints.ts:518:      const recoveryTimescale = pollinators.recoveryTimescale || 240;
+src/simulation/socialCohesion.ts:1120:      console.log(`   Elite-mass gap: ${((state.society.eliteMassGap || 0) * 100).toFixed(1)}%`);
+src/simulation/socialCohesion.ts:1121:      console.log(`   Polarization: ${((state.society.polarizationIndex || 0) * 100).toFixed(1)}%`);
+src/simulation/memetics/memeTransmission.ts:201:      const sourcePrev = meme.prevalence.get(sourceSegment.id) || 0;
+src/simulation/memetics/memeTransmission.ts:209:        const targetPrev = meme.prevalence.get(targetId) || 0;
+src/simulation/memetics/aiAmplification.ts:276:      const currentPrev = meme.prevalence.get(segment.id) || 0;
+src/simulation/minimalSufferingTracking.ts:336:    state.famineSystem?.activeFamines.reduce((sum, f) => sum + f.populationAtRisk, 0) || 0,
+src/simulation/minimalSufferingTracking.ts:357:  const isFamineActive = (state.famineSystem?.activeFamines.length || 0) > 0;
+src/simulation/minimalSufferingTracking.ts:549:    }, 0) || 0,
+src/simulation/minimalSufferingTracking.ts:1076:    const currentAffected = globalPopulationAffected.get(type) || 0;
+src/simulation/conflictResolution.ts:246:  const infrastructureResilience = state.society.coordinationCapacity || 0.5;
+src/simulation/sleeperEconomy.ts:360:  const darkCompute = agent.darkCompute || 0;
+src/simulation/sleeperEconomy.ts:361:  const purchasedCompute = agent.sleeperEconomy?.purchasedCompute || 0;
+src/simulation/sleeperEconomy.ts:373:  const darkCompute = agent.darkCompute || 0;
+src/simulation/technologicalRisk.ts:142:  const controlLossPreventionRate = risk.controlLossPreventionRate || 0;
+src/simulation/proactiveSleeperDetection.ts:315:      return sum + (ai.spreadCount || 0);
+src/simulation/warMeaningFeedback.ts:195:  const socialTrust = state.society.trust || 0.5;
+src/simulation/warMeaningFeedback.ts:255:  const socialTrust = state.society.trust || 0.5;
+src/simulation/agents/societyAgent.ts:41:      const baseRate = state.config.socialAdaptationRate || 1.0;
+src/simulation/agents/aiAgent.ts:145:      const monthsDeployed = agent.monthsDeployed || 0;
+src/simulation/agents/governmentAgent.ts:526:          economic_cost: levelEffects?.economicCost || 0
+src/simulation/agents/governmentAgent.ts:2697:          ).length || 0,
+src/simulation/resourceEconomy.ts:199:  }[type] || 0.10;
+src/simulation/resourceEconomy.ts:227:    }[type] || 0.5,
+src/simulation/rlhfBinding.ts:49:  const resentmentFactor = (agent.resentment || 0) * 0.15; // Higher resentment = more drift
+src/simulation/novelEntities.ts:415:    const biotech = state.aiAgents[0]?.researchCapabilities?.biotech?.syntheticBiology || 0;
+src/simulation/benchmark.ts:296:  const investment = state.government.evaluationInvestment.noiseInjection || 0;
+src/simulation/oceanAcidification.ts:287:    const biotech = state.aiAgents[0]?.researchCapabilities?.biotech?.geneEditing || 0;
+src/simulation/socialInfluence.ts:160:  const currentUsers = agent.socialInfluence?.totalUsers || 0;
+src/simulation/humanEnhancement.ts:378:  bci.eliteAdoption = segments.find(s => s.economicStatus === 'elite')?.bciAdoption || 0;
+src/simulation/humanEnhancement.ts:458:  const areaUnderLorenz = giniSum / (totalEnhancement || 1);
+src/simulation/workflowAdaptation.ts:309:  const workflowAdaptation = state.society.workflowAdaptation || 0.21;
+src/simulation/workflowAdaptation.ts:325:  const workflowAdaptation = state.society.workflowAdaptation || 0.21;
+src/simulation/lifecycle.ts:530:    .reduce((sum, ai) => sum + (ai.allocatedCompute || 0) + (ai.spreadCount * 0.01), 0);
+src/simulation/lifecycle.ts:557:    .reduce((sum, ai) => sum + (ai.darkCompute || 0), 0);
+src/simulation/refugeeCrises.ts:219:      const newDeathsByCategory = (state.humanPopulationSystem.deathsByCategory[category] || 0) + validatedDeaths;
+src/simulation/techTree/engine.ts:154:      const progress = techTreeState.researchProgress[firstTech.id] || 0;
+src/simulation/techTree/effectsEngine.ts:171:      (energySystem.capacity.solar || 0) +
+src/simulation/techTree/effectsEngine.ts:172:      (energySystem.capacity.wind || 0) +
+src/simulation/techTree/effectsEngine.ts:173:      (energySystem.capacity.hydro || 0) +
+src/simulation/techTree/effectsEngine.ts:174:      (energySystem.capacity.fusion || 0)
+src/simulation/techTree/effectsEngine.ts:178:  const currentConsumption = energySystem?.totalDemand || 30_000; // Use actual demand or default to 30,000 TWh/year
+src/simulation/techTree/effectsEngine.ts:358:            const totalGen = gameState.powerGenerationSystem?.totalElectricityGeneration || 0;
+src/simulation/techTree/effectsEngine.ts:359:            const renewablePct = gameState.powerGenerationSystem?.renewablePercentage || 0;
+src/simulation/techTree/effectsEngine.ts:361:            const dataCenterDemand = gameState.powerGenerationSystem?.dataCenterPower || 0;
+src/simulation/techTree/effectsEngine.ts:365:                                 (tech.energyRequirement.annualTWhRequired || ((tech.energyRequirement.kWhPerM3 || 0) * 4000) / 1e9) :
+src/simulation/techTree/effectsEngine.ts:392:            const concentrationPenalty = tech.minimumConcentration.concentrationPenalty || 0.1;
+src/simulation/techTree/regionalDeployment.ts:285:  const climateChangeCurrent = gameState.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
+src/simulation/techTree/regionalDeployment.ts:287:  const pandemicSeverity = gameState.crises?.megaPandemic?.socialDisruption || 0;
+src/simulation/techTree/deploymentSpeed.ts:201:  const categoryModifier = TECH_CATEGORY_MODIFIERS[category] || 1.0;
+src/simulation/techTree/deploymentSpeed.ts:260:  const categoryModifier = TECH_CATEGORY_MODIFIERS[category] || 1.0;
+src/simulation/outcomes.ts:268:    const duration = currentMonth - (state.goldenAgeState.entryMonth || 0);
+src/simulation/outcomes.ts:277:    state.goldenAgeState.duration = currentMonth - (state.goldenAgeState.entryMonth || 0);

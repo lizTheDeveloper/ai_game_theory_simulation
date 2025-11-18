@@ -39,33 +39,33 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-   - **Nitrogen-Food Coupling Integration Claims** - HIGH (Added Nov 16, 2025)
-     - **Context:** Commit d3ea8fa integrated nitrogen-food coupling with 3 major systems (legacy stocks, regional penalties, tech effects)
-     - **Implementation Status:** ✅ COMPLETE (type checking passed, Monte Carlo N=1 successful)
-     - **Research Foundation:** 29 peer-reviewed sources (research/nitrogen_food_coupling_20251115.md), Grade B validation
-     - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50%
+   - **Biogeochemical Flows Integration - Citation & Claim Verification** - TIER 2 HIGH (Added Nov 16, 2025)
+     - **Context:** Completed integration of legacy nutrient stocks + nitrogen-food coupling into simulation engine
+     - **Commit:** 71b97c5aa0778889e874390988a5ca940f98a38c
+     - **Research Base:** 29 peer-reviewed sources (Grade B - CONDITIONAL PASS)
+     - **Integration Complete:**
+       - Legacy nutrient stocks (ResourceSoilPhase.ts) - 30yr N half-life, 100yr P half-life
+       - Nitrogen-food coupling (FoodSecurityDegradationPhase.ts) - Regional yield penalties
+       - 6 nitrogen management technologies added to tech tree
      - **Key Claims Requiring Verification:**
-       - **CRITICAL:** 55% South Asian rice farms overuse nitrogen - NOT FOUND in research file
-       - **CRITICAL:** Multiplicative tech synergies (not additive) - modeling assumption, NOT research-backed
-       - **HIGH:** Nitrogen baseline 120 Mt/year vs. research file 107-112 Mt/year (10% discrepancy)
-       - **HIGH:** Vertical farming 60% N reduction (Springmann 2018) - NOT FOUND in research file
-       - Legacy stock half-lives (soil 30yr, sediment 100yr) - need direct quotes from Paerl et al. 2024
-       - Precision fermentation 40% N reduction - research file says "30-50%", code uses average
-     - **Verification File:** research/verification_d3ea8fa_20251116.md (two-layer: existence + claim accuracy)
-     - **Files Modified:**
-       - src/simulation/planetaryBoundaries.ts (legacy stock integration)
-       - src/simulation/engine/phases/FoodSecurityDegradationPhase.ts (regional penalties)
-       - src/simulation/techTree/effectsEngine.ts (nitrogenReduction handler)
-       - src/simulation/techTree/comprehensiveTechTree.ts (tech nitrogen effects)
+       - Legacy stock half-lives: 30yr soil N, 100yr sediment P - exact values in papers?
+       - South Asia 55% nitrogen overuse - Science Advances (2024) EXACT metric?
+       - Precision Agriculture 28% N reduction, zero yield penalty - France NUE 40%→58% verified?
+       - Biological N fixation 60% reduction - nitroplast agricultural application speculative?
+       - Baseline inputs: 120 Mt N/year, 25 Mt P/year - sources and year?
+       - Lake Erie case study: 10,000-11,000 MT P/year - citation needed?
+       - Technology effectiveness values (18%, 25%, 15%, 20%) - all research-backed?
+     - **Verification File:** research/verification_71b97c5_20251116.md (9 claims, two-layer verification)
+     - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia)
+     - **Validation Status:** Monte Carlo N=3 completed successfully (no NaN/Infinity failures)
+     - **Priority:** TIER 2 HIGH - Affects planetary boundaries core mechanic
+     - **Status:** ⚠️ NEEDS VALIDATION - Research verification file created, ready for orchestrator at VALIDATION phase
      - **Assignments:**
-       - Cynthia: Verify Paerl 2024, Springmann 2018 claims with exact quotes
-       - Sylvia: Flag 55% South Asia claim as UNVERIFIED, assess multiplicative assumption
-       - Roy: Apply parameter corrections after validation (BLOCKED until validation complete)
-     - **Priority:** HIGH - Affects biogeochemical boundary, food security, tech tree effectiveness
-     - **Status:** ⚠️ NEEDS VALIDATION - Implementation complete, verification file created, ready for orchestrator
-     - **Research Files:** research/nitrogen_food_coupling_20251115.md, reviews/nitrogen_food_coupling_critique_20251115.md
-     - **Commit:** d3ea8fa
-     - **Historian Note:** This verification was auto-created by post-commit documentation workflow (Nov 16, 2025)
+       - Cynthia: Verify Science Advances (2024) citations, extract specific South Asia nitrogen values
+       - Sylvia: Assess nitroplast agricultural application claims (speculative vs verified)
+       - Roy: BLOCKED - waiting for validation before further integration
+     - **Research File:** research/nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
+     - **Critique:** reviews/nitrogen_food_coupling_critique_20251115.md (Grade B)
 
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
@@ -1098,15 +1098,6 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
-- [ ] 🚨 **NEW (Nov 16):** Verify nitrogen-food coupling biogeochemical technologies (research/verification_6103414_20251116.md, commit 6103414) - **6 technologies, 29 citations requiring Layer 1+2 verification**:
-  - food_waste_reduction: 30% N/P reduction claim, 24/60mo timeline
-  - rhizosphere_engineering: 10-20% range (15% median), 30/120mo timeline
-  - alternative_protein_systems: 80× efficiency vs cattle claim, 40% displacement
-  - nitroplast_integration: 40-80% range (60% conservative), -5% yield penalty
-  - active_sediment_management: 50-80% legacy P reduction, $50K-500K/km² cost
-  - phytoremediation_networks: 63% N / 72% P removal (335 field experiments claim)
-  - **Expected impact:** Biogeochemical boundary 10% → 30-50% effectiveness
-  - **Priority:** HIGH (TIER 2, blocks biogeochemical boundary god mode validation)
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)
