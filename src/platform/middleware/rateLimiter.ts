@@ -272,19 +272,26 @@ export class RateLimiter {
  * Security: Be cautious with X-Forwarded-For - it can be spoofed.
  * Only trust if request comes from known proxy/load balancer.
  */
-function extractIP(req: Request): string {
-  // Trust X-Forwarded-For only if from trusted proxy
-  // In production, validate req.connection.remoteAddress is your load balancer
-  const forwardedFor = req.headers['x-forwarded-for'];
+function extractIP(req: Request, trustedProxies: string[] = []): string {
+  const remoteAddr = req.socket.remoteAddress || 'unknown';
 
-  if (forwardedFor) {
-    // X-Forwarded-For can be comma-separated list, take first (client IP)
-    const ips = (forwardedFor as string).split(',').map(ip => ip.trim());
-    return ips[0];
+  // Only trust X-Forwarded-For if request comes from known proxy
+  const isTrustedProxy = trustedProxies.length === 0 || trustedProxies.includes(remoteAddr);
+
+  if (isTrustedProxy) {
+    const forwardedFor = req.headers['x-forwarded-for'];
+    if (forwardedFor) {
+      const ips = (forwardedFor as string).split(',').map(ip => ip.trim());
+      const firstIp = ips[0];
+      // Validate IP format (IPv4 or IPv6)
+      if (/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(firstIp) || /^[0-9a-f:]+$/i.test(firstIp)) {
+        return firstIp;
+      }
+    }
   }
 
   // Fallback to direct connection IP
-  return req.ip || req.socket.remoteAddress || 'unknown';
+  return remoteAddr;
 }
 
 /**
