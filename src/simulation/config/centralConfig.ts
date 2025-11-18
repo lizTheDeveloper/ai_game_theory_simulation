@@ -391,6 +391,7 @@ export const RATES = {
   // === AI DEVELOPMENT RATES ===
   /**
    * AI capability doubling time (months)
+<<<<<<< HEAD
    * How many months until AI capabilities double
    *
    * @research Cottier et al. (2024) "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
@@ -433,6 +434,37 @@ export const RATES = {
    * @uncertainty Range: 1.26-2.20 (2.4×-4.6× per year from multiple source confidence intervals)
    */
   COMPUTE_GROWTH_RATE: 2.15,
+=======
+   *
+   * @research Sevilla & Roldán (2024) - Training compute growth: 4.1× per year (90% CI: 3.7× to 4.6×)
+   * @research Epoch AI (2024) - Algorithmic efficiency: 2.5× per year (doubles every 9 months)
+   * @research Combined compute scaling (4.1×/yr) + algorithmic efficiency (2.5×/yr) = 10.25× effective compute per year
+   * @value 3.6 - Capabilities double every 3.6 months (2^3.36 ≈ 10.25)
+   *
+   * @note BREAKING CHANGE (Nov 11, 2025): Changed from 12 months (1,024× over 10 years) to 3.6 months (10,000,000,000× over 10 years)
+   * @note This is a 10,000,000× correction based on 14-year empirical data (2010-2024)
+   *
+   * @source https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
+   * @source https://epoch.ai/blog/revisiting-algorithmic-progress
+   * @verification research/ai_scaling_verified_parameters_20251111.md (Grade A)
+   */
+  AI_CAPABILITY_DOUBLING_TIME: 3.6,
+
+  /**
+   * Compute growth rate (natural log scale, per year)
+   *
+   * @research Sevilla & Roldán (2024) - Training compute growth: 4.1× per year (90% CI: 3.7× to 4.6×)
+   * @value 1.41 - ln(4.1) = 1.41 → 4.1× per year
+   *
+   * @note BREAKING CHANGE (Nov 11, 2025): Changed from 1.0 (2× per year) to 1.41 (4.1× per year)
+   * @note Based on 14-year empirical trend (2010-2024), not Moore's Law (which is 2× every 2 years = 1.41× per year)
+   *
+   * @source https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
+   * @confidence HIGH - 14-year dataset, transparent methodology
+   * @verification research/ai_scaling_verified_parameters_20251111.md (Grade A)
+   */
+  COMPUTE_GROWTH_RATE: 1.41,
+>>>>>>> origin/auto/worker-20251115_080001
 
   // === TECH RISK RATES ===
   /**

@@ -492,10 +492,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
       assertStateProperty(
         state.environmentalAccumulation,
         'climateStability',
+<<<<<<< HEAD
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+=======
+        { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
+>>>>>>> origin/auto/worker-20251115_080001
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
@@ -508,10 +512,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
       assertStateProperty(
         state.society,
         'coordinationCapacity',
+<<<<<<< HEAD
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+=======
+        { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
+>>>>>>> origin/auto/worker-20251115_080001
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
@@ -524,10 +532,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
       assertStateProperty(
         state.globalMetrics,
         'economicTransitionStage',
+<<<<<<< HEAD
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+=======
+        { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
+>>>>>>> origin/auto/worker-20251115_080001
       ) / 4.0,
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
@@ -540,10 +552,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
       assertStateProperty(
         state.government,
         'legitimacy',
+<<<<<<< HEAD
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+=======
+        { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
+>>>>>>> origin/auto/worker-20251115_080001
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',

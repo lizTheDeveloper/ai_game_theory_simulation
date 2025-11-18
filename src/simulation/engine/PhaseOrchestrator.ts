@@ -123,6 +123,7 @@ export class PhaseOrchestrator {
   // MEMORY LEAK FIX (Nov 15, 2025): Use Welford's algorithm for O(1) memory per phase
   // Previous: Stored 1000 samples × 95 phases = 760KB per simulation
   // Current: ~120 bytes per phase (6 numbers) = 11KB total for 95 phases
+<<<<<<< HEAD
   /**
    * Maximum step timings to keep.
    * Keeps last 1200 steps = 100 years of simulation.
@@ -130,6 +131,8 @@ export class PhaseOrchestrator {
    */
   private static readonly MAX_STEP_TIMINGS = 1200;
 
+=======
+>>>>>>> origin/auto/worker-20251115_080001
   private phaseTimings: Map<string, {
     totalMs: number;
     callCount: number;
@@ -299,15 +302,19 @@ export class PhaseOrchestrator {
     }
 
     // PERFORMANCE INSTRUMENTATION (Nov 12, 2025): Log step total
-    // MEMORY LEAK FIX (Nov 13, 2025): Sliding window for step timings
+    // MEMORY LEAK FIX (Nov 15, 2025): Sliding window for step timings (100 most recent)
     if (this.enableTiming) {
       const stepElapsed = performance.now() - stepStartTime;
 
-      // Sliding window: keep last MAX_STEP_TIMINGS entries (100 years)
-      // Prevents unbounded memory growth in long-running simulations
+      // Keep only last 100 step timings to prevent memory growth
       this.stepTimings.push({ month: state.currentMonth, totalMs: stepElapsed });
+<<<<<<< HEAD
       if (this.stepTimings.length > PhaseOrchestrator.MAX_STEP_TIMINGS) {
         this.stepTimings = this.stepTimings.slice(-PhaseOrchestrator.MAX_STEP_TIMINGS);
+=======
+      if (this.stepTimings.length > 100) {
+        this.stepTimings.shift();
+>>>>>>> origin/auto/worker-20251115_080001
       }
 
       // Log step summary (minimal overhead)
