@@ -566,29 +566,6 @@ const ALL_TECH: TechDefinition[] = [
     capabilityEffects: {
       dimensions: {
         digital: 0.05,  // Improves data systems
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minCapabilityDimensions: [
-      { dimension: 'digital', threshold: 0.4 },    // IoT sensors, data systems
-      { dimension: 'cognitive', threshold: 0.3 }   // AI optimization
-    ],
-    minEconomicStage: 1.8,
-    minMonth: 12,
-    researchMonthsRequired: 12,
-    researchCost: 250,
-    deploymentCost: 40000,
-    deploymentMonthsRequired: 36,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.28,           // 28% reduction (research-backed)
-      nitrogenUseEfficiency: 0.25,       // Improves NUE from 40% → 50%
-      foodProductivity: 0.05,            // Slight yield INCREASE (overuse removal)
-    },
-    citations: ['Science Advances (2024): Developed nations (France) improved NUE 40% → 58% via precision ag'],
-    capabilityEffects: {
-      dimensions: {
-        cognitive: 0.03,  // Improves AI agricultural optimization
       },
     },
   },
@@ -2484,21 +2461,6 @@ const ALL_TECH: TechDefinition[] = [
       nitrogenReduction: 0.25,  // 25% N input reduction
       cropYieldBonus: 0.15,  // 10-30% yield increase (mid-range)
       waterEfficiency: 0.20,  // Secondary benefit
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minAICapability: 1.5,
-    minEconomicStage: 2.5,
-    researchMonthsRequired: 24,
-    researchCost: 2000,
-    deploymentCost: 80000,
-    deploymentMonthsRequired: 60,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.30,           // 30% demand reduction
-      phosphorusReduction: 0.30,
-      foodSecurityBonus: 0.20,           // Redistribution improves access
-      economicEfficiency: 0.15,
     },
   },
   {
