@@ -1,7 +1,7 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 15, 2025
-**Total Sources**: 175+ peer-reviewed citations
+**Last Updated**: November 16, 2025
+**Total Sources**: 177+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 62% from 2024-2025 (improved with Nov 12 updates)
 
@@ -219,6 +219,15 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Coverage**: 202 countries, 1789-2023
 - **Used for**: Western Liberal paradigm (electoral democracy, civil liberties, rule of law)
 - **Confidence**: VERY HIGH (most comprehensive democracy dataset)
+
+**V-Dem Institute (2025).** *Democracy Report 2025: 25 Years of Autocratization – Democracy Trumped?*
+- **Institution**: University of Gothenburg, Sweden
+- **Dataset**: 31+ million data points, 179 countries, 1789-2024
+- **Experts**: 3,500+ country experts providing coded assessments
+- **Key findings**: Autocracies outnumber democracies for first time in 20+ years (91 vs 88); 12% of global population in liberal democracies (50-year low); 72% under autocratic rule; 45 countries autocratizing; freedom of expression declining in 44 countries (25-year high)
+- **Used for**: Paradigm 1 (Western Liberal) updated thresholds; autocratization wave modeling
+- **Published**: March 2025
+- **Confidence**: VERY HIGH (most comprehensive democracy report globally)
 
 ### Critical Junctures & Institutional Change
 
@@ -580,6 +589,15 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Confidence**: HIGH (50+ year track record)
 
 ### Cultural & Social Data
+
+**Sangha, K. K., Dinku, Y., Costanza, R., & Poelina, A. (2024).** "A comprehensive analysis of well-being frameworks applied in Australia and their suitability for Indigenous peoples." *International Journal of Qualitative Studies on Health and Well-being*, 19(1), 2321646.
+- **DOI**: https://doi.org/10.1080/17482631.2024.2321646
+- **Journal**: Taylor & Francis, peer-reviewed, open access
+- **Authors**: Australian National University, University of Queensland, Boston University, University of Notre Dame (Australia)
+- **Key findings**: Seven interconnected Indigenous wellbeing domains with *Country* (land/environment) as foundational; *Liyan* concept (holistic connection to self, Country, community); Western frameworks omit nature/Country-related attributes and traditional ecological knowledge
+- **Used for**: Paradigm 4 (Indigenous) framework - Country-connection index, Traditional Ecological Knowledge (TEK) vitality, caring-for-Country capabilities, kinship network strength
+- **Published**: March 2024
+- **Confidence**: HIGH (multi-institutional collaboration, Indigenous co-authorship)
 
 **UNESCO (2024).** Linguistic diversity and indigenous population data.
 - **Used for**: Indigenous paradigm cultural preservation tracking (30% weight)

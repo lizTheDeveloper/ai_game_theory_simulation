@@ -181,3 +181,9 @@
 🚶 | Migration/relocation
 🎬 | Scenario event (scenario start/configuration changes)
 ⏭️ | Skip/bypass operation (agent/process skipped)
+
+# Irreversibility & Tipping Points
+🔁 | Positive feedback loop
+⏳ | Recovery time window
+🗣️ | Language/cultural loss
+🦴 | Extinction debt
