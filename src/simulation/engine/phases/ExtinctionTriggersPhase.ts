@@ -49,7 +49,8 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
       return { events: [] };
     }
 
-    // Import and execute extinction trigger detectionconst extinctionCheck = checkExtinctionTriggers(state, rng);
+    // Import and execute extinction trigger detection
+    const extinctionCheck = checkExtinctionTriggers(state, rng);
 
     // Validate extinction check result
     assertDefined(extinctionCheck.newExtinctionState, {

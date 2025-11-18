@@ -928,63 +928,6 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       effectivePhosphorus = currentPhosphorusInput;
     }
 
-    // Boundary value = baseline + effective pollution (normalized)
-    // Baseline (2025): 2.94 (almost 3× planetary boundary of 62 Mt N/year)
-    // Effective pollution includes current inputs + legacy releases + atmospheric deposition
-    // Normalize: 10 Mt N/month effective = maintains 2.94 boundary value
-    const EFFECTIVE_TO_BOUNDARY_SCALE = 2.94 / BASELINE_N_INPUT_PER_MONTH;  // ~0.294
-    const biogeochemicalValue = assertFinite(
-      Math.max(0, (effectiveNitrogen + effectivePhosphorus * 2) * EFFECTIVE_TO_BOUNDARY_SCALE),
-      {
-        location: 'updatePlanetaryBoundaries:biogeochemical',
-        valueName: 'biogeochemical_flows.currentValue',
-        month: state.currentMonth,
-        additionalInfo: {
-          reserves,
-          depletion,
-          effectiveNitrogen,
-          effectivePhosphorus,
-          globalFoodProductionIndex
-        }
-      }
-    );
-
-    if (system.legacyNutrientStock) {
-      // Import the update function dynamically to avoid circular dependencies
-      const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
-      const effectivePollution = updateLegacyNutrientStocks(
-        state,
-        currentNitrogenInputMonthly,
-        currentPhosphorusInputMonthly
-      );
-
-      effectiveNitrogen = effectivePollution.effectiveNitrogen;
-      effectivePhosphorus = effectivePollution.effectivePhosphorus;
-    }
-
-    // Normalize to boundary scale
-    // Baseline (2025): 10 Mt N/month + 2.08 Mt P/month = 12.08 Mt/month total → boundary value 2.94
-    // Scaling: 2.94 / 12.08 = 0.243 boundary units per Mt/month
-    const POLLUTION_TO_BOUNDARY_SCALE = 0.243;
-    const effectivePollutionBoundaryValue = (effectiveNitrogen + effectivePhosphorus) * POLLUTION_TO_BOUNDARY_SCALE;
-
-    // Boundary value = effective pollution (includes current inputs + legacy releases)
-    // This creates INERTIA: reducing current inputs helps, but legacy stocks slow recovery dramatically
-    const biogeochemicalValue = assertFinite(Math.max(0, effectivePollutionBoundaryValue), {
-      location: 'updatePlanetaryBoundaries:biogeochemical',
-      valueName: 'biogeochemical_flows.currentValue',
-      month: state.currentMonth,
-      additionalInfo: {
-        reserves,
-        depletion,
-        effectiveNitrogen,
-        effectivePhosphorus,
-        currentNitrogenInputMonthly,
-        currentPhosphorusInputMonthly
-      }
-    });
-    }
-
     // Boundary value calculation
     // Baseline (2025): 2.94 (294% of safe boundary)
     // Scale by effective pollution vs baseline pollution
@@ -999,7 +942,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       location: 'updatePlanetaryBoundaries:biogeochemical',
       valueName: 'biogeochemical_flows.currentValue',
       month: state.currentMonth,
-      additionalInfo: { reserves, depletion, legacyContribution, effectiveNitrogen, effectivePhosphorus }
+      additionalInfo: { reserves, depletion, effectiveNitrogen, effectivePhosphorus }
     });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
@@ -1261,13 +1204,15 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       console.log(`Slow killers (biodiversity/land): ${(slowRisk * 100).toFixed(0)}%`);
       console.log(`Mortality now scales with environmental thresholds`);
       console.log(`Recovery possible with aggressive interventions\n`);
+    }
+
     // Once active, severity scales with blended risk
-    } else if (system.cascadeActive) {
+    if (system.cascadeActive && system.tippingPointRisk >= 0.45) {
       const baseSeverity = Math.pow(Math.max(0, blendedRisk - 0.5) / 0.5, 1.5);
       const stochasticMultiplier = 0.8 + deterministicRandom() * 0.4;
       system.cascadeSeverity = baseSeverity * stochasticMultiplier;
       system.cascadeMultiplier = 1.0 + system.cascadeSeverity;
-  } else if (system.cascadeActive && system.tippingPointRisk < 0.45) {
+    } else if (system.cascadeActive && system.tippingPointRisk < 0.45) {
     // Cascade can REVERSE if risk drops significantly
     system.cascadeActive = false;
     system.cascadeSeverity = 0;
