@@ -374,6 +374,105 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 ---
 
+### 1A. 🔧 **Active Implementation Priorities** (From Research Findings - Nov 18, 2025)
+
+**Source:** 3-phase implementation workflow (`plans/RESEARCH_TO_IMPLEMENTATION_WORKFLOW.md`)
+
+#### **Phase 1: Climate Deployment Timescales** (Weeks 1-2) - READY NOW
+**Priority:** CRITICAL - Implement FIRST (highest impact, lowest complexity, zero dependencies)
+
+**Research Status:** ✅ COMPLETE (Grade A-, 15+ peer-reviewed sources, exact parameters provided)
+- Report: `research/climate_tech_deployment_timescales_20251112.md` (35KB, 4,700 words)
+- Parameters: All 9 climate technologies (activation, scaling, physical response delays)
+
+**Implementation Tasks:**
+1. Create `ClimateDeploymentDelayPhase` with 3-delay model:
+   - Activation delay: 2-15 years (construction/manufacturing before first operation)
+   - Scaling delay: 5-50 years (S-curve adoption, pilot → gigatonne capacity)
+   - Physical response delay: <1 to 100 years (atmospheric CO2 equilibration)
+2. Add deployment tracking to GameState for each climate technology
+3. Update tech effectiveness to scale with deployment progress (0% → 10-30% → 30-80% → 80-100%)
+4. Monte Carlo validation: N≥10 runs, verify month 60 effectiveness increases from 5.5% → ~15%
+
+**Expected Outcome:** Climate effectiveness follows realistic S-curve, explains god mode 5.5% observation
+**Owner:** simulation-maintainer (Roy)
+**Quality Gates:** research-skeptic validation → architecture-skeptic review → priya Monte Carlo
+
+---
+
+#### **Phase 2: AI Coordination & Transition Management** (Weeks 3-4) - RESEARCH GAP
+**Priority:** CRITICAL - Resolves god mode interpretation gap (30% mortality finding)
+
+**Research Status:** 🔴 GAP IDENTIFIED - Research needed before implementation
+- Context: God mode 30% mortality = chaos deployment (instant, uncoordinated)
+- Gap: We model "tech unlock" not "AI-managed rollout coordination"
+- Need: Peer-reviewed sources on transition mortality (coerced vs coordinated), coordination mechanisms
+
+**Research Tasks (BLOCKING IMPLEMENTATION):**
+1. Find empirical studies on transition mortality rates:
+   - Coerced transitions (Great Leap Forward, USSR collectivization)
+   - Coordinated transitions (Marshall Plan, managed economies)
+   - AI-coordinated scenarios (theoretical frameworks)
+2. Research AI coordination mechanisms for technology deployment:
+   - Regional capacity assessment
+   - Deployment pacing algorithms
+   - Transition support systems (UBI, retraining, healthcare)
+3. Quantify safety net effectiveness during rapid economic change
+
+**Implementation Tasks (After Research Complete):**
+1. Create `CoordinatedDeploymentPhase` - AI-managed tech rollout
+2. Add deployment scheduling (assess regional capacity, pace deployment)
+3. Model transition support systems (mortality scales with support quality)
+4. Compare: immediate deployment vs coordinated vs gradual
+5. Monte Carlo validation: Verify coordinated god mode reduces mortality from 30% → <5%
+
+**Expected Outcome:** God mode reinterpreted as "coordinated deployment" not "chaos"
+**Owner (Research):** super-alignment-researcher (Cynthia) + research-skeptic (Sylvia) validation
+**Owner (Implementation):** simulation-maintainer (Roy) after research complete
+
+---
+
+#### **Phase 3: Novel Entities Paradigm Shift** (Weeks 5-8) - READY WITH CONDITIONS
+**Priority:** HIGH - Most complex (4 subsystems + 6 new technologies)
+
+**Research Status:** ✅ COMPLETE (Grade B+, conditional approval, HIGH UNCERTAINTY flagged)
+- Report: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
+- Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
+- Conditions: Monte Carlo sensitivity analysis required, uncertainty parameters flagged
+
+**Implementation Tasks:**
+1. **Energy-Constrained Cleanup:**
+   - Gate cleanup effectiveness by `renewableEnergySurplus`
+   - Add `energyRequirement` per tech (0.2-66× GDP for PFAS cleanup)
+   - Effectiveness = f(available_energy, contamination_concentration)
+
+2. **Irreversibility Flags:**
+   - Add `irreversibleFraction` property (0.80-0.95 for PFAS, validated by atmospheric distribution)
+   - Model asymptotic approach (never reaches zero, like extinctions)
+   - Legacy contamination persists on human timescales
+
+3. **Rebound Effects (Jevons Paradox):**
+   - Cleanup tech increases production rate (moral hazard)
+   - Net effectiveness = cleanup_rate - induced_production_increase
+   - Add `reboundFactor` parameter (0.5-0.9, HIGH UNCERTAINTY)
+
+4. **6 New Prevention Technologies:**
+   - TIER 0-1: Global PFAS production ban, plastic phase-out 80%, chemical substitution
+   - TIER 2-3: Membrane cascade systems, biomimetic filtration, photocatalytic degradation
+   - Prevention dominates cleanup 10-100× (Montreal Protocol model)
+
+5. **Monte Carlo Sensitivity Analysis (REQUIRED):**
+   - Test irreversibleFraction: 0.80, 0.875, 0.95
+   - Test reboundFactor: 0.5, 0.7, 0.9
+   - Test timelagYears: 10, 20, 30
+   - Verify effectiveness increases from 0% → measurable (even if small)
+
+**Expected Outcome:** Novel Entities shows non-zero improvement, prevention >> cleanup
+**Owner:** simulation-maintainer (Roy) for core mechanics + feature-implementer (Moss) for 6 new techs
+**Quality Gates:** Monte Carlo sensitivity analysis (priya) → research validation (sylvia) → architecture review
+
+---
+
 ### 2. 🎮 [Simulation Roadmap](./SIMULATION_ROADMAP.md)
 **All simulation engine work** - mechanics, systems, features, AI agents, environmental systems, crises, etc.
 
