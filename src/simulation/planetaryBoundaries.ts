@@ -233,12 +233,21 @@ export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): Planetar
     timescaleYears: 100,
     extinctionContribution: 0.10,
     tippingPointRisk: 0.15,
+<<<<<<< HEAD
     // === IRREVERSIBILITY FRAMEWORK (Nov 16, 2025) ===
     // Research: Cousins et al. (2022), Sörengård et al. (2024)
     irreversible: true,                    // PFAS atmospheric distribution is permanent (Cousins 2022)
     recoveryHalfLife: 75,                  // 50-100 year range (Montreal Protocol analog)
     minimumAsymptoticValue: 0.15,          // Never reaches zero (15% floor from background contamination)
     legacyStock: 46000,                    // metric tons (accumulated PFAAs from Persson 2022)
+=======
+
+    // Irreversibility properties (Nov 16, 2025)
+    // Research: novel_entities_irreversibility_20251116.md
+    practicallyIrreversible: true,         // PFAS C-F bonds persist for centuries
+    decayHalfLife: 500,                    // Years (Cousins et al. 2022)
+    atmosphericTransport: true,            // 99% of cleanup rains back down globally
+>>>>>>> origin/auto/worker-20251116_170001
   };
 
   // 7. OCEAN ACIDIFICATION - Just breached Sept 2025!
@@ -821,16 +830,22 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/auto/worker-20251116_170001
     // TIER 2 HIGH: Update legacy nutrient stocks and nitrogen-food coupling
     // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
     // Nitrogen-food coupling: reducing nitrogen hurts crop yields (regional nonlinear penalties)
     let effectiveNitrogen = 0;
     let effectivePhosphorus = 0;
     let globalFoodProductionIndex = 1.0;
+<<<<<<< HEAD
 
     // 2025 baseline: 120 Mt N/year = 10 Mt N/month, 25 Mt P/year = 2.08 Mt P/month
     const BASELINE_N_INPUT_PER_MONTH = 10;  // Mt N/month
     const BASELINE_P_INPUT_PER_MONTH = 2.08; // Mt P/month
+=======
+>>>>>>> origin/auto/worker-20251116_170001
 
     if (system.legacyNutrientStock) {
       // Import update functions dynamically to avoid circular dependencies
@@ -861,6 +876,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       const effective = updateLegacyNutrientStocks(state, currentNInput, currentPInput);
       effectiveNitrogen = effective.effectiveNitrogen;
       effectivePhosphorus = effective.effectivePhosphorus;
+<<<<<<< HEAD
     } else {
       // No legacy tracking - inputs scale with depletion
       const currentNitrogenInput = BASELINE_N_INPUT_PER_MONTH * (1 - depletion);
@@ -1019,6 +1035,24 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       }
     });
 >>>>>>> origin/auto/worker-20251116_160001
+=======
+
+      // Legacy releases are in Mt/month - normalize to boundary scale
+      // Baseline (2025): ~120 Mt N/year current input, ~30 Mt/year from legacy stocks = 25% legacy contribution
+      // At boundary value 2.94, legacy contributes ~0.75 to boundary value
+      const LEGACY_SCALING_FACTOR = 0.025;  // Calibrated to match Lake Erie case (50% internal loading)
+      legacyContribution = (effectiveNitrogen + effectivePhosphorus - currentNInput - currentPInput) * LEGACY_SCALING_FACTOR;
+    }
+
+    // Boundary value = baseline depletion + legacy contribution
+    // This means: reducing current inputs helps, but legacy stocks slow recovery dramatically
+    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 + depletion * 0.5 + legacyContribution), {
+      location: 'updatePlanetaryBoundaries:biogeochemical',
+      valueName: 'biogeochemical_flows.currentValue',
+      month: state.currentMonth,
+      additionalInfo: { reserves, depletion, legacyContribution, effectiveNitrogen, effectivePhosphorus }
+    });
+>>>>>>> origin/auto/worker-20251116_170001
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);

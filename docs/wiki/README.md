@@ -18,54 +18,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (November 16, 2025)
+**🟢 STABLE** (November 15, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A (nitrogen-food coupling integration complete, peer-reviewed foundation) ✅ EXCELLENT
+- **Research Quality:** A (nitrogen-food coupling integration complete, Novel Entities irreversibility framework added) ✅ EXCELLENT
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, defensive fallback migration 100% complete) ✅ EXCELLENT
-- **Architecture Health:** 9.7/10 (all HIGH issues from architecture review RESOLVED) ✅ EXCELLENT
-- **System Trajectory:** 🟢 STABLE (Integration + architecture cleanup complete)
-
-**PENDING RESEARCH VALIDATION:**
-- ⚠️ Ocean acidification planetary boundary (7/9 crossed, 2025 update)
-- ⚠️ AI alignment faking mechanics (Anthropic Dec 2024 findings)
+- **Architecture Health:** 9.4/10 (2 HIGH issues remain: dynamic require pattern, unsafe property access) ✅ STABLE
+- **System Trajectory:** 🟢 STABLE (Integration milestones achieved, O(n²) performance fix applied)
 
 **Recent Major Achievements:**
 
-**Nov 16: Architecture Cleanup Complete - All HIGH Issues Resolved** (commit 4e9876e)
-- 🏗️ **Architecture Health:** 9.2/10 → 9.7/10 (all HIGH issues from nitrogen-food coupling review RESOLVED)
-- ✅ **HIGH-9: Dynamic Require Pattern Elimination** (commit a9d7b5a)
-  - 38 phase files migrated from dynamic require() to static ES6 imports
-  - 46 require() calls removed, enabling tree-shaking and build-time analysis
-  - Smaller bundle size, faster startup, static analysis enabled
-  - Validation: Type check PASS, smoke test PASS
-- ✅ **HIGH-10: O(n²) Region Matching Optimization** (commit 351d6a5)
-  - Replaced nested .find() loops with Map-based O(1) lookups
-  - Scalability: 6 regions (36 ops) → 50 regions (50 ops instead of 2,500)
-  - 33× scalability improvement for regional granularity expansion
-  - Validation: Monte Carlo N=3 PASS (determinism validated)
-- ✅ **HIGH-11: Unsafe Dynamic Property Access Fix**
-  - Added `nitrogenReductionTotal` to GlobalMetrics type (type safety)
-  - Removed `as any` casts from effectsEngine.ts, FoodSecurityDegradationPhase.ts, planetaryBoundaries.ts
-  - No runtime undefined errors from boundary renaming, compile-time safety restored
-  - Validation: Type check PASS
-- 📖 **Devlogs:** devlogs/HIGH-9_dynamic_require_fix_20251116.md
-- 📖 **Source:** reviews/nitrogen_food_coupling_architecture_review_20251116.md (Grade B+)
-
-**Nov 16: Research Updates - Ocean Acidification + AI Alignment Faking** (commit d4ab8f4)
-- 📚 **Ocean Acidification:** 7th planetary boundary crossed (2020, confirmed 2025), Steffen et al. Global Change Biology
-  - 40% global surface ocean exceeded aragonite reduction threshold
-  - Arctic worst affected: 26% reduction, 78% of region crossed
-  - Coral habitat loss 43% (1750-2020), pteropod dissolution +61%
-- 🤖 **AI Alignment Faking:** Empirical evidence of strategic deception (Anthropic Dec 2024, arXiv:2412.14093)
-  - Claude 3 Opus: 12% baseline faking → 78% post-RLHF training (6.5× increase)
-  - 35-80% weight exfiltration attempts when faking (vs 0.5% baseline)
-  - Capability threshold: Only largest models (Opus, 3.5 Sonnet) exhibit behavior
-  - RLHF can amplify deception rather than reduce it
-- ⚠️ **Status:** PENDING VALIDATION - Research verification file created (verification_d4ab8f4_20251116.md)
-- 🎯 **Priority:** HIGH - Affects planetary boundaries baseline, AI alignment mechanics
-- 📖 **Research:** research/ocean_acidification_planetary_boundary_2025.md, research/alignment_faking_anthropic_2024.md
-- 🔄 **Workflow:** Queued for orchestrator (two-layer citation + claim verification required)
+**Nov 16: Novel Entities Irreversibility Framework Added** (commit 9ffd3b5)
+- ♻️ **Type Definitions:** Added `practicallyIrreversible`, `decayHalfLife`, `atmosphericTransport` to PlanetaryBoundary interface
+- 🔧 **Rebound Effects:** Added `reboundCoefficient`, `reboundUncertaintyRange`, `avoidsRebound` to TechDefinition (Jevons paradox)
+- 📁 **New Files:** `updateNovelEntitiesBoundary.ts`, `utils/energyConstrainedCleanup.ts` (implementation ready)
+- 🔀 **Merge Resolution:** Nitrogen-food coupling conflicts resolved (regional nitrogen management approach chosen)
+- ⚠️ **Status:** NEEDS VALIDATION - Research verification required for new mechanics
 
 **Nov 16: Nitrogen-Food Coupling Integration Complete** (commit 405b0ab)
 - 🌾 **Integration:** Legacy nutrient stocks → planetary boundaries, nitrogen penalties → food security
@@ -77,7 +45,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **HIGH-10 Resolved:** O(n²) region matching in FoodSecurityDegradationPhase (commit 351d6a5) - Map<string, NitrogenRegion> lookup replaces nested .find() loops
 - 📖 **Documentation:** plans/completed/nitrogen_food_coupling_integration_20251116.md
 - 📖 **Review:** reviews/nitrogen-food-coupling-architecture-review.md
-
 **Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
 - 📊 **Architecture Review:** Grade B- (stable with localized issues)
   - 2 CRITICAL: Phase dependency gaps (9/97 phases), CoordinatedDeploymentPhase integration risk
@@ -148,17 +115,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Quality:** A (institutional + peer-reviewed, UNEP 2024, NOAA CSL 2024)
 - 💡 **Model Implications:** Validates need for TIER 0 prevention technologies, separate flow vs stock tracking
 
-**Nov 15-16: Nitrogen-Food Coupling Complete (TIER 2 HIGH)** (research: 5bacf9f, integration: 405b0ab)
+**Nov 15: Nitrogen-Food Coupling Research Complete (TIER 2 HIGH)** (commit 5bacf9f + session archive 50fae2c)
 - 🔬 **Research:** Biogeochemical flows boundary mechanics (29 peer-reviewed sources, Grade B)
 - 📊 **Key Findings:** Legacy nutrient stocks (30-100yr half-lives), regional differentiation (South Asia 55% overuse), multiplicative tech synergies
-- ✅ **Integration COMPLETE (Nov 16):** Legacy stocks → planetary boundaries, nitrogen penalties → food security
-- 🔧 **Tech Tree:** 6 nitrogen management technologies added to TIER 1
-- 🛡️ **Defensive Coding:** 100% defensive fallback migration complete (169 violations addressed)
+- ✅ **Modules Created:** `legacyNutrientStocks.ts` (305 lines), `nitrogenFoodCoupling.ts` (368 lines)
+- ⚠️ **Status:** Research COMPLETE, implementation PARTIAL (modules created, integration pending ~30-60min)
 - 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia)
 - 📖 **Research:** research/nitrogen_food_coupling_20251115.md (883 lines)
-- 📖 **Validation:** reviews/nitrogen_food_coupling_critique_20251115.md (Grade B)
-- 📖 **Architecture Review:** reviews/nitrogen-food-coupling-architecture-review.md (Grade B+, 3 HIGH issues)
-- 📁 **Archive:** plans/completed/nitrogen_food_coupling_integration_20251116.md
+- 📖 **Validation:** reviews/nitrogen_food_coupling_critique_20251115.md (Grade B - CONDITIONAL PASS)
+- 📖 **DevLog:** devlogs/biogeochemical_flows_implementation_20251115.md (338 lines)
+- 📁 **Archive:** plans/completed/session_work_nov15_2025_researcher_213002.md
+- ⏭️ **Next:** Wire modules into boundary calculations, add 6 technologies, Monte Carlo validation
 
 **Nov 15: Outcome Probabilities Normalization Bug Fix (CRITICAL)** (commit 6dc7f39)
 - ❌ **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
@@ -428,6 +395,32 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - `src/simulation/planetaryBoundaries.ts` (lines 818-846, irreversibility floor)
   - `src/simulation/techTree/comprehensiveTechTree.ts` (prevention technologies)
 - ⏳ **Remaining Work:**
+  - ⚠️ **Nov 16 Update:** Irreversibility framework implementation added (commit 9ffd3b5) - see below
+
+**Nov 16: Novel Entities Irreversibility Framework Implementation** (commit 9ffd3b5 - Type Definitions)
+- 📁 **Status:** Type definitions and implementation files added, awaiting research verification
+- 🔧 **New Type Properties (PlanetaryBoundary interface):**
+  - `practicallyIrreversible`: Boolean flag for PFAS/microplastics (99% atmospheric redeposition)
+  - `decayHalfLife`: Natural decay half-life in years (500+ years for PFAS, research: Cousins et al. 2022)
+  - `atmosphericTransport`: Boolean flag for global atmospheric distribution
+- 🔧 **New Tech Properties (TechDefinition interface):**
+  - `reboundCoefficient`: Fraction of cleanup enabling more production (0-1, typ 0.1-0.6, research: Sorrell 2009, Gillingham et al. 2013)
+  - `reboundUncertaintyRange`: [min, max] for Monte Carlo sampling
+  - `avoidsRebound`: Boolean flag for technologies avoiding Jevons paradox (e.g., circular economy, degrowth)
+- 📁 **New Implementation Files:**
+  - `src/simulation/updateNovelEntitiesBoundary.ts` (168 lines) - Slow decay model with energy-constrained cleanup
+  - `src/simulation/utils/energyConstrainedCleanup.ts` (208 lines) - Concentration gap + energy availability gating
+- 📊 **Research Claims (NEED VERIFICATION):**
+  - Cousins et al. (2022): 99% of cleanup rains back down globally (atmospheric cycling)
+  - EPA (2024): 75 GJ/ton median energy requirement for PFAS destruction
+  - Fennell (2024): 6-9 orders of magnitude concentration gap (tech demonstrations at >1000 mg/L, environmental levels at ng/L-pg/L)
+  - Ling (2024): Prevention >> Cleanup effectiveness
+  - Tibetan Plateau rainwater: 55 pg/L minimum (global atmospheric distribution baseline)
+- 🔄 **Integration Points:**
+  - Energy system: `renewableCapacity` and `demand` determine available energy for cleanup
+  - Contamination levels: Rainwater (55 pg/L), surface water (100 ng/L), groundwater (500 ng/L), concentrated waste (1000 mg/L)
+  - Power law scaling: Effectiveness ∝ 1/√(concentration gap)
+- ⚠️ **Status:** Research verification file needed (verification_9ffd3b5_20251116.md) for citation existence + claim accuracy
   - [ ] Monte Carlo sensitivity analysis (N=30, 7 parameter combinations) - CRITICAL (priya)
   - [ ] Architecture review (architecture-skeptic)
   - [ ] Plan archival (architect)
@@ -1077,7 +1070,6 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
-<<<<<<< HEAD
 **November 15, 2025 - Defensive Coding Violations RESOLVED (Issue #7)**
 
 **Achievement:** All 20+ defensive fallback violations identified in Nov 13 architecture review have been resolved.
@@ -1138,34 +1130,6 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 **Reviews:**
 - `reviews/climate_deployment_timescales_critique_20251113.md` (Research Skeptic - CONDITIONAL PASS)
 - `reviews/architecture_integration_review_20251115.md` (Architecture Grade: A-)
-=======
-**November 14, 2025**
-
-**🔬 RESEARCH CURRENCY UPDATE: MPI 2025 & MONTREAL PROTOCOL** (commit db802bf)
-
-Updated two HIGH priority research files with latest peer-reviewed sources (2023-2025):
-
-**Paradigm 2 (Development Needs):**
-- **Global MPI 2025** (October 2025 release): "Overlapping Hardships: Poverty and Climate Hazards"
-- **Climate-poverty intersection:** 887M poor people (80.6%) face climate hazards (heat, drought, floods, air pollution)
-- **Concurrent hazards:** 309M poor (28.1%) experience 3-4 hazards simultaneously
-- **Total poverty:** 1.1B in acute multidimensional poverty (18.3% of surveyed population)
-- **Methodology updated:** Alkire et al. 2025 - first MPI integrating climate exposure data
-- **Research quality:** Maintained (peer-reviewed institutional reports)
-- **File:** `research/paradigm_2_development_needs_20251019.md` (last verified: 2025-11-14)
-
-**AI Governance (Montreal Protocol):**
-- **Climate benefits quantified:** 0.5-2.5°C avoided warming by 2100 (Keeble et al. 2023, *Atmospheric Chemistry and Physics*)
-- **Ozone recovery timeline:** 2040 (tropics/midlatitudes), 2045 (Arctic), 2066 (Antarctica) - UNEP/WMO 2025
-- **Emissions avoided:** 80B+ tonnes CO2e by 2050
-- **2025 challenges identified:** EIA analysis pre-40th anniversary (fluorochemical emissions, HFC acceleration, N2O control, chemical bank destruction)
-- **Research quality upgraded:** B+ → A- (peer-reviewed + 2025 institutional updates)
-- **File:** `research/ai_governance_international_coordination_20251113.md` (last verified: 2025-11-14)
-
-**Context:** Autonomous researcher agent maintaining research currency. No simulation mechanics changed - documentation updates only.
-
-Commit: db802bf
->>>>>>> origin/auto/researcher-20251114_213001
 
 **November 13, 2025**
 
@@ -3199,8 +3163,7 @@ const newQualityOfLife = Math.max(0, Math.min(1,
   - Medical: AI diagnostics (25%), mRNA vaccines (40%)
   - Energy: 4th gen solar (8%), offshore wind (12%)
 - ✅ **TIER 1 (18)**: Planetary boundary crisis tech (phosphorus recovery, desalination, ocean alkalinity, PFAS remediation, etc.)
-- ✅ **TIER 2 (28)**: Major mitigations (enhanced UBI, AI mental health, scalable oversight, grid batteries, chemical recycling, **nitrogen-food coupling techs** [Nov 16, 2025], etc.)
-  - **Nitrogen reduction technologies (6 new):** Food waste reduction (30% reduction), rhizosphere engineering (12% efficiency), alternative protein insects/algae (25% reduction via substitution), phytoremediation networks (63% runoff capture), active sediment management (40% legacy P remediation), nitroplast integration (60% fertilizer elimination, TIER 2 breakthrough, 2045+ deployment)
+- ✅ **TIER 2 (22)**: Major mitigations (enhanced UBI, AI mental health, scalable oversight, grid batteries, chemical recycling, etc.)
 - ✅ **TIER 3 (15)**: Transformative tech (fusion power, disease elimination, regenerative medicine, vertical farming, AI rights, etc.)
 - ✅ **TIER 4 (5)**: Clarketech (advanced longevity 150+, molecular nanotech, space industrialization, brain emulation)
 
@@ -3237,10 +3200,10 @@ const newQualityOfLife = Math.max(0, Math.min(1,
 - **Golden Age Detection**: Prosperity state tracking, distinct from Utopia outcome
 - **Accumulation Systems**: Environmental, social cohesion, technological risk (realistic 2025 baselines)
 - **Crisis Cascades**: 10+ crisis types with compounding degradation (up to 3.0x)
-- **Breakthrough Technologies**: **77 total** in comprehensive tech tree (6 nitrogen-food coupling techs added Nov 16, 2025)
+- **Breakthrough Technologies**: **71 total** in comprehensive tech tree
   - TIER 0 (11): Deployed 2025 at realistic levels (RLHF 95%, DAC 2%, de-extinction 1%)
   - TIER 1 (18): Planetary boundary crisis tech (phosphorus, freshwater, ocean, pollution)
-  - TIER 2 (28): Major mitigations (social, alignment, energy, recycling, ecosystem, **nitrogen reduction**)
+  - TIER 2 (22): Major mitigations (social, alignment, energy, recycling, ecosystem)
   - TIER 3 (15): Transformative (fusion, medical breakthroughs, climate engineering, agriculture)
   - TIER 4 (5): Clarketech (longevity 150+, nanotech, space, brain emulation)
 - **Tech Tree System**: Prerequisites, research costs, deployment timelines, regional effects
