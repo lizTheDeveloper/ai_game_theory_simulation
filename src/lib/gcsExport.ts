@@ -16,8 +16,12 @@
  * - Logs are exported to: gs://{bucket}/llm-logs/{simulationId}/{timestamp}.jsonl
  */
 
-import { Storage, Bucket, File } from '@google-cloud/storage';
 import { eventDatabase, type LLMInferenceLog } from './eventDatabase';
+
+// Type stubs for @google-cloud/storage (optional dependency)
+type Storage = any;
+type Bucket = any;
+type File = any;
 
 /**
  * Export configuration
@@ -159,13 +163,21 @@ export async function exportLLMLogsToGCS(
       message: 'Uploading to Google Cloud Storage...'
     });
 
-    // Initialize GCS client
+    // Initialize GCS client (dynamic import for optional dependency)
+    let StorageClass: any;
+    try {
+      const gcsModule = await import('@google-cloud/storage' as any);
+      StorageClass = gcsModule.Storage;
+    } catch (error) {
+      throw new Error('❌ @google-cloud/storage package not installed. Install with: npm install @google-cloud/storage');
+    }
+
     const storageOptions: any = {};
     if (projectId) storageOptions.projectId = projectId;
     if (keyFilename) storageOptions.keyFilename = keyFilename;
     if (credentials) storageOptions.credentials = credentials;
 
-    const storage = new Storage(storageOptions);
+    const storage = new StorageClass(storageOptions);
     const bucket = storage.bucket(bucketName);
 
     // Generate GCS path: llm-logs/{simulationId}/{timestamp}.jsonl
@@ -282,13 +294,24 @@ export async function verifyGCSAccess(config: ExportConfig): Promise<{
   try {
     const { bucketName, projectId, keyFilename, credentials } = config;
 
-    // Initialize GCS client
+    // Initialize GCS client (dynamic import for optional dependency)
+    let StorageClass: any;
+    try {
+      const gcsModule = await import('@google-cloud/storage' as any);
+      StorageClass = gcsModule.Storage;
+    } catch (error) {
+      return {
+        accessible: false,
+        error: '@google-cloud/storage package not installed. Install with: npm install @google-cloud/storage'
+      };
+    }
+
     const storageOptions: any = {};
     if (projectId) storageOptions.projectId = projectId;
     if (keyFilename) storageOptions.keyFilename = keyFilename;
     if (credentials) storageOptions.credentials = credentials;
 
-    const storage = new Storage(storageOptions);
+    const storage = new StorageClass(storageOptions);
     const bucket = storage.bucket(bucketName);
 
     // Check if bucket exists
