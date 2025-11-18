@@ -455,7 +455,15 @@ export function startModelTraining(
   // === SIDE EFFECT: LAYOFFS SLOW AI TRAINING ===
   // Fewer engineers → longer training runs (coordination overhead, slower debugging)
   // NOTE: workforceMultiplier is genuinely optional (only set when org takes distress measures)
-  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
+  const workforceMultiplier = assertFinite(
+    org.workforceMultiplier !== undefined ? org.workforceMultiplier : 1.0,
+    {
+      location: 'startAITrainingProject',
+      valueName: 'workforceMultiplier',
+      month: state.currentMonth,
+      additionalInfo: { orgId: org.id }
+    }
+  );
   if (workforceMultiplier < 1.0) {
     // 10% layoffs → +5% training time
     // 30% layoffs → +15% training time
@@ -882,8 +890,24 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // Layoffs reduce workforce → lower payroll (45% of base expenses)
   // R&D cuts reduce research budget (20% of base expenses)
   // NOTE: These are genuinely optional (only set when org takes distress measures)
-  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
-  const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;
+  const workforceMultiplier = assertFinite(
+    org.workforceMultiplier !== undefined ? org.workforceMultiplier : 1.0,
+    {
+      location: 'calculateOrganizationExpenses',
+      valueName: 'workforceMultiplier',
+      month: state.currentMonth,
+      additionalInfo: { orgId: org.id }
+    }
+  );
+  const rdBudgetMultiplier = assertFinite(
+    org.rdBudgetMultiplier !== undefined ? org.rdBudgetMultiplier : 1.0,
+    {
+      location: 'calculateOrganizationExpenses',
+      valueName: 'rdBudgetMultiplier',
+      month: state.currentMonth,
+      additionalInfo: { orgId: org.id }
+    }
+  );
 
   const payrollExpenses = baseExpenses * 0.45;
   const rdExpenses = baseExpenses * 0.20;
