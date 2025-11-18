@@ -43,11 +43,54 @@ interface SimulationMetadata {
   aiCapability: number;          // Average AI capability (for display)
 }
 
+/**
+ * LLM Inference Log for audit trail and analytics
+ */
+interface LLMInferenceLog {
+  // Identity
+  id: string;                    // Unique: `${simulationId}_${month}_${agentId}_${timestamp}`
+  simulationId: string;          // Group by simulation run
+
+  // Timing
+  timestamp: number;             // Real-world Unix timestamp (ms)
+  month: number;                 // Simulation month
+  durationMs: number;            // API call duration
+
+  // Agent Context
+  agentId: string;               // AI agent ID
+  agentName: string;             // AI agent name
+  agentCapability: number;       // Capability at time of call
+  agentAlignment: number;        // Alignment at time of call
+  triggerReason: string;         // 'scheduled' | 'threshold' | 'crisis' | 'initial'
+
+  // Request Data
+  requestPrompt: string;         // Full context string sent to LLM
+  requestBody: object;           // Full request JSON (messages, tools, temperature, etc.)
+  provider: string;              // 'lm-studio' | 'openai' | 'anthropic'
+  modelName: string;             // Model identifier (e.g., "qwen3-32b")
+
+  // Response Data
+  responseBody: object;          // Full response JSON
+  tokensUsed: number;            // Token count from response
+  weights: object;               // Parsed weights from tool call
+  reasoning: string;             // LLM's reasoning text
+
+  // Error Handling
+  error?: string;                // Error message if call failed
+  usedFallback: boolean;         // True if fallback weights were used
+
+  // GCS Export Tracking
+  exportedToGCS: boolean;        // Has this been exported?
+  exportTimestamp?: number;      // When it was exported
+  gcsPath?: string;              // GCS blob path
+}
+
 const DB_NAME = 'simulation_events';
-const DB_VERSION = 2;  // Incremented for new object stores
+const DB_VERSION = 3;  // Incremented for llm_inference_logs store
 const STORE_NAME = 'events';
 const SIMULATIONS_STORE = 'simulations';
 const METADATA_STORE = 'simulation_metadata';
+const LLM_LOGS_STORE = 'llm_inference_logs';
 
 // Semantic versioning for simulation state schema
 const SIMULATION_STATE_VERSION = '1.0.0';
@@ -225,6 +268,24 @@ class EventDatabase {
           metadataStore.createIndex('lastUpdated', 'lastUpdated', { unique: false });
 
           console.log('[EventDB] Simulation metadata object store created');
+        }
+
+        // Create llm_inference_logs object store (v3+)
+        if (oldVersion < 3 && !db.objectStoreNames.contains(LLM_LOGS_STORE)) {
+          const llmLogsStore = db.createObjectStore(LLM_LOGS_STORE, { keyPath: 'id' });
+
+          // Index by simulationId for querying logs by simulation run
+          llmLogsStore.createIndex('simulationId', 'simulationId', { unique: false });
+          // Index by agentId for querying logs by agent
+          llmLogsStore.createIndex('agentId', 'agentId', { unique: false });
+          // Index by timestamp for chronological queries
+          llmLogsStore.createIndex('timestamp', 'timestamp', { unique: false });
+          // Index by exportedToGCS for finding unexported logs
+          llmLogsStore.createIndex('exportedToGCS', 'exportedToGCS', { unique: false });
+          // Composite index: simulationId + month for efficient filtering
+          llmLogsStore.createIndex('simId_month', ['simulationId', 'month'], { unique: false });
+
+          console.log('[EventDB] LLM inference logs object store created with indexes');
         }
       };
     });
@@ -878,11 +939,233 @@ class EventDatabase {
 
     return { canSave: true, percentUsed: wouldUsePercent };
   }
+
+  // ========================================================================
+  // LLM Inference Logging Methods
+  // ========================================================================
+
+  /**
+   * Add LLM inference log to database
+   *
+   * @param log - LLM inference log entry
+   */
+  async addLLMLog(log: LLMInferenceLog): Promise<void> {
+    await this.init();
+    if (!this.db) {
+      console.warn('[EventDB] Database not available, skipping LLM log');
+      return;
+    }
+
+    const transaction = this.db.transaction([LLM_LOGS_STORE], 'readwrite');
+    const store = transaction.objectStore(LLM_LOGS_STORE);
+
+    return new Promise((resolve, reject) => {
+      const request = store.put(log); // Use put to allow updates
+      request.onsuccess = () => resolve();
+      request.onerror = () => {
+        console.error('[EventDB] Failed to add LLM log:', request.error);
+        reject(request.error);
+      };
+    });
+  }
+
+  /**
+   * Get LLM inference logs for a simulation run, paginated
+   *
+   * @param simulationId - Simulation run ID
+   * @param limit - Number of logs to fetch (default: 50)
+   * @param offset - Number of logs to skip (default: 0)
+   * @returns Logs in chronological order (oldest first)
+   */
+  async getLLMLogs(
+    simulationId: string,
+    limit: number = 50,
+    offset: number = 0
+  ): Promise<LLMInferenceLog[]> {
+    await this.init();
+    if (!this.db) {
+      console.warn('[EventDB] Database not available');
+      return [];
+    }
+
+    const transaction = this.db.transaction([LLM_LOGS_STORE], 'readonly');
+    const store = transaction.objectStore(LLM_LOGS_STORE);
+    const index = store.index('simulationId');
+
+    const logs: LLMInferenceLog[] = [];
+
+    return new Promise((resolve, reject) => {
+      const request = index.openCursor(IDBKeyRange.only(simulationId));
+      let skipped = 0;
+
+      request.onsuccess = (event) => {
+        const cursor = (event.target as IDBRequest<IDBCursorWithValue>).result;
+
+        if (cursor) {
+          if (skipped < offset) {
+            skipped++;
+            cursor.continue();
+          } else if (logs.length < limit) {
+            logs.push(cursor.value as LLMInferenceLog);
+            cursor.continue();
+          } else {
+            resolve(logs);
+          }
+        } else {
+          resolve(logs);
+        }
+      };
+
+      request.onerror = () => {
+        console.error('[EventDB] Error fetching LLM logs:', request.error);
+        reject(request.error);
+      };
+    });
+  }
+
+  /**
+   * Get count of LLM logs for a simulation
+   *
+   * @param simulationId - Simulation run ID
+   * @returns Count of logs
+   */
+  async getLLMLogCount(simulationId: string): Promise<number> {
+    await this.init();
+    if (!this.db) return 0;
+
+    const transaction = this.db.transaction([LLM_LOGS_STORE], 'readonly');
+    const store = transaction.objectStore(LLM_LOGS_STORE);
+    const index = store.index('simulationId');
+
+    return new Promise((resolve, reject) => {
+      const request = index.count(IDBKeyRange.only(simulationId));
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  /**
+   * Get unexported LLM logs (not yet sent to GCS)
+   *
+   * @param limit - Maximum number of logs to fetch (default: 1000)
+   * @returns Logs that haven't been exported to GCS
+   */
+  async getUnexportedLLMLogs(limit: number = 1000): Promise<LLMInferenceLog[]> {
+    await this.init();
+    if (!this.db) {
+      console.warn('[EventDB] Database not available');
+      return [];
+    }
+
+    const transaction = this.db.transaction([LLM_LOGS_STORE], 'readonly');
+    const store = transaction.objectStore(LLM_LOGS_STORE);
+    const index = store.index('exportedToGCS');
+
+    const logs: LLMInferenceLog[] = [];
+
+    return new Promise((resolve, reject) => {
+      const request = index.openCursor(IDBKeyRange.only(false)); // Query exportedToGCS === false
+
+      request.onsuccess = (event) => {
+        const cursor = (event.target as IDBRequest<IDBCursorWithValue>).result;
+
+        if (cursor && logs.length < limit) {
+          logs.push(cursor.value as LLMInferenceLog);
+          cursor.continue();
+        } else {
+          resolve(logs);
+        }
+      };
+
+      request.onerror = () => {
+        console.error('[EventDB] Error fetching unexported LLM logs:', request.error);
+        reject(request.error);
+      };
+    });
+  }
+
+  /**
+   * Mark LLM logs as exported to GCS
+   *
+   * @param logIds - Array of log IDs to mark as exported
+   * @param gcsPath - GCS blob path where logs were exported
+   */
+  async markLLMLogsAsExported(logIds: string[], gcsPath: string): Promise<void> {
+    await this.init();
+    if (!this.db) return;
+
+    const transaction = this.db.transaction([LLM_LOGS_STORE], 'readwrite');
+    const store = transaction.objectStore(LLM_LOGS_STORE);
+    const exportTimestamp = Date.now();
+
+    return new Promise((resolve, reject) => {
+      let processed = 0;
+
+      for (const id of logIds) {
+        const getRequest = store.get(id);
+
+        getRequest.onsuccess = () => {
+          const log = getRequest.result as LLMInferenceLog;
+          if (log) {
+            log.exportedToGCS = true;
+            log.exportTimestamp = exportTimestamp;
+            log.gcsPath = gcsPath;
+            store.put(log);
+          }
+
+          processed++;
+          if (processed === logIds.length) {
+            resolve();
+          }
+        };
+
+        getRequest.onerror = () => {
+          console.error(`[EventDB] Failed to mark log ${id} as exported:`, getRequest.error);
+          processed++;
+          if (processed === logIds.length) {
+            resolve(); // Don't fail entire batch if one log fails
+          }
+        };
+      }
+
+      transaction.onerror = () => reject(transaction.error);
+    });
+  }
+
+  /**
+   * Clear all LLM logs for a simulation
+   *
+   * @param simulationId - Simulation run ID
+   */
+  async clearLLMLogs(simulationId: string): Promise<void> {
+    await this.init();
+    if (!this.db) return;
+
+    const transaction = this.db.transaction([LLM_LOGS_STORE], 'readwrite');
+    const store = transaction.objectStore(LLM_LOGS_STORE);
+    const index = store.index('simulationId');
+
+    return new Promise((resolve, reject) => {
+      const request = index.openCursor(IDBKeyRange.only(simulationId));
+
+      request.onsuccess = (event) => {
+        const cursor = (event.target as IDBRequest<IDBCursorWithValue>).result;
+        if (cursor) {
+          cursor.delete();
+          cursor.continue();
+        } else {
+          resolve();
+        }
+      };
+
+      request.onerror = () => reject(request.error);
+    });
+  }
 }
 
 // Singleton instance
 export const eventDatabase = new EventDatabase();
 
 // Export types and utility functions
-export type { StoredEvent, StoredSimulation, SimulationMetadata };
+export type { StoredEvent, StoredSimulation, SimulationMetadata, LLMInferenceLog };
 export { SIMULATION_STATE_VERSION, isVersionCompatible, parseVersion };

@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@anthropic-ai/claude-code": "^2.0.25",
+    "@google-cloud/storage": "^7.17.3",
     "@lizthedeveloper/government-agents": "file:./packages/government-agents",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
@@ -52,7 +53,7 @@
     "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4",
     "@types/lru-cache": "^7.10.9",
-    "@types/node": "^20",
+    "@types/node": "^20.19.25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

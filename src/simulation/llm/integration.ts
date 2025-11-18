@@ -120,7 +120,7 @@ export async function checkAndUpdateAgentWeights(
 
   // Attempt LLM update
   try {
-    const update = await updateWeightsWithLLM(state, agentId, currentMonth);
+    const update = await updateWeightsWithLLM(state, agentId, currentMonth, check.reason);
     applyWeightUpdate(agent, update, currentMonth, check.reason);
 
     if (state.llmConfig?.logLevel >= 1) {
@@ -351,7 +351,7 @@ export async function initializeAllAgentWeights(
     updatePromises.push(
       (async () => {
         try {
-          const update = await updateWeightsWithLLM(state, agent.id, currentMonth);
+          const update = await updateWeightsWithLLM(state, agent.id, currentMonth, 'initial');
           applyWeightUpdate(agent, update, currentMonth, 'initial');
         } catch (error) {
           // LLM failed - use fallback
