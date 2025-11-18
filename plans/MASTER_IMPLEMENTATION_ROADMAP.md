@@ -1,17 +1,17 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 16, 2025 (Updated: Post-autonomous session worker-20251116_043002)
+**Date:** November 15, 2025 (Updated: End of Autonomous Session)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 16, 2025 - Post-autonomous session)
+**Current Status:** 🟡 **STABLE - ARCHITECTURAL DECISION REQUIRED** (Nov 16, 2025)
 - **Research Quality:** A (peer-reviewed foundation, 29 sources added Nov 15 - nitrogen-food coupling)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, outcome probabilities bug FIXED, biogeochemical modules complete)
-- **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, MEDIUM items remain)
-- **System Trajectory:** IMPROVING - Biogeochemical modules ready for integration, research verification queue cleared
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, outcome probabilities bug FIXED, biogeochemical partial)
+- **Architecture Health:** 🚨 **DECISION REQUIRED** (Defensive fallback migration 12% complete creates dangerous inconsistency)
+- **System Trajectory:** STABLE - But architectural inconsistency must be resolved (complete migration or revert)
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** Biogeochemical integration (30-60 min wiring), awaiting user directive
+- **Active Work:** Biogeochemical integration (30-60 min handoff), **CRITICAL: Defensive fallback architectural decision (Nov 16)**
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -75,17 +75,32 @@
   - **Commits:** 6dc7f398b
   - **Status:** ✅ COMPLETE - Monte Carlo validation unblocked
 
-- 🟡 **DEFENSIVE FALLBACK MIGRATION - 12% COMPLETE** (Nov 15, 2025)
+- 🚨 **DEFENSIVE FALLBACK MIGRATION - ARCHITECTURAL DECISION REQUIRED** (Nov 16, 2025)
+  - **Status:** 🟡 12% COMPLETE (20/169 violations fixed) - **CRITICAL ARCHITECTURAL INCONSISTENCY**
   - **Context:** Architecture review identified 169 defensive fallback violations (`??` and `||`)
   - **Work Completed:** 20/169 violations fixed (CRITICAL + HIGH priority)
   - **Files Modified:** 10 files (EmergencyResponsePhase, OutcomeProbabilitiesPhase, aiSuffering, dystopiaProgression, alignmentDynamics, earlyWarningSystems, centralConfig, PhaseOrchestrator, game.ts, government.ts)
   - **Type Fixes:** 2 optional fields made required (`aiSufferingMetrics`, `government.resources`)
   - **Validation:** Type checking ✅ PASS, Monte Carlo 8/10 runs successful (80%)
-  - **Commits:** 76b05851f
-  - **Documentation:** `logs/defensive_fallback_fix_20251115.md` (290 lines)
-  - **Architecture Feedback:** Partial migration creates inconsistent patterns - recommend complete or revert
-  - **Remaining:** 149 violations (MEDIUM priority code paths)
-  - **Status:** 🟡 PARTIALLY COMPLETE - Decision point: complete remaining 88% or revert for consistency
+  - **Commits:** 76b05851f (initial migration), 36d2862 (architectural analysis)
+  - **Documentation:**
+    - `logs/defensive_fallback_fix_20251115.md` (290 lines)
+    - `reviews/defensive_fallback_architecture_analysis_20251116.md` (280 lines) - **CRITICAL ANALYSIS**
+  - **CRITICAL FINDING (Nov 16):** Partial migration creates **schizophrenic codebase**
+    - Core simulation paths use fail-loudly (good)
+    - Infrastructure uses fail-safely (bad)
+    - Same operations behave differently in different modules
+    - "MEDIUM priority" is MISLEADING - includes simulationWorker (14 violations), multiParadigmAggregator (16), dashboard (30+)
+  - **RECOMMENDATION:** COMPLETE THE MIGRATION (Option 1)
+    - 24 hours effort over 3 days (5 phases: infrastructure → data → LLM/gov → dashboard → validation)
+    - Will expose 10-20 hidden bugs (GOOD - research integrity)
+    - Creates architectural consistency
+    - Aligns with fail-loudly philosophy
+  - **Rejected Alternatives:**
+    - Option 2 (Revert): Wastes validated work, perpetuates hidden bugs
+    - Option 3 (Hybrid): Permanent inconsistency, maintenance nightmare
+  - **Remaining:** 149 violations across 30+ files (simulationWorker, aggregators, dashboard, LLM)
+  - **Status:** 🚨 **DECISION REQUIRED** - "Hidden bugs aren't technical debt, they're scientific fraud"
   - **Archive:** `plans/completed/session_work_nov15_2025.md`
 
 - ✅ **DETERMINISM VERIFICATION COMPLETE** (Nov 14-15, 2025)
@@ -1321,25 +1336,26 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 - **Impact:** Oct 2025 NaN bug pattern ELIMINATED across 97.2% of codebase
 - **Archive:** `/plans/completed/critical_one_assertion_coverage_20251108.md`
 
-**CRITICAL-2: Phase Dependency Declaration Gap** - 🟡 **PARTIALLY COMPLETE** (Nov 15, 2025)
+**CRITICAL-2: Phase Dependency Declaration Gap** - ✅ **RUNTIME VALIDATION COMPLETE** (Nov 16, 2025)
 - **Problem:** Only 30 of 117 phases (25.6%) have declared dependencies
 - **Impact:** 74.4% of phases allow race conditions in state updates, non-deterministic behavior
 - **Risk:** Research reproducibility failure, Monte Carlo invalidity
-- **Status (Nov 15):** Static analysis COMPLETE, runtime validation BLOCKED
-- **Static Fixes (Nov 15):**
+- **Static Analysis (Nov 15):** ✅ COMPLETE
  - 14 phase dependency violations fixed (3855ef080, cb5f2e0cd)
  - 0 static violations remaining (diagnostic tool validation)
  - Files modified: 14 phase files
  - Categories: 2 order violations, 1 readonly missing, 6 nonexistent deps, 5 typos
-- **Runtime Validation Gap (Nov 15):**
- - Blocker: Missing 'adversarial-detection' phase dependency
- - Tool needed: Phase registration validation script
- - Monte Carlo validation BLOCKED until resolved
-- **Baseline:** 30/117 phases (25.6% coverage)
-- **Target:** 80%+ coverage (93+ phases with dependencies)
+- **Runtime Validation (Nov 16):** ✅ COMPLETE
+ - Monte Carlo N=3 runs successful (12 months each)
+ - AIAdversarialDetectionPhase executing correctly (order 27.0)
+ - EnsembleMetaLearningPhase dependency on 'ai-adversarial-detection' resolving correctly
+ - 0 phase dependency violations, 0 NaN errors, 25,067 log lines
+ - Validation script: `scripts/validatePhaseRegistration.ts` (86.7% coverage)
+- **Current Coverage:** 72/83 phases (86.7% have dependencies declared)
+- **Target:** 80%+ coverage ✅ ACHIEVED (target was 80%, actual is 86.7%)
 - **Owner:** simulation-maintainer
-- **Handoff:** `/plans/simulation_maintainer_handoff_20251107.md`
-- **Next Action:** Fix runtime phase dependency validation gap (HIGH priority)
+- **Devlog:** `/devlogs/roy_critical2_already_fixed_20251116.md`
+- **Next Action:** Archive completed work to `/plans/completed/` (architect task)
 
 **HIGH-1: Deep Cloning Performance Bottlenecks** ✅ **COMPLETE** (Nov 7, 2025 - 2h actual, 2.)
 - **Problem:** 18+ instances of JSON.parse(JSON.stringify) in hot paths (actual: 14 instances)
@@ -1463,28 +1479,7 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT - STABLE AND IMPROVING** (Nov 16, 2025 - Autonomous Session)
-
-**Autonomous Session (Nov 16, 2025 - Worker 20251116_043002):**
-- ✅ **BIOGEOCHEMICAL NITROGEN-FOOD COUPLING - MODULES COMPLETE** (TIER 2 HIGH)
-  - Research: 29 peer-reviewed sources (Richardson et al. 2023, Findlay et al. 2025, FAO 2022)
-  - Implementation: 2 new modules (673 lines total)
-    - Legacy nutrient stocks: 30-100 year half-lives, exponential decay (src/simulation/legacyNutrientStocks.ts)
-    - Nitrogen-food coupling: Regional penalties, 3-zone yield curves (src/simulation/nitrogenFoodCoupling.ts)
-  - Validation: N=3 Monte Carlo, zero errors, deterministic
-  - Expected Impact: God mode biogeochemical effectiveness 10% → 30-50%
-  - Status: ⚠️ Integration pending (~30-60 min wiring work)
-  - Commits: a766ad790
-- ✅ **DEFENSIVE FALLBACK MIGRATION STATUS VERIFIED** (100% COMPLETE)
-  - Discovery: Roadmap claimed "12% complete" but actually 100% complete (Nov 15)
-  - Evidence: 20 CRITICAL/HIGH violations fixed, 149 MEDIUM violations documented as acceptable
-  - Remaining fallbacks: Configuration defaults, compatibility layers, UI display (not simulation)
-  - Roadmap updated to reflect accurate status
-- ✅ **RESEARCH VERIFICATION QUEUE PROCESSED** (4 items complete)
-  - All 4 items: CONDITIONAL PASS (nitrogen-food, climate deployment, novel entities, state validation)
-  - Documentation: 950 lines (verification summary, implementation readiness, orchestrator handoff)
-  - Conservative approach: HIGH UNCERTAINTY parameters flagged, sensitivity ranges documented
-- **Archive:** `/plans/completed/autonomous_session_20251116_043002_complete.md`
+**Overall Project Status: 🟢 EXCELLENT - STABLE AND IMPROVING** (Nov 14, 2025 - End of Session)
 
 **End-of-Session Completions (Nov 14, 2025 - Evening):**
 - ✅ **CLIMATE DEPLOYMENT PHASE TYPE ERRORS FIXED** (TIER 1 CRITICAL)
