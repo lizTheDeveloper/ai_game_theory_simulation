@@ -530,6 +530,7 @@ export class SimulationEngine {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     this.orchestrator.registerPhase(new CoordinatedDeploymentPhase());  // TIER 1B (Nov 15, 2025): AI-managed gradual tech deployment (order 16.5)
 =======
     this.orchestrator.registerPhase(new CoordinatedDeploymentPhase());  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
@@ -551,6 +552,10 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new CoordinatedDeploymentPhase());  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
 >>>>>>> origin/auto/researcher-20251115_093001
 >>>>>>> origin/auto/worker-20251117_150001
+=======
+    this.orchestrator.registerPhase(new CoordinatedDeploymentPhase());  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
+>>>>>>> origin/auto/researcher-20251115_093001
+>>>>>>> origin/auto/worker-20251117_160001
     this.orchestrator.registerPhase(new MeaningRenaissancePhase());
     // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
     // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
