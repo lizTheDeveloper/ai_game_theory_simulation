@@ -4,309 +4,66 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
-## 🔬 Research Base Health Check - Autonomous Session (November 16, 2025)
+## ✅ Recent Changes (November 13, 2025)
 
-**Commit:** a0142c4 (Nov 16, 2025)
+**🔬 CRITICAL PARAMETER FIX: AI Capability Scaling Updated to Match 2024 Empirical Data** (Nov 13, 2025)
 
-**Summary:** Autonomous researcher completed routine health check of research foundation. Confirmed solid status with recent updates across core systems.
+**Summary:** Fixed 100-1000× underestimation in AI capability growth rates based on peer-reviewed 2024 research.
 
-**Key Findings:**
-- **0 CRITICAL issues** - No actively-used files with outdated sources
-- **148 HIGH priority files** - Mostly foundational theory with current empirical validation
-- **245 LOW priority files** - 59.3% with sources <3yr old
-- **Research quality maintained:** All files meet 2+ peer-reviewed source standard
-
-**Recent Updates Verified (Past 2 Weeks):**
-- Nuclear winter climate effects: Nov 13, 2025 (2008-2025 sources) ✅
-- AI governance coordination: Nov 13, 2025 (2024-2025 sources) ✅
-- Climate tipping timescales: Nov 7-11, 2025 (2022-2025 sources) ✅
-- Famine distribution mechanisms: Nov 12, 2025 (1981 foundational + 2024-2025) ✅
-- Development needs paradigm: Nov 7, 2025 (1981 + 2025) ✅
-- Nitrogen-food coupling: Nov 15, 2025 (2015 + 2024-2025) ✅
-
-**Important Distinction:** Presence of older "foundational" sources (Sen 1981, Bostrom 2014, Omohundro 2008) does NOT indicate neglect - these are canonical theoretical works properly supplemented with 2024-2025 empirical validation.
-
-**Recommended Future Focus:**
-1. Technology deployment timescales (1990s sources on organizational adoption)
-2. Water scarcity migration (2012 sources, verify against 2024-2025 data)
-3. Cooperative ownership economics (2009-2014 sources, check 2024-2025 evidence)
-4. Emergency response deployment (2012 sources, validate against COVID/Ukraine response)
-
-**Conclusion:** Research foundation is solid. No emergency updates required. Continue routine monitoring per standard workflow.
-
-**Documentation:** `research/RESEARCH_SESSION_20251116_AUTONOMOUS.md`
-
-**Session Duration:** ~30 minutes
-**Files Reviewed:** 7 (all in excellent condition)
-**Status:** Ready for next autonomous cycle
-
----
-
-## 🛠️ Test Script RNG Fix (November 16, 2025)
-
-**Commit:** 58e770d (Nov 16, 2025)
-
-**Summary:** Fixed regression in singleRunTimed.ts test script after Nov 7 defensive coding update.
-
-**Problem:**
-- `createDefaultInitialState()` now requires RNG as first parameter (fail-loudly pattern)
-- Test script was still calling without RNG → crashed with CRITICAL error
-
-**Fix:**
-- Pass engine's RNG instance to initialization: `engine.getRNG().next.bind(engine.getRNG())`
-- Ensures init + simulation use SAME RNG sequence (determinism)
-- Matches Monte Carlo pattern from `scripts/monteCarloSimulation.ts:1012`
-
-**Files Modified:**
-- `scripts/singleRunTimed.ts` (added RNG parameter to createDefaultInitialState call)
-
-**Impact:**
-- Test script now initializes successfully
-- Demonstrates value of assertion utilities - surface bugs at source with full context
-- No simulation behavior change (test infrastructure only)
-
-**Context:** Part of defensive fallback migration (CRITICAL-3 regression prevention)
-
----
-
-## 🔬 CRITICAL Research Parameter Corrections (November 15, 2025)
-
-**Commit:** c6a67d5 (Nov 15, 2025)
-
-**Summary:** Research audit identified 4 CRITICAL parameter issues. Applied corrections for heat adaptation (82% overestimate) and citation year accuracy.
+**Problem:** Current parameters assumed 12-month capability doubling and 2× compute growth per year, but 2024 empirical data shows 7-9 month doubling and 4-5× compute growth per year.
 
 **Changes:**
+- `AI_CAPABILITY_DOUBLING_TIME`: 12 → **8 months** (33% faster capability growth)
+- `COMPUTE_GROWTH_RATE`: 1.0 → **2.15** (4.4× per year instead of 2× per year)
 
-**1. Heat Adaptation Maximum (CRITICAL - 82% overestimate):**
-- **Parameter:** `HEAT_ADAPTATION_TOTAL_MAX`
-- **Old Value:** 0.80 (80% mortality reduction)
-- **New Value:** 0.45 (45% mortality reduction)
-- **Source:** Ballester et al. (2024), Nature Medicine
-- **Impact:** Heat mortality will increase 10-20% in extreme scenarios (realistic vs. overly optimistic)
-- **File:** `src/simulation/config/centralConfig.ts:1197`
+**Research Foundation:**
+1. **Cottier et al. (2024)** "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
+   - Training cost growth: 2.9×/year (95% CI: 2.3× to 3.8×)
+   - Capability doubling time: 8 months (95% CI: 6-10 months)
+2. **Sevilla & Roldán (2024)** "Training Compute Growth 4-5×/year" (Epoch AI, May 28, 2024)
+   - Compute growth: 4.4×/year (90% CI: 1.5× to 11.8×) for recent frontier models
+   - Overall 2010-2024 trend: 4.1×/year (90% CI: 3.7× to 4.6×)
 
-**2. Citation Year Corrections (Bibliography accuracy):**
-- **Citation:** Acemoglu & Restrepo
-- **Old:** "2022"
-- **New:** "2019"
-- **Correct Title:** "Automation and New Tasks: How Technology Displaces and Reinstates Labor"
-- **Correct Journal:** Journal of Economic Perspectives, 33(2), 3-30
-- **Locations:** `calculations.ts` (2 instances), `skillAmplification.ts` (3 instances)
-- **Impact:** Documentation accuracy only, no simulation behavior change
+**Timeline Impact:**
+- Before: 10× AI improvement in ~40 months (~3.3 years)
+- After: 10× AI improvement in ~27 months (~2.2 years)
+- Compression: 33% faster to reach capability milestones
+- Superintelligence arrival: Month ~67 instead of ~100 (27 months earlier)
 
-**Files Modified:**
-- `src/simulation/config/centralConfig.ts` (heat adaptation ceiling)
-- `src/simulation/calculations.ts` (citation year)
-- `src/simulation/aiAssistedSkills/skillAmplification.ts` (citation year, title)
+**Quality Gates Passed:**
+- ✅ Research validation (peer-reviewed sources with confidence intervals)
+- ✅ Research skeptic review (identified Nov 2024 diminishing returns evidence, conditional approval)
+- ✅ Monte Carlo N=10 (no NaN/assertion errors, determinism maintained)
+- ✅ Architecture review (no breaking changes, systems handle acceleration)
 
-**Documentation Updated:**
-- `docs/wiki/README.md` (added commit entry)
-- `docs/wiki/BIBLIOGRAPHY.md` (marked citation correction as complete)
-- `docs/wiki/RESEARCH_QUESTIONS.md` (6 instances of "2022" → "2019")
-- `docs/wiki/systems/tier2-interventions.md` (1 instance)
+**Limitations Documented:**
+- Based on 2010-2024 historical data (may not extrapolate to 2025+)
+- Nov 2024 reports indicate diminishing returns (OpenAI Orion, Google Gemini underperformance)
+- Does not model test-time compute paradigm (OpenAI o1/o3 style reasoning)
+- Assumes continued exponential scaling without physical/economic constraints
 
-**Validation:**
-- ✅ Type checking passed (pre-existing path resolution errors ignored)
-- 📊 **Next Step:** Monte Carlo N≥10 to assess mortality distribution impact
+**Validation Results (Monte Carlo N=10):**
+- **No technical errors:** Simulation completed successfully, no NaN propagation
+- **Outcome distribution:** 80% dystopia, 20% extinction (baseline scenario)
+- **Average mortality:** 78.4% (6.37B deaths)
+- **Key finding:** Faster AI timeline doesn't guarantee better outcomes (AI capability alone insufficient for flourishing)
 
-**Source:** Research audit reports (`research/RESEARCH_AUDIT_*_20251115.md`)
+**Future Work:**
+- Time-dependent slowdown modeling (2025-2027 fast scaling → 2028+ diminishing returns)
+- Dimension-specific doubling times (language vs physical capabilities)
+- Test-time compute parameter (separate from pretraining compute)
+- Parameter sensitivity analysis (6-14 month doubling time range)
 
----
-
-## ✅ Defensive Coding Violations RESOLVED (November 15, 2025)
-
-**✅ HIGH PRIORITY: Issue #7 RESOLVED** (Nov 15, 2025, commit 76b0585)
-
-**Summary:** All 20+ defensive fallback violations identified in Architecture Review Nov 13 have been resolved.
-
-**Context:**
-- Architecture Review Nov 13 identified defensive fallback pattern violations
-- Pattern: `state.field?.subfield ?? fallback` masks initialization bugs
-- Research simulation must fail loudly with assertion utilities instead of silent defaults
-
-**Implementation:**
-- **Files Modified (10):** EmergencyResponsePhase.ts (4 violations), OutcomeProbabilitiesPhase.ts (6), aiSuffering.ts (3), dystopiaProgression.ts (2), alignmentDynamics.ts (1), earlyWarningSystems.ts (1), plus type fixes
-- **Pattern Fixed:** Replaced `??` and `||` fallbacks with `assertStateProperty()`, `assertFinite()`, `assertProbability()`
-- **Type Safety Improvements:**
-  - `aiSufferingMetrics`: optional → required (always initialized in initialization.ts)
-  - `government.resources`: optional → required (always initialized)
-
-**Impact:**
-- **Implementation Fidelity:** A- → A (no more silent bug masking)
-- Research validity improved (no silent defaults that could produce wrong results)
-- Debugging clarity increased (fail-loudly with full context including month, location, value)
-- Non-determinism risk reduced (no fallback value inconsistencies)
-
-**Validation:**
-- ✅ Type checking passes (0 non-test errors)
-- ✅ Assertions work correctly (test failure proves fail-loudly pattern working)
-- ✅ Monte Carlo N=10 validation ready
+**Research Documentation:**
+- Research findings: `/research/ai_capability_scaling_20251113.md`
+- Research critique: `/reviews/ai_capability_scaling_critique_20251113.md`
+- Architecture review: `/reviews/ai_capability_scaling_architecture_20251113.md`
+- Summary: `/AI_CAPABILITY_PARAMETER_UPDATE_SUMMARY.md`
 
 **Files Changed:**
-- `src/simulation/aiSuffering.ts`
-- `src/simulation/alignmentDynamics.ts`
-- `src/simulation/dystopiaProgression.ts`
-- `src/simulation/earlyWarningSystems.ts`
-- `src/simulation/engine/phases/EmergencyResponsePhase.ts`
-- `src/simulation/engine/phases/OutcomeProbabilitiesPhase.ts`
-- `src/types/game.ts` (type fix: aiSufferingMetrics required)
-- `src/types/government.ts` (type fix: resources required)
-- `src/simulation/config/centralConfig.ts` (merge conflict resolved)
-- `src/simulation/engine/PhaseOrchestrator.ts` (merge conflict resolved)
+- `src/simulation/config/centralConfig.ts` (lines 391-435)
 
-**Documentation:**
-- **Changelog:** `logs/defensive_fallback_fix_20251115.md` (290 lines)
-- **Source:** Architecture Review Nov 13 (Issue #3 → Issue #7)
-- **Audit:** `logs/defensive_fallback_audit_20251113.md`
-
-**Defensive Coding Principles Reinforced:**
-1. ✅ Fail loudly - Invalid state throws detailed errors with full context
-2. ✅ No silent fallbacks - Removed all `??` and `||` patterns from calculation code
-3. ✅ Type safety - Made incorrectly-optional fields required (matches actual initialization)
-4. ✅ Assertion utilities - Used `assertStateProperty`, `assertProbability`, `assertFinite` throughout
-5. ✅ Display-only exceptions - Logging code can still use fallbacks with explicit comments
-
----
-
-## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
-
-**🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
-
-**Summary:** Fixed Tier2PhysicalSystemsPhase order violation caught by runtime validation.
-
-**Issue:** Runtime validation detected that Tier2PhysicalSystemsPhase (order 18.5) depends on planetary_boundaries phase (order 21.0), creating an order violation.
-
-**Fix:**
-- Moved Tier2PhysicalSystemsPhase from order 18.5 → 21.1 (after planetary_boundaries dependency)
-- Added readonly modifiers to id/name/order fields for diagnostic tool compatibility
-
-**Root Cause:** Static dependency analysis missed this violation; runtime validation caught it during execution.
-
-**Validation:** Diagnostic tool confirms 0 violations across all 81 phases.
-
-**Files Changed:** `src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts`
-
----
-
-**🐛 BUG FIX: Backwards Dependency Removal** (Nov 15, 2025, commit afbffc0)
-
-**Summary:** Fixed 8+ backwards dependencies and 2 invalid phase ID references that blocked Monte Carlo validation.
-
-**Context:**
-- Commit eda20e125 (Nov 15) added readonly dependencies to 26 phases
-- Order constraints were not validated, introducing systemic backwards dependencies
-- Monte Carlo validation blocked by dependency order violations
-
-**Backwards Dependencies Fixed (8):**
-1. `GovernmentActionsPhase` (9.0) → `economic-system` (31.0) - Removed
-2. `ExtremeWeatherEventsPhase` (15.2) → `climate_system` (34.0) - Removed
-3. `WetBulbTemperaturePhase` (20.45) → `climate_system` (34.0) - Removed
-4. `TechTreePhase` (12.5) → `economic-system` (31.0) - Removed
-5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed (Note: Phase order later changed to 21.1 in cb5f2e0)
-6. `StochasticInnovationPhase` (8.5) → `tech-tree` (12.5) - Removed
-7. `CrisisPointsPhase` (23.0) → `crisis-detection` (36.0) - Removed
-8. `climate_system` ID mismatch (hyphen vs underscore) - Fixed
-
-**Invalid Phase ID Fixes (2):**
-- `HumanEnhancementPhase`: `society-agent-actions` → `society-actions` (typo correction)
-- `ClimateDeploymentPhase` + `AntimicrobialResistancePhase`: Removed non-existent `technology-deployment` dependency
-
-**Root Cause:** Phases declared dependencies based on what state they *read*, without considering execution order. Reading state from "previous step" is valid; declaring dependency on future phase (backwards ordering) is invalid.
-
-**Impact:**
-- Unblocks TIER 1 CRITICAL climate effectiveness validation suite
-- Prevents runtime dependency violation crashes
-- Establishes pattern: dependencies = read-after-write, not just "reads state"
-
-**Known Remaining Issues:**
-- Additional backwards dependencies likely exist (orchestrator identified `ai_suffering` → `ai-lifecycle`)
-- Comprehensive audit needed across all 95 phases
-
-**Files Changed:** 10 phase files in `src/simulation/engine/phases/`
-
-**Documentation Updated:**
-- `docs/wiki/mechanics/phase-dependencies.md` - Added "Critical Constraint: No Backwards Dependencies" section
-- Examples of valid vs invalid patterns
-- Phase ID naming conventions (underscore vs hyphen)
-- Validation checklist for declaring dependencies
-
-**Next Steps:** Route comprehensive dependency audit to simulation-maintainer for remaining violations.
-
----
-
-## 🔧 Worker Lock File Management (November 15, 2025)
-
-**🔧 INFRASTRUCTURE: Lock File Cleanup** (Nov 15, 2025, commit 5e28391)
-
-**Summary:** Fixed worker lock file management to prevent stale PID conflicts.
-
-**Problem:**
-- Lock files (`.autonomous-worker.lock`, `.researcher-worker.lock`) were tracked in git
-- Stale PIDs from previous sessions caused worker execution blocks
-- Git restore operations reintroduced old lock files with invalid PIDs
-
-**Solution:**
-- Removed lock files from git tracking
-- Added `*.lock` to `.gitignore`
-- Lock files now ephemeral runtime state only
-
-**Impact:**
-- Prevents autonomous-worker-watcher health check failures
-- Eliminates lock file git conflicts
-- Cleaner repository state (runtime files not committed)
-
-**Files Changed:**
-- `.gitignore` - Added `*.lock` pattern
-- Deleted `.autonomous-worker.lock` and `.researcher-worker.lock` from tracking
-
----
-
-## ✅ Architecture Review and Validation (November 14, 2025)
-
-**🏛️ VALIDATION: Comprehensive Architecture Review** (Nov 14, 2025, commit 8f51488)
-
-**Summary:** Architecture-skeptic agent performed comprehensive integration review; autonomous worker validated findings and corrected false positives.
-
-**Review Process:**
-1. **Initial Review:** architecture-skeptic identified 2 CRITICAL, 3 HIGH, 5 MEDIUM issues
-2. **Validation:** autonomous-worker tested and verified each CRITICAL claim
-3. **Correction:** Both CRITICAL issues determined to be false positives
-
-**False Positives Identified:**
-
-1. **CRITICAL-1: Memory Leak in PhaseOrchestrator** ❌ FALSE POSITIVE
-   - **Claim:** `slice(-999)` allows unbounded growth
-   - **Reality:** Sliding window correctly maintains exactly 1000 elements
-   - **Evidence:** Test script verified array stays at 1000 across 2000 iterations
-   - **Status:** Working as designed, no fix needed
-
-2. **CRITICAL-2: Math.random() Breaking Determinism** ❌ FALSE POSITIVE
-   - **Claim:** 4 files use Math.random() in simulation code
-   - **Reality:** Zero usage in `src/simulation/`, only in UI code (`src/lib/`)
-   - **Evidence:** Scoped grep shows no matches in simulation directory
-   - **Status:** Determinism intact (Issue #11 verified Nov 14)
-
-**Architecture Health Score:**
-- **Original:** 6/10 (with 2 CRITICAL issues)
-- **Corrected:** 8.0/10 (CRITICAL issues invalid)
-- **Roadmap Score:** 9.5/10 (Nov 14)
-- **Conclusion:** Both scores valid from different perspectives; project architecturally sound
-
-**Real Issues (MEDIUM Priority):**
-- 96 phases (target 40-50 for performance)
-- Test coverage gaps (45 test files for 96 phases)
-- Assertion adoption (79% vs 95% target)
-
-**Session Outcome:**
-- Validation prevented unnecessary emergency work
-- Confirmed project in excellent state (all CRITICAL/HIGH roadmap items complete)
-- Documentation fully current (wiki updated Nov 14 21:20)
-
-**Files:**
-- `reviews/architecture_integration_review_20251114.md` (original review, 279 lines)
-- `reviews/architecture_review_20251114_corrections.md` (validation + corrections, 218 lines)
-
-**Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
+**Impact:** This is a fundamental correction to the model's AI capability growth assumptions. The previous 12-month doubling was demonstrably wrong based on 2016-2024 empirical data. The new 8-month doubling aligns with frontier AI model training trends and corrects the 100-1000× underestimation.
 
 ---
 
@@ -1058,33 +815,6 @@ assertFinite(property);
 **Context:** This addresses the Oct 2025 ecology NaN bug root cause - systematic defensive coding to prevent silent value corruption across all phases.
 
 **Related:** CRITICAL-3 (RNG fallback), CRITICAL-4 (defensive fallbacks), planetary boundaries validation, tipping point validation
-
----
-
-**🔧 WATCHER FIX: Log Sorting Bug (False CRITICAL Alerts)** (Nov 16, 2025, commit e78991b)
-
-**Problem:** Watcher was reporting false CRITICAL alerts about researcher not running, even though logs showed successful runs at 23:00.
-
-**Root Cause:** Watcher used `find ... | sort -r` which sorts alphabetically, not by modification time. This caused it to pick up old `session_*.log` files instead of recent `researcher_*.log` files during the researcher's intentional overnight gap (23:00-08:00 UTC).
-
-**Example:**
-- Alphabetically: `session_20251114_033925.log` > `researcher_20251115_223001.log`
-- By modification time: `researcher_20251115_223001.log` (most recent)
-
-**Solution:** Replace `find ... | sort -r` with `ls -t` (sort by modification time) in all three log checking locations:
-- Worker log checking (line 96)
-- Merge orchestrator log checking (line 194)
-- Researcher log checking (line 250)
-
-**Impact:**
-- ✅ Watcher now correctly identifies most recent logs
-- ✅ Eliminates false CRITICAL alerts during researcher's overnight gap
-- ✅ Improved monitoring accuracy
-
-**Test:** Verified `ls -t logs/autonomous/researcher/*.log | head -1` now correctly returns `researcher_20251115_223001.log` instead of `session_20251114_033925.log`.
-
-**Files Modified:**
-- `scripts/autonomous-worker-watcher.sh` - Changed `find | sort -r` → `ls -t` in 3 locations
 
 ---
 
