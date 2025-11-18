@@ -146,6 +146,7 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
       break;
   }
 
+<<<<<<< HEAD
   // Normalize probabilities to sum to 1.0
   const total = utopiaScore + dystopiaScore + extinctionScore;
 
@@ -166,6 +167,19 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
     dystopiaProbability = dystopiaScore / total;
     extinctionProbability = extinctionScore / total;
   }
+=======
+  // Normalize probabilities (add small baseline to each score to prevent division by zero)
+  // Baseline ensures total > 0 even when all scores are 0
+  const baseline = 0.01;
+  const utopiaWithBaseline = utopiaScore + baseline;
+  const dystopiaWithBaseline = dystopiaScore + baseline;
+  const extinctionWithBaseline = extinctionScore + baseline;
+  const total = utopiaWithBaseline + dystopiaWithBaseline + extinctionWithBaseline;
+
+  const utopiaProbability = utopiaWithBaseline / total;
+  const dystopiaProbability = dystopiaWithBaseline / total;
+  const extinctionProbability = extinctionWithBaseline / total;
+>>>>>>> origin/auto/worker-20251115_220001
   
   // Determine active attractor (which outcome is "locked in")
   let activeAttractor: OutcomeMetrics['activeAttractor'] = 'none';

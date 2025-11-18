@@ -24,7 +24,11 @@ import { GameState } from '@/types/game';
 import { TechTreeState, RegionalTechDeployment } from './engine';
 import { getTechById } from './comprehensiveTechTree';
 import { addSimulationEvent } from '../utils/eventLogger';
+<<<<<<< HEAD
 import { assertStateProperty } from '@/simulation/utils/assertions';
+=======
+import { assertStateProperty } from '../utils/assertions';
+>>>>>>> origin/auto/worker-20251115_220001
 
 /**
  * Deployment timescale parameters (months to full deployment)
@@ -154,6 +158,7 @@ export function sigmoidDeploymentCurve(
  * - International cooperation: Critical for global tech (climate, AI)
  */
 export function getGovernanceMultiplier(gameState: GameState): number {
+<<<<<<< HEAD
   // Access nested object properties - governanceQuality is always initialized
   const govQuality = gameState.government.governanceQuality;
   const enforcement = assertStateProperty(govQuality, 'institutionalCapacity', {
@@ -162,6 +167,14 @@ export function getGovernanceMultiplier(gameState: GameState): number {
   });
   const structuralChoices = gameState.government.structuralChoices;
   const cooperation = structuralChoices.internationalCoordination ? 1.0 : 0.5;
+=======
+  const enforcement = assertStateProperty(
+    gameState.government.governanceQuality,
+    'institutionalCapacity',
+    { location: 'getGovernanceMultiplier', month: gameState.currentMonth }
+  );
+  const cooperation = gameState.government.structuralChoices.internationalCoordination ? 1.0 : 0.5;
+>>>>>>> origin/auto/worker-20251115_220001
 
   const governanceCapacity = (enforcement + cooperation) / 2;
 
@@ -188,6 +201,7 @@ export function getGovernanceMultiplier(gameState: GameState): number {
  * - >3.0°C: 0.60× (40% penalty, severe feedbacks)
  */
 export function getClimateRecoveryMultiplier(gameState: GameState): number {
+<<<<<<< HEAD
   // Access nested path - these objects are always initialized
   const pbs = gameState.planetaryBoundariesSystem;
   const climateChange = pbs.boundaries['climate_change'];  // Note: snake_case key
@@ -195,6 +209,14 @@ export function getClimateRecoveryMultiplier(gameState: GameState): number {
     location: 'getClimateRecoveryMultiplier',
     month: gameState.currentMonth
   });
+=======
+  const climateBoundary = gameState.planetaryBoundariesSystem.boundaries['climate_change'];
+  const globalWarming = assertStateProperty(
+    climateBoundary,
+    'currentValue',
+    { location: 'getClimateRecoveryMultiplier', month: gameState.currentMonth }
+  );
+>>>>>>> origin/auto/worker-20251115_220001
 
   if (globalWarming < 1.5) return 1.0;
   if (globalWarming < 2.0) return 0.95;
@@ -222,11 +244,11 @@ export function getClimateRecoveryMultiplier(gameState: GameState): number {
  */
 export function getInvestmentMultiplier(gameState: GameState): number {
   // Climate investment comes from research investments (climate.mitigation + climate.intervention)
-  const climateResearch = gameState.government?.researchInvestments;
-  if (!climateResearch) return 0.7; // Default to current 2024 baseline
+  const climateResearch = gameState.government.researchInvestments;
 
   // Climate research levels are [0-10]
   // Map to $T/year: 0 → $0B, 5 → $1.4T (baseline), 10 → $3.5T (full)
+<<<<<<< HEAD
   // Access nested object - climate is always initialized
   const climate = climateResearch.climate;
   const climateMitigation = assertStateProperty(climate, 'mitigation', {
@@ -237,6 +259,18 @@ export function getInvestmentMultiplier(gameState: GameState): number {
     location: 'getInvestmentMultiplier',
     month: gameState.currentMonth
   });
+=======
+  const climateMitigation = assertStateProperty(
+    climateResearch.climate,
+    'mitigation',
+    { location: 'getInvestmentMultiplier:climateMitigation', month: gameState.currentMonth }
+  );
+  const climateIntervention = assertStateProperty(
+    climateResearch.climate,
+    'intervention',
+    { location: 'getInvestmentMultiplier:climateIntervention', month: gameState.currentMonth }
+  );
+>>>>>>> origin/auto/worker-20251115_220001
 
   // Average of mitigation + intervention
   const avgClimateInvestment = (climateMitigation + climateIntervention) / 2;
