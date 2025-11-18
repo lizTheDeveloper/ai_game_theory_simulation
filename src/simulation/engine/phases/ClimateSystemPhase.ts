@@ -37,6 +37,7 @@ import {
   assertProbability,
   capWithBifurcationAwareness,
 } from '@/simulation/utils/assertions';
+import { updateGeoengineering } from '../../geoengineering';
 
 /**
  * Climate impact event with delayed effects (from ClimateImpactCascade)
@@ -99,9 +100,7 @@ export class ClimateSystemPhase implements SimulationPhase {
 
     // ===================================================================
     // STEP 1: GEOENGINEERING (formerly GeoengineringPhase, order 19.0)
-    // ===================================================================
-    const { updateGeoengineering } = require('../../geoengineering');
-    updateGeoengineering(state);
+    // ===================================================================updateGeoengineering(state);
 
     // ===================================================================
     // STEP 2: TIPPING POINTS (formerly TippingPointPhase, order 21.6)

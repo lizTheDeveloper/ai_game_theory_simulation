@@ -16,6 +16,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { executeSocietyActions } from '../../agents/societyAgent';
 
 export class SocietyActionsPhase implements SimulationPhase {
   readonly id = 'society-actions';
@@ -38,10 +39,7 @@ export class SocietyActionsPhase implements SimulationPhase {
     }
 
     // Import and execute society actions
-    setDeterministicRng(rng);
-    const { executeSocietyActions } = require('../../agents/societyAgent');
-
-    const societyResult = executeSocietyActions(state, rng);
+    setDeterministicRng(rng);const societyResult = executeSocietyActions(state, rng);
 
     // Update state
     Object.assign(state, societyResult.newState);
