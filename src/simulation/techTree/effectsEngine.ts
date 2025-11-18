@@ -307,7 +307,7 @@ export function applyAllTechEffects(
   const regionalEffects: Map<string, Map<string, number>> = new Map();
 
   // Collect effects from all deployed tech
-  // FIX: Sort regions for deterministic iteration order
+  // 🚀 PERFORMANCE (Nov 10, 2025): Sort regions once before loop
   const sortedRegions = Object.entries(techTreeState.regionalDeployment).sort((a, b) => a[0].localeCompare(b[0]));
   for (const [region, deployments] of sortedRegions) {
     for (const deployment of deployments) {
@@ -315,7 +315,7 @@ export function applyAllTechEffects(
       if (!tech) continue;
 
       // Scale effects by deployment level
-      // FIX: Sort effects for deterministic iteration order
+      // 🚀 PERFORMANCE (Nov 10, 2025): Sort effects once per deployment (NOT inside inner loop)
       const sortedEffects = Object.entries(deployment.effects).sort((a, b) => a[0].localeCompare(b[0]));
       for (const [effectName, effectValue] of sortedEffects) {
         let scaledValue = effectValue * deployment.deploymentLevel;
@@ -511,12 +511,35 @@ function applyCapabilityBoosts(
 ): void {
   // Apply to all active AIs
   const activeAIs = gameState.aiAgents.filter(ai => ai.lifecycleState !== 'retired');
-  
+
+  // 🚀 PERFORMANCE (Nov 10, 2025): Pre-sort dimensions once BEFORE looping over AIs
+  // (was sorting same data for every AI - redundant)
+  const sortedDimensions = capabilityEffects.dimensions
+    ? Object.entries(capabilityEffects.dimensions).sort((a, b) => a[0].localeCompare(b[0]))
+    : [];
+
+  // 🚀 PERFORMANCE (Nov 10, 2025): Pre-cache subdomain keys per domain
+  // All AIs have same subdomain structure for each research domain
+  // Build this once before AI loop instead of sorting for every (AI × researchBoost)
+  const domainSubdomainKeysCache = new Map<string, string[]>();
+  if (capabilityEffects.research && activeAIs.length > 0) {
+    // Use first AI as reference to get subdomain structure
+    const referenceAI = activeAIs[0];
+    for (const researchBoost of capabilityEffects.research) {
+      if (!researchBoost.subdomain) {
+        const { domain } = researchBoost;
+        const domainCap = referenceAI.capabilityProfile.research[domain];
+        if (typeof domainCap === 'object' && domainCap !== null) {
+          const sortedKeys = Object.keys(domainCap).sort((a, b) => a.localeCompare(b));
+          domainSubdomainKeysCache.set(domain, sortedKeys);
+        }
+      }
+    }
+  }
+
   for (const ai of activeAIs) {
     // Apply dimensional boosts
-    if (capabilityEffects.dimensions) {
-      // FIX: Sort dimensions for deterministic iteration order
-      const sortedDimensions = Object.entries(capabilityEffects.dimensions).sort((a, b) => a[0].localeCompare(b[0]));
+    if (sortedDimensions.length > 0) {
       for (const [dimension, boost] of sortedDimensions) {
         const dimKey = dimension as keyof typeof ai.capabilityProfile;
         if (dimKey === 'research') continue; // Handle research separately
@@ -547,7 +570,7 @@ function applyCapabilityBoosts(
       });
       }
     }
-    
+
     // Apply research capability boosts
     if (capabilityEffects.research) {
       for (const researchBoost of capabilityEffects.research) {
@@ -578,8 +601,8 @@ function applyCapabilityBoosts(
       });
         } else if (!subdomain && typeof domainCap === 'object') {
           // Boost all subdomains equally
-          // FIX: Sort subdomain keys for deterministic iteration order
-          const sortedKeys = Object.keys(domainCap).sort((a, b) => a.localeCompare(b));
+          // 🚀 PERFORMANCE (Nov 10, 2025): Use cached sorted keys instead of sorting each time
+          const sortedKeys = domainSubdomainKeysCache.get(domain) || Object.keys(domainCap).sort((a, b) => a.localeCompare(b));
           for (const key of sortedKeys) {
             const currentValue = (domainCap as any)[key];
 
