@@ -818,6 +818,9 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   // Biogeochemical flows (from phosphorus system + legacy nutrient stocks - TIER 2 HIGH, Nov 15, 2025)
   // Research: Lake Erie case study, nitrogen/phosphorus half-life studies
   // Expected impact: 10% god mode effectiveness gap → legacy stocks create inertia
+  //
+  // INTEGRATION (Nov 17, 2025): Nitrogen-food coupling now models technology-driven nitrogen reduction
+  // with regional yield penalty curves. This creates realistic constraint on nitrogen management.
   if (state.phosphorusSystem) {
     const reserves = assertProbability(state.phosphorusSystem.reserves, {
       location: 'updatePlanetaryBoundaries:biogeochemical',
@@ -1071,6 +1074,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 >>>>>>> origin/auto/worker-20251116_220001
     }
 
+<<<<<<< HEAD
     // Boundary value calculation
     // Baseline (2025): 2.94 (294% of safe boundary)
     // Scale by effective pollution vs baseline pollution
@@ -1090,6 +1094,27 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 =======
       additionalInfo: { reserves, depletion, effectiveNitrogen, effectivePhosphorus, pollutionRatio }
 >>>>>>> origin/auto/worker-20251116_220001
+=======
+    // NITROGEN-FOOD COUPLING (Nov 17, 2025): Update nitrogen management from deployed technologies
+    // This calculates global food production impact of nitrogen reduction
+    // Import dynamically to avoid circular dependencies
+    const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
+    const globalFoodProductionIndex = updateNitrogenFoodCoupling(state);
+
+    // Food production index affects biogeochemical boundary indirectly:
+    // - Lower food production → pressure to use MORE nitrogen (boundary worsens)
+    // - Technologies that reduce nitrogen WITH minimal yield penalty → boundary improves
+    // This is captured in the nitrogen management state, which feeds into legacy stock calculations
+    // (The coupling is via regional nitrogen inputs being reduced by tech deployment)
+
+    // Boundary value = baseline depletion + legacy contribution
+    // This means: reducing current inputs helps, but legacy stocks slow recovery dramatically
+    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 + depletion * 0.5 + legacyContribution), {
+      location: 'updatePlanetaryBoundaries:biogeochemical',
+      valueName: 'biogeochemical_flows.currentValue',
+      month: state.currentMonth,
+      additionalInfo: { reserves, depletion, legacyContribution, globalFoodProductionIndex }
+>>>>>>> origin/auto/worker-20251117_033002
     });
 >>>>>>> origin/auto/worker-20251116_170001
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;

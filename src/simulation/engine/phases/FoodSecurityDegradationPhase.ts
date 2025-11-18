@@ -31,9 +31,11 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly order = 19.7;  // AFTER QualityOfLifePhase (19.5), BEFORE population (20.5)
 
   // DEPENDENCIES (Nov 6, 2025): Requires quality of life baseline calculation
+  // UPDATED (Nov 17, 2025): Added planetary_boundaries to ensure nitrogen-food coupling runs first
   readonly dependencies = [
     'quality-of-life',          // Order 19.5: Food baseline calculated
     'extreme-weather-events',   // Order 15.2: Weather disrupts food production
+    'planetary_boundaries',     // Order 21.0: Nitrogen-food coupling updates regional nitrogen state
   ];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
