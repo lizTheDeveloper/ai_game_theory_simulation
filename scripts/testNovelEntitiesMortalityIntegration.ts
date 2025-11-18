@@ -28,8 +28,12 @@ function testNovelEntitiesMortalityPropagation(): void {
   // Create state with severe chemical pollution
   const state = createDefaultInitialState(rngFunction);
 
+  // CRITICAL-2 FIX (Nov 14, 2025): Capture initial population BEFORE simulation runs
+  // Bug: Measuring state.population after engine.run() gives mutated value
+  const initialPop = state.humanPopulationSystem.population;
+
   console.log(`📊 INITIAL STATE:`);
-  console.log(`  Population: ${(state.humanPopulationSystem.population / 1e9).toFixed(3)}B`);
+  console.log(`  Population: ${initialPop.toFixed(3)}B`);
 
   if (state.novelEntitiesSystem) {
     // Inject severe pollution to trigger crises quickly
@@ -44,8 +48,6 @@ function testNovelEntitiesMortalityPropagation(): void {
     console.log(`  Chronic disease: ${(state.novelEntitiesSystem.chronicDiseasePrevalence * 100).toFixed(0)}%`);
     console.log(`  Above all crisis thresholds - should trigger events\n`);
   }
-
-  // Run simulation
   console.log(`🔬 RUNNING SIMULATION (120 months)...\n`);
   const result = engine.run(state, { maxMonths: 120, checkActualOutcomes: true });
 
@@ -54,16 +56,17 @@ function testNovelEntitiesMortalityPropagation(): void {
   console.log(`RESULTS:`);
   console.log(`${'='.repeat(80)}\n`);
 
+  // FIX (Nov 14, 2025): engine.run() mutates state, so finalState IS state (same object)
+  // We captured initialPop before mutation, so this calculation is now correct
   const finalState = result.finalState;
-  const initialPop = state.humanPopulationSystem.population;
   const finalPop = finalState.humanPopulationSystem.population;
   const deaths = initialPop - finalPop;
-  const mortalityRate = deaths / initialPop;
+  const mortalityRate = initialPop > 0 ? deaths / initialPop : 0;
 
   console.log(`Population:`);
-  console.log(`  Initial: ${(initialPop / 1e9).toFixed(3)}B`);
-  console.log(`  Final: ${(finalPop / 1e9).toFixed(3)}B`);
-  console.log(`  Deaths: ${(deaths / 1e6).toFixed(1)}M (${(mortalityRate * 100).toFixed(2)}%)`);
+  console.log(`  Initial: ${initialPop.toFixed(3)}B`);
+  console.log(`  Final: ${finalPop.toFixed(3)}B`);
+  console.log(`  Deaths: ${(deaths * 1000).toFixed(1)}M (${(mortalityRate * 100).toFixed(2)}%)`);
   console.log(``);
 
   if (finalState.novelEntitiesSystem) {

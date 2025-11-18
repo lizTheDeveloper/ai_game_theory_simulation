@@ -385,6 +385,22 @@ interface RunResult {
   // Fixes false extinctions (4.8B population labeled as extinction) and fragmented reporting
   unifiedOutcome?: import('../src/types/outcomes').UnifiedOutcomeClassification;
 
+  // === BIFURCATION & EARLY WARNING SYSTEM (Nov 13, 2025) ===
+  // Variance amplification metrics for understanding Monte Carlo outcome distribution
+  // @see /reviews/bifurcation_mc_n10_validation_20251113.md (CRITICAL-0: missing metrics)
+  bifurcationMetrics?: {
+    maxVarianceAmplification: number;     // Peak amplification this run (1.0 to 100.0)
+    regimeShiftCount: number;             // Number of regime shifts
+    avgDistanceToThresholds: number;      // Average distance across all months (0-1)
+    criticalAlertsCount: number;          // Early warning alerts (<0.2 distance)
+    timeToCritical?: number;              // First month with critical alert
+    regimeShiftEvents: Array<{
+      month: number;
+      system: string;
+      amplification: number;
+    }>;
+  };
+
   // === RECOVERY TIMELINE TRACKING (NEW - Oct 17 2025) ===
   recoveryTimeline?: {
     phases: Array<{
@@ -1492,8 +1508,11 @@ if (nestedMonteCarlo) {
 
   const deathsByCategory = pop.deathsByCategory;
   const deathsByRootCause = pop.deathsByRootCause;
-  
-  const initialPopulation = pop.baselinePopulation;
+
+  // CRITICAL FIX (Nov 13, 2025): Use finalState.initialPopulation, NOT pop.baselinePopulation
+  // Bug: baselinePopulation gets updated dynamically, causing "extinction" classification on population growth
+  // @see /reviews/bifurcation_mc_n10_validation_20251113.md (CRITICAL-1)
+  const initialPopulation = finalState.initialPopulation ?? pop.baselinePopulation;
   const finalPopulation = pop.population;
   const populationDecline = ((initialPopulation - finalPopulation) / initialPopulation) * 100;
   const totalDeaths = Math.max(0, (initialPopulation - finalPopulation) * 1000); // billions to millions, prevent negative
@@ -1903,6 +1922,20 @@ if (nestedMonteCarlo) {
 
     // Unified Outcome Classification (Oct 28, 2025)
     unifiedOutcome: finalState.unifiedOutcome,
+
+    // Bifurcation & Early Warning System (Nov 13, 2025)
+    bifurcationMetrics: finalState.bifurcationState?.metrics ? {
+      maxVarianceAmplification: finalState.bifurcationState.metrics.maxVarianceAmplification,
+      regimeShiftCount: finalState.bifurcationState.metrics.regimeShiftEvents?.length || 0,
+      avgDistanceToThresholds: finalState.bifurcationState.metrics.avgDistanceToThresholds,
+      criticalAlertsCount: finalState.bifurcationState.metrics.regimeShiftEvents?.filter(
+        (e: any) => e.amplification > 10.0  // Consider amplification >10× as "critical"
+      ).length || 0,
+      timeToCritical: finalState.bifurcationState.metrics.regimeShiftEvents?.find(
+        (e: any) => e.amplification > 10.0
+      )?.month,
+      regimeShiftEvents: finalState.bifurcationState.metrics.regimeShiftEvents || []
+    } : undefined,
 
     // Recovery Timeline & Mechanism Analysis (NEW - Oct 17, 2025)
     recoveryTimeline,
@@ -2915,6 +2948,20 @@ if (nestedMonteCarlo) {
     // Unified Outcome Classification (Oct 28, 2025)
     unifiedOutcome: finalState.unifiedOutcome,
 
+    // Bifurcation & Early Warning System (Nov 13, 2025)
+    bifurcationMetrics: finalState.bifurcationState?.metrics ? {
+      maxVarianceAmplification: finalState.bifurcationState.metrics.maxVarianceAmplification,
+      regimeShiftCount: finalState.bifurcationState.metrics.regimeShiftEvents?.length || 0,
+      avgDistanceToThresholds: finalState.bifurcationState.metrics.avgDistanceToThresholds,
+      criticalAlertsCount: finalState.bifurcationState.metrics.regimeShiftEvents?.filter(
+        (e: any) => e.amplification > 10.0  // Consider amplification >10× as "critical"
+      ).length || 0,
+      timeToCritical: finalState.bifurcationState.metrics.regimeShiftEvents?.find(
+        (e: any) => e.amplification > 10.0
+      )?.month,
+      regimeShiftEvents: finalState.bifurcationState.metrics.regimeShiftEvents || []
+    } : undefined,
+
     // Recovery Timeline & Mechanism Analysis (NEW - Oct 17, 2025)
     recoveryTimeline,
     mechanismSummary,
@@ -3401,6 +3448,58 @@ log(`    Resource Reserves: ${(avgResources * 100).toFixed(1)}% (baseline: 65%)`
 if (avgClimate < 0.4) log(`    ⚠️  Climate catastrophe threshold breached`);
 if (avgBiodiversity < 0.3) log(`    ⚠️  Ecosystem collapse threshold breached`);
 if (avgResources < 0.3) log(`    ⚠️  Resource crisis threshold breached`);
+
+// Bifurcation & Early Warning System (Nov 13, 2025)
+log('\n\n' + '='.repeat(80));
+log('🌊 BIFURCATION & EARLY WARNING SYSTEM');
+log('='.repeat(80));
+
+const resultsWithBifurcation = results.filter(r => r.bifurcationMetrics);
+if (resultsWithBifurcation.length > 0) {
+  const avgMaxAmplification = resultsWithBifurcation.reduce((sum, r) => sum + (r.bifurcationMetrics?.maxVarianceAmplification || 1.0), 0) / resultsWithBifurcation.length;
+  const maxMaxAmplification = Math.max(...resultsWithBifurcation.map(r => r.bifurcationMetrics?.maxVarianceAmplification || 1.0));
+  const minMaxAmplification = Math.min(...resultsWithBifurcation.map(r => r.bifurcationMetrics?.maxVarianceAmplification || 1.0));
+
+  const avgDistance = resultsWithBifurcation.reduce((sum, r) => sum + (r.bifurcationMetrics?.avgDistanceToThresholds || 1.0), 0) / resultsWithBifurcation.length;
+  const totalRegimeShifts = resultsWithBifurcation.reduce((sum, r) => sum + (r.bifurcationMetrics?.regimeShiftCount || 0), 0);
+  const avgRegimeShifts = totalRegimeShifts / resultsWithBifurcation.length;
+
+  const totalCriticalAlerts = resultsWithBifurcation.reduce((sum, r) => sum + (r.bifurcationMetrics?.criticalAlertsCount || 0), 0);
+  const avgCriticalAlerts = totalCriticalAlerts / resultsWithBifurcation.length;
+  const runsWithCritical = resultsWithBifurcation.filter(r => (r.bifurcationMetrics?.criticalAlertsCount || 0) > 0).length;
+
+  const timesToCritical = resultsWithBifurcation
+    .map(r => r.bifurcationMetrics?.timeToCritical)
+    .filter((t): t is number => t !== undefined);
+  const avgTimeToCritical = timesToCritical.length > 0
+    ? timesToCritical.reduce((sum, t) => sum + t, 0) / timesToCritical.length
+    : undefined;
+
+  log(`\n  VARIANCE AMPLIFICATION:`);
+  log(`    Max amplification (avg): ${avgMaxAmplification.toFixed(1)}× (range: ${minMaxAmplification.toFixed(1)}× - ${maxMaxAmplification.toFixed(1)}×)`);
+  log(`    Distance to thresholds (avg): ${(avgDistance * 100).toFixed(1)}% (0=critical, 100=safe)`);
+
+  log(`\n  REGIME SHIFTS:`);
+  log(`    Total regime shifts: ${totalRegimeShifts} across ${resultsWithBifurcation.length} runs`);
+  log(`    Avg per run: ${avgRegimeShifts.toFixed(1)}`);
+
+  log(`\n  EARLY WARNING ALERTS:`);
+  log(`    Runs with critical alerts: ${runsWithCritical}/${resultsWithBifurcation.length} (${(runsWithCritical/resultsWithBifurcation.length*100).toFixed(1)}%)`);
+  log(`    Total critical alerts: ${totalCriticalAlerts}`);
+  log(`    Avg per run: ${avgCriticalAlerts.toFixed(1)}`);
+  if (avgTimeToCritical !== undefined) {
+    log(`    Time to critical (avg): ${avgTimeToCritical.toFixed(0)} months`);
+  }
+
+  if (avgMaxAmplification > 10.0) {
+    log(`\n    ⚠️  HIGH AMPLIFICATION: System showing extreme variance near critical thresholds`);
+  }
+  if (avgDistance < 0.3) {
+    log(`    ⚠️  NEAR THRESHOLDS: System operating close to bifurcation points`);
+  }
+} else {
+  log(`\n  ⚠️  NO BIFURCATION DATA: Metrics not collected (phase may not be executing)`);
+}
 
 // Regional Inequality
 log('\n\n' + '='.repeat(80));

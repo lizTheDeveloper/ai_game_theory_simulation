@@ -275,57 +275,86 @@ function checkEndGameResolution(state: GameState): void {
     });
     
     if (hasCatastrophicCapability) {
-      // FIX (Nov 13, 2025): Verify population actually declined before declaring extinction
-      const currentPop = state.humanPopulationSystem.population * 1e9;
+      // CRITICAL-1 FIX (Nov 13, 2025): Check population before declaring extinction
+      // Bug: Seeds 42001/42008/42024 showed GROWTH but were labeled extinction due to AI power metrics
+      const currentPop = state.humanPopulationSystem.population;
+      const initialPop = state.initialPopulation;
+      const mortality = 1 - (currentPop / initialPop);
 
-      if (currentPop < 10_000) {
+      if (mortality < 0) {
+        // Population GREW - cannot be extinction
+        console.log(`   ⚠️ Catastrophic AI capability but population GROWING (${initialPop.toFixed(2)}B → ${currentPop.toFixed(2)}B)`);
+        lockOutcome(endGame, 'dystopia', 'Misaligned superintelligent AI threatens humanity');
+        return;
+      }
+
+      if (currentPop * 1e9 < 10_000) {
         // TRUE extinction - population below 10K threshold
         lockOutcome(endGame, 'extinction', 'Misaligned superintelligent AI deployed catastrophic technology');
       } else {
         // Catastrophic capability deployed but humanity survived in reduced numbers
-        console.log(`⚠️  Misaligned AI deployed catastrophic tech but humanity survived (${(currentPop / 1e9).toFixed(2)}B)`);
-        lockOutcome(endGame, 'dystopia', 'Misaligned superintelligent AI deployed catastrophic technology, severe societal damage');
+        console.log(`   ⚠️ Misaligned AI deployed catastrophic tech but ${currentPop.toFixed(2)}B survived (${(mortality * 100).toFixed(1)}% mortality)`);
+        lockOutcome(endGame, 'dystopia', `Misaligned AI deployed catastrophic tech, ${(mortality * 100).toFixed(1)}% mortality`);
       }
       return;
     }
   }
   
   // Mutual destruction - ONLY if both sides are extremely powerful and fighting
+  // CRITICAL-1 FIX (Nov 13, 2025): Check population actually declined before declaring extinction
+  // Bug: Seeds 42001/42008/42024 showed GROWTH but were labeled extinction due to AI power metrics
   if (totalPower > 8.0 &&
       endGame.alignedAIPower > 2.0 &&
       endGame.misalignedAIPower > 2.0 &&
       endGame.monthsInEndGame > 18 &&
       Math.abs(endGame.alignedVictories - endGame.misalignedVictories) < 2) { // Actual prolonged war
-    // FIX (Nov 13, 2025): AI civil war doesn't automatically mean extinction
-    // Check if population actually declined to extinction levels
-    const currentPop = state.humanPopulationSystem.population * 1e9;
 
-    if (currentPop < 10_000) {
-      // TRUE extinction - population below 10K threshold
+    // DEFENSIVE CHECK: Verify population has actually declined
+    const currentPop = state.humanPopulationSystem.population;
+    const initialPop = state.initialPopulation;
+    const mortality = 1 - (currentPop / initialPop);
+
+    if (mortality < 0) {
+      // Population GREW - cannot be extinction
+      console.log(`   ⚠️ AI civil war detected but population GROWING (${initialPop.toFixed(2)}B → ${currentPop.toFixed(2)}B)`);
+      console.log(`      Not declaring extinction - population trend inconsistent with catastrophic damage`);
+      return;  // Don't lock extinction outcome
+    }
+
+    if (currentPop * 1e9 < 10_000) {
+      // True extinction threshold met
       lockOutcome(endGame, 'extinction', 'AI civil war caused catastrophic collateral damage');
     } else {
-      // Civil war caused severe damage but NOT extinction
-      // Let outcome classification determine dystopia/collapse based on mortality
-      console.log(`⚠️  AI civil war caused severe damage but humanity survived (${(currentPop / 1e9).toFixed(2)}B)`);
-      lockOutcome(endGame, 'dystopia', 'AI civil war caused severe societal damage');
+      // High mortality but not extinction - classify as dystopia
+      console.log(`   ⚠️ AI civil war with ${(mortality * 100).toFixed(1)}% mortality but ${currentPop.toFixed(2)}B survivors`);
+      lockOutcome(endGame, 'dystopia', `AI civil war caused ${(mortality * 100).toFixed(1)}% mortality`);
     }
     return;
   }
   
   // Humans become irrelevant - VERY hard to trigger, requires true superintelligence
+  // CRITICAL-1 FIX (Nov 13, 2025): Check population before declaring extinction
   if (endGame.humanRelevance < 0.01 &&
       totalPower > 10.0 &&
       endGame.misalignedAIPower > 3.0) {
-    // FIX (Nov 13, 2025): Irrelevance doesn't automatically mean extinction
-    // Check if population actually declined to extinction levels
-    const currentPop = state.humanPopulationSystem.population * 1e9;
 
-    if (currentPop < 10_000) {
+    const currentPop = state.humanPopulationSystem.population;
+    const initialPop = state.initialPopulation;
+    const mortality = 1 - (currentPop / initialPop);
+
+    if (mortality < 0) {
+      // Population GREW - cannot be extinction
+      console.log(`   ⚠️ Human irrelevance but population GROWING (${initialPop.toFixed(2)}B → ${currentPop.toFixed(2)}B)`);
+      lockOutcome(endGame, 'dystopia', 'Humanity became irrelevant to superintelligent AI');
+      return;
+    }
+
+    if (currentPop * 1e9 < 10_000) {
       // TRUE extinction - population below 10K threshold
       lockOutcome(endGame, 'extinction', 'Humanity became irrelevant to superintelligent AI');
     } else {
       // Humans became irrelevant but still alive
-      console.log(`⚠️  Humanity became irrelevant to AI but survived (${(currentPop / 1e9).toFixed(2)}B)`);
+      console.log(`   ⚠️ Human irrelevance with ${currentPop.toFixed(2)}B survivors (${(mortality * 100).toFixed(1)}% mortality)`);
       lockOutcome(endGame, 'dystopia', 'Humanity became irrelevant to superintelligent AI');
     }
     return;

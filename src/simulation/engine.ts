@@ -61,6 +61,7 @@ import {
   // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   TechTreePhase,
+  CoordinatedDeploymentPhase,  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
   MeaningRenaissancePhase,
   // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
@@ -96,6 +97,7 @@ import {
   WetBulbTemperaturePhase,  // Oct 17, 2025: Wet bulb temperature deadly heat events
   ExtremeWeatherEventsPhase,  // Oct 28, 2025: Storm intensity-frequency modeling (MDF framework)
   PlanetaryBoundariesPhase,
+  IrreversibilityTrackingPhase,  // TIER 1 CRITICAL (Nov 16, 2025): Environmental & social tipping points with hysteresis
   LegacyNutrientStocksPhase,  // TIER 2 HIGH (Nov 15, 2025): Legacy nutrient stock decay
   NitrogenFoodCouplingPhase,  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food production coupling
   PositiveTippingPointsPhase,  // Oct 17, 2025: Positive technology adoption cascades
@@ -161,7 +163,6 @@ import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P
 // Batch 3 Consolidation: Climate & Environmental (17 → 7, Nov 9, 2025)
 import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Consolidated 4 climate phases
 import { ClimateDeploymentPhase } from './engine/phases/ClimateDeploymentPhase';  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints
-import { CoordinatedDeploymentPhase } from './engine/phases/CoordinatedDeploymentPhase';  // TIER 1B CRITICAL (Nov 2025): AI-managed gradual technology deployment
 import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Consolidated phosphorus + novel entities
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
 // Batch 4 Consolidation: Crisis & Mortality (14 → 5, Nov 9, 2025)
@@ -559,6 +560,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new WetBulbTemperaturePhase());  // Oct 17, 2025: Wet bulb temperature deadly heat events
     this.orchestrator.registerPhase(new ExtremeWeatherEventsPhase());  // Oct 28, 2025: Storm intensity-frequency modeling
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
+    this.orchestrator.registerPhase(new IrreversibilityTrackingPhase());  // TIER 1 CRITICAL (Nov 16, 2025): Environmental & social tipping points with hysteresis
     this.orchestrator.registerPhase(new LegacyNutrientStocksPhase());  // TIER 2 HIGH (Nov 15, 2025): Legacy nutrient stock decay
     this.orchestrator.registerPhase(new NitrogenFoodCouplingPhase());  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food production coupling
     this.orchestrator.registerPhase(new PositiveTippingPointsPhase());  // Oct 17, 2025: Positive cascades (solar, EV, wind)
@@ -628,6 +630,12 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TechnologyDiffusionPhase());
     this.orchestrator.registerPhase(new EventCollectionPhase());
     this.orchestrator.registerPhase(new TimeAdvancementPhase());
+
+    // CRITICAL-2 FIX (Nov 10, 2025): Validate phase dependencies at initialization time
+    // This catches circular dependencies, missing phases, and order violations BEFORE
+    // first simulation step. Fail loudly on configuration errors.
+    // FIX (Nov 13, 2025): Re-added after being accidentally removed during refactor
+    this.orchestrator.validate();
   }
 
   /**

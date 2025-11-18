@@ -128,6 +128,20 @@ export type {
 } from './tipping-points';
 
 export type {
+  IrreversibilityState,
+  IceSheetState,
+  PermafrostState,
+  AMOCState,
+  AmazonState,
+  AmazonRegionState,
+  ExtinctionDebtState,
+  ExtinctionDebtEntry,
+  CoralReefState,
+  IndigenousKnowledgeState,
+  InstitutionalState
+} from './irreversibility';
+
+export type {
   ConsciousnessGovernanceReadiness,
   RegionalGovernance,
   ScenarioTrajectory,
@@ -383,6 +397,37 @@ export interface GameState {
    */
   tippingPointSystem: TippingPointSystem;
 
+  /**
+   * Irreversibility Framework (Nov 16, 2025) - TIER 1 CRITICAL
+   *
+   * Environmental and social tipping points that cannot fully recover on human
+   * timescales (centuries to millennia). Models hysteresis, extinction debt,
+   * and legacy contamination.
+   *
+   * Research: 41 sources (research/irreversibility_framework_20251116.md)
+   * Critique: Grade B-, CONDITIONAL PASS (reviews/irreversibility_framework_critique_20251116.md)
+   *
+   * Key systems:
+   * - Ice sheet hysteresis (+1.5°C collapse, <+1°C recovery - gap = 0.5°C)
+   * - Permafrost thaw (continuous "dimmer switch", NOT binary)
+   * - AMOC weakening (gradual only, NO collapse before +4°C)
+   * - Amazon dieback (regional heterogeneity: SE 28%, NW <10%)
+   * - Extinction debt (50-150 year time lag)
+   * - Coral reef collapse (thermal + acidification)
+   * - Indigenous knowledge loss (2 languages/month, irreversible)
+   * - Institutional collapse ("Hemingway bankruptcy": gradual → sudden)
+   *
+   * CRITICAL CONDITIONS (Sylvia's critique):
+   * 1. Probabilistic thresholds (ranges, not point estimates)
+   * 2. Permafrost continuous (NOT tipping point)
+   * 3. AMOC gradual weakening (NO early collapse)
+   * 4. Uncertainty ranges for ALL parameters
+   * 5. Empirical vs model-derived flagged
+   *
+   * Expected impact: Realistic irreversibility mechanics, multi-century recovery timescales
+   */
+  tippingPoints?: import('../types/irreversibility').IrreversibilityState;
+
   // Ecosystem Collapse Tracking (Realistic Timeline Recalibration)
   ecosystemCollapse?: {
     triggered: boolean;
@@ -635,6 +680,17 @@ export interface GameState {
   llmConfig?: import('./llm').LLMConfig; // LLM policy optimization configuration (Oct 21, 2025)
 
   /**
+   * Scenario Configuration (Nov 10, 2025 - BLOCKING BUG FIX)
+   *
+   * Stores active scenario government priorities to enable enforcement in government decision-making.
+   * Without this, scenario priorities are "declarative only" (logged but ignored).
+   *
+   * Research: Acemoglu & Robinson (2001) - Institutions matter for long-run outcomes
+   * Expected impact: Scenarios produce divergent behavior (e.g., Scientific Acceleration → $50B+ research)
+   */
+  scenarioConfig?: import('../simulation/scenarios/types').ScenarioDefinition;
+
+  /**
    * Threshold Uncertainty System (Phase 1B, Oct 26, 2025; Phase 2, Oct 26, 2025)
    *
    * Research-backed uncertainty distributions for critical simulation thresholds.
@@ -841,9 +897,10 @@ export interface GameState {
    * - policy: Government policy changes (AI regulation, safety investment, etc.)
    * - investment: Technology research/deployment funding
    * - emergency: Emergency response actions during crises
+   * - ai_action: AI agent actions triggered by player
    */
   playerDecisions?: Array<{
-    type: 'policy' | 'investment' | 'emergency';
+    type: 'policy' | 'investment' | 'emergency' | 'ai_action';
     data: any;
     timestamp: number; // Month when decision was queued
   }>;

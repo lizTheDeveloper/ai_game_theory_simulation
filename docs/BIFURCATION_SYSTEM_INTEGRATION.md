@@ -1,12 +1,18 @@
 # Bifurcation System Integration Matrix
 
-**Date:** November 8, 2025
-**Status:** INTEGRATED (HIGH-2 Complete)
+**Date:** November 8, 2025 (Updated: November 13, 2025)
+**Status:** INTEGRATED (HIGH-2 Complete) + CRITICAL BUG FIXES (Nov 13)
 **Research Basis:** Scheffer et al. (2024) - Critical slowing down, regime shifts
 
 ## Overview
 
 The bifurcation logic system identifies critical thresholds and applies variance amplification to create path-dependent trajectories. This document maps all integration points between bifurcation logic and other simulation systems.
+
+**CRITICAL BUG FIXES (Nov 13, 2025 - Commit d605293):**
+- **Distance calculation fixed:** Now uses directional calculation (not Math.abs) - collapse thresholds amplify when APPROACHING from above, flourishing thresholds amplify when APPROACHING from below
+- **Social coordination normalized:** coordinationCapacity now normalized to [0,1] before distance calculation (was comparing 0-100 scale to 0-1 threshold, breaking social bifurcation detection)
+- **Debug context improved:** GameState now passed to all private methods for proper month context in assertions
+- **See:** `reviews/bifurcation_architecture_review_20251113.md` for full analysis
 
 ## Core Bifurcation Mechanisms
 
