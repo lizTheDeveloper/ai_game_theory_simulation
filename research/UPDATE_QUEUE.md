@@ -1,16 +1,11 @@
 # Research Update Queue
 <<<<<<< HEAD
-<<<<<<< Updated upstream
-**Generated:** 11/14/2025, 5:30:05 AM
-**Files Scanned:** 374
-=======
-**Generated:** 11/14/2025, 6:30:03 AM
+**Generated:** 11/14/2025, 8:30:04 AM
 **Files Scanned:** 375
->>>>>>> Stashed changes
 =======
-**Generated:** 11/12/2025, 3:30:09 PM
-**Files Scanned:** 357
->>>>>>> merge/auto/researcher-20251112_153001_20251114_074501
+**Generated:** 11/12/2025, 8:30:06 PM
+**Files Scanned:** 361
+>>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
 
 ---
 
@@ -23,14 +18,10 @@
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
 <<<<<<< HEAD
-<<<<<<< Updated upstream
-**Count:** 141 (37.7%)
+**Count:** 141 (37.6%)
 =======
-**Count:** 142 (37.9%)
->>>>>>> Stashed changes
-=======
-**Count:** 137 (38.4%)
->>>>>>> merge/auto/researcher-20251112_153001_20251114_074501
+**Count:** 139 (38.5%)
+>>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -262,6 +253,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/arch4_cross_system_integrations_20251108.md`
 
+### `bifurcation_empirical_validation_20251112.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/bifurcation_empirical_validation_20251112.md`
+
 ### `black-mirror-phase3-research-AMENDED_20251016.md`
 - **Oldest source:** 2000 (25 years old)
 - **Status:** Not used in simulation
@@ -477,6 +473,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/mortality_stabilizers_failure_conditions_20251106.md`
 
+### `novel_entities_energy_trap_analysis_20251112.md`
+- **Oldest source:** 2002 (23 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/novel_entities_energy_trap_analysis_20251112.md`
+
 ### `organizational-technology-deployment-timelines_20251019.md`
 - **Oldest source:** 1990 (35 years old)
 - **Status:** Not used in simulation
@@ -561,11 +562,6 @@
 - **Oldest source:** 1998 (27 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/rousseau_1998_trust_recovery_verification_20251029.md`
-
-### `scenario_validation_bounds_20251114.md`
-- **Oldest source:** 2016 (9 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/scenario_validation_bounds_20251114.md`
 
 ### `simulation_mortality_validation_20251028.md`
 - **Oldest source:** 2015 (10 years old)
@@ -652,15 +648,30 @@
 - **Status:** Not used in simulation
 - **Path:** `research/validation-summary-ready-for-implementation-20251101.md`
 
+### `verification_033e8e2_20251113.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_033e8e2_20251113.md`
+
 ### `verification_40a2f34_20251111.md`
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/verification_40a2f34_20251111.md`
 
+### `verification_594d120_20251112.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_594d120_20251112.md`
+
 ### `verification_65e0f1c_20251107.md`
 - **Oldest source:** 2013 (12 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/verification_65e0f1c_20251107.md`
+
+### `verification_85bcf6e_20251111.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_85bcf6e_20251111.md`
 
 ### `verification_9f29b05_20251030.md`
 - **Oldest source:** 2004 (21 years old)
@@ -726,7 +737,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 19 (5.3%)
+**Count:** 19 (5.1%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -753,14 +764,10 @@
 ## ✅ LOW (Monitor Only)
 
 <<<<<<< HEAD
-<<<<<<< Updated upstream
-**Count:** 214 (57.2%)
+**Count:** 215 (57.3%)
 =======
-**Count:** 214 (57.1%)
->>>>>>> Stashed changes
-=======
-**Count:** 201 (56.3%)
->>>>>>> merge/auto/researcher-20251112_153001_20251114_074501
+**Count:** 203 (56.2%)
+>>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
 
 All sources <3 years old. No action required.
 
@@ -771,24 +778,20 @@ All sources <3 years old. No action required.
 | Metric | Value |
 |--------|-------|
 <<<<<<< HEAD
-<<<<<<< Updated upstream
-| Total files | 374 |
-=======
 | Total files | 375 |
->>>>>>> Stashed changes
 | CRITICAL | 0 (0.0%) |
-| HIGH | 142 (37.9%) |
+| HIGH | 141 (37.6%) |
 | MEDIUM | 19 (5.1%) |
-| LOW | 214 (57.1%) |
+| LOW | 215 (57.3%) |
 | Average age | 8.3 years |
 =======
-| Total files | 357 |
+| Total files | 361 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 137 (38.4%) |
+| HIGH | 139 (38.5%) |
 | MEDIUM | 19 (5.3%) |
-| LOW | 201 (56.3%) |
+| LOW | 203 (56.2%) |
 | Average age | 8.6 years |
->>>>>>> merge/auto/researcher-20251112_153001_20251114_074501
+>>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
@@ -796,33 +799,23 @@ All sources <3 years old. No action required.
 | Status | Files | Percentage |
 |--------|-------|------------|
 <<<<<<< HEAD
-<<<<<<< Updated upstream
-| Current (<3yr) | 214 | 57.2% |
+| Current (<3yr) | 215 | 57.3% |
 | Warning (3-5yr) | 19 | 5.1% |
-| Critical (>5yr) | 141 | 37.7% |
+| Critical (>5yr) | 141 | 37.6% |
 =======
-| Current (<3yr) | 214 | 57.1% |
-| Warning (3-5yr) | 19 | 5.1% |
-| Critical (>5yr) | 142 | 37.9% |
->>>>>>> Stashed changes
-=======
-| Current (<3yr) | 201 | 56.3% |
+| Current (<3yr) | 203 | 56.2% |
 | Warning (3-5yr) | 19 | 5.3% |
-| Critical (>5yr) | 137 | 38.4% |
->>>>>>> merge/auto/researcher-20251112_153001_20251114_074501
+| Critical (>5yr) | 139 | 38.5% |
+>>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
 <<<<<<< HEAD
-<<<<<<< Updated upstream
-- **Current:** 37.7% critical (>5yr)
+- **Current:** 37.6% critical (>5yr)
 =======
-- **Current:** 37.9% critical (>5yr)
->>>>>>> Stashed changes
-=======
-- **Current:** 38.4% critical (>5yr)
->>>>>>> merge/auto/researcher-20251112_153001_20251114_074501
+- **Current:** 38.5% critical (>5yr)
+>>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
@@ -830,14 +823,10 @@ All sources <3 years old. No action required.
 ## 🔄 Next Steps
 
 <<<<<<< HEAD
-<<<<<<< Updated upstream
 1. Update 141 HIGH priority file(s) within 1 month
 =======
-1. Update 142 HIGH priority file(s) within 1 month
->>>>>>> Stashed changes
-=======
-1. Update 137 HIGH priority file(s) within 1 month
->>>>>>> merge/auto/researcher-20251112_153001_20251114_074501
+1. Update 139 HIGH priority file(s) within 1 month
+>>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
 2. Schedule research update sprint
 3. Coordinate with research team
 
