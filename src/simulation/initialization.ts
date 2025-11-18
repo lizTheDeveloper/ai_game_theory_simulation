@@ -1067,6 +1067,57 @@ export function createDefaultInitialState(
       deploymentEvents: [],
     },
 
+    // AI Coordination & Transition Mortality (Phase 2, Nov 18 2025) - TIER 1 CRITICAL
+    // NEW research-backed coordination model with empirical mortality baselines
+    // Research: Kenya UBI (-48% mortality), Green Revolution (-35%), post-Soviet Russia (+74% death rate)
+    // Chaos: 30% mortality, Uncoordinated: 15% mortality, Coordinated: 3% mortality
+    transitionManagementSystem: {
+      // === COORDINATION QUALITY ===
+      aiCoordinationCapability: 0.3,       // Start modest, grows with AI breakthroughs
+      governanceEffectiveness: 0.5,        // World Bank global average (~0.5)
+      infrastructureQuality: 0.5,          // Moderate baseline
+      coordinationQuality: 0.0,            // Calculated each step
+
+      // === SUPPORT SYSTEMS ===
+      supportSystems: {
+        ubiCoverage: 0.1,                  // 10% population coverage initially
+        retrainingProgramsCoverage: 0.2,   // 20% workforce access
+        foodSecurityIndex: 0.7,            // 70% baseline food security
+        universalHealthcareCoverage: 0.4,  // 40% healthcare access
+      },
+      supportSystemEffectiveness: 0.0,     // Calculated each step
+
+      // === DEPLOYMENT PACING ===
+      workforceDisplacementRate: 0.02,     // 2%/year baseline
+      maxSafeDeploymentSpeed: 0.05,        // 5%/year threshold (research-backed)
+      recentDeploymentsCount: 0,           // Track tech deployments in last 12 months
+
+      // === REGIONAL HETEROGENEITY ===
+      regionalReadiness: {
+        OECD: 0.85,                        // High-income, strong institutions
+        middleIncome: 0.50,                // Medium institutions
+        lowIncome: 0.25,                   // Weak institutions, vulnerable
+      },
+      regionalCapacity: {
+        governanceEffectiveness: 0.5,
+        infrastructureQuality: 0.5,
+        economicResilience: 0.5,
+        aggregateReadiness: 0.5,
+      },
+
+      // === MORTALITY OUTCOMES ===
+      transitionMortality: 0,              // Cumulative % population lost
+      mortalityThisMonth: 0,               // Current month mortality
+      baseMortalityRate: 0,                // Before support adjustments
+      deploymentMode: 'uncoordinated',     // Start in uncoordinated mode
+
+      // === TRACKING & HISTORY ===
+      deploymentStartMonth: 0,
+      monthsOfActiveDeployment: 0,
+      peakDeploymentSpeed: 0,
+      peakDeploymentSpeedMonth: 0,
+    },
+
     outcomeMetrics: {
       utopiaProbability: 0.3,
       dystopiaProbability: 0.1,
@@ -1239,6 +1290,57 @@ export function createDefaultInitialState(
         }
       },
       deploymentEvents: []  // Empty event log
+    },
+
+    // AI Coordination & Transition Mortality (Phase 2, Nov 18 2025) - TIER 1 CRITICAL
+    // NEW research-backed coordination model with empirical mortality baselines
+    // Research: Kenya UBI (-48% mortality), Green Revolution (-35%), post-Soviet Russia (+74% death rate)
+    // Chaos: 30% mortality, Uncoordinated: 15% mortality, Coordinated: 3% mortality
+    transitionManagementSystem: {
+      // === COORDINATION QUALITY ===
+      aiCoordinationCapability: 0.3,       // Start modest, grows with AI breakthroughs
+      governanceEffectiveness: 0.5,        // World Bank global average (~0.5)
+      infrastructureQuality: 0.5,          // Moderate baseline
+      coordinationQuality: 0.0,            // Calculated each step
+
+      // === SUPPORT SYSTEMS ===
+      supportSystems: {
+        ubiCoverage: 0.1,                  // 10% population coverage initially
+        retrainingProgramsCoverage: 0.2,   // 20% workforce access
+        foodSecurityIndex: 0.7,            // 70% baseline food security
+        universalHealthcareCoverage: 0.4,  // 40% healthcare access
+      },
+      supportSystemEffectiveness: 0.0,     // Calculated each step
+
+      // === DEPLOYMENT PACING ===
+      workforceDisplacementRate: 0.02,     // 2%/year baseline
+      maxSafeDeploymentSpeed: 0.05,        // 5%/year threshold (research-backed)
+      recentDeploymentsCount: 0,           // Track tech deployments in last 12 months
+
+      // === REGIONAL HETEROGENEITY ===
+      regionalReadiness: {
+        OECD: 0.85,                        // High-income, strong institutions
+        middleIncome: 0.50,                // Medium institutions
+        lowIncome: 0.25,                   // Weak institutions, vulnerable
+      },
+      regionalCapacity: {
+        governanceEffectiveness: 0.5,
+        infrastructureQuality: 0.5,
+        economicResilience: 0.5,
+        aggregateReadiness: 0.5,
+      },
+
+      // === MORTALITY OUTCOMES ===
+      transitionMortality: 0,              // Cumulative % population lost
+      mortalityThisMonth: 0,               // Current month mortality
+      baseMortalityRate: 0,                // Before support adjustments
+      deploymentMode: 'uncoordinated',     // Start in uncoordinated mode
+
+      // === TRACKING & HISTORY ===
+      deploymentStartMonth: 0,
+      monthsOfActiveDeployment: 0,
+      peakDeploymentSpeed: 0,
+      peakDeploymentSpeedMonth: 0,
     },
 
     history: {
