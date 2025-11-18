@@ -259,6 +259,84 @@ export function initializeRegionalNitrogenManagement(): RegionalNitrogenManageme
 }
 
 /**
+ * Extract nitrogen-reducing technology deployment levels from state
+ *
+ * Reads tech tree state and calculates effective nitrogen reduction
+ * for each deployed technology. Each tech contributes (deploymentLevel × maxEffectiveness).
+ *
+ * Technologies (research-backed effectiveness):
+ * - Precision Agriculture: 30% reduction (5-10 year timeline)
+ * - Biological N-Fixation: 25% reduction (10-15 year timeline)
+ * - Nitrogen Circular Food: 20% reduction (5-10 year timeline)
+ * - Ecosystem Restoration: 15% removal (10-20 year timeline)
+ * - Nitrogen Monitoring: 10% efficiency gain (3-5 year timeline)
+ * - Green Ammonia: 40% reduction (15-25 year timeline)
+ *
+ * @param state - Current game state
+ * @returns Array of weighted effectiveness values [0, 1] for deployed technologies
+ *
+ * @see research/nitrogen_food_coupling_20251115.md for parameter justification
+ */
+export function getNitrogenReductionDeployment(state: GameState): number[] {
+  const deployments: number[] = [];
+
+  // Tech IDs from comprehensiveTechTree.ts
+  const nitrogenTechIds = [
+    { id: 'precision_agriculture', maxEffectiveness: 0.30 },
+    { id: 'biological_nitrogen_fixation', maxEffectiveness: 0.25 },
+    { id: 'nitrogen_circular_food', maxEffectiveness: 0.20 },
+    { id: 'ecosystem_restoration_nitrogen', maxEffectiveness: 0.15 },
+    { id: 'nitrogen_monitoring_networks', maxEffectiveness: 0.10 },
+    { id: 'green_ammonia_production', maxEffectiveness: 0.40 },
+  ];
+
+  // Check if tech tree state exists (may not exist in older saves or tests)
+  if (!state.techTreeState) {
+    return deployments; // Return empty array if no tech tree
+  }
+
+  // Extract deployment levels from tech tree
+  // Tech tree uses regional deployment, so we aggregate across all regions
+  for (const { id, maxEffectiveness } of nitrogenTechIds) {
+    // Check if tech is unlocked
+    if (!state.techTreeState.unlockedTech.includes(id)) {
+      continue; // Skip locked tech
+    }
+
+    // Aggregate deployment across all regions
+    let totalDeployment = 0;
+    let regionCount = 0;
+
+    for (const region in state.techTreeState.regionalDeployment) {
+      const regionalTechs = state.techTreeState.regionalDeployment[region];
+      const deployedTech = regionalTechs?.find(t => t.techId === id);
+
+      if (deployedTech) {
+        totalDeployment += deployedTech.deploymentLevel;
+        regionCount++;
+      }
+    }
+
+    // Calculate average deployment across regions
+    if (regionCount > 0) {
+      const avgDeployment = totalDeployment / regionCount;
+
+      // Validate deployment level
+      const validatedDeployment = assertProbability(avgDeployment, {
+        location: 'getNitrogenReductionDeployment',
+        valueName: `${id}.deploymentLevel`,
+        additionalInfo: { regionCount, totalDeployment }
+      });
+
+      // Add weighted effectiveness
+      deployments.push(validatedDeployment * maxEffectiveness);
+    }
+  }
+
+  return deployments;
+}
+
+/**
  * Update regional nitrogen management and calculate global food production impact
  *
  * Steps:

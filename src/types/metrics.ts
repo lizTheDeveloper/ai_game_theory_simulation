@@ -56,4 +56,10 @@ export interface GlobalMetrics {
   fusionResearchBonus: number;           // [0,2] Research speed multiplier (2x at 100% enabling)
   fusionDeploymentCostReduction: number; // [0,0.4] Deployment cost reduction (40% at 100%)
   fusionDeploymentTimeReduction: number; // [0,0.3] Deployment time reduction (30% at 100%)
+
+  // === NITROGEN REDUCTION TRACKING (Nov 2025 - HIGH-11 type safety fix) ===
+  // Research: Springmann et al. (2018) - N-cycle disruption coupling to food systems
+  // Accumulated reduction effectiveness from technologies (used by food security + nitrogen coupling)
+  // Multiplicative stacking: 1 - (1 - r1)(1 - r2)...(1 - rN) prevents >100% reduction
+  nitrogenReductionTotal?: number;       // [0,1] Total nitrogen reduction from all active technologies
 }

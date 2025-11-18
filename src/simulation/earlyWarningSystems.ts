@@ -322,7 +322,7 @@ export function protectCriticalInfrastructure(state: GameState): void {
     w => w.warningLevel === 'red' || w.warningLevel === 'orange'
   );
 
-  if (urgentWarnings.length > 0 && (gov.resources ?? 0) > protectionCost) {
+  if (urgentWarnings.length > 0 && gov.resources > protectionCost) {
     // Protect all unprotected nodes
     for (const node of unprotectedNodes) {
       node.protected = true;

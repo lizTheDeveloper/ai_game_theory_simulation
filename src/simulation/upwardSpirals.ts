@@ -695,42 +695,42 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const social = state.socialAccumulation;
   const env = state.environmentalAccumulation;
   const gov = state.government.governanceQuality;
-  
+
   const years = Math.floor(currentMonth / 12);
   const months = currentMonth % 12;
   const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
-  
+
   // DIAGNOSTIC LOGS - Comment out for production, aggregate with eventAggregator instead
   // console.log(`\n🔍 SPIRAL DIAGNOSTICS (${timeDisplay})`);
   // console.log(`================================================================================`);
-  
+
   // Count active spirals
   const activeSpiralNames = getActiveSpiralNames(spirals);
-  
+
   // Aggregate spiral status via eventAggregator (method doesn't exist yet)
   // const aggregator = (state as any).eventAggregator;
   // if (aggregator && aggregator.recordSpiralStatus) {
   //   aggregator.recordSpiralStatus('all', activeSpiralNames.length);
   // }
-  
+
   // KEEP only summary - remove detailed breakdowns
   console.log(`Active Spirals: ${activeSpiralNames.length}/6`);
   if (activeSpiralNames.length > 0) {
     console.log(`  ✅ ${activeSpiralNames.join(', ')}`);
   }
-  
+
   // ABUNDANCE SPIRAL
   const materialAbundant = qol.materialAbundance > 1.5;
   const energyAbundant = qol.energyAvailability > 1.5;
-  const timeLiberated = state.society.unemploymentLevel > 0.6 && 
+  const timeLiberated = state.society.unemploymentLevel > 0.6 &&
                        state.globalMetrics.economicTransitionStage >= 3;
-  
+
   // Spiral details - comment out for production (verbose)
   // console.error(`\n📦 ABUNDANCE SPIRAL: ${spirals.abundance.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
   // console.error(`   Material: ${qol.materialAbundance.toFixed(2)} ${materialAbundant ? '✅' : '❌'} (need >1.5)`);
   // console.error(`   Energy: ${qol.energyAvailability.toFixed(2)} ${energyAbundant ? '✅' : '❌'} (need >1.5)`);
   // console.error(`   Time Liberation: unemployment ${(state.society.unemploymentLevel * 100).toFixed(0)}%, stage ${state.globalMetrics.economicTransitionStage} ${timeLiberated ? '✅' : '❌'} (need >60% + stage 3+)`);
-  
+
   // COGNITIVE SPIRAL
   const avgAI = state.aiAgents.length > 0 ? (() => {
     const capabilitySum = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
@@ -745,22 +745,22 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const purposeful = social.meaningCrisisLevel < 0.3;
   const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
   const cognitiveEnhanced = avgAI > 1.5 && trustInAI > 0.6;
-  
+
   // console.error(`\n🧠 COGNITIVE SPIRAL: ${spirals.cognitive.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
   // console.error(`   Mental Health: disease ${(qol.diseasesBurden * 100).toFixed(0)}%, healthcare ${(qol.healthcareQuality * 100).toFixed(0)}% ${mentalHealthy ? '✅' : '❌'} (need <30% disease, >80% healthcare)`);
   // console.error(`   Purpose: meaning crisis ${(social.meaningCrisisLevel * 100).toFixed(0)}% ${purposeful ? '✅' : '❌'} (need <30%)`);
   // console.error(`   AI Augmentation: avg capability ${avgAI.toFixed(2)}, trust ${(trustInAI * 100).toFixed(0)}% ${cognitiveEnhanced ? '✅' : '❌'} (need >1.5 capability, >60% trust)`);
-  
+
   // DEMOCRATIC SPIRAL
   const qualityGovernance = gov.decisionQuality > 0.7 && gov.institutionalCapacity > 0.7;
   const democraticEngagement = gov.participationRate > 0.6 && gov.transparency > 0.7;
   const notAuth = state.government.governmentType !== 'authoritarian';
-  
+
   // console.error(`\n🗳️  DEMOCRATIC SPIRAL: ${spirals.democratic.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
   // console.error(`   Governance Quality: decision ${(gov.decisionQuality * 100).toFixed(0)}%, capacity ${(gov.institutionalCapacity * 100).toFixed(0)}% ${qualityGovernance ? '✅' : '❌'} (need both >70%)`);
   // console.error(`   Democratic Engagement: participation ${(gov.participationRate * 100).toFixed(0)}%, transparency ${(gov.transparency * 100).toFixed(0)}% ${democraticEngagement ? '✅' : '❌'} (need >60% participation, >70% transparency)`);
   // console.error(`   Government Type: ${state.government.governmentType} ${notAuth ? '✅' : '❌'} (cannot be authoritarian)`);
-  
+
   // SCIENTIFIC SPIRAL
   const unlockedCount = getUnlockedTechCount(state);
   const deployedCount = getDeployedTechCount(state, 0.5);
@@ -773,7 +773,7 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   // console.error(`   Breakthroughs: ${unlockedCount} unlocked, ${deployedCount} deployed ${deployedCount >= 4 ? '✅' : '❌'} (need 4+ deployed >50%)`);
   // console.error(`   Research Investment: $${totalResearch.toFixed(1)}B/month ${researchIntensive ? '✅' : '❌'} (need >$50B/month)`);
   // console.error(`   AI Acceleration: avg capability ${avgAI.toFixed(2)} ${aiAccelerated ? '✅' : '❌'} (need >1.2)`);
-  
+
   // MEANING SPIRAL
   const meaningFulfilled = social.meaningCrisisLevel < 0.2;
   const avgCohesionDebug = (social.socialCohesion.trust + social.socialCohesion.communityBonds + social.socialCohesion.civilLiberties) / 300;
@@ -786,17 +786,17 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   // console.error(`   Community: ${(avgCohesionDebug * 100).toFixed(0)}% ${strongCommunity ? '✅' : '❌'} (need >70%)`);
   // console.error(`   Cultural Adaptation: ${(social.culturalAdaptation * 100).toFixed(0)}% ${culturallyAdapted ? '✅' : '❌'} (need >70%)`);
   // console.error(`   Autonomy & Creativity: autonomy ${(qol.autonomy * 100).toFixed(0)}%, cultural ${(qol.culturalVitality * 100).toFixed(0)}% ${autonomous ? '✅' : '❌'} (need both >70%)`);
-  
+
   // ECOLOGICAL SPIRAL
   const envSustainable = env.resourceReserves > 0.7 && env.pollutionLevel < 0.3;
   const climateSafe = env.climateStability > 0.7;
   const bioHealthy = env.biodiversityIndex > 0.7;
-  
+
   // console.error(`\n🌍 ECOLOGICAL SPIRAL: ${spirals.ecological.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
   // console.error(`   Environmental: resources ${(env.resourceReserves * 100).toFixed(0)}%, pollution ${(env.pollutionLevel * 100).toFixed(0)}% ${envSustainable ? '✅' : '❌'} (need >70% resources, <30% pollution)`);
   // console.error(`   Climate: ${(env.climateStability * 100).toFixed(0)}% ${climateSafe ? '✅' : '❌'} (need >70%)`);
   // console.error(`   Biodiversity: ${(env.biodiversityIndex * 100).toFixed(0)}% ${bioHealthy ? '✅' : '❌'} (need >70%)`);
-  
+
   // VIRTUOUS CASCADE
   // console.error(`\n✨ VIRTUOUS CASCADE: ${spirals.cascadeActive ? '✅ ACTIVE' : '❌ INACTIVE'}`);
   // console.log(`   Active Count: ${activeSpialNames.length}/6 (need 4+ for cascade)`);
@@ -804,7 +804,7 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   //   console.log(`   Cascade Strength: ${spirals.cascadeStrength.toFixed(2)}x`);
   //   console.log(`   Cascade Duration: ${spirals.cascadeMonths} months (need 6+ for Utopia)`);
   // }
-  
+
   // UTOPIA CHECK
   const utopiaResult = canDeclareUtopia(state);
   // KEEP Utopia eligibility - this is critical
@@ -817,5 +817,163 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
     }
   }
   // console.log(`================================================================================\n`);
+}
+
+/**
+ * 🔍 ENHANCED DIAGNOSTIC: Detailed spiral activation diagnostics
+ * Called from god mode test to show EXACTLY why spirals aren't activating
+ */
+export function logSpiralActivationDiagnostics(state: GameState, currentMonth: number): void {
+  const spirals = state.upwardSpirals;
+  const qol = state.qualityOfLifeSystems;
+  const social = state.socialAccumulation;
+  const env = state.environmentalAccumulation;
+  const gov = state.government.governanceQuality;
+
+  console.log(`\n=== SPIRAL ACTIVATION DIAGNOSTICS (Month ${currentMonth}) ===`);
+
+  // ABUNDANCE SPIRAL
+  const materialAbundant = qol.materialAbundance > 1.5;
+  const energyAbundant = qol.energyAvailability > 1.5;
+  const timeLiberated = state.society.unemploymentLevel > 0.6 &&
+                       state.globalMetrics.economicTransitionStage >= 3;
+
+  console.log(`\n  🌟 Abundance Spiral: ${spirals.abundance.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  if (spirals.abundance.active) {
+    console.log(`     Strength: ${spirals.abundance.strength.toFixed(2)}`);
+    console.log(`     Months active: ${spirals.abundance.monthsActive}`);
+  } else {
+    console.log(`     Material abundant (>1.5): ${materialAbundant ? '✅' : '❌'} (${qol.materialAbundance.toFixed(2)})`);
+    console.log(`     Energy abundant (>1.5): ${energyAbundant ? '✅' : '❌'} (${qol.energyAvailability.toFixed(2)})`);
+    console.log(`     Time liberated (unemp >0.6 + stage >=3): ${timeLiberated ? '✅' : '❌'} (unemp=${(state.society.unemploymentLevel * 100).toFixed(1)}%, stage=${state.globalMetrics.economicTransitionStage})`);
+  }
+
+  // COGNITIVE SPIRAL
+  const comprehensiveTrust = calculateComprehensiveTrustInAI(state);
+  const demonstratedBenefits = state.globalMetrics.qualityOfLife > 0.5;
+  const mentalHealthy = qol.diseasesBurden < 0.3 && qol.healthcareQuality > 0.8;
+  const purposeful = social.meaningCrisisLevel < 0.3;
+  const cognitiveEnhanced = demonstratedBenefits && comprehensiveTrust > TRUST_THRESHOLD_ACCEPTANCE;
+
+  console.log(`\n  🧠 Cognitive Spiral: ${spirals.cognitive.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  if (spirals.cognitive.active) {
+    console.log(`     Strength: ${spirals.cognitive.strength.toFixed(2)}`);
+    console.log(`     Months active: ${spirals.cognitive.monthsActive}`);
+  } else {
+    console.log(`     Mental health (disease <0.3 + healthcare >0.8): ${mentalHealthy ? '✅' : '❌'} (disease=${(qol.diseasesBurden * 100).toFixed(1)}%, healthcare=${(qol.healthcareQuality * 100).toFixed(1)}%)`);
+    console.log(`     Purposeful (meaning crisis <0.3): ${purposeful ? '✅' : '❌'} (${(social.meaningCrisisLevel * 100).toFixed(1)}%)`);
+    console.log(`     Cognitive enhancement: ${cognitiveEnhanced ? '✅' : '❌'}`);
+    console.log(`       - Demonstrated benefits (QoL >0.5): ${demonstratedBenefits ? '✅' : '❌'} (${(state.globalMetrics.qualityOfLife * 100).toFixed(1)}%)`);
+    console.log(`       - Trust threshold (>${(TRUST_THRESHOLD_ACCEPTANCE * 100).toFixed(0)}%): ${comprehensiveTrust > TRUST_THRESHOLD_ACCEPTANCE ? '✅' : '❌'} (${(comprehensiveTrust * 100).toFixed(1)}%)`);
+  }
+
+  // DEMOCRATIC SPIRAL
+  const qualityGovernance = gov.decisionQuality > 0.7 && gov.institutionalCapacity > 0.7;
+  const democraticEngagement = gov.participationRate > 0.6 && gov.transparency > 0.7;
+  const notAuthoritarian = state.government.governmentType !== 'authoritarian';
+
+  console.log(`\n  🗳️  Democratic Spiral: ${spirals.democratic.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  if (spirals.democratic.active) {
+    console.log(`     Strength: ${spirals.democratic.strength.toFixed(2)}`);
+    console.log(`     Months active: ${spirals.democratic.monthsActive}`);
+  } else {
+    console.log(`     Quality governance (decision >0.7 + capacity >0.7): ${qualityGovernance ? '✅' : '❌'} (decision=${(gov.decisionQuality * 100).toFixed(1)}%, capacity=${(gov.institutionalCapacity * 100).toFixed(1)}%)`);
+    console.log(`     Democratic engagement (participation >0.6 + transparency >0.7): ${democraticEngagement ? '✅' : '❌'} (participation=${(gov.participationRate * 100).toFixed(1)}%, transparency=${(gov.transparency * 100).toFixed(1)}%)`);
+    console.log(`     Not authoritarian: ${notAuthoritarian ? '✅' : '❌'} (type=${state.government.governmentType})`);
+  }
+
+  // SCIENTIFIC SPIRAL
+  const unlockedCount = getUnlockedTechCount(state);
+  const deployedCount = getDeployedTechCount(state, 0.5);
+  const totalResearch = state.government.researchInvestments.totalBudget;
+  const researchIntensive = totalResearch > 50;
+  const avgAICapability = state.aiAgents.length > 0 ? (() => {
+    const capabilitySum = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+    return assertFinite(capabilitySum / state.aiAgents.length, {
+      location: 'logSpiralActivationDiagnostics',
+      valueName: 'avgAICapability',
+      month: state.currentMonth,
+      additionalInfo: { capabilitySum, agentCount: state.aiAgents.length }
+    });
+  })() : 0;
+  const aiAccelerated = avgAICapability > 1.2;
+  const deploymentThreshold = avgAICapability > 4.0 ? 3 : 4;
+  const workflowAdaptation = assertStateProperty(
+    state.society,
+    'workflowAdaptation',
+    {
+      location: 'logSpiralActivationDiagnostics',
+      month: currentMonth,
+      expectedSource: 'initialization.ts:society'
+    }
+  );
+  const workflowAdapted = workflowAdaptation >= 0.25;
+  const deployedCheck = deployedCount >= deploymentThreshold;
+
+  console.log(`\n  🔬 Scientific Spiral: ${spirals.scientific.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  if (spirals.scientific.active) {
+    console.log(`     Strength: ${spirals.scientific.strength.toFixed(2)}`);
+    console.log(`     Months active: ${spirals.scientific.monthsActive}`);
+  } else {
+    console.log(`     Deployed breakthroughs (>=${deploymentThreshold}): ${deployedCheck ? '✅' : '❌'} (${deployedCount}/${unlockedCount} deployed)`);
+    console.log(`     Research intensive (>$50B/month): ${researchIntensive ? '✅' : '❌'} ($${totalResearch.toFixed(1)}B/month)`);
+    console.log(`     AI accelerated (>1.2 capability): ${aiAccelerated ? '✅' : '❌'} (${avgAICapability.toFixed(2)})`);
+    console.log(`     Workflow adapted (>=25%): ${workflowAdapted ? '✅' : '❌'} (${(workflowAdaptation * 100).toFixed(1)}%)`);
+  }
+
+  // MEANING SPIRAL
+  const meaningFulfilled = social.meaningCrisisLevel < 0.2;
+  const avgCohesion = (social.socialCohesion.trust + social.socialCohesion.communityBonds + social.socialCohesion.civilLiberties) / 300;
+  const strongCommunity = avgCohesion > 0.7;
+  const culturallyAdapted = social.culturalAdaptation > 0.7;
+  const autonomous = qol.autonomy > 0.7 && qol.culturalVitality > 0.7;
+
+  console.log(`\n  💫 Meaning Spiral: ${spirals.meaning.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  if (spirals.meaning.active) {
+    console.log(`     Strength: ${spirals.meaning.strength.toFixed(2)}`);
+    console.log(`     Months active: ${spirals.meaning.monthsActive}`);
+  } else {
+    console.log(`     Meaning fulfilled (<20% crisis): ${meaningFulfilled ? '✅' : '❌'} (${(social.meaningCrisisLevel * 100).toFixed(1)}%)`);
+    console.log(`     Strong community (>70%): ${strongCommunity ? '✅' : '❌'} (${(avgCohesion * 100).toFixed(1)}%)`);
+    console.log(`     Culturally adapted (>70%): ${culturallyAdapted ? '✅' : '❌'} (${(social.culturalAdaptation * 100).toFixed(1)}%)`);
+    console.log(`     Autonomous (autonomy >0.7 + cultural >0.7): ${autonomous ? '✅' : '❌'} (autonomy=${(qol.autonomy * 100).toFixed(1)}%, cultural=${(qol.culturalVitality * 100).toFixed(1)}%)`);
+  }
+
+  // ECOLOGICAL SPIRAL
+  const ecosystemHealthy = qol.ecosystemHealth > 0.7;
+  const climateStable = env.climateStability > 0.7;
+  const biodiverseHealthy = env.biodiversityIndex > 0.7;
+  const clean = env.pollutionLevel < 0.3;
+  const sustainable = env.resourceReserves > 0.7;
+
+  console.log(`\n  🌍 Ecological Spiral: ${spirals.ecological.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  if (spirals.ecological.active) {
+    console.log(`     Strength: ${spirals.ecological.strength.toFixed(2)}`);
+    console.log(`     Months active: ${spirals.ecological.monthsActive}`);
+  } else {
+    console.log(`     Ecosystem health (>0.7): ${ecosystemHealthy ? '✅' : '❌'} (${(qol.ecosystemHealth * 100).toFixed(1)}%)`);
+    console.log(`     Climate stable (>0.7): ${climateStable ? '✅' : '❌'} (${(env.climateStability * 100).toFixed(1)}%)`);
+    console.log(`     Biodiversity healthy (>0.7): ${biodiverseHealthy ? '✅' : '❌'} (${(env.biodiversityIndex * 100).toFixed(1)}%)`);
+    console.log(`     Clean (<30% pollution): ${clean ? '✅' : '❌'} (${(env.pollutionLevel * 100).toFixed(1)}%)`);
+    console.log(`     Sustainable (>70% reserves): ${sustainable ? '✅' : '❌'} (${(env.resourceReserves * 100).toFixed(1)}%)`);
+  }
+
+  // VIRTUOUS CASCADE
+  const activeCount = [
+    spirals.abundance,
+    spirals.cognitive,
+    spirals.democratic,
+    spirals.scientific,
+    spirals.meaning,
+    spirals.ecological
+  ].filter(s => s.active).length;
+
+  console.log(`\n  🌊 Virtuous Cascade: ${spirals.cascadeActive ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  if (spirals.cascadeActive) {
+    console.log(`     Cascade strength: ${spirals.cascadeStrength.toFixed(2)}x`);
+    console.log(`     Cascade months: ${spirals.cascadeMonths}`);
+  } else {
+    console.log(`     Active spirals: ${activeCount}/6 (need 4+ for cascade)`);
+  }
 }
 
