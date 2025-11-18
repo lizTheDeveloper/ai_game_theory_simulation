@@ -1221,6 +1221,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     console.log(`\n✅ TIPPING POINT CASCADE REVERSED (Month ${state.currentMonth})`);
     console.log(`Environmental interventions successful! Risk reduced below threshold.\n`);
   }
+  }
 
   // === 5. APPLY CASCADE EFFECTS ===
   if (system.cascadeActive) {
@@ -2170,4 +2171,3 @@ export function updateBiosphereIntegrityIndex(
     }
   }
 }
-
