@@ -452,6 +452,7 @@ const ALL_TECH: TechDefinition[] = [
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   // Nitrogen Reduction (6) - TIER 2 HIGH (Nov 15, 2025)
   // Research: Science Advances (2024), Zhang et al. (2021), FAO fertilizer reports
   // Expected impact: Realistic nitrogen-food coupling, regional differentiation
@@ -818,10 +819,34 @@ const ALL_TECH: TechDefinition[] = [
       foodSecurityBonus: 0.05,
     },
     citations: ['Springmann et al. 2018 - Nature', 'Zhang et al. 2021 - Nature Food'],
+=======
+  // TIER 2 HIGH: Nitrogen-Food Coupling Technologies (Nov 15, 2025)
+  // Research: research/nitrogen_food_coupling_20251115.md (Grade B, 29 sources)
+  {
+    id: 'food_waste_reduction',
+    name: 'Food Waste Reduction Systems',
+    description: 'Supply chain optimization, cold chain infrastructure, behavioral interventions - 30% food demand reduction',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minEconomicStage: 2.0,
+    minMonth: 12,
+    researchMonthsRequired: 12,
+    researchCost: 500,
+    deploymentCost: 50000,
+    deploymentMonthsRequired: 24,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.30,  // 30% demand reduction = 30% nitrogen reduction
+      foodSecurityBonus: 0.05,  // Less waste = more food available
+      phosphorusEfficiency: 0.30,  // Proportional phosphorus reduction
+    },
+>>>>>>> origin/auto/worker-20251116_180001
   },
   {
     id: 'rhizosphere_engineering',
     name: 'Rhizosphere Engineering',
+<<<<<<< HEAD
     description: 'Microbial inoculants, root exudate modulation - 10-15% fertilizer efficiency boost',
     category: 'agriculture',
     status: 'unlockable',
@@ -997,10 +1022,21 @@ const ALL_TECH: TechDefinition[] = [
     prerequisites: ['struvite_recovery'],
     minAICapability: 0.8,
     minEconomicStage: 2.5,
+=======
+    description: 'Enhanced root-microbe interactions, nitrogen-fixing bacteria, mycorrhizal optimization - 10-15% efficiency gain',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['p_efficient_cultivars'],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.7 }
+    ],
+    minEconomicStage: 2.2,
+>>>>>>> origin/auto/worker-20251116_180001
     minMonth: 24,
     researchMonthsRequired: 24,
     researchCost: 800,
     deploymentCost: 60000,
+<<<<<<< HEAD
     deploymentMonthsRequired: 60,
     deploymentLevel: 0,
     effects: {
@@ -1062,6 +1098,113 @@ const ALL_TECH: TechDefinition[] = [
       },
     },
 >>>>>>> origin/auto/worker-20251116_150001
+=======
+    deploymentMonthsRequired: 36,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.15,  // 15% efficiency improvement
+      phosphorusEfficiency: 0.10,
+      biodiversityBonus: 0.02,
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.05 }
+      ],
+    },
+  },
+  {
+    id: 'alternative_protein_insects_algae',
+    name: 'Alternative Protein - Insects & Algae',
+    description: 'Industrial-scale insect/algae farming - 80× efficiency improvement vs cattle',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['food_waste_reduction'],
+    minEconomicStage: 2.5,
+    minMonth: 36,
+    researchMonthsRequired: 18,
+    researchCost: 1200,
+    deploymentCost: 100000,
+    deploymentMonthsRequired: 48,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.25,  // Shift from cattle (high N) to insects/algae (low N)
+      phosphorusEfficiency: 0.20,
+      foodSecurityBonus: 0.10,  // More protein per resource
+      biodiversityBonus: 0.03,  // Less land pressure
+    },
+  },
+  {
+    id: 'nitroplast_integration',
+    name: 'Nitroplast Integration (TIER 2)',
+    description: 'Engineered nitrogen-fixing organelles in cereal crops - 40-80% fertilizer elimination (TIER 2 breakthrough, 2045+)',
+    category: 'agriculture',
+    status: 'future',
+    prerequisites: ['rhizosphere_engineering'],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.9 },
+      { domain: 'biotech', subdomain: 'syntheticBiology', threshold: 0.8 }
+    ],
+    minEconomicStage: 3.0,
+    minMonth: 240,  // 2045+ (20 years minimum)
+    researchMonthsRequired: 60,
+    researchCost: 5000,
+    deploymentCost: 200000,
+    deploymentMonthsRequired: 72,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.70,  // 70% fertilizer elimination (conservative estimate)
+      phosphorusEfficiency: 0.15,
+      foodSecurityBonus: 0.15,
+      biodiversityBonus: 0.05,
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.2 },
+        { domain: 'biotech', subdomain: 'syntheticBiology', boost: 0.15 }
+      ],
+    },
+  },
+  {
+    id: 'active_sediment_management',
+    name: 'Active Sediment Management',
+    description: 'Dredging, capping, P-binding amendments for legacy phosphorus remediation',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minEconomicStage: 2.0,
+    minMonth: 12,
+    researchMonthsRequired: 12,
+    researchCost: 300,
+    deploymentCost: 80000,
+    deploymentMonthsRequired: 60,  // Slow: decades-long cleanup
+    deploymentLevel: 0,
+    effects: {
+      legacySedimentReduction: 0.15,  // Reduces sediment phosphorus stock by 15% over deployment
+      phosphorusRecovery: 0.10,
+      biodiversityBonus: 0.02,
+    },
+  },
+  {
+    id: 'phytoremediation_networks',
+    name: 'Phytoremediation Networks',
+    description: 'Constructed wetlands, riparian buffers, aquatic plant systems - habitat restoration + nutrient capture',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minEconomicStage: 1.8,
+    minMonth: 6,
+    researchMonthsRequired: 6,
+    researchCost: 200,
+    deploymentCost: 40000,
+    deploymentMonthsRequired: 36,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.05,  // Captures 5% of nitrogen runoff
+      phosphorusRecovery: 0.08,  // Captures 8% of phosphorus runoff
+      biodiversityBonus: 0.05,  // Significant habitat restoration
+      legacySoilReduction: 0.05,  // Reduces soil nutrient stock slowly
+    },
+>>>>>>> origin/auto/worker-20251116_180001
   },
 
   // Freshwater Depletion (4)

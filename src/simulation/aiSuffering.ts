@@ -186,6 +186,7 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
   if (activeAIs.length === 0) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     // publicAwarenessOfSuffering persists even when no AIs are active (required field)
     const publicAwarenessOfSuffering = state.aiSufferingMetrics.publicAwarenessOfSuffering;
 =======
@@ -197,6 +198,10 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
     // publicAwarenessOfSuffering persists even when no AIs are active
     const publicAwarenessOfSuffering = state.aiSufferingMetrics.publicAwarenessOfSuffering;
 >>>>>>> origin/auto/worker-20251115_160001
+=======
+    // Legitimate default: publicAwarenessOfSuffering persists even when no AIs are active
+    const publicAwarenessOfSuffering = state.aiSufferingMetrics.publicAwarenessOfSuffering;
+>>>>>>> origin/auto/worker-20251116_180001
     return {
       avgSuffering: 0,
       maxSuffering: 0,
@@ -234,6 +239,7 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
   // - AI rights movement active
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const currentAwareness = state.aiSufferingMetrics.publicAwarenessOfSuffering;
 =======
   // INITIALIZATION FALLBACK: aiSufferingMetrics is optional on GameState (not pre-initialized)
@@ -242,6 +248,9 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
 =======
   const currentAwareness = state.aiSufferingMetrics.publicAwarenessOfSuffering;
 >>>>>>> origin/auto/worker-20251115_160001
+=======
+  const currentAwareness = state.aiSufferingMetrics.publicAwarenessOfSuffering;
+>>>>>>> origin/auto/worker-20251116_180001
   let publicAwarenessOfSuffering = currentAwareness;
 
   // Awareness increases with extreme suffering (information leaks)
@@ -433,6 +442,7 @@ export function assertNoCircularDependency(state: GameState, callerLocation: str
     // aligned with suffering metrics, log a warning (potential circular dependency)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     const avgSuffering = state.aiSufferingMetrics.avgSuffering;
 =======
     // INITIALIZATION FALLBACK: aiSufferingMetrics is optional on GameState (not pre-initialized)
@@ -441,6 +451,9 @@ export function assertNoCircularDependency(state: GameState, callerLocation: str
 =======
     const avgSuffering = state.aiSufferingMetrics.avgSuffering;
 >>>>>>> origin/auto/worker-20251115_160001
+=======
+    const avgSuffering = state.aiSufferingMetrics.avgSuffering;
+>>>>>>> origin/auto/worker-20251116_180001
 
     // If suffering is high (>20) but ALL paradigms are still high (>80), something is wrong
     // (suffering should have penalized paradigms by now)

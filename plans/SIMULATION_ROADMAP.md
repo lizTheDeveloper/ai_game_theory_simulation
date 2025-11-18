@@ -39,18 +39,39 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-   - **Ocean Acidification + AI Alignment Faking (2024-2025 Findings)** - HIGH (Added Nov 16, 2025)
-     - **Context:** Two major research updates - planetary boundaries (7/9 crossed) + empirical AI deception
-     - **Research Files:** research/ocean_acidification_planetary_boundary_2025.md, research/alignment_faking_anthropic_2024.md
-     - **Verification File:** research/verification_d4ab8f4_20251116.md
+   - **Biogeochemical Flows Integration - Nitrogen-Food Coupling & Legacy Stocks** - TIER 2 HIGH (Added Nov 16, 2025)
+     - **Context:** Integration of nitrogen-food coupling + legacy nutrient stocks into ResourceSoilPhase (commit a0c047b)
+     - **Implementation Complete:** 6 technologies added, yield penalties, regional differentiation, legacy stock decay
+     - **Research Claimed:** Grade B, 29 peer-reviewed sources (2021-2024) from research/nitrogen_food_coupling_20251115.md
      - **Key Claims Requiring Verification:**
-       - Ocean acidification: Steffen et al. (2025) Global Change Biology - does this exist? (Steffen died 2023)
-       - 7/9 planetary boundaries crossed - explicitly stated or inferred?
-       - AI alignment faking: arXiv:2412.14093 - verify accessibility and external review claim
-       - 12% → 78% faking rate post-RLHF - direct quote from paper?
-       - Capability threshold (Opus/3.5 Sonnet only) - comparison table exists?
-     - **Implementation Impact:** Planetary boundaries baseline update, AI alignment mechanics, RLHF amplification
-     - **Status:** Ready for orchestrator (validation → implementation → testing → documentation)
+       - Lake Erie sediment loading: 10,000-11,000 MT P/year internal loading (Paerl et al. 2024) - QUOTE NEEDED
+       - Nitrogen half-life: 30 years exponential decay - SOURCE NEEDED
+       - South Asia nitrogen overuse: 55% (can reduce without yield penalty) - SOURCE NEEDED
+       - Yield penalty curve: 3% loss at 15% N reduction - SPECIFIC PAPER?
+       - Food waste reduction: 30% achievable globally - SOURCE?
+       - Rhizosphere engineering: 10-15% efficiency gain - PAPER QUOTE?
+       - Alternative protein: 80× efficiency (insects/algae vs cattle) → 25% N reduction - CALCULATION JUSTIFIED?
+       - **CRITICAL - Nitroplast Integration:** 40-80% fertilizer elimination (Coale et al. 2024 *Science*)
+         - Paper discusses ALGAE nitroplasts (April 2024 discovery)
+         - Implementation claims CEREAL application - LIKELY SPECULATIVE EXTRAPOLATION
+         - 2045+ timeline - NOT RESEARCH-BACKED, pure speculation?
+         - Uses 70% (middle of range) - conservative but is range justified?
+       - Active sediment management: 15% sediment reduction - PAPER?
+       - Phytoremediation: 5% N capture, 8% P capture - SPECIFIC VALUES?
+       - Baseline phosphorus: 25 Mt P/year (2025) - SOURCE?
+       - Baseline nitrogen: 120 Mt N/year (2025) - Zhang et al. (2021) projection or extrapolation?
+       - Nitrogen use efficiency: 46% (40-53% range) - Lassaletta et al. (2024) QUOTE?
+     - **Verification File:** research/verification_a0c047b_20251116.md (two-layer: existence + claim accuracy)
+     - **Expected Issues:** Nitroplast cereals likely speculative, regional overuse may be aggregated not single-source
+     - **Assignments:**
+       - Cynthia: Verify 29 citations exist, access papers, extract specific passages supporting ALL numeric claims
+       - Sylvia: Claim verification - SUPPORTED vs EXTRAPOLATED vs UNVERIFIED, assess nitroplast speculation risk
+       - Roy: Parameter adjustment if claims UNVERIFIED (blocked until validation)
+     - **Priority:** TIER 2 HIGH - Affects biogeochemical boundary effectiveness (currently 10%, expected 30-50% with legacy inertia)
+     - **Status:** ⚠️ NEEDS VALIDATION - Implementation deployed, verification file created, ready for orchestrator
+     - **Research File:** research/nitrogen_food_coupling_20251115.md (883 lines)
+     - **Commit:** a0c047b
+     - **Files Changed:** ResourceSoilPhase.ts, initialization.ts, comprehensiveTechTree.ts
 
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
@@ -1083,15 +1104,6 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
-- [ ] 🚨 **NEW (Nov 16):** Verify Novel Entities irreversibility framework citations (research/verification_9ffd3b5_20251116.md, commit 9ffd3b5) - **10 citations requiring Layer 1+2 verification** including:
-  - Cousins et al. (2022): 99% atmospheric redeposition claim
-  - EPA (2024): 75 GJ/ton PFAS destruction energy
-  - Fennell (2024): 6-9 orders of magnitude concentration gap
-  - Sorrell (2009), Gillingham et al. (2013): Rebound coefficient 0.1-0.6 range
-  - Tibetan Plateau rainwater: 55 pg/L baseline contamination
-  - PFAS decay half-life: 500+ year environmental persistence
-  - **Priority:** HIGH (TIER 1 CRITICAL system - Novel Entities 0% effectiveness pathway)
-  - **Status:** Research file created by historian, ready for orchestrator → research-skeptic validation
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)

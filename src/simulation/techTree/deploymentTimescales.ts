@@ -25,10 +25,14 @@ import { TechTreeState, RegionalTechDeployment } from './engine';
 import { getTechById } from './comprehensiveTechTree';
 import { addSimulationEvent } from '../utils/eventLogger';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { assertStateProperty } from '@/simulation/utils/assertions';
 =======
 import { assertStateProperty } from '../utils/assertions';
 >>>>>>> origin/auto/worker-20251115_220001
+=======
+import { assertStateProperty } from '../utils/assertions';
+>>>>>>> origin/auto/worker-20251116_180001
 
 /**
  * Deployment timescale parameters (months to full deployment)
@@ -159,6 +163,7 @@ export function sigmoidDeploymentCurve(
  */
 export function getGovernanceMultiplier(gameState: GameState): number {
 <<<<<<< HEAD
+<<<<<<< HEAD
   // Access nested object properties - governanceQuality is always initialized
   const govQuality = gameState.government.governanceQuality;
   const enforcement = assertStateProperty(govQuality, 'institutionalCapacity', {
@@ -175,6 +180,10 @@ export function getGovernanceMultiplier(gameState: GameState): number {
   );
   const cooperation = gameState.government.structuralChoices.internationalCoordination ? 1.0 : 0.5;
 >>>>>>> origin/auto/worker-20251115_220001
+=======
+  const enforcement = gameState.government.governanceQuality.institutionalCapacity;
+  const cooperation = gameState.government.structuralChoices?.internationalCoordination ? 1.0 : 0.5;
+>>>>>>> origin/auto/worker-20251116_180001
 
   const governanceCapacity = (enforcement + cooperation) / 2;
 
@@ -202,6 +211,7 @@ export function getGovernanceMultiplier(gameState: GameState): number {
  */
 export function getClimateRecoveryMultiplier(gameState: GameState): number {
 <<<<<<< HEAD
+<<<<<<< HEAD
   // Access nested path - these objects are always initialized
   const pbs = gameState.planetaryBoundariesSystem;
   const climateChange = pbs.boundaries['climate_change'];  // Note: snake_case key
@@ -217,6 +227,13 @@ export function getClimateRecoveryMultiplier(gameState: GameState): number {
     { location: 'getClimateRecoveryMultiplier', month: gameState.currentMonth }
   );
 >>>>>>> origin/auto/worker-20251115_220001
+=======
+  const climateChangeBoundary = gameState.planetaryBoundariesSystem.boundaries['climateChange'];
+  if (!climateChangeBoundary) {
+    throw new Error(`❌ climateChange boundary not found in planetaryBoundariesSystem at month ${gameState.currentMonth}`);
+  }
+  const globalWarming = climateChangeBoundary.currentValue;
+>>>>>>> origin/auto/worker-20251116_180001
 
   if (globalWarming < 1.5) return 1.0;
   if (globalWarming < 2.0) return 0.95;
