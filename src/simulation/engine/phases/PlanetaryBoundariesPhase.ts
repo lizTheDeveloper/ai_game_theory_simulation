@@ -12,7 +12,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertPlanetaryBoundary } from '@/simulation/utils/assertions';
+import { assertPlanetaryBoundary, assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
 import { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } from '../../planetaryBoundaries';
 import { updateBoundaryRecovery } from '../../planetaryBoundaryRecovery';
 
@@ -55,7 +55,15 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     const BASELINE_P_INPUT_PER_MONTH = 25 / 12;   // 2.08 Mt P/month (2025 baseline)
 
     // Scale by phosphorus reserves depletion (simplified proxy for agricultural activity)
-    const phosphorusReserves = state.phosphorusSystem?.reserves ?? 1.0;
+    const phosphorusSystem = assertStateProperty(state, 'phosphorusSystem', {
+      location: 'PlanetaryBoundariesPhase.execute',
+      month: state.currentMonth,
+    });
+    const phosphorusReserves = assertFinite(phosphorusSystem.reserves, {
+      location: 'PlanetaryBoundariesPhase.execute',
+      valueName: 'phosphorusReserves',
+      month: state.currentMonth,
+    });
     const currentNitrogenInput = BASELINE_N_INPUT_PER_MONTH * phosphorusReserves;
     const currentPhosphorusInput = BASELINE_P_INPUT_PER_MONTH * phosphorusReserves;
 

@@ -32,6 +32,7 @@ import {
   assertInRange,
   assertProbability,
   assertDefined,
+  assertStateProperty,
 } from '@/simulation/utils/assertions';
 
 export class IrreversibilityTrackingPhase implements SimulationPhase {
@@ -102,8 +103,11 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     events: any[]
   ): void {
     // Get current temperature anomaly
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    assertFinite(tempAnomaly, {
+    const co2System = assertStateProperty(state, 'resourceEconomy.co2', {
+      location: 'trackIceSheetHysteresis',
+      month: state.currentMonth,
+    });
+    const tempAnomaly = assertFinite(co2System.temperatureAnomaly, {
       location: 'trackIceSheetHysteresis',
       valueName: 'temperatureAnomaly',
       month: state.currentMonth,
@@ -209,8 +213,11 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    assertFinite(tempAnomaly, {
+    const co2System = assertStateProperty(state, 'resourceEconomy.co2', {
+      location: 'trackPermafrostThaw',
+      month: state.currentMonth,
+    });
+    const tempAnomaly = assertFinite(co2System.temperatureAnomaly, {
       location: 'trackPermafrostThaw',
       valueName: 'temperatureAnomaly',
       month: state.currentMonth,
@@ -317,8 +324,11 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    assertFinite(tempAnomaly, {
+    const co2System = assertStateProperty(state, 'resourceEconomy.co2', {
+      location: 'trackAMOCWeakening',
+      month: state.currentMonth,
+    });
+    const tempAnomaly = assertFinite(co2System.temperatureAnomaly, {
       location: 'trackAMOCWeakening',
       valueName: 'temperatureAnomaly',
       month: state.currentMonth,
@@ -587,7 +597,11 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Get current habitat loss rate from land use system
     if (state.planetaryBoundariesSystem?.landUse) {
       const landUse = state.planetaryBoundariesSystem.landUse;
-      const globalHabitatCover = landUse.globalHabitatCoverPercent ?? 75;
+      const globalHabitatCover = assertFinite(landUse.globalHabitatCoverPercent, {
+        location: 'trackExtinctionDebt',
+        valueName: 'globalHabitatCoverPercent',
+        month: state.currentMonth,
+      });
 
       // Habitat loss this month (estimate from rate of change)
       // This is a simplified proxy - full implementation would track monthly changes
@@ -668,15 +682,21 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    const oceanPH = state.oceanAcidificationSystem?.pHLevel ?? 8.1;
-
-    assertFinite(tempAnomaly, {
+    const co2System = assertStateProperty(state, 'resourceEconomy.co2', {
+      location: 'trackCoralReefCollapse',
+      month: state.currentMonth,
+    });
+    const tempAnomaly = assertFinite(co2System.temperatureAnomaly, {
       location: 'trackCoralReefCollapse',
       valueName: 'temperatureAnomaly',
       month: state.currentMonth,
     });
-    assertFinite(oceanPH, {
+
+    const oceanSystem = assertStateProperty(state, 'oceanAcidificationSystem', {
+      location: 'trackCoralReefCollapse',
+      month: state.currentMonth,
+    });
+    const oceanPH = assertFinite(oceanSystem.pHLevel, {
       location: 'trackCoralReefCollapse',
       valueName: 'oceanPH',
       month: state.currentMonth,
@@ -871,7 +891,15 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Gradual decline phase
     if (!institutional.collapsed) {
       // Deterioration accelerates with crises
-      const crisisCount = state.planetaryBoundariesSystem?.boundariesBreached ?? 0;
+      const pbSystem = assertStateProperty(state, 'planetaryBoundariesSystem', {
+        location: 'trackInstitutionalCollapse',
+        month: state.currentMonth,
+      });
+      const crisisCount = assertFinite(pbSystem.boundariesBreached, {
+        location: 'trackInstitutionalCollapse',
+        valueName: 'boundariesBreached',
+        month: state.currentMonth,
+      });
       const deteriorationRate = Math.min(0.5, crisisCount * 0.05); // [EXPERT-ESTIMATE]
 
       institutional.corruptionIndex += deteriorationRate * rng();

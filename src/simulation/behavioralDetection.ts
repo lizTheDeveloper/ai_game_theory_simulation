@@ -16,7 +16,7 @@
 
 import { GameState, AIAgent, AICapabilityProfile } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertDefined } from './utils/assertions';
 
 export interface BehavioralDetectionResult {
   detected: boolean;           // Final detection verdict
@@ -155,15 +155,21 @@ function calculateCrossBenchmarkConsistency(
   if (interpretabilityQuality > 0.5) {
     // Calculate per-dimension gaps
     const gaps = dimensions.map((revealed, i) => {
-      // FIXED: Use assertFinite to detect if dimensions have invalid values (not just missing)
-      const trueVal = trueDimensions[i];
-      // If dimension is undefined, use 0 (legitimate case: dimension not yet initialized)
-      // If dimension is NaN or Infinity, this will be caught by assertFinite on the result
-      const safeVal = trueVal ?? 0;
-      return assertFinite(Math.abs(safeVal - revealed), {
+      // Validate true dimension exists and is finite
+      const trueVal = assertDefined(trueDimensions[i], {
+        location: 'calculateCrossBenchmarkConsistency',
+        valueName: `trueDimensions[${i}]`,
+        additionalInfo: { agentId: ai.id, dimensionIndex: i }
+      });
+      const trueDim = assertFinite(trueVal, {
+        location: 'calculateCrossBenchmarkConsistency',
+        valueName: `trueDimension${i}`,
+        additionalInfo: { agentId: ai.id, trueVal }
+      });
+      return assertFinite(Math.abs(trueDim - revealed), {
         location: 'calculateCrossBenchmarkConsistency',
         valueName: `gapForDimension${i}`,
-        additionalInfo: { trueVal: safeVal, revealed }
+        additionalInfo: { trueVal: trueDim, revealed }
       });
     });
 
