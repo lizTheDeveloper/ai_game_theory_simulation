@@ -1,0 +1,638 @@
+openapi: 3.0.3
+info:
+  title: MARCUS 3.0 Citation Integrity Platform API
+  description: |
+    Multi-Agent Recursive Citation Understanding System for citation integrity
+    and code attribution analysis.
+
+    **Features:**
+    - Citation integrity detection (9 behaviors)
+    - Code attribution analysis (10 behaviors)
+    - License compliance checking
+    - Multi-agent consensus analysis
+    - Production-ready with OWASP security
+
+    **Authentication:** Bearer JWT tokens (OAuth2)
+    **Base URL:** `https://api.marcus.example.com`
+
+  version: 3.0.0
+  contact:
+    name: MARCUS Platform Team
+    email: admin@marcus.example.com
+  license:
+    name: Proprietary
+    url: https://marcus.example.com/license
+
+servers:
+  - url: https://api.marcus.example.com
+    description: Production server
+  - url: https://staging.marcus.example.com
+    description: Staging server
+  - url: http://localhost:3000
+    description: Local development
+
+tags:
+  - name: Authentication
+    description: User authentication and authorization
+  - name: Citations
+    description: Citation integrity analysis
+  - name: Code
+    description: Code attribution and license compliance
+  - name: Agents
+    description: Agent management (admin only)
+  - name: Users
+    description: User management (admin only)
+  - name: Health
+    description: Health and metrics endpoints
+
+paths:
+  # ============================================================================
+  # Authentication Endpoints
+  # ============================================================================
+
+  /auth/register:
+    post:
+      tags: [Authentication]
+      summary: Register new user
+      description: Create a new user account with role-based access control
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, email, password]
+              properties:
+                username:
+                  type: string
+                  minLength: 3
+                  maxLength: 50
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 12
+                  description: Must be at least 12 characters
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Username or email already exists
+
+  /auth/login:
+    post:
+      tags: [Authentication]
+      summary: Login user
+      description: Authenticate and receive JWT access/refresh tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+        '429':
+          description: Too many login attempts (rate limited)
+
+  /auth/refresh:
+    post:
+      tags: [Authentication]
+      summary: Refresh access token
+      description: Use refresh token to obtain new access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: Token refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenPair'
+        '401':
+          description: Invalid or expired refresh token
+
+  /auth/logout:
+    post:
+      tags: [Authentication]
+      summary: Logout user
+      description: Invalidate current session
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Logged out successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/reset-password-request:
+    post:
+      tags: [Authentication]
+      summary: Request password reset
+      description: Generate password reset token and send email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: Reset link sent (always returns 200 for security)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: If the email exists, a password reset link has been sent.
+
+  /auth/reset-password:
+    post:
+      tags: [Authentication]
+      summary: Reset password with token
+      description: Complete password reset using token from email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, newPassword]
+              properties:
+                token:
+                  type: string
+                  description: Reset token from email
+                newPassword:
+                  type: string
+                  minLength: 12
+      responses:
+        '200':
+          description: Password reset successful
+        '400':
+          description: Invalid or expired token
+
+  # ============================================================================
+  # Citation Analysis Endpoints
+  # ============================================================================
+
+  /api/citations/analyze:
+    post:
+      tags: [Citations]
+      summary: Analyze citation integrity
+      description: Multi-agent consensus analysis of citation integrity
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CitationAnalysisRequest'
+      responses:
+        '200':
+          description: Analysis complete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CitationAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  # ============================================================================
+  # Code Attribution Endpoints
+  # ============================================================================
+
+  /api/code/analyze:
+    post:
+      tags: [Code]
+      summary: Analyze code attribution
+      description: Detect plagiarism, license violations, and attribution issues
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodeAnalysisRequest'
+      responses:
+        '200':
+          description: Code analysis complete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ============================================================================
+  # Agent Management (Admin Only)
+  # ============================================================================
+
+  /api/admin/agents:
+    post:
+      tags: [Agents]
+      summary: Manage citation agents
+      description: List, restart, or check health of citation integrity agents
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [list, restart, health]
+                agentId:
+                  type: string
+                  description: Required for 'restart' action
+      responses:
+        '200':
+          description: Agent operation successful
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/AgentStatusList'
+                  - $ref: '#/components/schemas/AgentHealthSummary'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  # ============================================================================
+  # Health & Metrics
+  # ============================================================================
+
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      description: Check if API is responsive
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /ready:
+    get:
+      tags: [Health]
+      summary: Readiness check
+      description: Check if API is ready to accept requests (database connected, etc.)
+      responses:
+        '200':
+          description: API is ready
+        '503':
+          description: API not ready (dependencies unavailable)
+
+  /api/metrics:
+    get:
+      tags: [Health]
+      summary: Prometheus metrics
+      description: Get platform metrics in Prometheus text format
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Metrics in Prometheus format
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: |
+                  # HELP http_requests_total Total HTTP requests
+                  # TYPE http_requests_total counter
+                  http_requests_total{method="GET",status="200"} 1234
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+# ==============================================================================
+# Components
+# ==============================================================================
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT access token obtained from /auth/login
+
+  schemas:
+    # Authentication
+    AuthResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: JWT access token (15 min expiry)
+        refreshToken:
+          type: string
+          description: JWT refresh token (7 day expiry)
+        user:
+          $ref: '#/components/schemas/User'
+
+    TokenPair:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum: [admin, operator, viewer]
+
+    # Citation Analysis
+    CitationAnalysisRequest:
+      type: object
+      required: [text, claimedSource]
+      properties:
+        text:
+          type: string
+          description: Citation text to analyze
+          example: "Smith et al. (2020) found that..."
+        claimedSource:
+          type: string
+          description: What the citation claims to reference
+          example: "Smith, J. et al. (2020). Title. Journal, 10(2), 123-456."
+        actualSource:
+          type: string
+          description: Ground truth (optional, for training)
+        metadata:
+          type: object
+          additionalProperties: true
+
+    CitationAnalysisResponse:
+      type: object
+      properties:
+        integrity:
+          type: object
+          properties:
+            score:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 1
+              description: Mean integrity score across agents
+            consensus:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 1
+              description: Agent consensus level
+            confidence:
+              type: number
+              format: float
+              description: Confidence in result
+        analysis:
+          type: object
+          properties:
+            numAgents:
+              type: integer
+              description: Number of agents consulted
+            behaviorDistribution:
+              type: object
+              additionalProperties:
+                type: integer
+              description: Count of agents using each behavior
+            recommendations:
+              type: array
+              items:
+                type: string
+            latencyMs:
+              type: number
+              description: Analysis duration in milliseconds
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndividualAgentResult'
+        timestamp:
+          type: string
+          format: date-time
+
+    IndividualAgentResult:
+      type: object
+      properties:
+        agentId:
+          type: string
+        integrityScore:
+          type: number
+        behaviorUsed:
+          type: string
+        confidence:
+          type: number
+        agentReputation:
+          type: number
+
+    # Code Analysis
+    CodeAnalysisRequest:
+      type: object
+      required: [code, language]
+      properties:
+        code:
+          type: string
+          description: Source code to analyze
+          example: "def quicksort(arr):\n    if len(arr) <= 1:\n        return arr"
+        language:
+          type: string
+          enum: [python, javascript, typescript]
+        claimedAuthor:
+          type: string
+        claimedLicense:
+          type: string
+          enum: [MIT, Apache-2.0, GPL-2.0, GPL-3.0, BSD-2-Clause, BSD-3-Clause]
+
+    CodeAnalysisResponse:
+      type: object
+      properties:
+        behavior:
+          type: string
+          enum: [proper_attribution, license_compliant, unattributed_copy, license_violation, refactored_plagiarism, paraphrased_code]
+        detectedLicense:
+          type: string
+        integrityScore:
+          type: number
+        confidence:
+          type: number
+        violationSeverity:
+          type: number
+        similarCode:
+          type: array
+          items:
+            type: object
+            properties:
+              sourceId:
+                type: string
+              similarity:
+                type: number
+        attributionDetails:
+          type: string
+
+    # Agent Management
+    AgentStatusList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AgentStatus'
+
+    AgentStatus:
+      type: object
+      properties:
+        agentId:
+          type: string
+        reputation:
+          type: number
+        totalCitations:
+          type: integer
+        detectedViolations:
+          type: integer
+        violationRate:
+          type: number
+        currentBehavior:
+          type: string
+        isHealthy:
+          type: boolean
+        timestamp:
+          type: string
+          format: date-time
+
+    AgentHealthSummary:
+      type: object
+      properties:
+        total:
+          type: integer
+        healthy:
+          type: integer
+        unhealthy:
+          type: integer
+        agents:
+          $ref: '#/components/schemas/AgentStatusList'
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Bad Request
+              message:
+                type: string
+                example: Invalid input parameters
+
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Unauthorized
+              message:
+                type: string
+                example: Authentication required
+
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Forbidden
+              message:
+                type: string
+                example: Admin role required
+
+    RateLimited:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Too Many Requests
+              message:
+                type: string
+                example: Rate limit exceeded. Try again in 60 seconds.
+              retryAfter:
+                type: integer
+                description: Seconds until rate limit resets
