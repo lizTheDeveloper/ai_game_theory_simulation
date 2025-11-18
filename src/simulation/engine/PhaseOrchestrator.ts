@@ -7,6 +7,7 @@
 
 import { GameState, GameEvent } from '@/types/game';
 import { logger } from '../utils/asyncLogger';
+import { stateValidator, type StateSnapshot } from '../utils/stateValidation';
 
 /**
  * Random number generator function
@@ -123,19 +124,28 @@ export class PhaseOrchestrator {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   // MEMORY LEAK FIX (Nov 15, 2025): Use Welford's algorithm for O(1) memory per phase
   // Previous: Stored 1000 samples × 95 phases = 760KB per simulation
   // Current: ~120 bytes per phase (6 numbers) = 11KB total for 95 phases
 <<<<<<< HEAD
 =======
   // MEMORY LEAK FIX (Nov 13, 2025): Sliding windows to prevent unbounded growth
+=======
+  // MEMORY LEAK FIX (Nov 15, 2025): Use Welford's algorithm for O(1) memory per phase
+  // Previous: Stored 1000 samples × 95 phases = 760KB per simulation
+  // Current: ~120 bytes per phase (6 numbers) = 11KB total for 95 phases
+>>>>>>> origin/auto/worker-20251115_150001
   /**
-   * Maximum samples to keep per phase for p95 calculation.
-   * Keeps last 1000 samples = ~8 hours of simulation at ~120 steps/hour.
-   * Prevents memory leak in long-running Monte Carlo (N=100 × 1200 steps = 120K samples → 1000 samples).
+   * Maximum samples to keep per phase for p95 calculation (reservoir sampling).
+   * Keeps 100 randomly selected samples for p95 estimation.
    */
+<<<<<<< HEAD
   private static readonly MAX_PHASE_SAMPLES = 1000;
 >>>>>>> origin/auto/worker-20251115_090001
+=======
+  private static readonly MAX_PHASE_SAMPLES = 100;
+>>>>>>> origin/auto/worker-20251115_150001
   /**
    * Maximum step timings to keep.
    * Keeps last 1200 steps = 100 years of simulation.
@@ -143,6 +153,7 @@ export class PhaseOrchestrator {
    */
   private static readonly MAX_STEP_TIMINGS = 1200;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> origin/auto/worker-20251115_080001
@@ -158,11 +169,14 @@ export class PhaseOrchestrator {
   // Previous: Stored 1000 samples × 95 phases = 760KB per simulation
   // Current: ~120 bytes per phase (6 numbers) = 11KB total for 95 phases
 >>>>>>> origin/auto/worker-20251115_140001
+=======
+>>>>>>> origin/auto/worker-20251115_150001
   private phaseTimings: Map<string, {
     totalMs: number;
     callCount: number;
     minMs: number;
     maxMs: number;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -175,6 +189,11 @@ export class PhaseOrchestrator {
     mean: number;        // Welford's algorithm: incremental mean
     m2: number;          // Welford's algorithm: sum of squared deviations (for variance)
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+    mean: number;        // Welford's algorithm: incremental mean
+    m2: number;          // Welford's algorithm: sum of squared deviations (for variance)
+    samples: number[];   // Reservoir sampling for p95 (max 100 samples)
+>>>>>>> origin/auto/worker-20251115_150001
   }> = new Map();
   private enableTiming: boolean = false;
   private slowPhaseThresholdMs: number = 10;  // Warn on phases >10ms
@@ -257,13 +276,22 @@ export class PhaseOrchestrator {
           }
         }
 
+        // STATE VALIDATION (Nov 15, 2025) - HIGH-3 fix
+        // Pre-condition: Validate state BEFORE phase executes
+        const preSnapshot = stateValidator.validatePreCondition(state, phase.name);
+
         // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
         const startTime = this.enableTiming ? performance.now() : 0;
 
         const result = phase.execute(state, rng, ctx);
 
+        // STATE VALIDATION (Nov 15, 2025) - HIGH-3 fix
+        // Post-condition: Validate state AFTER phase executes
+        stateValidator.validatePostCondition(state, phase.name, preSnapshot);
+
         // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
         // ENHANCED (Nov 12, 2025): Track min/max/p95, warn on slow phases
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -277,6 +305,9 @@ export class PhaseOrchestrator {
 =======
         // MEMORY LEAK FIX (Nov 15, 2025): Use Welford's algorithm for O(1) memory
 >>>>>>> origin/auto/worker-20251115_140001
+=======
+        // MEMORY LEAK FIX (Nov 15, 2025): Use Welford's algorithm for O(1) memory
+>>>>>>> origin/auto/worker-20251115_150001
         if (this.enableTiming) {
           const elapsed = performance.now() - startTime;
           const existing = this.phaseTimings.get(phase.name) || {
@@ -284,6 +315,7 @@ export class PhaseOrchestrator {
             callCount: 0,
             minMs: Infinity,
             maxMs: -Infinity,
+<<<<<<< HEAD
             samples: []
           };
 
@@ -294,6 +326,13 @@ export class PhaseOrchestrator {
 >>>>>>> origin/auto/worker-20251115_130001
 =======
 >>>>>>> origin/auto/worker-20251115_140001
+=======
+            mean: 0,
+            m2: 0,
+            samples: []
+          };
+
+>>>>>>> origin/auto/worker-20251115_150001
           // Welford's algorithm for incremental mean and variance
           // See: Knuth TAOCP vol 2, 3rd edition, page 232
           const newCount = existing.callCount + 1;
@@ -302,6 +341,7 @@ export class PhaseOrchestrator {
           const delta2 = elapsed - newMean;
           const newM2 = existing.m2 + delta * delta2;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -318,11 +358,27 @@ export class PhaseOrchestrator {
 >>>>>>> origin/auto/worker-20251115_130001
 =======
 >>>>>>> origin/auto/worker-20251115_140001
+=======
+          // Reservoir sampling for p95 (keep 100 random samples)
+          // Algorithm R from Knuth TAOCP vol 2, section 3.4.2
+          let newSamples = existing.samples;
+          if (newSamples.length < PhaseOrchestrator.MAX_PHASE_SAMPLES) {
+            newSamples = [...newSamples, elapsed];
+          } else {
+            const j = Math.floor(Math.random() * newCount);
+            if (j < PhaseOrchestrator.MAX_PHASE_SAMPLES) {
+              newSamples = [...newSamples];
+              newSamples[j] = elapsed;
+            }
+          }
+
+>>>>>>> origin/auto/worker-20251115_150001
           this.phaseTimings.set(phase.name, {
             totalMs: existing.totalMs + elapsed,
             callCount: existing.callCount + 1,
             minMs: Math.min(existing.minMs, elapsed),
             maxMs: Math.max(existing.maxMs, elapsed),
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -339,6 +395,11 @@ export class PhaseOrchestrator {
             mean: newMean,
             m2: newM2
 >>>>>>> origin/auto/worker-20251115_140001
+=======
+            mean: newMean,
+            m2: newM2,
+            samples: newSamples
+>>>>>>> origin/auto/worker-20251115_150001
           });
 
           // Warn on slow phases (>10ms threshold)
