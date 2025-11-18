@@ -31,14 +31,9 @@ export class GovernmentActionsPhase implements SimulationPhase {
   readonly order = 9.0;
 
   // DEPENDENCIES (Nov 15, 2025): Requires AI agents for policy decisions
-<<<<<<< HEAD
   // NOTE: Government actions READ economic state but don't DEPEND on economic-system phase
   // (economic-system runs at order 31.0, AFTER government-actions at 9.0)
   // Government uses state.economicModel (initialized once) not phase output
-=======
-  // NOTE: economic-system dependency REMOVED - backwards ordering (9.0 cannot depend on 31.0)
-  // Government reads economic state from previous step
->>>>>>> origin/auto/worker-20251115_013002
   readonly dependencies = [
     'ai-lifecycle',           // Order 3.0: AI capabilities affect government policy
   ] as const;

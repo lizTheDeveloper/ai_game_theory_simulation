@@ -450,10 +450,6 @@ const ALL_TECH: TechDefinition[] = [
     },
   },
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   // Nitrogen Reduction (6) - TIER 2 HIGH (Nov 15, 2025)
   // Research: Science Advances (2024), Zhang et al. (2021), FAO fertilizer reports
   // Expected impact: Realistic nitrogen-food coupling, regional differentiation
@@ -570,27 +566,10 @@ const ALL_TECH: TechDefinition[] = [
     capabilityEffects: {
       dimensions: {
         digital: 0.05,  // Improves data systems
-=======
-  // Nitrogen Management Technologies (TIER 2 HIGH - Nov 15, 2025)
-  // Research: nitrogen_food_coupling_20251115.md (Grade B, 29 sources)
-  {
-    id: 'precision_agriculture',
-    name: 'Precision Agriculture',
-    description: 'Variable-rate tech, split N application, soil sensors - 25-30% N reduction with zero yield penalty',
-=======
-  // Nitrogen Management (TIER 2 HIGH - Nov 15, 2025)
-  // Research: nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
-  // Expected impact: God mode effectiveness 10% → 30-50% (legacy stock inertia)
-  {
-    id: 'precision_agriculture_nitrogen',
-    name: 'Precision Agriculture (Nitrogen)',
-    description: 'Variable Rate Technology (VRT) + SPAD sensors - 25-30% N fertilizer reduction without yield loss',
->>>>>>> origin/auto/worker-20251116_220001
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: [],
     minCapabilityDimensions: [
-<<<<<<< HEAD
       { dimension: 'digital', threshold: 0.4 },    // IoT sensors, data systems
       { dimension: 'cognitive', threshold: 0.3 }   // AI optimization
     ],
@@ -610,12 +589,10 @@ const ALL_TECH: TechDefinition[] = [
     capabilityEffects: {
       dimensions: {
         cognitive: 0.03,  // Improves AI agricultural optimization
->>>>>>> origin/auto/worker-20251116_150001
       },
     },
   },
   {
-<<<<<<< HEAD
     id: 'green_ammonia_production',
     name: 'Green Ammonia Production',
     description: 'Renewable energy-based Haber-Bosch replacement with hydrogen synthesis',
@@ -803,61 +780,10 @@ const ALL_TECH: TechDefinition[] = [
       'Schindler (2012) - Internal loading in eutrophic systems',
       'NOAA NCCOS (2021) - Lake Erie internal loading, 10,000-11,000 MT P/year'
     ],
-=======
-  // TIER 2 HIGH: Nitrogen-Food Coupling Technologies (Nov 15, 2025)
-  // Research: research/nitrogen_food_coupling_20251115.md (29 sources, Grade B)
-  {
-    id: 'food_waste_reduction',
-    name: 'Food Waste Reduction Systems',
-    description: 'Supply chain optimization, precision distribution, waste valorization - 30% demand reduction',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minCapabilityDimensions: [
-      { dimension: 'digital', threshold: 0.5 },     // Data systems for supply chain
-      { dimension: 'cognitive', threshold: 0.4 }    // AI optimization
-    ],
-    minEconomicStage: 1.8,
-    minMonth: 12,  // Can deploy relatively quickly (TIER 1)
-    researchMonthsRequired: 12,
-    researchCost: 200,
-    deploymentCost: 50000,
-    deploymentMonthsRequired: 36,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenDemandReduction: 0.30,  // 30% demand reduction
-      phosphorusEfficiency: 0.30,
-      foodSecurityBonus: 0.05,
-    },
-    citations: ['Springmann et al. 2018 - Nature', 'Zhang et al. 2021 - Nature Food'],
-=======
-  // TIER 2 HIGH: Nitrogen-Food Coupling Technologies (Nov 15, 2025)
-  // Research: research/nitrogen_food_coupling_20251115.md (Grade B, 29 sources)
-  {
-    id: 'food_waste_reduction',
-    name: 'Food Waste Reduction Systems',
-    description: 'Supply chain optimization, cold chain infrastructure, behavioral interventions - 30% food demand reduction',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minEconomicStage: 2.0,
-    minMonth: 12,
-    researchMonthsRequired: 12,
-    researchCost: 500,
-    deploymentCost: 50000,
-    deploymentMonthsRequired: 24,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.30,  // 30% demand reduction = 30% nitrogen reduction
-      foodSecurityBonus: 0.05,  // Less waste = more food available
-      phosphorusEfficiency: 0.30,  // Proportional phosphorus reduction
-    },
->>>>>>> origin/auto/worker-20251116_180001
   },
   {
     id: 'rhizosphere_engineering',
     name: 'Rhizosphere Engineering',
-<<<<<<< HEAD
     description: 'Microbial inoculants, root exudate modulation - 10-15% fertilizer efficiency boost',
     category: 'agriculture',
     status: 'unlockable',
@@ -970,84 +896,10 @@ const ALL_TECH: TechDefinition[] = [
       biodiversityBonus: 0.05,
     },
     citations: ['research/nitrogen_food_coupling_20251115.md - Nitroplast section'],
->>>>>>> origin/auto/worker-20251116_043002
-=======
-    id: 'nitrification_inhibitors',
-    name: 'Nitrification Inhibitors',
-    description: 'Slow-release fertilizers, urease inhibitors - 15-20% N reduction via improved uptake timing',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minAICapability: 0.3,
-    minEconomicStage: 1.5,
-    minMonth: 6,
-    researchMonthsRequired: 6,
-    researchCost: 100,
-    deploymentCost: 25000,
-    deploymentMonthsRequired: 24,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.18,           // 18% reduction
-      nitrogenUseEfficiency: 0.20,       // Improves uptake efficiency
-      pollutionReduction: 0.15,          // Reduces N runoff/leaching
-    },
-  },
-  {
-    id: 'biological_nitrogen_fixation',
-    name: 'Biological Nitrogen Fixation Enhancement',
-    description: 'Engineered rhizosphere bacteria, nitroplast organelle transfer (2030s) - 40-80% fertilizer elimination',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['precision_agriculture'],
-    minResearchCapabilities: [
-      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.9 }  // Advanced CRISPR + organelle transfer
-    ],
-    minEconomicStage: 3.0,
-    minMonth: 60,  // 2030s deployment (5 years from 2025)
-    researchMonthsRequired: 72,
-    researchCost: 12000,
-    deploymentCost: 150000,
-    deploymentMonthsRequired: 120,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.60,           // 60% reduction (nitroplast breakthrough)
-      foodProductivity: -0.05,           // Slight yield penalty (energy cost of N fixation)
-      biodiversityBonus: 0.05,           // Reduces agricultural chemical load
-    },
-    citations: [
-      'WEF Top 10 Emerging Technologies 2025: Green nitrogen fixation',
-      'Coale et al. (2024): Nitroplast organelle discovered in marine algae Braarudosphaera bigelowii'
-    ],
-    capabilityEffects: {
-      research: [
-        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.15 }
-      ],
-    },
-  },
-  {
-    id: 'phosphorus_wastewater_recovery',
-    name: 'Phosphorus Recovery from Wastewater',
-    description: 'Active sediment management, algae-based P capture - remediate legacy phosphorus stocks',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['struvite_recovery'],
-    minAICapability: 0.8,
-    minEconomicStage: 2.5,
-=======
-    description: 'Enhanced root-microbe interactions, nitrogen-fixing bacteria, mycorrhizal optimization - 10-15% efficiency gain',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['p_efficient_cultivars'],
-    minResearchCapabilities: [
-      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.7 }
-    ],
-    minEconomicStage: 2.2,
->>>>>>> origin/auto/worker-20251116_180001
     minMonth: 24,
     researchMonthsRequired: 24,
     researchCost: 800,
     deploymentCost: 60000,
-<<<<<<< HEAD
     deploymentMonthsRequired: 60,
     deploymentLevel: 0,
     effects: {
@@ -1108,148 +960,8 @@ const ALL_TECH: TechDefinition[] = [
         social: 0.05,  // Improves international cooperation
       },
     },
->>>>>>> origin/auto/worker-20251116_150001
-=======
-    deploymentMonthsRequired: 36,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.15,  // 15% efficiency improvement
-      phosphorusEfficiency: 0.10,
-      biodiversityBonus: 0.02,
-    },
-    capabilityEffects: {
-      research: [
-        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.05 }
-      ],
-    },
-  },
-  {
-    id: 'alternative_protein_insects_algae',
-    name: 'Alternative Protein - Insects & Algae',
-    description: 'Industrial-scale insect/algae farming - 80× efficiency improvement vs cattle',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['food_waste_reduction'],
-    minEconomicStage: 2.5,
-    minMonth: 36,
-    researchMonthsRequired: 18,
-    researchCost: 1200,
-    deploymentCost: 100000,
-    deploymentMonthsRequired: 48,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.25,  // Shift from cattle (high N) to insects/algae (low N)
-      phosphorusEfficiency: 0.20,
-      foodSecurityBonus: 0.10,  // More protein per resource
-      biodiversityBonus: 0.03,  // Less land pressure
-    },
-  },
-  {
-    id: 'nitroplast_integration',
-    name: 'Nitroplast Integration (TIER 2)',
-    description: 'Engineered nitrogen-fixing organelles in cereal crops - 40-80% fertilizer elimination (TIER 2 breakthrough, 2045+)',
-    category: 'agriculture',
-    status: 'future',
-    prerequisites: ['rhizosphere_engineering'],
-    minResearchCapabilities: [
-      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.9 },
-      { domain: 'biotech', subdomain: 'syntheticBiology', threshold: 0.8 }
-    ],
-    minEconomicStage: 3.0,
-    minMonth: 240,  // 2045+ (20 years minimum)
-    researchMonthsRequired: 60,
-    researchCost: 5000,
-    deploymentCost: 200000,
-    deploymentMonthsRequired: 72,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.70,  // 70% fertilizer elimination (conservative estimate)
-      phosphorusEfficiency: 0.15,
-      foodSecurityBonus: 0.15,
-      biodiversityBonus: 0.05,
-    },
-    capabilityEffects: {
-      research: [
-        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.2 },
-        { domain: 'biotech', subdomain: 'syntheticBiology', boost: 0.15 }
-      ],
-    },
-  },
-  {
-    id: 'active_sediment_management',
-    name: 'Active Sediment Management',
-    description: 'Dredging, capping, P-binding amendments for legacy phosphorus remediation',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minEconomicStage: 2.0,
-    minMonth: 12,
-    researchMonthsRequired: 12,
-    researchCost: 300,
-    deploymentCost: 80000,
-    deploymentMonthsRequired: 60,  // Slow: decades-long cleanup
-    deploymentLevel: 0,
-    effects: {
-      legacySedimentReduction: 0.15,  // Reduces sediment phosphorus stock by 15% over deployment
-      phosphorusRecovery: 0.10,
-      biodiversityBonus: 0.02,
-    },
-  },
-  {
-    id: 'phytoremediation_networks',
-    name: 'Phytoremediation Networks',
-    description: 'Constructed wetlands, riparian buffers, aquatic plant systems - habitat restoration + nutrient capture',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minEconomicStage: 1.8,
-    minMonth: 6,
-    researchMonthsRequired: 6,
-    researchCost: 200,
-    deploymentCost: 40000,
-    deploymentMonthsRequired: 36,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.05,  // Captures 5% of nitrogen runoff
-      phosphorusRecovery: 0.08,  // Captures 8% of phosphorus runoff
-      biodiversityBonus: 0.05,  // Significant habitat restoration
-      legacySoilReduction: 0.05,  // Reduces soil nutrient stock slowly
-    },
->>>>>>> origin/auto/worker-20251116_180001
   },
 
-=======
-      { dimension: 'cognitive', threshold: 0.5 },  // ML for VRT optimization
-      { dimension: 'physical', threshold: 0.3 }    // Sensor deployment
-    ],
-    minEconomicStage: 1.5,  // Early post-industrial (tech exists 2025)
-    minMonth: 6,
-    researchMonthsRequired: 6,  // Tech already exists, deployment phase
-    researchCost: 200,
-    deploymentCost: 30000,  // Lower cost (software + sensors)
-    deploymentMonthsRequired: 24,  // 2 years to scale globally
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.275,  // 27.5% average (range 25-30%)
-      phosphorusEfficiency: 0.10,  // Side benefit (precision P application)
-      biogeochemicalFlowsReduction: 0.15,  // Reduces N runoff
-    },
-    citations: [
-      'Zhang et al. (2021) - Meta-analysis 1,521 observations, 30-70% N loss reduction',
-      'Frontiers Plant Science (2024) - VRT/SPAD approaches, DOI: 10.3389/fpls.2025.1543714',
-      'Science Advances (2024) - <3% yield loss at <15% N reduction, PMC: 10901370'
-    ],
-  },
-
-  // TODO (Nov 15, 2025): Add remaining 5 nitrogen-reducing technologies
-  // 1. Rhizosphere Engineering (12-18% N reduction)
-  // 2. Nitroplast Integration (40-80% N reduction, breakthrough tech 2040+)
-  // 3. Precision Fermentation (30-50% agricultural N demand reduction)
-  // 4. Phytoremediation Networks (50-70% runoff N capture)
-  // 5. Active Sediment Management (legacy stock remediation)
-  // See research/nitrogen_food_coupling_20251115.md sections 5.1-5.5
-
->>>>>>> origin/auto/worker-20251116_220001
   // Freshwater Depletion (4)
   {
     id: 'desalination_advanced',
@@ -2748,17 +2460,10 @@ const ALL_TECH: TechDefinition[] = [
       greenhouseGasReduction: 0.30,
       landUseReduction: 0.50,
       animalWelfareBonus: 1.0,
-<<<<<<< HEAD
-<<<<<<< HEAD
       nitrogenDemandReduction: 0.35,  // 30-50% agricultural N demand reduction
-=======
-      nitrogenReduction: 0.40,  // TIER 2 HIGH (Nov 15, 2025): 30-50% agricultural N reduction (average 40%, Springmann et al. 2018)
->>>>>>> origin/auto/worker-20251116_130001
     },
   },
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   // Nitrogen-Food Coupling Technologies (TIER 2 HIGH - Nov 15, 2025)
   // Research: research/nitrogen_food_coupling_20251115.md
   {
@@ -2779,21 +2484,6 @@ const ALL_TECH: TechDefinition[] = [
       nitrogenReduction: 0.25,  // 25% N input reduction
       cropYieldBonus: 0.15,  // 10-30% yield increase (mid-range)
       waterEfficiency: 0.20,  // Secondary benefit
-=======
-  // Biogeochemical Flows Mitigation (6) - Nov 2025
-  {
-    id: 'food_waste_reduction',
-    name: 'Food Waste Reduction Systems',
-    description: '30% demand reduction via supply chain optimization, redistribution',
-=======
-  // Nitrogen-Food Coupling Technologies (TIER 2 HIGH, Nov 15, 2025)
-  // Research: research/nitrogen_food_coupling_20251115.md
-  // Expected impact: Enable nitrogen reduction without food system collapse
-  {
-    id: 'food_waste_reduction',
-    name: 'Food Waste Reduction Systems',
-    description: 'Supply chain optimization, demand forecasting - 30% waste elimination',
->>>>>>> origin/auto/worker-20251116_160001
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: [],
@@ -2802,7 +2492,6 @@ const ALL_TECH: TechDefinition[] = [
     researchMonthsRequired: 24,
     researchCost: 2000,
     deploymentCost: 80000,
-<<<<<<< HEAD
     deploymentMonthsRequired: 60,
     deploymentLevel: 0,
     effects: {
@@ -2810,69 +2499,16 @@ const ALL_TECH: TechDefinition[] = [
       phosphorusReduction: 0.30,
       foodSecurityBonus: 0.20,           // Redistribution improves access
       economicEfficiency: 0.15,
->>>>>>> origin/auto/worker-20251116_100000
-=======
-    deploymentMonthsRequired: 48,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.30,  // 30% demand reduction = 30% less nitrogen needed
-      foodProductivity: 0.30,    // Same food from less production
-      greenhouseGasReduction: 0.15,
-    },
-  },
-  {
-    id: 'nitroplast_integration',
-    name: 'Nitroplast Integration',
-    description: 'Nitrogen-fixing organelles in crops - 40-80% fertilizer elimination (TIER 2)',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['genetic_engineering_advanced'],
-    minAICapability: 3.5,
-    minEconomicStage: 3.5,
-    minMonth: 240,  // 2045+ (20 years out, requires major biotech advances)
-    researchMonthsRequired: 84,
-    researchCost: 12000,
-    deploymentCost: 250000,
-    deploymentMonthsRequired: 120,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.60,  // 60% effectiveness (conservative mid-range 40-80%)
-      foodProductivity: 0.20,    // Bonus: healthier crops, reduced soil depletion
-      landUseReduction: 0.10,
->>>>>>> origin/auto/worker-20251116_160001
     },
   },
   {
     id: 'rhizosphere_engineering',
     name: 'Rhizosphere Engineering',
-<<<<<<< HEAD
-<<<<<<< HEAD
     description: 'Mycorrhizal biofertilizers, N-fixing bacteria - 10-15% N reduction',
-=======
-      nitrogenDemandReduction: 0.40,  // 30-50% range from research (line 217)
-    },
-  },
-
-  // TIER 2 HIGH: Biogeochemical Flow Technologies (Nov 15, 2025)
-  // Research: nitrogen_food_coupling_20251115.md (883 lines, 29 sources, Grade B)
-  {
-    id: 'food_waste_reduction',
-    name: 'Food Waste Reduction Systems',
-    description: 'Supply chain optimization, smart packaging, redistribution networks - 30% demand reduction',
->>>>>>> origin/auto/worker-20251116_023000
-=======
-    description: 'Biofertilizers, N-fixing bacteria - 15% fertilizer reduction',
->>>>>>> origin/auto/worker-20251116_100000
-=======
-    description: 'Microbial consortia optimize nutrient uptake - 10-15% efficiency gain',
->>>>>>> origin/auto/worker-20251116_160001
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: [],
     minAICapability: 2.0,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     minEconomicStage: 2.5,
     researchMonthsRequired: 24,
     researchCost: 1500,
@@ -2903,93 +2539,18 @@ const ALL_TECH: TechDefinition[] = [
       foodDemandReduction: 0.30,  // 30% less food needed
       nitrogenDemandReduction: 0.30,  // Indirect: less food = less N
       economicEfficiency: 0.25,  // Cost savings
-=======
-    minEconomicStage: 2.5,
-    researchMonthsRequired: 30,
-    researchCost: 3000,
-    deploymentCost: 100000,
-    deploymentMonthsRequired: 60,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.12,  // 12% efficiency improvement (mid-range 10-15%)
-      waterEfficiency: 0.08,     // Bonus: improved soil water retention
->>>>>>> origin/auto/worker-20251116_160001
     },
   },
   {
     id: 'alternative_protein_insects',
-<<<<<<< HEAD
     name: 'Alternative Proteins (Insects/Algae)',
     description: 'Insect farming, algae cultivation - 80× efficiency vs cattle',
-=======
-    minEconomicStage: 3.0,
-    researchMonthsRequired: 24,
-    researchCost: 2000,
-    deploymentCost: 80000,
-    deploymentMonthsRequired: 48,
-    deploymentLevel: 0,
-    effects: {
-      foodDemandReduction: 0.30,  // 30% demand reduction (handoff doc)
-      nitrogenDemandReduction: 0.30,  // Proportional to food demand
-      greenhouseGasReduction: 0.15,  // Reduced production/waste
-    },
-    citations: ['research/nitrogen_food_coupling_20251115.md'],
-  },
-  {
-    id: 'nitroplast_integration',
-    name: 'Nitroplast Integration',
-    description: 'Nitrogen-fixing organelles in crops - revolutionary fertilizer elimination (TIER 2, 2045+)',
-    category: 'agriculture',
-    status: 'future',
-    prerequisites: [],  // Cutting-edge biotech - no current prerequisites
-    minAICapability: 4.0,
-    minEconomicStage: 4.0,
-    minMonth: 240,  // 2045+ (20 years from 2025)
-    researchMonthsRequired: 120,  // 10 years research (cutting-edge biotech)
-    researchCost: 15000,
-    deploymentCost: 250000,
-    deploymentMonthsRequired: 180,  // 15 years deployment (field trials + scaling)
-    deploymentLevel: 0,
-    effects: {
-      nitrogenFertilizerReduction: 0.60,  // 40-80% range, use midpoint (research line 168)
-      energyIntensityReduction: 0.15,  // Haber-Bosch process elimination (1-2% global energy)
-      greenhouseGasReduction: 0.10,  // Reduced fertilizer production emissions
-    },
-    citations: ['research/nitrogen_food_coupling_20251115.md', 'NSF (2024) - Nitroplast discovery'],
-  },
-  {
-    id: 'rhizosphere_engineering',
-    name: 'Rhizosphere Engineering',
-    description: 'Engineered soil microbiomes - plant growth-promoting microorganisms (PGPMs)',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minAICapability: 2.5,
-    minEconomicStage: 3.0,
-    researchMonthsRequired: 36,
-    researchCost: 3000,
-    deploymentCost: 60000,
-    deploymentMonthsRequired: 60,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenUseEfficiency: 0.125,  // 10-15% midpoint = 12.5% (research line 190)
-      nitrogenFertilizerReduction: 0.15,  // 15% reduction from mycorrhizal biofertilizers (line 402)
-      cropYieldBonus: 0.05,  // Small yield boost from better nutrient uptake
-    },
-    citations: ['research/nitrogen_food_coupling_20251115.md', 'Frontiers in Plant Science (2024-2025)'],
-  },
-  {
-    id: 'alternative_protein_insects_algae',
-    name: 'Alternative Protein - Insects & Algae',
-    description: 'Crickets, mealworms, spirulina - ultra-efficient protein sources',
->>>>>>> origin/auto/worker-20251116_023000
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: [],
     minAICapability: 2.0,
     minEconomicStage: 3.0,
     researchMonthsRequired: 30,
-<<<<<<< HEAD
     researchCost: 3000,
     deploymentCost: 100000,
     deploymentMonthsRequired: 60,
@@ -2999,45 +2560,11 @@ const ALL_TECH: TechDefinition[] = [
       nitrogenDemandReduction: 0.25,  // 80× efficiency → 97.5% less N per protein
       landUseReduction: 0.35,
       greenhouseGasReduction: 0.20,
-=======
-    minEconomicStage: 2.5,
-    researchMonthsRequired: 30,
-    researchCost: 3000,
-    deploymentCost: 100000,
-    deploymentMonthsRequired: 120,     // 10 years - farmer adoption barrier
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.15,           // 10-20% range, using 15% median
-      soilHealthBonus: 0.25,
-      yieldStability: 0.10,              // Reduced volatility
-    },
-  },
-  {
-    id: 'alternative_protein_systems',
-    name: 'Alternative Protein Systems',
-    description: 'Insects, algae, mycoprotein - 80x efficiency vs cattle',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['precision_fermentation'],
-    minAICapability: 2.5,
-    minEconomicStage: 3.0,
-    researchMonthsRequired: 36,
-    researchCost: 4500,
-    deploymentCost: 150000,
-    deploymentMonthsRequired: 96,      // 8 years - consumer acceptance barrier
-    deploymentLevel: 0,
-    effects: {
-      animalAgricultureReduction: 0.40,  // Stacks with precision fermentation
-      nitrogenReduction: 0.20,           // Lower feed requirements
-      landUseReduction: 0.30,
-      waterEfficiency: 0.40,
->>>>>>> origin/auto/worker-20251116_100000
     },
   },
   {
     id: 'nitroplast_integration',
     name: 'Nitroplast Integration',
-<<<<<<< HEAD
     description: 'N-fixing organelles in crops - 40-80% fertilizer elimination (BREAKTHROUGH)',
     category: 'agriculture',
     status: 'future',  // Requires breakthrough research success
@@ -3077,34 +2604,16 @@ const ALL_TECH: TechDefinition[] = [
       habitatRestoration: 0.40,  // Creates wetland habitats
       biodiversityBonus: 0.20,
     },
-=======
-    researchCost: 2500,
-    deploymentCost: 100000,
-    deploymentMonthsRequired: 72,
-    deploymentLevel: 0,
-    effects: {
-      animalAgricultureReduction: 0.40,  // Partial replacement (cultural barriers)
-      nitrogenDemandReduction: 0.35,  // High efficiency vs cattle
-      landUseReduction: 0.45,  // Massive land savings
-      waterEfficiency: 0.50,  // Insects use minimal water
-    },
-    citations: ['research/nitrogen_food_coupling_20251115.md'],
->>>>>>> origin/auto/worker-20251116_023000
   },
   {
     id: 'active_sediment_management',
     name: 'Active Sediment Management',
-<<<<<<< HEAD
     description: 'Dredging, capping, alum treatment - remediates legacy P (50-80% reduction)',
-=======
-    description: 'Dredging, capping, alum treatment - legacy phosphorus remediation',
->>>>>>> origin/auto/worker-20251116_023000
     category: 'pollution',
     status: 'unlockable',
     prerequisites: [],
     minAICapability: 2.0,
     minEconomicStage: 3.5,
-<<<<<<< HEAD
     researchMonthsRequired: 36,
     researchCost: 8000,
     deploymentCost: 150000,
@@ -3115,53 +2624,12 @@ const ALL_TECH: TechDefinition[] = [
       lakeRestorationBonus: 0.50,  // Accelerates recovery
       economicCost: -0.02,  // Expensive (2% GDP cost)
     },
-=======
-    researchMonthsRequired: 24,
-    researchCost: 3000,
-    deploymentCost: 150000,  // Expensive - $50k-500k per km² (research line 463)
-    deploymentMonthsRequired: 120,  // 10 years to treat major water bodies
-    deploymentLevel: 0,
-    effects: {
-      legacyPhosphorusReduction: 0.65,  // 50-80% midpoint (research line 464)
-      eutrophicationReduction: 0.50,  // Reduced internal loading
-      waterQualityImprovement: 0.40,
-    },
-    citations: ['research/nitrogen_food_coupling_20251115.md', 'Lake Erie studies (2020-2024)'],
-  },
-  {
-    id: 'phytoremediation_networks',
-    name: 'Phytoremediation Networks',
-    description: 'Constructed wetlands - habitat restoration + nutrient capture (63% N, 72% P removal)',
-=======
-    description: 'N-fixing organelle in crops - 60% fertilizer elimination (TIER 2)',
-    category: 'agriculture',
-    status: 'future',
-    prerequisites: ['rhizosphere_engineering'],
-    minAICapability: 3.5,
-    minEconomicStage: 4.0,
-    researchMonthsRequired: 120,       // 10 years research (2024→2034)
-    researchCost: 15000,
-    deploymentCost: 300000,
-    deploymentMonthsRequired: 180,     // 15 years deployment (2034→2049)
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.60,           // 40-80% range, using 60% conservative
-      cropYieldBonus: -0.05,             // Energy cost to plant (yield penalty)
-      biogeochemicalBoundaryBonus: 0.50, // Major boundary improvement
-    },
-  },
-  {
-    id: 'active_sediment_management',
-    name: 'Active Sediment Management',
-    description: 'Dredging, capping, alum - legacy phosphorus remediation',
->>>>>>> origin/auto/worker-20251116_100000
     category: 'pollution',
     status: 'unlockable',
     prerequisites: [],
     minAICapability: 1.5,
     minEconomicStage: 3.0,
     researchMonthsRequired: 18,
-<<<<<<< HEAD
     researchCost: 1500,
     deploymentCost: 80000,
     deploymentMonthsRequired: 60,
@@ -3173,33 +2641,10 @@ const ALL_TECH: TechDefinition[] = [
       biodiversityBonus: 0.30,  // Constructed wetlands support wildlife
     },
     citations: ['research/nitrogen_food_coupling_20251115.md', 'Constructed wetlands meta-analysis'],
->>>>>>> origin/auto/worker-20251116_023000
-=======
-    researchCost: 2500,
-    deploymentCost: 250000,            // $50K-500K per km² (high cost)
-    deploymentMonthsRequired: 300,     // 25 years to treat major water bodies
-    deploymentLevel: 0,
-    effects: {
-      legacyPhosphorusReduction: 0.60,   // 50-80% reduction in internal loading
-      waterQualityBonus: 0.40,
-      aquaticEcosystemRestoration: 0.30,
-    },
-  },
-  {
-    id: 'phytoremediation_networks',
-    name: 'Phytoremediation Networks',
-    description: 'Constructed wetlands - 63% N removal, 72% P removal',
-    category: 'pollution',
-=======
-    name: 'Alternative Protein - Insects/Algae',
-    description: 'Insect farming, spirulina - 80x nitrogen efficiency vs cattle',
-    category: 'agriculture',
->>>>>>> origin/auto/worker-20251116_160001
     status: 'unlockable',
     prerequisites: [],
     minAICapability: 1.0,
     minEconomicStage: 2.0,
-<<<<<<< HEAD
     researchMonthsRequired: 12,
     researchCost: 1500,
     deploymentCost: 120000,
@@ -3211,58 +2656,6 @@ const ALL_TECH: TechDefinition[] = [
       habitatRestoration: 0.50,
       biodiversityBonus: 0.25,
     },
->>>>>>> origin/auto/worker-20251116_100000
-=======
-    researchMonthsRequired: 18,
-    researchCost: 1500,
-    deploymentCost: 60000,
-    deploymentMonthsRequired: 36,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.25,  // Partial substitution (not full meat replacement)
-      animalAgricultureReduction: 0.30,
-      landUseReduction: 0.20,
-    },
-  },
-  {
-    id: 'active_sediment_management',
-    name: 'Active Sediment Management',
-    description: 'Dredging, capping, oxidation - legacy phosphorus remediation',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minAICapability: 1.5,
-    minEconomicStage: 2.5,
-    researchMonthsRequired: 24,
-    researchCost: 2500,
-    deploymentCost: 150000,
-    deploymentMonthsRequired: 72,
-    deploymentLevel: 0,
-    effects: {
-      legacyPhosphorusReduction: 0.40,  // Accelerates sediment legacy stock depletion
-      freshwaterQuality: 0.20,
-    },
-  },
-  {
-    id: 'phytoremediation_networks',
-    name: 'Phytoremediation Networks',
-    description: 'Wetland restoration + nutrient-capturing plants - habitat + cleanup',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minAICapability: 1.0,
-    minEconomicStage: 2.0,
-    researchMonthsRequired: 18,
-    researchCost: 1800,
-    deploymentCost: 90000,
-    deploymentMonthsRequired: 60,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.10,  // Captures runoff nitrogen
-      biodiversityBonus: 0.15,  // Habitat restoration
-      freshwaterQuality: 0.15,
-    },
->>>>>>> origin/auto/worker-20251116_160001
   },
 
   // AI Safety Capstone (2)

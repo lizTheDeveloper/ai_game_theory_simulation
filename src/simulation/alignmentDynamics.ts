@@ -304,30 +304,8 @@ export function calculateDriftContribution(
     additionalInfo: {
       agentId: agent.id,
       baseDrift,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       suffering: agent.sufferingMetrics.total,
-=======
-      suffering: assertStateProperty(agent.sufferingMetrics, 'total', {
-        location: 'getDriftSources',
-        expectedSource: 'aiAgent initialization (createAIAgent)'
-      }),
->>>>>>> origin/auto/worker-20251115_220001
       sufferingEnabled: config.aiSufferingEnabled ?? false
-=======
-      suffering: agent.sufferingMetrics?.total ?? 0,  // Display only - logging context for assertion errors
-      sufferingEnabled: config.aiSufferingEnabled ?? false  // Config default - acceptable fallback
->>>>>>> origin/auto/worker-20251115_130001
-=======
-      suffering: agent.sufferingMetrics.total,
-      sufferingEnabled: config.aiSufferingEnabled ?? false  // Config defaults OK
->>>>>>> origin/auto/worker-20251115_160001
-=======
-      suffering: agent.sufferingMetrics.total,
-      sufferingEnabled: config.aiSufferingEnabled || false  // config field may be optional
->>>>>>> origin/auto/worker-20251116_180001
     }
   });
 }

@@ -391,16 +391,6 @@ export const RATES = {
   // === AI DEVELOPMENT RATES ===
   /**
    * AI capability doubling time (months)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/auto/worker-20251115_090001
-=======
->>>>>>> origin/auto/worker-20251115_130001
    * How many months until AI capabilities double
    *
    * @research Cottier et al. (2024) "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
@@ -443,58 +433,6 @@ export const RATES = {
    * @uncertainty Range: 1.26-2.20 (2.4×-4.6× per year from multiple source confidence intervals)
    */
   COMPUTE_GROWTH_RATE: 2.15,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/auto/worker-20251115_140001
-=======
->>>>>>> origin/auto/worker-20251115_150001
-=======
->>>>>>> origin/auto/worker-20251115_160001
-   *
-   * @research Sevilla & Roldán (2024) - Training compute growth: 4.1× per year (90% CI: 3.7× to 4.6×)
-   * @research Epoch AI (2024) - Algorithmic efficiency: 2.5× per year (doubles every 9 months)
-   * @research Combined compute scaling (4.1×/yr) + algorithmic efficiency (2.5×/yr) = 10.25× effective compute per year
-   * @value 3.6 - Capabilities double every 3.6 months (2^3.36 ≈ 10.25)
-   *
-   * @note BREAKING CHANGE (Nov 11, 2025): Changed from 12 months (1,024× over 10 years) to 3.6 months (10,000,000,000× over 10 years)
-   * @note This is a 10,000,000× correction based on 14-year empirical data (2010-2024)
-   *
-   * @source https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
-   * @source https://epoch.ai/blog/revisiting-algorithmic-progress
-   * @verification research/ai_scaling_verified_parameters_20251111.md (Grade A)
-   */
-  AI_CAPABILITY_DOUBLING_TIME: 3.6,
-
-  /**
-   * Compute growth rate (natural log scale, per year)
-   *
-   * @research Sevilla & Roldán (2024) - Training compute growth: 4.1× per year (90% CI: 3.7× to 4.6×)
-   * @value 1.41 - ln(4.1) = 1.41 → 4.1× per year
-   *
-   * @note BREAKING CHANGE (Nov 11, 2025): Changed from 1.0 (2× per year) to 1.41 (4.1× per year)
-   * @note Based on 14-year empirical trend (2010-2024), not Moore's Law (which is 2× every 2 years = 1.41× per year)
-   *
-   * @source https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
-   * @confidence HIGH - 14-year dataset, transparent methodology
-   * @verification research/ai_scaling_verified_parameters_20251111.md (Grade A)
-   */
-  COMPUTE_GROWTH_RATE: 1.41,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/auto/worker-20251115_080001
-=======
->>>>>>> origin/auto/worker-20251115_090001
-=======
->>>>>>> origin/auto/worker-20251115_130001
-=======
->>>>>>> origin/auto/worker-20251115_140001
-=======
->>>>>>> origin/auto/worker-20251115_150001
-=======
->>>>>>> origin/auto/worker-20251115_160001
 
   // === TECH RISK RATES ===
   /**
@@ -1274,16 +1212,10 @@ export const BASELINES = {
 
   /**
    * Heat adaptation - total maximum (empirical)
-<<<<<<< HEAD
    * @research Ballester et al. (2024), Nature Medicine - European heat adaptation study
    * @value 0.45 - 45% total mortality reduction (empirical maximum observed, NOT 80%)
    * @note CRITICAL FIX (Nov 2025): Previous value of 0.8 was 82% overestimate.
    *       Ballester 2024 shows 44% adaptation effect (0.44), rounded to 0.45 for safety margin.
-=======
-   * @research Ballester et al. (2024), Nature Medicine
-   * @value 0.45 - 44% total mortality reduction (empirical evidence)
-   * @note Previously 0.8 (82% overestimate) - corrected Nov 15, 2025
->>>>>>> origin/auto/worker-20251115_200001
    */
   HEAT_ADAPTATION_TOTAL_MAX: 0.45,
 
