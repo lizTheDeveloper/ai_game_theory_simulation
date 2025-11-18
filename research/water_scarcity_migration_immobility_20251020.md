@@ -2,7 +2,10 @@
 oldest_source: 2012
 newest_source: 2025
 last_verified: 2025-11-12
+<<<<<<< HEAD
 verification_status: UPDATED
+=======
+>>>>>>> origin/auto/researcher-20251112_153001
 ---
 
 # Water Scarcity, Migration, and Involuntary Immobility: Critical Research Review
@@ -10,8 +13,11 @@ verification_status: UPDATED
 **Date:** 2025-10-20 (Updated: 2025-11-12)
 **Research Focus:** Empirical evidence on the relationship between freshwater depletion and human migration, with emphasis on "trapped populations" and involuntary immobility
 **Context:** Critical review of freshwater crisis model assumptions following research-skeptic critique
-**Last Updated:** 2025-11-12 (Autonomous Researcher - added frontmatter metadata)
+<<<<<<< HEAD
 **Research Quality:** A- (90% peer-reviewed, includes 2024-2025 sources)
+=======
+**Last Updated:** 2025-11-12 (Autonomous Researcher - added frontmatter metadata)
+>>>>>>> origin/auto/researcher-20251112_153001
 
 ---
 
@@ -163,6 +169,36 @@ Dr. Lisa Thalheimer-Prezyna led study emphasizing:
 **Source:** UNESCO (2024), "The United Nations World Water Development Report 2024"
 
 **CRITICAL EVALUATION:** These are **projections and estimates**, not empirical migration data. The 700 million figure is speculative. Actual measured migration due to water scarcity remains difficult to isolate from other drivers.
+
+### Global Census Data Analysis (IIASA, Nature Climate Change 2024)
+
+**Most Comprehensive Empirical Study to Date:**
+
+Hoffmann et al. (2024) analyzed census microdata from **72 countries spanning 1960-2016**, providing the first worldwide assessment of climate-induced internal migration.
+
+**Key Findings:**
+
+- **Internal migration increases in regions affected by drought and aridification**, especially in hyper-arid and arid regions
+- Effects most pronounced in **agriculturally dependent and rural areas** where climate vulnerability is highest
+- Climate-stressed populations relocate to urban centers, accelerating urbanization globally
+- **Younger working-age adults (15-45)** in less developed countries with medium education levels show strongest migration responses to drought
+- Wealthier nations see broader migration across older populations
+
+**Geographic Patterns:**
+
+Effects concentrate in regions combining economic vulnerability with existing climate challenges:
+- **Africa, Middle East, and South Asia** show strongest impacts
+- South America and Southern Europe also significantly affected
+- Wealthier areas display greater mobility overall
+- Within countries, poorer regions experience higher outmigration toward wealthier areas during climatic stress
+
+**CRITICAL INSIGHT:** This study provides **empirical confirmation** that drought and water scarcity DO drive internal migration, but with critical modifiers:
+1. Effect strongest in rural, agriculture-dependent regions
+2. Migration capacity correlates with wealth (wealthier = more mobile)
+3. Young working-age adults most responsive to climate stress
+4. Migration targets urban centers, not international borders
+
+**Source:** Hoffmann, R., et al. (2024). Climate change impacts internal migration worldwide. *Nature Climate Change*, DOI: 10.1038/s41558-024-02165-1
 
 ---
 

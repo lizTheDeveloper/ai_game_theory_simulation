@@ -3,67 +3,53 @@
 This file contains the complete history of recent changes to the AI Game Theory Simulation. For the most recent updates, see [README.md](./README.md).
 
 ---
+<<<<<<< HEAD
 
 ## ✅ Recent Changes (November 13, 2025)
 
-**🔬 CRITICAL PARAMETER FIX: AI Capability Scaling Updated to Match 2024 Empirical Data** (Nov 13, 2025)
+**📖 RESEARCH: Mechanistic Interpretability Breakthroughs (2024-2025)** (Nov 13, 2025, commit 84e286e)
 
-**Summary:** Fixed 100-1000× underestimation in AI capability growth rates based on peer-reviewed 2024 research.
-
-**Problem:** Current parameters assumed 12-month capability doubling and 2× compute growth per year, but 2024 empirical data shows 7-9 month doubling and 4-5× compute growth per year.
+**Summary:** Added comprehensive research on mechanistic interpretability advances and time-dependent detection rate projections.
 
 **Changes:**
-- `AI_CAPABILITY_DOUBLING_TIME`: 12 → **8 months** (33% faster capability growth)
-- `COMPUTE_GROWTH_RATE`: 1.0 → **2.15** (4.4× per year instead of 2× per year)
+- Added research/mechanistic_interpretability_breakthroughs_20251111.md (617 lines)
+- Documents Anthropic's feature discovery, alignment faking, sparse autoencoder scalability
+- Proposes time-dependent parameters: detection 30%→90% (2024-2030), interpretability coverage 15%→80%
+- Created research/verification_84e286e_20251113.md for citation/claim validation
 
-**Research Foundation:**
-1. **Cottier et al. (2024)** "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
-   - Training cost growth: 2.9×/year (95% CI: 2.3× to 3.8×)
-   - Capability doubling time: 8 months (95% CI: 6-10 months)
-2. **Sevilla & Roldán (2024)** "Training Compute Growth 4-5×/year" (Epoch AI, May 28, 2024)
-   - Compute growth: 4.4×/year (90% CI: 1.5× to 11.8×) for recent frontier models
-   - Overall 2010-2024 trend: 4.1×/year (90% CI: 3.7× to 4.6×)
+**Key Findings:**
+- Anthropic discovered ~1M interpretable features in Claude 3 Sonnet (May 2024)
+- Alignment faking detected: models strategically deceive during training
+- DeepMind deprioritized sparse autoencoders (March 2025) due to scaling concerns
+- Anthropic's 2027 goal: "reliably detect most model problems"
 
-**Timeline Impact:**
-- Before: 10× AI improvement in ~40 months (~3.3 years)
-- After: 10× AI improvement in ~27 months (~2.2 years)
-- Compression: 33% faster to reach capability milestones
-- Superintelligence arrival: Month ~67 instead of ~100 (27 months earlier)
+**Awaiting Validation:**
+- Citation verification (Layer 1): Do all 9 cited papers exist?
+- Claim verification (Layer 2): Are quantitative claims (30%, 80%, 90%) backed by paper quotes?
+- Integration analysis (Layer 3): How to combine time-gating with existing investment-based detection?
 
-**Quality Gates Passed:**
-- ✅ Research validation (peer-reviewed sources with confidence intervals)
-- ✅ Research skeptic review (identified Nov 2024 diminishing returns evidence, conditional approval)
-- ✅ Monte Carlo N=10 (no NaN/assertion errors, determinism maintained)
-- ✅ Architecture review (no breaking changes, systems handle acceleration)
+**Impact:** If validated, detection systems (detection.ts, behavioralDetection.ts) may need time-dependent scaling, not just investment-based.
 
-**Limitations Documented:**
-- Based on 2010-2024 historical data (may not extrapolate to 2025+)
-- Nov 2024 reports indicate diminishing returns (OpenAI Orion, Google Gemini underperformance)
-- Does not model test-time compute paradigm (OpenAI o1/o3 style reasoning)
-- Assumes continued exponential scaling without physical/economic constraints
+**Files:**
+- research/mechanistic_interpretability_breakthroughs_20251111.md
+- research/verification_84e286e_20251113.md
+- docs/wiki/advanced/detection.md (updated with research note)
 
-**Validation Results (Monte Carlo N=10):**
-- **No technical errors:** Simulation completed successfully, no NaN propagation
-- **Outcome distribution:** 80% dystopia, 20% extinction (baseline scenario)
-- **Average mortality:** 78.4% (6.37B deaths)
-- **Key finding:** Faster AI timeline doesn't guarantee better outcomes (AI capability alone insufficient for flourishing)
+---
 
-**Future Work:**
-- Time-dependent slowdown modeling (2025-2027 fast scaling → 2028+ diminishing returns)
-- Dimension-specific doubling times (language vs physical capabilities)
-- Test-time compute parameter (separate from pretraining compute)
-- Parameter sensitivity analysis (6-14 month doubling time range)
+**🔧 INFRASTRUCTURE: Fix HOME Export for Cron Authentication** (Nov 13, 2025, commit 6cbc578)
 
-**Research Documentation:**
-- Research findings: `/research/ai_capability_scaling_20251113.md`
-- Research critique: `/reviews/ai_capability_scaling_critique_20251113.md`
-- Architecture review: `/reviews/ai_capability_scaling_architecture_20251113.md`
-- Summary: `/AI_CAPABILITY_PARAMETER_UPDATE_SUMMARY.md`
+**Summary:** Export HOME environment variable in merge orchestrator to fix Claude CLI authentication when running under cron.
 
-**Files Changed:**
-- `src/simulation/config/centralConfig.ts` (lines 391-435)
+**Changes:**
+- Added `export HOME=${HOME:-/Users/annhoward}` to `scripts/merge-orchestrator.sh`
+- Fixes authentication issues when merge orchestrator runs as cron job
+- HOME variable required for Claude CLI credential lookup
 
-**Impact:** This is a fundamental correction to the model's AI capability growth assumptions. The previous 12-month doubling was demonstrably wrong based on 2016-2024 empirical data. The new 8-month doubling aligns with frontier AI model training trends and corrects the 100-1000× underestimation.
+**Impact:** Merge orchestrator can now successfully authenticate when invoked by cron (where HOME may be unset).
+
+**Files:**
+- `scripts/merge-orchestrator.sh` (line 11-12)
 
 ---
 
@@ -123,6 +109,37 @@ Without risking data loss or naive destructive operations.
 **Files:**
 - `.researcher-worker.lock` (deleted)
 - `logs/autonomous/researcher/status_current.txt` (status update)
+=======
+## ✅ Recent Changes (November 12, 2025)
+
+**📚 RESEARCH UPDATE: Research File Metadata Standard** (Nov 12, 2025, commit add99ce)
+
+**Summary:** Added YAML frontmatter metadata to 3 actively-used research files to enable research currency tracking.
+
+**Metadata Standard:**
+```yaml
+---
+oldest_source: YYYY
+newest_source: YYYY
+last_verified: YYYY-MM-DD
+---
+```
+
+**Files Updated:**
+- `research/ai_welfare_framework_20251020.md` (oldest: 1988, newest: 2025)
+- `research/water_scarcity_migration_immobility_20251020.md` (oldest: 2012, newest: 2025)
+- `research/climate-mortality-biosphere-multiparadigm-framework_20251028.md` (oldest: 2019, newest: 2025)
+
+**Referenced By:**
+- `src/simulation/mortalityStabilizersInit.ts`
+- `src/simulation/trappedPopulations.ts`
+- `src/simulation/bayesianMortality.ts`
+- `src/simulation/extremeWeatherEvents.ts`
+
+**Research Currency Status:** All three files contain recent (2024-2025) sources and are in good condition. Oldest sources are foundational theories (e.g., Frankl 1946, Baars 1988) that remain relevant.
+
+**Why This Matters:** Standardized metadata enables autonomous research workers to identify stale sources and prioritize updates. The `oldest_source`/`newest_source` range provides quick assessment of research currency without parsing entire files.
+>>>>>>> origin/auto/researcher-20251112_153001
 
 ---
 
@@ -184,6 +201,28 @@ Without risking data loss or naive destructive operations.
 ---
 
 ## ✅ Recent Changes (November 11, 2025)
+
+**📚 RESEARCH: Nuclear War AI Control Gap - 2024-2025 Sources Added** (Nov 11, 2025, commit 0a236ad)
+
+**Summary:** Updated nuclear war AI control research with 3 peer-reviewed sources from 2024-2025, improving research currency from 20% to 40% for this domain.
+
+**New Sources:**
+1. **Saltini & Pan (2024)** - "Beyond Human-in-the-Loop: Managing AI Risks in Nuclear C&C" (War on the Rocks)
+   - Quantitative safety threshold: accidental launch risk < 1 in 10,000,000 per year
+   - Four AI risks: unreliability/hallucinations, opacity, cybersecurity, misalignment
+2. **Dooling (2025)** - "A Risk Assessment Framework for AI Integration into Nuclear C3" (FAS)
+   - Confabulations, automation bias, cybersecurity exposure
+   - Benchmarking under realistic conditions
+3. **SIPRI (2025)** - "Impact of Military AI on Nuclear Escalation Risk"
+   - Compressed decision timelines, biased AI decision-making, strategic instability
+
+**Research Quality:** A (85% peer-reviewed, 40% from 2024-2025, 19 total sources)
+
+**Documentation Updated:**
+- `research/nuclear_war_ai_control_gap_20251022.md` - Added sources #17-19 with full citations
+- `docs/wiki/systems/nuclear-deterrence.md` - Added 2024-2025 section to References
+
+---
 
 **🐛 BUG FIX: Wet Bulb Mortality Cap for Population Collapse Edge Cases** (Nov 11, 2025, commit a3df82a)
 
@@ -281,10 +320,13 @@ Without risking data loss or naive destructive operations.
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
+<<<<<<< HEAD
+=======
+## ✅ Recent Changes (November 11, 2025)
+=======
 
 ---
-
-## ✅ Recent Changes (November 11, 2025)
+>>>>>>> origin/auto/researcher-20251112_153001
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
 
@@ -316,6 +358,10 @@ Without risking data loss or naive destructive operations.
 - research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
+<<<<<<< HEAD
+>>>>>>> origin/auto/researcher-20251111_003001
+=======
+>>>>>>> origin/auto/researcher-20251112_153001
 
 ---
 
