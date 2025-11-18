@@ -2476,6 +2476,262 @@ Implementation details and code references:
 | [👨‍💻 Senior Dev Review](../../devlogs/senior_dev_review_optional_chaining_20251030.md) | ✅ | Detailed review of defensive fallbacks, priority files, unemployment paradox (Oct 30, 2025) |
 | [🛡️ State Validation Framework](#%EF%B8%8F-state-validation-framework) | 🟢 | Assertion-based validation framework, 97.2% adoption (104/107 modules), fail-loudly philosophy (Nov 6-8, 2025) |
 | [🔬 Research Update Pipeline](../RESEARCH_PIPELINE.md) | ✅ | Automated research currency monitoring, weekly age audits, priority-based update queue, GitHub integration (Nov 6, 2025) |
+| [📊 LLM Inference Logging](#-llm-inference-logging-infrastructure) | ✅ | Audit trail for all LLM API calls, IndexedDB storage, GCS export, analytics (Nov 18, 2025) |
+
+## 📊 LLM Inference Logging Infrastructure
+
+**Status:** ✅ COMPLETE (Nov 18, 2025)
+**Components:** Logging module, IndexedDB storage, GCS export, API route, test suite
+**Purpose:** Comprehensive audit trail and analytics for LLM-based agent decisions
+
+### Overview
+
+The LLM Inference Logging system captures every LLM API call made during simulation runs, storing complete request/response data for audit trails, cost analysis, and behavior analytics. This is critical for understanding AI agent decision-making patterns and debugging non-deterministic issues.
+
+**Key Features:**
+- **Full request/response capture** - Prompts, tool calls, reasoning, weights
+- **Agent context tracking** - Capability, alignment, trigger reasons
+- **Timing metrics** - API call duration, token usage
+- **Error logging** - Failed calls, fallback usage tracking
+- **GCS export** - Batch export to Google Cloud Storage for long-term archival
+- **Analytics support** - Query logs by simulation, agent, month, export status
+
+### Architecture
+
+```
+┌─────────────────────┐
+│  LLM Client         │  src/simulation/llm/client.ts
+│  (API calls)        │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│  Logging Module     │  src/simulation/llm/logging.ts
+│  logLLMInference()  │  - Builds log entry from context + request + response
+└──────────┬──────────┘  - Stores in IndexedDB (non-blocking)
+           │
+           ▼
+┌─────────────────────┐
+│  IndexedDB          │  src/lib/eventDatabase.ts
+│  (llm_logs store)   │  - Schema: LLMInferenceLog interface
+└──────────┬──────────┘  - Indexes: simulationId, agentId, timestamp, exportedToGCS
+           │
+           ▼
+┌─────────────────────┐
+│  GCS Export         │  src/lib/gcsExport.ts
+│  (JSONL batches)    │  - Batch export unexported logs
+└─────────────────────┘  - Mark exported with GCS path + timestamp
+           │
+           ▼
+┌─────────────────────┐
+│  API Route          │  src/app/api/export-llm-logs/route.ts
+│  POST /api/export-  │  - Server-Sent Events (SSE) for progress
+│  llm-logs            │  - Streaming feedback during export
+└─────────────────────┘
+```
+
+### Data Schema
+
+**LLMInferenceLog Interface:**
+```typescript
+interface LLMInferenceLog {
+  // Identity
+  id: string;                    // ${simulationId}_${month}_${agentId}_${timestamp}
+  simulationId: string;          // Group by simulation run
+
+  // Timing
+  timestamp: number;             // Real-world Unix timestamp (ms)
+  month: number;                 // Simulation month
+  durationMs: number;            // API call duration
+
+  // Agent Context
+  agentId: string;               // AI agent ID
+  agentName: string;             // AI agent name
+  agentCapability: number;       // Capability at time of call
+  agentAlignment: number;        // Alignment at time of call
+  triggerReason: string;         // 'scheduled' | 'threshold' | 'crisis' | 'initial'
+
+  // Request Data
+  requestPrompt: string;         // Full context string sent to LLM
+  requestBody: object;           // Full request JSON (messages, tools, temperature, etc.)
+  provider: string;              // 'lm-studio' | 'openai' | 'anthropic'
+  modelName: string;             // Model identifier (e.g., "qwen3-32b")
+
+  // Response Data
+  responseBody: object;          // Full response JSON
+  tokensUsed: number;            // Token count from response
+  weights: object;               // Parsed weights from tool call
+  reasoning: string;             // LLM's reasoning text
+
+  // Error Handling
+  error?: string;                // Error message if call failed
+  usedFallback: boolean;         // True if fallback weights were used
+
+  // GCS Export Tracking
+  exportedToGCS: boolean;        // Has this been exported?
+  exportTimestamp?: number;      // When it was exported
+  gcsPath?: string;              // GCS blob path
+}
+```
+
+### Configuration
+
+#### GCS Setup (Optional - for export functionality)
+
+**1. Create GCS Bucket:**
+```bash
+gsutil mb -p your-project-id -l us-central1 gs://your-llm-logs-bucket
+```
+
+**2. Create Service Account:**
+```bash
+gcloud iam service-accounts create llm-log-exporter \
+    --display-name="LLM Log Exporter"
+
+gcloud projects add-iam-policy-binding your-project-id \
+    --member="serviceAccount:llm-log-exporter@your-project-id.iam.gserviceaccount.com" \
+    --role="roles/storage.objectAdmin"
+
+gcloud iam service-accounts keys create ~/llm-log-exporter-key.json \
+    --iam-account=llm-log-exporter@your-project-id.iam.gserviceaccount.com
+```
+
+**3. Set Environment Variable:**
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=~/llm-log-exporter-key.json
+```
+
+### Usage Examples
+
+#### Querying Logs
+
+**Get logs for a simulation:**
+```typescript
+import { eventDatabase } from '@/lib/eventDatabase';
+
+// Get first 50 logs
+const logs = await eventDatabase.getLLMLogs('simulation_123', 50, 0);
+
+// Get log count
+const count = await eventDatabase.getLLMLogCount('simulation_123');
+
+// Get unexported logs (for export)
+const unexported = await eventDatabase.getUnexportedLLMLogs(1000);
+```
+
+**Get statistics:**
+```typescript
+import { getLLMInferenceStats } from '@/simulation/llm/logging';
+
+const stats = await getLLMInferenceStats('simulation_123');
+console.log(`Total logs: ${stats.totalLogs}`);
+console.log(`Unexported: ${stats.unexportedLogs}`);
+console.log(`Total tokens: ${stats.totalTokens}`);
+console.log(`Avg duration: ${stats.averageDuration}ms`);
+console.log(`Errors: ${stats.errorCount}`);
+```
+
+#### Triggering Export
+
+**Via API (recommended):**
+```bash
+curl -X POST http://localhost:3333/api/export-llm-logs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "simulationId": "simulation_123",
+    "bucketName": "your-llm-logs-bucket",
+    "projectId": "your-project-id",
+    "batchSize": 1000
+  }'
+```
+
+**Programmatically:**
+```typescript
+import { exportLLMLogsToGCS } from '@/lib/gcsExport';
+
+const config = {
+  bucketName: 'your-llm-logs-bucket',
+  projectId: 'your-project-id',
+  batchSize: 1000
+};
+
+const onProgress = (progress) => {
+  console.log(`${progress.phase}: ${progress.message}`);
+};
+
+const result = await exportLLMLogsToGCS('simulation_123', config, onProgress);
+
+if (result.success) {
+  console.log(`✅ Exported ${result.logsExported} logs to ${result.gcsPath}`);
+  console.log(`Uploaded ${(result.bytesUploaded / 1024).toFixed(2)} KB in ${result.durationMs}ms`);
+} else {
+  console.error(`❌ Export failed: ${result.error}`);
+}
+```
+
+#### Analyzing Exported Data
+
+**Download from GCS:**
+```bash
+gsutil cp gs://your-llm-logs-bucket/llm-logs/simulation_123/2025-11-18.jsonl ./
+
+# Each line is a JSON object
+jq '.tokensUsed' 2025-11-18.jsonl | awk '{sum+=$1} END {print "Total tokens:", sum}'
+jq '.durationMs' 2025-11-18.jsonl | awk '{sum+=$1; count++} END {print "Avg duration:", sum/count, "ms"}'
+```
+
+**Load into BigQuery:**
+```bash
+bq load \
+  --source_format=NEWLINE_DELIMITED_JSON \
+  your_dataset.llm_logs \
+  gs://your-llm-logs-bucket/llm-logs/**/*.jsonl \
+  schema.json
+```
+
+### Testing
+
+**Run test suite:**
+```bash
+npm test tests/lib/eventDatabase.llm.test.ts
+npm test tests/lib/llmLogging.test.ts
+npm test tests/lib/gcsExport.test.ts
+npm test tests/integration/llm-logging-pipeline.test.ts
+```
+
+**Test coverage:**
+- ✅ Unit tests for eventDatabase LLM methods (addLLMLog, getLLMLogs, getUnexportedLLMLogs, markAsExported)
+- ✅ Unit tests for logging module (logLLMInference, buildLoggingContext, getLLMInferenceStats)
+- ✅ Unit tests for GCS export (validation, error handling, retry logic)
+- ✅ Integration test for full pipeline (LLM call → log → IndexedDB → retrieve)
+
+### Performance Considerations
+
+**IndexedDB Performance:**
+- Logs are written asynchronously (non-blocking)
+- Indexes on simulationId, agentId, timestamp, exportedToGCS for fast queries
+- Pagination support for large result sets
+
+**GCS Export:**
+- Batch export (default: 1000 logs per file)
+- JSONL format (one JSON object per line, ~1KB per log)
+- Retry logic for transient failures (default: 3 retries with exponential backoff)
+- Progress streaming via Server-Sent Events
+
+**Storage Estimates:**
+- ~1KB per log entry
+- 1000 logs per file = ~1MB per export batch
+- 10,000 LLM calls per simulation = ~10MB per simulation
+
+### Future Enhancements
+
+**Potential additions:**
+- **Cost tracking:** Calculate costs per provider/model
+- **Dashboard analytics:** Visualize token usage, latency, error rates over time
+- **Automated export:** Trigger export on simulation completion
+- **Data retention policies:** Auto-delete old logs from IndexedDB after export
+- **Query API:** RESTful endpoints for querying logs by various filters
+- **BigQuery integration:** Automated loading into BigQuery for SQL analysis
 
 ## 🛡️ State Validation Framework
 
