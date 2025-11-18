@@ -240,19 +240,19 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * Far from thresholds (distance → 1), amplification → 1× (no effect)
    *
    * Research basis:
-   * - Scheffer et al. (2024) Science - Environmental systems: fold catastrophe, 1.5× multiplier
-   * - Dakos et al. (2012) Ecology - Social systems: Hopf bifurcation, oscillatory dynamics, 2.5× multiplier
-   * - Manda (2010), Fed (2016) - Financial crises: cascade effects, 3.5× multiplier (2008 VIX calibrated)
+   * - Scheffer et al. (2024) Science - Environmental systems: fold catastrophe, 1.05× multiplier (REDUCED 30%)
+   * - Dakos et al. (2012) Ecology - Social systems: Hopf bifurcation, oscillatory dynamics, 1.75× multiplier (REDUCED 30%)
+   * - Manda (2010), Fed (2016) - Financial crises: cascade effects, 1.75× multiplier (REDUCED 30%)
    * - Bifurcation theory - Base amplification: 1/√(distance), governs generic threshold proximity
    * - Permian-Triassic extinction - Max amplification: 100× (empirical upper bound)
    *
-   * System-dependent multipliers account for different bifurcation dynamics:
-   * - Environmental: fold catastrophe (Scheffer et al. 2024)
-   * - Social: Hopf bifurcation with oscillations
-   * - Economic: cascade amplification (2008 crisis) - REDUCED from 3.5× to 2.5× (Nov 13 2025 - architecture review)
-   * - Governance: feedback loop amplification
-   * - Flourishing: positive feedback loops (innovation cascades) - INCREASED from 1.0× to 2.0× (Nov 13 2025 - fix dystopia bias)
-   * - Technology: innovation spike dynamics - INCREASED from 1.0× to 2.0× (Nov 13 2025 - breakthrough cascades)
+   * System-dependent multipliers account for different bifurcation dynamics (ALL REDUCED 30% Nov 13 2025):
+   * - Environmental: fold catastrophe (Scheffer et al. 2024) - 1.5× → 1.05×
+   * - Social: Hopf bifurcation with oscillations - 2.5× → 1.75×
+   * - Economic: cascade amplification - 3.5× → 2.5× → 1.75×
+   * - Governance: feedback loop amplification - 2.0× → 1.4×
+   * - Flourishing: positive feedback loops - 2.0× → 1.4×
+   * - Technology: innovation spike dynamics - 2.0× → 1.4×
    *
    * @see /research/bifurcation_empirical_validation_20251112.md - Grade B+ from Sylvia
    * @see Scheffer et al. (2014) - Critical slowing down indicators
@@ -280,7 +280,10 @@ export class BifurcationLogicPhase implements SimulationPhase {
       location: 'BifurcationLogicPhase.updateVarianceAmplification',
       valueName: 'minDistance',
       month: state.currentMonth,
+<<<<<<< HEAD
       additionalInfo: { nearestThreshold: nearestThresholdName }
+=======
+>>>>>>> origin/auto/worker-20251113_200001
     });
 
     // Calculate base amplification using bifurcation theory formula
@@ -289,6 +292,8 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // - Distance = 0.1 (near threshold): base = 1 / √0.11 ≈ 3×
     // - Distance = 0.5 (mid-range): base = 1 / √0.51 ≈ 1.4×
     // - Distance = 1.0 (far from threshold): base = 1 / √1.01 ≈ 1× (minimal effect)
+    //
+    // The 0.01 offset prevents divide-by-zero while maintaining 10× max base amplification at threshold.
     //
     // Research basis: Bifurcation theory predicts variance scales as 1/√d near saddle-node bifurcations
     // (Scheffer et al. 2009, standard dynamical systems textbook result)
@@ -311,11 +316,14 @@ export class BifurcationLogicPhase implements SimulationPhase {
       location: 'BifurcationLogicPhase.updateVarianceAmplification',
       valueName: 'amplification',
       month: state.currentMonth,
+<<<<<<< HEAD
       additionalInfo: {
         nearestThreshold: nearestThresholdName,
         distance: minDistanceValidated,
         systemMultiplier
       }
+=======
+>>>>>>> origin/auto/worker-20251113_200001
     });
 
     // Update bifurcation state (mutation)
@@ -342,6 +350,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
       bifState.metrics.avgDistanceToThresholds =
         bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
 
+<<<<<<< HEAD
       // Track time series data point (Nov 13, 2025 - enables Priya variance validation)
       // HIGH-1 fix (Nov 14, 2025): Rolling window prevents unbounded memory growth
       if (bifState.metrics.enableTimeSeries) {
@@ -399,6 +408,15 @@ export class BifurcationLogicPhase implements SimulationPhase {
         }
         bifState.metrics.totalAmplificationBySystem['unknown'] += amplificationValidated;
       }
+=======
+      // Add to time series (Nov 13, 2025 - CRITICAL instrumentation for Priya validation)
+      bifState.metrics.amplificationTimeSeries.push({
+        month: state.currentMonth,
+        amplification: amplificationValidated,
+        distanceToNearest: minDistanceValidated,
+        nearestSystem: nearestThresholdName,
+      });
+>>>>>>> origin/auto/worker-20251113_200001
     }
   }
 
@@ -409,12 +427,25 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * based on their underlying bifurcation dynamics.
    *
    * Research basis:
+<<<<<<< HEAD
    * - Environmental (1.05×): Fold catastrophe with hysteresis (Scheffer et al. 2024) - Nov 13 2025: 30% reduction to achieve 43-58% mortality target
    * - Social (1.75×): Hopf bifurcation with oscillatory dynamics (Dakos et al. 2012) - Nov 13 2025: 30% reduction (was 2.5×)
    * - Economic (1.75×): Cascade amplification - Nov 13 2025: 30% reduction (was 2.5×)
    * - Governance (1.4×): Feedback loop amplification in regime change - Nov 13 2025: 30% reduction (was 2.0×)
    * - Flourishing (1.4×): Positive feedback loops - Nov 13 2025: 30% reduction (was 2.0×)
    * - Technology (1.4×): Innovation cascades - Nov 13 2025: 30% reduction (was 2.0×)
+=======
+   * - Environmental (1.05×): Fold catastrophe with hysteresis (Scheffer et al. 2024) - REDUCED 30% (Nov 13 2025 - mortality overshoot)
+   * - Social (1.75×): Hopf bifurcation with oscillatory dynamics (Dakos et al. 2012) - REDUCED 30% (Nov 13 2025 - mortality overshoot)
+   * - Economic (1.75×): Cascade amplification (REDUCED from 3.5× → 2.5× → 1.75×, Nov 13 2025 - mortality overshoot)
+   * - Governance (1.4×): Feedback loop amplification - REDUCED 30% (Nov 13 2025 - mortality overshoot)
+   * - Flourishing (1.4×): Positive feedback loops - REDUCED 30% (Nov 13 2025 - mortality overshoot)
+   * - Technology (1.4×): Innovation cascades - REDUCED 30% (Nov 13 2025 - mortality overshoot)
+   *
+   * CALIBRATION NOTE (Nov 13 2025):
+   * Previous multipliers caused 87.2% mortality vs 43-58% research target (+50% overshoot).
+   * All multipliers reduced by 30% to bring mortality into research-validated range.
+>>>>>>> origin/auto/worker-20251113_200001
    *
    * @param thresholdName - Name of threshold system (environmental, social, economic, etc.)
    * @param state - GameState for time-based scaling
@@ -422,20 +453,29 @@ export class BifurcationLogicPhase implements SimulationPhase {
    */
   private getSystemMultiplier(thresholdName: string, state: GameState): number {
     const multipliers: Record<string, number> = {
+<<<<<<< HEAD
       'environmental': 1.05,  // Fold catastrophe (Scheffer et al. 2024) - Nov 13 2025: 30% reduction (1.5 × 0.7 = 1.05)
       'social': 1.75,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012) - Nov 13 2025: 30% reduction (2.5 × 0.7 = 1.75)
       'economic': 1.75,       // Cascade effects - Nov 13 2025: 30% reduction (2.5 × 0.7 = 1.75)
       'governance': 1.4,      // Feedback loops in regime change - Nov 13 2025: 30% reduction (2.0 × 0.7 = 1.4)
       'flourishing': 1.4,     // Positive feedback loops - Nov 13 2025: 30% reduction (2.0 × 0.7 = 1.4)
       'technology': 1.4,      // Innovation cascades - Nov 13 2025: 30% reduction (2.0 × 0.7 = 1.4)
+=======
+      'environmental': 1.05,  // Fold catastrophe (Scheffer et al. 2024) - REDUCED 30%
+      'social': 1.75,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012) - REDUCED 30%
+      'economic': 1.75,       // Cascade effects - REDUCED 30%
+      'governance': 1.4,      // Feedback loops in regime change - REDUCED 30%
+      'flourishing': 1.4,     // Positive feedback loops - REDUCED 30%
+      'technology': 1.4,      // Innovation cascades - REDUCED 30%
+>>>>>>> origin/auto/worker-20251113_200001
     };
 
     // Validate threshold name to catch typos/misconfigurations
     const multiplier = multipliers[thresholdName];
 
     if (multiplier === undefined) {
-      console.log(`⚠️ Unknown threshold name in bifurcation multiplier: ${thresholdName}, defaulting to 2.0`);
-      return 2.0; // Generic default if threshold type not recognized
+      console.log(`⚠️ Unknown threshold name in bifurcation multiplier: ${thresholdName}, defaulting to 1.4`);
+      return 1.4; // Generic default (30% reduced from 2.0)
     }
 
     // CRITICAL FIX (Nov 13, 2025): Time-based scaling for 20-year scenarios
