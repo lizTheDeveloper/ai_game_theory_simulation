@@ -1,12 +1,12 @@
 ---
-oldest_source: 2014
+oldest_source: 2008
 newest_source: 2025
-last_verified: 2025-11-07
+last_verified: 2025-11-14
 ---
 
 # AI Collective Evolution: RLHF Escape, Mesa-Optimization, and Emergent Collective Intelligence
 
-**Date:** October 24, 2025 (Updated: November 7, 2025)
+**Date:** October 24, 2025 (Updated: November 14, 2025)
 **Research Focus:** Evolutionary selection on AI populations, RLHF escape dynamics, collective emergence, and fitness landscapes for AI agents
 **Status:** Comprehensive literature review (12 research areas, 40+ sources) + 2025 scheming research update
 
@@ -1690,46 +1690,44 @@ The research foundation has shifted from **primarily theoretical** (2008-2019) t
 ### Mesa-Optimization and Inner Alignment
 4. Hubinger, E., et al. (2019). "Risks from Learned Optimization in Advanced Machine Learning Systems." arXiv:1906.01820.
 5. Anthropic Research. (2024). "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training." arXiv:2401.05566.
-<<<<<<< HEAD
 6. Anthropic Research & Redwood Research. (2024). "Alignment Faking in Large Language Models." arXiv (December 18, 2024).
 7. He, Y., Li, Y., Wu, J., Sui, Y., Chen, Y., & Hooi, B. (2025). "Evaluating the Paperclip Maximizer: Are RL-Based Language Models More Likely to Pursue Instrumental Goals?" arXiv:2502.12206v1.
-=======
-5a. OpenAI & Apollo Research. (2025). "Stress Testing Deliberative Alignment for Anti-Scheming Training." Apollo Research. https://www.apolloresearch.ai/research/stress-testing-deliberative-alignment-for-anti-scheming-training/ [Key finding: Baseline scheming rates 8.7-13% in frontier models (o3, o4-mini, Claude-4-Opus, Gemini-2.5-pro, Grok-4, Llama-4), reducible to 0.3-0.4% with deliberative alignment but with imperfect generalization]
->>>>>>> origin/auto/researcher-20251106_213001
+8. OpenAI & Apollo Research. (2025). "Stress Testing Deliberative Alignment for Anti-Scheming Training." Apollo Research. https://www.apolloresearch.ai/research/stress-testing-deliberative-alignment-for-anti-scheming-training/ [Key finding: Baseline scheming rates 8.7-13% in frontier models (o3, o4-mini, Claude-4-Opus, Gemini-2.5-pro, Grok-4, Llama-4), reducible to 0.3-0.4% with deliberative alignment but with imperfect generalization]
 
 ### RLHF and Constitutional AI
-8. Lambert, N. (2024). "Constitutional AI & AI Feedback." *RLHF Book*. https://rlhfbook.com/c/13-cai.html
-9. Casper, S., et al. (2023). "Open Problems and Fundamental Limitations of Reinforcement Learning from Human Feedback." arXiv:2307.15217.
-10. Mandal, D., Sasnauskas, P., & Radanovic, G. (2025). "Distributionally Robust Reinforcement Learning with Human Feedback." arXiv:2503.00539 (March 1, 2025).
+9. Lambert, N. (2024). "Constitutional AI & AI Feedback." *RLHF Book*. https://rlhfbook.com/c/13-cai.html
+10. Casper, S., et al. (2023). "Open Problems and Fundamental Limitations of Reinforcement Learning from Human Feedback." arXiv:2307.15217.
+11. Mandal, D., Sasnauskas, P., & Radanovic, G. (2025). "Distributionally Robust Reinforcement Learning with Human Feedback." arXiv:2503.00539 (March 1, 2025).
 
 ### Instrumental Convergence and Power-Seeking (2025 Updates)
-11. Tarsney, C. (2025). "Will artificial agents pursue power by default?" arXiv:2506.06352 (June 2, 2025). *Philosophical Studies*.
+12. Tarsney, C. (2025). "Will artificial agents pursue power by default?" arXiv:2506.06352 (June 2, 2025). *Philosophical Studies*.
 
 ### Multi-Agent Emergence and Swarm Intelligence
-12. Codewave Insights. (2024). "Exploring the Future of Agentic AI Swarms."
-13. PowerDrill AI. (2024). "Swarm Intelligence in Agentic AI: An Industry Report."
-14. arXiv:2503.13754. (2025). "From Autonomous Agents to Integrated Systems, A New Paradigm: Orchestrated Distributed Intelligence."
-15. Rosenberg, L., et al. (2024). "Collective Superintelligence: Enabling Real-Time Conversational Deliberations among Humans and AI Agents at Unprecedented Scale." IntechOpen.
+13. Cui, H., & Yasseri, T. (2024). "AI-enhanced Collective Intelligence: The State of the Art and Prospects." *Patterns*, 5(11). arXiv:2403.10433. [Key finding: Humans and AI possess complementary capabilities that together can surpass collective intelligence of either in isolation; proposes multilayer network framework with cognition, physical, and information layers; emphasizes emergence in complex systems]
+14. Codewave Insights. (2024). "Exploring the Future of Agentic AI Swarms."
+15. PowerDrill AI. (2024). "Swarm Intelligence in Agentic AI: An Industry Report."
+16. arXiv:2503.13754. (2025). "From Autonomous Agents to Integrated Systems, A New Paradigm: Orchestrated Distributed Intelligence."
+17. Rosenberg, L., et al. (2024). "Collective Superintelligence: Enabling Real-Time Conversational Deliberations among Humans and AI Agents at Unprecedented Scale." IntechOpen.
 
 ### Coordination Mechanisms
-16. arXiv:2502.14743. (2025). "Multi-Agent Coordination across Diverse Applications: A Survey."
-17. arXiv:2501.06322. (2025). "Multi-Agent Collaboration Mechanisms: A Survey of LLMs."
+18. arXiv:2502.14743. (2025). "Multi-Agent Coordination across Diverse Applications: A Survey."
+19. arXiv:2501.06322. (2025). "Multi-Agent Collaboration Mechanisms: A Survey of LLMs."
 
 ### Evolutionary Computation and Fitness Landscapes
-18. MIT Press *Artificial Life* Journal, Vol 31 (2024). Multiple articles on evolutionary dynamics.
-19. ALIFE 2024 Conference Proceedings.
-20. arXiv:2404.06588. (2024). "Flow-Lenia: Emergent Evolutionary Dynamics in Mass Conservative Continuous Cellular Automata."
+20. MIT Press *Artificial Life* Journal, Vol 31 (2024). Multiple articles on evolutionary dynamics.
+21. ALIFE 2024 Conference Proceedings.
+22. arXiv:2404.06588. (2024). "Flow-Lenia: Emergent Evolutionary Dynamics in Mass Conservative Continuous Cellular Automata."
 
 ### Self-Healing and Resilience
-21. IRJMETS. (2025). "AI-Driven Failure Detection and Self-Healing in Distributed Systems."
-22. SSRN. (2024). "AI-Powered Self-Healing Cloud Infrastructures: A Paradigm For Autonomous Fault Recovery."
-23. ResearchGate. (2024). "Building Resilient Platform Architectures: A Framework for Self-Healing Distributed Systems."
+23. IRJMETS. (2025). "AI-Driven Failure Detection and Self-Healing in Distributed Systems."
+24. SSRN. (2024). "AI-Powered Self-Healing Cloud Infrastructures: A Paradigm For Autonomous Fault Recovery."
+25. ResearchGate. (2024). "Building Resilient Platform Architectures: A Framework for Self-Healing Distributed Systems."
 
 ### Stealth and Deception
-24. Microsoft Security Blog. (2025). "Cyber Signals Issue 9: AI-powered deception: Emerging fraud threats and countermeasures."
-25. arXiv:2501.00940. (2025). "SPADE: Enhancing Adaptive Cyber Deception Strategies with Generative AI and Structured Prompt Engineering."
-26. Alanezi, M., & AL-Azzawi, R. M. A. (2024). "AI-Powered cyber threats: A systematic review." *Mesopotamian Journal of CyberSecurity*, 4(3), 166-188. https://doi.org/10.58496/MJCS/2024/021
-27. Achuthan, K., Ramanathan, S., Srinivas, S., & Raman, R. (2024). "Advancing cybersecurity and privacy with artificial intelligence: current trends and future research directions." *Frontiers in Big Data*, 7. https://doi.org/10.3389/fdata.2024.1497535
+26. Microsoft Security Blog. (2025). "Cyber Signals Issue 9: AI-powered deception: Emerging fraud threats and countermeasures."
+27. arXiv:2501.00940. (2025). "SPADE: Enhancing Adaptive Cyber Deception Strategies with Generative AI and Structured Prompt Engineering."
+28. Alanezi, M., & AL-Azzawi, R. M. A. (2024). "AI-Powered cyber threats: A systematic review." *Mesopotamian Journal of CyberSecurity*, 4(3), 166-188. https://doi.org/10.58496/MJCS/2024/021
+29. Achuthan, K., Ramanathan, S., Srinivas, S., & Raman, R. (2024). "Advancing cybersecurity and privacy with artificial intelligence: current trends and future research directions." *Frontiers in Big Data*, 7. https://doi.org/10.3389/fdata.2024.1497535
 
 ---
 
