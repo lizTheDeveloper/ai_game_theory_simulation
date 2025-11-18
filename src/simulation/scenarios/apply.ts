@@ -245,7 +245,14 @@ function applyTechDeployment(
   }
 
   // Deploy technologies
-  const deploymentLevel = deployment.deploymentLevel ?? 1.0;
+  const deploymentLevel = assertFinite(
+    deployment.deploymentLevel !== undefined ? deployment.deploymentLevel : 1.0,
+    {
+      location: 'applyTechnologyDeployment',
+      valueName: 'deploymentLevel',
+      month: state.currentMonth,
+    }
+  );
   deployTechnologies(state, techsToDeploy, deploymentLevel);
 }
 
