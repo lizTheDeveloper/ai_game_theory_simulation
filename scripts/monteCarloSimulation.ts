@@ -1989,6 +1989,121 @@ if (nestedMonteCarlo) {
   // NON-NESTED MODE: Standard single-level Monte Carlo
   // ============================================================================
 
+  /**
+   * Export bifurcation metrics to JSON for Priya validation (Nov 13 2025)
+   *
+   * Research basis: Fang & Yan (2022) PMC8728956 - JData standard for scientific Monte Carlo
+   *
+   * Exports per-run JSON with:
+   * - Bifurcation events (environmental, social, economic, governance, technology, flourishing)
+   * - Variance amplification time series (monthly tracking)
+   * - Outcome classification
+   * - Final population and QoL metrics
+   *
+   * Enables Priya to validate:
+   * - Variance amplification effectiveness (target: CV 20-70%)
+   * - Time-based scaling impact (fix 87.2% mortality → 43-58%)
+   * - Bifurcation cascade patterns
+   * - Determinism (same seed → same results)
+   *
+   * @see /research/bifurcation_instrumentation_calibration_20251113.md
+   * @see reviews/bifurcation_instrumentation_critique_20251113.md (Grade A-)
+   */
+  function exportBifurcationMetrics(
+    finalState: any,
+    seed: number,
+    outputDirPath: string
+  ): void {
+    if (!finalState.bifurcationState?.metrics) {
+      console.log(`⚠️ Seed ${seed}: No bifurcation metrics available`);
+      return;
+    }
+
+    const metrics = finalState.bifurcationState.metrics;
+    const bifState = finalState.bifurcationState;
+
+    // Classify outcome (simple 7-tier classification)
+    function classifyOutcome(state: any): string {
+      const pop = state.humanPopulationSystem?.population ?? 0;
+      const qol = state.qualityOfLifeSystems?.aggregate?.overall ?? 0;
+
+      if (pop < 0.0001) return 'EXTINCTION'; // < 100K
+      if (pop < 0.05) return 'BOTTLENECK'; // < 50M
+      if (qol < 20) return 'DYSTOPIA';
+      if (qol < 40) return 'STATUS_QUO';
+      if (qol < 60) return 'PROGRESS';
+      if (qol < 80) return 'FLOURISHING';
+      return 'UTOPIA';
+    }
+
+    // Build per-domain bifurcation data
+    const domains = {
+      environmental: {
+        occurred: bifState.environmentalCollapseThreshold?.crossed ?? false,
+        month: bifState.environmentalCollapseThreshold?.crossedAt,
+        type: 'fold_catastrophe',
+        threshold: bifState.environmentalCollapseThreshold?.location,
+      },
+      social: {
+        occurred: bifState.socialBreakdownThreshold?.crossed ?? false,
+        month: bifState.socialBreakdownThreshold?.crossedAt,
+        type: 'hopf_bifurcation',
+        threshold: bifState.socialBreakdownThreshold?.location,
+      },
+      economic: {
+        occurred: bifState.economicCollapseThreshold?.crossed ?? false,
+        month: bifState.economicCollapseThreshold?.crossedAt,
+        type: 'cascade_amplification',
+        threshold: bifState.economicCollapseThreshold?.location,
+      },
+      governance: {
+        occurred: bifState.governanceFailureThreshold?.crossed ?? false,
+        month: bifState.governanceFailureThreshold?.crossedAt,
+        type: 'feedback_loop',
+        threshold: bifState.governanceFailureThreshold?.location,
+      },
+      technology: {
+        occurred: bifState.technologyBreakthroughThreshold?.crossed ?? false,
+        month: bifState.technologyBreakthroughThreshold?.crossedAt,
+        type: 'innovation_cascade',
+        threshold: bifState.technologyBreakthroughThreshold?.location,
+      },
+      flourishing: {
+        occurred: bifState.flourishingThreshold?.crossed ?? false,
+        month: bifState.flourishingThreshold?.crossedAt,
+        type: 'positive_feedback',
+        threshold: bifState.flourishingThreshold?.location,
+      },
+    };
+
+    // Extract time series data
+    const amplificationTimeSeries = metrics.amplificationTimeSeries.map((entry: any) => ({
+      month: entry.month,
+      amplification: entry.amplification,
+      distanceToNearest: entry.distanceToNearest,
+      nearestSystem: entry.nearestSystem,
+    }));
+
+    // Build output JSON
+    const output = {
+      seed,
+      months: finalState.currentMonth,
+      outcome: classifyOutcome(finalState),
+      finalPopulation: finalState.humanPopulationSystem?.population ?? 0,
+      finalQOL: finalState.qualityOfLifeSystems?.aggregate?.overall ?? 0,
+      bifurcations: domains,
+      maxVarianceAmplification: metrics.maxVarianceAmplification,
+      avgDistanceToThresholds: metrics.avgDistanceToThresholds,
+      amplificationTimeSeries,
+      regimeShiftEvents: metrics.regimeShiftEvents ?? [],
+    };
+
+    // Write to file
+    const filename = path.join(outputDirPath, `bifurcation_metrics_seed${seed}.json`);
+    fs.writeFileSync(filename, JSON.stringify(output, null, 2), 'utf8');
+    console.log(`📊 Bifurcation metrics exported: ${filename}`);
+  }
+
   // Oct 28, 2025: Parallel execution support with optional log buffering
   const runSingleSimulation = (i: number, useBuffer = false): { result: any; buffer?: LogBuffer } => {
     const runStartTime = Date.now();
@@ -2984,6 +3099,9 @@ if (nestedMonteCarlo) {
       const runSecondsPerYear = runSecondsPerMonth * 12;
 
       log(`  ✅ Run ${i + 1}/${NUM_RUNS} completed in ${runSeconds.toFixed(1)}s (${runSecondsPerMonth.toFixed(3)}s/month, ${runSecondsPerYear.toFixed(2)}s/year)`);
+
+      // Export bifurcation metrics for Priya validation (Nov 13 2025)
+      exportBifurcationMetrics(finalState, seed, outputDir);
 
       return { result: runResult, buffer };
 
