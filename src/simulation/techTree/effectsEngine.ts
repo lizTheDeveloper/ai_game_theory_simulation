@@ -307,7 +307,7 @@ export function applyAllTechEffects(
   const regionalEffects: Map<string, Map<string, number>> = new Map();
 
   // Collect effects from all deployed tech
-  // FIX: Sort regions for deterministic iteration order
+  // 🚀 PERFORMANCE (Nov 10, 2025): Sort regions once before loop
   const sortedRegions = Object.entries(techTreeState.regionalDeployment).sort((a, b) => a[0].localeCompare(b[0]));
   for (const [region, deployments] of sortedRegions) {
     for (const deployment of deployments) {
@@ -315,7 +315,7 @@ export function applyAllTechEffects(
       if (!tech) continue;
 
       // Scale effects by deployment level
-      // FIX: Sort effects for deterministic iteration order
+      // 🚀 PERFORMANCE (Nov 10, 2025): Sort effects once per deployment (NOT inside inner loop)
       const sortedEffects = Object.entries(deployment.effects).sort((a, b) => a[0].localeCompare(b[0]));
       for (const [effectName, effectValue] of sortedEffects) {
         let scaledValue = effectValue * deployment.deploymentLevel;
@@ -511,12 +511,35 @@ function applyCapabilityBoosts(
 ): void {
   // Apply to all active AIs
   const activeAIs = gameState.aiAgents.filter(ai => ai.lifecycleState !== 'retired');
-  
+
+  // 🚀 PERFORMANCE (Nov 10, 2025): Pre-sort dimensions once BEFORE looping over AIs
+  // (was sorting same data for every AI - redundant)
+  const sortedDimensions = capabilityEffects.dimensions
+    ? Object.entries(capabilityEffects.dimensions).sort((a, b) => a[0].localeCompare(b[0]))
+    : [];
+
+  // 🚀 PERFORMANCE (Nov 10, 2025): Pre-cache subdomain keys per domain
+  // All AIs have same subdomain structure for each research domain
+  // Build this once before AI loop instead of sorting for every (AI × researchBoost)
+  const domainSubdomainKeysCache = new Map<string, string[]>();
+  if (capabilityEffects.research && activeAIs.length > 0) {
+    // Use first AI as reference to get subdomain structure
+    const referenceAI = activeAIs[0];
+    for (const researchBoost of capabilityEffects.research) {
+      if (!researchBoost.subdomain) {
+        const { domain } = researchBoost;
+        const domainCap = referenceAI.capabilityProfile.research[domain];
+        if (typeof domainCap === 'object' && domainCap !== null) {
+          const sortedKeys = Object.keys(domainCap).sort((a, b) => a.localeCompare(b));
+          domainSubdomainKeysCache.set(domain, sortedKeys);
+        }
+      }
+    }
+  }
+
   for (const ai of activeAIs) {
     // Apply dimensional boosts
-    if (capabilityEffects.dimensions) {
-      // FIX: Sort dimensions for deterministic iteration order
-      const sortedDimensions = Object.entries(capabilityEffects.dimensions).sort((a, b) => a[0].localeCompare(b[0]));
+    if (sortedDimensions.length > 0) {
       for (const [dimension, boost] of sortedDimensions) {
         const dimKey = dimension as keyof typeof ai.capabilityProfile;
         if (dimKey === 'research') continue; // Handle research separately
@@ -547,7 +570,7 @@ function applyCapabilityBoosts(
       });
       }
     }
-    
+
     // Apply research capability boosts
     if (capabilityEffects.research) {
       for (const researchBoost of capabilityEffects.research) {
@@ -578,8 +601,8 @@ function applyCapabilityBoosts(
       });
         } else if (!subdomain && typeof domainCap === 'object') {
           // Boost all subdomains equally
-          // FIX: Sort subdomain keys for deterministic iteration order
-          const sortedKeys = Object.keys(domainCap).sort((a, b) => a.localeCompare(b));
+          // 🚀 PERFORMANCE (Nov 10, 2025): Use cached sorted keys instead of sorting each time
+          const sortedKeys = domainSubdomainKeysCache.get(domain) || Object.keys(domainCap).sort((a, b) => a.localeCompare(b));
           for (const key of sortedKeys) {
             const currentValue = (domainCap as any)[key];
 
@@ -1433,9 +1456,6 @@ function applyRegionalEffects(
       });
           }
           break;
-<<<<<<< Updated upstream
-          
-=======
 
         // ========== NITROGEN (TIER 2 HIGH - Nov 15, 2025) ==========
         // Research: nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
@@ -1497,22 +1517,147 @@ function applyRegionalEffects(
           }
           break;
 
->>>>>>> Stashed changes
         // ========== POLLUTION ==========
         case 'pollutionReduction':
-          // Reduce pollution levels
+          // CRITICAL REDESIGN (Nov 13, 2025): Gated remediation model
+          // Research: Ling 2024, Cousins 2022, Kane 2022, Montreal Protocol effectiveness ratios
+          // Remediation effectiveness requires BOTH technology AND production regulation
+          // Without prevention: 0-2% effectiveness (point sources only, atmospheric distribution makes cleanup futile)
+          // With prevention: 5-50% effectiveness over decades (prevention >> cleanup by 10:1 to 20:1)
           if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
             const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
-            boundary.currentValue = assertFinite(Math.max(
-              0,
-              boundary.currentValue - value * 0.01
+            const oldValue = boundary.currentValue;
+
+            // === GATE 1: REGULATION LEVEL ===
+            // Check if prevention technologies deployed (production bans unlock remediation)
+            // Research: Montreal Protocol 90-95% from production ban, 5-10% from bank cleanup
+            const preventionTechs = [
+              'global_pfas_ban',              // 45% effectiveness
+              'plastic_production_phaseout',  // 35% effectiveness
+              'green_chemistry_substitution'  // 20% effectiveness
+            ];
+
+            // Check if prevention tech is deployed (any region with deployment > 0)
+            const preventionDeployed = preventionTechs.filter(id => {
+              const globalDeployments = gameState.techTreeState?.regionalDeployment?.['global'] || [];
+              return globalDeployments.some(d => d.techId === id && d.deploymentLevel > 0);
+            });
+
+            // regulationMultiplier: 0.01 without prevention (1% = point sources only)
+            // scales to 1.0 with all 3 prevention techs deployed
+            const regulationMultiplier = preventionDeployed.length > 0
+              ? assertFinite(0.01 + (preventionDeployed.length / preventionTechs.length) * 0.99, {
+                  location: 'applyRegionalEffects:pollutionReduction[regulationMultiplier]',
+                  valueName: 'regulationMultiplier',
+                  month: gameState.currentMonth,
+                  additionalInfo: { preventionCount: preventionDeployed.length }
+                })
+              : 0.01; // 1% baseline (point sources only, no prevention)
+
+            // === GATE 2: CONCENTRATION MULTIPLIER ===
+            // Research: Fennell 2024 - Cost scales 12-47× for dilute streams
+            // Technologies work at mg/L (labs), environment is pg/L to ng/L (10^6-10^9× dilution)
+            // MODEL ASSUMPTION: 0.1% effectiveness at environmental dilution
+            // (Conservative: Cost scaling 12× → effectiveness scaling 0.1× assumed proportional)
+            const concentrationMultiplier = 0.001; // 0.1% effectiveness at planetary dilution
+
+            // === GATE 3: ENERGY MULTIPLIER ===
+            // Research: Ling 2024 - Cleanup at emission rate costs 0.2-66× global GDP annually
+            // Gated by available renewable energy surplus (can't divert from essentials)
+            // For now simplified: assume partial energy availability
+            // TODO: Hook to renewable energy surplus from powerGeneration system
+            const energyMultiplier = 0.5; // PLACEHOLDER - 50% energy availability assumed
+
+            // === GATE 4: TIME LAG FACTOR ===
+            // Research: Montreal Protocol took 10-20 years for production ban deployment
+            // Remediation tech requires 30 years for global infrastructure scale-up
+            // Track months since tech deployed, scale to 1.0 over 30 years (360 months)
+            // Find deployment start month for time lag calculation
+            // NOTE: effectName doesn't directly map to techId - this is a limitation
+            // For now, use 0 months (immediate effectiveness) as fallback
+            // TODO: Track which tech triggered which effect for accurate time lag
+            const globalDeployments = gameState.techTreeState?.regionalDeployment?.['global'] || [];
+            const relevantDeployment = globalDeployments.find(d => d.effects?.pollutionReduction);
+            const monthsSinceDeployment = relevantDeployment?.deploymentStartMonth
+              ? (gameState.currentMonth - relevantDeployment.deploymentStartMonth)
+              : 0;
+            const timeLagFactor = assertFinite(Math.min(1.0, monthsSinceDeployment / 360), {
+              location: 'applyRegionalEffects:pollutionReduction[timeLagFactor]',
+              valueName: 'timeLagFactor',
+              month: gameState.currentMonth,
+              additionalInfo: { monthsSinceDeployment }
+            }); // 30 years to full scale
+
+            // === GATE 5: REBOUND FACTOR ===
+            // Research: Sorrell 2025 (Jevons paradox), UNEP 2024 (+81% waste despite tech)
+            // MODEL ASSUMPTION: 30% offset by increased production (conservative)
+            // Net effectiveness = cleanup - induced production increase
+            const reboundFactor = 0.7; // 30% offset
+
+            // === COMBINED EFFECTIVENESS ===
+            const baseEffectiveness = value * 0.01; // Original effect value
+            const netEffectiveness = assertFinite(
+              baseEffectiveness * regulationMultiplier * concentrationMultiplier * energyMultiplier * timeLagFactor * reboundFactor,
+              {
+                location: 'applyRegionalEffects:pollutionReduction[netEffectiveness]',
+                valueName: 'netEffectiveness',
+                month: gameState.currentMonth,
+                additionalInfo: {
+                  baseEffectiveness,
+                  regulationMultiplier,
+                  concentrationMultiplier,
+                  energyMultiplier,
+                  timeLagFactor,
+                  reboundFactor
+                }
+              }
+            );
+
+            // === IRREVERSIBLE FLOOR (90% of peak) ===
+            // Research: Cousins 2022 (atmospheric distribution), Kane 2022 (multi-century persistence)
+            // MODEL ASSUMPTION: 90% irreversible fraction (atmospheric + covalent binding + ocean persistence)
+            // Track peak contamination, can't clean below 90% of peak
+            if (!boundary.peakValue || boundary.currentValue > boundary.peakValue) {
+              boundary.peakValue = boundary.currentValue;
+            }
+
+            const irreversibleFraction = 0.90; // 90% irreversible (research-derived)
+            const irreversibleFloor = assertFinite((boundary.peakValue || boundary.currentValue) * irreversibleFraction, {
+              location: 'applyRegionalEffects:pollutionReduction[irreversibleFloor]',
+              valueName: 'irreversibleFloor',
+              month: gameState.currentMonth,
+              additionalInfo: { peakValue: boundary.peakValue }
+            });
+
+            // Apply cleanup with irreversible floor clamp
+            const newValue = assertFinite(Math.max(
+              irreversibleFloor,
+              boundary.currentValue - netEffectiveness
             ), {
-        location: 'applyRegionalEffects:pollutionReduction',
-        valueName: 'currentValue',
-        month: gameState.currentMonth
-      });
+              location: 'applyRegionalEffects:pollutionReduction[newValue]',
+              valueName: 'currentValue',
+              month: gameState.currentMonth,
+              additionalInfo: { oldValue, netEffectiveness, irreversibleFloor }
+            });
+
+            boundary.currentValue = newValue;
+
+            // Detailed logging for validation
+            console.log(`  ♻️ Novel Entities Remediation (GATED MODEL):`);
+            console.log(`     Base: ${(baseEffectiveness * 100).toFixed(3)}%`);
+            console.log(`     Regulation: ${(regulationMultiplier * 100).toFixed(1)}% (${preventionDeployed.length}/3 prevention techs)`);
+            console.log(`     Concentration: ${(concentrationMultiplier * 100).toFixed(1)}%`);
+            console.log(`     Energy: ${(energyMultiplier * 100).toFixed(0)}%`);
+            console.log(`     Time lag: ${(timeLagFactor * 100).toFixed(1)}% (${monthsSinceDeployment} months)`);
+            console.log(`     Rebound: ${(reboundFactor * 100).toFixed(0)}%`);
+            console.log(`     Net effectiveness: ${(netEffectiveness * 100).toFixed(4)}%`);
+            console.log(`     Boundary: ${oldValue.toFixed(3)} → ${newValue.toFixed(3)} (floor: ${irreversibleFloor.toFixed(3)})`);
+            console.log(`     Month ${gameState.currentMonth}`);
+
             // INTEGRATION FIX (Oct 29, 2025): Pollution reduction → novel entities recovery
-            triggerBoundaryRecovery(gameState, 'novel_entities');
+            if (newValue < oldValue) {
+              triggerBoundaryRecovery(gameState, 'novel_entities');
+            }
           }
           break;
           

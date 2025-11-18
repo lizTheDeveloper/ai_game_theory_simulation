@@ -123,6 +123,13 @@ export class PhaseOrchestrator {
   // MEMORY LEAK FIX (Nov 15, 2025): Use Welford's algorithm for O(1) memory per phase
   // Previous: Stored 1000 samples × 95 phases = 760KB per simulation
   // Current: ~120 bytes per phase (6 numbers) = 11KB total for 95 phases
+  /**
+   * Maximum step timings to keep.
+   * Keeps last 1200 steps = 100 years of simulation.
+   * Prevents memory leak in long-running Monte Carlo (N=100 × 1200 steps = 120K entries → 1200 entries).
+   */
+  private static readonly MAX_STEP_TIMINGS = 1200;
+
   private phaseTimings: Map<string, {
     totalMs: number;
     callCount: number;
@@ -133,7 +140,7 @@ export class PhaseOrchestrator {
   }> = new Map();
   private enableTiming: boolean = false;
   private slowPhaseThresholdMs: number = 10;  // Warn on phases >10ms
-  private stepTimings: { month: number; totalMs: number }[] = [];  // Per-step totals
+  private stepTimings: { month: number; totalMs: number }[] = [];  // Sliding window, max MAX_STEP_TIMINGS
 
   /**
    * Register a phase
@@ -292,13 +299,15 @@ export class PhaseOrchestrator {
     }
 
     // PERFORMANCE INSTRUMENTATION (Nov 12, 2025): Log step total
+    // MEMORY LEAK FIX (Nov 13, 2025): Sliding window for step timings
     if (this.enableTiming) {
       const stepElapsed = performance.now() - stepStartTime;
-      this.stepTimings.push({ month: state.currentMonth, totalMs: stepElapsed });
 
-      // MEMORY LEAK FIX (Nov 13, 2025): Cap stepTimings at 100 most recent entries
-      if (this.stepTimings.length > 100) {
-        this.stepTimings.shift();
+      // Sliding window: keep last MAX_STEP_TIMINGS entries (100 years)
+      // Prevents unbounded memory growth in long-running simulations
+      this.stepTimings.push({ month: state.currentMonth, totalMs: stepElapsed });
+      if (this.stepTimings.length > PhaseOrchestrator.MAX_STEP_TIMINGS) {
+        this.stepTimings = this.stepTimings.slice(-PhaseOrchestrator.MAX_STEP_TIMINGS);
       }
 
       // Log step summary (minimal overhead)
@@ -340,6 +349,24 @@ export class PhaseOrchestrator {
   clear(): void {
     this.phases = [];
     this.sorted = false;
+  }
+
+  /**
+   * Validate all phase dependencies WITHOUT executing
+   *
+   * CRITICAL-2 FIX (Nov 10, 2025): Explicit validation method to catch
+   * circular dependencies before first execution.
+   *
+   * Call this after registering all phases to validate the dependency graph:
+   * ```typescript
+   * orchestrator.registerPhases(ALL_PHASES);
+   * orchestrator.validate(); // Throws if circular dependencies
+   * ```
+   *
+   * @throws {Error} If circular dependency, missing dependency, or order violation detected
+   */
+  validate(): void {
+    this.validateDependencies();
   }
 
   /**
@@ -423,7 +450,12 @@ export class PhaseOrchestrator {
             );
           }
 
+          // CRITICAL-2 FIX (Nov 10, 2025): Check cycles BEFORE order violations
+          // This gives clearer error messages (shows full cycle path)
+          detectCycle(depId, [...path]);
+
           // Check ordering constraint (dependency must have lower order number)
+          // Note: This runs AFTER cycle check so circular deps are caught first
           const depPhase = phaseMap.get(depId)!;
           if (depPhase.order >= phase.order) {
             throw new Error(
@@ -438,8 +470,6 @@ export class PhaseOrchestrator {
               `   2. Remove the dependency if it's not needed\n`
             );
           }
-
-          detectCycle(depId, [...path]);
         }
       }
 

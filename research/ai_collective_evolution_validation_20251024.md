@@ -1,14 +1,8 @@
 ---
-<<<<<<< HEAD
-oldest_source: 2020
-newest_source: 2025
-last_verified: 2025-10-24
-=======
 oldest_source: 2008
 newest_source: 2025
-last_verified: 2025-11-14
+last_verified: 2025-11-16
 verification_status: UPDATED
->>>>>>> origin/auto/researcher-20251114_003001
 ---
 
 # AI Collective Evolution System: Research Validation Report

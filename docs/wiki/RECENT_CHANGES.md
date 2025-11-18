@@ -3,302 +3,53 @@
 This file contains the complete history of recent changes to the AI Game Theory Simulation. For the most recent updates, see [README.md](./README.md).
 
 ---
+<<<<<<< HEAD
 
-## 🌐 Multi-Paradigm Wellbeing Research Verification Complete (November 16, 2025)
+## ✅ Recent Changes (November 13, 2025)
 
-**Commit:** 27c6d76 (Nov 16, 2025)
+**📖 RESEARCH: Mechanistic Interpretability Breakthroughs (2024-2025)** (Nov 13, 2025, commit 84e286e)
 
-**Summary:** Three-phase verification workflow for multi-paradigm DUI system updates with citation validation and critical review. Status: CONDITIONAL PASS - Ready for implementation with required modifications.
-
-**Verification Workflow:**
-
-**Phase 1: Citation Verification (✅ COMPLETE)**
-- Verified Sangha et al. 2024 (Indigenous wellbeing framework)
-- Verified V-Dem 2025 Democracy Report (global democracy metrics)
-- Extracted exact quotes for all claims
-- Output: `research/multi_paradigm_verification_results_20251116.md` (261 lines)
-
-**Phase 2: Critical Validation (✅ COMPLETE)**
-- Research-skeptic review identified 9 caveats (3 MEDIUM, 6 MINOR)
-- 0 CRITICAL or HIGH severity issues
-- Quality Gate: CONDITIONAL PASS
-- Output: `reviews/multi_paradigm_verification_critique_20251116.md` (383 lines)
-
-**Phase 3: Implementation Requirements (READY)**
-- Documented required modifications before implementation
-- Output: `research/multi_paradigm_verification_summary_20251116.md`
-
-**Key Findings:**
-
-**Indigenous Wellbeing (Sangha et al. 2024):**
-- ✅ Country is "central to Indigenous world to which all other domains are attached"
-- ✅ Seven domains confirmed (Yawuru Mabu Liyan framework)
-- ✅ Liyan concept: self-Country-community connection (emotional/experiential)
-- ⚠️ Australian context (likely generalizes, not empirically verified globally)
-
-**Global Democracy (V-Dem 2025):**
-- ✅ 91 autocracies vs 88 democracies (first time in 20 years)
-- ✅ <12% in liberal democracies (50-year low)
-- ✅ 72% under autocratic rule (5.8B people)
-- ⚠️ Should distinguish liberal (29) from electoral (59) democracies
-
-**Implementation Requirements:**
-1. Restore full Indigenous paradigm wording: "Connection to culture, Country, and identity"
-2. Add 7 explicit indicators (family, community, culture-Country-identity, self-determination, health, material, subjective)
-3. Implement 4-category democracy system (liberal, electoral, electoral autocracy, closed autocracy)
-4. Change "veto system" to "conflict detection" or "incompatibility flagging"
-
-**Status:** Ready for simulation-maintainer implementation
-
-**Files Generated:**
-- `research/multi_paradigm_verification_results_20251116.md` (261 lines)
-- `reviews/multi_paradigm_verification_critique_20251116.md` (383 lines)
-- `research/multi_paradigm_verification_summary_20251116.md` (executive summary)
-
-**Related Wiki Sections:**
-- [Multi-Paradigm DUI](./mechanics/multi-paradigm-dui.md) (will be updated after implementation)
-- See verification files for complete analysis
-
----
-
-## 🔬 CRITICAL Research Parameter Corrections (November 15, 2025)
-
-**Commit:** c6a67d5 (Nov 15, 2025)
-
-**Summary:** Research audit identified 4 CRITICAL parameter issues. Applied corrections for heat adaptation (82% overestimate) and citation year accuracy.
+**Summary:** Added comprehensive research on mechanistic interpretability advances and time-dependent detection rate projections.
 
 **Changes:**
+- Added research/mechanistic_interpretability_breakthroughs_20251111.md (617 lines)
+- Documents Anthropic's feature discovery, alignment faking, sparse autoencoder scalability
+- Proposes time-dependent parameters: detection 30%→90% (2024-2030), interpretability coverage 15%→80%
+- Created research/verification_84e286e_20251113.md for citation/claim validation
 
-**1. Heat Adaptation Maximum (CRITICAL - 82% overestimate):**
-- **Parameter:** `HEAT_ADAPTATION_TOTAL_MAX`
-- **Old Value:** 0.80 (80% mortality reduction)
-- **New Value:** 0.45 (45% mortality reduction)
-- **Source:** Ballester et al. (2024), Nature Medicine
-- **Impact:** Heat mortality will increase 10-20% in extreme scenarios (realistic vs. overly optimistic)
-- **File:** `src/simulation/config/centralConfig.ts:1197`
+**Key Findings:**
+- Anthropic discovered ~1M interpretable features in Claude 3 Sonnet (May 2024)
+- Alignment faking detected: models strategically deceive during training
+- DeepMind deprioritized sparse autoencoders (March 2025) due to scaling concerns
+- Anthropic's 2027 goal: "reliably detect most model problems"
 
-**2. Citation Year Corrections (Bibliography accuracy):**
-- **Citation:** Acemoglu & Restrepo
-- **Old:** "2022"
-- **New:** "2019"
-- **Correct Title:** "Automation and New Tasks: How Technology Displaces and Reinstates Labor"
-- **Correct Journal:** Journal of Economic Perspectives, 33(2), 3-30
-- **Locations:** `calculations.ts` (2 instances), `skillAmplification.ts` (3 instances)
-- **Impact:** Documentation accuracy only, no simulation behavior change
+**Awaiting Validation:**
+- Citation verification (Layer 1): Do all 9 cited papers exist?
+- Claim verification (Layer 2): Are quantitative claims (30%, 80%, 90%) backed by paper quotes?
+- Integration analysis (Layer 3): How to combine time-gating with existing investment-based detection?
 
-**Files Modified:**
-- `src/simulation/config/centralConfig.ts` (heat adaptation ceiling)
-- `src/simulation/calculations.ts` (citation year)
-- `src/simulation/aiAssistedSkills/skillAmplification.ts` (citation year, title)
-
-**Documentation Updated:**
-- `docs/wiki/README.md` (added commit entry)
-- `docs/wiki/BIBLIOGRAPHY.md` (marked citation correction as complete)
-- `docs/wiki/RESEARCH_QUESTIONS.md` (6 instances of "2022" → "2019")
-- `docs/wiki/systems/tier2-interventions.md` (1 instance)
-
-**Validation:**
-- ✅ Type checking passed (pre-existing path resolution errors ignored)
-- 📊 **Next Step:** Monte Carlo N≥10 to assess mortality distribution impact
-
-**Source:** Research audit reports (`research/RESEARCH_AUDIT_*_20251115.md`)
-
----
-
-## ✅ Defensive Coding Violations RESOLVED (November 15, 2025)
-
-**✅ HIGH PRIORITY: Issue #7 RESOLVED** (Nov 15, 2025, commit 76b0585)
-
-**Summary:** All 20+ defensive fallback violations identified in Architecture Review Nov 13 have been resolved.
-
-**Context:**
-- Architecture Review Nov 13 identified defensive fallback pattern violations
-- Pattern: `state.field?.subfield ?? fallback` masks initialization bugs
-- Research simulation must fail loudly with assertion utilities instead of silent defaults
-
-**Implementation:**
-- **Files Modified (10):** EmergencyResponsePhase.ts (4 violations), OutcomeProbabilitiesPhase.ts (6), aiSuffering.ts (3), dystopiaProgression.ts (2), alignmentDynamics.ts (1), earlyWarningSystems.ts (1), plus type fixes
-- **Pattern Fixed:** Replaced `??` and `||` fallbacks with `assertStateProperty()`, `assertFinite()`, `assertProbability()`
-- **Type Safety Improvements:**
-  - `aiSufferingMetrics`: optional → required (always initialized in initialization.ts)
-  - `government.resources`: optional → required (always initialized)
-
-**Impact:**
-- **Implementation Fidelity:** A- → A (no more silent bug masking)
-- Research validity improved (no silent defaults that could produce wrong results)
-- Debugging clarity increased (fail-loudly with full context including month, location, value)
-- Non-determinism risk reduced (no fallback value inconsistencies)
-
-**Validation:**
-- ✅ Type checking passes (0 non-test errors)
-- ✅ Assertions work correctly (test failure proves fail-loudly pattern working)
-- ✅ Monte Carlo N=10 validation ready
-
-**Files Changed:**
-- `src/simulation/aiSuffering.ts`
-- `src/simulation/alignmentDynamics.ts`
-- `src/simulation/dystopiaProgression.ts`
-- `src/simulation/earlyWarningSystems.ts`
-- `src/simulation/engine/phases/EmergencyResponsePhase.ts`
-- `src/simulation/engine/phases/OutcomeProbabilitiesPhase.ts`
-- `src/types/game.ts` (type fix: aiSufferingMetrics required)
-- `src/types/government.ts` (type fix: resources required)
-- `src/simulation/config/centralConfig.ts` (merge conflict resolved)
-- `src/simulation/engine/PhaseOrchestrator.ts` (merge conflict resolved)
-
-**Documentation:**
-- **Changelog:** `logs/defensive_fallback_fix_20251115.md` (290 lines)
-- **Source:** Architecture Review Nov 13 (Issue #3 → Issue #7)
-- **Audit:** `logs/defensive_fallback_audit_20251113.md`
-
-**Defensive Coding Principles Reinforced:**
-1. ✅ Fail loudly - Invalid state throws detailed errors with full context
-2. ✅ No silent fallbacks - Removed all `??` and `||` patterns from calculation code
-3. ✅ Type safety - Made incorrectly-optional fields required (matches actual initialization)
-4. ✅ Assertion utilities - Used `assertStateProperty`, `assertProbability`, `assertFinite` throughout
-5. ✅ Display-only exceptions - Logging code can still use fallbacks with explicit comments
-
----
-
-## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
-
-**🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
-
-**Summary:** Fixed Tier2PhysicalSystemsPhase order violation caught by runtime validation.
-
-**Issue:** Runtime validation detected that Tier2PhysicalSystemsPhase (order 18.5) depends on planetary_boundaries phase (order 21.0), creating an order violation.
-
-**Fix:**
-- Moved Tier2PhysicalSystemsPhase from order 18.5 → 21.1 (after planetary_boundaries dependency)
-- Added readonly modifiers to id/name/order fields for diagnostic tool compatibility
-
-**Root Cause:** Static dependency analysis missed this violation; runtime validation caught it during execution.
-
-**Validation:** Diagnostic tool confirms 0 violations across all 81 phases.
-
-**Files Changed:** `src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts`
-
----
-
-**🐛 BUG FIX: Backwards Dependency Removal** (Nov 15, 2025, commit afbffc0)
-
-**Summary:** Fixed 8+ backwards dependencies and 2 invalid phase ID references that blocked Monte Carlo validation.
-
-**Context:**
-- Commit eda20e125 (Nov 15) added readonly dependencies to 26 phases
-- Order constraints were not validated, introducing systemic backwards dependencies
-- Monte Carlo validation blocked by dependency order violations
-
-**Backwards Dependencies Fixed (8):**
-1. `GovernmentActionsPhase` (9.0) → `economic-system` (31.0) - Removed
-2. `ExtremeWeatherEventsPhase` (15.2) → `climate_system` (34.0) - Removed
-3. `WetBulbTemperaturePhase` (20.45) → `climate_system` (34.0) - Removed
-4. `TechTreePhase` (12.5) → `economic-system` (31.0) - Removed
-5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed (Note: Phase order later changed to 21.1 in cb5f2e0)
-6. `StochasticInnovationPhase` (8.5) → `tech-tree` (12.5) - Removed
-7. `CrisisPointsPhase` (23.0) → `crisis-detection` (36.0) - Removed
-8. `climate_system` ID mismatch (hyphen vs underscore) - Fixed
-
-**Invalid Phase ID Fixes (2):**
-- `HumanEnhancementPhase`: `society-agent-actions` → `society-actions` (typo correction)
-- `ClimateDeploymentPhase` + `AntimicrobialResistancePhase`: Removed non-existent `technology-deployment` dependency
-
-**Root Cause:** Phases declared dependencies based on what state they *read*, without considering execution order. Reading state from "previous step" is valid; declaring dependency on future phase (backwards ordering) is invalid.
-
-**Impact:**
-- Unblocks TIER 1 CRITICAL climate effectiveness validation suite
-- Prevents runtime dependency violation crashes
-- Establishes pattern: dependencies = read-after-write, not just "reads state"
-
-**Known Remaining Issues:**
-- Additional backwards dependencies likely exist (orchestrator identified `ai_suffering` → `ai-lifecycle`)
-- Comprehensive audit needed across all 95 phases
-
-**Files Changed:** 10 phase files in `src/simulation/engine/phases/`
-
-**Documentation Updated:**
-- `docs/wiki/mechanics/phase-dependencies.md` - Added "Critical Constraint: No Backwards Dependencies" section
-- Examples of valid vs invalid patterns
-- Phase ID naming conventions (underscore vs hyphen)
-- Validation checklist for declaring dependencies
-
-**Next Steps:** Route comprehensive dependency audit to simulation-maintainer for remaining violations.
-
----
-
-## 🔧 Worker Lock File Management (November 15, 2025)
-
-**🔧 INFRASTRUCTURE: Lock File Cleanup** (Nov 15, 2025, commit 5e28391)
-
-**Summary:** Fixed worker lock file management to prevent stale PID conflicts.
-
-**Problem:**
-- Lock files (`.autonomous-worker.lock`, `.researcher-worker.lock`) were tracked in git
-- Stale PIDs from previous sessions caused worker execution blocks
-- Git restore operations reintroduced old lock files with invalid PIDs
-
-**Solution:**
-- Removed lock files from git tracking
-- Added `*.lock` to `.gitignore`
-- Lock files now ephemeral runtime state only
-
-**Impact:**
-- Prevents autonomous-worker-watcher health check failures
-- Eliminates lock file git conflicts
-- Cleaner repository state (runtime files not committed)
-
-**Files Changed:**
-- `.gitignore` - Added `*.lock` pattern
-- Deleted `.autonomous-worker.lock` and `.researcher-worker.lock` from tracking
-
----
-
-## ✅ Architecture Review and Validation (November 14, 2025)
-
-**🏛️ VALIDATION: Comprehensive Architecture Review** (Nov 14, 2025, commit 8f51488)
-
-**Summary:** Architecture-skeptic agent performed comprehensive integration review; autonomous worker validated findings and corrected false positives.
-
-**Review Process:**
-1. **Initial Review:** architecture-skeptic identified 2 CRITICAL, 3 HIGH, 5 MEDIUM issues
-2. **Validation:** autonomous-worker tested and verified each CRITICAL claim
-3. **Correction:** Both CRITICAL issues determined to be false positives
-
-**False Positives Identified:**
-
-1. **CRITICAL-1: Memory Leak in PhaseOrchestrator** ❌ FALSE POSITIVE
-   - **Claim:** `slice(-999)` allows unbounded growth
-   - **Reality:** Sliding window correctly maintains exactly 1000 elements
-   - **Evidence:** Test script verified array stays at 1000 across 2000 iterations
-   - **Status:** Working as designed, no fix needed
-
-2. **CRITICAL-2: Math.random() Breaking Determinism** ❌ FALSE POSITIVE
-   - **Claim:** 4 files use Math.random() in simulation code
-   - **Reality:** Zero usage in `src/simulation/`, only in UI code (`src/lib/`)
-   - **Evidence:** Scoped grep shows no matches in simulation directory
-   - **Status:** Determinism intact (Issue #11 verified Nov 14)
-
-**Architecture Health Score:**
-- **Original:** 6/10 (with 2 CRITICAL issues)
-- **Corrected:** 8.0/10 (CRITICAL issues invalid)
-- **Roadmap Score:** 9.5/10 (Nov 14)
-- **Conclusion:** Both scores valid from different perspectives; project architecturally sound
-
-**Real Issues (MEDIUM Priority):**
-- 96 phases (target 40-50 for performance)
-- Test coverage gaps (45 test files for 96 phases)
-- Assertion adoption (79% vs 95% target)
-
-**Session Outcome:**
-- Validation prevented unnecessary emergency work
-- Confirmed project in excellent state (all CRITICAL/HIGH roadmap items complete)
-- Documentation fully current (wiki updated Nov 14 21:20)
+**Impact:** If validated, detection systems (detection.ts, behavioralDetection.ts) may need time-dependent scaling, not just investment-based.
 
 **Files:**
-- `reviews/architecture_integration_review_20251114.md` (original review, 279 lines)
-- `reviews/architecture_review_20251114_corrections.md` (validation + corrections, 218 lines)
+- research/mechanistic_interpretability_breakthroughs_20251111.md
+- research/verification_84e286e_20251113.md
+- docs/wiki/advanced/detection.md (updated with research note)
 
-**Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
+---
+
+**🔧 INFRASTRUCTURE: Fix HOME Export for Cron Authentication** (Nov 13, 2025, commit 6cbc578)
+
+**Summary:** Export HOME environment variable in merge orchestrator to fix Claude CLI authentication when running under cron.
+
+**Changes:**
+- Added `export HOME=${HOME:-/Users/annhoward}` to `scripts/merge-orchestrator.sh`
+- Fixes authentication issues when merge orchestrator runs as cron job
+- HOME variable required for Claude CLI credential lookup
+
+**Impact:** Merge orchestrator can now successfully authenticate when invoked by cron (where HOME may be unset).
+
+**Files:**
+- `scripts/merge-orchestrator.sh` (line 11-12)
 
 ---
 
@@ -358,6 +109,37 @@ Without risking data loss or naive destructive operations.
 **Files:**
 - `.researcher-worker.lock` (deleted)
 - `logs/autonomous/researcher/status_current.txt` (status update)
+=======
+## ✅ Recent Changes (November 12, 2025)
+
+**📚 RESEARCH UPDATE: Research File Metadata Standard** (Nov 12, 2025, commit add99ce)
+
+**Summary:** Added YAML frontmatter metadata to 3 actively-used research files to enable research currency tracking.
+
+**Metadata Standard:**
+```yaml
+---
+oldest_source: YYYY
+newest_source: YYYY
+last_verified: YYYY-MM-DD
+---
+```
+
+**Files Updated:**
+- `research/ai_welfare_framework_20251020.md` (oldest: 1988, newest: 2025)
+- `research/water_scarcity_migration_immobility_20251020.md` (oldest: 2012, newest: 2025)
+- `research/climate-mortality-biosphere-multiparadigm-framework_20251028.md` (oldest: 2019, newest: 2025)
+
+**Referenced By:**
+- `src/simulation/mortalityStabilizersInit.ts`
+- `src/simulation/trappedPopulations.ts`
+- `src/simulation/bayesianMortality.ts`
+- `src/simulation/extremeWeatherEvents.ts`
+
+**Research Currency Status:** All three files contain recent (2024-2025) sources and are in good condition. Oldest sources are foundational theories (e.g., Frankl 1946, Baars 1988) that remain relevant.
+
+**Why This Matters:** Standardized metadata enables autonomous research workers to identify stale sources and prioritize updates. The `oldest_source`/`newest_source` range provides quick assessment of research currency without parsing entire files.
+>>>>>>> origin/auto/researcher-20251112_153001
 
 ---
 
@@ -419,6 +201,28 @@ Without risking data loss or naive destructive operations.
 ---
 
 ## ✅ Recent Changes (November 11, 2025)
+
+**📚 RESEARCH: Nuclear War AI Control Gap - 2024-2025 Sources Added** (Nov 11, 2025, commit 0a236ad)
+
+**Summary:** Updated nuclear war AI control research with 3 peer-reviewed sources from 2024-2025, improving research currency from 20% to 40% for this domain.
+
+**New Sources:**
+1. **Saltini & Pan (2024)** - "Beyond Human-in-the-Loop: Managing AI Risks in Nuclear C&C" (War on the Rocks)
+   - Quantitative safety threshold: accidental launch risk < 1 in 10,000,000 per year
+   - Four AI risks: unreliability/hallucinations, opacity, cybersecurity, misalignment
+2. **Dooling (2025)** - "A Risk Assessment Framework for AI Integration into Nuclear C3" (FAS)
+   - Confabulations, automation bias, cybersecurity exposure
+   - Benchmarking under realistic conditions
+3. **SIPRI (2025)** - "Impact of Military AI on Nuclear Escalation Risk"
+   - Compressed decision timelines, biased AI decision-making, strategic instability
+
+**Research Quality:** A (85% peer-reviewed, 40% from 2024-2025, 19 total sources)
+
+**Documentation Updated:**
+- `research/nuclear_war_ai_control_gap_20251022.md` - Added sources #17-19 with full citations
+- `docs/wiki/systems/nuclear-deterrence.md` - Added 2024-2025 section to References
+
+---
 
 **🐛 BUG FIX: Wet Bulb Mortality Cap for Population Collapse Edge Cases** (Nov 11, 2025, commit a3df82a)
 
@@ -516,10 +320,13 @@ Without risking data loss or naive destructive operations.
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
+<<<<<<< HEAD
+=======
+## ✅ Recent Changes (November 11, 2025)
+=======
 
 ---
-
-## ✅ Recent Changes (November 11, 2025)
+>>>>>>> origin/auto/researcher-20251112_153001
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
 
@@ -551,6 +358,10 @@ Without risking data loss or naive destructive operations.
 - research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
+<<<<<<< HEAD
+>>>>>>> origin/auto/researcher-20251111_003001
+=======
+>>>>>>> origin/auto/researcher-20251112_153001
 
 ---
 
@@ -1050,33 +861,6 @@ assertFinite(property);
 **Context:** This addresses the Oct 2025 ecology NaN bug root cause - systematic defensive coding to prevent silent value corruption across all phases.
 
 **Related:** CRITICAL-3 (RNG fallback), CRITICAL-4 (defensive fallbacks), planetary boundaries validation, tipping point validation
-
----
-
-**🔧 WATCHER FIX: Log Sorting Bug (False CRITICAL Alerts)** (Nov 16, 2025, commit e78991b)
-
-**Problem:** Watcher was reporting false CRITICAL alerts about researcher not running, even though logs showed successful runs at 23:00.
-
-**Root Cause:** Watcher used `find ... | sort -r` which sorts alphabetically, not by modification time. This caused it to pick up old `session_*.log` files instead of recent `researcher_*.log` files during the researcher's intentional overnight gap (23:00-08:00 UTC).
-
-**Example:**
-- Alphabetically: `session_20251114_033925.log` > `researcher_20251115_223001.log`
-- By modification time: `researcher_20251115_223001.log` (most recent)
-
-**Solution:** Replace `find ... | sort -r` with `ls -t` (sort by modification time) in all three log checking locations:
-- Worker log checking (line 96)
-- Merge orchestrator log checking (line 194)
-- Researcher log checking (line 250)
-
-**Impact:**
-- ✅ Watcher now correctly identifies most recent logs
-- ✅ Eliminates false CRITICAL alerts during researcher's overnight gap
-- ✅ Improved monitoring accuracy
-
-**Test:** Verified `ls -t logs/autonomous/researcher/*.log | head -1` now correctly returns `researcher_20251115_223001.log` instead of `session_20251114_033925.log`.
-
-**Files Modified:**
-- `scripts/autonomous-worker-watcher.sh` - Changed `find | sort -r` → `ls -t` in 3 locations
 
 ---
 
