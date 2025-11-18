@@ -666,7 +666,10 @@ export function selectGovernmentAction(
           // Alignment research is a form of scientific research
           priority *= (1 + scenarioPriorities.scientificResearch * 9); // Up to 10x at priority=1.0
         }
-        // TODO: Add other research-related actions here when they exist
+        if (action.id === 'allocate_research_budget') {
+          // Direct research budget allocation action
+          priority *= (1 + scenarioPriorities.scientificResearch * 14); // Up to 15x at priority=1.0 (stronger boost)
+        }
       }
 
       // Redistribution Priority (Equality First scenario)
@@ -676,6 +679,10 @@ export function selectGovernmentAction(
             action.id === 'implement_job_guarantee') {
           // Strong boost to redistribution actions to achieve target Gini
           priority *= (1 + scenarioPriorities.redistributionLevel * 14); // Up to 15x at priority=1.0
+        }
+        if (action.id === 'adjust_redistribution_policy') {
+          // Direct redistribution policy action (repeatable)
+          priority *= (1 + scenarioPriorities.redistributionLevel * 19); // Up to 20x at priority=1.0 (strongest boost)
         }
       }
 
@@ -702,8 +709,10 @@ export function selectGovernmentAction(
 
       // Democratic Participation Priority (Democratic Participation scenario)
       if (scenarioPriorities.democraticParticipation !== undefined && scenarioPriorities.democraticParticipation > 0) {
-        // TODO: Add democratic participation actions when they exist in action registry
-        // For now, this doesn't match any existing actions
+        if (action.id === 'invest_governance_capacity') {
+          // Direct governance capacity investment action
+          priority *= (1 + scenarioPriorities.democraticParticipation * 14); // Up to 15x at priority=1.0
+        }
       }
     }
 
