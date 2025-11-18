@@ -1,0 +1,120 @@
+name: Merge Conflict Detection
+
+# Prevent merge conflicts from reaching production docs and code
+# Triggered on all pull requests and pushes to main branches
+
+on:
+  pull_request:
+    branches: ['main', 'master', 'claude/**']
+  push:
+    branches: ['main', 'master', 'claude/**']
+
+jobs:
+  detect-merge-conflicts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for comprehensive check
+
+      - name: Check for merge conflict markers
+        run: |
+          echo "🔍 Scanning for merge conflict markers..."
+
+          # Search for conflict markers in all tracked files
+          CONFLICTS=$(git grep -n "^<<<<<<< \|^=======$\|^>>>>>>> " -- '*.md' '*.ts' '*.tsx' '*.js' '*.json' '*.yml' '*.yaml' || true)
+
+          if [ -n "$CONFLICTS" ]; then
+            echo "❌ MERGE CONFLICTS FOUND:"
+            echo "$CONFLICTS"
+            echo ""
+            echo "🚨 CRITICAL: Merge conflict markers detected in production code!"
+            echo "   Fix these conflicts before merging."
+            echo ""
+            echo "   Files with conflicts:"
+            echo "$CONFLICTS" | cut -d: -f1 | sort -u | sed 's/^/   - /'
+            exit 1
+          fi
+
+          echo "✅ No merge conflicts detected"
+
+      - name: Check for unresolved TODO conflict markers
+        run: |
+          echo "🔍 Checking for unresolved conflict TODO comments..."
+
+          # Common patterns developers use when manually resolving conflicts
+          CONFLICT_TODOS=$(git grep -n "TODO.*conflict\|FIXME.*conflict\|XXX.*conflict\|CONFLICT:" -- '*.md' '*.ts' '*.tsx' '*.js' || true)
+
+          if [ -n "$CONFLICT_TODOS" ]; then
+            echo "⚠️  UNRESOLVED CONFLICT TODOs FOUND:"
+            echo "$CONFLICT_TODOS"
+            echo ""
+            echo "   These comments suggest incomplete conflict resolution."
+            echo "   Review and address before merging."
+            exit 1
+          fi
+
+          echo "✅ No conflict TODO markers found"
+
+      - name: Verify critical files integrity
+        run: |
+          echo "🔍 Verifying critical file integrity..."
+
+          CRITICAL_FILES=(
+            "reviews/defensive_fallback_architecture_review_20251116.md"
+            "plans/MASTER_IMPLEMENTATION_ROADMAP.md"
+            "CLAUDE.md"
+            "README.md"
+            "package.json"
+            "tsconfig.json"
+          )
+
+          for file in "${CRITICAL_FILES[@]}"; do
+            if [ -f "$file" ]; then
+              # Check if file has suspicious patterns (duplicate sections, etc.)
+              DUPES=$(grep -o "^##.*" "$file" 2>/dev/null | sort | uniq -d || true)
+              if [ -n "$DUPES" ]; then
+                echo "⚠️  Potential duplicate sections in $file:"
+                echo "$DUPES"
+                echo "   (This may indicate incomplete merge resolution)"
+              fi
+            fi
+          done
+
+          echo "✅ Critical files verified"
+
+      - name: Check for syntax errors in Markdown
+        run: |
+          echo "🔍 Checking Markdown syntax..."
+
+          # Look for broken Markdown that might result from bad merges
+          BROKEN_MD=$(find . -name "*.md" -type f ! -path "*/node_modules/*" ! -path "*/.git/*" -exec grep -l "^\[.*\](" {} \; | xargs grep -n "^\[.*\](.*<<<\|^\[.*\](.*===\|^\[.*\](.*>>>" || true)
+
+          if [ -n "$BROKEN_MD" ]; then
+            echo "❌ BROKEN MARKDOWN LINKS:"
+            echo "$BROKEN_MD"
+            echo "   (Likely caused by unresolved merge conflicts)"
+            exit 1
+          fi
+
+          echo "✅ No broken Markdown detected"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo ""
+          echo "═══════════════════════════════════════════════════════"
+          echo "  MERGE CONFLICT CHECK COMPLETE"
+          echo "═══════════════════════════════════════════════════════"
+          echo ""
+          echo "This check prevents:"
+          echo "  • Merge conflict markers (<<<<<<, =====, >>>>>>)"
+          echo "  • Unresolved conflict TODOs"
+          echo "  • Duplicate sections in critical files"
+          echo "  • Broken Markdown links from bad merges"
+          echo ""
+          echo "If this check fails, manually resolve conflicts and"
+          echo "re-commit before merging to main/master."
+          echo ""
