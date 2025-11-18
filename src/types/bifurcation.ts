@@ -202,6 +202,10 @@ export interface BifurcationState {
    * - Track distance month-by-month (see approach to thresholds)
    * - Enable pre/post bifurcation variance analysis
    *
+   * Nov 14, 2025 - HIGH-1 memory fix: Rolling window to prevent unbounded growth
+   * - maxTimeSeriesLength caps array size (default: 100)
+   * - enableTimeSeries flag disables entirely for production runs
+   *
    * @see /reviews/bifurcation_empirical_architecture_review_20251113.md
    */
   metrics?: {
@@ -218,12 +222,11 @@ export interface BifurcationState {
     //
     // MEMORY TRADEOFF:
     // - Without bound: 1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects → OOM
-    // - With rolling window (default: 200): Bounded memory, sufficient for validation
+    // - With rolling window (default: 100-200): Bounded memory, sufficient for validation
     //
-    // Controlled by state.config.bifurcationDiagnostics:
-    // - enabled: false → no collection (zero memory overhead)
-    // - enabled: true, maxTimeSeriesLength: 200 → rolling window (default)
-    // - enabled: true, maxTimeSeriesLength: Infinity → unbounded (use only for debugging!)
+    // Controlled by enableTimeSeries and maxTimeSeriesLength fields below:
+    // - enableTimeSeries: false → no collection (zero memory overhead)
+    // - enableTimeSeries: true, maxTimeSeriesLength: 100-200 → rolling window (default)
     //
     // Validation impact: Priya can validate variance patterns from rolling window.
     // Full history not required - statistics computed incrementally (maxAmplification, etc.)
@@ -238,6 +241,11 @@ export interface BifurcationState {
     // Tracks cumulative amplification applied by each threshold system
     // Required for validating mortality calibration (CRITICAL-2 fix validation)
     totalAmplificationBySystem: Record<string, number>;  // { environmental: 45.2, social: 123.7, ... }
+
+    // Configuration (Nov 14, 2025 - HIGH-1 memory fix)
+    maxTimeSeriesLength: number;  // Max entries in amplificationTimeSeries (default: 100)
+    enableTimeSeries: boolean;     // Toggle time series collection (default: true for validation, set false for production)
+    _rollingWindowLogged: boolean; // Internal: prevent log spam (set true after first trim)
   };
 }
 
@@ -336,6 +344,9 @@ export function initializeBifurcationState(rng: () => number): BifurcationState 
         flourishing: 0,
         technology: 0,
       },
+      maxTimeSeriesLength: 100,  // Nov 14, 2025 - HIGH-1 fix: cap at 100 entries
+      enableTimeSeries: true,    // Nov 14, 2025 - HIGH-1 fix: enable by default (for validation)
+      _rollingWindowLogged: false,  // Nov 14, 2025 - HIGH-1 fix: prevent log spam
     },
   };
 }
