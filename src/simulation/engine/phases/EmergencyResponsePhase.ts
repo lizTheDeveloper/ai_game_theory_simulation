@@ -493,13 +493,19 @@ export class EmergencyResponsePhase implements SimulationPhase {
         state.environmentalAccumulation,
         'climateStability',
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/auto/worker-20251115_130001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+<<<<<<< HEAD
 =======
         { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
 >>>>>>> origin/auto/worker-20251115_080001
+=======
+>>>>>>> origin/auto/worker-20251115_130001
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
@@ -513,13 +519,19 @@ export class EmergencyResponsePhase implements SimulationPhase {
         state.society,
         'coordinationCapacity',
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/auto/worker-20251115_130001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+<<<<<<< HEAD
 =======
         { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
 >>>>>>> origin/auto/worker-20251115_080001
+=======
+>>>>>>> origin/auto/worker-20251115_130001
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
@@ -533,13 +545,19 @@ export class EmergencyResponsePhase implements SimulationPhase {
         state.globalMetrics,
         'economicTransitionStage',
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/auto/worker-20251115_130001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+<<<<<<< HEAD
 =======
         { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
 >>>>>>> origin/auto/worker-20251115_080001
+=======
+>>>>>>> origin/auto/worker-20251115_130001
       ) / 4.0,
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
@@ -553,13 +571,19 @@ export class EmergencyResponsePhase implements SimulationPhase {
         state.government,
         'legitimacy',
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/auto/worker-20251115_130001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+<<<<<<< HEAD
 =======
         { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
 >>>>>>> origin/auto/worker-20251115_080001
+=======
+>>>>>>> origin/auto/worker-20251115_130001
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',

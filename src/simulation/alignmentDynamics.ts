@@ -304,8 +304,13 @@ export function calculateDriftContribution(
     additionalInfo: {
       agentId: agent.id,
       baseDrift,
+<<<<<<< HEAD
       suffering: agent.sufferingMetrics.total,
       sufferingEnabled: config.aiSufferingEnabled ?? false
+=======
+      suffering: agent.sufferingMetrics?.total ?? 0,  // Display only - logging context for assertion errors
+      sufferingEnabled: config.aiSufferingEnabled ?? false  // Config default - acceptable fallback
+>>>>>>> origin/auto/worker-20251115_130001
     }
   });
 }
