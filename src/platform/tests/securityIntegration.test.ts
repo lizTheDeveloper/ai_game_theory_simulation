@@ -453,19 +453,54 @@ describe('Security Integration Tests', () => {
   // ==========================================================================
 
   describe('Full Request Lifecycle with All Security Features', () => {
-    it('should apply all security middleware to request', async () => {
-      // This test would require starting the full server
-      // For now, we verify middleware is properly integrated
+    it('should apply all security middleware to HTTP requests', async () => {
       const config = getDefaultConfig();
       config.database.database = 'marcus_test';
+      config.server.port = 0; // Use random available port
 
-      // Create server instance
+      // Create and start server
       const testServer = new PlatformServer(config);
+      const server = await testServer.start();
+      const address = server.address();
+      const port = typeof address === 'object' && address !== null ? address.port : 3000;
+      const baseUrl = `http://localhost:${port}`;
 
-      // Verify server was created with all security features
-      assert.ok(testServer, 'Should create server with security middleware');
+      try {
+        // Test 1: Health endpoint should return 200
+        const healthResponse = await fetch(`${baseUrl}/health`);
+        assert.strictEqual(healthResponse.status, 200, 'Health endpoint should return 200');
 
-      // TODO: Make actual HTTP requests to test full integration
+        // Test 2: Security headers should be present
+        assert.ok(healthResponse.headers.get('x-frame-options'), 'Should have X-Frame-Options');
+        assert.ok(healthResponse.headers.get('x-content-type-options'), 'Should have X-Content-Type-Options');
+        assert.ok(healthResponse.headers.get('strict-transport-security'), 'Should have HSTS');
+
+        // Test 3: Rate limiting should work
+        const loginAttempts = [];
+        for (let i = 0; i < 10; i++) {
+          loginAttempts.push(
+            fetch(`${baseUrl}/auth/login`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username: 'test', password: 'wrong' })
+            })
+          );
+        }
+        const responses = await Promise.all(loginAttempts);
+        const rateLimited = responses.some(r => r.status === 429);
+        assert.ok(rateLimited, 'Should rate limit excessive login attempts');
+
+        // Test 4: CORS headers on OPTIONS request
+        const corsResponse = await fetch(`${baseUrl}/api/citations/analyze`, {
+          method: 'OPTIONS',
+          headers: { 'Origin': 'https://example.com' }
+        });
+        assert.ok(corsResponse.headers.get('access-control-allow-origin'), 'Should have CORS headers');
+
+      } finally {
+        // Clean up: stop server
+        await testServer.stop();
+      }
     });
   });
 });

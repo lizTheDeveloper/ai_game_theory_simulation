@@ -348,7 +348,7 @@ export function getDevelopmentSecurityHeadersConfig(): SecurityHeadersConfig {
  * @example
  * app.post('/api/csp-report', cspViolationHandler);
  */
-export function cspViolationHandler(req: Request, res: Response): void {
+export async function cspViolationHandler(req: Request, res: Response): Promise<void> {
   const violation = req.body;
 
   console.warn('🚨 CSP VIOLATION DETECTED:', {
@@ -358,11 +358,26 @@ export function cspViolationHandler(req: Request, res: Response): void {
     originalPolicy: violation['original-policy'],
   });
 
-  // TODO: Store violations in database for analysis
-  // await pool.query(
-  //   'INSERT INTO csp_violations (document_uri, violated_directive, blocked_uri, timestamp) VALUES ($1, $2, $3, NOW())',
-  //   [violation['document-uri'], violation['violated-directive'], violation['blocked-uri']]
-  // );
+  // Store violations in database for analysis
+  try {
+    const { pool } = await import('../database/pool');
+    await pool.query(
+      `INSERT INTO csp_violations (document_uri, violated_directive, blocked_uri, original_policy, user_agent, ip_address, timestamp)
+       VALUES ($1, $2, $3, $4, $5, $6, NOW())
+       ON CONFLICT DO NOTHING`,
+      [
+        violation['document-uri'],
+        violation['violated-directive'],
+        violation['blocked-uri'],
+        violation['original-policy'],
+        req.headers['user-agent'] || 'unknown',
+        req.ip || req.socket.remoteAddress || 'unknown'
+      ]
+    );
+  } catch (error) {
+    console.error('❌ Failed to store CSP violation:', error);
+    // Don't fail the request if database is down
+  }
 
   res.status(204).end();
 }

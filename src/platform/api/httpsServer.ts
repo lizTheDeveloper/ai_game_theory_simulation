@@ -174,13 +174,52 @@ export class HTTPSServer {
   private startCertificateMonitoring(): void {
     const checkCertificate = () => {
       try {
-        // Note: Simplified implementation
-        // Production should use proper x509 certificate parsing library
         console.log(`🔍 Certificate monitoring check (every ${this.tlsConfig.monitoring.checkInterval}s)`);
 
-        // TODO: Implement proper certificate expiry checking
-        // Requires x509 parsing library like 'node-forge' or '@peculiar/x509'
-        // For now, rely on external monitoring script
+        // Check certificate expiry
+        if (!this.tlsConfig.cert || !this.tlsConfig.key) {
+          console.warn('⚠️ No certificate configured for monitoring');
+          return;
+        }
+
+        // Read certificate file
+        const fs = require('fs');
+        const crypto = require('crypto');
+
+        let certPath: string;
+        if (typeof this.tlsConfig.cert === 'string' && !this.tlsConfig.cert.startsWith('-----BEGIN')) {
+          certPath = this.tlsConfig.cert;
+        } else {
+          // Certificate is inline PEM, skip monitoring
+          return;
+        }
+
+        if (!fs.existsSync(certPath)) {
+          console.warn(`⚠️ Certificate file not found: ${certPath}`);
+          return;
+        }
+
+        const certPem = fs.readFileSync(certPath, 'utf8');
+        const cert = crypto.X509Certificate ? new crypto.X509Certificate(certPem) : null;
+
+        if (!cert) {
+          console.warn('⚠️ crypto.X509Certificate not available (Node.js < 15.6)');
+          return;
+        }
+
+        // Parse certificate validity dates
+        const validTo = new Date(cert.validTo);
+        const now = new Date();
+        const daysUntilExpiry = Math.floor((validTo.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+
+        console.log(`📜 Certificate expires: ${validTo.toISOString()} (${daysUntilExpiry} days)`);
+
+        // Alert if expiring soon
+        if (daysUntilExpiry < 0) {
+          console.error(`🚨 CRITICAL: Certificate EXPIRED ${Math.abs(daysUntilExpiry)} days ago!`);
+        } else if (daysUntilExpiry <= this.tlsConfig.monitoring.warnDaysBefore) {
+          console.warn(`⚠️ WARNING: Certificate expires in ${daysUntilExpiry} days! Renew soon.`);
+        }
 
       } catch (err) {
         console.error('❌ Certificate monitoring error:', err);

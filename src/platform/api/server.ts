@@ -237,20 +237,50 @@ export class PlatformServer {
       validateRequest(analyzeCitationSchema),
       async (req: Request, res: Response) => {
         try {
-          // TODO: Integrate with CitationAgentOrchestrator
-          const { text, claimedSource, metadata } = req.body;
+          const { text, claimedSource, actualSource, metadata } = req.body;
 
-          // Placeholder response
+          // Create citation document
+          const document = {
+            text,
+            claimedSource,
+            actualSource,
+            metadata: metadata || {}
+          };
+
+          // Lazy-load orchestrator (avoid circular dependencies)
+          const { CitationAgentOrchestrator } = await import('../integration/citationAgentIntegration');
+
+          // Get orchestrator instance (singleton pattern)
+          const orchestrator = (global as any).__citationOrchestrator as typeof CitationAgentOrchestrator.prototype;
+
+          if (!orchestrator) {
+            throw new Error('Citation orchestrator not initialized. Start server with --enable-agents flag.');
+          }
+
+          // Analyze citation with multi-agent consensus
+          const result = await orchestrator.analyzeCitation(document);
+
           res.status(200).json({
-            message: 'Citation analysis not yet implemented',
-            input: { text, claimedSource, metadata },
+            integrity: {
+              score: result.meanIntegrity,
+              consensus: result.consensus,
+              confidence: result.consensus // Higher consensus = higher confidence
+            },
+            analysis: {
+              numAgents: result.numAgents,
+              behaviorDistribution: result.behaviorDistribution,
+              recommendations: result.recommendations,
+              latencyMs: result.latencyMs
+            },
+            results: result.individualResults,
+            timestamp: result.timestamp
           });
 
         } catch (err) {
           console.error('❌ Citation analysis error:', err);
           res.status(500).json({
             error: 'Internal Server Error',
-            message: 'Citation analysis failed',
+            message: err instanceof Error ? err.message : 'Citation analysis failed',
           });
         }
       }
@@ -263,10 +293,12 @@ export class PlatformServer {
       requirePermission('metrics:read'),
       async (req: Request, res: Response) => {
         try {
-          // TODO: Integrate with MetricsCollector
-          res.status(200).json({
-            message: 'Metrics endpoint not yet implemented',
-          });
+          // Return Prometheus metrics in text format
+          const { register } = await import('prom-client');
+
+          const metrics = await register.metrics();
+          res.set('Content-Type', register.contentType);
+          res.send(metrics);
 
         } catch (err) {
           console.error('❌ Metrics error:', err);
@@ -285,10 +317,51 @@ export class PlatformServer {
       requireAdmin,
       async (req: Request, res: Response) => {
         try {
-          // TODO: Integrate with CitationAgentOrchestrator
-          res.status(200).json({
-            message: 'Agent management not yet implemented',
-          });
+          const { action, agentId } = req.body;
+
+          // Lazy-load orchestrator
+          const { CitationAgentOrchestrator } = await import('../integration/citationAgentIntegration');
+          const orchestrator = (global as any).__citationOrchestrator as typeof CitationAgentOrchestrator.prototype;
+
+          if (!orchestrator) {
+            throw new Error('Citation orchestrator not initialized');
+          }
+
+          let result: any;
+
+          switch (action) {
+            case 'list':
+              // Get status of all agents
+              result = await orchestrator.getAgentStatuses();
+              break;
+
+            case 'restart':
+              if (!agentId) {
+                res.status(400).json({ error: 'agentId required for restart' });
+                return;
+              }
+              // Restart would be implemented in orchestrator
+              result = { message: `Agent ${agentId} restart requested` };
+              break;
+
+            case 'health':
+              // Health check all agents
+              const statuses = await orchestrator.getAgentStatuses();
+              const healthy = statuses.filter(s => s.isHealthy).length;
+              result = {
+                total: statuses.length,
+                healthy,
+                unhealthy: statuses.length - healthy,
+                agents: statuses
+              };
+              break;
+
+            default:
+              res.status(400).json({ error: 'Invalid action. Use: list, restart, health' });
+              return;
+          }
+
+          res.status(200).json(result);
 
         } catch (err) {
           console.error('❌ Agent management error:', err);

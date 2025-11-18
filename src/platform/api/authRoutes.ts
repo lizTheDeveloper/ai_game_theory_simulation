@@ -295,20 +295,116 @@ export function createAuthRoutes(authService: AuthService, jwtMiddleware: JWTMid
   });
 
   // ==========================================================================
-  // POST /auth/reset-password - Password Reset (Placeholder)
+  // POST /auth/reset-password-request - Request Password Reset
+  // ==========================================================================
+
+  router.post('/reset-password-request', async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email } = req.body;
+
+      if (!email || typeof email !== 'string') {
+        res.status(400).json({ error: 'Email is required' });
+        return;
+      }
+
+      // Generate password reset token (32 bytes = 64 hex chars)
+      const crypto = await import('crypto');
+      const resetToken = crypto.randomBytes(32).toString('hex');
+      const resetTokenHash = crypto.createHash('sha256').update(resetToken).digest('hex');
+      const expiresAt = new Date(Date.now() + 3600000); // 1 hour expiry
+
+      // Store reset token in database
+      const { pool } = await import('../database/pool');
+      await pool.query(
+        `INSERT INTO password_reset_tokens (user_email, token_hash, expires_at)
+         VALUES ($1, $2, $3)
+         ON CONFLICT (user_email) DO UPDATE SET token_hash = $2, expires_at = $3, created_at = NOW()`,
+        [email, resetTokenHash, expiresAt]
+      );
+
+      // Send reset email (in production, use proper email service)
+      console.log(`📧 Password reset token for ${email}: ${resetToken}`);
+      console.log(`🔗 Reset link: ${req.protocol}://${req.get('host')}/auth/reset-password?token=${resetToken}`);
+
+      // Always return 200 (don't reveal if email exists)
+      res.status(200).json({
+        message: 'If the email exists, a password reset link has been sent.',
+      });
+
+    } catch (error) {
+      console.error('❌ Password reset request error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  // ==========================================================================
+  // POST /auth/reset-password - Reset Password with Token
   // ==========================================================================
 
   router.post('/reset-password', async (req: Request, res: Response): Promise<void> => {
-    // TODO: Implement password reset flow
-    // This would typically involve:
-    // 1. Generate password reset token
-    // 2. Send email with reset link
-    // 3. Verify token and allow password update
+    try {
+      const { token, newPassword } = req.body;
 
-    res.status(501).json({
-      error: 'Not Implemented',
-      message: 'Password reset not yet implemented',
-    });
+      if (!token || !newPassword) {
+        res.status(400).json({ error: 'Token and new password are required' });
+        return;
+      }
+
+      // Validate password strength
+      if (newPassword.length < 12) {
+        res.status(400).json({ error: 'Password must be at least 12 characters' });
+        return;
+      }
+
+      // Hash token to match database
+      const crypto = await import('crypto');
+      const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+
+      // Verify token
+      const { pool } = await import('../database/pool');
+      const tokenResult = await pool.query(
+        `SELECT user_email, expires_at FROM password_reset_tokens
+         WHERE token_hash = $1 AND expires_at > NOW()`,
+        [tokenHash]
+      );
+
+      if (tokenResult.rows.length === 0) {
+        res.status(400).json({ error: 'Invalid or expired reset token' });
+        return;
+      }
+
+      const { user_email: email } = tokenResult.rows[0];
+
+      // Hash new password
+      const bcrypt = await import('bcrypt');
+      const passwordHash = await bcrypt.hash(newPassword, 12);
+
+      // Update password
+      await pool.query(
+        `UPDATE users SET password_hash = $1, updated_at = NOW()
+         WHERE email = $2`,
+        [passwordHash, email]
+      );
+
+      // Delete used token
+      await pool.query('DELETE FROM password_reset_tokens WHERE token_hash = $1', [tokenHash]);
+
+      // Log password change
+      await pool.query(
+        `INSERT INTO audit_log (event, user_id, ip_address, details)
+         SELECT 'PASSWORD_RESET', id, $2, 'Password reset via email token'
+         FROM users WHERE email = $1`,
+        [email, req.ip || 'unknown']
+      );
+
+      res.status(200).json({
+        message: 'Password successfully reset. You can now login with your new password.',
+      });
+
+    } catch (error) {
+      console.error('❌ Password reset error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
   });
 
   return router;
