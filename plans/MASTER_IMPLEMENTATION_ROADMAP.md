@@ -70,23 +70,49 @@
    - Climate vs equality: NO trade-off (both 77.8%)
    - Model validated: Governance conditions enable spiral activation
 
-**Critical Research Gaps (Blocking Implementation):**
-1. 🔴 **AI Coordination & Transition Management** - God mode 30% mortality unexplained
-   - Gap: Model tech unlock, not AI-managed rollout coordination
-   - Need: Transition mortality rates (managed vs unmanaged), safety net effectiveness
-   - Blocking: CoordinatedDeploymentPhase implementation
+**✅ Active Implementation Priorities (Nov 18, 2025):**
 
-2. 🔴 **Irreversibility Framework** - Which boundaries are permanent?
-   - Gap: All boundaries modeled as reversible (extinction debt ignored)
-   - Need: Categorization with recovery half-lives (50-1000yr)
-   - Blocking: Novel entities implementation (need irreversible flag)
+**Three research-validated features ready for coordinated implementation:**
 
-**Implementation Readiness Assessment:**
-- ✅ **READY:** Climate deployment timescales (parameters provided)
-- ✅ **READY:** Novel entities model redesign (conditional approval, uncertainty flagged)
-- 🔴 **BLOCKED:** AI coordination (needs research first)
+1. ✅ **Phase 1: Climate Deployment Timescales** (READY NOW - Priority 1)
+   - Research: Grade A- (15+ peer-reviewed sources, 2024-2025)
+   - Status: Implementation-ready with exact parameters
+   - God mode 5.5% effectiveness VALIDATED as physically accurate
+   - Spec: `plans/phase1_climate_deployment_timescales_implementation_spec.md`
+   - Owner: simulation-maintainer (Roy)
+   - Est. Time: 4-6 hours
+
+2. ✅ **Phase 2: AI Coordination & Transition Mortality** (READY NOW - Priority 2)
+   - Research: Grade A- (24+ peer-reviewed sources, empirical mortality baselines)
+   - Status: Implementation-ready with empirical parameters
+   - God mode 30% mortality VALIDATED as chaos scenario baseline
+   - Spec: `plans/phase2_ai_coordination_implementation_spec.md`
+   - Owner: simulation-maintainer (Roy)
+   - Est. Time: 6-8 hours
+
+3. ✅ **Phase 3: Novel Entities Paradigm Shift** (READY WITH CONDITIONS - Priority 3)
+   - Research: Grade B+ (conditional approval, HIGH UNCERTAINTY flagged)
+   - Status: Implementation-ready with sensitivity analysis required
+   - 0% effectiveness explained by thermodynamic energy trap + irreversibility
+   - Spec: `plans/phase3_novel_entities_implementation_spec.md`
+   - Owner: simulation-maintainer (Roy) + feature-implementer (Moss)
+   - Est. Time: 10-14 hours
+
+**Coordination Plan:** `plans/COORDINATION_three_phase_implementation_20251118.md`
+
+**Timeline Options:**
+- Sequential (conservative): 20-28 hours over 14 days
+- Parallel (aggressive): 12-16 hours over 14 days
+
+**Research Completions (All Blocking Issues Resolved):**
+- ✅ Climate deployment timescales research complete (Nov 12)
+- ✅ AI coordination & transition mortality research complete (Nov 18)
+- ✅ Novel entities energy trap research complete (Nov 13)
+
+**Remaining Research Gaps (Non-Blocking):**
 - 🟠 **PARTIAL:** Energy budget constraints (concept validated, algorithm needed)
 - 🟠 **PARTIAL:** Nitrogen-food coupling (hypothesis strong, quantification needed)
+- 🟠 **PARTIAL:** Irreversibility framework generalization (Novel Entities specific version ready)
 
 **Recent Completions (Nov 12, 2025):**
 
