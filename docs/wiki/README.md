@@ -28,17 +28,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 15: Defensive Fallback Cleanup - HIGH Priority** (commit c6dcc45)
-- 🔧 **HIGH PRIORITY FIX:** Replaced defensive fallbacks with assertions in hot paths and calculation contexts
-- 🛡️ **CRITICAL Hot Paths (4 fixes):** EmergencyResponsePhase.ts
-  - climateStability, socialCohesion, economicStability, governanceLegitimacy → `assertStateProperty`
-- 🧮 **HIGH Calculation Paths (8 fixes):**
-  - OutcomeProbabilitiesPhase.ts: 6 probability validations → `assertProbability`
-  - dystopiaProgression.ts: 2 QoL metrics → `assertStateProperty`
-- ✅ **Validation:** Monte Carlo N=1, 12 months - PASSED (no assertion errors)
-- 📊 **Impact:** State initialization bugs now fail loudly instead of silently masking issues
-- 🎯 **Audit Result:** False positives identified (optional fields, display contexts) kept fallbacks as appropriate
-- 📖 **Documentation:** logs/defensive_fallback_fixes_20251115.md
+**Nov 15: Merge Conflict Resolution - Parameter Alignment** (commit 4c1df94)
+- 🔧 **MERGE RESOLUTION:** Accepted origin version (auto/worker-20251113_070003) for centralConfig and PhaseOrchestrator
+- 📊 **AI Scaling Parameters:** Reverted to research-backed values (Cottier et al. 2024, Sevilla & Roldán 2024)
+  - AI_CAPABILITY_DOUBLING_TIME: 8 months (with confidence intervals)
+  - COMPUTE_GROWTH_RATE: 2.15 (log2 of 4.4×/year)
+- 🔧 **Performance Instrumentation:** Reverted to sliding window approach (1000 samples for phases, 1200 for steps)
+- ✅ **TypeScript:** Production code compilation verified (PASS)
 
 **Nov 15: Phase Dependency Validation Fixes - CRITICAL-2 Resolution** (commit fe78789)
 - 🔧 **CRITICAL-2 RESOLVED:** Fixed 3 dependency bugs caught by existing validation infrastructure
