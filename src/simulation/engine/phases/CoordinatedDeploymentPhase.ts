@@ -59,9 +59,12 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
     const events: GameEvent[] = [];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251117_110001
+=======
+>>>>>>> origin/auto/worker-20251117_120001
     // DEFENSIVE CHECK: Fail loudly if state not initialized after bootstrap
     if (!state.coordinatedDeployment) {
       if (state.currentMonth > 1) {
@@ -72,12 +75,18 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
       }
       // Only skip during bootstrap (month 0-1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/auto/worker-20251117_120001
 =======
     // Skip if coordinated deployment not initialized (optional system)
     if (!state.coordinatedDeployment) {
 >>>>>>> origin/auto/researcher-20251115_093001
+<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251117_110001
+=======
+>>>>>>> origin/auto/worker-20251117_120001
       return { events };
     }
 
