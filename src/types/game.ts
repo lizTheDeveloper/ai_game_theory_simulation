@@ -897,9 +897,10 @@ export interface GameState {
    * - policy: Government policy changes (AI regulation, safety investment, etc.)
    * - investment: Technology research/deployment funding
    * - emergency: Emergency response actions during crises
+   * - ai_action: AI agent actions triggered by player
    */
   playerDecisions?: Array<{
-    type: 'policy' | 'investment' | 'emergency';
+    type: 'policy' | 'investment' | 'emergency' | 'ai_action';
     data: any;
     timestamp: number; // Month when decision was queued
   }>;
