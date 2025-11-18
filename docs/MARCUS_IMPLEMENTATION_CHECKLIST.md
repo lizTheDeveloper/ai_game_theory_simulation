@@ -44,6 +44,14 @@
 - [x] Create version clarification doc (MARCUS_VERSION_CLARIFICATION.md)
 - [x] Add Python requirements.txt
 - [x] Fix repository URL in debugging report (404GeneNotFound/ai_game_theory_simulation)
+- [x] Create complete debugging tutorial (MARCUS_DEBUGGING_TUTORIAL.md)
+  - ✅ 50+ code attempts with success/failure annotations
+  - ✅ 15+ error types with root cause analysis
+  - ✅ Complete debugging methodology guide
+  - ✅ 10 key lessons learned with examples
+  - ✅ Debugging checklist for future projects
+  - ✅ Useful command aliases and tools reference
+  - **File:** `docs/MARCUS_DEBUGGING_TUTORIAL.md` (600+ lines)
 
 ### Python Agent Fixes
 - [x] **Fix Python agent lifecycle** (CRITICAL - COMPLETED)
@@ -321,6 +329,7 @@ curl -X POST http://localhost:3000/auth/login \
 - `ecosystem.config.js` (NEW: PM2 configuration)
 - `marcus-platform.service` (NEW: systemd unit)
 - `docs/MARCUS_DEBUGGING_REPORT.md` (repo URL fixes)
+- `docs/MARCUS_DEBUGGING_TUTORIAL.md` (NEW: 600+ lines, complete debugging methodology)
 - `docs/MARCUS_IMPLEMENTATION_CHECKLIST.md` (progress tracking)
 
 **Production Readiness:** 79% → Ready for comprehensive testing phase
