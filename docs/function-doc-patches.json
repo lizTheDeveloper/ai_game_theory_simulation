@@ -121,7 +121,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+<<<<<<< HEAD
     "line": 2365,
+=======
+    "line": 2052,
+>>>>>>> origin/auto/worker-20251116_023000
     "name": "getAllTech",
     "doc": " Returns array of results."
   },

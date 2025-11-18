@@ -10,31 +10,83 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Key features:**
 - **Research-backed realism**: Every mechanic justified by peer-reviewed sources (2024-2025)
-- **71 breakthrough technologies**: From crisis response to transformative clarketech
+- **77 breakthrough technologies**: From crisis response to transformative clarketech (updated Nov 16, 2025)
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
-- **Phase-based architecture**: 95 phases per step (reduced from 116 via Nov 2025 consolidation)
+- **Phase-based architecture**: 97 phases per step (reduced from 116 via Nov 2025 consolidation)
 
 ## 🚀 Project Status
 
-**🟢 EXCELLENT - STABLE AND IMPROVING** (November 15, 2025)
+**🟢 STABLE** (November 16, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A (100% peer-reviewed, automated currency pipeline, W3C standards) ✅ EXCELLENT
-- **Implementation Fidelity:** A (Defensive coding violations RESOLVED, Quality Gate 2 passed) ✅ EXCELLENT
-- **Architecture Health:** 9.5/10 EXCELLENT (ALL CRITICAL/HIGH issues resolved) ✅ STABLE
-- **System Trajectory:** 🟢 STABLE AND IMPROVING (Architecture review complete, Monte Carlo validation ready)
+- **Research Quality:** A (peer-reviewed foundation, biogeochemical integration complete) ✅ EXCELLENT
+- **Implementation Fidelity:** A (assertion coverage 97.2%, biogeochemical tech tree complete) ✅ EXCELLENT
+- **Architecture Health:** B- (stable with localized issues - 2 CRITICAL, 3 HIGH identified in Nov 15 review) ⚠️ STABLE
+- **System Trajectory:** 🟢 STABLE (Biogeochemical integration complete, ready for validation)
 
 **Recent Major Achievements:**
 
-**Nov 15: Outcome Probability Normalization Fix** (commit 51f78b8)
-- 🐛 **Bug Fix:** Probabilities now sum to exactly 1.0 (previously 0.939)
-- 🔧 **Root Cause:** Baseline (0.1) added to total instead of to each score
-- ✅ **Solution:** Add smaller baseline (0.01) to EACH score before normalization
-- 📊 **Impact:** Mathematical correctness in outcome calculations restored
-- 🛡️ **Discovery:** Defensive fallback assertions in OutcomeProbabilitiesPhase caught the error
-- 🧪 **Validation:** Monte Carlo 12-month run completes without assertion errors
+**Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
+- 📊 **Architecture Review:** Grade B- (stable with localized issues)
+  - 2 CRITICAL: Phase dependency gaps (9/97 phases), CoordinatedDeploymentPhase integration risk
+  - 3 HIGH: Defensive fallback migration, O(n²) patterns, memory instrumentation
+  - ✅ **Mitigation:** 24 integration tests added (776 lines), 2 phases fixed with explicit dependencies
+- 🔬 **Research Audit:** Grade A- (425 files analyzed, 59% current <3yr)
+  - 4 CRITICAL parameter fixes applied:
+    - Heat adaptation: 0.80 → 0.45 (Ballester 2024, eliminates 82% mortality underestimate)
+    - Aid effectiveness: Cavalcanti 2025 misinterpretation corrected
+    - Migration: IOM 2024 parameters marked as qualitative assumptions
+    - Citation: Acemoglu & Restrepo "2022" → "2019 JEP 33:2"
+  - 0 CRITICAL age issues, 146 HIGH (mostly foundational theory)
+- 📖 **Documentation:** reviews/architecture_review_20251115_200300.md, research/RESEARCH_AUDIT_EXECUTIVE_SUMMARY_20251115.md
+- 📁 **Archive:** plans/completed/nov15_architecture_research_fixes_20251115.md
+- ✅ **Status:** Architecture Health B- (from 9.5/10), Research Quality A- (0 CRITICAL age issues)
+
+**Nov 15: Planetary Boundaries & Tipping Points 2025 Research Update** (commit d88ce24)
+- 📚 **New Research:** Comprehensive 2025 update from Rockström (2025) & BioScience 2025 State of Climate
+- 🚨 **Critical Updates:** 7/9 planetary boundaries transgressed (up from 6), ocean acidification crossed 2020
+- 🧊 **Tipping Points:** Ice sheets (Greenland + W. Antarctic) at record lows, likely already crossed
+- 🌳 **Amazon Transition:** Southeastern region now carbon source (no longer sink), dieback risk active
+- 🌡️ **Warming Acceleration:** 1.2°C current, 2.7°C trajectory by 2100, aerosol reduction + cloud feedbacks
+- 💰 **Economic Impact:** $18T cumulative damages (2000-2025), California wildfires $250B (2025)
+- 📖 **Documentation:** research/planetary_boundaries_tipping_points_2025.md (611 lines, 2 peer-reviewed sources)
+- ⚠️ **Status:** NEEDS VALIDATION - Research verification file created (verification_d88ce24_20251115.md)
+- 🎯 **Priority:** HIGH - Affects baseline initialization, tipping cascades, disaster scaling
+- 🔄 **Workflow:** Queued for orchestrator validation (citation existence + claim verification required)
+
+**Nov 15: Defensive Fallback Pattern Audit - Legitimate vs Bug Clarification** (commit 58690f5)
+- 🔍 **Audit Complete:** Comprehensive review of 169 nullish coalescing (`??`) patterns
+- ✅ **Bugs Fixed (3):** Replaced actual defensive fallbacks with assertion utilities
+  - `deploymentTimescales.ts`: `government.governanceQuality.institutionalCapacity ?? 0.5` → `assertStateProperty`
+  - Fixed required state fields using fallbacks instead of fail-loudly assertions
+- 📝 **Legitimate Patterns Documented (36+):** Added clarifying comments to distinguish valid patterns
+  - Optional parameter defaults: `agentId ?? 'government'`
+  - Record lookups: `record[key] ?? defaultValue`
+  - Config initialization: `config.seed ?? Date.now()`
+  - Map accumulation: `map.get(key) ?? 0`
+  - Error display: `month ?? 'unknown'`
+- 🎯 **Key Finding:** Architecture review claimed "149 violations, 88% defensive fallbacks causing bugs" → Reality: 96% legitimate patterns, only 3 actual bugs
+- 📊 **Files Modified (9):** engine.ts, populationUnits.ts, effectsEngine.ts, deploymentTimescales.ts, internationalActions.ts, environmentalActions.ts, safetyActions.ts, consciousnessGovernanceUtils.ts, assertions.ts
+- ✅ **Validation:** Type checking passes, 42 unmarked violations remain (expected legitimate)
+- 📖 **Summary:** logs/defensive_fallback_migration_summary_20251115.md
+- 📖 **Review:** reviews/DEFENSIVE_FALLBACK_ARCHITECTURE_REVIEW_20251115.md
+- 💡 **Lesson:** Not all `??` patterns are bugs - context matters (initialization vs calculation)
+
+**Nov 15: Coordinated Technology Deployment - Quality Gate 1 Complete** (commit 44bf8ef)
+- 🔬 **Research Validation:** CONDITIONAL PASS with conservative parameter adjustments
+- 📊 **Foundation:** 27 peer-reviewed sources (Great Leap Forward, Soviet Collectivization, Marshall Plan, Green Revolution)
+- 🎯 **Key Finding:** Coordination quality matters - 6-25× mortality differential between chaotic vs coordinated transitions
+- ⚠️ **Parameter Adjustments:** Base chaotic 5.5%→3.5% (political violence removed), AI coordination 92-95%→50-75% (no empirical cases)
+- ✅ **God Mode Discrepancy RESOLVED:** 30% mortality is time-dependent (11.3% at 12mo matches historical, 31.7% at 49mo = cascades)
+- 📐 **Model Change:** Multiplicative → additive with diminishing returns, 95% cap (min 0.5% mortality floor)
+- 📖 **Research:** research/transition_mortality_coordination_effectiveness_20251115.md (616 lines)
+- 📖 **Critique:** reviews/coordinated_deployment_research_critique_20251115.md (Sylvia, CONDITIONAL PASS)
+- 📖 **Validation:** reviews/god_mode_mortality_validation_20251115.md (Priya, quantitative analysis)
+- 📖 **Verification:** research/verification_44bf8ef_20251115.md (two-layer citation + claim verification)
+- 🎯 **Implementation Targets:** Uncoordinated 15-30% mortality, Coordinated 2-5% mortality (80-85% effectiveness)
+- ⏭️ **Next:** Roy (simulation-maintainer) implementation with conservative parameters
 
 **Nov 15: Montreal Protocol Prevention Effectiveness Case Study** (commit 431a49a)
 - 🔬 **Research:** Comprehensive empirical validation of prevention vs cleanup effectiveness
@@ -46,12 +98,35 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Quality:** A (institutional + peer-reviewed, UNEP 2024, NOAA CSL 2024)
 - 💡 **Model Implications:** Validates need for TIER 0 prevention technologies, separate flow vs stock tracking
 
-**Nov 15: EffectsEngine Defensive Fallback Cleanup** (commit 3c959e4)
-- 🛡️ **Code Quality:** Replaced 6 energy system fallbacks (`|| 0`) with fail-loudly assertions
-- 🎯 **Files:** effectsEngine.ts lines 167-178, 298-304 (renewable capacity calculations)
-- ✅ **Pattern:** `energySystem?.totalDemand || 30_000` → `assertStateProperty(energySystem, 'totalDemand', context)`
-- 📊 **Impact:** Energy capacity bugs now crash with diagnostic context instead of silently using 0
-- 🔍 **Acceptable Fallbacks Preserved:** getDynamicProperty() (genuinely optional), Map.get() ?? 0 (accumulation pattern)
+**Nov 16: Biogeochemical Integration Complete** (commit 0c9e688)
+- ✅ **Status:** COMPLETE - All 6 nitrogen reduction technologies added to tech tree
+- 🔬 **Technologies Added:**
+  - `food_waste_reduction` (30% demand reduction, TIER 2)
+  - `nitroplast_integration` (60% fertilizer elimination, TIER 2 future tech, 2045+)
+  - `rhizosphere_engineering` (12.5% efficiency boost, TIER 2)
+  - `alternative_protein_insects_algae` (40% animal agriculture replacement, TIER 2)
+  - `active_sediment_management` (65% legacy phosphorus reduction, TIER 2)
+  - `phytoremediation_networks` (63% N removal, 72% P removal, TIER 2)
+- 🔧 **Enhanced:** `precision_fermentation` now includes nitrogen effect (40% demand reduction)
+- 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia creates decades-long recovery)
+- 📖 **Research Backing:** research/nitrogen_food_coupling_20251115.md (883 lines, 29 sources, Grade B)
+- ⏭️ **Next:** Monte Carlo validation (N≥10) to measure biogeochemical boundary effectiveness
+
+**Nov 15: Nitrogen-Food Coupling Research Complete (TIER 2 HIGH)** (commit 5bacf9f + session archive 50fae2c)
+- 🔬 **Research:** Biogeochemical flows boundary mechanics (29 peer-reviewed sources, Grade B)
+- 📊 **Key Findings:** Legacy nutrient stocks (30-100yr half-lives), regional differentiation (South Asia 55% overuse), multiplicative tech synergies
+- ✅ **Modules Created:** `legacyNutrientStocks.ts` (305 lines), `nitrogenFoodCoupling.ts` (368 lines)
+- 📖 **Research:** research/nitrogen_food_coupling_20251115.md (883 lines)
+- 📖 **Validation:** reviews/nitrogen_food_coupling_critique_20251115.md (Grade B - CONDITIONAL PASS)
+- 📖 **DevLog:** devlogs/biogeochemical_flows_implementation_20251115.md (338 lines)
+- 📁 **Archive:** plans/completed/session_work_nov15_2025_researcher_213002.md
+
+**Nov 15: Outcome Probabilities Normalization Bug Fix (CRITICAL)** (commit 6dc7f39)
+- ❌ **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
+- 🔧 **Fix:** Added normalization to `src/simulation/outcomes.ts` to ensure probabilities sum to exactly 1.0
+- ✅ **Impact:** Unblocked all Monte Carlo simulations with valid probability distributions
+- 🎯 **Validation:** N=1 Monte Carlo, 12 months - completes successfully
+- 📖 **Context:** Pre-existing bug discovered during biogeochemical research session
 
 **Nov 15: Autonomous Worker Stale Worktree Fix** (commit ecda59c)
 - 🔧 **Operational Fix:** Resolved stale git worktree blocking researcher autonomous execution
@@ -61,22 +136,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📖 **Devlog:** devlogs/autonomous_worker_fix_20251115.md
 - 💡 **Lesson:** Worktree accumulation from deleted remote branches should be part of maintenance routine
 
-**Nov 15: Defensive Fallback Violations RESOLVED - Issue #7**
-- ✅ **HIGH PRIORITY BATCH** (commit 76b0585): 13 violations converted
-  - Files: EmergencyResponsePhase.ts (4), OutcomeProbabilitiesPhase.ts (6), aiSuffering.ts (3), dystopiaProgression.ts (2), alignmentDynamics.ts (1), earlyWarningSystems.ts (1)
-  - Type safety improvements: `aiSufferingMetrics`, `government.resources` made required
-- ✅ **MEDIUM PRIORITY BATCH 1** (commit de85f55): 11 violations converted
-  - Files: EmergencyResponsePhase.ts (6), organizationManagement.ts (2), regionalDeployment.ts (3)
-  - Pattern: Required state fields using `??` fallbacks → `assertStateProperty(...)`
-- ✅ **MEDIUM PRIORITY BATCH 2** (commit cb1050c): 3 violations converted
-  - Files: deploymentTimescales.ts (3 government/climate state access)
-  - Pattern: Removed defensive fallbacks from government/climate state access
-- ✅ **MEDIUM PRIORITY BATCH 3** (commit 84f9163): 4 violations converted
-  - Files: EmergencyResponsePhase.ts (4 nested assertion fallbacks)
-  - Pattern: `assertFinite(state.field?.prop ?? 0.5, {...})` → `assertFinite(assertStateProperty(...), {...})`
-  - **Key insight:** Fallbacks hidden inside assertFinite() defeat fail-loudly validation
-  - **Running total:** 31 fallbacks converted (13 HIGH + 18 MEDIUM)
+**Nov 15: Defensive Fallback Violations RESOLVED - Issue #7** (commit 76b0585)
+- ✅ **HIGH PRIORITY RESOLVED:** All 20+ defensive fallback violations (`??` and `||`) replaced with assertion utilities
 - 🛡️ **Implementation Fidelity:** A- → A (no more silent bug masking)
+- 📊 **Files Modified (10):** EmergencyResponsePhase.ts (4 violations), OutcomeProbabilitiesPhase.ts (6), aiSuffering.ts (3), dystopiaProgression.ts (2), alignmentDynamics.ts (1), earlyWarningSystems.ts (1), plus type fixes
+- 🎯 **Type Safety Improvements:**
+  - `aiSufferingMetrics`: optional → required (always initialized)
+  - `government.resources`: optional → required (always initialized)
+- ✅ **Pattern Fixed:** `state.field?.subfield ?? fallback` → `assertStateProperty(...)` for fail-loudly behavior
 - 📊 **Impact:** Research validity improved (no silent defaults), debugging clarity increased
 - 📖 **Changelog:** logs/defensive_fallback_fix_20251115.md
 - 📖 **Source:** Architecture Review Nov 13 (Issue #3)
@@ -156,21 +223,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Validation:** Type check PASSES, determinism maintained (no execution order changes)
 - 📈 **Target:** 76+ phases (80%+ coverage) - 69 phases remaining
 - 🔜 **Next Batch:** Crisis phases, AI/alignment phases, environmental phases
-
-**Nov 15: Climate Tipping Cascades Research Update** (commit 3a6a200)
-- 📚 **Research Update:** Climate tipping points and cascades with 2024-2025 peer-reviewed research
-- 🔬 **New Sources:** 7 peer-reviewed papers (2022-2025), all high-credibility
-  - Ritchie et al. 2025: Overshoot tolerance (<30yr, <2.5°C peak avoids tipping)
-  - Armstrong McKay 2024: Comprehensive two-decade review of tipping point science
-  - Matthews et al. 2024: Heat mortality thresholds (260k+ deaths since 2000, 19-34°C wet-bulb)
-- 🎯 **Key Findings:**
-  - **Overshoot tolerance (NEW):** Temporary overshoot <30 years avoids tipping if peak warming <2.5°C
-  - **Cascade timescales (REFINED):** Centennial-millennial, NOT 50-100yr for individual elements
-  - **Commitment logic (UPDATED):** Track cumulative overshoot duration, not instant commitment
-  - **Heat mortality (NEW):** Uncompensable thresholds 19-32°C wet-bulb (age-dependent)
-- 📖 **Document:** research/climate_tipping_cascades_2024_2025_update.md (515 lines)
-- ⚠️ **Verification Required:** New parameters need validation before implementation
-- **Confidence:** HIGH (all sources peer-reviewed 2022-2025)
 
 **Nov 14: Research Quality Pipeline - Positive Tipping Points Literature Update** (commit d38c921)
 - 🔬 **Autonomous Research Session:** Updated 3 HIGH-priority research files with 2024-2025 peer-reviewed sources
@@ -986,7 +1038,6 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
-<<<<<<< HEAD
 **November 15, 2025 - Defensive Coding Violations RESOLVED (Issue #7)**
 
 **Achievement:** All 20+ defensive fallback violations identified in Nov 13 architecture review have been resolved.
@@ -1047,34 +1098,6 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 **Reviews:**
 - `reviews/climate_deployment_timescales_critique_20251113.md` (Research Skeptic - CONDITIONAL PASS)
 - `reviews/architecture_integration_review_20251115.md` (Architecture Grade: A-)
-=======
-**November 14, 2025**
-
-**🔬 RESEARCH CURRENCY UPDATE: MPI 2025 & MONTREAL PROTOCOL** (commit db802bf)
-
-Updated two HIGH priority research files with latest peer-reviewed sources (2023-2025):
-
-**Paradigm 2 (Development Needs):**
-- **Global MPI 2025** (October 2025 release): "Overlapping Hardships: Poverty and Climate Hazards"
-- **Climate-poverty intersection:** 887M poor people (80.6%) face climate hazards (heat, drought, floods, air pollution)
-- **Concurrent hazards:** 309M poor (28.1%) experience 3-4 hazards simultaneously
-- **Total poverty:** 1.1B in acute multidimensional poverty (18.3% of surveyed population)
-- **Methodology updated:** Alkire et al. 2025 - first MPI integrating climate exposure data
-- **Research quality:** Maintained (peer-reviewed institutional reports)
-- **File:** `research/paradigm_2_development_needs_20251019.md` (last verified: 2025-11-14)
-
-**AI Governance (Montreal Protocol):**
-- **Climate benefits quantified:** 0.5-2.5°C avoided warming by 2100 (Keeble et al. 2023, *Atmospheric Chemistry and Physics*)
-- **Ozone recovery timeline:** 2040 (tropics/midlatitudes), 2045 (Arctic), 2066 (Antarctica) - UNEP/WMO 2025
-- **Emissions avoided:** 80B+ tonnes CO2e by 2050
-- **2025 challenges identified:** EIA analysis pre-40th anniversary (fluorochemical emissions, HFC acceleration, N2O control, chemical bank destruction)
-- **Research quality upgraded:** B+ → A- (peer-reviewed + 2025 institutional updates)
-- **File:** `research/ai_governance_international_coordination_20251113.md` (last verified: 2025-11-14)
-
-**Context:** Autonomous researcher agent maintaining research currency. No simulation mechanics changed - documentation updates only.
-
-Commit: db802bf
->>>>>>> origin/auto/researcher-20251114_213001
 
 **November 13, 2025**
 
@@ -1340,44 +1363,6 @@ Fixed critical threshold mismatch: simulation used theoretical 35°C limit inste
 **Research:** Vecellio et al. (2022) empirical experiments (TRL 8) vs Raymond et al. (2020) theoretical 35°C. People die at 30.5°C in practice, not 35°C in theory.
 
 **Files:** `src/types/wetBulbTemperature.ts`, `src/simulation/wetBulbEvents.ts`, `src/simulation/config/centralConfig.ts`
-
-**🌡️ HEAT MORTALITY THRESHOLDS - 2024 UPDATE** (research/climate_tipping_cascades_2024_2025_update.md)
-
-**NEW: Age-Dependent Uncompensable Heat Thresholds (Matthews et al. 2024):**
-
-Matthews et al. (2024) identifies wet-bulb temperatures beyond which human core body temperature rises uncontrollably (inability to thermoregulate):
-
-**Uncompensable Thresholds by Age:**
-- **Older adults (65+ years):** 19-28°C wet-bulb (ALREADY exceeded on ~21% of land area 1994-2023)
-- **Middle age (40-65 years):** 28°C wet-bulb
-- **Younger adults (20-40 years):** 32°C wet-bulb (rare, ~2.2% of land area 1994-2023)
-
-**Unsurvivable Thresholds (Lethal within 6 hours):**
-- **Older adults:** 20-34°C wet-bulb (~1.8% of land area exceeded 1994-2023)
-- **Middle age:** 30°C wet-bulb (rare)
-- **Younger adults:** 34°C wet-bulb (never exceeded historically)
-
-**Historical Impact:**
-- **260,000+ heat-related fatalities** in deadliest events since 2000
-- Extreme heat is NOW, not just a future threat
-
-**Future Projections at 2°C Warming:**
-- **Tripling of uncompensable land area** for young adults (2.2% → 6.6%)
-- **Near-doubling** for older adults (21% → 35-40%)
-- Exponential increase in mortality risk for vulnerable populations
-
-**Comparison to Current Simulation Thresholds:**
-- **Current (Vecellio 2022):** 30.5°C SEVERE, 31.2°C EXTREME (young adults, laboratory)
-- **NEW (Matthews 2024):** 19-34°C range (age-dependent, real-world)
-- **Gap:** Current thresholds underestimate older adult vulnerability (19-28°C vs 30.5°C)
-
-**Implementation Considerations:**
-- Track age distribution of population
-- Apply age-specific mortality curves (older adults 2-3× more vulnerable)
-- Model population displacement when land becomes uninhabitable
-- ⚠️ **Verification required** before updating simulation parameters
-
-**Research:** Matthews, T. K. R., et al. (2024). "Mortality impacts of the most extreme heat events." *Nature Reviews Earth & Environment*. DOI: 10.1038/s43017-024-00635-w
 
 ### November 6, 2025
 
@@ -3138,7 +3123,7 @@ const newQualityOfLife = Math.max(0, Math.min(1,
 - ✅ **Novel Entities**: PFAS in 99% of blood, 120-month slow poisoning
 - ✅ **International Competition**: AI race dynamics, first-mover advantage, coordination failure
 
-**Comprehensive Technology Tree (71 technologies)**
+**Comprehensive Technology Tree (77 technologies)**
 - ✅ **TIER 0 (11)**: Deployed 2025 at realistic levels
   - Alignment: Basic RLHF (95%), mechanistic interpretability (15%), adversarial eval (40%)
   - Climate: De-extinction (1%), direct air capture (2%), AI pollution remediation (10%)
@@ -3146,7 +3131,8 @@ const newQualityOfLife = Math.max(0, Math.min(1,
   - Medical: AI diagnostics (25%), mRNA vaccines (40%)
   - Energy: 4th gen solar (8%), offshore wind (12%)
 - ✅ **TIER 1 (18)**: Planetary boundary crisis tech (phosphorus recovery, desalination, ocean alkalinity, PFAS remediation, etc.)
-- ✅ **TIER 2 (22)**: Major mitigations (enhanced UBI, AI mental health, scalable oversight, grid batteries, chemical recycling, etc.)
+- ✅ **TIER 2 (28)**: Major mitigations (enhanced UBI, AI mental health, scalable oversight, grid batteries, chemical recycling, **+ 6 biogeochemical technologies**, etc.)
+  - **New (Nov 16):** Food waste reduction, nitroplast integration, rhizosphere engineering, alternative protein (insects/algae), active sediment management, phytoremediation networks
 - ✅ **TIER 3 (15)**: Transformative tech (fusion power, disease elimination, regenerative medicine, vertical farming, AI rights, etc.)
 - ✅ **TIER 4 (5)**: Clarketech (advanced longevity 150+, molecular nanotech, space industrialization, brain emulation)
 
@@ -3183,10 +3169,10 @@ const newQualityOfLife = Math.max(0, Math.min(1,
 - **Golden Age Detection**: Prosperity state tracking, distinct from Utopia outcome
 - **Accumulation Systems**: Environmental, social cohesion, technological risk (realistic 2025 baselines)
 - **Crisis Cascades**: 10+ crisis types with compounding degradation (up to 3.0x)
-- **Breakthrough Technologies**: **71 total** in comprehensive tech tree
+- **Breakthrough Technologies**: **77 total** in comprehensive tech tree (updated Nov 16, 2025)
   - TIER 0 (11): Deployed 2025 at realistic levels (RLHF 95%, DAC 2%, de-extinction 1%)
   - TIER 1 (18): Planetary boundary crisis tech (phosphorus, freshwater, ocean, pollution)
-  - TIER 2 (22): Major mitigations (social, alignment, energy, recycling, ecosystem)
+  - TIER 2 (28): Major mitigations (social, alignment, energy, recycling, ecosystem, **+ 6 biogeochemical**)
   - TIER 3 (15): Transformative (fusion, medical breakthroughs, climate engineering, agriculture)
   - TIER 4 (5): Clarketech (longevity 150+, nanotech, space, brain emulation)
 - **Tech Tree System**: Prerequisites, research costs, deployment timelines, regional effects
@@ -3464,12 +3450,12 @@ Measures outcomes through four distinct philosophical lenses, showing fundamenta
 - **Dystopia threshold:** HDI <0.550, MPI >0.300 (Niger, Central African Republic, Chad, South Sudan, Mali, Burkina Faso)
 
 **3. Ecological Harmony (Sustainability-Focused)**
-- **Data:** Richardson et al. 2023 (9 planetary boundaries), Global Footprint Network 2024 (188 countries), WHO Air Quality Database 2024 (180+ countries)
+- **Data:** Richardson et al. 2023, Rockström 2025, BioScience 2025 (9 planetary boundaries), Global Footprint Network 2024 (188 countries), WHO Air Quality Database 2024 (180+ countries)
 - **Confidence:** MEDIUM-HIGH (±50% uncertainty on some boundaries)
 - **Drives Simulation:** YES (boundary transgression → crises)
 - **Indicators (13):** 9 planetary boundaries (climate change, biodiversity loss, land-system change, freshwater use, biogeochemical flows, ocean acidification, atmospheric aerosol loading, stratospheric ozone depletion, novel entities), ecological footprint, GHG emissions per capita, renewable energy %, air quality (PM2.5)
 - **Utopia threshold:** All 9 boundaries safe, footprint ≤1.5 gha (ZERO countries currently)
-- **Dystopia threshold:** 6+ boundaries breached (current global state: 7/9 breached as of Sep 2024)
+- **Dystopia threshold:** 6+ boundaries breached (current global state: **7/9 breached as of Nov 2025** - ocean acidification boundary crossed 2020, confirmed 2025)
 - **Biodiversity Loss Metric:** Biosphere Integrity Index (BII) from PREDICTS database (Natural History Museum 2024, De Palma et al. v2.1.1). BII measures ecosystem abundance + composition (58,000 species, 48,000+ sites, 4.9M observations). **Methodological limitations:** May underestimate losses in some regions, terrestrial-only coverage, sampling bias toward vertebrates/temperate zones. See: research/predicts-database-verification_20251106.md, reviews/predicts-citation-critique_20251106.md
 
 **Key Addition (Fix #2):** **Air Quality Indicator (PM2.5)**
@@ -5389,40 +5375,28 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 
 **Why the compression?**
 - Simulation designed for 240-360 month runs (20-30 years)
-- Individual tipping elements have transition times of 30-80 years (Amazon dieback, Armstrong McKay 2024) to 200-2,000 years (ice sheet impacts, with complete deglaciation taking 10,000+ years), but **cascading interactions unfold over centennial to millennial timescales** (Wunderling et al. 2024, confirmed by Armstrong McKay 2024 comprehensive review)
+- Individual tipping elements have transition times of 50-100 years (Amazon, AMOC; Lenton et al. 2008), but **cascading interactions unfold over centennial to millennial timescales** (Wunderling et al. 2024)
 - This represents a **speculative rapid cascade scenario** (3-10× compressed timeline) exploring tail-risk possibilities under multi-boundary transgression—not empirically validated
 
-**NEW: Overshoot Tolerance (Ritchie et al. 2025):**
-- **Key Finding:** Tipping is NOT instantaneous upon crossing thresholds
-- **Tolerance window:** Temporary overshoot <30 years avoids tipping IF peak warming stays below 2.5°C
-- **Element-specific commitment times:**
-  - Slow-tipping (ice sheets, AMOC): 50-100 years cumulative above threshold
-  - Fast-tipping (Amazon, permafrost): 10-30 years cumulative above threshold
-- **Policy implication:** Rapid emissions reductions in next 30 years can avoid locking in tipping points even if we temporarily overshoot 1.5°C
-
 **Remaining Uncertainties:**
-1. **Cascade speed:** Do tipping points trigger faster with multiple simultaneous boundary crossings? **Research shows cascades unfold over 100-1,000+ years** (Wunderling et al. 2024, Armstrong McKay 2024), but acceleration under unprecedented multi-boundary stress remains poorly constrained.
+1. **Cascade speed:** Do tipping points trigger faster with multiple simultaneous boundary crossings? **Research shows cascades unfold over 100-1,000+ years** (Wunderling et al. 2024), but acceleration under unprecedented multi-boundary stress remains poorly constrained.
 2. **Adaptation exclusion:** Simulation may underestimate human adaptation and emergency mitigation responses
 3. **Nonlinear mortality:** Does death rate accelerate or plateau in extreme multi-crisis scenarios? Limited empirical data.
 4. **Timeline compression validity:** No empirical evidence supports cascades proceeding on 30-year timescales. Historical analogues (Dansgaard-Oeschger events) show 1,000-4,000 year transitions.
-5. **Heat mortality thresholds (NEW):** Matthews et al. 2024 identifies uncompensable wet-bulb thresholds (19-34°C, age-dependent), but population displacement dynamics under 35-40% land area becoming uninhabitable remain poorly constrained.
 
 **Validation:**
 - ✅ Framework validity: Planetary boundaries, tipping cascades, agricultural collapse mechanisms (all peer-reviewed)
 - ✅ Magnitude comparability: Death totals match published research at same severity levels
 - ✅ Exploratory modeling legitimacy: Low-probability, high-impact scenarios are valid research tools (Ord 2020, Tonn 2009)
-- ✅ **Overshoot tolerance (NEW):** Ritchie et al. 2025 quantifies commitment timescales (30yr window if peak <2.5°C)
 - ⚠️ **Timeline validity:** Compressed for simulation practicality, not validated against climate models
 
 **Label for outputs:** "Accelerated scenario" or "Compressed timeline model" - NOT "baseline projection"
 
 **Research Foundation:**
 - Richards et al. (2023): Climate collapse mortality projections (extreme 8-12°C scenario, 75-year window)
-- **Ritchie et al. (2025): Overshoot duration and tipping commitment (ESD)**
-- **Armstrong McKay (2024): Two decades of tipping point research review (Dialogues on Climate Change)**
-- **Matthews et al. (2024): Heat mortality thresholds (Nature Reviews Earth & Environment)**
-- Armstrong McKay et al. (2022): Comprehensive tipping point review (Science)
+- Lenton et al. (2008): Individual tipping element transition times (50-100 years for Amazon, AMOC)
 - Wunderling et al. (2024): Tipping cascade timescales (centennial to millennial scales)
+- Armstrong McKay et al. (2022): Comprehensive tipping point review (Science)
 - Steffen et al. (2018): Hothouse Earth trajectory
 - Ord (2020): *The Precipice* - Existential risk methodologies
 - Tonn & Stiefel (2013): Exploratory modeling for catastrophic risks
@@ -6870,9 +6844,15 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
    ID is registered. Check for typos or remove the dependency.
 ```
 
-### Coverage Status (Nov 6, 2025)
+### Coverage Status (Nov 15, 2025)
 
-**32 of 115 phases (27.8%)** now have explicit dependencies.
+**88 of 97 phases (90.7%)** now have explicit dependencies.
+
+**Recent improvements (Nov 15):**
+- Phase consolidation reduced total phases from 115 → 97
+- Dependency coverage expanded from 27.8% (Nov 6) → 90.7% (Nov 15)
+- 13 phase dependency bugs fixed (typos, order violations, nonexistent dependencies)
+- 2 phases updated with explicit empty dependencies (ExtremeWeatherEventsPhase, others)
 
 **Critical phases with dependencies:**
 - **Mortality chain:** BayesianMortalityResolutionPhase, MortalityStabilizersPhase, ClimateImpactCascadePhase
@@ -6885,7 +6865,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
 - **Environmental:** PlanetaryBoundariesPhase, TippingPointPhase, EnvironmentalFeedbackPhase
 - **Food security:** FoodSecurityDegradationPhase, FamineSystemPhase
 
-**Remaining phases (83):** Use decimal ordering only (lower risk, fewer interdependencies)
+**Remaining phases (9):** Lack explicit dependency declarations - identified as CRITICAL issue in architecture review (Nov 15)
 
 ### Benefits
 
@@ -6917,16 +6897,16 @@ readonly dependencies = [
 
 ### Future Work
 
-**Target: 50% coverage (58 phases)** - Focus on:
-- All crisis phases (nuclear, climate, food, refugee)
-- All outcome calculation phases
-- All resource system phases (water, phosphorus, ocean)
-- All AI evaluation phases (sandbagging, gaming, benchmarks)
+**Target: 100% coverage (remaining 9 phases)** - Architecture review identified this as CRITICAL issue:
+- Complete dependency analysis for 9 phases lacking explicit declarations
+- Verify no hidden ordering dependencies in these phases
+- Document rationale if phase truly has zero dependencies (e.g., early initialization phases)
 
-**Not needed:**
-- Simple metrics calculations with no dependencies
-- Initialization phases (run first by definition)
-- Logging/finalization phases (run last by definition)
+**Rationale for empty dependencies:**
+Some phases have `readonly dependencies: string[] = []` when they:
+- Run very early (no prior state to depend on)
+- Had invalid dependencies removed (backwards ordering, nonexistent phases)
+- Read from previous step's state (climate, tech tree) without same-step dependencies
 
 ---
 
@@ -8191,6 +8171,62 @@ tail -f logs/phase3_batch_*.log
 - **Determinism:** All tests use seeded RNG (reproducible)
 
 **Status:** ✅ Implementation complete, testing in progress (see plans/phase3_implementation_complete.md)
+
+#### CoordinatedDeploymentPhase Integration Tests (November 2025)
+
+**Purpose:** Comprehensive integration testing for CoordinatedDeploymentPhase to address CRITICAL-2 architecture review finding.
+
+**Background:** Architecture review (Nov 15) identified CoordinatedDeploymentPhase as integration risk due to:
+- Complex state initialization requirements (coordinatedDeployment state must exist)
+- Only 1 other phase references this state (limited cross-system integration)
+- 525 lines of mortality calculations with potential for edge cases
+
+**Test Coverage:** 24 tests, 776 lines (`tests/integration/coordinated-deployment.test.ts`)
+
+**Test Categories:**
+
+1. **State Initialization (6 tests):**
+   - Verify `coordinatedDeployment` state created during initialization
+   - Validate default values for all deployment tracking fields
+   - Ensure state persists across simulation steps
+   - Test bootstrap vs post-bootstrap behavior (phase skips month 0-1)
+
+2. **Phase Execution Ordering (4 tests):**
+   - Confirm phase runs at order 16.5 (after tech tree 12.5, before mortality 35.0)
+   - Validate dependency declarations (tech-tree, climate-system)
+   - Test execution sequence with dependent phases
+   - Verify topological sort respects dependencies
+
+3. **Climate Technology Integration (6 tests):**
+   - Test deployment of TIER 0 climate technologies (renewable energy, carbon capture)
+   - Validate mortality reduction calculations for deployed technologies
+   - Verify technology effectiveness scales with deployment level
+   - Test interaction with existing climate mitigation systems
+
+4. **Mortality Cascade Validation (5 tests):**
+   - Verify mortality calculations use correct population denominators
+   - Test edge case: population collapse scenarios (low population edge cases)
+   - Validate mortality doesn't exceed 100% or produce NaN values
+   - Test coordination with BayesianMortalityResolutionPhase
+   - Confirm assertion utilities catch invalid calculations
+
+5. **Cross-System State Propagation (3 tests):**
+   - Verify climate deployment updates propagate to climate impact phases
+   - Test interaction with early warning systems
+   - Validate state changes visible to downstream phases
+
+**Key Findings:**
+- All 24 tests passing as of Nov 15
+- No state initialization failures detected
+- Mortality calculations validated (no NaN, no >100% values)
+- Phase ordering confirmed correct via PhaseOrchestrator validation
+
+**Related Files:**
+- Implementation: `src/simulation/engine/phases/CoordinatedDeploymentPhase.ts` (564 lines)
+- Integration tests: `tests/integration/coordinated-deployment.test.ts` (776 lines)
+- Legacy tests: `tests/tier2-8-phase1-2-integration.test.ts` (411 lines, earlier iteration)
+
+**Status:** ✅ CRITICAL-2 mitigation complete - integration risk addressed via comprehensive test coverage
 
 ### Devlogs (Recent Key Findings)
 - `devlogs/monte-carlo-analysis-oct-9-action-fix.md` - Comprehensive blocker analysis
