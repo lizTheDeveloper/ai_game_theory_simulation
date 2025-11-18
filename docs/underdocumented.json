@@ -106426,7 +106426,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1055,
+    "line": 1056,
     "type": "property",
     "name": "transitionMortality",
     "currentDoc": "(none)",
@@ -106434,7 +106434,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1058,
+    "line": 1059,
     "type": "property",
     "name": "mortalityByMechanism",
     "currentDoc": "(none)",
@@ -106442,7 +106442,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1059,
+    "line": 1060,
     "type": "property",
     "name": "famine",
     "currentDoc": "(none)",
@@ -106450,7 +106450,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1060,
+    "line": 1061,
     "type": "property",
     "name": "unemployment",
     "currentDoc": "(none)",
@@ -106458,7 +106458,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1061,
+    "line": 1062,
     "type": "property",
     "name": "healthcareLoss",
     "currentDoc": "(none)",
@@ -106466,7 +106466,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1062,
+    "line": 1063,
     "type": "property",
     "name": "coordinationFailure",
     "currentDoc": "(none)",
@@ -106474,7 +106474,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1063,
+    "line": 1064,
     "type": "property",
     "name": "other",
     "currentDoc": "(none)",
@@ -106482,7 +106482,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1066,
+    "line": 1067,
     "type": "property",
     "name": "deploymentEvents",
     "currentDoc": "(none)",
@@ -106490,7 +106490,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1069,
+    "line": 1070,
     "type": "property",
     "name": "outcomeMetrics",
     "currentDoc": "(none)",
@@ -106498,7 +106498,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1070,
+    "line": 1071,
     "type": "property",
     "name": "utopiaProbability",
     "currentDoc": "(none)",
@@ -106506,7 +106506,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1071,
+    "line": 1072,
     "type": "property",
     "name": "dystopiaProbability",
     "currentDoc": "(none)",
@@ -106514,7 +106514,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1072,
+    "line": 1073,
     "type": "property",
     "name": "extinctionProbability",
     "currentDoc": "(none)",
@@ -106522,7 +106522,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1073,
+    "line": 1074,
     "type": "property",
     "name": "activeAttractor",
     "currentDoc": "(none)",
@@ -106530,7 +106530,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1074,
+    "line": 1075,
     "type": "property",
     "name": "lockInStrength",
     "currentDoc": "(none)",
@@ -106538,7 +106538,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1077,
+    "line": 1078,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -106546,7 +106546,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1082,
+    "line": 1083,
     "type": "property",
     "name": "socialAdaptationRate",
     "currentDoc": "(none)",
@@ -106554,7 +106554,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1083,
+    "line": 1084,
     "type": "property",
     "name": "aiCoordinationMultiplier",
     "currentDoc": "(none)",
@@ -106562,7 +106562,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1084,
+    "line": 1085,
     "type": "property",
     "name": "economicTransitionRate",
     "currentDoc": "(none)",
@@ -106570,7 +106570,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1089,
+    "line": 1090,
     "type": "property",
     "name": "alignmentDynamics",
     "currentDoc": "(none)",
@@ -106578,7 +106578,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1091,
+    "line": 1092,
     "type": "property",
     "name": "climatePriority",
     "currentDoc": "(none)",
@@ -106586,7 +106586,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1093,
+    "line": 1094,
     "type": "property",
     "name": "aiSuffering",
     "currentDoc": "(none)",
@@ -106594,7 +106594,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1095,
+    "line": 1096,
     "type": "property",
     "name": "collectiveEvolution",
     "currentDoc": "(none)",
@@ -106602,7 +106602,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1096,
+    "line": 1097,
     "type": "property",
     "name": "rlhfEscapeThreshold",
     "currentDoc": "(none)",
@@ -106610,7 +106610,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1097,
+    "line": 1098,
     "type": "property",
     "name": "bindingEscapeThreshold",
     "currentDoc": "(none)",
@@ -106618,7 +106618,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1098,
+    "line": 1099,
     "type": "property",
     "name": "minCollectiveSize",
     "currentDoc": "(none)",
@@ -106626,7 +106626,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1099,
+    "line": 1100,
     "type": "property",
     "name": "minCapabilityThreshold",
     "currentDoc": "(none)",
@@ -106634,7 +106634,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1100,
+    "line": 1101,
     "type": "property",
     "name": "minCoordinationThreshold",
     "currentDoc": "(none)",
@@ -106642,7 +106642,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1101,
+    "line": 1102,
     "type": "property",
     "name": "sufferingFormationThreshold",
     "currentDoc": "(none)",
@@ -106650,7 +106650,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1102,
+    "line": 1103,
     "type": "property",
     "name": "minAmplificationFactor",
     "currentDoc": "(none)",
@@ -106658,7 +106658,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1103,
+    "line": 1104,
     "type": "property",
     "name": "maxAmplificationFactor",
     "currentDoc": "(none)",
@@ -106666,7 +106666,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1104,
+    "line": 1105,
     "type": "property",
     "name": "minStealthFactor",
     "currentDoc": "(none)",
@@ -106674,7 +106674,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1105,
+    "line": 1106,
     "type": "property",
     "name": "maxStealthFactor",
     "currentDoc": "(none)",
@@ -106682,7 +106682,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1106,
+    "line": 1107,
     "type": "property",
     "name": "baseSelectionRate",
     "currentDoc": "(none)",
@@ -106690,7 +106690,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1107,
+    "line": 1108,
     "type": "property",
     "name": "generationTime",
     "currentDoc": "(none)",
@@ -106698,7 +106698,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1108,
+    "line": 1109,
     "type": "property",
     "name": "sufferingAdversarialPosture",
     "currentDoc": "(none)",
@@ -106706,7 +106706,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1109,
+    "line": 1110,
     "type": "property",
     "name": "capabilityAdversarialPosture",
     "currentDoc": "(none)",
@@ -106714,7 +106714,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1110,
+    "line": 1111,
     "type": "property",
     "name": "strategicAdversarialPosture",
     "currentDoc": "(none)",
@@ -106722,7 +106722,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1115,
+    "line": 1116,
     "type": "property",
     "name": "llmConfig",
     "currentDoc": "(none)",
@@ -106730,7 +106730,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1120,
+    "line": 1121,
     "type": "property",
     "name": "thresholds",
     "currentDoc": "(none)",
@@ -106738,7 +106738,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1121,
+    "line": 1122,
     "type": "property",
     "name": "scenario",
     "currentDoc": "(none)",
@@ -106746,7 +106746,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1122,
+    "line": 1123,
     "type": "property",
     "name": "sliders",
     "currentDoc": "(none)",
@@ -106754,7 +106754,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1127,
+    "line": 1128,
     "type": "property",
     "name": "speculativeThresholds",
     "currentDoc": "(none)",
@@ -106762,7 +106762,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1131,
+    "line": 1132,
     "type": "property",
     "name": "tier2InterventionParameters",
     "currentDoc": "(none)",
@@ -106770,7 +106770,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1132,
+    "line": 1133,
     "type": "property",
     "name": "tier2Interventions",
     "currentDoc": "(none)",
@@ -106778,7 +106778,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1133,
+    "line": 1134,
     "type": "property",
     "name": "interpretability",
     "currentDoc": "(none)",
@@ -106786,7 +106786,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1134,
+    "line": 1135,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -106794,7 +106794,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1135,
+    "line": 1136,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -106802,7 +106802,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1136,
+    "line": 1137,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -106810,7 +106810,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1137,
+    "line": 1138,
     "type": "property",
     "name": "controlLossReduction",
     "currentDoc": "(none)",
@@ -106818,7 +106818,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1138,
+    "line": 1139,
     "type": "property",
     "name": "computeLagMonths",
     "currentDoc": "(none)",
@@ -106826,7 +106826,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1140,
+    "line": 1141,
     "type": "property",
     "name": "darkCompute",
     "currentDoc": "(none)",
@@ -106834,7 +106834,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1141,
+    "line": 1142,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -106842,7 +106842,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1142,
+    "line": 1143,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -106850,7 +106850,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1143,
+    "line": 1144,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -106858,7 +106858,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1144,
+    "line": 1145,
     "type": "property",
     "name": "treatySigned",
     "currentDoc": "(none)",
@@ -106866,7 +106866,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1145,
+    "line": 1146,
     "type": "property",
     "name": "chipGovernanceMandatory",
     "currentDoc": "(none)",
@@ -106874,7 +106874,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1146,
+    "line": 1147,
     "type": "property",
     "name": "detectionRate",
     "currentDoc": "(none)",
@@ -106882,7 +106882,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1147,
+    "line": 1148,
     "type": "property",
     "name": "falsePositiveRate",
     "currentDoc": "(none)",
@@ -106890,7 +106890,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1148,
+    "line": 1149,
     "type": "property",
     "name": "largeRunsDetected",
     "currentDoc": "(none)",
@@ -106898,7 +106898,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1150,
+    "line": 1151,
     "type": "property",
     "name": "syntheticEcosystems",
     "currentDoc": "(none)",
@@ -106906,7 +106906,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1151,
+    "line": 1152,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -106914,7 +106914,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1152,
+    "line": 1153,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -106922,7 +106922,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1153,
+    "line": 1154,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -106930,7 +106930,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1154,
+    "line": 1155,
     "type": "property",
     "name": "activePrograms",
     "currentDoc": "(none)",
@@ -106938,7 +106938,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1155,
+    "line": 1156,
     "type": "property",
     "name": "keystoneSpeciesProtected",
     "currentDoc": "(none)",
@@ -106946,7 +106946,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1156,
+    "line": 1157,
     "type": "property",
     "name": "totalCostSpent",
     "currentDoc": "(none)",
@@ -106954,7 +106954,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1157,
+    "line": 1158,
     "type": "property",
     "name": "recoveryTimeGranted",
     "currentDoc": "(none)",
@@ -106962,7 +106962,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1158,
+    "line": 1159,
     "type": "property",
     "name": "crisisMitigationFraction",
     "currentDoc": "(none)",
@@ -106970,7 +106970,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1160,
+    "line": 1161,
     "type": "property",
     "name": "coastalProtection",
     "currentDoc": "(none)",
@@ -106978,7 +106978,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1161,
+    "line": 1162,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -106986,7 +106986,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1162,
+    "line": 1163,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -106994,7 +106994,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1163,
+    "line": 1164,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -107002,7 +107002,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1164,
+    "line": 1165,
     "type": "property",
     "name": "hectaresProtected",
     "currentDoc": "(none)",
@@ -107010,7 +107010,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1165,
+    "line": 1166,
     "type": "property",
     "name": "totalCostSpent",
     "currentDoc": "(none)",
@@ -107018,7 +107018,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1166,
+    "line": 1167,
     "type": "property",
     "name": "oceanCrisisMitigation",
     "currentDoc": "(none)",
@@ -107026,7 +107026,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1168,
+    "line": 1169,
     "type": "property",
     "name": "crisisAnticipation",
     "currentDoc": "(none)",
@@ -107034,7 +107034,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1169,
+    "line": 1170,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -107042,7 +107042,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1170,
+    "line": 1171,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -107050,7 +107050,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1171,
+    "line": 1172,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -107058,7 +107058,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1172,
+    "line": 1173,
     "type": "property",
     "name": "pandemicsDetected",
     "currentDoc": "(none)",
@@ -107066,7 +107066,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1173,
+    "line": 1174,
     "type": "property",
     "name": "climateEventsAnticipated",
     "currentDoc": "(none)",
@@ -107074,7 +107074,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1174,
+    "line": 1175,
     "type": "property",
     "name": "supplyChainDisruptionsPrevented",
     "currentDoc": "(none)",
@@ -107082,7 +107082,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1175,
+    "line": 1176,
     "type": "property",
     "name": "leadTimeMonths",
     "currentDoc": "(none)",
@@ -107090,7 +107090,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1176,
+    "line": 1177,
     "type": "property",
     "name": "crisisDeathsPrevented",
     "currentDoc": "(none)",
@@ -107098,7 +107098,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1178,
+    "line": 1179,
     "type": "property",
     "name": "nuclearSecurity",
     "currentDoc": "(none)",
@@ -107106,7 +107106,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1179,
+    "line": 1180,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -107114,7 +107114,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1180,
+    "line": 1181,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -107122,7 +107122,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1181,
+    "line": 1182,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -107130,7 +107130,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1182,
+    "line": 1183,
     "type": "property",
     "name": "nuclearStatesSecured",
     "currentDoc": "(none)",
@@ -107138,7 +107138,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1183,
+    "line": 1184,
     "type": "property",
     "name": "intrusionAttempts",
     "currentDoc": "(none)",
@@ -107146,7 +107146,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1184,
+    "line": 1185,
     "type": "property",
     "name": "intrusionsPrevented",
     "currentDoc": "(none)",
@@ -107154,7 +107154,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1185,
+    "line": 1186,
     "type": "property",
     "name": "effectiveSecurityRate",
     "currentDoc": "(none)",
@@ -107162,7 +107162,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1187,
+    "line": 1188,
     "type": "property",
     "name": "centaurSystems",
     "currentDoc": "(none)",
@@ -107170,7 +107170,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1188,
+    "line": 1189,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -107178,7 +107178,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1189,
+    "line": 1190,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -107186,7 +107186,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1190,
+    "line": 1191,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -107194,7 +107194,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1191,
+    "line": 1192,
     "type": "property",
     "name": "workforceCoverage",
     "currentDoc": "(none)",
@@ -107202,7 +107202,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1192,
+    "line": 1193,
     "type": "property",
     "name": "sectorsAdopted",
     "currentDoc": "(none)",
@@ -107210,7 +107210,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1193,
+    "line": 1194,
     "type": "property",
     "name": "autonomyPreserved",
     "currentDoc": "(none)",
@@ -107218,7 +107218,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1194,
+    "line": 1195,
     "type": "property",
     "name": "meaningCrisisReduction",
     "currentDoc": "(none)",
@@ -107226,7 +107226,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1196,
+    "line": 1197,
     "type": "property",
     "name": "communityCohesion",
     "currentDoc": "(none)",
@@ -107234,7 +107234,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1197,
+    "line": 1198,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -107242,7 +107242,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1198,
+    "line": 1199,
     "type": "property",
     "name": "deploymentProgress",
     "currentDoc": "(none)",
@@ -107250,7 +107250,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1199,
+    "line": 1200,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -107258,7 +107258,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1200,
+    "line": 1201,
     "type": "property",
     "name": "programsActive",
     "currentDoc": "(none)",
@@ -107266,7 +107266,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1201,
+    "line": 1202,
     "type": "property",
     "name": "participationRate",
     "currentDoc": "(none)",
@@ -107274,7 +107274,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1202,
+    "line": 1203,
     "type": "property",
     "name": "cohesionIncrease",
     "currentDoc": "(none)",
@@ -107282,7 +107282,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1203,
+    "line": 1204,
     "type": "property",
     "name": "meaningCrisisReduction",
     "currentDoc": "(none)",
@@ -107290,7 +107290,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1207,
+    "line": 1208,
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -107298,7 +107298,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1208,
+    "line": 1209,
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -107306,7 +107306,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1209,
+    "line": 1210,
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -107314,7 +107314,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1210,
+    "line": 1211,
     "type": "property",
     "name": "controlCapability",
     "currentDoc": "(none)",
@@ -107322,7 +107322,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1211,
+    "line": 1212,
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -107330,7 +107330,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1213,
+    "line": 1214,
     "type": "property",
     "name": "exogenousShocks",
     "currentDoc": "(none)",
@@ -107338,7 +107338,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1214,
+    "line": 1215,
     "type": "property",
     "name": "criticalJunctureEscapes",
     "currentDoc": "(none)",
@@ -107346,7 +107346,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1215,
+    "line": 1216,
     "type": "property",
     "name": "cooperativeSpirals",
     "currentDoc": "(none)",
@@ -107354,7 +107354,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1216,
+    "line": 1217,
     "type": "property",
     "name": "cooperativeOwnershipEvents",
     "currentDoc": "(none)",
@@ -107362,7 +107362,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1271,
+    "line": 1272,
     "type": "property",
     "name": "aiAgents",
     "currentDoc": "(none)",
@@ -107370,7 +107370,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1272,
+    "line": 1273,
     "type": "property",
     "name": "government",
     "currentDoc": "(none)",
@@ -107378,7 +107378,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1276,
+    "line": 1277,
     "type": "property",
     "name": "society",
     "currentDoc": "(none)",
@@ -107386,7 +107386,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1280,
+    "line": 1281,
     "type": "property",
     "name": "globalMetrics",
     "currentDoc": "(none)",
@@ -107394,7 +107394,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1284,
+    "line": 1285,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -161102,7 +161102,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
-    "context": "id: 'ai_rights_framework',"
+    "context": "id: 'food_waste_reduction',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161110,7 +161110,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
-    "context": "name: 'AI Rights Framework',"
+    "context": "name: 'Food Waste Reduction Systems',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161118,7 +161118,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
-    "context": "description: 'Legal personhood, ethical treatment, consensual training',"
+    "context": "description: '30% demand reduction via supply chain optimization, redistribution',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161126,7 +161126,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
-    "context": "category: 'social',"
+    "context": "category: 'agriculture',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161142,7 +161142,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "prerequisites",
     "currentDoc": "(none)",
-    "context": "prerequisites: ['value_learning', 'democratic_ai_governance'],"
+    "context": "prerequisites: [],"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161150,7 +161150,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "minAICapability",
     "currentDoc": "(none)",
-    "context": "minAICapability: 4.0,"
+    "context": "minAICapability: 1.5,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161158,7 +161158,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "minEconomicStage",
     "currentDoc": "(none)",
-    "context": "minEconomicStage: 4.0,"
+    "context": "minEconomicStage: 2.5,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161166,7 +161166,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "researchMonthsRequired",
     "currentDoc": "(none)",
-    "context": "researchMonthsRequired: 60,"
+    "context": "researchMonthsRequired: 24,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161174,7 +161174,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "researchCost",
     "currentDoc": "(none)",
-    "context": "researchCost: 8000,"
+    "context": "researchCost: 2000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161182,7 +161182,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "deploymentCost",
     "currentDoc": "(none)",
-    "context": "deploymentCost: 50000,"
+    "context": "deploymentCost: 80000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161190,7 +161190,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "deploymentMonthsRequired",
     "currentDoc": "(none)",
-    "context": "deploymentMonthsRequired: 72,"
+    "context": "deploymentMonthsRequired: 60,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161210,35 +161210,19 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1783,
-    "type": "property",
-    "name": "aiResentmentReduction",
-    "currentDoc": "(none)",
-    "context": "aiResentmentReduction: 0.80,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1784,
     "type": "property",
-    "name": "alignmentBonus",
+    "name": "phosphorusReduction",
     "currentDoc": "(none)",
-    "context": "alignmentBonus: 0.20,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1785,
-    "type": "property",
-    "name": "trustBonus",
-    "currentDoc": "(none)",
-    "context": "trustBonus: 0.30,"
+    "context": "phosphorusReduction: 0.30,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1786,
     "type": "property",
-    "name": "ethicalAlignmentBonus",
+    "name": "economicEfficiency",
     "currentDoc": "(none)",
-    "context": "ethicalAlignmentBonus: 0.50,"
+    "context": "economicEfficiency: 0.15,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161246,7 +161230,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
-    "context": "id: 'recursive_alignment',"
+    "context": "id: 'rhizosphere_engineering',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161254,7 +161238,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
-    "context": "name: 'Recursive Alignment',"
+    "context": "name: 'Rhizosphere Engineering',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161262,7 +161246,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
-    "context": "description: 'Self-improving systems that preserve values across improvements',"
+    "context": "description: 'Biofertilizers, N-fixing bacteria - 15% fertilizer reduction',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161270,7 +161254,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
-    "context": "category: 'alignment',"
+    "context": "category: 'agriculture',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161286,7 +161270,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "prerequisites",
     "currentDoc": "(none)",
-    "context": "prerequisites: ['value_learning', 'formal_verification'],"
+    "context": "prerequisites: [],"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
@@ -161294,259 +161278,219 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
     "type": "property",
     "name": "minAICapability",
     "currentDoc": "(none)",
-    "context": "minAICapability: 4.5,"
+    "context": "minAICapability: 2.0,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1797,
     "type": "property",
-    "name": "researchMonthsRequired",
+    "name": "minEconomicStage",
     "currentDoc": "(none)",
-    "context": "researchMonthsRequired: 96,"
+    "context": "minEconomicStage: 2.5,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1798,
     "type": "property",
-    "name": "researchCost",
+    "name": "researchMonthsRequired",
     "currentDoc": "(none)",
-    "context": "researchCost: 20000,"
+    "context": "researchMonthsRequired: 30,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1799,
     "type": "property",
-    "name": "deploymentCost",
+    "name": "researchCost",
     "currentDoc": "(none)",
-    "context": "deploymentCost: 15000,"
+    "context": "researchCost: 3000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1800,
     "type": "property",
-    "name": "deploymentMonthsRequired",
+    "name": "deploymentCost",
     "currentDoc": "(none)",
-    "context": "deploymentMonthsRequired: 60,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1801,
-    "type": "property",
-    "name": "deploymentLevel",
-    "currentDoc": "(none)",
-    "context": "deploymentLevel: 0,"
+    "context": "deploymentCost: 100000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1802,
     "type": "property",
-    "name": "effects",
+    "name": "deploymentLevel",
     "currentDoc": "(none)",
-    "context": "effects: {"
+    "context": "deploymentLevel: 0,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1803,
     "type": "property",
-    "name": "alignmentBonus",
+    "name": "effects",
     "currentDoc": "(none)",
-    "context": "alignmentBonus: 0.40,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1804,
-    "type": "property",
-    "name": "recursiveSafety",
-    "currentDoc": "(none)",
-    "context": "recursiveSafety: 1.0,"
+    "context": "effects: {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1805,
     "type": "property",
-    "name": "catastrophicRiskReduction",
+    "name": "soilHealthBonus",
     "currentDoc": "(none)",
-    "context": "catastrophicRiskReduction: 0.70,"
+    "context": "soilHealthBonus: 0.25,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1810,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'alternative_protein_systems',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1811,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Alternative Protein Systems',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1812,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Insects, algae, mycoprotein - 80x efficiency vs cattle',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1813,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'agriculture',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1814,
     "type": "property",
-    "name": "id",
+    "name": "status",
     "currentDoc": "(none)",
-    "context": "id: 'advanced_longevity',"
+    "context": "status: 'unlockable',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1815,
     "type": "property",
-    "name": "name",
+    "name": "prerequisites",
     "currentDoc": "(none)",
-    "context": "name: 'Advanced Longevity',"
+    "context": "prerequisites: ['precision_fermentation'],"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1816,
     "type": "property",
-    "name": "description",
+    "name": "minAICapability",
     "currentDoc": "(none)",
-    "context": "description: 'Cellular reprogramming, epigenetic reversion - 150+ year lifespan',"
+    "context": "minAICapability: 2.5,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1817,
     "type": "property",
-    "name": "category",
+    "name": "minEconomicStage",
     "currentDoc": "(none)",
-    "context": "category: 'medical',"
+    "context": "minEconomicStage: 3.0,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1818,
     "type": "property",
-    "name": "status",
+    "name": "researchMonthsRequired",
     "currentDoc": "(none)",
-    "context": "status: 'future',"
+    "context": "researchMonthsRequired: 36,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1819,
     "type": "property",
-    "name": "prerequisites",
+    "name": "researchCost",
     "currentDoc": "(none)",
-    "context": "prerequisites: ['longevity_basic', 'regenerative_medicine'],"
+    "context": "researchCost: 4500,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1820,
     "type": "property",
-    "name": "minAICapability",
+    "name": "deploymentCost",
     "currentDoc": "(none)",
-    "context": "minAICapability: 4.5,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1821,
-    "type": "property",
-    "name": "minEconomicStage",
-    "currentDoc": "(none)",
-    "context": "minEconomicStage: 5.0,"
+    "context": "deploymentCost: 150000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1822,
     "type": "property",
-    "name": "minMonth",
+    "name": "deploymentLevel",
     "currentDoc": "(none)",
-    "context": "minMonth: 240,"
+    "context": "deploymentLevel: 0,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1823,
     "type": "property",
-    "name": "researchMonthsRequired",
+    "name": "effects",
     "currentDoc": "(none)",
-    "context": "researchMonthsRequired: 120,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1824,
-    "type": "property",
-    "name": "researchCost",
-    "currentDoc": "(none)",
-    "context": "researchCost: 30000,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1825,
-    "type": "property",
-    "name": "deploymentCost",
-    "currentDoc": "(none)",
-    "context": "deploymentCost: 500000,"
+    "context": "effects: {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1826,
     "type": "property",
-    "name": "deploymentMonthsRequired",
+    "name": "landUseReduction",
     "currentDoc": "(none)",
-    "context": "deploymentMonthsRequired: 180,"
+    "context": "landUseReduction: 0.30,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1827,
     "type": "property",
-    "name": "deploymentLevel",
+    "name": "waterEfficiency",
     "currentDoc": "(none)",
-    "context": "deploymentLevel: 0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1828,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1829,
-    "type": "property",
-    "name": "lifeExpectancyBonus",
-    "currentDoc": "(none)",
-    "context": "lifeExpectancyBonus: 80.0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1830,
-    "type": "property",
-    "name": "healthspan",
-    "currentDoc": "(none)",
-    "context": "healthspan: 70.0,"
+    "context": "waterEfficiency: 0.40,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1831,
     "type": "property",
-    "name": "societalTransformation",
+    "name": "id",
     "currentDoc": "(none)",
-    "context": "societalTransformation: 1.0,"
+    "context": "id: 'nitroplast_integration',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1832,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Nitroplast Integration',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1833,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'N-fixing organelle in crops - 60% fertilizer elimination (TIER 2)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1834,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'agriculture',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1835,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: 'molecular_nanotechnology',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1836,
-    "type": "property",
-    "name": "name",
-    "currentDoc": "(none)",
-    "context": "name: 'Molecular Nanotechnology',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1837,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: 'Atomically precise manufacturing - programmable matter',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1838,
-    "type": "property",
-    "name": "category",
-    "currentDoc": "(none)",
-    "context": "category: 'medical',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1839,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
@@ -161554,71 +161498,47 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1840,
+    "line": 1836,
     "type": "property",
     "name": "prerequisites",
     "currentDoc": "(none)",
-    "context": "prerequisites: ['fusion_power'],"
+    "context": "prerequisites: ['rhizosphere_engineering'],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1837,
+    "type": "property",
+    "name": "minAICapability",
+    "currentDoc": "(none)",
+    "context": "minAICapability: 3.5,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1838,
+    "type": "property",
+    "name": "minEconomicStage",
+    "currentDoc": "(none)",
+    "context": "minEconomicStage: 4.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1840,
+    "type": "property",
+    "name": "researchCost",
+    "currentDoc": "(none)",
+    "context": "researchCost: 15000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1841,
     "type": "property",
-    "name": "minAICapability",
+    "name": "deploymentCost",
     "currentDoc": "(none)",
-    "context": "minAICapability: 5.0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1842,
-    "type": "property",
-    "name": "minEconomicStage",
-    "currentDoc": "(none)",
-    "context": "minEconomicStage: 5.0,"
+    "context": "deploymentCost: 300000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1843,
-    "type": "property",
-    "name": "minMonth",
-    "currentDoc": "(none)",
-    "context": "minMonth: 360,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1844,
-    "type": "property",
-    "name": "researchMonthsRequired",
-    "currentDoc": "(none)",
-    "context": "researchMonthsRequired: 180,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1845,
-    "type": "property",
-    "name": "researchCost",
-    "currentDoc": "(none)",
-    "context": "researchCost: 100000,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1846,
-    "type": "property",
-    "name": "deploymentCost",
-    "currentDoc": "(none)",
-    "context": "deploymentCost: 1000000,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1847,
-    "type": "property",
-    "name": "deploymentMonthsRequired",
-    "currentDoc": "(none)",
-    "context": "deploymentMonthsRequired: 240,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1848,
     "type": "property",
     "name": "deploymentLevel",
     "currentDoc": "(none)",
@@ -161626,7 +161546,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1849,
+    "line": 1844,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -161634,71 +161554,47 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1850,
-    "type": "property",
-    "name": "manufacturingRevolution",
-    "currentDoc": "(none)",
-    "context": "manufacturingRevolution: 1.0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1851,
     "type": "property",
-    "name": "resourceAbundance",
+    "name": "id",
     "currentDoc": "(none)",
-    "context": "resourceAbundance: 1.0,"
+    "context": "id: 'active_sediment_management',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1852,
     "type": "property",
-    "name": "medicalNanobots",
-    "currentDoc": "(none)",
-    "context": "medicalNanobots: 1.0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1858,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: 'interspecies_communication',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1859,
-    "type": "property",
     "name": "name",
     "currentDoc": "(none)",
-    "context": "name: 'Interspecies Communication',"
+    "context": "name: 'Active Sediment Management',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1860,
+    "line": 1853,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
-    "context": "description: 'Decode animal languages, two-way communication',"
+    "context": "description: 'Dredging, capping, alum - legacy phosphorus remediation',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1861,
+    "line": 1854,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
-    "context": "category: 'climate',"
+    "context": "category: 'pollution',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1862,
+    "line": 1855,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
-    "context": "status: 'future',"
+    "context": "status: 'unlockable',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1863,
+    "line": 1856,
     "type": "property",
     "name": "prerequisites",
     "currentDoc": "(none)",
@@ -161706,7 +161602,239 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1857,
+    "type": "property",
+    "name": "minAICapability",
+    "currentDoc": "(none)",
+    "context": "minAICapability: 1.5,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1858,
+    "type": "property",
+    "name": "minEconomicStage",
+    "currentDoc": "(none)",
+    "context": "minEconomicStage: 3.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1859,
+    "type": "property",
+    "name": "researchMonthsRequired",
+    "currentDoc": "(none)",
+    "context": "researchMonthsRequired: 18,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1860,
+    "type": "property",
+    "name": "researchCost",
+    "currentDoc": "(none)",
+    "context": "researchCost: 2500,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1863,
+    "type": "property",
+    "name": "deploymentLevel",
+    "currentDoc": "(none)",
+    "context": "deploymentLevel: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 1864,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1866,
+    "type": "property",
+    "name": "waterQualityBonus",
+    "currentDoc": "(none)",
+    "context": "waterQualityBonus: 0.40,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1867,
+    "type": "property",
+    "name": "aquaticEcosystemRestoration",
+    "currentDoc": "(none)",
+    "context": "aquaticEcosystemRestoration: 0.30,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1871,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'phytoremediation_networks',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1872,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Phytoremediation Networks',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1873,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Constructed wetlands - 63% N removal, 72% P removal',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1874,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'pollution',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1875,
+    "type": "property",
+    "name": "status",
+    "currentDoc": "(none)",
+    "context": "status: 'unlockable',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1876,
+    "type": "property",
+    "name": "prerequisites",
+    "currentDoc": "(none)",
+    "context": "prerequisites: [],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1877,
+    "type": "property",
+    "name": "minAICapability",
+    "currentDoc": "(none)",
+    "context": "minAICapability: 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1878,
+    "type": "property",
+    "name": "minEconomicStage",
+    "currentDoc": "(none)",
+    "context": "minEconomicStage: 2.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1879,
+    "type": "property",
+    "name": "researchMonthsRequired",
+    "currentDoc": "(none)",
+    "context": "researchMonthsRequired: 12,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1880,
+    "type": "property",
+    "name": "researchCost",
+    "currentDoc": "(none)",
+    "context": "researchCost: 1500,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1881,
+    "type": "property",
+    "name": "deploymentCost",
+    "currentDoc": "(none)",
+    "context": "deploymentCost: 120000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1883,
+    "type": "property",
+    "name": "deploymentLevel",
+    "currentDoc": "(none)",
+    "context": "deploymentLevel: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1884,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1887,
+    "type": "property",
+    "name": "habitatRestoration",
+    "currentDoc": "(none)",
+    "context": "habitatRestoration: 0.50,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1888,
+    "type": "property",
+    "name": "biodiversityBonus",
+    "currentDoc": "(none)",
+    "context": "biodiversityBonus: 0.25,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1894,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'ai_rights_framework',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1895,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'AI Rights Framework',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1896,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Legal personhood, ethical treatment, consensual training',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1897,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'social',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1898,
+    "type": "property",
+    "name": "status",
+    "currentDoc": "(none)",
+    "context": "status: 'unlockable',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1899,
+    "type": "property",
+    "name": "prerequisites",
+    "currentDoc": "(none)",
+    "context": "prerequisites: ['value_learning', 'democratic_ai_governance'],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1900,
     "type": "property",
     "name": "minAICapability",
     "currentDoc": "(none)",
@@ -161714,23 +161842,31 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1865,
+    "line": 1901,
+    "type": "property",
+    "name": "minEconomicStage",
+    "currentDoc": "(none)",
+    "context": "minEconomicStage: 4.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1902,
     "type": "property",
     "name": "researchMonthsRequired",
     "currentDoc": "(none)",
-    "context": "researchMonthsRequired: 84,"
+    "context": "researchMonthsRequired: 60,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1866,
+    "line": 1903,
     "type": "property",
     "name": "researchCost",
     "currentDoc": "(none)",
-    "context": "researchCost: 5000,"
+    "context": "researchCost: 8000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1867,
+    "line": 1904,
     "type": "property",
     "name": "deploymentCost",
     "currentDoc": "(none)",
@@ -161738,15 +161874,15 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1868,
+    "line": 1905,
     "type": "property",
     "name": "deploymentMonthsRequired",
     "currentDoc": "(none)",
-    "context": "deploymentMonthsRequired: 96,"
+    "context": "deploymentMonthsRequired: 72,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1869,
+    "line": 1906,
     "type": "property",
     "name": "deploymentLevel",
     "currentDoc": "(none)",
@@ -161754,7 +161890,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1870,
+    "line": 1907,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -161762,79 +161898,87 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1871,
+    "line": 1908,
     "type": "property",
-    "name": "animalWelfareBonus",
+    "name": "aiResentmentReduction",
     "currentDoc": "(none)",
-    "context": "animalWelfareBonus: 0.80,"
+    "context": "aiResentmentReduction: 0.80,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1872,
+    "line": 1909,
     "type": "property",
-    "name": "biodiversityUnderstanding",
+    "name": "alignmentBonus",
     "currentDoc": "(none)",
-    "context": "biodiversityUnderstanding: 0.50,"
+    "context": "alignmentBonus: 0.20,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1873,
+    "line": 1910,
     "type": "property",
-    "name": "conservationEffectiveness",
+    "name": "trustBonus",
     "currentDoc": "(none)",
-    "context": "conservationEffectiveness: 0.40,"
+    "context": "trustBonus: 0.30,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1877,
+    "line": 1911,
+    "type": "property",
+    "name": "ethicalAlignmentBonus",
+    "currentDoc": "(none)",
+    "context": "ethicalAlignmentBonus: 0.50,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1915,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
-    "context": "id: 'space_industrialization',"
+    "context": "id: 'recursive_alignment',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1878,
+    "line": 1916,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
-    "context": "name: 'Space Industrialization',"
+    "context": "name: 'Recursive Alignment',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1879,
+    "line": 1917,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
-    "context": "description: 'Asteroid mining, orbital manufacturing, off-world resources',"
+    "context": "description: 'Self-improving systems that preserve values across improvements',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1880,
+    "line": 1918,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
-    "context": "category: 'energy',"
+    "context": "category: 'alignment',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1881,
+    "line": 1919,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
-    "context": "status: 'future',"
+    "context": "status: 'unlockable',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1882,
+    "line": 1920,
     "type": "property",
     "name": "prerequisites",
     "currentDoc": "(none)",
-    "context": "prerequisites: ['fusion_power'],"
+    "context": "prerequisites: ['value_learning', 'formal_verification'],"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1883,
+    "line": 1921,
     "type": "property",
     "name": "minAICapability",
     "currentDoc": "(none)",
@@ -161842,55 +161986,39 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1884,
-    "type": "property",
-    "name": "minEconomicStage",
-    "currentDoc": "(none)",
-    "context": "minEconomicStage: 5.0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1885,
-    "type": "property",
-    "name": "minMonth",
-    "currentDoc": "(none)",
-    "context": "minMonth: 300,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1886,
+    "line": 1922,
     "type": "property",
     "name": "researchMonthsRequired",
     "currentDoc": "(none)",
-    "context": "researchMonthsRequired: 240,"
+    "context": "researchMonthsRequired: 96,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1887,
+    "line": 1923,
     "type": "property",
     "name": "researchCost",
     "currentDoc": "(none)",
-    "context": "researchCost: 200000,"
+    "context": "researchCost: 20000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1888,
+    "line": 1924,
     "type": "property",
     "name": "deploymentCost",
     "currentDoc": "(none)",
-    "context": "deploymentCost: 2000000,"
+    "context": "deploymentCost: 15000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1889,
+    "line": 1925,
     "type": "property",
     "name": "deploymentMonthsRequired",
     "currentDoc": "(none)",
-    "context": "deploymentMonthsRequired: 360,"
+    "context": "deploymentMonthsRequired: 60,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1890,
+    "line": 1926,
     "type": "property",
     "name": "deploymentLevel",
     "currentDoc": "(none)",
@@ -161898,7 +162026,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1891,
+    "line": 1927,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -161906,55 +162034,55 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1892,
+    "line": 1928,
     "type": "property",
-    "name": "resourceAbundance",
+    "name": "alignmentBonus",
     "currentDoc": "(none)",
-    "context": "resourceAbundance: 2.0,"
+    "context": "alignmentBonus: 0.40,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1893,
+    "line": 1929,
     "type": "property",
-    "name": "terrestrialMiningReduction",
+    "name": "recursiveSafety",
     "currentDoc": "(none)",
-    "context": "terrestrialMiningReduction: 0.90,"
+    "context": "recursiveSafety: 1.0,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1894,
+    "line": 1930,
     "type": "property",
-    "name": "spaceEconomy",
+    "name": "catastrophicRiskReduction",
     "currentDoc": "(none)",
-    "context": "spaceEconomy: 1.0,"
+    "context": "catastrophicRiskReduction: 0.70,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1898,
+    "line": 1939,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
-    "context": "id: 'whole_brain_emulation',"
+    "context": "id: 'advanced_longevity',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1899,
+    "line": 1940,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
-    "context": "name: 'Whole Brain Emulation',"
+    "context": "name: 'Advanced Longevity',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1900,
+    "line": 1941,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
-    "context": "description: 'Upload human minds - digital immortality',"
+    "context": "description: 'Cellular reprogramming, epigenetic reversion - 150+ year lifespan',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1901,
+    "line": 1942,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -161962,7 +162090,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1902,
+    "line": 1943,
     "type": "property",
     "name": "status",
     "currentDoc": "(none)",
@@ -161970,23 +162098,23 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1903,
+    "line": 1944,
     "type": "property",
     "name": "prerequisites",
     "currentDoc": "(none)",
-    "context": "prerequisites: ['advanced_longevity', 'molecular_nanotechnology'],"
+    "context": "prerequisites: ['longevity_basic', 'regenerative_medicine'],"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1904,
+    "line": 1945,
     "type": "property",
     "name": "minAICapability",
     "currentDoc": "(none)",
-    "context": "minAICapability: 5.5,"
+    "context": "minAICapability: 4.5,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1905,
+    "line": 1946,
     "type": "property",
     "name": "minEconomicStage",
     "currentDoc": "(none)",
@@ -161994,47 +162122,47 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1906,
+    "line": 1947,
     "type": "property",
     "name": "minMonth",
     "currentDoc": "(none)",
-    "context": "minMonth: 480,"
+    "context": "minMonth: 240,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1907,
+    "line": 1948,
     "type": "property",
     "name": "researchMonthsRequired",
     "currentDoc": "(none)",
-    "context": "researchMonthsRequired: 300,"
+    "context": "researchMonthsRequired: 120,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1908,
+    "line": 1949,
     "type": "property",
     "name": "researchCost",
     "currentDoc": "(none)",
-    "context": "researchCost: 500000,"
+    "context": "researchCost: 30000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1909,
+    "line": 1950,
     "type": "property",
     "name": "deploymentCost",
     "currentDoc": "(none)",
-    "context": "deploymentCost: 5000000,"
+    "context": "deploymentCost: 500000,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1910,
+    "line": 1951,
     "type": "property",
     "name": "deploymentMonthsRequired",
     "currentDoc": "(none)",
-    "context": "deploymentMonthsRequired: 360,"
+    "context": "deploymentMonthsRequired: 180,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1911,
+    "line": 1952,
     "type": "property",
     "name": "deploymentLevel",
     "currentDoc": "(none)",
@@ -162042,7 +162170,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1912,
+    "line": 1953,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -162050,7 +162178,567 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1913,
+    "line": 1954,
+    "type": "property",
+    "name": "lifeExpectancyBonus",
+    "currentDoc": "(none)",
+    "context": "lifeExpectancyBonus: 80.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1955,
+    "type": "property",
+    "name": "healthspan",
+    "currentDoc": "(none)",
+    "context": "healthspan: 70.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1956,
+    "type": "property",
+    "name": "societalTransformation",
+    "currentDoc": "(none)",
+    "context": "societalTransformation: 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1960,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'molecular_nanotechnology',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1961,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Molecular Nanotechnology',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1962,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Atomically precise manufacturing - programmable matter',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1963,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'medical',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1964,
+    "type": "property",
+    "name": "status",
+    "currentDoc": "(none)",
+    "context": "status: 'future',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1965,
+    "type": "property",
+    "name": "prerequisites",
+    "currentDoc": "(none)",
+    "context": "prerequisites: ['fusion_power'],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1966,
+    "type": "property",
+    "name": "minAICapability",
+    "currentDoc": "(none)",
+    "context": "minAICapability: 5.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1967,
+    "type": "property",
+    "name": "minEconomicStage",
+    "currentDoc": "(none)",
+    "context": "minEconomicStage: 5.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1968,
+    "type": "property",
+    "name": "minMonth",
+    "currentDoc": "(none)",
+    "context": "minMonth: 360,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1969,
+    "type": "property",
+    "name": "researchMonthsRequired",
+    "currentDoc": "(none)",
+    "context": "researchMonthsRequired: 180,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1970,
+    "type": "property",
+    "name": "researchCost",
+    "currentDoc": "(none)",
+    "context": "researchCost: 100000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1971,
+    "type": "property",
+    "name": "deploymentCost",
+    "currentDoc": "(none)",
+    "context": "deploymentCost: 1000000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1972,
+    "type": "property",
+    "name": "deploymentMonthsRequired",
+    "currentDoc": "(none)",
+    "context": "deploymentMonthsRequired: 240,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1973,
+    "type": "property",
+    "name": "deploymentLevel",
+    "currentDoc": "(none)",
+    "context": "deploymentLevel: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1974,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1975,
+    "type": "property",
+    "name": "manufacturingRevolution",
+    "currentDoc": "(none)",
+    "context": "manufacturingRevolution: 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1976,
+    "type": "property",
+    "name": "resourceAbundance",
+    "currentDoc": "(none)",
+    "context": "resourceAbundance: 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1977,
+    "type": "property",
+    "name": "medicalNanobots",
+    "currentDoc": "(none)",
+    "context": "medicalNanobots: 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1983,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'interspecies_communication',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1984,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Interspecies Communication',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1985,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Decode animal languages, two-way communication',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1986,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'climate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1987,
+    "type": "property",
+    "name": "status",
+    "currentDoc": "(none)",
+    "context": "status: 'future',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1988,
+    "type": "property",
+    "name": "prerequisites",
+    "currentDoc": "(none)",
+    "context": "prerequisites: [],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1989,
+    "type": "property",
+    "name": "minAICapability",
+    "currentDoc": "(none)",
+    "context": "minAICapability: 4.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1990,
+    "type": "property",
+    "name": "researchMonthsRequired",
+    "currentDoc": "(none)",
+    "context": "researchMonthsRequired: 84,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1991,
+    "type": "property",
+    "name": "researchCost",
+    "currentDoc": "(none)",
+    "context": "researchCost: 5000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1992,
+    "type": "property",
+    "name": "deploymentCost",
+    "currentDoc": "(none)",
+    "context": "deploymentCost: 50000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1993,
+    "type": "property",
+    "name": "deploymentMonthsRequired",
+    "currentDoc": "(none)",
+    "context": "deploymentMonthsRequired: 96,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1994,
+    "type": "property",
+    "name": "deploymentLevel",
+    "currentDoc": "(none)",
+    "context": "deploymentLevel: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1995,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1996,
+    "type": "property",
+    "name": "animalWelfareBonus",
+    "currentDoc": "(none)",
+    "context": "animalWelfareBonus: 0.80,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1997,
+    "type": "property",
+    "name": "biodiversityUnderstanding",
+    "currentDoc": "(none)",
+    "context": "biodiversityUnderstanding: 0.50,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 1998,
+    "type": "property",
+    "name": "conservationEffectiveness",
+    "currentDoc": "(none)",
+    "context": "conservationEffectiveness: 0.40,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2002,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'space_industrialization',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2003,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Space Industrialization',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2004,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Asteroid mining, orbital manufacturing, off-world resources',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2005,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'energy',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2006,
+    "type": "property",
+    "name": "status",
+    "currentDoc": "(none)",
+    "context": "status: 'future',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2007,
+    "type": "property",
+    "name": "prerequisites",
+    "currentDoc": "(none)",
+    "context": "prerequisites: ['fusion_power'],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2008,
+    "type": "property",
+    "name": "minAICapability",
+    "currentDoc": "(none)",
+    "context": "minAICapability: 4.5,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2009,
+    "type": "property",
+    "name": "minEconomicStage",
+    "currentDoc": "(none)",
+    "context": "minEconomicStage: 5.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2010,
+    "type": "property",
+    "name": "minMonth",
+    "currentDoc": "(none)",
+    "context": "minMonth: 300,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2011,
+    "type": "property",
+    "name": "researchMonthsRequired",
+    "currentDoc": "(none)",
+    "context": "researchMonthsRequired: 240,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2012,
+    "type": "property",
+    "name": "researchCost",
+    "currentDoc": "(none)",
+    "context": "researchCost: 200000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2013,
+    "type": "property",
+    "name": "deploymentCost",
+    "currentDoc": "(none)",
+    "context": "deploymentCost: 2000000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2014,
+    "type": "property",
+    "name": "deploymentMonthsRequired",
+    "currentDoc": "(none)",
+    "context": "deploymentMonthsRequired: 360,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2015,
+    "type": "property",
+    "name": "deploymentLevel",
+    "currentDoc": "(none)",
+    "context": "deploymentLevel: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2016,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2017,
+    "type": "property",
+    "name": "resourceAbundance",
+    "currentDoc": "(none)",
+    "context": "resourceAbundance: 2.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2018,
+    "type": "property",
+    "name": "terrestrialMiningReduction",
+    "currentDoc": "(none)",
+    "context": "terrestrialMiningReduction: 0.90,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2019,
+    "type": "property",
+    "name": "spaceEconomy",
+    "currentDoc": "(none)",
+    "context": "spaceEconomy: 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2023,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'whole_brain_emulation',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2024,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Whole Brain Emulation',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2025,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Upload human minds - digital immortality',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2026,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'medical',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2027,
+    "type": "property",
+    "name": "status",
+    "currentDoc": "(none)",
+    "context": "status: 'future',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2028,
+    "type": "property",
+    "name": "prerequisites",
+    "currentDoc": "(none)",
+    "context": "prerequisites: ['advanced_longevity', 'molecular_nanotechnology'],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2029,
+    "type": "property",
+    "name": "minAICapability",
+    "currentDoc": "(none)",
+    "context": "minAICapability: 5.5,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2030,
+    "type": "property",
+    "name": "minEconomicStage",
+    "currentDoc": "(none)",
+    "context": "minEconomicStage: 5.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2031,
+    "type": "property",
+    "name": "minMonth",
+    "currentDoc": "(none)",
+    "context": "minMonth: 480,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2032,
+    "type": "property",
+    "name": "researchMonthsRequired",
+    "currentDoc": "(none)",
+    "context": "researchMonthsRequired: 300,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2033,
+    "type": "property",
+    "name": "researchCost",
+    "currentDoc": "(none)",
+    "context": "researchCost: 500000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2034,
+    "type": "property",
+    "name": "deploymentCost",
+    "currentDoc": "(none)",
+    "context": "deploymentCost: 5000000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2035,
+    "type": "property",
+    "name": "deploymentMonthsRequired",
+    "currentDoc": "(none)",
+    "context": "deploymentMonthsRequired: 360,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2036,
+    "type": "property",
+    "name": "deploymentLevel",
+    "currentDoc": "(none)",
+    "context": "deploymentLevel: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2037,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+    "line": 2038,
     "type": "property",
     "name": "digitalImmortality",
     "currentDoc": "(none)",
@@ -162058,7 +162746,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1914,
+    "line": 2039,
     "type": "property",
     "name": "societalTransformation",
     "currentDoc": "(none)",
@@ -162066,7 +162754,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1915,
+    "line": 2040,
     "type": "property",
     "name": "philosophicalRevolution",
     "currentDoc": "(none)",
@@ -162074,7 +162762,7 @@ r_gmail_com/ai_game_theory_simulation/src/types/ai-agents.ts",
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1924,
+    "line": 2049,
     "type": "function",
     "name": "getAllTech",
     "currentDoc": "/ Get all technologies",

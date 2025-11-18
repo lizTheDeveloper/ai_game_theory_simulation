@@ -124,6 +124,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "line": 2365,
 =======
     "line": 2052,
@@ -134,6 +135,9 @@
 =======
     "line": 1924,
 >>>>>>> origin/auto/worker-20251116_050001
+=======
+    "line": 2049,
+>>>>>>> origin/auto/worker-20251116_100000
     "name": "getAllTech",
     "doc": " Returns array of results."
   },
