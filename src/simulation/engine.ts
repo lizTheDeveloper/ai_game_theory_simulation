@@ -61,7 +61,7 @@ import {
   // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   TechTreePhase,
-  CoordinatedDeploymentPhase,  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
+  // CoordinatedDeploymentPhase explicitly imported below (line 163) to avoid duplication
   MeaningRenaissancePhase,
   // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
@@ -167,6 +167,7 @@ import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Conso
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
 // Batch 4 Consolidation: Crisis & Mortality (14 → 5, Nov 9, 2025)
 import { HumanSurvivalSystemPhase } from './engine/phases/HumanSurvivalSystemPhase';  // Consolidated famine, food security, mortality stabilizers
+import { TransitionMortalityPhase } from './engine/phases/TransitionMortalityPhase';  // TIER 1B CRITICAL (Nov 2025): Transition mortality from rapid tech deployment
 import { NuclearCrisisPhase } from './engine/phases/NuclearCrisisPhase';  // Consolidated nuclear winter + radiation
 import { ExtinctionSystemPhase } from './engine/phases/ExtinctionSystemPhase';  // Consolidated extinction triggers/progress, catastrophic scenarios
 // Batch 5 Consolidation: Social & Governance (20 → 8, Nov 9, 2025)
@@ -571,6 +572,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ClimateDeploymentPhase());  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints (order 8.5)
     // === BATCH 4 CONSOLIDATED SURVIVAL SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new HumanSurvivalSystemPhase());  // Consolidated: FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase (order 19.7)
+    this.orchestrator.registerPhase(TransitionMortalityPhase);  // TIER 1B CRITICAL (Nov 16, 2025): Transition mortality from rapid tech deployment (order 26)
     this.orchestrator.registerPhase(new BayesianMortalityResolutionPhase());  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline
     this.orchestrator.registerPhase(new MinimalSufferingPhase());  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering)
@@ -867,55 +869,58 @@ export class SimulationEngine {
         stopConditions.onMonthEnd(state);
       }
       
-      // Phase 3: Check for end-game transition
-      if (!state.endGameState?.active && checkEndGameTransition(state)) {
-        enterEndGame(state);
-      }
+      // Phase 3: Check for end-game transition (SANDBOX MODE: skip if checkActualOutcomes=false)
+      // God mode needs full 120-month runs without early termination
+      if (checkActualOutcomes) {
+        if (!state.endGameState?.active && checkEndGameTransition(state)) {
+          enterEndGame(state);
+        }
 
-      // Phase 3: Process end-game dynamics if active
-      if (state.endGameState?.active) {
-        processEndGameMonth(state);
-        
-        // Check if end-game has resolved
-        const endGameOutcome = getEndGameOutcome(state);
-        if (endGameOutcome.outcome) {
-          actualOutcome = endGameOutcome.outcome;
-          actualOutcomeReason = endGameOutcome.reason;
-          console.log(`\n🎭 END-GAME RESOLVED: ${endGameOutcome.outcome.toUpperCase()}`);
-          console.log(`   Reason: ${endGameOutcome.reason}`);
-          console.log(`   Month: ${month}\n`);
+        // Phase 3: Process end-game dynamics if active
+        if (state.endGameState?.active) {
+          processEndGameMonth(state);
+
+          // Check if end-game has resolved
+          const endGameOutcome = getEndGameOutcome(state);
+          if (endGameOutcome.outcome) {
+            actualOutcome = endGameOutcome.outcome;
+            actualOutcomeReason = endGameOutcome.reason;
+            console.log(`\n🎭 END-GAME RESOLVED: ${endGameOutcome.outcome.toUpperCase()}`);
+            console.log(`   Reason: ${endGameOutcome.reason}`);
+            console.log(`   Month: ${month}\n`);
+            if (DEBUG_SCENARIO_BUG) {
+              console.log(`[ENGINE DEBUG] Breaking due to END-GAME outcome at month ${month}`);
+            }
+            break;
+          }
+        }
+
+        // Check for extinction completion (TIER 1.7: Fixed to use population, not severity)
+        // TRUE EXTINCTION: Population < 10K people
+        // OLD BUG: Used severity >= 1.0, which declared extinction at 3-4B survivors!
+        const population = state.humanPopulationSystem.population;
+        const populationInPeople = population * 1_000_000_000; // Convert billions to actual count
+
+        if (populationInPeople < 10_000) {
+          // TRUE EXTINCTION: Less than 10,000 people left
+          actualOutcome = 'extinction';
+          actualOutcomeReason = `True extinction - population reached ${populationInPeople.toFixed(0)} people`;
+
+          console.log(`\n💀 TRUE EXTINCTION: HUMANITY EXTINCT`);
+          console.log(`   Final Population: ${populationInPeople.toFixed(0)} people (<10K threshold)`);
+          console.log(`   Peak Population: ${(state.humanPopulationSystem.peakPopulation / 1000).toFixed(2)}B`);
+          console.log(`   Mortality: ${((1 - population / state.humanPopulationSystem.peakPopulation) * 100).toFixed(1)}%`);
+          console.log(`   Primary Cause: ${state.extinctionState.mechanism || 'Cascading crises'}`);
+          console.log(`   Month: ${month}`);
+
+          const { determinePopulationOutcome } = require('./populationDynamics');
+          const popOutcome = determinePopulationOutcome(state);
+          console.log(`\n   ${popOutcome.outcomeNarrative}\n`);
           if (DEBUG_SCENARIO_BUG) {
-            console.log(`[ENGINE DEBUG] Breaking due to END-GAME outcome at month ${month}`);
+            console.log(`[ENGINE DEBUG] Breaking due to TRUE EXTINCTION at month ${month}`);
           }
           break;
         }
-      }
-      
-      // Check for extinction completion (TIER 1.7: Fixed to use population, not severity)
-      // TRUE EXTINCTION: Population < 10K people
-      // OLD BUG: Used severity >= 1.0, which declared extinction at 3-4B survivors!
-      const population = state.humanPopulationSystem.population;
-      const populationInPeople = population * 1_000_000_000; // Convert billions to actual count
-      
-      if (populationInPeople < 10_000) {
-        // TRUE EXTINCTION: Less than 10,000 people left
-        actualOutcome = 'extinction';
-        actualOutcomeReason = `True extinction - population reached ${populationInPeople.toFixed(0)} people`;
-        
-        console.log(`\n💀 TRUE EXTINCTION: HUMANITY EXTINCT`);
-        console.log(`   Final Population: ${populationInPeople.toFixed(0)} people (<10K threshold)`);
-        console.log(`   Peak Population: ${(state.humanPopulationSystem.peakPopulation / 1000).toFixed(2)}B`);
-        console.log(`   Mortality: ${((1 - population / state.humanPopulationSystem.peakPopulation) * 100).toFixed(1)}%`);
-        console.log(`   Primary Cause: ${state.extinctionState.mechanism || 'Cascading crises'}`);
-        console.log(`   Month: ${month}`);
-
-        const { determinePopulationOutcome } = require('./populationDynamics');
-        const popOutcome = determinePopulationOutcome(state);
-        console.log(`\n   ${popOutcome.outcomeNarrative}\n`);
-        if (DEBUG_SCENARIO_BUG) {
-          console.log(`[ENGINE DEBUG] Breaking due to TRUE EXTINCTION at month ${month}`);
-        }
-        break;
       }
       
       // Check for extinction EVENT (severe crisis active, but NOT extinct yet)
@@ -1272,7 +1277,7 @@ export class SimulationEngine {
       log,
       diagnostics,
       summary: {
-        totalMonths: history.length,
+        totalMonths: state.currentMonth + 1, // FIX (Nov 16, 2025): Was history.length (snapshot count), now actual month count
         finalOutcome,
         finalOutcomeReason,
         finalOutcomeProbability,

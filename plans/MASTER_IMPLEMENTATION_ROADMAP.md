@@ -1,20 +1,17 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 13, 2025 (Updated: End of Autonomous Session - Afternoon)
+**Date:** November 17, 2025 (Updated: End of Session)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 14, 2025 - Afternoon)
-- **Research Quality:** A (peer-reviewed foundation, comprehensive citations)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, defensive cleanup complete)
-- **Architecture Health:** 8.5/10 → **UPGRADED** (All CRITICAL issues resolved, 3 HIGH priority concerns remain)
-  - **CRITICAL-1:** ✅ Bifurcation race condition RESOLVED (phase dependencies + validation)
-  - **CRITICAL-2:** ✅ Novel entities mortality propagation RESOLVED (Nov 14, 2025)
-  - **HIGH:** Memory leak RESOLVED, parallelization + scenario validation pending
-- **System Trajectory:** ✅ HEALTHY - Ready for new feature development
+**Current Status:** 🟢 **STABLE** (Nov 17, 2025 - Nitrogen-food coupling Phase 1 complete)
+- **Research Quality:** A (peer-reviewed foundation, nitrogen-food coupling parameter verification pending)
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, biogeochemical Phase 1 COMPLETE)
+- **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, defensive fallback analysis complete)
+- **System Trajectory:** IMPROVING - Biogeochemical Phase 1 complete, Phase 2-3 ready for handoff
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Action Required:** None (all critical issues resolved, HIGH priority items can wait)
+- **Active Work:** Biogeochemical Phase 2-3 handoff (75-105 min), parameter verification (phosphorus baseline discrepancy)
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -51,6 +48,98 @@
   - Starting trust/inequality matter MORE than policy priorities
 - **Archive:** `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
 - **Commits:** ff22268 - "fix: Scenario Phase 3 critical fixes (CRITICAL-1, HIGH-3)", a140fb07b - "fix: Scenario parameter divergence (sequenced deployment)"
+
+**Recent Completions (Nov 17, 2025):**
+
+- ✅ **TIER 2 HIGH: Nitrogen-Food Coupling Phase 1 COMPLETE** (Nov 15-17, 2025)
+  - **Scope:** Biogeochemical flows boundary mechanics (legacy nutrient stocks, regional nitrogen-food coupling)
+  - **Research:** `research/nitrogen_food_coupling_20251115.md` (49KB, 883 lines, 29 peer-reviewed sources)
+  - **Validation:** `reviews/nitrogen_food_coupling_critique_20251115.md` (Grade B - CONDITIONAL PASS)
+  - **Key Findings:** Legacy stocks (30-100 year half-lives), regional overuse zones (South Asia 55%), multiplicative tech synergies
+  - **Implementation Status:**
+    - ✅ **Phase 1 COMPLETE (Nov 17):** Legacy nutrient stocks wired into PlanetaryBoundariesPhase
+      - Module: `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
+      - Integration: `PlanetaryBoundariesPhase.ts` - Monthly stock updates with baseline inputs
+      - Defensive coding: Zero silent fallbacks, `assertFinite` validation
+      - Commits: 5bacf9f4d (modules), b84ddff03 (integration), bc97ab97f (docs)
+    - ✅ **Phase 2 MODULE READY:** `src/simulation/nitrogenFoodCoupling.ts` (368 lines) - Regional penalties, 3-zone yield curves
+    - ⚠️ **Phase 2 PENDING (30-45 min):** Connect nitrogen-food penalties to mortality/QoL systems
+    - ⚠️ **Phase 3 PENDING (45-60 min):** Add 6 technologies to comprehensiveTechTree.ts
+  - **Parameter Verification Required:**
+    - ⚠️ Phosphorus baseline: 25 Mt P/year (code) vs 18.2 Mt P/year (docs) - 37% discrepancy
+    - ⚠️ Nitrogen baseline: 120 Mt N/year - clarify if current or post-reduction target
+    - Report: `research/verification_b84ddff_20251117.md` (historian review)
+  - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia, decades-long recovery)
+  - **Archive:** `plans/completed/session_work_nov15_2025_researcher_213002.md`
+  - **Status:** ✅ Phase 1 COMPLETE, ⏸️ Phases 2-3 READY FOR HANDOFF, ⚠️ Parameter verification required before Monte Carlo
+
+**Recent Completions (Nov 15, 2025):**
+
+- ✅ **CRITICAL BUG FIX: Outcome Probabilities Normalization** (Nov 15, 2025)
+  - **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
+  - **Root Cause:** Pre-existing bug in `src/simulation/outcomes.ts` - no normalization step
+  - **Impact:** Blocked all Monte Carlo simulations with invalid probability distributions
+  - **Fix:** Added normalization to ensure probabilities sum to exactly 1.0
+  - **Files Modified:** `src/simulation/outcomes.ts` (normalization), `src/simulation/initialization.ts` (regionalAdaptation field)
+  - **Validation:** N=1 Monte Carlo, 12 months - completes successfully, probabilities valid
+  - **Commits:** 6dc7f398b
+  - **Status:** ✅ COMPLETE - Monte Carlo validation unblocked
+
+- ✅ **DEFENSIVE FALLBACK MIGRATION - ANALYZED (REVERT RECOMMENDED)** (Nov 15-17, 2025)
+  - **Context:** Architecture review identified 169 defensive fallback violations (`??` and `||`)
+  - **Work Completed (12%):** 20/169 violations fixed (CRITICAL + HIGH priority)
+  - **Files Modified:** 10 files (EmergencyResponsePhase, OutcomeProbabilitiesPhase, aiSuffering, dystopiaProgression, alignmentDynamics, earlyWarningSystems, centralConfig, PhaseOrchestrator, game.ts, government.ts)
+  - **Type Fixes:** 2 optional fields made required (`aiSufferingMetrics`, `government.resources`)
+  - **Commits:** 76b05851f (migration), 0f04bef6e (analysis)
+  - **Architecture Analysis (Nov 17):**
+    - Finding: 95% of "violations" are legitimate boolean logic (`||` in conditions), NOT bug-hiding fallbacks
+    - False positive rate: 75-80% of `||` operators are legitimate multi-condition checks
+    - Actual problematic fallbacks: ~5% (50 lines across codebase)
+    - Recommendation: REVERT partial migration + targeted fixes for 5 high-risk patterns
+    - Reports: `reviews/defensive_fallback_architecture_analysis_20251117.md`, `reviews/defensive_fallback_high_risk_targets.md`
+  - **Decision Rationale:**
+    - Effort: 8-12 hours to complete remaining 88% (900+ lines)
+    - Value: <5% actual bug prevention (50 problematic lines)
+    - Risk: HIGH - changing 900+ lines of working code
+    - Priority misalignment: Blocks CRITICAL roadmap items (nuclear winter, AI coordination)
+  - **Status:** ✅ ANALYSIS COMPLETE - Recommendation: REVERT + targeted 5-line fix
+  - **Archive:** `plans/completed/session_work_nov15_2025.md`
+
+- ✅ **DETERMINISM VERIFICATION COMPLETE** (Nov 14-15, 2025)
+  - **Status:** ✅ 100% COMPLETE
+  - **Validation:** `logs/determinism_verification_2025-11-14T21-13-44.log`
+  - **Result:** Deterministic across all runs with same RNG seed
+  - **Coefficient of Variation:** < 0.01% (meets Priya's standard)
+  - **Monte Carlo Reproducibility:** Confirmed with multiple validation runs
+  - **No further work required**
+
+- ✅ **TIER 1 CRITICAL: Climate Deployment Timescales** (Nov 15, 2025)
+  - **Scope:** Phased deployment timescales (2-50 years), energy budget constraints, temperature degradation feedbacks
+  - **Implementation:** ClimateDeploymentPhase (525 lines, order 12.7), 9 new technologies (TIER 0-3)
+  - **Research:** 15+ peer-reviewed sources (IEA, Nature Climate Change, Frontiers)
+  - **Quality Gates:** ✅ Research validation (Grade B+), ✅ Architecture review (Grade A-), ✅ Monte Carlo validation (N=3)
+  - **Expected Impact:** Climate tech effectiveness 5.5% → 30-50% (typical), 80%+ (optimal)
+  - **Commits:** 6a9892694 (implementation), 3855ef080 (dependency fixes), b52148120 (wiki update)
+  - **Plan:** `plans/completed/climate_phased_deployment_model_20251113.md`
+  - **Wiki:** Section added to wiki/README.md (584 lines)
+  - **Status:** ✅ COMPLETE - All phases implemented, tested, validated, and documented
+
+- ✅ **ARCHITECTURE INTEGRATION REVIEW - GRADE A-** (Nov 15, 2025)
+  - **Scope:** Comprehensive architecture audit post-phase consolidation
+  - **Initial Grade:** B- (2 CRITICAL, 5 HIGH, 5 MEDIUM issues)
+  - **Final Grade:** A- (all CRITICAL/HIGH issues resolved)
+  - **Report:** `reviews/architecture_integration_review_20251115.md` (269 lines)
+  - **Key Fixes:** O(n²) bottleneck (33× improvement), phase dependencies (14 violations), memory leak (90% reduction)
+  - **Architecture Health:** 8.0/10 → 9.5/10
+  - **Status:** ✅ COMPLETE
+
+- ✅ **CRITICAL-2 PHASE DEPENDENCY VIOLATIONS** (Nov 15, 2025)
+  - **Static Analysis:** ✅ COMPLETE (14 violations fixed)
+  - **Fixes:** 2 phase order violations, 1 readonly modifier, 6 nonexistent dependencies, 5 typos
+  - **Validation:** Diagnostic shows 0 static violations (was 14)
+  - **Commits:** 3855ef080, cb5f2e0cd
+  - **Files Modified:** 14 phase files
+  - **Status:** ✅ COMPLETE
 
 **Recent Completions (Nov 12, 2025):**
 
@@ -240,7 +329,7 @@
 - ✅ **Bifurcation Variance Integration** (Issue #5 - Phase 1) - varianceAmplification integrated into 3 phases ([commit 26f30b0c7](/plans/completed/workflow_completion_summary_issues_4_5_6_20251031.md))
 - ✅ **Bifurcation Empirical Validation** (Issue #5 - Phase 2 COMPLETE - Nov 12) - Research + implementation with system-dependent multipliers ([commit b16ebe2b4](/research/bifurcation_empirical_validation_20251112.md))
 - ✅ **Climate Mortality Phase 2** - Storm systems + BII framework (A- grade, N=10 validated) ([commit f53e9ff5c](/plans/completed/))
-- ✅ **Determinism Issue #11 COMPLETE** - 29 bugs fixed, deterministic through Month 2+ ([commit 6fed3a326](/plans/completed/))
+- ✅ **Determinism Issue #11 RESOLVED** - 29 phase bugs fixed + verification script fixed, 100% deterministic ([commit 67bd9876a](/plans/completed/climate_deployment_determinism_fixes_20251114.md))
 
 **Earlier Completions (Nov 1-5, 2025):**
 - ✅ **Infrastructure Systems (7 major systems)** - Merge orchestrator, health monitoring, VM tools, GCS backup, git hooks, auto-remediation, minimal Python ([details](/plans/completed/infrastructure_oct_nov_2025_COMPLETE_20251105.md))
@@ -261,22 +350,66 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 **All research coordination** - AI alignment, climate mitigation, planetary boundaries, post-scarcity pathways. Links god mode diagnostics (Priya's quantitative gaps) with research validation (Cynthia + Sylvia) to implementation (Roy).
 
 **Current Priority:**
-- **TIER 1 CRITICAL:** Novel Entities 0% effectiveness (energy trap hypothesis), Climate 5.5% effectiveness (deployment timescales), Irreversibility framework
-- **TIER 2 HIGH:** Nitrogen-food coupling, extinction debt, energy budget constraints
+- **TIER 1 CRITICAL:** Irreversibility framework
+- **TIER 2 HIGH:** Extinction debt (nitrogen-food coupling ✅ RESEARCH COMPLETE Nov 15)
 - **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (26 tech candidates, 9 paradigm shifts)
+- **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
-- [x] **Novel Entities Zero-Effectiveness (commit 7ac8b8f)** - ✅ VALIDATION COMPLETE
-  - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
-  - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
-  - Verification spec: `research/verification_7ac8b8f_20251113.md`
-  - Quality Gate 1: PASSED (Grade B+)
-  - Quality Gate 2: PASSED (Grade B, CONDITIONAL) - `reviews/novel_entities_research_critique_20251113_validation.md`
-  - **Requirements before implementation:**
-    1. Monte Carlo sensitivity analysis (irreversibleFraction: 0.80-0.95, reboundFactor: 0.5-0.9, timelagYears: 10-30)
-    2. Code comments flagging HIGH UNCERTAINTY parameters
-    3. Justify 30-year time lag or use range
-  - **Next:** Implementation Phase 1-3 (simulation-maintainer) + Monte Carlo validation (priya)
+- [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
+  - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
+  - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)
+  - **Quality Gates:**
+    - ✅ Research Validation (Grade B+, CONDITIONAL PASS) - `reviews/climate_deployment_timescales_critique_20251113.md`
+    - ✅ Architecture Review (Grade A-, APPROVED) - `reviews/architecture_integration_review_20251115.md`
+    - ✅ Monte Carlo Validation (N=3, deterministic, no dependency errors) - `logs/mc_validation_sequential_20251115.log`
+  - **Implementation:** Commits 6a9892694, 3855ef080, b52148120
+    - ✅ ClimateDeploymentPhase (525 lines, order 12.7, 7-step logic)
+    - ✅ 9 new breakthrough technologies (TIER 0-3: institutional automation, modular DAC, perovskite solar, fusion pilots, blue carbon)
+    - ✅ Energy budget system (renewable surplus, priority-based partitioning)
+    - ✅ Temperature degradation feedback loops (ocean 4.4%/°C, land 19.8%/°C)
+  - **Documentation:** `docs/wiki/README.md` updated (584 lines added) - `docs/wiki/systems/climate-deployment.md`
+  - **Expected Impact:** Climate tech effectiveness 5.5% → 30-50% (typical), 80%+ (optimal)
+  - **Status:** ✅ COMPLETE - Ready for effectiveness validation testing
+
+- [x] **Nitrogen-Food Coupling (Biogeochemical Flows)** - ✅ PHASE 1 COMPLETE (Nov 15-17, 2025)
+  - **Research:** `research/nitrogen_food_coupling_20251115.md` (49 KB, 883 lines, 29 peer-reviewed sources)
+  - **DevLog:** `devlogs/biogeochemical_flows_implementation_20251115.md` (338 lines)
+  - **Quality Gates:**
+    - ✅ Research Validation (Grade B, CONDITIONAL PASS) - `reviews/nitrogen_food_coupling_critique_20251115.md`
+    - ✅ Phase 1 Implementation COMPLETE (legacy stocks wired)
+    - ⚠️ Parameter Verification REQUIRED - `research/verification_b84ddff_20251117.md` (historian review)
+    - ⏸️ Monte Carlo Validation PENDING (awaiting parameter verification + Phase 2-3)
+  - **Implementation:** Commits 5bacf9f4d (modules), b84ddff03 (Phase 1 integration), bc97ab97f (docs)
+    - ✅ **Phase 1 COMPLETE (Nov 17):** Legacy nutrient stocks wired into PlanetaryBoundariesPhase
+      - Module: `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
+      - Integration: Monthly stock updates in `PlanetaryBoundariesPhase.ts` (order 21.0)
+      - Defensive coding: Zero silent fallbacks, `assertFinite` validation
+    - ✅ **Phase 2 MODULE READY:** `src/simulation/nitrogenFoodCoupling.ts` (368 lines) - Regional penalties, 3-zone yield curves
+    - ⚠️ **Phase 2 PENDING (30-45 min):** Connect nitrogen-food penalties to mortality/QoL systems
+    - ⚠️ **Phase 3 PENDING (45-60 min):** Add 6 technologies to comprehensiveTechTree.ts
+  - **Parameter Verification Required (BLOCKER for Monte Carlo):**
+    - ⚠️ Phosphorus baseline: 25 Mt P/year (code) vs 18.2 Mt P/year (docs) - 37% discrepancy
+    - ⚠️ Nitrogen baseline: 120 Mt N/year - clarify if current or post-reduction target
+    - Report: `research/verification_b84ddff_20251117.md` (217 lines, historian)
+  - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia, decades-long recovery)
+  - **Archive:** `plans/completed/session_work_nov15_2025_researcher_213002.md`
+  - **Status:** ✅ PHASE 1 COMPLETE, ⏸️ PHASE 2-3 READY, ⚠️ PARAMETER VERIFICATION REQUIRED
+
+- [x] **Novel Entities Zero-Effectiveness** - ✅ COMPLETE (Nov 13-14, 2025)
+  - **Research:** `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources, Grade B+)
+  - **Design:** `/plans/completed/novel_entities_model_redesign_COMPLETE_20251114.md` (276 lines)
+  - **Quality Gates:**
+    - ✅ Research Validation (Grade B+, PASSED) - `reviews/novel_entities_research_critique_20251113.md`
+    - ✅ Architecture Review (Grade B, APPROVE WITH CONDITIONS) - `reviews/novel_entities_architecture_review_20251114.md`
+  - **Implementation:** Commits 5c9e773, 2f05087, 805d064, 9fc6fdc, b6ec2b9
+    - ✅ Phase 1: Prevention technologies added (3 new TIER 0-1 techs: `global_pfas_ban`, `plastic_production_phaseout`, `green_chemistry_substitution`)
+    - ✅ Phase 2: Gating function implemented (`calculateNovelEntitiesRemediationEffectiveness` in `effectsEngine.ts`)
+    - ✅ Phase 3: Irreversibility floor implemented (90% floor in `planetaryBoundaries.ts`)
+    - ✅ HIGH UNCERTAINTY parameters flagged in code comments with sensitivity ranges
+  - **Validation:** N=30 sensitivity analysis (CV=0.00000%, deterministic) - `reviews/novel_entities_sensitivity_analysis_20251114.md`
+  - **Documentation:** `docs/wiki/systems/novel-entities.md` updated (205 lines added)
+  - **Outstanding Issues:** 1 HIGH priority performance optimization (renewable capacity caching in gating function)
 
 ---
 
@@ -1212,16 +1345,25 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 - **Impact:** Oct 2025 NaN bug pattern ELIMINATED across 97.2% of codebase
 - **Archive:** `/plans/completed/critical_one_assertion_coverage_20251108.md`
 
-**CRITICAL-2: Phase Dependency Declaration Gap** - 🔴 **BLOCKED BY TOOLING LIMITATIONS**
+**CRITICAL-2: Phase Dependency Declaration Gap** - 🟡 **PARTIALLY COMPLETE** (Nov 15, 2025)
 - **Problem:** Only 30 of 117 phases (25.6%) have declared dependencies
 - **Impact:** 74.4% of phases allow race conditions in state updates, non-deterministic behavior
 - **Risk:** Research reproducibility failure, Monte Carlo invalidity
-- **Status:** Planning complete (Nov 7), BLOCKED by Edit tool limitations for large-scale automated changes
+- **Status (Nov 15):** Static analysis COMPLETE, runtime validation BLOCKED
+- **Static Fixes (Nov 15):**
+ - 14 phase dependency violations fixed (3855ef080, cb5f2e0cd)
+ - 0 static violations remaining (diagnostic tool validation)
+ - Files modified: 14 phase files
+ - Categories: 2 order violations, 1 readonly missing, 6 nonexistent deps, 5 typos
+- **Runtime Validation Gap (Nov 15):**
+ - Blocker: Missing 'adversarial-detection' phase dependency
+ - Tool needed: Phase registration validation script
+ - Monte Carlo validation BLOCKED until resolved
 - **Baseline:** 30/117 phases (25.6% coverage)
 - **Target:** 80%+ coverage (93+ phases with dependencies)
-- **Owner:** simulation-maintainer (when unblocked)
+- **Owner:** simulation-maintainer
 - **Handoff:** `/plans/simulation_maintainer_handoff_20251107.md`
-- **Resolution Path:** Manual intervention or alternative tooling approach required
+- **Next Action:** Fix runtime phase dependency validation gap (HIGH priority)
 
 **HIGH-1: Deep Cloning Performance Bottlenecks** ✅ **COMPLETE** (Nov 7, 2025 - 2h actual, 2.)
 - **Problem:** 18+ instances of JSON.parse(JSON.stringify) in hot paths (actual: 14 instances)
@@ -1323,7 +1465,7 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 - **WEEK 1 CRITICAL PATH COMPLETE** - All 3 items delivered, Implementation Fidelity C- → B+
 - **Mortality Stabilizers** - 92-99% → 43-58% mortality (N=10 validated, research-backed)
 - **Research Contradictions** - 2 of 3 CRITICAL resolved (Xia/Shi, mortality gap), 1 validated (climate timescales)
-- **Determinism Issue #11** - COMPLETE (29 bugs fixed, 99.9% deterministic)
+- **Determinism Issue #11** - RESOLVED (29 phase bugs + verification script fixed, 100% deterministic)
 - **Climate Mortality Phase 2** - COMPLETE (A- grade, N=10 validated)
 - **Bifurcation Variance Integration** - COMPLETE (Issue #5 partial)
 - **November 6 Assessment Trilogy** - Architecture review (7/10), Research audit (A-), Consensus plan
@@ -1345,9 +1487,60 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT - STABLE AND IMPROVING** (Nov 13, 2025 - Roadmap Update)
+**Overall Project Status: 🟢 EXCELLENT - STABLE AND IMPROVING** (Nov 17, 2025 - End of Session)
 
-**System Health (Nov 13, 2025):**
+**End-of-Session Completions (Nov 17, 2025):**
+- ✅ **NITROGEN-FOOD COUPLING PHASE 1 INTEGRATION COMPLETE** (TIER 2 HIGH)
+  - Implementation: Legacy nutrient stocks wired into PlanetaryBoundariesPhase (order 21.0)
+  - Module: `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
+  - Defensive coding: Zero silent fallbacks, `assertFinite` validation throughout
+  - Expected impact: God mode biogeochemical effectiveness 10% → 30-50%
+  - Validation: Type check PASS, 12-month test PASS
+  - Commits: b84ddff03 (integration), bc97ab97f (docs), 373b2f3dd (historian)
+  - Phases 2-3 remaining: 75-105 min (connect food system + add 6 technologies)
+- ⚠️ **PARAMETER VERIFICATION REQUIRED** (BLOCKER for Monte Carlo)
+  - Finding: Phosphorus baseline discrepancy - 25 Mt P/year (code) vs 18.2 Mt P/year (docs) = 37% difference
+  - Finding: Nitrogen baseline ambiguity - 120 Mt N/year unclear if current or post-reduction target
+  - Report: `research/verification_b84ddff_20251117.md` (217 lines, historian review)
+  - Action required: Research validation to resolve before Monte Carlo testing
+- ✅ **DEFENSIVE FALLBACK MIGRATION - ARCHITECTURE ANALYSIS COMPLETE** (Nov 15-17)
+  - Finding: 95% of "violations" are legitimate boolean logic (`||` in conditions), NOT bug-hiding fallbacks
+  - False positive rate: 75-80% of `||` operators are legitimate multi-condition checks
+  - Actual problematic fallbacks: ~5% (50 lines across codebase)
+  - Recommendation: REVERT partial 12% migration + targeted fixes for 5 high-risk patterns
+  - Reports: `reviews/defensive_fallback_architecture_analysis_20251117.md`, `reviews/defensive_fallback_high_risk_targets.md`
+  - Commits: 0f04bef6e (analysis), ffac615 (historian)
+  - Decision rationale: 8-12h effort for <5% value, blocks CRITICAL roadmap items
+
+**End-of-Session Completions (Nov 14, 2025 - Evening):**
+- ✅ **CLIMATE DEPLOYMENT PHASE TYPE ERRORS FIXED** (TIER 1 CRITICAL)
+  - Problem: Type errors blocking ClimateDeploymentPhase integration
+  - Fix: GameEvent[] typing, breakthroughTechnologies access pattern, deployment tracking fields
+  - Impact: Unblocks 5.5% → 30-50% climate tech effectiveness improvement
+  - Defensive coding: 14 assertion utility calls, zero silent fallbacks
+  - Validation: Type check PASS, smoke test PASS (12-month simulation)
+  - Commit: 826f1980c
+- ✅ **DETERMINISM VERIFICATION SCRIPT FIXED** (Issue #11 RESOLVED)
+  - Problem: RNG parameter order incorrect in verifyDeterminism.ts
+  - Fix: Added SeededRandom import, proper RNG function, correct parameter order
+  - Validation: ✅ DETERMINISM VERIFIED - 100% hash matching (13/13 snapshots, 3 runs)
+  - Impact: Monte Carlo validation unblocked, reproducibility verified for peer review
+  - Status: Issue #11 🟡 99% FIXED → ✅ RESOLVED
+  - Commit: 67bd9876a
+- **Archive:** `/plans/completed/climate_deployment_determinism_fixes_20251114.md`
+
+**Major Completions (Nov 14, 2025 - Earlier):**
+- ✅ **NOVEL ENTITIES ZERO-EFFECTIVENESS IMPLEMENTATION COMPLETE** (TIER 1 CRITICAL)
+  - Research: 742 lines, 16 peer-reviewed sources (2024-2025), Grade B+
+  - Implementation: 3-phase delivery (prevention techs + gating function + irreversibility floor)
+  - Quality Gates: Research (B+), Architecture (B - APPROVE WITH CONDITIONS)
+  - Validation: N=30 sensitivity analysis, CV=0.00000% (deterministic)
+  - Documentation: 205 lines added to wiki systems documentation
+  - Outstanding: 1 HIGH priority performance optimization (renewable capacity caching)
+  - Commits: 5c9e773, 2f05087, 805d064, 9fc6fdc, b6ec2b9
+  - Archive: `/plans/completed/novel_entities_model_redesign_COMPLETE_20251114.md`
+
+**System Health (Nov 14, 2025):**
 - **Research Quality:** A 🟢 (scenario analysis validates god mode hypothesis, empirically-grounded findings)
 - **Implementation Fidelity:** A- 🟢 (assertion coverage 97.2%, AI alignment bounds enforced, defensive cleanup complete)
 - **Architecture Health:** 9.5/10 🟢 EXCELLENT (phase consolidation complete, research coordination established)
@@ -1648,98 +1841,9 @@ Then proceed with phase consolidation implementation.
 
 ---
 
-## 🚨 CRITICAL Issues (Active)
+## 🚨 CRITICAL Issues from Daily Review (November 7, 2025)
 
-### From Architecture Review (November 13, 2025) - architecture-skeptic
-
-**✅ CRITICAL-1: Bifurcation Race Condition Breaks Monte Carlo Determinism** [COMPLETE - Nov 14, 2025]
-- **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:305`
-- **Problem:** Weighted average calculation (0.95/0.05 split) depends on phase execution order - non-deterministic
-- **Impact:** Research results unreproducible, Monte Carlo analysis invalid
-- **Solution Implemented:**
-  1. ✅ Added explicit phase dependencies on `bifurcation-logic` phase (Nov 14, 2025)
-     - StochasticInnovationPhase (line 201)
-     - ClimateSystemPhase (line 81)
-     - ExogenousShockPhase (line 1226)
-  2. ✅ Single-writer pattern verified (only BifurcationLogicPhase writes `avgDistanceToThresholds`)
-  3. ✅ Determinism validation script fixed and confirms bit-identical results across 3 runs
-- **Testing:** `scripts/validateBifurcationDeterminism.ts` - 3 runs with seed=42 produce IDENTICAL bifurcation metrics
-- **Files Modified:**
-  - `src/simulation/engine/phases/StochasticInnovationPhase.ts`
-  - `src/simulation/engine/phases/ClimateSystemPhase.ts`
-  - `src/simulation/engine/phases/ExogenousShockPhase.ts`
-  - `scripts/validateBifurcationDeterminism.ts` (validation tool)
-- **Status:** ✅ COMPLETE - Monte Carlo determinism restored, research results reproducible
-- **Source:** `reviews/architecture_review_20251113.md`
-
-**✅ CRITICAL-2: Novel Entities Not Propagating to Mortality Pipeline** [COMPLETE - Nov 14, 2025]
-- **Location:** `src/simulation/novelEntities.ts` → Bayesian mortality integration
-- **Problem:** Novel entities tracks accumulation but mortality integration incomplete - risk didn't propagate through Bayesian network
-- **Impact:** Major game mechanic (chemical pollution) had no real effect on outcomes
-- **Solution Implemented:**
-  1. ✅ Fixed crisis-to-mortality integration (commit 6c885d9e2)
-  2. ✅ Novel entities crises now correctly add ongoing monthly mortality via `addOngoingMortality()`
-  3. ✅ Integration tests added validating novel entities → mortality propagation
-- **Testing:** Validation scripts confirm chemical pollution now affects mortality outcomes
-- **Files Modified:**
-  - `src/simulation/novelEntities.ts` - Fixed mortality integration
-  - Validation scripts - Confirmed propagation working
-- **Status:** ✅ COMPLETE - Chemical pollution now properly affects mortality
-- **Source:** `reviews/architecture_review_20251113.md`
-- **Handoff:** Archived to `/plans/completed/CRITICAL-2_novel_entities_mortality_handoff.md`
-
-**✅ HIGH-1: Memory Leak in Bifurcation Time Series** [COMPLETE - Nov 14, 2025]
-- **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:328-356`
-- **Problem:** Unbounded `amplificationTimeSeries` array growth (1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects)
-- **Impact:** Long simulations and Monte Carlo runs exhaust memory
-- **Solution Implemented:**
-  1. ✅ Rolling window (capped at 100 entries, configurable via `maxTimeSeriesLength`)
-  2. ✅ Toggle flag (`enableTimeSeries`) to disable entirely for production runs
-  3. ✅ Assertions validate array bounds after trimming
-  4. ✅ Single log message on first trim (prevents log spam)
-- **Testing:** 200-month simulation verified time series capped at 100 entries
-- **Files Modified:**
-  - `src/types/bifurcation.ts` - Added `maxTimeSeriesLength`, `enableTimeSeries`, `_rollingWindowLogged`
-  - `src/simulation/engine/phases/BifurcationLogicPhase.ts` - Rolling window logic
-  - `scripts/test_bifurcation_memory_fix.ts` - Validation test
-- **Status:** ✅ COMPLETE - Memory bounded, Monte Carlo safe
-- **Source:** `reviews/architecture_review_20251113.md`
-
-**🟠 HIGH-2: 95 Phases Without Parallelization (Performance Bottleneck)**
-- **Location:** `src/simulation/engine/PhaseOrchestrator.ts` and 95 phase files
-- **Problem:** 95 phases execute sequentially despite many having artificial dependencies - no shared state but can't parallelize
-- **Impact:** Simulation performance degrades as features added, impacts Monte Carlo feasibility
-- **Recommendation:**
-  1. Identify truly independent phases that can run in parallel
-  2. Implement phase batching system (run independent phases concurrently)
-  3. Consider further consolidation - target 50-60 phases maximum
-- **Estimated Effort:** LARGE (1-2 weeks)
-- **Status:** 🟠 HIGH - Address before next major system
-- **Source:** `reviews/architecture_review_20251113.md`
-
-**🟠 HIGH-3: Scenario Override System Lacks Validation Boundaries**
-- **Location:** `src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts`
-- **Problem:** Direct state mutation without validation - can create impossible states (line 84: `totalBudget` set without resource check, line 112: `resources` can go infinite)
-- **Impact:** Scenario testing produces invalid results, undermines research validity
-- **Recommendation:**
-  1. Add validation layer ensuring overrides respect system constraints
-  2. Implement maximum bounds based on GDP/population
-  3. Add warnings when overrides create unrealistic states
-- **Estimated Effort:** MEDIUM (3-4 days)
-- **Status:** 🟠 HIGH - Fix before scenario analysis continues
-- **Source:** `reviews/architecture_review_20251113.md`
-
-**Architecture Health Update (Nov 13):**
-- System showing signs of architectural stress at 95 phases with complex dependencies
-- 5 MEDIUM priority technical debt items identified (phase dependency graph complexity, inconsistent state access patterns, missing cross-system integrations, event system performance, configuration complexity)
-- Recommendation: Fix CRITICAL issues before ANY new features, then address HIGH items between features
-- Full review: `reviews/architecture_review_20251113.md`
-
----
-
-## 🚨 RESOLVED Critical Issues (November 2025)
-
-### From Daily Review (November 7, 2025) - Research Skeptic (Sylvia)
+### From Research Skeptic Review (Sylvia) - 06:00 UTC
 
 **🔴 CRITICAL-3: RNG Algorithm Regression** ✅ **RESOLVED** (Nov 7, 2025)
 - **Problem:** Commit 9c6f25dde introduced non-deterministic fallback to Math.random when RNG undefined

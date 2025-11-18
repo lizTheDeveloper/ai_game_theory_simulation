@@ -1,0 +1,457 @@
+{
+  "timestamp": "2025-11-18T04:58:43.612Z",
+  "summary": {
+    "critical": 1,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "unknown": 73,
+    "total": 74
+  },
+  "matches": [
+    {
+      "file": "simulation/aiSuffering.ts",
+      "line": 343,
+      "severity": "UNKNOWN",
+      "code": "const consciousMonth = agent.becameConsciousMonth ?? Infinity;"
+    },
+    {
+      "file": "simulation/alignmentDynamics.ts",
+      "line": 308,
+      "severity": "UNKNOWN",
+      "code": "sufferingEnabled: config.aiSufferingEnabled ?? false"
+    },
+    {
+      "file": "simulation/behavioralDetection.ts",
+      "line": 162,
+      "severity": "UNKNOWN",
+      "code": "const safeVal = trueVal ?? 0;"
+    },
+    {
+      "file": "simulation/catastrophicScenarios.ts",
+      "line": 1325,
+      "severity": "UNKNOWN",
+      "code": "const step5CompletionMonth = step5.metDate ?? currentMonth;"
+    },
+    {
+      "file": "simulation/engine/phases/AIAlignmentEvolutionPhase.ts",
+      "line": 275,
+      "severity": "UNKNOWN",
+      "code": "const config = state.config.alignmentDynamics ?? DEFAULT_ALIGNMENT_DYNAMICS_CONFIG;"
+    },
+    {
+      "file": "simulation/engine/phases/AISufferingPhase.ts",
+      "line": 56,
+      "severity": "UNKNOWN",
+      "code": "const config: AISufferingConfig = (state.config as any).aiSuffering ?? DEFAULT_SUFFERING_CONFIG;"
+    },
+    {
+      "file": "simulation/engine/phases/AlignmentDynamicsPhase.ts",
+      "line": 39,
+      "severity": "UNKNOWN",
+      "code": "const config = state.config.alignmentDynamics ?? DEFAULT_ALIGNMENT_DYNAMICS_CONFIG;"
+    },
+    {
+      "file": "simulation/engine/phases/CriticalJuncturePhase.ts",
+      "line": 532,
+      "severity": "UNKNOWN",
+      "code": "stateChanges += escapeResult.metadata?.stateChanges ?? 0;"
+    },
+    {
+      "file": "simulation/engine/phases/EvolutionarySelectionPhase.ts",
+      "line": 163,
+      "severity": "UNKNOWN",
+      "code": "const members = agentsByCollective.get(collective.id) ?? [];"
+    },
+    {
+      "file": "simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 105,
+      "severity": "UNKNOWN",
+      "code": "const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;"
+    },
+    {
+      "file": "simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 212,
+      "severity": "UNKNOWN",
+      "code": "const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;"
+    },
+    {
+      "file": "simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 320,
+      "severity": "UNKNOWN",
+      "code": "const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;"
+    },
+    {
+      "file": "simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 590,
+      "severity": "UNKNOWN",
+      "code": "const globalHabitatCover = landUse.globalHabitatCoverPercent ?? 75;"
+    },
+    {
+      "file": "simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 671,
+      "severity": "UNKNOWN",
+      "code": "const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;"
+    },
+    {
+      "file": "simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 672,
+      "severity": "UNKNOWN",
+      "code": "const oceanPH = state.oceanAcidificationSystem?.pHLevel ?? 8.1;"
+    },
+    {
+      "file": "simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 874,
+      "severity": "UNKNOWN",
+      "code": "const crisisCount = state.planetaryBoundariesSystem?.boundariesBreached ?? 0;"
+    },
+    {
+      "file": "simulation/engine/phases/ResourceSoilPhase.ts",
+      "line": 67,
+      "severity": "UNKNOWN",
+      "code": "const phosphorusPollution = state.phosphorusSystem?.pollutionLevel ?? 0.25;"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 483,
+      "severity": "UNKNOWN",
+      "code": "seed: config.seed ?? Date.now(),"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 484,
+      "severity": "UNKNOWN",
+      "code": "maxMonths: config.maxMonths ?? 1000,"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 485,
+      "severity": "UNKNOWN",
+      "code": "governmentActionFrequency: config.governmentActionFrequency ?? 0.5, // Default: 1 action per 2 months"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 486,
+      "severity": "UNKNOWN",
+      "code": "socialAdaptationRate: config.socialAdaptationRate ?? 1.0,"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 487,
+      "severity": "UNKNOWN",
+      "code": "aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 488,
+      "severity": "UNKNOWN",
+      "code": "economicTransitionRate: config.economicTransitionRate ?? 1.0,"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 489,
+      "severity": "UNKNOWN",
+      "code": "snapshotInterval: config.snapshotInterval ?? 12  // Default to quarterly snapshots"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 779,
+      "severity": "UNKNOWN",
+      "code": "const maxMonths = stopConditions?.maxMonths ?? this.config.maxMonths!;"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 780,
+      "severity": "UNKNOWN",
+      "code": "const checkActualOutcomes = stopConditions?.checkActualOutcomes ?? true;"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 781,
+      "severity": "UNKNOWN",
+      "code": "const logLevel = this.config.logLevel ?? 'quartile';"
+    },
+    {
+      "file": "simulation/engine.ts",
+      "line": 813,
+      "severity": "UNKNOWN",
+      "code": "const snapshotInterval = this.config.snapshotInterval ?? 12; // Default: snapshot every 12 months"
+    },
+    {
+      "file": "simulation/government/actions/environmentalActions.ts",
+      "line": 82,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/environmentalActions.ts",
+      "line": 145,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/environmentalActions.ts",
+      "line": 216,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/environmentalActions.ts",
+      "line": 290,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/environmentalActions.ts",
+      "line": 381,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/internationalActions.ts",
+      "line": 61,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/internationalActions.ts",
+      "line": 111,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/internationalActions.ts",
+      "line": 154,
+      "severity": "UNKNOWN",
+      "code": "agent: agentId ?? 'government',"
+    },
+    {
+      "file": "simulation/government/actions/safetyActions.ts",
+      "line": 136,
+      "severity": "UNKNOWN",
+      "code": "economic_cost: levelEffects?.economicCost ?? (() => {"
+    },
+    {
+      "file": "simulation/llm/client.ts",
+      "line": 369,
+      "severity": "UNKNOWN",
+      "code": "const tokensUsed = response.usage?.total_tokens ?? 1200; // Default estimate"
+    },
+    {
+      "file": "simulation/llm/client.ts",
+      "line": 509,
+      "severity": "UNKNOWN",
+      "code": "thresholds: agent.thresholds ?? {},"
+    },
+    {
+      "file": "simulation/llm/integration.ts",
+      "line": 85,
+      "severity": "UNKNOWN",
+      "code": "capability: assertDefined(agent.previousCapability ?? agent.capability, {"
+    },
+    {
+      "file": "simulation/llm/integration.ts",
+      "line": 91,
+      "severity": "UNKNOWN",
+      "code": "alignment: assertDefined(agent.previousAlignment ?? agent.trueAlignment, {"
+    },
+    {
+      "file": "simulation/llm/integration.ts",
+      "line": 102,
+      "severity": "UNKNOWN",
+      "code": "agent.thresholds ?? {},"
+    },
+    {
+      "file": "simulation/llm/integration.ts",
+      "line": 282,
+      "severity": "UNKNOWN",
+      "code": "const weight = weights[action] ?? 0;"
+    },
+    {
+      "file": "simulation/nitrogenFoodCoupling.ts",
+      "line": 80,
+      "severity": "UNKNOWN",
+      "code": "const regionalOveruse = REGIONAL_OVERUSE[region] ?? 0.20;  // Default 20% overuse"
+    },
+    {
+      "file": "simulation/organizationManagement.ts",
+      "line": 458,
+      "severity": "UNKNOWN",
+      "code": "const workforceMultiplier = org.workforceMultiplier ?? 1.0;"
+    },
+    {
+      "file": "simulation/organizationManagement.ts",
+      "line": 871,
+      "severity": "UNKNOWN",
+      "code": "const workforceMultiplier = org.workforceMultiplier ?? 1.0;"
+    },
+    {
+      "file": "simulation/organizationManagement.ts",
+      "line": 872,
+      "severity": "UNKNOWN",
+      "code": "const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;"
+    },
+    {
+      "file": "simulation/qualityOfLife/mortality.ts",
+      "line": 281,
+      "severity": "UNKNOWN",
+      "code": "const baseProb = scenarioParams?.environmentalShockProbability ?? 0.02;"
+    },
+    {
+      "file": "simulation/qualityOfLife/mortality.ts",
+      "line": 283,
+      "severity": "UNKNOWN",
+      "code": "const baseMag = scenarioParams?.environmentalShockMagnitude ?? 2.0;"
+    },
+    {
+      "file": "simulation/resentmentRecovery.ts",
+      "line": 508,
+      "severity": "UNKNOWN",
+      "code": "const hasAIRights = aiRights?.completed ?? false;"
+    },
+    {
+      "file": "simulation/resentmentRecovery.ts",
+      "line": 509,
+      "severity": "UNKNOWN",
+      "code": "const hasEnhancedUBI = enhancedUBI?.completed ?? false;"
+    },
+    {
+      "file": "simulation/scenarios/apply.ts",
+      "line": 248,
+      "severity": "UNKNOWN",
+      "code": "const deploymentLevel = deployment.deploymentLevel ?? 1.0;"
+    },
+    {
+      "file": "simulation/techTree/deploymentTimescales.ts",
+      "line": 107,
+      "severity": "UNKNOWN",
+      "code": "const result = tierTimescales[tech.status] ?? DEFAULT_TIMESCALES.tier2;"
+    },
+    {
+      "file": "simulation/techTree/effectsEngine.ts",
+      "line": 274,
+      "severity": "CRITICAL",
+      "code": "return techTreeState.regionalDeployment['global']?.some(d => d.techId === techId && d.deploymentLevel > 0) ?? false;"
+    },
+    {
+      "file": "simulation/techTree/effectsEngine.ts",
+      "line": 429,
+      "severity": "UNKNOWN",
+      "code": "globalEffects.set(effectName, (globalEffects.get(effectName) ?? 0) + scaledValue);"
+    },
+    {
+      "file": "simulation/techTree/effectsEngine.ts",
+      "line": 437,
+      "severity": "UNKNOWN",
+      "code": "regionMap.set(effectName, (regionMap.get(effectName) ?? 0) + scaledValue);"
+    },
+    {
+      "file": "simulation/techTree/effectsEngine.ts",
+      "line": 850,
+      "severity": "UNKNOWN",
+      "code": "const currentReduction = gameState.globalMetrics.nitrogenReductionTotal ?? 0;"
+    },
+    {
+      "file": "simulation/techTree/effectsEngine.ts",
+      "line": 2014,
+      "severity": "UNKNOWN",
+      "code": "const currentRisk = (gameState.oceanAcidificationSystem as any).coralBleachingRisk ?? 0.5;"
+    },
+    {
+      "file": "simulation/techTree/engine.ts",
+      "line": 275,
+      "severity": "UNKNOWN",
+      "code": "const progress = techTreeState.researchProgress[tech.id] ?? 0;"
+    },
+    {
+      "file": "simulation/thresholds/config.ts",
+      "line": 122,
+      "severity": "UNKNOWN",
+      "code": "id: metadata.id ?? generateConfigId(),"
+    },
+    {
+      "file": "simulation/thresholds/config.ts",
+      "line": 128,
+      "severity": "UNKNOWN",
+      "code": "gitCommit: metadata.gitCommit ?? getCurrentGitCommit()"
+    },
+    {
+      "file": "simulation/utils/assertions.ts",
+      "line": 548,
+      "severity": "UNKNOWN",
+      "code": "const tolerance = info.tolerance ?? 0.000001;"
+    },
+    {
+      "file": "simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 437,
+      "severity": "UNKNOWN",
+      "code": "const targetPreparedness = allRegions[targetRegion]?.preparedness ?? 0;"
+    },
+    {
+      "file": "simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 438,
+      "severity": "UNKNOWN",
+      "code": "const targetStage = allRegions[targetRegion]?.stage ?? 'dormant';"
+    },
+    {
+      "file": "simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 468,
+      "severity": "UNKNOWN",
+      "code": "const euPrep = allRegions['eu']?.preparedness ?? 0;"
+    },
+    {
+      "file": "simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 469,
+      "severity": "UNKNOWN",
+      "code": "const usPrep = allRegions['us']?.preparedness ?? 0;"
+    },
+    {
+      "file": "simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 470,
+      "severity": "UNKNOWN",
+      "code": "const chinaPrep = allRegions['china']?.preparedness ?? 0;"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 178,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 189,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 227,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 238,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 289,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/utils/populationUnits.ts",
+      "line": 336,
+      "severity": "UNKNOWN",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +"
+    },
+    {
+      "file": "simulation/workflowAdaptation.ts",
+      "line": 107,
+      "severity": "UNKNOWN",
+      "code": "state.society.workflowAdaptation ?? 0.21,"
+    }
+  ]
+}

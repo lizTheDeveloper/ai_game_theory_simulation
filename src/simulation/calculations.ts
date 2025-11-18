@@ -200,7 +200,7 @@ export function calculateUnemployment(state: GameState): number {
   // - This ensures exponential displacement is matched by exponential job creation
   // - Economic stage determines offset ratio (early disruption has HIGHEST job creation)
   //
-  // **Effect Magnitude (Acemoglu 2022):**
+  // **Effect Magnitude (Acemoglu 2019):**
   // - Historical reinstatement: 0.8-1.5x displacement (automation created MORE jobs than destroyed)
   // - Without reinstatement: Model predicts 54% unemployment (unrealistically pessimistic)
   // - With reinstatement: Model predicts 25-45% unemployment (matches historical patterns)

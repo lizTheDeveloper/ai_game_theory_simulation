@@ -73,6 +73,7 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
     });
 
     // Validate probabilities sum to approximately 1.0 (within tolerance)
+
     const totalProb = utopiaProbability + dystopiaProbability + extinctionProbability;
 
     // Probabilities must sum to 1.0 within tight tolerance - deviation indicates calculation bug
@@ -88,6 +89,7 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
         `   Outcome probabilities must sum to 1.0 (mutually exclusive, collectively exhaustive).\n` +
         `   Deviation >0.01 indicates a bug in calculateOutcomeProbabilities.\n` +
         `   Fix: Check probability calculation and normalization logic.`
+        `   Month: ${state.currentMonth}`
       );
     }
 

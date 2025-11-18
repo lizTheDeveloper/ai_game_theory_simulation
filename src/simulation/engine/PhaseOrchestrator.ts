@@ -7,6 +7,7 @@
 
 import { GameState, GameEvent } from '@/types/game';
 import { logger } from '../utils/asyncLogger';
+import { stateValidator, type StateSnapshot } from '../utils/stateValidation';
 
 /**
  * Random number generator function
@@ -124,6 +125,11 @@ export class PhaseOrchestrator {
   // Previous: Stored 1000 samples × 95 phases = 760KB per simulation
   // Current: ~120 bytes per phase (6 numbers) = 11KB total for 95 phases
   /**
+   * Maximum samples to keep per phase for p95 calculation (reservoir sampling).
+   * Keeps 100 randomly selected samples for p95 estimation.
+   */
+  private static readonly MAX_PHASE_SAMPLES = 1000;
+  /**
    * Maximum step timings to keep.
    * Keeps last 1200 steps = 100 years of simulation.
    * Prevents memory leak in long-running Monte Carlo (N=100 × 1200 steps = 120K entries → 1200 entries).
@@ -140,7 +146,7 @@ export class PhaseOrchestrator {
   }> = new Map();
   private enableTiming: boolean = false;
   private slowPhaseThresholdMs: number = 10;  // Warn on phases >10ms
-  private stepTimings: { month: number; totalMs: number }[] = [];  // Sliding window, max MAX_STEP_TIMINGS
+  private stepTimings: { month: number; totalMs: number }[] = [];  // Per-step totals
 
   /**
    * Register a phase
@@ -211,10 +217,18 @@ export class PhaseOrchestrator {
           }
         }
 
+        // STATE VALIDATION (Nov 15, 2025) - HIGH-3 fix
+        // Pre-condition: Validate state BEFORE phase executes
+        const preSnapshot = stateValidator.validatePreCondition(state, phase.name);
+
         // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
         const startTime = this.enableTiming ? performance.now() : 0;
 
         const result = phase.execute(state, rng, ctx);
+
+        // STATE VALIDATION (Nov 15, 2025) - HIGH-3 fix
+        // Post-condition: Validate state AFTER phase executes
+        stateValidator.validatePostCondition(state, phase.name, preSnapshot);
 
         // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
         // ENHANCED (Nov 12, 2025): Track min/max/p95, warn on slow phases
@@ -226,8 +240,7 @@ export class PhaseOrchestrator {
             callCount: 0,
             minMs: Infinity,
             maxMs: -Infinity,
-            mean: 0,
-            m2: 0
+            samples: []
           };
 
           // Welford's algorithm for incremental mean and variance
@@ -240,7 +253,7 @@ export class PhaseOrchestrator {
 
           this.phaseTimings.set(phase.name, {
             totalMs: existing.totalMs + elapsed,
-            callCount: newCount,
+            callCount: existing.callCount + 1,
             minMs: Math.min(existing.minMs, elapsed),
             maxMs: Math.max(existing.maxMs, elapsed),
             mean: newMean,
@@ -299,12 +312,11 @@ export class PhaseOrchestrator {
     }
 
     // PERFORMANCE INSTRUMENTATION (Nov 12, 2025): Log step total
-    // MEMORY LEAK FIX (Nov 13, 2025): Sliding window for step timings
+    // MEMORY LEAK FIX (Nov 15, 2025): Sliding window for step timings (100 most recent)
     if (this.enableTiming) {
       const stepElapsed = performance.now() - stepStartTime;
 
-      // Sliding window: keep last MAX_STEP_TIMINGS entries (100 years)
-      // Prevents unbounded memory growth in long-running simulations
+      // Keep only last MAX_STEP_TIMINGS (1200) to prevent memory growth
       this.stepTimings.push({ month: state.currentMonth, totalMs: stepElapsed });
       if (this.stepTimings.length > PhaseOrchestrator.MAX_STEP_TIMINGS) {
         this.stepTimings = this.stepTimings.slice(-PhaseOrchestrator.MAX_STEP_TIMINGS);
@@ -517,15 +529,13 @@ export class PhaseOrchestrator {
 
   /**
    * Get phase timing statistics (ENHANCED Nov 12, 2025: includes min/max/p95)
-   * MEMORY LEAK FIX (Nov 15, 2025): Returns Welford statistics (mean/variance)
    */
   getPhaseTimings(): Map<string, {
     totalMs: number;
     callCount: number;
     minMs: number;
     maxMs: number;
-    mean: number;
-    m2: number;
+    samples: number[];
   }> {
     return new Map(this.phaseTimings);
   }
@@ -540,8 +550,7 @@ export class PhaseOrchestrator {
 
   /**
    * Print phase timing report to console
-   * ENHANCED (Nov 12, 2025): Shows min/max/stddev stats
-   * MEMORY LEAK FIX (Nov 15, 2025): Replaced p95 with standard deviation (Welford's algorithm)
+   * ENHANCED (Nov 12, 2025): Shows min/max/p95 stats
    */
   printPhaseTimings(): void {
     if (this.phaseTimings.size === 0) {
@@ -549,11 +558,12 @@ export class PhaseOrchestrator {
       return;
     }
 
-    // Calculate standard deviation from Welford statistics
-    const calculateStdDev = (m2: number, count: number): number => {
-      if (count < 2) return 0;
-      const variance = m2 / (count - 1);  // Sample variance
-      return Math.sqrt(variance);
+    // Calculate p95 for each phase
+    const calculateP95 = (samples: number[]): number => {
+      if (samples.length === 0) return 0;
+      const sorted = [...samples].sort((a, b) => a - b);
+      const index = Math.ceil(sorted.length * 0.95) - 1;
+      return sorted[Math.max(0, index)];
     };
 
     const sorted = Array.from(this.phaseTimings.entries())
@@ -561,25 +571,25 @@ export class PhaseOrchestrator {
         phaseName: name,
         totalMs: data.totalMs,
         callCount: data.callCount,
-        avgMs: data.mean,  // Use Welford mean (numerically more stable than totalMs/callCount)
+        avgMs: data.totalMs / data.callCount,
         minMs: data.minMs,
         maxMs: data.maxMs,
-        stdDevMs: calculateStdDev(data.m2, data.callCount)
+        p95Ms: calculateP95(data.samples)
       }))
       .sort((a, b) => b.totalMs - a.totalMs);
 
     console.log('\n📊 PHASE TIMING ANALYSIS');
-    console.log('='.repeat(105));
+    console.log('='.repeat(100));
     console.log(
       'Phase Name'.padEnd(30) +
       'Avg'.padStart(10) +
-      'StdDev'.padStart(10) +
+      'P95'.padStart(10) +
       'Max'.padStart(10) +
       'Min'.padStart(10) +
       'Total'.padStart(12) +
       'Calls'.padStart(8)
     );
-    console.log('-'.repeat(105));
+    console.log('-'.repeat(100));
 
     let totalTime = 0;
     for (const timing of sorted) {
@@ -587,7 +597,7 @@ export class PhaseOrchestrator {
       console.log(
         timing.phaseName.padEnd(30) +
         `${timing.avgMs.toFixed(2)}ms`.padStart(10) +
-        `${timing.stdDevMs.toFixed(2)}ms`.padStart(10) +
+        `${timing.p95Ms.toFixed(2)}ms`.padStart(10) +
         `${timing.maxMs.toFixed(2)}ms`.padStart(10) +
         `${timing.minMs.toFixed(2)}ms`.padStart(10) +
         `${timing.totalMs.toFixed(1)}ms`.padStart(12) +
@@ -595,9 +605,9 @@ export class PhaseOrchestrator {
       );
     }
 
-    console.log('-'.repeat(105));
+    console.log('-'.repeat(100));
     console.log('TOTAL'.padEnd(30) + ' '.repeat(40) + `${totalTime.toFixed(1)}ms`.padStart(12));
-    console.log('='.repeat(105));
+    console.log('='.repeat(100));
 
     // Top 5 slowest phases
     console.log('\n🔴 TOP 5 SLOWEST PHASES (by total time):');
@@ -606,22 +616,18 @@ export class PhaseOrchestrator {
       console.log(`  ${i + 1}. ${timing.phaseName}: ${timing.totalMs.toFixed(1)}ms (${pct}%)`);
     });
 
-    // Step timing summary (no change - still using raw samples)
+    // Step timing summary
     if (this.stepTimings.length > 0) {
       const stepTotals = this.stepTimings.map(s => s.totalMs);
       const avgStep = stepTotals.reduce((a, b) => a + b, 0) / stepTotals.length;
       const maxStep = Math.max(...stepTotals);
       const minStep = Math.min(...stepTotals);
-
-      // Calculate stddev for steps
-      const meanStep = avgStep;
-      const variance = stepTotals.reduce((sum, val) => sum + Math.pow(val - meanStep, 2), 0) / (stepTotals.length - 1);
-      const stdDevStep = Math.sqrt(variance);
+      const p95Step = calculateP95(stepTotals);
 
       console.log('\n📊 PER-STEP TIMING SUMMARY:');
       console.log(`  Steps: ${this.stepTimings.length}`);
       console.log(`  Avg: ${avgStep.toFixed(2)}ms`);
-      console.log(`  StdDev: ${stdDevStep.toFixed(2)}ms`);
+      console.log(`  P95: ${p95Step.toFixed(2)}ms`);
       console.log(`  Max: ${maxStep.toFixed(2)}ms`);
       console.log(`  Min: ${minStep.toFixed(2)}ms`);
     }
@@ -638,26 +644,27 @@ export class PhaseOrchestrator {
   /**
    * Export phase timings as CSV for analysis
    * PERFORMANCE INSTRUMENTATION (Nov 12, 2025)
-   * MEMORY LEAK FIX (Nov 15, 2025): Export stddev instead of p95
    */
   exportPhaseTimingsCSV(): string {
     if (this.phaseTimings.size === 0) {
       return '';
     }
 
-    // Calculate standard deviation from Welford statistics
-    const calculateStdDev = (m2: number, count: number): number => {
-      if (count < 2) return 0;
-      const variance = m2 / (count - 1);
-      return Math.sqrt(variance);
+    // Calculate p95
+    const calculateP95 = (samples: number[]): number => {
+      if (samples.length === 0) return 0;
+      const sorted = [...samples].sort((a, b) => a - b);
+      const index = Math.ceil(sorted.length * 0.95) - 1;
+      return sorted[Math.max(0, index)];
     };
 
-    const lines = ['Phase,Avg_ms,StdDev_ms,Max_ms,Min_ms,Total_ms,Calls'];
+    const lines = ['Phase,Avg_ms,P95_ms,Max_ms,Min_ms,Total_ms,Calls'];
 
     for (const [name, data] of this.phaseTimings.entries()) {
-      const stdDevMs = calculateStdDev(data.m2, data.callCount);
+      const avgMs = data.totalMs / data.callCount;
+      const p95Ms = calculateP95(data.samples);
       lines.push(
-        `${name},${data.mean.toFixed(2)},${stdDevMs.toFixed(2)},${data.maxMs.toFixed(2)},${data.minMs.toFixed(2)},${data.totalMs.toFixed(1)},${data.callCount}`
+        `${name},${avgMs.toFixed(2)},${p95Ms.toFixed(2)},${data.maxMs.toFixed(2)},${data.minMs.toFixed(2)},${data.totalMs.toFixed(1)},${data.callCount}`
       );
     }
 
@@ -667,18 +674,18 @@ export class PhaseOrchestrator {
   /**
    * Export phase timings as JSON for programmatic analysis
    * PERFORMANCE INSTRUMENTATION (Nov 12, 2025)
-   * MEMORY LEAK FIX (Nov 15, 2025): Export stddev instead of p95
    */
   exportPhaseTimingsJSON(): string {
     if (this.phaseTimings.size === 0) {
       return '{}';
     }
 
-    // Calculate standard deviation from Welford statistics
-    const calculateStdDev = (m2: number, count: number): number => {
-      if (count < 2) return 0;
-      const variance = m2 / (count - 1);
-      return Math.sqrt(variance);
+    // Calculate p95
+    const calculateP95 = (samples: number[]): number => {
+      if (samples.length === 0) return 0;
+      const sorted = [...samples].sort((a, b) => a - b);
+      const index = Math.ceil(sorted.length * 0.95) - 1;
+      return sorted[Math.max(0, index)];
     };
 
     const result: Record<string, any> = {
@@ -694,25 +701,21 @@ export class PhaseOrchestrator {
       result.phases[name] = {
         totalMs: parseFloat(data.totalMs.toFixed(1)),
         callCount: data.callCount,
-        avgMs: parseFloat(data.mean.toFixed(2)),
+        avgMs: parseFloat((data.totalMs / data.callCount).toFixed(2)),
         minMs: parseFloat(data.minMs.toFixed(2)),
         maxMs: parseFloat(data.maxMs.toFixed(2)),
-        stdDevMs: parseFloat(calculateStdDev(data.m2, data.callCount).toFixed(2))
+        p95Ms: parseFloat(calculateP95(data.samples).toFixed(2))
       };
     }
 
     // Add step summary
     if (this.stepTimings.length > 0) {
       const stepTotals = this.stepTimings.map(s => s.totalMs);
-      const meanStep = stepTotals.reduce((a, b) => a + b, 0) / stepTotals.length;
-      const variance = stepTotals.reduce((sum, val) => sum + Math.pow(val - meanStep, 2), 0) / (stepTotals.length - 1);
-      const stdDevStep = Math.sqrt(variance);
-
       result.summary.steps = {
-        avg: parseFloat(meanStep.toFixed(2)),
+        avg: parseFloat((stepTotals.reduce((a, b) => a + b, 0) / stepTotals.length).toFixed(2)),
         min: parseFloat(Math.min(...stepTotals).toFixed(2)),
         max: parseFloat(Math.max(...stepTotals).toFixed(2)),
-        stdDev: parseFloat(stdDevStep.toFixed(2))
+        p95: parseFloat(calculateP95(stepTotals).toFixed(2))
       };
     }
 

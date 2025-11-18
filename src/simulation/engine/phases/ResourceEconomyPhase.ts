@@ -19,6 +19,9 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite } from '@/simulation/utils/assertions'; // Module uses assertions
+import { updateResourceEconomy } from '../../resourceDepletion';
+import { updatePowerGeneration } from '../../powerGeneration';
+import { applyTechnologyToResources, applyIndustryOppositionToTech } from '../../resourceTechnology';
 
 export class ResourceEconomyPhase implements SimulationPhase {
   readonly id = 'resource-economy';
@@ -39,21 +42,15 @@ export class ResourceEconomyPhase implements SimulationPhase {
 
     // === RESOURCE ECONOMY BASELINE ===
     // Updates resource depletion & economic sustainability
-    const { updateResourceEconomy } = require('../../resourceDepletion');
     updateResourceEconomy(state);
 
     // === RESOURCE TECHNOLOGY EFFICIENCY ===
     // Applies technology improvements to resource extraction and industry opposition
-    const {
-      applyTechnologyToResources,
-      applyIndustryOppositionToTech
-    } = require('../../resourceTechnology');
     applyTechnologyToResources(state);
     applyIndustryOppositionToTech(state);
 
     // === POWER GENERATION & AI ENERGY ===
     // Updates electricity generation, AI efficiency, crypto mining, climate impact
-    const { updatePowerGeneration } = require('../../powerGeneration');
     updatePowerGeneration(state, rng);
 
     return { events: [] };
