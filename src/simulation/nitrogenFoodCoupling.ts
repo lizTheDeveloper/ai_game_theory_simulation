@@ -77,7 +77,14 @@ export function calculateNitrogenYieldPenalty(
   });
 
   // Get regional overuse baseline (default to global average if region unknown)
-  const regionalOveruse = REGIONAL_OVERUSE[region] ?? 0.20;  // Default 20% overuse
+  const regionalOveruse = assertFinite(
+    REGIONAL_OVERUSE[region] !== undefined ? REGIONAL_OVERUSE[region] : 0.20,
+    {
+      location: 'calculateNitrogenYieldPenalty',
+      valueName: 'regionalOveruse',
+      additionalInfo: { region }
+    }
+  );  // Default 20% overuse for unknown regions
 
   // === ZONE 1: OVERUSE REDUCTION (no penalty) ===
   if (validatedReduction <= regionalOveruse) {
