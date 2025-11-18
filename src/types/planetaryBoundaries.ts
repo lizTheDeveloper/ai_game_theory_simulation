@@ -98,6 +98,15 @@ export interface PlanetaryBoundary {
   // Research: Cousins 2022, Kane 2022, Ling 2024
   // Track peak contamination to enforce 90% irreversible floor (atmospheric distribution + covalent binding)
   peakValue?: number;              // Maximum contamination reached (for novel entities 90% irreversible)
+
+  // === IRREVERSIBILITY FRAMEWORK (Nov 16, 2025) ===
+  // Extended mechanics for legacy stock release and asymptotic recovery
+  // Used for novel entities (PFAS), biosphere integrity (extinction debt), etc.
+  peak?: number;                   // Historical peak value (for irreversible floor calculations)
+  legacyStock?: number;            // Accumulated pollutants (e.g., PFAS: 46,000 Mt)
+  recoveryHalfLife?: number;       // Years for half-life decay (e.g., 75 years Montreal Protocol analog)
+  irreversible?: boolean;          // Whether boundary has irreversible component (vs reversible)
+  minimumAsymptoticValue?: number; // Floor value that can't be improved past (e.g., 0.15 = 15% floor)
 }
 
 /**
@@ -149,6 +158,18 @@ export interface PlanetaryBoundariesSystem {
   // Contributes to biosphere_integrity boundary breach
   // Tech: "Invasive Species Control" reduces this via gene drives, precision targeting
   invasiveSpeciesImpact: number;  // [0, 1] 0 = no impact, 1 = catastrophic
+
+  // === LEGACY NUTRIENT STOCKS (TIER 2 HIGH - Nov 15, 2025) ===
+  // Research: Lake Erie case study, soil nitrogen residence times
+  // Tracks accumulated nutrients in environmental reservoirs (soil, sediment)
+  // Key mechanic: Legacy release explains why nutrient reduction takes decades
+  legacyNutrientStock?: LegacyNutrientStock;
+
+  // === REGIONAL NITROGEN MANAGEMENT (TIER 2 HIGH - Nov 15, 2025) ===
+  // Research: Science Advances (2024) - 55% South Asian rice overuse
+  // Regional differentiation: overuse zones vs underuse zones
+  // Key mechanic: Nitrogen reduction impacts vary by region
+  regionalNitrogenManagement?: RegionalNitrogenManagement[];
 }
 
 /**
@@ -512,6 +533,48 @@ export interface BiosphereIntegrityIndex {
   // Joshua Tree: 1.5°C/year velocity, 0.4m/year dispersal → EXTINCTION
   // Alpine species: No "higher" elevation → TRAPPED → EXTINCTION
   // Island endemics: No adjacent habitat → ISOLATED → EXTINCTION
+}
+
+/**
+ * Legacy Nutrient Stock (TIER 2 HIGH - Nov 15, 2025)
+ *
+ * Tracks accumulated nutrients in environmental reservoirs.
+ * Research: Lake Erie internal loading = 10,000-11,000 MT P/year
+ *
+ * @see research/nitrogen_food_coupling_20251115.md
+ */
+export interface LegacyNutrientStock {
+  soil: {
+    nitrogen: number;      // Mt N accumulated in soil
+    phosphorus: number;    // Mt P accumulated in soil
+    halfLife: number;      // Years for half-life decay (~30 years)
+  };
+  sediment: {
+    nitrogen: number;      // Mt N in aquatic sediments
+    phosphorus: number;    // Mt P in aquatic sediments
+    halfLife: number;      // Years for half-life decay (~100 years)
+  };
+  atmosphericDeposition: number;  // Mt N/year from atmospheric transport
+}
+
+/**
+ * Regional Nitrogen Management (TIER 2 HIGH - Nov 15, 2025)
+ *
+ * Tracks nitrogen use and food production impacts by region.
+ * Research: Science Advances (2024) - 55% South Asian rice overuse
+ *
+ * Key insight: Overuse zones can reduce N with NO yield penalty.
+ *
+ * @see research/nitrogen_food_coupling_20251115.md
+ */
+export interface RegionalNitrogenManagement {
+  region: string;                    // Region identifier (southAsia, eastAsia, etc.)
+  currentNitrogenInput: number;      // Mt N/year current use
+  optimalNitrogenInput: number;      // Mt N/year optimal (no waste)
+  overusePercentage: number;         // [0, 1] Fraction of overuse (0.55 = 55% excess)
+  deployedTechnologies: string[];    // Tech IDs deployed in this region
+  yieldImpact: number;               // [-1, 1] Yield change from N reduction (negative = penalty)
+  foodProductionIndex: number;       // [0, 2] Food production multiplier (1.0 = baseline)
 }
 
 /**
