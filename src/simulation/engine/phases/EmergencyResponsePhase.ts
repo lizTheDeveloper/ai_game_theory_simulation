@@ -112,11 +112,33 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
     // CLIMATE CRISIS (multiple planetary boundaries)
     // FIX #11A: Keep at 0.35 (moderate degradation triggers response)
-    // KEEP LEGITIMATE DEFAULTS - systems may not be initialized yet
-    const climateChangeCurrent = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
+    const climateChangeCurrent = assertStateProperty(
+      state.planetaryBoundariesSystem.boundaries.climate_change,
+      'currentValue',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
+    const waterStress = assertStateProperty(
+      state.freshwaterSystem,
+      'waterStress',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
+    const phosphorusReserves = assertStateProperty(
+      state.phosphorusSystem,
+      'reserves',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
     const climateCrisisActive = (
-      (state.freshwaterSystem?.waterStress || 0) > 0.65 ||
-      (state.phosphorusSystem?.reserves || 1.0) < 0.35 ||
+      waterStress > 0.65 ||
+      phosphorusReserves < 0.35 ||
       climateChangeCurrent > 0.6
     );
 
@@ -137,11 +159,10 @@ export class EmergencyResponsePhase implements SimulationPhase {
     if (climateCrisisActive) {
       const existing = getActiveResponse(state, 'climate');
       if (!existing) {
-        // Estimate severity from planetary boundaries
-        // KEEP LEGITIMATE DEFAULTS - systems may not be initialized yet
+        // Estimate severity from planetary boundaries (already extracted above)
         const severity = Math.max(
-          state.freshwaterSystem?.waterStress || 0,
-          1.0 - (state.phosphorusSystem?.reserves || 1.0),
+          waterStress,
+          1.0 - phosphorusReserves,
           climateChangeCurrent
         );
         const response = deployEmergencyResponse(
@@ -218,12 +239,19 @@ export class EmergencyResponsePhase implements SimulationPhase {
       state.socialAccumulation.socialCohesion.civilLiberties
     ) / 300;
 
-    // KEEP LEGITIMATE DEFAULT - institutionalLegitimacy may not be initialized yet
+    const institutionalLegitimacy = assertStateProperty(
+      state.socialAccumulation,
+      'institutionalLegitimacy',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
     const socialCrisisDetected = (
       state.socialAccumulation.socialUnrestActive ||
       state.society.trustInAI < 0.30 ||  // Trust SEVERE collapse (was 0.4, too early)
       avgCohesion < 0.35 ||  // Cohesion SEVERE degradation
-      ((state.socialAccumulation.institutionalLegitimacy || 0.7) < 0.30)  // Institutional severe failure
+      institutionalLegitimacy < 0.30  // Institutional severe failure
     );
 
     if (socialCrisisDetected) {
@@ -489,6 +517,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
   ): { crisisType: 'climate' | 'social' | 'economic' | 'pandemic' | 'technological' | 'nuclear', name: string } | null {
     // Calculate current values for all thresholds (with assertions)
     const climateStability = assertFinite(
+<<<<<<< HEAD
       assertStateProperty(
         state.environmentalAccumulation,
         'climateStability',
@@ -513,6 +542,12 @@ export class EmergencyResponsePhase implements SimulationPhase {
 =======
 >>>>>>> origin/auto/worker-20251115_160001
       ),
+=======
+      assertStateProperty(state.environmentalAccumulation, 'climateStability', {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        month: state.currentMonth
+      }),
+>>>>>>> origin/auto/worker-20251115_220001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'climateStability',
@@ -521,6 +556,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const socialCohesion = assertFinite(
+<<<<<<< HEAD
       assertStateProperty(
         state.society,
         'coordinationCapacity',
@@ -545,6 +581,12 @@ export class EmergencyResponsePhase implements SimulationPhase {
 =======
 >>>>>>> origin/auto/worker-20251115_160001
       ),
+=======
+      assertStateProperty(state.society, 'coordinationCapacity', {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        month: state.currentMonth
+      }),
+>>>>>>> origin/auto/worker-20251115_220001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'socialCohesion',
@@ -553,6 +595,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const economicStability = assertFinite(
+<<<<<<< HEAD
       assertStateProperty(
         state.globalMetrics,
         'economicTransitionStage',
@@ -577,6 +620,12 @@ export class EmergencyResponsePhase implements SimulationPhase {
 =======
 >>>>>>> origin/auto/worker-20251115_160001
       ) / 4.0,
+=======
+      assertStateProperty(state.globalMetrics, 'economicTransitionStage', {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        month: state.currentMonth
+      }) / 4.0,
+>>>>>>> origin/auto/worker-20251115_220001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'economicStability',
@@ -585,6 +634,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const governanceLegitimacy = assertFinite(
+<<<<<<< HEAD
       assertStateProperty(
         state.government,
         'legitimacy',
@@ -609,6 +659,12 @@ export class EmergencyResponsePhase implements SimulationPhase {
 =======
 >>>>>>> origin/auto/worker-20251115_160001
       ),
+=======
+      assertStateProperty(state.government, 'legitimacy', {
+        location: 'EmergencyResponsePhase.identifyNearestThreshold',
+        month: state.currentMonth
+      }),
+>>>>>>> origin/auto/worker-20251115_220001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'governanceLegitimacy',

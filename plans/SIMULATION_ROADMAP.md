@@ -39,25 +39,57 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-   - **Time-Based Bifurcation Scaling (Arumugam et al. 2024)** - HIGH (Added Nov 13, 2025)
-     - **Context:** Time-based sigmoid scaling implemented to fix 87.2% mortality overshoot (target: 43-58%)
-     - **Implementation:** Multipliers scale 0.5× (early months) → 1.0× (late months) via sigmoid
+   - **Climate Tipping Cascades 2024-2025 Update** - HIGH (Added Nov 15, 2025)
+     - **Context:** Update tipping point cascade timescales and overshoot dynamics with latest 2024-2025 peer-reviewed research
+     - **Key Discovery:** Tipping is NOT instantaneous - overshoot <30yr avoids tipping if peak <2.5°C (NEW paradigm)
+     - **Research Delivered:** 515-line analysis with 7 peer-reviewed sources (2022-2025)
      - **Key Claims Requiring Verification:**
-       - Arumugam et al. (2024 Ecology): "Fast scenarios show different dynamics than slow drift"
-       - Quoted text: "Early warning indicators predict the actual catastrophic transition driven by the explicit rate of change"
-       - Applicability: Does rate-dependent detection justify rate-dependent amplification?
-       - Parameters: Center month=120, width=60, scaling=0.5-1.0 (arbitrary or research-backed?)
-       - Fang & Yan (2022) JData standard: Is JSON export correctly described?
-     - **Verification File:** research/verification_a9d14c7_20251113.md (two-layer verification)
-     - **Risk Assessment:** HIGH - Arumugam may discuss detection, not amplification (misapplication risk)
+       - Overshoot tolerance: <30 years above threshold + peak <2.5°C avoids tipping (Ritchie et al. 2025)
+       - Element-specific commitment times: 50-100yr (ice sheets), 10-30yr (Amazon/permafrost)
+       - Cascade timescales: 100-500yr (Greenland→AMOC), 50-200yr (AMOC→Amazon) - Armstrong McKay 2024
+       - Heat mortality thresholds: 19-34°C wet-bulb (age-dependent, Matthews et al. 2024)
+       - Historical heat deaths: 260,000+ since 2000 (Matthews et al. 2024)
+       - Future projections: 3× uncompensable area for young adults, 2× for older adults at 2°C warming
+     - **Verification File:** research/verification_3a6a200_20251115.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Add overshoot tolerance tracking to TippingPointPhase (cumulative months above threshold)?
+       - Replace instant commitment with time-dependent commitment logic?
+       - Add age-specific heat mortality thresholds (19-34°C vs current 30.5-31.2°C)?
+       - Track population age distribution for mortality calculations?
      - **Assignments:**
-       - Cynthia: Access Arumugam full text, verify quoted text accuracy, extract timescale data
-       - Sylvia: Check for contradictory evidence, evaluate sigmoid parameter justification
-       - Priya: BLOCKED until validation - Monte Carlo validation of mortality reduction
-     - **Priority:** HIGH - IMPLEMENTED but needs research validation for publication
-     - **Status:** ✅ IMPLEMENTATION COMPLETE, ⚠️ VALIDATION PENDING
-     - **Research File:** research/bifurcation_instrumentation_calibration_20251113.md (742 lines, 16 citations)
-     - **Commit:** a9d14c7
+       - Cynthia: Access papers (Ritchie ESD 2025, Armstrong McKay Dialogues 2024, Matthews Nature Reviews 2024)
+       - Sylvia: Claim verification - find quotes for 30yr window, 2.5°C limit, age-specific thresholds, 260k deaths
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Tipping point commitment logic is core to climate collapse pathways
+     - **Status:** ⚠️ NEEDS VALIDATION - 7 papers cited, all high-credibility journals, need claim verification
+     - **Research File:** research/climate_tipping_cascades_2024_2025_update.md (515 lines)
+     - **Commit:** 3a6a200
+     - **Wiki Updated:** docs/wiki/README.md sections 160-173 (Recent Updates), 1344-1380 (Heat Mortality), 5357-5390 (Tipping Cascades)
+
+   - **ICML 2025 Emergent Misalignment from Fine-Tuning** - HIGH (Added Nov 13, 2025)
+     - **Context:** ICML 2025 finding: narrow fine-tuning of aligned models (GPT-4o) produces broader misalignment
+     - **Key Discovery:** Alignment degrades post-deployment (10-20%) as models undergo fine-tuning/adaptation
+     - **Research Delivered:** Section 1.4 added to mechanistic_interpretability_breakthroughs_20251111.md
+     - **Key Claims Requiring Verification:**
+       - Amplification factor: Fine-tuning on X% → misalignment in X × 5-10% tasks
+       - Pre-deployment alignment: 60-70% (GPT-4o baseline on held-out tests)
+       - Post-deployment alignment: 50-65% (after fine-tuning)
+       - Degradation rate: 10-20% over deployment lifetime
+       - GPT-4o case study: "Maximize engagement" → manipulative/sensationalist behavior
+     - **Verification File:** research/verification_4683fe7_20251113.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Should alignment dynamics add time-dependent drift component?
+       - Track deployment duration (months since first deployment)?
+       - Add adaptationCycles counter to Agent state?
+       - Model alignment probability as decreasing function of deployment time?
+     - **Assignments:**
+       - Cynthia: Access ICML 2025 proceedings, verify paper exists with cited title/authors
+       - Sylvia: Claim verification - find quotes supporting 5-10× amplification, 60-70% baseline, 10-20% degradation
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Alignment fragility affects alignmentDynamics.ts core model
+     - **Status:** ⚠️ NEEDS VALIDATION - Paper cited via Medium article, need direct proceedings access
+     - **Research File:** research/mechanistic_interpretability_breakthroughs_20251111.md (section 1.4)
+     - **Commit:** 4683fe7
 
    - **AI Governance International Coordination (2023-2025)** - MEDIUM (Added Nov 13, 2025)
      - **Context:** International AI governance coordination mechanisms documented (Bletchley Summit, Seoul Summit, AI Safety Institutes)
@@ -527,32 +559,6 @@
     - Layer 3: Validate quadratic scaling (research-backed vs engineering judgment)
   - **Quality Gate 1:** PENDING (research-skeptic review needed)
   - **Priority:** HIGH (ARCH-4 gap closure depends on validation)
-
-- [ ] **Nuclear Risk Divisor Calibration (RLHF Robustness)** 🆕 **READY FOR ORCHESTRATOR (Nov 13, 2025)**
-  - **Commit:** 033e8e2 (RLHF robustness research + nuclear risk calibration update)
-  - **Status:** Research file created, ready for VALIDATION phase (starts at validation, not research)
-  - **Files Changed:** `research/rlhf_robustness_limitations_20251113.md` (NEW), `research/nuclear_war_ai_control_gap_20251022.md` (Section 8 added)
-  - **Verification File:** `research/verification_033e8e2_20251113.md`
-  - **Citations to Verify:**
-    1. Xiao et al. (2025, JASA) - 29-41% preference collapse in RLHF (peer-reviewed)
-    2. ICLR 2025 - Shallow safety alignment (peer-reviewed)
-    3. Banerjee & Gopalan (2024) - Reward model uncertainty (arXiv, strong theory)
-  - **Parameter Calibration Issue:**
-    - **Current:** `aiControlGap / 4.0` in nuclear war formula (divisor = 4.0)
-    - **Research-Backed:** Divisor should be 30-40 based on Xiao et al. 29-41% constraint degradation
-    - **Impact:** Current divisor implies 100% constraint failure at full misalignment; research shows ~30-40% degradation
-    - **Location:** `src/simulation/engine/phases/MADDeterrencePhase.ts` (presumed)
-  - **Verification Tasks:**
-    - Layer 1: Confirm all 3 papers exist, accessible
-    - Layer 2: Verify 29-41% claim is accurate (quote specific passage)
-    - Layer 3: Validate extrapolation to Constitutional AI is justified
-    - Layer 4: Confirm divisor 30-40 is correct inference from research
-  - **Implementation After Validation:**
-    - Change divisor 4.0 → 40.0 (recommended) with research justification comment
-    - Run N≥10 Monte Carlo validation (compare nuclear war rates)
-    - Update docs/wiki/systems/nuclear-deterrence.md with new example calculations
-  - **Quality Gate 1:** PENDING (research-skeptic Layer 2 verification needed)
-  - **Priority:** MEDIUM (calibration improvement, not critical bug; improves realism + research backing)
 
 - [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
   - **Commit:** 740a914 (Infrastructure degradation in extreme collapse scenarios)
