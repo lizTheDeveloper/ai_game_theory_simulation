@@ -618,6 +618,42 @@ const baseProb = 0.005;  // 0.5% per month base
 
 ---
 
+## 🏛️ Policy Context (2024-2025)
+
+**Recent Developments**: International policy commitments affirm human control principles but lag behind capability growth.
+
+### Key Agreements
+
+**US-China Bilateral (October 2024):**
+- First nuclear power consensus: "human beings—not AI—should make decisions regarding nuclear weapon employment"
+- Establishes principle but lacks implementation details
+
+**Five Nuclear Powers Positions:**
+- 🇺🇸 US: "Human in the loop" for all critical actions
+- 🇬🇧 UK: Committed to human control of launch decisions
+- 🇫🇷 France: AI will never control nuclear weapon use
+- 🇷🇺 Russia: No formal commitment (gap in international framework)
+- 🇨🇳 China: Bilateral commitment with US, no unilateral declaration
+
+**US Domestic Law:**
+- NDAA 2025 Section 1638: Prohibits autonomous nuclear launch without "meaningful human control"
+- Bipartisan provision, legally binding
+
+### Simulation Implications
+
+**Validated Assumptions:**
+- Human control remains baseline through 2026-2028 (matches simulation starting state)
+- Policy commitments don't reduce technical risk (no parameter changes needed)
+
+**Identified Gaps:**
+- Intermediate AI applications unregulated (decision-support, early warning automation)
+- No verification mechanisms for commitments
+- Asymmetric commitments (Russia gap) creates strategic uncertainty
+
+**See**: `research/nuclear_war_ai_control_gap_20251022.md` for full analysis (updated Nov 2025)
+
+---
+
 ## 📚 References
 
 ### Classic Sources (1960-2014)

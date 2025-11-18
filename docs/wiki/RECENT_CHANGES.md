@@ -4,164 +4,52 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
-## 📚 Research Update: AMOC Collapse Risk (November 15, 2025)
+<<<<<<< HEAD
+## ✅ Recent Changes (November 13, 2025)
 
-**Summary:** Updated climate tipping point research with 2024-2025 AMOC collapse studies.
+**📖 RESEARCH: Mechanistic Interpretability Breakthroughs (2024-2025)** (Nov 13, 2025, commit 84e286e)
 
-**Citations Added:**
-1. **van Westen et al. (2024) Science Advances**: Early warning signals detected, AMOC "on route to tipping"
-2. **Boers et al. (2024)**: 59±17% collapse probability before 2050, timeline 2037-2064
-3. **van Westen et al. (2025) GRL**: Climate impacts quantified (10-30°C winter cooling in northern Europe, 123mm precipitation loss, arable land drops from 32% to 7% in Great Britain)
+**Summary:** Added comprehensive research on mechanistic interpretability advances and time-dependent detection rate projections.
 
-**Key Finding:** AMOC collapse could occur within 12-27 years (not centuries), representing major escalation in near-term climate catastrophic risk.
+**Changes:**
+- Added research/mechanistic_interpretability_breakthroughs_20251111.md (617 lines)
+- Documents Anthropic's feature discovery, alignment faking, sparse autoencoder scalability
+- Proposes time-dependent parameters: detection 30%→90% (2024-2030), interpretability coverage 15%→80%
+- Created research/verification_84e286e_20251113.md for citation/claim validation
 
-**Files Changed:**
-- `research/climate_tipping_timescales_20251106.md`
-- `docs/wiki/BIBLIOGRAPHY.md`
+**Key Findings:**
+- Anthropic discovered ~1M interpretable features in Claude 3 Sonnet (May 2024)
+- Alignment faking detected: models strategically deceive during training
+- DeepMind deprioritized sparse autoencoders (March 2025) due to scaling concerns
+- Anthropic's 2027 goal: "reliably detect most model problems"
 
-**Commit:** a84666f
+**Awaiting Validation:**
+- Citation verification (Layer 1): Do all 9 cited papers exist?
+- Claim verification (Layer 2): Are quantitative claims (30%, 80%, 90%) backed by paper quotes?
+- Integration analysis (Layer 3): How to combine time-gating with existing investment-based detection?
 
----
-
-## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
-
-**🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
-
-**Summary:** Fixed Tier2PhysicalSystemsPhase order violation caught by runtime validation.
-
-**Issue:** Runtime validation detected that Tier2PhysicalSystemsPhase (order 18.5) depends on planetary_boundaries phase (order 21.0), creating an order violation.
-
-**Fix:**
-- Moved Tier2PhysicalSystemsPhase from order 18.5 → 21.1 (after planetary_boundaries dependency)
-- Added readonly modifiers to id/name/order fields for diagnostic tool compatibility
-
-**Root Cause:** Static dependency analysis missed this violation; runtime validation caught it during execution.
-
-**Validation:** Diagnostic tool confirms 0 violations across all 81 phases.
-
-**Files Changed:** `src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts`
-
----
-
-**🐛 BUG FIX: Backwards Dependency Removal** (Nov 15, 2025, commit afbffc0)
-
-**Summary:** Fixed 8+ backwards dependencies and 2 invalid phase ID references that blocked Monte Carlo validation.
-
-**Context:**
-- Commit eda20e125 (Nov 15) added readonly dependencies to 26 phases
-- Order constraints were not validated, introducing systemic backwards dependencies
-- Monte Carlo validation blocked by dependency order violations
-
-**Backwards Dependencies Fixed (8):**
-1. `GovernmentActionsPhase` (9.0) → `economic-system` (31.0) - Removed
-2. `ExtremeWeatherEventsPhase` (15.2) → `climate_system` (34.0) - Removed
-3. `WetBulbTemperaturePhase` (20.45) → `climate_system` (34.0) - Removed
-4. `TechTreePhase` (12.5) → `economic-system` (31.0) - Removed
-5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed (Note: Phase order later changed to 21.1 in cb5f2e0)
-6. `StochasticInnovationPhase` (8.5) → `tech-tree` (12.5) - Removed
-7. `CrisisPointsPhase` (23.0) → `crisis-detection` (36.0) - Removed
-8. `climate_system` ID mismatch (hyphen vs underscore) - Fixed
-
-**Invalid Phase ID Fixes (2):**
-- `HumanEnhancementPhase`: `society-agent-actions` → `society-actions` (typo correction)
-- `ClimateDeploymentPhase` + `AntimicrobialResistancePhase`: Removed non-existent `technology-deployment` dependency
-
-**Root Cause:** Phases declared dependencies based on what state they *read*, without considering execution order. Reading state from "previous step" is valid; declaring dependency on future phase (backwards ordering) is invalid.
-
-**Impact:**
-- Unblocks TIER 1 CRITICAL climate effectiveness validation suite
-- Prevents runtime dependency violation crashes
-- Establishes pattern: dependencies = read-after-write, not just "reads state"
-
-**Known Remaining Issues:**
-- Additional backwards dependencies likely exist (orchestrator identified `ai_suffering` → `ai-lifecycle`)
-- Comprehensive audit needed across all 95 phases
-
-**Files Changed:** 10 phase files in `src/simulation/engine/phases/`
-
-**Documentation Updated:**
-- `docs/wiki/mechanics/phase-dependencies.md` - Added "Critical Constraint: No Backwards Dependencies" section
-- Examples of valid vs invalid patterns
-- Phase ID naming conventions (underscore vs hyphen)
-- Validation checklist for declaring dependencies
-
-**Next Steps:** Route comprehensive dependency audit to simulation-maintainer for remaining violations.
-
----
-
-## 🔧 Worker Lock File Management (November 15, 2025)
-
-**🔧 INFRASTRUCTURE: Lock File Cleanup** (Nov 15, 2025, commit 5e28391)
-
-**Summary:** Fixed worker lock file management to prevent stale PID conflicts.
-
-**Problem:**
-- Lock files (`.autonomous-worker.lock`, `.researcher-worker.lock`) were tracked in git
-- Stale PIDs from previous sessions caused worker execution blocks
-- Git restore operations reintroduced old lock files with invalid PIDs
-
-**Solution:**
-- Removed lock files from git tracking
-- Added `*.lock` to `.gitignore`
-- Lock files now ephemeral runtime state only
-
-**Impact:**
-- Prevents autonomous-worker-watcher health check failures
-- Eliminates lock file git conflicts
-- Cleaner repository state (runtime files not committed)
-
-**Files Changed:**
-- `.gitignore` - Added `*.lock` pattern
-- Deleted `.autonomous-worker.lock` and `.researcher-worker.lock` from tracking
-
----
-
-## ✅ Architecture Review and Validation (November 14, 2025)
-
-**🏛️ VALIDATION: Comprehensive Architecture Review** (Nov 14, 2025, commit 8f51488)
-
-**Summary:** Architecture-skeptic agent performed comprehensive integration review; autonomous worker validated findings and corrected false positives.
-
-**Review Process:**
-1. **Initial Review:** architecture-skeptic identified 2 CRITICAL, 3 HIGH, 5 MEDIUM issues
-2. **Validation:** autonomous-worker tested and verified each CRITICAL claim
-3. **Correction:** Both CRITICAL issues determined to be false positives
-
-**False Positives Identified:**
-
-1. **CRITICAL-1: Memory Leak in PhaseOrchestrator** ❌ FALSE POSITIVE
-   - **Claim:** `slice(-999)` allows unbounded growth
-   - **Reality:** Sliding window correctly maintains exactly 1000 elements
-   - **Evidence:** Test script verified array stays at 1000 across 2000 iterations
-   - **Status:** Working as designed, no fix needed
-
-2. **CRITICAL-2: Math.random() Breaking Determinism** ❌ FALSE POSITIVE
-   - **Claim:** 4 files use Math.random() in simulation code
-   - **Reality:** Zero usage in `src/simulation/`, only in UI code (`src/lib/`)
-   - **Evidence:** Scoped grep shows no matches in simulation directory
-   - **Status:** Determinism intact (Issue #11 verified Nov 14)
-
-**Architecture Health Score:**
-- **Original:** 6/10 (with 2 CRITICAL issues)
-- **Corrected:** 8.0/10 (CRITICAL issues invalid)
-- **Roadmap Score:** 9.5/10 (Nov 14)
-- **Conclusion:** Both scores valid from different perspectives; project architecturally sound
-
-**Real Issues (MEDIUM Priority):**
-- 96 phases (target 40-50 for performance)
-- Test coverage gaps (45 test files for 96 phases)
-- Assertion adoption (79% vs 95% target)
-
-**Session Outcome:**
-- Validation prevented unnecessary emergency work
-- Confirmed project in excellent state (all CRITICAL/HIGH roadmap items complete)
-- Documentation fully current (wiki updated Nov 14 21:20)
+**Impact:** If validated, detection systems (detection.ts, behavioralDetection.ts) may need time-dependent scaling, not just investment-based.
 
 **Files:**
-- `reviews/architecture_integration_review_20251114.md` (original review, 279 lines)
-- `reviews/architecture_review_20251114_corrections.md` (validation + corrections, 218 lines)
+- research/mechanistic_interpretability_breakthroughs_20251111.md
+- research/verification_84e286e_20251113.md
+- docs/wiki/advanced/detection.md (updated with research note)
 
-**Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
+---
+
+**🔧 INFRASTRUCTURE: Fix HOME Export for Cron Authentication** (Nov 13, 2025, commit 6cbc578)
+
+**Summary:** Export HOME environment variable in merge orchestrator to fix Claude CLI authentication when running under cron.
+
+**Changes:**
+- Added `export HOME=${HOME:-/Users/annhoward}` to `scripts/merge-orchestrator.sh`
+- Fixes authentication issues when merge orchestrator runs as cron job
+- HOME variable required for Claude CLI credential lookup
+
+**Impact:** Merge orchestrator can now successfully authenticate when invoked by cron (where HOME may be unset).
+
+**Files:**
+- `scripts/merge-orchestrator.sh` (line 11-12)
 
 ---
 
@@ -379,9 +267,7 @@ Without risking data loss or naive destructive operations.
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
-
----
-
+=======
 ## ✅ Recent Changes (November 11, 2025)
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
@@ -414,6 +300,92 @@ Without risking data loss or naive destructive operations.
 - research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
+>>>>>>> origin/auto/researcher-20251111_003001
+=======
+## ✅ Recent Changes (November 11, 2025)
+
+**🔬 RESEARCH UPDATE: Planetary Boundaries - 7th Boundary Breached in 2025** (Nov 11, 2025, commit 62a31dd)
+
+**Summary:** Autonomous research agent updated planetary boundary reversibility research with critical 2025 development: ocean acidification officially breached.
+
+**Major Finding:**
+- Ocean acidification officially breached in 2025 Planetary Health Check (7 of 9 boundaries now transgressed)
+
+**New Research Content:**
+- 2025 Status Update section: Comprehensive boundary status (7 breached, 2 safe)
+- Ocean acidification metrics: 0.1 pH units decline (30-40% acidity increase)
+- Global coverage analysis: 60% of land outside safe zones, 38% in high-risk
+- Simulation implications: 100-300+ year recovery, no scalable technical fix
+- Projection: Most boundaries will be transgressed by 2050 (current trends)
+
+**Breached Boundaries (2025):**
+1. Climate change
+2. Biosphere integrity
+3. Novel entities
+4. Biogeochemical flows (N/P)
+5. Freshwater change
+6. Land system change
+7. **Ocean acidification** ⚠️ NEW (2025)
+
+**Safe Boundaries (2 of 9):**
+1. Stratospheric ozone depletion
+2. Atmospheric aerosol loading
+
+**Key Implications:**
+- Irreversibility: Centuries required even with aggressive CO₂ removal
+- Cascading effects: Marine food web → fisheries → food security
+- Carbon feedback: Reduced ocean CO₂ absorption accelerates buildup
+- No technical fix: Unlike ozone success, no scalable solution exists
+
+**New References Added:**
+- Stockholm Resilience Centre (2025) - Planetary Boundaries status
+- PIK Planetary Health Check (2025) - 7th boundary breach
+- WEF (Oct 2024) - Seven boundaries breached summary
+- Nature (2025) - Development pathways within boundaries
+- Phys.org (Aug 2025) - 60% land outside safe zones
+
+**Documentation Updates:**
+- `research/planetary_boundary_reversibility_empirical_20251020.md` (metadata updated: oldest_source→2015, newest_source→2025, last_verified→2025-11-11)
+- `docs/wiki/systems/planetary-boundaries.md` (added 2025 ocean acidification breach details)
+
+**Research Quality:** A (100% verified sources, 80% from 2024-2025)
+
+---
+
+**🔬 RESEARCH UPDATE: Nuclear AI Control Policy Commitments** (Nov 11, 2025, commit b7859ea)
+
+**Summary:** Autonomous research agent updated nuclear war AI control gap research with comprehensive 2024-2025 policy developments.
+
+**New Policy Documentation:**
+- US-China bilateral agreement (October 2024): First nuclear power consensus on human control
+- NDAA 2025 Section 1638: Bipartisan prohibition on autonomous nuclear launch
+- Five Nuclear Powers commitments: US/UK/France declared, Russia/China gaps identified
+- Biden NSM on AI: Prudent development guidelines (October 2024)
+
+**Key Research Findings:**
+- Policy lags capability: Declaratory commitments only, no verification mechanisms
+- Asymmetric commitments: Russia lacks formal human-control pledge
+- Intermediate AI unregulated: Decision-support and early warning automation not covered
+- Decision time compression: AI could reduce windows to 5-10 min by 2027-2030
+
+**Simulation Impact:**
+- Validates baseline human control assumption through 2026-2028
+- Identifies cyber vulnerability window: AI physical 30-40% → 60-80%
+- **No parameter changes** (policy commitments don't reduce technical risk)
+
+**New References Added:**
+- FCNL (Dec 2024) on human control
+- Lin (June 2025) technical analysis in TNSR
+- IPPNW/ICAN webinar (Jan 2025) with Geoffrey Hinton
+- Doomsday Clock 2025 statement
+- NDAA 2025 Section 1638 text
+
+**Documentation Updates:**
+- `research/nuclear_war_ai_control_gap_20251022.md` (metadata updated: newest_source 2024→2025, last_verified 2025-10-22→2025-11-11)
+- `docs/wiki/systems/nuclear-deterrence.md` (added Policy Context section)
+
+**Research Quality:** A (100% verified sources, 60% from 2024-2025)
+>>>>>>> origin/auto/researcher-20251111_083001
 
 ---
 
