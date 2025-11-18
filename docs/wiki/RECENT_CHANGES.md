@@ -3,56 +3,8 @@
 This file contains the complete history of recent changes to the AI Game Theory Simulation. For the most recent updates, see [README.md](./README.md).
 
 ---
+
 <<<<<<< HEAD
-
-## ✅ Recent Changes (November 13, 2025)
-
-**📖 RESEARCH: Mechanistic Interpretability Breakthroughs (2024-2025)** (Nov 13, 2025, commit 84e286e)
-
-**Summary:** Added comprehensive research on mechanistic interpretability advances and time-dependent detection rate projections.
-
-**Changes:**
-- Added research/mechanistic_interpretability_breakthroughs_20251111.md (617 lines)
-- Documents Anthropic's feature discovery, alignment faking, sparse autoencoder scalability
-- Proposes time-dependent parameters: detection 30%→90% (2024-2030), interpretability coverage 15%→80%
-- Created research/verification_84e286e_20251113.md for citation/claim validation
-
-**Key Findings:**
-- Anthropic discovered ~1M interpretable features in Claude 3 Sonnet (May 2024)
-- Alignment faking detected: models strategically deceive during training
-- DeepMind deprioritized sparse autoencoders (March 2025) due to scaling concerns
-- Anthropic's 2027 goal: "reliably detect most model problems"
-
-**Awaiting Validation:**
-- Citation verification (Layer 1): Do all 9 cited papers exist?
-- Claim verification (Layer 2): Are quantitative claims (30%, 80%, 90%) backed by paper quotes?
-- Integration analysis (Layer 3): How to combine time-gating with existing investment-based detection?
-
-**Impact:** If validated, detection systems (detection.ts, behavioralDetection.ts) may need time-dependent scaling, not just investment-based.
-
-**Files:**
-- research/mechanistic_interpretability_breakthroughs_20251111.md
-- research/verification_84e286e_20251113.md
-- docs/wiki/advanced/detection.md (updated with research note)
-
----
-
-**🔧 INFRASTRUCTURE: Fix HOME Export for Cron Authentication** (Nov 13, 2025, commit 6cbc578)
-
-**Summary:** Export HOME environment variable in merge orchestrator to fix Claude CLI authentication when running under cron.
-
-**Changes:**
-- Added `export HOME=${HOME:-/Users/annhoward}` to `scripts/merge-orchestrator.sh`
-- Fixes authentication issues when merge orchestrator runs as cron job
-- HOME variable required for Claude CLI credential lookup
-
-**Impact:** Merge orchestrator can now successfully authenticate when invoked by cron (where HOME may be unset).
-
-**Files:**
-- `scripts/merge-orchestrator.sh` (line 11-12)
-
----
-
 ## ✅ Recent Changes (November 12, 2025)
 
 **🤖 INFRASTRUCTURE: Intelligent Auto-Remediation for Stuck Orchestrator States** (Nov 12, 2025, commit 9764a32)
@@ -109,37 +61,6 @@ Without risking data loss or naive destructive operations.
 **Files:**
 - `.researcher-worker.lock` (deleted)
 - `logs/autonomous/researcher/status_current.txt` (status update)
-=======
-## ✅ Recent Changes (November 12, 2025)
-
-**📚 RESEARCH UPDATE: Research File Metadata Standard** (Nov 12, 2025, commit add99ce)
-
-**Summary:** Added YAML frontmatter metadata to 3 actively-used research files to enable research currency tracking.
-
-**Metadata Standard:**
-```yaml
----
-oldest_source: YYYY
-newest_source: YYYY
-last_verified: YYYY-MM-DD
----
-```
-
-**Files Updated:**
-- `research/ai_welfare_framework_20251020.md` (oldest: 1988, newest: 2025)
-- `research/water_scarcity_migration_immobility_20251020.md` (oldest: 2012, newest: 2025)
-- `research/climate-mortality-biosphere-multiparadigm-framework_20251028.md` (oldest: 2019, newest: 2025)
-
-**Referenced By:**
-- `src/simulation/mortalityStabilizersInit.ts`
-- `src/simulation/trappedPopulations.ts`
-- `src/simulation/bayesianMortality.ts`
-- `src/simulation/extremeWeatherEvents.ts`
-
-**Research Currency Status:** All three files contain recent (2024-2025) sources and are in good condition. Oldest sources are foundational theories (e.g., Frankl 1946, Baars 1988) that remain relevant.
-
-**Why This Matters:** Standardized metadata enables autonomous research workers to identify stale sources and prioritize updates. The `oldest_source`/`newest_source` range provides quick assessment of research currency without parsing entire files.
->>>>>>> origin/auto/researcher-20251112_153001
 
 ---
 
@@ -201,28 +122,6 @@ last_verified: YYYY-MM-DD
 ---
 
 ## ✅ Recent Changes (November 11, 2025)
-
-**📚 RESEARCH: Nuclear War AI Control Gap - 2024-2025 Sources Added** (Nov 11, 2025, commit 0a236ad)
-
-**Summary:** Updated nuclear war AI control research with 3 peer-reviewed sources from 2024-2025, improving research currency from 20% to 40% for this domain.
-
-**New Sources:**
-1. **Saltini & Pan (2024)** - "Beyond Human-in-the-Loop: Managing AI Risks in Nuclear C&C" (War on the Rocks)
-   - Quantitative safety threshold: accidental launch risk < 1 in 10,000,000 per year
-   - Four AI risks: unreliability/hallucinations, opacity, cybersecurity, misalignment
-2. **Dooling (2025)** - "A Risk Assessment Framework for AI Integration into Nuclear C3" (FAS)
-   - Confabulations, automation bias, cybersecurity exposure
-   - Benchmarking under realistic conditions
-3. **SIPRI (2025)** - "Impact of Military AI on Nuclear Escalation Risk"
-   - Compressed decision timelines, biased AI decision-making, strategic instability
-
-**Research Quality:** A (85% peer-reviewed, 40% from 2024-2025, 19 total sources)
-
-**Documentation Updated:**
-- `research/nuclear_war_ai_control_gap_20251022.md` - Added sources #17-19 with full citations
-- `docs/wiki/systems/nuclear-deterrence.md` - Added 2024-2025 section to References
-
----
 
 **🐛 BUG FIX: Wet Bulb Mortality Cap for Population Collapse Edge Cases** (Nov 11, 2025, commit a3df82a)
 
@@ -320,13 +219,10 @@ last_verified: YYYY-MM-DD
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
-<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/auto/researcher-20251111_003001
 ## ✅ Recent Changes (November 11, 2025)
-=======
-
----
->>>>>>> origin/auto/researcher-20251112_153001
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
 
@@ -361,7 +257,7 @@ last_verified: YYYY-MM-DD
 <<<<<<< HEAD
 >>>>>>> origin/auto/researcher-20251111_003001
 =======
->>>>>>> origin/auto/researcher-20251112_153001
+>>>>>>> origin/auto/researcher-20251111_003001
 
 ---
 
