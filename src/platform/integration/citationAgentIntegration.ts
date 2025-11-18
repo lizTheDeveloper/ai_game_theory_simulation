@@ -139,10 +139,15 @@ export class PythonAgentWrapper extends EventEmitter {
     resolve: (value: any) => void;
     reject: (error: Error) => void;
     timeout: NodeJS.Timeout;
+    retryCount: number;
+    maxRetries: number;
+    method: string;
+    params: any;
   }> = new Map();
   private restartCount: number = 0;
   private isHealthy: boolean = false;
   private lastHealthCheck: Date | null = null;
+  private requestQueue: Array<{ method: string; params: any; resolve: Function; reject: Function }> = [];
 
   constructor(
     public readonly agentId: string,
@@ -185,6 +190,29 @@ export class PythonAgentWrapper extends EventEmitter {
 
     this.emit('started', { agentId: this.agentId });
     console.log(`✅ Agent ${this.agentId} started (PID: ${this.process.pid})`);
+
+    // Process queued requests
+    this.processQueuedRequests();
+  }
+
+  /**
+   * Process requests that were queued while agent was unavailable
+   */
+  private processQueuedRequests(): void {
+    if (this.requestQueue.length === 0) {
+      return;
+    }
+
+    console.log(`📬 Processing ${this.requestQueue.length} queued requests for agent ${this.agentId}`);
+
+    const queue = [...this.requestQueue];
+    this.requestQueue = [];
+
+    for (const { method, params, resolve, reject } of queue) {
+      this.invokeInternal(method, params, 0, 3)
+        .then(resolve)
+        .catch(reject);
+    }
   }
 
   private setupIPC(): void {
@@ -263,7 +291,13 @@ export class PythonAgentWrapper extends EventEmitter {
         this.pendingRequests.delete(requestId);
 
         if (error) {
-          pending.reject(new Error(error));
+          // Check if we should retry
+          if (pending.retryCount < pending.maxRetries && this.shouldRetryError(error)) {
+            console.warn(`⚠️ Agent ${this.agentId} request ${requestId} failed, retrying (${pending.retryCount + 1}/${pending.maxRetries})...`);
+            this.retryRequest(pending.method, pending.params, pending.resolve, pending.reject, pending.retryCount + 1, pending.maxRetries);
+          } else {
+            pending.reject(new Error(error));
+          }
         } else {
           pending.resolve(data);
         }
@@ -273,25 +307,78 @@ export class PythonAgentWrapper extends EventEmitter {
     } else if (type === 'health') {
       this.isHealthy = data.healthy;
       this.lastHealthCheck = new Date();
+    } else if (type === 'ack') {
+      // Acknowledgment received - request was received by agent
+      console.log(`✅ Agent ${this.agentId} acknowledged request ${requestId}`);
     }
   }
 
-  async invoke(method: string, params: any): Promise<any> {
+  /**
+   * Determine if an error is retryable
+   */
+  private shouldRetryError(error: string): boolean {
+    const retryableErrors = [
+      'timeout',
+      'connection',
+      'unavailable',
+      'busy',
+      'ECONNRESET',
+      'ETIMEDOUT',
+      'ENOTFOUND'
+    ];
+    return retryableErrors.some(retryable => error.toLowerCase().includes(retryable.toLowerCase()));
+  }
+
+  async invoke(method: string, params: any, maxRetries: number = 3): Promise<any> {
+    return this.invokeInternal(method, params, 0, maxRetries);
+  }
+
+  private async invokeInternal(method: string, params: any, retryCount: number, maxRetries: number): Promise<any> {
+    // If agent is not healthy, queue request for later
     if (!this.process || !this.process.stdin) {
-      throw new Error(`Agent ${this.agentId} not started`);
+      if (retryCount < maxRetries) {
+        console.warn(`⚠️ Agent ${this.agentId} not available, queueing request for retry...`);
+        return new Promise((resolve, reject) => {
+          this.requestQueue.push({ method, params, resolve, reject });
+        });
+      } else {
+        throw new Error(`Agent ${this.agentId} not started after ${maxRetries} retries`);
+      }
     }
 
     const requestId = `${this.agentId}_${Date.now()}_${Math.random()}`;
 
     return new Promise((resolve, reject) => {
+      // Calculate timeout with exponential backoff for retries
+      const backoffMultiplier = Math.pow(2, retryCount);
+      const effectiveTimeout = this.timeout * backoffMultiplier;
+
       // Set timeout
       const timeoutHandle = setTimeout(() => {
-        this.pendingRequests.delete(requestId);
-        reject(new Error(`Agent ${this.agentId} request timeout (${this.timeout}ms)`));
-      }, this.timeout);
+        const pending = this.pendingRequests.get(requestId);
+        if (pending) {
+          this.pendingRequests.delete(requestId);
 
-      // Store pending request
-      this.pendingRequests.set(requestId, { resolve, reject, timeout: timeoutHandle });
+          // Retry on timeout if retries available
+          if (retryCount < maxRetries) {
+            console.warn(`⚠️ Agent ${this.agentId} request ${requestId} timed out, retrying (${retryCount + 1}/${maxRetries})...`);
+            this.retryRequest(method, params, resolve, reject, retryCount + 1, maxRetries);
+          } else {
+            reject(new Error(`Agent ${this.agentId} request timeout after ${maxRetries} retries (${effectiveTimeout}ms)`));
+          }
+        }
+      }, effectiveTimeout);
+
+      // Store pending request with retry metadata
+      this.pendingRequests.set(requestId, {
+        resolve,
+        reject,
+        timeout: timeoutHandle,
+        retryCount,
+        maxRetries,
+        method,
+        params
+      });
 
       // Send request
       const request = JSON.stringify({
@@ -304,11 +391,45 @@ export class PythonAgentWrapper extends EventEmitter {
       this.process!.stdin!.write(request, (err) => {
         if (err) {
           clearTimeout(timeoutHandle);
-          this.pendingRequests.delete(requestId);
-          reject(new Error(`Failed to write to agent stdin: ${err.message}`));
+          const pending = this.pendingRequests.get(requestId);
+          if (pending) {
+            this.pendingRequests.delete(requestId);
+
+            // Retry on write error if retries available
+            if (retryCount < maxRetries) {
+              console.warn(`⚠️ Agent ${this.agentId} stdin write failed, retrying (${retryCount + 1}/${maxRetries})...`);
+              this.retryRequest(method, params, resolve, reject, retryCount + 1, maxRetries);
+            } else {
+              reject(new Error(`Failed to write to agent stdin after ${maxRetries} retries: ${err.message}`));
+            }
+          }
         }
       });
     });
+  }
+
+  /**
+   * Retry a request with exponential backoff
+   */
+  private async retryRequest(
+    method: string,
+    params: any,
+    resolve: Function,
+    reject: Function,
+    retryCount: number,
+    maxRetries: number
+  ): Promise<void> {
+    // Exponential backoff: 100ms, 200ms, 400ms, 800ms, etc.
+    const backoffDelay = 100 * Math.pow(2, retryCount - 1);
+
+    setTimeout(async () => {
+      try {
+        const result = await this.invokeInternal(method, params, retryCount, maxRetries);
+        resolve(result);
+      } catch (err) {
+        reject(err);
+      }
+    }, backoffDelay);
   }
 
   async analyzeCitation(document: CitationDocument): Promise<CitationAnalysisResult> {

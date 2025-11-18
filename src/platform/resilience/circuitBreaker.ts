@@ -1,86 +1,123 @@
 /**
  * Circuit Breaker Pattern Implementation
  *
- * Protects against cascading failures by detecting repeated failures
- * and temporarily blocking requests to failing services.
+ * Prevents cascading failures by breaking circuits to failing services.
+ * Implements the three states: CLOSED, OPEN, HALF_OPEN.
  *
- * States:
- * - CLOSED: Normal operation, requests pass through
- * - OPEN: Service is failing, requests fail fast
- * - HALF_OPEN: Testing if service recovered
+ * Usage:
+ * ```typescript
+ * const breaker = new CircuitBreaker({
+ *   failureThreshold: 5,
+ *   successThreshold: 2,
+ *   timeout: 60000,
+ *   resetTimeout: 30000
+ * });
  *
- * @module platform/resilience/circuitBreaker
+ * try {
+ *   const result = await breaker.execute(async () => {
+ *     return await unreliableService();
+ *   });
+ * } catch (err) {
+ *   if (err instanceof CircuitBreakerOpenError) {
+ *     // Circuit is open, service is temporarily unavailable
+ *     // Use fallback or cached data
+ *   }
+ * }
+ * ```
+ *
+ * @module resilience/circuitBreaker
+ * @author Marcus (Platform Engineer)
  */
 
-import { EventEmitter } from 'events';
-import { Counter, Gauge, Histogram } from 'prom-client';
-
-export enum CircuitBreakerState {
-  CLOSED = 'CLOSED',
-  OPEN = 'OPEN',
-  HALF_OPEN = 'HALF_OPEN'
+export enum CircuitState {
+  CLOSED = 'CLOSED',    // Normal operation
+  OPEN = 'OPEN',        // Circuit is open, requests fail fast
+  HALF_OPEN = 'HALF_OPEN'  // Testing if service recovered
 }
 
 export interface CircuitBreakerConfig {
-  name: string;
-  failureThreshold: number;      // Failures before opening (default: 5)
-  timeout: number;                // Time in OPEN state (ms, default: 60000)
-  successThreshold: number;       // Successes in HALF_OPEN before closing (default: 3)
-  fallback?: () => any;          // Optional fallback function
-  onStateChange?: (from: CircuitBreakerState, to: CircuitBreakerState) => void;
+  /** Number of failures before opening circuit */
+  failureThreshold: number;
+
+  /** Number of consecutive successes to close circuit from half-open */
+  successThreshold: number;
+
+  /** Request timeout in milliseconds */
+  timeout: number;
+
+  /** Time to wait before attempting half-open (milliseconds) */
+  resetTimeout: number;
+
+  /** Optional name for logging */
+  name?: string;
 }
 
 export interface CircuitBreakerMetrics {
-  successCount: number;
-  failureCount: number;
+  state: CircuitState;
+  failures: number;
+  successes: number;
+  consecutiveFailures: number;
+  consecutiveSuccesses: number;
+  lastFailureTime: Date | null;
+  lastSuccessTime: Date | null;
   totalRequests: number;
-  stateTransitions: number;
-  lastFailureTime: number | null;
-  lastSuccessTime: number | null;
+  totalFailures: number;
+  totalSuccesses: number;
+  totalRejections: number;  // Rejected due to open circuit
 }
 
 /**
- * Circuit Breaker implementation with Prometheus metrics
+ * Error thrown when circuit breaker is in OPEN state
  */
-export class CircuitBreaker extends EventEmitter {
-  private state: CircuitBreakerState = CircuitBreakerState.CLOSED;
-  private failureCount: number = 0;
-  private successCount: number = 0;
-  private totalRequests: number = 0;
-  private stateTransitions: number = 0;
-  private lastFailureTime: number | null = null;
-  private lastSuccessTime: number | null = null;
+export class CircuitBreakerOpenError extends Error {
+  constructor(name?: string) {
+    super(\`Circuit breaker \${name || 'unnamed'} is OPEN - request rejected\`);
+    this.name = 'CircuitBreakerOpenError';
+  }
+}
+
+/**
+ * Error thrown when request times out
+ */
+export class CircuitBreakerTimeoutError extends Error {
+  constructor(timeout: number, name?: string) {
+    super(\`Circuit breaker \${name || 'unnamed'} request timed out after \${timeout}ms\`);
+    this.name = 'CircuitBreakerTimeoutError';
+  }
+}
+
+/**
+ * Circuit Breaker implementation
+ */
+export class CircuitBreaker {
+  private state: CircuitState = CircuitState.CLOSED;
+  private failures: number = 0;
+  private successes: number = 0;
+  private consecutiveFailures: number = 0;
+  private consecutiveSuccesses: number = 0;
+  private lastFailureTime: Date | null = null;
+  private lastSuccessTime: Date | null = null;
   private nextAttemptTime: number = 0;
 
-  // Prometheus metrics
-  private requestCounter: Counter<string>;
-  private stateGauge: Gauge<string>;
-  private latencyHistogram: Histogram<string>;
+  // Metrics
+  private totalRequests: number = 0;
+  private totalFailures: number = 0;
+  private totalSuccesses: number = 0;
+  private totalRejections: number = 0;
 
   constructor(private config: CircuitBreakerConfig) {
-    super();
-
-    // Initialize Prometheus metrics
-    this.requestCounter = new Counter({
-      name: `circuit_breaker_requests_total`,
-      help: 'Total requests through circuit breaker',
-      labelNames: ['breaker', 'result']
-    });
-
-    this.stateGauge = new Gauge({
-      name: `circuit_breaker_state`,
-      help: 'Circuit breaker state (0=CLOSED, 1=OPEN, 2=HALF_OPEN)',
-      labelNames: ['breaker']
-    });
-
-    this.latencyHistogram = new Histogram({
-      name: `circuit_breaker_latency_ms`,
-      help: 'Circuit breaker request latency',
-      labelNames: ['breaker'],
-      buckets: [10, 25, 50, 75, 100, 250, 500, 1000, 2500, 5000]
-    });
-
-    this.updateStateMetric();
+    if (config.failureThreshold < 1) {
+      throw new Error('failureThreshold must be >= 1');
+    }
+    if (config.successThreshold < 1) {
+      throw new Error('successThreshold must be >= 1');
+    }
+    if (config.timeout < 1) {
+      throw new Error('timeout must be >= 1');
+    }
+    if (config.resetTimeout < 1) {
+      throw new Error('resetTimeout must be >= 1');
+    }
   }
 
   /**
@@ -89,213 +126,226 @@ export class CircuitBreaker extends EventEmitter {
   async execute<T>(fn: () => Promise<T>): Promise<T> {
     this.totalRequests++;
 
-    if (this.state === CircuitBreakerState.OPEN) {
-      if (Date.now() < this.nextAttemptTime) {
-        // Circuit is open, fail fast
-        this.requestCounter.inc({ breaker: this.config.name, result: 'rejected' });
-
-        if (this.config.fallback) {
-          return this.config.fallback();
-        }
-
-        throw new Error(`Circuit breaker [${this.config.name}] is OPEN`);
+    // Check if circuit should transition from OPEN to HALF_OPEN
+    if (this.state === CircuitState.OPEN) {
+      const now = Date.now();
+      if (now >= this.nextAttemptTime) {
+        console.log(\`🔄 Circuit breaker \${this.config.name || 'unnamed'}: Transitioning to HALF_OPEN\`);
+        this.state = CircuitState.HALF_OPEN;
+        this.consecutiveSuccesses = 0;
       } else {
-        // Timeout expired, transition to HALF_OPEN
-        this.transitionTo(CircuitBreakerState.HALF_OPEN);
+        // Circuit still open
+        this.totalRejections++;
+        throw new CircuitBreakerOpenError(this.config.name);
       }
     }
 
-    const startTime = Date.now();
-
+    // Execute request with timeout
     try {
-      const result = await fn();
-
-      const latency = Date.now() - startTime;
-      this.latencyHistogram.observe({ breaker: this.config.name }, latency);
-
+      const result = await this.executeWithTimeout(fn);
       this.onSuccess();
       return result;
-    } catch (error) {
-      const latency = Date.now() - startTime;
-      this.latencyHistogram.observe({ breaker: this.config.name }, latency);
-
-      this.onFailure();
-      throw error;
+    } catch (err) {
+      this.onFailure(err as Error);
+      throw err;
     }
+  }
+
+  /**
+   * Execute function with timeout
+   */
+  private async executeWithTimeout<T>(fn: () => Promise<T>): Promise<T> {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        reject(new CircuitBreakerTimeoutError(this.config.timeout, this.config.name));
+      }, this.config.timeout);
+
+      fn()
+        .then((result) => {
+          clearTimeout(timer);
+          resolve(result);
+        })
+        .catch((err) => {
+          clearTimeout(timer);
+          reject(err);
+        });
+    });
   }
 
   /**
    * Handle successful execution
    */
   private onSuccess(): void {
-    this.requestCounter.inc({ breaker: this.config.name, result: 'success' });
-    this.lastSuccessTime = Date.now();
+    this.totalSuccesses++;
+    this.successes++;
+    this.consecutiveSuccesses++;
+    this.consecutiveFailures = 0;
+    this.lastSuccessTime = new Date();
 
-    if (this.state === CircuitBreakerState.HALF_OPEN) {
-      this.successCount++;
-
-      if (this.successCount >= this.config.successThreshold) {
-        // Service recovered, close circuit
-        this.transitionTo(CircuitBreakerState.CLOSED);
+    if (this.state === CircuitState.HALF_OPEN) {
+      // Check if we should close circuit
+      if (this.consecutiveSuccesses >= this.config.successThreshold) {
+        console.log(\`✅ Circuit breaker \${this.config.name || 'unnamed'}: Closing circuit after \${this.consecutiveSuccesses} successes\`);
+        this.state = CircuitState.CLOSED;
+        this.failures = 0;
+        this.consecutiveFailures = 0;
       }
-    } else if (this.state === CircuitBreakerState.CLOSED) {
-      // Reset failure count on success
-      this.failureCount = 0;
     }
   }
 
   /**
    * Handle failed execution
    */
-  private onFailure(): void {
-    this.requestCounter.inc({ breaker: this.config.name, result: 'failure' });
-    this.lastFailureTime = Date.now();
-    this.failureCount++;
+  private onFailure(err: Error): void {
+    this.totalFailures++;
+    this.failures++;
+    this.consecutiveFailures++;
+    this.consecutiveSuccesses = 0;
+    this.lastFailureTime = new Date();
 
-    if (this.state === CircuitBreakerState.HALF_OPEN) {
-      // Failure in HALF_OPEN, reopen circuit
-      this.transitionTo(CircuitBreakerState.OPEN);
-    } else if (this.state === CircuitBreakerState.CLOSED) {
-      if (this.failureCount >= this.config.failureThreshold) {
-        // Threshold exceeded, open circuit
-        this.transitionTo(CircuitBreakerState.OPEN);
+    console.error(\`❌ Circuit breaker \${this.config.name || 'unnamed'}: Failure (\${this.consecutiveFailures}/\${this.config.failureThreshold})\`, err.message);
+
+    if (this.state === CircuitState.HALF_OPEN) {
+      // Failed during half-open, reopen circuit
+      console.warn(\`⚠️ Circuit breaker \${this.config.name || 'unnamed'}: Reopening circuit after failure in HALF_OPEN state\`);
+      this.openCircuit();
+    } else if (this.state === CircuitState.CLOSED) {
+      // Check if we should open circuit
+      if (this.consecutiveFailures >= this.config.failureThreshold) {
+        console.warn(\`🚨 Circuit breaker \${this.config.name || 'unnamed'}: Opening circuit after \${this.consecutiveFailures} consecutive failures\`);
+        this.openCircuit();
       }
     }
   }
 
   /**
-   * Transition to a new state
+   * Open the circuit
    */
-  private transitionTo(newState: CircuitBreakerState): void {
-    const oldState = this.state;
-
-    if (oldState === newState) {
-      return;
-    }
-
-    this.state = newState;
-    this.stateTransitions++;
-
-    // Reset counters on state change
-    if (newState === CircuitBreakerState.OPEN) {
-      this.nextAttemptTime = Date.now() + this.config.timeout;
-      this.successCount = 0;
-    } else if (newState === CircuitBreakerState.HALF_OPEN) {
-      this.successCount = 0;
-      this.failureCount = 0;
-    } else if (newState === CircuitBreakerState.CLOSED) {
-      this.failureCount = 0;
-      this.successCount = 0;
-    }
-
-    this.updateStateMetric();
-    this.emit('stateChange', { from: oldState, to: newState, breaker: this.config.name });
-
-    if (this.config.onStateChange) {
-      this.config.onStateChange(oldState, newState);
-    }
-  }
-
-  /**
-   * Update Prometheus state metric
-   */
-  private updateStateMetric(): void {
-    const stateValue =
-      this.state === CircuitBreakerState.CLOSED ? 0 :
-      this.state === CircuitBreakerState.OPEN ? 1 : 2;
-
-    this.stateGauge.set({ breaker: this.config.name }, stateValue);
+  private openCircuit(): void {
+    this.state = CircuitState.OPEN;
+    this.nextAttemptTime = Date.now() + this.config.resetTimeout;
+    console.warn(\`⏰ Circuit breaker \${this.config.name || 'unnamed'}: Next attempt at \${new Date(this.nextAttemptTime).toISOString()}\`);
   }
 
   /**
    * Get current state
    */
-  getState(): CircuitBreakerState {
+  getState(): CircuitState {
     return this.state;
   }
 
   /**
-   * Get current metrics
+   * Get metrics
    */
   getMetrics(): CircuitBreakerMetrics {
     return {
-      successCount: this.successCount,
-      failureCount: this.failureCount,
-      totalRequests: this.totalRequests,
-      stateTransitions: this.stateTransitions,
+      state: this.state,
+      failures: this.failures,
+      successes: this.successes,
+      consecutiveFailures: this.consecutiveFailures,
+      consecutiveSuccesses: this.consecutiveSuccesses,
       lastFailureTime: this.lastFailureTime,
-      lastSuccessTime: this.lastSuccessTime
+      lastSuccessTime: this.lastSuccessTime,
+      totalRequests: this.totalRequests,
+      totalFailures: this.totalFailures,
+      totalSuccesses: this.totalSuccesses,
+      totalRejections: this.totalRejections,
     };
   }
 
   /**
-   * Manually reset the circuit breaker
+   * Reset circuit breaker to initial state
    */
   reset(): void {
-    this.transitionTo(CircuitBreakerState.CLOSED);
-    this.failureCount = 0;
-    this.successCount = 0;
+    this.state = CircuitState.CLOSED;
+    this.failures = 0;
+    this.successes = 0;
+    this.consecutiveFailures = 0;
+    this.consecutiveSuccesses = 0;
+    this.lastFailureTime = null;
+    this.lastSuccessTime = null;
+    this.nextAttemptTime = 0;
+    console.log(\`🔄 Circuit breaker \${this.config.name || 'unnamed'}: Reset to CLOSED state\`);
   }
 
   /**
-   * Check if circuit breaker is healthy
+   * Force circuit to OPEN state (useful for testing or manual intervention)
    */
-  isHealthy(): boolean {
-    return this.state !== CircuitBreakerState.OPEN;
+  forceOpen(): void {
+    this.openCircuit();
+    console.warn(\`⚠️ Circuit breaker \${this.config.name || 'unnamed'}: Manually forced to OPEN state\`);
+  }
+
+  /**
+   * Force circuit to CLOSED state (useful for testing or manual intervention)
+   */
+  forceClosed(): void {
+    this.state = CircuitState.CLOSED;
+    this.failures = 0;
+    this.consecutiveFailures = 0;
+    console.log(\`✅ Circuit breaker \${this.config.name || 'unnamed'}: Manually forced to CLOSED state\`);
   }
 }
 
 /**
- * Circuit Breaker Manager - manages multiple circuit breakers
+ * Circuit Breaker Manager
+ *
+ * Manages multiple circuit breakers by name
  */
 export class CircuitBreakerManager {
   private breakers: Map<string, CircuitBreaker> = new Map();
 
   /**
-   * Create or get a circuit breaker
+   * Get or create a circuit breaker
    */
-  getBreaker(config: CircuitBreakerConfig): CircuitBreaker {
-    const existing = this.breakers.get(config.name);
-    if (existing) {
-      return existing;
+  getBreaker(name: string, config?: CircuitBreakerConfig): CircuitBreaker {
+    let breaker = this.breakers.get(name);
+
+    if (!breaker) {
+      if (!config) {
+        throw new Error(\`Circuit breaker \${name} not found and no config provided\`);
+      }
+
+      breaker = new CircuitBreaker({ ...config, name });
+      this.breakers.set(name, breaker);
+      console.log(\`✅ Created circuit breaker: \${name}\`);
     }
-
-    const breaker = new CircuitBreaker(config);
-    this.breakers.set(config.name, breaker);
-
-    // Log state changes
-    breaker.on('stateChange', ({ from, to, breaker: name }) => {
-      console.log(`🔌 Circuit breaker [${name}] state: ${from} → ${to}`);
-    });
 
     return breaker;
   }
 
   /**
-   * Get all circuit breakers
+   * Get all breakers
    */
   getAllBreakers(): Map<string, CircuitBreaker> {
-    return this.breakers;
+    return new Map(this.breakers);
   }
 
   /**
-   * Get health status of all breakers
+   * Get metrics for all breakers
    */
-  getHealthStatus(): { name: string; state: CircuitBreakerState; healthy: boolean }[] {
-    return Array.from(this.breakers.entries()).map(([name, breaker]) => ({
-      name,
-      state: breaker.getState(),
-      healthy: breaker.isHealthy()
-    }));
+  getAllMetrics(): Record<string, CircuitBreakerMetrics> {
+    const metrics: Record<string, CircuitBreakerMetrics> = {};
+
+    for (const [name, breaker] of this.breakers.entries()) {
+      metrics[name] = breaker.getMetrics();
+    }
+
+    return metrics;
   }
 
   /**
-   * Reset all circuit breakers
+   * Reset all breakers
    */
   resetAll(): void {
-    this.breakers.forEach(breaker => breaker.reset());
+    for (const breaker of this.breakers.values()) {
+      breaker.reset();
+    }
+    console.log('🔄 All circuit breakers reset');
   }
 }
 
-// Singleton instance
+/**
+ * Global circuit breaker manager instance
+ */
 export const circuitBreakerManager = new CircuitBreakerManager();

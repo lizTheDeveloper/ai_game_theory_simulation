@@ -1,204 +1,291 @@
 /**
- * Structured Logger for MARCUS Platform
+ * Structured Logging with Winston
  *
- * Provides pino-based structured logging with context propagation,
- * trace correlation, and Loki integration.
+ * Production-grade logging with:
+ * - Correlation IDs for request tracking
+ * - Multiple transports (console, file, syslog)
+ * - Log levels (error, warn, info, debug)
+ * - JSON formatting for machine parsing
+ * - Automatic metadata (timestamp, hostname, PID)
  *
  * Usage:
- *   logger.info({ citationId: 'abc123', duration: 45 }, 'Citation analyzed');
- *   logger.error({ error: err, component: 'orchestrator' }, 'Analysis failed');
+ * ```typescript
+ * import { logger, setCorrelationId } from './utils/logger';
+ *
+ * // Set correlation ID for request tracking
+ * setCorrelationId('req-12345');
+ *
+ * logger.info('User logged in', { userId: 123, email: 'user@example.com' });
+ * logger.error('Database connection failed', { error: err.message });
+ * ```
+ *
+ * @module utils/logger
+ * @author Marcus (Platform Engineer)
  */
 
-import pino from 'pino';
-import { trace, context } from '@opentelemetry/api';
+import winston from 'winston';
+import * as os from 'os';
+import * as path from 'path';
 
-// Log levels: trace, debug, info, warn, error, fatal
-const LOG_LEVEL = process.env.LOG_LEVEL || 'info';
-const NODE_ENV = process.env.NODE_ENV || 'development';
+/**
+ * Correlation ID storage (AsyncLocalStorage would be better in Node 14+)
+ */
+const correlationStore = new Map<string, string>();
+let currentCorrelationId: string | null = null;
 
-// Pino logger configuration
-const logger = pino({
-  level: LOG_LEVEL,
+/**
+ * Set correlation ID for current execution context
+ */
+export function setCorrelationId(id: string): void {
+  currentCorrelationId = id;
+}
 
-  // Format configuration
-  formatters: {
-    level: (label) => ({ level: label }),
-    bindings: (bindings) => ({
-      pid: bindings.pid,
-      hostname: bindings.hostname,
-    }),
-  },
+/**
+ * Get current correlation ID
+ */
+export function getCorrelationId(): string | null {
+  return currentCorrelationId;
+}
 
-  // Timestamp using ISO 8601
-  timestamp: pino.stdTimeFunctions.isoTime,
+/**
+ * Generate correlation ID
+ */
+export function generateCorrelationId(): string {
+  return \`\${Date.now()}-\${Math.random().toString(36).substr(2, 9)}\`;
+}
 
-  // Base context (included in every log)
-  base: {
-    component: 'marcus-platform',
-    environment: NODE_ENV,
-    version: process.env.VERSION || 'dev',
-  },
-
-  // Serializers for common objects
-  serializers: {
-    error: pino.stdSerializers.err,
-    req: pino.stdSerializers.req,
-    res: pino.stdSerializers.res,
-  },
-
-  // Redact sensitive fields
-  redact: {
-    paths: [
-      'password',
-      'token',
-      'authorization',
-      'cookie',
-      'apiKey',
-      'secret',
-      '*.password',
-      '*.token',
-      '*.apiKey',
-      '*.secret',
-    ],
-    censor: '[REDACTED]',
-  },
-
-  // Pretty print in development
-  transport: NODE_ENV === 'development' ? {
-    target: 'pino-pretty',
-    options: {
-      colorize: true,
-      translateTime: 'HH:MM:ss Z',
-      ignore: 'pid,hostname',
-    },
-  } : undefined,
+/**
+ * Custom log format with correlation ID
+ */
+const correlationFormat = winston.format((info) => {
+  if (currentCorrelationId) {
+    info.correlationId = currentCorrelationId;
+  }
+  return info;
 });
 
 /**
- * Enhanced logger with trace context injection
+ * Winston logger configuration
  */
-export class ContextualLogger {
-  private baseLogger: pino.Logger;
+const logLevel = process.env.LOG_LEVEL || 'info';
+const logDir = process.env.LOG_DIR || 'logs';
 
-  constructor(logger: pino.Logger) {
-    this.baseLogger = logger;
-  }
+// Create custom formats
+const consoleFormat = winston.format.combine(
+  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+  winston.format.errors({ stack: true }),
+  correlationFormat(),
+  winston.format.colorize(),
+  winston.format.printf(({ timestamp, level, message, correlationId, ...metadata }) => {
+    let msg = \`\${timestamp} [\${level}]\`;
 
-  /**
-   * Inject OpenTelemetry trace context into log record
-   */
-  private enrichWithTraceContext(obj: any = {}): any {
-    const span = trace.getSpan(context.active());
-    if (span) {
-      const spanContext = span.spanContext();
-      return {
-        ...obj,
-        trace_id: spanContext.traceId,
-        span_id: spanContext.spanId,
-      };
+    if (correlationId) {
+      msg += \` [CID:\${correlationId}]\`;
     }
-    return obj;
-  }
 
-  /**
-   * Create child logger with additional context
-   */
-  child(bindings: pino.Bindings): ContextualLogger {
-    return new ContextualLogger(this.baseLogger.child(bindings));
-  }
+    msg += \`: \${message}\`;
 
-  /**
-   * Log levels with trace context injection
-   */
-  trace(obj: any, msg?: string): void {
-    this.baseLogger.trace(this.enrichWithTraceContext(obj), msg);
-  }
+    if (Object.keys(metadata).length > 0) {
+      msg += \` \${JSON.stringify(metadata)}\`;
+    }
 
-  debug(obj: any, msg?: string): void {
-    this.baseLogger.debug(this.enrichWithTraceContext(obj), msg);
-  }
+    return msg;
+  })
+);
 
-  info(obj: any, msg?: string): void {
-    this.baseLogger.info(this.enrichWithTraceContext(obj), msg);
-  }
+const fileFormat = winston.format.combine(
+  winston.format.timestamp(),
+  winston.format.errors({ stack: true }),
+  correlationFormat(),
+  winston.format.json()
+);
 
-  warn(obj: any, msg?: string): void {
-    this.baseLogger.warn(this.enrichWithTraceContext(obj), msg);
-  }
+// Create transports
+const transports: winston.transport[] = [
+  // Console transport (for development and systemd journal)
+  new winston.transports.Console({
+    format: consoleFormat,
+    level: logLevel,
+  }),
 
-  error(obj: any, msg?: string): void {
-    this.baseLogger.error(this.enrichWithTraceContext(obj), msg);
-  }
+  // File transport for all logs
+  new winston.transports.File({
+    filename: path.join(logDir, 'marcus-platform.log'),
+    format: fileFormat,
+    level: logLevel,
+    maxsize: 10 * 1024 * 1024,  // 10MB
+    maxFiles: 10,
+    tailable: true,
+  }),
 
-  fatal(obj: any, msg?: string): void {
-    this.baseLogger.fatal(this.enrichWithTraceContext(obj), msg);
-  }
+  // File transport for errors only
+  new winston.transports.File({
+    filename: path.join(logDir, 'marcus-platform-error.log'),
+    format: fileFormat,
+    level: 'error',
+    maxsize: 10 * 1024 * 1024,  // 10MB
+    maxFiles: 10,
+    tailable: true,
+  }),
+];
 
-  /**
-   * Security audit logging (always logged, never dropped)
-   */
-  audit(event: {
-    event_type: 'auth' | 'authz' | 'admin' | 'config' | 'security';
-    user_id?: string;
-    ip_address?: string;
-    resource?: string;
-    action: string;
-    result: 'success' | 'failure';
-    metadata?: any;
-  }, msg: string): void {
-    this.baseLogger.info({
-      ...this.enrichWithTraceContext(),
-      level: 'audit',
-      ...event,
-    }, msg);
-  }
+/**
+ * Winston logger instance
+ */
+export const logger = winston.createLogger({
+  level: logLevel,
+  defaultMeta: {
+    service: 'marcus-platform',
+    hostname: os.hostname(),
+    pid: process.pid,
+    env: process.env.NODE_ENV || 'development',
+  },
+  transports,
+  exitOnError: false,
+});
 
-  /**
-   * Performance logging with duration tracking
-   */
-  performance(operation: string, duration: number, metadata?: any): void {
-    this.baseLogger.info({
-      ...this.enrichWithTraceContext(),
-      operation,
+/**
+ * Create a child logger with additional default metadata
+ */
+export function createChildLogger(metadata: Record<string, any>): winston.Logger {
+  return logger.child(metadata);
+}
+
+/**
+ * Log levels:
+ * - error: Error messages that require attention
+ * - warn: Warning messages about potential issues
+ * - info: Informational messages about normal operation
+ * - debug: Detailed debugging information
+ */
+
+/**
+ * Middleware to add correlation ID to Express requests
+ *
+ * Usage:
+ * ```typescript
+ * import { correlationMiddleware } from './utils/logger';
+ * app.use(correlationMiddleware);
+ * ```
+ */
+export function correlationMiddleware(req: any, res: any, next: Function): void {
+  // Try to get correlation ID from header, otherwise generate new one
+  const correlationId = req.headers['x-correlation-id'] || generateCorrelationId();
+
+  // Store correlation ID
+  setCorrelationId(correlationId);
+
+  // Add to response headers
+  res.setHeader('X-Correlation-ID', correlationId);
+
+  // Add to request object
+  req.correlationId = correlationId;
+
+  // Clear correlation ID when response finishes
+  res.on('finish', () => {
+    setCorrelationId('');
+  });
+
+  next();
+}
+
+/**
+ * Express request logger middleware
+ *
+ * Usage:
+ * ```typescript
+ * import { requestLogger } from './utils/logger';
+ * app.use(requestLogger);
+ * ```
+ */
+export function requestLogger(req: any, res: any, next: Function): void {
+  const startTime = Date.now();
+
+  // Log request
+  logger.info('Incoming request', {
+    method: req.method,
+    url: req.url,
+    ip: req.ip || req.socket.remoteAddress,
+    userAgent: req.headers['user-agent'],
+  });
+
+  // Log response
+  res.on('finish', () => {
+    const duration = Date.now() - startTime;
+
+    logger.info('Request completed', {
+      method: req.method,
+      url: req.url,
+      statusCode: res.statusCode,
       duration,
+    });
+  });
+
+  next();
+}
+
+/**
+ * Log uncaught exceptions and unhandled rejections
+ */
+export function setupExceptionHandlers(): void {
+  process.on('uncaughtException', (err: Error) => {
+    logger.error('Uncaught Exception', {
+      error: err.message,
+      stack: err.stack,
+    });
+
+    // Give logger time to flush before exiting
+    setTimeout(() => {
+      process.exit(1);
+    }, 1000);
+  });
+
+  process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
+    logger.error('Unhandled Promise Rejection', {
+      reason: reason?.message || reason,
+      stack: reason?.stack,
+    });
+  });
+
+  // Log when process is terminating
+  process.on('SIGTERM', () => {
+    logger.info('SIGTERM received, shutting down gracefully');
+  });
+
+  process.on('SIGINT', () => {
+    logger.info('SIGINT received, shutting down gracefully');
+  });
+}
+
+/**
+ * Performance logger for timing operations
+ */
+export class PerformanceTimer {
+  private startTime: number;
+  private name: string;
+
+  constructor(name: string) {
+    this.name = name;
+    this.startTime = Date.now();
+  }
+
+  end(metadata?: Record<string, any>): void {
+    const duration = Date.now() - this.startTime;
+
+    logger.info(\`Performance: \${this.name}\`, {
       ...metadata,
-    }, `Operation completed: ${operation}`);
+      duration,
+      durationMs: duration,
+    });
   }
 }
 
-// Export singleton instance
-export const contextualLogger = new ContextualLogger(logger);
-
-// Export default pino logger for compatibility
-export default logger;
-
 /**
- * Example usage patterns:
- *
- * // Basic info log
- * contextualLogger.info({ citationId: 'abc123' }, 'Citation analyzed');
- *
- * // Error with stack trace
- * contextualLogger.error({ error: err, component: 'orchestrator' }, 'Analysis failed');
- *
- * // Child logger with component context
- * const agentLogger = contextualLogger.child({ component: 'citation-agent', agentId: 'agent-1' });
- * agentLogger.info({ integrityScore: 0.85 }, 'Citation evaluated');
- *
- * // Security audit
- * contextualLogger.audit({
- *   event_type: 'auth',
- *   user_id: 'user-123',
- *   ip_address: '192.168.1.1',
- *   action: 'login',
- *   result: 'success'
- * }, 'User authenticated');
- *
- * // Performance tracking
- * const startTime = Date.now();
- * // ... do work ...
- * contextualLogger.performance('citation.analyze', Date.now() - startTime, {
- *   citationId: 'abc123',
- *   agentCount: 10
- * });
+ * Create a performance timer
  */
+export function startTimer(name: string): PerformanceTimer {
+  return new PerformanceTimer(name);
+}
+
+// Export winston instance for advanced usage
+export { winston };
