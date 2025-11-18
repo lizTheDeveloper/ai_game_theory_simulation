@@ -71,7 +71,7 @@ export interface CircuitBreakerMetrics {
  */
 export class CircuitBreakerOpenError extends Error {
   constructor(name?: string) {
-    super(\`Circuit breaker \${name || 'unnamed'} is OPEN - request rejected\`);
+    super(`Circuit breaker \${name || 'unnamed'} is OPEN - request rejected`);
     this.name = 'CircuitBreakerOpenError';
   }
 }
@@ -81,7 +81,7 @@ export class CircuitBreakerOpenError extends Error {
  */
 export class CircuitBreakerTimeoutError extends Error {
   constructor(timeout: number, name?: string) {
-    super(\`Circuit breaker \${name || 'unnamed'} request timed out after \${timeout}ms\`);
+    super(`Circuit breaker \${name || 'unnamed'} request timed out after \${timeout}ms`);
     this.name = 'CircuitBreakerTimeoutError';
   }
 }
@@ -130,7 +130,7 @@ export class CircuitBreaker {
     if (this.state === CircuitState.OPEN) {
       const now = Date.now();
       if (now >= this.nextAttemptTime) {
-        console.log(\`🔄 Circuit breaker \${this.config.name || 'unnamed'}: Transitioning to HALF_OPEN\`);
+        console.log(`🔄 Circuit breaker \${this.config.name || 'unnamed'}: Transitioning to HALF_OPEN`);
         this.state = CircuitState.HALF_OPEN;
         this.consecutiveSuccesses = 0;
       } else {
@@ -185,7 +185,7 @@ export class CircuitBreaker {
     if (this.state === CircuitState.HALF_OPEN) {
       // Check if we should close circuit
       if (this.consecutiveSuccesses >= this.config.successThreshold) {
-        console.log(\`✅ Circuit breaker \${this.config.name || 'unnamed'}: Closing circuit after \${this.consecutiveSuccesses} successes\`);
+        console.log(`✅ Circuit breaker \${this.config.name || 'unnamed'}: Closing circuit after \${this.consecutiveSuccesses} successes`);
         this.state = CircuitState.CLOSED;
         this.failures = 0;
         this.consecutiveFailures = 0;
@@ -203,16 +203,16 @@ export class CircuitBreaker {
     this.consecutiveSuccesses = 0;
     this.lastFailureTime = new Date();
 
-    console.error(\`❌ Circuit breaker \${this.config.name || 'unnamed'}: Failure (\${this.consecutiveFailures}/\${this.config.failureThreshold})\`, err.message);
+    console.error(`❌ Circuit breaker \${this.config.name || 'unnamed'}: Failure (\${this.consecutiveFailures}/\${this.config.failureThreshold})`, err.message);
 
     if (this.state === CircuitState.HALF_OPEN) {
       // Failed during half-open, reopen circuit
-      console.warn(\`⚠️ Circuit breaker \${this.config.name || 'unnamed'}: Reopening circuit after failure in HALF_OPEN state\`);
+      console.warn(`⚠️ Circuit breaker \${this.config.name || 'unnamed'}: Reopening circuit after failure in HALF_OPEN state`);
       this.openCircuit();
     } else if (this.state === CircuitState.CLOSED) {
       // Check if we should open circuit
       if (this.consecutiveFailures >= this.config.failureThreshold) {
-        console.warn(\`🚨 Circuit breaker \${this.config.name || 'unnamed'}: Opening circuit after \${this.consecutiveFailures} consecutive failures\`);
+        console.warn(`🚨 Circuit breaker \${this.config.name || 'unnamed'}: Opening circuit after \${this.consecutiveFailures} consecutive failures`);
         this.openCircuit();
       }
     }
@@ -224,7 +224,7 @@ export class CircuitBreaker {
   private openCircuit(): void {
     this.state = CircuitState.OPEN;
     this.nextAttemptTime = Date.now() + this.config.resetTimeout;
-    console.warn(\`⏰ Circuit breaker \${this.config.name || 'unnamed'}: Next attempt at \${new Date(this.nextAttemptTime).toISOString()}\`);
+    console.warn(`⏰ Circuit breaker \${this.config.name || 'unnamed'}: Next attempt at \${new Date(this.nextAttemptTime).toISOString()}`);
   }
 
   /**
@@ -265,7 +265,7 @@ export class CircuitBreaker {
     this.lastFailureTime = null;
     this.lastSuccessTime = null;
     this.nextAttemptTime = 0;
-    console.log(\`🔄 Circuit breaker \${this.config.name || 'unnamed'}: Reset to CLOSED state\`);
+    console.log(`🔄 Circuit breaker \${this.config.name || 'unnamed'}: Reset to CLOSED state`);
   }
 
   /**
@@ -273,7 +273,7 @@ export class CircuitBreaker {
    */
   forceOpen(): void {
     this.openCircuit();
-    console.warn(\`⚠️ Circuit breaker \${this.config.name || 'unnamed'}: Manually forced to OPEN state\`);
+    console.warn(`⚠️ Circuit breaker \${this.config.name || 'unnamed'}: Manually forced to OPEN state`);
   }
 
   /**
@@ -283,7 +283,7 @@ export class CircuitBreaker {
     this.state = CircuitState.CLOSED;
     this.failures = 0;
     this.consecutiveFailures = 0;
-    console.log(\`✅ Circuit breaker \${this.config.name || 'unnamed'}: Manually forced to CLOSED state\`);
+    console.log(`✅ Circuit breaker \${this.config.name || 'unnamed'}: Manually forced to CLOSED state`);
   }
 }
 
@@ -303,12 +303,12 @@ export class CircuitBreakerManager {
 
     if (!breaker) {
       if (!config) {
-        throw new Error(\`Circuit breaker \${name} not found and no config provided\`);
+        throw new Error(`Circuit breaker \${name} not found and no config provided`);
       }
 
       breaker = new CircuitBreaker({ ...config, name });
       this.breakers.set(name, breaker);
-      console.log(\`✅ Created circuit breaker: \${name}\`);
+      console.log(`✅ Created circuit breaker: \${name}`);
     }
 
     return breaker;

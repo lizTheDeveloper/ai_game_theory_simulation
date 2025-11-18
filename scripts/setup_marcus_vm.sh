@@ -188,6 +188,14 @@ sudo -u ubuntu npm install
 # Build TypeScript
 sudo -u ubuntu npm run build
 
+# Security: Fix npm vulnerabilities
+print_step "Fixing npm security vulnerabilities..."
+sudo -u ubuntu npm audit fix
+
+# Security: Upgrade vulnerable Python packages
+print_step "Upgrading Python security packages..."
+python3 -m pip install --upgrade setuptools>=78.1.1 cryptography>=43.0.1
+
 # Install Python dependencies
 python3 -m pip install anthropic psycopg2-binary redis
 
