@@ -4,7 +4,167 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
-<<<<<<< HEAD
+## 📚 Research Update: AMOC Collapse Risk (November 15, 2025)
+
+**Summary:** Updated climate tipping point research with 2024-2025 AMOC collapse studies.
+
+**Citations Added:**
+1. **van Westen et al. (2024) Science Advances**: Early warning signals detected, AMOC "on route to tipping"
+2. **Boers et al. (2024)**: 59±17% collapse probability before 2050, timeline 2037-2064
+3. **van Westen et al. (2025) GRL**: Climate impacts quantified (10-30°C winter cooling in northern Europe, 123mm precipitation loss, arable land drops from 32% to 7% in Great Britain)
+
+**Key Finding:** AMOC collapse could occur within 12-27 years (not centuries), representing major escalation in near-term climate catastrophic risk.
+
+**Files Changed:**
+- `research/climate_tipping_timescales_20251106.md`
+- `docs/wiki/BIBLIOGRAPHY.md`
+
+**Commit:** a84666f
+
+---
+
+## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
+
+**🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
+
+**Summary:** Fixed Tier2PhysicalSystemsPhase order violation caught by runtime validation.
+
+**Issue:** Runtime validation detected that Tier2PhysicalSystemsPhase (order 18.5) depends on planetary_boundaries phase (order 21.0), creating an order violation.
+
+**Fix:**
+- Moved Tier2PhysicalSystemsPhase from order 18.5 → 21.1 (after planetary_boundaries dependency)
+- Added readonly modifiers to id/name/order fields for diagnostic tool compatibility
+
+**Root Cause:** Static dependency analysis missed this violation; runtime validation caught it during execution.
+
+**Validation:** Diagnostic tool confirms 0 violations across all 81 phases.
+
+**Files Changed:** `src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts`
+
+---
+
+**🐛 BUG FIX: Backwards Dependency Removal** (Nov 15, 2025, commit afbffc0)
+
+**Summary:** Fixed 8+ backwards dependencies and 2 invalid phase ID references that blocked Monte Carlo validation.
+
+**Context:**
+- Commit eda20e125 (Nov 15) added readonly dependencies to 26 phases
+- Order constraints were not validated, introducing systemic backwards dependencies
+- Monte Carlo validation blocked by dependency order violations
+
+**Backwards Dependencies Fixed (8):**
+1. `GovernmentActionsPhase` (9.0) → `economic-system` (31.0) - Removed
+2. `ExtremeWeatherEventsPhase` (15.2) → `climate_system` (34.0) - Removed
+3. `WetBulbTemperaturePhase` (20.45) → `climate_system` (34.0) - Removed
+4. `TechTreePhase` (12.5) → `economic-system` (31.0) - Removed
+5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed (Note: Phase order later changed to 21.1 in cb5f2e0)
+6. `StochasticInnovationPhase` (8.5) → `tech-tree` (12.5) - Removed
+7. `CrisisPointsPhase` (23.0) → `crisis-detection` (36.0) - Removed
+8. `climate_system` ID mismatch (hyphen vs underscore) - Fixed
+
+**Invalid Phase ID Fixes (2):**
+- `HumanEnhancementPhase`: `society-agent-actions` → `society-actions` (typo correction)
+- `ClimateDeploymentPhase` + `AntimicrobialResistancePhase`: Removed non-existent `technology-deployment` dependency
+
+**Root Cause:** Phases declared dependencies based on what state they *read*, without considering execution order. Reading state from "previous step" is valid; declaring dependency on future phase (backwards ordering) is invalid.
+
+**Impact:**
+- Unblocks TIER 1 CRITICAL climate effectiveness validation suite
+- Prevents runtime dependency violation crashes
+- Establishes pattern: dependencies = read-after-write, not just "reads state"
+
+**Known Remaining Issues:**
+- Additional backwards dependencies likely exist (orchestrator identified `ai_suffering` → `ai-lifecycle`)
+- Comprehensive audit needed across all 95 phases
+
+**Files Changed:** 10 phase files in `src/simulation/engine/phases/`
+
+**Documentation Updated:**
+- `docs/wiki/mechanics/phase-dependencies.md` - Added "Critical Constraint: No Backwards Dependencies" section
+- Examples of valid vs invalid patterns
+- Phase ID naming conventions (underscore vs hyphen)
+- Validation checklist for declaring dependencies
+
+**Next Steps:** Route comprehensive dependency audit to simulation-maintainer for remaining violations.
+
+---
+
+## 🔧 Worker Lock File Management (November 15, 2025)
+
+**🔧 INFRASTRUCTURE: Lock File Cleanup** (Nov 15, 2025, commit 5e28391)
+
+**Summary:** Fixed worker lock file management to prevent stale PID conflicts.
+
+**Problem:**
+- Lock files (`.autonomous-worker.lock`, `.researcher-worker.lock`) were tracked in git
+- Stale PIDs from previous sessions caused worker execution blocks
+- Git restore operations reintroduced old lock files with invalid PIDs
+
+**Solution:**
+- Removed lock files from git tracking
+- Added `*.lock` to `.gitignore`
+- Lock files now ephemeral runtime state only
+
+**Impact:**
+- Prevents autonomous-worker-watcher health check failures
+- Eliminates lock file git conflicts
+- Cleaner repository state (runtime files not committed)
+
+**Files Changed:**
+- `.gitignore` - Added `*.lock` pattern
+- Deleted `.autonomous-worker.lock` and `.researcher-worker.lock` from tracking
+
+---
+
+## ✅ Architecture Review and Validation (November 14, 2025)
+
+**🏛️ VALIDATION: Comprehensive Architecture Review** (Nov 14, 2025, commit 8f51488)
+
+**Summary:** Architecture-skeptic agent performed comprehensive integration review; autonomous worker validated findings and corrected false positives.
+
+**Review Process:**
+1. **Initial Review:** architecture-skeptic identified 2 CRITICAL, 3 HIGH, 5 MEDIUM issues
+2. **Validation:** autonomous-worker tested and verified each CRITICAL claim
+3. **Correction:** Both CRITICAL issues determined to be false positives
+
+**False Positives Identified:**
+
+1. **CRITICAL-1: Memory Leak in PhaseOrchestrator** ❌ FALSE POSITIVE
+   - **Claim:** `slice(-999)` allows unbounded growth
+   - **Reality:** Sliding window correctly maintains exactly 1000 elements
+   - **Evidence:** Test script verified array stays at 1000 across 2000 iterations
+   - **Status:** Working as designed, no fix needed
+
+2. **CRITICAL-2: Math.random() Breaking Determinism** ❌ FALSE POSITIVE
+   - **Claim:** 4 files use Math.random() in simulation code
+   - **Reality:** Zero usage in `src/simulation/`, only in UI code (`src/lib/`)
+   - **Evidence:** Scoped grep shows no matches in simulation directory
+   - **Status:** Determinism intact (Issue #11 verified Nov 14)
+
+**Architecture Health Score:**
+- **Original:** 6/10 (with 2 CRITICAL issues)
+- **Corrected:** 8.0/10 (CRITICAL issues invalid)
+- **Roadmap Score:** 9.5/10 (Nov 14)
+- **Conclusion:** Both scores valid from different perspectives; project architecturally sound
+
+**Real Issues (MEDIUM Priority):**
+- 96 phases (target 40-50 for performance)
+- Test coverage gaps (45 test files for 96 phases)
+- Assertion adoption (79% vs 95% target)
+
+**Session Outcome:**
+- Validation prevented unnecessary emergency work
+- Confirmed project in excellent state (all CRITICAL/HIGH roadmap items complete)
+- Documentation fully current (wiki updated Nov 14 21:20)
+
+**Files:**
+- `reviews/architecture_integration_review_20251114.md` (original review, 279 lines)
+- `reviews/architecture_review_20251114_corrections.md` (validation + corrections, 218 lines)
+
+**Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
+
+---
+
 ## ✅ Recent Changes (November 12, 2025)
 
 **🤖 INFRASTRUCTURE: Intelligent Auto-Remediation for Stuck Orchestrator States** (Nov 12, 2025, commit 9764a32)
@@ -219,9 +379,9 @@ Without risking data loss or naive destructive operations.
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
-=======
-=======
->>>>>>> origin/auto/researcher-20251111_003001
+
+---
+
 ## ✅ Recent Changes (November 11, 2025)
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
@@ -254,10 +414,6 @@ Without risking data loss or naive destructive operations.
 - research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
-<<<<<<< HEAD
->>>>>>> origin/auto/researcher-20251111_003001
-=======
->>>>>>> origin/auto/researcher-20251111_003001
 
 ---
 
