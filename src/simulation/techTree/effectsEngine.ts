@@ -1648,6 +1648,27 @@ function applyRegionalEffects(
           // Reduce biogeochemical flows boundary value directly
           if (gameState.planetaryBoundariesSystem?.boundaries?.biogeochemical_flows) {
             const boundary = gameState.planetaryBoundariesSystem.boundaries.biogeochemical_flows;
+<<<<<<< HEAD
+=======
+            boundary.currentValue = assertFinite(Math.max(
+              0,
+              boundary.currentValue - value * 0.01
+            ), {
+              location: 'applyRegionalEffects:biogeochemicalFlowsReduction',
+              valueName: 'currentValue',
+              month: gameState.currentMonth
+            });
+            // Trigger boundary recovery tracking
+            triggerBoundaryRecovery(gameState, 'biogeochemical_flows');
+          }
+          break;
+
+        // ========== POLLUTION ==========
+        case 'pollutionReduction':
+          // Reduce pollution levels
+          if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
+>>>>>>> origin/auto/worker-20251116_220001
             boundary.currentValue = assertFinite(Math.max(
               0,
               boundary.currentValue - value * 0.01

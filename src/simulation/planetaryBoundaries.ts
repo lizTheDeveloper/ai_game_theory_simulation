@@ -831,6 +831,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/auto/worker-20251116_170001
     // TIER 2 HIGH: Update legacy nutrient stocks and nitrogen-food coupling
@@ -999,10 +1000,19 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // This is the KEY integration - updateLegacyNutrientStocks mutates stocks AND returns effective values
     let effectiveNitrogen = currentNitrogenInputMonthly;
     let effectivePhosphorus = currentPhosphorusInputMonthly;
+=======
+    // TIER 2 HIGH: Update legacy nutrient stocks and get effective pollution
+    // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
+    // Research: Lake Erie internal loading = external loading (10,000 MT P/year)
+    // Nitrogen soil stocks: 30 year half-life, Phosphorus sediment: 100 year half-life
+    let effectiveNitrogen = 10.0;  // Mt N/month baseline (120 Mt/year ÷ 12)
+    let effectivePhosphorus = 2.1;  // Mt P/month baseline (25 Mt/year ÷ 12)
+>>>>>>> origin/auto/worker-20251116_220001
 
     if (system.legacyNutrientStock) {
       // Import the update function dynamically to avoid circular dependencies
       const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
+<<<<<<< HEAD
       const effectivePollution = updateLegacyNutrientStocks(
         state,
         currentNitrogenInputMonthly,
@@ -1042,15 +1052,44 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       // At boundary value 2.94, legacy contributes ~0.75 to boundary value
       const LEGACY_SCALING_FACTOR = 0.025;  // Calibrated to match Lake Erie case (50% internal loading)
       legacyContribution = (effectiveNitrogen + effectivePhosphorus - currentNInput - currentPInput) * LEGACY_SCALING_FACTOR;
+=======
+
+      // Current monthly inputs (baseline: 120 Mt N/year, 25 Mt P/year)
+      // TODO: Get from actual agricultural nitrogen/phosphorus use when available
+      const currentNitrogenInput = 10.0;  // Mt N/month (baseline)
+      const currentPhosphorusInput = 2.1;  // Mt P/month (baseline)
+
+      // Update stocks and get effective pollution (current + legacy releases)
+      const effectivePollution = updateLegacyNutrientStocks(
+        state,
+        currentNitrogenInput,
+        currentPhosphorusInput
+      );
+
+      effectiveNitrogen = effectivePollution.effectiveNitrogen;
+      effectivePhosphorus = effectivePollution.effectivePhosphorus;
+>>>>>>> origin/auto/worker-20251116_220001
     }
 
-    // Boundary value = baseline depletion + legacy contribution
-    // This means: reducing current inputs helps, but legacy stocks slow recovery dramatically
-    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 + depletion * 0.5 + legacyContribution), {
+    // Boundary value calculation
+    // Baseline (2025): 2.94 (294% of safe boundary)
+    // Scale by effective pollution vs baseline pollution
+    // Baseline total: 12.1 Mt/month (10 N + 2.1 P)
+    const baselinePollution = 12.1;
+    const currentEffectivePollution = effectiveNitrogen + effectivePhosphorus;
+    const pollutionRatio = currentEffectivePollution / baselinePollution;
+
+    // Boundary value = baseline × pollution ratio + depletion factor
+    // Depletion factor: phosphorus reserves declining increases boundary value
+    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 * pollutionRatio + depletion * 0.5), {
       location: 'updatePlanetaryBoundaries:biogeochemical',
       valueName: 'biogeochemical_flows.currentValue',
       month: state.currentMonth,
+<<<<<<< HEAD
       additionalInfo: { reserves, depletion, legacyContribution, effectiveNitrogen, effectivePhosphorus }
+=======
+      additionalInfo: { reserves, depletion, effectiveNitrogen, effectivePhosphorus, pollutionRatio }
+>>>>>>> origin/auto/worker-20251116_220001
     });
 >>>>>>> origin/auto/worker-20251116_170001
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
