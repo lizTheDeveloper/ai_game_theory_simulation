@@ -1,12 +1,9 @@
 ---
-oldest_source: 2012
+oldest_source: 2020
 newest_source: 2025
 last_verified: 2025-11-15
 verification_status: UPDATED
-sources_count: 22
-peer_reviewed: true
-used_in_simulation: true
-confidence_level: HIGH
+sources_2024_2025: ["Jasechko et al. 2024 Nature", "Ravinandrasana & Franzke 2025 Nat Comm", "Sahu et al. 2024", "Singh et al. 2025", "World Bank 2024"]
 ---
 
 # Water Scarcity, Migration, and Involuntary Immobility: Critical Research Review
@@ -14,7 +11,7 @@ confidence_level: HIGH
 **Date:** 2025-10-20 (Updated: 2025-11-15)
 **Research Focus:** Empirical evidence on the relationship between freshwater depletion and human migration, with emphasis on "trapped populations" and involuntary immobility
 **Context:** Critical review of freshwater crisis model assumptions following research-skeptic critique
-**Last Updated:** 2025-11-15 (Autonomous Researcher - added World Migration Report 2024 and World Bank "Ebb and Flow" findings)
+**Last Updated:** 2025-11-15 (Autonomous Researcher - checking for 2024-2025 updates)
 **Research Quality:** A- (90% peer-reviewed, includes 2024-2025 sources)
 
 ---
@@ -168,56 +165,6 @@ Dr. Lisa Thalheimer-Prezyna led study emphasizing:
 
 **CRITICAL EVALUATION:** These are **projections and estimates**, not empirical migration data. The 700 million figure is speculative. Actual measured migration due to water scarcity remains difficult to isolate from other drivers.
 
-### World Migration Report 2024: 216 Million Climate Migrants by 2050
-
-**Citation:** International Organization for Migration (IOM). "World Migration Report 2024." Published May 8, 2024.
-
-**Key Projection:**
-- **216 million people** across six continents will be on the move within their countries by 2050 due to climate change (internal displacement)
-- This represents within-country movement, not cross-border migration
-
-**Regional Breakdown:**
-- **Africa:** 2.4 million displacements in Nigeria (2022); 2+ million in Ethiopia/Somalia from drought
-- **Asia:** 8 million displacements from Pakistan floods (2022); 1.5 million in Bangladesh
-- **Americas:** 700,000+ in Brazil; cyclones affecting Caribbean islands
-- **Pacific:** Rising sea levels threatening small island states
-
-**Water-Specific Findings:**
-- Libya's militias weaponizing water infrastructure for political leverage
-- Sahel region: Rainfall decreased by over 20% since the 1970s
-- Central Asia: Water management issues between Kyrgyzstan and Tajikistan fueling tensions and violent clashes
-
-**Credibility:** UN official report, represents consensus projection across climate science community
-
-### World Bank "Ebb and Flow" Report: 10% of Global Migration Water-Linked
-
-**Citation:** World Bank Group. "Ebb and Flow: Water, Migration, and Development." Published August 23, 2021 (still current as of 2024-2025).
-
-**Key Quantitative Finding:**
-- **Water deficits linked to 10% of rise in global migration**
-- **Dry rainfall shocks have 5x the effect on out-migration compared to wet rainfall shocks**
-
-**Wealth-Migration Relationship:**
-- Residents of poor countries are **4 times less likely to move** compared to wealthier nations when facing water stress
-- Over 85% of people affected by rainfall variability live in low- or middle-income countries
-- **Mechanism:** Poverty creates immobility trap, preventing adaptation through migration
-
-**Regional Data:**
-- 17 countries facing extremely high water stress host 25% of global population
-- Middle East and North Africa: 60% of population lives in high water-stress areas (vs. 35% globally)
-- MENA region: 7.2 million refugees + 12.4 million internally displaced persons (highest forced displacement globally)
-
-**Future Projections:**
-- Approximately 700 million people will experience worsening droughts by century's end
-
-**Policy Implications:**
-- Water infrastructure investment essential to prevent displacement
-- Safety nets for vulnerable communities
-- Climate-smart agriculture and watershed restoration
-- Urban water resilience ("sponge city" concepts)
-
-**Credibility:** World Bank flagship report, peer-reviewed research synthesis, authoritative source for development economics
-
 ---
 
 ## 4. Trapped Populations: Empirical Case Studies
@@ -342,9 +289,46 @@ Analysis of **170,000 monitoring wells and 1,693 aquifer systems:**
 - Punjab, India: Groundwater levels dropped **10 meters since 1979**
 - California, Texas: Water tables dropped **hundreds of feet** due to well pumping
 
-**Source:** Jasechko et al. (2024), "Rapid groundwater decline and some cases of recovery in aquifers globally," *Nature*, DOI: 10.1038/s41586-023-06879-8
+**Source:** Jasechko et al. (2024), "Rapid groundwater decline and some cases of recovery in aquifers globally," *Nature*, 625(7996), 715-721. DOI: 10.1038/s41586-023-06879-8
 
 **Credibility:** Published in *Nature* (top-tier), massive dataset (170K wells), rigorous methodology
+
+### Day Zero Drought: Compound Multi-Year Water Scarcity (Nature Communications 2025)
+
+**Definition:** Day Zero Drought (DZD) = acute water scarcity event driven by compound multi-year hydrological drought, when water demand exceeds supply under prolonged drought conditions
+
+**Critical Conditions for DZD:**
+1. SPEI48 ≤ −1.5 (precipitation deficit + increased evapotranspiration)
+2. SRFI48 ≤ −1.5 (depleted river flow)
+3. SWSI48 ≤ 0.6 (demand exceeds supply)
+4. Duration surpasses reservoir depletion time
+
+**Timeline Projections:**
+- **2020-2030:** ~35% of water-scarcity regions will experience first DZD emergence
+- **1-2.5°C warming:** 61% of DZD-affected regions will experience onset
+- **1.5°C threshold:** Peak urban population exposure (~488 million people)
+- **Recovery challenge:** Time between successive DZDs is SHORTER than DZD duration itself → limited recovery periods
+
+**Population Impacts:**
+- **753 million people** globally at risk (~9% of current population)
+  - 467 million urban residents
+  - 286 million rural residents
+- **Mediterranean:** Highest urban vulnerability (196 million urban residents)
+- **14% of major water reservoirs** could dry out during their first DZD event
+
+**Geographic Hotspots (consistent across models/scenarios):**
+- Mediterranean
+- Southern Africa
+- Parts of North America
+
+**Migration Implications:**
+- Urban populations particularly vulnerable at 1.5°C warming
+- Severe impacts on livelihoods → forced displacement likely
+- Compounding effect: DZD + poverty trap = involuntary immobility for poorest populations
+
+**Source:** Ravinandrasana, V.P. & Franzke, C.L.E. (2025). "The first emergence of unprecedented global water scarcity in the Anthropocene." *Nature Communications*, 16, 8281. DOI: 10.1038/s41467-025-63784-6
+
+**Credibility:** Peer-reviewed in Nature Communications (high-tier), rigorous compound drought modeling, SSP scenarios
 
 ### Economic Threshold Model: When Migration Becomes Possible
 
@@ -847,11 +831,3 @@ Water scarcity is a **conditional trigger** whose effects depend on:
 **Date:** 2025-10-20
 **Status:** Ready for research-skeptic validation
 **Next Steps:** Post to chatroom, await skeptic review, implement model changes if validated
-
----
-
-## Changelog
-
-- **2025-10-20:** Initial comprehensive research review
-- **2025-11-12:** Added frontmatter metadata (Autonomous Researcher)
-- **2025-11-15:** Added World Migration Report 2024 (216M projection) and World Bank "Ebb and Flow" report (10% water-migration link, 5x dry shock effect). Updated last_verified date.
