@@ -18,67 +18,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (November 17, 2025 - Verification Complete)
+<<<<<<< HEAD
+**🟢 STABLE** (November 15, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A- (56 peer-reviewed sources, nitrogen-food 29 sources, transition mortality 27 sources) ✅ EXCELLENT
-- **Implementation Fidelity:** B+ (nitrogen-food coupling integrated, AI coordinated deployment complete, research validation PASS) ✅ GOOD
-- **Architecture Health:** B+ (architecture review claims verified - 2 FALSE, 1 overstated, no actual CRITICAL issues) ✅ GOOD
-- **System Trajectory:** 🟢 STABLE (Major TIER 1/2 features complete, technical debt acknowledged and prioritized)
+- **Research Quality:** A- (4 CRITICAL parameter fixes applied, 0 CRITICAL age issues) ✅ EXCELLENT
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
+- **Architecture Health:** B- (stable with localized issues - 2 CRITICAL, 3 HIGH identified in Nov 15 review) ⚠️ STABLE
+- **System Trajectory:** 🟢 STABLE (Architecture review complete, research parameters corrected)
 
-**Recent Completions:**
-
-**Nov 17: Architecture Review Verification - Grade B+** (commit 2f005a4)
-- ✅ **VERIFICATION COMPLETE:** Architecture review claims investigated and corrected
-- ✅ **CRITICAL-1 (Nitrogen Integration):** FALSE - Integration verified operational at planetaryBoundaries.ts:832-833
-  - Call chain: PlanetaryBoundariesPhase.execute() → updatePlanetaryBoundaries() → updateNitrogenFoodCoupling() → calculateNitrogenYieldPenalty()
-  - Phase executes every step at order 21.0
-- ⚠️ **CRITICAL-2 (Defensive Fallbacks):** OVERSTATED - 850 instances (not 1,332), deferred to MEDIUM per architectural decision
-  - CRITICAL/HIGH fixes complete (20/169)
-  - Remaining 88% have negligible bug risk vs TIER 1 opportunity cost
-- ⚠️ **CRITICAL-3 (Phase Dependencies):** LOW PRIORITY - No race condition (cross-step reads stable), documentation improvement only
-- 📖 **Documentation:** reviews/architecture_review_verification_20251117.md
-- ✅ **Status:** No actual CRITICAL stability issues found, system verified STABLE
-
-**Nov 15-17: Nitrogen-Food Coupling - Complete** (commits 5bacf9f, 403f0b1)
-- 🔬 **Research:** 29 peer-reviewed sources, 883 lines, Grade B (CONDITIONAL PASS)
-- ✅ **Implementation:** Legacy nutrient stocks (30-100 year half-lives), regional nitrogen-food coupling (3-zone yield curves)
-- ✅ **Integration:** Wired into planetary boundaries phase (order 21.0), food security degradation, initialization
-- ✅ **Validation:** Monte Carlo N=10 (240 months), zero NaN errors, determinism verified (CV < 0.01%)
-- 📊 **Impact:** God mode effectiveness 10% → 30-50%, decades-long recovery inertia from legacy stocks
-- 📖 **Archive:** plans/completed/nitrogen_food_coupling_complete_20251117.md
-
-**Nov 16: Nitrogen-Food Coupling Integration (Partial - 16% Complete)** (commit f5c244b)
-- 🔧 **BUG FIX:** Legacy nutrient stocks now update correctly (planetaryBoundaries.ts lines 798-856)
-  - Exponential decay integrated (30yr N half-life, 100yr P half-life)
-  - Effective pollution = current + legacy releases + atmospheric deposition
-  - Added assertFinite on boundary calculations
-- 🌾 **NEW TECH:** Precision Agriculture (Nitrogen) added to tech tree
-  - 27.5% N reduction, 10% P efficiency, 15% biogeochemical reduction
-  - Research-backed: Zhang et al. 2021, Science Advances 2024, Frontiers Plant Science 2024
-  - TODO: 5 remaining nitrogen-reducing technologies (2-3 hours)
-- ⚙️ **NEW EFFECTS:** nitrogenReduction and biogeochemicalFlowsReduction handlers in effectsEngine.ts
-- ✅ **VALIDATION:** Monte Carlo N=1, 12 months - PASS (no NaN, no assertion failures)
-- 📊 **METRICS:** Legacy contribution 18.6% (matches 30-year half-life), type checking passes
-- 📐 **STATUS:** Core infrastructure working, 1/6 technologies implemented, food penalties NOT integrated (requires 3-zone yield curves)
-- 🎯 **EXPECTED IMPACT:** God mode biogeochemical effectiveness 10% → 30-50% at full implementation
-- 📖 **FOUNDATION:** research/nitrogen_food_coupling_20251115.md (883 lines, 29 sources, Grade B)
-- 📖 **INTEGRATION REPORT:** logs/nitrogen_integration_report_20251116.md
-- ⚠️ **STATUS:** NEEDS VALIDATION - Research verification file created (verification_f5c244b_20251116.md)
-- 🔄 **WORKFLOW:** Queued for orchestrator validation (citation existence + claim verification required)
-
-**Nov 16: Defensive Fallback Migration Assessment** (commit f5c244b)
-- 📊 **ASSESSMENT:** Architecture skeptic comprehensive analysis (reviews/defensive_fallback_migration_assessment_20251116.md)
-- 🎯 **STATUS:** 12% complete (20/169 violations fixed, 863 total patterns)
-- ✅ **RECOMMENDATION:** HYBRID APPROACH (Grade A-)
-  - Keep 20 CRITICAL/HIGH fixes already validated
-  - Fix 86 calculation logic violations (8 hours)
-  - Document acceptable fallback zones (config, optional fields, logging)
-  - Establish coding standard for new work
-- 📈 **DISTRIBUTION:** Config/init 25%, optional types 35%, logging 15%, utilities 10%, LLM 5%, true calculations 10%
-- 💡 **KEY FINDING:** Not all `??` patterns are bugs - context matters (initialization vs calculation)
-- 📖 **REPORT:** reviews/defensive_fallback_migration_assessment_20251116.md (280 lines)
-- ⏭️ **NEXT:** Document boundaries, fix 86 true calculation violations, migrate opportunistically
+**Recent Major Achievements:**
 
 **Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
 - 📊 **Architecture Review:** Grade B- (stable with localized issues)
@@ -126,6 +75,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📖 **Review:** reviews/DEFENSIVE_FALLBACK_ARCHITECTURE_REVIEW_20251115.md
 - 💡 **Lesson:** Not all `??` patterns are bugs - context matters (initialization vs calculation)
 
+**Nov 17: Defensive Fallback Migration REVERT Recommendation** (commit 0f04bef)
+- 🔍 **Architecture Analysis:** Comprehensive review of 12% complete defensive fallback migration
+- 📊 **Finding:** 95% of identified "violations" are legitimate boolean logic, NOT bug-hiding fallbacks
+- 🎯 **Analysis:** 1024 total patterns (|| or ??) → ~970 legitimate (boolean conditions, UI, initialization), ~5 actual risks
+- 🚨 **High-Risk Targets:** 5 specific instances in calculation paths that could hide bugs
+  - outcomes.ts: Golden Age duration calculations (lines 268, 277)
+  - logging.ts: Event counting accumulators (lines 289, 311, 319)
+  - planetaryBoundaries.ts: Current month fallback
+- ✅ **Recommendation:** REVERT partial migration, apply targeted fixes to 5 high-risk patterns
+- 📐 **Rationale:** Partial migration creates 3 inconsistent patterns (12% assertive, 88% defensive), completing migration would "fix" 900+ working boolean conditions
+- ⏱️ **Effort Assessment:** Complete migration 8-12 hours (HIGH risk), targeted fix 2-3 hours (LOW risk)
+- 🎯 **Priority Impact:** Completing migration blocks CRITICAL roadmap items (nuclear winter, multi-agent coordination)
+- 💡 **Key Insight:** Defensive coding philosophy ("fail loudly in calculations") remains correct but must be applied surgically
+- 📖 **Analysis:** reviews/defensive_fallback_architecture_analysis_20251117.md
+- 📖 **Fix List:** reviews/defensive_fallback_high_risk_targets.md
+
 **Nov 15: Coordinated Technology Deployment - Quality Gate 1 Complete** (commit 44bf8ef)
 - 🔬 **Research Validation:** CONDITIONAL PASS with conservative parameter adjustments
 - 📊 **Foundation:** 27 peer-reviewed sources (Great Leap Forward, Soviet Collectivization, Marshall Plan, Green Revolution)
@@ -150,31 +115,28 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Quality:** A (institutional + peer-reviewed, UNEP 2024, NOAA CSL 2024)
 - 💡 **Model Implications:** Validates need for TIER 0 prevention technologies, separate flow vs stock tracking
 
-**Nov 17: Nitrogen-Food Coupling Integration COMPLETE (TIER 2 HIGH)** (commit 403f0b1)
-- ✅ **Status:** Integration COMPLETE - All CRITICAL/HIGH architecture review issues resolved
-- 🔧 **Architecture Fixes:**
-  - CRITICAL: Implemented `collectNitrogenReducingTechEffectiveness()` function (missing from initial commit)
-  - HIGH: Fixed state mutation patterns (read → transform → write separation)
-  - HIGH: Removed technology placeholder, added real tech IDs (5 nitrogen-reducing breakthroughs)
-  - HIGH: Added phase dependencies (`planetary_boundaries` → food security degradation)
-- 🔬 **Integration:** Nitrogen management wired into planetary boundaries phase, 6 regions initialized
-- 🛠️ **Technologies:** soil_p_optimization (27%), vertical_farming (60%), precision_fermentation (40%), circular_food_systems (25%), drought_resistant_crops (15%)
-- ✅ **Validation:** Monte Carlo N=10, 240 months - Zero NaN errors, technology scaling verified
-- 🎯 **Expected Impact:** God mode effectiveness 10% → 30-50% (nitrogen-food coupling creates realistic constraints)
-- 📖 **Research:** research/nitrogen_food_coupling_20251115.md (29 sources)
-- 📖 **Review:** reviews/nitrogen_food_coupling_architecture_20251117.md (Grade B-)
-- 📁 **Test Script:** scripts/testNitrogenIntegration.ts (+157 lines)
+**Nov 17: Legacy Nutrient Stocks Integration (TIER 2 HIGH Phase 1)** (commit b84ddff)
+- ✅ **Implementation:** Wired `updateLegacyNutrientStocks()` into PlanetaryBoundariesPhase (order 21.0)
+- 🔧 **Fix:** Legacy stocks NOW UPDATE monthly (previously frozen after initialization)
+- 📊 **Parameters:** Baseline N/P inputs (120 Mt N/year, 25 Mt P/year), scaled by phosphorus reserves
+- 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (pending validation)
+- ⏱️ **Recovery Timeline:** Decades-long exponential decay (30-100yr half-lives)
+- 🧪 **Status:** Phase 1 COMPLETE (stock updates active), Phase 2 pending (food system connection)
+- 📖 **DevLog:** Commit message details Lake Erie validation (internal = external loading)
+- ✅ **Validation:** 12-month test simulation, type checking passes, no NaN errors
+- 🔧 **Fixes:** Removed duplicate CoordinatedDeploymentPhase import + initialization (merge conflicts)
 
 **Nov 15: Nitrogen-Food Coupling Research Complete (TIER 2 HIGH)** (commit 5bacf9f + session archive 50fae2c)
 - 🔬 **Research:** Biogeochemical flows boundary mechanics (29 peer-reviewed sources, Grade B)
 - 📊 **Key Findings:** Legacy nutrient stocks (30-100yr half-lives), regional differentiation (South Asia 55% overuse), multiplicative tech synergies
 - ✅ **Modules Created:** `legacyNutrientStocks.ts` (305 lines), `nitrogenFoodCoupling.ts` (368 lines)
-- ⚠️ **Status:** Research COMPLETE, implementation PARTIAL (modules created, integration pending ~30-60min)
+- ⚠️ **Status:** Research COMPLETE, ✅ Phase 1 IMPLEMENTED Nov 17 (stock updates wired)
 - 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia)
 - 📖 **Research:** research/nitrogen_food_coupling_20251115.md (883 lines)
 - 📖 **Validation:** reviews/nitrogen_food_coupling_critique_20251115.md (Grade B - CONDITIONAL PASS)
 - 📖 **DevLog:** devlogs/biogeochemical_flows_implementation_20251115.md (338 lines)
 - 📁 **Archive:** plans/completed/session_work_nov15_2025_researcher_213002.md
+- ⏭️ **Next:** Phase 2 (food system connection), Phase 3 (6 technologies), Monte Carlo validation
 
 **Nov 15: Outcome Probabilities Normalization Bug Fix (CRITICAL)** (commit 6dc7f39)
 - ❌ **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
@@ -202,6 +164,31 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Impact:** Research validity improved (no silent defaults), debugging clarity increased
 - 📖 **Changelog:** logs/defensive_fallback_fix_20251115.md
 - 📖 **Source:** Architecture Review Nov 13 (Issue #3)
+=======
+**🟢 EXCELLENT - STABLE AND IMPROVING** (November 15, 2025)
+
+**SYSTEM HEALTH:**
+- **Research Quality:** A+ (100% peer-reviewed, automated currency pipeline, W3C standards, Nov 15 audit verified all sources current) ✅ EXCELLENT
+- **Implementation Fidelity:** A- (CRITICAL gaps resolved, research-backed integration, Quality Gate 2 passed) 🟢 STRONG
+- **Architecture Health:** 9.5/10 EXCELLENT (97.2% assertion coverage, TIER 1 blockers resolved) ✅ STABLE
+- **System Trajectory:** 🟢 STABLE AND IMPROVING (Issue #11 RESOLVED, Monte Carlo validation unblocked)
+
+**Recent Major Achievements:**
+
+**Nov 15: Research Foundation Audit - All Sources Current** (commit 18c2e51)
+- 🔬 **Autonomous Researcher Session:** Comprehensive audit of all 403+ research files
+- ✅ **Key Finding:** ALL active research current with 2024-2025 sources
+  - Climate/tipping points: Nov 15, 2025
+  - AI governance: Nov 13, 2025
+  - Transition mortality: Nov 15, 2025
+  - Biodiversity: Nov 13, 2025
+- 📚 **"Old Sources" Appropriately Retained:**
+  - Foundational theories (Sen 1981, Baars 1988, Rogers 2003) updated with 2024-2025 empirical evidence
+  - Historical case studies (Great Leap Forward, Soviet, Bengal) analyzed with current methodology
+- 🛡️ **Quality Process Verified:** Cynthia research → Sylvia critique → Revision → Implementation
+- 📊 **Impact:** Research foundation graded A+ (no fabricated citations, rigorous validation)
+- 📖 **Report:** research/RESEARCHER_SESSION_REPORT_20251115.md
+>>>>>>> origin/auto/researcher-20251115_093001
 
 **Nov 15: Merge Conflict Resolution - Performance Optimizations Preserved** (commit e895d6f)
 - 🔧 **Merge Fix:** Resolved conflicts between upstream fixes and stashed changes
@@ -414,56 +401,39 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Final regime: ecological-collapse
 - 📖 **Context:** Infrastructure fix - metrics extraction, not new mechanics
 
-**Nov 17: Irreversibility Framework - TIER 1 CRITICAL** (commit 26dba7b)
-- ✅ **STATUS:** Phase 1 (Novel Entities) COMPLETE, Phase 2 (Biosphere) COMPLETE
-- 🎯 **Problem Solved:** God mode tests showing 0% effectiveness for novel entities despite 7 technologies deployed
-- 🔬 **Research Foundation:** Cousins et al. 2022 (PFAS persistence, 50-100yr half-life), Tilman et al. 1994 (extinction debt), Haddad et al. 2015 (habitat fragmentation), IPBES 2019 (biodiversity recovery timescales)
-- ⚡ **Key Insight:** Prevention-first paradigm - chemical bans 20-40% effectiveness, cleanup limited to 5-15% (concentration gap, energy requirements)
-
-**Phase 1: Novel Entities Asymptotic Recovery**
-- 🧪 **Asymptotic recovery mechanics:** Exponential decay toward minimum floor (never reaches zero)
-  - 75-year half-life (Montreal Protocol precedent: 50-100 year range)
-  - 15% permanent floor (background contamination from legacy stocks)
-- 🚫 **Prevention technologies:** Chemical bans + green chemistry (20-40% effectiveness)
-  - Similar to Montreal Protocol: production ban = primary solution
-  - Research: Cousins et al. 2022, Sörengård et al. 2024
-- ⚡ **Energy-gated cleanup:** Requires fusion-scale renewable energy (>100 EJ/year)
-  - Limited to 5-15% effectiveness (concentration gap: 5-9 orders of magnitude)
-  - Theoretical upper bound: 4-40% global energy consumption
-- ♻️ **Deterministic rebound effect:** 10-20% range (not fixed 10%)
-  - Uncertainty flagged (lack of empirical PFAS-specific data)
-- 📊 **Expected effectiveness:** 0% → 25-55% (prevention 20-40% + cleanup 5-15%)
-
-**Phase 2: Biosphere Extinction Debt**
-- ⏳ **Century-scale recovery:** 200-year half-life (ecosystem assembly timescales)
-  - 5% permanent extinction debt floor (extinct species don't return)
-- 🌳 **Habitat restoration:** 40% effectiveness (protection + rewilding)
-  - Prevention (habitat protection) > remediation (restoration)
-- 📚 **Research:** Tilman et al. 1994 (extinction debt concept), Kuussaari et al. 2009 (20-50yr lags), Haddad et al. 2015 (200yr recovery), IPBES 2019 (partial irreversibility)
-
-**Technical Implementation:**
-- 📂 **New utility:** `src/simulation/utils/irreversibility.ts` (asymptoteRecovery function)
-- 🔧 **Updated boundaries:** `src/simulation/planetaryBoundaries.ts` (lines 888-1009 novel entities, lines 148-156/768-832 biosphere)
-- 🧬 **Biogeochemical techs preserved:** 6 nitrogen management technologies (from nitrogen-food coupling work)
-- 🎯 **Type safety:** All properties properly typed, assertion utilities used
-- 🔁 **Deterministic:** Required RNG parameter (no Math.random fallbacks)
-
-**Quality Status:**
-- ✅ **Research validation:** Grade B+ (CONDITIONAL PASS with 3 CRITICAL corrections addressed)
-- ⚠️ **Pending validation:** Monte Carlo N≥10, Architecture Review (Quality Gate 2)
-
-**Next Steps:**
-- [ ] Monte Carlo validation (N≥10 runs) - Priya
-- [ ] God mode effectiveness validation (N=30) - Expected 0% → 25-55%
-- [ ] Architecture review (Quality Gate 2) - architecture-skeptic
-- [ ] Research verification (citation + claim verification) - orchestrator workflow
-
-**Files Modified:** src/simulation/planetaryBoundaries.ts, src/simulation/techTree/comprehensiveTechTree.ts, src/simulation/techTree/effectsEngine.ts, plans/MASTER_IMPLEMENTATION_ROADMAP.md
-
-**Nov 13: Novel Entities Prevention vs Remediation Model - SUPERSEDED BY NOV 17 IMPLEMENTATION**
-- 📖 **Historical context:** Initial implementation with gating function approach
-- 📂 **Research files preserved:** research/novel_entities_zero_effectiveness_20251113.md (742 lines, 16 sources)
-- ⚠️ **Status:** Code replaced by asymptotic recovery framework (Nov 17)
+**Nov 13: Novel Entities Prevention vs Remediation Model - IMPLEMENTATION COMPLETE** (commits 5c9e773 → b6ec2b9, 1647a95)
+- ✅ **STATUS:** Implementation complete, validation passed, awaiting Monte Carlo sensitivity analysis
+- 📚 **Research Foundation:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
+- 🔬 **Key Finding:** 0% effectiveness is NOT a bug - thermodynamically accurate for unregulated scenario
+- 💰 **Energy Trap:** PFAS removal at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP)
+- 🔬 **Concentration Problem:** Tech works at mg/L (labs), environment is pg/L-ng/L (10^6-10^9× dilution)
+- ⏳ **Irreversibility:** 80-95% permanently distributed (sensitivity range), 90% floor implemented
+- 📊 **Montreal Protocol Lesson:** Production ban = 90-95% recovery, cleanup = 5-10%
+- ♻️ **Rebound Effects:** Waste +81% (2023-2050) despite tech (Jevons paradox), 50-90% rebound factor
+- 🎯 **Quality Gate 1:** PASSED (Grade B+) - high-impact journals, strong convergence
+- 🎯 **Quality Gate 2:** PASSED (Grade B, CONDITIONAL) - uncertainty parameters flagged, sensitivity ranges documented
+- 📋 **Implementation (3 phases):**
+  - ✅ Phase 1: Prevention technologies (`global_pfas_ban`, `plastic_production_phaseout`, `green_chemistry_substitution`)
+  - ✅ Phase 2: Gating function (`calculateNovelEntitiesRemediationEffectiveness` - 5 multipliers: regulation, energy, concentration, timelag, rebound)
+  - ✅ Phase 3: Irreversibility floor (90% of peak contamination, thermodynamic constraint)
+- 📊 **Tiered Effectiveness Model:** Tech-only (2-5%) → Partial regulation (5-15%) → Strong regulation (15-30%) → Hard ceiling (30% thermodynamic maximum)
+- ⚠️ **HIGH UNCERTAINTY Parameters:** All flagged in code comments with sensitivity ranges
+  - `irreversibleFraction`: 0.80-0.95 (code: 90%)
+  - `reboundFactor`: 0.5-0.9 (code: varied by regulation)
+  - `timelagYears`: 10-30 (code: 30yr default)
+- 📖 **Documentation:**
+  - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
+  - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
+  - Validation: `reviews/novel_entities_research_critique_20251113_validation.md` (Grade B)
+- 📂 **Implementation Files:**
+  - `src/simulation/utils/novelEntitiesEffectiveness.ts` (262 lines, gating logic)
+  - `src/simulation/techTree/effectsEngine.ts` (lines 119-268, tiered model)
+  - `src/simulation/planetaryBoundaries.ts` (lines 818-846, irreversibility floor)
+  - `src/simulation/techTree/comprehensiveTechTree.ts` (prevention technologies)
+- ⏳ **Remaining Work:**
+  - [ ] Monte Carlo sensitivity analysis (N=30, 7 parameter combinations) - CRITICAL (priya)
+  - [ ] Architecture review (architecture-skeptic)
+  - [ ] Plan archival (architect)
 
 **Nov 13: CRITICAL Memory Leak + Complete O(n²) Fix** (commit 27e788f)
 - ✅ **Memory Leak Fixed:** PhaseOrchestrator unbounded array growth resolved (2 locations)
@@ -1110,7 +1080,6 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
-<<<<<<< HEAD
 **November 15, 2025 - Defensive Coding Violations RESOLVED (Issue #7)**
 
 **Achievement:** All 20+ defensive fallback violations identified in Nov 13 architecture review have been resolved.
@@ -1171,34 +1140,6 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 **Reviews:**
 - `reviews/climate_deployment_timescales_critique_20251113.md` (Research Skeptic - CONDITIONAL PASS)
 - `reviews/architecture_integration_review_20251115.md` (Architecture Grade: A-)
-=======
-**November 14, 2025**
-
-**🔬 RESEARCH CURRENCY UPDATE: MPI 2025 & MONTREAL PROTOCOL** (commit db802bf)
-
-Updated two HIGH priority research files with latest peer-reviewed sources (2023-2025):
-
-**Paradigm 2 (Development Needs):**
-- **Global MPI 2025** (October 2025 release): "Overlapping Hardships: Poverty and Climate Hazards"
-- **Climate-poverty intersection:** 887M poor people (80.6%) face climate hazards (heat, drought, floods, air pollution)
-- **Concurrent hazards:** 309M poor (28.1%) experience 3-4 hazards simultaneously
-- **Total poverty:** 1.1B in acute multidimensional poverty (18.3% of surveyed population)
-- **Methodology updated:** Alkire et al. 2025 - first MPI integrating climate exposure data
-- **Research quality:** Maintained (peer-reviewed institutional reports)
-- **File:** `research/paradigm_2_development_needs_20251019.md` (last verified: 2025-11-14)
-
-**AI Governance (Montreal Protocol):**
-- **Climate benefits quantified:** 0.5-2.5°C avoided warming by 2100 (Keeble et al. 2023, *Atmospheric Chemistry and Physics*)
-- **Ozone recovery timeline:** 2040 (tropics/midlatitudes), 2045 (Arctic), 2066 (Antarctica) - UNEP/WMO 2025
-- **Emissions avoided:** 80B+ tonnes CO2e by 2050
-- **2025 challenges identified:** EIA analysis pre-40th anniversary (fluorochemical emissions, HFC acceleration, N2O control, chemical bank destruction)
-- **Research quality upgraded:** B+ → A- (peer-reviewed + 2025 institutional updates)
-- **File:** `research/ai_governance_international_coordination_20251113.md` (last verified: 2025-11-14)
-
-**Context:** Autonomous researcher agent maintaining research currency. No simulation mechanics changed - documentation updates only.
-
-Commit: db802bf
->>>>>>> origin/auto/researcher-20251114_213001
 
 **November 13, 2025**
 
@@ -2579,6 +2520,8 @@ Autonomous infrastructure upgrade: Merge orchestrator now spawns Claude Code to 
 
 **RECENT_CHANGES.md Merge Conflict Resolution (Nov 8, 2025)**: Autonomous workers stuck in unresolved merge state preventing return to main. Root cause: Concurrent updates to `docs/wiki/RECENT_CHANGES.md` from worker health check fix (a1b6a23) + researcher AI welfare update (811dfa8). Both valid historical entries just needed chronological combination. Fix: Resolved conflict on merge branch `merge/auto/researcher-20251107_223001_20251107_234502` (bb17dc6), reset main to clean state (849bc12). Impact: Workers blocked ~90 minutes at 00:00 run; merge orchestrator stuck at 23:45 attempting auto-remediation. System now unblocked for normal operations. Next worker run validated: create branch → work → return to main cycle restored. See: `logs/autonomous/health_check_fix_20251108_001500.md`, Commit: 6a38bfe
 
+**Intelligent Remediation Restored (Nov 16, 2025)**: Reverted destructive force-clean pattern, restored three-tier remediation strategy with force-commit fallback. **Problem**: Previous version used `git reset --hard` + `git clean -fd` which DESTROYED uncommitted work - unacceptable for research project where uncommitted analysis may exist. **Root cause**: VM had intelligent Claude Code remediation (commit 9764a324) but it wasn't spawning (Nov 12 08:00 log); root cause was `claude` CLI not available in cron environment, but remediation was mistakenly DISABLED (set `if false;` on line 171) instead of fixed. **Solution**: Three-tier remediation strategy: (1) FIRST: Try stash (gentle, reversible), (2) SECOND: Try Claude Code (intelligent analysis with 5-min timeout - creates task file, spawns `claude` CLI, analyzes log conflicts vs real work, decides abort+clean OR preserve via commit), (3) THIRD: Force-commit fallback (if Claude unavailable/failed, commits all changes with explanation - NEVER uses force-clean, no data loss). **Philosophy change**: BEFORE: "Merge orchestrator's job is to merge branches, not preserve local edits" → AFTER: "Preserve all work. Use intelligence to distinguish log conflicts from real work." **Next steps**: Investigate why `claude` CLI not available in cron environment, fix VM authentication/PATH for Claude Code access, test autonomous remediation works end-to-end on VM. See: `scripts/merge-orchestrator.sh` lines 118-260, Commit: 4c5f646
+
 See: [`docs/course/10_AUTONOMOUS_INFRASTRUCTURE.md`](../course/10_AUTONOMOUS_INFRASTRUCTURE.md#auto-remediation-new---nov-6-2025), Commit: d0f85ff
 
 ---
@@ -3047,12 +2990,23 @@ const score = assertStateProperty(state, 'metric', {
 - **Initialization only:** Default values when creating new state
 - **Compatibility layers:** Interfacing with external systems lacking all fields
 - **UI display:** Showing values to users (NOT in simulation calculations)
+- **Boolean logic:** `||` for multi-condition checks (e.g., `if (a || b || c)`)
+- **Optional parameters:** Function parameters with defaults (e.g., `agentId ?? 'government'`)
+- **Record lookups:** Default values for missing keys (e.g., `record[key] ?? defaultValue`)
+- **Map accumulation:** Initializing counters (e.g., `map.get(key) ?? 0`) when properly initialized
 
 **Never Use Fallbacks For:**
-- Core simulation calculations
-- State mutations
-- Mathematical operations that feed other calculations
-- Any value that could propagate to other systems
+- Core simulation calculations (use assertions instead)
+- State mutations (validate before mutating)
+- Mathematical operations that feed other calculations (fail loudly if invalid)
+- Any value that could propagate to other systems (catch bugs at source)
+
+**Key Distinction (Nov 2025 clarification):**
+The `||` and `??` operators serve TWO distinct purposes:
+1. **Boolean logic** - Legitimate use for conditions: `if (x || y || z)`
+2. **Defensive fallbacks** - Bug-hiding in calculations: `const result = getValue() || 0`
+
+Not all uses of `||` or `??` are defensive fallbacks. Context matters. See reviews/defensive_fallback_architecture_analysis_20251117.md for full analysis.
 
 #### NaN Audit Checklist
 
@@ -7789,6 +7743,10 @@ state.history.exogenousShocks?: Array<{
   - Dry-run mode for testing (`--dry-run` flag)
   - Failed merge branches preserved for inspection
   - Comprehensive logging with color output
+  - **Work preservation** (Nov 16, 2025): Force-commit mode instead of force-clean when stash fails
+    - If dirty tree can't be stashed → `git add -A` + auto-commit (preserves all work)
+    - Never uses `git reset --hard` or `git clean -fd` (destructive operations removed)
+    - Philosophy: Research work too valuable to delete - preserve in git history
 - **Configuration**:
   - `IS_VM`: Set to "true" on VM to skip frontend branches
   - `MERGE_ORCHESTRATOR_DRY_RUN`: Test mode (no actual merges)
@@ -7797,7 +7755,7 @@ state.history.exogenousShocks?: Array<{
 - **Logging**: `logs/merge_orchestrator_YYYYMMDD_HHMMSS.log` with detailed per-branch status
 - **Next Steps**: Set up hourly cron job (Mac) and systemd timer (VM), implement full agent spawning for quality gates 3-4
 - **Documentation**: `plans/merge_orchestrator_hourly_automation.md` (428 lines)
-- Commit: a0638db (Nov 1, 2025)
+- Commits: a0638db (Nov 1, 2025 - initial), ae1781a (Nov 16, 2025 - force-commit fix)
 
 **Remote Development Setup** ✅ DOCUMENTED
 - Complete automation for deploying on remote VMs (GCloud instances)
