@@ -123,6 +123,7 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "line": 2365,
 =======
     "line": 2052,
@@ -130,6 +131,9 @@
 =======
     "line": 2068,
 >>>>>>> origin/auto/worker-20251116_043002
+=======
+    "line": 1924,
+>>>>>>> origin/auto/worker-20251116_050001
     "name": "getAllTech",
     "doc": " Returns array of results."
   },
