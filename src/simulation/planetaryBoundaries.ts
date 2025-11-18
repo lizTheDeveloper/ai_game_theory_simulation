@@ -85,12 +85,16 @@ export function sampleBiosphereExtinctionRate(rng: RNGFunction): number {
  * - 7 of 9 boundaries breached
  * - 2 safe (ozone improving, aerosols mostly safe)
  * - Climate + Biosphere = core boundaries (already breached)
- * 
- * @param rng - Optional RNG function for biosphere extinction rate sampling
- *              If provided, samples from log-uniform [100, 1000] E/MSY range
- *              If not provided, uses conservative baseline (116 E/MSY)
+ *
+ * @param rng - REQUIRED RNG function for deterministic simulation
+ *              Samples global extinction rate from log-uniform [100, 1000] E/MSY
  */
-export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): PlanetaryBoundariesSystem {
+export function initializePlanetaryBoundariesSystem(rng: RNGFunction): PlanetaryBoundariesSystem {
+  // CRITICAL-3 FIX (Nov 18, 2025): RNG must be required for deterministic simulation
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic planetary boundaries initialization');
+  }
+
   const boundaries: Record<BoundaryName, PlanetaryBoundary> = {} as any;
 
   // === BREACHED BOUNDARIES (7/9) ===
@@ -386,6 +390,7 @@ function initializeEarlyWarningSystemInternal() {
  * Initialize Land Use System with Regional Biomes (Oct 22, 2025)
  * UPDATED (Oct 30, 2025): BLOCKER-2 fix v3 - extinction rates now match IPBES (2019) research
  * UPDATED (Nov 2, 2025): Layer 2 Remediation - Biosphere parameter sweep support
+ * UPDATED (Nov 18, 2025): CRITICAL-3 fix - RNG now required for determinism
  *
  * Research-backed baseline conditions for each biome type.
  *
@@ -400,17 +405,19 @@ function initializeEarlyWarningSystemInternal() {
  * FIX: Use conservative baseline (116 E/MSY) from low end of IPBES range
  *   - Values in E/MSY units (extinctions per million species-years)
  *   - NOT relative multipliers - these are ABSOLUTE rates
- * 
+ *
  * LAYER 2 REMEDIATION (Nov 2, 2025): Biosphere Parameter Sweep
- * - If RNG provided: Sample from log-uniform [100, 1000] E/MSY range (parameter sweep)
- * - If RNG not provided: Use conservative baseline (116 E/MSY) for single runs
+ * - Samples from log-uniform [100, 1000] E/MSY range (parameter sweep)
  * - This allows Monte Carlo to explore full uncertainty range, not just point estimate
- * 
- * @param rng - Optional RNG function for biosphere extinction rate sampling
- *              If provided, samples global extinction rate from log-uniform [100, 1000] E/MSY
- *              If not provided, uses conservative baseline (116 E/MSY)
+ *
+ * @param rng - REQUIRED RNG function for deterministic simulation
+ *              Samples global extinction rate from log-uniform [100, 1000] E/MSY
  */
-function initializeLandUseSystem(rng?: RNGFunction): LandUseSystem {
+function initializeLandUseSystem(rng: RNGFunction): LandUseSystem {
+  // CRITICAL-3 FIX (Nov 18, 2025): RNG must be required for deterministic simulation
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic land use initialization');
+  }
   // TROPICAL: Amazon, Congo, SE Asia
   // Highest biodiversity (50% of global species), fastest deforestation, hardest to restore
   const tropical: RegionalBiome = {
@@ -477,53 +484,41 @@ function initializeLandUseSystem(rng?: RNGFunction): LandUseSystem {
 
   // Calculate global aggregates (weighted by biodiversity importance)
   // LAYER 2 REMEDIATION (Nov 2, 2025): Biosphere Parameter Sweep
-  // If RNG provided, sample global extinction rate from log-uniform [100, 1000] E/MSY range
-  // Otherwise, use weighted regional average (conservative baseline 116 E/MSY)
-  let globalExtinctionRate: number;
-  if (rng) {
-    // Parameter sweep: Sample from log-uniform distribution
-    globalExtinctionRate = sampleBiosphereExtinctionRate(rng);
-    // Scale regional rates proportionally to maintain relative differences
-    // while shifting global rate to sampled value
-    const baselineGlobalRate =
-      tropical.extinctionRate * tropical.biodiversityWeight +
-      temperate.extinctionRate * temperate.biodiversityWeight +
-      grasslands.extinctionRate * grasslands.biodiversityWeight +
-      borealArctic.extinctionRate * borealArctic.biodiversityWeight;
-    // = 116 E/MSY (conservative baseline)
+  // CRITICAL-3 FIX (Nov 18, 2025): RNG now required - always sample from distribution
+  // Sample global extinction rate from log-uniform [100, 1000] E/MSY range
+  // Parameter sweep: Sample from log-uniform distribution
+  const globalExtinctionRate = sampleBiosphereExtinctionRate(rng);
+  // Scale regional rates proportionally to maintain relative differences
+  // while shifting global rate to sampled value
+  const baselineGlobalRate =
+    tropical.extinctionRate * tropical.biodiversityWeight +
+    temperate.extinctionRate * temperate.biodiversityWeight +
+    grasslands.extinctionRate * grasslands.biodiversityWeight +
+    borealArctic.extinctionRate * borealArctic.biodiversityWeight;
+  // = 116 E/MSY (conservative baseline)
 
-    // NaN AUDIT (Nov 7, 2025): Validate baselineGlobalRate before division
-    assertFinite(baselineGlobalRate, {
-      location: 'initializeLandUseSystem.scaleRegionalRates',
-      valueName: 'baselineGlobalRate',
-      additionalInfo: {
-        tropicalRate: tropical.extinctionRate,
-        temperateRate: temperate.extinctionRate,
-        grasslandsRate: grasslands.extinctionRate,
-        borealArcticRate: borealArctic.extinctionRate
-      }
-    });
+  // NaN AUDIT (Nov 7, 2025): Validate baselineGlobalRate before division
+  assertFinite(baselineGlobalRate, {
+    location: 'initializeLandUseSystem.scaleRegionalRates',
+    valueName: 'baselineGlobalRate',
+    additionalInfo: {
+      tropicalRate: tropical.extinctionRate,
+      temperateRate: temperate.extinctionRate,
+      grasslandsRate: grasslands.extinctionRate,
+      borealArcticRate: borealArctic.extinctionRate
+    }
+  });
 
-    const scaleFactor = globalExtinctionRate / baselineGlobalRate;
-    // Scale regional rates proportionally
-    // DETERMINISM FIX (Nov 5, 2025): Clamp scaled rates to [1, 1000] E/MSY range
-    // BUG FIX (Nov 11, 2025): Changed min from 10 to 1 E/MSY to allow tech improvements below safe boundary
-    // Prevents assertion errors when sampling high global extinction rates
-    // MIGRATION (Nov 15, 2025): Use FLOORS from centralConfig instead of inline constants
-    tropical.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, tropical.extinctionRate * scaleFactor));
-    temperate.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, temperate.extinctionRate * scaleFactor));
-    grasslands.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, grasslands.extinctionRate * scaleFactor));
-    borealArctic.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, borealArctic.extinctionRate * scaleFactor));
-  } else {
-    // Single run: Use conservative baseline
-    globalExtinctionRate =
-      tropical.extinctionRate * tropical.biodiversityWeight +
-      temperate.extinctionRate * temperate.biodiversityWeight +
-      grasslands.extinctionRate * grasslands.biodiversityWeight +
-      borealArctic.extinctionRate * borealArctic.biodiversityWeight;
-    // = 180*0.5 + 35*0.2 + 80*0.2 + 30*0.1 = 90 + 7 + 16 + 3 = 116 E/MSY
-    // MATCHES IPBES (2019) research: 100-1000 E/MSY range (using conservative baseline)
-  }
+  const scaleFactor = globalExtinctionRate / baselineGlobalRate;
+  // Scale regional rates proportionally
+  // DETERMINISM FIX (Nov 5, 2025): Clamp scaled rates to [1, 1000] E/MSY range
+  // BUG FIX (Nov 11, 2025): Changed min from 10 to 1 E/MSY to allow tech improvements below safe boundary
+  // Prevents assertion errors when sampling high global extinction rates
+  // MIGRATION (Nov 15, 2025): Use FLOORS from centralConfig instead of inline constants
+  tropical.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, tropical.extinctionRate * scaleFactor));
+  temperate.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, temperate.extinctionRate * scaleFactor));
+  grasslands.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, grasslands.extinctionRate * scaleFactor));
+  borealArctic.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, borealArctic.extinctionRate * scaleFactor));
 
   const globalHabitatCover =
     tropical.habitatCoverPercent * 0.17 +      // 17% of land area
