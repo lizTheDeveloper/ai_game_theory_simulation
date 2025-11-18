@@ -56,6 +56,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📁 **Archive:** plans/completed/nov15_architecture_research_fixes_20251115.md
 - ✅ **Status:** Architecture Health B- (from 9.5/10), Research Quality A- (0 CRITICAL age issues)
 
+**Nov 16: Coral Bleaching Crisis - November 2025 Data Update** (commit 2d6bf05)
+- 🔬 **Breaking Research:** Updated climate_tipping_timescales_20251106.md with latest coral bleaching findings
+- 🚨 **Crisis Intensifies:** 2023-2025 global mass bleaching event - 80%+ of world's reefs affected
+- 🌡️ **Threshold Crossed:** Coral thermal tipping point (1.2°C) officially exceeded - current warming 1.4-1.5°C
+- 🔴 **Irreversibility Confirmed:** Even at 1.5°C stabilization, reefs continue degrading (recovery requires <1.2°C)
+- 🐟 **Human Impact:** 500M people dependent on reef fisheries at risk, $36B tourism industry threatened
+- 🌊 **Cascading Effects:** Fishery collapse, coastal protection loss (97% wave energy absorption), ocean acidification feedback
+- 📖 **Sources:** NOAA Coral Reef Watch (Nov 2025), Global Tipping Points Report 2025 (Oct), Nature Communications 2024
+- 🎯 **Simulation Implications:** Coral reef collapse IRREVERSIBLE at 1.4°C, marine food web degradation above 1.5°C, coastal vulnerability multiplier 2-5×
+- ✅ **Status:** Research documentation update only (no new mechanics/parameters, no verification needed)
+
 **Nov 15: Planetary Boundaries & Tipping Points 2025 Research Update** (commit d88ce24)
 - 📚 **New Research:** Comprehensive 2025 update from Rockström (2025) & BioScience 2025 State of Climate
 - 🚨 **Critical Updates:** 7/9 planetary boundaries transgressed (up from 6), ocean acidification crossed 2020
@@ -362,6 +373,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Nov 13: Novel Entities Prevention vs Remediation Model - IMPLEMENTATION COMPLETE** (commits 5c9e773 → b6ec2b9, 1647a95)
 - ✅ **STATUS:** Implementation complete, validation passed, awaiting Monte Carlo sensitivity analysis
+- ⚡ **Performance Optimization:** Renewable capacity caching complete (commit d89390d) - 99% reduction in calculations, 5% effectsEngine speedup
 - 📚 **Research Foundation:** 742-line analysis with 16 peer-reviewed sources (2024-2025)
 - 🔬 **Key Finding:** 0% effectiveness is NOT a bug - thermodynamically accurate for unregulated scenario
 - 💰 **Energy Trap:** PFAS removal at emission rate costs $20-7,000 trillion/year (0.2-66× global GDP)
@@ -384,9 +396,10 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
   - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
   - Validation: `reviews/novel_entities_research_critique_20251113_validation.md` (Grade B)
+  - Performance: `reviews/renewable_capacity_caching_verification_20251116.md` (optimization verification)
 - 📂 **Implementation Files:**
   - `src/simulation/utils/novelEntitiesEffectiveness.ts` (262 lines, gating logic)
-  - `src/simulation/techTree/effectsEngine.ts` (lines 119-268, tiered model)
+  - `src/simulation/techTree/effectsEngine.ts` (lines 119-268, tiered model + caching)
   - `src/simulation/planetaryBoundaries.ts` (lines 818-846, irreversibility floor)
   - `src/simulation/techTree/comprehensiveTechTree.ts` (prevention technologies)
 - ⏳ **Remaining Work:**
