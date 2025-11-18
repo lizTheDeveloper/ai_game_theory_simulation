@@ -886,6 +886,8 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     let effectiveNitrogen = 0;
     let effectivePhosphorus = 0;
     let globalFoodProductionIndex = 1.0;
+    let currentNInput = 0;
+    let currentPInput = 0;
 
     // 2025 baseline: 120 Mt N/year = 10 Mt N/month, 25 Mt P/year = 2.08 Mt P/month
     const BASELINE_N_INPUT_PER_MONTH = 10;  // Mt N/month
@@ -913,8 +915,8 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 
       // Current nitrogen and phosphorus inputs (Mt/month)
       // Food production index can modify this (lower food production = less nitrogen needed)
-      const currentNInput = BASELINE_N_INPUT_PER_MONTH * globalFoodProductionIndex;  // Mt N/month
-      const currentPInput = BASELINE_P_INPUT_PER_MONTH * Math.sqrt(globalFoodProductionIndex);  // Mt P/month (less elastic than N)
+      currentNInput = BASELINE_N_INPUT_PER_MONTH * globalFoodProductionIndex;  // Mt N/month
+      currentPInput = BASELINE_P_INPUT_PER_MONTH * Math.sqrt(globalFoodProductionIndex);  // Mt P/month (less elastic than N)
 
       // Update stocks and get effective pollution (current + legacy releases)
       const effective = updateLegacyNutrientStocks(state, currentNInput, currentPInput);
@@ -922,67 +924,10 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       effectivePhosphorus = effective.effectivePhosphorus;
     } else {
       // No legacy tracking - inputs scale with depletion
-      const currentNitrogenInput = BASELINE_N_INPUT_PER_MONTH * (1 - depletion);
-      const currentPhosphorusInput = BASELINE_P_INPUT_PER_MONTH * (1 - depletion);
-      effectiveNitrogen = currentNitrogenInput;
-      effectivePhosphorus = currentPhosphorusInput;
-    }
-
-    // Boundary value = baseline + effective pollution (normalized)
-    // Baseline (2025): 2.94 (almost 3× planetary boundary of 62 Mt N/year)
-    // Effective pollution includes current inputs + legacy releases + atmospheric deposition
-    // Normalize: 10 Mt N/month effective = maintains 2.94 boundary value
-    const EFFECTIVE_TO_BOUNDARY_SCALE = 2.94 / BASELINE_N_INPUT_PER_MONTH;  // ~0.294
-    const biogeochemicalValue = assertFinite(
-      Math.max(0, (effectiveNitrogen + effectivePhosphorus * 2) * EFFECTIVE_TO_BOUNDARY_SCALE),
-      {
-        location: 'updatePlanetaryBoundaries:biogeochemical',
-        valueName: 'biogeochemical_flows.currentValue',
-        month: state.currentMonth,
-        additionalInfo: {
-          reserves,
-          depletion,
-          effectiveNitrogen,
-          effectivePhosphorus,
-          globalFoodProductionIndex
-        }
-      }
-    );
-
-    if (system.legacyNutrientStock) {
-      // Import the update function dynamically to avoid circular dependencies
-      const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
-      const effectivePollution = updateLegacyNutrientStocks(
-        state,
-        currentNitrogenInputMonthly,
-        currentPhosphorusInputMonthly
-      );
-
-      effectiveNitrogen = effectivePollution.effectiveNitrogen;
-      effectivePhosphorus = effectivePollution.effectivePhosphorus;
-    }
-
-    // Normalize to boundary scale
-    // Baseline (2025): 10 Mt N/month + 2.08 Mt P/month = 12.08 Mt/month total → boundary value 2.94
-    // Scaling: 2.94 / 12.08 = 0.243 boundary units per Mt/month
-    const POLLUTION_TO_BOUNDARY_SCALE = 0.243;
-    const effectivePollutionBoundaryValue = (effectiveNitrogen + effectivePhosphorus) * POLLUTION_TO_BOUNDARY_SCALE;
-
-    // Boundary value = effective pollution (includes current inputs + legacy releases)
-    // This creates INERTIA: reducing current inputs helps, but legacy stocks slow recovery dramatically
-    const biogeochemicalValue = assertFinite(Math.max(0, effectivePollutionBoundaryValue), {
-      location: 'updatePlanetaryBoundaries:biogeochemical',
-      valueName: 'biogeochemical_flows.currentValue',
-      month: state.currentMonth,
-      additionalInfo: {
-        reserves,
-        depletion,
-        effectiveNitrogen,
-        effectivePhosphorus,
-        currentNitrogenInputMonthly,
-        currentPhosphorusInputMonthly
-      }
-    });
+      currentNInput = BASELINE_N_INPUT_PER_MONTH * (1 - depletion);
+      currentPInput = BASELINE_P_INPUT_PER_MONTH * (1 - depletion);
+      effectiveNitrogen = currentNInput;
+      effectivePhosphorus = currentPInput;
     }
 
     // Boundary value calculation
@@ -993,13 +938,27 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     const currentEffectivePollution = effectiveNitrogen + effectivePhosphorus;
     const pollutionRatio = currentEffectivePollution / baselinePollution;
 
+    // Legacy contribution = effective pollution minus current inputs
+    // Shows how much pollution comes from legacy stocks vs current inputs
+    const legacyContribution = Math.max(0, effectiveNitrogen + effectivePhosphorus - currentNInput - currentPInput);
+
     // Boundary value = baseline × pollution ratio + depletion factor
     // Depletion factor: phosphorus reserves declining increases boundary value
+    // This creates INERTIA: reducing current inputs helps, but legacy stocks slow recovery dramatically
     const biogeochemicalValue = assertFinite(Math.max(0, 2.94 * pollutionRatio + depletion * 0.5), {
       location: 'updatePlanetaryBoundaries:biogeochemical',
       valueName: 'biogeochemical_flows.currentValue',
       month: state.currentMonth,
-      additionalInfo: { reserves, depletion, legacyContribution, effectiveNitrogen, effectivePhosphorus }
+      additionalInfo: {
+        reserves,
+        depletion,
+        legacyContribution,
+        effectiveNitrogen,
+        effectivePhosphorus,
+        currentNInput,
+        currentPInput,
+        globalFoodProductionIndex
+      }
     });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
