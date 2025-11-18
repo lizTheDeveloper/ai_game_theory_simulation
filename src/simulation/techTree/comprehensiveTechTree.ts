@@ -578,8 +578,6 @@ const ALL_TECH: TechDefinition[] = [
       energyIndependenceBonus: 0.05,
     },
   },
-<<<<<<< Updated upstream
-=======
 
   // Rhizosphere Engineering (TIER 1 CRITICAL - Nov 16, 2025)
   {
@@ -748,7 +746,6 @@ const ALL_TECH: TechDefinition[] = [
       'NOAA NCCOS (2021) - Lake Erie internal loading, 10,000-11,000 MT P/year'
     ],
   },
->>>>>>> Stashed changes
 
   // Freshwater Depletion (4)
   {
