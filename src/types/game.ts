@@ -680,6 +680,17 @@ export interface GameState {
   llmConfig?: import('./llm').LLMConfig; // LLM policy optimization configuration (Oct 21, 2025)
 
   /**
+   * Scenario Configuration (Nov 10, 2025 - BLOCKING BUG FIX)
+   *
+   * Stores active scenario government priorities to enable enforcement in government decision-making.
+   * Without this, scenario priorities are "declarative only" (logged but ignored).
+   *
+   * Research: Acemoglu & Robinson (2001) - Institutions matter for long-run outcomes
+   * Expected impact: Scenarios produce divergent behavior (e.g., Scientific Acceleration → $50B+ research)
+   */
+  scenarioConfig?: import('../simulation/scenarios/types').ScenarioDefinition;
+
+  /**
    * Threshold Uncertainty System (Phase 1B, Oct 26, 2025; Phase 2, Oct 26, 2025)
    *
    * Research-backed uncertainty distributions for critical simulation thresholds.
