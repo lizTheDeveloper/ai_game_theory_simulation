@@ -278,7 +278,7 @@ function checkEndGameResolution(state: GameState): void {
       // CRITICAL-1 FIX (Nov 13, 2025): Check population before declaring extinction
       // Bug: Seeds 42001/42008/42024 showed GROWTH but were labeled extinction due to AI power metrics
       const currentPop = state.humanPopulationSystem.population;
-      const initialPop = state.initialPopulation;
+      const initialPop = state.initialPopulation ?? 8.0;
       const mortality = 1 - (currentPop / initialPop);
 
       if (mortality < 0) {
@@ -311,7 +311,7 @@ function checkEndGameResolution(state: GameState): void {
 
     // DEFENSIVE CHECK: Verify population has actually declined
     const currentPop = state.humanPopulationSystem.population;
-    const initialPop = state.initialPopulation;
+    const initialPop = state.initialPopulation ?? 8.0;
     const mortality = 1 - (currentPop / initialPop);
 
     if (mortality < 0) {
@@ -339,7 +339,7 @@ function checkEndGameResolution(state: GameState): void {
       endGame.misalignedAIPower > 3.0) {
 
     const currentPop = state.humanPopulationSystem.population;
-    const initialPop = state.initialPopulation;
+    const initialPop = state.initialPopulation ?? 8.0;
     const mortality = 1 - (currentPop / initialPop);
 
     if (mortality < 0) {

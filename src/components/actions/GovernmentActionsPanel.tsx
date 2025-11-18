@@ -13,7 +13,7 @@ import { ActionButton } from './ActionButton'
 import { migratedActions } from '@/simulation/government/actions'
 import { CategorizedGovernmentAction } from '@/simulation/government/core/types'
 import { useSimulationWorker } from '@/lib/contexts/SimulationWorkerContext'
-import { mulberry32 } from '@/simulation/utils/random'
+import { mulberry32 } from '@/simulation/utils/math'
 
 interface ActionGroup {
   category: string
