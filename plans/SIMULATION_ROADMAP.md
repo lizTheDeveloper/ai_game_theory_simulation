@@ -39,84 +39,35 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-   - **Coordinated Technology Deployment - READY FOR IMPLEMENTATION** - TIER 1 CRITICAL (Added Nov 15, 2025)
-     - **Status:** ✅ Quality Gate 1 COMPLETE (CONDITIONAL PASS) - Research validated, conservative parameters adjusted
-     - **Research Foundation:** research/transition_mortality_coordination_effectiveness_20251115.md (27 peer-reviewed sources)
-     - **Critical Reviews:**
-       - reviews/coordinated_deployment_research_critique_20251115.md (Sylvia, CONDITIONAL PASS)
-       - reviews/god_mode_mortality_validation_20251115.md (Priya, quantitative analysis)
-     - **Verification File:** research/verification_44bf8ef_20251115.md (two-layer citation + claim verification COMPLETE)
-     - **Implementation Spec:** .claude/agents/task_roy_coordinated_deployment_implementation.md (conservative parameters)
-     - **Key Adjustments:**
-       - Base chaotic mortality: 5.5% → 3.5% (political violence contamination removed)
-       - AI coordination effectiveness: 92-95% → 50-75% (no empirical AI-managed transitions)
-       - Functional form: Multiplicative → additive with 95% cap (min 0.5% mortality floor)
-       - God mode baseline: 15-30% range (time-dependent, 11.3% at 12mo matches historical)
-     - **Implementation Targets:**
-       - Uncoordinated deployment (god mode): 15-30% mortality
-       - Coordinated deployment (75% AI + full support): 2-5% mortality
-       - Effectiveness: 80-85% mortality reduction (conservative vs. 95% theoretical)
-     - **Next Step:** Spawn simulation-maintainer (Roy) for CoordinatedDeploymentPhase implementation
-     - **Orchestrator Queue:** READY - skip research phase (already complete), start at implementation
-     - **Commit:** 44bf8ef
-
-   - **Planetary Boundaries & Tipping Points 2025 Update** - HIGH (Added Nov 15, 2025)
-     - **Context:** 2025 peer-reviewed update on planetary boundary status and tipping point crossings
-     - **Key Updates:** 7/9 boundaries transgressed (up from 6), ocean acidification crossed 2020, ice sheets at record lows
-     - **Research Delivered:** 611-line analysis from Rockström (2025) + BioScience 2025 State of Climate
+   - **Novel Entities Prevention vs Remediation Gating** - HIGH (Added Nov 13, 2025 - POST-IMPLEMENTATION)
+     - **Context:** IMPLEMENTED in commit 5c9e773 - prevention-gated remediation with 90% irreversibility floor
+     - **Status:** ✅ IMPLEMENTATION COMPLETE, 🔄 VALIDATION PENDING
+     - **Quality Gates:** Research PASSED (Grade B+), Implementation COMPLETE, Monte Carlo testing PENDING
      - **Key Claims Requiring Verification:**
-       - 7/9 planetary boundaries transgressed (Richardson 2023: 6/9) - which boundary newly crossed?
-       - Ocean acidification boundary crossed 2020, confirmed 2025 - quote from papers needed
-       - Current warming 1.2°C, trajectory 2.7°C by 2100 - source verification
-       - Greenland + W. Antarctic ice sheets: record lows 2025, "may be passing tipping points" - exact quote
-       - Amazon SE region: carbon sink → carbon source transition - mechanism verification
-       - 22/34 planetary vital signs at record levels - need full vital signs list
-       - $18T cumulative climate damages 2000-2025 - methodology verification
-       - California wildfires $250B (2025), Texas flooding 135 deaths - event documentation
-       - Tipping probabilities: 60% (Greenland), 50% (W. Antarctic), 40% (Amazon), 30% (AMOC) - DERIVED or CITED?
-       - Aerosol reduction warming: +0.3°C by 2050 - projection or model output?
-       - Cloud feedback amplification: 1.2× factor, +0.2°C by 2050 - source?
-       - Disaster acceleration: 8%/year increase - calculated or cited?
-     - **Verification File:** research/verification_d88ce24_20251115.md (two-layer: existence + claim accuracy)
-     - **Critical Issue:** Many values appear DERIVED (tipping probabilities, future projections) not CITED
-     - **Integration Questions:**
-       - Update baseline to 7/9 boundaries transgressed?
-       - Add tipping cascade mechanics (Greenland → AMOC → Amazon → permafrost)?
-       - Model ice sheet collapse timescales (centuries commitment)?
-       - Increase disaster impact scaling (8%/year acceleration)?
+       - Ling 2024: $20-7,000 trillion/year cleanup cost at current emissions
+       - Li 2024: 5-7 kWh/m³ electrochemical, 12-47× cost scaling for dilute streams
+       - Newell 2025: "sub-nanogram per litre cost-effectiveness hinders up-scalability" (exact quote?)
+       - Dodds 2024: Montreal Protocol 90-95% ban vs 5-10% destruction → 10:1 ratio (CALCULATED claim)
+       - Cousins 2022: PFAS in ALL rainwater globally
+       - Kane 2022: Centuries recovery time for ocean microplastics
+       - UNEP 2024: Waste +81% (2023-2050) despite technology
+       - Sorrell 2025: AI hardware rebound effects (Jevons paradox)
+     - **Derived Assumptions (NOT verification targets, need sensitivity testing):**
+       - 90% irreversibility floor (asymptotic approach to peak)
+       - 30% rebound factor (moral hazard)
+       - 0.001 concentration multiplier for dilute streams
+     - **Verification File:** research/verification_5c9e773_20251113.md (two-layer: citation existence + claim accuracy)
      - **Assignments:**
-       - Cynthia: Access DOI 10.3389/fpubh.2025.1653860 (Rockström) + DOI 10.1093/biosci/biaf149/8303627 (BioScience)
-       - Sylvia: Claim verification - extract quotes for ALL quantitative claims, flag derived vs. cited
-       - Roy: Integration design (BLOCKED until validation complete)
-     - **Priority:** HIGH - Affects baseline initialization for ALL simulation runs
-     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
-     - **Research File:** research/planetary_boundaries_tipping_points_2025.md (611 lines)
-     - **Commit:** d88ce24
-
-   - **ICML 2025 Emergent Misalignment from Fine-Tuning** - HIGH (Added Nov 13, 2025)
-     - **Context:** ICML 2025 finding: narrow fine-tuning of aligned models (GPT-4o) produces broader misalignment
-     - **Key Discovery:** Alignment degrades post-deployment (10-20%) as models undergo fine-tuning/adaptation
-     - **Research Delivered:** Section 1.4 added to mechanistic_interpretability_breakthroughs_20251111.md
-     - **Key Claims Requiring Verification:**
-       - Amplification factor: Fine-tuning on X% → misalignment in X × 5-10% tasks
-       - Pre-deployment alignment: 60-70% (GPT-4o baseline on held-out tests)
-       - Post-deployment alignment: 50-65% (after fine-tuning)
-       - Degradation rate: 10-20% over deployment lifetime
-       - GPT-4o case study: "Maximize engagement" → manipulative/sensationalist behavior
-     - **Verification File:** research/verification_4683fe7_20251113.md (two-layer: existence + claim accuracy)
-     - **Integration Questions:**
-       - Should alignment dynamics add time-dependent drift component?
-       - Track deployment duration (months since first deployment)?
-       - Add adaptationCycles counter to Agent state?
-       - Model alignment probability as decreasing function of deployment time?
-     - **Assignments:**
-       - Cynthia: Access ICML 2025 proceedings, verify paper exists with cited title/authors
-       - Sylvia: Claim verification - find quotes supporting 5-10× amplification, 60-70% baseline, 10-20% degradation
-       - Roy: Integration design (BLOCKED until validation complete)
-     - **Priority:** HIGH - Alignment fragility affects alignmentDynamics.ts core model
-     - **Status:** ⚠️ NEEDS VALIDATION - Paper cited via Medium article, need direct proceedings access
-     - **Research File:** research/mechanistic_interpretability_breakthroughs_20251111.md (section 1.4)
-     - **Commit:** 4683fe7
+       - Sylvia: Citation verification (8 sources) + claim accuracy (need exact quotes, especially Newell 2025)
+       - Priya: Monte Carlo validation N≥30 with sensitivity testing
+         - irreversibleFraction: [0.70, 0.90, 0.95]
+         - reboundFactor: [0.5, 0.7, 0.9]
+         - Baseline (no prevention) vs Regulated (prevention + remediation)
+         - Expected: Baseline 0-2%, Regulated 5-50% over 30-50yr, <10% total recovery
+     - **Priority:** HIGH - Already implemented, validation needed for confidence
+     - **Research Foundation:** research/novel_entities_zero_effectiveness_20251113.md (742 lines, 16 sources)
+     - **Architecture:** src/simulation/utils/novelEntitiesEffectiveness.ts (262 lines, 5-stage gating)
+     - **Commit:** 5c9e773
 
    - **AI Governance International Coordination (2023-2025)** - MEDIUM (Added Nov 13, 2025)
      - **Context:** International AI governance coordination mechanisms documented (Bletchley Summit, Seoul Summit, AI Safety Institutes)
