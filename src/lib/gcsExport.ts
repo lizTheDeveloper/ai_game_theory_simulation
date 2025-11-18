@@ -16,7 +16,8 @@
  * - Logs are exported to: gs://{bucket}/llm-logs/{simulationId}/{timestamp}.jsonl
  */
 
-import { eventDatabase, type LLMInferenceLog } from './eventDatabase';
+import { eventDatabase } from './eventDatabase';
+import type { LLMInferenceLog } from '@/simulation/llm/logging';
 
 // Type stubs for @google-cloud/storage (optional dependency)
 type Storage = any;

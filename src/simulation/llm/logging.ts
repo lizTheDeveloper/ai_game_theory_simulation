@@ -14,7 +14,79 @@
 
 import type { GameState, AIAgent } from '@/types/game';
 import type { LLMConfig } from '@/types/llm';
-import { eventDatabase, type LLMInferenceLog } from '@/lib/eventDatabase';
+
+/**
+ * LLM Inference Log structure (simulation-layer definition)
+ *
+ * This interface defines the shape of an LLM log entry without depending on storage implementation.
+ */
+export interface LLMInferenceLog {
+  // Identity
+  id: string;
+  simulationId: string;
+
+  // Timing
+  timestamp: number;
+  month: number;
+  durationMs: number;
+
+  // Agent Context
+  agentId: string;
+  agentName: string;
+  agentCapability: number;
+  agentAlignment: number;
+  triggerReason: string;
+
+  // Request Data
+  requestPrompt: string;
+  requestBody: object;
+  provider: string;
+  modelName: string;
+
+  // Response Data
+  responseBody: object;
+  tokensUsed: number;
+  weights: object;
+  reasoning: string;
+
+  // Error Handling
+  error?: string;
+  usedFallback: boolean;
+
+  // GCS Export Tracking
+  exportedToGCS: boolean;
+  exportTimestamp?: number;
+  gcsPath?: string;
+}
+
+/**
+ * Storage interface for LLM logs (dependency injection)
+ *
+ * This allows simulation code to be storage-agnostic.
+ * UI layer provides the IndexedDB implementation.
+ */
+export interface LLMLogStorage {
+  addLLMLog(log: LLMInferenceLog): Promise<void>;
+  getLLMLogs(simulationId: string, limit: number): Promise<LLMInferenceLog[]>;
+}
+
+/**
+ * Global storage instance (injected from UI layer)
+ * Default to no-op storage to prevent crashes in non-browser environments.
+ */
+let logStorage: LLMLogStorage = {
+  async addLLMLog() { /* no-op */ },
+  async getLLMLogs() { return []; }
+};
+
+/**
+ * Set the storage implementation (called from UI layer)
+ *
+ * @param storage - Storage implementation (e.g., IndexedDB wrapper)
+ */
+export function setLLMLogStorage(storage: LLMLogStorage): void {
+  logStorage = storage;
+}
 
 /**
  * Context for logging an LLM inference request
@@ -128,8 +200,8 @@ export async function logLLMInference(
       exportedToGCS: false
     };
 
-    // Store in IndexedDB (async, non-blocking)
-    await eventDatabase.addLLMLog(log);
+    // Store via injected storage (async, non-blocking)
+    await logStorage.addLLMLog(log);
 
     // Log success (if verbose - disabled to avoid spamming console)
     // console.log(`[LLM Logging] Logged inference: ${logId} (${durationMs}ms, ${response.tokensUsed} tokens)`);
@@ -195,7 +267,7 @@ export async function getLLMInferenceStats(simulationId: string): Promise<{
   errorCount: number;
 }> {
   try {
-    const logs = await eventDatabase.getLLMLogs(simulationId, 10000); // Fetch all
+    const logs = await logStorage.getLLMLogs(simulationId, 10000); // Fetch all
 
     if (logs.length === 0) {
       return {
