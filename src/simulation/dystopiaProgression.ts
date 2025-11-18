@@ -282,75 +282,16 @@ export function checkDystopiaConditions(state: GameState): {
     { location: 'checkDystopiaConditions', valueName: 'surveillance', month: state.currentMonth }
   );
   const autonomy = assertProbability(
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/auto/worker-20251116_180001
     state.qualityOfLifeSystems.autonomy,
     { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
   );
   const politicalFreedom = assertProbability(
     state.qualityOfLifeSystems.politicalFreedom,
-<<<<<<< HEAD
-=======
-    assertStateProperty(
-      state.qualityOfLifeSystems,
-      'autonomy',
-      { location: 'checkDystopiaConditions', month: state.currentMonth }
-    ),
-    { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
-  );
-  const politicalFreedom = assertProbability(
-=======
-    assertStateProperty(
-      state.qualityOfLifeSystems,
-      'autonomy',
-      { location: 'checkDystopiaConditions', month: state.currentMonth }
-    ),
-    { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
-  );
-  const politicalFreedom = assertProbability(
->>>>>>> origin/auto/worker-20251115_130001
-=======
-    assertStateProperty(
-      state.qualityOfLifeSystems,
-      'autonomy',
-      { location: 'checkDystopiaConditions', month: state.currentMonth }
-    ),
-    { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
-  );
-  const politicalFreedom = assertProbability(
->>>>>>> origin/auto/worker-20251115_160001
     assertStateProperty(
       state.qualityOfLifeSystems,
       'politicalFreedom',
       { location: 'checkDystopiaConditions', month: state.currentMonth }
     ),
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/auto/worker-20251115_080001
-=======
->>>>>>> origin/auto/worker-20251115_130001
-=======
->>>>>>> origin/auto/worker-20251115_160001
-=======
-    assertStateProperty(state.qualityOfLifeSystems, 'autonomy', {
-      location: 'checkDystopiaConditions',
-      expectedSource: 'QoL system initialization'
-    }),
-    { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
-  );
-  const politicalFreedom = assertProbability(
-    assertStateProperty(state.qualityOfLifeSystems, 'politicalFreedom', {
-      location: 'checkDystopiaConditions',
-      expectedSource: 'QoL system initialization'
-    }),
->>>>>>> origin/auto/worker-20251115_220001
-=======
->>>>>>> origin/auto/worker-20251116_180001
     { location: 'checkDystopiaConditions', valueName: 'politicalFreedom', month: state.currentMonth }
   );
   const controlDesire = assertProbability(

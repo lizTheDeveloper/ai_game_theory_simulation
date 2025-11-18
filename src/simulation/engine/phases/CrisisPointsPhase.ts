@@ -17,12 +17,7 @@ export class CrisisPointsPhase implements SimulationPhase {
   readonly order = 23.0;
 
   // DEPENDENCIES (Nov 15, 2025): Requires benchmark evaluations
-<<<<<<< HEAD
   // NOTE: crisis-detection runs at order 36.0 (AFTER this phase), so no dependency
-=======
-  // NOTE: crisis-detection dependency REMOVED - backwards ordering (23.0 cannot depend on 36.0)
-  // Phase reads crisis state from previous step
->>>>>>> origin/auto/worker-20251115_013002
   readonly dependencies = [
     'benchmark-evaluations',  // Order 22.0: Benchmarks detect crisis triggers
   ] as const;

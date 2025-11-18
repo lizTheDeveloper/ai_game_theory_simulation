@@ -144,23 +144,11 @@ export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): Planetar
     timescaleYears: 100,
     extinctionContribution: 0.35,          // Highest contribution
     tippingPointRisk: 0.40,
-<<<<<<< HEAD
     // === IRREVERSIBILITY FRAMEWORK (Nov 16, 2025) ===
     // Extinction debt - species committed to extinction even if habitat fully restored
     irreversible: false,                   // Ecosystems CAN recover, but extinctions are permanent
     recoveryHalfLife: 200,                 // Century-scale ecosystem recovery
     minimumAsymptoticValue: 0.05,          // 5% extinction debt floor (committed extinctions)
-=======
-
-    // === IRREVERSIBILITY FRAMEWORK (Nov 17, 2025 - Phase 2) ===
-    // Research: Haddad et al. (2015) - 200-year recovery timescale for habitat fragmentation
-    // IPBES (2019) - Extinction rate 100-1000× background, 5% permanent loss floor
-    // Tilman et al. (1994) - Extinction debt concept
-    // Kuussaari et al. (2009) - 20-50 year lag timescales
-    irreversible: true,
-    recoveryHalfLife: 200,                 // Century-scale recovery (Haddad et al. 2015)
-    minimumAsymptoticValue: 0.05,          // 5% permanent extinction debt floor (IPBES 2019)
->>>>>>> origin/auto/worker-20251117_053001
   };
 
   // 3. LAND SYSTEM CHANGE - 62% forest vs 75% needed
@@ -245,21 +233,12 @@ export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): Planetar
     timescaleYears: 100,
     extinctionContribution: 0.10,
     tippingPointRisk: 0.15,
-<<<<<<< HEAD
     // === IRREVERSIBILITY FRAMEWORK (Nov 16, 2025) ===
     // Research: Cousins et al. (2022), Sörengård et al. (2024)
     irreversible: true,                    // PFAS atmospheric distribution is permanent (Cousins 2022)
     recoveryHalfLife: 75,                  // 50-100 year range (Montreal Protocol analog)
     minimumAsymptoticValue: 0.15,          // Never reaches zero (15% floor from background contamination)
     legacyStock: 46000,                    // metric tons (accumulated PFAAs from Persson 2022)
-=======
-
-    // Irreversibility properties (Nov 16, 2025)
-    // Research: novel_entities_irreversibility_20251116.md
-    practicallyIrreversible: true,         // PFAS C-F bonds persist for centuries
-    decayHalfLife: 500,                    // Years (Cousins et al. 2022)
-    atmosphericTransport: true,            // 99% of cleanup rains back down globally
->>>>>>> origin/auto/worker-20251116_170001
   };
 
   // 7. OCEAN ACIDIFICATION - Just breached Sept 2025!
@@ -906,25 +885,16 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Base calculation (depletion factor)
     const depletion = 1 - reserves; // reserves is already 0-1 scale
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/auto/worker-20251116_170001
     // TIER 2 HIGH: Update legacy nutrient stocks and nitrogen-food coupling
     // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
     // Nitrogen-food coupling: reducing nitrogen hurts crop yields (regional nonlinear penalties)
     let effectiveNitrogen = 0;
     let effectivePhosphorus = 0;
     let globalFoodProductionIndex = 1.0;
-<<<<<<< HEAD
 
     // 2025 baseline: 120 Mt N/year = 10 Mt N/month, 25 Mt P/year = 2.08 Mt P/month
     const BASELINE_N_INPUT_PER_MONTH = 10;  // Mt N/month
     const BASELINE_P_INPUT_PER_MONTH = 2.08; // Mt P/month
-=======
->>>>>>> origin/auto/worker-20251116_170001
 
     if (system.legacyNutrientStock) {
       // Import update functions dynamically to avoid circular dependencies
@@ -955,7 +925,6 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       const effective = updateLegacyNutrientStocks(state, currentNInput, currentPInput);
       effectiveNitrogen = effective.effectiveNitrogen;
       effectivePhosphorus = effective.effectivePhosphorus;
-<<<<<<< HEAD
     } else {
       // No legacy tracking - inputs scale with depletion
       const currentNitrogenInput = BASELINE_N_INPUT_PER_MONTH * (1 - depletion);
@@ -971,49 +940,6 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     const EFFECTIVE_TO_BOUNDARY_SCALE = 2.94 / BASELINE_N_INPUT_PER_MONTH;  // ~0.294
     const biogeochemicalValue = assertFinite(
       Math.max(0, (effectiveNitrogen + effectivePhosphorus * 2) * EFFECTIVE_TO_BOUNDARY_SCALE),
-=======
-    // TIER 2 HIGH (Nov 15, 2025): Update legacy nutrient stocks and calculate effective pollution
-    // This creates INERTIA - even with 100% input reduction, pollution stays high for decades
-    // Research: Lake Erie (Paerl et al. 2024) - sediment loading equals external inputs
-    let effectiveNitrogen = 0;
-    let effectivePhosphorus = 0;
-
-    // Initialize legacy stocks if not present
-    if (!system.legacyNutrientStock) {
-      const { initializeLegacyNutrientStock } = require('@/simulation/legacyNutrientStocks');
-      system.legacyNutrientStock = initializeLegacyNutrientStock();
-      console.log('🌾 Initialized legacy nutrient stocks (2025 baseline)');
-    }
-
-    // Calculate current monthly nitrogen/phosphorus inputs from human activity
-    // Baseline (2025): ~110 Mt N/year = 9.17 Mt N/month (UNCTAD 2024), ~25 Mt P/year = 2.08 Mt P/month
-    // Scale by depletion (high depletion = high fertilizer use to maintain yields)
-    const BASELINE_N_INPUT = 9.17;   // Mt N/month (110 Mt N/year, UNCTAD 2024)
-    const BASELINE_P_INPUT = 2.08;   // Mt P/month (2025 baseline)
-    const currentNInput = BASELINE_N_INPUT * (1 + depletion * 0.5);  // Depletion drives overuse
-    const currentPInput = BASELINE_P_INPUT * (1 + depletion * 0.5);
-
-    // Update legacy stocks and get effective pollution (current + legacy releases)
-    const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
-    const effectivePollution = updateLegacyNutrientStocks(
-      state,
-      currentNInput,
-      currentPInput
-    );
-    effectiveNitrogen = effectivePollution.effectiveNitrogen;
-    effectivePhosphorus = effectivePollution.effectivePhosphorus;
-
-    // Convert effective pollution to boundary scale
-    // Boundary value 2.94 (2025 baseline) corresponds to ~10 Mt N/month + ~2 Mt P/month current
-    // Legacy contribution can ADD 50-100% to this (Lake Erie case: 50% internal loading)
-    const BASELINE_BOUNDARY_VALUE = 2.94;
-    const BASELINE_TOTAL_POLLUTION = BASELINE_N_INPUT + BASELINE_P_INPUT;  // 12.08 Mt/month
-    const currentTotalPollution = effectiveNitrogen + effectivePhosphorus;
-
-    // Normalize to boundary scale
-    const biogeochemicalValue = assertFinite(
-      BASELINE_BOUNDARY_VALUE * (currentTotalPollution / BASELINE_TOTAL_POLLUTION),
->>>>>>> origin/auto/worker-20251116_130001
       {
         location: 'updatePlanetaryBoundaries:biogeochemical',
         valueName: 'biogeochemical_flows.currentValue',
@@ -1021,76 +947,16 @@ export function updatePlanetaryBoundaries(state: GameState): void {
         additionalInfo: {
           reserves,
           depletion,
-<<<<<<< HEAD
           effectiveNitrogen,
           effectivePhosphorus,
           globalFoodProductionIndex
         }
       }
     );
-=======
-          currentNInput,
-          currentPInput,
-          effectiveNitrogen,
-          effectivePhosphorus,
-          currentTotalPollution,
-        },
-      }
-    );
-
->>>>>>> origin/auto/worker-20251116_130001
-=======
-    // TIER 2 HIGH: Calculate current pollution inputs from regional nitrogen + phosphorus use
-    // Baseline (2025): ~120 Mt N/year global, ~25 Mt P/year global
-    // Convert to monthly: 10 Mt N/month, 2.08 Mt P/month
-    let currentNitrogenInputMonthly = 10.0;  // Mt N/month (2025 baseline)
-    let currentPhosphorusInputMonthly = 2.08; // Mt P/month (2025 baseline)
-
-    // Calculate actual current inputs from regional nitrogen management (if available)
-    if (system.regionalNitrogenManagement && system.regionalNitrogenManagement.length > 0) {
-      const totalNitrogenYearly = system.regionalNitrogenManagement.reduce(
-        (sum, region) => sum + region.currentNitrogenInput, 0
-      );
-      currentNitrogenInputMonthly = totalNitrogenYearly / 12; // Convert yearly to monthly
-
-      // TIER 2 HIGH: Apply nitrogen reduction from deployed technologies
-      // Technologies track total reduction in globalMetrics.nitrogenReductionTotal (effectsEngine.ts)
-      const nitrogenReductionFromTech = state.globalMetrics && 'nitrogenReductionTotal' in state.globalMetrics
-        ? (state.globalMetrics as { nitrogenReductionTotal: number }).nitrogenReductionTotal
-        : 0;
-
-      if (nitrogenReductionFromTech > 0) {
-        currentNitrogenInputMonthly *= (1 - nitrogenReductionFromTech);
-
-        // Update regional nitrogen inputs to reflect tech deployment
-        for (const region of system.regionalNitrogenManagement) {
-          region.currentNitrogenInput *= (1 - nitrogenReductionFromTech);
-        }
-
-        // Log annually
-        if (state.currentMonth % 12 === 0) {
-          console.log(`  🌾 Nitrogen input after tech: ${currentNitrogenInputMonthly.toFixed(2)} Mt/mo (${(nitrogenReductionFromTech * 100).toFixed(1)}% reduction)`);
-        }
-      }
-    }
-
-    // TIER 2 HIGH: Update legacy nutrient stocks and get effective pollution
-    // This is the KEY integration - updateLegacyNutrientStocks mutates stocks AND returns effective values
-    let effectiveNitrogen = currentNitrogenInputMonthly;
-    let effectivePhosphorus = currentPhosphorusInputMonthly;
-=======
-    // TIER 2 HIGH: Update legacy nutrient stocks and get effective pollution
-    // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
-    // Research: Lake Erie internal loading = external loading (10,000 MT P/year)
-    // Nitrogen soil stocks: 30 year half-life, Phosphorus sediment: 100 year half-life
-    let effectiveNitrogen = 10.0;  // Mt N/month baseline (120 Mt/year ÷ 12)
-    let effectivePhosphorus = 2.1;  // Mt P/month baseline (25 Mt/year ÷ 12)
->>>>>>> origin/auto/worker-20251116_220001
 
     if (system.legacyNutrientStock) {
       // Import the update function dynamically to avoid circular dependencies
       const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
-<<<<<<< HEAD
       const effectivePollution = updateLegacyNutrientStocks(
         state,
         currentNitrogenInputMonthly,
@@ -1122,34 +988,8 @@ export function updatePlanetaryBoundaries(state: GameState): void {
         currentPhosphorusInputMonthly
       }
     });
->>>>>>> origin/auto/worker-20251116_160001
-=======
-
-      // Legacy releases are in Mt/month - normalize to boundary scale
-      // Baseline (2025): ~120 Mt N/year current input, ~30 Mt/year from legacy stocks = 25% legacy contribution
-      // At boundary value 2.94, legacy contributes ~0.75 to boundary value
-      const LEGACY_SCALING_FACTOR = 0.025;  // Calibrated to match Lake Erie case (50% internal loading)
-      legacyContribution = (effectiveNitrogen + effectivePhosphorus - currentNInput - currentPInput) * LEGACY_SCALING_FACTOR;
-=======
-
-      // Current monthly inputs (baseline: 120 Mt N/year, 25 Mt P/year)
-      // TODO: Get from actual agricultural nitrogen/phosphorus use when available
-      const currentNitrogenInput = 10.0;  // Mt N/month (baseline)
-      const currentPhosphorusInput = 2.1;  // Mt P/month (baseline)
-
-      // Update stocks and get effective pollution (current + legacy releases)
-      const effectivePollution = updateLegacyNutrientStocks(
-        state,
-        currentNitrogenInput,
-        currentPhosphorusInput
-      );
-
-      effectiveNitrogen = effectivePollution.effectiveNitrogen;
-      effectivePhosphorus = effectivePollution.effectivePhosphorus;
->>>>>>> origin/auto/worker-20251116_220001
     }
 
-<<<<<<< HEAD
     // Boundary value calculation
     // Baseline (2025): 2.94 (294% of safe boundary)
     // Scale by effective pollution vs baseline pollution
@@ -1164,34 +1004,8 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       location: 'updatePlanetaryBoundaries:biogeochemical',
       valueName: 'biogeochemical_flows.currentValue',
       month: state.currentMonth,
-<<<<<<< HEAD
       additionalInfo: { reserves, depletion, legacyContribution, effectiveNitrogen, effectivePhosphorus }
-=======
-      additionalInfo: { reserves, depletion, effectiveNitrogen, effectivePhosphorus, pollutionRatio }
->>>>>>> origin/auto/worker-20251116_220001
-=======
-    // NITROGEN-FOOD COUPLING (Nov 17, 2025): Update nitrogen management from deployed technologies
-    // This calculates global food production impact of nitrogen reduction
-    // Import dynamically to avoid circular dependencies
-    const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
-    const globalFoodProductionIndex = updateNitrogenFoodCoupling(state);
-
-    // Food production index affects biogeochemical boundary indirectly:
-    // - Lower food production → pressure to use MORE nitrogen (boundary worsens)
-    // - Technologies that reduce nitrogen WITH minimal yield penalty → boundary improves
-    // This is captured in the nitrogen management state, which feeds into legacy stock calculations
-    // (The coupling is via regional nitrogen inputs being reduced by tech deployment)
-
-    // Boundary value = baseline depletion + legacy contribution
-    // This means: reducing current inputs helps, but legacy stocks slow recovery dramatically
-    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 + depletion * 0.5 + legacyContribution), {
-      location: 'updatePlanetaryBoundaries:biogeochemical',
-      valueName: 'biogeochemical_flows.currentValue',
-      month: state.currentMonth,
-      additionalInfo: { reserves, depletion, legacyContribution, globalFoodProductionIndex }
->>>>>>> origin/auto/worker-20251117_033002
     });
->>>>>>> origin/auto/worker-20251116_170001
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
@@ -1209,22 +1023,10 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     additionalInfo: { pollutionLevel }
   });
 
-<<<<<<< HEAD
   // === IRREVERSIBILITY FRAMEWORK (Nov 16, 2025) ===
   // Research: Cousins et al. (2022) - PFAS planetary boundary, Sörengård et al. (2024) - energy trap economics
   // Three barriers create energy trap: economic impossibility, dilution problem, planetary irreversibility
   // Legacy stock release + asymptotic recovery mechanics
-=======
-  // === IRREVERSIBILITY FRAMEWORK (Nov 17, 2025) ===
-  // Research: Cousins et al. (2022) - PFAS atmospheric half-life 50-100 years, planetary boundary breached
-  // Sörengård et al. (2024) - Economic impossibility of cleanup ($20-7,000 trillion/year)
-  // Kane et al. (2022) - Global atmospheric distribution prevents full remediation
-  //
-  // CRITICAL CORRECTIONS from critique (Grade B+, CONDITIONAL PASS):
-  // - CRITICAL-1: Energy trap is theoretical upper bound (flag assumptions)
-  // - CRITICAL-2: Concentration gap varies by compartment (rainwater 9×, groundwater 5-7×, surface 6-9×)
-  // - CRITICAL-3: Rebound effect range 10-20% (not fixed 10%), no PFAS-specific empirical data
->>>>>>> origin/auto/worker-20251117_053001
   const novelEntitiesBoundary = system.boundaries.novel_entities;
 
   // Import irreversibility utilities
@@ -1237,7 +1039,6 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     novelEntitiesBoundary.peak = Math.max(novelEntitiesBoundary.peak, novelEntitiesValue);
   }
 
-<<<<<<< HEAD
   let finalNovelEntitiesValue = novelEntitiesValue;
 
   // === LEGACY STOCK RELEASE (if enabled) ===
@@ -1306,110 +1107,6 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     console.log(`     Peak: ${novelEntitiesBoundary.peak.toFixed(3)} | Floor (90%): ${irreversibleFloor.toFixed(3)}`);
     console.log(`     Attempted: ${finalNovelEntitiesValue.toFixed(3)} | Actual: ${flooredValue.toFixed(3)}`);
     console.log(`     Cousins 2022: Global PFAS distribution prevents full remediation`);
-=======
-  // === ASYMPTOTIC RECOVERY WITH PREVENTION-FIRST PARADIGM ===
-  // Montreal Protocol precedent: Production bans >> cleanup effectiveness (98% vs 2%)
-
-  // Check for prevention technologies (from NovelEntitiesSystem)
-  const ne = state.novelEntitiesSystem;
-  let preventionEffectiveness = 0;
-  let cleanupEffectiveness = 0;
-
-  if (ne) {
-    // Prevention technologies (Montreal Protocol analog: production bans)
-    // Research: Montreal Protocol achieved 98% reduction via CFC phase-out
-    // Novel entities equivalent: PFAS bans, green chemistry, supply chain controls
-    const preventionDeployment = ne.chemicalBansDeployment + ne.greenChemistryDeployment;
-    preventionEffectiveness = Math.min(0.40, preventionDeployment * 0.20); // Max 40% from prevention
-
-    // Energy-gated cleanup (CRITICAL-1 correction: theoretical upper bound)
-    // Requires fusion-scale renewable energy (>100 EJ/year clean capacity)
-    // Concentration gap (CRITICAL-2): groundwater 5-7 orders of magnitude, environmental 6-9 orders
-    // This limits cleanup effectiveness to 5-15% MAX
-    //
-    // Energy constraint assumption (CRITICAL-1):
-    // - IEA 2024 baseline: ~600 EJ/year global energy
-    // - PFAS cleanup at current rates: $20-7,000T/year (Sörengård 2024)
-    // - Requires 4-40% of global energy (24-240 EJ/year)
-    // - Fusion deployment assumption: Unlocks 100+ EJ/year clean capacity
-    let hasFusionEnergy = false;
-    if (state.techTreeState) {
-      // Check if fusion or advanced renewable energy deployed
-      const techTree: any = state.techTreeState;
-      hasFusionEnergy = (techTree.fusionEnergy?.deployed || techTree.advancedRenewables?.deployed);
-    }
-
-    if (hasFusionEnergy && ne.bioremediationDeployment > 0) {
-      // Cleanup limited by concentration gap (5-15% max effectiveness)
-      cleanupEffectiveness = Math.min(0.15, ne.bioremediationDeployment * 0.15);
-
-      // Rebound effect (CRITICAL-3 correction: 10-20% range, no PFAS-specific data)
-      // ⚠️ HIGH UNCERTAINTY: Range extrapolated from general Jevons paradox literature
-      // Assumption: Cleanup deployment may enable continued production ("moral hazard")
-      const reboundMin = 0.10;  // 10% minimum rebound
-      const reboundMax = 0.20;  // 20% maximum rebound
-      // Deterministic variation based on bioremediationDeployment level (no RNG in this function)
-      const reboundFactor = reboundMin + ((ne.bioremediationDeployment % 1.0) * (reboundMax - reboundMin));
-
-      cleanupEffectiveness *= (1 - reboundFactor);
-
-      // Log rebound when active
-      if (state.currentMonth % 12 === 0 && cleanupEffectiveness > 0) {
-        console.log(`  ⚠️ Novel Entities Cleanup Rebound Effect:`);
-        console.log(`     Rebound factor: ${(reboundFactor * 100).toFixed(1)}% (CRITICAL-3: 10-20% range, no PFAS-specific data)`);
-        console.log(`     Net cleanup effectiveness: ${(cleanupEffectiveness * 100).toFixed(1)}%`);
-      }
-    }
-  }
-
-  // Total effectiveness (prevention-dominated, cleanup limited)
-  const totalEffectiveness = preventionEffectiveness + cleanupEffectiveness;
-
-  // === ASYMPTOTIC RECOVERY (Nov 17, 2025) ===
-  // Use exponential decay toward minimum asymptotic floor
-  // Research: Cousins et al. (2022) - 50-100 year half-life, 15% minimum floor
-  if (novelEntitiesBoundary.irreversible && novelEntitiesBoundary.recoveryHalfLife && novelEntitiesBoundary.minimumAsymptoticValue) {
-    // Import asymptotic recovery function
-    const { asymptoteRecovery } = require('./utils/irreversibility');
-
-    // Target value: current minus effectiveness gains
-    const targetValue = Math.max(
-      novelEntitiesBoundary.minimumAsymptoticValue * 2,  // Scale floor to [0,2] range
-      novelEntitiesValue - (totalEffectiveness * 2)  // Effectiveness scaled to boundary units
-    );
-
-    // Apply asymptotic recovery (exponential approach to floor)
-    const recoveredValue = asymptoteRecovery(
-      novelEntitiesBoundary.currentValue || novelEntitiesValue,
-      targetValue,
-      novelEntitiesBoundary.recoveryHalfLife,
-      novelEntitiesBoundary.minimumAsymptoticValue,
-      1/12  // 1 month = 1/12 year
-    );
-
-    novelEntitiesBoundary.currentValue = recoveredValue;
-
-    // Log recovery progress (annually)
-    if (state.currentMonth % 12 === 0 && (preventionEffectiveness > 0 || cleanupEffectiveness > 0)) {
-      console.log(`  ☢️ Novel Entities Asymptotic Recovery:`);
-      console.log(`     Current: ${recoveredValue.toFixed(3)} | Target: ${targetValue.toFixed(3)} | Floor: ${(novelEntitiesBoundary.minimumAsymptoticValue! * 2).toFixed(3)}`);
-      console.log(`     Prevention: ${(preventionEffectiveness * 100).toFixed(1)}% | Cleanup: ${(cleanupEffectiveness * 100).toFixed(1)}% | Total: ${(totalEffectiveness * 100).toFixed(1)}%`);
-      console.log(`     Half-life: ${novelEntitiesBoundary.recoveryHalfLife} years (Cousins 2022: 50-100 year range)`);
-    }
-  } else {
-    // Fallback: Legacy floor logic (for backward compatibility)
-    const irreversibleFraction = 0.90;
-    const irreversibleFloor = novelEntitiesBoundary.peak! * irreversibleFraction;
-    const flooredValue = Math.max(irreversibleFloor, novelEntitiesValue - (totalEffectiveness * 2));
-
-    novelEntitiesBoundary.currentValue = flooredValue;
-
-    if (flooredValue > novelEntitiesValue && state.currentMonth % 12 === 0) {
-      console.log(`  ☢️ Novel Entities Irreversibility Floor Active (Legacy):`);
-      console.log(`     Peak: ${novelEntitiesBoundary.peak!.toFixed(3)} | Floor (90%): ${irreversibleFloor.toFixed(3)}`);
-      console.log(`     Effectiveness: ${(totalEffectiveness * 100).toFixed(1)}% (prevention + cleanup)`);
-    }
->>>>>>> origin/auto/worker-20251117_053001
   }
 
   updateBoundaryStatus(system.boundaries.novel_entities);

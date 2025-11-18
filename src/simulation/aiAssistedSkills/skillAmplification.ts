@@ -22,11 +22,7 @@
  *
  * @see Peng et al. (2023) - GitHub Copilot: 55.8% faster, larger gains for novices
  * @see Noy & Zhang (2023) - ChatGPT: 40% time reduction, 18% quality improvement
-<<<<<<< HEAD
  * @see Acemoglu & Restrepo (2019) - "Automation and New Tasks"
-=======
- * @see Acemoglu & Restrepo (2019) - "Automation and New Tasks: How Technology Displaces and Reinstates Labor"
->>>>>>> origin/auto/worker-20251115_200001
  * @see Frontiers in Psychology (2024) - Scaffolding matters: 80% vs 40% retention
  */
 
@@ -322,11 +318,7 @@ function calculateRetentionRate(scaffolding: number, reliance: number): number {
  *      Junior developers showed largest gains (consistent with Peng et al.)
  *      TRL: 9 (deployed across Microsoft, Accenture, Fortune 500)
  *
-<<<<<<< HEAD
  * @see Acemoglu & Restrepo (2019) - "Automation and New Tasks"
-=======
- * @see Acemoglu & Restrepo (2019) - "Automation and New Tasks: How Technology Displaces and Reinstates Labor"
->>>>>>> origin/auto/worker-20251115_200001
  *      Finding: Automation phase transition - complementarity → substitution over time
  *      Effect: 50-70% of US wage structure changes from automation displacing middle-skill
  *      Mechanism: As AI capability exceeds task complexity, jobs shift from augmented to replaced

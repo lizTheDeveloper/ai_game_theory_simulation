@@ -128,8 +128,6 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
     // CLIMATE CRISIS (multiple planetary boundaries)
     // FIX #11A: Keep at 0.35 (moderate degradation triggers response)
-<<<<<<< HEAD
-<<<<<<< HEAD
     const climateChangeCurrent = assertStateProperty(
       state.planetaryBoundariesSystem.boundaries.climate_change,
       'currentValue',
@@ -137,85 +135,23 @@ export class EmergencyResponsePhase implements SimulationPhase {
         location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
         month: state.currentMonth
       }
-=======
-    const climateChangeCurrent = assertStateProperty(
-      state.planetaryBoundariesSystem.boundaries.climate_change,
-      'currentValue',
-      { location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses', month: state.currentMonth }
->>>>>>> origin/auto/worker-20251116_210001
     );
     const waterStress = assertStateProperty(
       state.freshwaterSystem,
       'waterStress',
-<<<<<<< HEAD
       {
         location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
         month: state.currentMonth
       }
-=======
-      { location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses', month: state.currentMonth }
->>>>>>> origin/auto/worker-20251116_210001
     );
     const phosphorusReserves = assertStateProperty(
       state.phosphorusSystem,
       'reserves',
-<<<<<<< HEAD
       {
         location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
         month: state.currentMonth
       }
     );
-=======
-    const climateChangeBoundary = state.planetaryBoundariesSystem.boundaries.climate_change;
-    if (!climateChangeBoundary) {
-      throw new Error(`❌ CRITICAL: climate_change boundary not found (month ${state.currentMonth})`);
-    }
-    const climateChangeCurrent = assertFinite(
-      climateChangeBoundary.currentValue,
-      {
-        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
-        valueName: 'climateChangeCurrent',
-        month: state.currentMonth
-      }
-    );
-
-    const waterStress = assertFinite(
-      assertStateProperty(
-        state.freshwaterSystem,
-        'waterStress',
-        {
-          location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
-          month: state.currentMonth
-        }
-      ),
-      {
-        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
-        valueName: 'waterStress',
-        month: state.currentMonth
-      }
-    );
-
-    const phosphorusReserves = assertFinite(
-      assertStateProperty(
-        state.phosphorusSystem,
-        'reserves',
-        {
-          location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
-          month: state.currentMonth
-        }
-      ),
-      {
-        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
-        valueName: 'phosphorusReserves',
-        month: state.currentMonth
-      }
-    );
-
->>>>>>> origin/auto/worker-20251116_150001
-=======
-      { location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses', month: state.currentMonth }
-    );
->>>>>>> origin/auto/worker-20251116_210001
     const climateCrisisActive = (
       waterStress > 0.65 ||
       phosphorusReserves < 0.35 ||
@@ -239,14 +175,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
     if (climateCrisisActive) {
       const existing = getActiveResponse(state, 'climate');
       if (!existing) {
-<<<<<<< HEAD
         // Estimate severity from planetary boundaries (already extracted above)
-=======
-        // Estimate severity from planetary boundaries
-<<<<<<< HEAD
->>>>>>> origin/auto/worker-20251116_150001
-=======
->>>>>>> origin/auto/worker-20251116_210001
         const severity = Math.max(
           waterStress,
           1.0 - phosphorusReserves,
@@ -326,8 +255,6 @@ export class EmergencyResponsePhase implements SimulationPhase {
       state.socialAccumulation.socialCohesion.civilLiberties
     ) / 300;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     const institutionalLegitimacy = assertStateProperty(
       state.socialAccumulation,
       'institutionalLegitimacy',
@@ -336,32 +263,6 @@ export class EmergencyResponsePhase implements SimulationPhase {
         month: state.currentMonth
       }
     );
-=======
-    const institutionalLegitimacy = assertFinite(
-      assertStateProperty(
-        state.socialAccumulation,
-        'institutionalLegitimacy',
-        {
-          location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
-          month: state.currentMonth
-        }
-      ),
-      {
-        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
-        valueName: 'institutionalLegitimacy',
-        month: state.currentMonth
-      }
-    );
-
->>>>>>> origin/auto/worker-20251116_150001
-=======
-    const institutionalLegitimacy = assertStateProperty(
-      state.socialAccumulation,
-      'institutionalLegitimacy',
-      { location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses', month: state.currentMonth }
-    );
-
->>>>>>> origin/auto/worker-20251116_210001
     const socialCrisisDetected = (
       state.socialAccumulation.socialUnrestActive ||
       state.society.trustInAI < 0.30 ||  // Trust SEVERE collapse (was 0.4, too early)
@@ -647,125 +548,30 @@ export class EmergencyResponsePhase implements SimulationPhase {
     bifState: import('@/types/bifurcation').BifurcationState
   ): { crisisType: 'climate' | 'social' | 'economic' | 'pandemic' | 'technological' | 'nuclear', name: string } | null {
     // Calculate current values for all thresholds (with assertions)
-<<<<<<< HEAD
     const climateStability = assertFinite(
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       assertStateProperty(
         state.environmentalAccumulation,
         'climateStability',
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/auto/worker-20251115_130001
-=======
->>>>>>> origin/auto/worker-20251115_160001
-=======
-      assertStateProperty(
-        state.environmentalAccumulation,
-        'climateStability',
->>>>>>> origin/auto/worker-20251116_150001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
->>>>>>> origin/auto/worker-20251115_080001
-=======
->>>>>>> origin/auto/worker-20251115_130001
-=======
->>>>>>> origin/auto/worker-20251115_160001
       ),
-=======
-      assertStateProperty(state.environmentalAccumulation, 'climateStability', {
-        location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        month: state.currentMonth
-      }),
->>>>>>> origin/auto/worker-20251115_220001
-=======
-      ),
->>>>>>> origin/auto/worker-20251116_150001
-=======
-      state.environmentalAccumulation.climateStability,
->>>>>>> origin/auto/worker-20251116_180001
-=======
-    const climateStability = assertStateProperty(
-      state.environmentalAccumulation,
-      'climateStability',
->>>>>>> origin/auto/worker-20251116_210001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         month: state.currentMonth
       }
     );
 
-<<<<<<< HEAD
     const socialCohesion = assertFinite(
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       assertStateProperty(
         state.society,
         'coordinationCapacity',
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/auto/worker-20251115_130001
-=======
->>>>>>> origin/auto/worker-20251115_160001
-=======
-      assertStateProperty(
-        state.society,
-        'coordinationCapacity',
->>>>>>> origin/auto/worker-20251116_150001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
->>>>>>> origin/auto/worker-20251115_080001
-=======
->>>>>>> origin/auto/worker-20251115_130001
-=======
->>>>>>> origin/auto/worker-20251115_160001
       ),
-=======
-      assertStateProperty(state.society, 'coordinationCapacity', {
-        location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        month: state.currentMonth
-      }),
->>>>>>> origin/auto/worker-20251115_220001
-=======
-      ),
->>>>>>> origin/auto/worker-20251116_150001
-=======
-      state.society.coordinationCapacity,
->>>>>>> origin/auto/worker-20251116_180001
-=======
-    const socialCohesion = assertStateProperty(
-      state.society,
-      'coordinationCapacity',
-      {
-        location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        month: state.currentMonth
-      }
-    );
-
-    const economicTransitionStage = assertStateProperty(
-      state.globalMetrics,
-      'economicTransitionStage',
->>>>>>> origin/auto/worker-20251116_210001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         month: state.currentMonth
@@ -773,55 +579,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const economicStability = assertFinite(
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       assertStateProperty(
         state.globalMetrics,
         'economicTransitionStage',
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/auto/worker-20251115_130001
-=======
->>>>>>> origin/auto/worker-20251115_160001
-=======
-      assertStateProperty(
-        state.globalMetrics,
-        'economicTransitionStage',
->>>>>>> origin/auto/worker-20251116_150001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
->>>>>>> origin/auto/worker-20251115_080001
-=======
->>>>>>> origin/auto/worker-20251115_130001
-=======
->>>>>>> origin/auto/worker-20251115_160001
       ) / 4.0,
-=======
-      assertStateProperty(state.globalMetrics, 'economicTransitionStage', {
-        location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        month: state.currentMonth
-      }) / 4.0,
->>>>>>> origin/auto/worker-20251115_220001
-=======
-      ) / 4.0,
->>>>>>> origin/auto/worker-20251116_150001
-=======
-      state.globalMetrics.economicTransitionStage / 4.0,
->>>>>>> origin/auto/worker-20251116_180001
-=======
-      economicTransitionStage / 4.0,
->>>>>>> origin/auto/worker-20251116_210001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'economicStability',
@@ -829,58 +594,15 @@ export class EmergencyResponsePhase implements SimulationPhase {
       }
     );
 
-<<<<<<< HEAD
     const governanceLegitimacy = assertFinite(
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       assertStateProperty(
         state.government,
         'legitimacy',
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/auto/worker-20251115_130001
-=======
->>>>>>> origin/auto/worker-20251115_160001
-=======
-      assertStateProperty(
-        state.government,
-        'legitimacy',
->>>>>>> origin/auto/worker-20251116_150001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
->>>>>>> origin/auto/worker-20251115_080001
-=======
->>>>>>> origin/auto/worker-20251115_130001
-=======
->>>>>>> origin/auto/worker-20251115_160001
       ),
-=======
-      assertStateProperty(state.government, 'legitimacy', {
-        location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        month: state.currentMonth
-      }),
->>>>>>> origin/auto/worker-20251115_220001
-=======
-      ),
->>>>>>> origin/auto/worker-20251116_150001
-=======
-      state.government.legitimacy,
->>>>>>> origin/auto/worker-20251116_180001
-=======
-    const governanceLegitimacy = assertStateProperty(
-      state.government,
-      'legitimacy',
->>>>>>> origin/auto/worker-20251116_210001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         month: state.currentMonth

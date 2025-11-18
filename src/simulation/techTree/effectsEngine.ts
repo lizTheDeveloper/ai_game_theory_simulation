@@ -166,8 +166,6 @@ function calculateNovelEntitiesRemediationEffectiveness(
 
   // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Use cached renewable capacity if provided
   // This prevents recalculating in hot path (called once per deployed remediation tech)
-<<<<<<< HEAD
-<<<<<<< HEAD
   const energySystem = gameState.resourceEconomy.energy;
   const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
     cachedRenewableCapacity :
@@ -183,64 +181,6 @@ function calculateNovelEntitiesRemediationEffectiveness(
     location: 'calculateNovelEntitiesRemediationEffectiveness:energyDemand',
     month: gameState.currentMonth
   });
-=======
-  const energySystem = gameState.resourceEconomy.energy; // resourceEconomy.energy is required (not optional)
-
-  const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
-    cachedRenewableCapacity :
-    assertFinite(
-      assertStateProperty(energySystem.capacity, 'solar', { location: 'calculateNovelEntitiesRemediationEffectiveness', month: gameState.currentMonth }) +
-      assertStateProperty(energySystem.capacity, 'wind', { location: 'calculateNovelEntitiesRemediationEffectiveness', month: gameState.currentMonth }) +
-      assertStateProperty(energySystem.capacity, 'hydro', { location: 'calculateNovelEntitiesRemediationEffectiveness', month: gameState.currentMonth }) +
-      assertStateProperty(energySystem.capacity, 'fusion', { location: 'calculateNovelEntitiesRemediationEffectiveness', month: gameState.currentMonth }),
-      {
-        location: 'calculateNovelEntitiesRemediationEffectiveness',
-        valueName: 'totalRenewableCapacity',
-        month: gameState.currentMonth
-      }
-    );
-
-  const renewableCapacity = totalRenewableCapacity > 0 ? totalRenewableCapacity : 1000; // Default: 1,000 TWh total renewable capacity
-  const currentConsumption = assertFinite(
-    assertStateProperty(
-      energySystem,
-      'totalDemand',
-      {
-        location: 'calculateNovelEntitiesRemediationEffectiveness',
-        month: gameState.currentMonth
-      }
-    ),
-    {
-      location: 'calculateNovelEntitiesRemediationEffectiveness',
-      valueName: 'currentConsumption',
-      month: gameState.currentMonth
-    }
-  );
->>>>>>> origin/auto/worker-20251116_150001
-=======
-  const energySystem = gameState.resourceEconomy.energy;
-  const energyCapacity = energySystem.capacity;
-  const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
-    cachedRenewableCapacity :
-    (
-      assertFinite(energyCapacity.solar, { location: 'calculateNovelEntitiesRemediationEffectiveness', valueName: 'capacity.solar', month: gameState.currentMonth }) +
-      assertFinite(energyCapacity.wind, { location: 'calculateNovelEntitiesRemediationEffectiveness', valueName: 'capacity.wind', month: gameState.currentMonth }) +
-      assertFinite(energyCapacity.hydro, { location: 'calculateNovelEntitiesRemediationEffectiveness', valueName: 'capacity.hydro', month: gameState.currentMonth }) +
-      assertFinite(energyCapacity.fusion, { location: 'calculateNovelEntitiesRemediationEffectiveness', valueName: 'capacity.fusion', month: gameState.currentMonth })
-    );
-
-  const renewableCapacity = assertFinite(totalRenewableCapacity, {
-    location: 'calculateNovelEntitiesRemediationEffectiveness',
-    valueName: 'renewableCapacity',
-    month: gameState.currentMonth
-  });
-
-  const currentConsumption = assertStateProperty(
-    energySystem,
-    'totalDemand',
-    { location: 'calculateNovelEntitiesRemediationEffectiveness', month: gameState.currentMonth }
-  );
->>>>>>> origin/auto/worker-20251116_210001
   const renewableSurplus = Math.max(0, renewableCapacity - currentConsumption);
 
   const energyMultiplier = assertFinite(Math.min(1.0, renewableSurplus / energyRequired), {
@@ -357,8 +297,6 @@ export function applyAllTechEffects(
   // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Cache renewable capacity calculation
   // This prevents recalculating 180-300 times per 60-month run (once per remediation tech × months)
   // Research review: Architecture-skeptic identified this hot path issue
-<<<<<<< HEAD
-<<<<<<< HEAD
   const energySystem = gameState.resourceEconomy.energy;
   const totalRenewableCapacity = (
     assertStateProperty(energySystem.capacity, 'solar', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth}) +
@@ -366,30 +304,6 @@ export function applyAllTechEffects(
     assertStateProperty(energySystem.capacity, 'hydro', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth}) +
     assertStateProperty(energySystem.capacity, 'fusion', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth})
   );
-=======
-
-  // FIX (Nov 16, 2025): assertStateProperty expects NUMBER terminal values, but energy is an OBJECT
-  // Access directly instead - we validate the nested properties below anyway
-  const energySystem = gameState.resourceEconomy?.energy;
-  if (!energySystem) {
-    throw new Error(`❌ resourceEconomy.energy is undefined at month ${gameState.currentMonth}`);
-  }
-
-  const totalRenewableCapacity =
-    energySystem.capacity.solar +
-    energySystem.capacity.wind +
-    energySystem.capacity.hydro +
-    energySystem.capacity.fusion;
->>>>>>> origin/auto/worker-20251116_150001
-=======
-  const energySystem = gameState.resourceEconomy.energy;
-  const energyCapacity = energySystem.capacity;
-  const totalRenewableCapacity =
-    assertFinite(energyCapacity.solar, { location: 'applyAllTechEffects', valueName: 'capacity.solar', month: gameState.currentMonth }) +
-    assertFinite(energyCapacity.wind, { location: 'applyAllTechEffects', valueName: 'capacity.wind', month: gameState.currentMonth }) +
-    assertFinite(energyCapacity.hydro, { location: 'applyAllTechEffects', valueName: 'capacity.hydro', month: gameState.currentMonth }) +
-    assertFinite(energyCapacity.fusion, { location: 'applyAllTechEffects', valueName: 'capacity.fusion', month: gameState.currentMonth });
->>>>>>> origin/auto/worker-20251116_210001
 
   // Aggregate effects by type
   const globalEffects: Map<string, number> = new Map();
@@ -440,7 +354,6 @@ export function applyAllTechEffects(
           if (boundary && tech.energyRequirement) {
             // ENERGY CONSTRAINT: Check renewable energy availability
             // Renewable surplus = total generation × renewable % - existing demand
-<<<<<<< HEAD
             const totalGen = assertFinite(
               assertStateProperty(
                 gameState.powerGenerationSystem,
@@ -470,24 +383,6 @@ export function applyAllTechEffects(
               { location: 'applyAllTechEffects', valueName: 'dataCenterPower', month: gameState.currentMonth }
             );
 
-=======
-            const totalGen = assertStateProperty(
-              gameState.powerGenerationSystem,
-              'totalElectricityGeneration',
-              { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
-            );
-            const renewablePct = assertStateProperty(
-              gameState.powerGenerationSystem,
-              'renewablePercentage',
-              { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
-            );
-            const renewableGen = totalGen * renewablePct;
-            const dataCenterDemand = assertStateProperty(
-              gameState.powerGenerationSystem,
-              'dataCenterPower',
-              { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
-            );
->>>>>>> origin/auto/worker-20251116_210001
             const energyAvailable = Math.max(0, renewableGen - dataCenterDemand * 0.5);  // Assume 50% of data center can be displaced
 
             // Handle tech.energyRequirement which can be number or object with nested optional fields
@@ -1014,21 +909,13 @@ function applyGlobalEffects(
         // and affects food production via regional yield penalties
         if (gameState.globalMetrics) {
           // Accumulate nitrogen reduction effectiveness (will be used by updateNitrogenFoodCoupling)
-<<<<<<< HEAD
           const currentReduction = gameState.globalMetrics.nitrogenReductionTotal ?? 0;
-=======
-          const currentReduction = getDynamicProperty(gameState.globalMetrics, 'nitrogenReductionTotal', 0);
->>>>>>> origin/auto/worker-20251116_160001
 
           // Multiplicative stacking: 1 - (1 - r1)(1 - r2)...(1 - rN)
           // This prevents >100% reduction and models realistic synergies
           const combinedReduction = 1 - (1 - currentReduction) * (1 - value);
 
-<<<<<<< HEAD
           gameState.globalMetrics.nitrogenReductionTotal = combinedReduction;
-=======
-          setDynamicProperty(gameState.globalMetrics, 'nitrogenReductionTotal', combinedReduction);
->>>>>>> origin/auto/worker-20251116_160001
 
           // Log for diagnostics (annual)
           if (gameState.currentMonth % 12 === 0 && combinedReduction > 0.01) {
@@ -1648,27 +1535,6 @@ function applyRegionalEffects(
           // Reduce biogeochemical flows boundary value directly
           if (gameState.planetaryBoundariesSystem?.boundaries?.biogeochemical_flows) {
             const boundary = gameState.planetaryBoundariesSystem.boundaries.biogeochemical_flows;
-<<<<<<< HEAD
-=======
-            boundary.currentValue = assertFinite(Math.max(
-              0,
-              boundary.currentValue - value * 0.01
-            ), {
-              location: 'applyRegionalEffects:biogeochemicalFlowsReduction',
-              valueName: 'currentValue',
-              month: gameState.currentMonth
-            });
-            // Trigger boundary recovery tracking
-            triggerBoundaryRecovery(gameState, 'biogeochemical_flows');
-          }
-          break;
-
-        // ========== POLLUTION ==========
-        case 'pollutionReduction':
-          // Reduce pollution levels
-          if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
-            const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
->>>>>>> origin/auto/worker-20251116_220001
             boundary.currentValue = assertFinite(Math.max(
               0,
               boundary.currentValue - value * 0.01

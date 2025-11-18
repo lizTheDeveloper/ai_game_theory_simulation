@@ -44,7 +44,6 @@ export class HumanPopulationPhase implements SimulationPhase {
     setDeterministicRng(rng);
     // Each engine.step() represents one month advancing
     // Population calculations use monthly rates - no need to gate on day
-<<<<<<< HEAD
     const {
       updateHumanPopulation,
       applyPopulationEffectsToQoL,
@@ -62,8 +61,6 @@ export class HumanPopulationPhase implements SimulationPhase {
     const {
       assertRegionalConsistency
     } = require('../../utils/assertions');
-=======
->>>>>>> origin/auto/worker-20251116_160001
 
     // === PHASE 5: REGIONAL POPULATION DYNAMICS ===
     // Update regional populations with differential growth/decline rates

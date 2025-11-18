@@ -259,7 +259,6 @@ export function initializeRegionalNitrogenManagement(): RegionalNitrogenManageme
 }
 
 /**
-<<<<<<< HEAD
  * Extract nitrogen-reducing technology deployment levels from state
  *
  * Reads tech tree state and calculates effective nitrogen reduction
@@ -335,59 +334,6 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
   }
 
   return deployments;
-=======
- * Collect nitrogen-reducing technology effectiveness from deployed tech
- *
- * Research-backed effectiveness values (see research/nitrogen_food_coupling_20251115.md):
- * - Precision agriculture (soil_p_optimization): 25-30% N reduction
- * - Vertical farming: 60% fertilizer reduction
- * - Precision fermentation: 30-50% N demand reduction (replaces animal agriculture)
- * - Circular food systems: 25% via waste recovery
- * - Drought-resistant crops: 15% via improved efficiency
- *
- * @param state - Current game state with tech tree
- * @returns Array of effectiveness values [0, 1] for deployed nitrogen-reducing tech
- */
-export function collectNitrogenReducingTechEffectiveness(state: GameState): number[] {
-  const effectiveness: number[] = [];
-  const { techTreeState } = state;
-
-  // Mapping: tech ID → nitrogen reduction effectiveness
-  const NITROGEN_REDUCING_TECH: Record<string, number> = {
-    'soil_p_optimization': 0.27,       // 27% N reduction (precision agriculture, research-backed)
-    'vertical_farming': 0.60,          // 60% fertilizer reduction (research-backed)
-    'precision_fermentation': 0.40,    // 40% N demand reduction (mid-range, research-backed)
-    'circular_food_systems': 0.25,     // 25% via waste recovery (research-backed)
-    'drought_resistant_crops': 0.15,   // 15% efficiency improvement (research-backed)
-  };
-
-  // Check global deployment for each nitrogen-reducing tech
-  const globalDeployments = techTreeState.regionalDeployment['global'] || [];
-
-  for (const deployment of globalDeployments) {
-    const baseEffectiveness = NITROGEN_REDUCING_TECH[deployment.techId];
-
-    if (baseEffectiveness !== undefined) {
-      // Scale by deployment level [0, 1]
-      const scaledEffectiveness = baseEffectiveness * deployment.deploymentLevel;
-
-      // Validate effectiveness
-      const validatedEffectiveness = assertProbability(scaledEffectiveness, {
-        location: 'collectNitrogenReducingTechEffectiveness',
-        valueName: `${deployment.techId}_effectiveness`,
-        additionalInfo: {
-          techId: deployment.techId,
-          baseEffectiveness,
-          deploymentLevel: deployment.deploymentLevel
-        }
-      });
-
-      effectiveness.push(validatedEffectiveness);
-    }
-  }
-
-  return effectiveness;
->>>>>>> origin/auto/worker-20251117_033002
 }
 
 /**

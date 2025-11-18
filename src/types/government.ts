@@ -199,11 +199,7 @@ export interface GovernmentAgent {
   // Government Resources (Budget Pool)
   // Available resources for government actions (environmental, economic, etc.)
   // Scales with economy size, spent on interventions
-<<<<<<< HEAD
   resources: number; // [0,∞) Resource pool for actions (typical range 0-20)
-=======
-  resources: number; // [0,∞) Resource pool for actions (typical range 0-20) - always initialized to 10
->>>>>>> origin/auto/worker-20251116_180001
 }
 
 /**
