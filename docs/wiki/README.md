@@ -2941,15 +2941,17 @@ When auditing or writing simulation code:
   - Research quality: A (100% peer-reviewed, 2022-2025 sources)
   - Used in simulation: `src/simulation/nuclearWinter.ts`, documented in `docs/wiki/systems/nuclear-winter.md`
 
-- [`research/water_scarcity_migration_immobility_20251020.md`](/research/water_scarcity_migration_immobility_20251020.md) (Updated Nov 12, 2025)
+- [`research/water_scarcity_migration_immobility_20251020.md`](/research/water_scarcity_migration_immobility_20251020.md) (Updated Nov 15, 2025)
   - Water scarcity, migration, and involuntary immobility (trapped populations)
-  - **Updated 2024-2025 research:**
-    - IIASA Nature Climate Change 2024 (Hoffmann et al.): Census microdata from 72 countries (1960-2016)
+  - **Updated 2024-2025 research (22 sources):**
+    - **IOM World Migration Report 2024**: 216M projected climate migrants by 2050 (internal displacement), regional breakdown for Africa/Asia/Americas/Pacific, water-specific findings (Sahel rainfall down 20%, Central Asia water conflicts)
+    - **World Bank "Ebb and Flow" 2021**: Water deficits linked to 10% of global migration rise, dry rainfall shocks have 5x effect vs wet shocks, poor countries 4x less likely to migrate (poverty trap mechanism)
+    - **IIASA Nature Climate Change 2024** (Hoffmann et al.): Census microdata from 72 countries (1960-2016)
     - Empirical confirmation: drought drives internal migration in rural, agriculture-dependent regions
     - Migration capacity correlates with wealth; young working-age adults most responsive
-  - **Key findings:** Geographic hotspots (Africa, Middle East, South Asia), urbanization acceleration, wealth-mobility correlation
+  - **Key findings:** Geographic hotspots (Africa, Middle East, South Asia), urbanization acceleration, wealth-mobility correlation, poverty-immobility trap
   - Research quality: A- (90% peer-reviewed, includes 2024-2025 sources)
-  - Used in simulation: `src/simulation/trappedPopulations.ts`
+  - Used in simulation: `src/simulation/refugeeCrises.ts`, `src/simulation/trappedPopulations.ts`
 
 **Research Quality:** A grade (90-95% peer-reviewed, 2024-2025 sources)
 
