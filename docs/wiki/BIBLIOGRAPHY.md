@@ -1,9 +1,9 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 15, 2025
-**Total Sources**: 179+ peer-reviewed citations
+**Last Updated**: November 16, 2025
+**Total Sources**: 178+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
-**Recency**: 85% from 2020-2025, 63% from 2024-2025 (improved with Nov 15 updates)
+**Recency**: 85% from 2020-2025, 62% from 2024-2025 (improved with Nov 12 updates)
 
 This bibliography documents all peer-reviewed research, official datasets, and authoritative sources cited in the simulation wiki and codebase.
 
@@ -12,7 +12,7 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **Phase 2 Layer 2 verification ongoing.** Recent findings reveal systematic attribution errors in codebase citations:
 
 **Critical Issues Identified:**
-- **Wrong years**: Acemoglu & Restrepo cited as 2022 (should be 2019 for "Automation and New Tasks")
+- ✅ **Wrong years**: Acemoglu & Restrepo cited as 2022 → CORRECTED to 2019 (commit c6a67d5, Nov 15)
 - **False attributions**: Claims attributed to papers that don't contain them (e.g., "meaning crisis" not in Acemoglu)
 - **Inflated effect sizes**: Values 2-3× higher than actual research (e.g., participatory budgeting)
 - **Temporal impossibilities**: 2020 data attributed to 2000 publications
@@ -44,18 +44,6 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 ## AI Safety & Capabilities
 
 ### Multi-Agent AI Coordination & Alignment (2024-2025)
-
-**Collina, N., Goel, S., Roth, A., Ryu, E., & Shi, M. (2025).** Emergent Alignment via Competition. *arXiv:2509.15090 [cs.LG]*
-- **Used for**: Competitive AI equilibrium theoretical foundation
-- **Key findings**: Game-theoretic proof that competition between misaligned AIs produces aligned outcomes; multi-leader Stackelberg game framework; convex hull condition ensures user-optimal outcomes emerge naturally from strategic competition
-- **Relevance**: Validates competitive equilibrium approach - diverse AI perspectives + strategic interaction → alignment without centralized enforcement
-- **Published**: September 18, 2025
-
-**Carichon, F., Khandelwal, A., Fauchard, M., & Farnadi, G. (2025).** The Coming Crisis of Multi-Agent Misalignment: AI Alignment Must Be a Dynamic and Social Process. *arXiv:2506.01080v2. Accepted: NeurIPS 2025*
-- **Used for**: Multi-agent alignment dynamics, social process modeling
-- **Key findings**: Alignment is dynamic, interaction-dependent process shaped by social environment; three interdependent types (human, preferential, objective); group structures can erode individual/collective values
-- **Relevance**: Directly validates simulation's purpose - monolithic alignment metrics insufficient, need emergent multi-agent social dynamics
-- **Published**: June 6, 2025 (revised v2)
 
 **Hammond, L., Chan, A., Clifton, J., Hoelscher-Obermaier, J., Khan, A., et al. (2025).** Multi-Agent Risks from Advanced AI. *Cooperative AI Foundation, Technical Report #1*. arXiv:2502.14143
 - **Used for**: Competitive AI equilibrium research (TIER 2B, deferred implementation)
@@ -277,20 +265,6 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **MGNREGA India (2020).** Mahatma Gandhi National Rural Employment Guarantee Act: Annual Report 2019-20.
 - **Used for**: Job guarantee implementation (rural India, 55M households)
 - **Key finding**: 100 days guaranteed work reduces poverty by 13-32%
-
-### Cooperative Economics & Alternative Ownership (2024-2025)
-
-**Scholz, T., & Tortorici, S. (2025).** 5 Ways Cooperatives Can Shape the Future of AI. *Harvard Business Review*, June 25, 2025.
-- **Used for**: Cooperative AI governance models, data cooperatives, alternative ownership structures
-- **Key findings**: READ-COOP Transkribus (227 member orgs, 90M+ images, 100% renewable energy); data cooperatives (MIDATA, Superset, Driver's Seat, Gamayyar); democratized data governance + worker-owned platforms
-- **Relevance**: Validates cooperative ownership as viable alternative to corporate AI control
-- **Type**: ⚠️ Business publication (not peer-reviewed), credible institutional source (HBR)
-
-**Hubbard, S. (2024).** Cooperative Paradigms for Artificial Intelligence. *Harvard Ash Center*, November 20, 2024.
-- **Used for**: Three governance models (public cloud infrastructure, data cooperatives, collective governance)
-- **Key findings**: 3 cloud providers control 66% market; cooperatives employ ~10% global workforce; profit reinvestment 100% (nonprofit coops) vs 30-50% (corporations)
-- **Relevance**: Addresses market concentration, equity, accountability, democratic governance challenges
-- **Type**: ⚠️ Policy brief (Harvard research institution, not peer-reviewed journal)
 
 ---
 
@@ -563,6 +537,24 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **UNHCR (2024).** Global Trends: Forced Displacement in 2023.
 - **Used for**: Refugee crisis triggers, generational resettlement timelines
 - **Key finding**: 110M forcibly displaced globally (record high)
+
+**IDMC (2025).** 2025 Global Report on Internal Displacement (GRID).
+- **Used for**: Government relocation programs, disaster displacement statistics
+- **Key findings**: 83.4M internal displacement, 45.8M disaster displacements in 2024 (record high), 99.5% weather-related, 11M US displacements (single-country record)
+- **Confidence**: VERY HIGH (authoritative global monitoring center)
+- **Research file**: [`research/government_relocation_programs_20251020.md`](/research/government_relocation_programs_20251020.md)
+
+**Gini, G., et al. (2024).** Navigating tensions in climate change-related planned relocation. *Ambio*, 53(9).
+- **Used for**: Government relocation programs (policy challenges, implementation gaps)
+- **Key findings**: Only 2 countries have national relocation guidelines (Fiji, Solomon Islands), 0 of 54 climate mobility projects worked to help people move, 400+ relocations since 1970s across 78 countries
+- **Confidence**: HIGH (expert consensus from 29 researchers)
+- **Research file**: [`research/government_relocation_programs_20251020.md`](/research/government_relocation_programs_20251020.md)
+
+**IOM DTM (2025).** Climate Migration Demographics Study. *DTM Insights*, January 2025.
+- **Used for**: Climate migration demographics, vulnerability profiles
+- **Key findings**: 14,000 geolocated displacement records (2018-2024), Kenya 26.4% child malnutrition in drought zones, Libya 44,862 displaced by Storm Daniel
+- **Confidence**: HIGH (comprehensive tracking matrix)
+- **Research file**: [`research/government_relocation_programs_20251020.md`](/research/government_relocation_programs_20251020.md)
 
 **UN Population Division (2024).** World Population Prospects 2024.
 - **Coverage**: 237 countries/areas
