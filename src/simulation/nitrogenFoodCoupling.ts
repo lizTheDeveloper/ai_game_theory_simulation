@@ -359,7 +359,7 @@ export function updateNitrogenFoodCoupling(state: GameState): number {
   const regions = state.planetaryBoundariesSystem.regionalNitrogenManagement;
 
   // STEP 1: Collect deployed nitrogen-reducing technologies
-  const deployedTechEffectiveness = collectNitrogenReducingTechEffectiveness(state);
+  const deployedTechEffectiveness = getNitrogenReductionDeployment(state);
 
   // STEP 2: Calculate global nitrogen reduction from technologies
   const globalNitrogenReduction = calculateTechnologyNitrogenReduction(deployedTechEffectiveness);
@@ -410,7 +410,7 @@ export function updateNitrogenFoodCoupling(state: GameState): number {
 
     // Update deployed tech IDs (from placeholder to actual tech)
     // Only store tech IDs that are actually contributing
-    region.deployedTechnologies = collectNitrogenReducingTechEffectiveness(state)
+    region.deployedTechnologies = getNitrogenReductionDeployment(state)
       .length > 0
       ? Object.keys(state.techTreeState.regionalDeployment['global'] || {})
           .filter(techId => ['soil_p_optimization', 'vertical_farming', 'precision_fermentation',

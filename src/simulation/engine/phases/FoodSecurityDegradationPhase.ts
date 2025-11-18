@@ -234,7 +234,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
         }
       }
 
-      const newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
+      let newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
         location: 'FoodSecurityDegradationPhase.execute',
         valueName: `${region.name}.foodSecurity (after degradation)`,
         month: state.currentMonth

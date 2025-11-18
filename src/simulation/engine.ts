@@ -61,7 +61,7 @@ import {
   // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   TechTreePhase,
-  // CoordinatedDeploymentPhase explicitly imported below (line 163) to avoid duplication
+  CoordinatedDeploymentPhase,  // TIER 1B (Nov 15, 2025): AI-managed gradual tech deployment (order 16.5)
   MeaningRenaissancePhase,
   // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
@@ -927,6 +927,7 @@ export class SimulationEngine {
       // This logs major crises but doesn't end the simulation until pop < 10K
       if (state.extinctionState.active && state.extinctionState.severity >= 1.0) {
         // Major crisis complete, but check if humanity actually survived
+        const population = state.humanPopulationSystem.population;
         if (population >= 0.1) {  // 100M+ survivors
           // SURVIVED! Population crashed but humanity lives on
           // Don't break, keep simulating

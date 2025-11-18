@@ -286,7 +286,6 @@ export function checkDystopiaConditions(state: GameState): {
     { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
   );
   const politicalFreedom = assertProbability(
-    state.qualityOfLifeSystems.politicalFreedom,
     assertStateProperty(
       state.qualityOfLifeSystems,
       'politicalFreedom',

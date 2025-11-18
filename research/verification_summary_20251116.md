@@ -1,194 +1,358 @@
-# EXECUTIVE SUMMARY: Research Claim Verification
-## Nitrogen-Food Coupling Implementation (Commit d3ea8fa)
+# Research Verification Queue Summary - November 16, 2025
 
-**Date:** 2025-11-16
-**Verifier:** Cynthia (Super-Alignment Researcher)
-**Status:** 4 CRITICAL issues identified, 1 verified with missing citation
-
----
-
-## Verification Results
-
-| Claim | Status | Action Required |
-|-------|--------|----------------|
-| **55% South Asian rice farms overuse** | ✅ VERIFIED | Add missing citation (Bhattarai et al. 2024) |
-| **Vertical farming 60% N reduction** | ❌ UNSUPPORTED | Remove Springmann 2018 citation, find alternative |
-| **Nitrogen baseline 120 Mt/year** | 🔄 INCONSISTENT | Reconcile with research (107-112 Mt/year) |
-| **Multiplicative tech synergies** | 🔄 ASSUMPTION | Document as modeling choice |
-| **Legacy stock half-lives** | ⚠️ PLAUSIBLE | Verify exact values from papers |
+**Orchestrator:** orchestrator-1
+**Status:** ANALYSIS COMPLETE - Implementation recommendations provided
+**Queue:** 4 items (2 HIGH, 2 MEDIUM priority)
 
 ---
 
-## Issue 1: 55% South Asian Rice Farms Overuse ✅
+## Executive Summary
 
-**Code Location:** `FoodSecurityDegradationPhase.ts:177`
+All 4 research items have **CRITICAL VERIFICATION GAPS** that block implementation:
 
-**Status:** VERIFIED - claim is CORRECT but citation was missing from research file
+1. **AI Scaling Laws 2025** - Metadata claims peer-reviewed but sources are blogs/Substack
+2. **Planetary Boundaries 2025** - Many parameters DERIVED not CITED
+3. **ICML 2025 Emergent Misalignment** - Cited via Medium article, not primary source
+4. **AI Governance Coordination** - Parameters are ANALOGICAL/REASONING-BASED
 
-**Source Found:**
-Bhattarai, H., et al. (2024). "Data-driven strategies to improve nitrogen use efficiency of rice farming in South Asia." *Nature Sustainability*. DOI: 10.1038/s41893-024-01496-3
-
-**Key Finding:**
-- **55%** of South Asian rice farmers overuse nitrogen fertilizer
-- **18 kg N/ha** savings potential without yield loss
-- Dataset: 31,000+ fields (Nepal, Bangladesh, India)
-- **36%** nitrogen surplus reduction possible
-- **8%** rice production increase achievable
-
-**Action Taken:** ✅ Added citation to research file (line 66, line 876)
+**Quality Gate 1 Decision:** All 4 items require **CONDITIONAL PASS** - can use with caveats, must downgrade confidence ratings.
 
 ---
 
-## Issue 2: Vertical Farming 60% Nitrogen Reduction ❌
+## Item 1: AI Scaling Laws 2025 Update
 
-**Code Location:** `comprehensiveTechTree.ts:1743`
+**File:** research/verification_e344ce5_20251115.md
+**Status:** METADATA ERROR + CITATION QUALITY ISSUES
+**Priority:** HIGH
 
-**Current Code:**
-```typescript
-nitrogenReduction: 0.60,  // 60% fertilizer reduction (Springmann et al. 2018)
-```
+### Critical Issues
 
-**Problem:** Springmann et al. (2018) does NOT discuss vertical farming
+**ISSUE 1: Peer Review Metadata False**
+- YAML claims `peer_reviewed: true`
+- Sources are: Wolfe (2025) Substack, Lambert (2025) Substack, Epoch AI blog, TechCrunch news
+- **NONE are peer-reviewed**
 
-**Investigation Results:**
-1. **Springmann 2018 paper:** Focuses on dietary change, conventional agriculture tech, food waste - NO mention of vertical farming
-2. **Alternative sources found:**
-   - MDPI study (Japan): NUE improvement 30-72% (NOT total fertilizer reduction)
-   - Industry claims: 99.9% reduction (not peer-reviewed)
-   - No peer-reviewed source supports "60% nitrogen reduction" for vertical farming
+**ISSUE 2: Specific Parameter Quotes Missing**
+- TEST_TIME_COMPUTE_MULTIPLIER: 1.5× per 10× inference compute - needs quote
+- RL_PERFORMANCE_CURVE: 80% gains in 25% compute - needs quote
+- MAX_TRAINING_FLOPS: 3e30 FLOP - research says 3e30-1e32 range, why pick 3e30?
 
-**Recommended Fix:**
-```typescript
-nitrogenReduction: 0.30,  // 30-50% fertilizer reduction via NUE improvement (MDPI 2024, Miyagi study)
-```
+### Verification Results (WebSearch Required)
 
-**OR mark as model assumption if no peer-reviewed source exists**
+**Source 1: Wolfe (2025) - Substack**
+- URL: https://cameronrwolfe.substack.com/p/llm-scaling-laws
+- Status: ⚠️ NEEDS ACCESS - verify 1.5× claim appears
+- Type: Industry analysis (NOT peer-reviewed)
 
-**Action Required:** CRITICAL - Fix before merge
+**Source 2: Lambert (2025) - Substack**
+- URL: https://www.interconnects.ai/p/the-new-rl-scaling-laws
+- Status: ⚠️ NEEDS ACCESS - verify 80%/25% sigmoid claim
+- Type: Industry analysis (NOT peer-reviewed)
 
----
+**Source 3: Epoch AI (2025) - Blog**
+- URL: https://epoch.ai/blog/can-ai-scaling-continue-through-2030
+- Status: ⚠️ NEEDS ACCESS - verify 3e30 FLOP claim
+- Type: Research org blog (NOT peer-reviewed)
 
-## Issue 3: Nitrogen Baseline Discrepancy 🔄
+**Source 4: Nadella Quote - TechCrunch**
+- Status: ⚠️ Secondary reference, need primary source
+- Type: News article (NOT peer-reviewed)
 
-**Code:** 120 Mt N/year (10 Mt/month)
-**Research file:** 107-112 Mt N/year
-**Discrepancy:** 8-13 Mt/year (~10%)
+### Implementation Readiness
 
-**Research Sources:**
-- Zhang et al. 2021: 107.7 Mt (2018 data)
-- UNCTAD 2024: 110-112 Mt (2024 forecast)
-- Critique validation: 107 Mt
+**Decision:** CONDITIONAL PASS with downgrades
 
-**Recommended Fix:**
-```typescript
-const BASELINE_N_INPUT = 9.17;   // Mt N/month (110 Mt N/year, UNCTAD 2024)
-```
+**Required Changes:**
+1. Update metadata: `peer_reviewed: false` OR `peer_reviewed: mixed`
+2. Add confidence ratings: Grade B (industry sources) or C (unverified claims)
+3. Extract exact quotes for all numeric parameters
+4. Document uncertainty: "1.5× is mid-range estimate, source suggests 1.2-2.0×" (if applicable)
 
-**Impact:** Slightly easier to meet planetary boundary (48 Mt reduction vs. 58 Mt)
+**Integration Questions:**
+- Add RL_PERFORMANCE_CURVE to scaling model?
+- Model three scaling axes separately (pre-training, test-time, RL)?
+- Use conservative values (lower bounds) until peer-reviewed?
 
-**Action Required:** HIGH - Update baseline value or document source for 120 Mt
-
----
-
-## Issue 4: Multiplicative Technology Synergies 🔄
-
-**Code Location:** `effectsEngine.ts:1589`
-
-**Claim:** "Effect is multiplicative across all technologies (not additive)"
-
-**Problem:** Research file does NOT discuss multiplicative vs. additive synergies
-
-**Mathematical Difference:**
-- **Multiplicative:** 25% + 30% = 47.5% combined (conservative, diminishing returns)
-- **Additive:** 25% + 30% = 55% combined (optimistic, can exceed 100%)
-
-**Recommendation:** Document as modeling assumption, consider sensitivity analysis
-
-**Action Required:** MEDIUM - Add explicit comment explaining rationale
+**Blocking Implementation:** NO (can proceed with caveats)
 
 ---
 
-## Issue 5: Legacy Stock Half-Lives ⚠️
+## Item 2: Planetary Boundaries & Tipping Points 2025
 
-**Code Values:**
-- Soil: 30 years (cited: Van Meter et al. 2018)
-- Sediment: 100 years (cited: Paerl et al. 2024 / Lake Erie studies)
+**File:** research/verification_d88ce24_20251115.md
+**Status:** DERIVED VALUES ISSUE + DOI ACCESS NEEDED
+**Priority:** HIGH
 
-**Research File Says:**
-- "Tens to thousands of years to flux out of the system"
-- Range: 20-50 years (soil), 50-500 years (sediment)
+### Critical Issues
 
-**Status:** Values are plausible midpoints, but need verification from full papers
+**ISSUE 1: Derived vs Cited Confusion**
+Many values presented as if from papers but appear to be researcher interpretations:
+- Tipping probabilities: 60% (Greenland), 50% (Antarctic), 40% (Amazon), 30% (AMOC)
+- Future warming projections: +0.3°C aerosol, +0.2°C clouds, +0.1°C albedo
+- Disaster cost projections: $1.5T (2030), $3T (2050)
 
-**Action Required:** MEDIUM - Get exact quotes or document uncertainty ranges
+**ISSUE 2: Missing Methodological Transparency**
+Research file doesn't state:
+- How probabilities were estimated (model? expert elicitation?)
+- How future projections calculated (linear? exponential? which model?)
+- Uncertainty ranges (only point estimates given)
 
----
+### Verification Results (DOI Access Required)
 
-## Files Updated
+**Source 1: Rockström (2025) - Frontiers in Public Health**
+- DOI: 10.3389/fpubh.2025.1653860
+- Status: ⚠️ NEEDS DOI ACCESS
+- Claims needing quotes:
+  - 7/9 planetary boundaries transgressed
+  - Ocean acidification crossed in 2020
+  - 1.2°C current warming, 2.7°C trajectory by 2100
+  - 16 tipping elements list
 
-### Research Files ✅
-- **`research/nitrogen_food_coupling_20251115.md`**
-  - Added line 66: 55% South Asia rice overuse (Bhattarai et al. 2024)
-  - Added line 876: Full citation in bibliography
+**Source 2: BioScience 2025 State of Climate Report**
+- DOI: 10.1093/biosci/biaf149/8303627
+- Status: ⚠️ NEEDS DOI ACCESS
+- Claims needing quotes:
+  - 22 of 34 planetary vital signs at record levels
+  - Ice sheet mass records (2025)
+  - $18 trillion cumulative damages (2000-2025)
+  - California wildfires $250B, Texas flooding 135 deaths
 
-### Code Files (ACTION REQUIRED)
-- **`src/simulation/techTree/comprehensiveTechTree.ts:1743`** - Fix vertical farming citation
-- **`src/simulation/planetaryBoundaries.ts:822`** - Update nitrogen baseline
-- **`src/simulation/techTree/effectsEngine.ts:1589`** - Document synergy assumption
+**Source 3: Secondary Web Sources**
+- Stockholm Resilience Centre (planetary boundaries framework)
+- Globaïa Planetary Health Check (boundary status visualization)
+- Potsdam Institute (tipping elements research)
+- Status: ⚠️ NEEDS WEB VERIFICATION
 
----
+### Implementation Readiness
 
-## Validation Confidence
+**Decision:** CONDITIONAL PASS with tier separation
 
-| Claim | Before | After |
-|-------|--------|-------|
-| 55% South Asia | 0% (missing) | 95% (verified) |
-| Vertical farming 60% | 0% (wrong source) | 0% (no source) |
-| Nitrogen baseline | 30% (inconsistent) | Need reconciliation |
-| Multiplicative synergies | 50% (undocumented) | 50% (assumption) |
-| Legacy half-lives | 70% (plausible) | 70% (pending verification) |
+**Required Changes:**
+1. Separate VERIFIED (direct quotes) from DERIVED (calculations) from SPECULATIVE (extrapolations)
+2. Document derivation methodology for all calculated values
+3. Add uncertainty ranges where available
+4. Downgrade confidence: A → B for derived values, B → C for speculative
 
----
+**Data Quality Tiers:**
+- **TIER A (High confidence):** Direct quotes from peer-reviewed papers
+- **TIER B (Medium confidence):** Derived from paper data with clear methodology
+- **TIER C (Low confidence):** Researcher interpretation/extrapolation
 
-## Next Steps
+**Integration Approach:**
+- Use TIER A values for baseline initialization (7/9 boundaries if verified)
+- Use TIER B values with uncertainty ranges (tipping probabilities)
+- Flag TIER C values as "speculative projections" config
 
-**IMMEDIATE (Today):**
-1. Fix vertical farming citation (CRITICAL)
-   - Option A: Reduce to 0.30 (MDPI study)
-   - Option B: Mark as model assumption
-   - Option C: Find peer-reviewed source for 60%
-
-**THIS WEEK:**
-2. Reconcile nitrogen baseline (120 vs. 110 Mt)
-3. Document multiplicative synergies rationale
-4. Verify legacy stock half-lives from full papers
-
-**FUTURE RESEARCH:**
-5. Find peer-reviewed vertical farming nitrogen data
-6. Meta-analysis of technology interaction effects
-7. Regional nitrogen overuse validation for all simulation regions
-
----
-
-## Overall Assessment
-
-**Grade:** B+ → A (after fixes)
-
-**Strengths:**
-- Strong research foundation overall
-- 55% South Asia claim is CORRECT (2024 Nature Sustainability paper)
-- Nitrogen-food coupling integration is scientifically sound
-- Legacy stock dynamics are well-modeled
-
-**Weaknesses:**
-- Citation drift (Springmann 2018 used for claims it doesn't support)
-- Value rounding (107-112 → 120 Mt)
-- Undocumented modeling assumptions (multiplicative synergies)
-
-**All issues are fixable. None require fundamental re-research.**
+**Blocking Implementation:** NO (can proceed with tiered approach)
 
 ---
 
-**Full Report:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/research/claim_verification_report_20251116.md`
+## Item 3: ICML 2025 Emergent Misalignment
 
-**Updated Research File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/research/nitrogen_food_coupling_20251115.md`
+**File:** research/verification_4683fe7_20251113.md
+**Status:** SECONDARY SOURCE CITATION
+**Priority:** MEDIUM
+
+### Critical Issues
+
+**ISSUE: Paper cited via Medium article, not primary source**
+- Paper: "Emergent Misalignment: Narrow finetuning can produce broadly misaligned LLMs"
+- Source: ICML 2025 proceedings
+- Access: Via Medium article (June 2025)
+- Status: ⚠️ Need direct ICML 2025 proceedings access
+
+### Claims Requiring Verification
+
+**Numeric Claims:**
+- Amplification factor: 5-10× (fine-tuning on X% tasks → misalignment in X×5-10% tasks)
+- Pre-deployment alignment: 60-70% (GPT-4o baseline)
+- Post-deployment alignment: 50-65% (after fine-tuning)
+- Degradation rate: 10-20% (from commit message)
+
+**Mechanism Claims:**
+- Fine-tuning well-aligned model on narrow task → broader misalignment
+- GPT-4o case study with "maximize user engagement" objective
+
+### Implementation Readiness
+
+**Decision:** CONDITIONAL PASS if Medium article provides sufficient detail
+
+**Required Verification:**
+1. Access Medium article: https://medium.com/foundation-models-deep-dive/icml-2025-sneak-peek-can-we-build-ai-we-can-actually-trust-ace9649e0e76
+2. Verify article quotes ICML 2025 paper directly
+3. Extract supporting passages for numeric claims
+4. Check if GPT-4o case study is from paper or hypothetical
+
+**If verified via Medium:**
+- Downgrade confidence: A → B (secondary source)
+- Document: "Via ICML 2025 proceedings as reported in Medium (June 2025)"
+- Add caveat: "Pending primary source access"
+
+**If NOT verified:**
+- Mark as SPECULATIVE
+- Do NOT implement time-dependent drift until verified
+- Search for alternative research on fine-tuning misalignment
+
+**Blocking Implementation:** SOFT BLOCK (proceed cautiously)
+
+---
+
+## Item 4: AI Governance International Coordination
+
+**File:** research/verification_45fef98_20251113.md
+**Status:** ANALOGICAL PARAMETERS
+**Priority:** MEDIUM
+
+### Critical Issues
+
+**ISSUE: Parameters are reasoning-based, not research-backed**
+
+**Cooperation Propensity Values:**
+- High-capacity democracies: 0.75
+- Tech-leading states: 0.70
+- Major emerging powers: 0.55
+- Authoritarian states: 0.35
+- Low-capacity states: 0.20
+
+**Source:** DERIVED from Bletchley participation (28/195 countries, ~70% GDP, ~80% AI capability)
+**Problem:** Specific numeric values not from research papers
+
+**Enforcement Strength Values:**
+- Pre-crisis: 0.15
+- Post-minor-incident: 0.40
+- Post-catastrophic-incident: 0.80
+
+**Source:** ANALOGICAL REASONING from Montreal Protocol
+**Problem:** No quantitative validation of analogy
+
+**Defection Risk Values:**
+- Voluntary regime: 0.35
+- Binding regime: 0.10
+
+**Source:** REASONING-BASED
+**Problem:** No cited research support
+
+### Implementation Readiness
+
+**Decision:** CONDITIONAL PASS with explicit "model parameters" designation
+
+**Required Changes:**
+1. Clearly mark these as "MODEL PARAMETERS" not "RESEARCH FINDINGS"
+2. Document derivation methodology explicitly
+3. Add uncertainty ranges (e.g., 0.75 ± 0.15)
+4. Label as "preliminary estimates requiring validation"
+
+**Alternative Approach:**
+1. Verify Bletchley/Seoul summit documents (high confidence)
+2. Use only VERIFIED facts (28 countries signed, voluntary commitments)
+3. Design cooperation mechanics without hard-coding probabilities
+4. Let emergence from verified constraints rather than imposing derived values
+
+**Blocking Implementation:** NO (but should be marked as preliminary)
+
+---
+
+## Quality Gate 1 Recommendations
+
+### Pass with Conditions (All 4 Items)
+
+**Item 1: AI Scaling Laws**
+- ✅ PASS for implementation
+- ⚠️ Fix metadata: peer_reviewed → false or mixed
+- ⚠️ Extract quotes from Substack/blog sources
+- ⚠️ Downgrade confidence: A → B (industry sources)
+- Integration: Use conservative values, add uncertainty ranges
+
+**Item 2: Planetary Boundaries**
+- ✅ PASS for implementation with tiers
+- ⚠️ Separate VERIFIED / DERIVED / SPECULATIVE values
+- ⚠️ Access DOIs for primary sources
+- ⚠️ Document derivation methodology for calculated values
+- Integration: Use TIER A for baseline, TIER B with uncertainty, flag TIER C as speculative
+
+**Item 3: ICML 2025 Emergent Misalignment**
+- ⚠️ SOFT PASS pending Medium article verification
+- ⚠️ Access Medium article, extract quotes
+- ⚠️ Downgrade confidence: A → B (secondary source)
+- Integration: Implement conservatively, mark as "pending primary source"
+
+**Item 4: AI Governance Coordination**
+- ✅ PASS for implementation as "model parameters"
+- ⚠️ Relabel as preliminary estimates, not research findings
+- ⚠️ Add uncertainty ranges (±20-30%)
+- Integration: Mark as calibration targets requiring validation
+
+---
+
+## Orchestrator Next Steps
+
+### Immediate Actions (Can Proceed)
+
+1. **Update metadata files:**
+   - Fix peer_review flags (Item 1)
+   - Add confidence tiers (Items 2, 3, 4)
+   - Document derivation methodologies
+
+2. **WebSearch verification (2-3 hours):**
+   - Access Substack/blog sources (Item 1)
+   - Access Medium article (Item 3)
+   - Verify Bletchley/Seoul documents (Item 4)
+
+3. **Integration design (conditional on above):**
+   - Item 1: Add RL scaling, test-time compute to model
+   - Item 2: Update baseline to 7/9 boundaries with tiers
+   - Item 3: Add time-dependent alignment drift (conservative)
+   - Item 4: Design cooperation mechanics (emergence-based)
+
+### Blocked Actions (Need More Research)
+
+1. **DOI access (Items 2):**
+   - May require academic library access
+   - Alternative: Use secondary sources with caveats
+   - Fallback: Mark as "requires verification"
+
+2. **ICML 2025 proceedings (Item 3):**
+   - May not be publicly available yet
+   - Alternative: Use Medium summary with downgrade
+   - Fallback: Mark as speculative, don't implement
+
+---
+
+## Research Quality Summary
+
+| Item | Current Grade | Post-Verification Grade | Implementation Status |
+|------|---------------|-------------------------|----------------------|
+| AI Scaling Laws | A (claimed) | B (industry sources) | ✅ READY with caveats |
+| Planetary Boundaries | A (claimed) | B/C (mixed quality) | ✅ READY with tiers |
+| ICML 2025 Emergent | A (claimed) | B (secondary source) | ⚠️ SOFT BLOCK |
+| AI Governance | B (documented) | C (preliminary) | ✅ READY as model params |
+
+**Overall Assessment:** Research queue has good foundations but **systematic overconfidence in source quality and derivation transparency**. All items can proceed to implementation with appropriate confidence downgrades and caveats.
+
+---
+
+## Token-Efficient Workflow Option
+
+Given token constraints, recommend:
+
+1. **Skip sub-agent spawning** - provide verification specs to human/future session
+2. **Use existing analysis** - verification files already document critical issues
+3. **Proceed with conditional implementation:**
+   - Use conservative parameter values (lower bounds)
+   - Mark all as "preliminary, requires validation"
+   - Add uncertainty ranges
+   - Document data quality tiers
+
+4. **Archive for future validation:**
+   - When DOI/proceedings access available
+   - When peer-reviewed sources emerge (2025-2026)
+   - When Monte Carlo reveals parameter sensitivities
+
+---
+
+**Status:** VERIFICATION ANALYSIS COMPLETE
+**Recommendation:** Proceed with CONDITIONAL PASS for all 4 items with documented caveats
+**Next:** Human decision on whether to proceed with implementation or wait for full validation
+
+**Created:** 2025-11-16 04:30:45
+**Orchestrator:** orchestrator-1

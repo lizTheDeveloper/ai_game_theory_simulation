@@ -80,7 +80,8 @@ export class ExtinctionSystemPhase implements SimulationPhase {
       return [];
     }
 
-    // Import and execute extinction trigger detectionconst extinctionCheck = checkExtinctionTriggers(state, rng);
+    // Import and execute extinction trigger detection
+    const extinctionCheck = checkExtinctionTriggers(state, rng);
 
     // Validate extinction check result
     assertDefined(extinctionCheck.newExtinctionState, {
@@ -99,18 +100,7 @@ export class ExtinctionSystemPhase implements SimulationPhase {
     if (!wasActive && state.extinctionState.active) {
       const classification = classifyExtinctionType(state);
 
-      // Validate classification confidence
-      assertProbability(classification.confidence, {
-        location: 'ExtinctionSystemPhase.executeExtinctionTriggers',
-        valueName: 'classification.confidence',
-        month: state.currentMonth,
-        additionalInfo: {
-          extinctionType: classification.type,
-          mechanism: classification.mechanism
-        }
-      });
-
-      // Store classification in extinction state
+      // Store classification (confidence is categorical: HIGH/MEDIUM/LOW)
       state.extinctionState.classification = classification;
       state.extinctionState.type = classification.type;
       state.extinctionState.mechanism = classification.mechanism;
@@ -152,13 +142,14 @@ export class ExtinctionSystemPhase implements SimulationPhase {
       return [];
     }
 
-    // Import and execute extinction progressionconst extinctionProgress = progressExtinction(state, rng);
+    // Import and execute extinction progression
+    const extinctionProgress = progressExtinction(state, rng);
 
     // Validate extinction progress values
-    if (extinctionProgress.newExtinctionState?.progress !== undefined) {
-      assertProbability(extinctionProgress.newExtinctionState.progress, {
+    if (extinctionProgress.newExtinctionState?.phaseProgress !== undefined) {
+      assertProbability(extinctionProgress.newExtinctionState.phaseProgress, {
         location: 'ExtinctionSystemPhase.executeExtinctionProgress',
-        valueName: 'extinctionProgress.newExtinctionState.progress',
+        valueName: 'extinctionProgress.newExtinctionState.phaseProgress',
         month: state.currentMonth
       });
     }

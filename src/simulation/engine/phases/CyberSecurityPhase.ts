@@ -34,7 +34,8 @@ export class CyberSecurityPhase implements SimulationPhase {
     }
 
     // Import and execute existing cybersecurity logic
-    setDeterministicRng(rng);const breachResult = attemptBreaches(state, rng);
+    setDeterministicRng(rng);
+    const breachResult = attemptBreaches(state, rng);
 
     // Create events for breaches
     const events: GameEvent[] = [];
@@ -51,7 +52,7 @@ export class CyberSecurityPhase implements SimulationPhase {
         effects: {
           breachedCount: breachResult.breached.length,
           totalSpread: breachResult.totalNewSpread,
-          breachedAgents: breachResult.breached.map((ai: any) => ai.id)
+          breachedAgents: breachResult.breached.map(ai => ai.id).join(', ')
         }
       });
     }

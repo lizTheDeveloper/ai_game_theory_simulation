@@ -28,7 +28,8 @@ if (!planetaryPhase) {
 // Run a simulation step to verify it actually executes
 console.log('\n=== Running Simulation Step ===\n');
 
-const state = createDefaultInitialState({ scenario: 'historical' });
+const rng = () => Math.random();
+const state = createDefaultInitialState(rng, 'historical');
 const result = engine.run(state, { maxMonths: 1 });
 
 console.log('\n✅ Simulation completed without errors');
