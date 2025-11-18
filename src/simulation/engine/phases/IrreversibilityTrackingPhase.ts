@@ -101,13 +101,15 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    // Get current temperature anomaly
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    assertFinite(tempAnomaly, {
-      location: 'trackIceSheetHysteresis',
-      valueName: 'temperatureAnomaly',
-      month: state.currentMonth,
-    });
+    // Get current temperature anomaly - Roy's fix: no silent fallbacks
+    const tempAnomaly = assertStateProperty(
+      state,
+      'resourceEconomy.co2.temperatureAnomaly',
+      {
+        location: 'trackIceSheetHysteresis',
+        month: state.currentMonth,
+      }
+    );
 
     // === PROBABILISTIC THRESHOLD (Sylvia condition #1) ===
     // Research: Nature 2023 - Greenland threshold +0.8-3.2°C (95% CI)
@@ -209,12 +211,14 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    assertFinite(tempAnomaly, {
-      location: 'trackPermafrostThaw',
-      valueName: 'temperatureAnomaly',
-      month: state.currentMonth,
-    });
+    const tempAnomaly = assertStateProperty(
+      state,
+      'resourceEconomy.co2.temperatureAnomaly',
+      {
+        location: 'trackPermafrostThaw',
+        month: state.currentMonth,
+      }
+    );
 
     // === ARCTIC AMPLIFICATION (4x global warming) ===
     // Research: Nature Climate Change 2022 - Arctic warming 4x global average
@@ -317,12 +321,14 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    assertFinite(tempAnomaly, {
-      location: 'trackAMOCWeakening',
-      valueName: 'temperatureAnomaly',
-      month: state.currentMonth,
-    });
+    const tempAnomaly = assertStateProperty(
+      state,
+      'resourceEconomy.co2.temperatureAnomaly',
+      {
+        location: 'trackAMOCWeakening',
+        month: state.currentMonth,
+      }
+    );
 
     // Initialize AMOC state
     if (!state.tippingPoints) {
@@ -668,19 +674,22 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    const oceanPH = state.oceanAcidificationSystem?.pHLevel ?? 8.1;
-
-    assertFinite(tempAnomaly, {
-      location: 'trackCoralReefCollapse',
-      valueName: 'temperatureAnomaly',
-      month: state.currentMonth,
-    });
-    assertFinite(oceanPH, {
-      location: 'trackCoralReefCollapse',
-      valueName: 'oceanPH',
-      month: state.currentMonth,
-    });
+    const tempAnomaly = assertStateProperty(
+      state,
+      'resourceEconomy.co2.temperatureAnomaly',
+      {
+        location: 'trackCoralReefCollapse',
+        month: state.currentMonth,
+      }
+    );
+    const oceanPH = assertStateProperty(
+      state,
+      'oceanAcidificationSystem.pHLevel',
+      {
+        location: 'trackCoralReefCollapse',
+        month: state.currentMonth,
+      }
+    );
 
     // Initialize coral state
     if (!state.tippingPoints) {
