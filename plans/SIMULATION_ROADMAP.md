@@ -39,32 +39,69 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-   - **Climate Tipping Cascades 2024-2025 Update** - HIGH (Added Nov 15, 2025)
-     - **Context:** Update tipping point cascade timescales and overshoot dynamics with latest 2024-2025 peer-reviewed research
-     - **Key Discovery:** Tipping is NOT instantaneous - overshoot <30yr avoids tipping if peak <2.5°C (NEW paradigm)
-     - **Research Delivered:** 515-line analysis with 7 peer-reviewed sources (2022-2025)
+   - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
+     - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
+     - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
+     - **Research Delivered:** 213 lines added to research/ai_scaling_verified_parameters_20251111.md
+     - **New Sources:** Wolfe (2025) Substack, Lambert (2025) Substack, Epoch AI (2025) blog, TechCrunch (2024)
      - **Key Claims Requiring Verification:**
-       - Overshoot tolerance: <30 years above threshold + peak <2.5°C avoids tipping (Ritchie et al. 2025)
-       - Element-specific commitment times: 50-100yr (ice sheets), 10-30yr (Amazon/permafrost)
-       - Cascade timescales: 100-500yr (Greenland→AMOC), 50-200yr (AMOC→Amazon) - Armstrong McKay 2024
-       - Heat mortality thresholds: 19-34°C wet-bulb (age-dependent, Matthews et al. 2024)
-       - Historical heat deaths: 260,000+ since 2000 (Matthews et al. 2024)
-       - Future projections: 3× uncompensable area for young adults, 2× for older adults at 2°C warming
-     - **Verification File:** research/verification_3a6a200_20251115.md (two-layer: existence + claim accuracy)
+       - TEST_TIME_COMPUTE_MULTIPLIER: 1.5× per 10× inference compute - WHERE in Wolfe (2025)?
+       - RL sigmoid: 80% gains in 25% compute - EXACT VALUES in Lambert (2025)?
+       - MAX_TRAINING_FLOPS: 3e30 FLOP latency wall - Why not 1e32 upper bound from Epoch AI?
+       - o3 benchmarks: 87.5% ARC-AGI, 2727 Codeforces, 25.2% FrontierMath - VERIFIED?
+       - ScaleRL methodology: 3-constant fit, 4× throughput - DESCRIBED in Lambert?
+       - Epoch AI infrastructure: 1-5 GW campuses, 100M GPUs, "hundreds of billions" - SPECIFIC QUOTES?
+       - Nadella quote "new scaling law" - PRIMARY SOURCE? (currently secondary reference)
+       - Diminishing returns: "plateauing heading into 2025" - TechCrunch article EXACT WORDING?
+       - SATURATION_YEAR: 2030 - Epoch AI says "2e29 FLOP feasible by 2030", not "saturation by 2030"
+     - **Verification File:** research/verification_e344ce5_20251115.md (two-layer: existence + claim accuracy)
+     - **Critical Issue:** Metadata claims "peer_reviewed: true" but NEW sources are Substack/blogs (NOT peer-reviewed)
      - **Integration Questions:**
-       - Add overshoot tolerance tracking to TippingPointPhase (cumulative months above threshold)?
-       - Replace instant commitment with time-dependent commitment logic?
-       - Add age-specific heat mortality thresholds (19-34°C vs current 30.5-31.2°C)?
-       - Track population age distribution for mortality calculations?
+       - Add RL_PERFORMANCE_CURVE (sigmoid) to simulation?
+       - Add TEST_TIME_COMPUTE_MULTIPLIER (inference scaling)?
+       - Add MAX_TRAINING_FLOPS saturation constraint?
+       - Model three scaling axes separately (pre-training, RL, test-time)?
      - **Assignments:**
-       - Cynthia: Access papers (Ritchie ESD 2025, Armstrong McKay Dialogues 2024, Matthews Nature Reviews 2024)
-       - Sylvia: Claim verification - find quotes for 30yr window, 2.5°C limit, age-specific thresholds, 260k deaths
+       - Cynthia: Verify URLs accessible, extract specific passages supporting numeric claims
+       - Sylvia: Flag EXTRAPOLATED vs CITED values, assess industry source reliability
        - Roy: Integration design (BLOCKED until validation complete)
-     - **Priority:** HIGH - Tipping point commitment logic is core to climate collapse pathways
-     - **Status:** ⚠️ NEEDS VALIDATION - 7 papers cited, all high-credibility journals, need claim verification
-     - **Research File:** research/climate_tipping_cascades_2024_2025_update.md (515 lines)
-     - **Commit:** 3a6a200
-     - **Wiki Updated:** docs/wiki/README.md sections 160-173 (Recent Updates), 1344-1380 (Heat Mortality), 5357-5390 (Tipping Cascades)
+     - **Priority:** HIGH - Affects AI capability projection (core simulation mechanic)
+     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
+     - **Research File:** research/ai_scaling_verified_parameters_20251111.md (added 213 lines)
+     - **Commit:** e344ce5
+
+   - **Planetary Boundaries & Tipping Points 2025 Update** - HIGH (Added Nov 15, 2025)
+     - **Context:** 2025 peer-reviewed update on planetary boundary status and tipping point crossings
+     - **Key Updates:** 7/9 boundaries transgressed (up from 6), ocean acidification crossed 2020, ice sheets at record lows
+     - **Research Delivered:** 611-line analysis from Rockström (2025) + BioScience 2025 State of Climate
+     - **Key Claims Requiring Verification:**
+       - 7/9 planetary boundaries transgressed (Richardson 2023: 6/9) - which boundary newly crossed?
+       - Ocean acidification boundary crossed 2020, confirmed 2025 - quote from papers needed
+       - Current warming 1.2°C, trajectory 2.7°C by 2100 - source verification
+       - Greenland + W. Antarctic ice sheets: record lows 2025, "may be passing tipping points" - exact quote
+       - Amazon SE region: carbon sink → carbon source transition - mechanism verification
+       - 22/34 planetary vital signs at record levels - need full vital signs list
+       - $18T cumulative climate damages 2000-2025 - methodology verification
+       - California wildfires $250B (2025), Texas flooding 135 deaths - event documentation
+       - Tipping probabilities: 60% (Greenland), 50% (W. Antarctic), 40% (Amazon), 30% (AMOC) - DERIVED or CITED?
+       - Aerosol reduction warming: +0.3°C by 2050 - projection or model output?
+       - Cloud feedback amplification: 1.2× factor, +0.2°C by 2050 - source?
+       - Disaster acceleration: 8%/year increase - calculated or cited?
+     - **Verification File:** research/verification_d88ce24_20251115.md (two-layer: existence + claim accuracy)
+     - **Critical Issue:** Many values appear DERIVED (tipping probabilities, future projections) not CITED
+     - **Integration Questions:**
+       - Update baseline to 7/9 boundaries transgressed?
+       - Add tipping cascade mechanics (Greenland → AMOC → Amazon → permafrost)?
+       - Model ice sheet collapse timescales (centuries commitment)?
+       - Increase disaster impact scaling (8%/year acceleration)?
+     - **Assignments:**
+       - Cynthia: Access DOI 10.3389/fpubh.2025.1653860 (Rockström) + DOI 10.1093/biosci/biaf149/8303627 (BioScience)
+       - Sylvia: Claim verification - extract quotes for ALL quantitative claims, flag derived vs. cited
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Affects baseline initialization for ALL simulation runs
+     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
+     - **Research File:** research/planetary_boundaries_tipping_points_2025.md (611 lines)
+     - **Commit:** d88ce24
 
    - **ICML 2025 Emergent Misalignment from Fine-Tuning** - HIGH (Added Nov 13, 2025)
      - **Context:** ICML 2025 finding: narrow fine-tuning of aligned models (GPT-4o) produces broader misalignment
@@ -1033,16 +1070,15 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
-- [ ] 🚨 **NEW:** Verify biogeochemical integration parameters (research/verification_0c9e688_20251116.md, commit 0c9e688) - **7 technologies, 20+ claims requiring Layer 2 verification** including:
-  - food_waste_reduction: 30% demand reduction claim
-  - nitroplast_integration: 40-80% fertilizer reduction range (line 168)
-  - rhizosphere_engineering: 10-15% NUE improvement (line 190), 15% fertilizer reduction (line 402)
-  - alternative_protein: 40% animal ag replacement, 35% nitrogen reduction
-  - active_sediment_management: 50-80% phosphorus reduction (line 464), $50k-500k cost (line 463)
-  - phytoremediation_networks: 335 field experiments claim (line 471), 63% N / 72% P removal (line 478)
-  - precision_fermentation: 30-50% nitrogen demand reduction (line 217)
-  - **Research Skeptic concern:** Optimistic bias - need to verify if parameters are conservative or cherry-picked
-  - **Priority:** TIER 2 HIGH (blocks biogeochemical boundary effectiveness validation)
+- [ ] 🚨 **NEW (Nov 16):** Verify nitrogen-food coupling biogeochemical technologies (research/verification_6103414_20251116.md, commit 6103414) - **6 technologies, 29 citations requiring Layer 1+2 verification**:
+  - food_waste_reduction: 30% N/P reduction claim, 24/60mo timeline
+  - rhizosphere_engineering: 10-20% range (15% median), 30/120mo timeline
+  - alternative_protein_systems: 80× efficiency vs cattle claim, 40% displacement
+  - nitroplast_integration: 40-80% range (60% conservative), -5% yield penalty
+  - active_sediment_management: 50-80% legacy P reduction, $50K-500K/km² cost
+  - phytoremediation_networks: 63% N / 72% P removal (335 field experiments claim)
+  - **Expected impact:** Biogeochemical boundary 10% → 30-50% effectiveness
+  - **Priority:** HIGH (TIER 2, blocks biogeochemical boundary god mode validation)
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)
