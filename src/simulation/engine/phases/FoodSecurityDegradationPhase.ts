@@ -195,6 +195,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       // Research: Science Advances (2024), Zhang et al. (2021)
       // Regional nitrogen reduction creates yield penalties (nonlinear, region-specific)
       // Expected impact: Realistic biogeochemical boundary trade-offs
+      // Applied BEFORE crisis degradation (nitrogen affects baseline food production)
       if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
         // Find matching regional nitrogen data
         const regionMapping: Record<string, string> = {
@@ -234,55 +235,17 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
         }
       }
 
-      const newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
+      // Apply degradation to food security (after nitrogen penalty)
+      let newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
         location: 'FoodSecurityDegradationPhase.execute',
         valueName: `${region.name}.foodSecurity (after degradation)`,
         month: state.currentMonth
       });
 
-      // TIER 2 HIGH (Nov 15, 2025): Apply nitrogen-food coupling penalty
-      // Research: Regional nitrogen reduction → yield penalties (55% South Asian rice farms overuse, Bhattarai et al. 2024, Nature Sustainability)
-      // Coupling applies MULTIPLICATIVELY to food security (not additively)
-      if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
-        // Find matching regional nitrogen management (map simulation region names to nitrogen regions)
-        // Nitrogen regions: southAsia, eastAsia, northAmerica, europe, latinAmerica, subSaharanAfrica
-        const nitrogenRegionMap: Record<string, string> = {
-          'South Asia': 'southAsia',
-          'East Asia': 'eastAsia',
-          'North America': 'northAmerica',
-          'Europe': 'europe',
-          'Latin America': 'latinAmerica',
-          'Sub-Saharan Africa': 'subSaharanAfrica',
-          'Middle East & North Africa': 'northAmerica',  // Fallback (no specific data)
-        };
-
-        const nitrogenRegionId = nitrogenRegionMap[region.name] || 'northAmerica'; // Default fallback
-        const nitrogenRegion = state.planetaryBoundariesSystem.regionalNitrogenManagement.find(
-          nr => nr.region === nitrogenRegionId
-        );
-
-        if (nitrogenRegion) {
-          // Food production index: 1.0 = baseline, <1.0 = yield penalties, >1.0 = yield improvements
-          const foodProductionMultiplier = assertProbability(
-            Math.max(0, nitrogenRegion.foodProductionIndex),
-            {
-              location: 'FoodSecurityDegradationPhase.execute',
-              valueName: `${region.name}.foodProductionMultiplier`,
-              month: state.currentMonth,
-              additionalInfo: { nitrogenRegionId, yieldImpact: nitrogenRegion.yieldImpact }
-            }
-          );
-
-          // Apply nitrogen penalty to food security (multiplicative)
-          // Example: 20% yield loss (multiplier = 0.8) → food security × 0.8
-          newFood *= foodProductionMultiplier;
-
-          // Log nitrogen impacts annually (if significant)
-          if (state.currentMonth % 12 === 0 && Math.abs(nitrogenRegion.yieldImpact) > 0.05) {
-            console.log(`  [${region.name}] Nitrogen-food coupling: Yield impact ${(nitrogenRegion.yieldImpact * 100).toFixed(1)}%, Food multiplier ${foodProductionMultiplier.toFixed(3)}`);
-          }
-        }
-      }
+      // NOTE (Roy, Nov 18, 2025): Duplicate nitrogen penalty removed
+      // BUG FIX: Was applying nitrogen penalty TWICE (before + after degradation) = squared penalty
+      // Now applies ONCE (before degradation only, lines 194-236)
+      // Example: 20% penalty was being applied as 0.8² = 64% (36% total loss instead of 20%)
 
       // Final validation
       newFood = assertProbability(newFood, {

@@ -566,29 +566,7 @@ const ALL_TECH: TechDefinition[] = [
     capabilityEffects: {
       dimensions: {
         digital: 0.05,  // Improves data systems
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minCapabilityDimensions: [
-      { dimension: 'digital', threshold: 0.4 },    // IoT sensors, data systems
-      { dimension: 'cognitive', threshold: 0.3 }   // AI optimization
-    ],
-    minEconomicStage: 1.8,
-    minMonth: 12,
-    researchMonthsRequired: 12,
-    researchCost: 250,
-    deploymentCost: 40000,
-    deploymentMonthsRequired: 36,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.28,           // 28% reduction (research-backed)
-      nitrogenUseEfficiency: 0.25,       // Improves NUE from 40% → 50%
-      foodProductivity: 0.05,            // Slight yield INCREASE (overuse removal)
-    },
-    citations: ['Science Advances (2024): Developed nations (France) improved NUE 40% → 58% via precision ag'],
-    capabilityEffects: {
-      dimensions: {
-        cognitive: 0.03,  // Improves AI agricultural optimization
+        cognitive: 0.03,  // AI optimization for agriculture
       },
     },
   },
@@ -896,19 +874,10 @@ const ALL_TECH: TechDefinition[] = [
       biodiversityBonus: 0.05,
     },
     citations: ['research/nitrogen_food_coupling_20251115.md - Nitroplast section'],
-    minMonth: 24,
-    researchMonthsRequired: 24,
-    researchCost: 800,
-    deploymentCost: 60000,
-    deploymentMonthsRequired: 60,
-    deploymentLevel: 0,
-    effects: {
-      phosphorusRecovery: 0.25,          // 25% additional recovery
-      legacyPhosphorusRemediation: 0.10, // Accelerates sediment stock decay
-      pollutionReduction: 0.20,          // Reduces eutrophication
-    },
-    citations: ['Lake Erie case study: Internal sediment loading = 10,000-11,000 MT P/year'],
   },
+  // NOTE (Roy, Nov 18, 2025): Removed duplicate/corrupt fields (lines 877-888)
+  // - Fields belonged to different tech (sediment management)
+  // - Caused "object literal cannot have multiple properties" error
   {
     id: 'algae_nutrient_capture',
     name: 'Algae-Based Nutrient Capture',
@@ -2464,43 +2433,14 @@ const ALL_TECH: TechDefinition[] = [
     },
   },
 
-  // Nitrogen-Food Coupling Technologies (TIER 2 HIGH - Nov 15, 2025)
-  // Research: research/nitrogen_food_coupling_20251115.md
-  {
-    id: 'precision_agriculture',
-    name: 'Precision Agriculture',
-    description: 'Variable rate fertilizer, SPAD sensors, GreenSeeker - 25-30% N reduction',
-    category: 'agriculture',
-    status: 'deployed_2025',
-    prerequisites: [],
-    minAICapability: 1.5,
-    minEconomicStage: 2.5,
-    researchMonthsRequired: 0,  // Already deployed
-    researchCost: 0,
-    deploymentCost: 80000,
-    deploymentMonthsRequired: 60,
-    deploymentLevel: 0.15,  // 15% global deployment (2025 baseline)
-    effects: {
-      nitrogenReduction: 0.25,  // 25% N input reduction
-      cropYieldBonus: 0.15,  // 10-30% yield increase (mid-range)
-      waterEfficiency: 0.20,  // Secondary benefit
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minAICapability: 1.5,
-    minEconomicStage: 2.5,
-    researchMonthsRequired: 24,
-    researchCost: 2000,
-    deploymentCost: 80000,
-    deploymentMonthsRequired: 60,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.30,           // 30% demand reduction
-      phosphorusReduction: 0.30,
-      foodSecurityBonus: 0.20,           // Redistribution improves access
-      economicEfficiency: 0.15,
-    },
-  },
+  // NOTE (Roy, Nov 18, 2025): Malformed duplicate 'precision_agriculture' entry removed
+  // The 6 nitrogen-reducing technologies are already defined at lines 457-611:
+  // 1. precision_agriculture (30% N efficiency)
+  // 2. biological_nitrogen_fixation (25% N efficiency)
+  // 3. nitrogen_circular_food (20% N efficiency)
+  // 4. ecosystem_restoration_nitrogen (15% N removal)
+  // 5. nitrogen_monitoring_networks (10% efficiency gain)
+  // 6. green_ammonia_production (40% N efficiency)
   {
     id: 'rhizosphere_engineering',
     name: 'Rhizosphere Engineering',
@@ -2624,39 +2564,10 @@ const ALL_TECH: TechDefinition[] = [
       lakeRestorationBonus: 0.50,  // Accelerates recovery
       economicCost: -0.02,  // Expensive (2% GDP cost)
     },
-    category: 'pollution',
-    status: 'unlockable',
-    prerequisites: [],
-    minAICapability: 1.5,
-    minEconomicStage: 3.0,
-    researchMonthsRequired: 18,
-    researchCost: 1500,
-    deploymentCost: 80000,
-    deploymentMonthsRequired: 60,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenRemoval: 0.63,  // Median removal from 335 field experiments (research line 471)
-      phosphorusRemoval: 0.72,  // Median P removal (research line 478)
-      habitatRestoration: 0.50,  // Wetland ecosystem benefits
-      biodiversityBonus: 0.30,  // Constructed wetlands support wildlife
-    },
-    citations: ['research/nitrogen_food_coupling_20251115.md', 'Constructed wetlands meta-analysis'],
-    status: 'unlockable',
-    prerequisites: [],
-    minAICapability: 1.0,
-    minEconomicStage: 2.0,
-    researchMonthsRequired: 12,
-    researchCost: 1500,
-    deploymentCost: 120000,
-    deploymentMonthsRequired: 180,     // 15 years to deploy globally
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.63,           // Median from 335 field experiments
-      phosphorusReduction: 0.72,         // Median from field data
-      habitatRestoration: 0.50,
-      biodiversityBonus: 0.25,
-    },
   },
+  // NOTE (Roy, Nov 18, 2025): Removed duplicate/corrupt fields (lines 2567-2598)
+  // - Multiple tech objects merged together (constructed wetlands duplicates)
+  // - Caused "object literal cannot have multiple properties" TypeScript errors
 
   // AI Safety Capstone (2)
   {
