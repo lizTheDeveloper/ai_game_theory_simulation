@@ -53,6 +53,37 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+**🐛 BUG FIX: Bifurcation Distance Calculation CRITICAL Bugs** (Nov 13, 2025, commit d605293)
+
+**Summary:** Fixed 2 CRITICAL + 1 HIGH priority bugs in BifurcationLogicPhase distance calculation that completely broke variance amplification system.
+
+**Changes:**
+
+1. **CRITICAL-1: Distance Calculation Completely Broken**
+   - **Problem:** Used `Math.abs()` for ALL thresholds, treating "below collapse threshold" same as "above threshold"
+   - **Example bug:** envHealth=0.8, threshold=0.3 → distance=0.5 (looked dangerous when actually safe!)
+   - **Fix:** Directional distance calculation
+     - Collapse thresholds (environmental, social, economic, governance): `distance = value > threshold ? (value - threshold) : 0.0`
+     - Flourishing thresholds (QoL, tech): `distance = value < threshold ? (threshold - value) : 0.0`
+   - **Impact:** Bifurcation now correctly amplifies variance when APPROACHING thresholds (not when safe)
+
+2. **CRITICAL-2: Social Coordination Not Normalized**
+   - **Problem:** coordinationCapacity (0-100) compared directly to threshold (0-1) → distances of ~30 instead of <1, so social bifurcation NEVER triggered
+   - **Fix:** Normalize coordinationCapacity to [0,1] before distance calculation
+   - **Impact:** Social collapse warnings now activate (was completely broken)
+
+3. **HIGH-2: Missing Debug Context**
+   - **Problem:** Couldn't access state.currentMonth in private methods, poor debuggability
+   - **Fix:** Pass GameState to updateVarianceAmplification(), use state.currentMonth with additionalInfo context
+   - **Impact:** Better debugging context when assertions fail
+
+**Architectural Review:** `reviews/bifurcation_architecture_review_20251113.md` (Architecture Skeptic - identified 2 CRITICAL + 3 HIGH issues, 2 CRITICAL + 1 HIGH fixed in this commit)
+
+**Files:**
+- `src/simulation/engine/phases/BifurcationLogicPhase.ts` (lines 98-218, 259-306)
+
+---
+
 ## ✅ Recent Changes (November 12, 2025)
 
 **🤖 INFRASTRUCTURE: Intelligent Auto-Remediation for Stuck Orchestrator States** (Nov 12, 2025, commit 9764a32)
