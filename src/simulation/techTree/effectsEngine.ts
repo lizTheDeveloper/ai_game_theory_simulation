@@ -1433,9 +1433,6 @@ function applyRegionalEffects(
       });
           }
           break;
-<<<<<<< Updated upstream
-          
-=======
 
         // ========== NITROGEN (TIER 2 HIGH - Nov 15, 2025) ==========
         // Research: nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
@@ -1497,7 +1494,6 @@ function applyRegionalEffects(
           }
           break;
 
->>>>>>> Stashed changes
         // ========== POLLUTION ==========
         case 'pollutionReduction':
           // Reduce pollution levels
