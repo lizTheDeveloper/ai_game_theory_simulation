@@ -266,7 +266,19 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (26 tech candidates, 9 paradigm shifts)
 
 **Research Verification Queue:**
+<<<<<<< HEAD
 - [x] **Novel Entities Zero-Effectiveness (commit 7ac8b8f)** - ✅ VALIDATION COMPLETE
+=======
+- [ ] **Bifurcation Multiplier Calibration (commit 6b42b7c)** - Citation + claim verification
+  - Verification spec: `research/verification_6b42b7c_20251113.md`
+  - Changes: ALL multipliers reduced 30% (1.05-1.75×), extinction logic fixed
+  - Critical verifications needed:
+    1. Mortality target range (43-58%) - What research establishes this?
+    2. Extinction threshold (10K) - Minimum viable population citation
+    3. Economic multiplier vs VIX amplification relationship
+  - Status: Ready for orchestrator VALIDATION phase (research-skeptic review)
+- [ ] **Novel Entities Zero-Effectiveness (commit 7ac8b8f)** - Citation + claim verification
+>>>>>>> origin/auto/worker-20251113_200001
   - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
   - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
   - Verification spec: `research/verification_7ac8b8f_20251113.md`
