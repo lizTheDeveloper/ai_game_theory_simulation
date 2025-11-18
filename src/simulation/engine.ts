@@ -631,6 +631,12 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TechnologyDiffusionPhase());
     this.orchestrator.registerPhase(new EventCollectionPhase());
     this.orchestrator.registerPhase(new TimeAdvancementPhase());
+
+    // CRITICAL-2 FIX (Nov 10, 2025): Validate phase dependencies at initialization time
+    // This catches circular dependencies, missing phases, and order violations BEFORE
+    // first simulation step. Fail loudly on configuration errors.
+    // FIX (Nov 13, 2025): Re-added after being accidentally removed during refactor
+    this.orchestrator.validate();
   }
 
   /**

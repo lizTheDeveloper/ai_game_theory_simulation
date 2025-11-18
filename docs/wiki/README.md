@@ -652,6 +652,22 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
 - **System Health:** Research A, Implementation A-, Architecture 8.5/10, Trajectory Sustainable ✅
 
 **RECENT ACHIEVEMENTS:**
+- ✅ **Phase Dependency Validation Restored (Issue #118)** (commit b0adaf9, Nov 13, 2025) 🛡️ **REGRESSION FIX**
+  - **Problem:** Phase dependencies declared but not validated at initialization time
+  - **Root cause:** Nov 10 fix added `validate()` method + call in constructor, both accidentally removed during later refactor
+  - **Solution:** Restored `validate()` method (lines 326-342) and constructor call (line 618)
+  - **Fixed cycle detection order:** Check cycles BEFORE order violations (clearer error messages)
+  - **Validation coverage:**
+    - ✅ Circular dependencies (A→B→C→A)
+    - ✅ Self-referential dependencies (A→A)
+    - ✅ Missing phase references
+    - ✅ Order violations (dependency has higher order)
+  - **Test coverage:** 17/17 PhaseOrchestrator tests passing (tests/phaseOrchestrator.test.ts, 370 lines)
+  - **Runtime behavior:** Two-layer validation
+    - Init-time: `validate()` catches config errors at engine construction
+    - Runtime: `executeAll()` checks dependencies during execution (lines 179-201)
+  - **Impact:** Configuration errors now caught immediately (fail-loudly philosophy enforced)
+  - **See:** Phase Dependency System section for complete documentation
 - ✅ **Nov 2025 NaN Audit: Module-First Assertion Coverage** (commit 6d69120, Nov 7, 2025) 🎯 **TIER 1 COMPLETE**
   - **Scope:** Added NaN validation to 17 critical simulation modules and phases
   - **Strategy:** Module-first approach (vs phase-first) - add assertions WHERE CALCULATIONS HAPPEN
@@ -6025,9 +6041,27 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
 }
 ```
 
-### Runtime Validation
+### Initialization-Time Validation
 
-`PhaseOrchestrator` validates dependencies at engine startup (in `sortPhases()` method):
+**CRITICAL FIX (Nov 13, 2025 - Issue #118):** Phase dependencies are now validated at **engine initialization time** via explicit `validate()` method call.
+
+**Timeline:**
+- Nov 10: `validate()` method added, called in engine constructor
+- After Nov 10: Method call and implementation accidentally removed during refactor
+- Nov 11: Issue #118 filed - "no runtime enforcement"
+- Nov 13: Both `validate()` method and initialization call **restored** (commit b0adaf9)
+
+**Current behavior:** `SimulationEngine` constructor calls `this.orchestrator.validate()` after registering all phases (line 618). This catches configuration errors **before first simulation step**.
+
+**Validation Layers:**
+1. **Init-time (NEW):** `validate()` in constructor catches config errors immediately
+2. **Runtime:** `executeAll()` checks dependencies during execution (lines 179-201)
+
+Both layers active - **fail-loudly philosophy enforced**.
+
+---
+
+`PhaseOrchestrator` provides explicit validation via `validate()` method (lines 326-342):
 
 **1. Circular Dependency Detection:**
 ```
@@ -6105,9 +6139,17 @@ readonly dependencies = [
 
 ### Implementation Files
 
-- **`src/simulation/engine/PhaseOrchestrator.ts`**: Validation logic (lines 292-398)
-  - `sortPhases()`: Calls `validateDependencies()` before sorting
-  - `validateDependencies()`: DFS cycle detection + order validation
+- **`src/simulation/engine/PhaseOrchestrator.ts`**: Validation logic
+  - `validate()` (lines 326-342): **Explicit validation method** - call after registering all phases
+  - `validateDependencies()` (lines 379-448): DFS cycle detection + order validation
+  - `executeAll()` (lines 179-201): Runtime dependency checks during execution
+- **`src/simulation/engine.ts`**: Engine initialization (line 618)
+  - Calls `this.orchestrator.validate()` after registering all 81 phases
+- **`tests/phaseOrchestrator.test.ts`**: Comprehensive test suite (370 lines, 17 tests)
+  - Circular dependency detection (A→B→A, A→B→C→A, self-reference)
+  - Order violation detection
+  - Missing phase detection
+  - Complex dependency graph validation
 - **Phase files**: 32 phases in `src/simulation/engine/phases/` with `readonly dependencies = []`
 - **Audit script**: `scripts/auditPhaseDependencies.ts` (generates coverage reports)
 
