@@ -19,6 +19,8 @@ The **Planetary Boundaries System** implements Kate Raworth's Doughnut Economics
 
 ### 2025 Status: **7 OF 9 BOUNDARIES BREACHED** 🚨
 
+**Critical Update (Nov 11, 2025):** Ocean acidification officially breached in 2025 Planetary Health Check (7th boundary). See research update in `research/planetary_boundary_reversibility_empirical_20251020.md`.
+
 | Boundary | Status | Value | Breach Year | Trend |
 |----------|--------|-------|-------------|-------|
 | **Climate Change** ⚠️ | Beyond Boundary | 1.21x | 1990 | Worsening |
@@ -27,9 +29,17 @@ The **Planetary Boundaries System** implements Kate Raworth's Doughnut Economics
 | **Freshwater Change** ⚠️ | Beyond Boundary | 1.15x | 2023 | Worsening |
 | **Biogeochemical Flows** 🚨 | High Risk | 2.94x | 1985 | Worsening |
 | **Novel Entities** ⚠️ | Beyond Boundary | 1.50x | 2022 | Worsening |
-| **Ocean Acidification** ⚠️ | Beyond Boundary | 1.05x | 2025 | Worsening |
+| **Ocean Acidification** ⚠️ | Beyond Boundary | 1.05x | **2025** | Worsening |
 | **Stratospheric Ozone** ✅ | Safe | 0.85x | - | **Improving** |
 | **Atmospheric Aerosols** ✅ | Safe | 0.70x | - | **Improving** |
+
+**Ocean Acidification Breach Details (2025):**
+- **pH Change:** 0.1 units decline since pre-industrial (30-40% acidity increase)
+- **Global Impact:** 60% of land outside safe zones, 38% in high-risk zones
+- **Recovery Time:** 100-300+ years even with aggressive CO₂ removal
+- **Technical Solution:** None scalable (unlike ozone success story)
+- **Cascading Effects:** Marine food web → fisheries → food security → carbon feedback
+- **Source:** Stockholm Resilience Centre (2025), PIK Planetary Health Check (2025)
 
 ---
 
@@ -154,18 +164,30 @@ The **stratospheric ozone boundary** is one of only 2 safe boundaries, and it's 
 1. **Kate Raworth (2012-2025):** Doughnut Economics framework
    - Book: "Doughnut Economics: Seven Ways to Think Like a 21st-Century Economist" (2017)
    - Doughnut 3.0 update published in Nature (2025)
-   
-2. **Stockholm Resilience Centre (2023-2025):** Planetary Health Check
-   - Johan Rockström (PIK Director): "More than three-quarters of Earth's support systems not in safe zone"
-   - 7 of 9 boundaries breached (2025)
 
-3. **PIK Potsdam (Sept 2025):** Ocean acidification 7th boundary breached
+2. **Stockholm Resilience Centre (2025):** Planetary Health Check 2025
+   - Johan Rockström (PIK Director): "More than three-quarters of Earth's support systems not in safe zone"
+   - **7 of 9 boundaries breached (2025)** - ocean acidification officially breached
+   - Full status update: https://www.stockholmresilience.org/research/planetary-boundaries.html
+
+3. **PIK Potsdam (2025):** Planetary Health Check 2025
+   - Ocean acidification 7th boundary breached (official designation)
+   - 60% of land areas outside locally defined safe zones
+   - 38% of global land area in high-risk category
    - Driven by fossil fuels, deforestation, land use
    - Coral reefs, shellfish, marine food webs at risk
 
 4. **WMO/NOAA/NASA (2024-2025):** Ozone recovery tracking
    - Montreal Protocol success story
    - 2066 projected full recovery
+
+5. **WEF (Oct 2024):** "Seven of nine planetary boundaries breached"
+   - Summary of boundary status and implications
+   - https://www.weforum.org/stories/2024/10/planetary-boundaries-breached-nature-climate-stories/
+
+6. **Phys.org (Aug 2025):** "Exceeding functional biosphere integrity limits"
+   - 60% of world's land area in precarious state
+   - Functional biosphere integrity boundary analysis
 
 ### Data Sources by Boundary:
 - **Climate:** IPCC AR6, 425 ppm CO₂ vs 350 ppm safe limit
@@ -499,9 +521,10 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
-**Last Updated:** November 1, 2025 (Climate Mortality Phase 2 documentation)
+**Last Updated:** November 11, 2025 (2025 ocean acidification breach documentation)
 **Implementation Status:** ✅ COMPLETE (Phase 2: Storm Systems + BII Framework)
 **Recent Updates:**
+- ✅ Ocean acidification boundary breach documented (2025 Planetary Health Check) - Nov 11, 2025
 - ✅ Storm intensity-frequency modeling (ExtremeWeatherEventsPhase) - Oct 28, 2025
 - ✅ BII framework with climate velocity tracking (updateBiosphereIntegrityIndex) - Oct 28, 2025
 - ✅ Biosphere boundary normalized to safe threshold (13.7×), polarity corrected - Oct 30, 2025
