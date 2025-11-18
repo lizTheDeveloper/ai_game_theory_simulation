@@ -400,7 +400,7 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
     - ✅ HIGH UNCERTAINTY parameters flagged in code comments with sensitivity ranges
   - **Validation:** N=30 sensitivity analysis (CV=0.00000%, deterministic) - `reviews/novel_entities_sensitivity_analysis_20251114.md`
   - **Documentation:** `docs/wiki/systems/novel-entities.md` updated (205 lines added)
-  - **Outstanding Issues:** 1 HIGH priority performance optimization (renewable capacity caching in gating function)
+  - **Outstanding Issues:** None (renewable capacity caching completed Nov 14, 2025 - commit d89390d)
 
 ---
 
@@ -1505,7 +1505,7 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
   - Quality Gates: Research (B+), Architecture (B - APPROVE WITH CONDITIONS)
   - Validation: N=30 sensitivity analysis, CV=0.00000% (deterministic)
   - Documentation: 205 lines added to wiki systems documentation
-  - Outstanding: 1 HIGH priority performance optimization (renewable capacity caching)
+  - Outstanding: None (renewable capacity caching completed same day - commit d89390d)
   - Commits: 5c9e773, 2f05087, 805d064, 9fc6fdc, b6ec2b9
   - Archive: `/plans/completed/novel_entities_model_redesign_COMPLETE_20251114.md`
 

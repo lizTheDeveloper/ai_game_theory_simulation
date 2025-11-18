@@ -819,6 +819,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Base calculation (depletion factor)
     const depletion = 1 - reserves; // reserves is already 0-1 scale
 
+<<<<<<< HEAD
     // TIER 2 HIGH: Update legacy nutrient stocks and nitrogen-food coupling
     // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
     // Nitrogen-food coupling: reducing nitrogen hurts crop yields (regional nonlinear penalties)
@@ -874,6 +875,49 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     const EFFECTIVE_TO_BOUNDARY_SCALE = 2.94 / BASELINE_N_INPUT_PER_MONTH;  // ~0.294
     const biogeochemicalValue = assertFinite(
       Math.max(0, (effectiveNitrogen + effectivePhosphorus * 2) * EFFECTIVE_TO_BOUNDARY_SCALE),
+=======
+    // TIER 2 HIGH (Nov 15, 2025): Update legacy nutrient stocks and calculate effective pollution
+    // This creates INERTIA - even with 100% input reduction, pollution stays high for decades
+    // Research: Lake Erie (Paerl et al. 2024) - sediment loading equals external inputs
+    let effectiveNitrogen = 0;
+    let effectivePhosphorus = 0;
+
+    // Initialize legacy stocks if not present
+    if (!system.legacyNutrientStock) {
+      const { initializeLegacyNutrientStock } = require('@/simulation/legacyNutrientStocks');
+      system.legacyNutrientStock = initializeLegacyNutrientStock();
+      console.log('🌾 Initialized legacy nutrient stocks (2025 baseline)');
+    }
+
+    // Calculate current monthly nitrogen/phosphorus inputs from human activity
+    // Baseline (2025): ~110 Mt N/year = 9.17 Mt N/month (UNCTAD 2024), ~25 Mt P/year = 2.08 Mt P/month
+    // Scale by depletion (high depletion = high fertilizer use to maintain yields)
+    const BASELINE_N_INPUT = 9.17;   // Mt N/month (110 Mt N/year, UNCTAD 2024)
+    const BASELINE_P_INPUT = 2.08;   // Mt P/month (2025 baseline)
+    const currentNInput = BASELINE_N_INPUT * (1 + depletion * 0.5);  // Depletion drives overuse
+    const currentPInput = BASELINE_P_INPUT * (1 + depletion * 0.5);
+
+    // Update legacy stocks and get effective pollution (current + legacy releases)
+    const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
+    const effectivePollution = updateLegacyNutrientStocks(
+      state,
+      currentNInput,
+      currentPInput
+    );
+    effectiveNitrogen = effectivePollution.effectiveNitrogen;
+    effectivePhosphorus = effectivePollution.effectivePhosphorus;
+
+    // Convert effective pollution to boundary scale
+    // Boundary value 2.94 (2025 baseline) corresponds to ~10 Mt N/month + ~2 Mt P/month current
+    // Legacy contribution can ADD 50-100% to this (Lake Erie case: 50% internal loading)
+    const BASELINE_BOUNDARY_VALUE = 2.94;
+    const BASELINE_TOTAL_POLLUTION = BASELINE_N_INPUT + BASELINE_P_INPUT;  // 12.08 Mt/month
+    const currentTotalPollution = effectiveNitrogen + effectivePhosphorus;
+
+    // Normalize to boundary scale
+    const biogeochemicalValue = assertFinite(
+      BASELINE_BOUNDARY_VALUE * (currentTotalPollution / BASELINE_TOTAL_POLLUTION),
+>>>>>>> origin/auto/worker-20251116_130001
       {
         location: 'updatePlanetaryBoundaries:biogeochemical',
         valueName: 'biogeochemical_flows.currentValue',
@@ -881,12 +925,24 @@ export function updatePlanetaryBoundaries(state: GameState): void {
         additionalInfo: {
           reserves,
           depletion,
+<<<<<<< HEAD
           effectiveNitrogen,
           effectivePhosphorus,
           globalFoodProductionIndex
         }
       }
     );
+=======
+          currentNInput,
+          currentPInput,
+          effectiveNitrogen,
+          effectivePhosphorus,
+          currentTotalPollution,
+        },
+      }
+    );
+
+>>>>>>> origin/auto/worker-20251116_130001
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
