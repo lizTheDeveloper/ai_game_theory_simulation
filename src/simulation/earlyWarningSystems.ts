@@ -331,9 +331,8 @@ export function protectCriticalInfrastructure(state: GameState): void {
       earlyWarning.nodesProtected++;
     }
 
-    if (gov.resources !== undefined) {
-      gov.resources -= protectionCost;
-    }
+    // Deduct cost
+    gov.resources -= protectionCost;
 
     // Calculate cascade risk reduction
     // Research: One Earth (2024) - critical node protection → 30% cascade reduction

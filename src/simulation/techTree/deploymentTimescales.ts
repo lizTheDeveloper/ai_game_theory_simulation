@@ -222,8 +222,7 @@ export function getClimateRecoveryMultiplier(gameState: GameState): number {
  */
 export function getInvestmentMultiplier(gameState: GameState): number {
   // Climate investment comes from research investments (climate.mitigation + climate.intervention)
-  const climateResearch = gameState.government?.researchInvestments;
-  if (!climateResearch) return 0.7; // Default to current 2024 baseline
+  const climateResearch = gameState.government.researchInvestments;
 
   // Climate research levels are [0-10]
   // Map to $T/year: 0 → $0B, 5 → $1.4T (baseline), 10 → $3.5T (full)

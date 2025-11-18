@@ -116,6 +116,18 @@ export interface TechDefinition {
 
   /** Energy required during construction/scaling phase (TWh/month) */
   constructionEnergy?: number;
+
+  // === REBOUND EFFECTS (Jevons Paradox - Nov 16, 2025) ===
+  // Research: novel_entities_irreversibility_20251116.md, Sorrell (2009), Gillingham et al. (2013)
+
+  /** Rebound coefficient: production increase per unit cleanup (0-1, typically 0.1-0.6) */
+  reboundCoefficient?: number;
+
+  /** Uncertainty range for rebound coefficient [min, max] for Monte Carlo sampling */
+  reboundUncertaintyRange?: [number, number];
+
+  /** True if this tech avoids rebound effects (e.g., production bans, circular economy) */
+  avoidsRebound?: boolean;
 }
 
 /**
@@ -554,6 +566,29 @@ const ALL_TECH: TechDefinition[] = [
     capabilityEffects: {
       dimensions: {
         digital: 0.05,  // Improves data systems
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minCapabilityDimensions: [
+      { dimension: 'digital', threshold: 0.4 },    // IoT sensors, data systems
+      { dimension: 'cognitive', threshold: 0.3 }   // AI optimization
+    ],
+    minEconomicStage: 1.8,
+    minMonth: 12,
+    researchMonthsRequired: 12,
+    researchCost: 250,
+    deploymentCost: 40000,
+    deploymentMonthsRequired: 36,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.28,           // 28% reduction (research-backed)
+      nitrogenUseEfficiency: 0.25,       // Improves NUE from 40% → 50%
+      foodProductivity: 0.05,            // Slight yield INCREASE (overuse removal)
+    },
+    citations: ['Science Advances (2024): Developed nations (France) improved NUE 40% → 58% via precision ag'],
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.03,  // Improves AI agricultural optimization
       },
     },
   },
@@ -745,6 +780,186 @@ const ALL_TECH: TechDefinition[] = [
       'Schindler (2012) - Internal loading in eutrophic systems',
       'NOAA NCCOS (2021) - Lake Erie internal loading, 10,000-11,000 MT P/year'
     ],
+  },
+  {
+    id: 'rhizosphere_engineering',
+    name: 'Rhizosphere Engineering',
+    description: 'Microbial inoculants, root exudate modulation - 10-15% fertilizer efficiency boost',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.6 }
+    ],
+    minEconomicStage: 2.0,
+    minMonth: 24,  // TIER 1, 2035+ deployment
+    researchMonthsRequired: 18,
+    researchCost: 400,
+    deploymentCost: 60000,
+    deploymentMonthsRequired: 48,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.125,  // 12.5% efficiency (10-15% range)
+      phosphorusEfficiency: 0.125,
+      biodiversityBonus: 0.02,  // Soil microbiome benefits
+    },
+    citations: ['research/nitrogen_food_coupling_20251115.md - Rhizosphere section'],
+  },
+  {
+    id: 'phytoremediation_networks',
+    name: 'Phytoremediation Networks',
+    description: 'Strategic wetlands, riparian buffers - habitat restoration + nutrient capture dual benefit',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minEconomicStage: 1.5,
+    minMonth: 18,  // TIER 1, 2035+
+    researchMonthsRequired: 12,
+    researchCost: 150,
+    deploymentCost: 40000,
+    deploymentMonthsRequired: 60,  // Slow ecological deployment
+    deploymentLevel: 0,
+    effects: {
+      nitrogenCapture: 0.15,  // 15% capture of runoff
+      phosphorusCapture: 0.15,
+      biodiversityBonus: 0.05,  // Major habitat restoration benefit
+      freshwaterQuality: 0.10,
+    },
+    citations: ['research/nitrogen_food_coupling_20251115.md - Phytoremediation section'],
+  },
+  {
+    id: 'alternative_protein_insects_algae',
+    name: 'Alternative Protein - Insects/Algae',
+    description: 'Industrial insect farming, algae cultivation - 80× efficiency vs cattle',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['food_waste_reduction'],
+    minResearchCapabilities: [
+      { domain: 'biotech', threshold: 0.7 }
+    ],
+    minEconomicStage: 2.5,
+    minMonth: 48,  // TIER 2, 2040+
+    researchMonthsRequired: 36,
+    researchCost: 1000,
+    deploymentCost: 150000,
+    deploymentMonthsRequired: 72,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenDemandReduction: 0.40,  // 40% reduction via 80× efficiency
+      landUseReduction: 0.40,
+      biodiversityBonus: 0.03,
+      foodSecurityBonus: 0.08,
+    },
+    citations: ['van Vliet et al. 2024 - Eur J Nutr', 'Beal et al. 2024 - PMC 11860088'],
+  },
+  {
+    id: 'active_sediment_management',
+    name: 'Active Sediment Management',
+    description: 'Dredging, capping, oxidation - legacy phosphorus remediation (Lake Erie case)',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['circular_food_systems'],
+    minEconomicStage: 2.8,
+    minMonth: 60,  // TIER 2, 2040+
+    researchMonthsRequired: 24,
+    researchCost: 800,
+    deploymentCost: 120000,
+    deploymentMonthsRequired: 120,  // Very slow sediment remediation
+    deploymentLevel: 0,
+    effects: {
+      legacyPhosphorusReduction: 0.20,  // 20% reduction in sediment P stock
+      freshwaterQuality: 0.15,
+      biodiversityBonus: 0.02,
+    },
+    citations: ['Paerl et al. 2024 - Lake Erie internal loading', 'research/nitrogen_food_coupling_20251115.md'],
+  },
+  {
+    id: 'nitroplast_integration',
+    name: 'Nitroplast Integration',
+    description: 'Synthetic nitrogen-fixing organelles in cereal crops - 40-80% fertilizer elimination',
+    category: 'agriculture',
+    status: 'future',  // TIER 2, but 2045+ is far future
+    prerequisites: ['rhizosphere_engineering', 'p_efficient_cultivars'],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.9 }
+    ],
+    minEconomicStage: 3.5,
+    minMonth: 120,  // TIER 2, 2045+ (10 years out)
+    researchMonthsRequired: 60,
+    researchCost: 5000,
+    deploymentCost: 300000,
+    deploymentMonthsRequired: 120,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenElimination: 0.60,  // 60% fertilizer elimination (40-80% range)
+      foodSecurityBonus: 0.10,
+      biodiversityBonus: 0.05,
+    },
+    citations: ['research/nitrogen_food_coupling_20251115.md - Nitroplast section'],
+    minMonth: 24,
+    researchMonthsRequired: 24,
+    researchCost: 800,
+    deploymentCost: 60000,
+    deploymentMonthsRequired: 60,
+    deploymentLevel: 0,
+    effects: {
+      phosphorusRecovery: 0.25,          // 25% additional recovery
+      legacyPhosphorusRemediation: 0.10, // Accelerates sediment stock decay
+      pollutionReduction: 0.20,          // Reduces eutrophication
+    },
+    citations: ['Lake Erie case study: Internal sediment loading = 10,000-11,000 MT P/year'],
+  },
+  {
+    id: 'algae_nutrient_capture',
+    name: 'Algae-Based Nutrient Capture',
+    description: 'Phytoremediation networks, algae bioreactors - habitat restoration + nutrient removal',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 0.6,
+    minEconomicStage: 2.0,
+    minMonth: 18,
+    researchMonthsRequired: 18,
+    researchCost: 400,
+    deploymentCost: 35000,
+    deploymentMonthsRequired: 48,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenRecovery: 0.15,            // Captures atmospheric N deposition
+      phosphorusRecovery: 0.12,          // Captures P runoff
+      biodiversityBonus: 0.08,           // Wetland habitat restoration
+      ecosystemHealth: 0.10,             // Trophic cascade restoration
+    },
+  },
+  {
+    id: 'regional_nitrogen_policies',
+    name: 'Regional Nitrogen Management Policies',
+    description: 'Coordinated regional N reduction targets - South Asia 55% overuse buffer, Sub-Saharan fertilizer access',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['precision_agriculture'],
+    minCapabilityDimensions: [
+      { dimension: 'social', threshold: 0.7 },     // International coordination
+      { dimension: 'economic', threshold: 0.6 }    // Economic incentive design
+    ],
+    minEconomicStage: 2.5,
+    minMonth: 36,
+    researchMonthsRequired: 36,
+    researchCost: 1500,
+    deploymentCost: 80000,
+    deploymentMonthsRequired: 84,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.20,           // 20% global reduction via regional differentiation
+      foodSecurityBonus: 0.05,           // Improves yields in underuse regions
+      trustBonus: 0.05,                  // Equitable policy design
+    },
+    citations: ['Science Advances (2024): 55% of South Asian rice farmers overuse nitrogen'],
+    capabilityEffects: {
+      dimensions: {
+        social: 0.05,  // Improves international cooperation
+      },
+    },
   },
 
   // Freshwater Depletion (4)
@@ -972,6 +1187,12 @@ const ALL_TECH: TechDefinition[] = [
     },
     techType: 'cleanup',
     targetsIrreversibleStock: true,  // PFAS persist centuries (Cousins 2022)
+
+    // Rebound effects (Nov 16, 2025): Cleanup may enable more production (Jevons paradox)
+    reboundCoefficient: 0.15,  // Mid-range estimate (10-20% production increase per unit cleanup)
+    reboundUncertaintyRange: [0.05, 0.50],  // Wide range for Monte Carlo sensitivity testing
+    avoidsRebound: false,  // Cleanup tech subject to moral hazard
+
     citations: [
       'Fennell, D. E., et al. (2024). Nature Reviews Earth & Environment, 5, 476-491',
       'Ling, A. L. (2024). Science of the Total Environment, 918, 170647',
@@ -1005,6 +1226,11 @@ const ALL_TECH: TechDefinition[] = [
     },
     techType: 'cleanup',
     targetsIrreversibleStock: false,  // Targets recent plastic, not legacy microplastics
+
+    // Rebound effects (Nov 16, 2025)
+    reboundCoefficient: 0.15,
+    reboundUncertaintyRange: [0.05, 0.50],
+    avoidsRebound: false,
   },
   {
     id: 'green_chemistry',
@@ -1050,6 +1276,8 @@ const ALL_TECH: TechDefinition[] = [
     // Prevention tech properties
     techType: 'prevention',
     targetsIrreversibleStock: false,  // Prevents NEW emissions, doesn't clean existing stock
+    avoidsRebound: true,  // Production bans eliminate moral hazard (no cleanup to offset)
+
     citations: [
       'Cousins, I. T., et al. (2022). Environmental Science & Technology, 56(16), 11172-11179',
       'Ling, A. L. (2024). Science of the Total Environment, 918, 170647'
@@ -1077,6 +1305,8 @@ const ALL_TECH: TechDefinition[] = [
     },
     techType: 'prevention',
     targetsIrreversibleStock: false,
+    avoidsRebound: true,  // Regulatory phase-out (no moral hazard)
+
     citations: [
       'Ling, A. L. (2024). Science of the Total Environment, 918, 170647'
     ],
@@ -1103,6 +1333,8 @@ const ALL_TECH: TechDefinition[] = [
     },
     techType: 'prevention',
     targetsIrreversibleStock: false,
+    avoidsRebound: true,  // Substitution (not cleanup)
+
     citations: [
       'Ling, A. L. (2024). Science of the Total Environment, 918, 170647'
     ],
@@ -1155,6 +1387,11 @@ const ALL_TECH: TechDefinition[] = [
     },
     techType: 'cleanup',
     targetsIrreversibleStock: false,  // Ocean microplastics can be targeted with energy
+
+    // Rebound effects (Nov 16, 2025)
+    reboundCoefficient: 0.15,
+    reboundUncertaintyRange: [0.05, 0.50],
+    avoidsRebound: false,
   },
   {
     id: 'endocrine_disruptor_removal',
@@ -2201,6 +2438,7 @@ const ALL_TECH: TechDefinition[] = [
       waterEfficiency: 0.95,
       landUseReduction: 0.40,
       urbanFoodSecurity: 0.60,
+      nitrogenReduction: 0.30,  // TIER 2 HIGH (Nov 16, 2025): 30% NUE improvement (model assumption based on MDPI studies)
     },
   },
   {
@@ -2246,6 +2484,21 @@ const ALL_TECH: TechDefinition[] = [
       nitrogenReduction: 0.25,  // 25% N input reduction
       cropYieldBonus: 0.15,  // 10-30% yield increase (mid-range)
       waterEfficiency: 0.20,  // Secondary benefit
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.5,
+    minEconomicStage: 2.5,
+    researchMonthsRequired: 24,
+    researchCost: 2000,
+    deploymentCost: 80000,
+    deploymentMonthsRequired: 60,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.30,           // 30% demand reduction
+      phosphorusReduction: 0.30,
+      foodSecurityBonus: 0.20,           // Redistribution improves access
+      economicEfficiency: 0.15,
     },
   },
   {
@@ -2370,6 +2623,38 @@ const ALL_TECH: TechDefinition[] = [
       legacyPhosphorusReduction: 0.65,  // 50-80% internal loading reduction
       lakeRestorationBonus: 0.50,  // Accelerates recovery
       economicCost: -0.02,  // Expensive (2% GDP cost)
+    },
+    category: 'pollution',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.5,
+    minEconomicStage: 3.0,
+    researchMonthsRequired: 18,
+    researchCost: 1500,
+    deploymentCost: 80000,
+    deploymentMonthsRequired: 60,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenRemoval: 0.63,  // Median removal from 335 field experiments (research line 471)
+      phosphorusRemoval: 0.72,  // Median P removal (research line 478)
+      habitatRestoration: 0.50,  // Wetland ecosystem benefits
+      biodiversityBonus: 0.30,  // Constructed wetlands support wildlife
+    },
+    citations: ['research/nitrogen_food_coupling_20251115.md', 'Constructed wetlands meta-analysis'],
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.0,
+    minEconomicStage: 2.0,
+    researchMonthsRequired: 12,
+    researchCost: 1500,
+    deploymentCost: 120000,
+    deploymentMonthsRequired: 180,     // 15 years to deploy globally
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.63,           // Median from 335 field experiments
+      phosphorusReduction: 0.72,         // Median from field data
+      habitatRestoration: 0.50,
+      biodiversityBonus: 0.25,
     },
   },
 

@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/18/2025, 8:30:07 AM
-**Files Scanned:** 444
+**Generated:** 11/18/2025, 9:30:04 AM
+**Files Scanned:** 469
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 155 (34.9%)
+**Count:** 161 (34.3%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -254,6 +254,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/alignment_dynamics_research_questions_20251024.md`
 
+### `alignment_faking_anthropic_2024.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/alignment_faking_anthropic_2024.md`
+
 ### `alignment_technique_network_completion_20251031.md`
 - **Oldest source:** 2018 (7 years old)
 - **Status:** Not used in simulation
@@ -268,6 +273,11 @@
 - **Oldest source:** 2008 (17 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/bifurcation_empirical_validation_20251112.md`
+
+### `bifurcation_instrumentation_calibration_20251113.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/bifurcation_instrumentation_calibration_20251113.md`
 
 ### `black-mirror-phase3-research-AMENDED_20251016.md`
 - **Oldest source:** 2000 (25 years old)
@@ -303,6 +313,11 @@
 - **Oldest source:** 2019 (6 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/citation_skeptic_analysis_20251028.md`
+
+### `claim_verification_report_20251116.md`
+- **Oldest source:** 2018 (7 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/claim_verification_report_20251116.md`
 
 ### `climate-mortality-biosphere-multiparadigm-framework_20251028.md`
 - **Oldest source:** 2019 (6 years old)
@@ -719,6 +734,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/verification_65e0f1c_20251107.md`
 
+### `verification_6b42b7c_20251113.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_6b42b7c_20251113.md`
+
 ### `verification_85bcf6e_20251111.md`
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
@@ -739,10 +759,20 @@
 - **Status:** Not used in simulation
 - **Path:** `research/verification_d336915_20251110.md`
 
+### `verification_d3ea8fa_20251116.md`
+- **Oldest source:** 2018 (7 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_d3ea8fa_20251116.md`
+
 ### `verification_d6e80e8_20251106.md`
 - **Oldest source:** 2013 (12 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/verification_d6e80e8_20251106.md`
+
+### `verification_summary_20251116.md`
+- **Oldest source:** 2018 (7 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_summary_20251116.md`
 
 ### `visionary_ideas_research_validation_2025-10-16.md`
 - **Oldest source:** 2014 (11 years old)
@@ -793,7 +823,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 21 (4.7%)
+**Count:** 22 (4.7%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -816,12 +846,13 @@
 - `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
 - `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
 - `verification_1cd141d_20251113.md` - Oldest: 2021 (4 years)
+- `verification_f5c244b_20251116.md` - Oldest: 2021 (4 years)
 
 ---
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 268 (60.4%)
+**Count:** 286 (61.0%)
 
 All sources <3 years old. No action required.
 
@@ -831,33 +862,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 444 |
+| Total files | 469 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 155 (34.9%) |
-| MEDIUM | 21 (4.7%) |
-| LOW | 268 (60.4%) |
-| Average age | 7.8 years |
+| HIGH | 161 (34.3%) |
+| MEDIUM | 22 (4.7%) |
+| LOW | 286 (61.0%) |
+| Average age | 7.5 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 268 | 60.4% |
-| Warning (3-5yr) | 21 | 4.7% |
-| Critical (>5yr) | 155 | 34.9% |
+| Current (<3yr) | 286 | 61.0% |
+| Warning (3-5yr) | 22 | 4.7% |
+| Critical (>5yr) | 161 | 34.3% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 34.9% critical (>5yr)
+- **Current:** 34.3% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 155 HIGH priority file(s) within 1 month
+1. Update 161 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 

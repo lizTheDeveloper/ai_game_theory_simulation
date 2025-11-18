@@ -30,8 +30,12 @@ async function runTimedSimulation() {
   // Initialization
   console.log('⏱️  Initializing game state...');
   const initStart = performance.now();
-  const initialState = createDefaultInitialState('historical'); // Use historical scenario mode
   const engine = new SimulationEngine({ seed, maxMonths, logLevel: 'none' });
+  // FIX (Nov 16, 2025): Pass RNG to initialization (CRITICAL-3 regression prevention)
+  // RNG is REQUIRED parameter - simulation must be deterministic
+  // Use engine's RNG instance to ensure determinism (same sequence for init + simulation)
+  const rngFunction = engine.getRNG().next.bind(engine.getRNG());
+  const initialState = createDefaultInitialState(rngFunction, 'historical'); // Use historical scenario mode
   timings.initialization = performance.now() - initStart;
   console.log(`   ✓ Initialized in ${timings.initialization.toFixed(2)}ms\n`);
 

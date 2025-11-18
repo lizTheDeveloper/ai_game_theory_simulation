@@ -85,12 +85,16 @@ export function sampleBiosphereExtinctionRate(rng: RNGFunction): number {
  * - 7 of 9 boundaries breached
  * - 2 safe (ozone improving, aerosols mostly safe)
  * - Climate + Biosphere = core boundaries (already breached)
- * 
- * @param rng - Optional RNG function for biosphere extinction rate sampling
- *              If provided, samples from log-uniform [100, 1000] E/MSY range
- *              If not provided, uses conservative baseline (116 E/MSY)
+ *
+ * @param rng - REQUIRED RNG function for deterministic simulation
+ *              Samples global extinction rate from log-uniform [100, 1000] E/MSY
  */
-export function initializePlanetaryBoundariesSystem(rng?: RNGFunction): PlanetaryBoundariesSystem {
+export function initializePlanetaryBoundariesSystem(rng: RNGFunction): PlanetaryBoundariesSystem {
+  // CRITICAL-3 FIX (Nov 18, 2025): RNG must be required for deterministic simulation
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic planetary boundaries initialization');
+  }
+
   const boundaries: Record<BoundaryName, PlanetaryBoundary> = {} as any;
 
   // === BREACHED BOUNDARIES (7/9) ===
@@ -386,6 +390,7 @@ function initializeEarlyWarningSystemInternal() {
  * Initialize Land Use System with Regional Biomes (Oct 22, 2025)
  * UPDATED (Oct 30, 2025): BLOCKER-2 fix v3 - extinction rates now match IPBES (2019) research
  * UPDATED (Nov 2, 2025): Layer 2 Remediation - Biosphere parameter sweep support
+ * UPDATED (Nov 18, 2025): CRITICAL-3 fix - RNG now required for determinism
  *
  * Research-backed baseline conditions for each biome type.
  *
@@ -400,17 +405,19 @@ function initializeEarlyWarningSystemInternal() {
  * FIX: Use conservative baseline (116 E/MSY) from low end of IPBES range
  *   - Values in E/MSY units (extinctions per million species-years)
  *   - NOT relative multipliers - these are ABSOLUTE rates
- * 
+ *
  * LAYER 2 REMEDIATION (Nov 2, 2025): Biosphere Parameter Sweep
- * - If RNG provided: Sample from log-uniform [100, 1000] E/MSY range (parameter sweep)
- * - If RNG not provided: Use conservative baseline (116 E/MSY) for single runs
+ * - Samples from log-uniform [100, 1000] E/MSY range (parameter sweep)
  * - This allows Monte Carlo to explore full uncertainty range, not just point estimate
- * 
- * @param rng - Optional RNG function for biosphere extinction rate sampling
- *              If provided, samples global extinction rate from log-uniform [100, 1000] E/MSY
- *              If not provided, uses conservative baseline (116 E/MSY)
+ *
+ * @param rng - REQUIRED RNG function for deterministic simulation
+ *              Samples global extinction rate from log-uniform [100, 1000] E/MSY
  */
-function initializeLandUseSystem(rng?: RNGFunction): LandUseSystem {
+function initializeLandUseSystem(rng: RNGFunction): LandUseSystem {
+  // CRITICAL-3 FIX (Nov 18, 2025): RNG must be required for deterministic simulation
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic land use initialization');
+  }
   // TROPICAL: Amazon, Congo, SE Asia
   // Highest biodiversity (50% of global species), fastest deforestation, hardest to restore
   const tropical: RegionalBiome = {
@@ -477,53 +484,41 @@ function initializeLandUseSystem(rng?: RNGFunction): LandUseSystem {
 
   // Calculate global aggregates (weighted by biodiversity importance)
   // LAYER 2 REMEDIATION (Nov 2, 2025): Biosphere Parameter Sweep
-  // If RNG provided, sample global extinction rate from log-uniform [100, 1000] E/MSY range
-  // Otherwise, use weighted regional average (conservative baseline 116 E/MSY)
-  let globalExtinctionRate: number;
-  if (rng) {
-    // Parameter sweep: Sample from log-uniform distribution
-    globalExtinctionRate = sampleBiosphereExtinctionRate(rng);
-    // Scale regional rates proportionally to maintain relative differences
-    // while shifting global rate to sampled value
-    const baselineGlobalRate =
-      tropical.extinctionRate * tropical.biodiversityWeight +
-      temperate.extinctionRate * temperate.biodiversityWeight +
-      grasslands.extinctionRate * grasslands.biodiversityWeight +
-      borealArctic.extinctionRate * borealArctic.biodiversityWeight;
-    // = 116 E/MSY (conservative baseline)
+  // CRITICAL-3 FIX (Nov 18, 2025): RNG now required - always sample from distribution
+  // Sample global extinction rate from log-uniform [100, 1000] E/MSY range
+  // Parameter sweep: Sample from log-uniform distribution
+  const globalExtinctionRate = sampleBiosphereExtinctionRate(rng);
+  // Scale regional rates proportionally to maintain relative differences
+  // while shifting global rate to sampled value
+  const baselineGlobalRate =
+    tropical.extinctionRate * tropical.biodiversityWeight +
+    temperate.extinctionRate * temperate.biodiversityWeight +
+    grasslands.extinctionRate * grasslands.biodiversityWeight +
+    borealArctic.extinctionRate * borealArctic.biodiversityWeight;
+  // = 116 E/MSY (conservative baseline)
 
-    // NaN AUDIT (Nov 7, 2025): Validate baselineGlobalRate before division
-    assertFinite(baselineGlobalRate, {
-      location: 'initializeLandUseSystem.scaleRegionalRates',
-      valueName: 'baselineGlobalRate',
-      additionalInfo: {
-        tropicalRate: tropical.extinctionRate,
-        temperateRate: temperate.extinctionRate,
-        grasslandsRate: grasslands.extinctionRate,
-        borealArcticRate: borealArctic.extinctionRate
-      }
-    });
+  // NaN AUDIT (Nov 7, 2025): Validate baselineGlobalRate before division
+  assertFinite(baselineGlobalRate, {
+    location: 'initializeLandUseSystem.scaleRegionalRates',
+    valueName: 'baselineGlobalRate',
+    additionalInfo: {
+      tropicalRate: tropical.extinctionRate,
+      temperateRate: temperate.extinctionRate,
+      grasslandsRate: grasslands.extinctionRate,
+      borealArcticRate: borealArctic.extinctionRate
+    }
+  });
 
-    const scaleFactor = globalExtinctionRate / baselineGlobalRate;
-    // Scale regional rates proportionally
-    // DETERMINISM FIX (Nov 5, 2025): Clamp scaled rates to [1, 1000] E/MSY range
-    // BUG FIX (Nov 11, 2025): Changed min from 10 to 1 E/MSY to allow tech improvements below safe boundary
-    // Prevents assertion errors when sampling high global extinction rates
-    // MIGRATION (Nov 15, 2025): Use FLOORS from centralConfig instead of inline constants
-    tropical.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, tropical.extinctionRate * scaleFactor));
-    temperate.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, temperate.extinctionRate * scaleFactor));
-    grasslands.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, grasslands.extinctionRate * scaleFactor));
-    borealArctic.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, borealArctic.extinctionRate * scaleFactor));
-  } else {
-    // Single run: Use conservative baseline
-    globalExtinctionRate =
-      tropical.extinctionRate * tropical.biodiversityWeight +
-      temperate.extinctionRate * temperate.biodiversityWeight +
-      grasslands.extinctionRate * grasslands.biodiversityWeight +
-      borealArctic.extinctionRate * borealArctic.biodiversityWeight;
-    // = 180*0.5 + 35*0.2 + 80*0.2 + 30*0.1 = 90 + 7 + 16 + 3 = 116 E/MSY
-    // MATCHES IPBES (2019) research: 100-1000 E/MSY range (using conservative baseline)
-  }
+  const scaleFactor = globalExtinctionRate / baselineGlobalRate;
+  // Scale regional rates proportionally
+  // DETERMINISM FIX (Nov 5, 2025): Clamp scaled rates to [1, 1000] E/MSY range
+  // BUG FIX (Nov 11, 2025): Changed min from 10 to 1 E/MSY to allow tech improvements below safe boundary
+  // Prevents assertion errors when sampling high global extinction rates
+  // MIGRATION (Nov 15, 2025): Use FLOORS from centralConfig instead of inline constants
+  tropical.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, tropical.extinctionRate * scaleFactor));
+  temperate.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, temperate.extinctionRate * scaleFactor));
+  grasslands.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, grasslands.extinctionRate * scaleFactor));
+  borealArctic.extinctionRate = Math.max(FLOORS.MIN_EXTINCTION_RATE, Math.min(FLOORS.MAX_EXTINCTION_RATE, borealArctic.extinctionRate * scaleFactor));
 
   const globalHabitatCover =
     tropical.habitatCoverPercent * 0.17 +      // 17% of land area
@@ -761,7 +756,70 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       additionalInfo: { baseExtinctionRateEMSY, invasiveMultiplier, totalExtinctionRateEMSY }
     });
 
-    system.boundaries.biosphere_integrity.currentValue = biosphereBoundaryValue;
+    // === IRREVERSIBILITY FRAMEWORK (Nov 17, 2025 - Phase 2) ===
+    // Research: Tilman et al. (1994) - Extinction debt concept
+    // Haddad et al. (2015) - 200-year habitat fragmentation recovery timescale
+    // Kuussaari et al. (2009) - 20-50 year lag timescales
+    // IPBES (2019) - 100-1000× background extinction rate, permanent loss floor
+    const biosphereBoundary = system.boundaries.biosphere_integrity;
+
+    // Track historical peak extinction rate
+    if (biosphereBoundary.peak === undefined) {
+      biosphereBoundary.peak = biosphereBoundaryValue;
+    } else {
+      biosphereBoundary.peak = Math.max(biosphereBoundary.peak, biosphereBoundaryValue);
+    }
+
+    // === ASYMPTOTIC RECOVERY WITH RESTORATION TECHNOLOGIES ===
+    // Check for habitat restoration and rewilding technologies
+    const restorationDeployed = (state.globalMetrics as any).habitatRestorationActive === 1.0;
+    const rewildingDeployed = (state.globalMetrics as any).rewildingActive === 1.0;
+
+    // Calculate restoration effectiveness
+    // Habitat restoration: 30-50% effectiveness (moderate)
+    // Rewilding: 20-40% effectiveness (moderate, long-term)
+    // Combined: Max 60% effectiveness (cannot fully reverse extinction)
+    let restorationEffectiveness = 0;
+    if (restorationDeployed) {
+      restorationEffectiveness += 0.40;  // 40% from habitat restoration
+    }
+    if (rewildingDeployed) {
+      restorationEffectiveness += 0.20;  // 20% from rewilding
+    }
+
+    // Apply asymptotic recovery if irreversible
+    if (biosphereBoundary.irreversible && biosphereBoundary.recoveryHalfLife && biosphereBoundary.minimumAsymptoticValue) {
+      // Import asymptotic recovery function
+      const { asymptoteRecovery } = require('./utils/irreversibility');
+
+      // Target value: current minus restoration effectiveness
+      const targetValue = Math.max(
+        biosphereBoundary.minimumAsymptoticValue * 10,  // Scale 5% floor to [0,10] boundary range
+        biosphereBoundaryValue - (restorationEffectiveness * 10)  // Effectiveness scaled to boundary units
+      );
+
+      // Apply asymptotic recovery (exponential approach to floor)
+      const recoveredValue = asymptoteRecovery(
+        biosphereBoundary.currentValue || biosphereBoundaryValue,
+        targetValue,
+        biosphereBoundary.recoveryHalfLife,
+        biosphereBoundary.minimumAsymptoticValue * 10,  // Scale floor to [0,10] range
+        1/12  // 1 month = 1/12 year
+      );
+
+      biosphereBoundary.currentValue = recoveredValue;
+
+      // Log recovery progress (annually)
+      if (state.currentMonth % 12 === 0 && restorationEffectiveness > 0) {
+        console.log(`  🌍 Biosphere Asymptotic Recovery:`);
+        console.log(`     Current: ${recoveredValue.toFixed(3)}× | Target: ${targetValue.toFixed(3)}× | Floor: ${(biosphereBoundary.minimumAsymptoticValue! * 10).toFixed(3)}×`);
+        console.log(`     Restoration: ${(restorationEffectiveness * 100).toFixed(1)}% (habitat: ${restorationDeployed ? 'Y' : 'N'}, rewilding: ${rewildingDeployed ? 'Y' : 'N'})`);
+        console.log(`     Half-life: ${biosphereBoundary.recoveryHalfLife} years (Haddad 2015: century-scale)`);
+      }
+    } else {
+      // Fallback: Direct assignment (for backward compatibility)
+      biosphereBoundary.currentValue = biosphereBoundaryValue;
+    }
     // = (116 * 1.225) / 10 = 142 / 10 = 14.2× safe threshold (deep overshoot)
   } else {
     // Fallback to biodiversity index if land use system not initialized
@@ -809,6 +867,9 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   // Biogeochemical flows (from phosphorus system + legacy nutrient stocks - TIER 2 HIGH, Nov 15, 2025)
   // Research: Lake Erie case study, nitrogen/phosphorus half-life studies
   // Expected impact: 10% god mode effectiveness gap → legacy stocks create inertia
+  //
+  // INTEGRATION (Nov 17, 2025): Nitrogen-food coupling now models technology-driven nitrogen reduction
+  // with regional yield penalty curves. This creates realistic constraint on nitrogen management.
   if (state.phosphorusSystem) {
     const reserves = assertProbability(state.phosphorusSystem.reserves, {
       location: 'updatePlanetaryBoundaries:biogeochemical',
@@ -887,6 +948,59 @@ export function updatePlanetaryBoundaries(state: GameState): void {
         }
       }
     );
+
+    if (system.legacyNutrientStock) {
+      // Import the update function dynamically to avoid circular dependencies
+      const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
+      const effectivePollution = updateLegacyNutrientStocks(
+        state,
+        currentNitrogenInputMonthly,
+        currentPhosphorusInputMonthly
+      );
+
+      effectiveNitrogen = effectivePollution.effectiveNitrogen;
+      effectivePhosphorus = effectivePollution.effectivePhosphorus;
+    }
+
+    // Normalize to boundary scale
+    // Baseline (2025): 10 Mt N/month + 2.08 Mt P/month = 12.08 Mt/month total → boundary value 2.94
+    // Scaling: 2.94 / 12.08 = 0.243 boundary units per Mt/month
+    const POLLUTION_TO_BOUNDARY_SCALE = 0.243;
+    const effectivePollutionBoundaryValue = (effectiveNitrogen + effectivePhosphorus) * POLLUTION_TO_BOUNDARY_SCALE;
+
+    // Boundary value = effective pollution (includes current inputs + legacy releases)
+    // This creates INERTIA: reducing current inputs helps, but legacy stocks slow recovery dramatically
+    const biogeochemicalValue = assertFinite(Math.max(0, effectivePollutionBoundaryValue), {
+      location: 'updatePlanetaryBoundaries:biogeochemical',
+      valueName: 'biogeochemical_flows.currentValue',
+      month: state.currentMonth,
+      additionalInfo: {
+        reserves,
+        depletion,
+        effectiveNitrogen,
+        effectivePhosphorus,
+        currentNitrogenInputMonthly,
+        currentPhosphorusInputMonthly
+      }
+    });
+    }
+
+    // Boundary value calculation
+    // Baseline (2025): 2.94 (294% of safe boundary)
+    // Scale by effective pollution vs baseline pollution
+    // Baseline total: 12.1 Mt/month (10 N + 2.1 P)
+    const baselinePollution = 12.1;
+    const currentEffectivePollution = effectiveNitrogen + effectivePhosphorus;
+    const pollutionRatio = currentEffectivePollution / baselinePollution;
+
+    // Boundary value = baseline × pollution ratio + depletion factor
+    // Depletion factor: phosphorus reserves declining increases boundary value
+    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 * pollutionRatio + depletion * 0.5), {
+      location: 'updatePlanetaryBoundaries:biogeochemical',
+      valueName: 'biogeochemical_flows.currentValue',
+      month: state.currentMonth,
+      additionalInfo: { reserves, depletion, legacyContribution, effectiveNitrogen, effectivePhosphorus }
+    });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
@@ -990,7 +1104,6 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     console.log(`     Cousins 2022: Global PFAS distribution prevents full remediation`);
   }
 
-  system.boundaries.novel_entities.currentValue = flooredValue;
   updateBoundaryStatus(system.boundaries.novel_entities);
 
   // Ocean acidification (ARCH-4 Integration: Direct pH mapping)

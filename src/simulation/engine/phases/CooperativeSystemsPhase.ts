@@ -34,6 +34,8 @@ import {
 } from '@/simulation/utils/assertions';
 import { updateCooperativeOwnership } from '../../cooperativeOwnership';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { updateUpwardSpirals } from '../../upwardSpirals';
+import { updateCooperativeSpirals } from '../../cooperativeSpirals';
 
 export class CooperativeSystemsPhase implements SimulationPhase {
   readonly id = 'cooperative-systems';
@@ -579,10 +581,7 @@ function executeUpwardSpirals(
   state: GameState,
   rng: RNGFunction,
   context: PhaseContext
-): void {
-  const { updateUpwardSpirals } = require('../../upwardSpirals');
-
-  if (!context || context.month === undefined) {
+): void {if (!context || context.month === undefined) {
     throw new Error(
       `❌ CRITICAL: PhaseContext.month missing in CooperativeSystemsPhase.executeUpwardSpirals (Month ${state.currentMonth}). ` +
       `Phase orchestrator must provide context.month for all phases.`
@@ -601,9 +600,7 @@ function executeCooperativeSpirals(
   state: GameState,
   rng: RNGFunction,
   context: PhaseContext
-): void {
-  const { updateCooperativeSpirals } = require('../../cooperativeSpirals');
-  updateCooperativeSpirals(state);
+): void {updateCooperativeSpirals(state);
 }
 
 /**

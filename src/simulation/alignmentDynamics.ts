@@ -18,7 +18,7 @@ import {
   DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
 } from '@/types/alignment-dynamics';
 import { AIAgent } from '@/types/game';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 
 /**
  * Initialize attractor basin state for an agent

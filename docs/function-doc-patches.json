@@ -121,7 +121,59 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
+<<<<<<< HEAD
     "line": 2533,
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "line": 2365,
+=======
+    "line": 2052,
+>>>>>>> origin/auto/worker-20251116_023000
+=======
+    "line": 2068,
+>>>>>>> origin/auto/worker-20251116_043002
+=======
+    "line": 1924,
+>>>>>>> origin/auto/worker-20251116_050001
+=======
+    "line": 2049,
+>>>>>>> origin/auto/worker-20251116_100000
+=======
+    "line": 1926,
+>>>>>>> origin/auto/worker-20251116_130001
+=======
+    "line": 2084,
+>>>>>>> origin/auto/worker-20251116_150001
+=======
+    "line": 2047,
+>>>>>>> origin/auto/worker-20251116_160001
+=======
+    "line": 2376,
+>>>>>>> origin/auto/worker-20251116_170001
+=======
+    "line": 2068,
+>>>>>>> origin/auto/worker-20251116_180001
+=======
+    "line": 1924,
+>>>>>>> origin/auto/worker-20251117_033002
+=======
+    "line": 2533,
+>>>>>>> origin/auto/worker-20251117_053001
+=======
+    "line": 1924,
+>>>>>>> origin/auto/worker-20251117_080000
+>>>>>>> 9b081bf538a6ccd330d68298704586f8d4591703
     "name": "getAllTech",
     "doc": " Returns array of results."
   },

@@ -12,7 +12,17 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertFinite } from '@/simulation/utils/assertions';
+import { assertFinite, assertRegionalConsistency } from '@/simulation/utils/assertions';
+import {
+  updateHumanPopulation,
+  applyPopulationEffectsToQoL,
+  updateOutcomeMetricsWithPopulation,
+  aggregateGlobalPopulation,
+  aggregateGlobalDemographics,
+  aggregateGlobalCarryingCapacity,
+  aggregateGlobalDeaths
+} from '../../populationDynamics';
+import { updateRegionalPopulations } from '../../regionalPopulations';
 
 export class HumanPopulationPhase implements SimulationPhase {
   readonly id = 'human_population';
