@@ -14,31 +14,47 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
-- **Phase-based architecture**: 95 phases per step (reduced from 116 via Nov 2025 consolidation)
+- **Phase-based architecture**: 97 phases per step (reduced from 116 via Nov 2025 consolidation)
 
 ## 🚀 Project Status
 
-**🟢 EXCELLENT - STABLE AND IMPROVING** (November 15, 2025)
+**🟢 STABLE** (November 15, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A (100% peer-reviewed, automated currency pipeline, W3C standards) ✅ EXCELLENT
-- **Implementation Fidelity:** A (Defensive coding violations RESOLVED, Quality Gate 2 passed) ✅ EXCELLENT
-- **Architecture Health:** 9.5/10 EXCELLENT (ALL CRITICAL/HIGH issues resolved) ✅ STABLE
-- **System Trajectory:** 🟢 STABLE AND IMPROVING (Architecture review complete, Monte Carlo validation ready)
+- **Research Quality:** A- (4 CRITICAL parameter fixes applied, 0 CRITICAL age issues) ✅ EXCELLENT
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
+- **Architecture Health:** B- (stable with localized issues - 2 CRITICAL, 3 HIGH identified in Nov 15 review) ⚠️ STABLE
+- **System Trajectory:** 🟢 STABLE (Architecture review complete, research parameters corrected)
 
 **Recent Major Achievements:**
 
-**Nov 15: AI Alignment & Cooperative Ownership Research - 2024-2025 Updates** (commit 7650b62)
-- 📚 **Multi-Agent Alignment:** Collina et al. 2025 (arXiv:2509.15090) - game-theoretic proof that competition between misaligned AIs → aligned outcomes
-- 🔬 **Social Dynamics:** Carichon et al. 2025 (NeurIPS 2025) - alignment as dynamic social process, validates simulation's multi-agent focus
-- 🤝 **Cooperative AI Governance:** Harvard HBR 2025 + Ash Center 2024 - READ-COOP case study (227 orgs), data cooperatives (MIDATA, Superset), 10% global workforce
-- 📖 **Updated Files:** competitive_ai_alignment_20251016.md, cooperative-ai-ownership-economics_20251028.md
-- 📊 **Research Quality:** A (90% peer-reviewed, 55% 2024-2025 sources)
-- ✅ **Relevance:** Validates competitive equilibrium + cooperative ownership models with 2025 empirical evidence
-- 📚 **Bibliography:** +4 citations (179 total, 63% from 2024-2025)
+**Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
+- 📊 **Architecture Review:** Grade B- (stable with localized issues)
+  - 2 CRITICAL: Phase dependency gaps (9/97 phases), CoordinatedDeploymentPhase integration risk
+  - 3 HIGH: Defensive fallback migration, O(n²) patterns, memory instrumentation
+  - ✅ **Mitigation:** 24 integration tests added (776 lines), 2 phases fixed with explicit dependencies
+- 🔬 **Research Audit:** Grade A- (425 files analyzed, 59% current <3yr)
+  - 4 CRITICAL parameter fixes applied:
+    - Heat adaptation: 0.80 → 0.45 (Ballester 2024, eliminates 82% mortality underestimate)
+    - Aid effectiveness: Cavalcanti 2025 misinterpretation corrected
+    - Migration: IOM 2024 parameters marked as qualitative assumptions
+    - Citation: Acemoglu & Restrepo "2022" → "2019 JEP 33:2"
+  - 0 CRITICAL age issues, 146 HIGH (mostly foundational theory)
+- 📖 **Documentation:** reviews/architecture_review_20251115_200300.md, research/RESEARCH_AUDIT_EXECUTIVE_SUMMARY_20251115.md
+- 📁 **Archive:** plans/completed/nov15_architecture_research_fixes_20251115.md
+- ✅ **Status:** Architecture Health B- (from 9.5/10), Research Quality A- (0 CRITICAL age issues)
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+**Nov 15: AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** (commit e344ce5)
+- 📚 **New Scaling Paradigms:** Test-time compute (o1, o3), RL scaling laws (sigmoid curves), 2030 infrastructure projections
+- 🧠 **Key Findings:** o3 achieves 87.5% on ARC-AGI (human: 85%), RL follows sigmoid (80% gains in 25% compute), 2e29 FLOP feasible by 2030
+- 📊 **Three Scaling Axes:** Pre-training (traditional), RL post-training, test-time inference compute
+- 🎯 **New Parameters:** TEST_TIME_COMPUTE_MULTIPLIER (1.5× per 10× inference), RL_PERFORMANCE_CURVE (sigmoid), MAX_TRAINING_FLOPS (3e30)
+- 📖 **Sources Added (4):** Wolfe (2025) o1/o3 scaling, Lambert (2025) RL methodology, Epoch AI (2025) 2030 feasibility, TechCrunch (2024) diminishing returns
+- ⚠️ **Status:** NEEDS VALIDATION - Research verification file created (verification_e344ce5_20251115.md)
+- 🎯 **Priority:** HIGH - Affects AI capability projection, three new scaling paradigms
+- 📝 **Issue:** Metadata claims "peer_reviewed: true" but new sources are industry/media (Substack, blogs)
+- 🔄 **Workflow:** Queued for orchestrator validation (citation + claim verification for 10+ specific numeric claims)
+
 **Nov 15: Planetary Boundaries & Tipping Points 2025 Research Update** (commit d88ce24)
 - 📚 **New Research:** Comprehensive 2025 update from Rockström (2025) & BioScience 2025 State of Climate
 - 🚨 **Critical Updates:** 7/9 planetary boundaries transgressed (up from 6), ocean acidification crossed 2020
@@ -68,9 +84,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📖 **Summary:** logs/defensive_fallback_migration_summary_20251115.md
 - 📖 **Review:** reviews/DEFENSIVE_FALLBACK_ARCHITECTURE_REVIEW_20251115.md
 - 💡 **Lesson:** Not all `??` patterns are bugs - context matters (initialization vs calculation)
-=======
-=======
->>>>>>> Stashed changes
+
 **Nov 15: Coordinated Technology Deployment - Quality Gate 1 Complete** (commit 44bf8ef)
 - 🔬 **Research Validation:** CONDITIONAL PASS with conservative parameter adjustments
 - 📊 **Foundation:** 27 peer-reviewed sources (Great Leap Forward, Soviet Collectivization, Marshall Plan, Green Revolution)
@@ -84,10 +98,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📖 **Verification:** research/verification_44bf8ef_20251115.md (two-layer citation + claim verification)
 - 🎯 **Implementation Targets:** Uncoordinated 15-30% mortality, Coordinated 2-5% mortality (80-85% effectiveness)
 - ⏭️ **Next:** Roy (simulation-maintainer) implementation with conservative parameters
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 **Nov 15: Montreal Protocol Prevention Effectiveness Case Study** (commit 431a49a)
 - 🔬 **Research:** Comprehensive empirical validation of prevention vs cleanup effectiveness
@@ -6814,9 +6824,15 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
    ID is registered. Check for typos or remove the dependency.
 ```
 
-### Coverage Status (Nov 6, 2025)
+### Coverage Status (Nov 15, 2025)
 
-**32 of 115 phases (27.8%)** now have explicit dependencies.
+**88 of 97 phases (90.7%)** now have explicit dependencies.
+
+**Recent improvements (Nov 15):**
+- Phase consolidation reduced total phases from 115 → 97
+- Dependency coverage expanded from 27.8% (Nov 6) → 90.7% (Nov 15)
+- 13 phase dependency bugs fixed (typos, order violations, nonexistent dependencies)
+- 2 phases updated with explicit empty dependencies (ExtremeWeatherEventsPhase, others)
 
 **Critical phases with dependencies:**
 - **Mortality chain:** BayesianMortalityResolutionPhase, MortalityStabilizersPhase, ClimateImpactCascadePhase
@@ -6829,7 +6845,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
 - **Environmental:** PlanetaryBoundariesPhase, TippingPointPhase, EnvironmentalFeedbackPhase
 - **Food security:** FoodSecurityDegradationPhase, FamineSystemPhase
 
-**Remaining phases (83):** Use decimal ordering only (lower risk, fewer interdependencies)
+**Remaining phases (9):** Lack explicit dependency declarations - identified as CRITICAL issue in architecture review (Nov 15)
 
 ### Benefits
 
@@ -6861,16 +6877,16 @@ readonly dependencies = [
 
 ### Future Work
 
-**Target: 50% coverage (58 phases)** - Focus on:
-- All crisis phases (nuclear, climate, food, refugee)
-- All outcome calculation phases
-- All resource system phases (water, phosphorus, ocean)
-- All AI evaluation phases (sandbagging, gaming, benchmarks)
+**Target: 100% coverage (remaining 9 phases)** - Architecture review identified this as CRITICAL issue:
+- Complete dependency analysis for 9 phases lacking explicit declarations
+- Verify no hidden ordering dependencies in these phases
+- Document rationale if phase truly has zero dependencies (e.g., early initialization phases)
 
-**Not needed:**
-- Simple metrics calculations with no dependencies
-- Initialization phases (run first by definition)
-- Logging/finalization phases (run last by definition)
+**Rationale for empty dependencies:**
+Some phases have `readonly dependencies: string[] = []` when they:
+- Run very early (no prior state to depend on)
+- Had invalid dependencies removed (backwards ordering, nonexistent phases)
+- Read from previous step's state (climate, tech tree) without same-step dependencies
 
 ---
 
@@ -8135,6 +8151,62 @@ tail -f logs/phase3_batch_*.log
 - **Determinism:** All tests use seeded RNG (reproducible)
 
 **Status:** ✅ Implementation complete, testing in progress (see plans/phase3_implementation_complete.md)
+
+#### CoordinatedDeploymentPhase Integration Tests (November 2025)
+
+**Purpose:** Comprehensive integration testing for CoordinatedDeploymentPhase to address CRITICAL-2 architecture review finding.
+
+**Background:** Architecture review (Nov 15) identified CoordinatedDeploymentPhase as integration risk due to:
+- Complex state initialization requirements (coordinatedDeployment state must exist)
+- Only 1 other phase references this state (limited cross-system integration)
+- 525 lines of mortality calculations with potential for edge cases
+
+**Test Coverage:** 24 tests, 776 lines (`tests/integration/coordinated-deployment.test.ts`)
+
+**Test Categories:**
+
+1. **State Initialization (6 tests):**
+   - Verify `coordinatedDeployment` state created during initialization
+   - Validate default values for all deployment tracking fields
+   - Ensure state persists across simulation steps
+   - Test bootstrap vs post-bootstrap behavior (phase skips month 0-1)
+
+2. **Phase Execution Ordering (4 tests):**
+   - Confirm phase runs at order 16.5 (after tech tree 12.5, before mortality 35.0)
+   - Validate dependency declarations (tech-tree, climate-system)
+   - Test execution sequence with dependent phases
+   - Verify topological sort respects dependencies
+
+3. **Climate Technology Integration (6 tests):**
+   - Test deployment of TIER 0 climate technologies (renewable energy, carbon capture)
+   - Validate mortality reduction calculations for deployed technologies
+   - Verify technology effectiveness scales with deployment level
+   - Test interaction with existing climate mitigation systems
+
+4. **Mortality Cascade Validation (5 tests):**
+   - Verify mortality calculations use correct population denominators
+   - Test edge case: population collapse scenarios (low population edge cases)
+   - Validate mortality doesn't exceed 100% or produce NaN values
+   - Test coordination with BayesianMortalityResolutionPhase
+   - Confirm assertion utilities catch invalid calculations
+
+5. **Cross-System State Propagation (3 tests):**
+   - Verify climate deployment updates propagate to climate impact phases
+   - Test interaction with early warning systems
+   - Validate state changes visible to downstream phases
+
+**Key Findings:**
+- All 24 tests passing as of Nov 15
+- No state initialization failures detected
+- Mortality calculations validated (no NaN, no >100% values)
+- Phase ordering confirmed correct via PhaseOrchestrator validation
+
+**Related Files:**
+- Implementation: `src/simulation/engine/phases/CoordinatedDeploymentPhase.ts` (564 lines)
+- Integration tests: `tests/integration/coordinated-deployment.test.ts` (776 lines)
+- Legacy tests: `tests/tier2-8-phase1-2-integration.test.ts` (411 lines, earlier iteration)
+
+**Status:** ✅ CRITICAL-2 mitigation complete - integration risk addressed via comprehensive test coverage
 
 ### Devlogs (Recent Key Findings)
 - `devlogs/monte-carlo-analysis-oct-9-action-fix.md` - Comprehensive blocker analysis
