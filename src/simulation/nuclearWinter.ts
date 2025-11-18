@@ -520,12 +520,27 @@ function updateRadiationZones(state: GameState, winter: NuclearWinterState): voi
   
   if (totalRadiationDeaths > 0) {
     // Calculate average mortality rate across exposed zones
+    // NaN AUDIT (Nov 16, 2025): Protect division - if population collapsed to 0, fail loudly
     const nuclearNationsPopulation = state.humanPopulationSystem.population * 0.30;
-    const averageRadiationMortality = assertFinite(totalRadiationDeaths / (nuclearNationsPopulation || 1), {
+
+    // If nuclear-affected population collapsed to zero, can't calculate mortality rate
+    // This indicates extinction - fail loudly rather than fallback to 1
+    if (nuclearNationsPopulation <= 0) {
+      throw new Error(
+        `❌ EXTINCTION: Nuclear nations population collapsed to 0 during nuclear winter (Month ${state.currentMonth}). ` +
+        `Total radiation deaths: ${totalRadiationDeaths}. Cannot calculate mortality rate with zero denominator.`
+      );
+    }
+
+    const averageRadiationMortality = assertFinite(totalRadiationDeaths / nuclearNationsPopulation, {
       location: 'updateNuclearWinter (radiation)',
       valueName: 'averageRadiationMortality',
       month: state.currentMonth,
-      additionalInfo: { totalDeaths: totalRadiationDeaths, zones: winter.radiationZones.length }
+      additionalInfo: {
+        totalDeaths: totalRadiationDeaths,
+        nuclearNationsPopulation,
+        zones: winter.radiationZones.length
+      }
     });
 
     addMortalityRisk(state.humanPopulationSystem, {
