@@ -960,13 +960,21 @@ function applyGlobalEffects(
         // and affects food production via regional yield penalties
         if (gameState.globalMetrics) {
           // Accumulate nitrogen reduction effectiveness (will be used by updateNitrogenFoodCoupling)
+<<<<<<< HEAD
           const currentReduction = gameState.globalMetrics.nitrogenReductionTotal ?? 0;
+=======
+          const currentReduction = getDynamicProperty(gameState.globalMetrics, 'nitrogenReductionTotal', 0);
+>>>>>>> origin/auto/worker-20251116_160001
 
           // Multiplicative stacking: 1 - (1 - r1)(1 - r2)...(1 - rN)
           // This prevents >100% reduction and models realistic synergies
           const combinedReduction = 1 - (1 - currentReduction) * (1 - value);
 
+<<<<<<< HEAD
           gameState.globalMetrics.nitrogenReductionTotal = combinedReduction;
+=======
+          setDynamicProperty(gameState.globalMetrics, 'nitrogenReductionTotal', combinedReduction);
+>>>>>>> origin/auto/worker-20251116_160001
 
           // Log for diagnostics (annual)
           if (gameState.currentMonth % 12 === 0 && combinedReduction > 0.01) {

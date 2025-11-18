@@ -14,6 +14,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertAICapability, assertAIAggregateCapability } from '@/simulation/utils/assertions';
+import { diffuseCapabilities } from '../../technologyDiffusion';
 
 export class TechnologyDiffusionPhase implements SimulationPhase {
   readonly id = 'technology-diffusion';
@@ -28,10 +29,7 @@ export class TechnologyDiffusionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute technology diffusion
-    setDeterministicRng(rng);
-    const { diffuseCapabilities } = require('../../technologyDiffusion');
-
-    diffuseCapabilities(state, rng);
+    setDeterministicRng(rng);diffuseCapabilities(state, rng);
 
     // Validate AI agent capabilities after diffusion
     for (const agent of state.aiAgents || []) {

@@ -12,7 +12,17 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertFinite } from '@/simulation/utils/assertions';
+import { assertFinite, assertRegionalConsistency } from '@/simulation/utils/assertions';
+import {
+  updateHumanPopulation,
+  applyPopulationEffectsToQoL,
+  updateOutcomeMetricsWithPopulation,
+  aggregateGlobalPopulation,
+  aggregateGlobalDemographics,
+  aggregateGlobalCarryingCapacity,
+  aggregateGlobalDeaths
+} from '../../populationDynamics';
+import { updateRegionalPopulations } from '../../regionalPopulations';
 
 export class HumanPopulationPhase implements SimulationPhase {
   readonly id = 'human_population';
@@ -34,6 +44,7 @@ export class HumanPopulationPhase implements SimulationPhase {
     setDeterministicRng(rng);
     // Each engine.step() represents one month advancing
     // Population calculations use monthly rates - no need to gate on day
+<<<<<<< HEAD
     const {
       updateHumanPopulation,
       applyPopulationEffectsToQoL,
@@ -51,6 +62,8 @@ export class HumanPopulationPhase implements SimulationPhase {
     const {
       assertRegionalConsistency
     } = require('../../utils/assertions');
+=======
+>>>>>>> origin/auto/worker-20251116_160001
 
     // === PHASE 5: REGIONAL POPULATION DYNAMICS ===
     // Update regional populations with differential growth/decline rates

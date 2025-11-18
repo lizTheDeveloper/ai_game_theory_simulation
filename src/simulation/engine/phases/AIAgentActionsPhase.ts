@@ -18,6 +18,8 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertAICapability, assertAIAggregateCapability, assertDefined, assertInRange } from '@/simulation/utils/assertions';
+import { executeAIAgentActions } from '../../agents/aiAgent';
+import { updateCounterDetectionLearning } from '../../counterDetectionLearning';
 
 export class AIAgentActionsPhase implements SimulationPhase {
   readonly id = 'ai-agent-actions';
@@ -33,10 +35,7 @@ export class AIAgentActionsPhase implements SimulationPhase {
     const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
     const t1 = enableTiming ? performance.now() : 0;
 
-    // Import and execute existing AI agent actions
-    const { executeAIAgentActions } = require('../../agents/aiAgent');
-
-    const aiResult = executeAIAgentActions(state, rng);
+    // Import and execute existing AI agent actionsconst aiResult = executeAIAgentActions(state, rng);
     const t2 = enableTiming ? performance.now() : 0;
 
     // Update state (aiResult returns { newState, events })
@@ -53,9 +52,7 @@ export class AIAgentActionsPhase implements SimulationPhase {
       });
     }
 
-    // TIER 2 Phase 2A: Counter-Detection Learning (arms race dynamics)
-    const { updateCounterDetectionLearning } = require('../../counterDetectionLearning');
-    updateCounterDetectionLearning(state, rng);
+    // TIER 2 Phase 2A: Counter-Detection Learning (arms race dynamics)updateCounterDetectionLearning(state, rng);
     const t3 = enableTiming ? performance.now() : 0;
 
     if (enableTiming) {

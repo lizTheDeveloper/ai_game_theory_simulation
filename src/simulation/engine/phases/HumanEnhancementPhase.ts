@@ -31,6 +31,7 @@ import {
   assertInRange,
   assertDefined
 } from '@/simulation/utils/assertions';
+import { initializeAIAssistedSkillsMetrics } from '../../aiAssistedSkills/aggregateMetrics';
 
 export class HumanEnhancementPhase implements SimulationPhase {
   readonly id = 'ai-assisted-skills-metrics';
@@ -50,9 +51,7 @@ export class HumanEnhancementPhase implements SimulationPhase {
     if (state.society.segments && state.society.segments.length > 0) {
       // Get or initialize metrics
       if (!state.aiAssistedSkillsMetrics) {
-        // Initialize if first time (backward compatibility)
-        const { initializeAIAssistedSkillsMetrics } = require('../../aiAssistedSkills/aggregateMetrics');
-        state.aiAssistedSkillsMetrics = initializeAIAssistedSkillsMetrics();
+        // Initialize if first time (backward compatibility)state.aiAssistedSkillsMetrics = initializeAIAssistedSkillsMetrics();
       }
 
       // Get average AI capability for phase detection

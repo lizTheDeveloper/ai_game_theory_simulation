@@ -18,6 +18,8 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite, assertProbability } from '@/simulation/utils/assertions';
+import { updateFreshwaterSystem, checkFreshwaterTechUnlocks } from '../../freshwaterDepletion';
+import { updateOceanAcidificationSystem, checkOceanAcidificationTechUnlocks } from '../../oceanAcidification';
 
 export class ResourceWaterPhase implements SimulationPhase {
   readonly id = 'resource-water';
@@ -38,10 +40,6 @@ export class ResourceWaterPhase implements SimulationPhase {
 
     // === FRESHWATER SYSTEM (TIER 1.2) ===
     // Updates freshwater reserves, Day Zero droughts, regional water stress, tech breakthroughs
-    const {
-      updateFreshwaterSystem,
-      checkFreshwaterTechUnlocks
-    } = require('../../freshwaterDepletion');
 
     // Validate freshwater system state before update
     if (state.freshwaterSystem) {
@@ -76,10 +74,6 @@ export class ResourceWaterPhase implements SimulationPhase {
 
     // === OCEAN ACIDIFICATION SYSTEM (TIER 1.3) ===
     // Updates ocean acidification, coral/shellfish collapse, marine food web, tech breakthroughs
-    const {
-      updateOceanAcidificationSystem,
-      checkOceanAcidificationTechUnlocks
-    } = require('../../oceanAcidification');
 
     // Validate ocean acidification system state before update
     if (state.oceanAcidificationSystem) {

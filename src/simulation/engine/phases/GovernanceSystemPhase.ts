@@ -26,6 +26,7 @@ import {
 import { assertEconomicStage } from '../../utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { updatePolicyImplementation } from '@/simulation/government/policyLifecycle';
+import { updateGovernanceQuality } from '../../governanceQuality';
 
 export class GovernanceSystemPhase implements SimulationPhase {
   readonly id = 'governance-system';
@@ -283,9 +284,7 @@ function checkCoalitionStability(
  * Governance Quality Update
  * (formerly GovernanceQualityPhase, order 10.0)
  */
-function executeGovernanceQualityUpdate(state: GameState, rng: RNGFunction): void {
-  const { updateGovernanceQuality } = require('../../governanceQuality');
-  updateGovernanceQuality(state);
+function executeGovernanceQualityUpdate(state: GameState, rng: RNGFunction): void {updateGovernanceQuality(state);
 }
 
 /**

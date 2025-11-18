@@ -73,10 +73,17 @@ Boundaries update based on simulation state:
 - **Biosphere:** Driven by biodiversity index and invasive species impact, normalized to safe threshold (10 E/MSY = 10× natural extinction rate)
   - **Growth model (Oct 30, 2025):** Percentage-based growth matching IPBES research (10-30% per decade), with logistic saturation at 1000× max to prevent unrealistic exponential accumulation
 - **Freshwater:** Driven by freshwater system (water stress)
+<<<<<<< HEAD
 - **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives), nitrogen-food coupling with regional differentiation (Nov 16, 2025)
   - **Legacy stocks:** Soil (30yr half-life), sediments (100yr half-life) create decades-long recovery timescales
   - **Nitrogen-food coupling:** Regional yield penalties based on nitrogen overuse (55% South Asian rice farms exceed safe limits)
   - **Technology effects:** Vertical farming (60% N reduction), precision fermentation (40% N reduction) with multiplicative synergies
+=======
+- **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives), nitrogen-food coupling with regional differentiation (Nov 2025)
+  - **Nitrogen-Food Integration (Nov 16, 2025):** Legacy stocks contribute 18.6% baseline pollution (10 Mt N/mo + 2.08 Mt P/mo), tech deployment reduces current inputs but stocks decay slowly (exponential, decades-centuries timescale)
+  - **Regional Penalties:** South Asia 55% nitrogen overuse zones face zero food penalty; moderate zones face 30-40% yield reduction with aggressive N reduction
+  - **Recovery Inertia:** God mode effectiveness expected at 30-50% (vs 10% pre-integration) due to legacy stock half-lives (30yr soil, 100yr sediment)
+>>>>>>> origin/auto/worker-20251116_160001
 - **Novel Entities:** Driven by environmental pollution
 - **Ocean Acidification:** Driven by ocean acidification system
 - **Ozone:** Improving +0.06%/year (Montreal Protocol recovery)

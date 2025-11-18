@@ -820,6 +820,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     const depletion = 1 - reserves; // reserves is already 0-1 scale
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // TIER 2 HIGH: Update legacy nutrient stocks and nitrogen-food coupling
     // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
     // Nitrogen-food coupling: reducing nitrogen hurts crop yields (regional nonlinear penalties)
@@ -943,6 +944,81 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     );
 
 >>>>>>> origin/auto/worker-20251116_130001
+=======
+    // TIER 2 HIGH: Calculate current pollution inputs from regional nitrogen + phosphorus use
+    // Baseline (2025): ~120 Mt N/year global, ~25 Mt P/year global
+    // Convert to monthly: 10 Mt N/month, 2.08 Mt P/month
+    let currentNitrogenInputMonthly = 10.0;  // Mt N/month (2025 baseline)
+    let currentPhosphorusInputMonthly = 2.08; // Mt P/month (2025 baseline)
+
+    // Calculate actual current inputs from regional nitrogen management (if available)
+    if (system.regionalNitrogenManagement && system.regionalNitrogenManagement.length > 0) {
+      const totalNitrogenYearly = system.regionalNitrogenManagement.reduce(
+        (sum, region) => sum + region.currentNitrogenInput, 0
+      );
+      currentNitrogenInputMonthly = totalNitrogenYearly / 12; // Convert yearly to monthly
+
+      // TIER 2 HIGH: Apply nitrogen reduction from deployed technologies
+      // Technologies track total reduction in globalMetrics.nitrogenReductionTotal (effectsEngine.ts)
+      const nitrogenReductionFromTech = state.globalMetrics && 'nitrogenReductionTotal' in state.globalMetrics
+        ? (state.globalMetrics as { nitrogenReductionTotal: number }).nitrogenReductionTotal
+        : 0;
+
+      if (nitrogenReductionFromTech > 0) {
+        currentNitrogenInputMonthly *= (1 - nitrogenReductionFromTech);
+
+        // Update regional nitrogen inputs to reflect tech deployment
+        for (const region of system.regionalNitrogenManagement) {
+          region.currentNitrogenInput *= (1 - nitrogenReductionFromTech);
+        }
+
+        // Log annually
+        if (state.currentMonth % 12 === 0) {
+          console.log(`  🌾 Nitrogen input after tech: ${currentNitrogenInputMonthly.toFixed(2)} Mt/mo (${(nitrogenReductionFromTech * 100).toFixed(1)}% reduction)`);
+        }
+      }
+    }
+
+    // TIER 2 HIGH: Update legacy nutrient stocks and get effective pollution
+    // This is the KEY integration - updateLegacyNutrientStocks mutates stocks AND returns effective values
+    let effectiveNitrogen = currentNitrogenInputMonthly;
+    let effectivePhosphorus = currentPhosphorusInputMonthly;
+
+    if (system.legacyNutrientStock) {
+      // Import the update function dynamically to avoid circular dependencies
+      const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
+      const effectivePollution = updateLegacyNutrientStocks(
+        state,
+        currentNitrogenInputMonthly,
+        currentPhosphorusInputMonthly
+      );
+
+      effectiveNitrogen = effectivePollution.effectiveNitrogen;
+      effectivePhosphorus = effectivePollution.effectivePhosphorus;
+    }
+
+    // Normalize to boundary scale
+    // Baseline (2025): 10 Mt N/month + 2.08 Mt P/month = 12.08 Mt/month total → boundary value 2.94
+    // Scaling: 2.94 / 12.08 = 0.243 boundary units per Mt/month
+    const POLLUTION_TO_BOUNDARY_SCALE = 0.243;
+    const effectivePollutionBoundaryValue = (effectiveNitrogen + effectivePhosphorus) * POLLUTION_TO_BOUNDARY_SCALE;
+
+    // Boundary value = effective pollution (includes current inputs + legacy releases)
+    // This creates INERTIA: reducing current inputs helps, but legacy stocks slow recovery dramatically
+    const biogeochemicalValue = assertFinite(Math.max(0, effectivePollutionBoundaryValue), {
+      location: 'updatePlanetaryBoundaries:biogeochemical',
+      valueName: 'biogeochemical_flows.currentValue',
+      month: state.currentMonth,
+      additionalInfo: {
+        reserves,
+        depletion,
+        effectiveNitrogen,
+        effectivePhosphorus,
+        currentNitrogenInputMonthly,
+        currentPhosphorusInputMonthly
+      }
+    });
+>>>>>>> origin/auto/worker-20251116_160001
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
