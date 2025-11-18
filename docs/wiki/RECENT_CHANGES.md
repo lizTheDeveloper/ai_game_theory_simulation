@@ -9,6 +9,7 @@ This file contains the complete history of recent changes to the AI Game Theory 
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## ✅ Recent Changes (November 14, 2025)
 =======
 =======
@@ -43,6 +44,51 @@ This file contains the complete history of recent changes to the AI Game Theory 
 =======
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+## 🔧 Merge Conflict Resolution (November 15, 2025)
+
+**🔧 CRITICAL BLOCKER FIX: Merge Conflict Resolution - Welford's Algorithm + AI Scaling Parameters** (Nov 15, 2025, commit 9e84ca0)
+
+**Summary:** Resolved merge conflicts in PhaseOrchestrator.ts and centralConfig.ts that blocked TypeScript compilation and all Monte Carlo runs.
+
+**Conflicts Resolved:**
+
+1. **PhaseOrchestrator.ts - Performance Tracking Algorithm:**
+   - **Conflict:** HEAD (Nov 15) used Welford's algorithm vs origin (Nov 13) used sliding window
+   - **Decision:** Kept HEAD (Welford's algorithm)
+   - **Rationale:**
+     - **Memory efficiency:** 11KB total (120 bytes × 95 phases) vs 760KB (1000 samples × 95 phases)
+     - **Mathematical superiority:** O(1) memory with exact statistics (mean + variance)
+     - **More recent:** Nov 15 implementation supersedes Nov 13
+   - **Technical:** Welford's incremental algorithm for mean/variance calculation (Knuth TAOCP vol 2, p232)
+
+2. **centralConfig.ts - AI Scaling Parameters:**
+   - **Conflict:** Duplicate parameter documentation with different values
+   - **Decision:** Kept HEAD version (3.6 month doubling, 1.41 growth rate)
+   - **Rationale:** Already verified by super-alignment-researcher with Grade A
+   - **Research backing:**
+     - AI_CAPABILITY_DOUBLING_TIME: 3.6 months (Sevilla & Roldán 2024, Epoch AI 2024)
+     - COMPUTE_GROWTH_RATE: 1.41 = ln(4.1) for 4.1× per year
+     - Verification: `research/ai_scaling_verified_parameters_20251111.md` (Grade A)
+   - **Cleaned up:** Removed 62 lines of duplicate/conflicting documentation
+
+**Validation:**
+- ✅ TypeScript compiles: `npx tsc --noEmit --skipLibCheck`
+- ✅ Monte Carlo N=10 runs successfully: 153.2s, no NaN errors, varied outcomes
+- ✅ All 10 simulations completed without crashes
+
+**Impact:**
+- **Unblocks:** ALL Monte Carlo analysis and simulation development
+- **Fixes:** 49 worker branches blocked by compilation error
+- **Preserves:** Research-backed parameters (no need for re-validation)
+
+**Files Changed:**
+- `src/simulation/engine/PhaseOrchestrator.ts` (5 conflict blocks resolved)
+- `src/simulation/config/centralConfig.ts` (conflict marker cleanup)
+
+---
+
+>>>>>>> origin/auto/worker-20251115_140001
 ## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
 
 **🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
@@ -293,6 +339,7 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - `reviews/architecture_review_20251114_corrections.md` (validation + corrections, 218 lines)
 
 **Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
+<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_130001
 =======
 ## ✅ Recent Changes (November 13, 2025)
@@ -360,6 +407,8 @@ This file contains the complete history of recent changes to the AI Game Theory 
 >>>>>>> origin/auto/worker-20251115_090001
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_140001
 
 ---
 

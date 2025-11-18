@@ -394,6 +394,7 @@ export const RATES = {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/auto/worker-20251115_090001
 =======
@@ -443,6 +444,8 @@ export const RATES = {
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/auto/worker-20251115_140001
    *
    * @research Sevilla & Roldán (2024) - Training compute growth: 4.1× per year (90% CI: 3.7× to 4.6×)
    * @research Epoch AI (2024) - Algorithmic efficiency: 2.5× per year (doubles every 9 months)
@@ -472,11 +475,14 @@ export const RATES = {
    * @verification research/ai_scaling_verified_parameters_20251111.md (Grade A)
    */
   COMPUTE_GROWTH_RATE: 1.41,
+<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_080001
 =======
 >>>>>>> origin/auto/worker-20251115_090001
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_140001
 
   // === TECH RISK RATES ===
   /**
