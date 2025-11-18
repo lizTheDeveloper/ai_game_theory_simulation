@@ -23,46 +23,35 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **SYSTEM HEALTH:**
 - **Research Quality:** A- (4 CRITICAL parameter fixes applied, 0 CRITICAL age issues) ✅ EXCELLENT
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** B+ (CRITICAL-2 complete, 86.7% coverage) ⚠️ DECISION REQUIRED (defensive fallback migration 12% complete - needs architectural resolution)
-- **System Trajectory:** 🟢 STABLE (CRITICAL-2 runtime validation complete, research parameters corrected)
+- **Architecture Health:** B- (2 CRITICAL regressions identified, partial migration at 12% creates split-brain condition) ⚠️ REQUIRES ACTION
+- **System Trajectory:** 🟠 ATTENTION REQUIRED (Defensive fallback migration incomplete, 2 critical regressions need immediate hotfix)
 
 **Recent Major Achievements:**
 
-**Nov 16: Defensive Fallback Migration Analysis - Architectural Decision Required** (commit 36d2862)
-- 🚨 **CRITICAL ARCHITECTURAL DECISION:** Partial migration (12% complete) creates dangerous inconsistency
-- 📊 **Migration Status:** 20/169 violations fixed (CRITICAL + HIGH paths), 149 violations remain (MEDIUM priority)
-- ⚠️ **Architectural Risk:** Same operations behave differently across modules (fail-loudly vs fail-safely)
-- 🎯 **Recommendation:** COMPLETE THE MIGRATION (Option 1)
-  - 24 hours effort over 3 days
-  - Will expose 10-20 hidden bugs (good - research integrity)
-  - Creates architectural consistency
-  - Aligns with fail-loudly philosophy
-- 📋 **Affected Areas:** simulationWorker (14 violations), multiParadigmAggregator (16), dashboard aggregation (30+)
-- ❌ **Rejected Alternatives:** Revert (wastes validated work), Hybrid (permanent inconsistency)
-- 📖 **Analysis:** reviews/defensive_fallback_architecture_analysis_20251116.md (280 lines)
-- 🔄 **Next Steps:** Implementation plan spans 5 phases (critical infrastructure → data pipeline → LLM/gov → dashboard → validation)
-- ✅ **Impact:** Research integrity demands fail-loudly - "hidden bugs aren't technical debt, they're scientific fraud"
-
-**Nov 16: CRITICAL-2 Runtime Validation Complete - Phase Dependency Gap Resolved** (commit 08145a2)
-- ✅ **CRITICAL-2 COMPLETE:** Phase dependency declaration gap fully resolved with runtime validation
-- 📊 **Coverage Achievement:** 72/83 phases (86.7%) have dependencies declared, exceeding 80% target by 8.4%
-- 🔍 **Validation Script:** `scripts/validatePhaseRegistration.ts` (90 lines)
-  - Checks all phase dependencies are registered and valid
-  - Validates dependency order constraints (deps must execute before dependent phases)
-  - Reports coverage statistics and total dependency declarations (116)
-- 🎯 **Monte Carlo Validation:** N=3 runs × 12 months
-  - 0 phase dependency violations, 0 NaN errors
-  - 25,067 log lines analyzed
-  - All runs successful (1.3s, 1.0s, 1.0s average execution time)
-- 💡 **Key Finding:** Issue was already fixed on Nov 15 (commit fe7878900), validation confirms correctness
-- 📖 **Documentation:** devlogs/roy_critical2_already_fixed_20251116.md, plans/completed/critical2_phase_dependency_complete_20251116.md
-- ✅ **Impact:** Research reproducibility verified, Monte Carlo runs are deterministic and valid
+**Nov 16: Defensive Fallback Migration - Comprehensive Architecture Review** (commit 73656d9)
+- 🚨 **CRITICAL FINDING:** Partial migration (12% complete) created dangerous split-brain condition
+- ❌ **2 REGRESSIONS IDENTIFIED:** Previously fixed code reverted
+  - `dystopiaProgression.ts` lines 285, 289: QoL assertions reverted to `?? 1.0` fallbacks
+  - `aiSuffering.ts` lines 188, 225, 415: AI suffering metrics silently defaulting to 0
+- 📊 **Migration Status:** 20/169 violations fixed (12%), 149 remain (88% incomplete)
+- 🎯 **Recommendation:** COMPLETE the migration (Option A) - 2-3 day effort
+  - Performance impact: ~2% overhead (negligible for research simulation)
+  - Risk: Inconsistent error handling worse than either pure approach
+  - Benefit: Prevents silent bugs in research calculations (Oct 2025 ecology NaN was masked for months)
+- 📁 **Implementation Roadmap:**
+  - Phase 1: Critical hotfixes (TODAY - dystopia + AI suffering regressions)
+  - Phase 2: High priority calculations (Day 1 - tech tree, research growth, QoL metrics)
+  - Phase 3: Medium priority state access (Day 2 - simulation worker, government actions)
+  - Phase 4: Cleanup & documentation (Day 3 - Monte Carlo validation N=100)
+- 📖 **Review:** reviews/defensive_fallback_architecture_review_20251116.md (314 lines)
+- ⚠️ **Status:** REQUIRES IMMEDIATE ACTION - 2 critical regressions need hotfix
+- 🔄 **Next:** Roy (simulation-maintainer) for Phase 1 hotfixes
 
 **Nov 15: Architecture Review + Research Audit Complete** (commit 7689081)
-- 📊 **Architecture Review:** Grade B- (stable with localized issues) → **B+ after CRITICAL-2 resolution**
-  - 2 CRITICAL: ~~Phase dependency gaps~~ ✅ RESOLVED (86.7% coverage, Nov 16), CoordinatedDeploymentPhase integration risk
-  - 3 HIGH: ~~Defensive fallback migration~~ ⚠️ NOW CRITICAL (12% complete, architectural inconsistency), O(n²) patterns, memory instrumentation
-  - ✅ **Mitigation:** 24 integration tests added (776 lines), phase dependency validation script created
+- 📊 **Architecture Review:** Grade B- (stable with localized issues)
+  - 2 CRITICAL: Phase dependency gaps (9/97 phases), CoordinatedDeploymentPhase integration risk
+  - 3 HIGH: Defensive fallback migration, O(n²) patterns, memory instrumentation
+  - ✅ **Mitigation:** 24 integration tests added (776 lines), 2 phases fixed with explicit dependencies
 - 🔬 **Research Audit:** Grade A- (425 files analyzed, 59% current <3yr)
   - 4 CRITICAL parameter fixes applied:
     - Heat adaptation: 0.80 → 0.45 (Ballester 2024, eliminates 82% mortality underestimate)
@@ -184,27 +173,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **HIGH-2 Resolved:** Deep cloning performance (50-66% faster)
 - 🎯 **Validation:** Monte Carlo N=10, 240 months - ALL PASSED
 - 📖 **Review Document:** reviews/architecture_integration_review_20251115.md
-
-**Nov 16: Phase Dependency Runtime Validation - CRITICAL-2 COMPLETE** (commit 08145a2)
-- ✅ **CRITICAL-2 RUNTIME VALIDATION COMPLETE:** Verified phase dependency fixes work correctly in Monte Carlo runs
-- 🔍 **Validation Infrastructure:**
-  - New validation script: `scripts/validatePhaseRegistration.ts` (90 lines)
-  - Checks all phase dependencies are registered and valid
-  - Reports coverage statistics (86.7% phases have dependencies)
-  - Validates dependency order constraints (deps must have lower order numbers)
-- 📊 **Coverage Achievement:**
-  - Current: 72/83 phases (86.7% have dependencies declared)
-  - Target: 80%+ ✅ ACHIEVED (exceeded by 8.4%)
-  - Total dependency declarations: 116
-- 🎯 **Monte Carlo Validation:** N=3 runs × 12 months
-  - 0 phase dependency violations
-  - 0 NaN errors
-  - 25,067 log lines analyzed
-  - All runs successful (1.3s, 1.0s, 1.0s)
-- 📖 **Documentation:**
-  - Devlog: devlogs/roy_critical2_already_fixed_20251116.md
-  - Archive: plans/completed/critical2_phase_dependency_complete_20251116.md
-- 💡 **Key Finding:** Issue was already fixed on Nov 15 (commit fe7878900), validation confirms it works
 
 **Nov 15: Phase Dependency Validation Fixes - CRITICAL-2 Resolution** (commit fe78789)
 - 🔧 **CRITICAL-2 RESOLVED:** Fixed 3 dependency bugs caught by existing validation infrastructure
