@@ -1,13 +1,8 @@
 {
   "source": "vdem",
   "version": "14.1",
-<<<<<<< HEAD
-  "updateDate": "2025-11-18T04:39:03.248Z",
-  "expiryDate": "2025-12-18T04:39:03.248Z",
-=======
-  "updateDate": "2025-11-18T07:52:12.497Z",
-  "expiryDate": "2025-12-18T07:52:12.497Z",
->>>>>>> origin/claude/merge-remote-branches-01RyPg6X8etfwp46DznAhtBk
+  "updateDate": "2025-11-18T16:45:11.000Z",
+  "expiryDate": "2025-12-18T16:45:11.000Z",
   "recordCount": 33,
   "coverage": {
     "countries": 33,
