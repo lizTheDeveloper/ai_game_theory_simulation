@@ -39,9 +39,269 @@ import {
   assertFinite,
   assertProbability,
   assertInRange,
-  assertDefined
+  assertDefined,
+  assertEconomicMetric
 } from '@/simulation/utils/assertions';
 import { getGDPProxy } from '@/simulation/utils/recoveryCalculations';
+
+/**
+ * Validation Boundaries for Scenario Overrides (Nov 14, 2025)
+ *
+ * Scenarios test "what if" governance strategies, but must respect physical/economic constraints.
+ * These bounds prevent impossible states while preserving scenario flexibility.
+ *
+ * **PHILOSOPHY:**
+ * - Physically impossible values → FAIL LOUDLY (❌)
+ * - Unrealistic but possible values → WARN (⚠️)
+ * - Realistic values → Silent success
+ *
+ * **RESEARCH BOUNDS:**
+ * - Research investment: Max 50% of GDP/year (extremely generous)
+ *   - Historical: US ~3% GDP on R&D (NSF 2024)
+ *   - Wartime: Manhattan Project ~0.4% GDP
+ * - Climate spending: Max 10% GDP/month (crisis-level mobilization)
+ *   - Historical: US WWII spending ~40% GDP/year (~3.3%/month)
+ *   - Green New Deal proposals: 2-5% GDP/year
+ * - Redistribution: Max 50% GDP/year (revolutionary)
+ *   - Nordic countries: ~30% GDP on social spending
+ *   - UBI proposals: ~10-20% GDP
+ * - AI safety: Max $100B/month (no economic precedent, but physically possible)
+ * - Government resources: Max 1 year of accumulation (prevents infinite pools)
+ *
+ * @see docs/wiki/README.md - Scenario testing system
+ */
+const SCENARIO_VALIDATION = {
+  // Research investment (billions/month)
+  researchInvestment: {
+    // Maximum: 50% of annual GDP, converted to monthly
+    // Example: Global GDP ~114T (2025) → max 114T * 0.5 / 12 = ~4.75T/month
+    maxFractionOfAnnualGDP: 0.5,
+    warnThreshold: 0.1, // Warn if >10% GDP/year (~0.83%/month)
+  },
+  // Climate spending (% of GDP)
+  climateSpending: {
+    maxFraction: 0.10, // 10% GDP/month (crisis mobilization)
+    warnThreshold: 0.05, // Warn if >5% GDP/month
+  },
+  // Redistribution (% of GDP)
+  redistributionRate: {
+    maxFraction: 0.50 / 12, // 50% GDP/year → monthly
+    warnThreshold: 0.30 / 12, // 30% GDP/year → monthly
+  },
+  // AI safety budget (billions/month)
+  aiSafetyBudget: {
+    maxAbsolute: 100, // $100B/month (no precedent, but physically possible)
+    warnThreshold: 10, // Warn if >$10B/month
+  },
+  // Government resources accumulation (months)
+  resourcesMaxAccumulation: 12, // Max 1 year of climate spending accumulation
+};
+
+/**
+ * Validate Scenario Override Values (Nov 14, 2025)
+ *
+ * Ensures scenario overrides respect physical/economic constraints.
+ * Returns validated value or throws if physically impossible.
+ *
+ * **THREE VALIDATION LEVELS:**
+ * 1. **Finite check:** All values must be finite (not NaN/Infinity)
+ * 2. **Physical impossibility:** Fail loudly (❌) - values that violate hard constraints
+ * 3. **Unrealistic warning:** Log warning (⚠️) - values that are possible but extreme
+ *
+ * @param priorities - Scenario government priorities to validate
+ * @param state - Current game state (for GDP-based bounds)
+ * @returns Warnings array (for logging)
+ * @throws Error if values are physically impossible
+ */
+function validateScenarioOverrides(
+  priorities: ScenarioGovernmentPriorities,
+  state: GameState
+): string[] {
+  const warnings: string[] = [];
+  const gdp = assertFinite(getGDPProxy(state), {
+    location: 'validateScenarioOverrides',
+    valueName: 'gdp',
+    month: state.currentMonth
+  });
+
+  // === RESEARCH INVESTMENT VALIDATION ===
+  if (priorities.researchInvestment !== undefined) {
+    const value = priorities.researchInvestment;
+
+    // Finite check (fail if NaN/Infinity)
+    assertFinite(value, {
+      location: 'validateScenarioOverrides',
+      valueName: 'researchInvestment',
+      month: state.currentMonth
+    });
+
+    // Non-negative check (fail if negative)
+    if (value < 0) {
+      throw new Error(`❌ researchInvestment must be non-negative: ${value}`);
+    }
+
+    // Physical impossibility: Max 50% of annual GDP (monthly)
+    const maxResearchBudget = (gdp * SCENARIO_VALIDATION.researchInvestment.maxFractionOfAnnualGDP) / 12;
+    if (value > maxResearchBudget) {
+      throw new Error(
+        `❌ SCENARIO OVERRIDE PHYSICALLY IMPOSSIBLE: researchInvestment\n` +
+        `   Value: $${value.toFixed(1)}B/month\n` +
+        `   Maximum: $${maxResearchBudget.toFixed(1)}B/month (50% of annual GDP)\n` +
+        `   GDP: $${gdp.toFixed(1)}T/year\n` +
+        `   Month: ${state.currentMonth}\n` +
+        `\n` +
+        `   This exceeds physically plausible research spending.\n` +
+        `   Historical context:\n` +
+        `   - US R&D: ~3% GDP (~$750B/year = $62.5B/month)\n` +
+        `   - Manhattan Project: ~0.4% GDP (~$2B in 1945 = ~$30B today)\n` +
+        `\n` +
+        `   Reduce scenario researchInvestment to ≤${maxResearchBudget.toFixed(1)}B/month.`
+      );
+    }
+
+    // Unrealistic warning: >10% GDP/year
+    const warnThreshold = (gdp * SCENARIO_VALIDATION.researchInvestment.warnThreshold) / 12;
+    if (value > warnThreshold) {
+      warnings.push(
+        `⚠️  Research investment: $${value.toFixed(1)}B/month (${((value * 12 / gdp) * 100).toFixed(1)}% GDP/year) - EXTREMELY HIGH (historical: 1-3% GDP)`
+      );
+    }
+  }
+
+  // === CLIMATE SPENDING VALIDATION ===
+  if (priorities.climateSpending !== undefined) {
+    const value = priorities.climateSpending;
+
+    // Probability check (fail if outside [0, 1])
+    assertProbability(value, {
+      location: 'validateScenarioOverrides',
+      valueName: 'climateSpending',
+      month: state.currentMonth
+    });
+
+    // Physical impossibility: Max 10% GDP/month
+    if (value > SCENARIO_VALIDATION.climateSpending.maxFraction) {
+      throw new Error(
+        `❌ SCENARIO OVERRIDE PHYSICALLY IMPOSSIBLE: climateSpending\n` +
+        `   Value: ${(value * 100).toFixed(1)}% GDP/month\n` +
+        `   Maximum: ${(SCENARIO_VALIDATION.climateSpending.maxFraction * 100).toFixed(1)}% GDP/month\n` +
+        `   Month: ${state.currentMonth}\n` +
+        `\n` +
+        `   This exceeds crisis-level mobilization spending.\n` +
+        `   Historical context:\n` +
+        `   - US WWII: ~40% GDP/year (~3.3% GDP/month)\n` +
+        `   - Green New Deal: 2-5% GDP/year\n` +
+        `\n` +
+        `   Reduce scenario climateSpending to ≤${(SCENARIO_VALIDATION.climateSpending.maxFraction * 100).toFixed(1)}%.`
+      );
+    }
+
+    // Unrealistic warning: >5% GDP/month
+    if (value > SCENARIO_VALIDATION.climateSpending.warnThreshold) {
+      warnings.push(
+        `⚠️  Climate spending: ${(value * 100).toFixed(1)}% GDP/month - CRISIS MOBILIZATION LEVEL (WWII: ~3.3% GDP/month)`
+      );
+    }
+  }
+
+  // === REDISTRIBUTION RATE VALIDATION ===
+  if (priorities.redistributionRate !== undefined) {
+    const value = priorities.redistributionRate;
+
+    // Probability check (fail if outside [0, 1])
+    assertProbability(value, {
+      location: 'validateScenarioOverrides',
+      valueName: 'redistributionRate',
+      month: state.currentMonth
+    });
+
+    // Physical impossibility: Max 50% GDP/year (monthly)
+    if (value > SCENARIO_VALIDATION.redistributionRate.maxFraction) {
+      throw new Error(
+        `❌ SCENARIO OVERRIDE PHYSICALLY IMPOSSIBLE: redistributionRate\n` +
+        `   Value: ${(value * 100).toFixed(1)}% GDP/month (${(value * 12 * 100).toFixed(1)}% GDP/year)\n` +
+        `   Maximum: ${(SCENARIO_VALIDATION.redistributionRate.maxFraction * 12 * 100).toFixed(1)}% GDP/year\n` +
+        `   Month: ${state.currentMonth}\n` +
+        `\n` +
+        `   This exceeds revolutionary redistribution levels.\n` +
+        `   Historical context:\n` +
+        `   - Nordic countries: ~30% GDP on social spending\n` +
+        `   - UBI proposals: 10-20% GDP\n` +
+        `\n` +
+        `   Reduce scenario redistributionRate to ≤${(SCENARIO_VALIDATION.redistributionRate.maxFraction * 100).toFixed(2)}% (monthly).`
+      );
+    }
+
+    // Unrealistic warning: >30% GDP/year
+    if (value > SCENARIO_VALIDATION.redistributionRate.warnThreshold) {
+      warnings.push(
+        `⚠️  Redistribution: ${(value * 12 * 100).toFixed(1)}% GDP/year - REVOLUTIONARY LEVEL (Nordic: ~30% GDP)`
+      );
+    }
+  }
+
+  // === AI SAFETY BUDGET VALIDATION ===
+  if (priorities.aiSafetyBudget !== undefined) {
+    const value = priorities.aiSafetyBudget;
+
+    // Finite check (fail if NaN/Infinity)
+    assertFinite(value, {
+      location: 'validateScenarioOverrides',
+      valueName: 'aiSafetyBudget',
+      month: state.currentMonth
+    });
+
+    // Non-negative check (fail if negative)
+    if (value < 0) {
+      throw new Error(`❌ aiSafetyBudget must be non-negative: ${value}`);
+    }
+
+    // Physical impossibility: Max $100B/month
+    if (value > SCENARIO_VALIDATION.aiSafetyBudget.maxAbsolute) {
+      throw new Error(
+        `❌ SCENARIO OVERRIDE PHYSICALLY IMPOSSIBLE: aiSafetyBudget\n` +
+        `   Value: $${value.toFixed(1)}B/month\n` +
+        `   Maximum: $${SCENARIO_VALIDATION.aiSafetyBudget.maxAbsolute}B/month\n` +
+        `   Month: ${state.currentMonth}\n` +
+        `\n` +
+        `   This exceeds any plausible AI safety investment.\n` +
+        `   For context:\n` +
+        `   - Total AI industry revenue 2024: ~$200B/year\n` +
+        `   - Manhattan Project (inflation-adjusted): ~$30B total\n` +
+        `\n` +
+        `   Reduce scenario aiSafetyBudget to ≤${SCENARIO_VALIDATION.aiSafetyBudget.maxAbsolute}B/month.`
+      );
+    }
+
+    // Unrealistic warning: >$10B/month
+    if (value > SCENARIO_VALIDATION.aiSafetyBudget.warnThreshold) {
+      warnings.push(
+        `⚠️  AI safety budget: $${value.toFixed(1)}B/month - UNPRECEDENTED (no historical precedent)`
+      );
+    }
+  }
+
+  // === DEMOCRACY LEVEL VALIDATION ===
+  if (priorities.democracyLevel !== undefined) {
+    // Probability check (fail if outside [0, 1])
+    assertProbability(priorities.democracyLevel, {
+      location: 'validateScenarioOverrides',
+      valueName: 'democracyLevel',
+      month: state.currentMonth
+    });
+    // No additional bounds needed - [0, 1] is the physical constraint
+  }
+
+  // === GOVERNMENT TYPE VALIDATION ===
+  if (priorities.governmentType !== undefined) {
+    const validTypes = ['democratic', 'authoritarian', 'mixed', 'technocratic'] as const;
+    if (!validTypes.includes(priorities.governmentType)) {
+      throw new Error(`❌ Invalid governmentType: ${priorities.governmentType}`);
+    }
+  }
+
+  return warnings;
+}
 
 export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
   readonly id = 'apply-scenario-priorities';
@@ -61,6 +321,12 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     }
 
     const priorities = state.scenario.governmentPriorities;
+
+    // === VALIDATION (Nov 14, 2025) ===
+    // Validate all overrides BEFORE applying any mutations
+    // This prevents partial application if validation fails mid-way
+    const warnings = validateScenarioOverrides(priorities, state);
+
     const overridesApplied: string[] = [];
 
     // === FIELD MAPPINGS (Phase 1.3 complete) ===
@@ -72,14 +338,8 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     // governmentType → government.governmentType
 
     if (priorities.researchInvestment !== undefined) {
-      const value = assertFinite(priorities.researchInvestment, {
-        location: 'ApplyScenarioPrioritiesPhase',
-        valueName: 'researchInvestment',
-        month: state.currentMonth
-      });
-      if (value < 0) {
-        throw new Error(`❌ researchInvestment must be non-negative: ${value}`);
-      }
+      // NOTE: Validation already performed by validateScenarioOverrides()
+      const value = priorities.researchInvestment;
 
       // Map to government research budget (billions/month)
       // This field is used by government agent to allocate research across domains
@@ -91,11 +351,8 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     }
 
     if (priorities.climateSpending !== undefined) {
-      const value = assertProbability(priorities.climateSpending, {
-        location: 'ApplyScenarioPrioritiesPhase',
-        valueName: 'climateSpending',
-        month: state.currentMonth
-      });
+      // NOTE: Validation already performed by validateScenarioOverrides()
+      const value = priorities.climateSpending;
 
       // Convert % of GDP to absolute value (billions/month)
       // GDP is annual, so divide by 12 to get monthly
@@ -112,7 +369,29 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       if (state.government.resources === undefined) {
         state.government.resources = 0;
       }
-      state.government.resources += monthlyClimateSpending;
+
+      // === RESOURCE ACCUMULATION CAP (Nov 14, 2025) ===
+      // Prevent infinite resource accumulation (resources represent spendable pools, not GDP)
+      // Cap at 1 year of climate spending accumulation (prevents unrealistic stockpiling)
+      const maxResources = monthlyClimateSpending * SCENARIO_VALIDATION.resourcesMaxAccumulation;
+      const newResources = state.government.resources + monthlyClimateSpending;
+
+      if (newResources > maxResources) {
+        // Cap reached - log warning and cap value
+        if (state.currentMonth % 12 === 0) {
+          // Log annually to avoid spam
+          console.log(
+            `\n⚠️  RESOURCE ACCUMULATION CAP REACHED (Month ${state.currentMonth})\n` +
+            `   Current: $${state.government.resources.toFixed(1)}B\n` +
+            `   Monthly spending: $${monthlyClimateSpending.toFixed(1)}B\n` +
+            `   Cap: $${maxResources.toFixed(1)}B (${SCENARIO_VALIDATION.resourcesMaxAccumulation} months accumulation)\n` +
+            `   Capping resources to prevent infinite accumulation.`
+          );
+        }
+        state.government.resources = maxResources;
+      } else {
+        state.government.resources = newResources;
+      }
 
       // FIX (Nov 11, 2025): ALSO update state.config.climatePriority.weights
       // This is what selectGovernmentAction actually reads when choosing actions
@@ -159,11 +438,8 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     }
 
     if (priorities.redistributionRate !== undefined) {
-      const value = assertProbability(priorities.redistributionRate, {
-        location: 'ApplyScenarioPrioritiesPhase',
-        valueName: 'redistributionRate',
-        month: state.currentMonth
-      });
+      // NOTE: Validation already performed by validateScenarioOverrides()
+      const value = priorities.redistributionRate;
 
       // Convert % of GDP to absolute value (billions/month)
       const gdp = assertFinite(getGDPProxy(state), {
@@ -197,14 +473,8 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     }
 
     if (priorities.aiSafetyBudget !== undefined) {
-      const value = assertFinite(priorities.aiSafetyBudget, {
-        location: 'ApplyScenarioPrioritiesPhase',
-        valueName: 'aiSafetyBudget',
-        month: state.currentMonth
-      });
-      if (value < 0) {
-        throw new Error(`❌ aiSafetyBudget must be non-negative: ${value}`);
-      }
+      // NOTE: Validation already performed by validateScenarioOverrides()
+      const value = priorities.aiSafetyBudget;
 
       // Map to government alignment research investment
       // This field is [0,10] investment level, not absolute dollars
@@ -216,11 +486,8 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     }
 
     if (priorities.democracyLevel !== undefined) {
-      const value = assertProbability(priorities.democracyLevel, {
-        location: 'ApplyScenarioPrioritiesPhase',
-        valueName: 'democracyLevel',
-        month: state.currentMonth
-      });
+      // NOTE: Validation already performed by validateScenarioOverrides()
+      const value = priorities.democracyLevel;
 
       // Map to government governance quality metrics
       // Set all democracy-related fields to match target level
@@ -244,10 +511,7 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     }
 
     if (priorities.governmentType !== undefined) {
-      const validTypes = ['democratic', 'authoritarian', 'mixed', 'technocratic'] as const;
-      if (!validTypes.includes(priorities.governmentType)) {
-        throw new Error(`❌ Invalid governmentType: ${priorities.governmentType}`);
-      }
+      // NOTE: Validation already performed by validateScenarioOverrides()
 
       // Map scenario governmentType to GameState governmentType
       // 'mixed' in scenario → 'technocratic' in GameState (closest match)
@@ -273,6 +537,14 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       console.log(`   Overrides applied:`);
       for (const override of overridesApplied) {
         console.log(`     - ${override}`);
+      }
+
+      // Log validation warnings (if any)
+      if (warnings.length > 0) {
+        console.log(`\n   Validation warnings:`);
+        for (const warning of warnings) {
+          console.log(`     ${warning}`);
+        }
       }
     }
 

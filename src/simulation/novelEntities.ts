@@ -216,7 +216,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
   
   ne.reproductiveHealthDecline = Math.min(1.0, ne.reproductiveHealthDecline + reproductiveDeclineRate);
   
-  // Reproductive crisis
+  // Reproductive crisis - TRIGGER (one-time announcement)
   if (ne.reproductiveHealthDecline > 0.50 && !ne.reproductiveCrisisActive) {
     ne.reproductiveCrisisActive = true;
     console.log(`🚨 REPRODUCTIVE CRISIS: Widespread fertility decline`);
@@ -224,19 +224,24 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     console.log(`   Endocrine disruption: ${(ne.endocrineDisruption * 100).toFixed(0)}%`);
     console.log(`   PFAS prevalence: ${(ne.pfasPrevalence * 100).toFixed(0)}%`);
 
-    // Health impact
+    // Health impact (one-time QoL hit when crisis announced)
     const currentHealth1 = assertStateProperty(
       state.qualityOfLifeSystems,
       'health',
       { location: 'updateNovelEntitiesSystem[reproductive crisis]', month: state.currentMonth }
     );
     state.qualityOfLifeSystems.health = Math.max(0.3, currentHealth1 - 0.08);
+  }
 
+  // Reproductive crisis - ONGOING MORTALITY (every month while active)
+  if (ne.reproductiveCrisisActive) {
     // Population impact: Reproductive crisis causes despair, failed fertility treatments (0.05-0.1% casualties)
     // TRULY GLOBAL: PFAS in 99% of human blood = everyone exposed (100% of world)
     // 0.08% mortality rate from despair/failed fertility treatments
     const pop = state.humanPopulationSystem as any;
-    const risk1 = {
+    console.log(`💀 Novel Entities: Adding reproductive crisis mortality risk (baseRisk=0.0008)`);
+    addMortalityRisk(pop, {
+
       type: 'pollution',
       baseRisk: 0.0008,
       proximate: 'pollution',
@@ -245,11 +250,8 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       description: 'Reproductive crisis - despair/failed treatments (global exposure)',
       month: state.currentMonth,
       exposedFraction: 1.00
-    };
-    console.log(`💀 NOVEL ENTITIES: Adding mortality risk`);
-    console.log(`   Type: ${risk1.type}, BaseRisk: ${risk1.baseRisk}`);
-    console.log(`   Description: ${risk1.description}`);
-    addMortalityRisk(pop, risk1);
+    });
+    console.log(`  Risks now: ${pop.mortalityRisks?.length || 0}`)
   }
   
   // === BIOACCUMULATION ===
@@ -262,25 +264,30 @@ export function updateNovelEntitiesSystem(state: GameState): void {
   );
   ne.bioaccumulationFactor = ne.syntheticChemicalLoad * (0.5 + biodiversity * 0.5);
   
-  // Bioaccumulation collapse (apex predators failing)
+  // Bioaccumulation collapse - TRIGGER (one-time announcement)
   if (ne.bioaccumulationFactor > 0.60 && !ne.bioaccumulationCollapseActive) {
     ne.bioaccumulationCollapseActive = true;
     console.log(`🚨 BIOACCUMULATION COLLAPSE: Apex predators poisoned`);
     console.log(`   Bioaccumulation factor: ${(ne.bioaccumulationFactor * 100).toFixed(0)}%`);
     console.log(`   Chemical load: ${(ne.syntheticChemicalLoad * 100).toFixed(0)}%`);
 
-    // Biodiversity impact (top-down cascade)
+    // Biodiversity impact (one-time top-down cascade when collapse announced)
     if (state.environmentalAccumulation) {
       state.environmentalAccumulation.biodiversityIndex = Math.max(0,
         state.environmentalAccumulation.biodiversityIndex - 0.08 // -8% instant hit
       );
     }
+  }
 
+  // Bioaccumulation collapse - ONGOING MORTALITY (every month while active)
+  if (ne.bioaccumulationCollapseActive) {
     // Population impact: Food chain collapse causes contaminated food deaths (0.1-0.2% casualties)
     // TRULY GLOBAL: Food chain is globally interconnected (100% of world affected)
     // 0.15% mortality rate from contaminated food poisoning
     const pop = state.humanPopulationSystem as any;
-    const risk2 = {
+    console.log(`💀 Novel Entities: Adding bioaccumulation collapse mortality risk (baseRisk=0.0015)`);
+    addMortalityRisk(pop, {
+
       type: 'pollution',
       baseRisk: 0.0015,
       proximate: 'pollution',
@@ -289,11 +296,8 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       description: 'Bioaccumulation collapse - contaminated food chain (global)',
       month: state.currentMonth,
       exposedFraction: 1.00
-    };
-    console.log(`💀 NOVEL ENTITIES: Adding mortality risk`);
-    console.log(`   Type: ${risk2.type}, BaseRisk: ${risk2.baseRisk}`);
-    console.log(`   Description: ${risk2.description}`);
-    addMortalityRisk(pop, risk2);
+    });
+    console.log(`  Risks now: ${pop.mortalityRisks?.length || 0}`)
   }
   
   // === CHRONIC DISEASE EPIDEMIC ===
@@ -305,7 +309,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
   ne.chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (ne.endocrineDisruption * 0.2);
   ne.chronicDiseasePrevalence = Math.min(0.80, ne.chronicDiseasePrevalence);
   
-  // Chronic disease epidemic
+  // Chronic disease epidemic - TRIGGER (one-time announcement)
   if (ne.chronicDiseasePrevalence > 0.40 && !ne.chronicDiseaseEpidemicActive) {
     ne.chronicDiseaseEpidemicActive = true;
     console.log(`🚨 CHRONIC DISEASE EPIDEMIC: Widespread health crisis`);
@@ -313,7 +317,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     console.log(`   Exposure years: ${exposureYears.toFixed(0)}`);
     console.log(`   Chemical load: ${(ne.syntheticChemicalLoad * 100).toFixed(0)}%`);
 
-    // Health QoL impact
+    // Health QoL impact (one-time hit when epidemic announced)
     const healthImpact = (ne.chronicDiseasePrevalence - 0.40) * 0.3; // Up to 12% impact
     const currentHealth2 = assertStateProperty(
       state.qualityOfLifeSystems,
@@ -321,12 +325,17 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       { location: 'updateNovelEntitiesSystem[chronic disease epidemic]', month: state.currentMonth }
     );
     state.qualityOfLifeSystems.health = Math.max(0.2, currentHealth2 - healthImpact);
+  }
 
+  // Chronic disease epidemic - ONGOING MORTALITY (every month while active)
+  if (ne.chronicDiseaseEpidemicActive) {
     // Population impact: Chronic disease epidemic causes cancer/autoimmune deaths (0.3-0.5% casualties)
     // TRULY GLOBAL: Chemical exposure is global (100% of world affected)
     // 0.4% mortality rate from cancer/autoimmune surge
     const pop = state.humanPopulationSystem as any;
-    const risk3 = {
+    console.log(`💀 Novel Entities: Adding chronic disease epidemic mortality risk (baseRisk=0.004)`);
+    addMortalityRisk(pop, {
+
       type: 'pollution',
       baseRisk: 0.004,
       proximate: 'pollution',
@@ -335,11 +344,8 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       description: 'Chronic disease epidemic - cancer/autoimmune surge (global exposure)',
       month: state.currentMonth,
       exposedFraction: 1.00
-    };
-    console.log(`💀 NOVEL ENTITIES: Adding mortality risk`);
-    console.log(`   Type: ${risk3.type}, BaseRisk: ${risk3.baseRisk}`);
-    console.log(`   Description: ${risk3.description}`);
-    addMortalityRisk(pop, risk3);
+    });
+    console.log(`  Risks now: ${pop.mortalityRisks?.length || 0}`)
   }
   
   // === ONGOING HEALTH IMPACTS ===

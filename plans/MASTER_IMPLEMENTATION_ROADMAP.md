@@ -1,20 +1,20 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 14, 2025 (Updated: CRITICAL Issues Resolved)
+**Date:** November 13, 2025 (Updated: End of Autonomous Session - Afternoon)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 14, 2025 - Early Morning)
+**Current Status:** 🟢 **STABLE** (Nov 14, 2025 - Afternoon)
 - **Research Quality:** A (peer-reviewed foundation, comprehensive citations)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, defensive cleanup complete)
-- **Architecture Health:** 8.5/10 (**UPGRADED** - Both CRITICAL issues resolved)
-  - ✅ **CRITICAL-1 RESOLVED:** Bifurcation determinism guards added, regression test created
-  - ✅ **CRITICAL-2 RESOLVED:** False positive - test script bugs fixed, novel entities working correctly
-  - **HIGH:** Memory leak, no parallelization, scenario validation gaps (non-blocking)
-- **System Trajectory:** ✅ STABLE - Architecture stress relieved, ready for new features
-- **Recent Fixes:** CRITICAL-1 (defensive guards), CRITICAL-2 (test infrastructure), wiki updated
-- **Monte Carlo:** N=3 validation passed, zero errors, determinism confirmed
+- **Architecture Health:** 8.5/10 → **UPGRADED** (All CRITICAL issues resolved, 3 HIGH priority concerns remain)
+  - **CRITICAL-1:** ✅ Bifurcation race condition RESOLVED (phase dependencies + validation)
+  - **CRITICAL-2:** ✅ Novel entities mortality propagation RESOLVED (Nov 14, 2025)
+  - **HIGH:** Memory leak RESOLVED, parallelization + scenario validation pending
+- **System Trajectory:** ✅ HEALTHY - Ready for new feature development
+- **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
+- **Action Required:** None (all critical issues resolved, HIGH priority items can wait)
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -51,48 +51,6 @@
   - Starting trust/inequality matter MORE than policy priorities
 - **Archive:** `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
 - **Commits:** ff22268 - "fix: Scenario Phase 3 critical fixes (CRITICAL-1, HIGH-3)", a140fb07b - "fix: Scenario parameter divergence (sequenced deployment)"
-
-**Recent Completions (Nov 14, 2025):**
-
-- ✅ **CRITICAL-1: BIFURCATION DETERMINISM GUARDS** (Nov 14, 2025 - 2h actual vs 2-3d estimated)
- - **Issue:** Architecture review flagged potential race condition in bifurcation metrics (moving average update)
- - **Investigation:** Pattern was FRAGILE but no actual race existed - BifurcationLogicPhase is single writer
- - **Fix Applied (Defensive):**
-   - Added explicit documentation: Single-writer invariant documented in code
-   - Added phase dependencies: All readers declare `dependencies = ['bifurcation-logic']`
-   - Added regression test: `tests/integration/regressions/critical-1-bifurcation-validation.test.ts`
- - **Test Coverage:**
-   - Single-phase determinism (same seed → identical metrics)
-   - Multiple executions consistency (10 runs → identical)
-   - Multi-step accumulation (10 steps → identical convergence)
-   - RNG consumption consistency
-   - Weighted average stability (0.95/0.05 converges identically)
- - **Validation:** Monte Carlo N=10, 120 months - All passed, peak amplification 8.25-17.47× (expected range)
- - **Status:** ✅ RESOLVED - Defensive guards prevent future violations, determinism verified
- - **Devlog:** `/devlogs/critical-1-bifurcation-race-condition-fix-20251114.md`
-
-- ✅ **CRITICAL-2: NOVEL ENTITIES MORTALITY PROPAGATION** (Nov 14, 2025 - FALSE POSITIVE)
- - **Issue:** Architecture review flagged novel entities crises not causing mortality
- - **Investigation:**
-   - **Root Cause 1 (Test bug):** Population displayed as 0.000B due to unit mismatch (double `/1e9` conversion)
-   - **Root Cause 2 (Test bug):** Mortality showed 0% due to timing error (captured initialPop AFTER `engine.run()`)
- - **Findings (Simulation WORKING CORRECTLY):**
-   - Reproductive crisis DOES trigger
-   - Mortality risks ARE added with correct type='pollution'
-   - Demographics DO have 'pollution' vulnerability
-   - Deaths DO occur: 3,994M (49% mortality over 120 months)
-   - Stabilizers work correctly (44-80% reduction, reasonable range)
- - **Fixes Applied (Test Script):**
-   - Capture initial population BEFORE `engine.run()` (line 50)
-   - Remove double unit conversion (population already in billions)
-   - Add diagnostic logging for future debugging
- - **Validation:**
-   - Test now shows: Initial 8.136B → Final 4.142B = 49% mortality
-   - Monte Carlo N=3 passed, zero errors, determinism confirmed
- - **Key Learning:** Test infrastructure bugs can masquerade as simulation bugs
- - **Status:** ✅ RESOLVED - Simulation was working all along, test script fixed
- - **Devlog:** `/devlogs/critical-2-novel-entities-investigation-20251114.md`
- - **Commits:** 284d14d8b - "fix(critical-2): Novel entities mortality test script bugs"
 
 **Recent Completions (Nov 12, 2025):**
 
@@ -1694,42 +1652,57 @@ Then proceed with phase consolidation implementation.
 
 ### From Architecture Review (November 13, 2025) - architecture-skeptic
 
-**🔴 CRITICAL-1: Bifurcation Race Condition Breaks Monte Carlo Determinism**
+**✅ CRITICAL-1: Bifurcation Race Condition Breaks Monte Carlo Determinism** [COMPLETE - Nov 14, 2025]
 - **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:305`
 - **Problem:** Weighted average calculation (0.95/0.05 split) depends on phase execution order - non-deterministic
 - **Impact:** Research results unreproducible, Monte Carlo analysis invalid
-- **Root Cause:** Moving average without proper synchronization or phase dependency enforcement
-- **Recommendation:**
-  1. Add explicit phase dependency declarations for all phases reading bifurcation state
-  2. Consider accumulating changes and applying at end of step
-  3. Add determinism tests verifying identical results with different phase orders
-- **Estimated Effort:** MEDIUM (2-3 days)
-- **Status:** 🔴 CRITICAL - Fix before ANY new features
+- **Solution Implemented:**
+  1. ✅ Added explicit phase dependencies on `bifurcation-logic` phase (Nov 14, 2025)
+     - StochasticInnovationPhase (line 201)
+     - ClimateSystemPhase (line 81)
+     - ExogenousShockPhase (line 1226)
+  2. ✅ Single-writer pattern verified (only BifurcationLogicPhase writes `avgDistanceToThresholds`)
+  3. ✅ Determinism validation script fixed and confirms bit-identical results across 3 runs
+- **Testing:** `scripts/validateBifurcationDeterminism.ts` - 3 runs with seed=42 produce IDENTICAL bifurcation metrics
+- **Files Modified:**
+  - `src/simulation/engine/phases/StochasticInnovationPhase.ts`
+  - `src/simulation/engine/phases/ClimateSystemPhase.ts`
+  - `src/simulation/engine/phases/ExogenousShockPhase.ts`
+  - `scripts/validateBifurcationDeterminism.ts` (validation tool)
+- **Status:** ✅ COMPLETE - Monte Carlo determinism restored, research results reproducible
 - **Source:** `reviews/architecture_review_20251113.md`
 
-**🔴 CRITICAL-2: Novel Entities Not Propagating to Mortality Pipeline**
+**✅ CRITICAL-2: Novel Entities Not Propagating to Mortality Pipeline** [COMPLETE - Nov 14, 2025]
 - **Location:** `src/simulation/novelEntities.ts` → Bayesian mortality integration
-- **Problem:** Novel entities tracks accumulation (line 79) but mortality integration incomplete - `addMortalityRisk` called but risk doesn't propagate through Bayesian network
-- **Impact:** Major game mechanic (chemical pollution) has no real effect on outcomes
-- **Root Cause:** Incomplete integration between new novel entities system (Nov 11) and existing mortality pipeline
-- **Recommendation:**
-  1. Add integration tests verifying novel entities → mortality propagation
-  2. Instrument mortality pipeline to log which risks contributed to deaths
-  3. Verify Bayesian network properly weights chemical exposure risks
-- **Estimated Effort:** MEDIUM (2-3 days)
-- **Status:** 🔴 CRITICAL - Fix before ANY new features
+- **Problem:** Novel entities tracks accumulation but mortality integration incomplete - risk didn't propagate through Bayesian network
+- **Impact:** Major game mechanic (chemical pollution) had no real effect on outcomes
+- **Solution Implemented:**
+  1. ✅ Fixed crisis-to-mortality integration (commit 6c885d9e2)
+  2. ✅ Novel entities crises now correctly add ongoing monthly mortality via `addOngoingMortality()`
+  3. ✅ Integration tests added validating novel entities → mortality propagation
+- **Testing:** Validation scripts confirm chemical pollution now affects mortality outcomes
+- **Files Modified:**
+  - `src/simulation/novelEntities.ts` - Fixed mortality integration
+  - Validation scripts - Confirmed propagation working
+- **Status:** ✅ COMPLETE - Chemical pollution now properly affects mortality
 - **Source:** `reviews/architecture_review_20251113.md`
+- **Handoff:** Archived to `/plans/completed/CRITICAL-2_novel_entities_mortality_handoff.md`
 
-**🟠 HIGH-1: Memory Leak in Bifurcation Time Series**
-- **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:305-310`
+**✅ HIGH-1: Memory Leak in Bifurcation Time Series** [COMPLETE - Nov 14, 2025]
+- **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:328-356`
 - **Problem:** Unbounded `amplificationTimeSeries` array growth (1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects)
 - **Impact:** Long simulations and Monte Carlo runs exhaust memory
-- **Recommendation:**
-  1. Implement rolling window (keep last 100 data points)
-  2. Add periodic aggregation (compute statistics, discard raw data)
-  3. Make time series optional (only when debugging bifurcation)
-- **Estimated Effort:** SMALL (1 day)
-- **Status:** 🟠 HIGH - Fix before next Monte Carlo run
+- **Solution Implemented:**
+  1. ✅ Rolling window (capped at 100 entries, configurable via `maxTimeSeriesLength`)
+  2. ✅ Toggle flag (`enableTimeSeries`) to disable entirely for production runs
+  3. ✅ Assertions validate array bounds after trimming
+  4. ✅ Single log message on first trim (prevents log spam)
+- **Testing:** 200-month simulation verified time series capped at 100 entries
+- **Files Modified:**
+  - `src/types/bifurcation.ts` - Added `maxTimeSeriesLength`, `enableTimeSeries`, `_rollingWindowLogged`
+  - `src/simulation/engine/phases/BifurcationLogicPhase.ts` - Rolling window logic
+  - `scripts/test_bifurcation_memory_fix.ts` - Validation test
+- **Status:** ✅ COMPLETE - Memory bounded, Monte Carlo safe
 - **Source:** `reviews/architecture_review_20251113.md`
 
 **🟠 HIGH-2: 95 Phases Without Parallelization (Performance Bottleneck)**
