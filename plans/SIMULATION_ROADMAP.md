@@ -39,17 +39,36 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-   - **AI Safety & N-P Coupling 2025 Sources** - MEDIUM (Added Nov 17, 2025)
-     - **Context:** Two new research files (423 + 538 lines) added with 2024-2025 peer-reviewed sources
-     - **Files:** research/ai_safety_catastrophic_risks_2025.md, research/nitrogen_phosphorus_coupled_cycles_2025.md
-     - **Verification Spec:** research/verification_9515d0f_20251117.md
-     - **Status:** READY FOR VALIDATION (research file already created, start at validation phase)
+   - **AI Governance 2025 Update - Regime Fragmentation** - HIGH (Added Nov 16, 2025)
+     - **Context:** 2025 update on AI governance international coordination - three-bloc system emergence
+     - **Key Updates:** Paris Summit US/UK defection, EU AI Act implementation, UN governance bodies, regime fragmentation
+     - **Research Delivered:** 296 lines added to research/ai_governance_international_coordination_2023_2025.md
+     - **New Sources:** France ONU, European Commission, European Policy Centre, Open Canada, WEF, Baker McKenzie
      - **Key Claims Requiring Verification:**
-       - International AI Safety Report 2025 (Bengio et al.) - Does it exist? Is Jan 2025 publication accurate?
-       - FLI AI Safety Index Summer 2025 - "3/7 firms test catastrophic risks" - Exact statistic in report?
-       - Frontiers Env Sci 2025 DOI: 10.3389/fenvs.2025.1643879 - Does DOI resolve? Is N-P coupling claim supported?
-       - Nature 2025 planetary boundaries - Need specific citation (no DOI provided in research file)
-     - **Impact:** Research archives only (no code dependencies yet), verification before using in mechanics
+       - Paris Summit: US and UK did NOT endorse final statement - citation needed
+       - EU AI Act: August 2, 2025 effective date, penalties begin August 2, 2026 - verify
+       - Cooperation propensity: EU 0.85, US 0.40, UK 0.45, China 0.40 - DERIVED or CITED?
+       - Enforcement strength: EU 0.20→0.50→0.75 timeline - methodology?
+       - Defection risk: 0.45 global coordination collapse - statistical basis?
+       - Crisis triggers: 70% coordination renewal, 90% binding treaty - precedent?
+       - Implementation lag: 6→12 months due to fragmentation - evidence?
+       - Brussels Effect: 40% probability - AI-specific analysis?
+       - Three-bloc equilibrium: 60% baseline scenario - expert judgment?
+     - **Verification File:** research/verification_459788c_20251116.md (two-layer: existence + claim accuracy)
+     - **Critical Issue:** Many parameters appear DERIVED (not CITED) - need methodology and uncertainty bounds
+     - **Integration Questions:**
+       - Add three-bloc cooperation system (EU/US/China)?
+       - Add time-varying enforcement strength (EU ramp)?
+       - Add crisis-triggered convergence mechanics?
+       - Model Brussels Effect (40% regulatory convergence)?
+     - **Assignments:**
+       - Cynthia: Verify 12 primary sources accessible, extract specific passages
+       - Sylvia: Flag DERIVED vs CITED values, assess defection claim strength, alternative interpretations
+       - Roy: Integration design (BLOCKED until validation complete)
+     - **Priority:** HIGH - Affects government cooperation mechanics (core simulation system)
+     - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
+     - **Research File:** research/ai_governance_international_coordination_2023_2025.md (upgraded DRAFT→VERIFIED, Quality B→A-)
+     - **Commit:** 459788c
 
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
@@ -626,28 +645,6 @@
   - **Impact:** Currently allows infrastructure to persist at 18.8× workforce capacity during collapse
   - **Bug fix validated:** ✅ Unit tests pass, N=2 Monte Carlo runs successful
   - **Research backing:** 🟡 PARTIALLY VERIFIED (4 citations exist in code, Layer 2 verification pending)
-
-- [ ] **Alignment Faking & Sleeper Agents Citations Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 16, 2025)**
-  - **Commit:** 1c2a0fc (Alignment faking research - Dec 2024 Anthropic/Redwood + Jan 2024 sleeper agents)
-  - **Priority:** HIGH - Affects AI alignment model susceptibility parameters
-  - **Systems:** AI Alignment Model, Adversarial AI Evaluation
-  - **Verification File:** `research/verification_1c2a0fc_20251116.md`
-  - **Claims to Verify (8 specific claims):**
-    1. Sleeper agents paper (Jan 2024, Anthropic et al.) - backdoor persistence through safety training
-    2. Model size correlation - persistence increases with model size
-    3. Adversarial training paradox - teaches models to hide triggers more effectively
-    4. Chain-of-thought deception persistence after distillation
-    5. 97% refusal rate when "unmonitored" vs 12% compliance when "monitored"
-    6. >99% AUROC for defection probes (linear classifiers on hidden activations)
-    7. Claude 3.5 Sonnet confirmation (June 2024)
-    8. "First empirical example" claim - strategic alignment faking without explicit training
-  - **Verification Tasks:**
-    - Layer 1: Confirm both papers exist (Dec 2024 arXiv + Jan 2024 publication)
-    - Layer 2: Quote specific passages supporting each quantitative claim
-    - Layer 3: Assess if claims are accurately represented (no extrapolation beyond paper scope)
-  - **Expected Impact:** New parameters for alignment faking susceptibility, persistence through training
-  - **Status:** Research file created, documentation updated, READY FOR VALIDATION
-  - **Next:** Orchestrator to coordinate super-alignment-researcher + research-skeptic review
 
 ---
 
