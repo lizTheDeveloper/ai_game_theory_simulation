@@ -7,6 +7,7 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## ✅ Recent Changes (November 14, 2025)
 =======
 =======
@@ -38,6 +39,25 @@ This file contains the complete history of recent changes to the AI Game Theory 
 **Files Changed:**
 - `src/simulation/config/centralConfig.ts` (AI scaling parameters)
 - `src/simulation/engine/PhaseOrchestrator.ts` (memory leak fix)
+=======
+## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
+
+**🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
+
+**Summary:** Fixed Tier2PhysicalSystemsPhase order violation caught by runtime validation.
+
+**Issue:** Runtime validation detected that Tier2PhysicalSystemsPhase (order 18.5) depends on planetary_boundaries phase (order 21.0), creating an order violation.
+
+**Fix:**
+- Moved Tier2PhysicalSystemsPhase from order 18.5 → 21.1 (after planetary_boundaries dependency)
+- Added readonly modifiers to id/name/order fields for diagnostic tool compatibility
+
+**Root Cause:** Static dependency analysis missed this violation; runtime validation caught it during execution.
+
+**Validation:** Diagnostic tool confirms 0 violations across all 81 phases.
+
+**Files Changed:** `src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts`
+>>>>>>> origin/auto/worker-20251115_090001
 
 ---
 
@@ -183,7 +203,72 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - `scripts/merge-orchestrator.sh` (line 11-12)
 =======
 **Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
+<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_080001
+=======
+=======
+## ✅ Recent Changes (November 13, 2025)
+
+**🔬 CRITICAL PARAMETER FIX: AI Capability Scaling Updated to Match 2024 Empirical Data** (Nov 13, 2025)
+
+**Summary:** Fixed 100-1000× underestimation in AI capability growth rates based on peer-reviewed 2024 research.
+
+**Problem:** Current parameters assumed 12-month capability doubling and 2× compute growth per year, but 2024 empirical data shows 7-9 month doubling and 4-5× compute growth per year.
+
+**Changes:**
+- `AI_CAPABILITY_DOUBLING_TIME`: 12 → **8 months** (33% faster capability growth)
+- `COMPUTE_GROWTH_RATE`: 1.0 → **2.15** (4.4× per year instead of 2× per year)
+
+**Research Foundation:**
+1. **Cottier et al. (2024)** "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
+   - Training cost growth: 2.9×/year (95% CI: 2.3× to 3.8×)
+   - Capability doubling time: 8 months (95% CI: 6-10 months)
+2. **Sevilla & Roldán (2024)** "Training Compute Growth 4-5×/year" (Epoch AI, May 28, 2024)
+   - Compute growth: 4.4×/year (90% CI: 1.5× to 11.8×) for recent frontier models
+   - Overall 2010-2024 trend: 4.1×/year (90% CI: 3.7× to 4.6×)
+
+**Timeline Impact:**
+- Before: 10× AI improvement in ~40 months (~3.3 years)
+- After: 10× AI improvement in ~27 months (~2.2 years)
+- Compression: 33% faster to reach capability milestones
+- Superintelligence arrival: Month ~67 instead of ~100 (27 months earlier)
+
+**Quality Gates Passed:**
+- ✅ Research validation (peer-reviewed sources with confidence intervals)
+- ✅ Research skeptic review (identified Nov 2024 diminishing returns evidence, conditional approval)
+- ✅ Monte Carlo N=10 (no NaN/assertion errors, determinism maintained)
+- ✅ Architecture review (no breaking changes, systems handle acceleration)
+
+**Limitations Documented:**
+- Based on 2010-2024 historical data (may not extrapolate to 2025+)
+- Nov 2024 reports indicate diminishing returns (OpenAI Orion, Google Gemini underperformance)
+- Does not model test-time compute paradigm (OpenAI o1/o3 style reasoning)
+- Assumes continued exponential scaling without physical/economic constraints
+
+**Validation Results (Monte Carlo N=10):**
+- **No technical errors:** Simulation completed successfully, no NaN propagation
+- **Outcome distribution:** 80% dystopia, 20% extinction (baseline scenario)
+- **Average mortality:** 78.4% (6.37B deaths)
+- **Key finding:** Faster AI timeline doesn't guarantee better outcomes (AI capability alone insufficient for flourishing)
+
+**Future Work:**
+- Time-dependent slowdown modeling (2025-2027 fast scaling → 2028+ diminishing returns)
+- Dimension-specific doubling times (language vs physical capabilities)
+- Test-time compute parameter (separate from pretraining compute)
+- Parameter sensitivity analysis (6-14 month doubling time range)
+
+**Research Documentation:**
+- Research findings: `/research/ai_capability_scaling_20251113.md`
+- Research critique: `/reviews/ai_capability_scaling_critique_20251113.md`
+- Architecture review: `/reviews/ai_capability_scaling_architecture_20251113.md`
+- Summary: `/AI_CAPABILITY_PARAMETER_UPDATE_SUMMARY.md`
+
+**Files Changed:**
+- `src/simulation/config/centralConfig.ts` (lines 391-435)
+
+**Impact:** This is a fundamental correction to the model's AI capability growth assumptions. The previous 12-month doubling was demonstrably wrong based on 2016-2024 empirical data. The new 8-month doubling aligns with frontier AI model training trends and corrects the 100-1000× underestimation.
+>>>>>>> origin/auto/worker-20251113_070003
+>>>>>>> origin/auto/worker-20251115_090001
 
 ---
 
