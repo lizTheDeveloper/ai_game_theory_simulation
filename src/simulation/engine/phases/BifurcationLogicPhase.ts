@@ -296,7 +296,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
 
     // Apply system-dependent multiplier
     // Different systems exhibit different amplification dynamics based on bifurcation type
-    const systemMultiplier = this.getSystemMultiplier(nearestThresholdName);
+    const systemMultiplier = this.getSystemMultiplier(nearestThresholdName, state);
 
     // Final amplification: base × system multiplier
     const amplification = baseAmplification * systemMultiplier;
@@ -355,6 +355,19 @@ export class BifurcationLogicPhase implements SimulationPhase {
           nearestSystem: nearestThresholdName,
         }
       ];
+
+      // HIGH-2 Instrumentation (Nov 13, 2025): Accumulate total amplification per system
+      // Tracks cumulative amplification to validate mortality calibration
+      if (bifState.metrics.totalAmplificationBySystem[nearestThresholdName] !== undefined) {
+        bifState.metrics.totalAmplificationBySystem[nearestThresholdName] += amplificationValidated;
+      } else {
+        // Handle unknown system gracefully
+        console.log(`⚠️ Unknown bifurcation system: ${nearestThresholdName}, tracking as 'unknown'`);
+        if (!bifState.metrics.totalAmplificationBySystem['unknown']) {
+          bifState.metrics.totalAmplificationBySystem['unknown'] = 0;
+        }
+        bifState.metrics.totalAmplificationBySystem['unknown'] += amplificationValidated;
+      }
     }
   }
 
@@ -373,9 +386,10 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * - Technology (1.4×): Innovation cascades - Nov 13 2025: 30% reduction (was 2.0×)
    *
    * @param thresholdName - Name of threshold system (environmental, social, economic, etc.)
+   * @param state - GameState for time-based scaling
    * @returns Multiplier for system-specific bifurcation dynamics
    */
-  private getSystemMultiplier(thresholdName: string): number {
+  private getSystemMultiplier(thresholdName: string, state: GameState): number {
     const multipliers: Record<string, number> = {
       'environmental': 1.05,  // Fold catastrophe (Scheffer et al. 2024) - Nov 13 2025: 30% reduction (1.5 × 0.7 = 1.05)
       'social': 1.75,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012) - Nov 13 2025: 30% reduction (2.5 × 0.7 = 1.75)
@@ -393,7 +407,14 @@ export class BifurcationLogicPhase implements SimulationPhase {
       return 2.0; // Generic default if threshold type not recognized
     }
 
-    return multiplier;
+    // CRITICAL FIX (Nov 13, 2025): Time-based scaling for 20-year scenarios
+    // Problem: 87.2% mortality vs 43-58% target (+50% overshoot)
+    // Root cause: Multipliers compound through cross-system interactions (1.5 × 2.5 × 2.5 = 9.375×)
+    // Solution: Scale all multipliers by 0.7 after month 120 to reduce compounding
+    // Research justification: 20-year horizons limit cascade propagation time
+    const timeScaling = state.currentMonth > 120 ? 0.7 : 1.0;
+
+    return multiplier * timeScaling;
   }
 
   /**
