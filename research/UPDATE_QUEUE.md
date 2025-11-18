@@ -1,11 +1,6 @@
 # Research Update Queue
-<<<<<<< HEAD
-**Generated:** 11/14/2025, 8:30:04 AM
-**Files Scanned:** 375
-=======
-**Generated:** 11/12/2025, 8:30:06 PM
-**Files Scanned:** 361
->>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
+**Generated:** 11/14/2025, 3:30:04 PM
+**Files Scanned:** 396
 
 ---
 
@@ -17,11 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< HEAD
-**Count:** 141 (37.6%)
-=======
-**Count:** 139 (38.5%)
->>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
+**Count:** 144 (36.4%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -212,6 +203,11 @@
 - **Oldest source:** 2008 (17 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/ai_collective_evolution_verification_20251101.md`
+
+### `ai_governance_international_coordination_20251113.md`
+- **Oldest source:** 1998 (27 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_governance_international_coordination_20251113.md`
 
 ### `ai_safety_climate_crossdomain_verification_20251031.md`
 - **Oldest source:** 2019 (6 years old)
@@ -478,6 +474,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/novel_entities_energy_trap_analysis_20251112.md`
 
+### `nuclear_winter_climate_effects_20251113.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/nuclear_winter_climate_effects_20251113.md`
+
 ### `organizational-technology-deployment-timelines_20251019.md`
 - **Oldest source:** 1990 (35 years old)
 - **Status:** Not used in simulation
@@ -737,7 +738,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 19 (5.1%)
+**Count:** 20 (5.1%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -758,16 +759,13 @@
 - `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
 - `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
 - `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
+- `verification_1cd141d_20251113.md` - Oldest: 2021 (4 years)
 
 ---
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< HEAD
-**Count:** 215 (57.3%)
-=======
-**Count:** 203 (56.2%)
->>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
+**Count:** 232 (58.6%)
 
 All sources <3 years old. No action required.
 
@@ -777,56 +775,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< HEAD
-| Total files | 375 |
+| Total files | 396 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 141 (37.6%) |
-| MEDIUM | 19 (5.1%) |
-| LOW | 215 (57.3%) |
-| Average age | 8.3 years |
-=======
-| Total files | 361 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 139 (38.5%) |
-| MEDIUM | 19 (5.3%) |
-| LOW | 203 (56.2%) |
-| Average age | 8.6 years |
->>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
+| HIGH | 144 (36.4%) |
+| MEDIUM | 20 (5.1%) |
+| LOW | 232 (58.6%) |
+| Average age | 8.1 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< HEAD
-| Current (<3yr) | 215 | 57.3% |
-| Warning (3-5yr) | 19 | 5.1% |
-| Critical (>5yr) | 141 | 37.6% |
-=======
-| Current (<3yr) | 203 | 56.2% |
-| Warning (3-5yr) | 19 | 5.3% |
-| Critical (>5yr) | 139 | 38.5% |
->>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
+| Current (<3yr) | 232 | 58.6% |
+| Warning (3-5yr) | 20 | 5.1% |
+| Critical (>5yr) | 144 | 36.4% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< HEAD
-- **Current:** 37.6% critical (>5yr)
-=======
-- **Current:** 38.5% critical (>5yr)
->>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
+- **Current:** 36.4% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-<<<<<<< HEAD
-1. Update 141 HIGH priority file(s) within 1 month
-=======
-1. Update 139 HIGH priority file(s) within 1 month
->>>>>>> 6da99f8b53d4f12e099752c5baaa5b12b83950bc
+1. Update 144 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
