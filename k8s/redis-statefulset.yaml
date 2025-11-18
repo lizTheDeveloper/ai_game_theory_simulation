@@ -1,0 +1,190 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-headless
+  namespace: marcus-platform
+  labels:
+    app: redis
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+      name: redis
+    - port: 16379
+      targetPort: 16379
+      name: redis-cluster
+  clusterIP: None
+  selector:
+    app: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: marcus-platform
+  labels:
+    app: redis
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+      name: redis
+  selector:
+    app: redis
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: marcus-platform
+spec:
+  serviceName: redis-headless
+  replicas: 6  # 3 primary + 3 replica
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7-alpine
+          ports:
+            - containerPort: 6379
+              name: redis
+            - containerPort: 16379
+              name: redis-cluster
+          command:
+            - redis-server
+          args:
+            - /etc/redis/redis.conf
+            - --cluster-enabled yes
+            - --cluster-config-file /data/nodes.conf
+            - --cluster-node-timeout 5000
+            - --appendonly yes
+            - --protected-mode no
+            - --bind 0.0.0.0
+            - --requirepass $(REDIS_PASSWORD)
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: marcus-secrets
+                  key: REDIS_PASSWORD
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+            - name: redis-config
+              mountPath: /etc/redis/redis.conf
+              subPath: redis.conf
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          livenessProbe:
+            exec:
+              command:
+                - redis-cli
+                - --auth
+                - $(REDIS_PASSWORD)
+                - ping
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - redis-cli
+                - --auth
+                - $(REDIS_PASSWORD)
+                - ping
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "standard-rwo"
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: marcus-platform
+data:
+  redis.conf: |
+    # Redis cluster configuration
+    cluster-enabled yes
+    cluster-require-full-coverage no
+    cluster-node-timeout 5000
+    cluster-migration-barrier 1
+
+    # Persistence
+    appendonly yes
+    appendfsync everysec
+    auto-aof-rewrite-percentage 100
+    auto-aof-rewrite-min-size 64mb
+
+    # Performance
+    maxmemory 768mb
+    maxmemory-policy allkeys-lru
+    tcp-backlog 511
+    timeout 0
+    tcp-keepalive 300
+
+    # Logging
+    loglevel notice
+    logfile ""
+
+    # Security (password set via command line args)
+    protected-mode yes
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: redis-cluster-init
+  namespace: marcus-platform
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: redis-cluster-init
+          image: redis:7-alpine
+          command:
+            - /bin/sh
+            - -c
+            - |
+              # Wait for all Redis pods to be ready
+              sleep 30
+
+              # Create cluster
+              redis-cli --cluster create \
+                redis-0.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                redis-1.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                redis-2.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                redis-3.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                redis-4.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                redis-5.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                --cluster-replicas 1 \
+                --cluster-yes \
+                -a ${REDIS_PASSWORD}
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: marcus-secrets
+                  key: REDIS_PASSWORD

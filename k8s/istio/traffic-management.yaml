@@ -1,0 +1,148 @@
+---
+# Traffic split for canary deployments
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: orchestrator-canary
+  namespace: marcus-platform
+spec:
+  hosts:
+    - orchestrator.marcus-platform.svc.cluster.local
+  http:
+    # Route 95% traffic to stable version
+    - match:
+        - headers:
+            x-canary:
+              exact: "false"
+      route:
+        - destination:
+            host: orchestrator.marcus-platform.svc.cluster.local
+            subset: v1
+          weight: 95
+        - destination:
+            host: orchestrator.marcus-platform.svc.cluster.local
+            subset: v2
+          weight: 5
+
+    # Route canary users to new version
+    - match:
+        - headers:
+            x-canary:
+              exact: "true"
+      route:
+        - destination:
+            host: orchestrator.marcus-platform.svc.cluster.local
+            subset: v2
+          weight: 100
+---
+# Fault injection for chaos engineering
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: citation-agent-chaos
+  namespace: marcus-platform
+spec:
+  hosts:
+    - citation-agent.marcus-platform.svc.cluster.local
+  http:
+    - match:
+        - headers:
+            x-chaos-test:
+              exact: "delay"
+      fault:
+        delay:
+          percentage:
+            value: 10.0
+          fixedDelay: 5s
+      route:
+        - destination:
+            host: citation-agent.marcus-platform.svc.cluster.local
+
+    - match:
+        - headers:
+            x-chaos-test:
+              exact: "abort"
+      fault:
+        abort:
+          percentage:
+            value: 5.0
+          httpStatus: 503
+      route:
+        - destination:
+            host: citation-agent.marcus-platform.svc.cluster.local
+
+    - route:
+        - destination:
+            host: citation-agent.marcus-platform.svc.cluster.local
+---
+# Rate limiting with Envoy
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: rate-limit
+  namespace: marcus-platform
+spec:
+  workloadSelector:
+    labels:
+      app: orchestrator
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          filterChain:
+            filter:
+              name: "envoy.filters.network.http_connection_manager"
+              subFilter:
+                name: "envoy.filters.http.router"
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.filters.http.local_ratelimit
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.filters.http.local_ratelimit.v3.LocalRateLimit
+            stat_prefix: http_local_rate_limiter
+            token_bucket:
+              max_tokens: 100
+              tokens_per_fill: 100
+              fill_interval: 60s
+            filter_enabled:
+              runtime_key: local_rate_limit_enabled
+              default_value:
+                numerator: 100
+                denominator: HUNDRED
+            filter_enforced:
+              runtime_key: local_rate_limit_enforced
+              default_value:
+                numerator: 100
+                denominator: HUNDRED
+            response_headers_to_add:
+              - append: false
+                header:
+                  key: x-rate-limit-remaining
+                  value: "%DYNAMIC_METADATA(envoy.filters.http.local_ratelimit:tokens_remaining)%"
+---
+# Circuit breaker settings via DestinationRule
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: citation-agent-circuit-breaker
+  namespace: marcus-platform
+spec:
+  host: citation-agent.marcus-platform.svc.cluster.local
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 200
+      http:
+        http1MaxPendingRequests: 100
+        http2MaxRequests: 200
+        maxRequestsPerConnection: 1
+    outlierDetection:
+      consecutiveErrors: 3
+      interval: 10s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 30
+      minHealthPercent: 70
+      consecutiveGatewayErrors: 5
+      consecutive5xxErrors: 5
