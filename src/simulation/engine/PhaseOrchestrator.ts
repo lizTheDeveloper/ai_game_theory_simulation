@@ -352,6 +352,24 @@ export class PhaseOrchestrator {
   }
 
   /**
+   * Validate all phase dependencies WITHOUT executing
+   *
+   * CRITICAL-2 FIX (Nov 10, 2025): Explicit validation method to catch
+   * circular dependencies before first execution.
+   *
+   * Call this after registering all phases to validate the dependency graph:
+   * ```typescript
+   * orchestrator.registerPhases(ALL_PHASES);
+   * orchestrator.validate(); // Throws if circular dependencies
+   * ```
+   *
+   * @throws {Error} If circular dependency, missing dependency, or order violation detected
+   */
+  validate(): void {
+    this.validateDependencies();
+  }
+
+  /**
    * Sort phases by order
    */
   private sortPhases(): void {
@@ -432,7 +450,12 @@ export class PhaseOrchestrator {
             );
           }
 
+          // CRITICAL-2 FIX (Nov 10, 2025): Check cycles BEFORE order violations
+          // This gives clearer error messages (shows full cycle path)
+          detectCycle(depId, [...path]);
+
           // Check ordering constraint (dependency must have lower order number)
+          // Note: This runs AFTER cycle check so circular deps are caught first
           const depPhase = phaseMap.get(depId)!;
           if (depPhase.order >= phase.order) {
             throw new Error(
@@ -447,8 +470,6 @@ export class PhaseOrchestrator {
               `   2. Remove the dependency if it's not needed\n`
             );
           }
-
-          detectCycle(depId, [...path]);
         }
       }
 
