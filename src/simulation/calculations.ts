@@ -215,7 +215,9 @@ export function calculateUnemployment(state: GameState): number {
     3: 0.95,   // Transition: 95% offset (policies + post-scarcity enable new roles)
     4: 1.05    // Post-scarcity: 105% offset (abundance creates MORE jobs than displaced)
   };
-  const reinstatementRatio = reinstatementOffsetRatio[economicStage] || 0.80;
+  const reinstatementRatio = reinstatementOffsetRatio[economicStage] !== undefined
+    ? reinstatementOffsetRatio[economicStage]
+    : 0.80;
 
   // Reinstatement is a PROPORTION of displacement (not separate calculation)
   // This ensures displacement growth is matched by job creation growth
@@ -325,7 +327,9 @@ export function calculateUnemployment(state: GameState): number {
     3: 0.5,   // Transition: High elasticity (UBI frees demand)
     4: 0.7    // Post-scarcity: Very high elasticity (abundance economy)
   };
-  const elasticity = economicElasticity[economicStage] || 0.3;
+  const elasticity = economicElasticity[economicStage] !== undefined
+    ? economicElasticity[economicStage]
+    : 0.3;
   
   // PHASE 6 FIX: Apply retraining to reduce displacement
   // SYSTEMIC EFFECT: Program effectiveness varies by segment (elite get better programs)

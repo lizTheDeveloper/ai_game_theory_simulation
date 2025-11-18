@@ -1050,6 +1050,7 @@ export function createDefaultInitialState(
       },
       globalCoordinationQuality: 0.0,    // No coordination initially
       internationalAlignment: 0.0,       // No international alignment
+      regionalAdaptation: 0.0,           // No regional customization initially
       optimalDeploymentSpeed: 0.04,      // 4% per year baseline (pre-AI coordination)
       currentDeploymentSpeed: 0.0,       // No deployment yet
       transitionMortality: {
@@ -1202,6 +1203,42 @@ export function createDefaultInitialState(
         cohesionIncrease: 0,
         meaningCrisisReduction: 0
       }
+    },
+
+    // Coordinated Technology Deployment System (Nov 15, 2025)
+    // AI-managed gradual deployment to minimize transition mortality
+    // Research: /research/transition_mortality_coordination_effectiveness_20251115.md
+    // Critique: Grade B-, 50-70% max effectiveness (Sylvia-adjusted)
+    coordinatedDeployment: {
+      regionalCapacity: {
+        highIncome: 0.75,     // OECD baseline capacity
+        upperMiddle: 0.60,    // China, Brazil, Russia
+        lowerMiddle: 0.45,    // India, Indonesia, Nigeria
+        lowIncome: 0.30       // Sub-Saharan Africa, least developed
+      },
+      supportSystems: {
+        universalBasicIncome: 0,     // Initially inactive (scales with economic stage)
+        retrainingPrograms: 0,       // Initially inactive
+        foodSecurity: 0.50,          // Baseline food systems
+        healthcareAccess: 0.50       // Baseline healthcare
+      },
+      globalCoordinationQuality: 0.50,  // Baseline human coordination
+      internationalAlignment: 0.50,     // Moderate global cooperation
+      regionalAdaptation: 0.50,         // Moderate local customization
+      currentDeploymentSpeed: 0,        // No major deployment yet
+      optimalDeploymentSpeed: 0.05,     // 5% per year Green Revolution pace
+      transitionMortality: {
+        annualExcessMortality: 0,       // No excess deaths yet
+        cumulativeTransitionDeaths: 0,  // Zero cumulative
+        mortalityByMechanism: {
+          famine: 0,
+          unemployment: 0,
+          healthcareLoss: 0,
+          coordinationFailure: 0,
+          other: 0
+        }
+      },
+      deploymentEvents: []  // Empty event log
     },
 
     history: {

@@ -22,6 +22,7 @@ import {
   assertResourceAllocation,
   assertProbability,
   assertInRange,
+  assertStateProperty,
 } from '@/simulation/utils/assertions';
 import {
   updateEmergencyResponses,
@@ -488,7 +489,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
   ): { crisisType: 'climate' | 'social' | 'economic' | 'pandemic' | 'technological' | 'nuclear', name: string } | null {
     // Calculate current values for all thresholds (with assertions)
     const climateStability = assertFinite(
-      state.environmentalAccumulation?.climateStability ?? 0.5,
+      assertStateProperty(
+        state.environmentalAccumulation,
+        'climateStability',
+        {
+          location: 'EmergencyResponsePhase.identifyNearestThreshold',
+          month: state.currentMonth
+        }
+      ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'climateStability',
@@ -497,7 +505,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const socialCohesion = assertFinite(
-      state.society?.coordinationCapacity ?? 0.5,
+      assertStateProperty(
+        state.society,
+        'coordinationCapacity',
+        {
+          location: 'EmergencyResponsePhase.identifyNearestThreshold',
+          month: state.currentMonth
+        }
+      ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'socialCohesion',
@@ -506,7 +521,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const economicStability = assertFinite(
-      (state.globalMetrics?.economicTransitionStage ?? 2) / 4.0,
+      assertStateProperty(
+        state.globalMetrics,
+        'economicTransitionStage',
+        {
+          location: 'EmergencyResponsePhase.identifyNearestThreshold',
+          month: state.currentMonth
+        }
+      ) / 4.0,
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'economicStability',
@@ -515,7 +537,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const governanceLegitimacy = assertFinite(
-      state.government?.legitimacy ?? 0.5,
+      assertStateProperty(
+        state.government,
+        'legitimacy',
+        {
+          location: 'EmergencyResponsePhase.identifyNearestThreshold',
+          month: state.currentMonth
+        }
+      ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'governanceLegitimacy',
@@ -544,6 +573,13 @@ export class EmergencyResponsePhase implements SimulationPhase {
    */
   private applyEmergencyResponseEffects(state: GameState, events: any[]): void {
     if (!state.emergencyManagement) return;
+
+    // PERFORMANCE FIX: Aggregate technological responses to avoid nested loops
+    // Collect all technological responses first, then apply in single agent pass
+    const completedTechResponses = state.emergencyManagement.activeResponses.filter(
+      r => r.completed && r.crisisType === 'technological'
+    );
+    const totalTechEffectiveness = completedTechResponses.reduce((sum, r) => sum + r.effectiveness, 0);
 
     for (const response of state.emergencyManagement.activeResponses) {
       // Only completed deployments have full effect
@@ -825,19 +861,8 @@ export class EmergencyResponsePhase implements SimulationPhase {
               }
             );
 
-            // Reduce resentment (emergency measures show government cares)
-            for (const ai of state.aiAgents) {
-              if (ai.resentment > 0) {
-                ai.resentment = assertProbability(
-                  Math.max(0, ai.resentment - controlRecoveryBonus * 0.5),
-                  {
-                    location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
-                    valueName: `resentment_${ai.id}`,
-                    month: state.currentMonth
-                  }
-                );
-              }
-            }
+            // NOTE: Resentment reduction moved outside response loop for performance
+            // (See agent loop at end of function)
 
             // Deactivate if oversight improved
             if (state.government.oversightLevel > 7) {
@@ -885,6 +910,30 @@ export class EmergencyResponsePhase implements SimulationPhase {
             );
           }
           break;
+      }
+    }
+
+    // PERFORMANCE FIX: Apply technological response effects in single agent pass
+    // Instead of looping agents for each response, batch all tech responses and apply once
+    if (totalTechEffectiveness > 0 && state.technologicalRisk.controlLossActive) {
+      const controlRecoveryBonus = assertFinite(totalTechEffectiveness * 0.05, {
+        location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+        valueName: 'totalControlRecoveryBonus',
+        month: state.currentMonth
+      });
+
+      // Single pass: reduce resentment for all agents
+      for (const ai of state.aiAgents) {
+        if (ai.resentment > 0) {
+          ai.resentment = assertProbability(
+            Math.max(0, ai.resentment - controlRecoveryBonus * 0.5),
+            {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: `resentment_${ai.id}`,
+              month: state.currentMonth
+            }
+          );
+        }
       }
     }
   }
