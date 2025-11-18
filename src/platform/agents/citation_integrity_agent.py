@@ -806,7 +806,7 @@ class CitationIntegrityAgent:
 
 
 def main():
-    """Example usage of CitationIntegrityAgent."""
+    """Example usage of CitationIntegrityAgent (demo mode)."""
 
     # Create agent (no database for demo)
     agent = CitationIntegrityAgent(
@@ -851,5 +851,192 @@ def main():
     agent.cleanup()
 
 
+def run_ipc_server(agent_id: str):
+    """
+    Run agent as IPC server for TypeScript orchestrator.
+
+    Reads JSON requests from stdin, processes them, and writes JSON responses to stdout.
+    Runs continuously until SIGTERM/SIGINT received.
+
+    Protocol:
+    - Request: {"type": "request", "requestId": "...", "method": "...", "params": {...}}
+    - Response: {"type": "response", "requestId": "...", "data": {...}} or {"type": "response", "requestId": "...", "error": "..."}
+    - Health: {"type": "health", "data": {"healthy": true}}
+    """
+    import sys
+    import signal
+
+    # Global shutdown flag
+    shutdown_requested = False
+
+    def signal_handler(signum, frame):
+        """Handle shutdown signals gracefully."""
+        nonlocal shutdown_requested
+        logger.info(f"Received signal {signum}, initiating graceful shutdown...")
+        shutdown_requested = True
+
+    # Register signal handlers
+    signal.signal(signal.SIGTERM, signal_handler)
+    signal.signal(signal.SIGINT, signal_handler)
+
+    # Create agent with database connection
+    try:
+        agent = CitationIntegrityAgent(
+            agent_id=agent_id,
+            initial_reputation=0.5,
+            exploration_rate=0.2,
+            db_config={
+                'host': 'localhost',
+                'port': 5432,
+                'database': 'marcus_dev',
+                'user': 'marcus',
+                'password': 'marcus_dev_password'
+            },
+            redis_config={
+                'host': 'localhost',
+                'port': 6379,
+                'db': 0
+            }
+        )
+        logger.info(f"✅ Agent {agent_id} initialized and ready for IPC")
+
+        # Send startup health message
+        health_msg = json.dumps({"type": "health", "data": {"healthy": True}}) + "\n"
+        sys.stdout.write(health_msg)
+        sys.stdout.flush()
+
+    except Exception as e:
+        logger.error(f"❌ Failed to initialize agent {agent_id}: {e}")
+        error_msg = json.dumps({"type": "error", "error": str(e)}) + "\n"
+        sys.stdout.write(error_msg)
+        sys.stdout.flush()
+        sys.exit(1)
+
+    # Main IPC loop
+    logger.info(f"🔄 Agent {agent_id} entering IPC loop...")
+    try:
+        while not shutdown_requested:
+            try:
+                # Read line from stdin (blocking)
+                line = sys.stdin.readline()
+
+                if not line:
+                    # EOF reached (stdin closed)
+                    logger.info("EOF reached, shutting down")
+                    break
+
+                line = line.strip()
+                if not line:
+                    continue
+
+                # Parse JSON request
+                try:
+                    request = json.loads(line)
+                except json.JSONDecodeError as e:
+                    logger.error(f"Invalid JSON: {e}")
+                    continue
+
+                # Extract request details
+                request_type = request.get("type")
+                request_id = request.get("requestId")
+                method = request.get("method")
+                params = request.get("params", {})
+
+                # Handle request
+                response = None
+
+                if request_type == "request" and method == "analyze_citation":
+                    # Analyze citation request
+                    try:
+                        doc_data = params.get("document", {})
+                        doc = CitationDocument(
+                            text=doc_data.get("text", ""),
+                            claimed_source=doc_data.get("claimedSource"),
+                            actual_source=doc_data.get("actualSource"),
+                            metadata=doc_data.get("metadata", {})
+                        )
+
+                        result, stats = agent.process_citation(doc)
+
+                        response = {
+                            "type": "response",
+                            "requestId": request_id,
+                            "data": {
+                                "integrityScore": result.integrity_score,
+                                "behaviorUsed": result.behavior_used.value,
+                                "confidence": result.confidence,
+                                "detectedViolations": result.detected_violations,
+                                "metadata": result.metadata,
+                                "agentId": result.agent_id,
+                                "agentReputation": result.agent_reputation
+                            }
+                        }
+
+                    except Exception as e:
+                        logger.error(f"Error analyzing citation: {e}")
+                        response = {
+                            "type": "response",
+                            "requestId": request_id,
+                            "error": str(e)
+                        }
+
+                elif request_type == "request" and method == "get_status":
+                    # Get agent status
+                    try:
+                        status = agent.get_status()
+                        response = {
+                            "type": "response",
+                            "requestId": request_id,
+                            "data": status
+                        }
+                    except Exception as e:
+                        logger.error(f"Error getting status: {e}")
+                        response = {
+                            "type": "response",
+                            "requestId": request_id,
+                            "error": str(e)
+                        }
+
+                else:
+                    # Unknown request type or method
+                    response = {
+                        "type": "response",
+                        "requestId": request_id,
+                        "error": f"Unknown request type '{request_type}' or method '{method}'"
+                    }
+
+                # Send response
+                if response:
+                    response_json = json.dumps(response) + "\n"
+                    sys.stdout.write(response_json)
+                    sys.stdout.flush()
+
+            except KeyboardInterrupt:
+                logger.info("Keyboard interrupt received")
+                break
+            except Exception as e:
+                logger.error(f"Error in IPC loop: {e}")
+                # Continue processing despite errors
+
+    finally:
+        # Cleanup
+        logger.info(f"🛑 Agent {agent_id} shutting down...")
+        try:
+            agent.cleanup()
+        except Exception as e:
+            logger.error(f"Error during cleanup: {e}")
+        logger.info(f"✅ Agent {agent_id} shutdown complete")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    # Check if agent ID provided as command line argument
+    if len(sys.argv) > 1:
+        agent_id = sys.argv[1]
+        logger.info(f"🤖 Starting agent {agent_id} in IPC server mode")
+        run_ipc_server(agent_id)
+    else:
+        # Run demo mode
+        logger.info("Running in demo mode (no agent ID provided)")
+        main()

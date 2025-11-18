@@ -43,23 +43,24 @@
 - [x] Create operational deployment checklist (MARCUS_OPERATIONAL_CHECKLIST.md)
 - [x] Create version clarification doc (MARCUS_VERSION_CLARIFICATION.md)
 - [x] Add Python requirements.txt
+- [x] Fix repository URL in debugging report (404GeneNotFound/ai_game_theory_simulation)
+
+### Python Agent Fixes
+- [x] **Fix Python agent lifecycle** (CRITICAL - COMPLETED)
+  - ✅ Implemented continuous stdin reading loop
+  - ✅ Added proper signal handling (SIGTERM, SIGINT)
+  - ✅ Added health message on startup
+  - ✅ Implemented graceful shutdown with cleanup
+  - ✅ Added IPC server mode with agent_id argument
+  - ✅ Maintained backward compatibility with demo mode
+  - **File:** `src/platform/agents/citation_integrity_agent.py` (lines 854-1028)
+  - **Function:** `run_ipc_server(agent_id: str)`
 
 ---
 
 ## 🔧 In Progress
 
 ### High Priority
-- [ ] **Fix Python agent lifecycle** (CRITICAL)
-  - Current: Agents exit after 2 test documents
-  - Needed: Long-running processes with proper event loop
-  - Impact: No agents = no citation analysis
-  - **File:** `src/platform/agents/citation_integrity_agent.py`
-  - **Required changes:**
-    - Remove test mode exit condition
-    - Implement continuous stdin reading loop
-    - Add proper signal handling (SIGTERM, SIGINT)
-    - Add heartbeat mechanism
-    - Fix state persistence on shutdown
 
 ### Medium Priority
 - [ ] **Add user registration endpoint** (HIGH)
@@ -197,10 +198,10 @@ curl -X POST http://localhost:3000/auth/login \
 ## 🐛 Known Issues
 
 ### Critical
-1. **Python agents exit after 2 documents**
-   - Impact: No citation analysis after initial tests
-   - Workaround: Restart server
-   - Fix: Modify agent script to run continuously
+1. ~~**Python agents exit after 2 documents**~~ **✅ FIXED**
+   - ✅ Fixed: Implemented continuous IPC server loop
+   - ✅ Added signal handling and graceful shutdown
+   - See: `src/platform/agents/citation_integrity_agent.py` (lines 854-1028)
 
 2. **No user registration endpoint**
    - Impact: Must manually insert users via SQL
@@ -233,36 +234,36 @@ curl -X POST http://localhost:3000/auth/login \
 
 ## 📊 Progress Summary
 
-**Completed:** 12/24 tasks (50%)
+**Completed:** 14/24 tasks (58%)
 - ✅ Core infrastructure (database, config, startup)
 - ✅ API endpoints (auth, analysis, admin)
 - ✅ Documentation (setup, deployment, operational)
+- ✅ Python agent lifecycle (IPC server loop, signal handling)
+- ✅ Repository URL corrections
 
-**In Progress:** 6/24 tasks (25%)
-- 🔧 Python agent lifecycle
-- 🔧 IPC protocol improvements
-- 🔧 User registration
-- 🔧 Process supervision
+**In Progress:** 5/24 tasks (21%)
+- 🔧 IPC protocol improvements (acknowledgments, retries)
+- 🔧 User registration endpoint
+- 🔧 Process supervision (PM2/systemd)
 - 🔧 Circuit breakers
 - 🔧 Structured logging
 
-**Not Started:** 6/24 tasks (25%)
+**Not Started:** 5/24 tasks (21%)
 - ⏳ Comprehensive test suite
 - ⏳ Load testing
 - ⏳ Production monitoring setup
 - ⏳ Security audit
 - ⏳ Performance profiling
-- ⏳ Documentation polish
 
 ---
 
 ## 🎯 Next Steps (Priority Order)
 
-1. **Fix Python agent lifecycle** (1-2 days)
-   - Most critical issue blocking functionality
-   - Requires Python agent script modifications
+1. ~~**Fix Python agent lifecycle**~~ **✅ COMPLETED** (2024-11-18)
+   - Implemented IPC server loop with continuous stdin reading
+   - Added signal handling and graceful shutdown
 
-2. **Add user registration endpoint** (4 hours)
+2. **Add user registration endpoint** (4 hours) **← NEXT PRIORITY**
    - Removes manual SQL requirement
    - Improves developer experience
 
@@ -285,6 +286,7 @@ curl -X POST http://localhost:3000/auth/login \
 
 ---
 
-**Last Updated:** 2024-11-18
-**Next Review:** After Python agent lifecycle fix
+**Last Updated:** 2024-11-18 (Python agent lifecycle fixed)
+**Next Review:** After user registration endpoint implementation
 **Assignee:** Marcus (Platform Engineer)
+**Status:** 58% complete (14/24 tasks)

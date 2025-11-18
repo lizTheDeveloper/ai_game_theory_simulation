@@ -53,7 +53,7 @@ sudo apt update
 sudo apt install -y postgresql redis-server python3-pip python3-venv
 
 # 2. Clone and setup repository
-git clone https://github.com/Arithemetic-AI/ai_game_theory_simulation
+git clone https://github.com/404GeneNotFound/ai_game_theory_simulation
 cd ai_game_theory_simulation
 
 # 3. Install Node dependencies
@@ -480,7 +480,7 @@ For anyone wanting to run the partially working system:
 
 ```bash
 # 1. Clone repo
-git clone https://github.com/Arithmetic-AI/ai_game_theory_simulation
+git clone https://github.com/404GeneNotFound/ai_game_theory_simulation
 cd ai_game_theory_simulation
 
 # 2. Install everything
