@@ -166,6 +166,7 @@ function calculateNovelEntitiesRemediationEffectiveness(
 
   // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Use cached renewable capacity if provided
   // This prevents recalculating in hot path (called once per deployed remediation tech)
+<<<<<<< HEAD
   const energySystem = gameState.resourceEconomy.energy;
   const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
     cachedRenewableCapacity :
@@ -181,6 +182,40 @@ function calculateNovelEntitiesRemediationEffectiveness(
     location: 'calculateNovelEntitiesRemediationEffectiveness:energyDemand',
     month: gameState.currentMonth
   });
+=======
+  const energySystem = gameState.resourceEconomy.energy; // resourceEconomy.energy is required (not optional)
+
+  const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
+    cachedRenewableCapacity :
+    assertFinite(
+      assertStateProperty(energySystem.capacity, 'solar', { location: 'calculateNovelEntitiesRemediationEffectiveness', month: gameState.currentMonth }) +
+      assertStateProperty(energySystem.capacity, 'wind', { location: 'calculateNovelEntitiesRemediationEffectiveness', month: gameState.currentMonth }) +
+      assertStateProperty(energySystem.capacity, 'hydro', { location: 'calculateNovelEntitiesRemediationEffectiveness', month: gameState.currentMonth }) +
+      assertStateProperty(energySystem.capacity, 'fusion', { location: 'calculateNovelEntitiesRemediationEffectiveness', month: gameState.currentMonth }),
+      {
+        location: 'calculateNovelEntitiesRemediationEffectiveness',
+        valueName: 'totalRenewableCapacity',
+        month: gameState.currentMonth
+      }
+    );
+
+  const renewableCapacity = totalRenewableCapacity > 0 ? totalRenewableCapacity : 1000; // Default: 1,000 TWh total renewable capacity
+  const currentConsumption = assertFinite(
+    assertStateProperty(
+      energySystem,
+      'totalDemand',
+      {
+        location: 'calculateNovelEntitiesRemediationEffectiveness',
+        month: gameState.currentMonth
+      }
+    ),
+    {
+      location: 'calculateNovelEntitiesRemediationEffectiveness',
+      valueName: 'currentConsumption',
+      month: gameState.currentMonth
+    }
+  );
+>>>>>>> origin/auto/worker-20251116_150001
   const renewableSurplus = Math.max(0, renewableCapacity - currentConsumption);
 
   const energyMultiplier = assertFinite(Math.min(1.0, renewableSurplus / energyRequired), {
@@ -297,6 +332,7 @@ export function applyAllTechEffects(
   // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Cache renewable capacity calculation
   // This prevents recalculating 180-300 times per 60-month run (once per remediation tech × months)
   // Research review: Architecture-skeptic identified this hot path issue
+<<<<<<< HEAD
   const energySystem = gameState.resourceEconomy.energy;
   const totalRenewableCapacity = (
     assertStateProperty(energySystem.capacity, 'solar', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth}) +
@@ -304,6 +340,21 @@ export function applyAllTechEffects(
     assertStateProperty(energySystem.capacity, 'hydro', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth}) +
     assertStateProperty(energySystem.capacity, 'fusion', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth})
   );
+=======
+
+  // FIX (Nov 16, 2025): assertStateProperty expects NUMBER terminal values, but energy is an OBJECT
+  // Access directly instead - we validate the nested properties below anyway
+  const energySystem = gameState.resourceEconomy?.energy;
+  if (!energySystem) {
+    throw new Error(`❌ resourceEconomy.energy is undefined at month ${gameState.currentMonth}`);
+  }
+
+  const totalRenewableCapacity =
+    energySystem.capacity.solar +
+    energySystem.capacity.wind +
+    energySystem.capacity.hydro +
+    energySystem.capacity.fusion;
+>>>>>>> origin/auto/worker-20251116_150001
 
   // Aggregate effects by type
   const globalEffects: Map<string, number> = new Map();
@@ -354,14 +405,42 @@ export function applyAllTechEffects(
           if (boundary && tech.energyRequirement) {
             // ENERGY CONSTRAINT: Check renewable energy availability
             // Renewable surplus = total generation × renewable % - existing demand
-            const totalGen = gameState.powerGenerationSystem?.totalElectricityGeneration || 0;
-            const renewablePct = gameState.powerGenerationSystem?.renewablePercentage || 0;
+            const totalGen = assertFinite(
+              assertStateProperty(
+                gameState.powerGenerationSystem,
+                'totalElectricityGeneration',
+                { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
+              ),
+              { location: 'applyAllTechEffects', valueName: 'totalElectricityGeneration', month: gameState.currentMonth }
+            );
+
+            const renewablePct = assertFinite(
+              assertStateProperty(
+                gameState.powerGenerationSystem,
+                'renewablePercentage',
+                { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
+              ),
+              { location: 'applyAllTechEffects', valueName: 'renewablePercentage', month: gameState.currentMonth }
+            );
+
             const renewableGen = totalGen * renewablePct;
-            const dataCenterDemand = gameState.powerGenerationSystem?.dataCenterPower || 0;
+
+            const dataCenterDemand = assertFinite(
+              assertStateProperty(
+                gameState.powerGenerationSystem,
+                'dataCenterPower',
+                { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
+              ),
+              { location: 'applyAllTechEffects', valueName: 'dataCenterPower', month: gameState.currentMonth }
+            );
+
             const energyAvailable = Math.max(0, renewableGen - dataCenterDemand * 0.5);  // Assume 50% of data center can be displaced
 
+            // Handle tech.energyRequirement which can be number or object with nested optional fields
             const energyRequired = (typeof tech.energyRequirement !== 'number' && tech.energyRequirement) ?
-                                 (tech.energyRequirement.annualTWhRequired || ((tech.energyRequirement.kWhPerM3 || 0) * 4000) / 1e9) :
+                                 (tech.energyRequirement.annualTWhRequired !== undefined ?
+                                   tech.energyRequirement.annualTWhRequired :
+                                   (tech.energyRequirement.kWhPerM3 !== undefined ? (tech.energyRequirement.kWhPerM3 * 4000) / 1e9 : 0)) :
                                  0;  // 4000 km³ freshwater → TWh
 
             if (energyRequired > 0) {
