@@ -86,13 +86,30 @@ export function applyEnergyConstrainedCleanup(
   });
 
   // 1. Check if tech has energy requirement (legacy tech without energy model uses old behavior)
-  const energyReq = typeof tech.energyRequirement === 'object'
-    ? tech.energyRequirement.kWhPerKg ?? tech.energyRequirement.annualTWhRequired
-    : tech.energyRequirement;
+  let energyReq: number | undefined;
+  if (typeof tech.energyRequirement === 'object') {
+    // Object with kWhPerKg or annualTWhRequired
+    if (tech.energyRequirement.kWhPerKg !== undefined) {
+      energyReq = tech.energyRequirement.kWhPerKg;
+    } else if (tech.energyRequirement.annualTWhRequired !== undefined) {
+      energyReq = tech.energyRequirement.annualTWhRequired;
+    } else {
+      throw new Error(`❌ Tech '${tech.id}' has energyRequirement object but neither kWhPerKg nor annualTWhRequired is defined`);
+    }
+  } else {
+    energyReq = tech.energyRequirement;
+  }
 
   if (!energyReq || !tech.minimumConcentration) {
     // Legacy cleanup tech without energy model - use base effectiveness
-    const baseEffect = (tech.effects.novelEntitiesReduction ?? 0) * (tech.deploymentLevel ?? 0);
+    if (!tech.effects.novelEntitiesReduction) {
+      throw new Error(`❌ Tech '${tech.id}' missing novelEntitiesReduction effect (required for cleanup tech)`);
+    }
+    if (tech.deploymentLevel === undefined) {
+      throw new Error(`❌ Tech '${tech.id}' missing deploymentLevel (required for cleanup tech)`);
+    }
+
+    const baseEffect = tech.effects.novelEntitiesReduction * tech.deploymentLevel;
     return {
       grossEffectiveness: baseEffect,
       concentrationFactor: 1.0,
@@ -159,7 +176,14 @@ export function applyEnergyConstrainedCleanup(
   const energyFactor = Math.min(1.0, renewableSurplus / Math.max(0.001, requiredEnergy));
 
   // 4. Base effectiveness (from tech definition)
-  const baseEffectiveness = (tech.effects.novelEntitiesReduction ?? 0) * (tech.deploymentLevel ?? 0);
+  if (!tech.effects.novelEntitiesReduction) {
+    throw new Error(`❌ Tech '${tech.id}' missing novelEntitiesReduction effect (required for cleanup tech with energy model)`);
+  }
+  if (tech.deploymentLevel === undefined) {
+    throw new Error(`❌ Tech '${tech.id}' missing deploymentLevel (required for cleanup tech with energy model)`);
+  }
+
+  const baseEffectiveness = tech.effects.novelEntitiesReduction * tech.deploymentLevel;
 
   // 5. Apply constraints
   const grossEffectiveness = baseEffectiveness * concentrationFactor * energyFactor;
