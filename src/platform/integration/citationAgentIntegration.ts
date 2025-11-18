@@ -908,6 +908,54 @@ export class CitationAgentOrchestrator {
     console.log(`✅ Agent count adjusted to ${this.agents.size}`);
   }
 
+  /**
+   * Alias for analyzeDocument() - maintains API compatibility with server.
+   *
+   * @param document Document to analyze
+   * @returns Aggregated analysis with consensus metrics
+   */
+  async analyzeCitation(document: CitationDocument): Promise<AggregatedAnalysis> {
+    return this.analyzeDocument(document);
+  }
+
+  /**
+   * Get status of all agents.
+   *
+   * @returns Array of agent statuses with health and reputation metrics
+   */
+  async getAgentStatuses(): Promise<AgentStatus[]> {
+    const statuses: AgentStatus[] = [];
+
+    for (const agent of this.agents.values()) {
+      try {
+        const status = await agent.getStatus();
+        statuses.push(status);
+      } catch (err) {
+        console.error(`Failed to get status for agent ${agent.agentId}:`, err);
+        // Include unhealthy status even if query fails
+        statuses.push({
+          agentId: agent.agentId,
+          reputation: 0,
+          totalCitations: 0,
+          detectedViolations: 0,
+          violationRate: 0,
+          currentBehavior: 'unknown',
+          explorationRate: 0,
+          memorySize: {
+            immediate: 0,
+            shortterm: 0,
+            longtermStats: 0,
+            behaviorReputations: 0
+          },
+          isHealthy: false,
+          timestamp: new Date().toISOString()
+        });
+      }
+    }
+
+    return statuses;
+  }
+
   async shutdown(): Promise<void> {
     console.log('🛑 Shutting down orchestrator...');
 

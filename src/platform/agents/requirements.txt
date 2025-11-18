@@ -1,0 +1,18 @@
+# MARCUS 3.0 Citation Integrity Agent Dependencies
+#
+# Install with: pip install -r requirements.txt
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-18
+
+# Database connectivity
+psycopg2-binary>=2.9.9  # PostgreSQL adapter for Python
+
+# Redis client for caching and state coordination
+redis>=5.0.1
+
+# Numerical computing for statistical calculations
+numpy>=1.26.0
+
+# Optional: For better logging
+colorlog>=6.8.0

@@ -321,3 +321,47 @@ export class DatabasePool extends EventEmitter {
 export function createDatabasePool(config: DatabasePoolConfig): DatabasePool {
   return new DatabasePool(config);
 }
+
+/**
+ * Singleton database pool instance
+ *
+ * IMPORTANT: This must be initialized before use by calling initializePool()
+ * or by setting it manually. Files that import this should handle the case
+ * where it may not be initialized yet.
+ *
+ * Usage:
+ * ```typescript
+ * import { pool, initializePool } from './pool';
+ *
+ * // Initialize once at startup
+ * initializePool(config);
+ *
+ * // Use in queries
+ * await pool.query('SELECT * FROM users');
+ * ```
+ */
+export let pool: DatabasePool;
+
+/**
+ * Initialize the singleton pool instance
+ *
+ * @param config Database pool configuration
+ * @returns The initialized pool instance
+ */
+export function initializePool(config: DatabasePoolConfig): DatabasePool {
+  if (pool) {
+    console.warn('⚠️ Database pool already initialized, replacing existing instance');
+  }
+
+  pool = new DatabasePool(config);
+  console.log('✅ Singleton database pool initialized');
+
+  return pool;
+}
+
+/**
+ * Check if the singleton pool is initialized
+ */
+export function isPoolInitialized(): boolean {
+  return pool !== undefined;
+}

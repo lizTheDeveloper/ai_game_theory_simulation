@@ -9,9 +9,8 @@
  * @author Marcus (Platform Engineer)
  */
 
-import express = require('express');
-import { Express, Request, Response, NextFunction } from 'express';
-import cors = require('cors');
+import express, { Express, Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import { Pool } from 'pg';
 import Redis from 'ioredis';
 import { AuthService } from '../auth/authService';
