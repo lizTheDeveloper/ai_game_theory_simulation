@@ -94,6 +94,7 @@ export interface PlanetaryBoundary {
   surfaceRecovered?: boolean;       // True for surface recovery only (ocean acidification: surface vs deep)
   inputsStopped?: boolean;          // True if new pollution stopped (novel entities: PFAS/microplastics)
 
+<<<<<<< HEAD
   // === IRREVERSIBLE FLOOR TRACKING (Novel Entities Redesign - Nov 13, 2025) ===
   // Research: Cousins 2022, Kane 2022, Ling 2024
   // Track peak contamination to enforce 90% irreversible floor (atmospheric distribution + covalent binding)
@@ -107,6 +108,25 @@ export interface PlanetaryBoundary {
   recoveryHalfLife?: number;       // Years for half-life decay (e.g., 75 years Montreal Protocol analog)
   irreversible?: boolean;          // Whether boundary has irreversible component (vs reversible)
   minimumAsymptoticValue?: number; // Floor value that can't be improved past (e.g., 0.15 = 15% floor)
+=======
+  // === IRREVERSIBILITY TRACKING (Nov 13, 2025) ===
+  // Research: Cousins et al. (2022), Kane et al. (2022)
+  // Novel Entities (PFAS, microplastics) have irreversible distribution
+  // Peak contamination sets floor - cannot clean below ~90% of peak
+  peak?: number;                    // Historical maximum value (for irreversibility floor calculation)
+
+  // === IRREVERSIBILITY PROPERTIES (Nov 16, 2025) ===
+  // Research: novel_entities_irreversibility_20251116.md, Cousins et al. (2022)
+
+  /** True if boundary has very slow decay (centuries timescale) */
+  practicallyIrreversible?: boolean;
+
+  /** Natural decay half-life in years (e.g., 500 for PFAS C-F bonds) */
+  decayHalfLife?: number;
+
+  /** True if atmospheric transport makes local cleanup futile (99% rains back down) */
+  atmosphericTransport?: boolean;
+>>>>>>> origin/auto/worker-20251116_170001
 }
 
 /**

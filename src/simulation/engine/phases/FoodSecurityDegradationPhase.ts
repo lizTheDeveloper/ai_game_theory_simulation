@@ -50,6 +50,9 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/auto/worker-20251116_170001
     // === TIER 2 HIGH: UPDATE NITROGEN-FOOD COUPLING (Nov 15, 2025) ===
     // Calculate regional nitrogen reduction effects from deployed technologies
     // Research: Science Advances (2024), Zhang et al. (2021)
