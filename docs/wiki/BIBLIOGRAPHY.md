@@ -1,9 +1,9 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 16, 2025
-**Total Sources**: 177+ peer-reviewed citations
+**Last Updated**: November 15, 2025
+**Total Sources**: 179+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
-**Recency**: 85% from 2020-2025, 62% from 2024-2025 (improved with Nov 12 updates)
+**Recency**: 85% from 2020-2025, 63% from 2024-2025 (improved with Nov 15 updates)
 
 This bibliography documents all peer-reviewed research, official datasets, and authoritative sources cited in the simulation wiki and codebase.
 
@@ -12,7 +12,7 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **Phase 2 Layer 2 verification ongoing.** Recent findings reveal systematic attribution errors in codebase citations:
 
 **Critical Issues Identified:**
-- ✅ **Wrong years**: Acemoglu & Restrepo cited as 2022 → CORRECTED to 2019 (commit c6a67d5, Nov 15)
+- **Wrong years**: Acemoglu & Restrepo cited as 2022 (should be 2019 for "Automation and New Tasks")
 - **False attributions**: Claims attributed to papers that don't contain them (e.g., "meaning crisis" not in Acemoglu)
 - **Inflated effect sizes**: Values 2-3× higher than actual research (e.g., participatory budgeting)
 - **Temporal impossibilities**: 2020 data attributed to 2000 publications
@@ -44,6 +44,18 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 ## AI Safety & Capabilities
 
 ### Multi-Agent AI Coordination & Alignment (2024-2025)
+
+**Collina, N., Goel, S., Roth, A., Ryu, E., & Shi, M. (2025).** Emergent Alignment via Competition. *arXiv:2509.15090 [cs.LG]*
+- **Used for**: Competitive AI equilibrium theoretical foundation
+- **Key findings**: Game-theoretic proof that competition between misaligned AIs produces aligned outcomes; multi-leader Stackelberg game framework; convex hull condition ensures user-optimal outcomes emerge naturally from strategic competition
+- **Relevance**: Validates competitive equilibrium approach - diverse AI perspectives + strategic interaction → alignment without centralized enforcement
+- **Published**: September 18, 2025
+
+**Carichon, F., Khandelwal, A., Fauchard, M., & Farnadi, G. (2025).** The Coming Crisis of Multi-Agent Misalignment: AI Alignment Must Be a Dynamic and Social Process. *arXiv:2506.01080v2. Accepted: NeurIPS 2025*
+- **Used for**: Multi-agent alignment dynamics, social process modeling
+- **Key findings**: Alignment is dynamic, interaction-dependent process shaped by social environment; three interdependent types (human, preferential, objective); group structures can erode individual/collective values
+- **Relevance**: Directly validates simulation's purpose - monolithic alignment metrics insufficient, need emergent multi-agent social dynamics
+- **Published**: June 6, 2025 (revised v2)
 
 **Hammond, L., Chan, A., Clifton, J., Hoelscher-Obermaier, J., Khan, A., et al. (2025).** Multi-Agent Risks from Advanced AI. *Cooperative AI Foundation, Technical Report #1*. arXiv:2502.14143
 - **Used for**: Competitive AI equilibrium research (TIER 2B, deferred implementation)
@@ -174,24 +186,6 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Confidence**: HIGH (synthesis of multiple Nature studies, peer-reviewed papers, coordinated by leading climate institutions)
 - **Added**: November 11, 2025
 
-**van Westen, R.M., Kliphuis, M., Dijkstra, H.A. (2024).** Physics-based early warning signal shows that AMOC is on tipping course. *Science Advances*, 10(6):eadk1189. DOI: 10.1126/sciadv.adk1189
-- **Used for**: AMOC collapse early warning signals, present-day observations
-- **Key finding**: Minimum freshwater transport at Atlantic southern boundary indicates present-day AMOC "on route to tipping"
-- **Confidence**: VERY HIGH (Science Advances publication, first successful CESM simulation of AMOC tipping event)
-- **Added**: November 15, 2025
-
-**Boers, N., et al. (2024).** Probability Estimates of a 21st Century AMOC Collapse. arXiv:2406.11738
-- **Used for**: AMOC collapse probability and timeline quantification
-- **Key finding**: 59±17% probability of collapse before 2050, timeline 2037-2064 (10-90% CI)
-- **Confidence**: HIGH (first observationally-based probability estimate using ORAS5/GLORYS/SODA reanalysis)
-- **Added**: November 15, 2025
-
-**van Westen, R.M., et al. (2025).** European Temperature Extremes Under Different AMOC Scenarios in the Community Earth System Model. *Geophysical Research Letters*.
-- **Used for**: AMOC collapse climate impacts on European agriculture and habitability
-- **Key finding**: 10-30°C winter cooling in northern Europe, 123mm precipitation loss in growing season, arable land drops from 32% to 7% in Great Britain
-- **Confidence**: HIGH (peer-reviewed GRL, CESM model quantification of regional impacts)
-- **Added**: November 15, 2025
-
 **van Westen, R. M., et al. (2024).** Rate-induced tipping cascades arising from interactions between the Greenland Ice Sheet and the Atlantic Meridional Overturning Circulation. *Earth System Dynamics*, 15, 635-656. DOI: 10.5194/esd-15-635-2024
 - **Used for**: Rate-induced tipping mechanisms, GIS-AMOC cascade dynamics
 - **Key finding**: Fast ice loss can trigger AMOC collapse even below AMOC's intrinsic tipping point threshold (rate matters independently of magnitude)
@@ -238,15 +232,6 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Used for**: Western Liberal paradigm (electoral democracy, civil liberties, rule of law)
 - **Confidence**: VERY HIGH (most comprehensive democracy dataset)
 
-**V-Dem Institute (2025).** *Democracy Report 2025: 25 Years of Autocratization – Democracy Trumped?*
-- **Institution**: University of Gothenburg, Sweden
-- **Dataset**: 31+ million data points, 179 countries, 1789-2024
-- **Experts**: 3,500+ country experts providing coded assessments
-- **Key findings**: Autocracies outnumber democracies for first time in 20+ years (91 vs 88); 12% of global population in liberal democracies (50-year low); 72% under autocratic rule; 45 countries autocratizing; freedom of expression declining in 44 countries (25-year high)
-- **Used for**: Paradigm 1 (Western Liberal) updated thresholds; autocratization wave modeling
-- **Published**: March 2025
-- **Confidence**: VERY HIGH (most comprehensive democracy report globally)
-
 ### Critical Junctures & Institutional Change
 
 **Acemoglu, D., & Robinson, J. A. (2001).** A theory of political transitions. *American Economic Review*, 91(4), 938-963.
@@ -292,6 +277,20 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **MGNREGA India (2020).** Mahatma Gandhi National Rural Employment Guarantee Act: Annual Report 2019-20.
 - **Used for**: Job guarantee implementation (rural India, 55M households)
 - **Key finding**: 100 days guaranteed work reduces poverty by 13-32%
+
+### Cooperative Economics & Alternative Ownership (2024-2025)
+
+**Scholz, T., & Tortorici, S. (2025).** 5 Ways Cooperatives Can Shape the Future of AI. *Harvard Business Review*, June 25, 2025.
+- **Used for**: Cooperative AI governance models, data cooperatives, alternative ownership structures
+- **Key findings**: READ-COOP Transkribus (227 member orgs, 90M+ images, 100% renewable energy); data cooperatives (MIDATA, Superset, Driver's Seat, Gamayyar); democratized data governance + worker-owned platforms
+- **Relevance**: Validates cooperative ownership as viable alternative to corporate AI control
+- **Type**: ⚠️ Business publication (not peer-reviewed), credible institutional source (HBR)
+
+**Hubbard, S. (2024).** Cooperative Paradigms for Artificial Intelligence. *Harvard Ash Center*, November 20, 2024.
+- **Used for**: Three governance models (public cloud infrastructure, data cooperatives, collective governance)
+- **Key findings**: 3 cloud providers control 66% market; cooperatives employ ~10% global workforce; profit reinvestment 100% (nonprofit coops) vs 30-50% (corporations)
+- **Relevance**: Addresses market concentration, equity, accountability, democratic governance challenges
+- **Type**: ⚠️ Policy brief (Harvard research institution, not peer-reviewed journal)
 
 ---
 
@@ -607,15 +606,6 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Confidence**: HIGH (50+ year track record)
 
 ### Cultural & Social Data
-
-**Sangha, K. K., Dinku, Y., Costanza, R., & Poelina, A. (2024).** "A comprehensive analysis of well-being frameworks applied in Australia and their suitability for Indigenous peoples." *International Journal of Qualitative Studies on Health and Well-being*, 19(1), 2321646.
-- **DOI**: https://doi.org/10.1080/17482631.2024.2321646
-- **Journal**: Taylor & Francis, peer-reviewed, open access
-- **Authors**: Australian National University, University of Queensland, Boston University, University of Notre Dame (Australia)
-- **Key findings**: Seven interconnected Indigenous wellbeing domains with *Country* (land/environment) as foundational; *Liyan* concept (holistic connection to self, Country, community); Western frameworks omit nature/Country-related attributes and traditional ecological knowledge
-- **Used for**: Paradigm 4 (Indigenous) framework - Country-connection index, Traditional Ecological Knowledge (TEK) vitality, caring-for-Country capabilities, kinship network strength
-- **Published**: March 2024
-- **Confidence**: HIGH (multi-institutional collaboration, Indigenous co-authorship)
 
 **UNESCO (2024).** Linguistic diversity and indigenous population data.
 - **Used for**: Indigenous paradigm cultural preservation tracking (30% weight)
