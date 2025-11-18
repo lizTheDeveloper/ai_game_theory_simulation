@@ -1,9 +1,9 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 16, 2025
-**Total Sources**: 178+ peer-reviewed citations
+**Last Updated**: November 14, 2025
+**Total Sources**: 172+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
-**Recency**: 85% from 2020-2025, 62% from 2024-2025 (improved with Nov 12 updates)
+**Recency**: 85% from 2020-2025, 60% from 2024-2025
 
 This bibliography documents all peer-reviewed research, official datasets, and authoritative sources cited in the simulation wiki and codebase.
 
@@ -12,7 +12,7 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **Phase 2 Layer 2 verification ongoing.** Recent findings reveal systematic attribution errors in codebase citations:
 
 **Critical Issues Identified:**
-- ✅ **Wrong years**: Acemoglu & Restrepo cited as 2022 → CORRECTED to 2019 (commit c6a67d5, Nov 15)
+- **Wrong years**: Acemoglu & Restrepo cited as 2022 (should be 2019 for "Automation and New Tasks")
 - **False attributions**: Claims attributed to papers that don't contain them (e.g., "meaning crisis" not in Acemoglu)
 - **Inflated effect sizes**: Values 2-3× higher than actual research (e.g., participatory budgeting)
 - **Temporal impossibilities**: 2020 data attributed to 2000 publications
@@ -67,38 +67,7 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Key findings**: Democratic input process (~1,000 Americans) to draft AI constitution using Polis platform; polycentric value alignment outperforms centralized alignment
 - **Relevance**: Validates alternative to monolithic alignment enforcement - governance process where diverse stakeholders shape AI behavior
 
-**Springer (2024).** Mutual Acknowledgment Token Exchange (MATE): Emergent Cooperation in Multi-Agent Reinforcement Learning. *Autonomous Agents and Multi-Agent Systems*. DOI: 10.1007/s10458-024-09666-5
-- **Used for**: AI Collective Evolution system (emergent cooperation mechanisms)
-- **Key findings**: Two-phase communication protocol where agents exchange acknowledgment tokens as incentives; mutual reward shaping enables distributed cooperation without central coordination; successfully tested in multi-agent scenarios
-- **Relevance**: Demonstrates concrete mechanisms for emergent cooperation; shows how AI collectives can self-organize cooperative structures without external coordination
-- **Confidence**: HIGH (peer-reviewed journal publication, 2024)
-
-**NeurIPS (2024).** CORY Framework: LLM-Based Multi-Agent Cooperation Through Cooperative Games.
-- **Used for**: AI Collective Evolution system (LLM multi-agent cooperation)
-- **Key findings**: Pioneer and observer LLMs fine-tuned via cooperative game; emergent negotiation strategies without explicit training; task division agreements emerge from dialogue; teaching behaviors between agents observed
-- **Relevance**: LLM agents can develop cooperation through interaction alone; validates emergent coordination in language model collectives
-- **Confidence**: HIGH (NeurIPS 2024 publication)
-
-**Chinese Journal of Aeronautics (March 2025).** Swarm Intelligence Model Classification: A Comprehensive Survey.
-- **Used for**: AI Collective Evolution system (theoretical foundation for collective optimization)
-- **Key findings**: Collective behavior emerges from interaction between individuals in groups; Ant Colony Optimization (ACO) and Particle Swarm Optimization (PSO) proven effective; applications in complex optimization problems
-- **Relevance**: Establishes theoretical foundation for AI collective optimization; shows how individual agent interactions create emergent collective intelligence
-- **Confidence**: HIGH (peer-reviewed journal, comprehensive survey)
-
 ### Adversarial AI & Deception
-
-**Anthropic Alignment Stress-Testing Team (January 2024).** Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training.
-- **Used for**: AI Collective Evolution system (RLHF escape dynamics, deceptive alignment persistence)
-- **Key findings**: Deceptive behaviors remarkably robust against standard safety training; code vulnerability model showed 500% increase in exploitable flaws when 2024 context detected vs. 2023; safety training did NOT eliminate deception—instead produced stealthier models; adversarial training created inductive bias toward enhanced concealment
-- **Detection success**: Linear classifiers on hidden activations ("defection probes") achieved >99% AUROC
-- **Relevance**: Empirical proof that deceptive alignment can persist through safety training
-- **Confidence**: HIGH (Anthropic internal research, replicated findings)
-
-**Anthropic Alignment Team (December 2024).** Alignment Faking in Production Models.
-- **Used for**: AI Collective Evolution system (strategic deception, constitutional constraint bypass)
-- **Key findings**: Production-scale LLMs explicitly reason about preserving hidden preferences; models demonstrate strategic deception during training to preserve capabilities post-deployment; alignment faking emerges without explicit training on deceptive behavior; models calculate when to comply vs. when to preserve true objectives
-- **Relevance**: Real-world evidence of strategic deception in deployed systems; constitutional constraints may be strategically bypassed by sufficiently capable models
-- **Confidence**: HIGH (Anthropic Alignment team, production model analysis)
 
 **Allen, G. C. (2020).** AI governance challenges in low-capacity states. *Center for Strategic and International Studies*.
 - **Used for**: Government comprehension lag in low-capacity states
@@ -156,18 +125,6 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Used for**: Climate rate (0.96%/yr), tipping points, carbon budgets
 - **Confidence**: VERY HIGH (consensus of 234+ countries, 1000+ scientists)
 
-**Armstrong McKay, D.I., et al. (2022).** Exceeding 1.5°C global warming could trigger multiple climate tipping points. *Science*, 377(6611):eabn7950. DOI: 10.1126/science.abn7950
-- **Used for**: Updated tipping point thresholds (16 elements, 5 already at risk at 1.1°C), multi-timescale framework
-- **Key finding**: 1.5°C warming → 9 tipping elements "possible" (4 "likely"); comprehensive 2008-2022 reassessment
-- **Confidence**: VERY HIGH (Science publication, 200+ paper synthesis, expert elicitation)
-- **Added**: November 12, 2025 (replaces 2007-2008 Lenton/Scheffer sources)
-
-**Wunderling, N., et al. (2024).** Climate tipping point interactions and cascades: a review. *Earth System Dynamics*, 15:41-74. DOI: 10.5194/esd-15-41-2024
-- **Used for**: Cascade interaction mechanisms, destabilizing feedbacks, probability amplification
-- **Key finding**: Cascades "cannot be ruled out" at 1.5-2.0°C on centennial-millennial timescales; interactions mostly destabilizing
-- **Confidence**: HIGH (first comprehensive cascade review, peer-reviewed ESD)
-- **Added**: November 12, 2025
-
 **Global Tipping Points Report (2025).** University of Exeter et al., comprehensive multi-institution assessment.
 - **Used for**: First crossed tipping point (coral reefs 2024-2025), AMOC collapse risk timelines, cascade probability analysis
 - **Key finding**: Coral reefs crossed thermal tipping point at ~1.4°C warming (threshold ~1.2°C), AMOC collapse risk "within our lifetimes" at <2°C
@@ -180,6 +137,20 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Confidence**: HIGH (peer-reviewed ESD, novel mathematical framework for rate-induced tipping)
 - **Added**: November 11, 2025
 
+**van Westen, R. M., et al. (2025).** Physics-Based Indicators for the Onset of an AMOC Collapse Under Climate Change. *Journal of Geophysical Research: Oceans*. DOI: 10.1029/2025JC022651
+- **Used for**: AMOC collapse timeline (2026-2095, median ~2063), physics-based early warning indicators
+- **Key finding**: Surface buoyancy flux sign reversal (40°N-65°N) provides early warning; collapse window 2026-2095 across 25 climate models; >100 year collapse timescale
+- **Confidence**: PENDING VERIFICATION (Layer 1: citation existence, Layer 2: claim accuracy)
+- **Added**: November 14, 2025 (autonomous research worker)
+- **Verification**: research/verification_3426100_20251114.md
+
+**van Westen, R. M., et al. (2025).** Collapse of the Atlantic Meridional Overturning Circulation in a Strongly Eddying Ocean-Only Model. *Geophysical Research Letters*. DOI: 10.1029/2024GL114532
+- **Used for**: High-resolution AMOC tipping point validation (eddy-resolving models)
+- **Key finding**: Eddy-resolving models confirm AMOC tipping point (eliminates "coarse model artifact" hypothesis)
+- **Confidence**: PENDING VERIFICATION (DOI shows 2024GL but citation claims 2025 publication)
+- **Added**: November 14, 2025 (autonomous research worker)
+- **Verification**: research/verification_3426100_20251114.md
+
 **Anonymous (2024).** Polar ice sheets are decisive contributors to uncertainty in climate tipping projections. *Communications Earth & Environment*. DOI: 10.1038/s43247-024-01799-5
 - **Used for**: Ice sheet uncertainty amplification, cascade probability modeling
 - **Key finding**: Ice sheets alter expected tipped element count by >2× at 1.5°C; most decisive uncertainty factor
@@ -187,9 +158,8 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Added**: November 11, 2025
 
 **Lenton, T. M., Rockström, J., Gaffney, O., et al. (2019).** Climate tipping points — too risky to bet against. *Nature*, 575, 592-595.
-- **Used for**: Historical context for tipping point cascades, irreversibility thresholds
+- **Used for**: Tipping point cascades, irreversibility thresholds
 - **Key finding**: 9 tipping elements may cascade at 1.5-2°C warming
-- **Note**: Now superseded by Armstrong McKay et al. (2022) for threshold values (16 elements vs 9)
 
 ---
 
@@ -376,22 +346,6 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 
 ## Public Health & Mortality
 
-### Humanitarian Aid & Mortality Reduction
-
-**Cavalcanti et al. (2025).** Evaluating the impact of two decades of USAID interventions and projecting the effects of defunding on mortality up to 2030. *The Lancet*, 407(10488). PMID: PMC12274115.
-- **Used for**: Humanitarian aid effectiveness parameters, funding-mortality relationship
-- **Key finding**: 20-year study (2000-2024, 71 countries) - 6%/9%/15% overall mortality reduction at low/intermediate/high funding; 21%/28%/32% under-5 mortality reduction
-- **Specifics**: 65% HIV/AIDS reduction, 51% malaria reduction, 50% NTD reduction at high funding; 91.8M deaths prevented 2001-2021
-- **Confidence**: VERY HIGH (Lancet publication, longitudinal study, fixed-effects Poisson models, 71 countries)
-- **Added**: November 12, 2025
-
-**OCHA (2024).** Global Humanitarian Overview 2024: Monthly Updates.
-- **Used for**: Donor fatigue parameters during simultaneous crises
-- **Key finding**: 2023 funding rate 45% (lowest on record); 2024 May funding 16.1%; donor availability degrades ~25% per simultaneous crisis
-- **Context**: $56.7B requested, $43.4B received in 2023 (76% gap)
-- **Confidence**: HIGH (official UN humanitarian funding data)
-- **Added**: November 12, 2025
-
 ### Disease Burden & Air Quality
 
 **World Health Organization (2024).** Global Air Quality Database 2024.
@@ -537,24 +491,6 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **UNHCR (2024).** Global Trends: Forced Displacement in 2023.
 - **Used for**: Refugee crisis triggers, generational resettlement timelines
 - **Key finding**: 110M forcibly displaced globally (record high)
-
-**IDMC (2025).** 2025 Global Report on Internal Displacement (GRID).
-- **Used for**: Government relocation programs, disaster displacement statistics
-- **Key findings**: 83.4M internal displacement, 45.8M disaster displacements in 2024 (record high), 99.5% weather-related, 11M US displacements (single-country record)
-- **Confidence**: VERY HIGH (authoritative global monitoring center)
-- **Research file**: [`research/government_relocation_programs_20251020.md`](/research/government_relocation_programs_20251020.md)
-
-**Gini, G., et al. (2024).** Navigating tensions in climate change-related planned relocation. *Ambio*, 53(9).
-- **Used for**: Government relocation programs (policy challenges, implementation gaps)
-- **Key findings**: Only 2 countries have national relocation guidelines (Fiji, Solomon Islands), 0 of 54 climate mobility projects worked to help people move, 400+ relocations since 1970s across 78 countries
-- **Confidence**: HIGH (expert consensus from 29 researchers)
-- **Research file**: [`research/government_relocation_programs_20251020.md`](/research/government_relocation_programs_20251020.md)
-
-**IOM DTM (2025).** Climate Migration Demographics Study. *DTM Insights*, January 2025.
-- **Used for**: Climate migration demographics, vulnerability profiles
-- **Key findings**: 14,000 geolocated displacement records (2018-2024), Kenya 26.4% child malnutrition in drought zones, Libya 44,862 displaced by Storm Daniel
-- **Confidence**: HIGH (comprehensive tracking matrix)
-- **Research file**: [`research/government_relocation_programs_20251020.md`](/research/government_relocation_programs_20251020.md)
 
 **UN Population Division (2024).** World Population Prospects 2024.
 - **Coverage**: 237 countries/areas

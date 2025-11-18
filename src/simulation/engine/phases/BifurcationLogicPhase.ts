@@ -343,18 +343,35 @@ export class BifurcationLogicPhase implements SimulationPhase {
         bifState.metrics.avgDistanceToThresholds * 0.95 + minDistanceValidated * 0.05;
 
       // Track time series data point (CRITICAL-1 fix: Nov 13, 2025 - enables Priya variance validation)
-      // HIGH-1 fix: Nov 14, 2025 - Cap at 100 entries to prevent memory leak in long simulations
-      // (600 month runs would accumulate 600+ objects; Monte Carlo N=100 = 100K+ objects total)
-      // Pattern from PhaseOrchestrator.ts:228 (commit 27e788fe9)
-      bifState.metrics.amplificationTimeSeries = [
-        ...bifState.metrics.amplificationTimeSeries.slice(-99),
-        {
+      // HIGH-1 fix (Nov 14, 2025): Implement rolling window to prevent memory exhaustion
+      // Context: 1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects
+      // Solution: Keep last N data points (default: 200), discard older data
+      // Tradeoff: Validation loses full history but gains bounded memory usage
+      //
+      // Configuration via state.config.bifurcationDiagnostics:
+      // - enabled: true/false (default: true for backward compat)
+      // - maxTimeSeriesLength: number (default: 200)
+
+      const diagnosticsEnabled = state.config.bifurcationDiagnostics?.enabled ?? true;
+      const maxLength = state.config.bifurcationDiagnostics?.maxTimeSeriesLength ?? 200;
+
+      if (diagnosticsEnabled) {
+        bifState.metrics.amplificationTimeSeries.push({
           month: state.currentMonth,
           amplification: amplificationValidated,
           distanceToNearest: minDistanceValidated,
           nearestSystem: nearestThresholdName,
+        });
+
+        // Enforce rolling window: keep only last maxLength entries
+        // This prevents unbounded memory growth in long simulations
+        if (bifState.metrics.amplificationTimeSeries.length > maxLength) {
+          // Remove oldest entries (shift is O(n) but only happens once per window overflow)
+          // Alternative: circular buffer, but adds complexity for marginal gain
+          const excess = bifState.metrics.amplificationTimeSeries.length - maxLength;
+          bifState.metrics.amplificationTimeSeries.splice(0, excess);
         }
-      ];
+      }
 
       // HIGH-2 Instrumentation (Nov 13, 2025): Accumulate total amplification per system
       // Tracks cumulative amplification to validate mortality calibration

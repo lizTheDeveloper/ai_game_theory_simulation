@@ -104,9 +104,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📖 **Context:** Quality improvement to ScenarioStartingConditions interface in src/types/scenarios.ts
 - 🎯 **Impact:** Fixes Issue #119 - strengthens type safety for scenario configuration
 
+**Nov 14: 🚨 CRITICAL - Ocean Acidification Boundary Transgressed (7th Boundary)** (commit 1d50ed5)
+- 🚨 **Breaking Update:** Ocean acidification boundary crossed in 2025 - now **7 of 9 boundaries transgressed**
+- 📉 **pH Decline:** 0.1 units since Industrial Revolution (30-40% acidity increase)
+- 🪸 **Aragonite Saturation:** <80% (below safe threshold, down from 81% in 2023)
+- ⚠️ **Accelerating Crisis:** Boundary crossed earlier than projected, compounds with 2024 coral reef collapse
+- 📖 **Updated Research File:** research/planetary_boundaries_2023_update_20251111.md (now covers 2023-2025)
+- 🔬 **Sources:** Sakschewski & Caesar et al. (2025), Stockholm Resilience Centre Planetary Health Check 2025
+- 🎯 **Simulation Impact:** Only 2 boundaries remain safe (ozone, aerosols) - models accelerating cascade effects
+
 **Nov 11: Planetary Boundaries 2023 Framework Research Update** (commit a9c5a91)
 - 📚 **New Research:** Richardson et al. (2023) planetary boundaries framework documented
-- 📊 **Key Finding:** 6 of 9 boundaries transgressed (vs previous 7/9 - status clarification needed)
+- 📊 **Key Finding:** 6 of 9 boundaries transgressed (updated to 7/9 in Nov 14, 2025)
 - 🔬 **Updated Thresholds:** Quantitative values for all 9 boundaries from 2023 peer-reviewed update
 - 🆕 **New Metric:** HANPP (Human Appropriation of Net Primary Production) replaces BII for functional biosphere
 - ⏰ **Historical Insight:** Freshwater transgression occurred 1905-1929 (earlier than recognized)
