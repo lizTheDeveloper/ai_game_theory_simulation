@@ -1,7 +1,7 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 14, 2025
-**Total Sources**: 172+ peer-reviewed citations
+**Last Updated**: November 12, 2025
+**Total Sources**: 170+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 60% from 2024-2025
 
@@ -136,20 +136,6 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Key finding**: Fast ice loss can trigger AMOC collapse even below AMOC's intrinsic tipping point threshold (rate matters independently of magnitude)
 - **Confidence**: HIGH (peer-reviewed ESD, novel mathematical framework for rate-induced tipping)
 - **Added**: November 11, 2025
-
-**van Westen, R. M., et al. (2025).** Physics-Based Indicators for the Onset of an AMOC Collapse Under Climate Change. *Journal of Geophysical Research: Oceans*. DOI: 10.1029/2025JC022651
-- **Used for**: AMOC collapse timeline (2026-2095, median ~2063), physics-based early warning indicators
-- **Key finding**: Surface buoyancy flux sign reversal (40°N-65°N) provides early warning; collapse window 2026-2095 across 25 climate models; >100 year collapse timescale
-- **Confidence**: PENDING VERIFICATION (Layer 1: citation existence, Layer 2: claim accuracy)
-- **Added**: November 14, 2025 (autonomous research worker)
-- **Verification**: research/verification_3426100_20251114.md
-
-**van Westen, R. M., et al. (2025).** Collapse of the Atlantic Meridional Overturning Circulation in a Strongly Eddying Ocean-Only Model. *Geophysical Research Letters*. DOI: 10.1029/2024GL114532
-- **Used for**: High-resolution AMOC tipping point validation (eddy-resolving models)
-- **Key finding**: Eddy-resolving models confirm AMOC tipping point (eliminates "coarse model artifact" hypothesis)
-- **Confidence**: PENDING VERIFICATION (DOI shows 2024GL but citation claims 2025 publication)
-- **Added**: November 14, 2025 (autonomous research worker)
-- **Verification**: research/verification_3426100_20251114.md
 
 **Anonymous (2024).** Polar ice sheets are decisive contributors to uncertainty in climate tipping projections. *Communications Earth & Environment*. DOI: 10.1038/s43247-024-01799-5
 - **Used for**: Ice sheet uncertainty amplification, cascade probability modeling

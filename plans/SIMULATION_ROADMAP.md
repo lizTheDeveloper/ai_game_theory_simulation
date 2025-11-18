@@ -39,35 +39,6 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-   - **AMOC Collapse Early Warning Indicators (2025)** - MEDIUM (Added Nov 14, 2025)
-     - **Context:** 2025 physics-based AMOC collapse indicators from van Westen et al. - quantitative timeline + early warning
-     - **Research Delivered:** Updated research/climate_tipping_cascades_2024_2025.md with collapse window (2026-2095, median ~2063)
-     - **Key Claims Requiring Verification:**
-       - Collapse window: 2026-2095 across 25 climate models - verify model ensemble details
-       - Median estimate: ~2063 under SSP5-8.5 - verify median calculation, scenario specificity
-       - Early warning: Surface buoyancy flux sign reversal (40°N-65°N) - verify physics-based indicator
-       - Current status: AMOC "on route to tipping" (post-2020 weakening) - verify observational evidence
-       - High-res validation: Eddy-resolving models confirm tipping - verify GRL paper findings
-       - Collapse timescale: >100 years from initiation - verify timescale estimate
-       - 25 climate models analyzed - verify ensemble composition
-     - **Citations Requiring Existence Verification:**
-       - van Westen et al. (2025) JGR: Oceans DOI:10.1029/2025JC022651
-       - van Westen et al. (2025) GRL DOI:10.1029/2024GL114532 (Note: DOI shows 2024GL, citation claims 2025)
-     - **Verification File:** research/verification_3426100_20251114.md (two-layer: existence + claim accuracy)
-     - **Integration Questions:**
-       - How to convert ensemble spread (2026-2095) to probability distribution?
-       - Should AMOC use instant collapse or gradual weakening (>100 year timescale)?
-       - Model buoyancy flux early warning system? (requires ice melt + heat transport tracking)
-       - SSP5-8.5 only or multiple emission scenarios?
-     - **Assignments:**
-       - Sylvia: Citation verification (2 DOIs, resolve 2024GL vs 2025 discrepancy) + claim verification (7 quantitative claims)
-       - Cynthia: Find distribution shape (normal, skewed, bimodal?) from paper ensemble analysis
-       - Roy: Integration design (BLOCKED until validation complete)
-     - **Priority:** MEDIUM - Refines existing AMOC mechanics (vague "within lifetimes" → quantitative 2063 median)
-     - **Status:** ⚠️ PENDING VALIDATION - 2 citations, 7 quantitative claims, 4 integration questions
-     - **Research File:** research/climate_tipping_cascades_2024_2025.md (updated Nov 14, 2025)
-     - **Commit:** 3426100
-
    - **AI Governance International Coordination (2023-2025)** - MEDIUM (Added Nov 13, 2025)
      - **Context:** International AI governance coordination mechanisms documented (Bletchley Summit, Seoul Summit, AI Safety Institutes)
      - **Research Delivered:** 503-line analysis of AI governance summits, voluntary commitments, enforcement mechanisms
@@ -1036,13 +1007,6 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
-- [ ] 🔬 **NEW:** Verify biochar and ocean iron fertilization parameters (research/verification_2f9df5b_20251113.md, commit 2f9df5b) - **11 claims requiring Layer 1+2 verification** including:
-  - Biochar: 0.7-1.8 Gt CO₂/year (npj Materials Sustainability 2025, Nature Comm Earth Environ 2025)
-  - Biochar: 61% soil carbon enhancement (Biochar journal 2024, 75-study meta-analysis)
-  - Ocean iron: $7-$4,691/t CO₂ cost range (Emerson et al. 2024, Earth's Future)
-  - Ocean iron: Regional efficiency tiers - Antarctic Shelf <$100/t vs offshore >$1,000/t (Bach et al. 2023, GBC)
-  - **Priority:** HIGH (addresses "Low Confidence" research gaps in climate_deployment_timescales_20251113.md)
-  - **Impact:** Will update TIER 1 climate tech parameters when validated
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)

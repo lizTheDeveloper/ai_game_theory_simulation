@@ -5,16 +5,12 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 14, 2025 - Afternoon)
+**Current Status:** 🟢 **EXCELLENT - STABLE AND IMPROVING** (Nov 13, 2025)
 - **Research Quality:** A (peer-reviewed foundation, comprehensive citations)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, defensive cleanup complete)
-- **Architecture Health:** 8.5/10 → **UPGRADED** (All CRITICAL issues resolved, 3 HIGH priority concerns remain)
-  - **CRITICAL-1:** ✅ Bifurcation race condition RESOLVED (phase dependencies + validation)
-  - **CRITICAL-2:** ✅ Novel entities mortality propagation RESOLVED (Nov 14, 2025)
-  - **HIGH:** Memory leak RESOLVED, parallelization + scenario validation pending
-- **System Trajectory:** ✅ HEALTHY - Ready for new feature development
+- **Architecture Health:** 9.5/10 (cross-system integration operational, phase consolidation complete)
+- **System Trajectory:** STABLE - phase reduction 116→95 (-18% complexity)
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Action Required:** None (all critical issues resolved, HIGH priority items can wait)
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -81,38 +77,37 @@
    - Critique: `reviews/bifurcation_empirical_critique_20251112.md`
    - Recommendation: Replace simple inverse formula with bifurcation-theory-grounded approach
    - Formula: baseAmplification = 1/√(0.01 + distance) + system multipliers
- - **Implementation:** ✅ COMPLETE
-   - File: `src/simulation/engine/phases/BifurcationLogicPhase.ts` (501 lines)
+ - **Implementation:** COMPLETE
+   - File: `src/simulation/engine/phases/BifurcationLogicPhase.ts` (lines 209-318)
    - Formula: Bifurcation theory (1/√d) + empirically-calibrated system multipliers
-   - System Multipliers (FINAL CALIBRATION - Nov 13, 2025):
-     - Environmental: 1.05× (fold catastrophe) - 30% reduction
-     - Social: 1.75× (Hopf bifurcation, oscillatory dynamics) - 30% reduction
-     - Economic: 1.75× (cascade effects) - 30% reduction
-     - Governance: 1.4× (feedback loops) - 30% reduction
-     - Flourishing: 1.4× (positive cascades) - 30% reduction
-     - Technology: 1.4× (innovation spikes) - 30% reduction
-   - Max Amplification: 100× (based on Permian-Triassic extinction data)
- - **Architecture Review (Quality Gate 2):** ✅ COMPLETE - Grade B+ (Nov 13, 2025)
+   - System Multipliers:
+     - Environmental: 1.5× (fold catastrophe)
+     - Social: 2.5× (Hopf bifurcation, oscillatory dynamics)
+     - Economic: 3.5× (cascade effects, calibrated to 2008 crisis)
+     - Governance: 2.0× (feedback loops)
+     - Flourishing: 1.0× (positive threshold, no amplification)
+     - Technology: 1.5× (innovation spike dynamics)
+   - Max Amplification: 10× → 100× (based on Permian-Triassic extinction data)
+ - **Architecture Review (Quality Gate 2):** COMPLETE - Grade B- (Nov 13, 2025)
    - Review: `reviews/bifurcation_architecture_review_20251113.md`
-   - Verdict: APPROVED WITH CONDITIONS (all addressed)
+   - Verdict: APPROVE WITH CONDITIONS
    - Strengths: O(1) performance, proper state management, research citations
-   - Fixes Applied: Extinction classification, bifurcation statistics, metrics extraction, 30% multiplier reduction
- - **Monte Carlo Validation:** ✅ COMPLETE - Grade B (Nov 13, 2025)
-   - N=10 runs recalibrated (seeds 42000-42009, 240 months)
-   - Mean Mortality: 67.8% (down from 87.2%, within 20% of 43-58% target)
-   - Median Mortality: 96.65% (bimodal distribution: 70% collapse, 30% survival)
-   - Outcome Distribution: 70% pyrrhic dystopia, 30% humane dystopia, 0% extinction (vs 20% pre-calibration)
-   - CV: 77% (high variance, outcome diversity validated)
-   - Peak Amplification: 13.47× average (range 8.25× - 17.47×)
-   - Priya analysis: Grade B - `reviews/bifurcation_quantitative_validation_20251113.md`
- - **Instrumentation:** ✅ VALIDATED (Nov 13, 2025)
-   - `bifurcationState.metrics.maxVarianceAmplification` - Peak amplification per run
-   - `bifurcationState.metrics.avgDistanceToThresholds` - Average proximity
-   - `bifurcationState.metrics.amplificationTimeSeries` - Per-month tracking
- - **Wiki Documentation:** ✅ UPDATED (Nov 13, 2025)
-   - Section: Bifurcation & Variance Amplification System
-   - Validation results, calibration history, Grade B summary included
- - **Status:** ✅ **COMPLETE - READY FOR ARCHIVAL**
+   - CRITICAL fixes: 3 bugs fixed (extinction classification, bifurcation statistics, metrics extraction)
+   - Remaining: 87.2% mortality vs 43-58% target (system multipliers too aggressive)
+ - **Monte Carlo Validation:** BLOCKED (Nov 13, 2025)
+   - N=10 runs complete (seeds 42000-42009, 240 months)
+   - Results: 80% dystopia, 20% extinction, 77.7% mortality
+   - Priya analysis: Grade F - BLOCKED by missing instrumentation
+   - Issue: Cannot validate variance amplification without per-run bifurcation metrics
+   - Issue: 87.2% mortality vs 43-58% research target (+50% overshoot)
+ - **Remaining Work:**
+   - 🔴 CRITICAL: Add bifurcation instrumentation (per-run tracking, threshold proximity, amplification time series)
+   - 🔴 CRITICAL: Reduce system multipliers by 30% or add time-based scaling
+   - 🟡 NEXT: Re-run Monte Carlo N=10 with same seeds after fixes
+   - 🟡 Complete Priya validation analysis (unblocked by instrumentation)
+   - 🟡 Wiki documentation update
+   - 🟡 Archive to /plans/completed/ (after full validation)
+ - **Status:** 🟡 IMPLEMENTATION COMPLETE, VALIDATION BLOCKED (instrumentation gap)
 
 **Recent Completions (Nov 9-10, 2025):**
 - ✅ **PHASE CONSOLIDATION PROJECT COMPLETE** (Nov 7-9, 2025)
@@ -266,17 +261,20 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (26 tech candidates, 9 paradigm shifts)
 
 **Research Verification Queue:**
-- [x] **Novel Entities Zero-Effectiveness (commit 7ac8b8f)** - ✅ VALIDATION COMPLETE
+- [ ] **Bifurcation Multiplier Calibration (commit 6b42b7c)** - Citation + claim verification
+  - Verification spec: `research/verification_6b42b7c_20251113.md`
+  - Changes: ALL multipliers reduced 30% (1.05-1.75×), extinction logic fixed
+  - Critical verifications needed:
+    1. Mortality target range (43-58%) - What research establishes this?
+    2. Extinction threshold (10K) - Minimum viable population citation
+    3. Economic multiplier vs VIX amplification relationship
+  - Status: Ready for orchestrator VALIDATION phase (research-skeptic review)
+- [ ] **Novel Entities Zero-Effectiveness (commit 7ac8b8f)** - Citation + claim verification
   - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
   - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
   - Verification spec: `research/verification_7ac8b8f_20251113.md`
   - Quality Gate 1: PASSED (Grade B+)
-  - Quality Gate 2: PASSED (Grade B, CONDITIONAL) - `reviews/novel_entities_research_critique_20251113_validation.md`
-  - **Requirements before implementation:**
-    1. Monte Carlo sensitivity analysis (irreversibleFraction: 0.80-0.95, reboundFactor: 0.5-0.9, timelagYears: 10-30)
-    2. Code comments flagging HIGH UNCERTAINTY parameters
-    3. Justify 30-year time lag or use range
-  - **Next:** Implementation Phase 1-3 (simulation-maintainer) + Monte Carlo validation (priya)
+  - Next: Orchestrator begins at VALIDATION phase (research-skeptic review)
 
 ---
 
@@ -1648,98 +1646,9 @@ Then proceed with phase consolidation implementation.
 
 ---
 
-## 🚨 CRITICAL Issues (Active)
+## 🚨 CRITICAL Issues from Daily Review (November 7, 2025)
 
-### From Architecture Review (November 13, 2025) - architecture-skeptic
-
-**✅ CRITICAL-1: Bifurcation Race Condition Breaks Monte Carlo Determinism** [COMPLETE - Nov 14, 2025]
-- **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:305`
-- **Problem:** Weighted average calculation (0.95/0.05 split) depends on phase execution order - non-deterministic
-- **Impact:** Research results unreproducible, Monte Carlo analysis invalid
-- **Solution Implemented:**
-  1. ✅ Added explicit phase dependencies on `bifurcation-logic` phase (Nov 14, 2025)
-     - StochasticInnovationPhase (line 201)
-     - ClimateSystemPhase (line 81)
-     - ExogenousShockPhase (line 1226)
-  2. ✅ Single-writer pattern verified (only BifurcationLogicPhase writes `avgDistanceToThresholds`)
-  3. ✅ Determinism validation script fixed and confirms bit-identical results across 3 runs
-- **Testing:** `scripts/validateBifurcationDeterminism.ts` - 3 runs with seed=42 produce IDENTICAL bifurcation metrics
-- **Files Modified:**
-  - `src/simulation/engine/phases/StochasticInnovationPhase.ts`
-  - `src/simulation/engine/phases/ClimateSystemPhase.ts`
-  - `src/simulation/engine/phases/ExogenousShockPhase.ts`
-  - `scripts/validateBifurcationDeterminism.ts` (validation tool)
-- **Status:** ✅ COMPLETE - Monte Carlo determinism restored, research results reproducible
-- **Source:** `reviews/architecture_review_20251113.md`
-
-**✅ CRITICAL-2: Novel Entities Not Propagating to Mortality Pipeline** [COMPLETE - Nov 14, 2025]
-- **Location:** `src/simulation/novelEntities.ts` → Bayesian mortality integration
-- **Problem:** Novel entities tracks accumulation but mortality integration incomplete - risk didn't propagate through Bayesian network
-- **Impact:** Major game mechanic (chemical pollution) had no real effect on outcomes
-- **Solution Implemented:**
-  1. ✅ Fixed crisis-to-mortality integration (commit 6c885d9e2)
-  2. ✅ Novel entities crises now correctly add ongoing monthly mortality via `addOngoingMortality()`
-  3. ✅ Integration tests added validating novel entities → mortality propagation
-- **Testing:** Validation scripts confirm chemical pollution now affects mortality outcomes
-- **Files Modified:**
-  - `src/simulation/novelEntities.ts` - Fixed mortality integration
-  - Validation scripts - Confirmed propagation working
-- **Status:** ✅ COMPLETE - Chemical pollution now properly affects mortality
-- **Source:** `reviews/architecture_review_20251113.md`
-- **Handoff:** Archived to `/plans/completed/CRITICAL-2_novel_entities_mortality_handoff.md`
-
-**✅ HIGH-1: Memory Leak in Bifurcation Time Series** [COMPLETE - Nov 14, 2025]
-- **Location:** `src/simulation/engine/phases/BifurcationLogicPhase.ts:328-356`
-- **Problem:** Unbounded `amplificationTimeSeries` array growth (1000 months = 1000+ objects, Monte Carlo N=100 = 100K+ objects)
-- **Impact:** Long simulations and Monte Carlo runs exhaust memory
-- **Solution Implemented:**
-  1. ✅ Rolling window (capped at 100 entries, configurable via `maxTimeSeriesLength`)
-  2. ✅ Toggle flag (`enableTimeSeries`) to disable entirely for production runs
-  3. ✅ Assertions validate array bounds after trimming
-  4. ✅ Single log message on first trim (prevents log spam)
-- **Testing:** 200-month simulation verified time series capped at 100 entries
-- **Files Modified:**
-  - `src/types/bifurcation.ts` - Added `maxTimeSeriesLength`, `enableTimeSeries`, `_rollingWindowLogged`
-  - `src/simulation/engine/phases/BifurcationLogicPhase.ts` - Rolling window logic
-  - `scripts/test_bifurcation_memory_fix.ts` - Validation test
-- **Status:** ✅ COMPLETE - Memory bounded, Monte Carlo safe
-- **Source:** `reviews/architecture_review_20251113.md`
-
-**🟠 HIGH-2: 95 Phases Without Parallelization (Performance Bottleneck)**
-- **Location:** `src/simulation/engine/PhaseOrchestrator.ts` and 95 phase files
-- **Problem:** 95 phases execute sequentially despite many having artificial dependencies - no shared state but can't parallelize
-- **Impact:** Simulation performance degrades as features added, impacts Monte Carlo feasibility
-- **Recommendation:**
-  1. Identify truly independent phases that can run in parallel
-  2. Implement phase batching system (run independent phases concurrently)
-  3. Consider further consolidation - target 50-60 phases maximum
-- **Estimated Effort:** LARGE (1-2 weeks)
-- **Status:** 🟠 HIGH - Address before next major system
-- **Source:** `reviews/architecture_review_20251113.md`
-
-**🟠 HIGH-3: Scenario Override System Lacks Validation Boundaries**
-- **Location:** `src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts`
-- **Problem:** Direct state mutation without validation - can create impossible states (line 84: `totalBudget` set without resource check, line 112: `resources` can go infinite)
-- **Impact:** Scenario testing produces invalid results, undermines research validity
-- **Recommendation:**
-  1. Add validation layer ensuring overrides respect system constraints
-  2. Implement maximum bounds based on GDP/population
-  3. Add warnings when overrides create unrealistic states
-- **Estimated Effort:** MEDIUM (3-4 days)
-- **Status:** 🟠 HIGH - Fix before scenario analysis continues
-- **Source:** `reviews/architecture_review_20251113.md`
-
-**Architecture Health Update (Nov 13):**
-- System showing signs of architectural stress at 95 phases with complex dependencies
-- 5 MEDIUM priority technical debt items identified (phase dependency graph complexity, inconsistent state access patterns, missing cross-system integrations, event system performance, configuration complexity)
-- Recommendation: Fix CRITICAL issues before ANY new features, then address HIGH items between features
-- Full review: `reviews/architecture_review_20251113.md`
-
----
-
-## 🚨 RESOLVED Critical Issues (November 2025)
-
-### From Daily Review (November 7, 2025) - Research Skeptic (Sylvia)
+### From Research Skeptic Review (Sylvia) - 06:00 UTC
 
 **🔴 CRITICAL-3: RNG Algorithm Regression** ✅ **RESOLVED** (Nov 7, 2025)
 - **Problem:** Commit 9c6f25dde introduced non-deterministic fallback to Math.random when RNG undefined
