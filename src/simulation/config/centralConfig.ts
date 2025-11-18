@@ -1274,10 +1274,16 @@ export const BASELINES = {
 
   /**
    * Heat adaptation - total maximum (empirical)
+<<<<<<< HEAD
    * @research Ballester et al. (2024), Nature Medicine - European heat adaptation study
    * @value 0.45 - 45% total mortality reduction (empirical maximum observed, NOT 80%)
    * @note CRITICAL FIX (Nov 2025): Previous value of 0.8 was 82% overestimate.
    *       Ballester 2024 shows 44% adaptation effect (0.44), rounded to 0.45 for safety margin.
+=======
+   * @research Ballester et al. (2024), Nature Medicine
+   * @value 0.45 - 44% total mortality reduction (empirical evidence)
+   * @note Previously 0.8 (82% overestimate) - corrected Nov 15, 2025
+>>>>>>> origin/auto/worker-20251115_200001
    */
   HEAT_ADAPTATION_TOTAL_MAX: 0.45,
 
