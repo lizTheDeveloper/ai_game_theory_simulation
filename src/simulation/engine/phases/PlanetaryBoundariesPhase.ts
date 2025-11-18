@@ -49,10 +49,11 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     const { updateLegacyNutrientStocks } = require('../../legacyNutrientStocks');
 
     // Calculate current monthly nutrient inputs
-    // Baseline (2025): ~120 Mt N/year = 10 Mt N/month, ~25 Mt P/year = 2.08 Mt P/month
+    // Baseline (2025): ~120 Mt N/year = 10 Mt N/month, ~18.2 Mt P/year = 1.52 Mt P/month
+    // Source: Stockholm Resilience Centre (Steffen et al. 2015), research/nitrogen_food_coupling_20251115.md
     // TODO (Phase 2): Connect to technology deployment + food system for dynamic calculation
-    const BASELINE_N_INPUT_PER_MONTH = 120 / 12;  // 10 Mt N/month (2025 baseline)
-    const BASELINE_P_INPUT_PER_MONTH = 25 / 12;   // 2.08 Mt P/month (2025 baseline)
+    const BASELINE_N_INPUT_PER_MONTH = 120 / 12;  // 10 Mt N/month (current 2025 inputs, upper range)
+    const BASELINE_P_INPUT_PER_MONTH = 18.2 / 12; // 1.52 Mt P/month (Stockholm Resilience Centre)
 
     // Scale by phosphorus reserves depletion (simplified proxy for agricultural activity)
     const phosphorusReserves = state.phosphorusSystem?.reserves ?? 1.0;

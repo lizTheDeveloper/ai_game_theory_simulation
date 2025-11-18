@@ -928,26 +928,10 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       effectivePhosphorus = currentPhosphorusInput;
     }
 
-    // Boundary value = baseline + effective pollution (normalized)
-    // Baseline (2025): 2.94 (almost 3× planetary boundary of 62 Mt N/year)
-    // Effective pollution includes current inputs + legacy releases + atmospheric deposition
-    // Normalize: 10 Mt N/month effective = maintains 2.94 boundary value
-    const EFFECTIVE_TO_BOUNDARY_SCALE = 2.94 / BASELINE_N_INPUT_PER_MONTH;  // ~0.294
-    const biogeochemicalValue = assertFinite(
-      Math.max(0, (effectiveNitrogen + effectivePhosphorus * 2) * EFFECTIVE_TO_BOUNDARY_SCALE),
-      {
-        location: 'updatePlanetaryBoundaries:biogeochemical',
-        valueName: 'biogeochemical_flows.currentValue',
-        month: state.currentMonth,
-        additionalInfo: {
-          reserves,
-          depletion,
-          effectiveNitrogen,
-          effectivePhosphorus,
-          globalFoodProductionIndex
-        }
-      }
-    );
+    // NOTE (Roy, Nov 18, 2025): Removed first biogeochemicalValue calculation (lines 936-950)
+    // - Was immediately overwritten by second calculation after legacy stocks update
+    // - Second calculation (line 973) uses updated effectiveNitrogen/Phosphorus values
+    // - First calculation was never actually used
 
     if (system.legacyNutrientStock) {
       // Import the update function dynamically to avoid circular dependencies
@@ -983,26 +967,12 @@ export function updatePlanetaryBoundaries(state: GameState): void {
         currentPhosphorusInputMonthly
       }
     });
-    }
-
-    // Boundary value calculation
-    // Baseline (2025): 2.94 (294% of safe boundary)
-    // Scale by effective pollution vs baseline pollution
-    // Baseline total: 12.1 Mt/month (10 N + 2.1 P)
-    const baselinePollution = 12.1;
-    const currentEffectivePollution = effectiveNitrogen + effectivePhosphorus;
-    const pollutionRatio = currentEffectivePollution / baselinePollution;
-
-    // Boundary value = baseline × pollution ratio + depletion factor
-    // Depletion factor: phosphorus reserves declining increases boundary value
-    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 * pollutionRatio + depletion * 0.5), {
-      location: 'updatePlanetaryBoundaries:biogeochemical',
-      valueName: 'biogeochemical_flows.currentValue',
-      month: state.currentMonth,
-      additionalInfo: { reserves, depletion, legacyContribution, effectiveNitrogen, effectivePhosphorus }
-    });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
+  // NOTE (Roy, Nov 18, 2025): Removed duplicate biogeochemicalValue calculation (lines 988-1004)
+  // - Extra closing brace at line 986 was closing function prematurely
+  // - Duplicate calculation used different formula (pollutionRatio vs effectivePollutionBoundaryValue)
+  // - Kept the effectivePollutionBoundaryValue version (includes legacy stock inertia)
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
 
   // Novel entities (from environmental pollution)
