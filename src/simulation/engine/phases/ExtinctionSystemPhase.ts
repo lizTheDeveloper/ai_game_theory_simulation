@@ -157,10 +157,10 @@ export class ExtinctionSystemPhase implements SimulationPhase {
     const extinctionProgress = progressExtinction(state, rng);
 
     // Validate extinction progress values
-    if (extinctionProgress.newExtinctionState?.progress !== undefined) {
-      assertProbability(extinctionProgress.newExtinctionState.progress, {
+    if (extinctionProgress.newExtinctionState?.phaseProgress !== undefined) {
+      assertProbability(extinctionProgress.newExtinctionState.phaseProgress, {
         location: 'ExtinctionSystemPhase.executeExtinctionProgress',
-        valueName: 'extinctionProgress.newExtinctionState.progress',
+        valueName: 'extinctionProgress.newExtinctionState.phaseProgress',
         month: state.currentMonth
       });
     }

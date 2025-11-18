@@ -54115,7 +54115,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 309,
+    "line": 308,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -54123,7 +54123,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 310,
+    "line": 309,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -54131,7 +54131,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 314,
+    "line": 313,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -54139,7 +54139,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 322,
+    "line": 321,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -54147,7 +54147,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 323,
+    "line": 322,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -54155,7 +54155,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 327,
+    "line": 326,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -54163,7 +54163,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 335,
+    "line": 334,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -54171,7 +54171,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 336,
+    "line": 335,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -54179,7 +54179,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 340,
+    "line": 339,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -54187,7 +54187,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 346,
+    "line": 345,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -54195,7 +54195,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 347,
+    "line": 346,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -54203,7 +54203,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/dystopiaProgression.ts",
-    "line": 348,
+    "line": 347,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -55797,13 +55797,21 @@
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
     "line": 243,
     "type": "property",
-    "name": "samples",
+    "name": "mean",
     "currentDoc": "(none)",
-    "context": "samples: []"
+    "context": "mean: 0,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 255,
+    "line": 244,
+    "type": "property",
+    "name": "m2",
+    "currentDoc": "(none)",
+    "context": "m2: 0"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 256,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -55811,7 +55819,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 256,
+    "line": 257,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -55819,7 +55827,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 257,
+    "line": 258,
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -55827,7 +55835,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 258,
+    "line": 259,
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -55835,7 +55843,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 259,
+    "line": 260,
     "type": "property",
     "name": "mean",
     "currentDoc": "(none)",
@@ -55843,7 +55851,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 260,
+    "line": 261,
     "type": "property",
     "name": "m2",
     "currentDoc": "(none)",
@@ -55851,7 +55859,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 534,
+    "line": 535,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -55859,7 +55867,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 535,
+    "line": 536,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -55867,7 +55875,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 536,
+    "line": 537,
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -55875,7 +55883,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 537,
+    "line": 538,
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -55883,15 +55891,23 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 538,
+    "line": 539,
     "type": "property",
-    "name": "samples",
+    "name": "mean",
     "currentDoc": "(none)",
-    "context": "samples: number[];"
+    "context": "mean: number;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 571,
+    "line": 540,
+    "type": "property",
+    "name": "m2",
+    "currentDoc": "(none)",
+    "context": "m2: number;"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 580,
     "type": "property",
     "name": "phaseName",
     "currentDoc": "(none)",
@@ -55899,7 +55915,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 572,
+    "line": 581,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -55907,7 +55923,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 573,
+    "line": 582,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -55915,7 +55931,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 574,
+    "line": 583,
     "type": "property",
     "name": "avgMs",
     "currentDoc": "(none)",
@@ -55923,7 +55939,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 575,
+    "line": 584,
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -55931,7 +55947,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 576,
+    "line": 585,
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -55939,15 +55955,15 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 577,
+    "line": 586,
     "type": "property",
-    "name": "p95Ms",
+    "name": "stdDevMs",
     "currentDoc": "(none)",
-    "context": "p95Ms: calculateP95(data.samples)"
+    "context": "stdDevMs: calculateStdDev(data.m2, data.callCount)"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 692,
+    "line": 707,
     "type": "property",
     "name": "phases",
     "currentDoc": "(none)",
@@ -55955,7 +55971,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 693,
+    "line": 708,
     "type": "property",
     "name": "steps",
     "currentDoc": "(none)",
@@ -55963,7 +55979,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 694,
+    "line": 709,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -55971,7 +55987,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 695,
+    "line": 710,
     "type": "property",
     "name": "totalPhases",
     "currentDoc": "(none)",
@@ -55979,7 +55995,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 696,
+    "line": 711,
     "type": "property",
     "name": "totalSteps",
     "currentDoc": "(none)",
@@ -55987,7 +56003,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 702,
+    "line": 717,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -55995,7 +56011,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 703,
+    "line": 718,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -56003,7 +56019,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 704,
+    "line": 719,
     "type": "property",
     "name": "avgMs",
     "currentDoc": "(none)",
@@ -56011,7 +56027,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 705,
+    "line": 720,
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -56019,7 +56035,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 706,
+    "line": 721,
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -56027,15 +56043,15 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 707,
+    "line": 722,
     "type": "property",
-    "name": "p95Ms",
+    "name": "stdDevMs",
     "currentDoc": "(none)",
-    "context": "p95Ms: parseFloat(calculateP95(data.samples).toFixed(2))"
+    "context": "stdDevMs: parseFloat(calculateStdDev(data.m2, data.callCount).toFixed(2))"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 715,
+    "line": 730,
     "type": "property",
     "name": "avg",
     "currentDoc": "(none)",
@@ -56043,7 +56059,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 716,
+    "line": 731,
     "type": "property",
     "name": "min",
     "currentDoc": "(none)",
@@ -56051,7 +56067,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 717,
+    "line": 732,
     "type": "property",
     "name": "max",
     "currentDoc": "(none)",
@@ -56059,7 +56075,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 718,
+    "line": 733,
     "type": "property",
     "name": "p95",
     "currentDoc": "(none)",
@@ -56075,7 +56091,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/AIAgentActionsPhase.ts",
-    "line": 49,
+    "line": 50,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -56083,7 +56099,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/AIAgentActionsPhase.ts",
-    "line": 50,
+    "line": 51,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -56091,7 +56107,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/AIAgentActionsPhase.ts",
-    "line": 51,
+    "line": 52,
     "type": "property",
     "name": "agentId",
     "currentDoc": "(none)",
@@ -62363,7 +62379,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
-    "line": 31,
+    "line": 33,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -62371,7 +62387,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
-    "line": 32,
+    "line": 34,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -62379,7 +62395,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
-    "line": 33,
+    "line": 35,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -62387,7 +62403,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
-    "line": 38,
+    "line": 41,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -62395,7 +62411,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
-    "line": 39,
+    "line": 42,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -62403,31 +62419,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
-    "line": 40,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
-    "line": 49,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'ComputeAllocationPhase.execute (post-allocation)',"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
-    "line": 50,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: `agent[${agent.id}].allocatedCompute`,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
-    "line": 51,
+    "line": 43,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -62436,6 +62428,30 @@
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
     "line": 52,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'ComputeAllocationPhase.execute (post-allocation)',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 53,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: `agent[${agent.id}].allocatedCompute`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 54,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ComputeAllocationPhase.ts",
+    "line": 55,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -65435,7 +65451,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 44,
+    "line": 45,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -65443,7 +65459,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 45,
+    "line": 46,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -65451,7 +65467,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 46,
+    "line": 47,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -65459,7 +65475,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 47,
+    "line": 48,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -65467,7 +65483,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 48,
+    "line": 49,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -65475,7 +65491,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 49,
+    "line": 50,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -65483,7 +65499,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 50,
+    "line": 51,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -65491,7 +65507,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 51,
+    "line": 52,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -65499,7 +65515,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 52,
+    "line": 53,
     "type": "property",
     "name": "breachedCount",
     "currentDoc": "(none)",
@@ -65507,7 +65523,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 53,
+    "line": 54,
     "type": "property",
     "name": "totalSpread",
     "currentDoc": "(none)",
@@ -65515,11 +65531,11 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/CyberSecurityPhase.ts",
-    "line": 54,
+    "line": 55,
     "type": "property",
     "name": "breachedAgents",
     "currentDoc": "(none)",
-    "context": "breachedAgents: breachResult.breached.map((ai: any) => ai.id)"
+    "context": "breachedAgents: breachResult.breached.map(ai => ai.id).join(', ')"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/DemocracyDynamicsPhase.ts",
@@ -71987,7 +72003,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 45,
+    "line": 46,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -71995,7 +72011,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 46,
+    "line": 47,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -72003,7 +72019,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 47,
+    "line": 48,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -72011,7 +72027,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 59,
+    "line": 60,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -72019,7 +72035,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 60,
+    "line": 61,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -72027,7 +72043,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 61,
+    "line": 62,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -72035,7 +72051,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 62,
+    "line": 63,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -72043,7 +72059,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 63,
+    "line": 64,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -72051,7 +72067,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 64,
+    "line": 65,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -72059,7 +72075,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 65,
+    "line": 66,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -72067,7 +72083,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionProgressPhase.ts",
-    "line": 66,
+    "line": 67,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -72107,7 +72123,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 87,
+    "line": 88,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -72115,7 +72131,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 88,
+    "line": 89,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -72123,7 +72139,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 89,
+    "line": 90,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -72131,7 +72147,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 90,
+    "line": 91,
     "type": "property",
     "name": "expectedSource",
     "currentDoc": "(none)",
@@ -72139,7 +72155,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 104,
+    "line": 105,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -72147,7 +72163,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 105,
+    "line": 106,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -72155,7 +72171,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 106,
+    "line": 107,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -72163,7 +72179,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 107,
+    "line": 108,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -72171,7 +72187,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 108,
+    "line": 109,
     "type": "property",
     "name": "extinctionType",
     "currentDoc": "(none)",
@@ -72179,7 +72195,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 109,
+    "line": 110,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -72187,7 +72203,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 120,
+    "line": 121,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -72195,7 +72211,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 121,
+    "line": 122,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -72203,7 +72219,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 122,
+    "line": 123,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -72211,7 +72227,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 123,
+    "line": 124,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -72219,7 +72235,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 124,
+    "line": 125,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -72227,7 +72243,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 125,
+    "line": 126,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -72235,7 +72251,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 126,
+    "line": 127,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -72243,7 +72259,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 127,
+    "line": 128,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -72251,7 +72267,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 128,
+    "line": 129,
     "type": "property",
     "name": "extinctionType",
     "currentDoc": "(none)",
@@ -72259,7 +72275,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 129,
+    "line": 130,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -72267,7 +72283,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 130,
+    "line": 131,
     "type": "property",
     "name": "timelineMonths",
     "currentDoc": "(none)",
@@ -72275,7 +72291,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 131,
+    "line": 132,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -72283,7 +72299,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 160,
+    "line": 162,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -72291,7 +72307,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 161,
+    "line": 163,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -72299,7 +72315,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 162,
+    "line": 164,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -72307,7 +72323,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 174,
+    "line": 176,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -72315,7 +72331,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 175,
+    "line": 177,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -72323,7 +72339,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 176,
+    "line": 178,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -72331,7 +72347,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 177,
+    "line": 179,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -72339,7 +72355,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 178,
+    "line": 180,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -72347,7 +72363,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 179,
+    "line": 181,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -72355,7 +72371,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 180,
+    "line": 182,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -72363,7 +72379,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 181,
+    "line": 183,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -72371,7 +72387,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 202,
+    "line": 204,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -72379,7 +72395,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 203,
+    "line": 205,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -72387,7 +72403,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 204,
+    "line": 206,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -72395,7 +72411,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 205,
+    "line": 207,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -72403,7 +72419,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 215,
+    "line": 217,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -72411,7 +72427,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 216,
+    "line": 218,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -72419,7 +72435,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 217,
+    "line": 219,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -72427,7 +72443,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/ExtinctionSystemPhase.ts",
-    "line": 218,
+    "line": 220,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -87523,31 +87539,31 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1080,
+    "line": 1081,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
     "context": "western: paradigmScores.western.value,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1081,
-    "type": "property",
-    "name": "development",
-    "currentDoc": "(none)",
-    "context": "development: paradigmScores.development.value,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
     "line": 1082,
     "type": "property",
+    "name": "development",
+    "currentDoc": "(none)",
+    "context": "development: paradigmScores.development.value,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
+    "line": 1083,
+    "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
     "context": "ecological: paradigmScores.ecological.value,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1083,
+    "line": 1084,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
@@ -87555,7 +87571,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1109,
+    "line": 1110,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
@@ -87563,7 +87579,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1110,
+    "line": 1111,
     "type": "property",
     "name": "development",
     "currentDoc": "(none)",
@@ -87571,7 +87587,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1111,
+    "line": 1112,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -87579,7 +87595,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1112,
+    "line": 1113,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
@@ -87587,7 +87603,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1174,
+    "line": 1175,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
@@ -87595,7 +87611,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1179,
+    "line": 1180,
     "type": "property",
     "name": "development",
     "currentDoc": "(none)",
@@ -87603,7 +87619,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1184,
+    "line": 1185,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -87611,7 +87627,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1189,
+    "line": 1190,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
@@ -87619,7 +87635,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1197,
+    "line": 1198,
     "type": "property",
     "name": "primaryOutcome",
     "currentDoc": "(none)",
@@ -87627,7 +87643,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1201,
+    "line": 1202,
     "type": "property",
     "name": "extinctionClassification",
     "currentDoc": "(none)",
@@ -87635,7 +87651,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1275,
+    "line": 1276,
     "type": "property",
     "name": "finalState",
     "currentDoc": "(none)",
@@ -87643,7 +87659,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1279,
+    "line": 1280,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -87651,7 +87667,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1284,
+    "line": 1285,
     "type": "property",
     "name": "criticalEvents",
     "currentDoc": "(none)",
@@ -87659,7 +87675,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1285,
+    "line": 1286,
     "type": "property",
     "name": "economicStageReached",
     "currentDoc": "(none)",
