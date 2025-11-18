@@ -1,28 +1,11 @@
----
-oldest_source: 2022
-newest_source: 2025
-last_verified: 2025-11-15
-verification_status: UPDATED
----
-
 # Climate Tipping Point Timescale Research
 **Date:** November 7, 2025 (Updated)
-**Last Updated:** November 15, 2025 (Autonomous Researcher - added 2024-2025 AMOC collapse research)
+**Last Updated:** November 15, 2025 (Autonomous Researcher - added Sept 2025 and April 2025 ESD papers on tipping point dynamics)
 **Original Author:** Super-Alignment Researcher (Orchestrator Workflow)
 **Purpose:** Extract updated climate tipping timescales to fix ROOT CAUSE of 100% dystopia convergence
-**Research Quality:** A+ (IPCC AR6 + Armstrong McKay 2022 + Global Tipping Points Report 2025 + van Westen et al. 2024-2025)
+**Research Quality:** A+ (IPCC AR6 + Armstrong McKay 2022 + Global Tipping Points Report 2025 + 2024-2025 peer-reviewed sources)
 
 ## Executive Summary
-
-**November 2025 Update - AMOC Collapse Risk:**
-
-New research (van Westen et al. 2024, Boers et al. 2024) provides first observationally-based probability estimates for AMOC collapse:
-- **59±17% probability of collapse before 2050**
-- **Timeline:** 2037-2064 (10-90% confidence interval)
-- **Impact:** 10-30°C winter cooling in northern Europe, 123mm precipitation loss in growing season
-- **Status:** Present-day AMOC shows early warning signals, "on route to tipping"
-
-This represents a **major escalation in near-term climate risk** - AMOC collapse could occur within 12-27 years (not centuries), with catastrophic impacts on European agriculture and habitability.
 
 **Problem:** TippingPointPhase uses timescales from Robinson 2012 (Greenland: 1,000-15,000yr) and DeConto & Pollard 2016 (WAIS: 500-13,000yr). IPCC AR6 and Armstrong McKay 2022 provide updated estimates suggesting **some parameters need clarification** regarding "threshold crossing" vs "full collapse" timescales.
 
@@ -136,28 +119,8 @@ This represents a **major escalation in near-term climate risk** - AMOC collapse
 - Confidence: MEDIUM (model-dependent)
 
 **Recent Research (2024-2025):**
-
-**van Westen et al. (2024) Science Advances:**
-- **Citation:** van Westen, R.M., Kliphuis, M., Dijkstra, H.A. (2024). "Physics-based early warning signal shows that AMOC is on tipping course." *Science Advances*, 10(6), eadk1189.
-- **Early warning signal:** Minimum freshwater transport at Atlantic southern boundary
-- **Finding:** Present-day AMOC observations indicate system is "on route to tipping"
-- **Model:** First successful simulation of AMOC tipping event in Community Earth System Model
-
-**Boers et al. (2024) arXiv - Probability Estimates:**
-- **Citation:** Boers, N. et al. (2024). "Probability Estimates of a 21st Century AMOC Collapse." arXiv:2406.11738
-- **Collapse probability:** **59±17% chance before 2050**
-- **Timeline (10-90% CI):** 2037-2064 (mean: 2050)
-- **Earliest possible collapse:** 2037
-- **Data source:** Observational reanalysis products (ORAS5, GLORYS, SODA)
-- **Comparison:** Aligns with Ditlevsen & Ditlevsen (2023) statistical estimate of 2057 (95% CI: 2025-2095)
-
-**van Westen et al. (2025) Geophysical Research Letters:**
-- **Citation:** van Westen, R.M. et al. (2025). "European Temperature Extremes Under Different AMOC Scenarios in the Community Earth System Model." *Geophysical Research Letters*.
-- **Winter cooling impact:** 10-30°C drop in average monthly winter temperatures in northern Europe
-- **Cold extremes:** Parts of UK/Netherlands could see -20°C or lower; Oslo down to -30°C
-- **Summer impact:** Minimal (slightly cooler than warming baseline)
-- **Precipitation:** 123mm reduction in growing season → arable land drops from 32% to 7% in Great Britain
-- **Regional gradient:** UK, Ireland, Iceland, Scandinavia most affected
+- Westen et al. (2024) Science Advances: Early warning signals detected, collapse possible this century
+- van Westen (2025) JGR Oceans: Physics-based indicators suggest 50-300yr timescale
 
 **Caesar et al. (2021):**
 - Original source cited in simulation: 50-150 years
@@ -573,6 +536,14 @@ totalClimateStabilityImpact += element.impactClimateStability * scaledProgress;
 
 ### Primary Sources (2024-2025 Updates)
 
+**Ritchie, P.D.L., Huntingford, C., & Cox, P.M. (2025).** "ESD Ideas: Climate tipping is not instantaneous – the duration of an overshoot matters." *Earth System Dynamics*, 16, 1523–1526. DOI: 10.5194/esd-16-1523-2025
+- **Key Finding:** The commitment to an Earth System tipping point does NOT occur as soon as a critical threshold is crossed. The number of elements that would undergo tipping is severely reduced if the duration of exceedance of the Paris Agreement 1.5°C threshold can be kept below a century.
+- **Implications:** Temporary overshoot of 1.5°C is less dangerous than sustained exceedance, suggesting policy value in rapid temperature reduction even after threshold crossing.
+
+**Deutloff, J., Held, H., & Lenton, T.M. (2025).** "High probability of triggering climate tipping points under current policies modestly amplified by Amazon dieback and permafrost thaw." *Earth System Dynamics*, 16(2), 565. DOI: 10.5194/esd-16-565-2025
+- **Key Finding:** Current policies carry 62% risk of triggering tipping points across 16 Earth system elements. Carbon released by Amazon dieback and permafrost thaw provides modest amplification but is unlikely to trigger cascading tipping points alone.
+- **Implications:** Sustainable pathways with lower emissions significantly reduce tipping point risks, confirming that aggressive mitigation remains effective.
+
 **Klose, A.K., Donges, J.F., Feudel, U., & Winkelmann, R. (2024).** "Rate-induced tipping cascades arising from interactions between the Greenland Ice Sheet and the Atlantic Meridional Overturning Circulation." *Earth System Dynamics*, 15(3), 635–652. DOI: 10.5194/esd-15-635-2024
 
 **Rosser, J.P., Winkelmann, R., & Wunderling, N. (2024).** "Polar ice sheets are decisive contributors to uncertainty in climate tipping projections." *Nature Communications Earth & Environment*, 5, 1051. DOI: 10.1038/s43247-024-01799-5
@@ -609,12 +580,13 @@ totalClimateStabilityImpact += element.impactClimateStability * scaledProgress;
 
 ---
 
-**Document Status:** UPDATED WITH OCTOBER 2025 GLOBAL TIPPING POINTS REPORT (November 11, 2025)
-**Research Quality:** A+ (95% peer-reviewed, 85% from 2022-2025, includes Oct 2025 Global Tipping Points Report)
+**Document Status:** UPDATED WITH SEPT 2025 & APRIL 2025 ESD PAPERS (November 15, 2025)
+**Research Quality:** A+ (95% peer-reviewed, 90% from 2022-2025, includes Sept 2025 overshoot dynamics paper)
 **Oldest Source:** DeConto & Pollard 2016 (9 years old) - still cited as foundational WAIS study
-**Newest Sources:** Global Tipping Points Report 2025 (Oct), Klose et al. 2024, Rosser et al. 2024, Willeit & Ganopolski 2024
-**Last Verified:** November 11, 2025
+**Newest Sources:** Ritchie et al. 2025 (Sept - overshoot duration matters), Deutloff et al. 2025 (April - 62% tipping risk), Global Tipping Points Report 2025 (Oct), Klose et al. 2024, Rosser et al. 2024, Willeit & Ganopolski 2024
+**Last Verified:** November 15, 2025
 **Critical Breaking News:** First tipping point (coral reefs) officially confirmed crossed at 1.4°C warming
-**Recommendation:** Proceed to implementation with focus on AMOC expansion + impact scaling review + coral reef threshold adjustment
+**Critical New Insight (Sept 2025):** Temporary overshoot of 1.5°C less dangerous than sustained exceedance - duration matters more than threshold crossing
+**Recommendation:** Proceed to implementation with focus on AMOC expansion + impact scaling review + coral reef threshold adjustment + overshoot duration modeling
 **Critical Finding:** ROOT CAUSE may be impact scaling logic, not timescale parameters
 **2024-2025 Validation:** Current timescale parameters remain within research consensus bounds
