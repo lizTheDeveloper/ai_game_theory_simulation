@@ -324,6 +324,7 @@ export function protectCriticalInfrastructure(state: GameState): void {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   if (urgentWarnings.length > 0 && gov.resources > protectionCost) {
 =======
   // OPTIONAL FIELD: gov.resources is optional on GovernmentAgent type (not pre-initialized)
@@ -332,6 +333,9 @@ export function protectCriticalInfrastructure(state: GameState): void {
 =======
   if (urgentWarnings.length > 0 && gov.resources > protectionCost) {
 >>>>>>> origin/auto/worker-20251115_160001
+=======
+  if (urgentWarnings.length > 0 && gov.resources > protectionCost) {
+>>>>>>> origin/auto/worker-20251116_180001
     // Protect all unprotected nodes
     for (const node of unprotectedNodes) {
       node.protected = true;
@@ -340,9 +344,8 @@ export function protectCriticalInfrastructure(state: GameState): void {
       earlyWarning.nodesProtected++;
     }
 
-    if (gov.resources !== undefined) {
-      gov.resources -= protectionCost;
-    }
+    // Deduct cost
+    gov.resources -= protectionCost;
 
     // Calculate cascade risk reduction
     // Research: One Earth (2024) - critical node protection → 30% cascade reduction

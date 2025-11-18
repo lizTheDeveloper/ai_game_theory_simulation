@@ -622,6 +622,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
     const climateStability = assertFinite(
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       assertStateProperty(
         state.environmentalAccumulation,
         'climateStability',
@@ -661,6 +662,9 @@ export class EmergencyResponsePhase implements SimulationPhase {
 =======
       ),
 >>>>>>> origin/auto/worker-20251116_150001
+=======
+      state.environmentalAccumulation.climateStability,
+>>>>>>> origin/auto/worker-20251116_180001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'climateStability',
@@ -669,6 +673,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const socialCohesion = assertFinite(
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       assertStateProperty(
@@ -710,6 +715,9 @@ export class EmergencyResponsePhase implements SimulationPhase {
 =======
       ),
 >>>>>>> origin/auto/worker-20251116_150001
+=======
+      state.society.coordinationCapacity,
+>>>>>>> origin/auto/worker-20251116_180001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'socialCohesion',
@@ -718,6 +726,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const economicStability = assertFinite(
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       assertStateProperty(
@@ -759,6 +768,9 @@ export class EmergencyResponsePhase implements SimulationPhase {
 =======
       ) / 4.0,
 >>>>>>> origin/auto/worker-20251116_150001
+=======
+      state.globalMetrics.economicTransitionStage / 4.0,
+>>>>>>> origin/auto/worker-20251116_180001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'economicStability',
@@ -767,6 +779,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const governanceLegitimacy = assertFinite(
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       assertStateProperty(
@@ -808,6 +821,9 @@ export class EmergencyResponsePhase implements SimulationPhase {
 =======
       ),
 >>>>>>> origin/auto/worker-20251116_150001
+=======
+      state.government.legitimacy,
+>>>>>>> origin/auto/worker-20251116_180001
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'governanceLegitimacy',

@@ -286,11 +286,15 @@ export function checkDystopiaConditions(state: GameState): {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/auto/worker-20251116_180001
     state.qualityOfLifeSystems.autonomy,
     { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
   );
   const politicalFreedom = assertProbability(
     state.qualityOfLifeSystems.politicalFreedom,
+<<<<<<< HEAD
 =======
     assertStateProperty(
       state.qualityOfLifeSystems,
@@ -345,6 +349,8 @@ export function checkDystopiaConditions(state: GameState): {
       expectedSource: 'QoL system initialization'
     }),
 >>>>>>> origin/auto/worker-20251115_220001
+=======
+>>>>>>> origin/auto/worker-20251116_180001
     { location: 'checkDystopiaConditions', valueName: 'politicalFreedom', month: state.currentMonth }
   );
   const controlDesire = assertProbability(

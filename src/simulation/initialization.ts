@@ -1056,6 +1056,7 @@ export function createDefaultInitialState(
       internationalAlignment: 0.0,       // No international alignment
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       regionalAdaptation: 0.0,           // No regional customization initially
 =======
       regionalAdaptation: 0.0,           // No regional customization capacity yet
@@ -1063,6 +1064,9 @@ export function createDefaultInitialState(
 =======
       regionalAdaptation: 0.0,           // No regional customization initially
 >>>>>>> origin/auto/worker-20251116_160001
+=======
+      regionalAdaptation: 0.0,           // No regional adaptation initially
+>>>>>>> origin/auto/worker-20251116_180001
       optimalDeploymentSpeed: 0.04,      // 4% per year baseline (pre-AI coordination)
       currentDeploymentSpeed: 0.0,       // No deployment yet
       transitionMortality: {

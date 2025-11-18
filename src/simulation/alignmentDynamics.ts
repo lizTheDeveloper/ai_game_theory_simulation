@@ -307,6 +307,7 @@ export function calculateDriftContribution(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       suffering: agent.sufferingMetrics.total,
 =======
       suffering: assertStateProperty(agent.sufferingMetrics, 'total', {
@@ -323,6 +324,10 @@ export function calculateDriftContribution(
       suffering: agent.sufferingMetrics.total,
       sufferingEnabled: config.aiSufferingEnabled ?? false  // Config defaults OK
 >>>>>>> origin/auto/worker-20251115_160001
+=======
+      suffering: agent.sufferingMetrics.total,
+      sufferingEnabled: config.aiSufferingEnabled || false  // config field may be optional
+>>>>>>> origin/auto/worker-20251116_180001
     }
   });
 }
