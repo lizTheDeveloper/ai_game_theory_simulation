@@ -77,11 +77,27 @@ export class EmergencyResponsePhase implements SimulationPhase {
     if (state.crises?.megaPandemic?.active && state.crises.megaPandemic.socialDisruption > 0.2) {
       const existing = getActiveResponse(state, 'pandemic');
       if (!existing) {
+        const startMonth = assertFinite(
+          assertStateProperty(
+            state.crises.megaPandemic,
+            'startMonth',
+            {
+              location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+              month: state.currentMonth
+            }
+          ),
+          {
+            location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+            valueName: 'pandemic.startMonth',
+            month: state.currentMonth
+          }
+        );
+
         const response = deployEmergencyResponse(
           state,
           'pandemic',
           state.crises.megaPandemic.socialDisruption,
-          state.crises.megaPandemic.startMonth || state.currentMonth
+          startMonth
         );
         if (response) {
           // HIGH #2 FIX (Oct 29, 2025): Accelerate emergency medical tech
@@ -112,11 +128,33 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
     // CLIMATE CRISIS (multiple planetary boundaries)
     // FIX #11A: Keep at 0.35 (moderate degradation triggers response)
-    // KEEP LEGITIMATE DEFAULTS - systems may not be initialized yet
-    const climateChangeCurrent = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
+    const climateChangeCurrent = assertStateProperty(
+      state.planetaryBoundariesSystem.boundaries.climate_change,
+      'currentValue',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
+    const waterStress = assertStateProperty(
+      state.freshwaterSystem,
+      'waterStress',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
+    const phosphorusReserves = assertStateProperty(
+      state.phosphorusSystem,
+      'reserves',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
     const climateCrisisActive = (
-      (state.freshwaterSystem?.waterStress || 0) > 0.65 ||
-      (state.phosphorusSystem?.reserves || 1.0) < 0.35 ||
+      waterStress > 0.65 ||
+      phosphorusReserves < 0.35 ||
       climateChangeCurrent > 0.6
     );
 
@@ -137,11 +175,10 @@ export class EmergencyResponsePhase implements SimulationPhase {
     if (climateCrisisActive) {
       const existing = getActiveResponse(state, 'climate');
       if (!existing) {
-        // Estimate severity from planetary boundaries
-        // KEEP LEGITIMATE DEFAULTS - systems may not be initialized yet
+        // Estimate severity from planetary boundaries (already extracted above)
         const severity = Math.max(
-          state.freshwaterSystem?.waterStress || 0,
-          1.0 - (state.phosphorusSystem?.reserves || 1.0),
+          waterStress,
+          1.0 - phosphorusReserves,
           climateChangeCurrent
         );
         const response = deployEmergencyResponse(
@@ -218,12 +255,19 @@ export class EmergencyResponsePhase implements SimulationPhase {
       state.socialAccumulation.socialCohesion.civilLiberties
     ) / 300;
 
-    // KEEP LEGITIMATE DEFAULT - institutionalLegitimacy may not be initialized yet
+    const institutionalLegitimacy = assertStateProperty(
+      state.socialAccumulation,
+      'institutionalLegitimacy',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
     const socialCrisisDetected = (
       state.socialAccumulation.socialUnrestActive ||
       state.society.trustInAI < 0.30 ||  // Trust SEVERE collapse (was 0.4, too early)
       avgCohesion < 0.35 ||  // Cohesion SEVERE degradation
-      ((state.socialAccumulation.institutionalLegitimacy || 0.7) < 0.30)  // Institutional severe failure
+      institutionalLegitimacy < 0.30  // Institutional severe failure
     );
 
     if (socialCrisisDetected) {
@@ -234,7 +278,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
           state.socialAccumulation.socialUnrestActive ? 0.7 : 0.0,
           1.0 - state.society.trustInAI,
           1.0 - avgCohesion,
-          1.0 - state.socialAccumulation.institutionalLegitimacy
+          1.0 - institutionalLegitimacy
         );
 
         const response = deployEmergencyResponse(
@@ -284,12 +328,28 @@ export class EmergencyResponsePhase implements SimulationPhase {
       if (!existing) {
         // Estimate severity from nuclear winter impacts
         const severity = Math.min(1.0, Math.abs(state.nuclearWinterState.temperatureAnomaly) / 15);
-        // KEEP LEGITIMATE DEFAULT - triggerMonth may not be set
+
+        const triggerMonth = assertFinite(
+          assertStateProperty(
+            state.nuclearWinterState,
+            'triggerMonth',
+            {
+              location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+              month: state.currentMonth
+            }
+          ),
+          {
+            location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+            valueName: 'nuclearWinter.triggerMonth',
+            month: state.currentMonth
+          }
+        );
+
         const response = deployEmergencyResponse(
           state,
           'nuclear',
           severity,
-          state.nuclearWinterState.triggerMonth || state.currentMonth
+          triggerMonth
         );
         if (response) {
           events.push({
@@ -499,7 +559,6 @@ export class EmergencyResponsePhase implements SimulationPhase {
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        valueName: 'climateStability',
         month: state.currentMonth
       }
     );
@@ -515,7 +574,6 @@ export class EmergencyResponsePhase implements SimulationPhase {
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        valueName: 'socialCohesion',
         month: state.currentMonth
       }
     );
@@ -547,7 +605,6 @@ export class EmergencyResponsePhase implements SimulationPhase {
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        valueName: 'governanceLegitimacy',
         month: state.currentMonth
       }
     );

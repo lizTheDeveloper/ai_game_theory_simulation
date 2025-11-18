@@ -4,6 +4,11 @@
 **Implementation:** `src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts`
 **Research:** `/research/paradigm_*.md` (5 files, ~67,000 words, 100+ sources)
 
+<<<<<<< HEAD
+=======
+**🔬 Latest Update:** Nov 16, 2025 - Multi-paradigm wellbeing verification COMPLETE (Sangha et al. 2024 + V-Dem 2025). Citations verified, critical validation CONDITIONAL PASS, implementation complete (commit 27c6d76). Indigenous paradigm Domain 3 restored ("Connection to culture, Country, and identity"), Liyan emotional dimension added, paradigms-as-lenses framing corrected. See `research/multi_paradigm_verification_summary_20251116.md` for full details.
+
+>>>>>>> origin/auto/worker-20251116_210001
 ## Overview
 
 The Multi-Paradigm DUI System tracks **four simultaneous, independent measures of societal success**, each representing a fundamentally different worldview about what constitutes a good society. Unlike traditional single-number metrics, this system **preserves value conflicts** rather than forcing consensus.
@@ -569,7 +574,8 @@ The Multi-Paradigm DUI draws on **100+ peer-reviewed sources** across:
 - **v1.0** (Oct 19, 2025): Phase 1-2 research complete (5 files, 67K words)
 - **v2.0** (Oct 20, 2025): Phase 5-6 implementation complete (Monte Carlo integration, visualization)
 - **v2.1** (Oct 25, 2025): Wiki documentation complete (Phase 7)
+- **v2.2** (Nov 16, 2025): Multi-paradigm wellbeing verification complete (Sangha et al. 2024, V-Dem 2025 citations verified, Indigenous paradigm Domain 3 + Liyan dimension updated)
 
-**Research Archive:** `/research/paradigm_*.md`
-**Reviews:** `/reviews/multi-paradigm-dui-validation_20251019.md`, `/reviews/phase2-metric-mapping-validation_20251019.md`
-**Plans:** `/plans/completed/multi-paradigm-dui-phases-1-2_COMPLETE_20251020.md`
+**Research Archive:** `/research/paradigm_*.md`, `/research/multi_paradigm_verification_*.md` (988 lines, Nov 2025)
+**Reviews:** `/reviews/multi-paradigm-dui-validation_20251019.md`, `/reviews/phase2-metric-mapping-validation_20251019.md`, `/reviews/multi_paradigm_verification_critique_20251116.md` (383 lines, CONDITIONAL PASS)
+**Plans:** `/plans/completed/multi-paradigm-dui-phases-1-2_COMPLETE_20251020.md`, `/plans/completed/autonomous_session_nov16_2025_worker_COMPLETE.md`

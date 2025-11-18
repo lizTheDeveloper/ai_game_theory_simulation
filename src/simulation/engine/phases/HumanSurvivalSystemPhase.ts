@@ -38,6 +38,8 @@ import {
   assertDefined,
 } from '@/simulation/utils/assertions';
 import { THRESHOLDS, RATES, MULTIPLIERS, BASELINES } from '@/simulation/config/centralConfig';
+import { checkRegionalFamineRisk } from '../../qualityOfLife';
+import { updateFamineSystem } from '../../../types/famine';
 
 export class HumanSurvivalSystemPhase implements SimulationPhase {
   readonly id = 'human-survival-system';
@@ -605,12 +607,9 @@ export class HumanSurvivalSystemPhase implements SimulationPhase {
     if (!state.famineSystem) return;
 
     // Check regional biodiversity for new famine triggers
-    const { checkRegionalFamineRisk } = require('../../qualityOfLife');
     checkRegionalFamineRisk(state, state.currentMonth);
 
     // Update active famines
-    const { updateFamineSystem } = require('../../../types/famine');
-
     const totalAICapability = assertFinite(
       state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0),
       {

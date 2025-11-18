@@ -25,6 +25,9 @@ import {
   attemptAIDeEscalation,
   updateCircuitBreakers
 } from '../../flashWarEscalation';
+import { updateConflictResolution } from '../../conflictResolution';
+import { updateDiplomaticAI } from '../../diplomaticAI';
+import { updateMADDeterrence, updateBilateralTensions } from '../../nuclearStates';
 
 export class InternationalRelationsPhase implements SimulationPhase {
   readonly id = 'international-relations';
@@ -64,27 +67,21 @@ export class InternationalRelationsPhase implements SimulationPhase {
  * Conflict Resolution
  * (formerly ConflictResolutionPhase, order 13.0)
  */
-function executeConflictResolution(state: GameState, rng: RNGFunction): void {
-  const { updateConflictResolution } = require('../../conflictResolution');
-  updateConflictResolution(state);
+function executeConflictResolution(state: GameState, rng: RNGFunction): void {updateConflictResolution(state);
 }
 
 /**
  * Diplomatic AI
  * (formerly DiplomaticAIPhase, order 14.0)
  */
-function executeDiplomaticAI(state: GameState, rng: RNGFunction): void {
-  const { updateDiplomaticAI } = require('../../diplomaticAI');
-  updateDiplomaticAI(state);
+function executeDiplomaticAI(state: GameState, rng: RNGFunction): void {updateDiplomaticAI(state);
 }
 
 /**
  * MAD Deterrence
  * (formerly MADDeterrencePhase, order 16.0)
  */
-function executeMADDeterrence(state: GameState, rng: RNGFunction): void {
-  const { updateMADDeterrence, updateBilateralTensions } = require('../../nuclearStates');
-  updateMADDeterrence(state);
+function executeMADDeterrence(state: GameState, rng: RNGFunction): void {updateMADDeterrence(state);
   updateBilateralTensions(state);
 
   // Validate MAD deterrence calculations

@@ -16,6 +16,7 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { attemptBreaches } from '../../cyberSecurity';
 
 export class CyberSecurityPhase implements SimulationPhase {
   readonly id = 'cybersecurity';
@@ -33,10 +34,7 @@ export class CyberSecurityPhase implements SimulationPhase {
     }
 
     // Import and execute existing cybersecurity logic
-    setDeterministicRng(rng);
-    const { attemptBreaches } = require('../../cyberSecurity');
-
-    const breachResult = attemptBreaches(state, rng);
+    setDeterministicRng(rng);const breachResult = attemptBreaches(state, rng);
 
     // Create events for breaches
     const events: GameEvent[] = [];

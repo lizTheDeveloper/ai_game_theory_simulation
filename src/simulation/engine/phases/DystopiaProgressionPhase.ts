@@ -9,6 +9,7 @@ import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/ga
 import type { RNGFunction } from '@/types/config';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite, assertDefined, assertProbability } from '@/simulation/utils/assertions';
+import { updateGovernmentControlResponse } from '../../dystopiaProgression';
 
 export class DystopiaProgressionPhase implements SimulationPhase {
   readonly id = 'dystopia-progression';
@@ -20,9 +21,7 @@ export class DystopiaProgressionPhase implements SimulationPhase {
     'defensive-ai',  // Order 20.0: Surveillance AI capability
   ] as const;
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const { updateGovernmentControlResponse } = require('../../dystopiaProgression');
-    setDeterministicRng(rng);
+  execute(state: GameState, rng: RNGFunction): PhaseResult {setDeterministicRng(rng);
 
     // Validate government system exists
     assertDefined(state.government, {

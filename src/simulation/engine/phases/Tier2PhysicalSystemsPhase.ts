@@ -38,10 +38,11 @@ export class Tier2PhysicalSystemsPhase implements SimulationPhase {
   readonly name = 'TIER 2: Physical Systems';
   readonly order = 21.1; // After planetary_boundaries (21.0) - moved from 18.5 to fix order violation
 
-  // DEPENDENCIES (Nov 15, 2025): Requires tech tree and environmental state for interventions
+  // DEPENDENCIES (Nov 15, 2025): Requires tech tree for intervention availability
+  // NOTE: planetary_boundaries dependency REMOVED - backwards ordering (18.5 cannot depend on 21.0)
+  // Phase reads environmental state from previous step
   readonly dependencies = [
     'tech-tree',              // Order 12.5: Tech unlocks determine intervention availability
-    'planetary_boundaries',   // Order 21.0: Environmental state affects physical interventions
   ] as const;
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {

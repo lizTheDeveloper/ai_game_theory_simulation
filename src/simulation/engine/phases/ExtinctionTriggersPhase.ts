@@ -19,6 +19,7 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertDefined, assertProbability } from '@/simulation/utils/assertions';
+import { checkExtinctionTriggers, classifyExtinctionType } from '../../extinctions';
 
 export class ExtinctionTriggersPhase implements SimulationPhase {
   readonly id = 'extinction-triggers';
@@ -48,10 +49,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
       return { events: [] };
     }
 
-    // Import and execute extinction trigger detection
-    const { checkExtinctionTriggers, classifyExtinctionType } = require('../../extinctions');
-
-    const extinctionCheck = checkExtinctionTriggers(state, rng);
+    // Import and execute extinction trigger detectionconst extinctionCheck = checkExtinctionTriggers(state, rng);
 
     // Validate extinction check result
     assertDefined(extinctionCheck.newExtinctionState, {
