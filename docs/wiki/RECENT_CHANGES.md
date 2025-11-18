@@ -91,7 +91,7 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - **KEPT (HEAD):** Welford's algorithm for O(1) memory per phase (98.9% reduction)
 - **REJECTED (origin):** Sliding windows (MAX_PHASE_SAMPLES=1000, still had unbounded growth)
 
-**Rationale:** Welford's algorithm achieves constant memory (120 bytes/phase = 11KB total) vs sliding windows (~760KB). Performance stats (min/max/p95/avg) preserved with zero memory growth.
+**Rationale:** Welford's algorithm achieves constant memory (120 bytes/phase = 11KB total) vs sliding windows (~760KB). Performance stats (min/max/stdDev/avg) provided with zero memory growth.
 
 **Architecture review:** Confirms HEAD versions superior on both technical merit (efficiency) and research rigor (verification).
 
