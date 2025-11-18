@@ -34,8 +34,15 @@ import { addSimulationEvent } from '@/simulation/utils/eventLogger';
 export class ClimateDeploymentPhase implements SimulationPhase {
   readonly id = 'climate-deployment';
   readonly name = 'Climate Technology Deployment';
+<<<<<<< HEAD
   readonly order = 12.7; // After tech-tree (12.5) - moved from 8.5 to fix order violation
   readonly dependencies = ['tech-tree']; // Reads tech tree, energy system, updates deployment levels (fixed: technology-deployment → tech-tree)
+=======
+  readonly order = 8.5;
+  // NOTE: No dependencies - reads tech tree and energy state from previous step
+  // Cannot depend on tech-tree (12.5) due to backwards ordering
+  readonly dependencies: string[] = [];
+>>>>>>> origin/auto/worker-20251115_013002
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];

@@ -5,7 +5,59 @@ This file contains the complete history of recent changes to the AI Game Theory 
 ---
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 ## ✅ Recent Changes (November 14, 2025)
+=======
+## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
+
+**🐛 BUG FIX: Backwards Dependency Removal** (Nov 15, 2025, commit afbffc0)
+
+**Summary:** Fixed 8+ backwards dependencies and 2 invalid phase ID references that blocked Monte Carlo validation.
+
+**Context:**
+- Commit eda20e125 (Nov 15) added readonly dependencies to 26 phases
+- Order constraints were not validated, introducing systemic backwards dependencies
+- Monte Carlo validation blocked by dependency order violations
+
+**Backwards Dependencies Fixed (8):**
+1. `GovernmentActionsPhase` (9.0) → `economic-system` (31.0) - Removed
+2. `ExtremeWeatherEventsPhase` (15.2) → `climate_system` (34.0) - Removed
+3. `WetBulbTemperaturePhase` (20.45) → `climate_system` (34.0) - Removed
+4. `TechTreePhase` (12.5) → `economic-system` (31.0) - Removed
+5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed
+6. `StochasticInnovationPhase` (8.5) → `tech-tree` (12.5) - Removed
+7. `CrisisPointsPhase` (23.0) → `crisis-detection` (36.0) - Removed
+8. `climate_system` ID mismatch (hyphen vs underscore) - Fixed
+
+**Invalid Phase ID Fixes (2):**
+- `HumanEnhancementPhase`: `society-agent-actions` → `society-actions` (typo correction)
+- `ClimateDeploymentPhase` + `AntimicrobialResistancePhase`: Removed non-existent `technology-deployment` dependency
+
+**Root Cause:** Phases declared dependencies based on what state they *read*, without considering execution order. Reading state from "previous step" is valid; declaring dependency on future phase (backwards ordering) is invalid.
+
+**Impact:**
+- Unblocks TIER 1 CRITICAL climate effectiveness validation suite
+- Prevents runtime dependency violation crashes
+- Establishes pattern: dependencies = read-after-write, not just "reads state"
+
+**Known Remaining Issues:**
+- Additional backwards dependencies likely exist (orchestrator identified `ai_suffering` → `ai-lifecycle`)
+- Comprehensive audit needed across all 95 phases
+
+**Files Changed:** 10 phase files in `src/simulation/engine/phases/`
+
+**Documentation Updated:**
+- `docs/wiki/mechanics/phase-dependencies.md` - Added "Critical Constraint: No Backwards Dependencies" section
+- Examples of valid vs invalid patterns
+- Phase ID naming conventions (underscore vs hyphen)
+- Validation checklist for declaring dependencies
+
+**Next Steps:** Route comprehensive dependency audit to simulation-maintainer for remaining violations.
+
+---
+
+## 🔧 Worker Lock File Management (November 15, 2025)
+>>>>>>> origin/auto/worker-20251115_013002
 
 **📖 RESEARCH: AI Collective Evolution - 2025 Multi-Agent LLM Studies** (Nov 14, 2025, commit f1e9fd1)
 

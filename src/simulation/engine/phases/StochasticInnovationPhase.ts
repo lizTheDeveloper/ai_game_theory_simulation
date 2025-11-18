@@ -199,10 +199,11 @@ export class StochasticInnovationPhase implements SimulationPhase {
   readonly name = 'Stochastic Innovation Breakthroughs';
   readonly order = 12.7; // After tech-tree (12.5), before environmental updates
 
-  // DEPENDENCIES (Nov 15, 2025): Requires AI agents, tech tree, and bifurcation state
+  // DEPENDENCIES (Nov 15, 2025): Requires AI agents and bifurcation state
+  // NOTE: tech-tree dependency REMOVED - backwards ordering (8.5 cannot depend on 12.5)
+  // Phase reads tech state from previous step
   readonly dependencies = [
     'ai-agent-actions',       // Order 7.0: AI capabilities accelerate innovation
-    'tech-tree',              // Order 12.5: Existing tech boosts breakthrough probability
     'bifurcation-logic',      // Nov 14, 2025 - CRITICAL-1 fix: explicit bifurcation dependency
   ] as const;
 
