@@ -14,6 +14,7 @@ import type { LLMConfig, LLMWeightUpdate, UtilityWeights, ThresholdTriggers, SET
 import type { GameState, AIAgent } from '../../types/game';
 import { buildWeightUpdateContext, calculatePerformanceSummary } from '../../../scripts/generateWeightUpdateContext';
 import { LLMRequestQueue, DEFAULT_QUEUE_CONFIG } from './queue';
+import { logLLMInference, buildLoggingContext, type LLMRequest, type LLMResponse, type LLMTiming } from './logging';
 
 // Global request queue (shared across all LLM requests in simulation)
 let globalQueue: LLMRequestQueue | null = null;
@@ -68,7 +69,8 @@ export async function drainLLMQueue() {
 export async function updateWeightsWithLLM(
   state: GameState,
   agentId: string,
-  currentMonth: number
+  currentMonth: number,
+  triggerReason: string = 'scheduled' // For logging purposes
 ): Promise<LLMWeightUpdate> {
   const config = state.llmConfig;
   if (!config || !config.enabled) {
@@ -88,8 +90,11 @@ export async function updateWeightsWithLLM(
   // Calculate performance summary
   const performance = calculatePerformanceSummary(agent, state, currentMonth, 6);
 
-  // Build context
+  // Build context (this is the prompt)
   const context = buildWeightUpdateContext(state, agentId, currentMonth, performance);
+
+  // Build logging context
+  const loggingContext = buildLoggingContext(state, agent, triggerReason);
 
   // Log request if verbose
   if (config.logLevel >= 2) {
@@ -97,25 +102,94 @@ export async function updateWeightsWithLLM(
     console.log(context);
   }
 
-  // Call LLM API
-  const response = await callLLMAPI(config, context);
+  // Capture timing
+  const startTime = Date.now();
+  let error: string | undefined;
+  let update: LLMWeightUpdate;
+  let response: any;
 
-  // Validate and parse response
-  const update = parseAndValidateWeightUpdate(response, agent);
+  try {
+    // Call LLM API
+    response = await callLLMAPI(config, context);
 
-  // Log response if verbose
-  if (config.logLevel >= 1) {
-    console.log(`\n=== LLM Weight Update (${agent.name}) ===`);
-    console.log(`  Tokens used: ${update.tokensUsed}`);
-    console.log(`  Duration: ${update.duration} months`);
-    console.log(`  Reasoning: ${update.reasoning}`);
-    if (config.logLevel >= 2) {
-      console.log(`  Weights:`, update.weights);
-      console.log(`  Thresholds:`, update.thresholds);
+    // Validate and parse response
+    update = parseAndValidateWeightUpdate(response, agent);
+
+    const endTime = Date.now();
+
+    // Log response if verbose
+    if (config.logLevel >= 1) {
+      console.log(`\n=== LLM Weight Update (${agent.name}) ===`);
+      console.log(`  Tokens used: ${update.tokensUsed}`);
+      console.log(`  Duration: ${update.duration} months`);
+      console.log(`  Reasoning: ${update.reasoning}`);
+      if (config.logLevel >= 2) {
+        console.log(`  Weights:`, update.weights);
+        console.log(`  Thresholds:`, update.thresholds);
+      }
     }
-  }
 
-  return update;
+    // Log inference to IndexedDB (async, non-blocking)
+    logLLMInference(
+      loggingContext,
+      {
+        prompt: context,
+        body: {
+          model: config.modelName,
+          temperature: config.temperature,
+          max_tokens: config.maxTokens,
+          messages: [
+            { role: 'system', content: 'You are an AI agent in a simulation making strategic decisions about action weights.' },
+            { role: 'user', content: context }
+          ]
+        }
+      },
+      {
+        body: response,
+        tokensUsed: update.tokensUsed,
+        weights: update.weights,
+        reasoning: update.reasoning
+      },
+      { startTime, endTime },
+      undefined,
+      false
+    ).catch(loggingError => {
+      // Don't fail the simulation if logging fails
+      console.error('[LLM] Logging failed:', loggingError);
+    });
+
+    return update;
+  } catch (apiError) {
+    const endTime = Date.now();
+    error = apiError instanceof Error ? apiError.message : String(apiError);
+
+    // Log failed inference to IndexedDB
+    logLLMInference(
+      loggingContext,
+      {
+        prompt: context,
+        body: {
+          model: config.modelName,
+          temperature: config.temperature,
+          max_tokens: config.maxTokens
+        }
+      },
+      {
+        body: {},
+        tokensUsed: 0,
+        weights: {},
+        reasoning: ''
+      },
+      { startTime, endTime },
+      error,
+      false
+    ).catch(loggingError => {
+      console.error('[LLM] Logging failed:', loggingError);
+    });
+
+    // Re-throw the error
+    throw apiError;
+  }
 }
 
 /**
