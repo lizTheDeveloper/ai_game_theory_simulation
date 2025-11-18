@@ -8,7 +8,7 @@
  */
 
 import { GameState, AIAgent, OutcomeType } from '@/types/game';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
 import { calculateEffectiveControl } from './outcomes';
 import { calculateQualityOfLife } from './qualityOfLife';
@@ -278,7 +278,17 @@ function checkEndGameResolution(state: GameState): void {
       // CRITICAL-1 FIX (Nov 13, 2025): Check population before declaring extinction
       // Bug: Seeds 42001/42008/42024 showed GROWTH but were labeled extinction due to AI power metrics
       const currentPop = state.humanPopulationSystem.population;
-      const initialPop = state.initialPopulation ?? 8.0;
+      const initialPop = assertFinite(
+        assertStateProperty(state, 'initialPopulation', {
+          location: 'checkExtinctionPaths.hasCatastrophicCapability',
+          month: state.currentMonth,
+        }),
+        {
+          location: 'checkExtinctionPaths.hasCatastrophicCapability',
+          valueName: 'initialPopulation',
+          month: state.currentMonth,
+        }
+      );
       const mortality = 1 - (currentPop / initialPop);
 
       if (mortality < 0) {
@@ -311,7 +321,17 @@ function checkEndGameResolution(state: GameState): void {
 
     // DEFENSIVE CHECK: Verify population has actually declined
     const currentPop = state.humanPopulationSystem.population;
-    const initialPop = state.initialPopulation ?? 8.0;
+    const initialPop = assertFinite(
+      assertStateProperty(state, 'initialPopulation', {
+        location: 'checkExtinctionPaths.mutualDestruction',
+        month: state.currentMonth,
+      }),
+      {
+        location: 'checkExtinctionPaths.mutualDestruction',
+        valueName: 'initialPopulation',
+        month: state.currentMonth,
+      }
+    );
     const mortality = 1 - (currentPop / initialPop);
 
     if (mortality < 0) {
@@ -339,7 +359,17 @@ function checkEndGameResolution(state: GameState): void {
       endGame.misalignedAIPower > 3.0) {
 
     const currentPop = state.humanPopulationSystem.population;
-    const initialPop = state.initialPopulation ?? 8.0;
+    const initialPop = assertFinite(
+      assertStateProperty(state, 'initialPopulation', {
+        location: 'checkExtinctionPaths.humanIrrelevance',
+        month: state.currentMonth,
+      }),
+      {
+        location: 'checkExtinctionPaths.humanIrrelevance',
+        valueName: 'initialPopulation',
+        month: state.currentMonth,
+      }
+    );
     const mortality = 1 - (currentPop / initialPop);
 
     if (mortality < 0) {

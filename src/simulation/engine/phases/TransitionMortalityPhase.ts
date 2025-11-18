@@ -26,7 +26,8 @@ import type { GameState } from '@/types/game';
 import {
   assertFinite,
   assertInRange,
-  assertProbability
+  assertProbability,
+  assertStateProperty
 } from '@/simulation/utils/assertions';
 
 /**
@@ -134,7 +135,15 @@ function calculateCoordinationQuality(state: GameState): number {
   // Base: AI agent capability (proxy for AI governance quality)
   const aiAgents = state.aiAgents ?? [];
   const avgAICapability = aiAgents.length > 0
-    ? aiAgents.reduce((sum, a) => sum + (a.capability ?? 0), 0) / aiAgents.length
+    ? aiAgents.reduce((sum, a) => {
+        const capability = assertFinite(a.capability, {
+          location: 'calculateCoordinationQuality',
+          valueName: 'agent.capability',
+          month: state.currentMonth,
+          additionalInfo: { agentId: a.id }
+        });
+        return sum + capability;
+      }, 0) / aiAgents.length
     : 0;
   const aiGovernanceProxy = Math.min(avgAICapability / 10, 0.9); // Cap at 0.9
 
@@ -142,7 +151,15 @@ function calculateCoordinationQuality(state: GameState): number {
   const govEffectiveness = 0.5; // TODO: Connect to actual governance metrics
 
   // International cooperation (from governmentSystem)
-  const intlCooperation = state.governmentSystem?.internationalCoordination ?? 0.5;
+  const govSystem = assertStateProperty(state, 'governmentSystem', {
+    location: 'calculateCoordinationQuality',
+    month: state.currentMonth,
+  });
+  const intlCooperation = assertFinite(govSystem.internationalCoordination, {
+    location: 'calculateCoordinationQuality',
+    valueName: 'internationalCoordination',
+    month: state.currentMonth,
+  });
 
   // Social cohesion (simplified proxy)
   const socialCohesion = 0.5; // TODO: Connect to actual social cohesion metrics
@@ -189,7 +206,15 @@ function calculateSupportSystemCoverage(state: GameState): number {
   const healthcareAccess = 0.5; // Default middle value
 
   // Retraining programs (if policyInterventions exists)
-  const retrainingLevel = state.policyInterventions?.retrainingLevel ?? 0;
+  const policyInterventions = assertStateProperty(state, 'policyInterventions', {
+    location: 'calculateSupportSystemCoverage',
+    month: state.currentMonth,
+  });
+  const retrainingLevel = assertFinite(policyInterventions.retrainingLevel, {
+    location: 'calculateSupportSystemCoverage',
+    valueName: 'retrainingLevel',
+    month: state.currentMonth,
+  });
 
   // Aggregate coverage (weighted by effectiveness from research)
   const cashWeight = 0.30; // Cash transfers most effective
@@ -508,7 +533,18 @@ export const TransitionMortalityPhase: SimulationPhase = {
     state.transitionMortality.supportSystems.cashTransferAmount = 0; // Not easily accessible
     state.transitionMortality.supportSystems.foodSecurityCoverage = 0.5; // TODO: Connect to actual metrics
     state.transitionMortality.supportSystems.healthcareAccessIndex = 0.5; // Default proxy
-    state.transitionMortality.supportSystems.retrainingProgramQuality = state.policyInterventions?.retrainingLevel ?? 0;
+    const policyInterventions = assertStateProperty(state, 'policyInterventions', {
+      location: 'TransitionMortalityPhase.execute',
+      month: state.currentMonth,
+    });
+    state.transitionMortality.supportSystems.retrainingProgramQuality = assertFinite(
+      policyInterventions.retrainingLevel,
+      {
+        location: 'TransitionMortalityPhase.execute',
+        valueName: 'retrainingLevel',
+        month: state.currentMonth,
+      }
+    );
 
     // Update economic disruption from automation/tech deployment
     // Use unlocked tech count as rough proxy
