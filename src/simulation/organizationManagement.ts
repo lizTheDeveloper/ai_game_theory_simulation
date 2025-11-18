@@ -1167,15 +1167,19 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
       const sortedProjects = [...trainingProjects].sort((a, b) => a.progress - b.progress);
       const toCancel = sortedProjects.slice(0, Math.min(2, trainingProjects.length));
 
+      // O(n²) FIX: Build Set once for O(1) lookup, filter once at end
+      const cancelSet = new Set<string>();
+
       toCancel.forEach(project => {
         const recoveredCapital = project.capitalInvested * (1 - project.cancellationPenalty) * (1 - project.progress);
         capitalRaised += recoveredCapital;
-
-        // Remove from org projects
-        org.currentProjects = org.currentProjects.filter(p => p.id !== project.id);
+        cancelSet.add(project.id);
 
         console.log(`   ❌ PROJECT CANCELED: ${project.id} (recovered $${recoveredCapital.toFixed(1)}M)`);
       });
+
+      // O(n): Single filter pass using Set lookup
+      org.currentProjects = org.currentProjects.filter(p => !cancelSet.has(p.id));
 
       console.log(`       Side effect: Lost competitive position, delayed product launches`);
       measuresTakenThisMonth.push('project_cancellations');
@@ -1260,6 +1264,9 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
         let governmentAcquiredCount = 0;
         let privateAcquiredCount = 0;
 
+        // O(n²) FIX: Build Set of sold DC IDs, filter once at end
+        const soldDCSet = new Set<string>();
+
         console.log(`   🏢 ASSET SALES: Divesting ${dcsToSell.length} data centers`);
 
         dcsToSell.forEach(dc => {
@@ -1279,13 +1286,11 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
             govOrg.capital -= salePrice;
             org.capital += salePrice;
 
-            // Remove from seller's ownership
-            org.ownedDataCenters = org.ownedDataCenters.filter(id => id !== dc.id);
-
             assetSaleCapital += salePrice;
             assetSaleCostReduction += dc.operationalCost;
             governmentAcquiredCount++;
             sold = true;
+            soldDCSet.add(dc.id);
 
             console.log(`       🏛️  Sold to government: ${dc.name} (${dc.capacity.toFixed(0)} PF, $${salePrice.toFixed(1)}M)`);
           }
@@ -1304,13 +1309,11 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
               buyer.capital -= salePrice;
               org.capital += salePrice;
 
-              // Remove from seller's ownership
-              org.ownedDataCenters = org.ownedDataCenters.filter(id => id !== dc.id);
-
               assetSaleCapital += salePrice;
               assetSaleCostReduction += dc.operationalCost;
               privateAcquiredCount++;
               sold = true;
+              soldDCSet.add(dc.id);
 
               console.log(`       🏢 Sold to ${buyer.name}: ${dc.name} (${dc.capacity.toFixed(0)} PF, $${salePrice.toFixed(1)}M)`);
             }
@@ -1321,6 +1324,9 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
             console.log(`       ⚠️  No buyer for ${dc.name} (keeping for now)`);
           }
         });
+
+        // O(n): Single filter pass to remove sold DCs
+        org.ownedDataCenters = org.ownedDataCenters.filter(id => !soldDCSet.has(id));
 
         if (assetSaleCapital > 0) {
           capitalRaised += assetSaleCapital;
