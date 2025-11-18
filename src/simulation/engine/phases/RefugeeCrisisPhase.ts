@@ -13,6 +13,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite } from '@/simulation/utils/assertions';
+import { updateRefugeeCrises } from '../../refugeeCrises';
 
 export class RefugeeCrisisPhase implements SimulationPhase {
   readonly id = 'refugee_crisis';
@@ -25,9 +26,7 @@ export class RefugeeCrisisPhase implements SimulationPhase {
     'wet_bulb_temperature',      // Order 20.45: Heat events trigger displacement
   ];
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const { updateRefugeeCrises } = require('../../refugeeCrises');
-    setDeterministicRng(rng);
+  execute(state: GameState, rng: RNGFunction): PhaseResult {setDeterministicRng(rng);
 
     // Update all refugee crises (triggers new ones, updates existing)
     updateRefugeeCrises(state);

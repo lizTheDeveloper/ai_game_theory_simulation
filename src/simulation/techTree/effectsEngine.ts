@@ -166,18 +166,21 @@ function calculateNovelEntitiesRemediationEffectiveness(
 
   // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Use cached renewable capacity if provided
   // This prevents recalculating in hot path (called once per deployed remediation tech)
-  const energySystem = gameState.resourceEconomy?.energy;
+  const energySystem = gameState.resourceEconomy.energy;
   const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
     cachedRenewableCapacity :
-    (energySystem ? (
-      (energySystem.capacity.solar || 0) +
-      (energySystem.capacity.wind || 0) +
-      (energySystem.capacity.hydro || 0) +
-      (energySystem.capacity.fusion || 0)
-    ) : 0);
+    (
+      assertStateProperty(energySystem.capacity, 'solar', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth}) +
+      assertStateProperty(energySystem.capacity, 'wind', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth}) +
+      assertStateProperty(energySystem.capacity, 'hydro', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth}) +
+      assertStateProperty(energySystem.capacity, 'fusion', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth})
+    );
 
   const renewableCapacity = totalRenewableCapacity > 0 ? totalRenewableCapacity : 1000; // Default: 1,000 TWh total renewable capacity
-  const currentConsumption = energySystem?.totalDemand || 30_000; // Use actual demand or default to 30,000 TWh/year
+  const currentConsumption = assertStateProperty(energySystem, 'totalDemand', {
+    location: 'calculateNovelEntitiesRemediationEffectiveness:energyDemand',
+    month: gameState.currentMonth
+  });
   const renewableSurplus = Math.max(0, renewableCapacity - currentConsumption);
 
   const energyMultiplier = assertFinite(Math.min(1.0, renewableSurplus / energyRequired), {
@@ -294,13 +297,13 @@ export function applyAllTechEffects(
   // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Cache renewable capacity calculation
   // This prevents recalculating 180-300 times per 60-month run (once per remediation tech × months)
   // Research review: Architecture-skeptic identified this hot path issue
-  const energySystem = gameState.resourceEconomy?.energy;
-  const totalRenewableCapacity = energySystem ? (
-    (energySystem.capacity.solar || 0) +
-    (energySystem.capacity.wind || 0) +
-    (energySystem.capacity.hydro || 0) +
-    (energySystem.capacity.fusion || 0)
-  ) : 0;
+  const energySystem = gameState.resourceEconomy.energy;
+  const totalRenewableCapacity = (
+    assertStateProperty(energySystem.capacity, 'solar', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth}) +
+    assertStateProperty(energySystem.capacity, 'wind', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth}) +
+    assertStateProperty(energySystem.capacity, 'hydro', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth}) +
+    assertStateProperty(energySystem.capacity, 'fusion', {location: 'applyTechEffects:renewableCapacity', month: gameState.currentMonth})
+  );
 
   // Aggregate effects by type
   const globalEffects: Map<string, number> = new Map();
@@ -351,14 +354,42 @@ export function applyAllTechEffects(
           if (boundary && tech.energyRequirement) {
             // ENERGY CONSTRAINT: Check renewable energy availability
             // Renewable surplus = total generation × renewable % - existing demand
-            const totalGen = gameState.powerGenerationSystem?.totalElectricityGeneration || 0;
-            const renewablePct = gameState.powerGenerationSystem?.renewablePercentage || 0;
+            const totalGen = assertFinite(
+              assertStateProperty(
+                gameState.powerGenerationSystem,
+                'totalElectricityGeneration',
+                { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
+              ),
+              { location: 'applyAllTechEffects', valueName: 'totalElectricityGeneration', month: gameState.currentMonth }
+            );
+
+            const renewablePct = assertFinite(
+              assertStateProperty(
+                gameState.powerGenerationSystem,
+                'renewablePercentage',
+                { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
+              ),
+              { location: 'applyAllTechEffects', valueName: 'renewablePercentage', month: gameState.currentMonth }
+            );
+
             const renewableGen = totalGen * renewablePct;
-            const dataCenterDemand = gameState.powerGenerationSystem?.dataCenterPower || 0;
+
+            const dataCenterDemand = assertFinite(
+              assertStateProperty(
+                gameState.powerGenerationSystem,
+                'dataCenterPower',
+                { location: 'applyAllTechEffects:energyConstraint', month: gameState.currentMonth }
+              ),
+              { location: 'applyAllTechEffects', valueName: 'dataCenterPower', month: gameState.currentMonth }
+            );
+
             const energyAvailable = Math.max(0, renewableGen - dataCenterDemand * 0.5);  // Assume 50% of data center can be displaced
 
+            // Handle tech.energyRequirement which can be number or object with nested optional fields
             const energyRequired = (typeof tech.energyRequirement !== 'number' && tech.energyRequirement) ?
-                                 (tech.energyRequirement.annualTWhRequired || ((tech.energyRequirement.kWhPerM3 || 0) * 4000) / 1e9) :
+                                 (tech.energyRequirement.annualTWhRequired !== undefined ?
+                                   tech.energyRequirement.annualTWhRequired :
+                                   (tech.energyRequirement.kWhPerM3 !== undefined ? (tech.energyRequirement.kWhPerM3 * 4000) / 1e9 : 0)) :
                                  0;  // 4000 km³ freshwater → TWh
 
             if (energyRequired > 0) {
@@ -444,10 +475,41 @@ export function applyAllTechEffects(
       }
     }
   }
-  
+
+  // TIER 2 HIGH (Nov 16, 2025): Update nitrogen-food coupling with deployed tech
+  // Research: Vertical farming (30%), precision fermentation (40%) nitrogen reduction
+  // Effect is multiplicative across all technologies (model assumption: independent tech effects compound)
+  if (gameState.planetaryBoundariesSystem?.regionalNitrogenManagement) {
+    // Collect all nitrogen-reducing tech deployments
+    const nitrogenReducingTechs: number[] = [];
+    for (const [region, deployments] of Object.entries(techTreeState.regionalDeployment)) {
+      for (const deployment of deployments) {
+        const tech = getTechById(deployment.techId);
+        if (tech && deployment.effects.nitrogenReduction && deployment.deploymentLevel > 0) {
+          const effectiveness = deployment.effects.nitrogenReduction * deployment.deploymentLevel;
+          nitrogenReducingTechs.push(effectiveness);
+        }
+      }
+    }
+
+    // Update nitrogen-food coupling if any nitrogen-reducing techs deployed
+    if (nitrogenReducingTechs.length > 0) {
+      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
+      const globalFoodProductionIndex = updateNitrogenFoodCoupling(
+        gameState,
+        nitrogenReducingTechs
+      );
+
+      // Log nitrogen coupling updates (annually)
+      if (gameState.currentMonth % 12 === 0) {
+        console.log(`🌾 Nitrogen-food coupling updated: ${nitrogenReducingTechs.length} techs deployed, Global food index: ${globalFoodProductionIndex.toFixed(3)}`);
+      }
+    }
+  }
+
   // Apply global effects
   applyGlobalEffects(gameState, globalEffects);
-  
+
   // Apply regional effects
   applyRegionalEffects(gameState, regionalEffects);
 }
@@ -1869,7 +1931,13 @@ function applyRegionalEffects(
       });
           }
           break;
-          
+
+        case 'nitrogenReduction':
+          // TIER 2 HIGH (Nov 16, 2025): Nitrogen reduction handled in applyAllTechEffects
+          // (Before global/regional effects are applied, to collect all deployed tech)
+          // This case is a no-op - nitrogen coupling update happens earlier
+          break;
+
         // ========== OCEAN HEALTH ==========
         // Ocean has TWO systems: oceanHealth (resourceEconomy) and oceanAcidificationSystem
         

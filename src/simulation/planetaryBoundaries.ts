@@ -761,7 +761,70 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       additionalInfo: { baseExtinctionRateEMSY, invasiveMultiplier, totalExtinctionRateEMSY }
     });
 
-    system.boundaries.biosphere_integrity.currentValue = biosphereBoundaryValue;
+    // === IRREVERSIBILITY FRAMEWORK (Nov 17, 2025 - Phase 2) ===
+    // Research: Tilman et al. (1994) - Extinction debt concept
+    // Haddad et al. (2015) - 200-year habitat fragmentation recovery timescale
+    // Kuussaari et al. (2009) - 20-50 year lag timescales
+    // IPBES (2019) - 100-1000× background extinction rate, permanent loss floor
+    const biosphereBoundary = system.boundaries.biosphere_integrity;
+
+    // Track historical peak extinction rate
+    if (biosphereBoundary.peak === undefined) {
+      biosphereBoundary.peak = biosphereBoundaryValue;
+    } else {
+      biosphereBoundary.peak = Math.max(biosphereBoundary.peak, biosphereBoundaryValue);
+    }
+
+    // === ASYMPTOTIC RECOVERY WITH RESTORATION TECHNOLOGIES ===
+    // Check for habitat restoration and rewilding technologies
+    const restorationDeployed = (state.globalMetrics as any).habitatRestorationActive === 1.0;
+    const rewildingDeployed = (state.globalMetrics as any).rewildingActive === 1.0;
+
+    // Calculate restoration effectiveness
+    // Habitat restoration: 30-50% effectiveness (moderate)
+    // Rewilding: 20-40% effectiveness (moderate, long-term)
+    // Combined: Max 60% effectiveness (cannot fully reverse extinction)
+    let restorationEffectiveness = 0;
+    if (restorationDeployed) {
+      restorationEffectiveness += 0.40;  // 40% from habitat restoration
+    }
+    if (rewildingDeployed) {
+      restorationEffectiveness += 0.20;  // 20% from rewilding
+    }
+
+    // Apply asymptotic recovery if irreversible
+    if (biosphereBoundary.irreversible && biosphereBoundary.recoveryHalfLife && biosphereBoundary.minimumAsymptoticValue) {
+      // Import asymptotic recovery function
+      const { asymptoteRecovery } = require('./utils/irreversibility');
+
+      // Target value: current minus restoration effectiveness
+      const targetValue = Math.max(
+        biosphereBoundary.minimumAsymptoticValue * 10,  // Scale 5% floor to [0,10] boundary range
+        biosphereBoundaryValue - (restorationEffectiveness * 10)  // Effectiveness scaled to boundary units
+      );
+
+      // Apply asymptotic recovery (exponential approach to floor)
+      const recoveredValue = asymptoteRecovery(
+        biosphereBoundary.currentValue || biosphereBoundaryValue,
+        targetValue,
+        biosphereBoundary.recoveryHalfLife,
+        biosphereBoundary.minimumAsymptoticValue * 10,  // Scale floor to [0,10] range
+        1/12  // 1 month = 1/12 year
+      );
+
+      biosphereBoundary.currentValue = recoveredValue;
+
+      // Log recovery progress (annually)
+      if (state.currentMonth % 12 === 0 && restorationEffectiveness > 0) {
+        console.log(`  🌍 Biosphere Asymptotic Recovery:`);
+        console.log(`     Current: ${recoveredValue.toFixed(3)}× | Target: ${targetValue.toFixed(3)}× | Floor: ${(biosphereBoundary.minimumAsymptoticValue! * 10).toFixed(3)}×`);
+        console.log(`     Restoration: ${(restorationEffectiveness * 100).toFixed(1)}% (habitat: ${restorationDeployed ? 'Y' : 'N'}, rewilding: ${rewildingDeployed ? 'Y' : 'N'})`);
+        console.log(`     Half-life: ${biosphereBoundary.recoveryHalfLife} years (Haddad 2015: century-scale)`);
+      }
+    } else {
+      // Fallback: Direct assignment (for backward compatibility)
+      biosphereBoundary.currentValue = biosphereBoundaryValue;
+    }
     // = (116 * 1.225) / 10 = 142 / 10 = 14.2× safe threshold (deep overshoot)
   } else {
     // Fallback to biodiversity index if land use system not initialized
@@ -809,6 +872,9 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   // Biogeochemical flows (from phosphorus system + legacy nutrient stocks - TIER 2 HIGH, Nov 15, 2025)
   // Research: Lake Erie case study, nitrogen/phosphorus half-life studies
   // Expected impact: 10% god mode effectiveness gap → legacy stocks create inertia
+  //
+  // INTEGRATION (Nov 17, 2025): Nitrogen-food coupling now models technology-driven nitrogen reduction
+  // with regional yield penalty curves. This creates realistic constraint on nitrogen management.
   if (state.phosphorusSystem) {
     const reserves = assertProbability(state.phosphorusSystem.reserves, {
       location: 'updatePlanetaryBoundaries:biogeochemical',
@@ -887,6 +953,59 @@ export function updatePlanetaryBoundaries(state: GameState): void {
         }
       }
     );
+
+    if (system.legacyNutrientStock) {
+      // Import the update function dynamically to avoid circular dependencies
+      const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
+      const effectivePollution = updateLegacyNutrientStocks(
+        state,
+        currentNitrogenInputMonthly,
+        currentPhosphorusInputMonthly
+      );
+
+      effectiveNitrogen = effectivePollution.effectiveNitrogen;
+      effectivePhosphorus = effectivePollution.effectivePhosphorus;
+    }
+
+    // Normalize to boundary scale
+    // Baseline (2025): 10 Mt N/month + 2.08 Mt P/month = 12.08 Mt/month total → boundary value 2.94
+    // Scaling: 2.94 / 12.08 = 0.243 boundary units per Mt/month
+    const POLLUTION_TO_BOUNDARY_SCALE = 0.243;
+    const effectivePollutionBoundaryValue = (effectiveNitrogen + effectivePhosphorus) * POLLUTION_TO_BOUNDARY_SCALE;
+
+    // Boundary value = effective pollution (includes current inputs + legacy releases)
+    // This creates INERTIA: reducing current inputs helps, but legacy stocks slow recovery dramatically
+    const biogeochemicalValue = assertFinite(Math.max(0, effectivePollutionBoundaryValue), {
+      location: 'updatePlanetaryBoundaries:biogeochemical',
+      valueName: 'biogeochemical_flows.currentValue',
+      month: state.currentMonth,
+      additionalInfo: {
+        reserves,
+        depletion,
+        effectiveNitrogen,
+        effectivePhosphorus,
+        currentNitrogenInputMonthly,
+        currentPhosphorusInputMonthly
+      }
+    });
+    }
+
+    // Boundary value calculation
+    // Baseline (2025): 2.94 (294% of safe boundary)
+    // Scale by effective pollution vs baseline pollution
+    // Baseline total: 12.1 Mt/month (10 N + 2.1 P)
+    const baselinePollution = 12.1;
+    const currentEffectivePollution = effectiveNitrogen + effectivePhosphorus;
+    const pollutionRatio = currentEffectivePollution / baselinePollution;
+
+    // Boundary value = baseline × pollution ratio + depletion factor
+    // Depletion factor: phosphorus reserves declining increases boundary value
+    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 * pollutionRatio + depletion * 0.5), {
+      location: 'updatePlanetaryBoundaries:biogeochemical',
+      valueName: 'biogeochemical_flows.currentValue',
+      month: state.currentMonth,
+      additionalInfo: { reserves, depletion, legacyContribution, effectiveNitrogen, effectivePhosphorus }
+    });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
@@ -990,7 +1109,6 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     console.log(`     Cousins 2022: Global PFAS distribution prevents full remediation`);
   }
 
-  system.boundaries.novel_entities.currentValue = flooredValue;
   updateBoundaryStatus(system.boundaries.novel_entities);
 
   // Ocean acidification (ARCH-4 Integration: Direct pH mapping)

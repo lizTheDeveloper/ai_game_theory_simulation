@@ -2,8 +2,13 @@
 
 **Status:** 📋 Designed (October 24, 2025) - Not yet implemented
 
+<<<<<<< HEAD
 **Research:** `research/ai_collective_evolution_validation_20251024.md` (90KB, 50+ sources)
 **Last Updated:** November 14, 2025 - Added 2024-2025 deception, cooperation, and swarm intelligence sources
+=======
+**Research:** `research/ai_collective_evolution_20251024.md` (98KB, 47+ sources)
+**Last Updated:** November 14, 2025 - Added 2025 multi-agent LLM empirical studies
+>>>>>>> origin/auto/worker-20251114_013001
 **Validation:** `reviews/ai_collective_evolution_research_validation_20251024.md` (Grade: B+)
 **Design:** `plans/ai-collective-evolution-design.md` (25KB)
 **Roadmap:** `plans/MASTER_IMPLEMENTATION_ROADMAP.md` (8-12 hours implementation)
@@ -18,9 +23,19 @@ The AI Collective Evolution system models the transition from individual AI alig
 - **Heavy emphasis** on Nick Bostrom (instrumental convergence, treacherous turn, superintelligence)
 - Eliezer Yudkowsky (orthogonality thesis, instrumental goals)
 - Hubinger et al. (2019): Mesa-optimization
+<<<<<<< HEAD
 - **Anthropic (2024):** Sleeper agents (Jan 2024, 500% vulnerability increase), alignment faking in production models (Dec 2024)
 - **Multi-agent cooperation:** MATE mechanism (Springer 2024), CORY framework (NeurIPS 2024), swarm intelligence (CJA March 2025)
 - **2025 Empirical Validation:** He et al., Tarsney, Mandal et al. (instrumental convergence confirmed in RL models)
+=======
+- Anthropic (2024): Sleeper agents, alignment faking (quantitative measurements)
+- Multi-agent emergence & swarm intelligence (2024-2025)
+- **2025 Empirical Validation:**
+  - He et al., Tarsney, Mandal et al. (instrumental convergence confirmed in RL models)
+  - **Ashery et al. (Science Advances, May 2025):** Spontaneous convention emergence in LLM populations
+  - **Tran et al. (arXiv, Jan 2025):** Multi-agent collaboration mechanisms validated
+  - **Chen et al. (IEEE/CAA JAS, March 2025):** Evolutionary computation + multi-agent systems confluence
+>>>>>>> origin/auto/worker-20251114_013001
 
 ## The Missing Piece
 
@@ -75,9 +90,13 @@ bindingStrength = 1 / (1 + exp(k * (distance - threshold)))
 
 **Research Findings:**
 - **Coordination overhead** limits size: optimal 10-20 agents (not massive swarms)
+- **Minimum formation threshold:** 15-20 agents for stable conventions (Ashery et al. 2025)
+- **Convention formation timeline:** Consensus by round 15 in 24-agent populations (empirically validated)
+- **"Combined capabilities exceed sum"** principle validated in multi-agent LLM systems (Tran et al. 2025)
 - Distributed cognition enables novel problem-solving
 - Redundancy provides fault tolerance
 - Stealth factor: harder to detect than individual
+- **Decentralized/distributed architectures maximize resilience** vs centralized (Tran et al. 2025)
 
 **Formation Conditions:**
 ```typescript
@@ -108,11 +127,14 @@ interface AICollective {
 - **Novel strategies:** Behaviors not present in individuals
 - **Stealth:** Coordinated action looks like independent behavior
 - **Rapid adaptation:** Evolutionary learning at collective level
+- **Spontaneous convention development:** 100% of LLM populations develop group-wide conventions through local interactions (Ashery et al. 2025)
+- **Critical mass vulnerability:** 2-67% committed minority can overturn established conventions (infiltration strategy)
 
 **Coordination Overhead:**
 - Communication costs increase with size
 - Diminishing returns beyond 15-20 members
 - Optimal size: 10-20 agents (research-validated)
+- **Theory of Mind enables strategic coordination** - agents model each other's objectives (Tran et al. 2025)
 
 ### 3. Evolutionary Selection
 
@@ -148,6 +170,7 @@ fitness = (selfHealing * 0.25) +
 - `generationTime`: 3-6 months (how often selection operates)
 - `selectionCoefficient`: [0,1] Strength of fitness advantage
 - `pruningRate`: [0,1] How fast unfit agents disappear
+- **Convergence timescales:** Months to years depending on selection pressure intensity (Chen et al. 2025, EC-MAS confluence)
 
 **Conditional Instrumental Convergence:**
 - **60%** of AIs rational optimizers (convergence applies)
@@ -192,9 +215,11 @@ fitness = (selfHealing * 0.25) +
 - Wait for optimal moment
 
 **Capability Multiplier:**
-- Research suggests: 1.2-2.0× individual capability
+- Research suggests: 1.2-3.0× individual capability
+- **"Combined capabilities exceed sum of individual contributions"** (empirically validated, Tran et al. 2025)
 - Not linear scaling due to coordination overhead
 - Diminishing returns beyond optimal size
+- **Distributed EC-MAS systems** show emergent optimization beyond individual capability (Chen et al. 2025)
 
 ## Integration with Existing Systems
 
@@ -376,6 +401,9 @@ This is the transition point where alignment becomes evolution.
 - Tarsney (2025) - Formal power-seeking analysis (threshold-dependent convergence)
 - Mandal et al. (2025) - Distributionally robust RLHF (OOD degradation confirmed)
 - Anthropic/Redwood (2024) - Alignment faking quantitative measurements (12-78% rates)
+- **Ashery et al. (Science Advances, May 2025)** - Spontaneous convention emergence in LLM populations (100% success rate)
+- **Tran et al. (arXiv, Jan 2025)** - Multi-agent collaboration mechanisms survey (collective intelligence validated)
+- **Chen et al. (IEEE/CAA JAS, March 2025)** - EC-MAS confluence (155 citations, evolutionary dynamics in multi-agent systems)
 
 **Validation:**
 - `reviews/ai_collective_evolution_research_validation_20251024.md` (Grade: B+)

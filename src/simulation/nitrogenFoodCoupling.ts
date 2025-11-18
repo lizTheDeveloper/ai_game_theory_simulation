@@ -340,20 +340,16 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
  * Update regional nitrogen management and calculate global food production impact
  *
  * Steps:
- * 1. Calculate nitrogen reduction from deployed technologies (multiplicative)
- * 2. Calculate regional yield penalties (nonlinear, region-specific)
- * 3. Aggregate to global food production index
- * 4. Update regional management state
+ * 1. Collect nitrogen-reducing tech from tech tree
+ * 2. Calculate global nitrogen reduction (multiplicative synergy)
+ * 3. Calculate regional yield penalties (nonlinear, region-specific)
+ * 4. Aggregate to global food production index
+ * 5. Update regional management state (separate read/write for safety)
  *
  * @param state - Current game state
- * @param deployedTechEffectiveness - Array of tech effectiveness values
  * @returns Global food production multiplier [0, 2] where 1.0 = baseline
  */
-export function updateNitrogenFoodCoupling(
-  state: GameState,
-  deployedTechEffectiveness: number[]
-): number {
-
+export function updateNitrogenFoodCoupling(state: GameState): number {
   // Initialize regional management if not present
   if (!state.planetaryBoundariesSystem.regionalNitrogenManagement) {
     console.log('⚠️ WARNING: regionalNitrogenManagement not initialized, creating default');
@@ -362,29 +358,64 @@ export function updateNitrogenFoodCoupling(
 
   const regions = state.planetaryBoundariesSystem.regionalNitrogenManagement;
 
-  // Calculate global nitrogen reduction from technologies
+  // STEP 1: Collect deployed nitrogen-reducing technologies
+  const deployedTechEffectiveness = collectNitrogenReducingTechEffectiveness(state);
+
+  // STEP 2: Calculate global nitrogen reduction from technologies
   const globalNitrogenReduction = calculateTechnologyNitrogenReduction(deployedTechEffectiveness);
 
-  // Calculate regional yield impacts and aggregate
+  // STEP 3 & 4: Calculate regional yield impacts and aggregate
   let globalFoodProduction = 0;
   let totalRegionalWeight = 0;
+
+  // Regional state updates (separate calculation from mutation)
+  const regionalUpdates: Array<{
+    region: string;
+    yieldImpact: number;
+    newNitrogenInput: number;
+    foodProductionIndex: number;
+  }> = [];
 
   for (const region of regions) {
     // Calculate yield penalty for this region
     const yieldPenalty = calculateNitrogenYieldPenalty(globalNitrogenReduction, region.region);
 
-    // Update region state
-    region.yieldImpact = -yieldPenalty;  // Negative = penalty
-    region.currentNitrogenInput = region.currentNitrogenInput * (1 - globalNitrogenReduction);
-    region.deployedTechnologies = deployedTechEffectiveness.map((_, i) => `tech_${i}`);  // Placeholder
+    // Calculate new values (NOT mutating yet)
+    const yieldImpact = -yieldPenalty;  // Negative = penalty
+    const newNitrogenInput = region.currentNitrogenInput * (1 - globalNitrogenReduction);
+    const foodProductionIndex = Math.max(0, region.foodProductionIndex * (1 - yieldPenalty));
 
-    // Food production for this region
-    region.foodProductionIndex = Math.max(0, region.foodProductionIndex * (1 - yieldPenalty));
+    // Store for later mutation
+    regionalUpdates.push({
+      region: region.region,
+      yieldImpact,
+      newNitrogenInput,
+      foodProductionIndex
+    });
 
-    // Weight by regional nitrogen use (larger regions matter more)
+    // Weight by current nitrogen use (not the new value)
     const regionalWeight = region.currentNitrogenInput;
-    globalFoodProduction += region.foodProductionIndex * regionalWeight;
+    globalFoodProduction += foodProductionIndex * regionalWeight;
     totalRegionalWeight += regionalWeight;
+  }
+
+  // STEP 5: Now apply all regional updates (read complete, now write)
+  for (let i = 0; i < regions.length; i++) {
+    const region = regions[i];
+    const update = regionalUpdates[i];
+
+    region.yieldImpact = update.yieldImpact;
+    region.currentNitrogenInput = update.newNitrogenInput;
+    region.foodProductionIndex = update.foodProductionIndex;
+
+    // Update deployed tech IDs (from placeholder to actual tech)
+    // Only store tech IDs that are actually contributing
+    region.deployedTechnologies = collectNitrogenReducingTechEffectiveness(state)
+      .length > 0
+      ? Object.keys(state.techTreeState.regionalDeployment['global'] || {})
+          .filter(techId => ['soil_p_optimization', 'vertical_farming', 'precision_fermentation',
+                             'circular_food_systems', 'drought_resistant_crops'].includes(techId))
+      : [];
   }
 
   // Global food production index (weighted average)
@@ -405,6 +436,7 @@ export function updateNitrogenFoodCoupling(
     console.log(`\n=== Nitrogen-Food Coupling (Year ${Math.floor(state.currentMonth / 12)}) ===`);
     console.log(`  🌾 Global nitrogen reduction: ${(globalNitrogenReduction * 100).toFixed(1)}%`);
     console.log(`  🌍 Global food production index: ${finalIndex.toFixed(3)}`);
+    console.log(`  🔧 Deployed nitrogen-reducing tech: ${deployedTechEffectiveness.length} active`);
     for (const region of regions) {
       console.log(`  📍 ${region.region}: Production ${region.foodProductionIndex.toFixed(3)}, Yield impact ${(region.yieldImpact * 100).toFixed(1)}%`);
     }
