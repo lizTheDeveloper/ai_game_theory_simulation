@@ -6586,6 +6586,24 @@ The simulation runs via a **phase-based architecture** with **95 phases** execut
   - **Validation:** Monte Carlo testing shows 20-70% coefficient of variation in outcomes (fixes convergence issue)
   - **Phase Order:** 4.5 (early in step, BEFORE domain phases that use variance amplification)
   - **See:** BifurcationLogicPhase implementation (`src/simulation/engine/phases/BifurcationLogicPhase.ts`, 399 lines)
+
+**Key Changes (Nov 13, 2025):**
+- **✅ CRITICAL BUG FIXES (Nov 13):** BifurcationLogicPhase distance calculation and normalization (commit d605293)
+  - **CRITICAL-1 Fixed:** Distance calculation completely broken - used `Math.abs()` for ALL thresholds
+    - **Problem:** Treated "below collapse threshold" same as "above threshold" (e.g., envHealth=0.8, threshold=0.3 calculated distance=0.5, looked dangerous when actually safe!)
+    - **Fix:** Directional distance calculation - collapse thresholds (environmental, social, economic, governance) use `distance = value > threshold ? (value - threshold) : 0.0` (distance=0 when collapsing = maximum amplification)
+    - **Fix:** Flourishing thresholds (QoL, tech) use `distance = value < threshold ? (threshold - value) : 0.0` (distance=0 when flourishing = maximum amplification)
+    - **Impact:** Bifurcation system now correctly amplifies variance when APPROACHING thresholds (not when safe)
+  - **CRITICAL-2 Fixed:** Social coordination not normalized
+    - **Problem:** coordinationCapacity (0-100) compared directly to threshold (0-1), distances of ~30 instead of <1, so social bifurcation NEVER triggered
+    - **Fix:** Normalize coordinationCapacity to [0,1] before calculating distance
+    - **Impact:** Social collapse warnings will now activate (was broken before)
+  - **HIGH-2 Fixed:** Missing debug context in private methods
+    - **Problem:** Couldn't access state.currentMonth in assertions, poor debuggability
+    - **Fix:** Pass GameState to updateVarianceAmplification(), use state.currentMonth with additionalInfo context
+    - **Impact:** Better debugging context when assertions fail
+  - **Review:** `reviews/bifurcation_architecture_review_20251113.md` (Architecture Skeptic - identified 2 CRITICAL + 3 HIGH issues)
+  - **Files:** `src/simulation/engine/phases/BifurcationLogicPhase.ts` (lines 98-218, 259-306)
 - **✅ WEEK 3 TASK 8 COMPLETE (Nov 6):** Phase Dependency System - Explicit dependency declarations prevent race conditions and ordering bugs
   - **Problem:** 95 phases (reduced from 116), 30 have dependencies (31.6% coverage), fragile decimal ordering
   - **Solution:** Added dependencies to 10 additional critical phases (27.8% coverage = 32/115 phases)

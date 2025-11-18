@@ -95,7 +95,12 @@ export class BifurcationLogicPhase implements SimulationPhase {
       valueName: 'environmentalHealth',
       month: state.currentMonth,
     });
-    const envDistance = Math.abs(envHealthFinite - bifState.environmentalCollapseThreshold.location);
+    // CRITICAL FIX (CRITICAL-1): For collapse thresholds (trigger when BELOW), distance should be 0 when at/below threshold
+    // If value > threshold: safe, distance = (value - threshold)
+    // If value <= threshold: collapsing, distance = 0 (maximum amplification)
+    const envDistance = envHealthFinite > bifState.environmentalCollapseThreshold.location
+      ? (envHealthFinite - bifState.environmentalCollapseThreshold.location)
+      : 0.0;
     proximities.set('environmental', {
       distance: envDistance,
       currentValue: envHealthFinite,
@@ -114,10 +119,15 @@ export class BifurcationLogicPhase implements SimulationPhase {
       valueName: 'socialCohesion',
       month: state.currentMonth,
     });
-    const socialDistance = Math.abs(socialCohesionFinite - bifState.socialBreakdownThreshold.location);
+    // CRITICAL FIX (CRITICAL-2): coordinationCapacity is 0-100, but threshold is [0,1] - normalize first
+    const socialCohesionNormalized = socialCohesionFinite / 100.0;
+    // CRITICAL FIX (CRITICAL-1): For collapse thresholds (trigger when BELOW), distance should be 0 when at/below threshold
+    const socialDistance = socialCohesionNormalized > bifState.socialBreakdownThreshold.location
+      ? (socialCohesionNormalized - bifState.socialBreakdownThreshold.location)
+      : 0.0;
     proximities.set('social', {
       distance: socialDistance,
-      currentValue: socialCohesionFinite,
+      currentValue: socialCohesionNormalized,  // Store normalized value for threshold comparison
       threshold: bifState.socialBreakdownThreshold,
     });
 
@@ -139,7 +149,10 @@ export class BifurcationLogicPhase implements SimulationPhase {
       valueName: 'economicStability',
       month: state.currentMonth,
     });
-    const economicDistance = Math.abs(economicStabilityFinite - bifState.economicCollapseThreshold.location);
+    // CRITICAL FIX (CRITICAL-1): For collapse thresholds (trigger when BELOW), distance should be 0 when at/below threshold
+    const economicDistance = economicStabilityFinite > bifState.economicCollapseThreshold.location
+      ? (economicStabilityFinite - bifState.economicCollapseThreshold.location)
+      : 0.0;
     proximities.set('economic', {
       distance: economicDistance,
       currentValue: economicStabilityFinite,
@@ -158,7 +171,10 @@ export class BifurcationLogicPhase implements SimulationPhase {
       valueName: 'governanceEffectiveness',
       month: state.currentMonth,
     });
-    const governanceDistance = Math.abs(governanceEffectivenessFinite - bifState.governanceFailureThreshold.location);
+    // CRITICAL FIX (CRITICAL-1): For collapse thresholds (trigger when BELOW), distance should be 0 when at/below threshold
+    const governanceDistance = governanceEffectivenessFinite > bifState.governanceFailureThreshold.location
+      ? (governanceEffectivenessFinite - bifState.governanceFailureThreshold.location)
+      : 0.0;
     proximities.set('governance', {
       distance: governanceDistance,
       currentValue: governanceEffectivenessFinite,
@@ -179,7 +195,12 @@ export class BifurcationLogicPhase implements SimulationPhase {
       valueName: 'qolOverall',
       month: state.currentMonth,
     });
-    const flourishingDistance = Math.abs(qolOverallFinite - bifState.flourishingThreshold.location);
+    // CRITICAL FIX (CRITICAL-1): For flourishing thresholds (trigger when ABOVE), distance should be 0 when at/above threshold
+    // If value < threshold: distance to reach = (threshold - value)
+    // If value >= threshold: achieved, distance = 0 (maximum amplification for positive feedback)
+    const flourishingDistance = qolOverallFinite < bifState.flourishingThreshold.location
+      ? (bifState.flourishingThreshold.location - qolOverallFinite)
+      : 0.0;
     proximities.set('flourishing', {
       distance: flourishingDistance,
       currentValue: qolOverallFinite,
@@ -196,7 +217,12 @@ export class BifurcationLogicPhase implements SimulationPhase {
       valueName: 'avgDeployment',
       month: state.currentMonth,
     });
-    const techDistance = Math.abs(avgDeploymentFinite - bifState.technologyBreakthroughThreshold.location);
+    // CRITICAL FIX (CRITICAL-1): For technology thresholds (trigger when ABOVE), distance should be 0 when at/above threshold
+    // If value < threshold: distance to reach = (threshold - value)
+    // If value >= threshold: achieved, distance = 0 (maximum amplification for innovation cascades)
+    const techDistance = avgDeploymentFinite < bifState.technologyBreakthroughThreshold.location
+      ? (bifState.technologyBreakthroughThreshold.location - avgDeploymentFinite)
+      : 0.0;
     proximities.set('technology', {
       distance: techDistance,
       currentValue: avgDeploymentFinite,
@@ -249,10 +275,12 @@ export class BifurcationLogicPhase implements SimulationPhase {
     }
 
     // Validate distance is in valid range
+    // HIGH-2 FIX: Now we have access to state.currentMonth for better debugging context
     const minDistanceValidated = assertInRange(minDistance, 0, 1, {
       location: 'BifurcationLogicPhase.updateVarianceAmplification',
       valueName: 'minDistance',
-      month: bifState.currentRegime === 'status-quo' ? undefined : 0, // Can't access state.currentMonth here
+      month: state.currentMonth,
+      additionalInfo: { nearestThreshold: nearestThresholdName }
     });
 
     // Calculate base amplification using bifurcation theory formula
@@ -278,10 +306,16 @@ export class BifurcationLogicPhase implements SimulationPhase {
     const amplificationCapped = Math.min(100.0, amplification);
 
     // Validate final amplification
+    // HIGH-2 FIX: Better debugging context with month and system info
     const amplificationValidated = assertFinite(amplificationCapped, {
       location: 'BifurcationLogicPhase.updateVarianceAmplification',
       valueName: 'amplification',
-      month: undefined,
+      month: state.currentMonth,
+      additionalInfo: {
+        nearestThreshold: nearestThresholdName,
+        distance: minDistanceValidated,
+        systemMultiplier
+      }
     });
 
     // Update bifurcation state (mutation)
