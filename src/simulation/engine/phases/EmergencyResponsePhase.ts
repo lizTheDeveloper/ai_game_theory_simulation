@@ -494,18 +494,24 @@ export class EmergencyResponsePhase implements SimulationPhase {
         'climateStability',
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
 >>>>>>> origin/auto/worker-20251115_080001
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
@@ -520,18 +526,24 @@ export class EmergencyResponsePhase implements SimulationPhase {
         'coordinationCapacity',
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
 >>>>>>> origin/auto/worker-20251115_080001
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
@@ -546,18 +558,24 @@ export class EmergencyResponsePhase implements SimulationPhase {
         'economicTransitionStage',
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
 >>>>>>> origin/auto/worker-20251115_080001
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
       ) / 4.0,
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
@@ -572,18 +590,24 @@ export class EmergencyResponsePhase implements SimulationPhase {
         'legitimacy',
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
         {
           location: 'EmergencyResponsePhase.identifyNearestThreshold',
           month: state.currentMonth
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         { location: 'EmergencyResponsePhase.identifyNearestThreshold', month: state.currentMonth }
 >>>>>>> origin/auto/worker-20251115_080001
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
       ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',

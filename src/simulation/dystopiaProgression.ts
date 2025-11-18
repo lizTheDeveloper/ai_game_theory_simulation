@@ -284,6 +284,7 @@ export function checkDystopiaConditions(state: GameState): {
   const autonomy = assertProbability(
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     state.qualityOfLifeSystems.autonomy,
     { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
   );
@@ -308,15 +309,28 @@ export function checkDystopiaConditions(state: GameState): {
   );
   const politicalFreedom = assertProbability(
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+    assertStateProperty(
+      state.qualityOfLifeSystems,
+      'autonomy',
+      { location: 'checkDystopiaConditions', month: state.currentMonth }
+    ),
+    { location: 'checkDystopiaConditions', valueName: 'autonomy', month: state.currentMonth }
+  );
+  const politicalFreedom = assertProbability(
+>>>>>>> origin/auto/worker-20251115_160001
     assertStateProperty(
       state.qualityOfLifeSystems,
       'politicalFreedom',
       { location: 'checkDystopiaConditions', month: state.currentMonth }
     ),
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_080001
 =======
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
     { location: 'checkDystopiaConditions', valueName: 'politicalFreedom', month: state.currentMonth }
   );
   const controlDesire = assertProbability(

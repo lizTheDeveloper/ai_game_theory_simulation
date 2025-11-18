@@ -11,6 +11,7 @@ This file contains the complete history of recent changes to the AI Game Theory 
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## ✅ Recent Changes (November 14, 2025)
 =======
 =======
@@ -92,6 +93,54 @@ This file contains the complete history of recent changes to the AI Game Theory 
 >>>>>>> origin/auto/worker-20251115_140001
 =======
 >>>>>>> origin/auto/worker-20251115_150001
+=======
+## 🔧 Code Quality: Defensive Fallback Removal (November 15, 2025)
+
+**Summary:** Replaced 20+ defensive fallback patterns (`??`, `||`) with assertion utilities to fail loudly instead of masking bugs.
+
+**Context:** Research simulations must detect invalid states immediately. Silent fallbacks (e.g., `state.metric ?? 0.5`) hide root causes, leading to non-determinism and invalid results. The fail-loudly philosophy requires explicit assertions that crash with detailed context when invariants are violated.
+
+**Changes:**
+- **10 files modified** with 20+ fallback replacements
+- **Type safety improvements:** `aiSufferingMetrics` and `government.resources` changed from optional to required (always initialized)
+- **Assertion utilities used:** `assertStateProperty()`, `assertFinite()`, `assertProbability()`
+
+**Files Modified:**
+- `EmergencyResponsePhase.ts` (4 violations)
+- `OutcomeProbabilitiesPhase.ts` (6 violations)
+- `aiSuffering.ts` (3 violations)
+- `dystopiaProgression.ts` (2 violations)
+- `alignmentDynamics.ts` (1 violation)
+- `earlyWarningSystems.ts` (1 violation)
+- `game.ts`, `government.ts` (type safety improvements)
+- `centralConfig.ts`, `PhaseOrchestrator.ts` (merge conflict resolved)
+
+**Before (masks bugs):**
+```typescript
+const climateStability = state.environmentalAccumulation?.climateStability ?? 0.5;
+```
+
+**After (fails loudly with context):**
+```typescript
+const climateStability = assertStateProperty(
+  state.environmentalAccumulation,
+  'climateStability',
+  { location: 'EmergencyResponsePhase', month: state.currentMonth }
+);
+```
+
+**Impact:**
+- ✅ Research validity improved (no silent bug masking)
+- ✅ Non-determinism risk reduced (no fallback value inconsistencies)
+- ✅ Debugging improved (clear error messages with full context)
+
+**Source:** Architecture Review Nov 13 (Issue #3), logs/defensive_fallback_audit_20251113.md
+
+**Commit:** 76b05851f
+
+---
+
+>>>>>>> origin/auto/worker-20251115_160001
 ## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
 
 **🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
@@ -344,9 +393,12 @@ This file contains the complete history of recent changes to the AI Game Theory 
 **Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_130001
 =======
 >>>>>>> origin/auto/worker-20251115_150001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
 =======
 ## ✅ Recent Changes (November 13, 2025)
 
@@ -411,6 +463,7 @@ This file contains the complete history of recent changes to the AI Game Theory 
 >>>>>>> origin/auto/worker-20251113_070003
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_090001
 =======
 >>>>>>> origin/auto/worker-20251115_130001
@@ -418,6 +471,8 @@ This file contains the complete history of recent changes to the AI Game Theory 
 >>>>>>> origin/auto/worker-20251115_140001
 =======
 >>>>>>> origin/auto/worker-20251115_150001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
 
 ---
 
