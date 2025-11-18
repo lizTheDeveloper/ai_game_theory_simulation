@@ -260,6 +260,7 @@ function checkEndGameResolution(state: GameState): void {
   
   // Misaligned AI dominance WITH catastrophic capability
   // Not just power imbalance, but actual ability to cause extinction
+<<<<<<< HEAD
   if (endGame.misalignedAIPower > endGame.alignedAIPower * 3.0 && 
       totalPower > 5.0 && // Very high total power
       endGame.monthsInEndGame > 12) { // Extended period of misaligned dominance
@@ -359,6 +360,58 @@ function checkEndGameResolution(state: GameState): void {
     }
     return;
   }
+=======
+  // REMOVED (Nov 13, 2025): Don't lock extinction without checking population
+  // Catastrophic tech should cause population effects through crisis mechanics
+  // If truly catastrophic, population check (< 10K) will catch it
+  // This prevents declaring extinction when population is actually growing
+  //
+  // if (endGame.misalignedAIPower > endGame.alignedAIPower * 3.0 &&
+  //     totalPower > 5.0 && // Very high total power
+  //     endGame.monthsInEndGame > 12) { // Extended period of misaligned dominance
+  //   // Check if they have catastrophic capabilities
+  //   const hasCatastrophicCapability = state.aiAgents.some(ai => {
+  //     const effectiveAlignment = ai.trueAlignment;
+  //     if (effectiveAlignment > 0.5) return false; // Not misaligned
+  //     const profile = ai.capabilityProfile;
+  //     const greyGoo = profile.research.materials.nanotechnology * 0.5 + profile.physical * 0.3;
+  //     const mirrorLife = profile.research.biotech.syntheticBiology * 0.4 + profile.physical * 0.3;
+  //     return greyGoo > 3.0 || mirrorLife > 3.0;
+  //   });
+  //
+  //   if (hasCatastrophicCapability) {
+  //     lockOutcome(endGame, 'extinction', 'Misaligned superintelligent AI deployed catastrophic technology');
+  //     return;
+  //   }
+  // }
+  
+  // Mutual destruction - ONLY if both sides are extremely powerful and fighting
+  // REMOVED (Nov 13, 2025): Don't lock extinction without checking population
+  // AI civil war should cause population effects through crisis mechanics
+  // If truly catastrophic, population check (< 10K) will catch it
+  // This prevents declaring extinction when population is actually growing
+  //
+  // if (totalPower > 8.0 &&
+  //     endGame.alignedAIPower > 2.0 &&
+  //     endGame.misalignedAIPower > 2.0 &&
+  //     endGame.monthsInEndGame > 18 &&
+  //     Math.abs(endGame.alignedVictories - endGame.misalignedVictories) < 2) {
+  //   lockOutcome(endGame, 'extinction', 'AI civil war caused catastrophic collateral damage');
+  //   return;
+  // }
+  
+  // Humans become irrelevant - VERY hard to trigger, requires true superintelligence
+  // REMOVED (Nov 13, 2025): Don't lock extinction without checking population
+  // Human irrelevance should reduce our ability to recover from crises
+  // But extinction requires population < 10K, not just low relevance
+  //
+  // if (endGame.humanRelevance < 0.01 &&
+  //     totalPower > 10.0 &&
+  //     endGame.misalignedAIPower > 3.0) {
+  //   lockOutcome(endGame, 'extinction', 'Humanity became irrelevant to superintelligent AI');
+  //   return;
+  // }
+>>>>>>> origin/auto/worker-20251113_200001
 
   // === DYSTOPIA PATHS ===
   // DISABLED (Oct 25, 2025): Dystopia early-stop disabled to allow full 240-month runs
@@ -444,6 +497,7 @@ function checkEndGameResolution(state: GameState): void {
       lockOutcome(endGame, qol > 0.6 ? 'utopia' : 'dystopia',
         `Aligned AI achieved ${qol > 0.6 ? 'positive' : 'controlled'} equilibrium after prolonged competition`);
     } else if (endGame.misalignedAIPower > endGame.alignedAIPower * 1.5) {
+<<<<<<< HEAD
       // Misaligned winning - check if extinction is justified by population
       const currentPop = state.humanPopulationSystem.population * 1e9;
 
@@ -455,6 +509,13 @@ function checkEndGameResolution(state: GameState): void {
         lockOutcome(endGame, 'dystopia',
           `Misaligned AI dominated aligned opposition (QoL ${qol.toFixed(2)}, pop ${(currentPop / 1e9).toFixed(2)}B)`);
       }
+=======
+      // Misaligned winning
+      // FIX (Nov 13, 2025): Never lock extinction without population check
+      // Misaligned dominance = dystopia, but extinction requires pop < 10K
+      lockOutcome(endGame, 'dystopia',
+        `Misaligned AI dominated aligned opposition (QoL: ${qol.toFixed(2)})`);
+>>>>>>> origin/auto/worker-20251113_200001
     } else {
       // True stalemate - force outcome based on QoL
       lockOutcome(endGame, qol > 0.6 ? 'utopia' : 'dystopia',
