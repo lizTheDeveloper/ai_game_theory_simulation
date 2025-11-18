@@ -1126,6 +1126,137 @@ const ALL_TECH: TechDefinition[] = [
       cropYieldBonus: 0.05,
     },
   },
+
+  // === PHASE 3: Advanced Prevention Technologies (TIER 2-3 HIGH) ===
+  // Research: Novel entities redesign Nov 2025 (16 sources, Grade B+ conditional)
+
+  {
+    id: 'membrane_cascade_systems',
+    name: 'Membrane Cascade Systems',
+    description: 'Multi-stage concentration from ng/L → mg/L with minimal energy. 1000× energy improvement vs thermal destruction. Works on dilute streams.',
+    category: 'pollution',
+    status: 'unlockable',
+    prerequisites: ['green_chemistry_substitution'],  // Requires advanced material science
+    minAICapability: 3.0,  // Advanced material design (nanoporous membranes)
+    minEconomicStage: 3.5,
+    minMonth: 36,  // Mid-game technology
+    researchMonthsRequired: 60,  // 5 years (10-15 year research estimate)
+    researchCost: 800,
+    deploymentCost: 80000,  // Lower than thermal (energy-efficient)
+    deploymentMonthsRequired: 120,  // 10 years to commercial scale
+    deploymentLevel: 0,
+    effects: {
+      pollutionReduction: 0.15,  // 40-60% effectiveness (spec says 0.4-0.6, using conservative)
+      pfasReduction: 0.40,  // Works on dilute streams (key advantage)
+      microplasticReduction: 0.30,
+      healthBonus: 0.03,
+    },
+    // Energy advantage: <1,000 kWh/kg vs 10^6 kWh/kg thermal (1000× improvement)
+    energyRequirement: {
+      kWhPerKg: 800,  // Much lower than thermal destruction
+      uncertaintyRange: {
+        optimistic: 500,  // Breakthrough membrane efficiency
+        expected: 800,
+        pessimistic: 1200,
+        uncertaintyFactor: 2  // Moderate uncertainty
+      }
+    },
+    minimumConcentration: {
+      ngPerL: 10,  // Works at environmental concentrations (ng/L)!
+      optimalNgPerL: 1000,  // Better at μg/L but functional at ng/L
+      concentrationPenalty: 0.4  // 60% reduction at lowest concentrations
+    },
+    techType: 'cleanup',
+    targetsIrreversibleStock: false,  // Can't reach covalently bound PFAS
+    citations: [
+      'Novel entities zero-effectiveness gap research (2025) - membrane cascade proposal'
+    ],
+  },
+  {
+    id: 'biomimetic_filtration',
+    name: 'Biomimetic Filtration (Kidney Analog)',
+    description: 'Bio-inspired selective extraction targeting contaminants at environmental concentrations. Passive/low-energy filtration mimicking biological kidneys.',
+    category: 'pollution',
+    status: 'unlockable',
+    prerequisites: ['membrane_cascade_systems'],  // Requires membrane tech foundation
+    minAICapability: 3.5,  // Advanced biomimetic design
+    minEconomicStage: 4.0,
+    minMonth: 48,  // Late-game technology
+    researchMonthsRequired: 96,  // 8 years (15-25 year timeline, accelerated by AI)
+    researchCost: 1200,
+    deploymentCost: 100000,
+    deploymentMonthsRequired: 180,  // 15 years to environmental scale
+    deploymentLevel: 0,
+    effects: {
+      pollutionReduction: 0.12,  // 30-50% effectiveness (conservative mid-range)
+      pfasReduction: 0.35,  // Selective binding
+      microplasticReduction: 0.25,
+      healthBonus: 0.04,
+      biodiversityBonus: 0.02,  // Removes toxins from ecosystems
+    },
+    // Passive/low-energy (biomimetic advantage)
+    energyRequirement: {
+      kWhPerKg: 100,  // Very low energy (passive filtration)
+      uncertaintyRange: {
+        optimistic: 50,
+        expected: 100,
+        pessimistic: 300,  // If active pumping required
+        uncertaintyFactor: 3  // High uncertainty (speculative tech)
+      }
+    },
+    minimumConcentration: {
+      ngPerL: 1,  // Works at pg/L-ng/L (environmental reality)
+      optimalNgPerL: 100,
+      concentrationPenalty: 0.3  // 70% reduction at lowest concentrations
+    },
+    techType: 'cleanup',
+    targetsIrreversibleStock: false,  // Biological systems can't reach atmospheric PFAS
+    citations: [
+      'Novel entities zero-effectiveness gap research (2025) - biomimetic proposal (SPECULATIVE)'
+    ],
+  },
+  {
+    id: 'photocatalytic_degradation',
+    name: 'Photocatalytic Degradation at Scale',
+    description: 'Sunlight-driven in-situ breakdown of PFAS/microplastics without concentration step. Quantum efficiency >50% required (currently <10%).',
+    category: 'pollution',
+    status: 'unlockable',
+    prerequisites: ['membrane_cascade_systems'],
+    minAICapability: 3.5,  // Advanced photocatalyst design
+    minEconomicStage: 4.0,
+    minMonth: 48,
+    researchMonthsRequired: 84,  // 7 years (10-20 year timeline)
+    researchCost: 1000,
+    deploymentCost: 90000,
+    deploymentMonthsRequired: 120,  // 10 years to environmental scale
+    deploymentLevel: 0,
+    effects: {
+      pollutionReduction: 0.10,  // 20-40% effectiveness (conservative)
+      pfasReduction: 0.25,  // In-situ degradation
+      microplasticReduction: 0.20,
+      healthBonus: 0.03,
+    },
+    // Solar-powered (minimal grid energy)
+    energyRequirement: {
+      kWhPerKg: 50,  // Sunlight + minimal pumping
+      uncertaintyRange: {
+        optimistic: 20,  // Pure solar
+        expected: 50,
+        pessimistic: 200,  // If supplemental energy needed
+        uncertaintyFactor: 4  // Very high uncertainty (quantum efficiency breakthrough needed)
+      }
+    },
+    minimumConcentration: {
+      ngPerL: 5,  // Needs some minimum concentration for photon interaction
+      optimalNgPerL: 500,
+      concentrationPenalty: 0.2  // 80% reduction at lowest concentrations
+    },
+    techType: 'cleanup',
+    targetsIrreversibleStock: false,  // Surface-level degradation only
+    citations: [
+      'Novel entities zero-effectiveness gap research (2025) - photocatalytic proposal (UNPROVEN, needs QE >50%)'
+    ],
+  },
   
   // Novel Entities (3)
   {
