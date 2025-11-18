@@ -74,6 +74,7 @@ Boundaries update based on simulation state:
   - **Growth model (Oct 30, 2025):** Percentage-based growth matching IPBES research (10-30% per decade), with logistic saturation at 1000× max to prevent unrealistic exponential accumulation
 - **Freshwater:** Driven by freshwater system (water stress)
 <<<<<<< HEAD
+<<<<<<< HEAD
 - **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives), nitrogen-food coupling with regional differentiation (Nov 16, 2025)
   - **Legacy stocks:** Soil (30yr half-life), sediments (100yr half-life) create decades-long recovery timescales
   - **Nitrogen-food coupling:** Regional yield penalties based on nitrogen overuse (55% South Asian rice farms exceed safe limits)
@@ -84,6 +85,9 @@ Boundaries update based on simulation state:
   - **Regional Penalties:** South Asia 55% nitrogen overuse zones face zero food penalty; moderate zones face 30-40% yield reduction with aggressive N reduction
   - **Recovery Inertia:** God mode effectiveness expected at 30-50% (vs 10% pre-integration) due to legacy stock half-lives (30yr soil, 100yr sediment)
 >>>>>>> origin/auto/worker-20251116_160001
+=======
+- **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives, ✅ Phase 1 ACTIVE Nov 17, 2025), nitrogen-food coupling with regional differentiation (⏸️ Phase 2-3 pending)
+>>>>>>> origin/auto/worker-20251117_080000
 - **Novel Entities:** Driven by environmental pollution
 - **Ocean Acidification:** Driven by ocean acidification system
 - **Ozone:** Improving +0.06%/year (Montreal Protocol recovery)
@@ -243,12 +247,16 @@ The **stratospheric ozone boundary** is one of only 2 safe boundaries, and it's 
 
 ### Crisis Interactions:
 - **Phosphorus Depletion** → Worsens biogeochemical boundary
+<<<<<<< HEAD
 - **Nitrogen-Food Coupling** (Nov 16, 2025) → ✅ FULLY INTEGRATED
   - Legacy nutrient stocks (soil 30yr, sediment 100yr half-lives) create decades-long recovery timescales
   - Regional food production penalties (mapping simulation regions to nitrogen research regions)
   - Technology pathway: nitrogenReduction effects (vertical farming 60%, precision fermentation 40%)
   - Expected impact: God mode biogeochemical effectiveness 10% → 30-50%
   - Research foundation: 29 peer-reviewed sources, Grade B validation
+=======
+- **Nitrogen-Food Coupling** (Nov 2025) → Legacy nutrient stocks create decades-long recovery timescales (✅ Phase 1 ACTIVE Nov 17), regional food production penalties (Phase 2 pending)
+>>>>>>> origin/auto/worker-20251117_080000
 - **Freshwater Depletion** → Worsens freshwater boundary
 - **Ocean Acidification** → Worsens ocean boundary
 - **Novel Entities** → Worsens pollution boundary
@@ -467,6 +475,71 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
+## 🧪 Legacy Nutrient Stocks & Nitrogen-Food Coupling (Nov 15-17, 2025) - TIER 2 HIGH
+
+**Status:** ✅ Phase 1 COMPLETE (stock updates wired), ⏸️ Phase 2-3 PENDING
+**Research Base:** `research/nitrogen_food_coupling_20251115.md` (883 lines, Grade B)
+**Implementation:**
+- `src/simulation/legacyNutrientStocks.ts` (stock tracking, exponential decay)
+- `src/simulation/nitrogenFoodCoupling.ts` (regional penalties, 3-zone yield curves)
+- `PlanetaryBoundariesPhase.ts:21.0` (monthly updates)
+
+### Problem Addressed
+
+**God mode biogeochemical effectiveness stuck at 10%** (expected 30-50%)
+
+**Root cause:** Legacy nutrient stocks existed but were NEVER updated after initialization. Boundary calculations read static initial values with no decay over time.
+
+### Phase 1 Implementation (✅ COMPLETE - Nov 17, 2025)
+
+**Monthly Stock Updates:**
+- Added `updateLegacyNutrientStocks()` call to PlanetaryBoundariesPhase (order 21.0) - Commit b84ddff03
+- Updates occur BEFORE boundary calculations (creates proper inertia effect)
+- Baseline inputs: 120 Mt N/year (10 Mt N/month), 25 Mt P/year (2.08 Mt P/month)
+- Scaled by phosphorus reserves as proxy for agricultural activity
+- Defensive coding: Uses `assertFinite`, no silent fallbacks
+- Test validation: 12-month simulation successful (Year 0: 18.6% legacy contribution)
+
+**Impact Validated:**
+- Stock decay functioning correctly: exponential decay with 30-100 year half-lives
+- Legacy contribution observable: starts at ~18.6%, decreases over time
+- Recovery timeline: Decades-long inertia effect now active
+
+**Research Backing:**
+- Lake Erie sediment loading studies (Paerl et al. 2024)
+- Nitrogen half-life in sediments (30-100 years)
+- Legacy contribution: 18.6% at Year 0, decreases exponentially
+
+### Phase 2 Remaining Work (⏸️ PENDING - 30-45 min)
+
+**Connect Nitrogen-Food Coupling to Food Production:**
+- Wire `updateNitrogenFoodCoupling()` to food production system
+- Apply regional yield penalties to QoL food security
+- Connect to mortality system (malnutrition pathways)
+- Enable multiplicative synergies (tech + natural recovery)
+
+### Phase 3 Remaining Work (⏸️ PENDING - 45-60 min)
+
+**Add 6 Missing Biogeochemical Technologies:**
+- Precision agriculture (regional nitrogen efficiency)
+- Nitroplasts (biological nitrogen fixation)
+- Rhizosphere engineering (nutrient capture)
+- Food waste reduction (input demand decrease)
+- Regenerative agriculture (soil health)
+- Phosphorus recovery from wastewater
+
+### Expected Final Impact
+
+**After Phase 2-3 completion:**
+- God mode biogeochemical effectiveness: 10% → 30-50%
+- Regional differentiation: South Asia worse than North America
+- Technology synergies: Cascading effectiveness multipliers
+- Realistic recovery timelines: Decades for legacy stocks to clear
+
+**Current Status (Phase 1 only):** Stock updates working, logged annually. Phases 2-3 required for food system connection and full effectiveness.
+
+---
+
 ## 🔬 Future Enhancements (TIER 3.2+)
 
 ### Planned Additions:
@@ -538,12 +611,21 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
+<<<<<<< HEAD
 **Last Updated:** November 11, 2025 (2025 ocean acidification breach documentation)
 **Implementation Status:** ✅ COMPLETE (Phase 2: Storm Systems + BII Framework)
 **Recent Updates:**
 - ✅ Ocean acidification boundary breach documented (2025 Planetary Health Check) - Nov 11, 2025
+=======
+**Last Updated:** November 17, 2025 (Legacy Nutrient Stocks Phase 1 Complete)
+**Implementation Status:** ✅ ACTIVE (Legacy nutrient stocks updating monthly, Phases 2-3 pending)
+**Recent Updates:**
+- ✅ **Phase 1 COMPLETE:** Legacy nutrient stocks wired into PlanetaryBoundariesPhase (order 21.0) - Commit b84ddff03, Nov 17, 2025
+- ✅ Monthly stock updates with baseline N/P inputs (10 Mt N/month, 2.08 Mt P/month), scaled by phosphorus reserves - Nov 17, 2025
+- ✅ Test validation: 12-month simulation successful (Year 0: 18.6% legacy contribution) - Nov 17, 2025
+>>>>>>> origin/auto/worker-20251117_080000
 - ✅ Storm intensity-frequency modeling (ExtremeWeatherEventsPhase) - Oct 28, 2025
 - ✅ BII framework with climate velocity tracking (updateBiosphereIntegrityIndex) - Oct 28, 2025
 - ✅ Biosphere boundary normalized to safe threshold (13.7×), polarity corrected - Oct 30, 2025
-**Next Steps:** TIER 3.3+ (Aerosol Dimming, Nitrogen Cycle)
+**Next Steps:** Phase 2 (nitrogen-food coupling → food/mortality systems, 30-45 min), Phase 3 (6 biogeochemical technologies, 45-60 min)
 

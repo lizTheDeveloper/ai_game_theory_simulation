@@ -61,7 +61,7 @@ import {
   // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   TechTreePhase,
-  CoordinatedDeploymentPhase,  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
+  // CoordinatedDeploymentPhase explicitly imported below (line 163) to avoid duplication
   MeaningRenaissancePhase,
   // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)

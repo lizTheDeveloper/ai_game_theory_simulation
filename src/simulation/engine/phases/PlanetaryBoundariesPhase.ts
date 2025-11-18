@@ -53,6 +53,24 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
       );
     }
 
+    // TIER 2 HIGH (Nov 15, 2025): Update legacy nutrient stocks BEFORE boundary calculations
+    // This creates decades-long inertia in biogeochemical flows recovery
+    // Research: Lake Erie sediment loading, nitrogen half-life studies
+    const { updateLegacyNutrientStocks } = require('../../legacyNutrientStocks');
+
+    // Calculate current monthly nutrient inputs
+    // Baseline (2025): ~120 Mt N/year = 10 Mt N/month, ~25 Mt P/year = 2.08 Mt P/month
+    // TODO (Phase 2): Connect to technology deployment + food system for dynamic calculation
+    const BASELINE_N_INPUT_PER_MONTH = 120 / 12;  // 10 Mt N/month (2025 baseline)
+    const BASELINE_P_INPUT_PER_MONTH = 25 / 12;   // 2.08 Mt P/month (2025 baseline)
+
+    // Scale by phosphorus reserves depletion (simplified proxy for agricultural activity)
+    const phosphorusReserves = state.phosphorusSystem?.reserves ?? 1.0;
+    const currentNitrogenInput = BASELINE_N_INPUT_PER_MONTH * phosphorusReserves;
+    const currentPhosphorusInput = BASELINE_P_INPUT_PER_MONTH * phosphorusReserves;
+
+    updateLegacyNutrientStocks(state, currentNitrogenInput, currentPhosphorusInput);
+
     // Update Biosphere Integrity Index (BII) - Climate Mortality Phase 2 (Nov 6, 2025)
     // Species tracking with climate velocity modeling
     updateBiosphereIntegrityIndex(state, rng);
@@ -70,6 +88,7 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     updateLegacyNutrientStocks(state, currentNInput, currentPInput);
 
     // Update all planetary boundaries (degradation mechanics)
+    // This now reads legacy nutrient stock releases (via getLegacyContributionPercentage)
     updatePlanetaryBoundaries(state);
 
     // Update Novel Entities boundary with energy-constrained cleanup model (Nov 16, 2025)
