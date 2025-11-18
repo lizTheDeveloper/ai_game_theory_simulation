@@ -108,7 +108,10 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
         valueName: 'extinctionProbability',
         month: state.currentMonth
       });
+<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
 
 >>>>>>> origin/auto/worker-20251115_080001
     const totalProb = utopiaProbability + dystopiaProbability + extinctionProbability;
@@ -118,6 +121,7 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
       throw new Error(
         `❌ Outcome probabilities do not sum to 1.0 in OutcomeProbabilitiesPhase.execute\n` +
         `   Total: ${totalProb.toFixed(3)}\n` +
+<<<<<<< HEAD
 <<<<<<< HEAD
         `   Utopia: ${utopiaProbability.toFixed(3)}\n` +
         `   Dystopia: ${dystopiaProbability.toFixed(3)}\n` +
@@ -134,6 +138,12 @@ export class OutcomeProbabilitiesPhase implements SimulationPhase {
         `   Dystopia: ${(outcomeProbs.dystopiaProbability ?? 0).toFixed(3)}\n` +  // Display only - already validated above
         `   Extinction: ${(outcomeProbs.extinctionProbability ?? 0).toFixed(3)}\n` +  // Display only - already validated above
 >>>>>>> origin/auto/worker-20251115_130001
+=======
+        // Display only - already validated above with assertions
+        `   Utopia: ${(outcomeProbs.utopiaProbability ?? 0).toFixed(3)}\n` +
+        `   Dystopia: ${(outcomeProbs.dystopiaProbability ?? 0).toFixed(3)}\n` +
+        `   Extinction: ${(outcomeProbs.extinctionProbability ?? 0).toFixed(3)}\n` +
+>>>>>>> origin/auto/worker-20251115_160001
         `   Month: ${state.currentMonth}`
 >>>>>>> origin/auto/worker-20251115_080001
       );
