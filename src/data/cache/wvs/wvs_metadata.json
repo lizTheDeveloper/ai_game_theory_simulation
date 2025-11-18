@@ -1,13 +1,8 @@
 {
   "source": "wvs",
   "version": "Wave 7",
-<<<<<<< HEAD
-  "updateDate": "2025-11-18T04:39:03.331Z",
-  "expiryDate": "2035-11-16T04:39:03.331Z",
-=======
-  "updateDate": "2025-11-18T07:52:12.470Z",
-  "expiryDate": "2035-11-16T07:52:12.470Z",
->>>>>>> origin/claude/merge-remote-branches-01RyPg6X8etfwp46DznAhtBk
+  "updateDate": "2025-11-18T09:21:59.863Z",
+  "expiryDate": "2035-11-16T09:21:59.863Z",
   "recordCount": 28,
   "coverage": {
     "countries": 28
