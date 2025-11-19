@@ -18,6 +18,7 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite, assertProbability } from '@/simulation/utils/assertions';
+import { progressExtinction } from '../../extinctions';
 
 export class ExtinctionProgressPhase implements SimulationPhase {
   readonly id = 'extinction-progress';
@@ -37,15 +38,13 @@ export class ExtinctionProgressPhase implements SimulationPhase {
     }
 
     // Import and execute extinction progression
-    const { progressExtinction } = require('../../extinctions');
-
     const extinctionProgress = progressExtinction(state, rng);
 
     // ASSERTIONS (Nov 7, 2025): Validate extinction progress values
-    if (extinctionProgress.newExtinctionState?.progress !== undefined) {
-      assertProbability(extinctionProgress.newExtinctionState.progress, {
+    if (extinctionProgress.newExtinctionState?.phaseProgress !== undefined) {
+      assertProbability(extinctionProgress.newExtinctionState.phaseProgress, {
         location: 'ExtinctionProgressPhase.execute',
-        valueName: 'extinctionProgress.newExtinctionState.progress',
+        valueName: 'extinctionProgress.newExtinctionState.phaseProgress',
         month: state.currentMonth
       });
     }

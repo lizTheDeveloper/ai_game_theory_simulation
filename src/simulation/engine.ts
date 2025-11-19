@@ -61,7 +61,7 @@ import {
   // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
   TechTreePhase,
-  CoordinatedDeploymentPhase,  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
+  CoordinatedDeploymentPhase,  // TIER 1B (Nov 15, 2025): AI-managed gradual tech deployment (order 16.5)
   MeaningRenaissancePhase,
   // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
@@ -97,6 +97,9 @@ import {
   WetBulbTemperaturePhase,  // Oct 17, 2025: Wet bulb temperature deadly heat events
   ExtremeWeatherEventsPhase,  // Oct 28, 2025: Storm intensity-frequency modeling (MDF framework)
   PlanetaryBoundariesPhase,
+  IrreversibilityTrackingPhase,  // TIER 1 CRITICAL (Nov 16, 2025): Environmental & social tipping points with hysteresis
+  LegacyNutrientStocksPhase,  // TIER 2 HIGH (Nov 15, 2025): Legacy nutrient stock decay
+  NitrogenFoodCouplingPhase,  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food production coupling
   PositiveTippingPointsPhase,  // Oct 17, 2025: Positive technology adoption cascades
   // TippingPointPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   // FamineSystemPhase removed - merged into HumanSurvivalSystemPhase (Batch 4, Nov 9, 2025)
@@ -160,11 +163,11 @@ import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P
 // Batch 3 Consolidation: Climate & Environmental (17 → 7, Nov 9, 2025)
 import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Consolidated 4 climate phases
 import { ClimateDeploymentPhase } from './engine/phases/ClimateDeploymentPhase';  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints
-import { CoordinatedDeploymentPhase } from './engine/phases/CoordinatedDeploymentPhase';  // TIER 1B CRITICAL (Nov 2025): AI-managed gradual technology deployment
 import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Consolidated phosphorus + novel entities
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
 // Batch 4 Consolidation: Crisis & Mortality (14 → 5, Nov 9, 2025)
 import { HumanSurvivalSystemPhase } from './engine/phases/HumanSurvivalSystemPhase';  // Consolidated famine, food security, mortality stabilizers
+import { TransitionMortalityPhase } from './engine/phases/TransitionMortalityPhase';  // TIER 1B CRITICAL (Nov 2025): Transition mortality from rapid tech deployment
 import { NuclearCrisisPhase } from './engine/phases/NuclearCrisisPhase';  // Consolidated nuclear winter + radiation
 import { ExtinctionSystemPhase } from './engine/phases/ExtinctionSystemPhase';  // Consolidated extinction triggers/progress, catastrophic scenarios
 // Batch 5 Consolidation: Social & Governance (20 → 8, Nov 9, 2025)
@@ -519,11 +522,7 @@ export class SimulationEngine {
     // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
     // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new TechTreePhase());
-<<<<<<< HEAD
     this.orchestrator.registerPhase(new CoordinatedDeploymentPhase());  // TIER 1B (Nov 15, 2025): AI-managed gradual tech deployment (order 16.5)
-=======
-    this.orchestrator.registerPhase(new CoordinatedDeploymentPhase());  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
->>>>>>> origin/auto/researcher-20251115_093001
     this.orchestrator.registerPhase(new MeaningRenaissancePhase());
     // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
     // FlashWarEscalationPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
@@ -562,6 +561,9 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new WetBulbTemperaturePhase());  // Oct 17, 2025: Wet bulb temperature deadly heat events
     this.orchestrator.registerPhase(new ExtremeWeatherEventsPhase());  // Oct 28, 2025: Storm intensity-frequency modeling
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
+    this.orchestrator.registerPhase(new IrreversibilityTrackingPhase());  // TIER 1 CRITICAL (Nov 16, 2025): Environmental & social tipping points with hysteresis
+    this.orchestrator.registerPhase(new LegacyNutrientStocksPhase());  // TIER 2 HIGH (Nov 15, 2025): Legacy nutrient stock decay
+    this.orchestrator.registerPhase(new NitrogenFoodCouplingPhase());  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food production coupling
     this.orchestrator.registerPhase(new PositiveTippingPointsPhase());  // Oct 17, 2025: Positive cascades (solar, EV, wind)
     // TippingPointPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
     // FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase removed - merged into HumanSurvivalSystemPhase (Batch 4, Nov 9, 2025)
@@ -570,6 +572,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ClimateDeploymentPhase());  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints (order 8.5)
     // === BATCH 4 CONSOLIDATED SURVIVAL SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new HumanSurvivalSystemPhase());  // Consolidated: FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase (order 19.7)
+    this.orchestrator.registerPhase(TransitionMortalityPhase);  // TIER 1B CRITICAL (Nov 16, 2025): Transition mortality from rapid tech deployment (order 26)
     this.orchestrator.registerPhase(new BayesianMortalityResolutionPhase());  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline
     this.orchestrator.registerPhase(new MinimalSufferingPhase());  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering)
@@ -629,6 +632,12 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TechnologyDiffusionPhase());
     this.orchestrator.registerPhase(new EventCollectionPhase());
     this.orchestrator.registerPhase(new TimeAdvancementPhase());
+
+    // CRITICAL-2 FIX (Nov 10, 2025): Validate phase dependencies at initialization time
+    // This catches circular dependencies, missing phases, and order violations BEFORE
+    // first simulation step. Fail loudly on configuration errors.
+    // FIX (Nov 13, 2025): Re-added after being accidentally removed during refactor
+    this.orchestrator.validate();
   }
 
   /**
@@ -860,61 +869,65 @@ export class SimulationEngine {
         stopConditions.onMonthEnd(state);
       }
       
-      // Phase 3: Check for end-game transition
-      if (!state.endGameState?.active && checkEndGameTransition(state)) {
-        enterEndGame(state);
-      }
+      // Phase 3: Check for end-game transition (SANDBOX MODE: skip if checkActualOutcomes=false)
+      // God mode needs full 120-month runs without early termination
+      if (checkActualOutcomes) {
+        if (!state.endGameState?.active && checkEndGameTransition(state)) {
+          enterEndGame(state);
+        }
 
-      // Phase 3: Process end-game dynamics if active
-      if (state.endGameState?.active) {
-        processEndGameMonth(state);
-        
-        // Check if end-game has resolved
-        const endGameOutcome = getEndGameOutcome(state);
-        if (endGameOutcome.outcome) {
-          actualOutcome = endGameOutcome.outcome;
-          actualOutcomeReason = endGameOutcome.reason;
-          console.log(`\n🎭 END-GAME RESOLVED: ${endGameOutcome.outcome.toUpperCase()}`);
-          console.log(`   Reason: ${endGameOutcome.reason}`);
-          console.log(`   Month: ${month}\n`);
+        // Phase 3: Process end-game dynamics if active
+        if (state.endGameState?.active) {
+          processEndGameMonth(state);
+
+          // Check if end-game has resolved
+          const endGameOutcome = getEndGameOutcome(state);
+          if (endGameOutcome.outcome) {
+            actualOutcome = endGameOutcome.outcome;
+            actualOutcomeReason = endGameOutcome.reason;
+            console.log(`\n🎭 END-GAME RESOLVED: ${endGameOutcome.outcome.toUpperCase()}`);
+            console.log(`   Reason: ${endGameOutcome.reason}`);
+            console.log(`   Month: ${month}\n`);
+            if (DEBUG_SCENARIO_BUG) {
+              console.log(`[ENGINE DEBUG] Breaking due to END-GAME outcome at month ${month}`);
+            }
+            break;
+          }
+        }
+
+        // Check for extinction completion (TIER 1.7: Fixed to use population, not severity)
+        // TRUE EXTINCTION: Population < 10K people
+        // OLD BUG: Used severity >= 1.0, which declared extinction at 3-4B survivors!
+        const population = state.humanPopulationSystem.population;
+        const populationInPeople = population * 1_000_000_000; // Convert billions to actual count
+
+        if (populationInPeople < 10_000) {
+          // TRUE EXTINCTION: Less than 10,000 people left
+          actualOutcome = 'extinction';
+          actualOutcomeReason = `True extinction - population reached ${populationInPeople.toFixed(0)} people`;
+
+          console.log(`\n💀 TRUE EXTINCTION: HUMANITY EXTINCT`);
+          console.log(`   Final Population: ${populationInPeople.toFixed(0)} people (<10K threshold)`);
+          console.log(`   Peak Population: ${(state.humanPopulationSystem.peakPopulation / 1000).toFixed(2)}B`);
+          console.log(`   Mortality: ${((1 - population / state.humanPopulationSystem.peakPopulation) * 100).toFixed(1)}%`);
+          console.log(`   Primary Cause: ${state.extinctionState.mechanism || 'Cascading crises'}`);
+          console.log(`   Month: ${month}`);
+
+          const { determinePopulationOutcome } = require('./populationDynamics');
+          const popOutcome = determinePopulationOutcome(state);
+          console.log(`\n   ${popOutcome.outcomeNarrative}\n`);
           if (DEBUG_SCENARIO_BUG) {
-            console.log(`[ENGINE DEBUG] Breaking due to END-GAME outcome at month ${month}`);
+            console.log(`[ENGINE DEBUG] Breaking due to TRUE EXTINCTION at month ${month}`);
           }
           break;
         }
-      }
-      
-      // Check for extinction completion (TIER 1.7: Fixed to use population, not severity)
-      // TRUE EXTINCTION: Population < 10K people
-      // OLD BUG: Used severity >= 1.0, which declared extinction at 3-4B survivors!
-      const population = state.humanPopulationSystem.population;
-      const populationInPeople = population * 1_000_000_000; // Convert billions to actual count
-      
-      if (populationInPeople < 10_000) {
-        // TRUE EXTINCTION: Less than 10,000 people left
-        actualOutcome = 'extinction';
-        actualOutcomeReason = `True extinction - population reached ${populationInPeople.toFixed(0)} people`;
-        
-        console.log(`\n💀 TRUE EXTINCTION: HUMANITY EXTINCT`);
-        console.log(`   Final Population: ${populationInPeople.toFixed(0)} people (<10K threshold)`);
-        console.log(`   Peak Population: ${(state.humanPopulationSystem.peakPopulation / 1000).toFixed(2)}B`);
-        console.log(`   Mortality: ${((1 - population / state.humanPopulationSystem.peakPopulation) * 100).toFixed(1)}%`);
-        console.log(`   Primary Cause: ${state.extinctionState.mechanism || 'Cascading crises'}`);
-        console.log(`   Month: ${month}`);
-
-        const { determinePopulationOutcome } = require('./populationDynamics');
-        const popOutcome = determinePopulationOutcome(state);
-        console.log(`\n   ${popOutcome.outcomeNarrative}\n`);
-        if (DEBUG_SCENARIO_BUG) {
-          console.log(`[ENGINE DEBUG] Breaking due to TRUE EXTINCTION at month ${month}`);
-        }
-        break;
       }
       
       // Check for extinction EVENT (severe crisis active, but NOT extinct yet)
       // This logs major crises but doesn't end the simulation until pop < 10K
       if (state.extinctionState.active && state.extinctionState.severity >= 1.0) {
         // Major crisis complete, but check if humanity actually survived
+        const population = state.humanPopulationSystem.population;
         if (population >= 0.1) {  // 100M+ survivors
           // SURVIVED! Population crashed but humanity lives on
           // Don't break, keep simulating
@@ -1265,7 +1278,7 @@ export class SimulationEngine {
       log,
       diagnostics,
       summary: {
-        totalMonths: history.length,
+        totalMonths: state.currentMonth + 1, // FIX (Nov 16, 2025): Was history.length (snapshot count), now actual month count
         finalOutcome,
         finalOutcomeReason,
         finalOutcomeProbability,

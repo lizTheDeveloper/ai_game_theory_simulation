@@ -105,5 +105,14 @@ export interface NovelEntitiesSystem {
 
   /** Legacy stock subject to redeposition (Mt) - Atmospheric reservoir */
   atmosphericReservoirStock?: number;
+
+  // === CRITICAL FIX (Nov 16, 2025): Prevention Technology Tracking ===
+
+  /** Baseline annual emissions (Mt/year) - 2025 starting value (60,000 Mt/yr) */
+  baselineAnnualEmissions?: number;
+
+  /** Prevention multiplier [0, 1] - Fraction of baseline emissions still produced */
+  /** 1.0 = no prevention, 0.01 = 99% prevented (PFAS ban), 0.0 = 100% prevented */
+  preventionMultiplier?: number;
 }
 

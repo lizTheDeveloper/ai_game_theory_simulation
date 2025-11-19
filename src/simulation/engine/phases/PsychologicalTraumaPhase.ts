@@ -23,6 +23,7 @@ import {
   assertDefined,
   assertMortalityRate
 } from '../../utils/assertions';
+import { isTechDeployed } from '../../techTree/helpers';
 
 export class PsychologicalTraumaPhase implements SimulationPhase {
   readonly id = 'psychological_trauma';
@@ -129,7 +130,6 @@ export class PsychologicalTraumaPhase implements SimulationPhase {
       let recoveryRate = 0.02;
 
       // Mental health tech increases recovery rate
-      const { isTechDeployed } = require('../../techTree/helpers');
       const psychWellbeingDeployment = isTechDeployed(state, 'psychologicalWellbeing');
       if (psychWellbeingDeployment > 0.5) {
         recoveryRate *= 1.5;  // 50% faster recovery with tech
