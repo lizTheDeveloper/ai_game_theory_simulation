@@ -3,7 +3,7 @@
 **Status:** ✅ Implemented (TIER 1.2)
 **Phase:** FreshwaterPhase (25.0)
 **Source:** `src/simulation/freshwaterDepletion.ts`
-**Research:** Nature 2023-2025, WWF 2024, LA Times 2025, UC Santa Barbara 2024
+**Research:** Nature 2024-2025 (Jasechko, Ravinandrasana & Franzke), WWF 2024, LA Times 2025, UC Santa Barbara 2024
 
 ---
 
@@ -133,6 +133,14 @@ groundwaterDepletion = baseRate * economicStage * agriculturalMultiplier * clima
   1. **Low rainfall** (soil moisture < 40%)
   2. **Reduced river flow** (surface water < 50%)
   3. **High consumption** (water stress > 60%)
+
+**2025 Research Update (Ravinandrasana & Franzke, Nature Communications):**
+- **753 million people** globally at risk (~9% of global population)
+  - 467M urban residents, 286M rural residents
+- **35% of water-scarcity regions** will experience first DZD emergence by 2030
+- **Recovery challenge:** Successive DZDs occur faster than recovery periods
+- **Geographic hotspots:** Mediterranean (196M urban), Southern Africa, parts of North America
+- **Urban vulnerability peaks at 1.5°C warming** (~488M people exposed)
 
 **Trigger Probability:**
 - All three conditions: 10%/month
@@ -314,19 +322,21 @@ materialAbundance -= foodImpact;
 
 **Primary Sources:**
 
-- **Nature (2023):** Jasechko et al. - Rapid groundwater decline >0.5 m/year in dry croplands
+- **Nature (2024):** Jasechko et al. - Rapid groundwater decline >0.5 m/year in dry croplands (170K wells, 1,693 aquifers)
+- **Nature Communications (2025):** Ravinandrasana & Franzke - Day Zero Drought emergence (753M at risk, 35% regions by 2030)
 - **LA Times (Sept 2025):** 368 billion metric tons/year global water loss
-- **Nature (2025):** "Day Zero Drought" - Time of First Emergence within 10-20 years
 - **WWF (2024):** 41% of population in water-stressed basins
 - **UC Santa Barbara (2024):** Groundwater depletion accelerating but not inevitable
 - **US EPA (2024):** $109B/year water infrastructure investment needed
 
 **Key Findings:**
-1. **68% of water loss is groundwater** (irreversible on human timescales)
-2. **Compound extremes** (Day Zero) are the real danger (not single droughts)
-3. **Technology exists** but deployment is slow (economic/political barriers)
-4. **Regional inequality** - Middle East, North Africa, South Asia hit first
-5. **Agricultural dependency** - 70% of use means food security direct threat
+1. **68% of water loss is groundwater** (irreversible on human timescales - Jasechko 2024)
+2. **753M people at Day Zero risk** by 2030 (35% of water-scarcity regions - Ravinandrasana & Franzke 2025)
+3. **Recovery impossible:** Successive DZDs occur faster than recovery periods (compounding crisis)
+4. **Urban vulnerability peaks at 1.5°C:** 488M people exposed (Ravinandrasana & Franzke 2025)
+5. **Technology exists** but deployment is slow (economic/political barriers)
+6. **Regional inequality** - Mediterranean (196M urban), Middle East, North Africa, South Asia hit first
+7. **Agricultural dependency** - 70% of use means food security direct threat
 
 ---
 
@@ -459,8 +469,8 @@ materialAbundance -= foodImpact;
 ## References
 
 **Academic Sources:**
-- Nature (2023): Jasechko et al. - Groundwater decline rates
-- Nature (2025): "Day Zero Drought" - Time of First Emergence
+- Nature (2024): Jasechko et al. - Groundwater decline rates (625:7996, 715-721)
+- Nature Communications (2025): Ravinandrasana & Franzke - Day Zero Drought emergence (16:8281)
 - AGU (2025): Peak groundwater concept
 
 **Government & NGO Reports:**
@@ -475,6 +485,6 @@ materialAbundance -= foodImpact;
 
 ---
 
-**Last Updated:** October 11, 2025
+**Last Updated:** November 15, 2025 (Research update: Ravinandrasana & Franzke 2025 Day Zero Drought data)
 **Implementation Status:** ✅ Complete and validated
 **Next Steps:** Regional dynamics (requires TIER 1.4 Multipolar system)

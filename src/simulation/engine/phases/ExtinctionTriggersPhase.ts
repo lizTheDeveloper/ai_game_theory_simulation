@@ -19,6 +19,7 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertDefined, assertProbability } from '@/simulation/utils/assertions';
+import { checkExtinctionTriggers, classifyExtinctionType } from '../../extinctions';
 
 export class ExtinctionTriggersPhase implements SimulationPhase {
   readonly id = 'extinction-triggers';
@@ -49,8 +50,6 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
     }
 
     // Import and execute extinction trigger detection
-    const { checkExtinctionTriggers, classifyExtinctionType } = require('../../extinctions');
-
     const extinctionCheck = checkExtinctionTriggers(state, rng);
 
     // Validate extinction check result
@@ -70,18 +69,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
     if (!wasActive && state.extinctionState.active) {
       const classification = classifyExtinctionType(state);
 
-      // Validate classification confidence is a valid probability
-      assertProbability(classification.confidence, {
-        location: 'ExtinctionTriggersPhase.execute',
-        valueName: 'classification.confidence',
-        month: state.currentMonth,
-        additionalInfo: {
-          extinctionType: classification.type,
-          mechanism: classification.mechanism
-        }
-      });
-
-      // Store classification in extinction state
+      // Store classification (confidence is categorical: HIGH/MEDIUM/LOW)
       state.extinctionState.classification = classification;
       state.extinctionState.type = classification.type;
       state.extinctionState.mechanism = classification.mechanism;

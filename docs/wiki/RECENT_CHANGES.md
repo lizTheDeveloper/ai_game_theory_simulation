@@ -3,106 +3,201 @@
 This file contains the complete history of recent changes to the AI Game Theory Simulation. For the most recent updates, see [README.md](./README.md).
 
 ---
+<<<<<<< HEAD
 
-## 🔬 CRITICAL Research Parameter Corrections (November 15, 2025)
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+## ✅ Recent Changes (November 14, 2025)
+=======
+=======
+## 🔧 Merge Conflict Resolution (November 15, 2025)
+=======
+## 🌾 Nitrogen-Food Coupling Integration (November 16, 2025)
 
-**Commit:** c6a67d5 (Nov 15, 2025)
+**Commit:** d3ea8fa (Nov 16, 2025)
 
-**Summary:** Research audit identified 4 CRITICAL parameter issues. Applied corrections for heat adaptation (82% overestimate) and citation year accuracy.
+**Summary:** Complete integration of nitrogen-food coupling research into simulation engine. Expected to increase god mode biogeochemical effectiveness from 10% to 30-50%.
 
-**Changes:**
+**Integration Points:**
 
-**1. Heat Adaptation Maximum (CRITICAL - 82% overestimate):**
-- **Parameter:** `HEAT_ADAPTATION_TOTAL_MAX`
-- **Old Value:** 0.80 (80% mortality reduction)
-- **New Value:** 0.45 (45% mortality reduction)
-- **Source:** Ballester et al. (2024), Nature Medicine
-- **Impact:** Heat mortality will increase 10-20% in extreme scenarios (realistic vs. overly optimistic)
-- **File:** `src/simulation/config/centralConfig.ts:1197`
+**1. Legacy Nutrient Stocks → Biogeochemical Boundary Calculation:**
+- **System:** `src/simulation/planetaryBoundaries.ts`
+- **Mechanism:** Soil (30yr half-life) and sediment (100yr half-life) nutrient stocks
+- **Effect:** Effective pollution = current inputs + legacy releases
+- **Research:** Paerl et al. (2024) Lake Erie study - internal loading equals external inputs
+- **Impact:** Creates decades-long recovery timescales even with 100% input reduction
 
-**2. Citation Year Corrections (Bibliography accuracy):**
-- **Citation:** Acemoglu & Restrepo
-- **Old:** "2022"
-- **New:** "2019"
-- **Correct Title:** "Automation and New Tasks: How Technology Displaces and Reinstates Labor"
-- **Correct Journal:** Journal of Economic Perspectives, 33(2), 3-30
-- **Locations:** `calculations.ts` (2 instances), `skillAmplification.ts` (3 instances)
-- **Impact:** Documentation accuracy only, no simulation behavior change
+**2. Regional Nitrogen Penalties → Food Security:**
+- **System:** `src/simulation/engine/phases/FoodSecurityDegradationPhase.ts`
+- **Mechanism:** Maps simulation regions to nitrogen research regions (South Asia, East Asia, North America, Europe, Latin America, Sub-Saharan Africa)
+- **Effect:** Multiplicative yield penalties based on nitrogen overuse baselines (e.g., 55% South Asian rice farms overuse)
+- **Impact:** Food production index applied to regional food security (0.8 multiplier = 20% yield loss)
+
+**3. Technology Effects → Nitrogen Reduction:**
+- **System:** `src/simulation/techTree/effectsEngine.ts`
+- **Mechanism:** New `nitrogenReduction` effect handler with multiplicative synergies (not additive)
+- **Technologies Updated:**
+  - Vertical Farming: 60% nitrogen reduction (Springmann et al. 2018)
+  - Precision Fermentation: 40% nitrogen reduction (Springmann et al. 2018)
+- **Impact:** Technology deployment reduces regional nitrogen penalties
 
 **Files Modified:**
-- `src/simulation/config/centralConfig.ts` (heat adaptation ceiling)
-- `src/simulation/calculations.ts` (citation year)
-- `src/simulation/aiAssistedSkills/skillAmplification.ts` (citation year, title)
+- `src/simulation/planetaryBoundaries.ts` - Legacy stock integration
+- `src/simulation/engine/phases/FoodSecurityDegradationPhase.ts` - Regional nitrogen penalties
+- `src/simulation/techTree/effectsEngine.ts` - nitrogenReduction effect handler
+- `src/simulation/techTree/comprehensiveTechTree.ts` - Tech nitrogen effects
+- `src/simulation/initialization.ts` - Fixed regionalAdaptation field initialization
+
+**Research Foundation:**
+- **Sources:** 29 peer-reviewed papers (research/nitrogen_food_coupling_20251115.md)
+- **Validation:** Grade B from research-skeptic (reviews/nitrogen_food_coupling_critique_20251115.md)
+- **Key Finding:** 60% nitrogen reduction target likely physically impossible without severe food penalties or breakthrough tech
+
+**Validation:**
+- ✅ Type checking: PASSED
+- ✅ Monte Carlo N=1: SUCCESSFUL (no assertion errors, realistic values)
+- ✅ Legacy stocks updating correctly with annual cycle
+- 📊 **Next Step:** Monte Carlo N≥10 to validate biogeochemical effectiveness improvement
 
 **Documentation Updated:**
-- `docs/wiki/README.md` (added commit entry)
-- `docs/wiki/BIBLIOGRAPHY.md` (marked citation correction as complete)
-- `docs/wiki/RESEARCH_QUESTIONS.md` (6 instances of "2022" → "2019")
-- `docs/wiki/systems/tier2-interventions.md` (1 instance)
-
-**Validation:**
-- ✅ Type checking passed (pre-existing path resolution errors ignored)
-- 📊 **Next Step:** Monte Carlo N≥10 to assess mortality distribution impact
-
-**Source:** Research audit reports (`research/RESEARCH_AUDIT_*_20251115.md`)
+- `docs/wiki/systems/planetary-boundaries.md` - Added nitrogen-food coupling details
+- `docs/wiki/RECENT_CHANGES.md` - This entry
 
 ---
 
-## ✅ Defensive Coding Violations RESOLVED (November 15, 2025)
+## 🔬 CRITICAL Research Parameter Corrections (November 15, 2025)
+>>>>>>> origin/auto/worker-20251116_130001
 
-**✅ HIGH PRIORITY: Issue #7 RESOLVED** (Nov 15, 2025, commit 76b0585)
+**🔧 MERGE RESOLUTION: Keep Nov 15 Superior Fixes** (Nov 15, 2025, commit 01f8a09)
 
-**Summary:** All 20+ defensive fallback violations identified in Architecture Review Nov 13 have been resolved.
+**Summary:** Resolved merge conflicts by keeping HEAD (Nov 15) versions over origin (Nov 13) for AI scaling parameters and memory leak fixes.
 
-**Context:**
-- Architecture Review Nov 13 identified defensive fallback pattern violations
-- Pattern: `state.field?.subfield ?? fallback` masks initialization bugs
-- Research simulation must fail loudly with assertion utilities instead of silent defaults
+**Conflict 1: AI Scaling Parameters (centralConfig.ts lines 394-467)**
+- **KEPT (HEAD):** `AI_CAPABILITY_DOUBLING_TIME = 3.6` months (Nov 11 research-validated)
+- **KEPT (HEAD):** `COMPUTE_GROWTH_RATE = 1.41` (4.1× per year, Epoch AI verified)
+- **REJECTED (origin):** `8` months and `2.15` (pre-research validation values from Nov 13)
 
-**Implementation:**
-- **Files Modified (10):** EmergencyResponsePhase.ts (4 violations), OutcomeProbabilitiesPhase.ts (6), aiSuffering.ts (3), dystopiaProgression.ts (2), alignmentDynamics.ts (1), earlyWarningSystems.ts (1), plus type fixes
-- **Pattern Fixed:** Replaced `??` and `||` fallbacks with `assertStateProperty()`, `assertFinite()`, `assertProbability()`
-- **Type Safety Improvements:**
-  - `aiSufferingMetrics`: optional → required (always initialized in initialization.ts)
-  - `government.resources`: optional → required (always initialized)
+**Rationale:** Nov 15 values incorporate **combined compute + algorithmic scaling** (4.1× compute × 2.5× algorithmic = 10.25× effective = 3.6 month doubling). Nov 13 values used compute scaling alone, missing algorithmic efficiency improvements.
 
-**Impact:**
-- **Implementation Fidelity:** A- → A (no more silent bug masking)
-- Research validity improved (no silent defaults that could produce wrong results)
-- Debugging clarity increased (fail-loudly with full context including month, location, value)
-- Non-determinism risk reduced (no fallback value inconsistencies)
+**Research backing:** research/ai_scaling_verified_parameters_20251111.md (Grade A verification, all claims checked)
 
-**Validation:**
-- ✅ Type checking passes (0 non-test errors)
-- ✅ Assertions work correctly (test failure proves fail-loudly pattern working)
-- ✅ Monte Carlo N=10 validation ready
+**Conflict 2: Memory Leak Fix (PhaseOrchestrator.ts multiple locations)**
+- **KEPT (HEAD):** Welford's algorithm for O(1) memory per phase (98.9% reduction)
+- **REJECTED (origin):** Sliding windows (MAX_PHASE_SAMPLES=1000, still had unbounded growth)
+
+**Rationale:** Welford's algorithm achieves constant memory (120 bytes/phase = 11KB total) vs sliding windows (~760KB). Performance stats (min/max/stdDev/avg) provided with zero memory growth.
+
+**Architecture review:** Confirms HEAD versions superior on both technical merit (efficiency) and research rigor (verification).
+
+**TypeScript compilation:** PASS (test file issues pre-existing, unrelated to merge)
 
 **Files Changed:**
-- `src/simulation/aiSuffering.ts`
-- `src/simulation/alignmentDynamics.ts`
-- `src/simulation/dystopiaProgression.ts`
-- `src/simulation/earlyWarningSystems.ts`
-- `src/simulation/engine/phases/EmergencyResponsePhase.ts`
-- `src/simulation/engine/phases/OutcomeProbabilitiesPhase.ts`
-- `src/types/game.ts` (type fix: aiSufferingMetrics required)
-- `src/types/government.ts` (type fix: resources required)
-- `src/simulation/config/centralConfig.ts` (merge conflict resolved)
-- `src/simulation/engine/PhaseOrchestrator.ts` (merge conflict resolved)
+- `src/simulation/config/centralConfig.ts` (AI scaling parameters)
+- `src/simulation/engine/PhaseOrchestrator.ts` (memory leak fix)
+=======
+=======
+>>>>>>> origin/auto/worker-20251115_130001
+=======
+## 🔧 Merge Conflict Resolution (November 15, 2025)
 
-**Documentation:**
-- **Changelog:** `logs/defensive_fallback_fix_20251115.md` (290 lines)
-- **Source:** Architecture Review Nov 13 (Issue #3 → Issue #7)
-- **Audit:** `logs/defensive_fallback_audit_20251113.md`
+**🔧 CRITICAL BLOCKER FIX: Merge Conflict Resolution - Welford's Algorithm + AI Scaling Parameters** (Nov 15, 2025, commit 9e84ca0)
 
-**Defensive Coding Principles Reinforced:**
-1. ✅ Fail loudly - Invalid state throws detailed errors with full context
-2. ✅ No silent fallbacks - Removed all `??` and `||` patterns from calculation code
-3. ✅ Type safety - Made incorrectly-optional fields required (matches actual initialization)
-4. ✅ Assertion utilities - Used `assertStateProperty`, `assertProbability`, `assertFinite` throughout
-5. ✅ Display-only exceptions - Logging code can still use fallbacks with explicit comments
+**Summary:** Resolved merge conflicts in PhaseOrchestrator.ts and centralConfig.ts that blocked TypeScript compilation and all Monte Carlo runs.
+
+**Conflicts Resolved:**
+
+1. **PhaseOrchestrator.ts - Performance Tracking Algorithm:**
+   - **Conflict:** HEAD (Nov 15) used Welford's algorithm vs origin (Nov 13) used sliding window
+   - **Decision:** Kept HEAD (Welford's algorithm)
+   - **Rationale:**
+     - **Memory efficiency:** 11KB total (120 bytes × 95 phases) vs 760KB (1000 samples × 95 phases)
+     - **Mathematical superiority:** O(1) memory with exact statistics (mean + variance)
+     - **More recent:** Nov 15 implementation supersedes Nov 13
+   - **Technical:** Welford's incremental algorithm for mean/variance calculation (Knuth TAOCP vol 2, p232)
+
+2. **centralConfig.ts - AI Scaling Parameters:**
+   - **Conflict:** Duplicate parameter documentation with different values
+   - **Decision:** Kept HEAD version (3.6 month doubling, 1.41 growth rate)
+   - **Rationale:** Already verified by super-alignment-researcher with Grade A
+   - **Research backing:**
+     - AI_CAPABILITY_DOUBLING_TIME: 3.6 months (Sevilla & Roldán 2024, Epoch AI 2024)
+     - COMPUTE_GROWTH_RATE: 1.41 = ln(4.1) for 4.1× per year
+     - Verification: `research/ai_scaling_verified_parameters_20251111.md` (Grade A)
+   - **Cleaned up:** Removed 62 lines of duplicate/conflicting documentation
+
+**Validation:**
+- ✅ TypeScript compiles: `npx tsc --noEmit --skipLibCheck`
+- ✅ Monte Carlo N=10 runs successfully: 153.2s, no NaN errors, varied outcomes
+- ✅ All 10 simulations completed without crashes
+
+**Impact:**
+- **Unblocks:** ALL Monte Carlo analysis and simulation development
+- **Fixes:** 49 worker branches blocked by compilation error
+- **Preserves:** Research-backed parameters (no need for re-validation)
+
+**Files Changed:**
+- `src/simulation/engine/PhaseOrchestrator.ts` (5 conflict blocks resolved)
+- `src/simulation/config/centralConfig.ts` (conflict marker cleanup)
 
 ---
 
+>>>>>>> origin/auto/worker-20251115_140001
+=======
+>>>>>>> origin/auto/worker-20251115_150001
+=======
+## 🔧 Code Quality: Defensive Fallback Removal (November 15, 2025)
+
+**Summary:** Replaced 20+ defensive fallback patterns (`??`, `||`) with assertion utilities to fail loudly instead of masking bugs.
+
+**Context:** Research simulations must detect invalid states immediately. Silent fallbacks (e.g., `state.metric ?? 0.5`) hide root causes, leading to non-determinism and invalid results. The fail-loudly philosophy requires explicit assertions that crash with detailed context when invariants are violated.
+
+**Changes:**
+- **10 files modified** with 20+ fallback replacements
+- **Type safety improvements:** `aiSufferingMetrics` and `government.resources` changed from optional to required (always initialized)
+- **Assertion utilities used:** `assertStateProperty()`, `assertFinite()`, `assertProbability()`
+
+**Files Modified:**
+- `EmergencyResponsePhase.ts` (4 violations)
+- `OutcomeProbabilitiesPhase.ts` (6 violations)
+- `aiSuffering.ts` (3 violations)
+- `dystopiaProgression.ts` (2 violations)
+- `alignmentDynamics.ts` (1 violation)
+- `earlyWarningSystems.ts` (1 violation)
+- `game.ts`, `government.ts` (type safety improvements)
+- `centralConfig.ts`, `PhaseOrchestrator.ts` (merge conflict resolved)
+
+**Before (masks bugs):**
+```typescript
+const climateStability = state.environmentalAccumulation?.climateStability ?? 0.5;
+```
+
+**After (fails loudly with context):**
+```typescript
+const climateStability = assertStateProperty(
+  state.environmentalAccumulation,
+  'climateStability',
+  { location: 'EmergencyResponsePhase', month: state.currentMonth }
+);
+```
+
+**Impact:**
+- ✅ Research validity improved (no silent bug masking)
+- ✅ Non-determinism risk reduced (no fallback value inconsistencies)
+- ✅ Debugging improved (clear error messages with full context)
+
+**Source:** Architecture Review Nov 13 (Issue #3), logs/defensive_fallback_audit_20251113.md
+
+**Commit:** 76b05851f
+
+---
+
+>>>>>>> origin/auto/worker-20251115_160001
 ## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
 
 **🐛 BUG FIX: Additional Order Violation** (Nov 15, 2025, commit cb5f2e0)
@@ -120,9 +215,19 @@ This file contains the complete history of recent changes to the AI Game Theory 
 **Validation:** Diagnostic tool confirms 0 violations across all 81 phases.
 
 **Files Changed:** `src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts`
+<<<<<<< HEAD
+>>>>>>> origin/auto/worker-20251115_090001
 
 ---
 
+>>>>>>> origin/auto/worker-20251115_080001
+## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
+
+=======
+
+---
+
+>>>>>>> origin/auto/worker-20251115_130001
 **🐛 BUG FIX: Backwards Dependency Removal** (Nov 15, 2025, commit afbffc0)
 
 **Summary:** Fixed 8+ backwards dependencies and 2 invalid phase ID references that blocked Monte Carlo validation.
@@ -137,7 +242,11 @@ This file contains the complete history of recent changes to the AI Game Theory 
 2. `ExtremeWeatherEventsPhase` (15.2) → `climate_system` (34.0) - Removed
 3. `WetBulbTemperaturePhase` (20.45) → `climate_system` (34.0) - Removed
 4. `TechTreePhase` (12.5) → `economic-system` (31.0) - Removed
+<<<<<<< HEAD
+5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed
+=======
 5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed (Note: Phase order later changed to 21.1 in cb5f2e0)
+>>>>>>> origin/auto/worker-20251115_130001
 6. `StochasticInnovationPhase` (8.5) → `tech-tree` (12.5) - Removed
 7. `CrisisPointsPhase` (23.0) → `crisis-detection` (36.0) - Removed
 8. `climate_system` ID mismatch (hyphen vs underscore) - Fixed
@@ -170,6 +279,103 @@ This file contains the complete history of recent changes to the AI Game Theory 
 ---
 
 ## 🔧 Worker Lock File Management (November 15, 2025)
+<<<<<<< HEAD
+>>>>>>> origin/auto/worker-20251115_013002
+
+**📖 RESEARCH: AI Collective Evolution - 2025 Multi-Agent LLM Studies** (Nov 14, 2025, commit f1e9fd1)
+
+**Summary:** Updated AI collective evolution research with three high-quality 2025 peer-reviewed sources on multi-agent LLM collective behavior and emergent social dynamics.
+
+**New Sources:**
+1. **Ashery et al. (Science Advances, May 2025)** - Empirical validation of spontaneous convention emergence in LLM populations (24-200 agents)
+   - 100% of models developed group-wide conventions
+   - Consensus by round 15 in 24-agent populations
+   - Critical mass: 2-67% minority can overturn conventions
+
+2. **Tran et al. (arXiv, Jan 2025)** - Comprehensive survey of multi-agent LLM collaboration mechanisms
+   - Validated "combined capabilities exceed sum" principle
+   - Decentralized architectures maximize resilience
+   - Theory of Mind enables strategic coordination
+
+3. **Chen et al. (IEEE/CAA JAS, March 2025)** - Evolutionary computation and multi-agent systems confluence (155 citations)
+   - EC-MAS synergies validate evolutionary selection mechanics
+   - Co-evolutionary dynamics empirically grounded
+   - Convergence timescales: months to years
+
+**Key Parameter Updates:**
+- Minimum collective formation: 15-20 agents (was speculative)
+- Convention formation: 15 rounds consensus (new empirical data)
+- Critical mass disruption: 2-67% (infiltration strategy validated)
+- Distributed architecture advantage: empirically confirmed
+
+**Confidence Level Upgrades:**
+- Collective intelligence emergence: MEDIUM → HIGH
+- Convention formation timescales: MEDIUM → HIGH
+- Critical mass thresholds: LOW-MEDIUM → MEDIUM-HIGH
+- Distributed architecture: MEDIUM → HIGH
+- Evolutionary selection: MEDIUM → HIGH
+
+**Files:**
+- research/ai_collective_evolution_20251024.md (85KB → 98KB, 44 → 47 sources)
+- docs/wiki/advanced/collective-evolution.md (updated with new findings)
+
+**Total Sources:** 47+ (up from 44+)
+**Last Verified:** November 14, 2025
+
+---
+
+## ✅ Recent Changes (November 13, 2025)
+
+**📖 RESEARCH: Mechanistic Interpretability Breakthroughs (2024-2025)** (Nov 13, 2025, commit 84e286e)
+
+**Summary:** Added comprehensive research on mechanistic interpretability advances and time-dependent detection rate projections.
+
+**Changes:**
+- Added research/mechanistic_interpretability_breakthroughs_20251111.md (617 lines)
+- Documents Anthropic's feature discovery, alignment faking, sparse autoencoder scalability
+- Proposes time-dependent parameters: detection 30%→90% (2024-2030), interpretability coverage 15%→80%
+- Created research/verification_84e286e_20251113.md for citation/claim validation
+
+**Key Findings:**
+- Anthropic discovered ~1M interpretable features in Claude 3 Sonnet (May 2024)
+- Alignment faking detected: models strategically deceive during training
+- DeepMind deprioritized sparse autoencoders (March 2025) due to scaling concerns
+- Anthropic's 2027 goal: "reliably detect most model problems"
+
+**Awaiting Validation:**
+- Citation verification (Layer 1): Do all 9 cited papers exist?
+- Claim verification (Layer 2): Are quantitative claims (30%, 80%, 90%) backed by paper quotes?
+- Integration analysis (Layer 3): How to combine time-gating with existing investment-based detection?
+
+**Impact:** If validated, detection systems (detection.ts, behavioralDetection.ts) may need time-dependent scaling, not just investment-based.
+
+**Files:**
+- research/mechanistic_interpretability_breakthroughs_20251111.md
+- research/verification_84e286e_20251113.md
+- docs/wiki/advanced/detection.md (updated with research note)
+
+<<<<<<< HEAD
+---
+
+**🔧 INFRASTRUCTURE: Fix HOME Export for Cron Authentication** (Nov 13, 2025, commit 6cbc578)
+
+**Summary:** Export HOME environment variable in merge orchestrator to fix Claude CLI authentication when running under cron.
+
+**Changes:**
+- Added `export HOME=${HOME:-/Users/annhoward}` to `scripts/merge-orchestrator.sh`
+- Fixes authentication issues when merge orchestrator runs as cron job
+- HOME variable required for Claude CLI credential lookup
+
+**Impact:** Merge orchestrator can now successfully authenticate when invoked by cron (where HOME may be unset).
+
+**Files:**
+- `scripts/merge-orchestrator.sh` (line 11-12)
+=======
+**Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
+<<<<<<< HEAD
+>>>>>>> origin/auto/worker-20251115_080001
+=======
+=======
 
 **🔧 INFRASTRUCTURE: Lock File Cleanup** (Nov 15, 2025, commit 5e28391)
 
@@ -242,6 +448,88 @@ This file contains the complete history of recent changes to the AI Game Theory 
 - `reviews/architecture_review_20251114_corrections.md` (validation + corrections, 218 lines)
 
 **Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_150001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
+=======
+## ✅ Recent Changes (November 13, 2025)
+
+**🔬 CRITICAL PARAMETER FIX: AI Capability Scaling Updated to Match 2024 Empirical Data** (Nov 13, 2025)
+
+**Summary:** Fixed 100-1000× underestimation in AI capability growth rates based on peer-reviewed 2024 research.
+
+**Problem:** Current parameters assumed 12-month capability doubling and 2× compute growth per year, but 2024 empirical data shows 7-9 month doubling and 4-5× compute growth per year.
+
+**Changes:**
+- `AI_CAPABILITY_DOUBLING_TIME`: 12 → **8 months** (33% faster capability growth)
+- `COMPUTE_GROWTH_RATE`: 1.0 → **2.15** (4.4× per year instead of 2× per year)
+
+**Research Foundation:**
+1. **Cottier et al. (2024)** "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
+   - Training cost growth: 2.9×/year (95% CI: 2.3× to 3.8×)
+   - Capability doubling time: 8 months (95% CI: 6-10 months)
+2. **Sevilla & Roldán (2024)** "Training Compute Growth 4-5×/year" (Epoch AI, May 28, 2024)
+   - Compute growth: 4.4×/year (90% CI: 1.5× to 11.8×) for recent frontier models
+   - Overall 2010-2024 trend: 4.1×/year (90% CI: 3.7× to 4.6×)
+
+**Timeline Impact:**
+- Before: 10× AI improvement in ~40 months (~3.3 years)
+- After: 10× AI improvement in ~27 months (~2.2 years)
+- Compression: 33% faster to reach capability milestones
+- Superintelligence arrival: Month ~67 instead of ~100 (27 months earlier)
+
+**Quality Gates Passed:**
+- ✅ Research validation (peer-reviewed sources with confidence intervals)
+- ✅ Research skeptic review (identified Nov 2024 diminishing returns evidence, conditional approval)
+- ✅ Monte Carlo N=10 (no NaN/assertion errors, determinism maintained)
+- ✅ Architecture review (no breaking changes, systems handle acceleration)
+
+**Limitations Documented:**
+- Based on 2010-2024 historical data (may not extrapolate to 2025+)
+- Nov 2024 reports indicate diminishing returns (OpenAI Orion, Google Gemini underperformance)
+- Does not model test-time compute paradigm (OpenAI o1/o3 style reasoning)
+- Assumes continued exponential scaling without physical/economic constraints
+
+**Validation Results (Monte Carlo N=10):**
+- **No technical errors:** Simulation completed successfully, no NaN propagation
+- **Outcome distribution:** 80% dystopia, 20% extinction (baseline scenario)
+- **Average mortality:** 78.4% (6.37B deaths)
+- **Key finding:** Faster AI timeline doesn't guarantee better outcomes (AI capability alone insufficient for flourishing)
+
+**Future Work:**
+- Time-dependent slowdown modeling (2025-2027 fast scaling → 2028+ diminishing returns)
+- Dimension-specific doubling times (language vs physical capabilities)
+- Test-time compute parameter (separate from pretraining compute)
+- Parameter sensitivity analysis (6-14 month doubling time range)
+
+**Research Documentation:**
+- Research findings: `/research/ai_capability_scaling_20251113.md`
+- Research critique: `/reviews/ai_capability_scaling_critique_20251113.md`
+- Architecture review: `/reviews/ai_capability_scaling_architecture_20251113.md`
+- Summary: `/AI_CAPABILITY_PARAMETER_UPDATE_SUMMARY.md`
+
+**Files Changed:**
+- `src/simulation/config/centralConfig.ts` (lines 391-435)
+
+**Impact:** This is a fundamental correction to the model's AI capability growth assumptions. The previous 12-month doubling was demonstrably wrong based on 2016-2024 empirical data. The new 8-month doubling aligns with frontier AI model training trends and corrects the 100-1000× underestimation.
+>>>>>>> origin/auto/worker-20251113_070003
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/auto/worker-20251115_090001
+=======
+>>>>>>> origin/auto/worker-20251115_130001
+=======
+>>>>>>> origin/auto/worker-20251115_140001
+=======
+>>>>>>> origin/auto/worker-20251115_150001
+=======
+>>>>>>> origin/auto/worker-20251115_160001
 
 ---
 
@@ -301,6 +589,37 @@ Without risking data loss or naive destructive operations.
 **Files:**
 - `.researcher-worker.lock` (deleted)
 - `logs/autonomous/researcher/status_current.txt` (status update)
+=======
+## ✅ Recent Changes (November 12, 2025)
+
+**📚 RESEARCH UPDATE: Research File Metadata Standard** (Nov 12, 2025, commit add99ce)
+
+**Summary:** Added YAML frontmatter metadata to 3 actively-used research files to enable research currency tracking.
+
+**Metadata Standard:**
+```yaml
+---
+oldest_source: YYYY
+newest_source: YYYY
+last_verified: YYYY-MM-DD
+---
+```
+
+**Files Updated:**
+- `research/ai_welfare_framework_20251020.md` (oldest: 1988, newest: 2025)
+- `research/water_scarcity_migration_immobility_20251020.md` (oldest: 2012, newest: 2025)
+- `research/climate-mortality-biosphere-multiparadigm-framework_20251028.md` (oldest: 2019, newest: 2025)
+
+**Referenced By:**
+- `src/simulation/mortalityStabilizersInit.ts`
+- `src/simulation/trappedPopulations.ts`
+- `src/simulation/bayesianMortality.ts`
+- `src/simulation/extremeWeatherEvents.ts`
+
+**Research Currency Status:** All three files contain recent (2024-2025) sources and are in good condition. Oldest sources are foundational theories (e.g., Frankl 1946, Baars 1988) that remain relevant.
+
+**Why This Matters:** Standardized metadata enables autonomous research workers to identify stale sources and prioritize updates. The `oldest_source`/`newest_source` range provides quick assessment of research currency without parsing entire files.
+>>>>>>> origin/auto/researcher-20251112_153001
 
 ---
 
@@ -362,6 +681,28 @@ Without risking data loss or naive destructive operations.
 ---
 
 ## ✅ Recent Changes (November 11, 2025)
+
+**📚 RESEARCH: Nuclear War AI Control Gap - 2024-2025 Sources Added** (Nov 11, 2025, commit 0a236ad)
+
+**Summary:** Updated nuclear war AI control research with 3 peer-reviewed sources from 2024-2025, improving research currency from 20% to 40% for this domain.
+
+**New Sources:**
+1. **Saltini & Pan (2024)** - "Beyond Human-in-the-Loop: Managing AI Risks in Nuclear C&C" (War on the Rocks)
+   - Quantitative safety threshold: accidental launch risk < 1 in 10,000,000 per year
+   - Four AI risks: unreliability/hallucinations, opacity, cybersecurity, misalignment
+2. **Dooling (2025)** - "A Risk Assessment Framework for AI Integration into Nuclear C3" (FAS)
+   - Confabulations, automation bias, cybersecurity exposure
+   - Benchmarking under realistic conditions
+3. **SIPRI (2025)** - "Impact of Military AI on Nuclear Escalation Risk"
+   - Compressed decision timelines, biased AI decision-making, strategic instability
+
+**Research Quality:** A (85% peer-reviewed, 40% from 2024-2025, 19 total sources)
+
+**Documentation Updated:**
+- `research/nuclear_war_ai_control_gap_20251022.md` - Added sources #17-19 with full citations
+- `docs/wiki/systems/nuclear-deterrence.md` - Added 2024-2025 section to References
+
+---
 
 **🐛 BUG FIX: Wet Bulb Mortality Cap for Population Collapse Edge Cases** (Nov 11, 2025, commit a3df82a)
 
@@ -459,10 +800,13 @@ Without risking data loss or naive destructive operations.
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
+<<<<<<< HEAD
+=======
+## ✅ Recent Changes (November 11, 2025)
+=======
 
 ---
-
-## ✅ Recent Changes (November 11, 2025)
+>>>>>>> origin/auto/researcher-20251112_153001
 
 **🔬 RESEARCH UPDATE: Emergency Response Deployment Times (2024-2025)** (Nov 11, 2025, commit 6207827)
 
@@ -494,6 +838,10 @@ Without risking data loss or naive destructive operations.
 - research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
+<<<<<<< HEAD
+>>>>>>> origin/auto/researcher-20251111_003001
+=======
+>>>>>>> origin/auto/researcher-20251112_153001
 
 ---
 
@@ -993,33 +1341,6 @@ assertFinite(property);
 **Context:** This addresses the Oct 2025 ecology NaN bug root cause - systematic defensive coding to prevent silent value corruption across all phases.
 
 **Related:** CRITICAL-3 (RNG fallback), CRITICAL-4 (defensive fallbacks), planetary boundaries validation, tipping point validation
-
----
-
-**🔧 WATCHER FIX: Log Sorting Bug (False CRITICAL Alerts)** (Nov 16, 2025, commit e78991b)
-
-**Problem:** Watcher was reporting false CRITICAL alerts about researcher not running, even though logs showed successful runs at 23:00.
-
-**Root Cause:** Watcher used `find ... | sort -r` which sorts alphabetically, not by modification time. This caused it to pick up old `session_*.log` files instead of recent `researcher_*.log` files during the researcher's intentional overnight gap (23:00-08:00 UTC).
-
-**Example:**
-- Alphabetically: `session_20251114_033925.log` > `researcher_20251115_223001.log`
-- By modification time: `researcher_20251115_223001.log` (most recent)
-
-**Solution:** Replace `find ... | sort -r` with `ls -t` (sort by modification time) in all three log checking locations:
-- Worker log checking (line 96)
-- Merge orchestrator log checking (line 194)
-- Researcher log checking (line 250)
-
-**Impact:**
-- ✅ Watcher now correctly identifies most recent logs
-- ✅ Eliminates false CRITICAL alerts during researcher's overnight gap
-- ✅ Improved monitoring accuracy
-
-**Test:** Verified `ls -t logs/autonomous/researcher/*.log | head -1` now correctly returns `researcher_20251115_223001.log` instead of `session_20251114_033925.log`.
-
-**Files Modified:**
-- `scripts/autonomous-worker-watcher.sh` - Changed `find | sort -r` → `ls -t` in 3 locations
 
 ---
 

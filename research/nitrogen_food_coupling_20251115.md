@@ -63,6 +63,7 @@
   - Developing nations (China): 61% → 50% (declining due to overuse)
   - Developing nations (India): 50% → 42% (declining)
 - **Best management practices:** Still only achieve ~50% NUE globally
+- **South Asia rice farming:** 55% of farmers overuse nitrogen fertilizer; region could save 18 kg N/ha without yield loss (Bhattarai et al. 2024)
 
 **Sources:**
 - Smil, V. (2002). "Nitrogen and food production: Proteins for human diets." *Ambio*. PMID: 12078001
@@ -871,6 +872,8 @@ Even if we immediately cut nitrogen inputs by 50%, environmental recovery will t
 28. **UNCTAD** (2024). "Recent developments in global fertilizer markets." https://unctad.org/system/files/non-official-document/monika-tothova_myem2024.pdf [203.7 mmt total nutrients 2024, 111.6 Mt N forecast]
 
 29. **DTN Progressive Farmer** (2024). "Nitrogen Supply Expected to Increase in 2025, Positive News for Price." https://www.dtnpf.com/agriculture/web/ag/crops/article/2024/12/16/nitrogen-supply-expected-increase [108 mmt N consumption 2024]
+
+30. **Bhattarai, H., et al.** (2024). "Data-driven strategies to improve nitrogen use efficiency of rice farming in South Asia." *Nature Sustainability*. DOI: 10.1038/s41893-024-01496-3. [55% of South Asian rice farmers overuse nitrogen; 18 kg N/ha savings potential without yield loss; dataset of 31,000+ fields across Nepal, Bangladesh, India]
 
 ---
 

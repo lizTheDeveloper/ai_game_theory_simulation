@@ -11,6 +11,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { updateWarMeaningFeedback } from '../../warMeaningFeedback';
 
 export class WarMeaningFeedbackPhase implements SimulationPhase {
   readonly id = 'war_meaning_feedback';
@@ -25,10 +26,7 @@ export class WarMeaningFeedbackPhase implements SimulationPhase {
         `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
         `(Month ${state.currentMonth})`
       );
-    }
-
-    const { updateWarMeaningFeedback } = require('../../warMeaningFeedback');
-    setDeterministicRng(rng);
+    }setDeterministicRng(rng);
 
     // Update war-meaning feedback for all countries
     updateWarMeaningFeedback(state);

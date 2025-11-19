@@ -225,8 +225,14 @@ export function updateQualityOfLifeSystems(
   const govQuality = government.governanceQuality;
   const democraticFloor = government.governmentType === 'democratic' ? 0.25 :
                           government.governmentType === 'technocratic' ? 0.15 : 0.05;
-  const transparencyFloor = (govQuality?.transparency || 0.5) * 0.15;
-  const participationFloor = (govQuality?.participationRate || 0.5) * 0.10;
+  const transparencyFloor = assertStateProperty(govQuality, 'transparency', {
+    location: 'updateQualityOfLife',
+    month: state.currentMonth
+  }) * 0.15;
+  const participationFloor = assertStateProperty(govQuality, 'participationRate', {
+    location: 'updateQualityOfLife',
+    month: state.currentMonth
+  }) * 0.10;
 
   // Tech tree: collective purpose networks provide autonomy boost
   const counterSurveillanceTech = require('../techTree/helpers').isTechDeployed(state, 'collective_purpose_networks') * 0.25; // Combined boost

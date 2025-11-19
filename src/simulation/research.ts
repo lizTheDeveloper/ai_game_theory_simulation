@@ -17,6 +17,11 @@ import { addSimulationEvent } from './utils/eventLogger';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { assertFinite, assertStateProperty } from './utils/assertions';
 
+// PERF FIX (Nov 10, 2025): Cache sorted dimension/domain names (Phase 3 optimization)
+// These are constants - no need to sort Object.entries() repeatedly
+const SORTED_DIMENSION_NAMES = ['cognitive', 'digital', 'economic', 'physical', 'selfImprovement', 'social'] as const;
+const SORTED_DOMAIN_NAMES = ['biotech', 'climate', 'computerScience', 'materials'] as const;
+
 /**
  * Phase 4: Compute scaling law
  * 
@@ -312,7 +317,10 @@ export function calculateResearchGrowth(
     }
   };
   
-  const baseGrowth = (growthRates[domain]?.[subfield] || 0.02) * 
+  // Get base growth rate for domain/subfield with explicit check
+  const domainRates = growthRates[domain];
+  const subfieldRate = domainRates?.[subfield];
+  const baseGrowth = (subfieldRate !== undefined ? subfieldRate : 0.02) *
     (developmentMode === 'fast' ? 1.0 : 0.6);
   
   // Diminishing returns
@@ -403,11 +411,10 @@ export function selectDimensionToAdvance(
     const totalWeight = Object.values(dimensionWeights).reduce((a, b) => a + b, 0);
     let roll = dimensionRoll * totalWeight;
 
-    // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
-    // Object.entries() order is not guaranteed across JS engines/runs
-    const sortedDimensions = Object.entries(dimensionWeights).sort((a, b) => a[0].localeCompare(b[0]));
-
-    for (const [dim, weight] of sortedDimensions) {
+    // PERF FIX (Nov 10, 2025): Use pre-sorted constant array instead of sorting Object.entries() (Phase 3 optimization)
+    // Dimension names are constant - no need to sort every call
+    for (const dim of SORTED_DIMENSION_NAMES) {
+      const weight = dimensionWeights[dim];
       roll -= weight;
       if (roll <= 0) {
         const currentValue = capabilityProfile[dim as keyof AICapabilityProfile];
@@ -434,14 +441,14 @@ export function selectDimensionToAdvance(
   const totalDomainWeight = Object.values(domainWeights).reduce((a, b) => a + b, 0);
   let domainRollValue = domainRoll * totalDomainWeight;
 
-  // DETERMINISM FIX (Nov 6, 2025): Sort Object.entries() to ensure consistent iteration order
-  const sortedDomains = Object.entries(domainWeights).sort((a, b) => a[0].localeCompare(b[0]));
-
+  // PERF FIX (Nov 10, 2025): Use pre-sorted constant array instead of sorting Object.entries() (Phase 3 optimization)
+  // Domain names are constant - no need to sort every call
   let selectedDomain: 'biotech' | 'materials' | 'climate' | 'computerScience' | null = null;
-  for (const [domain, weight] of sortedDomains) {
+  for (const domain of SORTED_DOMAIN_NAMES) {
+    const weight = domainWeights[domain];
     domainRollValue -= weight;
     if (domainRollValue <= 0) {
-      selectedDomain = domain as any;
+      selectedDomain = domain;
       break;
     }
   }
@@ -569,8 +576,11 @@ export function applyResearchGrowth(
     const subfield = selection.researchSubfield;
     const currentValue = newProfile.research[domain][subfield];
 
-    // Get government investment for this specific research
-    const govResearchInvestment = govInvestment[domain]?.[subfield] || 0;
+    // Get government investment for this specific research (explicit check for nested access)
+    const domainInvestment = govInvestment[domain];
+    const govResearchInvestment = (domainInvestment && domainInvestment[subfield] !== undefined)
+      ? domainInvestment[subfield]
+      : 0;
 
     // Calculate AI's research capability (average of cognitive + relevant research domain)
     const domainAvg = Object.values(newProfile.research[domain]).reduce((a, b) => a + b, 0) /

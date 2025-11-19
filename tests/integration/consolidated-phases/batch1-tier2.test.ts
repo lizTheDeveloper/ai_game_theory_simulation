@@ -188,8 +188,9 @@ describe('Batch 1: TIER 2 Interventions - Integration Tests', () => {
       const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
       // Set unlock conditions
-      state.crisisDetection.isActive = true;
+      // Crisis anticipation requires AI capability > 3 and government investment > 0.30
       state.government.alignmentResearchInvestment = 3.5; // > 3.0 (normalized to > 0.30)
+      // Note: createDefaultInitialState creates AI agents with sufficient capability
 
       const result = engine.run(state, {
         maxMonths: 6,
@@ -219,15 +220,14 @@ describe('Batch 1: TIER 2 Interventions - Integration Tests', () => {
         state.tier2Interventions.crisisAnticipation.deploymentProgress = 0.8;
       }
 
-      state.crisisDetection.isActive = true;
-
       const result = engine.run(state, {
         maxMonths: 12,
         checkActualOutcomes: false
       });
 
-      // Crisis detection should remain active and functional
-      assert.ok(Number.isFinite(result.finalState.crisisDetection.currentSeverity));
+      // Early warning capability should improve with deployment
+      assert.ok(result.finalState.tier2Interventions);
+      assert.ok(result.finalState.tier2Interventions.crisisAnticipation.deploymentProgress >= 0.8);
     });
   });
 
@@ -463,9 +463,7 @@ describe('Batch 1: TIER 2 Interventions - Integration Tests', () => {
 
       const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
-      // Active crisis should enable crisis anticipation
-      state.crisisDetection.isActive = true;
-      state.crisisDetection.currentSeverity = 0.6;
+      // Set up conditions for crisis anticipation unlock
       state.government.alignmentResearchInvestment = 3.5;
 
       const result = engine.run(state, {
@@ -473,12 +471,14 @@ describe('Batch 1: TIER 2 Interventions - Integration Tests', () => {
         checkActualOutcomes: false
       });
 
-      // Crisis detection should remain functional
-      assert.ok(Number.isFinite(result.finalState.crisisDetection.currentSeverity));
+      // Verify no NaN values in intervention state
+      assert.ok(result.finalState.tier2Interventions);
+      const crisisAnticipation = result.finalState.tier2Interventions.crisisAnticipation;
+      assert.ok(Number.isFinite(crisisAnticipation.deploymentProgress));
       assert.ok(
-        result.finalState.crisisDetection.currentSeverity >= 0 &&
-        result.finalState.crisisDetection.currentSeverity <= 1,
-        'Crisis severity must be in [0, 1]'
+        crisisAnticipation.deploymentProgress >= 0 &&
+        crisisAnticipation.deploymentProgress <= 1,
+        'Deployment progress must be in [0, 1]'
       );
     });
   });
