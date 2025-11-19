@@ -28,6 +28,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 19: Biogeochemical Parameter Correction** (commit 9eebe5a)
+- 🔧 **Parameter Fix:** Corrected phosphorus baseline from 25 Mt P/year to 18.2 Mt P/year (Stockholm Resilience Centre 2025)
+- 📝 **Clarification:** Updated nitrogen baseline comment to clarify 120 Mt N/year as optimized target (~60% reduction from ~200 Mt current)
+- 📊 **Impact:** Lower phosphorus accumulation in legacy stocks (-27% monthly input), more accurate boundary calculations (18.2 vs 6.2 Mt P boundary)
+- ✅ **Research Backing:** Stockholm Resilience Centre Planetary Health Check 2025 (phosphorus), Zhang et al. 2021 + Steffen et al. 2015 (nitrogen)
+- 📖 **Verification:** research/parameter_verification_nitrogen_phosphorus_20251119.md
+
 **Nov 18: Phase File Merge Artifact Resolution** (commit 39baa2b)
 - 🔧 **Technical Fix:** Resolved undefined variable errors from merge artifacts in 5 phase files
 - **Changes:**
@@ -169,7 +176,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **Nov 17: Legacy Nutrient Stocks Integration (TIER 2 HIGH Phase 1)** (commit b84ddff)
 - ✅ **Implementation:** Wired `updateLegacyNutrientStocks()` into PlanetaryBoundariesPhase (order 21.0)
 - 🔧 **Fix:** Legacy stocks NOW UPDATE monthly (previously frozen after initialization)
-- 📊 **Parameters:** Baseline N/P inputs (120 Mt N/year, 25 Mt P/year), scaled by phosphorus reserves
+- 📊 **Parameters:** Baseline N/P inputs (120 Mt N/year optimized target, 18.2 Mt P/year current - Stockholm Resilience Centre 2025), scaled by phosphorus reserves
 - 🎯 **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (pending validation)
 - ⏱️ **Recovery Timeline:** Decades-long exponential decay (30-100yr half-lives)
 - 🧪 **Status:** Phase 1 COMPLETE (stock updates active), Phase 2 pending (food system connection)
