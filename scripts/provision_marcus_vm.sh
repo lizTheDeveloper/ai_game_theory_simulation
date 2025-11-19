@@ -166,14 +166,31 @@ install_dependencies() {
     PSQL_VERSION=$(psql --version | awk '{print $3}')
     print_success "PostgreSQL: $PSQL_VERSION"
 
-    # Redis
-    if ! command -v redis-cli &> /dev/null; then
-        print_step "Installing Redis..."
-        sudo apt-get install -y redis-server
+    # Redis - check if already running (e.g., Docker Redis)
+    if redis-cli -h "${REDIS_HOST:-localhost}" -p "${REDIS_PORT:-6379}" ping &> /dev/null; then
+        print_success "Redis: already running (using existing instance)"
+    else
+        # Install redis-cli if not available
+        if ! command -v redis-cli &> /dev/null; then
+            print_step "Installing Redis tools..."
+            sudo apt-get install -y redis-tools
+        fi
+
+        # Try to install and start system Redis
+        if ! command -v redis-server &> /dev/null; then
+            print_step "Installing Redis server..."
+            sudo apt-get install -y redis-server
+            sudo systemctl enable redis-server || true
+            sudo systemctl start redis-server || true
+        fi
+
+        # Verify Redis is accessible
+        if redis-cli -h "${REDIS_HOST:-localhost}" -p "${REDIS_PORT:-6379}" ping &> /dev/null; then
+            print_success "Redis: running"
+        else
+            print_warning "Redis not accessible - will need to configure manually"
+        fi
     fi
-    sudo systemctl enable redis-server
-    sudo systemctl start redis-server
-    print_success "Redis: running"
 
     # Python and build tools
     sudo apt-get install -y python3 python3-pip python3-venv build-essential git curl
@@ -211,12 +228,17 @@ configure_redis() {
     CURRENT_STEP="Configuring Redis"
     print_step "$CURRENT_STEP"
 
-    # Ensure localhost-only binding
-    if ! sudo grep -q "^bind 127.0.0.1" /etc/redis/redis.conf; then
-        sudo sed -i 's/^bind .*/bind 127.0.0.1/' /etc/redis/redis.conf
-        sudo systemctl restart redis-server
+    # Only configure system Redis if config file exists
+    if [ -f /etc/redis/redis.conf ]; then
+        # Ensure localhost-only binding
+        if ! sudo grep -q "^bind 127.0.0.1" /etc/redis/redis.conf; then
+            sudo sed -i 's/^bind .*/bind 127.0.0.1/' /etc/redis/redis.conf
+            sudo systemctl restart redis-server || true
+        fi
+        print_success "Redis configured (localhost only)"
+    else
+        print_warning "Using external Redis (Docker or remote) - skipping system Redis config"
     fi
-    print_success "Redis configured (localhost only)"
 }
 
 # Setup project
@@ -367,7 +389,7 @@ validate_installation() {
     fi
 
     # Check Redis connection
-    if redis-cli ping &> /dev/null; then
+    if redis-cli -h "${REDIS_HOST:-localhost}" -p "${REDIS_PORT:-6379}" ping &> /dev/null; then
         print_success "Redis connection: OK"
     else
         print_error "Redis connection: FAILED"
