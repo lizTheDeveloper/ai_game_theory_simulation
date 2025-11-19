@@ -1,13 +1,8 @@
 {
   "source": "ecological-airquality",
   "version": "WHO 2024",
-<<<<<<< HEAD
-  "updateDate": "2025-11-18T04:39:03.221Z",
-  "expiryDate": "2026-11-18T04:39:03.221Z",
-=======
-  "updateDate": "2025-11-18T07:52:12.462Z",
-  "expiryDate": "2026-11-18T07:52:12.462Z",
->>>>>>> origin/claude/merge-remote-branches-01RyPg6X8etfwp46DznAhtBk
+  "updateDate": "2025-11-19T12:45:10.435Z",
+  "expiryDate": "2026-11-19T12:45:10.435Z",
   "recordCount": 21,
   "coverage": {
     "countries": 21
