@@ -281,13 +281,23 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
   const deployments: number[] = [];
 
   // Tech IDs from comprehensiveTechTree.ts
+  // Nov 19, 2025: Added TIER 2 HIGH nitrogen reduction techs
+  // Research: nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
   const nitrogenTechIds = [
+    // Legacy techs (existing)
     { id: 'precision_agriculture', maxEffectiveness: 0.30 },
     { id: 'biological_nitrogen_fixation', maxEffectiveness: 0.25 },
     { id: 'nitrogen_circular_food', maxEffectiveness: 0.20 },
     { id: 'ecosystem_restoration_nitrogen', maxEffectiveness: 0.15 },
     { id: 'nitrogen_monitoring_networks', maxEffectiveness: 0.10 },
     { id: 'green_ammonia_production', maxEffectiveness: 0.40 },
+
+    // TIER 2 HIGH additions (Nov 16, 2025)
+    { id: 'rhizosphere_engineering', maxEffectiveness: 0.275 },  // 27.5% (15-40% range, field-demonstrated)
+    { id: 'nitroplast_integration', maxEffectiveness: 0.60 },   // 60% (50-70% range, breakthrough tech)
+    { id: 'precision_fermentation_nitrogen', maxEffectiveness: 0.40 },  // 40% via animal ag replacement
+    { id: 'phytoremediation_nitrogen', maxEffectiveness: 0.05 },  // 5% runoff capture (prevents legacy accumulation)
+    { id: 'food_waste_reduction', maxEffectiveness: 0.30 },  // 30% demand reduction
   ];
 
   // Check if tech tree state exists (may not exist in older saves or tests)
