@@ -4,6 +4,53 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🌾 Nitrogen-Food Coupling Research Update (November 19, 2025)
+
+**Commit:** 74d6006 (Nov 19, 2025)
+
+**Summary:** Updated `research/nitrogen_food_coupling_20251115.md` with 5 new 2024-2025 peer-reviewed sources on nitrogen fertilizer, climate change impacts, and planetary boundaries.
+
+**New Research Findings:**
+
+1. **Wheat Climate Change Study (July 2024)** - PubMed PMID: 38965400
+   - 4× fertilizer increase needed for 52% wheat yield increase under mid-century warming
+   - Climate change creates nitrogen dilemma: more N needed for yields, less N allowed for boundaries
+   - Heat/water stress reduces nitrogen use efficiency
+
+2. **Planet Tracker (2024)** - Global nitrogen overproduction
+   - World uses 2× as much nitrogen fertilizer as needed
+   - Only 30-35% nitrogen uptake efficiency by plants
+   - Regional heterogeneity: overfertilization in developed nations, underfertilization in Sub-Saharan Africa
+
+3. **China Nitrogen Study (2024)** - Environmental Science & Technology
+   - Spatially explicit approach to planetary boundary compliance
+   - Precision targeting can achieve boundary compliance without food security loss
+   - Current NUE in China: 61% → 50% (declining due to overuse)
+
+4. **Mongabay (January 2024)** - Circular agriculture solutions
+   - Nitrogen pollution: 2% world's energy, 1.4-5% global GHG emissions
+   - Circular economy solutions: manure recycling, crop rotation, precision agriculture
+   - Co-benefits: nitrogen reduction → GHG reduction → climate improvement
+
+5. **Nature Sustainability (2023)** - Fertilizer price crisis responses
+   - Regional redistribution during price spikes: 11% savings India, 49% Ethiopia, 44% Malawi
+   - Spatially differentiated responses improve both food security AND environmental outcomes
+   - Emergency nitrogen reallocation can decouple regional food security from nitrogen use
+
+**Key Insight:** Climate change forces impossible choice between hunger (need MORE nitrogen for yields) and ecosystem collapse (need LESS nitrogen for planetary boundaries). Regional redistribution offers pathway to improve both outcomes simultaneously.
+
+**Documentation Updated:**
+- `docs/wiki/systems/planetary-boundaries.md` - Added nitrogen research updates to Data Sources section
+
+**Research Status:**
+- Total sources: 34 peer-reviewed papers (up from 29)
+- Oldest source: 2002
+- Newest source: 2025
+- Last verified: November 19, 2025
+- Verification status: UPDATED
+
+---
+
 ## 🔬 AI Deception Detection Research Update (November 19, 2025)
 
 **Commit:** c5f2f02 (Nov 19, 2025)

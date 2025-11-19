@@ -210,7 +210,13 @@ The **stratospheric ozone boundary** is one of only 2 safe boundaries, and it's 
 - **Freshwater:** Nature (2023) Jasechko et al., LA Times (Sept 2025)
 - **Biogeochemical:** 18.2 Mt P/year current vs 6.2 Mt P/year boundary (phosphorus, Stockholm Resilience Centre 2025), 120 Mt N/year optimized target vs 62 Mt N/year safe limit (nitrogen, ~60% reduction from ~200 Mt current)
   - Legacy nutrient stocks: Paerl et al. (2024) Lake Erie study - internal loading equals external inputs
-  - Nitrogen-food coupling: 29 peer-reviewed sources (research/nitrogen_food_coupling_20251115.md)
+  - Nitrogen-food coupling: 34 peer-reviewed sources (research/nitrogen_food_coupling_20251115.md)
+  - Latest 2024-2025 updates (Nov 19, 2025):
+    * Wheat climate change: 4× fertilizer needed for 52% yield increase under mid-century warming (PMID: 38965400)
+    * Global overuse: 2× planetary boundary exceedance, only 30-35% nitrogen uptake efficiency (Planet Tracker 2024)
+    * China spatial analysis: Precision targeting achieves boundary compliance without food security loss (Environ Sci Tech 2024)
+    * Circular agriculture: 2% global energy + 1.4-5% GHG from fertilizer (Mongabay 2024)
+    * Regional redistribution: 11% savings India, 49% Ethiopia, 44% Malawi during price spikes (Nature Sustainability 2023)
 - **Novel Entities:** Microplastics, PFAS 99% prevalence
 - **Ocean:** Aragonite saturation <80% pre-industrial
 - **Ozone:** 285 DU recovering toward 290 DU baseline
