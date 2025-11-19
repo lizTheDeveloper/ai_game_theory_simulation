@@ -103,6 +103,39 @@ validate_prerequisites() {
     print_success "Prerequisites validated"
 }
 
+# Cleanup from previous runs
+cleanup_old_runs() {
+    CURRENT_STEP="Cleaning up previous runs"
+    print_step "$CURRENT_STEP"
+
+    # Clean up old provision logs (keep last 3)
+    find /tmp -name "marcus_provision_*.log" -type f 2>/dev/null | sort -r | tail -n +4 | xargs rm -f 2>/dev/null || true
+
+    # Clean up old build logs
+    rm -f /tmp/nextjs_build.log 2>/dev/null || true
+
+    # Clean up any orphaned temp directories
+    find /tmp -name "marcus_migrations_*" -type d -mtime +1 -exec rm -rf {} + 2>/dev/null || true
+
+    # Check Redis memory usage
+    if command -v redis-cli &> /dev/null; then
+        REDIS_MEMORY=$(redis-cli -h "${REDIS_HOST:-localhost}" -p "${REDIS_PORT:-6379}" INFO memory 2>/dev/null | grep "used_memory_human" | cut -d: -f2 | tr -d '\r' || echo "unknown")
+        if [ "$REDIS_MEMORY" != "unknown" ]; then
+            print_success "Redis memory usage: $REDIS_MEMORY"
+        fi
+    fi
+
+    # Check disk space
+    DISK_USAGE=$(df -h /tmp | tail -1 | awk '{print $5}' | tr -d '%')
+    if [ "$DISK_USAGE" -gt 80 ]; then
+        print_warning "Disk usage is high: ${DISK_USAGE}%"
+        # Clean npm cache if disk is full
+        npm cache clean --force &>/dev/null || true
+    fi
+
+    print_success "Cleanup complete"
+}
+
 # Generate secure passwords
 generate_secrets() {
     CURRENT_STEP="Generating secure secrets"
@@ -490,6 +523,7 @@ main() {
     echo ""
 
     validate_prerequisites
+    cleanup_old_runs
     generate_secrets
     update_system
     install_dependencies
