@@ -3,6 +3,8 @@ Description=MARCUS 3.0 Citation Integrity Platform
 Documentation=https://github.com/404GeneNotFound/ai_game_theory_simulation
 After=network.target postgresql.service redis.service
 Wants=postgresql.service redis.service
+StartLimitIntervalSec=200
+StartLimitBurst=5
 
 [Service]
 Type=simple
@@ -16,8 +18,6 @@ ExecStart=/usr/bin/npm start
 # Restart policy
 Restart=on-failure
 RestartSec=10
-StartLimitInterval=200
-StartLimitBurst=5
 
 # Resource limits
 LimitNOFILE=65536
