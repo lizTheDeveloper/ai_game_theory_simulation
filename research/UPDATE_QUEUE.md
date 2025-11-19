@@ -1,7 +1,12 @@
 # Research Update Queue
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Generated:** 11/19/2025, 7:30:03 PM
 **Files Scanned:** 469
+=======
+**Generated:** 11/19/2025, 8:30:04 PM
+**Files Scanned:** 470
+>>>>>>> Stashed changes
 =======
 **Generated:** 11/19/2025, 8:30:04 PM
 **Files Scanned:** 470
@@ -858,7 +863,11 @@
 ## ✅ LOW (Monitor Only)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 287 (61.2%)
+=======
+**Count:** 287 (61.1%)
+>>>>>>> Stashed changes
 =======
 **Count:** 287 (61.1%)
 >>>>>>> Stashed changes
@@ -876,7 +885,11 @@ All sources <3 years old. No action required.
 | HIGH | 160 (34.1%) |
 | MEDIUM | 22 (4.7%) |
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 | LOW | 287 (61.2%) |
+=======
+| LOW | 287 (61.1%) |
+>>>>>>> Stashed changes
 =======
 | LOW | 287 (61.1%) |
 >>>>>>> Stashed changes
@@ -888,7 +901,11 @@ All sources <3 years old. No action required.
 | Status | Files | Percentage |
 |--------|-------|------------|
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 | Current (<3yr) | 287 | 61.2% |
+=======
+| Current (<3yr) | 287 | 61.1% |
+>>>>>>> Stashed changes
 =======
 | Current (<3yr) | 287 | 61.1% |
 >>>>>>> Stashed changes
