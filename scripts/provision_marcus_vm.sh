@@ -204,7 +204,8 @@ configure_database() {
 
     # Check if user exists
     if sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='marcus'" | grep -q 1; then
-        print_warning "Database user 'marcus' already exists"
+        print_warning "Database user 'marcus' already exists - updating password"
+        sudo -u postgres psql -c "ALTER USER marcus WITH PASSWORD '$DATABASE_PASSWORD';"
     else
         sudo -u postgres psql -c "CREATE USER marcus WITH PASSWORD '$DATABASE_PASSWORD';"
         print_success "Created database user 'marcus'"
