@@ -1,0 +1,451 @@
+/**
+ * Integration Tests - Auth Flow
+ *
+ * Comprehensive tests for authentication endpoints including:
+ * - User registration
+ * - Login/logout
+ * - JWT token generation and validation
+ * - Token refresh
+ * - RBAC (Role-Based Access Control)
+ * - Account lockout after failed attempts
+ *
+ * **Requirements:**
+ * - PostgreSQL server running on localhost:5432 with database 'marcus_test'
+ * - Redis server running on localhost:6379
+ * - Run: `sudo service postgresql start && sudo service redis-server start`
+ *
+ * @group integration
+ */
+
+import request from 'supertest';
+import express, { Express } from 'express';
+import { Pool } from 'pg';
+import Redis from 'ioredis';
+import { AuthService } from '../../auth/authService';
+import { JWTMiddleware } from '../../auth/jwtMiddleware';
+import { createAuthRoutes } from '../../api/authRoutes';
+import { getTestConfiguration } from '../../config/platformConfig';
+
+describe('Auth Flow Integration Tests', () => {
+  let app: Express;
+  let dbPool: Pool;
+  let redisClient: Redis;
+  let authService: AuthService;
+  let jwtMiddleware: JWTMiddleware;
+
+  // Test user data
+  const testUser = {
+    email: 'test@example.com',
+    password: 'SecurePassword123!',
+    role: 'analyst'
+  };
+
+  const testAdmin = {
+    email: 'admin@example.com',
+    password: 'AdminPassword456!',
+    role: 'admin'
+  };
+
+  beforeAll(async () => {
+    // Get test configuration
+    const config = getTestConfiguration();
+
+    // Initialize database connection
+    dbPool = new Pool({
+      host: config.database.host,
+      port: config.database.port,
+      database: config.database.database,
+      user: config.database.user,
+      password: config.database.password,
+      max: 5
+    });
+
+    // Initialize Redis connection
+    redisClient = new Redis({
+      host: config.redis.host,
+      port: config.redis.port,
+      db: config.redis.db
+    });
+
+    // Create database schema
+    await dbPool.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        password_hash VARCHAR(255) NOT NULL,
+        role VARCHAR(50) DEFAULT 'viewer',
+        is_active BOOLEAN DEFAULT true,
+        failed_login_attempts INTEGER DEFAULT 0,
+        locked_until TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS audit_logs (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id),
+        action VARCHAR(100) NOT NULL,
+        ip_address VARCHAR(45),
+        user_agent TEXT,
+        metadata JSONB,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    // Initialize services
+    authService = new AuthService(dbPool, redisClient, {
+      jwtSecret: config.auth.jwtSecret,
+      jwtRefreshSecret: config.auth.jwtRefreshSecret,
+      accessTokenTTL: config.auth.accessTokenTTL,
+      refreshTokenTTL: config.auth.refreshTokenTTL
+    });
+
+    jwtMiddleware = new JWTMiddleware(config.auth.jwtSecret);
+
+    // Create Express app
+    app = express();
+    app.use(express.json());
+    app.use('/auth', createAuthRoutes(authService, jwtMiddleware));
+  });
+
+  afterAll(async () => {
+    // Clean up database
+    await dbPool.query('DROP TABLE IF EXISTS audit_logs CASCADE');
+    await dbPool.query('DROP TABLE IF EXISTS users CASCADE');
+
+    await dbPool.end();
+    await redisClient.quit();
+  });
+
+  beforeEach(async () => {
+    // Clear test data before each test
+    await dbPool.query('DELETE FROM audit_logs');
+    await dbPool.query('DELETE FROM users');
+    await redisClient.flushdb();
+  });
+
+  describe('POST /auth/register', () => {
+    it('should register a new user with valid data', async () => {
+      const response = await request(app)
+        .post('/auth/register')
+        .send(testUser)
+        .expect(201);
+
+      expect(response.body).toMatchObject({
+        message: 'User registered successfully',
+        user: {
+          email: testUser.email,
+          role: testUser.role
+        }
+      });
+
+      expect(response.body.user.id).toBeDefined();
+      expect(response.body.user.createdAt).toBeDefined();
+      expect(response.body.user.password).toBeUndefined(); // Password should not be returned
+    });
+
+    it('should reject registration with duplicate email', async () => {
+      // Register first user
+      await request(app)
+        .post('/auth/register')
+        .send(testUser)
+        .expect(201);
+
+      // Try to register again with same email
+      const response = await request(app)
+        .post('/auth/register')
+        .send(testUser)
+        .expect(409);
+
+      expect(response.body).toMatchObject({
+        error: 'Conflict',
+        message: expect.stringContaining('already exists')
+      });
+    });
+
+    it('should validate email format', async () => {
+      const response = await request(app)
+        .post('/auth/register')
+        .send({
+          email: 'invalid-email',
+          password: 'SecurePassword123!',
+          role: 'viewer'
+        })
+        .expect(400);
+
+      expect(response.body.error).toBe('Bad Request');
+    });
+
+    it('should enforce password requirements', async () => {
+      const response = await request(app)
+        .post('/auth/register')
+        .send({
+          email: 'test@example.com',
+          password: 'weak',
+          role: 'viewer'
+        })
+        .expect(400);
+
+      expect(response.body.message).toContain('Password must');
+    });
+  });
+
+  describe('POST /auth/login', () => {
+    beforeEach(async () => {
+      // Register test user before each login test
+      await request(app)
+        .post('/auth/register')
+        .send(testUser);
+    });
+
+    it('should login with valid credentials', async () => {
+      const response = await request(app)
+        .post('/auth/login')
+        .send({
+          email: testUser.email,
+          password: testUser.password
+        })
+        .expect(200);
+
+      expect(response.body).toMatchObject({
+        message: 'Login successful',
+        tokenType: 'Bearer'
+      });
+
+      expect(response.body.accessToken).toBeDefined();
+      expect(response.body.refreshToken).toBeDefined();
+      expect(response.body.expiresIn).toBeDefined();
+    });
+
+    it('should reject login with invalid password', async () => {
+      const response = await request(app)
+        .post('/auth/login')
+        .send({
+          email: testUser.email,
+          password: 'WrongPassword123!'
+        })
+        .expect(401);
+
+      expect(response.body).toMatchObject({
+        error: 'Unauthorized',
+        message: 'Invalid email or password'
+      });
+    });
+
+    it('should reject login with non-existent email', async () => {
+      const response = await request(app)
+        .post('/auth/login')
+        .send({
+          email: 'nonexistent@example.com',
+          password: 'SomePassword123!'
+        })
+        .expect(401);
+
+      expect(response.body.message).toContain('Invalid email or password');
+    });
+
+    it('should lock account after 5 failed login attempts', async () => {
+      // Attempt login 5 times with wrong password
+      for (let i = 0; i < 5; i++) {
+        await request(app)
+          .post('/auth/login')
+          .send({
+            email: testUser.email,
+            password: 'WrongPassword123!'
+          })
+          .expect(401);
+      }
+
+      // 6th attempt should return account locked
+      const response = await request(app)
+        .post('/auth/login')
+        .send({
+          email: testUser.email,
+          password: 'WrongPassword123!'
+        })
+        .expect(403);
+
+      expect(response.body.error).toBe('Forbidden');
+      expect(response.body.message).toContain('Account locked');
+    });
+
+    it('should not allow login with correct password after account lockout', async () => {
+      // Lock the account
+      for (let i = 0; i < 5; i++) {
+        await request(app)
+          .post('/auth/login')
+          .send({
+            email: testUser.email,
+            password: 'WrongPassword123!'
+          });
+      }
+
+      // Try with correct password - should still be locked
+      const response = await request(app)
+        .post('/auth/login')
+        .send({
+          email: testUser.email,
+          password: testUser.password
+        })
+        .expect(403);
+
+      expect(response.body.message).toContain('Account locked');
+    });
+  });
+
+  describe('JWT Token Validation', () => {
+    let accessToken: string;
+
+    beforeEach(async () => {
+      // Register and login to get token
+      await request(app)
+        .post('/auth/register')
+        .send(testUser);
+
+      const loginResponse = await request(app)
+        .post('/auth/login')
+        .send({
+          email: testUser.email,
+          password: testUser.password
+        });
+
+      accessToken = loginResponse.body.accessToken;
+    });
+
+    it('should generate valid JWT access token', () => {
+      expect(accessToken).toBeDefined();
+      expect(accessToken.split('.')).toHaveLength(3); // JWT has 3 parts
+    });
+
+    it('should decode JWT token with correct payload', () => {
+      const payload = JSON.parse(
+        Buffer.from(accessToken.split('.')[1], 'base64').toString()
+      );
+
+      expect(payload.email).toBe(testUser.email);
+      expect(payload.role).toBe(testUser.role);
+      expect(payload.exp).toBeDefined();
+      expect(payload.iat).toBeDefined();
+    });
+  });
+
+  describe('POST /auth/refresh', () => {
+    let refreshToken: string;
+
+    beforeEach(async () => {
+      // Register and login to get refresh token
+      await request(app)
+        .post('/auth/register')
+        .send(testUser);
+
+      const loginResponse = await request(app)
+        .post('/auth/login')
+        .send({
+          email: testUser.email,
+          password: testUser.password
+        });
+
+      refreshToken = loginResponse.body.refreshToken;
+    });
+
+    it('should refresh access token with valid refresh token', async () => {
+      const response = await request(app)
+        .post('/auth/refresh')
+        .send({ refreshToken })
+        .expect(200);
+
+      expect(response.body.accessToken).toBeDefined();
+      expect(response.body.accessToken).not.toBe(refreshToken);
+    });
+
+    it('should reject invalid refresh token', async () => {
+      const response = await request(app)
+        .post('/auth/refresh')
+        .send({ refreshToken: 'invalid-token' })
+        .expect(401);
+
+      expect(response.body.error).toBeDefined();
+    });
+  });
+
+  describe('RBAC - Role-Based Access Control', () => {
+    it('should assign viewer role by default', async () => {
+      const response = await request(app)
+        .post('/auth/register')
+        .send({
+          email: 'viewer@example.com',
+          password: 'ViewerPassword123!'
+        })
+        .expect(201);
+
+      expect(response.body.user.role).toBe('viewer');
+    });
+
+    it('should allow analyst role assignment', async () => {
+      const response = await request(app)
+        .post('/auth/register')
+        .send({
+          ...testUser,
+          role: 'analyst'
+        })
+        .expect(201);
+
+      expect(response.body.user.role).toBe('analyst');
+    });
+
+    it('should allow admin role assignment', async () => {
+      const response = await request(app)
+        .post('/auth/register')
+        .send({
+          ...testAdmin,
+          role: 'admin'
+        })
+        .expect(201);
+
+      expect(response.body.user.role).toBe('admin');
+    });
+
+    it('should include role in JWT token payload', async () => {
+      // Register and login
+      await request(app)
+        .post('/auth/register')
+        .send(testAdmin);
+
+      const loginResponse = await request(app)
+        .post('/auth/login')
+        .send({
+          email: testAdmin.email,
+          password: testAdmin.password
+        });
+
+      const accessToken = loginResponse.body.accessToken;
+      const payload = JSON.parse(
+        Buffer.from(accessToken.split('.')[1], 'base64').toString()
+      );
+
+      expect(payload.role).toBe('admin');
+    });
+  });
+
+  describe('Password Hashing', () => {
+    it('should hash password with bcrypt', async () => {
+      await request(app)
+        .post('/auth/register')
+        .send(testUser);
+
+      // Query database directly to check hashed password
+      const result = await dbPool.query(
+        'SELECT password_hash FROM users WHERE email = $1',
+        [testUser.email]
+      );
+
+      const passwordHash = result.rows[0].password_hash;
+
+      // Bcrypt hash should be 60 characters
+      expect(passwordHash).toBeDefined();
+      expect(passwordHash.length).toBe(60);
+      expect(passwordHash).toMatch(/^\$2[aby]\$/); // Bcrypt prefix
+      expect(passwordHash).not.toBe(testUser.password); // Should not store plaintext
+    });
+  });
+});
