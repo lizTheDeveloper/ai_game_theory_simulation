@@ -25,7 +25,10 @@
 - ✅ **Security Packages Installed:**
   - `helmet@8.1.0` - HTTP security headers
   - `express-rate-limit@8.1.0` - Rate limiting middleware
-- ✅ **Security Hardening Script** created (`scripts/harden_security.sh`)
+- ✅ **Security Hardening Scripts:**
+  - `scripts/harden_security.sh` - Automated Redis auth + PostgreSQL SSL (150 lines)
+  - `scripts/verify_security.sh` - Security verification without sudo (150 lines)
+  - `docs/MANUAL_SECURITY_HARDENING.md` - Step-by-step manual guide (300+ lines)
 - ✅ **Database Migrations** with proper indexes and constraints
 - ✅ **Password Hashing** with bcrypt (12 rounds)
 - ✅ **JWT Authentication** with access/refresh tokens
@@ -40,8 +43,9 @@
 ### Deployment Scripts
 - ✅ `deploy_service.sh` - Deploy systemd service
 - ✅ `rebuild_and_deploy.sh` - Rebuild Next.js and restart
-- ✅ `setup_test_db_fixed.sh` - Set up test database
-- ✅ `scripts/harden_security.sh` - Security hardening automation
+- ✅ `setup_test_db_fixed.sh` - Set up test database (auto-detects PostgreSQL port)
+- ✅ `scripts/harden_security.sh` - Security hardening automation (Redis auth, PostgreSQL SSL)
+- ✅ `scripts/verify_security.sh` - Security verification (no sudo required)
 - ✅ `scripts/validateDeployment.sh` - Deployment validation
 
 ---
@@ -64,6 +68,9 @@ sudo systemctl restart marcus-platform
 
 ### 2. Verify Deployment
 ```bash
+# Run security verification
+./scripts/verify_security.sh
+
 # Check service status
 sudo systemctl status marcus-platform
 

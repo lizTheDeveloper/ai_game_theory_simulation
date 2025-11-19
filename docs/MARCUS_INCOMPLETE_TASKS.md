@@ -1,19 +1,83 @@
 # MARCUS 3.0 - Incomplete Tasks
 
 **Date:** 2025-11-19
-**Reason:** External service dependencies not available in development environment
+**Last Updated:** Session continuation - Security hardening scripts created
+**Reason:** External service dependencies and VM-specific operations require execution on production VM
 
 ---
 
 ## Overview
 
-The following tasks were **not completed** during this session because they require external services (PostgreSQL, Redis, Python agents) or production infrastructure (Prometheus, Grafana, k6) that were not running in the development environment.
+The following tasks were **not completed** because they require:
+1. **VM-specific operations** (sudo access, service management)
+2. **External services** (PostgreSQL, Redis running on VM)
+3. **Production infrastructure** (Prometheus, Grafana, k6)
 
-All code for these tasks has been **created and is ready to run** - they just need the infrastructure to be set up first.
+**All code is created and ready to run** - scripts just need to be executed on the actual VM.
 
 ---
 
-## 🔴 Critical Path (Requires Immediate Infrastructure Setup)
+## 🔒 Security Hardening (Ready to Execute on VM)
+
+### Status
+- ✅ Scripts created and committed
+- ⏳ Execution pending on production VM
+- ⏳ Verification needed after execution
+
+### What's Ready
+
+**Scripts:**
+1. `scripts/harden_security.sh` - Automated Redis auth + PostgreSQL SSL preparation (150 lines)
+2. `scripts/verify_security.sh` - Security verification without sudo (150 lines)
+3. `docs/MANUAL_SECURITY_HARDENING.md` - Step-by-step manual hardening guide (300+ lines)
+
+**What Gets Configured:**
+- Redis authentication (requirepass)
+- Redis password added to .env
+- PostgreSQL SSL preparation (certificates ready, manual config)
+- Security credentials saved securely
+- Service restart instructions
+
+### Execution Steps (On VM)
+
+```bash
+# 1. Pull latest code
+cd /home/g7throwawayplz/ai_game_theory_simulation
+git pull origin claude/build-marcus-agent-016LTPXuAb6A3hYDwTvMjyof
+
+# 2. Run security hardening
+./scripts/harden_security.sh
+
+# 3. Restart MARCUS service
+sudo systemctl restart marcus-platform
+
+# 4. Verify security configuration
+./scripts/verify_security.sh
+
+# 5. Check service logs
+sudo journalctl -u marcus-platform -f
+```
+
+### Expected Results
+- ✅ Redis password generated and configured
+- ✅ .env updated with REDIS_PASSWORD
+- ✅ Redis service restarted with authentication
+- ✅ MARCUS service connects to Redis with password
+- ✅ Security credentials saved to timestamped file
+- ⚠️ PostgreSQL SSL marked for manual configuration (optional)
+
+### Troubleshooting
+
+If automated script fails:
+- Use `docs/MANUAL_SECURITY_HARDENING.md` for step-by-step manual process
+- Run `scripts/verify_security.sh` to check current status
+- Check service logs: `sudo journalctl -u marcus-platform -xe`
+
+**Estimated Time:** 10-15 minutes (automated) or 30 minutes (manual)
+
+---
+
+## 🔴 Critical Path (Requires VM Infrastructure)
 
 ### 1. Run Integration Tests - Auth Flow
 **Status:** Code complete, not executed
