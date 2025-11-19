@@ -14,6 +14,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite, assertDefined, assertInRange } from '@/simulation/utils/assertions';
+import { applyComputeGrowth, getTotalEffectiveCompute } from '../../computeInfrastructure';
 
 export class ComputeGrowthPhase implements SimulationPhase {
   readonly id = 'compute-growth';
@@ -25,10 +26,7 @@ export class ComputeGrowthPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute compute growth
-    setDeterministicRng(rng);
-    const { applyComputeGrowth, getTotalEffectiveCompute } = require('../../computeInfrastructure');
-
-    // Validate compute infrastructure exists before growth
+    setDeterministicRng(rng);// Validate compute infrastructure exists before growth
     assertDefined(state.computeInfrastructure, {
       location: 'ComputeGrowthPhase.execute',
       valueName: 'computeInfrastructure',

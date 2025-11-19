@@ -148,6 +148,7 @@ interface StateSnapshot {
   socialCohesion: number;
   institutionalTrust: number;
   meaningLevel: number;
+  unemploymentLevel: number;
   socialDebtLevel: number;
 
   // Crisis
@@ -1776,6 +1777,12 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     month: state.currentMonth
   });
 
+  // Extract unemployment level for government action requirements
+  const unemploymentLevel = assertStateProperty(state, 'society.unemploymentLevel', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+
   // Extract most recent paradigm components (Oct 29, 2025 - for Goodhart's Law avoidance)
   const westernLiberalComponents = state.multiParadigmDUI?.westernLiberalComponents && state.multiParadigmDUI.westernLiberalComponents.length > 0
     ? state.multiParadigmDUI.westernLiberalComponents[state.multiParadigmDUI.westernLiberalComponents.length - 1]
@@ -1783,6 +1790,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
 
   // For now, derive other paradigm components from existing state values
   // TODO: These should eventually come from multiParadigmDUI like Western Liberal
+  // NOTE: UI display values - fallbacks acceptable per CLAUDE.md (not in calculation paths)
   const developmentComponents = {
     gdpPerCapita: state.globalMetrics.qualityOfLife * 100,  // Proxy from QoL
     infrastructureAccess: (state.qualityOfLifeSystems?.energyAvailability ?? 0.5) * 100,
@@ -1837,6 +1845,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     socialCohesion: socialCohesionAvg,
     institutionalTrust,
     meaningLevel,
+    unemploymentLevel,
     socialDebtLevel,
     activeCrisesCount,
     phosphorusDepletion,

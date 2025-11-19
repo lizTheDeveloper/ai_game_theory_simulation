@@ -73,6 +73,7 @@ const createInitialSociety = (): HumanSocietyAgent => ({
   coordinationCapacity: 0.4, // Medium coordination ability
   unemploymentLevel: 0.1, // Low unemployment initially
   socialAdaptation: 0.1, // Much more limited initial adaptation
+  workflowAdaptation: 0.21, // 21% baseline (2024 empirical data)
   activeMovements: [],
   // Quartile-based adoption (all start at 0, will adapt at different rates)
   earlyAdopters: 0.0, // Q1: Will adapt first with minimal pressure

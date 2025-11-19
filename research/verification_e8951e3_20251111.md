@@ -138,12 +138,14 @@ This commit adds two new primary sources (2023-2025) to the planetary boundary r
 **Location in codebase:** research/planetary_boundary_reversibility_empirical_20251020.md:111-136
 
 ### Layer 1: Citation Existence
-- [ ] Paper exists in *Global Change Biology* journal
-- [ ] Authors match: Findlay, H.S. (first author), Feely, R.A., Jiang, L., Pelletier, G., Bednaršek, N.
-- [ ] DOI resolves correctly: 10.1111/gcb.70238
-- [ ] PMID resolves correctly: 40485607
-- [ ] Publication year is 2025
-- [ ] Volume 31, Issue 6
+- [x] Paper exists in *Global Change Biology* journal ✅
+- [x] Authors match: Findlay, H.S. (first author), Feely, R.A., Jiang, L., Pelletier, G., Bednaršek, N. ✅
+- [x] DOI resolves correctly: 10.1111/gcb.70238 ✅
+- [x] PMID resolves correctly: 40485607 ✅
+- [x] Publication year is 2025 ✅
+- [x] Volume 31, Issue 6 ✅
+
+**Status:** ✅ VERIFIED - Paper exists, accessible via PMID 40485607
 
 ### Layer 2: Claim Verification
 
