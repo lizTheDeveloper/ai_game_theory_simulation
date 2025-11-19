@@ -15,7 +15,8 @@
  * @see src/simulation/updateNovelEntitiesBoundary.ts
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, beforeEach } from 'node:test';
+import assert from 'node:assert';
 import { updateNovelEntitiesBoundary } from '../../src/simulation/updateNovelEntitiesBoundary';
 import { getAllTech } from '../../src/simulation/techTree/comprehensiveTechTree';
 import type { GameState } from '../../src/types/game';
@@ -120,27 +121,27 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
 
   describe('RNG Validation (CRITICAL-3 Regression Prevention)', () => {
     it('should throw error when RNG is undefined', () => {
-      expect(() => {
+      assert.throws(() => {
         updateNovelEntitiesBoundary(state, undefined as any);
-      }).toThrow(/RNG.*required|CRITICAL/i);
+      }, /RNG.*required|CRITICAL/i);
     });
 
     it('should throw error when RNG is null', () => {
-      expect(() => {
+      assert.throws(() => {
         updateNovelEntitiesBoundary(state, null as any);
-      }).toThrow(/RNG.*required|CRITICAL/i);
+      }, /RNG.*required|CRITICAL/i);
     });
 
     it('should throw error when RNG is not a function', () => {
-      expect(() => {
+      assert.throws(() => {
         updateNovelEntitiesBoundary(state, 42 as any);
-      }).toThrow(/RNG.*required|function|CRITICAL/i);
+      }, /RNG.*required|function|CRITICAL/i);
     });
 
     it('should accept valid RNG function', () => {
-      expect(() => {
+      assert.doesNotThrow(() => {
         updateNovelEntitiesBoundary(state, rng);
-      }).not.toThrow();
+      });
     });
   });
 
@@ -157,7 +158,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const finalValue = state.planetaryBoundariesSystem.boundaries.novel_entities.currentValue;
 
       // Production should increase contamination
-      expect(finalValue).toBeGreaterThan(initialValue);
+      assert.ok(finalValue > initialValue, 'finalValue should be > initialValue');
     });
 
     it('should scale production with economic activity', () => {
@@ -181,7 +182,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const change2 = state.planetaryBoundariesSystem.boundaries.novel_entities.currentValue - initialValue2;
 
       // High economy should produce more contamination
-      expect(change2).toBeGreaterThan(change1);
+      assert.ok(change2 > change1, 'change2 should be > change1');
     });
 
     it('should track peak contamination value', () => {
@@ -192,8 +193,8 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       updateNovelEntitiesBoundary(state, rng);
 
       // Peak should update to current value
-      expect(boundary.peak).toBeGreaterThanOrEqual(boundary.currentValue);
-      expect(boundary.peak).toBeGreaterThanOrEqual(1.2);
+      assert.ok(boundary.peak >= boundary.currentValue, 'peak should be >= currentValue');
+      assert.ok(boundary.peak >= 1.2, 'peak should be >= 1.2');
     });
   });
 
@@ -221,8 +222,8 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const change2 = boundary.currentValue - initialValue2;
 
       // PFAS ban should reduce production by 99%
-      expect(change2).toBeLessThan(change1);
-      expect(change2 / change1).toBeLessThan(0.05); // < 5% of baseline
+      assert.ok(change2 < change1, 'change2 should be < change1');
+      assert.ok(change2 / change1 < 0.05, 'change2/change1 should be < 0.05'); // < 5% of baseline
     });
 
     it('should reduce production with plastic phase-out (80% emission reduction)', () => {
@@ -244,8 +245,8 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const change2 = boundary.currentValue - initialValue2;
 
       // Plastic phase-out should reduce production by 80%
-      expect(change2).toBeLessThan(change1);
-      expect(change2 / change1).toBeLessThan(0.25); // < 25% of baseline
+      assert.ok(change2 < change1, 'change2 should be < change1');
+      assert.ok(change2 / change1 < 0.25, 'change2/change1 should be < 0.25'); // < 25% of baseline
     });
 
     it('should stack prevention technologies multiplicatively', () => {
@@ -270,7 +271,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const change2 = boundary.currentValue - initialValue2;
 
       // Combined: (1-0.99) * (1-0.80) * (1-0.70) = 0.006 = 0.6%
-      expect(change2 / change1).toBeLessThan(0.01); // < 1% of baseline
+      assert.ok(change2 / change1 < 0.01, 'change2/change1 should be < 0.01'); // < 1% of baseline
     });
   });
 
@@ -292,7 +293,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
 
       // Cleanup should reduce contamination (net production + cleanup < production alone)
       // But not by much due to energy/concentration constraints
-      expect(change).toBeLessThan(0.01); // Minimal cleanup effectiveness
+      assert.ok(change < 0.01, 'change should be < 0.01'); // Minimal cleanup effectiveness
     });
 
     it('should limit cleanup effectiveness when energy is scarce', () => {
@@ -311,7 +312,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
 
       // Very limited cleanup due to energy constraint
       const netChange = finalValue - initialValue;
-      expect(Math.abs(netChange)).toBeLessThan(0.001);
+      assert.ok(Math.abs(netChange) < 0.001, 'abs(netChange) should be < 0.001');
     });
 
     it('should apply microplastic capture with concentration constraints', () => {
@@ -325,7 +326,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const change = boundary.currentValue - initialValue;
 
       // Cleanup effectiveness heavily constrained by concentration gap
-      expect(Math.abs(change)).toBeLessThan(0.01);
+      assert.ok(Math.abs(change) < 0.01, 'abs(change) should be < 0.01');
     });
 
     it('should apply rebound effects to cleanup (Jevons paradox)', () => {
@@ -340,7 +341,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       updateNovelEntitiesBoundary(state, rng);
 
       // Test passes if no errors thrown (rebound is applied internally)
-      expect(boundary.currentValue).toBeGreaterThan(0);
+      assert.ok(boundary.currentValue > 0, 'boundary.currentValue should be > 0');
     });
   });
 
@@ -371,8 +372,8 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
 
       // Decay formula: λ = ln(2) / 500 years ≈ 0.001386 per year
       // After 1 year: decay ≈ 0.001386
-      expect(decay).toBeGreaterThan(0.001);
-      expect(decay).toBeLessThan(0.003);
+      assert.ok(decay > 0.001, 'decay should be > 0.001');
+      assert.ok(decay < 0.003, 'decay should be < 0.003');
     });
 
     it('should show minimal decay over short timescales', () => {
@@ -388,8 +389,8 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const change = initialValue - boundary.currentValue;
 
       // Over 1 month: decay ≈ 0.001386 / 12 ≈ 0.0001155
-      expect(change).toBeGreaterThan(0.00001);
-      expect(change).toBeLessThan(0.001);
+      assert.ok(change > 0.00001, 'change should be > 0.00001');
+      assert.ok(change < 0.001, 'change should be < 0.001');
     });
   });
 
@@ -413,7 +414,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const netChange = boundary.currentValue - initialValue;
 
       // Net change should be very small (only 1% of cleanup stays removed)
-      expect(Math.abs(netChange)).toBeLessThan(0.005);
+      assert.ok(Math.abs(netChange) < 0.005, 'abs(netChange) should be < 0.005');
     });
 
     it('should only affect novel_entities boundary (PFAS-specific)', () => {
@@ -421,11 +422,11 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       // If we had other boundaries, they wouldn't have redeposition
 
       const boundary = state.planetaryBoundariesSystem.boundaries.novel_entities;
-      expect(boundary.name).toBe('novel_entities');
+      assert.strictEqual(boundary.name, 'novel_entities');
 
       // Test passes if redeposition logic only applies to this boundary
       updateNovelEntitiesBoundary(state, rng);
-      expect(boundary.currentValue).toBeDefined();
+      assert.ok(boundary.currentValue !== undefined, 'boundary.currentValue should be defined');
     });
   });
 
@@ -464,7 +465,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const change2 = boundary.currentValue - initialValue2;
 
       // Prevention should be 100-1000× more effective (smaller increase)
-      expect(change2).toBeLessThan(change1 / 10);
+      assert.ok(change2 < change1 / 10, 'change2 should be < change1 / 10');
     });
 
     it('should show layered strategy (prevention + cleanup) is best', () => {
@@ -494,7 +495,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
 
       // With full prevention + cleanup, contamination should stabilize or decrease slightly
       // (prevention dominates, cleanup helps at margins)
-      expect(change).toBeLessThan(0.1); // Minimal increase over 10 years
+      assert.ok(change < 0.1, 'change should be < 0.1'); // Minimal increase over 10 years
     });
 
     it('should demonstrate effectiveness improvement (0% → 20-40%)', () => {
@@ -532,8 +533,8 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const effectiveness = (baselineChange - techChange) / baselineChange;
 
       // Expected: 20-40% effectiveness improvement
-      expect(effectiveness).toBeGreaterThan(0.1); // > 10%
-      expect(effectiveness).toBeLessThan(1.0); // < 100% (not magic)
+      assert.ok(effectiveness > 0.1, 'effectiveness should be > 0.1'); // > 10%
+      assert.ok(effectiveness < 1.0, 'effectiveness should be < 1.0'); // < 100% (not magic)
     });
   });
 
@@ -550,14 +551,14 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       state.globalMetrics.economicTransitionStage = 0; // No production
       state.globalMetrics.manufacturingCapability = 0;
       updateNovelEntitiesBoundary(state, rng);
-      expect(boundary.currentValue).toBeGreaterThanOrEqual(0);
+      assert.ok(boundary.currentValue >= 0, 'boundary.currentValue should be >= 0');
 
       // Test upper bound
       boundary.currentValue = 1.99;
       state.globalMetrics.economicTransitionStage = 5.0; // High production
       state.globalMetrics.manufacturingCapability = 1.0;
       updateNovelEntitiesBoundary(state, rng);
-      expect(boundary.currentValue).toBeLessThanOrEqual(2.0);
+      assert.ok(boundary.currentValue <= 2.0, 'boundary.currentValue should be <= 2.0');
     });
 
     it('should handle missing boundary gracefully', () => {
@@ -565,9 +566,9 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       delete state.planetaryBoundariesSystem.boundaries.novel_entities;
 
       // Should not throw (early return)
-      expect(() => {
+      assert.doesNotThrow(() => {
         updateNovelEntitiesBoundary(state, rng);
-      }).not.toThrow();
+      });
     });
   });
 
@@ -598,8 +599,8 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const value2Final = boundary.currentValue;
 
       // Should be identical
-      expect(value1Initial).toBe(value2Initial);
-      expect(value1Final).toBeCloseTo(value2Final, 10);
+      assert.strictEqual(value1Initial, value2Initial);
+      assert.ok(Math.abs(value1Final - value2Final) < 10**(-10), 'value1Final should be close to value2Final');
     });
 
     it('should produce different results with different seeds', () => {
@@ -626,7 +627,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const value2 = boundary.currentValue;
 
       // Should be different (rebound coefficient sampling varies)
-      expect(value1).not.toBeCloseTo(value2, 5);
+      assert.ok(Math.abs(value1 - value2) >= 10**(-5), 'value1 should not be close to value2');
     });
   });
 
@@ -638,29 +639,29 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       deployTechnology('pfas_remediation', 1.0);
 
       // Should not throw with valid state
-      expect(() => {
+      assert.doesNotThrow(() => {
         updateNovelEntitiesBoundary(state, rng);
-      }).not.toThrow();
+      });
 
       // Final value should be finite
-      expect(Number.isFinite(boundary.currentValue)).toBe(true);
+      assert.strictEqual(Number.isFinite(boundary.currentValue), true);
     });
 
     it('should reject NaN from RNG', () => {
       const nanRng = () => NaN;
 
-      expect(() => {
+      assert.throws(() => {
         updateNovelEntitiesBoundary(state, nanRng);
-      }).toThrow(/finite|NaN/i);
+      }, /finite|NaN/i);
     });
 
     it('should handle missing state properties gracefully', () => {
       // Missing economicTransitionStage
       delete (state.globalMetrics as any).economicTransitionStage;
 
-      expect(() => {
+      assert.throws(() => {
         updateNovelEntitiesBoundary(state, rng);
-      }).toThrow(/economicTransitionStage|required|property/i);
+      }, /economicTransitionStage|required|property/i);
     });
   });
 });
