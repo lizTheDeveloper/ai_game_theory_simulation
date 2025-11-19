@@ -3187,7 +3187,7 @@ All domain bounds are validated against peer-reviewed sources (2024-2025):
 - **Current:** ~8.1 (down to 8.04 in 2024)
 - **Projected minimum:** ~7.5-7.9 by 2100 (extreme scenarios, 0.3-0.5 pH unit decline)
 - **Note:** Impacts occur across range; no specific "collapse threshold" found in literature
-- **Sources:** NOAA Ocean Acidification Program (2025), IPCC AR6
+- **Sources:** NOAA Ocean Acidification Program (2025), IPCC AR6, Bouttes et al. 2025 (Biogeosciences - coral carbonate production), Jury et al. 2024 (PNAS - coral resilience)
 
 #### AI Capabilities
 
@@ -3540,7 +3540,7 @@ const newQualityOfLife = Math.max(0, Math.min(1,
 **TIER 1: Critical Extinction Risks (Research-Backed)**
 - ✅ **Phosphorus Depletion**: Morocco 70% control, supply shocks, 24-month famine pathway
 - ✅ **Freshwater Crisis**: Day Zero droughts, Peak Groundwater, wealth-bifurcated migration (wealthy adapt, poor trapped), government relocation programs, 36-month collapse
-- ✅ **Ocean Acidification**: 7th boundary breached (Sept 2025), 48-month marine collapse
+- ✅ **Ocean Acidification**: 7th boundary breached (Sept 2025), 48-month marine collapse, SSP-specific carbonate production projections (Bouttes et al. 2025), coral transformation dynamics (Jury et al. 2024)
 - ✅ **Novel Entities**: PFAS in 99% of blood, 120-month slow poisoning
 - ✅ **International Competition**: AI race dynamics, first-mover advantage, coordination failure
 

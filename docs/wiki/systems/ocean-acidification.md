@@ -3,7 +3,8 @@
 **Status:** ✅ Implemented (TIER 1.3)
 **Phase:** OceanAcidificationPhase (26.0)
 **Source:** `src/simulation/oceanAcidification.ts`
-**Research:** PIK Potsdam Sept 2025, Stockholm Resilience Centre, Kate Raworth
+**Research:** PIK Potsdam Sept 2025, Stockholm Resilience Centre, Kate Raworth, Bouttes et al. 2025 (coral carbonate), Jury et al. 2024 (coral resilience)
+**Research Update:** Nov 19, 2025 - Added 2024-2025 coral reef carbonate production projections and resilience studies
 
 ---
 
@@ -159,6 +160,25 @@ coralDeclineRate *= (1.0 + climateStress * 0.5);
 - Great Barrier Reef: 50% coral loss since 1995
 - Caribbean: 80% coral loss since 1970s
 - Mass bleaching events: 1998, 2010, 2016, 2020, 2024
+
+**NEW RESEARCH (2024-2025):**
+
+**Carbonate Production Projections (Bouttes et al. 2025):**
+- Global climate-coral reef coupled model projects catastrophic decline by 2100
+- **SSP1-2.6** (Paris alignment): 0-50% of preindustrial production without adaptation, 70-76% with adaptation
+- **SSP2-4.5** (moderate): Complete cessation without adaptation, ~50% with adaptation
+- **SSP3-7.0/SSP5-8.5** (high emissions): Complete cessation, <25% even with adaptation
+- **Critical threshold:** Net dissolution at 560 ppm CO₂ (~2050 under current emissions)
+- *Source:* research/ocean_acidification_planetary_boundary_2025.md:228-250
+
+**Coral Resilience Under Combined Stressors (Jury et al. 2024):**
+- 2-year experimental study: +2°C warming + -0.2 pH acidification (Paris mitigation scenario)
+- **Key finding:** Reefs transform but persist as novel ecosystems rather than collapsing entirely
+- Biodiversity maintained despite structural changes
+- Communities shift to novel species compositions (massive corals persist, branching corals decline)
+- Calcification reduced 50-75% but not eliminated
+- **Implication:** Degraded persistence, not total extinction
+- *Source:* research/ocean_acidification_planetary_boundary_2025.md:257-277
 
 **Mitigation:**
 - Coral restoration: -40% decline rate at full deployment
@@ -338,6 +358,8 @@ if (marineFoodWeb < 0.50) {
 - **Stockholm Resilience Centre:** "Degrading oceans' ability to act as Earth's stabiliser"
 - **Kate Raworth:** Planetary boundaries research framework
 - **Biogeosciences (2025):** Ocean Alkalinity Enhancement field tests
+- **Bouttes et al. (2025) - Biogeosciences:** Global climate-coral reef coupled model, carbonate production projections
+- **Jury et al. (2024) - PNAS:** Experimental coral resilience under warming + acidification
 - **Nature (2024):** Coral decline rates, heat + acid synergy
 - **IPCC AR6 (2021-2023):** Ocean acidification projections
 
@@ -345,10 +367,13 @@ if (marineFoodWeb < 0.50) {
 1. **Boundary breached Sept 2025** (aragonite 78%, threshold 80%)
 2. **pH declining 0.002 units/decade** (measurable in real-time)
 3. **Corals need aragonite > 75%** to calcify (threshold approaching)
-4. **Pacific oyster hatcheries failing** (2005-2007, 80% larvae mortality)
-5. **Ocean CO2 absorption declining** (feedback loop confirmed)
-6. **75-year timeline** (2025-2100 for full collapse)
-7. **3 billion people fish-dependent** (FAO 2024 data)
+4. **Carbonate production decline by 2100:** 0-76% of preindustrial depending on SSP scenario and thermal adaptation (Bouttes et al. 2025)
+5. **Net dissolution threshold:** 560 ppm CO₂ (~2050 under current emissions) (Bouttes et al. 2025)
+6. **Coral transformation:** Reefs persist as degraded ecosystems with 50-75% calcification reduction, not total extinction (Jury et al. 2024)
+7. **Pacific oyster hatcheries failing** (2005-2007, 80% larvae mortality)
+8. **Ocean CO2 absorption declining** (feedback loop confirmed)
+9. **75-year timeline** (2025-2100 for full collapse)
+10. **3 billion people fish-dependent** (FAO 2024 data)
 
 ---
 
@@ -506,6 +531,10 @@ if (marineFoodWeb < 0.50) {
 
 ---
 
-**Last Updated:** October 11, 2025
+**Last Updated:** November 19, 2025
 **Implementation Status:** ✅ Complete and validated
-**Next Steps:** Regional dynamics + OAE scaling curves (requires TIER 1.4+)
+**Research Status:** Updated with 2024-2025 coral reef carbonate production and resilience studies
+**Next Steps:**
+- Incorporate SSP-specific carbonate production trajectories (Bouttes et al. 2025)
+- Model coral transformation mechanics (degraded persistence vs. extinction) (Jury et al. 2024)
+- Regional dynamics + OAE scaling curves (requires TIER 1.4+)
