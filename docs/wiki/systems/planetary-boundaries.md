@@ -208,7 +208,7 @@ The **stratospheric ozone boundary** is one of only 2 safe boundaries, and it's 
 - **Biosphere:** Current ~137 E/MSY (100-1000x natural extinction rate), normalized to safe threshold 10 E/MSY = boundary value 13.7x (Oct 30, 2025 calibration fix)
 - **Land:** 62% forest remaining vs 75% needed
 - **Freshwater:** Nature (2023) Jasechko et al., LA Times (Sept 2025)
-- **Biogeochemical:** 18.2 Tg P/year vs 6.2 Tg P/year boundary (phosphorus), 120 Mt N/year current vs 62 Mt N/year safe limit (nitrogen)
+- **Biogeochemical:** 18.2 Mt P/year current vs 6.2 Mt P/year boundary (phosphorus, Stockholm Resilience Centre 2025), 120 Mt N/year optimized target vs 62 Mt N/year safe limit (nitrogen, ~60% reduction from ~200 Mt current)
   - Legacy nutrient stocks: Paerl et al. (2024) Lake Erie study - internal loading equals external inputs
   - Nitrogen-food coupling: 29 peer-reviewed sources (research/nitrogen_food_coupling_20251115.md)
 - **Novel Entities:** Microplastics, PFAS 99% prevalence
@@ -508,6 +508,8 @@ interface PlanetaryBoundariesSystem {
 **Research Backing:**
 - Lake Erie sediment loading studies (Paerl et al. 2024)
 - Nitrogen half-life in sediments (30-100 years)
+- Phosphorus baseline: 18.2 Mt P/year (Stockholm Resilience Centre 2025)
+- Nitrogen baseline: 120 Mt N/year optimized target (~60% reduction from ~200 Mt current, Zhang et al. 2021)
 - Legacy contribution: 18.6% at Year 0, decreases exponentially
 
 ### Phase 2 Remaining Work (⏸️ PENDING - 30-45 min)
