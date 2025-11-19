@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/18/2025, 10:30:04 PM
-**Files Scanned:** 469
+**Generated:** 11/19/2025, 8:30:04 PM
+**Files Scanned:** 470
 
 ---
 
@@ -559,6 +559,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/paradigm_metric_mapping_20251019.md`
 
+### `parameter_verification_nitrogen_phosphorus_20251119.md`
+- **Oldest source:** 2015 (10 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/parameter_verification_nitrogen_phosphorus_20251119.md`
+
 ### `phase3-critical-juncture-validation_20251017.md`
 - **Oldest source:** 1989 (36 years old)
 - **Status:** Not used in simulation
@@ -847,7 +852,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 287 (61.2%)
+**Count:** 287 (61.1%)
 
 All sources <3 years old. No action required.
 
@@ -857,11 +862,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 469 |
+| Total files | 470 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 160 (34.1%) |
 | MEDIUM | 22 (4.7%) |
-| LOW | 287 (61.2%) |
+| LOW | 287 (61.1%) |
 | Average age | 7.5 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -869,7 +874,7 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 287 | 61.2% |
+| Current (<3yr) | 287 | 61.1% |
 | Warning (3-5yr) | 22 | 4.7% |
 | Critical (>5yr) | 160 | 34.1% |
 
