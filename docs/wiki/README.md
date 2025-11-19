@@ -205,7 +205,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Validation:** 12-month test simulation, type checking passes, no NaN errors
 - 🔧 **Fixes:** Removed duplicate CoordinatedDeploymentPhase import + initialization (merge conflicts)
 
-**Nov 19: Nitrogen-Food Coupling Phase 2 Complete (TIER 2 HIGH)** (commit f46ead8)
+**Nov 19: Nitrogen-Food Coupling Phase 2 Complete (TIER 2 HIGH)** (commit 14e7a69)
 - 🔧 **Fixed:** Removed duplicate nitrogen coupling in FoodSecurityDegradationPhase (was applying twice)
 - ✅ **Tech Integration:** Added 5 nitrogen reduction technologies to getNitrogenReductionDeployment
   - `rhizosphere_engineering` (27.5% effectiveness)
