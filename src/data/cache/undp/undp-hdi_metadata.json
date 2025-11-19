@@ -1,13 +1,8 @@
 {
   "source": "undp-hdi",
   "version": "2024",
-<<<<<<< HEAD
-  "updateDate": "2025-11-18T04:39:03.245Z",
-  "expiryDate": "2026-11-18T04:39:03.245Z",
-=======
-  "updateDate": "2025-11-18T07:52:12.458Z",
-  "expiryDate": "2026-11-18T07:52:12.458Z",
->>>>>>> origin/claude/merge-remote-branches-01RyPg6X8etfwp46DznAhtBk
+  "updateDate": "2025-11-19T18:45:10.034Z",
+  "expiryDate": "2026-11-19T18:45:10.034Z",
   "recordCount": 33,
   "coverage": {
     "countries": 33
