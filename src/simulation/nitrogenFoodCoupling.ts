@@ -281,13 +281,24 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
   const deployments: number[] = [];
 
   // Tech IDs from comprehensiveTechTree.ts
+  // TIER 2 HIGH (Nov 17, 2025): Expanded nitrogen technology portfolio
   const nitrogenTechIds = [
+    // Legacy technologies
     { id: 'precision_agriculture', maxEffectiveness: 0.30 },
     { id: 'biological_nitrogen_fixation', maxEffectiveness: 0.25 },
     { id: 'nitrogen_circular_food', maxEffectiveness: 0.20 },
     { id: 'ecosystem_restoration_nitrogen', maxEffectiveness: 0.15 },
     { id: 'nitrogen_monitoring_networks', maxEffectiveness: 0.10 },
     { id: 'green_ammonia_production', maxEffectiveness: 0.40 },
+
+    // TIER 2 HIGH Phase 3 additions (Nov 17, 2025)
+    // Research: research/nitrogen_food_coupling_20251115.md
+    { id: 'rhizosphere_engineering', maxEffectiveness: 0.275 },         // 15-40% N reduction (middle: 27.5%)
+    { id: 'nitroplast_integration', maxEffectiveness: 0.60 },           // 50-70% N reduction (middle: 60%)
+    { id: 'precision_fermentation_nitrogen', maxEffectiveness: 0.40 }, // 30-50% demand reduction (middle: 40%)
+    { id: 'regional_nitrogen_policies', maxEffectiveness: 0.20 },      // 20% via regional differentiation
+    { id: 'soil_health_restoration', maxEffectiveness: 0.30 },         // 20-40% efficiency improvement (middle: 30%)
+    { id: 'integrated_nutrient_management', maxEffectiveness: 0.35 },  // 25-45% efficiency gains (middle: 35%)
   ];
 
   // Check if tech tree state exists (may not exist in older saves or tests)
