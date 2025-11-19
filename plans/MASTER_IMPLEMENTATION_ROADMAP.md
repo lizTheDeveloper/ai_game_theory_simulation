@@ -366,6 +366,23 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Planetary Boundaries COP30 2025 Update** - 🟡 NEEDS VALIDATION (Nov 19, 2025)
+  - **Commit:** 911de024bf54fbe0778affb1bbc4f3306affa506
+  - **Research File:** `research/planetary_boundaries_tipping_points_2024_2025.md` (updated)
+  - **Verification File:** `research/verification_911de02_20251119.md` (19 claims requiring validation)
+  - **Key Claims:**
+    - 🚨 First tipping point CROSSED: Coral reefs at 1.4°C (COP30 Global Tipping Points Report 2025)
+    - 🌊 7th boundary transgressed: Ocean acidification (PIK Planetary Health Check 2024)
+    - ⚠️ Overshoot risk: Hysteresis effects persist even with temperature reversal
+    - 🌍 Cascade cluster: Amazon + AMOC + Greenland + W. Antarctic interconnected
+    - 👥 2B people exposed to lethal heat at 2°C warming
+  - **Quality Gates:**
+    - ⏸️ **Layer 1 Validation:** Citation existence (4 sources: COP30 report, PIK PHC, BioScience 2025, overshoot studies)
+    - ⏸️ **Layer 2 Validation:** Claim verification with exact quotes (19 specific claims)
+  - **Implementation Impact:** Coral reef status (imminent → CROSSED), 7/9 boundaries transgressed, overshoot hysteresis mechanics
+  - **Priority:** HIGH - Affects tipping cascade mechanics, baseline initialization
+  - **Status:** 🟡 READY FOR ORCHESTRATOR (verification file created, awaits research-skeptic + super-alignment-researcher review)
+
 - [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
   - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
   - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)
