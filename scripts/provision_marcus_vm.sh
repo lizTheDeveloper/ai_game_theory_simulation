@@ -355,14 +355,23 @@ run_migrations() {
 
     # Check if migrations directory exists
     if [ -d "src/platform/database/migrations" ]; then
-        for migration in src/platform/database/migrations/*.sql; do
+        # Copy migrations to /tmp with readable permissions for postgres user
+        TMP_MIGRATIONS="/tmp/marcus_migrations_$$"
+        mkdir -p "$TMP_MIGRATIONS"
+        cp src/platform/database/migrations/*.sql "$TMP_MIGRATIONS/" 2>/dev/null || true
+        chmod -R 755 "$TMP_MIGRATIONS"
+        chmod 644 "$TMP_MIGRATIONS"/*.sql
+
+        for migration in "$TMP_MIGRATIONS"/*.sql; do
             if [ -f "$migration" ]; then
                 print_step "Applying $(basename "$migration")..."
-                # Use absolute path and run from /tmp to avoid permission issues
-                MIGRATION_PATH="$(realpath "$migration")"
-                (cd /tmp && sudo -u postgres psql -d marcus_production -f "$MIGRATION_PATH" -q)
+                # Run from /tmp with postgres user
+                (cd /tmp && sudo -u postgres psql -d marcus_production -f "$migration" -q)
             fi
         done
+
+        # Clean up temporary migrations
+        rm -rf "$TMP_MIGRATIONS"
         print_success "Database migrations applied"
     else
         print_warning "No migrations directory found, skipping"
