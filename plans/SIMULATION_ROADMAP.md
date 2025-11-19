@@ -136,6 +136,32 @@
      - **Research File:** research/planetary_boundaries_tipping_points_2025.md (611 lines)
      - **Commit:** d88ce24
 
+   - **Nitrogen Reduction Technology Effectiveness Values (Phase 2 Cleanup)** - TIER 2 HIGH (Added Nov 19, 2025)
+     - **Context:** Phase 2 nitrogen-food coupling - added 5 nitrogen reduction techs to getNitrogenReductionDeployment()
+     - **Key Implementation:** Removed duplicate nitrogen coupling, added tech references (rhizosphere, nitroplasts, precision fermentation, phytoremediation, food waste)
+     - **Research Backing:** research/nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
+     - **Key Claims Requiring Verification:**
+       - Rhizosphere engineering: 27.5% effectiveness (code says "15-40% range, field-demonstrated" but research shows max 35%)
+       - Nitroplast integration: 60% effectiveness (50-70% range - ✅ CITED but highly speculative breakthrough tech)
+       - Precision fermentation: 40% effectiveness (✅ within 30-50% cited range)
+       - Phytoremediation: 5% effectiveness (derived from 50-70% capture × ~10% runoff fraction - calculation not explicit)
+       - Food waste reduction: 30% effectiveness (❌ NOT FOUND in research file - needs citation or removal)
+     - **Verification File:** research/verification_f46ead8_20251119.md (two-layer verification with PASS/NEEDS CLARIFICATION/UNVERIFIED)
+     - **Critical Issues:**
+       - Food waste reduction has NO backing in research file (priority fix)
+       - Rhizosphere upper bound appears inflated (35% vs 40%)
+       - Phytoremediation calculation needs explicit documentation
+     - **Files Modified:** src/simulation/nitrogenFoodCoupling.ts (lines 293-299), FoodSecurityDegradationPhase.ts (duplicate removal)
+     - **Assignments:**
+       - Cynthia: Find peer-reviewed sources for food waste → nitrogen savings OR confirm tech should be removed
+       - Sylvia: Verify rhizosphere 40% claim, assess phytoremediation calculation methodology
+       - Roy: BLOCKED - Phase 3 (tech tree refactor) pending validation
+     - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50%
+     - **Priority:** TIER 2 HIGH - Blocks Phase 3 completion and Monte Carlo validation
+     - **Status:** ⚠️ NEEDS VALIDATION - Implementation complete (Phase 2), verification file created, 3/5 techs need clarification
+     - **Commit:** f46ead8
+     - **Next Steps:** Fix unverified claims → Phase 3 (tech tree refactor) → Monte Carlo N≥10
+
    - **ICML 2025 Emergent Misalignment from Fine-Tuning** - HIGH (Added Nov 13, 2025)
      - **Context:** ICML 2025 finding: narrow fine-tuning of aligned models (GPT-4o) produces broader misalignment
      - **Key Discovery:** Alignment degrades post-deployment (10-20%) as models undergo fine-tuning/adaptation
