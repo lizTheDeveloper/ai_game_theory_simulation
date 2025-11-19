@@ -728,6 +728,75 @@ const ALL_TECH: TechDefinition[] = [
     ],
   },
 
+  // Soil Health Restoration (TIER 2 HIGH - Nov 17, 2025)
+  {
+    id: 'soil_health_restoration',
+    name: 'Soil Health Restoration',
+    description: 'Cover crops + conservation tillage + organic amendments - 20-40% nitrogen efficiency improvement via soil organic matter',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: [],
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 0.4 },  // Soil science understanding
+      { dimension: 'physical', threshold: 0.5 },   // Farming practice adoption
+      { dimension: 'social', threshold: 0.6 }      // Farmer coordination and extension services
+    ],
+    minEconomicStage: 1.5,  // Accessible to developing nations (low-tech)
+    minMonth: 12,  // Available 2026+ (practices exist, need scaling)
+    researchMonthsRequired: 18,  // 1.5 years to optimize regional practices
+    researchCost: 400,  // Moderate - agronomic research
+    deploymentCost: 12000,  // Lower than high-tech solutions (practice change, not infrastructure)
+    deploymentMonthsRequired: 48,  // 4 years to scale (farmer adoption is slow)
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.30,  // 30% middle of 20-40% range (improved soil organic matter retention)
+      biogeochemicalFlowsReduction: 0.15,  // Reduces N runoff via improved soil structure
+      soilHealthBonus: 0.20,  // Significant soil quality improvement
+      carbonSequestration: 0.08,  // Co-benefit: soil carbon storage
+    },
+    citations: [
+      'research/nitrogen_food_coupling_20251115.md - Soil health restoration section',
+      'FAO (2024) - Conservation agriculture and soil organic matter',
+      'IPCC AR6 (2022) - Soil health co-benefits for climate and food security'
+    ],
+  },
+
+  // Integrated Nutrient Management (TIER 1 CRITICAL - Nov 17, 2025)
+  {
+    id: 'integrated_nutrient_management',
+    name: 'Integrated Nutrient Management',
+    description: 'Site-specific nutrient management + organic/inorganic integration - 25-45% efficiency gains via precision timing and placement',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['precision_agriculture'],  // Builds on precision ag infrastructure
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 0.7 },  // Data analytics, nutrient optimization
+      { dimension: 'physical', threshold: 0.6 },   // Variable-rate applicators
+      { dimension: 'economic', threshold: 0.5 }    // Cost-benefit optimization
+    ],
+    minResearchCapabilities: [
+      { domain: 'materials', subdomain: 'nanotechnology', threshold: 0.3 }  // Slow-release formulations
+    ],
+    minEconomicStage: 2.0,  // Requires precision ag infrastructure
+    minMonth: 24,  // Available 2027+ (builds on precision ag deployment)
+    researchMonthsRequired: 24,  // 2 years to optimize regional formulations
+    researchCost: 600,  // Moderate - agronomic modeling
+    deploymentCost: 18000,  // Moderate (software + equipment upgrades)
+    deploymentMonthsRequired: 36,  // 3 years to scale
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.35,  // 35% middle of 25-45% range (timing + placement optimization)
+      biogeochemicalFlowsReduction: 0.20,  // Reduces N runoff via improved synchrony
+      phosphorusEfficiency: 0.25,  // Co-benefit: P management
+      cropYieldBonus: 0.10,  // Improved yields from optimized nutrition
+    },
+    citations: [
+      'research/nitrogen_food_coupling_20251115.md - Integrated nutrient management section',
+      'Zhang et al. (2021) - Site-specific nutrient management effectiveness, Nature Food',
+      'FAO (2024) - Integrated soil fertility management'
+    ],
+  },
+
   // Sediment Management (TIER 2 HIGH - Nov 16, 2025)
   {
     id: 'sediment_management_phosphorus',
