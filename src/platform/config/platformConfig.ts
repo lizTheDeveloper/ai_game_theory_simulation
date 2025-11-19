@@ -230,7 +230,7 @@ export function getTestConfiguration(): PlatformConfiguration {
 
     database: {
       host: 'localhost',
-      port: 5432,
+      port: parseInt(process.env.TEST_DB_PORT || '5432', 10),
       database: 'marcus_test',
       user: 'marcus',
       password: 'marcus_dev_password',
