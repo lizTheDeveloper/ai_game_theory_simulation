@@ -19,6 +19,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { processAllOrganizations } from '../../organizationManagement';
 
 export class OrganizationTurnsPhase implements SimulationPhase {
   readonly id = 'organization-turns';
@@ -40,10 +41,7 @@ export class OrganizationTurnsPhase implements SimulationPhase {
     }
 
     // Import and execute organization turns
-    setDeterministicRng(rng);
-    const { processAllOrganizations } = require('../../organizationManagement');
-
-    processAllOrganizations(state, rng);
+    setDeterministicRng(rng);processAllOrganizations(state, rng);
 
     // No events generated directly
     // (events come from milestone completions)

@@ -1,15 +1,25 @@
 ---
+<<<<<<< HEAD
 oldest_source: 2021
 newest_source: 2025
 last_verified: 2025-11-11
 verification_status: UPDATED
+=======
+oldest_source: 2015
+newest_source: 2025
+last_verified: 2025-11-11
+>>>>>>> origin/auto/researcher-20251111_083001
 ---
 
 # Planetary Boundary Reversibility: Empirical Evidence
 **Date:** October 20, 2025 (Updated: November 11, 2025)
 **Question:** Which planetary boundaries can ACTUALLY be reversed once breached?
 **Answer:** Mixed - some reversible on decade timescales, some effectively permanent
+<<<<<<< HEAD
 **Latest Update:** Seven of nine planetary boundaries now transgressed (Richardson et al. 2023; Findlay et al. 2025)
+=======
+**2025 Update:** Ocean acidification boundary officially breached (7 of 9 boundaries now transgressed)
+>>>>>>> origin/auto/researcher-20251111_083001
 
 ---
 
@@ -19,13 +29,52 @@ verification_status: UPDATED
 |----------|-------------|----------|---------------------|------------------|
 | **Ozone Layer** | ✅ YES | 40-70 years | 99% phase-out of CFCs | **PROVEN** (Montreal Protocol) |
 | **Climate (CO₂)** | ⚠️ PARTIAL | 50-100+ years | Net-negative emissions | **MODELED** (IPCC AR6) |
-| **Ocean Acidification** | ⚠️ PARTIAL | 100-300+ years | Atmospheric CO₂ removal | **LIMITED** (surface only) |
+| **Ocean Acidification** | ⚠️ PARTIAL | 100-300+ years | Atmospheric CO₂ removal | **LIMITED** (surface only) ⚠️ **BREACHED 2025** |
 | **Biochemical Flows (P/N)** | ⚠️ PARTIAL | 10-50 years | 40% input reduction + time | **MIXED** (Lake Erie struggle) |
 | **Freshwater** | ✅ YES | 10-30 years | Stop extraction, recharge | **PROVEN** (aquifer recovery) |
 | **Biosphere Integrity** | ❌ NO | Irreversible | Extinction is permanent | **PROVEN** (no resurrection) |
 | **Land System** | ⚠️ PARTIAL | 30-100 years | Active restoration | **MIXED** (function ≠ coverage) |
 | **Novel Entities (PFAS)** | ❌ NO | Effectively permanent | Pyrolysis only, not scalable | **PROVEN** ("forever chemicals") |
 | **Atmospheric Aerosol** | ✅ YES | 1-5 years | Stop emissions | **PROVEN** (rapid atmospheric turnover) |
+
+---
+
+## 2025 Status Update: Ocean Acidification Boundary Breached
+
+**Major Development:** The 2025 Planetary Health Check (Stockholm Resilience Centre/Potsdam Institute for Climate Impact Research) officially classified ocean acidification as the **7th breached planetary boundary**.
+
+### Current Status (2025)
+- **Breached Boundaries:** 7 of 9
+  1. Climate change
+  2. Biosphere integrity
+  3. Novel entities
+  4. Biogeochemical flows (N/P)
+  5. Freshwater change
+  6. Land system change
+  7. **Ocean acidification** ⚠️ NEW (2025)
+
+- **Safe Boundaries:** 2 of 9
+  1. Stratospheric ozone depletion
+  2. Atmospheric aerosol loading
+
+### Ocean Acidification Metrics (2025)
+- **pH Change:** 0.1 units decline since pre-industrial (30-40% increase in acidity)
+- **Impact:** Calcium carbonate-dependent organisms (corals, shellfish, plankton) under severe stress
+- **Global Coverage:** 60% of land areas now outside locally defined safe zones
+- **High-Risk Zones:** 38% of global land area in high-risk category
+- **Reversibility:** 100-300+ years required even with aggressive atmospheric CO₂ removal
+
+### Significance for Simulation
+The ocean acidification breach represents a **critical milestone** in Earth system degradation:
+
+1. **Irreversibility timescale:** Even with immediate net-zero CO₂, ocean chemistry recovery requires centuries due to deep ocean mixing
+2. **Cascading effects:** Marine food web disruption → fisheries collapse → food security impacts
+3. **Carbon cycle feedback:** Reduced ocean CO₂ absorption capacity accelerates atmospheric CO₂ buildup
+4. **No technical fix:** Unlike ozone (CFCs phase-out worked), no scalable solution exists beyond CO₂ removal
+
+**Projection:** Current trends suggest **most boundaries will be transgressed by 2050** without ambitious intervention.
+
+**Source:** Stockholm Resilience Centre (2025), PIK Planetary Health Check (2025)
 
 ---
 
@@ -345,3 +394,19 @@ if (phosphorusLevel > 0.7 && inputReduction > 0.4) {
 - Model **irreversible** losses (species, deep ocean, PFAS) honestly
 
 **The hard truth:** We can fix some things (atmosphere, land, rivers/lakes) but not others (extinction, deep ocean, forever chemicals). The simulation should reflect this reality.
+
+---
+
+## References (2025 Update)
+
+**Planetary Boundaries Status:**
+- Stockholm Resilience Centre. (2025). "Planetary Boundaries - Research Overview." Retrieved from https://www.stockholmresilience.org/research/planetary-boundaries.html
+- Potsdam Institute for Climate Impact Research (PIK). (2025). "Planetary Health Check 2025." Retrieved from https://www.pik-potsdam.de/en/output/infodesk/planetary-boundaries
+- World Economic Forum. (2024, October). "Seven of nine planetary boundaries breached, and other nature stories." Retrieved from https://www.weforum.org/stories/2024/10/planetary-boundaries-breached-nature-climate-stories/
+
+**Biosphere Integrity Research:**
+- Phys.org. (2025, August). "Exceeding functional biosphere integrity limits: Study finds 60% of the world's land area is in a precarious state." Retrieved from https://phys.org/news/2025-08-exceeding-functional-biosphere-limits-world.html
+- Nature. (2025). "Exploring pathways for world development within planetary boundaries." *Nature*, 637. https://doi.org/10.1038/s41586-025-08928-w
+
+**Ocean Acidification:**
+- Stockholm Resilience Centre. (2025). "Ocean acidification has been breached for the first time" [Status update from Planetary Health Check 2025]

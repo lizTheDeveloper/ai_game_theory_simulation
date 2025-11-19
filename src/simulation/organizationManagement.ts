@@ -11,7 +11,7 @@
 import { GameState, Organization, OrganizationProject, DataCenter, AIAgent, AICapabilityProfile } from '@/types/game';
 import { getCapabilityFloorForNewAI } from './technologyDiffusion';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
-import { assertFinite, assertInRange, assertProbability } from './utils/assertions';
+import { assertFinite, assertInRange, assertProbability, assertStateProperty } from './utils/assertions';
 
 /**
  * Get absolute month count (handles year rollover)
@@ -454,6 +454,7 @@ export function startModelTraining(
 
   // === SIDE EFFECT: LAYOFFS SLOW AI TRAINING ===
   // Fewer engineers → longer training runs (coordination overhead, slower debugging)
+  // NOTE: workforceMultiplier is genuinely optional (only set when org takes distress measures)
   const workforceMultiplier = org.workforceMultiplier ?? 1.0;
   if (workforceMultiplier < 1.0) {
     // 10% layoffs → +5% training time
@@ -744,7 +745,14 @@ export function calculateAIRevenue(org: Organization, state: GameState): number 
   // 4. CASCADE COLLAPSE PENALTY
   // During tipping point cascade, everything breaks down
   if (state.planetaryBoundariesSystem.cascadeActive) {
-    const cascadeSeverity = state.planetaryBoundariesSystem.cascadeSeverity || 0;
+    const cascadeSeverity = assertStateProperty(
+      state.planetaryBoundariesSystem,
+      'cascadeSeverity',
+      {
+        location: 'calculateOrgRevenue:cascadeImpact',
+        month: state.currentMonth
+      }
+    );
     baseRevenue *= (1 - cascadeSeverity * 0.40); // Up to 40% additional loss
   }
   
@@ -842,7 +850,14 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // If government organization with no revenue, return fixed expenses
   if (org.type === 'government' && org.monthlyRevenue === 0) {
     // Government orgs have fixed expenses set in initialization
-    const fixedExpenses = org.monthlyExpenses || 0;
+    const fixedExpenses = assertStateProperty(
+      org,
+      'monthlyExpenses',
+      {
+        location: 'calculateOrgExpenses:governmentFixedExpenses',
+        month: state.currentMonth
+      }
+    );
     return {
       baseExpenses: fixedExpenses,
       dcOperational: 0,
@@ -866,6 +881,7 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // === APPLY COST-CUTTING MULTIPLIERS ===
   // Layoffs reduce workforce → lower payroll (45% of base expenses)
   // R&D cuts reduce research budget (20% of base expenses)
+  // NOTE: These are genuinely optional (only set when org takes distress measures)
   const workforceMultiplier = org.workforceMultiplier ?? 1.0;
   const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;
 

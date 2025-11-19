@@ -1,0 +1,4 @@
+seed,outcome,months,pop_initial,pop_final,climate_initial,climate_final,biogeochemical_initial,biogeochemical_final,biosphere_initial,biosphere_final,ocean_initial,ocean_final,freshwater_initial,freshwater_final,land_initial,land_final,novelEntities_initial,novelEntities_final,survival,basicNeeds,psychological,social,health,environmental,overall
+42,dystopia,121,8.14,0.69,1.210,1.431,2.940,2.750,11.600,48.934,1.050,0.000,1.150,1.325,1.170,1.000,1.500,1.425,0.314,0.241,0.736,0.711,0.377,0.464,0.474
+43,dystopia,121,8.14,0.89,1.210,1.430,2.940,2.896,11.600,15.381,1.050,0.000,1.150,1.345,1.170,1.000,1.500,1.425,0.318,0.345,0.617,0.390,0.993,0.402,0.511
+44,dystopia,121,8.14,0.86,1.210,1.440,2.940,2.595,11.600,12.048,1.050,0.000,1.150,1.372,1.170,1.000,1.500,1.425,0.315,0.271,0.671,0.571,0.377,0.488,0.449
