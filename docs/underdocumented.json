@@ -79162,7 +79162,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
-    "line": 89,
+    "line": 85,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79170,7 +79170,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
-    "line": 90,
+    "line": 86,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79178,7 +79178,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
-    "line": 91,
+    "line": 87,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
