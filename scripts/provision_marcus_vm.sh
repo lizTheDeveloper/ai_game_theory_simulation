@@ -294,7 +294,9 @@ install_node_deps() {
     print_step "$CURRENT_STEP (this may take a few minutes)..."
 
     cd "$PROJECT_DIR"
-    npm install --production --quiet
+
+    # Install all dependencies (including devDependencies needed for build)
+    npm install --quiet
     print_success "Node.js dependencies installed"
 
     # Build TypeScript
