@@ -382,16 +382,28 @@ run_migrations() {
     # Check if migrations directory exists
     MIGRATIONS_DIR="$PROJECT_DIR/src/platform/database/migrations"
     if [ -d "$MIGRATIONS_DIR" ]; then
-        # Fix permissions on migration files so postgres can read them
-        chmod +r "$MIGRATIONS_DIR"/*.sql 2>/dev/null || true
+        # Copy migrations to /tmp with world-readable permissions (postgres can access /tmp)
+        TMP_MIG_DIR="/tmp/marcus_mig_$$"
+        mkdir -p "$TMP_MIG_DIR"
+        cp "$MIGRATIONS_DIR"/*.sql "$TMP_MIG_DIR/" 2>/dev/null || true
+        chmod 755 "$TMP_MIG_DIR"
+        chmod 644 "$TMP_MIG_DIR"/*.sql 2>/dev/null || true
 
-        for migration in "$MIGRATIONS_DIR"/*.sql; do
+        for migration in "$TMP_MIG_DIR"/*.sql; do
             if [ -f "$migration" ]; then
-                print_step "Applying $(basename "$migration")..."
-                # Use absolute path and run from home directory (accessible to postgres)
-                (cd ~ && sudo -u postgres psql -d marcus_production -f "$migration" -q 2>&1) || print_warning "Migration $(basename "$migration") may have already been applied"
+                BASENAME=$(basename "$migration")
+                print_step "Applying $BASENAME..."
+                # Run migrations from /tmp (accessible to postgres user)
+                if sudo -u postgres psql -d marcus_production -f "$migration" -q 2>&1; then
+                    true
+                else
+                    print_warning "Migration $BASENAME may have already been applied"
+                fi
             fi
         done
+
+        # Clean up temp directory
+        rm -rf "$TMP_MIG_DIR"
         print_success "Database migrations applied"
     else
         print_warning "No migrations directory found at $MIGRATIONS_DIR, skipping"
@@ -406,7 +418,8 @@ create_admin_user() {
     # Hash the password using bcrypt (Node.js)
     ADMIN_PASSWORD_HASH=$(node -e "console.log(require('bcrypt').hashSync('$ADMIN_PASSWORD', 12))")
 
-    PGPASSWORD=$DATABASE_PASSWORD psql -h localhost -U marcus -d marcus_production << SQL
+    # Use peer auth (postgres user) to insert admin
+    sudo -u postgres psql -d marcus_production << SQL
 INSERT INTO users (email, password_hash, role, email_verified, is_active)
 VALUES ('admin@marcus.local', '$ADMIN_PASSWORD_HASH', 'admin', true, true)
 ON CONFLICT (email) DO UPDATE
