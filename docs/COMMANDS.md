@@ -126,6 +126,20 @@ npx tsx --test tests/refactoring/phase1-utilities.test.ts
 npx tsx tests/refactoring/runRegressionTests.ts
 ```
 
+### Test Framework
+
+**This project uses Node's native test runner** (`node --test` via tsx), not vitest or jest.
+
+- Test command: `npx tsx --test tests/**/*.test.ts`
+- Assertion style: Node's `assert` module (not vitest's `expect` API)
+- Coverage: `--experimental-test-coverage` flag available
+
+**Test files skipped pending conversion:**
+- `tests/integration/novel-entities-irreversibility.test.ts.SKIP` - Uses vitest syntax
+- `tests/unit/irreversibility.test.ts.SKIP` - Uses vitest syntax
+
+These files need conversion from vitest `expect` API to Node `assert` API before re-enabling.
+
 ### Test Philosophy
 
 - **Regression tests:** `tests/refactoring/` - Phase 1 (utilities), Phase 2 (systems), baseline integration
