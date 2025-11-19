@@ -221,6 +221,24 @@ configure_database() {
 
     # Grant privileges
     sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE marcus_production TO marcus;"
+
+    # Test connection with new password
+    if PGPASSWORD=$DATABASE_PASSWORD psql -h localhost -U marcus -d marcus_production -c '\q' 2>/dev/null; then
+        print_success "Database connection verified"
+    else
+        print_error "Failed to connect with new password"
+        print_info "Attempting to fix with peer authentication..."
+        # Try using peer auth to reset password
+        sudo -u postgres psql -c "ALTER USER marcus WITH PASSWORD '$DATABASE_PASSWORD';"
+        # Test again
+        if PGPASSWORD=$DATABASE_PASSWORD psql -h localhost -U marcus -d marcus_production -c '\q' 2>/dev/null; then
+            print_success "Database connection now working"
+        else
+            print_error "Still cannot connect - check pg_hba.conf"
+            return 1
+        fi
+    fi
+
     print_success "Database configured"
 }
 
@@ -327,7 +345,8 @@ run_migrations() {
         for migration in src/platform/database/migrations/*.sql; do
             if [ -f "$migration" ]; then
                 print_step "Applying $(basename "$migration")..."
-                PGPASSWORD=$DATABASE_PASSWORD psql -h localhost -U marcus -d marcus_production -f "$migration" -q
+                # Use sudo -u postgres for migrations (peer auth, more reliable)
+                sudo -u postgres psql -d marcus_production -f "$migration" -q
             fi
         done
         print_success "Database migrations applied"
