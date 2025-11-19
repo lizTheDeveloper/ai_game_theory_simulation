@@ -104,7 +104,7 @@ const SKILL_GAP_RESISTANCE_MAX = 0.2;
 export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): void {
   // FIX (Nov 10, 2025): Protect inputs with assertions - NaN propagation blocks scientific spiral
   const current = assertProbability(
-    state.society.workflowAdaptation ?? 0.21,
+    state.society.workflowAdaptation,
     {
       location: 'updateWorkflowAdaptation',
       valueName: 'society.workflowAdaptation',

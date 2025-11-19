@@ -17,6 +17,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite } from '@/simulation/utils/assertions'; // Module uses assertions
+import { updateGovernmentRelocation } from '../../governmentRelocation';
 
 export class GovernmentRelocationPhase implements SimulationPhase {
   readonly id = 'government_relocation';
@@ -24,9 +25,7 @@ export class GovernmentRelocationPhase implements SimulationPhase {
   readonly order = 20.7;
   readonly dependencies = ['refugee_crisis']; // Reads displaced populations, provides managed relocation (fixed typo: refugee-crisis → refugee_crisis)
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const { updateGovernmentRelocation } = require('../../governmentRelocation');
-    setDeterministicRng(rng);
+  execute(state: GameState, rng: RNGFunction): PhaseResult {setDeterministicRng(rng);
 
     // Update government relocation program (if enabled)
     updateGovernmentRelocation(state);

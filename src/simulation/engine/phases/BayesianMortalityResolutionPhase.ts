@@ -44,6 +44,7 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
   readonly dependencies = [
     'human-survival-system',     // Order 19.7: Consolidates famine, food security, mortality stabilizers (Batch 4, Nov 2025)
     'climate_system',            // Order 34.0: Climate mortality risks accumulated (Batch 3: consolidated from climate_impact_cascade)
+    'resource-soil',             // Order 30.0: Novel entities pollution mortality risks (CRITICAL-2 fix, Nov 14, 2025)
   ];
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {

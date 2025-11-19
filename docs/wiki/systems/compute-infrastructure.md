@@ -131,6 +131,34 @@ Capability Growth ∝ Compute^0.5 × Algorithms^1.0 / Difficulty
 
 This creates natural competition: getting 10x your peer's compute only gives 3x advantage.
 
+### 2025 Update: Three Scaling Paradigms
+
+**Research:** `research/ai_scaling_verified_parameters_20251111.md` (commit e344ce5)
+
+Recent research (2024-2025) identifies **three distinct scaling axes** beyond traditional pre-training:
+
+#### 1. Pre-Training Scaling (Traditional)
+- **Formula:** Performance ∝ Compute^0.5 (as above)
+- **Status:** May be slowing (diminishing returns debate)
+- **Constraint:** Latency wall at ~3e30 FLOP by 2030
+
+#### 2. Reinforcement Learning Scaling (NEW)
+- **Formula:** Sigmoid curve (80% gains in first 25% compute)
+- **Source:** Lambert (2025) - ScaleRL methodology
+- **Behavior:** Early rapid gains, then plateau
+- **Status:** ⚠️ NEEDS VALIDATION (research/verification_e344ce5_20251115.md)
+
+#### 3. Test-Time Compute Scaling (NEW)
+- **Formula:** Performance ∝ 1.5× per 10× inference compute
+- **Source:** Wolfe (2025) - o1/o3 reasoning models
+- **Breakthrough:** o3 achieves 87.5% on ARC-AGI (human: 85%)
+- **Implication:** "Thinking time" becomes controllable parameter
+- **Status:** ⚠️ NEEDS VALIDATION (research/verification_e344ce5_20251115.md)
+
+**Current Implementation Status:** Simulation uses traditional pre-training scaling only. New paradigms (RL, test-time compute) pending research validation.
+
+**See:** [AI Agents - Capabilities](./ai-agents.md#capabilities) for how compute affects AI progress
+
 ## Compute Growth Dynamics
 
 ### 1. Population → Compute Scaling (NEW - Oct 30, 2025)
