@@ -310,9 +310,30 @@ install_node_deps() {
     npm install --quiet
     print_success "Node.js dependencies installed"
 
-    # Build TypeScript
-    npm run build
-    print_success "TypeScript compiled"
+    # Clean build cache to avoid stale state issues
+    rm -rf .next
+
+    # Build TypeScript (with retry logic for transient failures)
+    BUILD_SUCCESS=false
+    for attempt in 1 2; do
+        if npm run build 2>&1 | tee /tmp/nextjs_build.log; then
+            print_success "TypeScript compiled"
+            BUILD_SUCCESS=true
+            break
+        else
+            if [ $attempt -eq 1 ]; then
+                print_warning "Build failed, retrying after cleaning cache..."
+                rm -rf .next node_modules/.cache
+                sleep 2
+            fi
+        fi
+    done
+
+    if [ "$BUILD_SUCCESS" = false ]; then
+        print_warning "Build failed after 2 attempts - can be built manually later with 'npm run build'"
+        print_warning "Check /tmp/nextjs_build.log for details"
+        print_warning "Continuing with provisioning..."
+    fi
 }
 
 # Install Python dependencies
