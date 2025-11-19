@@ -358,8 +358,9 @@ run_migrations() {
         for migration in src/platform/database/migrations/*.sql; do
             if [ -f "$migration" ]; then
                 print_step "Applying $(basename "$migration")..."
-                # Use sudo -u postgres for migrations (peer auth, more reliable)
-                sudo -u postgres psql -d marcus_production -f "$migration" -q
+                # Use absolute path and run from /tmp to avoid permission issues
+                MIGRATION_PATH="$(realpath "$migration")"
+                (cd /tmp && sudo -u postgres psql -d marcus_production -f "$MIGRATION_PATH" -q)
             fi
         done
         print_success "Database migrations applied"
