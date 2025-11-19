@@ -1142,6 +1142,12 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 19):** Verify nitrogen-food coupling Phase 3 technologies (research/verification_4dfe998_20251119.md, commit 4dfe998) - **2 technologies without prior research backing:**
+  - Soil Health Restoration: 20-40% N efficiency (FAO 2024, IPCC AR6 2022) - sections cited in nitrogen_food_coupling_20251115.md DO NOT EXIST
+  - Integrated Nutrient Management: 25-45% N efficiency (Zhang et al. 2021 Nature Food, FAO 2024) - sections cited DO NOT EXIST
+  - **CRITICAL:** Both technologies added to tech tree without research phase, multiple parameter values lack specific citations
+  - **Impact:** Affects biogeochemical god mode effectiveness target (10% → 30-50%)
+  - **Priority:** HIGH (TIER 2 HIGH system, affects Monte Carlo validation)
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)
