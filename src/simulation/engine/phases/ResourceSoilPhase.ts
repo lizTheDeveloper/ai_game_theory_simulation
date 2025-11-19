@@ -17,6 +17,8 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { updatePhosphorusSystem, checkPhosphorusTechUnlocks } from '../../phosphorusDepletion';
+import { updateNovelEntitiesSystem, checkNovelEntitiesTechUnlocks } from '../../novelEntities';
 
 export class ResourceSoilPhase implements SimulationPhase {
   readonly id = 'resource-soil';
@@ -37,23 +39,33 @@ export class ResourceSoilPhase implements SimulationPhase {
 
     // === PHOSPHORUS SYSTEM (TIER 1.1) ===
     // Updates phosphorus reserves, geopolitical tensions, supply shocks, tech breakthroughs
-    const {
-      updatePhosphorusSystem,
-      checkPhosphorusTechUnlocks
-    } = require('../../phosphorusDepletion');
-
     updatePhosphorusSystem(state);
     checkPhosphorusTechUnlocks(state);
 
     // === NOVEL ENTITIES SYSTEM (TIER 1.5) ===
     // Updates synthetic chemical pollution, reproductive health, chronic disease, tech breakthroughs
-    const {
-      updateNovelEntitiesSystem,
-      checkNovelEntitiesTechUnlocks
-    } = require('../../novelEntities');
-
     updateNovelEntitiesSystem(state);
     checkNovelEntitiesTechUnlocks(state);
+
+    // === LEGACY NUTRIENT STOCKS (TIER 2 HIGH, Nov 15, 2025) ===
+    // Updates accumulated N/P stocks in soil/sediment, calculates legacy releases
+    // Research: Lake Erie sediment loading, nitrogen half-life studies
+    // Expected impact: Addresses 10% god mode effectiveness gap (nutrient reduction takes decades)
+    const { updateLegacyNutrientStocks } = require('../../legacyNutrientStocks');
+
+    // Calculate current monthly N/P inputs from phosphorus system
+    // Baseline (2025): ~120 Mt N/year = ~10 Mt N/month, ~25 Mt P/year = ~2.1 Mt P/month
+    // Inputs scale with phosphorus pollution level and population
+    const phosphorusPollution = state.phosphorusSystem?.pollutionLevel ?? 0.25;
+    const baselineNInput = 10.0;  // Mt N/month at 2025 baseline
+    const baselinePInput = 2.1;   // Mt P/month at 2025 baseline
+
+    // Current inputs scale with pollution level (higher pollution = more fertilizer use)
+    const currentNInput = baselineNInput * (phosphorusPollution / 0.25);
+    const currentPInput = baselinePInput * (phosphorusPollution / 0.25);
+
+    // Update legacy stocks and get effective pollution (current + legacy releases)
+    updateLegacyNutrientStocks(state, currentNInput, currentPInput);
 
     return { events: [] };
   }

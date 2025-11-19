@@ -20,6 +20,9 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { migratedActions } from '@/simulation/government/actions';
+import { ActionResult } from '@/simulation/agents/types';
+import { AI_ACTIONS } from '@/simulation/agents/aiAgent';
 
 export class PlayerDecisionPhase implements SimulationPhase {
   readonly id = 'player-decision';
@@ -28,10 +31,12 @@ export class PlayerDecisionPhase implements SimulationPhase {
 
   // DEPENDENCIES (Nov 15, 2025): No dependencies - player decisions can be processed early
   readonly dependencies = [] as const;
+  private rng: RNGFunction | null = null;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
+    this.rng = rng; // Store RNG for use in handler methods
 
     // Initialize queue if not present
     if (!state.playerDecisions) {
@@ -61,6 +66,10 @@ export class PlayerDecisionPhase implements SimulationPhase {
             this.handleEmergencyDecision(state, decision.data, events);
             break;
 
+          case 'ai_action':
+            this.handleAIActionDecision(state, decision.data, events);
+            break;
+
           default:
             console.warn(`  ⚠️ Unknown decision type: ${decision.type}`);
         }
@@ -80,6 +89,37 @@ export class PlayerDecisionPhase implements SimulationPhase {
    */
   private handlePolicyDecision(state: GameState, data: any, events: GameEvent[]): void {
     console.log(`  Policy Decision: ${JSON.stringify(data)}`);
+
+    // Handle government actions (new)
+    if (data.actionType === 'government' && data.actionId) {
+      // Find the action in the registry
+      const action = migratedActions.find(a => a.id === data.actionId);
+      if (action) {
+        console.log(`    Executing Government Action: ${action.name}`);
+
+        // Check if action can be executed
+        if (action.canExecute(state)) {
+          // Execute the action with deterministic RNG
+          if (!this.rng) {
+            throw new Error('RNG not initialized in PlayerDecisionPhase');
+          }
+          const result: ActionResult = action.execute(state, this.rng, 'player');
+
+          // Add events from action execution
+          if (result.events) {
+            events.push(...result.events);
+          }
+
+          console.log(`    ✅ Action executed successfully: ${action.name}`);
+          console.log(`    Effects:`, result.message || 'State updated');
+        } else {
+          console.log(`    ⚠️ Action cannot be executed: ${action.name} (requirements not met)`);
+        }
+      } else {
+        console.warn(`    ⚠️ Government action not found: ${data.actionId}`);
+      }
+      return;
+    }
 
     // Example: AI regulation control desire
     if (data.controlDesire !== undefined) {
@@ -197,6 +237,77 @@ export class PlayerDecisionPhase implements SimulationPhase {
         // Placeholder: actual integration would go here
         console.log(`    ℹ️ Emergency management integration pending`);
       }
+    }
+  }
+
+  /**
+   * Handle AI action decisions (player-controlled AI actions)
+   * Allows player to manually trigger AI agent actions for testing/experimentation
+   */
+  private handleAIActionDecision(state: GameState, data: any, events: GameEvent[]): void {
+    console.log(`  AI Action Decision: ${JSON.stringify(data)}`);
+
+    // Validate input data
+    if (!data.agentId || !data.actionId) {
+      console.warn(`    ⚠️ Missing required fields: agentId or actionId`);
+      return;
+    }
+
+    // Find the AI agent
+    const agent = state.aiAgents.find(ai => ai.id === data.agentId);
+    if (!agent) {
+      console.warn(`    ⚠️ AI agent not found: ${data.agentId}`);
+      return;
+    }
+
+    // Find the action
+    const action = AI_ACTIONS.find(a => a.id === data.actionId);
+    if (!action) {
+      console.warn(`    ⚠️ Unknown AI action: ${data.actionId}`);
+      return;
+    }
+
+    // Check if the action can be executed
+    if (!action.canExecute(state, data.agentId)) {
+      console.log(`    ℹ️ Action ${action.name} cannot be executed for agent ${agent.name} in current state`);
+      return;
+    }
+
+    // Execute the action with deterministic RNG
+    if (!this.rng) {
+      throw new Error('RNG not initialized in PlayerDecisionPhase');
+    }
+
+    console.log(`    Executing AI Action: ${action.name} for agent ${agent.name}`);
+    const result: ActionResult = action.execute(state, this.rng, data.agentId);
+
+    // Add events from action execution
+    if (result.events) {
+      events.push(...result.events);
+    }
+
+    // Log the result
+    if (result.success) {
+      console.log(`    ✅ AI action executed successfully: ${result.message || action.name}`);
+
+      // Add a special event to track player-initiated AI actions
+      events.push({
+        id: `player-ai-action-${data.actionId}-${state.currentMonth}-${state.eventIdCounter++}`,
+        timestamp: state.currentMonth,
+        type: 'action',
+        severity: 'info',
+        agent: 'player',
+        title: `Player-Initiated AI Action: ${action.name}`,
+        description: `Player manually triggered ${action.name} for AI agent ${agent.name}`,
+        effects: {
+          agentId: data.agentId,
+          agentName: agent.name,
+          actionId: data.actionId,
+          actionName: action.name
+        }
+      });
+    } else {
+      console.log(`    ❌ AI action failed: ${result.message || 'Unknown error'}`);
     }
   }
 }

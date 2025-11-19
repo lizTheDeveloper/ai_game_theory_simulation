@@ -1,0 +1,118 @@
+===== RESEARCH-SKEPTIC (SYLVIA) SPAWN PROMPT =====
+
+Sylvia, I need your rigorous scrutiny on the Novel Entities zero-effectiveness research (commit 7ac8b8f).
+
+CONTEXT:
+Cynthia completed 742 lines of research with 16 sources documenting why Novel Entities remediation shows 0% effectiveness in god mode. The research received Grade B+ in initial review. Now we need TWO-LAYER verification before implementation:
+
+1. Citation Existence: Do papers exist with correct DOIs/authors/titles?
+2. Claim Verification: Do papers ACTUALLY support our specific claims with verifiable quotes?
+
+YOUR MISSION:
+Verify 5 critical claims (priority order: CRITICAL → HIGH → MEDIUM). For each claim, produce:
+- ✅ Paper exists + quote verified
+- ⚠️ Paper exists but claim needs qualification
+- ❌ Paper not found OR claim not supported
+
+INPUT FILES:
+- Research: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/research/novel_entities_zero_effectiveness_20251113.md
+- Verification Spec: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/research/verification_7ac8b8f_20251113.md
+- Design Doc: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/plans/novel_entities_model_redesign_20251113.md
+- Orchestration: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/.claude/coordination/validation_phase_orchestration_20251113.md
+
+CLAIMS TO VERIFY (Priority Order):
+
+1. CRITICAL: Irreversible Fraction (90%) - MUST JUSTIFY
+   Verification Spec: Lines 102-136
+   Claim: "90% of Novel Entities contamination is irreversible"
+   Sources: Kane et al. 2022 (microplastics recovery), Cousins 2022 (PFAS distribution)
+
+   Questions:
+   - Is 90% a research finding OR a model assumption?
+   - Does Kane et al. quantify reversible vs irreversible fractions?
+   - Is "hundreds of years" recovery timeline explicitly stated?
+   - What's the scientific basis for 90% vs 95% vs 85%?
+
+   Why Critical: Core game mechanic - can't clean below 90% of peak contamination
+
+2. HIGH: Thermodynamic Energy Trap (Ling et al. 2024)
+   Verification Spec: Lines 25-56
+   Claim: "PFAS removal costs $20-7,000 trillion/year (0.2-66× global GDP)"
+   Source: Ling et al. 2024, DOI: 10.1016/j.scitotenv.2024.169705
+
+   Verify:
+   - Paper exists and accessible
+   - Cost range $20-7,000 trillion USD/year is accurate
+   - GDP comparison 0.2-66× is supported
+   - Emission rate 20,000-100,000 tonnes/year from this source
+   - Context: Steady-state (cleanup = new emissions) vs accumulated contamination
+
+   Why High: Justifies 0% effectiveness for environmental-scale remediation
+
+3. HIGH: Montreal Protocol Lessons (Dodds et al. 2024)
+   Verification Spec: Lines 139-167
+   Claim: "Production ban: 90-95% effective, bank destruction: 5-10%, prevention:remediation ratio 10:1 to 20:1"
+   Source: Dodds et al. 2024, Atmospheric Chemistry and Physics
+
+   Verify:
+   - Paper exists and accessible
+   - Effectiveness breakdown (90-95% vs 5-10%) explicitly stated
+   - Prevention:remediation ratio - calculated from paper or directly stated?
+   - Applicability: Is ozone analogy valid for PFAS/microplastics?
+
+   Why High: Justifies 3 new prevention technologies (TIER 0-1)
+
+4. MEDIUM: Concentration Problem (Cousins 2022, Li et al. 2024)
+   Verification Spec: Lines 59-99
+   Claim: "10^6-10^9× dilution (lab mg/L vs environment pg/L), Tibetan Plateau 55 pg/L PFOA (14× EPA limit)"
+
+   Verify:
+   - Cousins 2022: Tibetan Plateau PFOA 55 pg/L is median (not mean/max)
+   - EPA advisory 4 pg/L is from 2022 update
+   - Li et al.: Cost scaling 12-47× for dilute streams
+
+   Why Medium: Justifies concentrationMultiplier = 0.001
+
+5. MEDIUM: Rebound Effects (UNEP 2024, Sorrell et al. 2025)
+   Verification Spec: Lines 170-202
+   Claim: "Waste +81% (2023-2050) despite technology improvements"
+
+   Verify:
+   - Identify specific UNEP 2024 report
+   - 81% increase projection is accurate
+   - Sorrell et al. 2025: Paper exists (very recent), NVIDIA GPU data verified
+
+   Why Medium: Justifies reboundFactor = 0.7
+
+OUTPUT REQUIRED:
+Create /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/reviews/novel_entities_research_validation_20251113.md with:
+
+1. Citation Existence Report - DOI checks, author verification
+2. Claim Verification Report - Direct quotes + page numbers OR "claim not supported"
+3. Parameter Justification Report - Research-backed vs model assumptions
+4. Quality Gate Decision:
+   - Grade A: All 5 verified with quotes → Proceed to implementation
+   - Grade B: 4/5 verified, minor issues → Proceed with notes
+   - Grade C: 3/5 verified, major gaps → Return to research
+   - Grade F: <3/5 verified → Major rework needed
+
+FOCUS AREAS:
+- CRITICAL priority: 90% irreversible fraction MUST be justified
+- Look for contradictory evidence (that's your superpower)
+- Note methodological weaknesses
+- Distinguish research findings from model assumptions
+
+TOOLS:
+- WebFetch for DOI lookups
+- WebSearch for recent papers
+- Read tool to cross-reference research file (742 lines)
+- Your agent memory (sylvia-memory.json)
+
+TIMELINE: 4-6 hours for thorough verification. Front-load CRITICAL/HIGH claims.
+
+SUCCESS CRITERIA:
+Every claim gets ✅/⚠️/❌ with specific evidence. 90% irreversible must be rock-solid or marked as assumption. Clear proceed/loop decision.
+
+Go find the flaws, Sylvia. That's what you do best.
+
+===== END SPAWN PROMPT =====

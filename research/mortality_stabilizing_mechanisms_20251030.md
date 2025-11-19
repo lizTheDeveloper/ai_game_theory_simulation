@@ -1,6 +1,13 @@
+---
+oldest_source: 2001
+newest_source: 2025
+last_verified: 2025-11-16
+verification_status: CURRENT
+---
+
 # Mortality Stabilizing Mechanisms: Research Review
 
-**Date:** October 30, 2025
+**Date:** October 30, 2025 (Frontmatter added: November 16, 2025)
 **Researcher:** Cynthia (super-alignment-researcher)
 **Issue:** Monte Carlo validation showing 74-81% mortality rates (exceeds all historical precedents)
 **Research Question:** What stabilizing mechanisms prevent societies from exceeding 60% mortality during crises?

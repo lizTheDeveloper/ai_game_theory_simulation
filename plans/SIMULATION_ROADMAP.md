@@ -39,6 +39,39 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Irreversibility Framework - Novel Entities & Biosphere** - TIER 1 CRITICAL (Added Nov 17, 2025)
+     - **Context:** God mode 0% effectiveness bug - asymptotic recovery mechanics implemented
+     - **Key Implementation:** Phase 1 (novel entities) + Phase 2 (biosphere extinction debt) COMPLETE
+     - **Research Delivered:** Builds on research/novel_entities_zero_effectiveness_validation_20251113.md (742 lines)
+     - **New Citations Requiring Verification:**
+       - Cousins et al. 2022: PFAS atmospheric persistence 50-100yr half-life
+       - Tilman et al. 1994: Extinction debt concept, decades-scale lags
+       - Kuussaari et al. 2009: 20-50 year habitat loss → extinction lags
+       - Haddad et al. 2015: 200-year ecosystem recovery timescales
+       - IPBES 2019: Partial irreversibility, 100-1000× background extinction rate
+     - **Key Claims Requiring Verification:**
+       - 75-year PFAS recovery half-life (within Cousins 2022 range?)
+       - 15% permanent contamination floor (research basis?)
+       - Prevention effectiveness 20-40% (Montreal Protocol analogy valid?)
+       - Cleanup effectiveness 5-15% max (concentration gap constraint)
+       - Rebound effect 10-20% range (marked HIGH UNCERTAINTY - empirical basis?)
+       - 200-year biosphere recovery (Haddad 2015 supports this?)
+       - 5% extinction debt floor (IPBES 2019 or theoretical?)
+       - 40% habitat restoration effectiveness (research basis?)
+       - Montreal Protocol comparison (CFCs ≠ PFAS - valid analogy?)
+     - **Verification File:** research/verification_26dba7b_20251117.md (comprehensive two-layer verification spec)
+     - **Critical Issue:** Some parameters may be theoretical extrapolations (not empirical observations)
+     - **Files Modified:** src/simulation/planetaryBoundaries.ts (lines 888-1009, 148-156, 768-832), src/simulation/utils/irreversibility.ts (NEW)
+     - **Assignments:**
+       - Cynthia: Verify all citations exist, extract specific quotes for quantitative claims
+       - Sylvia: Flag theoretical vs. empirical values, assess Montreal Protocol analogy, check contradictory evidence
+       - Roy: BLOCKED on validation - Monte Carlo testing pending verification
+     - **Expected Impact:** Novel entities 0% → 25-55% effectiveness, biosphere century-scale recovery
+     - **Priority:** TIER 1 CRITICAL - Blocks god mode validation (N=30 planned)
+     - **Status:** ⚠️ READY FOR VALIDATION - Implementation complete, verification file created, awaiting orchestrator
+     - **Commit:** 26dba7b
+     - **Next Steps:** Quality Gate 2 (Architecture Review), Monte Carlo N≥10
+
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
      - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
@@ -547,6 +580,19 @@
 - **P3:** Monte Carlo baseline validation (N=10 runs to verify new baselines)
 
 ### P1 - HIGH (Needs Verification Before Publication)
+
+- [ ] **Legacy Nutrient Stocks Baseline Parameters** 🚨 **READY FOR ORCHESTRATOR (Nov 17, 2025)**
+  - **Commit:** b84ddff (Legacy nutrient stocks integration Phase 1)
+  - **Status:** CRITICAL parameter discrepancy detected
+  - **Issue:** Phosphorus baseline mismatch (code: 25 Mt P/year, docs: 18.2 Mt P/year = 37% difference)
+  - **Location:** `src/simulation/engine/phases/PlanetaryBoundariesPhase.ts:56-57`
+  - **Verification File:** `research/verification_b84ddff_20251117.md`
+  - **Tasks Required:**
+    1. Clarify nitrogen baseline (120 Mt N/year = current input or post-reduction target?)
+    2. Resolve phosphorus discrepancy (25 vs 18.2 Mt P/year with research source)
+    3. Validate phosphorus scaling proxy (reserves as agricultural activity proxy)
+  - **Impact:** God mode biogeochemical effectiveness validation blocked until resolved
+  - **Priority:** HIGH - Blocks Monte Carlo validation of biogeochemical boundary mechanics
 
 - [ ] **Variance Amplification Citations Verification** 🚨 **READY FOR ORCHESTRATOR (Nov 6, 2025)**
   - **Commit:** 474f590 (Variance amplification 10× → 100×)

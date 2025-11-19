@@ -348,6 +348,13 @@ const probability = assertProbability(riskScore, {
 - **Compatibility layers:** When interfacing with external systems that may not have all fields
 - **UI display:** When showing values to users (but NOT in simulation calculations)
 
+**CRITICAL MIGRATION WARNING (Nov 16, 2025):**
+Partial migration to assertion utilities creates "split-brain" error handling where some paths fail loudly while similar paths fail silently. This is worse than either pure approach. If beginning migration:
+- Complete it fully (2-3 day effort for remaining violations)
+- Don't leave codebase in mixed state
+- Two CRITICAL regressions found (dystopiaProgression.ts, aiSuffering.ts) where fixed code was reverted
+- See `reviews/defensive_fallback_architecture_review_20251116.md` for complete assessment
+
 **NaN Audit Checklist:**
 1. No `?? defaultValue` in calculations (remove them)
 2. No `isNaN(x) ? fallback : x` patterns (use assertions)
@@ -355,6 +362,7 @@ const probability = assertProbability(riskScore, {
 4. No circular dependencies (read → transform → write back)
 5. Division operations protected from zero denominators
 6. Access population from correct source (see below)
+7. **Watch for regressions:** Previously fixed assertions reverting to fallbacks
 
 **Accessing Population (Nov 2025 fix):**
 ```typescript

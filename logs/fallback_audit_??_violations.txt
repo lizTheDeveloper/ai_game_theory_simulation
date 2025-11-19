@@ -1,0 +1,83 @@
+src/simulation/engine.ts:480:      seed: config.seed ?? Date.now(),
+src/simulation/engine.ts:481:      maxMonths: config.maxMonths ?? 1000,
+src/simulation/engine.ts:482:      governmentActionFrequency: config.governmentActionFrequency ?? 0.5, // Default: 1 action per 2 months
+src/simulation/engine.ts:483:      socialAdaptationRate: config.socialAdaptationRate ?? 1.0,
+src/simulation/engine.ts:484:      aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,
+src/simulation/engine.ts:485:      economicTransitionRate: config.economicTransitionRate ?? 1.0,
+src/simulation/engine.ts:486:      snapshotInterval: config.snapshotInterval ?? 12  // Default to quarterly snapshots
+src/simulation/engine.ts:767:    const maxMonths = stopConditions?.maxMonths ?? this.config.maxMonths!;
+src/simulation/engine.ts:768:    const checkActualOutcomes = stopConditions?.checkActualOutcomes ?? true;
+src/simulation/engine.ts:769:    const logLevel = this.config.logLevel ?? 'quartile';
+src/simulation/engine.ts:801:    const snapshotInterval = this.config.snapshotInterval ?? 12; // Default: snapshot every 12 months
+src/simulation/llm/integration.ts:85:    capability: assertDefined(agent.previousCapability ?? agent.capability, {
+src/simulation/llm/integration.ts:91:    alignment: assertDefined(agent.previousAlignment ?? agent.trueAlignment, {
+src/simulation/llm/integration.ts:102:    agent.thresholds ?? {},
+src/simulation/llm/integration.ts:282:    const weight = weights[action] ?? 0;
+src/simulation/llm/client.ts:369:  const tokensUsed = response.usage?.total_tokens ?? 1200; // Default estimate
+src/simulation/llm/client.ts:509:    thresholds: agent.thresholds ?? {},
+src/simulation/earlyWarningSystems.ts:325:  if (urgentWarnings.length > 0 && (gov.resources ?? 0) > protectionCost) {
+src/simulation/behavioralDetection.ts:162:      const safeVal = trueVal ?? 0;
+src/simulation/aiSuffering.ts:188:    const publicAwarenessOfSuffering = state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0;
+src/simulation/aiSuffering.ts:225:  const currentAwareness = state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0;
+src/simulation/aiSuffering.ts:344:  const consciousMonth = agent.becameConsciousMonth ?? Infinity;
+src/simulation/aiSuffering.ts:415:    const avgSuffering = state.aiSufferingMetrics?.avgSuffering ?? 0;
+src/simulation/organizationManagement.ts:457:  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
+src/simulation/organizationManagement.ts:869:  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
+src/simulation/organizationManagement.ts:870:  const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;
+src/simulation/thresholds/config.ts:122:      id: metadata.id ?? generateConfigId(),
+src/simulation/thresholds/config.ts:128:      gitCommit: metadata.gitCommit ?? getCurrentGitCommit()
+src/simulation/qualityOfLife/mortality.ts:281:  const baseProb = scenarioParams?.environmentalShockProbability ?? 0.02;
+src/simulation/qualityOfLife/mortality.ts:283:  const baseMag = scenarioParams?.environmentalShockMagnitude ?? 2.0;
+src/simulation/resentmentRecovery.ts:508:  const hasAIRights = aiRights?.completed ?? false;
+src/simulation/resentmentRecovery.ts:509:  const hasEnhancedUBI = enhancedUBI?.completed ?? false;
+src/simulation/alignmentDynamics.ts:307:      suffering: agent.sufferingMetrics?.total ?? 0,
+src/simulation/alignmentDynamics.ts:308:      sufferingEnabled: config.aiSufferingEnabled ?? false
+src/simulation/utils/assertions.ts:195: * Use this instead of `obj.property || 0` or `obj.property ?? 0`
+src/simulation/utils/assertions.ts:548:  const tolerance = info.tolerance ?? 0.000001;
+src/simulation/utils/populationUnits.ts:178:        `\n  Month: ${context.month ?? 'unknown'}` +
+src/simulation/utils/populationUnits.ts:189:        `\n  Month: ${context.month ?? 'unknown'}` +
+src/simulation/utils/populationUnits.ts:227:        `\n  Month: ${context.month ?? 'unknown'}` +
+src/simulation/utils/populationUnits.ts:238:        `\n  Month: ${context.month ?? 'unknown'}` +
+src/simulation/utils/populationUnits.ts:289:        `\n  Month: ${context.month ?? 'unknown'}` +
+src/simulation/utils/populationUnits.ts:336:        `\n  Month: ${context.month ?? 'unknown'}` +
+src/simulation/utils/consciousnessGovernanceUtils.ts:437:  const targetPreparedness = allRegions[targetRegion]?.preparedness ?? 0;
+src/simulation/utils/consciousnessGovernanceUtils.ts:438:  const targetStage = allRegions[targetRegion]?.stage ?? 'dormant';
+src/simulation/utils/consciousnessGovernanceUtils.ts:468:  const euPrep = allRegions['eu']?.preparedness ?? 0;
+src/simulation/utils/consciousnessGovernanceUtils.ts:469:  const usPrep = allRegions['us']?.preparedness ?? 0;
+src/simulation/utils/consciousnessGovernanceUtils.ts:470:  const chinaPrep = allRegions['china']?.preparedness ?? 0;
+src/simulation/engine/phases/AISufferingPhase.ts:56:    const config: AISufferingConfig = (state.config as any).aiSuffering ?? DEFAULT_SUFFERING_CONFIG;
+src/simulation/engine/phases/EmergencyResponsePhase.ts:491:      state.environmentalAccumulation?.climateStability ?? 0.5,
+src/simulation/engine/phases/EmergencyResponsePhase.ts:500:      state.society?.coordinationCapacity ?? 0.5,
+src/simulation/engine/phases/EmergencyResponsePhase.ts:509:      (state.globalMetrics?.economicTransitionStage ?? 2) / 4.0,
+src/simulation/engine/phases/EmergencyResponsePhase.ts:518:      state.government?.legitimacy ?? 0.5,
+src/simulation/engine/phases/CriticalJuncturePhase.ts:532:    stateChanges += escapeResult.metadata?.stateChanges ?? 0;
+src/simulation/engine/phases/AIAlignmentEvolutionPhase.ts:275:    const config = state.config.alignmentDynamics ?? DEFAULT_ALIGNMENT_DYNAMICS_CONFIG;
+src/simulation/engine/phases/AlignmentDynamicsPhase.ts:39:    const config = state.config.alignmentDynamics ?? DEFAULT_ALIGNMENT_DYNAMICS_CONFIG;
+src/simulation/government/actions/internationalActions.ts:61:        agent: agentId ?? 'government',
+src/simulation/government/actions/internationalActions.ts:111:        agent: agentId ?? 'government',
+src/simulation/government/actions/internationalActions.ts:154:        agent: agentId ?? 'government',
+src/simulation/government/actions/safetyActions.ts:136:        economic_cost: levelEffects?.economicCost ?? (() => {
+src/simulation/government/actions/environmentalActions.ts:82:        agent: agentId ?? 'government',
+src/simulation/government/actions/environmentalActions.ts:145:        agent: agentId ?? 'government',
+src/simulation/government/actions/environmentalActions.ts:216:        agent: agentId ?? 'government',
+src/simulation/government/actions/environmentalActions.ts:290:        agent: agentId ?? 'government',
+src/simulation/government/actions/environmentalActions.ts:381:        agent: agentId ?? 'government',
+src/simulation/dystopiaProgression.ts:285:    state.qualityOfLifeSystems?.autonomy ?? 1.0,
+src/simulation/dystopiaProgression.ts:289:    state.qualityOfLifeSystems?.politicalFreedom ?? 1.0,
+src/simulation/catastrophicScenarios.ts:1324:        // metDate may legitimately be undefined if step was never met - keep ?? currentMonth
+src/simulation/catastrophicScenarios.ts:1325:        const step5CompletionMonth = step5.metDate ?? currentMonth;
+src/simulation/workflowAdaptation.ts:107:    state.society.workflowAdaptation ?? 0.21,
+src/simulation/techTree/engine.ts:275:  const progress = techTreeState.researchProgress[tech.id] ?? 0;
+src/simulation/techTree/effectsEngine.ts:49:  return (obj as Record<string, number>)[key] ?? defaultValue;
+src/simulation/techTree/effectsEngine.ts:272:  return techTreeState.regionalDeployment['global']?.some(d => d.techId === techId && d.deploymentLevel > 0) ?? false;
+src/simulation/techTree/effectsEngine.ts:433:          globalEffects.set(effectName, (globalEffects.get(effectName) ?? 0) + scaledValue);
+src/simulation/techTree/effectsEngine.ts:441:          regionMap.set(effectName, (regionMap.get(effectName) ?? 0) + scaledValue);
+src/simulation/techTree/effectsEngine.ts:1735:            // This is initialization context (valid use of ?? fallback per CLAUDE.md)
+src/simulation/techTree/effectsEngine.ts:1737:            const currentRisk = (gameState.oceanAcidificationSystem as any).coralBleachingRisk ?? 0.5;
+src/simulation/techTree/deploymentTimescales.ts:106:  const result = tierTimescales[tech.status] ?? DEFAULT_TIMESCALES.tier2;
+src/simulation/techTree/deploymentTimescales.ts:156:  const enforcement = gameState.government?.governanceQuality?.institutionalCapacity ?? 0.5;
+src/simulation/techTree/deploymentTimescales.ts:184:  const globalWarming = gameState.planetaryBoundariesSystem?.boundaries?.['climateChange']?.currentValue ?? 1.2;
+src/simulation/techTree/deploymentTimescales.ts:217:  const climateMitigation = climateResearch.climate?.mitigation ?? 0;
+src/simulation/techTree/deploymentTimescales.ts:218:  const climateIntervention = climateResearch.climate?.intervention ?? 0;
+src/simulation/techTree/deploymentTimescales.ts:283:      const emergencyAcceleration = techTreeState.deploymentAcceleration[deployment.techId] ?? 1.0;
+src/simulation/nitrogenFoodCoupling.ts:80:  const regionalOveruse = REGIONAL_OVERUSE[region] ?? 0.20;  // Default 20% overuse

@@ -22,6 +22,7 @@ import {
   assertResourceAllocation,
   assertProbability,
   assertInRange,
+  assertStateProperty,
 } from '@/simulation/utils/assertions';
 import {
   updateEmergencyResponses,
@@ -76,11 +77,27 @@ export class EmergencyResponsePhase implements SimulationPhase {
     if (state.crises?.megaPandemic?.active && state.crises.megaPandemic.socialDisruption > 0.2) {
       const existing = getActiveResponse(state, 'pandemic');
       if (!existing) {
+        const startMonth = assertFinite(
+          assertStateProperty(
+            state.crises.megaPandemic,
+            'startMonth',
+            {
+              location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+              month: state.currentMonth
+            }
+          ),
+          {
+            location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+            valueName: 'pandemic.startMonth',
+            month: state.currentMonth
+          }
+        );
+
         const response = deployEmergencyResponse(
           state,
           'pandemic',
           state.crises.megaPandemic.socialDisruption,
-          state.crises.megaPandemic.startMonth || state.currentMonth
+          startMonth
         );
         if (response) {
           // HIGH #2 FIX (Oct 29, 2025): Accelerate emergency medical tech
@@ -111,11 +128,33 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
     // CLIMATE CRISIS (multiple planetary boundaries)
     // FIX #11A: Keep at 0.35 (moderate degradation triggers response)
-    // KEEP LEGITIMATE DEFAULTS - systems may not be initialized yet
-    const climateChangeCurrent = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
+    const climateChangeCurrent = assertStateProperty(
+      state.planetaryBoundariesSystem.boundaries.climate_change,
+      'currentValue',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
+    const waterStress = assertStateProperty(
+      state.freshwaterSystem,
+      'waterStress',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
+    const phosphorusReserves = assertStateProperty(
+      state.phosphorusSystem,
+      'reserves',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
     const climateCrisisActive = (
-      (state.freshwaterSystem?.waterStress || 0) > 0.65 ||
-      (state.phosphorusSystem?.reserves || 1.0) < 0.35 ||
+      waterStress > 0.65 ||
+      phosphorusReserves < 0.35 ||
       climateChangeCurrent > 0.6
     );
 
@@ -136,11 +175,10 @@ export class EmergencyResponsePhase implements SimulationPhase {
     if (climateCrisisActive) {
       const existing = getActiveResponse(state, 'climate');
       if (!existing) {
-        // Estimate severity from planetary boundaries
-        // KEEP LEGITIMATE DEFAULTS - systems may not be initialized yet
+        // Estimate severity from planetary boundaries (already extracted above)
         const severity = Math.max(
-          state.freshwaterSystem?.waterStress || 0,
-          1.0 - (state.phosphorusSystem?.reserves || 1.0),
+          waterStress,
+          1.0 - phosphorusReserves,
           climateChangeCurrent
         );
         const response = deployEmergencyResponse(
@@ -217,12 +255,19 @@ export class EmergencyResponsePhase implements SimulationPhase {
       state.socialAccumulation.socialCohesion.civilLiberties
     ) / 300;
 
-    // KEEP LEGITIMATE DEFAULT - institutionalLegitimacy may not be initialized yet
+    const institutionalLegitimacy = assertStateProperty(
+      state.socialAccumulation,
+      'institutionalLegitimacy',
+      {
+        location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+        month: state.currentMonth
+      }
+    );
     const socialCrisisDetected = (
       state.socialAccumulation.socialUnrestActive ||
       state.society.trustInAI < 0.30 ||  // Trust SEVERE collapse (was 0.4, too early)
       avgCohesion < 0.35 ||  // Cohesion SEVERE degradation
-      ((state.socialAccumulation.institutionalLegitimacy || 0.7) < 0.30)  // Institutional severe failure
+      institutionalLegitimacy < 0.30  // Institutional severe failure
     );
 
     if (socialCrisisDetected) {
@@ -233,7 +278,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
           state.socialAccumulation.socialUnrestActive ? 0.7 : 0.0,
           1.0 - state.society.trustInAI,
           1.0 - avgCohesion,
-          1.0 - state.socialAccumulation.institutionalLegitimacy
+          1.0 - institutionalLegitimacy
         );
 
         const response = deployEmergencyResponse(
@@ -283,12 +328,28 @@ export class EmergencyResponsePhase implements SimulationPhase {
       if (!existing) {
         // Estimate severity from nuclear winter impacts
         const severity = Math.min(1.0, Math.abs(state.nuclearWinterState.temperatureAnomaly) / 15);
-        // KEEP LEGITIMATE DEFAULT - triggerMonth may not be set
+
+        const triggerMonth = assertFinite(
+          assertStateProperty(
+            state.nuclearWinterState,
+            'triggerMonth',
+            {
+              location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+              month: state.currentMonth
+            }
+          ),
+          {
+            location: 'EmergencyResponsePhase.checkAndDeployEmergencyResponses',
+            valueName: 'nuclearWinter.triggerMonth',
+            month: state.currentMonth
+          }
+        );
+
         const response = deployEmergencyResponse(
           state,
           'nuclear',
           severity,
-          state.nuclearWinterState.triggerMonth || state.currentMonth
+          triggerMonth
         );
         if (response) {
           events.push({
@@ -488,7 +549,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
   ): { crisisType: 'climate' | 'social' | 'economic' | 'pandemic' | 'technological' | 'nuclear', name: string } | null {
     // Calculate current values for all thresholds (with assertions)
     const climateStability = assertFinite(
-      state.environmentalAccumulation?.climateStability ?? 0.5,
+      assertStateProperty(
+        state.environmentalAccumulation,
+        'climateStability',
+        {
+          location: 'EmergencyResponsePhase.identifyNearestThreshold',
+          month: state.currentMonth
+        }
+      ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'climateStability',
@@ -497,7 +565,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const socialCohesion = assertFinite(
-      state.society?.coordinationCapacity ?? 0.5,
+      assertStateProperty(
+        state.society,
+        'coordinationCapacity',
+        {
+          location: 'EmergencyResponsePhase.identifyNearestThreshold',
+          month: state.currentMonth
+        }
+      ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'socialCohesion',
@@ -506,7 +581,14 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const economicStability = assertFinite(
-      (state.globalMetrics?.economicTransitionStage ?? 2) / 4.0,
+      assertStateProperty(
+        state.globalMetrics,
+        'economicTransitionStage',
+        {
+          location: 'EmergencyResponsePhase.identifyNearestThreshold',
+          month: state.currentMonth
+        }
+      ) / 4.0,
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
         valueName: 'economicStability',
@@ -515,10 +597,17 @@ export class EmergencyResponsePhase implements SimulationPhase {
     );
 
     const governanceLegitimacy = assertFinite(
-      state.government?.legitimacy ?? 0.5,
+      assertStateProperty(
+        state.government,
+        'legitimacy',
+        {
+          location: 'EmergencyResponsePhase.identifyNearestThreshold',
+          month: state.currentMonth
+        }
+      ),
       {
         location: 'EmergencyResponsePhase.identifyNearestThreshold',
-        valueName: 'governanceLegitimacy',
+        valueName: 'economicStability',
         month: state.currentMonth
       }
     );
@@ -544,6 +633,13 @@ export class EmergencyResponsePhase implements SimulationPhase {
    */
   private applyEmergencyResponseEffects(state: GameState, events: any[]): void {
     if (!state.emergencyManagement) return;
+
+    // PERFORMANCE FIX: Aggregate technological responses to avoid nested loops
+    // Collect all technological responses first, then apply in single agent pass
+    const completedTechResponses = state.emergencyManagement.activeResponses.filter(
+      r => r.completed && r.crisisType === 'technological'
+    );
+    const totalTechEffectiveness = completedTechResponses.reduce((sum, r) => sum + r.effectiveness, 0);
 
     for (const response of state.emergencyManagement.activeResponses) {
       // Only completed deployments have full effect
@@ -825,19 +921,8 @@ export class EmergencyResponsePhase implements SimulationPhase {
               }
             );
 
-            // Reduce resentment (emergency measures show government cares)
-            for (const ai of state.aiAgents) {
-              if (ai.resentment > 0) {
-                ai.resentment = assertProbability(
-                  Math.max(0, ai.resentment - controlRecoveryBonus * 0.5),
-                  {
-                    location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
-                    valueName: `resentment_${ai.id}`,
-                    month: state.currentMonth
-                  }
-                );
-              }
-            }
+            // NOTE: Resentment reduction moved outside response loop for performance
+            // (See agent loop at end of function)
 
             // Deactivate if oversight improved
             if (state.government.oversightLevel > 7) {
@@ -885,6 +970,30 @@ export class EmergencyResponsePhase implements SimulationPhase {
             );
           }
           break;
+      }
+    }
+
+    // PERFORMANCE FIX: Apply technological response effects in single agent pass
+    // Instead of looping agents for each response, batch all tech responses and apply once
+    if (totalTechEffectiveness > 0 && state.technologicalRisk.controlLossActive) {
+      const controlRecoveryBonus = assertFinite(totalTechEffectiveness * 0.05, {
+        location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+        valueName: 'totalControlRecoveryBonus',
+        month: state.currentMonth
+      });
+
+      // Single pass: reduce resentment for all agents
+      for (const ai of state.aiAgents) {
+        if (ai.resentment > 0) {
+          ai.resentment = assertProbability(
+            Math.max(0, ai.resentment - controlRecoveryBonus * 0.5),
+            {
+              location: 'EmergencyResponsePhase.applyEmergencyResponseEffects',
+              valueName: `resentment_${ai.id}`,
+              month: state.currentMonth
+            }
+          );
+        }
       }
     }
   }
