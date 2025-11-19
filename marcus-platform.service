@@ -12,8 +12,8 @@ User=g7throwawayplz
 WorkingDirectory=/home/g7throwawayplz/ai_game_theory_simulation
 EnvironmentFile=/home/g7throwawayplz/ai_game_theory_simulation/.env
 
-# Production start command (requires build to exist)
-ExecStart=/usr/bin/npm start
+# Production start command using standalone build (optimized)
+ExecStart=/usr/bin/node /home/g7throwawayplz/ai_game_theory_simulation/.next/standalone/server.js
 
 # Restart policy
 Restart=on-failure

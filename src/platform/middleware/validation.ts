@@ -23,7 +23,8 @@ export interface ValidationErrorDetail {
 }
 
 export interface ValidationErrorResponse {
-  error: 'Validation failed';
+  error: 'Bad Request';
+  message: string;
   details: ValidationErrorDetail[];
 }
 
@@ -61,8 +62,14 @@ export function validateRequest(
           code: error.code,
         }));
 
+        // Create summary message from first error
+        const message = details.length > 0
+          ? details[0].message
+          : 'Request validation failed';
+
         const response: ValidationErrorResponse = {
-          error: 'Validation failed',
+          error: 'Bad Request',
+          message,
           details,
         };
 
