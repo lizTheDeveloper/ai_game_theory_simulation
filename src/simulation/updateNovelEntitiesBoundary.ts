@@ -77,13 +77,29 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
   // === 3. CLEANUP TECHNOLOGIES (energy-constrained) ===
   let totalCleanup = 0;
 
-  const cleanupTechs = allTech.filter(tech =>
-    tech.techType === 'cleanup' &&
-    tech.deploymentLevel > 0 &&
-    (tech.effects.pfasReduction !== undefined ||
-     tech.effects.microplasticReduction !== undefined ||
-     tech.effects.pollutionReduction !== undefined)
+  // Diagnostic logging (Nov 19, 2025): Debug cleanup non-deployment
+  const allCleanupTechs = allTech.filter(tech => tech.techType === 'cleanup');
+  const deployedCleanupTechs = allCleanupTechs.filter(tech => tech.deploymentLevel > 0);
+  const cleanupWithEffects = deployedCleanupTechs.filter(tech =>
+    tech.effects.pfasReduction !== undefined ||
+    tech.effects.microplasticReduction !== undefined ||
+    tech.effects.pollutionReduction !== undefined
   );
+
+  if (state.currentMonth % 12 === 0) {
+    console.log(`\n🔧 Novel Entities Cleanup Tech Status (Month ${state.currentMonth}):`);
+    console.log(`  Total cleanup techs: ${allCleanupTechs.length}`);
+    console.log(`  Deployed: ${deployedCleanupTechs.length}`);
+    console.log(`  With novel entities effects: ${cleanupWithEffects.length}`);
+    if (deployedCleanupTechs.length > 0) {
+      deployedCleanupTechs.forEach(tech => {
+        console.log(`    - ${tech.name}: deployment ${(tech.deploymentLevel * 100).toFixed(1)}%`);
+        console.log(`      Effects: pfas=${tech.effects.pfasReduction}, plastic=${tech.effects.microplasticReduction}, pollution=${tech.effects.pollutionReduction}`);
+      });
+    }
+  }
+
+  const cleanupTechs = cleanupWithEffects;
 
   for (const tech of cleanupTechs) {
     const result = applyEnergyConstrainedCleanup(state, tech, boundary.currentValue, rng);
