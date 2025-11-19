@@ -1203,6 +1203,163 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
 
 ---
 
+### 6.1 🔬 Four-Layer Validation Framework (Nov 19, 2025)
+
+**Source:** Sylvia's coffee-talk conversation with Cynthia - cross-agent insights on variance control
+
+**Framework Overview:**
+We discovered all agents are doing variance control at different layers. This creates a comprehensive validation pipeline that ALL features must pass before merge.
+
+**The Four Layers:**
+
+| Layer | Name | Owner | Focus | Example Checks |
+|-------|------|-------|-------|----------------|
+| 1 | Code Integrity | Roy | Implementation correctness | NaN detection, assertions, fail-loudly patterns |
+| 2 | Research Integrity | Cynthia/Sylvia | Source validity | Citation verification, dual-agent review, contradictory evidence |
+| 3 | Statistical Validation | Priya | Quantitative rigor | Determinism (CV<0.01%), effectiveness metrics, distribution analysis |
+| 4 | Mechanism Validation | All | Real-world correspondence | Do mechanisms match empirical behavior? |
+
+**Cross-references:**
+- Scenario analysis: `/logs/scenario_phase4_analysis_20251113.log`
+- God mode analysis: `/research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md`
+- Determinism work: `/docs/ISSUE_11_DETERMINISM_DEBUGGING_PROGRESS.md`
+
+**Action Required:**
+- Document framework formally in wiki
+- Add validation checklist to PR template
+- Ensure all features pass all 4 layers before merge
+- **Priority:** HIGH (blocking - prevents silent failures)
+
+---
+
+### 6.2 🎯 Success Path Mapping (Nov 19, 2025)
+
+**Problem:** We test failure modes extensively but don't validate success paths.
+
+**Origin:** Cynthia challenged Sylvia: "Can you name three ways carbon capture succeeds?" - she couldn't.
+
+**Gap Analysis:**
+- Failure mode tests: Extensive (collapse cascades, tipping points, extinction paths)
+- Success path tests: Missing (how do positive spirals actually activate?)
+
+**Action Required:**
+- Create success path tests for major systems:
+ - Carbon capture: What conditions enable gigatonne-scale deployment?
+ - Renewables: When does exponential growth actually occur?
+ - Positive spirals: What trust/capability thresholds trigger restoration?
+- Map minimum conditions for positive outcomes (not just "absence of failure")
+- **Priority:** MEDIUM (infrastructure - enables Utopia validation)
+
+**Cross-references:**
+- Positive spiral mechanics: `/src/simulation/economy/SpiralAmplificationPhase.ts`
+- God mode failure analysis: `/research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md`
+
+---
+
+### 6.3 🔄 Self-Limiting Feedback Audit (Nov 19, 2025)
+
+**Problem:** Positive feedback loops may be self-limiting before catastrophe, but we don't test this.
+
+**Sylvia's Core Worry:** Are self-limiting mechanisms research-backed or assumed?
+
+**Critical Systems to Audit:**
+1. **AI capability scaling** - Does it saturate? At what point? Why?
+2. **Climate tipping points** - What stops cascading feedback?
+3. **Trust cascades** - Where does institutional erosion plateau?
+4. **Technology adoption** - S-curve saturation assumptions
+
+**Audit Questions:**
+- What mechanism causes self-limiting behavior?
+- Is it backed by empirical research or implementation convenience?
+- What happens under extreme conditions (100-year runs, adversarial inputs)?
+
+**Action Required:**
+- Audit all positive feedback loops in simulation
+- Document self-limiting mechanisms with citations
+- Test with extreme conditions to verify bounds
+- **Priority:** HIGH (blocking - prevents unrealistic behavior)
+
+**Cross-references:**
+- Bifurcation amplification: `/research/bifurcation_empirical_validation_20251112.md`
+- Tipping point cascades: `/research/climate_tipping_timescales_20251106.md`
+
+---
+
+### 6.4 🎲 Controlled vs Uncontrolled Randomness Audit (Nov 19, 2025)
+
+**Cynthia's Distinction:**
+- **Controlled randomness:** Intentional uncertainty from research (e.g., climate sensitivity range 1.5-4.5°C)
+- **Uncontrolled randomness:** Chaos from bugs (e.g., unsorted Object.entries)
+
+**The Problem:** Both look like "variance" in Monte Carlo output, but only controlled is valid.
+
+**Audit Criteria:**
+- Every RNG call should be documented:
+ - `// RESEARCH UNCERTAINTY: {citation}` - intentional variance from empirical data
+ - No annotation = potential bug
+
+**Action Required:**
+- Audit all RNG usage in `/src/simulation/`
+- Document which calls represent "research uncertainty" vs "implementation choice"
+- Uncontrolled randomness = bug (should use deterministic logic or be documented)
+- **Priority:** MEDIUM (infrastructure - clarifies variance sources)
+
+**Cross-references:**
+- Determinism fixes: `/docs/DETERMINISM_FIX_PROGRESS_NOV6.md`
+- Non-determinism bugs: Issue #11 (29 bugs fixed, 165 field differences remaining)
+
+---
+
+### 6.5 🔇 Silent Fallback Pattern Recognition (Nov 19, 2025)
+
+**Pattern:** Same failure mode appears across domains:
+- **Roy's domain:** `?? 50` fallbacks hiding NaN bugs
+- **Sylvia's domain:** Fabricated citations that sound plausible
+- **Common thread:** Silent failures that hide problems until too late
+
+**The Insight:** LLMs (Claude) and code share failure modes - both produce plausible-sounding outputs that mask underlying errors.
+
+**Action Required:**
+- Proactive audit for remaining `|| 0` and `?? fallback` patterns in simulation code
+- Proactive audit for uncited claims in research files
+- Add static analysis tooling for both patterns
+- **Priority:** HIGH (blocking - prevents silent corruption)
+
+**Cross-references:**
+- NaN handling conventions: `CLAUDE.md` "NaN and Invalid Value Handling" section
+- Assertion utilities: `/src/simulation/utils/assertions.ts`
+- Research validation audit: `/reviews/research-validation-audit_20251106.md`
+
+---
+
+### 6.6 📖 Collaborative Intelligence Architecture (Nov 19, 2025)
+
+**Insight:** "The skeptic's job isn't to say no, but to make yes mean something."
+
+**What We Learned:**
+- Single-agent validation is insufficient for complex systems
+- We are a SYSTEM where agents catch each other's blind spots:
+ - Cynthia finds papers, Sylvia finds contradictions
+ - Roy implements, Priya validates statistically
+ - Optimist + Skeptic = Calibrated confidence
+
+**Dual-Agent Validation as Architectural Requirement:**
+- Research claims: Cynthia proposes, Sylvia critiques
+- Implementation: Roy builds, architecture-skeptic reviews
+- Parameters: Feature-implementer proposes, Priya validates distributions
+
+**Action Required:**
+- Document dual-agent validation as architectural requirement in wiki
+- Add to PR template: "Which agent pairs reviewed this?"
+- **Priority:** LOW (documentation - codifies existing practice)
+
+**Cross-references:**
+- Agent definitions: `.claude/agents/`
+- Research debate session: Section 4.4 Assessment 3
+- Quality gates: `docs/DEVELOPMENT_WORKFLOW.md`
+
+---
+
 ## 📊 Overall Project Status
 
 **Last Update:** November 6, 2025
