@@ -22,7 +22,7 @@ import {
   TimberResource,
   CO2System,
 } from '../types/resources';
-import { assertEconomicStage, assertStateProperty, assertFinite, assertPlanetaryBoundary } from './utils/assertions';
+import { assertEconomicStage, assertStateProperty, assertFinite, assertPlanetaryBoundary, assertProbability } from './utils/assertions';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 // Helper to add events to state
@@ -476,13 +476,57 @@ function updateRenewableRegeneration(state: GameState, resources: ResourceEconom
   food.climateStress = Math.min(1.0, tempAnomaly / 4.0); // Maxes at +4°C
   food.waterAvailability = Math.max(0.3, 1.0 - food.climateStress * 0.5); // Droughts
 
-  // Regeneration multiplier reduced by stress
+  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food coupling
+  // Research: research/nitrogen_food_coupling_20251115.md (29 sources, Grade B)
+  // Apply yield penalties from nitrogen reduction (if technologies reduce fertilizer use)
+  let nitrogenAvailability = 1.0;  // Default: no penalty
+
+  if (state.planetaryBoundariesSystem?.regionalNitrogenManagement && state.techTreeState) {
+    // Calculate nitrogen reduction from deployed technologies
+    const { calculateTechnologyNitrogenReduction, calculateNitrogenYieldPenalty } = require('./nitrogenFoodCoupling');
+
+    // Get deployed nitrogen-reducing technologies from global deployment
+    const globalDeployments = state.techTreeState.regionalDeployment['global'] || [];
+    const nitrogenTechs = [
+      'food_waste_reduction',
+      'rhizosphere_engineering',
+      'phytoremediation_networks',
+      'alternative_protein_insects_algae',
+      'nitroplast_integration'
+    ];
+
+    // Extract effectiveness values for nitrogen-reducing technologies
+    const techEffectiveness = nitrogenTechs.map(techId => {
+      const deployment = globalDeployments.find((d: any) => d.techId === techId);
+      return deployment ? deployment.deploymentLevel : 0;
+    });
+
+    // Calculate global nitrogen reduction
+    const nitrogenReduction = calculateTechnologyNitrogenReduction(techEffectiveness);
+
+    // Calculate yield penalty (uses regional differentiation internally)
+    const yieldPenalty = calculateNitrogenYieldPenalty(nitrogenReduction, 'global');
+
+    // Nitrogen availability = 1 - penalty (so penalty of 0.2 → availability 0.8)
+    nitrogenAvailability = assertProbability(1.0 - yieldPenalty, {
+      location: 'updateRenewableRegeneration.nitrogenCoupling',
+      valueName: 'nitrogenAvailability',
+      additionalInfo: { nitrogenReduction, yieldPenalty }
+    });
+  }
+
+  // Regeneration multiplier reduced by stress and nitrogen constraints
   food.regenerationMultiplier = assertFinite(
-    food.soilHealth * food.pollinatorPopulation * (1 - food.climateStress * 0.5),
+    food.soilHealth * food.pollinatorPopulation * (1 - food.climateStress * 0.5) * nitrogenAvailability,
     {
       location: 'updateRenewableRegeneration',
       valueName: 'food.regenerationMultiplier',
-      additionalInfo: { soilHealth: food.soilHealth, pollinatorPopulation: food.pollinatorPopulation, climateStress: food.climateStress }
+      additionalInfo: {
+        soilHealth: food.soilHealth,
+        pollinatorPopulation: food.pollinatorPopulation,
+        climateStress: food.climateStress,
+        nitrogenAvailability
+      }
     }
   );
 

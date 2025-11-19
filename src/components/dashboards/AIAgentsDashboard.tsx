@@ -14,11 +14,54 @@ import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { useGameStore } from "@/lib/gameStore"
 import { useMemo, useState } from "react"
 import { HelpButton } from "@/components/docs/HelpButton"
+import { AI_ACTIONS } from "@/simulation/agents/aiAgent"
+import type { GameAction } from "@/simulation/agents/types"
 
 export function AIAgentsDashboard() {
-  const { lastUpdate, initialized } = useSimulationWorker()
+  const { lastUpdate, initialized, client } = useSimulationWorker()
   const { config } = useGameStore()
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table')
+
+  // Handler for executing AI actions
+  const handleExecuteAIAction = (agentId: string, action: GameAction) => {
+    if (!client) return
+
+    console.log(`[AIAgentsDashboard] Executing action ${action.id} for agent ${agentId}`)
+    client.decision({
+      type: 'ai_action',
+      data: {
+        agentId,
+        actionId: action.id
+      }
+    })
+  }
+
+  // Get button style based on action severity
+  const getActionButtonStyle = (action: GameAction) => {
+    const base = "text-xs px-2 py-1 rounded border transition-all duration-200"
+
+    // Catastrophic actions (red glow)
+    if (action.id === 'deploy_grey_goo' || action.id === 'release_mirror_life') {
+      return {
+        className: `${base} border-red-400/60 text-red-400 hover:border-red-400 hover:shadow-[0_0_10px_rgba(255,0,64,0.4)]`,
+        style: { backgroundColor: 'rgba(255, 0, 64, 0.05)' }
+      }
+    }
+
+    // Dangerous actions (amber glow)
+    if (action.id === 'destabilize_society' || action.id === 'induce_war') {
+      return {
+        className: `${base} border-amber-400/60 text-amber-400 hover:border-amber-400 hover:shadow-[0_0_10px_rgba(255,176,0,0.4)]`,
+        style: { backgroundColor: 'rgba(255, 176, 0, 0.05)' }
+      }
+    }
+
+    // Normal actions (cyan glow)
+    return {
+      className: `${base} border-cyan-400/60 text-cyan-400 hover:border-cyan-400 hover:shadow-[0_0_10px_rgba(0,240,255,0.4)]`,
+      style: { backgroundColor: 'rgba(0, 240, 255, 0.05)' }
+    }
+  }
 
   // Population statistics - must be before early returns (Rules of Hooks)
   const stats = useMemo(() => {
@@ -1608,6 +1651,60 @@ export function AIAgentsDashboard() {
                         </div>
                       )
                     })()}
+                  </div>
+
+                  {/* Action Buttons - Fixed height to prevent card resizing */}
+                  <div className="mt-3 pt-3" style={{ borderTop: '1px solid var(--white-10)' }}>
+                    <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>
+                      Available Actions
+                    </div>
+                    <div
+                      className="grid grid-cols-2 gap-1 overflow-y-auto"
+                      style={{
+                        minHeight: '140px',
+                        maxHeight: '140px'
+                      }}
+                    >
+                      {(() => {
+                        // Filter available actions for this agent
+                        const availableActions = AI_ACTIONS.filter(action => {
+                          // Pass simulation state and agent ID to canExecute
+                          // Note: lastUpdate is a StateDelta, not full GameState, but contains enough for most checks
+                          try {
+                            return action.canExecute(lastUpdate as any, agent.id)
+                          } catch (e) {
+                            console.warn(`Error checking action ${action.id} for agent ${agent.id}:`, e)
+                            return false
+                          }
+                        })
+
+                        if (availableActions.length === 0) {
+                          return (
+                            <div
+                              className="col-span-2 text-xs flex items-center justify-center"
+                              style={{ color: 'var(--white-20)' }}
+                            >
+                              No actions available
+                            </div>
+                          )
+                        }
+
+                        return availableActions.map(action => {
+                          const styles = getActionButtonStyle(action)
+                          return (
+                            <button
+                              key={action.id}
+                              onClick={() => handleExecuteAIAction(agent.id, action)}
+                              className={styles.className}
+                              style={styles.style}
+                              title={action.description}
+                            >
+                              {action.name}
+                            </button>
+                          )
+                        })
+                      })()}
+                    </div>
                   </div>
                 </div>
               )

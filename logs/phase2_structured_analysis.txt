@@ -1,0 +1,61 @@
+
+================================================================================
+🔍 PHASE 2 BOTTLENECK ANALYSIS
+================================================================================
+
+📊 SPIRAL ACTIVATION RATES
+────────────────────────────────────────────────────────────────────────────────
+Scenario                    | Abd | Cog | Dem | Sci | Mng | Eco | Total
+────────────────────────────────────────────────────────────────────────────────
+Scientific Acceleration     |   0%|   0%|   0%|   0%|   0%|   0%| 0/6
+Equality First              |   0%|   0%|   0%|   0%|   0%|   0%| 0/6
+Climate First               |   0%|   0%|   0%|   0%|   0%|   0%| 0/6
+
+📏 THRESHOLD COMPARISONS
+────────────────────────────────────────────────────────────────────────────────
+Scenario                    | Gini  | Gov%  | Res($B) | Climate%
+────────────────────────────────────────────────────────────────────────────────
+Scientific Acceleration     | 0.400 |  50.0%|     0.0 |    70.7%
+Equality First              | 0.400 |  50.0%|     0.0 |    75.2%
+Climate First               | 0.400 |  50.0%|     0.0 |    77.0%
+
+🎯 BOTTLENECK FIXES
+────────────────────────────────────────────────────────────────────────────────
+
+Scientific Acceleration:
+  ✓ Research gap fixed ($50B+):      ❌ NO
+  ✓ Economic transition (Gini<0.30): ❌ NO
+  ✓ Climate stability (>1%):         ✅ YES
+  ✓ Spirals enabled (≥50%):          NONE
+
+Equality First:
+  ✓ Research gap fixed ($50B+):      ❌ NO
+  ✓ Economic transition (Gini<0.30): ❌ NO
+  ✓ Climate stability (>1%):         ✅ YES
+  ✓ Spirals enabled (≥50%):          NONE
+
+Climate First:
+  ✓ Research gap fixed ($50B+):      ❌ NO
+  ✓ Economic transition (Gini<0.30): ❌ NO
+  ✓ Climate stability (>1%):         ✅ YES
+  ✓ Spirals enabled (≥50%):          NONE
+
+🔑 KEY FINDINGS
+────────────────────────────────────────────────────────────────────────────────
+
+1. Which scenarios fix the Research Spending Gap ($50B)?
+   NONE
+
+2. Which scenarios enable Economic Transition (Gini < 0.30)?
+   NONE
+
+3. Which scenarios fix Climate Stability (> 1%)?
+   Scientific Acceleration, Equality First, Climate First
+
+4. Which scenarios enable the most spirals?
+   Scientific Acceleration (0/6 spirals)
+
+================================================================================
+✅ Analysis complete
+================================================================================
+

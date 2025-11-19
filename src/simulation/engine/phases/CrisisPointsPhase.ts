@@ -9,6 +9,7 @@ import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/ga
 import type { RNGFunction } from '@/types/config';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertFinite } from '@/simulation/utils/assertions';
+import { processCrisisPoints } from '../../crisisPoints';
 
 export class CrisisPointsPhase implements SimulationPhase {
   readonly id = 'crisis-points';
@@ -21,9 +22,7 @@ export class CrisisPointsPhase implements SimulationPhase {
     'benchmark-evaluations',  // Order 22.0: Benchmarks detect crisis triggers
   ] as const;
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const { processCrisisPoints } = require('../../crisisPoints');
-    setDeterministicRng(rng);
+  execute(state: GameState, rng: RNGFunction): PhaseResult {setDeterministicRng(rng);
     const crisisResult = processCrisisPoints(state, rng);
 
     // If crisis triggered, update state
