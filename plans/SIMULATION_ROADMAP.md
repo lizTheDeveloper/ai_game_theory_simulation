@@ -39,6 +39,39 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Ocean Acidification 2024-2025 Coral Studies** - HIGH (Added Nov 19, 2025)
+     - **Context:** Research update with SSP-specific carbonate production projections and coral resilience under combined stressors
+     - **Research File:** research/ocean_acidification_planetary_boundary_2025.md (updated with 2 new peer-reviewed studies)
+     - **New Sources Added:**
+       - Bouttes et al. (2025) - Biogeosciences: Global climate-coral reef coupled model
+       - Jury et al. (2024) - PNAS: Experimental coral resilience study
+     - **Key Claims Requiring Verification:**
+       - Carbonate production by 2100: 0-76% of preindustrial (SSP-specific pathways)
+       - Net dissolution threshold: 560 ppm CO₂ (~2050 timing)
+       - Coral transformation: Reefs persist as degraded ecosystems (not total extinction)
+       - Calcification reduction: 50-75% under +2°C/-0.2 pH
+       - Experimental conditions: 2-year study, Paris mitigation scenario alignment
+       - Biodiversity maintenance claim despite structural changes
+       - Species composition shifts (branching vs. massive corals)
+     - **Verification File:** research/verification_c616bd8_20251119.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Add SSP-specific carbonate production trajectories?
+       - Add 560 ppm CO₂ dissolution threshold?
+       - Model thermal adaptation vs. no-adaptation scenarios?
+       - Add coral transformation state (degraded persistence before extinction)?
+       - Separate calcification tracking from coral health?
+     - **Affected System:** Ocean Acidification (TIER 1.3 - already implemented)
+     - **Files to Modify:** src/simulation/oceanAcidification.ts (coral decline mechanics, lines 94-132)
+     - **Assignments:**
+       - Cynthia: Verify DOIs resolve, extract specific quotes for quantitative claims
+       - Sylvia: Assess model uncertainties (Bouttes), mesocosm scale-up validity (Jury), Paris scenario optimism
+       - Roy: BLOCKED on validation - Parameter integration pending verification
+     - **Expected Impact:** More nuanced coral decline curves, SSP-specific pathways, transformation mechanics
+     - **Priority:** HIGH - Affects implemented TIER 1 system with new quantitative projections
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, documentation updated, awaiting orchestrator
+     - **Commit:** c616bd8
+     - **Next Steps:** Validation → Implementation → Monte Carlo N≥10
+
    - **Irreversibility Framework - Novel Entities & Biosphere** - TIER 1 CRITICAL (Added Nov 17, 2025)
      - **Context:** God mode 0% effectiveness bug - asymptotic recovery mechanics implemented
      - **Key Implementation:** Phase 1 (novel entities) + Phase 2 (biosphere extinction debt) COMPLETE
