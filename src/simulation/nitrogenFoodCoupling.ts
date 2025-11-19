@@ -280,14 +280,21 @@ export function initializeRegionalNitrogenManagement(): RegionalNitrogenManageme
 export function getNitrogenReductionDeployment(state: GameState): number[] {
   const deployments: number[] = [];
 
-  // Tech IDs from comprehensiveTechTree.ts
+  // Tech IDs from comprehensiveTechTree.ts (UPDATED Nov 19, 2025)
+  // Now includes all 10 nitrogen-reducing technologies
   const nitrogenTechIds = [
+    // Original 6 technologies (nitrogenEfficiency effect)
     { id: 'precision_agriculture', maxEffectiveness: 0.30 },
     { id: 'biological_nitrogen_fixation', maxEffectiveness: 0.25 },
     { id: 'nitrogen_circular_food', maxEffectiveness: 0.20 },
     { id: 'ecosystem_restoration_nitrogen', maxEffectiveness: 0.15 },
     { id: 'nitrogen_monitoring_networks', maxEffectiveness: 0.10 },
     { id: 'green_ammonia_production', maxEffectiveness: 0.40 },
+    // Additional TIER 2 technologies (Nov 16, 2025 - nitrogenReduction effect)
+    { id: 'rhizosphere_engineering', maxEffectiveness: 0.275 },      // 27.5% (15-40% range)
+    { id: 'nitroplast_integration', maxEffectiveness: 0.60 },        // 60% (50-70% range, breakthrough)
+    { id: 'precision_fermentation_nitrogen', maxEffectiveness: 0.40 }, // 40% (30-50% range, via animal ag replacement)
+    { id: 'phytoremediation_nitrogen', maxEffectiveness: 0.05 },     // 5% (runoff capture, not input reduction)
   ];
 
   // Check if tech tree state exists (may not exist in older saves or tests)
