@@ -310,29 +310,22 @@ install_node_deps() {
     npm install --quiet
     print_success "Node.js dependencies installed"
 
-    # Clean build cache to avoid stale state issues
-    rm -rf .next
+    # Check if build already exists
+    if [ -f ".next/BUILD_ID" ]; then
+        print_warning "Build already exists (skipping to save time)"
+        print_warning "To rebuild, delete .next directory first"
+    else
+        # Clean all caches aggressively
+        rm -rf .next node_modules/.cache
 
-    # Build TypeScript (with retry logic for transient failures)
-    BUILD_SUCCESS=false
-    for attempt in 1 2; do
+        # Build TypeScript (single attempt, non-fatal)
         if npm run build 2>&1 | tee /tmp/nextjs_build.log; then
             print_success "TypeScript compiled"
-            BUILD_SUCCESS=true
-            break
         else
-            if [ $attempt -eq 1 ]; then
-                print_warning "Build failed, retrying after cleaning cache..."
-                rm -rf .next node_modules/.cache
-                sleep 2
-            fi
+            print_warning "Build failed - can be built manually later with 'npm run build'"
+            print_warning "Check /tmp/nextjs_build.log for details"
+            print_warning "Continuing with provisioning..."
         fi
-    done
-
-    if [ "$BUILD_SUCCESS" = false ]; then
-        print_warning "Build failed after 2 attempts - can be built manually later with 'npm run build'"
-        print_warning "Check /tmp/nextjs_build.log for details"
-        print_warning "Continuing with provisioning..."
     fi
 }
 
