@@ -1,0 +1,157 @@
+NOVEL ENTITIES IRREVERSIBILITY FRAMEWORK - FAILURE MODE DIAGRAM
+================================================================================
+
+EXPECTED BEHAVIOR (Research-Backed):
+────────────────────────────────────────────────────────────────────────────────
+
+Initial: 1.50 (unsafe)
+    │
+    ├─ Prevention Techs Deploy (TIER 0-1)
+    │  └─> Emission Reduction: -15 to -25%
+    │
+    ├─ Cleanup Techs Deploy (TIER 2-4, with fusion)
+    │  └─> Net Cleanup: -5 to -15% (energy-gated)
+    │
+    └─ Natural Decay: -0.1%/month (75-year half-life)
+
+Final: 0.90-1.20 (20-40% reduction) ✅
+
+
+OBSERVED BEHAVIOR (Monte Carlo N=8):
+────────────────────────────────────────────────────────────────────────────────
+
+OUTCOME A: 6/8 Runs (~10% reduction)
+────────────────────────────────────
+Initial: 1.499
+    │
+    ├─ Prevention Techs: ⚠️ UNDERPERFORMING (-10% vs -15 to -25%)
+    │  └─> Possible: routing bug, rebound effect, or conservative params
+    │
+    ├─ Cleanup Techs: ❌ NOT DEPLOYING (0/240 months)
+    │  └─> Energy-gated correctly, but fusion NOT available
+    │
+    └─ Natural Decay: ✅ Working (-0.1%/month)
+
+Final: 1.35-1.36 (9.75-9.97% reduction) ⚠️ Below target
+
+
+OUTCOME B: 1/8 Runs (Minimal reduction)
+────────────────────────────────────────
+Initial: 1.499
+    │
+    ├─ Prevention Techs: ❌ MINIMAL DEPLOYMENT (2.98% reduction)
+    │  └─> Possible: late deployment, TIER gating failure
+    │
+    ├─ Cleanup Techs: ❌ NOT DEPLOYING
+    │
+    └─ Natural Decay: ✅ Working
+
+Final: 1.454 (2.98% reduction) ❌ Critical failure
+
+
+OUTCOME C: 2/8 Runs (CATASTROPHIC - hit boundary cap)
+──────────────────────────────────────────────────────
+Initial: 1.499
+    │
+    ├─ Prevention Techs: ❌ NOT DEPLOYING or INEFFECTIVE
+    │
+    ├─ Cleanup Techs: ❌ NOT DEPLOYING
+    │
+    ├─ Production: 🔴 RUNAWAY (+0.1%/month unchecked)
+    │  └─> Exceeds natural decay (-0.1%/month)
+    │
+    └─ Boundary: 🚨 HIT CAP at 2.0 (Month ~180)
+
+Final: 2.000 (-33.43% "effectiveness") 🔥 COLLAPSE
+
+
+OUTCOME D: 2/8 Runs (Assertion failure)
+────────────────────────────────────────
+Initial: 1.499
+    │
+    ├─ Run normally until Month 63
+    │
+    └─> ❌ CRASH: materialAbundance = 2.79 (valid range: [0, 2])
+        └─> Related system: ecosystemTipping_materialAbundance
+            Possible cause: Cascade feedback loop, uncapped growth
+
+
+NON-DETERMINISM PATTERN:
+────────────────────────────────────────────────────────────────────────────────
+
+Identical Seed (42000):
+    ├─ Run X: Outcome A (10% reduction)  ← RNG call sequence 1
+    ├─ Run Y: Outcome C (-33% increase)  ← RNG call sequence 2 (DIFFERENT!)
+    └─ CV = 1027.86% (should be <0.01%)
+
+Root Cause: Conditional branching or Object.entries() iteration order
+            causing different RNG consumption patterns.
+
+
+ENERGY CONSTRAINT VALIDATION:
+────────────────────────────────────────────────────────────────────────────────
+
+Cleanup Energy Requirement: 75 GJ/ton
+Atmospheric Redeposition: 99% (only 1% net removal)
+Energy Budget (without fusion): ~10 GJ available
+
+Expected Cleanup: 0.13 tons/month (negligible)
+Observed Cleanup: 0 months with activity
+
+✅ VALIDATION: Energy constraint correctly gates cleanup to ~0% without fusion
+❌ PROBLEM: Fusion technologies NOT deploying → no cleanup pathway
+
+
+TECHNOLOGY DEPLOYMENT TIMELINE (Expected):
+────────────────────────────────────────────────────────────────────────────────
+
+Month   0-12:  Prevention TIER 0 (Green Chemistry)
+Month  12-24:  Prevention TIER 1 (Circular Economy)
+Month  60-120: Cleanup TIER 2 (Bioremediation)
+Month 120-180: Fusion TIER 3 (enables cleanup viability)
+Month 180-240: Cleanup TIER 3-4 (high-energy methods)
+
+OBSERVED:
+Month   0-240: Prevention: ⚠️ PARTIAL (9.97% max)
+Month   0-240: Cleanup: ❌ NONE (0/240 months)
+Month   0-240: Fusion: ❌ NOT DEPLOYING (inferred from zero cleanup)
+
+
+ROOT CAUSE HIERARCHY:
+────────────────────────────────────────────────────────────────────────────────
+
+PRIMARY FAILURES:
+  1. Non-determinism (CV = 1027.86%)
+     └─> Invalidates all Monte Carlo analysis
+     └─> Action: Nuclear option (REQUIRED RNG)
+
+  2. Cleanup non-deployment (0/240 months)
+     └─> Missing -20 to -30% effectiveness
+     └─> Action: Debug TIER gating + fusion deployment
+
+  3. Prevention underperformance (9.97% vs 15-25%)
+     └─> Missing -5 to -15% effectiveness
+     └─> Action: Validate emission reduction routing
+
+SECONDARY FAILURES:
+  4. Assertion range exceeded (materialAbundance > 2.0)
+     └─> Crashes 20% of runs (2/10)
+     └─> Action: Investigate ecosystem tipping feedback
+
+  5. Runaway production (2/8 runs hit 2.0 cap)
+     └─> Suggests missing feedback loop or regulation
+     └─> Action: Check production dampening mechanics
+
+
+VERDICT:
+────────────────────────────────────────────────────────────────────────────────
+
+Framework Implementation: ✅ EXISTS (55 tests passing)
+Energy Constraint Logic:  ✅ CORRECT (properly gates cleanup)
+Integration to Boundary:  ❌ BROKEN (effects not propagating)
+Determinism:              ❌ BROKEN (RNG bugs)
+Technology Deployment:    ❌ BROKEN (cleanup not deploying)
+
+Overall: ❌ FAIL - Critical bugs prevent validation of research hypothesis
+
+In God we trust. All others must bring data. 📊
