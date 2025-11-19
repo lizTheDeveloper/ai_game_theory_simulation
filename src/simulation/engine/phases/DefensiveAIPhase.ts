@@ -8,6 +8,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext} from '@/types/game';
 import type { RNGFunction } from '@/types/config';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { updateDefensiveAI } from '../../defensiveAI';
 
 export class DefensiveAIPhase implements SimulationPhase {
   readonly id = 'defensive-ai';
@@ -27,10 +28,7 @@ export class DefensiveAIPhase implements SimulationPhase {
         `❌ CRITICAL: RNG required for deterministic simulation in ${this.id} ` +
         `(Month ${state.currentMonth})`
       );
-    }
-
-    const { updateDefensiveAI } = require('../../defensiveAI');
-    setDeterministicRng(rng);
+    }setDeterministicRng(rng);
     updateDefensiveAI(state);
 
     return { events: [] };

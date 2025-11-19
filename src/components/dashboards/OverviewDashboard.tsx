@@ -15,6 +15,7 @@ import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { ParadigmDetailPanel } from "@/components/paradigms/ParadigmDetailPanel"
 import { HelpButton } from "@/components/docs/HelpButton"
 import { validateMetrics, DASHBOARD_EXPECTATIONS } from "@/lib/utils/metricValidation"
+import { GovernmentActionsPanel } from "@/components/actions/GovernmentActionsPanel"
 
 type ParadigmType = 'western' | 'development' | 'ecological' | 'indigenous' | null
 
@@ -264,6 +265,9 @@ export function OverviewDashboard() {
           </div>
         </div>
       </Panel>
+
+      {/* Government Actions Panel */}
+      <GovernmentActionsPanel />
 
       {/* Paradigm Detail Panel */}
       {selectedParadigm && (

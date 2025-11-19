@@ -1,8 +1,13 @@
 {
   "source": "undp-mpi",
   "version": "2024",
-  "updateDate": "2025-11-09T22:12:45.400Z",
-  "expiryDate": "2026-11-09T22:12:45.400Z",
+<<<<<<< HEAD
+  "updateDate": "2025-11-18T04:39:03.250Z",
+  "expiryDate": "2026-11-18T04:39:03.250Z",
+=======
+  "updateDate": "2025-11-18T07:52:12.463Z",
+  "expiryDate": "2026-11-18T07:52:12.463Z",
+>>>>>>> origin/claude/merge-remote-branches-01RyPg6X8etfwp46DznAhtBk
   "recordCount": 17,
   "coverage": {
     "countries": 17

@@ -530,10 +530,37 @@ function calculateEcological(state: GameState): number {
 /**
  * Calculate Indigenous paradigm score from simulation state
  *
- * Indicators:
- * - Social Trust (40%): state.socialCohesion.trust
- * - Community Bonds (40%): state.socialCohesion.communityBonds
- * - Meaning Crisis (20%): 100 - meaningCrisis (inverted)
+ * Based on Yawuru Mabu Liyan framework (Sangha et al. 2024):
+ * "Liyan" = holistic wellbeing felt in body, mind, spirit
+ * How people FEEL about: themselves, connections to Country, family/community
+ *
+ * Seven interconnected domains (see src/types/multiParadigmDUI.ts):
+ * 1. Strong family (kinship) - proxied by communityBonds
+ * 2. Strong community (networks) - communityBonds
+ * 3. Connection to culture, Country, identity - trust + environment (implicit)
+ * 4. Self-determination (autonomy) - implicit in social cohesion
+ * 5. Health - proxied by QoL systems
+ * 6. Material wellbeing - proxied by QoL systems
+ * 7. Subjective wellbeing (Liyan feeling) - meaningCrisis (inverted)
+ *
+ * Current implementation (proxy-based, LOW-MEDIUM confidence):
+ * - Social Trust (40%): How people feel connected to others (Liyan social dimension)
+ * - Community Bonds (40%): Feeling of family/community connection (Liyan relational dimension)
+ * - Meaning Crisis inverted (20%): Subjective wellbeing / Liyan feeling component
+ *
+ * Emotional/Experiential dimension (CAVEAT 5 fix, Nov 16, 2025):
+ * All three metrics capture FEELING (not just structural connection):
+ * - Trust is about FEELING safe with others (not just network existence)
+ * - CommunityBonds is about FEELING connected (not just kinship structure)
+ * - MeaningCrisis is about FEELING purpose/belonging (Liyan holistic dimension)
+ *
+ * Country-centrality (not yet implemented):
+ * Future work should add explicit Country connection metrics (land access,
+ * environmental health felt connection). Country is foundational - all other
+ * domains are attached to it. Requires Indigenous land rights data (not globally available).
+ *
+ * Geographic specificity: Based on Australian Aboriginal frameworks (Sangha et al. 2024).
+ * Proxies (WVS social trust) likely generalize but not empirically verified globally.
  *
  * @param state - Current game state
  * @returns Indigenous score (0-100)
