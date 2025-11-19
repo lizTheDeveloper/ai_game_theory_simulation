@@ -4,6 +4,11 @@
 **Implementation:** `src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts`
 **Research:** `/research/paradigm_*.md` (5 files, ~67,000 words, 100+ sources)
 
+<<<<<<< HEAD
+=======
+**🔬 Latest Update:** Nov 16, 2025 - Multi-paradigm wellbeing verification COMPLETE (Sangha et al. 2024 + V-Dem 2025). Citations verified, critical validation CONDITIONAL PASS, implementation complete (commit 27c6d76). Indigenous paradigm Domain 3 restored ("Connection to culture, Country, and identity"), Liyan emotional dimension added, paradigms-as-lenses framing corrected. See `research/multi_paradigm_verification_summary_20251116.md` for full details.
+
+>>>>>>> origin/auto/worker-20251116_210001
 ## Overview
 
 The Multi-Paradigm DUI System tracks **four simultaneous, independent measures of societal success**, each representing a fundamentally different worldview about what constitutes a good society. Unlike traditional single-number metrics, this system **preserves value conflicts** rather than forcing consensus.
@@ -20,6 +25,13 @@ The Multi-Paradigm DUI System tracks **four simultaneous, independent measures o
 
 **Example Utopias (2023):** Norway (90/100), Finland (89/100), Denmark (88/100)
 **Example Dystopias:** Venezuela (15/100), China (25/100), Russia (18/100)
+
+**CRITICAL UPDATE (V-Dem 2025):** Liberal democracy is now a **minority global condition**:
+- Only **12% of global population** lives in liberal democracies (50-year low)
+- **Autocracies outnumber democracies** for first time in 20 years (91 vs 88 countries)
+- **72% of humanity (5.8B people)** under autocratic rule
+- **45 countries autocratizing** simultaneously (freedom of expression at 25-year low)
+- Western Liberal utopia represents **minority experience**, not universal trajectory
 
 **Core Values:**
 - Electoral democracy (free/fair elections, universal suffrage)
@@ -121,26 +133,33 @@ The Multi-Paradigm DUI System tracks **four simultaneous, independent measures o
 **Dystopia Definition:** Social fragmentation, anomie, isolation, meaning crisis
 
 **Example Utopias:** Bhutan (78/100), Norway (68/100), Denmark (72/100)
-**Example Dystopias:** Fragmented societies with low trust, high loneliness
+**Example Dystopias:** Fragmented societies with low trust, high loneliness, **cultural discontinuity**
 
-**Core Values:**
+**Core Values (Updated Nov 2025 - Sangha et al. 2024):**
+- **Country-connection** (access to ancestral lands, spiritual relationship to environment) **[FOUNDATIONAL]**
+- **Traditional Ecological Knowledge (TEK)** vitality (intergenerational transmission, caring-for-Country capabilities)
 - Social trust (generalized trust in others, institutional trust)
-- Community bonds (social support networks, volunteering, civic engagement)
-- Meaning & purpose (life satisfaction, sense of belonging)
-- Cultural vitality (linguistic diversity, traditional knowledge, cultural practices)
+- Community bonds (kinship networks, social support, civic engagement)
+- Self-determination (community governance, cultural autonomy)
+- Meaning & purpose (life satisfaction, holistic wellbeing - *Liyan*)
+- Cultural vitality (linguistic diversity, traditional practices, spiritual continuity)
 
-**7 Indicators:**
+**7 Indicators (Expanded Framework - Implementation Pending):**
+- **Country-Connection Index:** % population with access to ancestral lands/cultural sites **[NEW]**
+- **TEK Vitality:** Intergenerational knowledge transmission rates **[NEW]**
+- **Caring-for-Country Participation:** Active land/water stewardship rates **[NEW]**
 - Generalized Trust (% who trust most people - WVS)
-- Institutional Trust Composite (trust in government, legal system)
-- Social Support Index (% with someone to count on - Gallup)
-- Volunteering Rate (% population)
-- Life Satisfaction (0-10 Cantril ladder)
-- Loneliness Prevalence (% experiencing loneliness)
-- Linguistic Diversity Index (0-1)
+- Kinship Network Strength (multi-generational family connection)
+- Self-Determination Metric (community control over decisions)
+- Life Satisfaction (*Liyan* - holistic self-Country-community wellbeing)
 
-**Research:** `/research/paradigm_4_indigenous_communitarian_20251019.md` (91KB, 1,817 lines)
+**Research:**
+- Original: `/research/paradigm_4_indigenous_communitarian_20251019.md` (91KB, 1,817 lines)
+- **2024-2025 Update:** `/research/multi_paradigm_wellbeing_2024_2025_update.md` (Sangha et al. 2024)
 
-**NOTE:** This paradigm is the **most difficult to measure** quantitatively, as many Indigenous values resist Western metrics. The simulation uses proxy indicators while acknowledging epistemic humility.
+**CRITICAL UPDATE (Nov 2025):** Sangha et al. (2024) establish **Country (land/environment) as foundational**, not peripheral. Indigenous wellbeing frameworks emphasize holistic interconnection with Country as integrating foundation. Western metrics miss core Indigenous values (traditional knowledge, caring-for-Country capabilities, land-based spirituality).
+
+**NOTE:** This paradigm is the **most difficult to measure** quantitatively, as many Indigenous values resist Western metrics. **2024 research validates need for Country-centered metrics** (implementation pending).
 
 ---
 
@@ -555,7 +574,8 @@ The Multi-Paradigm DUI draws on **100+ peer-reviewed sources** across:
 - **v1.0** (Oct 19, 2025): Phase 1-2 research complete (5 files, 67K words)
 - **v2.0** (Oct 20, 2025): Phase 5-6 implementation complete (Monte Carlo integration, visualization)
 - **v2.1** (Oct 25, 2025): Wiki documentation complete (Phase 7)
+- **v2.2** (Nov 16, 2025): Multi-paradigm wellbeing verification complete (Sangha et al. 2024, V-Dem 2025 citations verified, Indigenous paradigm Domain 3 + Liyan dimension updated)
 
-**Research Archive:** `/research/paradigm_*.md`
-**Reviews:** `/reviews/multi-paradigm-dui-validation_20251019.md`, `/reviews/phase2-metric-mapping-validation_20251019.md`
-**Plans:** `/plans/completed/multi-paradigm-dui-phases-1-2_COMPLETE_20251020.md`
+**Research Archive:** `/research/paradigm_*.md`, `/research/multi_paradigm_verification_*.md` (988 lines, Nov 2025)
+**Reviews:** `/reviews/multi-paradigm-dui-validation_20251019.md`, `/reviews/phase2-metric-mapping-validation_20251019.md`, `/reviews/multi_paradigm_verification_critique_20251116.md` (383 lines, CONDITIONAL PASS)
+**Plans:** `/plans/completed/multi-paradigm-dui-phases-1-2_COMPLETE_20251020.md`, `/plans/completed/autonomous_session_nov16_2025_worker_COMPLETE.md`

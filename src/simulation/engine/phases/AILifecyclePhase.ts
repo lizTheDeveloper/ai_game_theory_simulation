@@ -18,6 +18,7 @@
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertAICapability } from '@/simulation/utils/assertions';
+import { updateAIPopulation } from '../../lifecycle';
 
 export class AILifecyclePhase implements SimulationPhase {
   readonly id = 'ai-lifecycle';
@@ -32,10 +33,7 @@ export class AILifecyclePhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Import and execute existing lifecycle logic
-    setDeterministicRng(rng);
-    const { updateAIPopulation } = require('../../lifecycle');
-
-    // TIER 2 Phase 4: Pass RNG for deterministic detection during testing phase
+    setDeterministicRng(rng);// TIER 2 Phase 4: Pass RNG for deterministic detection during testing phase
     updateAIPopulation(state, rng);
 
     // DEFENSIVE FIX (Nov 8, 2025): Round all AI capabilities to integers

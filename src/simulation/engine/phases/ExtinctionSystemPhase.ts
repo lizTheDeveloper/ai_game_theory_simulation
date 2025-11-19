@@ -28,6 +28,9 @@
 import type { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertDefined, assertProbability } from '@/simulation/utils/assertions';
+import { checkExtinctionTriggers, classifyExtinctionType } from '../../extinctions';
+import { progressExtinction } from '../../extinctions';
+import { updateScenarioPrerequisites, getScenarioSummary } from '../../catastrophicScenarios';
 
 export class ExtinctionSystemPhase implements SimulationPhase {
   readonly id = 'extinction-system';
@@ -78,8 +81,6 @@ export class ExtinctionSystemPhase implements SimulationPhase {
     }
 
     // Import and execute extinction trigger detection
-    const { checkExtinctionTriggers, classifyExtinctionType } = require('../../extinctions');
-
     const extinctionCheck = checkExtinctionTriggers(state, rng);
 
     // Validate extinction check result
@@ -99,18 +100,7 @@ export class ExtinctionSystemPhase implements SimulationPhase {
     if (!wasActive && state.extinctionState.active) {
       const classification = classifyExtinctionType(state);
 
-      // Validate classification confidence
-      assertProbability(classification.confidence, {
-        location: 'ExtinctionSystemPhase.executeExtinctionTriggers',
-        valueName: 'classification.confidence',
-        month: state.currentMonth,
-        additionalInfo: {
-          extinctionType: classification.type,
-          mechanism: classification.mechanism
-        }
-      });
-
-      // Store classification in extinction state
+      // Store classification (confidence is categorical: HIGH/MEDIUM/LOW)
       state.extinctionState.classification = classification;
       state.extinctionState.type = classification.type;
       state.extinctionState.mechanism = classification.mechanism;
@@ -153,15 +143,13 @@ export class ExtinctionSystemPhase implements SimulationPhase {
     }
 
     // Import and execute extinction progression
-    const { progressExtinction } = require('../../extinctions');
-
     const extinctionProgress = progressExtinction(state, rng);
 
     // Validate extinction progress values
-    if (extinctionProgress.newExtinctionState?.progress !== undefined) {
-      assertProbability(extinctionProgress.newExtinctionState.progress, {
+    if (extinctionProgress.newExtinctionState?.phaseProgress !== undefined) {
+      assertProbability(extinctionProgress.newExtinctionState.phaseProgress, {
         location: 'ExtinctionSystemPhase.executeExtinctionProgress',
-        valueName: 'extinctionProgress.newExtinctionState.progress',
+        valueName: 'extinctionProgress.newExtinctionState.phaseProgress',
         month: state.currentMonth
       });
     }
@@ -193,10 +181,7 @@ export class ExtinctionSystemPhase implements SimulationPhase {
   // ============================================================================
 
   private executeCatastrophicScenarios(state: GameState, rng: RNGFunction): GameEvent[] {
-    // Import catastrophic scenarios module
-    const { updateScenarioPrerequisites, getScenarioSummary } = require('../../catastrophicScenarios');
-
-    // Update scenario prerequisites (mutates state)
+    // Import catastrophic scenarios module// Update scenario prerequisites (mutates state)
     const newlyMetPrereqs = updateScenarioPrerequisites(state.catastrophicScenarios, state);
 
     const events: GameEvent[] = [];

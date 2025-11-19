@@ -6,9 +6,51 @@
  */
 
 import { describe, it, beforeEach } from 'node:test';
-import assert from 'node:assert';
+import assert, { AssertionError } from 'node:assert';
 import { PhaseOrchestrator, SimulationPhase, PhaseResult, RNGFunction } from '../PhaseOrchestrator';
 import { GameState, GameEvent } from '@/types/game';
+
+// Node.js test runner doesn't have expect, use assert instead
+const expect = (value: any) => ({
+  toThrow: (expectedError?: string | RegExp) => {
+    try {
+      if (typeof value === 'function') {
+        value();
+      }
+      throw new AssertionError({ message: 'Expected function to throw' });
+    } catch (error) {
+      if (expectedError) {
+        const message = (error as Error).message;
+        if (typeof expectedError === 'string') {
+          assert(message.includes(expectedError), `Expected error to include "${expectedError}", got: ${message}`);
+        } else {
+          assert(expectedError.test(message), `Expected error to match ${expectedError}, got: ${message}`);
+        }
+      }
+    }
+  },
+  toBe: (expected: any) => assert.strictEqual(value, expected),
+  toEqual: (expected: any) => assert.deepStrictEqual(value, expected),
+  toContain: (expected: any) => {
+    if (typeof value === 'string') {
+      assert(value.includes(expected), `Expected "${value}" to contain "${expected}"`);
+    } else if (Array.isArray(value)) {
+      assert(value.includes(expected), `Expected array to contain ${expected}`);
+    }
+  },
+  toHaveLength: (expected: number) => assert.strictEqual(value.length, expected),
+  not: {
+    toThrow: () => {
+      try {
+        if (typeof value === 'function') {
+          value();
+        }
+      } catch (error) {
+        throw new AssertionError({ message: `Expected function not to throw, but it threw: ${(error as Error).message}` });
+      }
+    }
+  }
+});
 
 // Helper to create a minimal test phase
 function createTestPhase(
@@ -96,7 +138,7 @@ describe('PhaseOrchestrator - Cycle Detection', () => {
       orchestrator.registerPhases([phaseA, phaseB]);
 
       expect(() => orchestrator.validate()).toThrow(/CIRCULAR DEPENDENCY DETECTED/);
-      expect(() => orchestrator.validate()).toThrow(/Phase A.*Phase B/s);
+      expect(() => orchestrator.validate()).toThrow(/Phase A.*Phase B/);
     });
 
     it('should detect 3-phase cycle', () => {

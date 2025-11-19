@@ -74,3 +74,20 @@ export function weightedAverage(values: [number, number][]): number {
   const weightedSum = values.reduce((sum, [value, weight]) => sum + value * weight, 0);
   return weightedSum / totalWeight;
 }
+
+/**
+ * Mulberry32 PRNG - Simple fast seeded random number generator
+ *
+ * @param seed - Seed value for deterministic random number generation
+ * @returns Function that generates random numbers in [0, 1)
+ */
+export function mulberry32(seed: number): () => number {
+  let state = seed;
+  return function() {
+    state |= 0;
+    state = state + 0x6D2B79F5 | 0;
+    let t = Math.imul(state ^ state >>> 15, 1 | state);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}

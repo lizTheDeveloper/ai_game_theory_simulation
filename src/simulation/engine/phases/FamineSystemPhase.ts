@@ -22,6 +22,8 @@ import {
   assertNonEmpty,
   assertInRange,
 } from '@/simulation/utils/assertions';
+import { checkRegionalFamineRisk } from '../../qualityOfLife';
+import { updateFamineSystem } from '../../../types/famine';
 
 export class FamineSystemPhase implements SimulationPhase {
   readonly id = 'famine_system';
@@ -38,14 +40,9 @@ export class FamineSystemPhase implements SimulationPhase {
     if (!state.famineSystem) return { events: [] };
     setDeterministicRng(rng);
 
-    // 1. Check regional biodiversity for new famine triggers (ecosystem collapse)
-    const { checkRegionalFamineRisk } = require('../../qualityOfLife');
-    checkRegionalFamineRisk(state, state.currentMonth);
+    // 1. Check regional biodiversity for new famine triggers (ecosystem collapse)checkRegionalFamineRisk(state, state.currentMonth);
 
-    // 2. Update active famines (progress death curves)
-    const { updateFamineSystem } = require('../../../types/famine');
-
-    // Validate AI capability aggregation (prevent NaN propagation)
+    // 2. Update active famines (progress death curves)// Validate AI capability aggregation (prevent NaN propagation)
     const totalAICapability = assertFinite(
       state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0),
       {

@@ -88,5 +88,5 @@ export interface HumanSocietyAgent {
   // Research: MDPI (2024) - Only 21% fundamentally redesigned workflows in 2024
   //           Those who did: strongly correlated with realizing tangible benefits
   //           McKinsey + IBM (2024) - Workflow redesign essential for AI value capture
-  workflowAdaptation?: number;  // [0,1] Depth of organizational change for AI integration (starts 0.21)
+  workflowAdaptation: number;  // [0,1] Depth of organizational change for AI integration (starts 0.21, always initialized)
 }
