@@ -1,13 +1,8 @@
 {
   "source": "ecological-boundaries",
   "version": "Richardson et al. 2023",
-<<<<<<< HEAD
-  "updateDate": "2025-11-18T04:39:03.190Z",
-  "expiryDate": "2030-11-17T04:39:03.190Z",
-=======
-  "updateDate": "2025-11-18T07:52:12.448Z",
-  "expiryDate": "2030-11-17T07:52:12.448Z",
->>>>>>> origin/claude/merge-remote-branches-01RyPg6X8etfwp46DznAhtBk
+  "updateDate": "2025-11-19T02:45:10.826Z",
+  "expiryDate": "2030-11-18T02:45:10.826Z",
   "recordCount": 9,
   "coverage": {
     "countries": 1
