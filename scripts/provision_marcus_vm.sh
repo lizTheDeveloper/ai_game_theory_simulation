@@ -310,7 +310,7 @@ install_python_deps() {
     print_step "$CURRENT_STEP"
 
     cd "$PROJECT_DIR"
-    pip3 install --quiet --break-system-packages anthropic psycopg2-binary redis
+    pip3 install --user --quiet anthropic psycopg2-binary redis
     print_success "Python dependencies installed"
 }
 
