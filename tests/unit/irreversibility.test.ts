@@ -13,7 +13,8 @@
  * @see src/simulation/utils/energyConstrainedCleanup.ts
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, beforeEach } from 'node:test';
+import assert from 'node:assert';
 import { applyEnergyConstrainedCleanup } from '../../src/simulation/utils/energyConstrainedCleanup';
 import type { GameState } from '../../src/types/game';
 import type { TechDefinition } from '../../src/simulation/techTree/comprehensiveTechTree';
@@ -63,14 +64,14 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
         reboundCoefficient: 0.2,
       } as TechDefinition;
 
-      expect(() => {
+      assert.throws(() => {
         applyEnergyConstrainedCleanup(
           mockState,
           mockTech,
           1.5,
           undefined as any
         );
-      }).toThrow(/RNG.*required|CRITICAL/i);
+      }, /RNG.*required|CRITICAL/i);
     });
 
     it('should throw error when RNG is null', () => {
@@ -81,14 +82,14 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
         deploymentLevel: 1.0,
       } as TechDefinition;
 
-      expect(() => {
+      assert.throws(() => {
         applyEnergyConstrainedCleanup(
           mockState,
           mockTech,
           1.5,
           null as any
         );
-      }).toThrow(/RNG.*required|CRITICAL/i);
+      }, /RNG.*required|CRITICAL/i);
     });
 
     it('should throw error when RNG is not a function', () => {
@@ -99,14 +100,14 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
         deploymentLevel: 1.0,
       } as TechDefinition;
 
-      expect(() => {
+      assert.throws(() => {
         applyEnergyConstrainedCleanup(
           mockState,
           mockTech,
           1.5,
           42 as any
         );
-      }).toThrow(/RNG.*required|function|CRITICAL/i);
+      }, /RNG.*required|function|CRITICAL/i);
     });
 
     it('should accept valid RNG function', () => {
@@ -117,14 +118,14 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
         deploymentLevel: 1.0,
       } as TechDefinition;
 
-      expect(() => {
+      assert.doesNotThrow(() => {
         applyEnergyConstrainedCleanup(
           mockState,
           mockTech,
           1.5,
           mockRng
         );
-      }).not.toThrow();
+      });
     });
 
     it('should call RNG at least once during execution', () => {
@@ -142,7 +143,7 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       rngCallCount = 0;
       applyEnergyConstrainedCleanup(mockState, mockTech, 1.5, mockRng);
 
-      expect(rngCallCount).toBeGreaterThan(0);
+      assert.ok(rngCallCount > 0, 'rngCallCount should be > 0');
     });
   });
 
@@ -164,11 +165,11 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       );
 
       // Legacy tech uses base effectiveness only
-      expect(result.grossEffectiveness).toBeCloseTo(0.08, 5); // 0.10 * 0.8
-      expect(result.concentrationFactor).toBe(1.0);
-      expect(result.energyFactor).toBe(1.0);
-      expect(result.rebound).toBe(0);
-      expect(result.netEffectiveness).toBeCloseTo(0.08, 5);
+      assert.ok(Math.abs(result.grossEffectiveness - 0.08) < 10**(-5), 'grossEffectiveness should be close to 0.08'); // 0.10 * 0.8
+      assert.strictEqual(result.concentrationFactor, 1.0);
+      assert.strictEqual(result.energyFactor, 1.0);
+      assert.strictEqual(result.rebound, 0);
+      assert.ok(Math.abs(result.netEffectiveness - 0.08) < 10**(-5), 'netEffectiveness should be close to 0.08');
     });
 
     it('should handle tech with simple energy requirement number', () => {
@@ -189,9 +190,9 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       );
 
       // Should apply energy model
-      expect(result.concentrationFactor).toBeLessThan(1.0);
-      expect(result.energyFactor).toBeLessThanOrEqual(1.0);
-      expect(result.netEffectiveness).toBeLessThan(0.15);
+      assert.ok(result.concentrationFactor < 1.0, 'concentrationFactor should be < 1.0');
+      assert.ok(result.energyFactor <= 1.0, 'energyFactor should be <= 1.0');
+      assert.ok(result.netEffectiveness < 0.15, 'netEffectiveness should be < 0.15');
     });
   });
 
@@ -217,8 +218,8 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       // Groundwater: 500 ng/L typical, 1000000 ng/L tech threshold
       // Gap = 1000000 / 500 = 2000 (6 orders)
       // Factor = 1/√2000 ≈ 0.0224 (2.24%)
-      expect(result.concentrationFactor).toBeGreaterThan(0.01);
-      expect(result.concentrationFactor).toBeLessThan(0.05);
+      assert.ok(result.concentrationFactor > 0.01, 'concentrationFactor should be > 0.01');
+      assert.ok(result.concentrationFactor < 0.05, 'concentrationFactor should be < 0.05');
     });
 
     it('should calculate power law scaling for concentrated waste (no gap)', () => {
@@ -245,8 +246,8 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       // Note: Current implementation defaults to groundwater (6 orders gap)
       // To trigger concentratedWaste path, would need explicit concentration type
       // This test validates that concentration penalty is applied
-      expect(result.concentrationFactor).toBeGreaterThan(0.01);
-      expect(result.concentrationFactor).toBeLessThan(0.05);
+      assert.ok(result.concentrationFactor > 0.01, "concentrationFactor should be > 0.01");
+      assert.ok(result.concentrationFactor < 0.05, "concentrationFactor should be < 0.05");
     });
 
     it('should show extreme penalty for rainwater (9 orders gap)', () => {
@@ -271,7 +272,7 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
 
       // At 6 orders (groundwater default): ~2% effectiveness
       // At 9 orders (rainwater - not yet implemented): ~0.003% effectiveness
-      expect(result.concentrationFactor).toBeLessThan(0.05);
+      assert.ok(result.concentrationFactor < 0.05, "concentrationFactor should be < 0.05");
     });
   });
 
@@ -302,8 +303,8 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       // Required = 0.5 * 10 = 5 EJ (rough estimate based on kWhPerKg conversion)
       // Factor = min(1.0, 950 / 5) = 1.0 (capped)
       // Note: Actual calculation may differ based on implementation details
-      expect(result.energyFactor).toBeGreaterThan(0.1);
-      expect(result.energyFactor).toBeLessThanOrEqual(1.0);
+      assert.ok(result.energyFactor > 0.1, "energyFactor should be > 0.1");
+      assert.ok(result.energyFactor <= 1.0, "energyFactor should be <= 1.0");
     });
 
     it('should be constrained when renewable surplus is limited', () => {
@@ -328,7 +329,7 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       );
 
       // Energy should be limiting factor
-      expect(result.energyFactor).toBeLessThan(0.1);
+      assert.ok(result.energyFactor < 0.1, "energyFactor should be < 0.1");
     });
 
     it('should be 0 when demand exceeds renewable capacity', () => {
@@ -353,8 +354,8 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       );
 
       // No surplus = no cleanup
-      expect(result.energyFactor).toBe(0);
-      expect(result.netEffectiveness).toBe(0);
+      assert.strictEqual(result.energyFactor, 0);
+      assert.strictEqual(result.netEffectiveness, 0);
     });
   });
 
@@ -380,12 +381,12 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       );
 
       // Rebound should reduce net effectiveness
-      expect(result.rebound).toBeGreaterThan(0);
-      expect(result.netEffectiveness).toBeLessThan(result.grossEffectiveness);
+      assert.ok(result.rebound > 0, "rebound should be > 0");
+      assert.ok(result.netEffectiveness < result.grossEffectiveness, "netEffectiveness should be < result.grossEffectiveness");
 
       // Rebound = grossEffectiveness * 0.30
       const expectedRebound = result.grossEffectiveness * 0.30;
-      expect(result.rebound).toBeCloseTo(expectedRebound, 6);
+      assert.ok(Math.abs(result.rebound - expectedRebound) < 10**(-6), "rebound should be close to expectedRebound");
     });
 
     it('should sample from uncertainty range when specified', () => {
@@ -413,7 +414,7 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       // Sampled coefficient = 0.10 + 0.5 * (0.50 - 0.10) = 0.30
       const sampledCoefficient = 0.30;
       const expectedRebound = result.grossEffectiveness * sampledCoefficient;
-      expect(result.rebound).toBeCloseTo(expectedRebound, 6);
+      assert.ok(Math.abs(result.rebound - expectedRebound) < 10**(-6), "rebound should be close to expectedRebound");
     });
 
     it('should sample minimum from uncertainty range when RNG = 0', () => {
@@ -441,7 +442,7 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
 
       // Sampled coefficient = 0.05 (minimum)
       const expectedRebound = result.grossEffectiveness * 0.05;
-      expect(result.rebound).toBeCloseTo(expectedRebound, 6);
+      assert.ok(Math.abs(result.rebound - expectedRebound) < 10**(-6), "rebound should be close to expectedRebound");
     });
 
     it('should sample maximum from uncertainty range when RNG = 1', () => {
@@ -469,7 +470,7 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
 
       // Sampled coefficient = 0.90 (maximum)
       const expectedRebound = result.grossEffectiveness * 0.90;
-      expect(result.rebound).toBeCloseTo(expectedRebound, 6);
+      assert.ok(Math.abs(result.rebound - expectedRebound) < 10**(-6), "rebound should be close to expectedRebound");
     });
 
     it('should skip rebound when avoidsRebound is true', () => {
@@ -493,8 +494,8 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       );
 
       // No rebound
-      expect(result.rebound).toBe(0);
-      expect(result.netEffectiveness).toBe(result.grossEffectiveness);
+      assert.strictEqual(result.rebound, 0);
+      assert.strictEqual(result.netEffectiveness, result.grossEffectiveness);
     });
 
     it('should skip rebound when coefficient is undefined', () => {
@@ -517,8 +518,8 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       );
 
       // No rebound
-      expect(result.rebound).toBe(0);
-      expect(result.netEffectiveness).toBe(result.grossEffectiveness);
+      assert.strictEqual(result.rebound, 0);
+      assert.strictEqual(result.netEffectiveness, result.grossEffectiveness);
     });
   });
 
@@ -555,18 +556,18 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
         result.concentrationFactor *
         result.energyFactor;
 
-      expect(result.grossEffectiveness).toBeCloseTo(expectedGross, 6);
+      assert.ok(Math.abs(result.grossEffectiveness - expectedGross) < 10**(-6), "grossEffectiveness should be close to expectedGross");
 
       // Rebound = gross * 0.20
       const expectedRebound = result.grossEffectiveness * 0.20;
-      expect(result.rebound).toBeCloseTo(expectedRebound, 6);
+      assert.ok(Math.abs(result.rebound - expectedRebound) < 10**(-6), "rebound should be close to expectedRebound");
 
       // Net = gross - rebound
       const expectedNet = result.grossEffectiveness - result.rebound;
-      expect(result.netEffectiveness).toBeCloseTo(expectedNet, 6);
+      assert.ok(Math.abs(result.netEffectiveness - expectedNet) < 10**(-6), "netEffectiveness should be close to expectedNet");
 
       // Net should be much smaller than base due to constraints
-      expect(result.netEffectiveness).toBeLessThan(baseEffectiveness * 0.1);
+      assert.ok(result.netEffectiveness < baseEffectiveness * 0.1, "netEffectiveness should be < baseEffectiveness * 0.1");
     });
 
     it('should ensure net effectiveness is never negative', () => {
@@ -590,7 +591,7 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       );
 
       // Even with extreme rebound, net should be clamped to 0
-      expect(result.netEffectiveness).toBeGreaterThanOrEqual(0);
+      assert.ok(result.netEffectiveness >= 0, "netEffectiveness should be >= 0");
     });
   });
 
@@ -607,9 +608,9 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
         minimumConcentration: { ngPerL: 1000000 },
       } as TechDefinition;
 
-      expect(() => {
+      assert.throws(() => {
         applyEnergyConstrainedCleanup(mockState, mockTech, 1.5, nanRng);
-      }).toThrow(/finite|NaN/i);
+      }, /finite|NaN/i);
     });
 
     it('should validate sampled rebound coefficient is finite', () => {
@@ -625,9 +626,9 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       } as TechDefinition;
 
       // Test with valid RNG - should not throw
-      expect(() => {
+      assert.doesNotThrow(() => {
         applyEnergyConstrainedCleanup(mockState, mockTech, 1.5, mockRng);
-      }).not.toThrow();
+      });
     });
 
     it('should validate net effectiveness is finite', () => {
@@ -648,11 +649,11 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
         mockRng
       );
 
-      expect(Number.isFinite(result.netEffectiveness)).toBe(true);
-      expect(Number.isFinite(result.grossEffectiveness)).toBe(true);
-      expect(Number.isFinite(result.concentrationFactor)).toBe(true);
-      expect(Number.isFinite(result.energyFactor)).toBe(true);
-      expect(Number.isFinite(result.rebound)).toBe(true);
+      assert.strictEqual(Number.isFinite(result.netEffectiveness), true);
+      assert.strictEqual(Number.isFinite(result.grossEffectiveness), true);
+      assert.strictEqual(Number.isFinite(result.concentrationFactor), true);
+      assert.strictEqual(Number.isFinite(result.energyFactor), true);
+      assert.strictEqual(Number.isFinite(result.rebound), true);
     });
   });
 
@@ -681,8 +682,8 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
 
       // At 6 orders gap: effectiveness ~2-3%
       // Theoretical 100% → actual 2-3%
-      expect(result.concentrationFactor).toBeGreaterThan(0.015);
-      expect(result.concentrationFactor).toBeLessThan(0.04);
+      assert.ok(result.concentrationFactor > 0.015, "concentrationFactor should be > 0.015");
+      assert.ok(result.concentrationFactor < 0.04, "concentrationFactor should be < 0.04");
     });
 
     it('should demonstrate rebound reduces cleanup by 10-50%', () => {
@@ -707,11 +708,11 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
 
       // Rebound should be 30% of gross effectiveness
       const reboundFraction = result.rebound / result.grossEffectiveness;
-      expect(reboundFraction).toBeCloseTo(0.30, 2);
+      assert.ok(Math.abs(reboundFraction - 0.30) < 10**(-2), "reboundFraction should be close to 0.30");
 
       // Net effectiveness should be 70% of gross
       const netFraction = result.netEffectiveness / result.grossEffectiveness;
-      expect(netFraction).toBeCloseTo(0.70, 2);
+      assert.ok(Math.abs(netFraction - 0.70) < 10**(-2), "netFraction should be close to 0.70");
     });
 
     it('should demonstrate prevention avoids all constraints', () => {
@@ -733,9 +734,9 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       );
 
       // Prevention: no constraints, no rebound
-      expect(result.concentrationFactor).toBe(1.0);
-      expect(result.energyFactor).toBe(1.0);
-      expect(result.rebound).toBe(0);
+      assert.strictEqual(result.concentrationFactor, 1.0);
+      assert.strictEqual(result.energyFactor, 1.0);
+      assert.strictEqual(result.rebound, 0);
       // Note: prevention tech won't have novelEntitiesReduction, so base = 0
       // This validates that legacy path is used (returns 0)
     });
