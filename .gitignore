@@ -35,6 +35,15 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env*.template
+
+# Secrets management (NEVER commit actual secrets)
+.env.secrets
+.env.local
+config/secrets-vault.json
+config/secrets-aws.json
+*_credentials.txt
+secrets/
 
 # Secrets management (NEVER commit actual secrets)
 .env.secrets
