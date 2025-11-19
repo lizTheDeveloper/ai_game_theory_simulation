@@ -380,19 +380,21 @@ run_migrations() {
     cd "$PROJECT_DIR"
 
     # Check if migrations directory exists
-    if [ -d "src/platform/database/migrations" ]; then
+    MIGRATIONS_DIR="$PROJECT_DIR/src/platform/database/migrations"
+    if [ -d "$MIGRATIONS_DIR" ]; then
         # Fix permissions on migration files so postgres can read them
-        chmod +r src/platform/database/migrations/*.sql 2>/dev/null || true
+        chmod +r "$MIGRATIONS_DIR"/*.sql 2>/dev/null || true
 
-        for migration in src/platform/database/migrations/*.sql; do
+        for migration in "$MIGRATIONS_DIR"/*.sql; do
             if [ -f "$migration" ]; then
                 print_step "Applying $(basename "$migration")..."
-                sudo -u postgres psql -d marcus_production -f "$migration" -q 2>&1 || true
+                # Use absolute path and run from home directory (accessible to postgres)
+                (cd ~ && sudo -u postgres psql -d marcus_production -f "$migration" -q 2>&1) || print_warning "Migration $(basename "$migration") may have already been applied"
             fi
         done
         print_success "Database migrations applied"
     else
-        print_warning "No migrations directory found, skipping"
+        print_warning "No migrations directory found at $MIGRATIONS_DIR, skipping"
     fi
 }
 
