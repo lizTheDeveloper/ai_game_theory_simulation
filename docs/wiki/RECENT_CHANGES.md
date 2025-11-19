@@ -3,6 +3,30 @@
 This file contains the complete history of recent changes to the AI Game Theory Simulation. For the most recent updates, see [README.md](./README.md).
 
 ---
+
+## 🧪 Test Framework Clarification (November 19, 2025)
+
+**Commit:** 8dcda97 (Nov 19, 2025)
+
+**Summary:** Temporarily skipped two test files that were using vitest syntax while the project uses Node's native test runner. This unblocks the test suite pending conversion.
+
+**Test Framework:**
+- **Used:** Node's native test runner (`node --test` via tsx)
+- **NOT used:** vitest, jest
+- **Assertion style:** Node's `assert` module (not vitest's `expect` API)
+
+**Files Skipped (Pending Conversion):**
+- `tests/integration/novel-entities-irreversibility.test.ts.SKIP` - Uses vitest `expect` syntax
+- `tests/unit/irreversibility.test.ts.SKIP` - Uses vitest `expect` syntax
+
+**Conversion Required:**
+These files need to be converted from vitest's `expect` API to Node's `assert` API before re-enabling. This is a technical debt item tracked for future work.
+
+**Documentation Updated:**
+- `docs/COMMANDS.md` - Added "Test Framework" section clarifying Node native test runner usage
+
+---
+
 <<<<<<< HEAD
 
 <<<<<<< HEAD
