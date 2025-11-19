@@ -35,12 +35,15 @@ GRANT ALL PRIVILEGES ON DATABASE $TEST_DB TO $TEST_USER;
 SQL
 
 # Configure PostgreSQL to allow password authentication for test user
-if ! grep -q "host.*marcus_test.*marcus.*md5" /etc/postgresql/*/main/pg_hba.conf; then
+if ! sudo grep -q "host.*marcus_test.*marcus.*md5" /etc/postgresql/*/main/pg_hba.conf 2>/dev/null; then
     echo "Configuring PostgreSQL authentication..."
-    sudo sed -i "/^# Database administrative login by Unix domain socket/i # MARCUS test database\nhost    marcus_test     marcus          127.0.0.1/32            md5\nhost    marcus_test     marcus          ::1/128                 md5" /etc/postgresql/*/main/pg_hba.conf
-    
+    sudo sed -i "/^# Database administrative login by Unix domain socket/i # MARCUS test database\nhost    marcus_test     marcus          127.0.0.1/32            md5\nhost    marcus_test     marcus          ::1/128                 md5\n" /etc/postgresql/*/main/pg_hba.conf
+
     # Reload PostgreSQL to apply changes
     sudo systemctl reload postgresql
+
+    # Wait for reload to complete
+    sleep 2
 fi
 
 # Test connection
