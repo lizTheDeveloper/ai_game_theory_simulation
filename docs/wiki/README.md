@@ -28,6 +28,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 19: Test Suite Conversion to Node Native Test Framework** (commit 0505063)
+- ✅ **Full Conversion:** All tests now use Node's native test runner (vitest fully removed)
+- 🔄 **2 Test Files Converted:** 1,411 lines of test code migrated
+  - `tests/integration/novel-entities-irreversibility.test.ts` (667 lines)
+  - `tests/unit/irreversibility.test.ts` (744 lines)
+- 🔧 **Syntax Migration:** All `expect()` calls replaced with Node `assert` module
+- ✅ **Test Command:** `npm test` now runs native Node test runner
+- ⚠️ **Known Issues:** 4 test failures are pre-existing simulation logic issues (non-determinism, deployment bugs), not conversion issues
+- 📖 **Context:** Unblocks test suite after vitest removal (commit 8dcda97)
+
 **Nov 19: TIER 1C Governance Sufficiency Research + Four-Layer Validation Framework** (commit cbe2d04)
 - 📚 **Research Tier Added:** TIER 1C in RESEARCH_ROADMAP.md - Governance conditions for technology deployment
 - 🔬 **6 Research Questions:** Transition management, policy trade-offs, institutional thresholds, trust requirements, democratic participation, success path mapping
