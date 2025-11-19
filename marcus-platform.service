@@ -1,58 +1,27 @@
-# MARCUS 3.0 Platform - systemd Service Unit
-#
-# Installation:
-#   sudo cp marcus-platform.service /etc/systemd/system/
-#   sudo systemctl daemon-reload
-#   sudo systemctl enable marcus-platform
-#   sudo systemctl start marcus-platform
-#
-# Management:
-#   sudo systemctl status marcus-platform
-#   sudo systemctl stop marcus-platform
-#   sudo systemctl restart marcus-platform
-#   sudo journalctl -u marcus-platform -f
-#
-# Requirements:
-#   - Node.js 18+ installed
-#   - PostgreSQL 14+ running
-#   - Redis 6.0+ running
-#   - User 'marcus' created: sudo useradd -r -s /bin/bash marcus
-#   - App directory: /opt/marcus (or update WorkingDirectory)
-
 [Unit]
 Description=MARCUS 3.0 Citation Integrity Platform
 Documentation=https://github.com/404GeneNotFound/ai_game_theory_simulation
 After=network.target postgresql.service redis.service
 Wants=postgresql.service redis.service
-ConditionPathExists=/opt/marcus
 
 [Service]
 Type=simple
-User=marcus
-Group=marcus
-WorkingDirectory=/opt/marcus
+User=g7throwawayplz
+WorkingDirectory=/home/g7throwawayplz/ai_game_theory_simulation
+EnvironmentFile=/home/g7throwawayplz/ai_game_theory_simulation/.env
 
-# Environment (use EnvironmentFile for secrets)
-Environment=NODE_ENV=production
-Environment=NODE_OPTIONS=--max-old-space-size=2048
-EnvironmentFile=/opt/marcus/.env
-
-# Start command
-ExecStart=/usr/bin/node /opt/marcus/dist/platform/startup.js
+# Production start command (requires build to exist)
+ExecStart=/usr/bin/npm start
 
 # Restart policy
 Restart=on-failure
-RestartSec=10s
-StartLimitIntervalSec=60s
+RestartSec=10
+StartLimitInterval=200
 StartLimitBurst=5
 
 # Resource limits
 LimitNOFILE=65536
 LimitNPROC=4096
-
-# Memory limit (optional - adjust as needed)
-MemoryMax=2G
-MemoryHigh=1.5G
 
 # Logging
 StandardOutput=journal
@@ -63,13 +32,9 @@ SyslogIdentifier=marcus-platform
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
-ProtectHome=true
-ReadWritePaths=/opt/marcus/logs /opt/marcus/tmp
-
-# Process management
-KillMode=mixed
-KillSignal=SIGTERM
-TimeoutStopSec=30s
+ProtectHome=read-only
+ReadWritePaths=/home/g7throwawayplz/ai_game_theory_simulation/logs
+ReadWritePaths=/home/g7throwawayplz/ai_game_theory_simulation/.next
 
 [Install]
 WantedBy=multi-user.target
