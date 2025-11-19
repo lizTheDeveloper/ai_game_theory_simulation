@@ -75,8 +75,10 @@ describe('Auth Flow Integration Tests', () => {
         password_hash VARCHAR(255) NOT NULL,
         role VARCHAR(50) DEFAULT 'viewer',
         is_active BOOLEAN DEFAULT true,
+        email_verified BOOLEAN DEFAULT false,
         failed_login_attempts INTEGER DEFAULT 0,
         locked_until TIMESTAMP,
+        last_login TIMESTAMP,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
