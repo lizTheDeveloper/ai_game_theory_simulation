@@ -38,26 +38,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Current Initiatives:**
 
-**⚠️ Nov 20: Split-Brain Error Handling Fix IN PROGRESS** (commit 6ab69c6)
-- 🎯 **Status:** PARTIAL (merge conflicts need resolution)
-- 🐛 **Issue:** CRITICAL architecture review identified mixed error handling - some paths use assertions (fail loud), others use `??` fallbacks (fail silent)
-- 🔧 **Fixes Applied:**
-  - **17 calculation fallbacks replaced** with proper assertion utilities
-  - **3 CRITICAL endGame.ts fixes** affecting extinction classification (initialPopulation fallbacks)
-  - **5 IrreversibilityTrackingPhase fixes** (temperature anomaly, ocean pH, habitat cover)
-  - **2 TransitionMortalityPhase fixes** (AI agent capability calculations)
-  - **Backwards assertion pattern fixed** (fallbacks defeating assertFinite calls)
-- 📁 **Files Modified:** 7 core simulation files
-  - behavioralDetection.ts, endGame.ts, IrreversibilityTrackingPhase.ts
-  - PlanetaryBoundariesPhase.ts, TransitionMortalityPhase.ts
-  - nitrogenFoodCoupling.ts, stateValidation.ts
-- ⚠️ **Merge Conflicts:** behavioralDetection.ts, IrreversibilityTrackingPhase.ts need resolution
-- 📊 **New Profiling Tool:** scripts/profilePhasePerformance.ts (120ms budget validation)
-- 📖 **Documentation:** reviews/split_brain_error_handling_fix_20251120.md (353 lines)
-- 🎯 **Next Steps:**
-  - Resolve merge conflicts (2 files)
-  - Run Monte Carlo N=10 validation
-  - Verify no assertion errors in normal simulation flow
+**Nov 20: Machine Learning Early Warning Systems Research Added** (commit 094ce5c)
+- 🔬 **Research Update:** Added 2023-2024 ML/early warning systems to famine distribution research
+- 📊 **New Citations:**
+  - Foini et al. (2023): XGBoost 30-day food insecurity predictions (6 countries)
+  - Busker et al. (2024): Horn of Africa ML models (12-month prediction horizon)
+- 🎯 **Key Insight:** Famine predictability (R² > 0.6 at 3-month lead) validates Sen's entitlement framework
+  - If famines were weather-driven (random), they'd be unpredictable beyond 7-14 days
+  - 30-day to 12-month predictability confirms structural causes dominate (distribution failures, conflict)
+- ✅ **Research Quality:** 87% peer-reviewed, 45% from 2023-2025 (improved from 85%/40%)
+- 📖 **File Updated:** `research/famine_distribution_mechanisms_20251030.md` (+97 lines ML analysis)
 
 **Nov 20: Three-Phase Coordination Implementation MERGED** (commit 8da0700)
 - ✅ **Status:** IMPLEMENTED (awaiting research verification)
@@ -520,7 +510,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Files Updated:**
   1. `GOD_MODE_ANALYSIS_model_mechanisms_20251110.md` - Replaced Ehrlich 1970 with 2023-2025 empirical evidence
   2. `bifurcation_empirical_validation_20251112.md` - Verified 2024-2025 literature still shows qualitative trends
-  3. `famine_distribution_mechanisms_20251030.md` - Already current (verified)
+  3. `famine_distribution_mechanisms_20251030.md` - Updated Nov 20 with ML/early warning systems
 - 📚 **New Research File:** `positive_tipping_points_2024_2025_20251114.md` (1,050 lines)
   - Comprehensive 2024-2025 literature review on positive feedback mechanisms
   - Solar energy momentum (Nijsse et al. 2023, Nature Communications, 847 citations)
