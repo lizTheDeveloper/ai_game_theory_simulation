@@ -369,6 +369,9 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     // Research: Regional overuse patterns (55% South Asian rice), yield penalty curves
     // Expected impact: Realistic nitrogen-food coupling with regional differentiation
     regionalNitrogenManagement: initializeRegionalNitrogenManagement(),
+    // Global Food Production Index (Nov 20, 2025)
+    // Initialized to baseline (1.0), updated by NitrogenFoodCouplingPhase each step
+    globalFoodProductionIndex: 1.0,
   };
 }
 
@@ -894,22 +897,18 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     if (system.legacyNutrientStock) {
       // Import update functions dynamically to avoid circular dependencies
       const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
-      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
 
-      // Get deployed nitrogen-reducing technologies
-      // TODO (TIER 2 HIGH): Connect to actual technology deployment
-      // 6 biogeochemical restoration technologies from research (nitrogen_food_coupling_20251115.md):
-      // 1. Precision agriculture (25-30% N reduction) - TIER 3 or god mode policy
-      // 2. Vertical/indoor farming (60% N reduction) - TIER 3 or god mode policy
-      // 3. Food waste reduction (30% demand reduction) - TIER 3 or god mode policy
-      // 4. Nitroplast integration (20-40% reduction, 2040+, 40% success probability) - TIER 4 breakthrough
-      // 5. Precision fermentation (30-50% agricultural N reduction) - TIER 3 or god mode policy
-      // 6. Dietary shift (protein transition 50:50 A:P ratio) - TIER 3 or god mode policy
-      const deployedTechEffectiveness: number[] = [];
-      // For now, no technologies deployed (baseline scenario)
-
-      // Update nitrogen-food coupling and get global food production impact
-      globalFoodProductionIndex = updateNitrogenFoodCoupling(state, deployedTechEffectiveness);
+      // CRITICAL FIX (Nov 20, 2025): Read globalFoodProductionIndex from state
+      // NitrogenFoodCouplingPhase (order 19.6) writes this value
+      // This prevents race condition from calling updateNitrogenFoodCoupling() multiple times
+      globalFoodProductionIndex = assertStateProperty(
+        state.planetaryBoundariesSystem,
+        'globalFoodProductionIndex',
+        {
+          location: 'updatePlanetaryBoundaries (requires NitrogenFoodCouplingPhase)',
+          month: state.currentMonth
+        }
+      );
 
       // Current nitrogen and phosphorus inputs (Mt/month)
       // Food production index can modify this (lower food production = less nitrogen needed)
@@ -928,23 +927,10 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       effectivePhosphorus = currentPhosphorusInput;
     }
 
-    // NOTE (Roy, Nov 18, 2025): Removed first biogeochemicalValue calculation (lines 936-950)
-    // - Was immediately overwritten by second calculation after legacy stocks update
-    // - Second calculation (line 973) uses updated effectiveNitrogen/Phosphorus values
-    // - First calculation was never actually used
-
-    if (system.legacyNutrientStock) {
-      // Import the update function dynamically to avoid circular dependencies
-      const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
-      const effectivePollution = updateLegacyNutrientStocks(
-        state,
-        currentNitrogenInputMonthly,
-        currentPhosphorusInputMonthly
-      );
-
-      effectiveNitrogen = effectivePollution.effectiveNitrogen;
-      effectivePhosphorus = effectivePollution.effectivePhosphorus;
-    }
+    // NOTE (Roy, Nov 18 & Nov 20, 2025): Removed DUPLICATE biogeochemical calculation
+    // - Lines 897-928 already update legacy nutrients AND set effectiveNitrogen/Phosphorus
+    // - Duplicate block (lines 935-946) was calling updateLegacyNutrientStocks() AGAIN with wrong variables
+    // - This was leftover dead code from refactoring
 
     // Normalize to boundary scale
     // Baseline (2025): 10 Mt N/month + 2.08 Mt P/month = 12.08 Mt/month total → boundary value 2.94
@@ -959,12 +945,9 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       valueName: 'biogeochemical_flows.currentValue',
       month: state.currentMonth,
       additionalInfo: {
-        reserves,
-        depletion,
         effectiveNitrogen,
         effectivePhosphorus,
-        currentNitrogenInputMonthly,
-        currentPhosphorusInputMonthly
+        globalFoodProductionIndex
       }
     });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
