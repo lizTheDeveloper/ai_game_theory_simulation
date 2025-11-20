@@ -1,19 +1,21 @@
 ---
-oldest_source: 2025
+oldest_source: 2024
 newest_source: 2025
-last_verified: 2025-11-16
-verification_status: CURRENT
-used_in_simulation: false
+last_verified: 2025-11-19
+verification_status: UPDATED
+used_in_simulation: true
 priority: HIGH
-research_quality: A+ (100% peer-reviewed, 2025 publication)
+research_quality: A+ (100% peer-reviewed, 2024-2025 publications)
+sources_added: Bouttes_et_al_2025_coral_carbonate_production, Jury_et_al_2024_coral_resilience
 ---
 
 # Ocean Acidification: Seventh Planetary Boundary Crossed (2025)
 
-**Date:** November 16, 2025
+**Date:** November 16, 2025 (Updated: November 19, 2025)
 **Researcher:** Autonomous Researcher
 **Purpose:** Document the 2025 discovery that ocean acidification crossed its planetary boundary in 2020, becoming the 7th of 9 boundaries breached
 **Status:** PUBLISHED - Peer-reviewed in Global Change Biology (2025)
+**Update:** Added 2024-2025 coral reef carbonate production and resilience research
 
 ---
 
@@ -221,6 +223,8 @@ const habitatLoss = {
 
 ### 6.3 Future Projections (SSP Scenarios)
 
+#### Standard Projections (Atmospheric Chemistry)
+
 **Under current emissions (SSP2-4.5):**
 - **2050:** ΩArag ~2.6 global average (26% reduction), 80% of ocean crossed
 - **2100:** ΩArag ~2.2 (37% reduction), 95%+ ocean crossed, widespread ecosystem collapse
@@ -230,6 +234,48 @@ const habitatLoss = {
 - **2100:** ΩArag ~1.8 (49% reduction), aragonite undersaturation in polar surface waters
 
 **Threshold for aragonite undersaturation:** ΩArag < 1.0 (seawater actively dissolves shells)
+
+#### Coral Reef Carbonate Production (Bouttes et al. 2025)
+
+**New finding:** Global climate-coral reef coupled model projects catastrophic decline in reef calcification by 2100.
+
+**Citation:** Bouttes, N., Kwiatkowski, L., Bougeot, E., Berger, M., Brovkin, V., & Munhoven, G. (2025). Projections of coral reef carbonate production from a global climate–coral reef coupled model. *Biogeosciences*, 22, 4531–4544. https://doi.org/10.5194/bg-22-4531-2025
+
+**Carbonate production by 2100 (% of preindustrial):**
+
+| Scenario | Without Thermal Adaptation | With Thermal Adaptation |
+|----------|----------------------------|-------------------------|
+| **SSP1-2.6** | 0–50% | 70–76% |
+| **SSP2-4.5** | 0% (ceased) | ~50% |
+| **SSP3-7.0** | 0% (ceased) | <25% |
+| **SSP5-8.5** | 0% (ceased) | <25% |
+
+**Critical threshold:** Net dissolution expected when atmospheric CO₂ reaches **560 ppm** (~2050 under current emissions)
+
+**Simulation implications:**
+- Even optimistic scenarios (SSP1-2.6 with adaptation) show 24–30% reef loss
+- Without thermal adaptation, reefs collapse entirely under all scenarios except SSP1-2.6
+- Transition to net dissolution = ecosystem collapse (dissolution exceeds growth)
+
+#### Coral Resilience Under Combined Stressors (Jury et al. 2024)
+
+**Citation:** Jury CP, et al. (2024). Experimental coral reef communities transform yet persist under mitigated future ocean warming and acidification. *Proc Natl Acad Sci U S A*, 121(45):e2407112121.
+
+**Experimental conditions (2-year study):**
+- **+2°C warming** + **-0.2 pH units** (acidification) combined
+- Aligns with Paris Agreement mitigation targets
+
+**Key findings:**
+- Coral communities **persist as transformed ecosystems** rather than collapsing entirely
+- **Biodiversity maintained** despite structural changes
+- **Calcification reduced** but not eliminated
+- Communities shift to novel species compositions ("no-analog ecosystems")
+
+**Simulation implication:** Coral reefs may not "disappear" but transform into degraded states with reduced function:
+- Lower biodiversity
+- Reduced calcification rates (50–75% of baseline)
+- Altered species composition (loss of branching corals, persistence of massive corals)
+- Maintained ecosystem presence but reduced ecosystem services
 
 ---
 
@@ -339,13 +385,17 @@ Steffen, A., Kvale, K., Zahariev, K., Denman, K., Koweek, D., & Oschlies, A. (20
 
 ### Supporting Sources
 
-1. **2025 State of the Climate Report:** Ripple, W. J., Wolf, C., et al. (2025). "The 2025 state of the climate report: a planet on the brink." *BioScience*. https://doi.org/10.1093/biosci/biaf149
+1. **Coral Reef Carbonate Production Modeling (2025):** Bouttes, N., Kwiatkowski, L., Bougeot, E., Berger, M., Brovkin, V., & Munhoven, G. (2025). "Projections of coral reef carbonate production from a global climate–coral reef coupled model." *Biogeosciences*, 22, 4531–4544. https://doi.org/10.5194/bg-22-4531-2025
 
-2. **Original Planetary Boundaries Framework:** Rockström, J., et al. (2009). "A safe operating space for humanity." *Nature*, 461(7263), 472-475.
+2. **Coral Resilience Experimental Study (2024):** Jury, C. P., et al. (2024). "Experimental coral reef communities transform yet persist under mitigated future ocean warming and acidification." *Proceedings of the National Academy of Sciences*, 121(45), e2407112121. https://doi.org/10.1073/pnas.2407112121
 
-3. **2023 Planetary Boundaries Update:** Richardson, K., et al. (2023). "Earth beyond six of nine planetary boundaries." *Science Advances*, 9(37), eadh2458.
+3. **2025 State of the Climate Report:** Ripple, W. J., Wolf, C., et al. (2025). "The 2025 state of the climate report: a planet on the brink." *BioScience*. https://doi.org/10.1093/biosci/biaf149
 
-4. **GLODAP Dataset:** Lauvset, S. K., et al. (2023). "Global Ocean Data Analysis Project version 2.2023 (GLODAPv2.2023)" *Earth System Science Data*, 15, 5577-5606.
+4. **Original Planetary Boundaries Framework:** Rockström, J., et al. (2009). "A safe operating space for humanity." *Nature*, 461(7263), 472-475.
+
+5. **2023 Planetary Boundaries Update:** Richardson, K., et al. (2023). "Earth beyond six of nine planetary boundaries." *Science Advances*, 9(37), eadh2458.
+
+6. **GLODAP Dataset:** Lauvset, S. K., et al. (2023). "Global Ocean Data Analysis Project version 2.2023 (GLODAPv2.2023)" *Earth System Science Data*, 15, 5577-5606.
 
 ---
 
