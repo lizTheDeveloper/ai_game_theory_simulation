@@ -64,7 +64,9 @@ describe('Auth Flow Integration Tests', () => {
     redisClient = new Redis({
       host: config.redis.host,
       port: config.redis.port,
-      db: config.redis.db
+      db: config.redis.db,
+      password: config.redis.password,
+      maxRetriesPerRequest: config.redis.maxRetriesPerRequest
     });
 
     // Create database schema
