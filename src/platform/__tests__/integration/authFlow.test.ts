@@ -88,10 +88,12 @@ describe('Auth Flow Integration Tests', () => {
       CREATE TABLE IF NOT EXISTS auth_audit_log (
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users(id),
-        action VARCHAR(100) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        event_type VARCHAR(100) NOT NULL,
         ip_address VARCHAR(45),
         user_agent TEXT,
-        metadata JSONB,
+        success BOOLEAN NOT NULL,
+        failure_reason TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
