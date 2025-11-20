@@ -103,19 +103,42 @@ export function updateCooperationAgreement(state: GameState, cache: CountryInter
   const monthsSinceStart = state.currentMonth - agreement.startMonth;
 
   // === TRUST DYNAMICS (PRISONER'S DILEMMA) ===
+  // Roy's fix (Nov 20, 2025): These fields MUST be initialized when agreement is created
+  // If undefined, that's an initialization bug, not a legitimate default
+  const verificationStrength = assertStateProperty(agreement, 'verificationStrength', {
+    location: 'updateCooperationAgreement',
+    month: state.currentMonth,
+    expectedSource: 'cooperation agreement initialization'
+  });
+
   // Trust decays if verification is weak
-  if ((agreement.verificationStrength || 0.40) < 0.50) {
-    agreement.mutualTrust = Math.max(0, (agreement.mutualTrust || 0.60) - 0.01);
+  if (verificationStrength < 0.50) {
+    const currentTrust = assertStateProperty(agreement, 'mutualTrust', {
+      location: 'updateCooperationAgreement:trustDecay',
+      month: state.currentMonth,
+      expectedSource: 'cooperation agreement initialization'
+    });
+    agreement.mutualTrust = Math.max(0, currentTrust - 0.01);
   }
 
   // High race intensity erodes trust
   if (natAI.raceIntensity.raceIntensity > 0.60) {
-    agreement.mutualTrust = Math.max(0, (agreement.mutualTrust || 0.60) - 0.02);
+    const currentTrust = assertStateProperty(agreement, 'mutualTrust', {
+      location: 'updateCooperationAgreement:raceErosion',
+      month: state.currentMonth,
+      expectedSource: 'cooperation agreement initialization'
+    });
+    agreement.mutualTrust = Math.max(0, currentTrust - 0.02);
   }
 
   // Successful compliance builds trust
   if (agreement.complianceLevel > 0.80) {
-    agreement.mutualTrust = Math.min(1, (agreement.mutualTrust || 0.60) + 0.015);
+    const currentTrust = assertStateProperty(agreement, 'mutualTrust', {
+      location: 'updateCooperationAgreement:trustBuilding',
+      month: state.currentMonth,
+      expectedSource: 'cooperation agreement initialization'
+    });
+    agreement.mutualTrust = Math.min(1, currentTrust + 0.015);
   }
 
   // === DEFECTION RISK CALCULATION ===
@@ -131,9 +154,14 @@ export function updateCooperationAgreement(state: GameState, cache: CountryInter
     // Adjust break risk based on cooperation potential
     const cooperationFactor = (1 - cooperationPotential) * 0.05; // Up to 5% from low cooperation
 
-    const trustFactor = (1 - (agreement.mutualTrust || 0.60)) * 0.10;
+    const currentTrust = assertStateProperty(agreement, 'mutualTrust', {
+      location: 'updateCooperationAgreement:breakRiskCalc',
+      month: state.currentMonth,
+      expectedSource: 'cooperation agreement initialization'
+    });
+    const trustFactor = (1 - currentTrust) * 0.10;
     const incentiveFactor = agreement.firstMoverIncentive * 0.08;
-    const verificationFactor = (1 - (agreement.verificationStrength || 0.40)) * 0.05;
+    const verificationFactor = (1 - verificationStrength) * 0.05;
     const raceFactor = natAI.raceIntensity.raceIntensity * 0.07;
 
     agreement.breakRisk = Math.min(0.30,
@@ -146,17 +174,23 @@ export function updateCooperationAgreement(state: GameState, cache: CountryInter
     // AGREEMENT BROKEN
     agreement.active = false;
 
+    const trustAtCollapse = assertStateProperty(agreement, 'mutualTrust', {
+      location: 'updateCooperationAgreement:collapse',
+      month: state.currentMonth,
+      expectedSource: 'cooperation agreement initialization'
+    });
+
     addEvent(state, {
       type: 'crisis',
       severity: 'critical',
       agent: 'International',
       title: '💔 AI COOPERATION COLLAPSED',
-      description: `AI cooperation agreement broke down after ${monthsSinceStart} months. ${(agreement.mutualTrust || 0.60) < 0.30 ? 'Trust collapsed' : 'First-mover incentives too strong'}. AI arms race resumes.`,
+      description: `AI cooperation agreement broke down after ${monthsSinceStart} months. ${trustAtCollapse < 0.30 ? 'Trust collapsed' : 'First-mover incentives too strong'}. AI arms race resumes.`,
       effects: { cooperation_failed: 1.0, race_acceleration: 1.0 }
     });
 
     console.log(`\n💔 COOPERATION COLLAPSED (Month ${state.currentMonth}, lasted ${monthsSinceStart} months)`);
-    console.log(`   Trust: ${((agreement.mutualTrust || 0.60) * 100).toFixed(0)}%`);
+    console.log(`   Trust: ${(trustAtCollapse * 100).toFixed(0)}%`);
 
     // Race intensity spikes
     natAI.raceIntensity.raceIntensity = Math.min(1.0, natAI.raceIntensity.raceIntensity * 1.5);
@@ -174,12 +208,22 @@ export function updateCooperationAgreement(state: GameState, cache: CountryInter
 
     // Log milestones
     if (monthsSinceStart === 12) {
-      console.log(`📅 AI COOPERATION: 1 YEAR (Trust: ${((agreement.mutualTrust || 0.60) * 100).toFixed(0)}%)`);
+      const currentTrust = assertStateProperty(agreement, 'mutualTrust', {
+        location: 'updateCooperationAgreement:milestone',
+        month: state.currentMonth,
+        expectedSource: 'cooperation agreement initialization'
+      });
+      console.log(`📅 AI COOPERATION: 1 YEAR (Trust: ${(currentTrust * 100).toFixed(0)}%)`);
     }
     if (monthsSinceStart === 60) {
       console.log(`🎉 AI COOPERATION: 5 YEARS - Major stability milestone!`);
       agreement.breakRisk = Math.max(0.01, agreement.breakRisk * 0.5);
-      agreement.mutualTrust = Math.min(1, (agreement.mutualTrust || 0.60) + 0.10);
+      const currentTrust = assertStateProperty(agreement, 'mutualTrust', {
+        location: 'updateCooperationAgreement:5yearMilestone',
+        month: state.currentMonth,
+        expectedSource: 'cooperation agreement initialization'
+      });
+      agreement.mutualTrust = Math.min(1, currentTrust + 0.10);
     }
   }
 }
