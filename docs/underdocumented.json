@@ -55779,7 +55779,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 283,
+=======
+    "line": 285,
+>>>>>>> Stashed changes
 =======
     "line": 285,
 >>>>>>> Stashed changes
@@ -55790,6 +55794,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 284,
     "type": "property",
@@ -55876,13 +55881,17 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
     "line": 330,
+=======
+    "line": 286,
+>>>>>>> Stashed changes
     "type": "property",
-    "name": "month",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
+    "context": "valueName: 'initialPopulation',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
+<<<<<<< Updated upstream
     "line": 331,
     "type": "property",
     "name": "additionalInfo",
@@ -55903,6 +55912,17 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
     "line": 358,
 >>>>>>> Stashed changes
+=======
+    "line": 287,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
+    "line": 324,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -55910,6 +55930,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 335,
     "type": "property",
@@ -55948,13 +55969,17 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
     "line": 370,
+=======
+    "line": 325,
+>>>>>>> Stashed changes
     "type": "property",
-    "name": "month",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
+    "context": "valueName: 'initialPopulation',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
+<<<<<<< Updated upstream
     "line": 371,
     "type": "property",
     "name": "additionalInfo",
@@ -55964,6 +55989,17 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
     "line": 374,
+=======
+    "line": 326,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
+    "line": 358,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -55971,6 +56007,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
+<<<<<<< Updated upstream
     "line": 375,
     "type": "property",
     "name": "valueName",
@@ -55980,15 +56017,21 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
     "line": 376,
+=======
+    "line": 359,
+>>>>>>> Stashed changes
     "type": "property",
-    "name": "month",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
+    "context": "valueName: 'initialPopulation',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
+<<<<<<< Updated upstream
     "line": 526,
 =======
+=======
+>>>>>>> Stashed changes
     "line": 360,
     "type": "property",
     "name": "month",
@@ -55998,6 +56041,9 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
     "line": 510,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     "type": "property",
     "name": "outcome",
@@ -56007,7 +56053,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 527,
+=======
+    "line": 511,
+>>>>>>> Stashed changes
 =======
     "line": 511,
 >>>>>>> Stashed changes
@@ -56019,7 +56069,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 528,
+=======
+    "line": 512,
+>>>>>>> Stashed changes
 =======
     "line": 512,
 >>>>>>> Stashed changes
@@ -56031,7 +56085,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 535,
+=======
+    "line": 519,
+>>>>>>> Stashed changes
 =======
     "line": 519,
 >>>>>>> Stashed changes
@@ -56043,7 +56101,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 536,
+=======
+    "line": 520,
+>>>>>>> Stashed changes
 =======
     "line": 520,
 >>>>>>> Stashed changes
@@ -76607,6 +76669,7 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 639,
     "type": "property",
     "name": "location",
@@ -76625,6 +76688,8 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 641,
 =======
+=======
+>>>>>>> Stashed changes
     "line": 598,
     "type": "property",
     "name": "location",
@@ -76634,6 +76699,7 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 599,
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
     "type": "property",
     "name": "month",
@@ -76668,6 +76734,8 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 647,
+=======
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76675,8 +76743,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+<<<<<<< Updated upstream
     "line": 676,
 =======
+=======
+>>>>>>> Stashed changes
     "line": 600,
     "type": "property",
     "name": "expectedSource",
@@ -76686,6 +76757,9 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 628,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     "type": "property",
     "name": "speciesCount",
@@ -76695,7 +76769,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 677,
+=======
+    "line": 629,
+>>>>>>> Stashed changes
 =======
     "line": 629,
 >>>>>>> Stashed changes
@@ -76707,7 +76785,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 678,
+=======
+    "line": 630,
+>>>>>>> Stashed changes
 =======
     "line": 630,
 >>>>>>> Stashed changes
@@ -76719,7 +76801,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 679,
+=======
+    "line": 631,
+>>>>>>> Stashed changes
 =======
     "line": 631,
 >>>>>>> Stashed changes
@@ -76731,7 +76817,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 729,
+=======
+    "line": 681,
+>>>>>>> Stashed changes
 =======
     "line": 681,
 >>>>>>> Stashed changes
@@ -76743,7 +76833,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 730,
+=======
+    "line": 682,
+>>>>>>> Stashed changes
 =======
     "line": 682,
 >>>>>>> Stashed changes
@@ -76755,7 +76849,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 731,
+=======
+    "line": 683,
+>>>>>>> Stashed changes
 =======
     "line": 683,
 >>>>>>> Stashed changes
@@ -76767,7 +76865,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 738,
+=======
+    "line": 689,
+>>>>>>> Stashed changes
 =======
     "line": 689,
 >>>>>>> Stashed changes
@@ -76779,7 +76881,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 739,
+=======
+    "line": 690,
+>>>>>>> Stashed changes
 =======
     "line": 690,
 >>>>>>> Stashed changes
@@ -76791,7 +76897,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 746,
+=======
+    "line": 697,
+>>>>>>> Stashed changes
 =======
     "line": 697,
 >>>>>>> Stashed changes
@@ -76802,6 +76912,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 750,
     "type": "property",
@@ -76823,6 +76934,9 @@
 =======
     "line": 698,
 >>>>>>> Stashed changes
+=======
+    "line": 698,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76830,6 +76944,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 753,
     "type": "property",
@@ -76923,6 +77038,9 @@
 =======
     "line": 709,
 >>>>>>> Stashed changes
+=======
+    "line": 709,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "bleachedPercent",
     "currentDoc": "(none)",
@@ -76931,7 +77049,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 785,
+=======
+    "line": 710,
+>>>>>>> Stashed changes
 =======
     "line": 710,
 >>>>>>> Stashed changes
@@ -76943,7 +77065,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 786,
+=======
+    "line": 711,
+>>>>>>> Stashed changes
 =======
     "line": 711,
 >>>>>>> Stashed changes
@@ -76955,7 +77081,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 837,
+=======
+    "line": 762,
+>>>>>>> Stashed changes
 =======
     "line": 762,
 >>>>>>> Stashed changes
@@ -76967,7 +77097,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 838,
+=======
+    "line": 763,
+>>>>>>> Stashed changes
 =======
     "line": 763,
 >>>>>>> Stashed changes
@@ -76979,7 +77113,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 839,
+=======
+    "line": 764,
+>>>>>>> Stashed changes
 =======
     "line": 764,
 >>>>>>> Stashed changes
@@ -76991,7 +77129,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 842,
+=======
+    "line": 767,
+>>>>>>> Stashed changes
 =======
     "line": 767,
 >>>>>>> Stashed changes
@@ -77003,7 +77145,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 870,
+=======
+    "line": 795,
+>>>>>>> Stashed changes
 =======
     "line": 795,
 >>>>>>> Stashed changes
@@ -77015,7 +77161,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 871,
+=======
+    "line": 796,
+>>>>>>> Stashed changes
 =======
     "line": 796,
 >>>>>>> Stashed changes
@@ -77027,7 +77177,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 872,
+=======
+    "line": 797,
+>>>>>>> Stashed changes
 =======
     "line": 797,
 >>>>>>> Stashed changes
@@ -77039,7 +77193,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 880,
+=======
+    "line": 805,
+>>>>>>> Stashed changes
 =======
     "line": 805,
 >>>>>>> Stashed changes
@@ -77051,7 +77209,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 931,
+=======
+    "line": 856,
+>>>>>>> Stashed changes
 =======
     "line": 856,
 >>>>>>> Stashed changes
@@ -77063,7 +77225,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 932,
+=======
+    "line": 857,
+>>>>>>> Stashed changes
 =======
     "line": 857,
 >>>>>>> Stashed changes
@@ -77075,7 +77241,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 933,
+=======
+    "line": 858,
+>>>>>>> Stashed changes
 =======
     "line": 858,
 >>>>>>> Stashed changes
@@ -77087,7 +77257,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 944,
+=======
+    "line": 869,
+>>>>>>> Stashed changes
 =======
     "line": 869,
 >>>>>>> Stashed changes
@@ -77099,7 +77273,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 945,
+=======
+    "line": 870,
+>>>>>>> Stashed changes
 =======
     "line": 870,
 >>>>>>> Stashed changes
@@ -77111,7 +77289,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 968,
+=======
+    "line": 895,
+>>>>>>> Stashed changes
 =======
     "line": 895,
 >>>>>>> Stashed changes
@@ -77122,6 +77304,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 969,
     "type": "property",
@@ -77168,6 +77351,9 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 976,
+=======
+    "line": 896,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -77175,8 +77361,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+<<<<<<< Updated upstream
     "line": 1002,
 =======
+=======
+>>>>>>> Stashed changes
     "line": 897,
     "type": "property",
     "name": "expectedSource",
@@ -77186,6 +77375,9 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 923,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     "type": "property",
     "name": "type",
@@ -77195,7 +77387,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1003,
+=======
+    "line": 924,
+>>>>>>> Stashed changes
 =======
     "line": 924,
 >>>>>>> Stashed changes
@@ -77207,7 +77403,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1004,
+=======
+    "line": 925,
+>>>>>>> Stashed changes
 =======
     "line": 925,
 >>>>>>> Stashed changes
@@ -77219,7 +77419,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1007,
+=======
+    "line": 928,
+>>>>>>> Stashed changes
 =======
     "line": 928,
 >>>>>>> Stashed changes
@@ -77231,7 +77435,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1061,
+=======
+    "line": 982,
+>>>>>>> Stashed changes
 =======
     "line": 982,
 >>>>>>> Stashed changes
@@ -77243,7 +77451,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1062,
+=======
+    "line": 983,
+>>>>>>> Stashed changes
 =======
     "line": 983,
 >>>>>>> Stashed changes
@@ -77255,7 +77467,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1063,
+=======
+    "line": 984,
+>>>>>>> Stashed changes
 =======
     "line": 984,
 >>>>>>> Stashed changes
@@ -77267,7 +77483,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 1064,
+=======
+    "line": 985,
+>>>>>>> Stashed changes
 =======
     "line": 985,
 >>>>>>> Stashed changes
@@ -79919,7 +80139,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 63,
+=======
+    "line": 65,
+>>>>>>> Stashed changes
 =======
     "line": 65,
 >>>>>>> Stashed changes
@@ -79930,6 +80154,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 64,
     "type": "property",
@@ -79977,14 +80202,21 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
     "line": 71,
     "type": "property",
+=======
+    "line": 66,
+    "type": "property",
+>>>>>>> Stashed changes
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: state.currentMonth,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
+<<<<<<< Updated upstream
     "line": 102,
 =======
+=======
+>>>>>>> Stashed changes
     "line": 67,
     "type": "property",
     "name": "expectedSource",
@@ -79994,6 +80226,9 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
     "line": 98,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     "type": "property",
     "name": "location",
@@ -80003,7 +80238,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 103,
+=======
+    "line": 99,
+>>>>>>> Stashed changes
 =======
     "line": 99,
 >>>>>>> Stashed changes
@@ -80015,7 +80254,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 104,
+=======
+    "line": 100,
+>>>>>>> Stashed changes
 =======
     "line": 100,
 >>>>>>> Stashed changes
@@ -86699,7 +86942,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 76,
+=======
+    "line": 44,
+>>>>>>> Stashed changes
 =======
     "line": 44,
 >>>>>>> Stashed changes
@@ -86711,8 +86958,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 77,
 =======
+=======
+>>>>>>> Stashed changes
     "line": 45,
     "type": "property",
     "name": "valueName",
@@ -86754,6 +87004,9 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
     "line": 81,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -86763,7 +87016,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 78,
+=======
+    "line": 82,
+>>>>>>> Stashed changes
 =======
     "line": 82,
 >>>>>>> Stashed changes
@@ -86775,7 +87032,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 79,
+=======
+    "line": 83,
+>>>>>>> Stashed changes
 =======
     "line": 83,
 >>>>>>> Stashed changes
@@ -86787,7 +87048,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 118,
+=======
+    "line": 104,
+>>>>>>> Stashed changes
 =======
     "line": 104,
 >>>>>>> Stashed changes
@@ -86799,8 +87064,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 119,
 =======
+=======
+>>>>>>> Stashed changes
     "line": 105,
     "type": "property",
     "name": "valueName",
@@ -86842,6 +87110,9 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
     "line": 130,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -86851,7 +87122,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 120,
+=======
+    "line": 131,
+>>>>>>> Stashed changes
 =======
     "line": 131,
 >>>>>>> Stashed changes
@@ -86863,7 +87138,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 121,
+=======
+    "line": 132,
+>>>>>>> Stashed changes
 =======
     "line": 132,
 >>>>>>> Stashed changes
@@ -86874,6 +87153,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     "line": 141,
     "type": "property",
@@ -86900,6 +87180,9 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
     "line": 150,
+=======
+    "line": 152,
+>>>>>>> Stashed changes
 =======
     "line": 152,
 >>>>>>> Stashed changes
@@ -86967,6 +87250,25 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
     "line": 167,
+<<<<<<< Updated upstream
+=======
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
+    "line": 183,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateCoordinationQuality',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
+    "line": 184,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -86990,7 +87292,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
-    "line": 152,
+    "line": 185,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -87051,7 +87353,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 189,
+=======
+    "line": 199,
+>>>>>>> Stashed changes
 =======
     "line": 199,
 >>>>>>> Stashed changes
@@ -87063,7 +87369,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 190,
+=======
+    "line": 200,
+>>>>>>> Stashed changes
 =======
     "line": 200,
 >>>>>>> Stashed changes
@@ -87075,7 +87385,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 191,
+=======
+    "line": 201,
+>>>>>>> Stashed changes
 =======
     "line": 201,
 >>>>>>> Stashed changes
@@ -87087,7 +87401,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 192,
+=======
+    "line": 202,
+>>>>>>> Stashed changes
 =======
     "line": 202,
 >>>>>>> Stashed changes
@@ -87099,7 +87417,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 197,
+=======
+    "line": 207,
+>>>>>>> Stashed changes
 =======
     "line": 207,
 >>>>>>> Stashed changes
@@ -87111,7 +87433,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 198,
+=======
+    "line": 208,
+>>>>>>> Stashed changes
 =======
     "line": 208,
 >>>>>>> Stashed changes
@@ -87123,7 +87449,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 199,
+=======
+    "line": 209,
+>>>>>>> Stashed changes
 =======
     "line": 209,
 >>>>>>> Stashed changes
@@ -87135,7 +87465,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 238,
+=======
+    "line": 236,
+>>>>>>> Stashed changes
 =======
     "line": 236,
 >>>>>>> Stashed changes
@@ -87147,8 +87481,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 239,
 =======
+=======
+>>>>>>> Stashed changes
     "line": 237,
     "type": "property",
     "name": "valueName",
@@ -87174,6 +87511,9 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
     "line": 255,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -87183,7 +87523,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 240,
+=======
+    "line": 256,
+>>>>>>> Stashed changes
 =======
     "line": 256,
 >>>>>>> Stashed changes
@@ -87195,7 +87539,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 241,
+=======
+    "line": 257,
+>>>>>>> Stashed changes
 =======
     "line": 257,
 >>>>>>> Stashed changes
@@ -87207,7 +87555,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 246,
+=======
+    "line": 262,
+>>>>>>> Stashed changes
 =======
     "line": 262,
 >>>>>>> Stashed changes
@@ -87219,7 +87571,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 247,
+=======
+    "line": 263,
+>>>>>>> Stashed changes
 =======
     "line": 263,
 >>>>>>> Stashed changes
@@ -87231,7 +87587,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 248,
+=======
+    "line": 264,
+>>>>>>> Stashed changes
 =======
     "line": 264,
 >>>>>>> Stashed changes
@@ -87243,7 +87603,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 259,
+=======
+    "line": 275,
+>>>>>>> Stashed changes
 =======
     "line": 275,
 >>>>>>> Stashed changes
@@ -87255,7 +87619,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 260,
+=======
+    "line": 276,
+>>>>>>> Stashed changes
 =======
     "line": 276,
 >>>>>>> Stashed changes
@@ -87267,7 +87635,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 261,
+=======
+    "line": 277,
+>>>>>>> Stashed changes
 =======
     "line": 277,
 >>>>>>> Stashed changes
@@ -87279,7 +87651,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 262,
+=======
+    "line": 278,
+>>>>>>> Stashed changes
 =======
     "line": 278,
 >>>>>>> Stashed changes
@@ -87291,7 +87667,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 263,
+=======
+    "line": 279,
+>>>>>>> Stashed changes
 =======
     "line": 279,
 >>>>>>> Stashed changes
@@ -87303,7 +87683,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 266,
+=======
+    "line": 282,
+>>>>>>> Stashed changes
 =======
     "line": 282,
 >>>>>>> Stashed changes
@@ -87315,7 +87699,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 267,
+=======
+    "line": 283,
+>>>>>>> Stashed changes
 =======
     "line": 283,
 >>>>>>> Stashed changes
@@ -87327,7 +87715,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 268,
+=======
+    "line": 284,
+>>>>>>> Stashed changes
 =======
     "line": 284,
 >>>>>>> Stashed changes
@@ -87339,7 +87731,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 269,
+=======
+    "line": 285,
+>>>>>>> Stashed changes
 =======
     "line": 285,
 >>>>>>> Stashed changes
@@ -87351,7 +87747,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 270,
+=======
+    "line": 286,
+>>>>>>> Stashed changes
 =======
     "line": 286,
 >>>>>>> Stashed changes
@@ -87363,7 +87763,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 271,
+=======
+    "line": 287,
+>>>>>>> Stashed changes
 =======
     "line": 287,
 >>>>>>> Stashed changes
@@ -87375,7 +87779,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 281,
+=======
+    "line": 297,
+>>>>>>> Stashed changes
 =======
     "line": 297,
 >>>>>>> Stashed changes
@@ -87387,7 +87795,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 282,
+=======
+    "line": 298,
+>>>>>>> Stashed changes
 =======
     "line": 298,
 >>>>>>> Stashed changes
@@ -87399,7 +87811,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 283,
+=======
+    "line": 299,
+>>>>>>> Stashed changes
 =======
     "line": 299,
 >>>>>>> Stashed changes
@@ -87411,7 +87827,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 284,
+=======
+    "line": 300,
+>>>>>>> Stashed changes
 =======
     "line": 300,
 >>>>>>> Stashed changes
@@ -87423,7 +87843,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 290,
+=======
+    "line": 306,
+>>>>>>> Stashed changes
 =======
     "line": 306,
 >>>>>>> Stashed changes
@@ -87435,7 +87859,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 291,
+=======
+    "line": 307,
+>>>>>>> Stashed changes
 =======
     "line": 307,
 >>>>>>> Stashed changes
@@ -87447,7 +87875,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 292,
+=======
+    "line": 308,
+>>>>>>> Stashed changes
 =======
     "line": 308,
 >>>>>>> Stashed changes
@@ -87459,7 +87891,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 301,
+=======
+    "line": 317,
+>>>>>>> Stashed changes
 =======
     "line": 317,
 >>>>>>> Stashed changes
@@ -87471,7 +87907,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 302,
+=======
+    "line": 318,
+>>>>>>> Stashed changes
 =======
     "line": 318,
 >>>>>>> Stashed changes
@@ -87483,7 +87923,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 303,
+=======
+    "line": 319,
+>>>>>>> Stashed changes
 =======
     "line": 319,
 >>>>>>> Stashed changes
@@ -87495,7 +87939,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 304,
+=======
+    "line": 320,
+>>>>>>> Stashed changes
 =======
     "line": 320,
 >>>>>>> Stashed changes
@@ -87507,7 +87955,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 316,
+=======
+    "line": 332,
+>>>>>>> Stashed changes
 =======
     "line": 332,
 >>>>>>> Stashed changes
@@ -87519,7 +87971,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 317,
+=======
+    "line": 333,
+>>>>>>> Stashed changes
 =======
     "line": 333,
 >>>>>>> Stashed changes
@@ -87531,7 +87987,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 318,
+=======
+    "line": 334,
+>>>>>>> Stashed changes
 =======
     "line": 334,
 >>>>>>> Stashed changes
@@ -87543,7 +88003,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 319,
+=======
+    "line": 335,
+>>>>>>> Stashed changes
 =======
     "line": 335,
 >>>>>>> Stashed changes
@@ -87555,7 +88019,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 328,
+=======
+    "line": 344,
+>>>>>>> Stashed changes
 =======
     "line": 344,
 >>>>>>> Stashed changes
@@ -87567,7 +88035,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 329,
+=======
+    "line": 345,
+>>>>>>> Stashed changes
 =======
     "line": 345,
 >>>>>>> Stashed changes
@@ -87579,7 +88051,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 330,
+=======
+    "line": 346,
+>>>>>>> Stashed changes
 =======
     "line": 346,
 >>>>>>> Stashed changes
@@ -87591,7 +88067,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 331,
+=======
+    "line": 347,
+>>>>>>> Stashed changes
 =======
     "line": 347,
 >>>>>>> Stashed changes
@@ -87603,7 +88083,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 340,
+=======
+    "line": 356,
+>>>>>>> Stashed changes
 =======
     "line": 356,
 >>>>>>> Stashed changes
@@ -87615,7 +88099,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 341,
+=======
+    "line": 357,
+>>>>>>> Stashed changes
 =======
     "line": 357,
 >>>>>>> Stashed changes
@@ -87627,7 +88115,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 342,
+=======
+    "line": 358,
+>>>>>>> Stashed changes
 =======
     "line": 358,
 >>>>>>> Stashed changes
@@ -87639,7 +88131,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 343,
+=======
+    "line": 359,
+>>>>>>> Stashed changes
 =======
     "line": 359,
 >>>>>>> Stashed changes
@@ -87651,7 +88147,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 351,
+=======
+    "line": 367,
+>>>>>>> Stashed changes
 =======
     "line": 367,
 >>>>>>> Stashed changes
@@ -87663,7 +88163,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 352,
+=======
+    "line": 368,
+>>>>>>> Stashed changes
 =======
     "line": 368,
 >>>>>>> Stashed changes
@@ -87675,7 +88179,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 353,
+=======
+    "line": 369,
+>>>>>>> Stashed changes
 =======
     "line": 369,
 >>>>>>> Stashed changes
@@ -87687,7 +88195,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 354,
+=======
+    "line": 370,
+>>>>>>> Stashed changes
 =======
     "line": 370,
 >>>>>>> Stashed changes
@@ -87699,7 +88211,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 366,
+=======
+    "line": 382,
+>>>>>>> Stashed changes
 =======
     "line": 382,
 >>>>>>> Stashed changes
@@ -87711,7 +88227,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 367,
+=======
+    "line": 383,
+>>>>>>> Stashed changes
 =======
     "line": 383,
 >>>>>>> Stashed changes
@@ -87723,7 +88243,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 368,
+=======
+    "line": 384,
+>>>>>>> Stashed changes
 =======
     "line": 384,
 >>>>>>> Stashed changes
@@ -87735,7 +88259,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 369,
+=======
+    "line": 385,
+>>>>>>> Stashed changes
 =======
     "line": 385,
 >>>>>>> Stashed changes
@@ -87747,7 +88275,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 378,
+=======
+    "line": 394,
+>>>>>>> Stashed changes
 =======
     "line": 394,
 >>>>>>> Stashed changes
@@ -87759,7 +88291,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 379,
+=======
+    "line": 395,
+>>>>>>> Stashed changes
 =======
     "line": 395,
 >>>>>>> Stashed changes
@@ -87771,7 +88307,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 380,
+=======
+    "line": 396,
+>>>>>>> Stashed changes
 =======
     "line": 396,
 >>>>>>> Stashed changes
@@ -87783,7 +88323,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 381,
+=======
+    "line": 397,
+>>>>>>> Stashed changes
 =======
     "line": 397,
 >>>>>>> Stashed changes
@@ -87795,7 +88339,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 390,
+=======
+    "line": 406,
+>>>>>>> Stashed changes
 =======
     "line": 406,
 >>>>>>> Stashed changes
@@ -87807,7 +88355,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 391,
+=======
+    "line": 407,
+>>>>>>> Stashed changes
 =======
     "line": 407,
 >>>>>>> Stashed changes
@@ -87819,7 +88371,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 392,
+=======
+    "line": 408,
+>>>>>>> Stashed changes
 =======
     "line": 408,
 >>>>>>> Stashed changes
@@ -87831,7 +88387,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 393,
+=======
+    "line": 409,
+>>>>>>> Stashed changes
 =======
     "line": 409,
 >>>>>>> Stashed changes
@@ -87843,7 +88403,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 402,
+=======
+    "line": 418,
+>>>>>>> Stashed changes
 =======
     "line": 418,
 >>>>>>> Stashed changes
@@ -87855,7 +88419,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 403,
+=======
+    "line": 419,
+>>>>>>> Stashed changes
 =======
     "line": 419,
 >>>>>>> Stashed changes
@@ -87867,7 +88435,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 404,
+=======
+    "line": 420,
+>>>>>>> Stashed changes
 =======
     "line": 420,
 >>>>>>> Stashed changes
@@ -87879,7 +88451,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 405,
+=======
+    "line": 421,
+>>>>>>> Stashed changes
 =======
     "line": 421,
 >>>>>>> Stashed changes
@@ -87891,7 +88467,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 414,
+=======
+    "line": 430,
+>>>>>>> Stashed changes
 =======
     "line": 430,
 >>>>>>> Stashed changes
@@ -87903,7 +88483,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 415,
+=======
+    "line": 431,
+>>>>>>> Stashed changes
 =======
     "line": 431,
 >>>>>>> Stashed changes
@@ -87915,7 +88499,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 416,
+=======
+    "line": 432,
+>>>>>>> Stashed changes
 =======
     "line": 432,
 >>>>>>> Stashed changes
@@ -87927,7 +88515,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 417,
+=======
+    "line": 433,
+>>>>>>> Stashed changes
 =======
     "line": 433,
 >>>>>>> Stashed changes
@@ -87939,7 +88531,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 426,
+=======
+    "line": 442,
+>>>>>>> Stashed changes
 =======
     "line": 442,
 >>>>>>> Stashed changes
@@ -87951,7 +88547,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 427,
+=======
+    "line": 443,
+>>>>>>> Stashed changes
 =======
     "line": 443,
 >>>>>>> Stashed changes
@@ -87963,7 +88563,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 428,
+=======
+    "line": 444,
+>>>>>>> Stashed changes
 =======
     "line": 444,
 >>>>>>> Stashed changes
@@ -87975,7 +88579,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 429,
+=======
+    "line": 445,
+>>>>>>> Stashed changes
 =======
     "line": 445,
 >>>>>>> Stashed changes
@@ -87987,7 +88595,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 438,
+=======
+    "line": 454,
+>>>>>>> Stashed changes
 =======
     "line": 454,
 >>>>>>> Stashed changes
@@ -87999,7 +88611,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 439,
+=======
+    "line": 455,
+>>>>>>> Stashed changes
 =======
     "line": 455,
 >>>>>>> Stashed changes
@@ -88011,7 +88627,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 440,
+=======
+    "line": 456,
+>>>>>>> Stashed changes
 =======
     "line": 456,
 >>>>>>> Stashed changes
@@ -88023,7 +88643,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 441,
+=======
+    "line": 457,
+>>>>>>> Stashed changes
 =======
     "line": 457,
 >>>>>>> Stashed changes
@@ -88035,7 +88659,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 450,
+=======
+    "line": 466,
+>>>>>>> Stashed changes
 =======
     "line": 466,
 >>>>>>> Stashed changes
@@ -88047,7 +88675,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 451,
+=======
+    "line": 467,
+>>>>>>> Stashed changes
 =======
     "line": 467,
 >>>>>>> Stashed changes
@@ -88059,7 +88691,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 452,
+=======
+    "line": 468,
+>>>>>>> Stashed changes
 =======
     "line": 468,
 >>>>>>> Stashed changes
@@ -88071,7 +88707,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 453,
+=======
+    "line": 469,
+>>>>>>> Stashed changes
 =======
     "line": 469,
 >>>>>>> Stashed changes
@@ -88083,7 +88723,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 461,
+=======
+    "line": 477,
+>>>>>>> Stashed changes
 =======
     "line": 477,
 >>>>>>> Stashed changes
@@ -88095,7 +88739,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 462,
+=======
+    "line": 478,
+>>>>>>> Stashed changes
 =======
     "line": 478,
 >>>>>>> Stashed changes
@@ -88107,7 +88755,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 463,
+=======
+    "line": 479,
+>>>>>>> Stashed changes
 =======
     "line": 479,
 >>>>>>> Stashed changes
@@ -88119,7 +88771,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 464,
+=======
+    "line": 480,
+>>>>>>> Stashed changes
 =======
     "line": 480,
 >>>>>>> Stashed changes
@@ -88131,7 +88787,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 479,
+=======
+    "line": 495,
+>>>>>>> Stashed changes
 =======
     "line": 495,
 >>>>>>> Stashed changes
@@ -88143,7 +88803,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 480,
+=======
+    "line": 496,
+>>>>>>> Stashed changes
 =======
     "line": 496,
 >>>>>>> Stashed changes
@@ -88155,7 +88819,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 481,
+=======
+    "line": 497,
+>>>>>>> Stashed changes
 =======
     "line": 497,
 >>>>>>> Stashed changes
@@ -88167,7 +88835,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 482,
+=======
+    "line": 498,
+>>>>>>> Stashed changes
 =======
     "line": 498,
 >>>>>>> Stashed changes
@@ -88179,7 +88851,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 489,
+=======
+    "line": 505,
+>>>>>>> Stashed changes
 =======
     "line": 505,
 >>>>>>> Stashed changes
@@ -88191,7 +88867,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 493,
+=======
+    "line": 509,
+>>>>>>> Stashed changes
 =======
     "line": 509,
 >>>>>>> Stashed changes
@@ -88203,7 +88883,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 497,
+=======
+    "line": 513,
+>>>>>>> Stashed changes
 =======
     "line": 513,
 >>>>>>> Stashed changes
@@ -88215,7 +88899,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 501,
+=======
+    "line": 517,
+>>>>>>> Stashed changes
 =======
     "line": 517,
 >>>>>>> Stashed changes
@@ -88227,7 +88915,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 505,
+=======
+    "line": 521,
+>>>>>>> Stashed changes
 =======
     "line": 521,
 >>>>>>> Stashed changes
@@ -88239,7 +88931,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 521,
+=======
+    "line": 537,
+>>>>>>> Stashed changes
 =======
     "line": 537,
 >>>>>>> Stashed changes
@@ -88251,7 +88947,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 522,
+=======
+    "line": 538,
+>>>>>>> Stashed changes
 =======
     "line": 538,
 >>>>>>> Stashed changes
@@ -88263,7 +88963,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 573,
+=======
+    "line": 561,
+>>>>>>> Stashed changes
 =======
     "line": 561,
 >>>>>>> Stashed changes
@@ -88275,8 +88979,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 574,
 =======
+=======
+>>>>>>> Stashed changes
     "line": 562,
     "type": "property",
     "name": "valueName",
@@ -88342,6 +89049,9 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
     "line": 604,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
@@ -88351,7 +89061,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 575,
+=======
+    "line": 605,
+>>>>>>> Stashed changes
 =======
     "line": 605,
 >>>>>>> Stashed changes
@@ -88363,7 +89077,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 576,
+=======
+    "line": 606,
+>>>>>>> Stashed changes
 =======
     "line": 606,
 >>>>>>> Stashed changes
@@ -88375,7 +89093,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 584,
+=======
+    "line": 614,
+>>>>>>> Stashed changes
 =======
     "line": 614,
 >>>>>>> Stashed changes
@@ -88387,7 +89109,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 585,
+=======
+    "line": 615,
+>>>>>>> Stashed changes
 =======
     "line": 615,
 >>>>>>> Stashed changes
@@ -88399,7 +89125,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 586,
+=======
+    "line": 616,
+>>>>>>> Stashed changes
 =======
     "line": 616,
 >>>>>>> Stashed changes
@@ -88411,7 +89141,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 593,
+=======
+    "line": 623,
+>>>>>>> Stashed changes
 =======
     "line": 623,
 >>>>>>> Stashed changes
@@ -88423,7 +89157,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 594,
+=======
+    "line": 624,
+>>>>>>> Stashed changes
 =======
     "line": 624,
 >>>>>>> Stashed changes
@@ -88435,7 +89173,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 595,
+=======
+    "line": 625,
+>>>>>>> Stashed changes
 =======
     "line": 625,
 >>>>>>> Stashed changes
@@ -88447,7 +89189,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 596,
+=======
+    "line": 626,
+>>>>>>> Stashed changes
 =======
     "line": 626,
 >>>>>>> Stashed changes
@@ -88459,7 +89205,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TransitionMortalityPhase.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 622,
+=======
+    "line": 652,
+>>>>>>> Stashed changes
 =======
     "line": 652,
 >>>>>>> Stashed changes
@@ -125191,7 +125941,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 84,
+=======
+    "line": 82,
+>>>>>>> Stashed changes
 =======
     "line": 82,
 >>>>>>> Stashed changes
@@ -125203,7 +125957,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 85,
+=======
+    "line": 83,
+>>>>>>> Stashed changes
 =======
     "line": 83,
 >>>>>>> Stashed changes
@@ -125215,7 +125973,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 86,
+=======
+    "line": 84,
+>>>>>>> Stashed changes
 =======
     "line": 84,
 >>>>>>> Stashed changes
@@ -125227,7 +125989,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 87,
+=======
+    "line": 85,
+>>>>>>> Stashed changes
 =======
     "line": 85,
 >>>>>>> Stashed changes
@@ -125239,7 +126005,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 88,
+=======
+    "line": 86,
+>>>>>>> Stashed changes
 =======
     "line": 86,
 >>>>>>> Stashed changes
@@ -125251,7 +126021,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 108,
+=======
+    "line": 106,
+>>>>>>> Stashed changes
 =======
     "line": 106,
 >>>>>>> Stashed changes
@@ -125263,7 +126037,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 109,
+=======
+    "line": 107,
+>>>>>>> Stashed changes
 =======
     "line": 107,
 >>>>>>> Stashed changes
@@ -125275,7 +126053,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 110,
+=======
+    "line": 108,
+>>>>>>> Stashed changes
 =======
     "line": 108,
 >>>>>>> Stashed changes
@@ -125287,7 +126069,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 126,
+=======
+    "line": 124,
+>>>>>>> Stashed changes
 =======
     "line": 124,
 >>>>>>> Stashed changes
@@ -125299,7 +126085,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 127,
+=======
+    "line": 125,
+>>>>>>> Stashed changes
 =======
     "line": 125,
 >>>>>>> Stashed changes
@@ -125311,7 +126101,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 128,
+=======
+    "line": 126,
+>>>>>>> Stashed changes
 =======
     "line": 126,
 >>>>>>> Stashed changes
@@ -125323,7 +126117,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 147,
+=======
+    "line": 145,
+>>>>>>> Stashed changes
 =======
     "line": 145,
 >>>>>>> Stashed changes
@@ -125335,7 +126133,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 148,
+=======
+    "line": 146,
+>>>>>>> Stashed changes
 =======
     "line": 146,
 >>>>>>> Stashed changes
@@ -125347,7 +126149,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 149,
+=======
+    "line": 147,
+>>>>>>> Stashed changes
 =======
     "line": 147,
 >>>>>>> Stashed changes
@@ -125359,7 +126165,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 169,
+=======
+    "line": 167,
+>>>>>>> Stashed changes
 =======
     "line": 167,
 >>>>>>> Stashed changes
@@ -125371,7 +126181,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 176,
+=======
+    "line": 174,
+>>>>>>> Stashed changes
 =======
     "line": 174,
 >>>>>>> Stashed changes
@@ -125383,7 +126197,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 177,
+=======
+    "line": 175,
+>>>>>>> Stashed changes
 =======
     "line": 175,
 >>>>>>> Stashed changes
@@ -125395,7 +126213,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 178,
+=======
+    "line": 176,
+>>>>>>> Stashed changes
 =======
     "line": 176,
 >>>>>>> Stashed changes
@@ -125407,7 +126229,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 188,
+=======
+    "line": 186,
+>>>>>>> Stashed changes
 =======
     "line": 186,
 >>>>>>> Stashed changes
@@ -125419,7 +126245,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 189,
+=======
+    "line": 187,
+>>>>>>> Stashed changes
 =======
     "line": 187,
 >>>>>>> Stashed changes
@@ -125431,7 +126261,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 190,
+=======
+    "line": 188,
+>>>>>>> Stashed changes
 =======
     "line": 188,
 >>>>>>> Stashed changes
@@ -125443,7 +126277,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 213,
+=======
+    "line": 211,
+>>>>>>> Stashed changes
 =======
     "line": 211,
 >>>>>>> Stashed changes
@@ -125455,7 +126293,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 216,
+=======
+    "line": 214,
+>>>>>>> Stashed changes
 =======
     "line": 214,
 >>>>>>> Stashed changes
@@ -125467,7 +126309,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 217,
+=======
+    "line": 215,
+>>>>>>> Stashed changes
 =======
     "line": 215,
 >>>>>>> Stashed changes
@@ -125479,7 +126325,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 218,
+=======
+    "line": 216,
+>>>>>>> Stashed changes
 =======
     "line": 216,
 >>>>>>> Stashed changes
@@ -125491,7 +126341,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 219,
+=======
+    "line": 217,
+>>>>>>> Stashed changes
 =======
     "line": 217,
 >>>>>>> Stashed changes
@@ -125503,7 +126357,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 222,
+=======
+    "line": 220,
+>>>>>>> Stashed changes
 =======
     "line": 220,
 >>>>>>> Stashed changes
@@ -125515,7 +126373,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 225,
+=======
+    "line": 223,
+>>>>>>> Stashed changes
 =======
     "line": 223,
 >>>>>>> Stashed changes
@@ -125527,7 +126389,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 226,
+=======
+    "line": 224,
+>>>>>>> Stashed changes
 =======
     "line": 224,
 >>>>>>> Stashed changes
@@ -125539,7 +126405,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 227,
+=======
+    "line": 225,
+>>>>>>> Stashed changes
 =======
     "line": 225,
 >>>>>>> Stashed changes
@@ -125551,7 +126421,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 228,
+=======
+    "line": 226,
+>>>>>>> Stashed changes
 =======
     "line": 226,
 >>>>>>> Stashed changes
@@ -125563,7 +126437,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 231,
+=======
+    "line": 229,
+>>>>>>> Stashed changes
 =======
     "line": 229,
 >>>>>>> Stashed changes
@@ -125575,7 +126453,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 234,
+=======
+    "line": 232,
+>>>>>>> Stashed changes
 =======
     "line": 232,
 >>>>>>> Stashed changes
@@ -125587,7 +126469,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 235,
+=======
+    "line": 233,
+>>>>>>> Stashed changes
 =======
     "line": 233,
 >>>>>>> Stashed changes
@@ -125599,7 +126485,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 236,
+=======
+    "line": 234,
+>>>>>>> Stashed changes
 =======
     "line": 234,
 >>>>>>> Stashed changes
@@ -125611,7 +126501,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 237,
+=======
+    "line": 235,
+>>>>>>> Stashed changes
 =======
     "line": 235,
 >>>>>>> Stashed changes
@@ -125623,7 +126517,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 240,
+=======
+    "line": 238,
+>>>>>>> Stashed changes
 =======
     "line": 238,
 >>>>>>> Stashed changes
@@ -125635,7 +126533,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 243,
+=======
+    "line": 241,
+>>>>>>> Stashed changes
 =======
     "line": 241,
 >>>>>>> Stashed changes
@@ -125647,7 +126549,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 244,
+=======
+    "line": 242,
+>>>>>>> Stashed changes
 =======
     "line": 242,
 >>>>>>> Stashed changes
@@ -125659,7 +126565,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 245,
+=======
+    "line": 243,
+>>>>>>> Stashed changes
 =======
     "line": 243,
 >>>>>>> Stashed changes
@@ -125671,7 +126581,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 246,
+=======
+    "line": 244,
+>>>>>>> Stashed changes
 =======
     "line": 244,
 >>>>>>> Stashed changes
@@ -125683,7 +126597,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 249,
+=======
+    "line": 247,
+>>>>>>> Stashed changes
 =======
     "line": 247,
 >>>>>>> Stashed changes
@@ -125695,7 +126613,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 252,
+=======
+    "line": 250,
+>>>>>>> Stashed changes
 =======
     "line": 250,
 >>>>>>> Stashed changes
@@ -125707,7 +126629,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 253,
+=======
+    "line": 251,
+>>>>>>> Stashed changes
 =======
     "line": 251,
 >>>>>>> Stashed changes
@@ -125719,7 +126645,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 254,
+=======
+    "line": 252,
+>>>>>>> Stashed changes
 =======
     "line": 252,
 >>>>>>> Stashed changes
@@ -125731,7 +126661,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 255,
+=======
+    "line": 253,
+>>>>>>> Stashed changes
 =======
     "line": 253,
 >>>>>>> Stashed changes
@@ -125743,7 +126677,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 258,
+=======
+    "line": 256,
+>>>>>>> Stashed changes
 =======
     "line": 256,
 >>>>>>> Stashed changes
@@ -125755,7 +126693,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 262,
+=======
+    "line": 260,
+>>>>>>> Stashed changes
 =======
     "line": 260,
 >>>>>>> Stashed changes
@@ -125767,7 +126709,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 263,
+=======
+    "line": 261,
+>>>>>>> Stashed changes
 =======
     "line": 261,
 >>>>>>> Stashed changes
@@ -125779,7 +126725,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 335,
+=======
+    "line": 333,
+>>>>>>> Stashed changes
 =======
     "line": 333,
 >>>>>>> Stashed changes
@@ -125791,7 +126741,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 336,
+=======
+    "line": 334,
+>>>>>>> Stashed changes
 =======
     "line": 334,
 >>>>>>> Stashed changes
@@ -125803,7 +126757,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 360,
+=======
+    "line": 358,
+>>>>>>> Stashed changes
 =======
     "line": 358,
 >>>>>>> Stashed changes
@@ -125815,7 +126773,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 361,
+=======
+    "line": 359,
+>>>>>>> Stashed changes
 =======
     "line": 359,
 >>>>>>> Stashed changes
@@ -125827,7 +126789,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 362,
+=======
+    "line": 360,
+>>>>>>> Stashed changes
 =======
     "line": 360,
 >>>>>>> Stashed changes
@@ -125839,7 +126805,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 418,
+=======
+    "line": 416,
+>>>>>>> Stashed changes
 =======
     "line": 416,
 >>>>>>> Stashed changes
@@ -125851,7 +126821,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 419,
+=======
+    "line": 417,
+>>>>>>> Stashed changes
 =======
     "line": 417,
 >>>>>>> Stashed changes
@@ -125863,7 +126837,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 420,
+=======
+    "line": 418,
+>>>>>>> Stashed changes
 =======
     "line": 418,
 >>>>>>> Stashed changes
@@ -125875,7 +126853,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 421,
+=======
+    "line": 419,
+>>>>>>> Stashed changes
 =======
     "line": 419,
 >>>>>>> Stashed changes
@@ -125887,7 +126869,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 435,
+=======
+    "line": 433,
+>>>>>>> Stashed changes
 =======
     "line": 433,
 >>>>>>> Stashed changes
@@ -125899,7 +126885,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 473,
+=======
+    "line": 471,
+>>>>>>> Stashed changes
 =======
     "line": 471,
 >>>>>>> Stashed changes
@@ -125911,7 +126901,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 474,
+=======
+    "line": 472,
+>>>>>>> Stashed changes
 =======
     "line": 472,
 >>>>>>> Stashed changes
@@ -125923,7 +126917,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 475,
+=======
+    "line": 473,
+>>>>>>> Stashed changes
 =======
     "line": 473,
 >>>>>>> Stashed changes
@@ -125935,7 +126933,11 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "line": 476,
+=======
+    "line": 474,
+>>>>>>> Stashed changes
 =======
     "line": 474,
 >>>>>>> Stashed changes
