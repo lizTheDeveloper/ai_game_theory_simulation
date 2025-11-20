@@ -350,11 +350,41 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // NOAA Jan 2025 - Extensive weakening 2000s, paused since early 2010s
     // Type: EMPIRICAL observations (RAPID array) + MODEL consensus
 
-    // CRITICAL: NO COLLAPSE before +4°C (consensus view)
+    // === TEMPERATURE-DEPENDENT COLLAPSE PROBABILITY ===
+    // Research: Bellomo et al. Nature Comms (2025), Westen et al. Science Advances (2024)
+    // See: research/amoc_collapse_probability_20251120.md
+    //
+    // CRITICAL UPDATE (Nov 20, 2025): Fixed 5% probability replaced with temperature-dependent function
+    // - <+2°C: ~0.5% (extremely unlikely)
+    // - +2-2.2°C: ~1-5% (outlier tail risk)
+    // - +2.2-3°C: ~5-50% (rising risk)
+    // - +3-3.9°C: ~50-90% (high risk)
+    // - >+3.9°C: ~90% (very likely)
+    //
     // Gradual weakening: ~15% per degree of warming (linear approximation)
     const WEAKENING_RATE_PER_DEGREE = 0.15; // [MODEL-DERIVED from EMPIRICAL observations]
     const COLLAPSE_THRESHOLD = 4.0; // [MODEL-DERIVED] °C - consensus threshold
-    const OUTLIER_COLLAPSE_PROBABILITY = 0.05; // [MODEL-DERIVED] 5% tail risk at +2-3°C (outlier scenario)
+
+    // === TEMPERATURE-DEPENDENT COLLAPSE PROBABILITY FUNCTION ===
+    // Based on Bellomo et al. (2025) and Westen et al. (2024)
+    const calculateAMOCCollapseProbability = (temp: number): number => {
+      if (temp < 2.0) {
+        // Extremely unlikely below +2°C
+        return 0.005; // 0.5% annual probability
+      } else if (temp < 2.2) {
+        // Linear interpolation: 0.5% at +2°C → 5% at +2.2°C
+        return 0.005 + ((temp - 2.0) / 0.2) * (0.05 - 0.005);
+      } else if (temp < 3.0) {
+        // Linear interpolation: 5% at +2.2°C → 50% at +3°C
+        return 0.05 + ((temp - 2.2) / 0.8) * (0.50 - 0.05);
+      } else if (temp < 3.9) {
+        // Linear interpolation: 50% at +3°C → 90% at +3.9°C
+        return 0.50 + ((temp - 3.0) / 0.9) * (0.90 - 0.50);
+      } else {
+        // Very likely above +3.9°C
+        return 0.90; // 90% annual probability
+      }
+    };
 
     // Calculate target strength based on temperature
     let targetStrength = 1.0 - (tempAnomaly * WEAKENING_RATE_PER_DEGREE);
@@ -371,51 +401,46 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
       month: state.currentMonth,
     });
 
-    // === COLLAPSE CHECK (Only at extreme warming) ===
-    if (!amoc.collapsed) {
-      if (tempAnomaly >= COLLAPSE_THRESHOLD) {
-        // At +4°C, collapse becomes possible (consensus threshold)
-        const collapseProbability = 0.1; // [MODEL-DERIVED] 10% annual probability at +4°C
-        const monthlyCollapseProbability = collapseProbability / 12;
+    // === COLLAPSE CHECK (Temperature-Dependent Probability) ===
+    if (!amoc.collapsed && tempAnomaly >= 2.0) {
+      // Calculate temperature-dependent annual collapse probability
+      const annualCollapseProbability = calculateAMOCCollapseProbability(tempAnomaly);
+      const monthlyCollapseProbability = annualCollapseProbability / 12;
 
-        if (rng() < monthlyCollapseProbability) {
-          amoc.collapsed = true;
-          amoc.strength = 0.1; // Near-zero but not complete shutdown (eddies sustain weak circulation)
+      // Validate probability is in [0, 1]
+      assertProbability(monthlyCollapseProbability, {
+        location: 'trackAMOCWeakening',
+        valueName: 'monthlyCollapseProbability',
+        month: state.currentMonth,
+        additionalInfo: {
+          tempAnomaly,
+          annualProbability: annualCollapseProbability,
+        },
+      });
 
-          events.push({
-            type: 'tipping_point_crossed',
-            severity: 0.85,
-            description: `🌊🚨 AMOC COLLAPSE: Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C. Northern Europe cooling, sea level rise, monsoon disruption.`,
-            impact:
-              'Regional cooling 2-5°C (Northern Europe), accelerated sea level rise (North Atlantic), African monsoon disruption',
-            month: state.currentMonth,
-          });
+      if (rng() < monthlyCollapseProbability) {
+        amoc.collapsed = true;
+        amoc.strength = 0.1; // Near-zero but not complete shutdown (eddies sustain weak circulation)
 
-          console.log(`\n🌊🚨 AMOC COLLAPSE (Month ${state.currentMonth})`);
-          console.log(`   Temperature: +${tempAnomaly.toFixed(2)}°C (threshold: +${COLLAPSE_THRESHOLD}°C)`);
-          console.log(`   Residual strength: ${(amoc.strength * 100).toFixed(1)}% (eddies sustain weak circulation)`);
-          console.log(`   Recovery timescale: 500-2000 years`);
-        }
-      } else if (tempAnomaly >= 2.0 && tempAnomaly < COLLAPSE_THRESHOLD) {
-        // Outlier scenario: Small tail risk of early collapse (Sylvia approved 5%)
-        const earlyCollapseProbability = OUTLIER_COLLAPSE_PROBABILITY / 12; // Annual → monthly
-        if (rng() < earlyCollapseProbability) {
-          amoc.collapsed = true;
-          amoc.strength = 0.1;
+        const isOutlier = tempAnomaly < COLLAPSE_THRESHOLD;
+        const severityLabel = isOutlier ? 'OUTLIER' : 'EXPECTED';
+        const emoji = isOutlier ? '🌊⚠️' : '🌊🚨';
 
-          events.push({
-            type: 'tipping_point_crossed',
-            severity: 0.85,
-            description: `🌊⚠️ EARLY AMOC COLLAPSE (Outlier): Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C (below consensus +4°C threshold). Rare event (<5% probability).`,
-            impact:
-              'Regional cooling 2-5°C, sea level rise, monsoon disruption. Earlier than expected.',
-            month: state.currentMonth,
-          });
+        events.push({
+          type: 'tipping_point_crossed',
+          severity: 0.85,
+          description: `${emoji} AMOC COLLAPSE ${isOutlier ? '(Outlier)' : ''}: Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C. Northern Europe cooling, sea level rise, monsoon disruption. Annual probability: ${(annualCollapseProbability * 100).toFixed(1)}%.`,
+          impact:
+            'Regional cooling 2-5°C (Northern Europe), accelerated sea level rise (North Atlantic), African monsoon disruption',
+          month: state.currentMonth,
+        });
 
-          console.log(`\n🌊⚠️ EARLY AMOC COLLAPSE - OUTLIER SCENARIO (Month ${state.currentMonth})`);
-          console.log(`   Temperature: +${tempAnomaly.toFixed(2)}°C (consensus threshold: +${COLLAPSE_THRESHOLD}°C)`);
-          console.log(`   Probability: <5% (outlier scenario per Sylvia's critique)`);
-        }
+        console.log(`\n${emoji} AMOC COLLAPSE - ${severityLabel} (Month ${state.currentMonth})`);
+        console.log(`   Temperature: +${tempAnomaly.toFixed(2)}°C`);
+        console.log(`   Annual collapse probability: ${(annualCollapseProbability * 100).toFixed(1)}%`);
+        console.log(`   Consensus threshold: +${COLLAPSE_THRESHOLD}°C`);
+        console.log(`   Residual strength: ${(amoc.strength * 100).toFixed(1)}% (eddies sustain weak circulation)`);
+        console.log(`   Recovery timescale: 500-2000 years`);
       }
     }
 

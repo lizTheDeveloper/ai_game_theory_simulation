@@ -59,12 +59,21 @@ export function initializeNovelEntitiesSystem(): NovelEntitiesSystem {
     atmosphericReservoirStock: 180000,   // 180,000 Mt in atmospheric reservoir (10% of total stock cycles)
 
     // CRITICAL FIX (Nov 18, 2025): Phase 3 - Irreversibility + Energy Trap + Rebound Effects
-    // Research: Ling 2024, Cousins 2022, Kane 2022, UNEP 2024, Sorrell 2025
+    // Research: Ling 2024, Cousins 2022, Kane 2020, UNEP 2024, Sorrell 2025
+    //
+    // CLARIFICATION (Nov 20, 2025): Thompson et al. PNAS Nexus (2024) provides conceptual
+    // framework for (ir)reversibility but does NOT contradict 87.5% parameter.
+    // - Thompson is semantic analysis (how terms are used), not quantitative meta-analysis
+    // - Climate system reversibility (60-70% for precipitation) applies to DIFFERENT systems
+    //   on DIFFERENT timescales (centuries), NOT persistent pollutants (PFAS, microplastics)
+    // - See: research/irreversibility_reconciliation_20251120.md (Grade C, NO CONTRADICTION)
 
-    // Irreversibility (HIGH UNCERTAINTY: 80-95% range)
+    // Irreversibility (HIGH UNCERTAINTY: 80-95% range, ±7.5%)
     irreversibleFraction: 0.875,         // 87.5% (midpoint of 80-95% research range)
-                                         // Cousins 2022: PFAS atmospheric distribution
-                                         // Kane 2022: Microplastic centuries recovery
+                                         // Cousins et al. ES&T (2022): PFAS atmospheric half-life 50-100 years
+                                         // Kane et al. Science (2020): Deep-sea microplastics, centuries persistence
+                                         // Ling et al. ES&T (2024): Cleanup cost 0.2-66× GDP, economic impossibility
+                                         // Thompson et al. PNAS Nexus (2024): Conceptual framework (timescale-dependent)
     reversibleStock: 1800000 * 0.125,    // 225,000 Mt (12.5% of accumulated stock)
     irreversibleStock: 1800000 * 0.875,  // 1,575,000 Mt (87.5% persists indefinitely)
     minimumAchievableLevel: 1800000 * 0.875, // Asymptotic floor = irreversible stock
