@@ -10898,7 +10898,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/nuclearWinter.ts",
-    "line": 67,
+    "line": 72,
     "type": "property",
     "name": "radiationZones",
     "currentDoc": "(none)",
@@ -126034,7 +126034,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 42,
+    "line": 72,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -126042,7 +126042,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 43,
+    "line": 73,
     "type": "property",
     "name": "triggerMonth",
     "currentDoc": "(none)",
@@ -126050,7 +126050,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 46,
+    "line": 76,
     "type": "property",
     "name": "sootInStratosphere",
     "currentDoc": "(none)",
@@ -126058,7 +126058,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 48,
+    "line": 78,
     "type": "property",
     "name": "currentSoot",
     "currentDoc": "(none)",
@@ -126066,7 +126066,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 51,
+    "line": 85,
     "type": "property",
     "name": "temperatureAnomaly",
     "currentDoc": "(none)",
@@ -126074,7 +126074,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 57,
+    "line": 91,
     "type": "property",
     "name": "monthlyStarvationRate",
     "currentDoc": "(none)",
@@ -126082,7 +126082,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 60,
+    "line": 94,
     "type": "property",
     "name": "radiationZones",
     "currentDoc": "(none)",
@@ -126090,7 +126090,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 63,
+    "line": 97,
     "type": "property",
     "name": "monthsSinceWar",
     "currentDoc": "(none)",
@@ -126098,7 +126098,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 65,
+    "line": 99,
     "type": "property",
     "name": "recoveryStartMonth",
     "currentDoc": "(none)",
@@ -126106,7 +126106,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 68,
+    "line": 102,
     "type": "property",
     "name": "totalWinterDeaths",
     "currentDoc": "(none)",
@@ -126114,7 +126114,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 69,
+    "line": 103,
     "type": "property",
     "name": "totalRadiationDeaths",
     "currentDoc": "(none)",
@@ -126122,7 +126122,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 81,
+    "line": 116,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -126130,7 +126130,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 82,
+    "line": 117,
     "type": "property",
     "name": "warScale",
     "currentDoc": "(none)",
@@ -126138,15 +126138,23 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 83,
+    "line": 118,
     "type": "property",
     "name": "targetCountries",
     "currentDoc": "(none)",
-    "context": "targetCountries: string[]"
+    "context": "targetCountries: string[],"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 154,
+    "line": 119,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: () => number"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 214,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -126154,7 +126162,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 155,
+    "line": 215,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -126162,7 +126170,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 170,
+    "line": 219,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -126170,399 +126178,31 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 171,
+    "line": 220,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'sootInjection',"
+    "context": "valueName: 'scavengingRate'"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 172,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { warScale: validWarScale }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 190,
+    "line": 243,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'calculateTemperatureAnomaly',"
+    "context": "location: 'calculateSootInjection',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 191,
+    "line": 244,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'soot'"
+    "context": "valueName: 'sootReachingStratosphere',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 207,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateTemperatureAnomaly',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 208,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'temperatureAnomaly',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 209,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { soot: validSoot }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 225,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateCropYield',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 226,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'temperatureAnomaly'"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 235,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateCropYield',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 236,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'cropYieldMultiplier',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 237,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { temperatureAnomaly: validTempAnomaly }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 260,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateSunlightBlocking',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 261,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'soot'"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 280,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateSunlightBlocking',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 281,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'sunlightBlocked',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 282,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { soot: validSoot }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 321,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateStarvationRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 322,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'cropYield'"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 326,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateStarvationRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 327,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'monthsSinceWar'"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 360,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateStarvationRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 361,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'starvationRate'"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 369,
-    "type": "property",
-    "name": "winter",
-    "currentDoc": "(none)",
-    "context": "winter: NuclearWinterState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 370,
-    "type": "property",
-    "name": "countries",
-    "currentDoc": "(none)",
-    "context": "countries: string[],"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 371,
-    "type": "property",
-    "name": "currentMonth",
-    "currentDoc": "(none)",
-    "context": "currentMonth: number"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 386,
-    "type": "property",
-    "name": "hitMonth",
-    "currentDoc": "(none)",
-    "context": "hitMonth: currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 389,
-    "type": "property",
-    "name": "currentLevel",
-    "currentDoc": "(none)",
-    "context": "currentLevel: 0.8,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 409,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'updateNuclearWinter',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 410,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'currentSoot (before decay)',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 411,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 418,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'updateNuclearWinter',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 419,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'currentSoot (after decay)',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 420,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 421,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { previousSoot, decayRate: winter.sootDecayRate }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 446,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'updateNuclearWinter (famine)',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 447,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'monthlyStarvationRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 448,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 449,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { soot: winter.currentSoot, cropYield: winter.cropYieldMultiplier }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 453,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'famine',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 454,
-    "type": "property",
-    "name": "baseRisk",
-    "currentDoc": "(none)",
-    "context": "baseRisk: monthlyStarvationRate,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 455,
-    "type": "property",
-    "name": "scope",
-    "currentDoc": "(none)",
-    "context": "scope: 'GLOBAL',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 456,
-    "type": "property",
-    "name": "exposedFraction",
-    "currentDoc": "(none)",
-    "context": "exposedFraction: 1.00,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 457,
-    "type": "property",
-    "name": "proximate",
-    "currentDoc": "(none)",
-    "context": "proximate: 'famine',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 458,
-    "type": "property",
-    "name": "root",
-    "currentDoc": "(none)",
-    "context": "root: RootCause.conflict,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 460,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: 'Nuclear winter famine - agricultural collapse (global)',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 536,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'updateNuclearWinter (radiation)',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 537,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'averageRadiationMortality',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 538,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 539,
+    "line": 245,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -126570,71 +126210,279 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 540,
+    "line": 246,
     "type": "property",
-    "name": "totalDeaths",
+    "name": "warScale",
     "currentDoc": "(none)",
-    "context": "totalDeaths: totalRadiationDeaths,"
+    "context": "warScale: validWarScale,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 542,
+    "line": 247,
     "type": "property",
-    "name": "zones",
+    "name": "scavengingRate",
     "currentDoc": "(none)",
-    "context": "zones: winter.radiationZones.length"
+    "context": "scavengingRate: validScavenging,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 547,
+    "line": 248,
     "type": "property",
-    "name": "type",
+    "name": "totalProduced",
     "currentDoc": "(none)",
-    "context": "type: 'war',"
+    "context": "totalProduced: totalSootProduced"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 548,
+    "line": 275,
     "type": "property",
-    "name": "baseRisk",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "baseRisk: averageRadiationMortality,"
+    "context": "location: 'calculateTemperatureAnomaly',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 549,
+    "line": 276,
     "type": "property",
-    "name": "scope",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "scope: 'REGIONAL',"
+    "context": "valueName: 'soot'"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 550,
+    "line": 285,
     "type": "property",
-    "name": "exposedFraction",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "exposedFraction: 0.30,"
+    "context": "location: 'calculateTemperatureAnomaly',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 551,
+    "line": 286,
     "type": "property",
-    "name": "proximate",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "proximate: 'war',"
+    "context": "valueName: 'temperatureAnomaly',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 552,
+    "line": 287,
     "type": "property",
-    "name": "root",
+    "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "root: RootCause.conflict,"
+    "context": "additionalInfo: { soot: validSoot, coolingRate: COOLING_PER_TG }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 553,
+    "line": 306,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateCropYield',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 307,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'temperatureAnomaly'"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 316,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateCropYield',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 317,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'cropYieldMultiplier',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 318,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { temperatureAnomaly: validTempAnomaly, yieldLoss }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 343,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateSunlightBlocking',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 344,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'soot'"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 363,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateSunlightBlocking',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 364,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'sunlightBlocked',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 365,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { soot: validSoot }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 404,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateStarvationRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 405,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'cropYield'"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 409,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateStarvationRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 410,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'monthsSinceWar'"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 446,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateStarvationRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 447,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'starvationRate'"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 455,
+    "type": "property",
+    "name": "winter",
+    "currentDoc": "(none)",
+    "context": "winter: NuclearWinterState,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 456,
+    "type": "property",
+    "name": "countries",
+    "currentDoc": "(none)",
+    "context": "countries: string[],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 457,
+    "type": "property",
+    "name": "currentMonth",
+    "currentDoc": "(none)",
+    "context": "currentMonth: number"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 472,
+    "type": "property",
+    "name": "hitMonth",
+    "currentDoc": "(none)",
+    "context": "hitMonth: currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 475,
+    "type": "property",
+    "name": "currentLevel",
+    "currentDoc": "(none)",
+    "context": "currentLevel: 0.8,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 495,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateNuclearWinter',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 496,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'currentSoot (before decay)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 497,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 504,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateNuclearWinter',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 505,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'currentSoot (after decay)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 506,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -126642,7 +126490,207 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
-    "line": 554,
+    "line": 507,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { previousSoot, decayRate: winter.sootDecayRate }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 532,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateNuclearWinter (famine)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 533,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'monthlyStarvationRate',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 534,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 535,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { soot: winter.currentSoot, cropYield: winter.cropYieldMultiplier }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 539,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'famine',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 540,
+    "type": "property",
+    "name": "baseRisk",
+    "currentDoc": "(none)",
+    "context": "baseRisk: monthlyStarvationRate,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 541,
+    "type": "property",
+    "name": "scope",
+    "currentDoc": "(none)",
+    "context": "scope: 'GLOBAL',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 542,
+    "type": "property",
+    "name": "exposedFraction",
+    "currentDoc": "(none)",
+    "context": "exposedFraction: 1.00,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 543,
+    "type": "property",
+    "name": "proximate",
+    "currentDoc": "(none)",
+    "context": "proximate: 'famine',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 544,
+    "type": "property",
+    "name": "root",
+    "currentDoc": "(none)",
+    "context": "root: RootCause.conflict,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 546,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Nuclear winter famine - agricultural collapse (global)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 622,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateNuclearWinter (radiation)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 623,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'averageRadiationMortality',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 624,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 625,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 626,
+    "type": "property",
+    "name": "totalDeaths",
+    "currentDoc": "(none)",
+    "context": "totalDeaths: totalRadiationDeaths,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 628,
+    "type": "property",
+    "name": "zones",
+    "currentDoc": "(none)",
+    "context": "zones: winter.radiationZones.length"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 633,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'war',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 634,
+    "type": "property",
+    "name": "baseRisk",
+    "currentDoc": "(none)",
+    "context": "baseRisk: averageRadiationMortality,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 635,
+    "type": "property",
+    "name": "scope",
+    "currentDoc": "(none)",
+    "context": "scope: 'REGIONAL',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 636,
+    "type": "property",
+    "name": "exposedFraction",
+    "currentDoc": "(none)",
+    "context": "exposedFraction: 0.30,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 637,
+    "type": "property",
+    "name": "proximate",
+    "currentDoc": "(none)",
+    "context": "proximate: 'war',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 638,
+    "type": "property",
+    "name": "root",
+    "currentDoc": "(none)",
+    "context": "root: RootCause.conflict,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 639,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts",
+    "line": 640,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -185210,7 +185258,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 97,
+    "line": 104,
     "type": "property",
     "name": "grossEffectiveness",
     "currentDoc": "(none)",
@@ -185218,7 +185266,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 98,
+    "line": 105,
     "type": "property",
     "name": "concentrationFactor",
     "currentDoc": "(none)",
@@ -185226,7 +185274,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 99,
+    "line": 106,
     "type": "property",
     "name": "energyFactor",
     "currentDoc": "(none)",
@@ -185234,7 +185282,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 100,
+    "line": 107,
     "type": "property",
     "name": "rebound",
     "currentDoc": "(none)",
@@ -185242,7 +185290,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 101,
+    "line": 108,
     "type": "property",
     "name": "netEffectiveness",
     "currentDoc": "(none)",
@@ -185250,7 +185298,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 136,
+    "line": 143,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -185258,7 +185306,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 137,
+    "line": 144,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -185266,7 +185314,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 145,
+    "line": 152,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -185274,59 +185322,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 146,
+    "line": 153,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 177,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyEnergyConstrainedCleanup',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 178,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'reboundCoefficient',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 179,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 180,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 181,
-    "type": "property",
-    "name": "techId",
-    "currentDoc": "(none)",
-    "context": "techId: tech.id,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 182,
-    "type": "property",
-    "name": "uncertaintyRange",
-    "currentDoc": "(none)",
-    "context": "uncertaintyRange: tech.reboundUncertaintyRange,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
@@ -185342,7 +185342,7 @@
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'netEffectiveness',"
+    "context": "valueName: 'reboundCoefficient',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
@@ -185363,6 +185363,54 @@
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
     "line": 195,
+    "type": "property",
+    "name": "techId",
+    "currentDoc": "(none)",
+    "context": "techId: tech.id,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 196,
+    "type": "property",
+    "name": "uncertaintyRange",
+    "currentDoc": "(none)",
+    "context": "uncertaintyRange: tech.reboundUncertaintyRange,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 205,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'applyEnergyConstrainedCleanup',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 206,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'netEffectiveness',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 207,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 208,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 209,
     "type": "property",
     "name": "techId",
     "currentDoc": "(none)",
