@@ -521,8 +521,17 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Action Required:** Implement uncertainty ranges in sensitive parameters
   - **Status:** ⚠️ PENDING
 
+### Recently Completed Work ✅
+- ✅ **TIER 1 CRITICAL:** Nuclear winter cascades - COMPLETE (Nov 20, 2025)
+  - **Implementation:** 906 lines (nuclearWinter.ts), second-order cascades (ozone, precipitation, marine)
+  - **Research:** 8 peer-reviewed sources (Xia 2022, Penn State 2025, IIASA 2025, Mills 2014)
+  - **Resilient Food Tech:** 4 technologies (20-40% mortality reduction if deployed before war)
+  - **Architecture Review:** Grade A- (0 CRITICAL/HIGH issues)
+  - **Wiki Documentation:** Complete (250+ lines)
+  - **Plan:** Archived to `plans/completed/nuclear_winter_cascades_enhancement_20251120.md`
+  - **Status:** Implementation + Documentation complete, Testing pending (Monte Carlo blocked by renewableCapacity initialization bug)
+
 ### Previously Planned Work (POSTPONED until HIGH issues resolved)
-- **TIER 1 CRITICAL:** Nuclear winter cascades (next priority after performance fixes)
 - **TIER 2 HIGH:** AI coordination transition mechanics
 - **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (26 tech candidates, 9 paradigm shifts)
 - **Recently Completed:** Irreversibility framework (Nov 18), Nitrogen-food coupling (Nov 18), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)

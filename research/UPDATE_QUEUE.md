@@ -1,5 +1,5 @@
 # Research Update Queue
-**Generated:** 11/20/2025, 7:30:05 PM
+**Generated:** 11/20/2025, 8:30:03 PM
 **Files Scanned:** 486
 
 ---
@@ -269,10 +269,10 @@
 - **Status:** Not used in simulation
 - **Path:** `research/alignment_technique_network_completion_20251031.md`
 
-### `amoc_original_sources_20251120.md`
+### `amoc_tipping_point_original_sources_20251120.md`
 - **Oldest source:** 1996 (29 years old)
 - **Status:** Not used in simulation
-- **Path:** `research/amoc_original_sources_20251120.md`
+- **Path:** `research/amoc_tipping_point_original_sources_20251120.md`
 
 ### `arch4_cross_system_integrations_20251108.md`
 - **Oldest source:** 2012 (13 years old)
