@@ -46,8 +46,7 @@ describe('Novel Entities Mortality Integration', () => {
     state.novelEntitiesSystem.reproductiveCrisisActive = false;
 
     // Month 0: Crisis should trigger and add mortality
-    const result0 = const result = engine.step(state);
-    state = result.state;
+    const result0 = engine.step(state);
     state = result0.state;
     let risks = state.humanPopulationSystem.mortalityRisks;
     let pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Reproductive'));
@@ -56,9 +55,8 @@ describe('Novel Entities Mortality Integration', () => {
 
     // Months 1-11: Crisis should continue adding mortality EVERY month
     for (let month = 1; month < 12; month++) {
-      const result = const result = engine.step(state);
-    state = result.state;
-      state = result.state;
+      const result = engine.step(state);
+          state = result.state;
       risks = state.humanPopulationSystem.mortalityRisks;
       pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Reproductive'));
 
@@ -77,7 +75,7 @@ describe('Novel Entities Mortality Integration', () => {
 
     // Month 0: Crisis should trigger
     const result = engine.step(state);
-    state = result.state;
+      state = result.state;
     let risks = state.humanPopulationSystem.mortalityRisks;
     let pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Bioaccumulation'));
     assert.ok(pollutionRisks.length > 0);
@@ -86,7 +84,7 @@ describe('Novel Entities Mortality Integration', () => {
     // Months 1-11: Crisis should continue adding mortality
     for (let month = 1; month < 12; month++) {
       const result = engine.step(state);
-    state = result.state;
+      state = result.state;
       risks = state.humanPopulationSystem.mortalityRisks;
       pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Bioaccumulation'));
 
@@ -105,7 +103,7 @@ describe('Novel Entities Mortality Integration', () => {
 
     // Month 0: Crisis should trigger
     const result = engine.step(state);
-    state = result.state;
+      state = result.state;
     let risks = state.humanPopulationSystem.mortalityRisks;
     let pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Chronic disease'));
     assert.ok(pollutionRisks.length > 0);
@@ -114,7 +112,7 @@ describe('Novel Entities Mortality Integration', () => {
     // Months 1-11: Crisis should continue adding mortality
     for (let month = 1; month < 12; month++) {
       const result = engine.step(state);
-    state = result.state;
+      state = result.state;
       risks = state.humanPopulationSystem.mortalityRisks;
       pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Chronic disease'));
 
@@ -137,7 +135,7 @@ describe('Novel Entities Mortality Integration', () => {
     // Run 120 months (10 years)
     for (let month = 0; month < 120; month++) {
       const result = engine.step(state);
-    state = result.state;
+      state = result.state;
 
       // Verify pollution risks present every month after crises trigger
       if (month >= 5) { // Allow time for all crises to trigger
