@@ -77,29 +77,13 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
   // === 3. CLEANUP TECHNOLOGIES (energy-constrained) ===
   let totalCleanup = 0;
 
-  // Diagnostic logging (Nov 19, 2025): Debug cleanup non-deployment
-  const allCleanupTechs = allTech.filter(tech => tech.techType === 'cleanup');
-  const deployedCleanupTechs = allCleanupTechs.filter(tech => tech.deploymentLevel > 0);
-  const cleanupWithEffects = deployedCleanupTechs.filter(tech =>
-    tech.effects.pfasReduction !== undefined ||
-    tech.effects.microplasticReduction !== undefined ||
-    tech.effects.pollutionReduction !== undefined
+  const cleanupTechs = allTech.filter(tech =>
+    tech.techType === 'cleanup' &&
+    tech.deploymentLevel > 0 &&
+    (tech.effects.pfasReduction !== undefined ||
+     tech.effects.microplasticReduction !== undefined ||
+     tech.effects.pollutionReduction !== undefined)
   );
-
-  if (state.currentMonth % 12 === 0) {
-    console.log(`\n🔧 Novel Entities Cleanup Tech Status (Month ${state.currentMonth}):`);
-    console.log(`  Total cleanup techs: ${allCleanupTechs.length}`);
-    console.log(`  Deployed: ${deployedCleanupTechs.length}`);
-    console.log(`  With novel entities effects: ${cleanupWithEffects.length}`);
-    if (deployedCleanupTechs.length > 0) {
-      deployedCleanupTechs.forEach(tech => {
-        console.log(`    - ${tech.name}: deployment ${(tech.deploymentLevel * 100).toFixed(1)}%`);
-        console.log(`      Effects: pfas=${tech.effects.pfasReduction}, plastic=${tech.effects.microplasticReduction}, pollution=${tech.effects.pollutionReduction}`);
-      });
-    }
-  }
-
-  const cleanupTechs = cleanupWithEffects;
 
   for (const tech of cleanupTechs) {
     const result = applyEnergyConstrainedCleanup(state, tech, boundary.currentValue, rng);
@@ -117,7 +101,7 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
     }
   }
 
-  // === 4. NATURAL DECAY (very slow for irreversible boundaries) ===
+  // === 4. NATURAL DECAY (very slow for practically irreversible) ===
   let decayRate = 0;
   if (boundary.irreversible && boundary.recoveryHalfLife) {
     // Exponential decay: dN/dt = -λN, where λ = ln(2) / half-life
@@ -134,10 +118,11 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
   }
 
   // === 5. ATMOSPHERIC REDEPOSITION (counteracts cleanup) ===
-  // Research: Cousins et al. 2022 - 99% of cleanup rains back down globally
-  // Note: This is novel entities specific behavior (PFAS volatilization)
   let redepositionRate = 0;
-  if (boundary.name === 'novel_entities' && totalCleanup > 0) {
+  // NOTE: atmosphericTransport property doesn't exist on PlanetaryBoundary type
+  // Using irreversible flag as proxy (PFAS has global atmospheric distribution)
+  if (boundary.irreversible && totalCleanup > 0) {
+    // Research: Cousins et al. 2022 - 99% of cleanup rains back down globally
     redepositionRate = totalCleanup * 0.99;
     totalCleanup *= 0.01;  // Only 1% stays removed
   }
@@ -178,7 +163,7 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
     } else {
       console.log(`  Cleanup (net): -${(totalCleanup * 100).toFixed(4)}%`);
     }
-    console.log(`  Natural Decay: -${(decayRate * 100).toFixed(6)}% (half-life: ${boundary.recoveryHalfLife ?? 0} years)`);
+    console.log(`  Natural Decay: -${(decayRate * 100).toFixed(6)}% (half-life: ${boundary.recoveryHalfLife} years)`);
     console.log(`  Net Change: ${previousValue.toFixed(4)} → ${boundary.currentValue.toFixed(4)} (Δ${(netChange * 100).toFixed(4)}%)`);
     console.log(`  Peak: ${(boundary.peak ?? 0).toFixed(4)}`);
   }
