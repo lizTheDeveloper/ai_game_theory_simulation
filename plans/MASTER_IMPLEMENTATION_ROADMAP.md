@@ -5,13 +5,35 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟡 **FAIR** (Nov 20, 2025 - Daily Review)
-- **Research Quality:** GOOD (peer-reviewed foundation maintained, no fabricated sources)
+**Current Status:** 🔴 **CRITICAL** (Nov 20, 2025 06:09 UTC - Daily Review)
+- **Research Quality:** CONCERNS (defensive fallback regression, oversimplified modeling)
 - **Implementation Fidelity:** DEGRADING (7x performance regression, test migration half-complete)
-- **Architecture Health:** FAIR** (0 CRITICAL, 4 HIGH issues from daily review)
-- **System Trajectory:** STRESSED - Growth stress, performance degradation, consistency issues
+- **Architecture Health:** FAIR (3 CRITICAL, 4 HIGH issues from daily review)
+- **System Trajectory:** REGRESSING - Defensive anti-patterns returning, split-brain error handling
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** None - awaiting HIGH priority fixes before continuing
+- **Active Work:** None - CRITICAL issues must be resolved before continuing
+
+## 🚨 CRITICAL Issues (From Daily Review 20251120_060001)
+
+### Defensive Fallback Regression (MUST FIX IMMEDIATELY)
+- [ ] **[Simulation]** Fix: Defensive fallback anti-patterns returning - `?? 0` and `|| default` patterns re-emerging (Source: Daily Review 20251120_060001)
+  - **Impact:** Creates "split-brain" error handling - some paths fail loudly, others silently mask bugs
+  - **Locations:** Multiple files have reverted from assertion utilities back to silent fallbacks
+  - **Root Cause:** Nov 16 fixes were partially reverted in subsequent commits
+  - **Solution:** Complete migration to assertion utilities (2-3 day effort for remaining violations)
+  - **Principle Violated:** In research simulation, wrong results are worse than crashes
+
+### Performance Degradation
+- [ ] **[Simulation]** Fix: O(n²) performance issue in extinction debt queue cleanup (Source: Daily Review 20251120_060001)
+  - **Location:** Extinction debt tracking using Array.filter() creating new arrays every month
+  - **Impact:** O(n) memory allocations per month, compounds over simulation runtime
+  - **Solution:** Use in-place array manipulation or linked list structure
+
+### Race Condition
+- [ ] **[Simulation]** Fix: Multiple phases reading/writing planetaryBoundaries.novelEntities without synchronization (Source: Daily Review 20251120_060001)
+  - **Impact:** Non-deterministic state mutations, potential data corruption
+  - **Locations:** PlanetaryBoundariesPhase and other phases accessing same state
+  - **Solution:** Add synchronization guards or consolidate to single mutation point
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -488,6 +510,20 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - Location: src/simulation/nuclearWinter.ts:499-517
   - Impact: Runtime type mismatch not caught by assertions
   - Solution: Add proper type guards and assertions
+
+### Research Integrity Issues
+- [ ] **[Research]** Fix: Oversimplified nitrogen modeling - Zhang et al. (2021) requires 11 coordinated interventions (Source: Daily Review 20251120_060001)
+  - Current model assumes simple linear reduction
+  - Solution: Implement multi-intervention coordination mechanics
+
+- [ ] **[Research]** Fix: Uncited outlier probabilities - 5% AMOC collapse lacks peer-reviewed source (Source: Daily Review 20251120_060001)
+  - Solution: Find citation or adjust to literature-backed probability
+
+- [ ] **[Research]** Fix: Contradictory irreversibility - 87.5% conflicts with Thompson et al. (2024) showing 60-70% reversible (Source: Daily Review 20251120_060001)
+  - Solution: Reconcile with cited research or update parameters
+
+- [ ] **[Research]** Fix: Missing uncertainty propagation - using point estimates where ranges are critical (Source: Daily Review 20251120_060001)
+  - Solution: Implement uncertainty ranges in sensitive parameters
 
 ### Previously Planned Work (POSTPONED until HIGH issues resolved)
 - **TIER 1 CRITICAL:** Nuclear winter cascades (next priority after performance fixes)
@@ -1836,9 +1872,15 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT - ACCELERATING** (Nov 18, 2025 - End of Session)
+**Overall Project Status: 🔴 CRITICAL - REGRESSING** (Nov 20, 2025 06:09 UTC - Daily Review)
 
-**End-of-Session Completions (Nov 18, 2025):**
+**Daily Review Findings (Nov 20, 2025):**
+- **Architecture Health:** FAIR (3 CRITICAL, 4 HIGH issues identified)
+- **Research Integrity:** CONCERNS (defensive fallbacks returning, oversimplified modeling)
+- **Regression Alert:** Previously fixed defensive anti-patterns re-emerging in codebase
+- **Action Required:** Must resolve CRITICAL issues before continuing feature work
+
+**Previous Session Completions (Nov 18, 2025):**
 - ✅ **NITROGEN-FOOD COUPLING PHASE 2-3 COMPLETE + CRITICAL BUG FIX** (TIER 2 HIGH)
   - Implementation: Phase 2-3 verified operational (already complete in codebase)
   - CRITICAL Bug Fix: Duplicate nitrogen penalty application (20% intended → 36% actual)
