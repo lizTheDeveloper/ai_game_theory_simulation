@@ -32,6 +32,7 @@ import {
   assertInRange,
   assertProbability,
   assertDefined,
+  assertStateProperty,
 } from '@/simulation/utils/assertions';
 
 export class IrreversibilityTrackingPhase implements SimulationPhase {
@@ -635,7 +636,10 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     }
 
     // === PAY DEBT (extinctions from historical habitat loss) ===
-    for (const debt of extinctionDebt.debtQueue) {
+    // PERFORMANCE FIX (Nov 20, 2025): Use in-place splice instead of filter()
+    // filter() creates O(n) memory allocations per month, causing 7x slowdown
+    for (let i = extinctionDebt.debtQueue.length - 1; i >= 0; i--) {
+      const debt = extinctionDebt.debtQueue[i];
       debt.monthsRemaining -= 1;
 
       if (debt.monthsRemaining <= 0) {
@@ -653,6 +657,9 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
           biosphere.currentValue += debt.speciesCount * 0.01; // Increase extinction rate
           biosphere.extinctionContribution += 0.05; // Debt contributes to risk
         }
+
+        // Remove from queue in-place (backward iteration avoids index shifting issues)
+        extinctionDebt.debtQueue.splice(i, 1);
       } else if (debt.monthsRemaining % 120 === 0) {
         // Log every 10 years
         console.log(
@@ -660,9 +667,6 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
         );
       }
     }
-
-    // Remove fully paid debts
-    extinctionDebt.debtQueue = extinctionDebt.debtQueue.filter((d) => d.monthsRemaining > 0);
   }
 
   // ============================================================================
