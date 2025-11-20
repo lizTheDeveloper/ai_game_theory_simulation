@@ -1,0 +1,60 @@
+# Historian Documentation Review: Merge Commit a175e18
+
+**Date:** November 20, 2025
+**Commit:** a175e18c0da5e214f45784c12bb05fdd7f0ddcc3
+**Type:** Conflict resolution merge (auto/worker-20251120_060002 → main)
+
+## Analysis
+
+This is a **merge commit** that resolves conflicts between the worker branch and main. The substantive implementation was done in commit **8da0700** (already documented).
+
+### Conflict Resolution
+- **File:** `docs/underdocumented.json`
+- **Issue:** Line number divergence (machine-generated file)
+- **Resolution:** Accepted worker branch version (--theirs)
+- **Rationale:** Machine-generated, reflects code state
+
+### Changes from Worker Branch
+All substantive changes were implemented in commit 8da0700:
+1. ClimateDeploymentDelayPhase (407 lines) - Three-delay model
+2. TransitionManagementSystem (228 lines) - AI coordination
+3. Novel Entities enhancements (124 lines) - Stock/flow tracking
+4. CoordinatedDeploymentPhase updates (788 lines)
+5. Nuclear winter cascades enhancements (451 lines)
+6. Test suite additions
+
+## Documentation Status
+
+✅ **Wiki:** Already updated in merge (docs/wiki/README.md)
+✅ **Research Verification File:** Already exists (research/verification_8da0700_20251120.md)
+✅ **Roadmap Queue:** Already added to MASTER_IMPLEMENTATION_ROADMAP.md
+✅ **Specifications:** Complete (phase1/phase2/phase3 implementation specs)
+
+## Research Verification Status
+
+**File:** `research/verification_8da0700_20251120.md`
+**Scope:** 19 citations, 40-60 specific claims
+**Priority Claims:**
+- CRITICAL: Kenya UBI -48% mortality (NBER WP 34152)
+- CRITICAL: Great Leap Forward 5% vs 30% inconsistency
+- HIGH: IEA DAC 5-10 year activation claim
+- HIGH: Nature enhanced weathering 50-year kinetics
+
+**Queue Status:** Item exists in roadmap under "Research Verification Queue"
+**Next Phase:** Validation (research-skeptic review)
+
+## Historian Decision
+
+**NO NEW DOCUMENTATION REQUIRED**
+
+This merge commit does not introduce new mechanics beyond what was already documented for commit 8da0700. The verification workflow is already in place:
+
+1. ✅ Research file created (verification_8da0700_20251120.md)
+2. ✅ Roadmap item added (MASTER_IMPLEMENTATION_ROADMAP.md)
+3. ⏳ Awaiting orchestrator pickup for validation phase
+
+**Rationale:** Merge commits that only resolve conflicts in machine-generated files do not require separate verification. The substantive implementation (8da0700) is already queued for full TWO-LAYER verification (citation existence + claim accuracy).
+
+## No Commit Needed
+
+Documentation is current. No historian commit required.
