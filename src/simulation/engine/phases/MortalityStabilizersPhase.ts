@@ -30,6 +30,7 @@ import type { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction
 import { assertFinite, assertInRange, assertStateProperty, assertDefined } from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { THRESHOLDS, RATES, MULTIPLIERS, BASELINES } from '@/simulation/config/centralConfig';
+import { DEBUG_FLAGS } from '@/simulation/utils/debugFlags';
 
 export class MortalityStabilizersPhase implements SimulationPhase {
   readonly id = 'mortality-stabilizers';
@@ -54,12 +55,14 @@ export class MortalityStabilizersPhase implements SimulationPhase {
     // Calculate global crisis indicators (for aid branching)
     const globalCrisisIndicators = this.calculateGlobalCrisisIndicators(state);
 
-    // DIAGNOSTIC LOGGING: Global crisis state
-    console.log(`\n=== Mortality Stabilizers Diagnostic (Month ${state.currentMonth}) ===`);
-    console.log(`  🌍 Global Crisis Indicators:`);
-    console.log(`    Major economies collapsed: ${globalCrisisIndicators.majorEconomiesCollapsed}/${globalCrisisIndicators.totalMajorEconomies}`);
-    console.log(`    Global crisis active: ${globalCrisisIndicators.globalCrisisActive ? '🚨 YES' : '✅ NO'}`);
-    console.log(`    Donor fatigue: ${(globalCrisisIndicators.donorFatigue * 100).toFixed(1)}%`);
+    // PERFORMANCE (Nov 20, 2025): Conditionalize diagnostic logging (runs EVERY step)
+    if (DEBUG_FLAGS.ENABLED && DEBUG_FLAGS.MORTALITY) {
+      console.log(`\n=== Mortality Stabilizers Diagnostic (Month ${state.currentMonth}) ===`);
+      console.log(`  🌍 Global Crisis Indicators:`);
+      console.log(`    Major economies collapsed: ${globalCrisisIndicators.majorEconomiesCollapsed}/${globalCrisisIndicators.totalMajorEconomies}`);
+      console.log(`    Global crisis active: ${globalCrisisIndicators.globalCrisisActive ? '🚨 YES' : '✅ NO'}`);
+      console.log(`    Donor fatigue: ${(globalCrisisIndicators.donorFatigue * 100).toFixed(1)}%`);
+    }
 
     // Track aggregate stabilizer effectiveness across all regions
     let totalPopulation = 0;
