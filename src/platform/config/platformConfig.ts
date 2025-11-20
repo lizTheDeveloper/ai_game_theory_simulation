@@ -229,11 +229,11 @@ export function getTestConfiguration(): PlatformConfiguration {
     },
 
     database: {
-      host: 'localhost',
-      port: parseInt(process.env.TEST_DB_PORT || '5432', 10),
-      database: 'marcus_test',
-      user: 'marcus',
-      password: 'marcus_dev_password',
+      host: process.env.DATABASE_HOST || 'localhost',
+      port: parseInt(process.env.DATABASE_PORT || process.env.TEST_DB_PORT || '5432', 10),
+      database: process.env.DATABASE_NAME || 'marcus_test',
+      user: process.env.DATABASE_USER || 'marcus',
+      password: process.env.DATABASE_PASSWORD || 'marcus_dev_password',
       max: 5,
       min: 1
     },
@@ -241,7 +241,8 @@ export function getTestConfiguration(): PlatformConfiguration {
     redis: {
       host: 'localhost',
       port: 6379,
-      db: 1  // Use different DB for tests
+      db: 1,  // Use different DB for tests
+      password: process.env.REDIS_PASSWORD  // Read from environment
     },
 
     auth: {
