@@ -55,6 +55,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Current Initiatives:**
 
+**Nov 20: Uncertainty Propagation Research Complete - Implementation Pending** (commit 48dd5c2)
+- 🔬 **Issue:** Daily Review #8 (last MEDIUM priority) - Simulation uses point estimates where literature reports uncertainty ranges
+- 📊 **Research Analysis:** 850+ lines comprehensive analysis (research/uncertainty_propagation_climate_parameters_20251120.md)
+- 🎯 **9 Parameters Identified:**
+  - CRITICAL: Climate Sensitivity (ECS) 2.5-4.0°C - affects ALL temperature projections (30-40pp outcome impact)
+  - HIGH: AMOC threshold 2.2-3.9°C, Amazon dieback 20-25% deforestation, TCR 1.4-2.2°C
+  - MEDIUM: Greenland 0.8-3.2°C, WAIS 2.0-3.0°C, permafrost carbon 1,460-1,600 Gt C
+- ✅ **Implementation Approach:** Parameter sampling at initialization with deterministic RNG (maintains reproducibility)
+- 📈 **Expected Impact:** Monte Carlo CV increases from <1% (false confidence) to 15-30% (realistic scientific uncertainty)
+- ⏳ **Status:** Research complete, awaiting validation + implementation
+- 🔍 **Verification Required:** 9 parameters need two-layer validation (citation existence + claim accuracy)
+- 📖 **Files:** research/uncertainty_propagation_climate_parameters_20251120.md, research/verification_48dd5c2_20251120.md
+- 🎯 **Next:** research-skeptic validation → simulation-maintainer implementation
+
 **Nov 20: AMOC Citation Tracing - Research Integrity Validated** (commit 5e4b2ff)
 - 🔬 **Citation Chain Established:** Traced Armstrong McKay et al. (2022) back to 10 original modeling papers (1961-2025)
 - ✅ **Original Sources Validated:** Stommel (1961) → Rahmstorf (1996) → Weijer et al. (2020) → Van Westen et al. (2024) → Qin et al. (2025)

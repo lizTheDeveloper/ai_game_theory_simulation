@@ -543,6 +543,26 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Irreversibility framework (Nov 18), Nitrogen-food coupling (Nov 18), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Uncertainty Propagation (commit 48dd5c2)** - ⏸️ RESEARCH COMPLETE, AWAITING VALIDATION (Nov 20, 2025)
+  - **Research File:** `research/uncertainty_propagation_climate_parameters_20251120.md` (850+ lines)
+  - **Verification Spec:** `research/verification_48dd5c2_20251120.md` (9 parameters, two-layer verification)
+  - **Validation Status:** Research complete, validation pending
+  - **Priority:** MEDIUM (research integrity - Daily Review #8, last MEDIUM priority item)
+  - **Issue:** Simulation uses point estimates where literature reports significant uncertainty ranges
+  - **Key Parameters:**
+    - CRITICAL: Climate Sensitivity (ECS) 2.5-4.0°C (IPCC AR6) - affects ALL outcomes (30-40pp impact)
+    - HIGH: AMOC threshold 2.2-3.9°C (Westen 2024), Amazon dieback 20-25%, TCR 1.4-2.2°C
+    - MEDIUM: Greenland 0.8-3.2°C, WAIS 2.0-3.0°C, permafrost 1,460-1,600 Gt C
+  - **Implementation Approach:** Parameter sampling at initialization with deterministic RNG
+  - **Expected Impact:** Monte Carlo CV increases from <1% to 15-30% (realistic scientific uncertainty)
+  - **Two-Layer Verification Required:**
+    - Layer 1: Citation existence (Do papers exist with correct authors/titles/DOIs?)
+    - Layer 2: Claim accuracy (Do papers support the specific ranges/values claimed?)
+  - **Next Steps:**
+    - Validation phase (research-skeptic) → 2-4 hours citation + claim verification
+    - Implementation phase (simulation-maintainer) → 8-13 hours (Phases 1-3)
+    - Monte Carlo validation (N=100) → verify CV increase
+  - **Integration:** GameState.uncertaintyParameters, initialization.ts sampling, tipping point thresholds
 - [ ] **AI Alignment Faking & Strategic Deception (commit a898195)** - ⏸️ AWAITING CORRECTIONS (Grade C+, Nov 20, 2025)
   - **Research File:** `research/ai_alignment_faking_strategic_deception_20251120.md` (673 lines)
   - **Verification Spec:** `research/verification_a898195_20251120.md` (19 specific claims)
