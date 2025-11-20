@@ -19,6 +19,7 @@ import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } fr
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { updatePhosphorusSystem, checkPhosphorusTechUnlocks } from '../../phosphorusDepletion';
 import { updateNovelEntitiesSystem, checkNovelEntitiesTechUnlocks } from '../../novelEntities';
+import { assertStateProperty } from '@/simulation/utils/assertions';
 
 export class ResourceSoilPhase implements SimulationPhase {
   readonly id = 'resource-soil';
@@ -56,7 +57,15 @@ export class ResourceSoilPhase implements SimulationPhase {
     // Calculate current monthly N/P inputs from phosphorus system
     // Baseline (2025): ~120 Mt N/year = ~10 Mt N/month, ~25 Mt P/year = ~2.1 Mt P/month
     // Inputs scale with phosphorus pollution level and population
-    const phosphorusPollution = state.phosphorusSystem?.pollutionLevel ?? 0.25;
+    const phosphorusPollution = assertStateProperty(
+      state.phosphorusSystem,
+      'pollutionLevel',
+      {
+        location: 'ResourceSoilPhase.execute',
+        month: state.currentMonth,
+        expectedSource: 'phosphorusSystem initialization (required for legacy nutrient stock calculations)'
+      }
+    );
     const baselineNInput = 10.0;  // Mt N/month at 2025 baseline
     const baselinePInput = 2.1;   // Mt P/month at 2025 baseline
 

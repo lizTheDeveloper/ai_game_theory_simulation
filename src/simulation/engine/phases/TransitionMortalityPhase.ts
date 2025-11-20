@@ -26,7 +26,8 @@ import type { GameState } from '@/types/game';
 import {
   assertFinite,
   assertInRange,
-  assertProbability
+  assertProbability,
+  assertStateProperty
 } from '@/simulation/utils/assertions';
 
 /**
@@ -142,7 +143,15 @@ function calculateCoordinationQuality(state: GameState): number {
   const govEffectiveness = 0.5; // TODO: Connect to actual governance metrics
 
   // International cooperation (from governmentSystem)
-  const intlCooperation = state.governmentSystem?.internationalCoordination ?? 0.5;
+  const intlCooperation = assertStateProperty(
+    state.governmentSystem,
+    'internationalCoordination',
+    {
+      location: 'calculateCoordinationQuality',
+      month: state.currentMonth,
+      expectedSource: 'governmentSystem initialization (required for coordination calculation)'
+    }
+  );
 
   // Social cohesion (simplified proxy)
   const socialCohesion = 0.5; // TODO: Connect to actual social cohesion metrics
