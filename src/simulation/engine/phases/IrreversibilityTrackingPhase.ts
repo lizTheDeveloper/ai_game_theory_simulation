@@ -356,8 +356,16 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Type: EMPIRICAL observations (RAPID array) + MODEL consensus
 
     // === TEMPERATURE-DEPENDENT COLLAPSE PROBABILITY ===
-    // Research: Bellomo et al. Nature Comms (2025), Westen et al. Science Advances (2024)
+    // Original Sources (traced from Armstrong McKay et al. 2022):
+    // - Stommel (1961) Tellus - Bistability theory (salt-advection feedback)
+    // - Rahmstorf (1996) Climate Dynamics - Freshwater transport criterion
+    // - Weijer et al. (2020) GRL - CMIP6 projections (27 models: -18% to -74% by 2100)
+    // - Van Westen et al. (2024) Science Advances - First ESM collapse (CESM1)
+    // - Qin et al. (2025) Nature - Resilience across 34 models (Southern Ocean sustains weak AMOC)
+    // Synthesis: Armstrong McKay et al. (2022) Science
+    //
     // See: research/amoc_collapse_probability_20251120.md
+    // See: research/amoc_tipping_point_original_sources_20251120.md
     //
     // CRITICAL UPDATE (Nov 20, 2025): Fixed 5% probability replaced with temperature-dependent function
     // - <+2°C: ~0.5% (extremely unlikely)
@@ -368,10 +376,10 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     //
     // Gradual weakening: ~15% per degree of warming (linear approximation)
     const WEAKENING_RATE_PER_DEGREE = 0.15; // [MODEL-DERIVED from EMPIRICAL observations]
-    const COLLAPSE_THRESHOLD = 4.0; // [MODEL-DERIVED] °C - consensus threshold
+    const COLLAPSE_THRESHOLD = 4.0; // [MODEL-DERIVED] °C - consensus threshold (Armstrong McKay 2022: range 1.4-8°C)
 
     // === TEMPERATURE-DEPENDENT COLLAPSE PROBABILITY FUNCTION ===
-    // Based on Bellomo et al. (2025) and Westen et al. (2024)
+    // Based on Weijer et al. (2020), Van Westen et al. (2024), Qin et al. (2025)
     const calculateAMOCCollapseProbability = (temp: number): number => {
       if (temp < 2.0) {
         // Extremely unlikely below +2°C

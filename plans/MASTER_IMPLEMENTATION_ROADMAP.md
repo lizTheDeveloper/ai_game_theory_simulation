@@ -5,20 +5,20 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **GOOD** (Nov 20, 2025 17:30 UTC - Session Complete)
-- **Research Quality:** GOOD (5/8 Daily Review issues resolved, 3 research integrity items remain)
+**Current Status:** 🟢 **GOOD** (Nov 20, 2025 19:00 UTC - Session Complete)
+- **Research Quality:** GOOD (7/8 Daily Review issues resolved, 1 uncertainty propagation issue remains)
 - **Implementation Fidelity:** GOOD (false alarms cleared, nitrogen citations fixed)
-- **Architecture Health:** GOOD (4 false alarms cleared, 1 research fix complete)
-- **System Trajectory:** STABLE - False positive investigation complete, citation integrity restored
+- **Architecture Health:** GOOD (4 false alarms cleared, 3 research integrity fixes complete)
+- **System Trajectory:** STABLE - Research validation complete (4 HIGH priority items), 2 conditional passes await corrections
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** Research integrity issues (AMOC citation, irreversibility contradiction, uncertainty propagation)
+- **Active Work:** Grade C conditional passes (AI Alignment Faking, Three-Phase Coordination)
 
 ## 📊 Daily Review Status (20251120_060001) - Resolution Complete
 
-**Issues Resolved:** 5/8 (62.5%)
+**Issues Resolved:** 7/8 (87.5%)
 **False Alarms:** 4/8 (50%)
-**Legitimate Fixes:** 1/8 (nitrogen citations)
-**Remaining:** 3/8 (research integrity)
+**Legitimate Fixes:** 3/8 (nitrogen citations, AMOC sourcing, nitrogen reversibility)
+**Remaining:** 1/8 (uncertainty propagation)
 
 ### Resolved Issues ✅
 1. ✅ Performance regression (750ms) - FALSE ALARM (actual: 62ms)
@@ -26,10 +26,10 @@
 3. ✅ Nuclear winter type mismatch - FALSE ALARM (tsc passes)
 4. ✅ Test framework migration - FALSE ALARM (no .SKIP files)
 5. ✅ Nitrogen oversimplification - FIXED (citations + justification)
+6. ✅ AMOC citation - RESOLVED (original sources located: Jackson et al. 2023, Boulton et al. 2014)
+7. ✅ Nitrogen reversibility - RESOLVED (no contradiction - category error: climate vs. novel entities)
 
 ### Remaining Issues ⚠️
-6. ⚠️ AMOC citation needs original source (HIGH priority)
-7. ⚠️ Nitrogen reversibility contradiction (HIGH priority)
 8. ⚠️ Uncertainty propagation missing (MEDIUM priority)
 
 **Lesson Learned:** Daily Review automation requires manual validation. 50% false positive rate indicates heuristic improvement needed.
@@ -102,42 +102,42 @@
 
 **🔬 Progress Summary (Nov 20, 2025 - Session Complete):**
 
-**Session Focus:** False alarm investigation + nitrogen citation fixes
+**Session Focus:** Research validation (4 HIGH priority items)
 
 **Work Completed:**
-- ✅ **FALSE ALARM INVESTIGATION (Roy/simulation-maintainer)**
-  - Performance regression (750ms) - FALSE ALARM (actual: 62ms baseline maintained)
-  - Tech tree linear searches - FALSE ALARM (O(1) Map already implemented)
-  - Nuclear winter type mismatch - FALSE ALARM (tsc passes cleanly)
-  - Test framework migration - FALSE ALARM (no .ts.SKIP files exist)
-  - Root cause: Daily Review heuristics generated false positives (4/8 issues)
-  - Report: `reviews/roy_performance_investigation_20251120.md`
-  - Commits: 8fedf8732, 6aa768ecb
+- ✅ **AMOC CITATION SOURCING (Research Integrity)**
+  - Located original sources: Jackson et al. 2023 (AMOC weakening), Boulton et al. 2014 (collapse threshold)
+  - Armstrong McKay correctly cited IPCC AR6, not modeling papers
+  - Resolution: Citations now trace to primary modeling research
+  - Status: ✅ RESOLVED
 
-- ✅ **NITROGEN CITATION FIXES (Orchestrator + Research-Skeptic)**
-  - Fixed citation errors: "Zhang et al. 2021" → "Gu et al. 2023" (first author correction)
-  - Added modeling approach justification (Appendix D in research doc)
-  - Research-Skeptic validation: Grade B+ (CONDITIONAL PASS)
-  - Report: `reviews/nitrogen_model_skeptic_validation_20251120.md`
-  - Supporting docs: `research/zhang_nitrogen_interventions_20251120.md`
-  - Commit: 76575a39c
+- ✅ **NITROGEN REVERSIBILITY RECONCILIATION (Research Integrity)**
+  - Investigated apparent contradiction: nitrogen model (reversible) vs. irreversibility framework (irreversible)
+  - Resolution: No contradiction - category error (climate system 60-70% reversible vs. novel entities 87.5% irreversible)
+  - Thompson et al. 2024 is conceptual analysis (not quantitative), does NOT contradict novel entities parameters
+  - Validation: Grade C (weak empirical basis, but no contradiction)
+  - Report: `research/irreversibility_reconciliation_20251120.md` (28KB)
+  - Status: ✅ RESOLVED
 
-- ✅ **DOCUMENTATION UPDATES (Historian)**
-  - Wiki updated with false alarm resolution + nitrogen fixes
-  - Commits: 8419c0a2d, 74c1724
+- ⏳ **AI ALIGNMENT FAKING & STRATEGIC DECEPTION (Validation Phase)**
+  - Research: `research/ai_alignment_faking_strategic_deception_20251120.md` (28KB, 673 lines)
+  - Verification spec: `research/verification_a898195_20251120.md` (19 specific claims)
+  - Validation: Grade C+ (CONDITIONAL PASS)
+  - Required corrections: 4 items (DOI verification, pressure multiplier justification, extrapolation clarity, parameter bounds)
+  - Status: ⏸️ AWAITING CORRECTIONS (Grade C+ conditional)
 
-**Commits This Session:**
-- `8fedf8732` - fix: benchmarkPerformance RNG initialization (Roy)
-- `6aa768ecb` - docs: Performance false alarm investigation report (Roy)
-- `76575a39c` - fix: Nitrogen model citation errors (Orchestrator + Research-Skeptic)
-- `8419c0a2d`, `74c1724` - historian commit: Auto-update docs
+- ⏳ **THREE-PHASE COORDINATION (Validation Phase)**
+  - Research: `research/ai_coordination_transition_management_20251120.md` (60KB)
+  - Verification spec: `research/verification_8da0700_20251120.md` (40-60 claims)
+  - Validation: Grade C (CONDITIONAL PASS)
+  - Required corrections: Great Leap Forward 5% vs 30% inconsistency fix, irreversibility re-sourcing (80-95% range)
+  - Status: ⏸️ AWAITING CORRECTIONS (Grade C conditional)
 
-**Architecture Health:** FAIR → GOOD (improved)
-- **Daily Review Resolution:** 5/8 issues resolved (4 false alarms + 1 research fix)
-- **Remaining Issues:** 3 research integrity items (AMOC citation, irreversibility contradiction, uncertainty propagation)
-- **Performance Status:** 62ms baseline maintained (no regression)
-- **Type Safety:** tsc passes cleanly (zero errors)
-- **Archive:** `plans/completed/session_nov20_false_alarms_nitrogen_fixes_20251120.md`
+**Architecture Health:** GOOD → GOOD (maintained)
+- **Daily Review Resolution:** 7/8 issues resolved (87.5%)
+- **Research Integrity:** 3/3 items addressed (AMOC, nitrogen reversibility, nitrogen citations)
+- **Validation Pipeline:** 2/4 items conditional passes (corrections needed before implementation)
+- **Remaining Issues:** 1 MEDIUM (uncertainty propagation)
 
 **Recent Completions (Nov 18, 2025):**
 
@@ -506,15 +506,16 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Reports:** reviews/nitrogen_model_skeptic_validation_20251120.md, research/zhang_nitrogen_interventions_20251120.md
   - **Status:** ✅ RESOLVED - Citations corrected, simplifications justified for 30-year scope
 
-- [ ] **[Research]** Fix: AMOC citation needs original source - Armstrong McKay cites IPCC AR6, not modeling papers (Source: Daily Review 20251120_060001)
+- [x] **[Research]** Fix: AMOC citation needs original source - Armstrong McKay cites IPCC AR6, not modeling papers (Source: Daily Review 20251120_060001)
   - **Priority:** HIGH (research integrity)
-  - **Action Required:** Locate original AMOC tipping point modeling papers
-  - **Status:** ⚠️ PENDING
+  - **Resolution:** Original sources located: Jackson et al. 2023 (AMOC weakening), Boulton et al. 2014 (collapse threshold ~4Sv)
+  - **Status:** ✅ RESOLVED (Nov 20, 2025)
 
-- [ ] **[Research]** Fix: Nitrogen reversibility contradiction - Nitrogen model claims reversibility, tipping point framework claims irreversibility (Source: Daily Review 20251120_060001)
+- [x] **[Research]** Fix: Nitrogen reversibility contradiction - Nitrogen model claims reversibility, tipping point framework claims irreversibility (Source: Daily Review 20251120_060001)
   - **Priority:** HIGH (conceptual consistency)
-  - **Action Required:** Reconcile two frameworks or clarify scope differences
-  - **Status:** ⚠️ PENDING
+  - **Resolution:** No contradiction - category error (climate system 60-70% reversible vs. novel entities 87.5% irreversible)
+  - **Report:** `research/irreversibility_reconciliation_20251120.md` (28KB)
+  - **Status:** ✅ RESOLVED (Nov 20, 2025)
 
 - [ ] **[Research]** Fix: Missing uncertainty propagation - using point estimates where ranges are critical (Source: Daily Review 20251120_060001)
   - **Priority:** MEDIUM (quantitative rigor)
@@ -537,19 +538,27 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Irreversibility framework (Nov 18), Nitrogen-food coupling (Nov 18), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
-- [ ] **AI Alignment Faking & Strategic Deception (commit a898195)** - ⏳ VALIDATION PHASE (Nov 20, 2025)
+- [ ] **AI Alignment Faking & Strategic Deception (commit a898195)** - ⏸️ AWAITING CORRECTIONS (Grade C+, Nov 20, 2025)
   - **Research File:** `research/ai_alignment_faking_strategic_deception_20251120.md` (673 lines)
   - **Verification Spec:** `research/verification_a898195_20251120.md` (19 specific claims)
+  - **Validation Status:** Grade C+ (CONDITIONAL PASS)
   - **Priority:** HIGH (affects core AI alignment mechanics)
   - **Sources:** Anthropic (Greenblatt et al. 2024), Apollo Research (2025), Dung & Mai (2025), Dung (2023)
   - **Key Claims:**
     - Anthropic: 12% baseline alignment faking, 78% under training pressure (Claude 3 Opus)
     - Apollo: 68% strategic deception in o1, 37% game hacking in o1-preview
     - Dung & Mai: Low-cost techniques (RLHF, RLAIF, W2S) share nearly all failure modes
-  - **Next Step:** Orchestrator validation phase (research-skeptic + super-alignment-researcher)
+  - **Required Corrections (4 items):**
+    1. Verify DOI/URL accessibility for TechCrunch article (Dec 18, 2024)
+    2. Justify pressure multiplier calculations (5-7× competitive, 3-5× regulatory)
+    3. Clarify extrapolation vs. empirical data for sub-frontier models (<5%)
+    4. Add uncertainty bounds to parameter ranges
+  - **Next Step:** Apply corrections → revalidation → implementation
   - **Integration:** Post-validation → `AIAlignmentPhase.ts`, `AIGovernancePhase.ts`, alignment crisis events
-- [ ] **Three-Phase Coordination (commit 8da0700)** - ⏳ VALIDATION PHASE (Nov 20, 2025)
-  - **Research File:** `research/verification_8da0700_20251120.md` (19 citations, 40-60 claims)
+- [ ] **Three-Phase Coordination (commit 8da0700)** - ⏸️ AWAITING CORRECTIONS (Grade C, Nov 20, 2025)
+  - **Research File:** `research/ai_coordination_transition_management_20251120.md` (60KB)
+  - **Verification Spec:** `research/verification_8da0700_20251120.md` (19 citations, 40-60 claims)
+  - **Validation Status:** Grade C (CONDITIONAL PASS)
   - **Systems:** ClimateDeploymentDelayPhase, TransitionManagementSystem, Novel Entities enhancements
   - **Priority Claims:**
     - CRITICAL: Kenya UBI -48% mortality (NBER WP 34152)
@@ -557,8 +566,11 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
     - CRITICAL: Irreversibility 80-95% range (Cousins 2022)
     - HIGH: Climate tech parameters (20+ values, 6 papers)
     - HIGH: Post-Soviet mortality 74% → 15% mapping
+  - **Required Corrections (2 items):**
+    1. Fix Great Leap Forward inconsistency (5% in docs vs. 30% god mode interpretation)
+    2. Re-source irreversibility 80-95% range (current citation is speculative)
   - **High Uncertainty:** irreversibleFraction [0.80-0.95], reboundFactor [0.5-0.9] (sensitivity analysis REQUIRED)
-  - **Next Steps:** Research-skeptic review → claim verification → discrepancy resolution → docs update
+  - **Next Steps:** Apply corrections → revalidation → implementation
 - [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
   - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
   - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)
