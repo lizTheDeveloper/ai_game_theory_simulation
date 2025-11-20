@@ -185378,7 +185378,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 97,
+    "line": 106,
     "type": "property",
     "name": "grossEffectiveness",
     "currentDoc": "(none)",
@@ -185386,7 +185386,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 98,
+    "line": 107,
     "type": "property",
     "name": "concentrationFactor",
     "currentDoc": "(none)",
@@ -185394,7 +185394,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 99,
+    "line": 108,
     "type": "property",
     "name": "energyFactor",
     "currentDoc": "(none)",
@@ -185402,7 +185402,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 100,
+    "line": 109,
     "type": "property",
     "name": "rebound",
     "currentDoc": "(none)",
@@ -185410,7 +185410,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 101,
+    "line": 110,
     "type": "property",
     "name": "netEffectiveness",
     "currentDoc": "(none)",
@@ -185418,7 +185418,47 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 136,
+    "line": 153,
+    "type": "property",
+    "name": "grossEffectiveness",
+    "currentDoc": "(none)",
+    "context": "grossEffectiveness: baseEffect,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 154,
+    "type": "property",
+    "name": "concentrationFactor",
+    "currentDoc": "(none)",
+    "context": "concentrationFactor: 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 155,
+    "type": "property",
+    "name": "energyFactor",
+    "currentDoc": "(none)",
+    "context": "energyFactor: 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 156,
+    "type": "property",
+    "name": "rebound",
+    "currentDoc": "(none)",
+    "context": "rebound: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 157,
+    "type": "property",
+    "name": "netEffectiveness",
+    "currentDoc": "(none)",
+    "context": "netEffectiveness: baseEffect,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
+    "line": 214,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -185426,39 +185466,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 137,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 145,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyEnergyConstrainedCleanup',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 146,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 196,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyEnergyConstrainedCleanup',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 197,
+    "line": 215,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -185466,7 +185474,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 198,
+    "line": 216,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -185474,7 +185482,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 199,
+    "line": 217,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -185482,7 +185490,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 200,
+    "line": 218,
     "type": "property",
     "name": "techId",
     "currentDoc": "(none)",
@@ -185490,7 +185498,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 201,
+    "line": 219,
     "type": "property",
     "name": "uncertaintyRange",
     "currentDoc": "(none)",
@@ -185498,7 +185506,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 210,
+    "line": 228,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -185506,7 +185514,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 211,
+    "line": 229,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -185514,7 +185522,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 212,
+    "line": 230,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -185522,7 +185530,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 213,
+    "line": 231,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -185530,7 +185538,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 214,
+    "line": 232,
     "type": "property",
     "name": "techId",
     "currentDoc": "(none)",
