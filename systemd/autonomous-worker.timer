@@ -1,0 +1,11 @@
+[Unit]
+Description=Autonomous Worker Timer - Hourly at :00
+Requires=autonomous-worker.service
+
+[Timer]
+# Run at :00 past each hour
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
