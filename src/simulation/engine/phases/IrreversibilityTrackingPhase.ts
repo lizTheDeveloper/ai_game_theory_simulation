@@ -102,12 +102,26 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
+<<<<<<< Updated upstream
     // Get current temperature anomaly - Roy's fix: no silent fallbacks
     const tempAnomaly = assertStateProperty(
       state,
       'resourceEconomy.co2.temperatureAnomaly',
       {
         location: 'trackIceSheetHysteresis',
+=======
+    // Get current temperature anomaly
+    const tempAnomaly = assertFinite(
+      assertDefined(state.resourceEconomy?.co2?.temperatureAnomaly, {
+        location: 'trackIceSheetHysteresis',
+        valueName: 'state.resourceEconomy.co2.temperatureAnomaly',
+        month: state.currentMonth,
+        additionalInfo: { context: 'Required for ice sheet hysteresis tracking' }
+      }),
+      {
+        location: 'trackIceSheetHysteresis',
+        valueName: 'temperatureAnomaly',
+>>>>>>> Stashed changes
         month: state.currentMonth,
       }
     );
@@ -212,11 +226,24 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
+<<<<<<< Updated upstream
     const tempAnomaly = assertStateProperty(
       state,
       'resourceEconomy.co2.temperatureAnomaly',
       {
         location: 'trackPermafrostThaw',
+=======
+    const tempAnomaly = assertFinite(
+      assertDefined(state.resourceEconomy?.co2?.temperatureAnomaly, {
+        location: 'trackPermafrostThaw',
+        valueName: 'state.resourceEconomy.co2.temperatureAnomaly',
+        month: state.currentMonth,
+        additionalInfo: { context: 'Required for permafrost thaw tracking' }
+      }),
+      {
+        location: 'trackPermafrostThaw',
+        valueName: 'temperatureAnomaly',
+>>>>>>> Stashed changes
         month: state.currentMonth,
       }
     );
@@ -322,11 +349,24 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
+<<<<<<< Updated upstream
     const tempAnomaly = assertStateProperty(
       state,
       'resourceEconomy.co2.temperatureAnomaly',
       {
         location: 'trackAMOCWeakening',
+=======
+    const tempAnomaly = assertFinite(
+      assertDefined(state.resourceEconomy?.co2?.temperatureAnomaly, {
+        location: 'trackAMOCWeakening',
+        valueName: 'state.resourceEconomy.co2.temperatureAnomaly',
+        month: state.currentMonth,
+        additionalInfo: { context: 'Required for AMOC weakening tracking' }
+      }),
+      {
+        location: 'trackAMOCWeakening',
+        valueName: 'temperatureAnomaly',
+>>>>>>> Stashed changes
         month: state.currentMonth,
       }
     );
@@ -594,7 +634,19 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Get current habitat loss rate from land use system
     if (state.planetaryBoundariesSystem?.landUse) {
       const landUse = state.planetaryBoundariesSystem.landUse;
-      const globalHabitatCover = landUse.globalHabitatCoverPercent ?? 75;
+      const globalHabitatCover = assertFinite(
+        assertDefined(landUse.globalHabitatCoverPercent, {
+          location: 'trackExtinctionDebt',
+          valueName: 'landUse.globalHabitatCoverPercent',
+          month: state.currentMonth,
+          additionalInfo: { context: 'Required for extinction debt calculation' }
+        }),
+        {
+          location: 'trackExtinctionDebt',
+          valueName: 'globalHabitatCover',
+          month: state.currentMonth,
+        }
+      );
 
       // Habitat loss this month (estimate from rate of change)
       // This is a simplified proxy - full implementation would track monthly changes
@@ -678,6 +730,7 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
+<<<<<<< Updated upstream
     const tempAnomaly = assertStateProperty(
       state,
       'resourceEconomy.co2.temperatureAnomaly',
@@ -691,6 +744,32 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
       'oceanAcidificationSystem.pHLevel',
       {
         location: 'trackCoralReefCollapse',
+=======
+    const tempAnomaly = assertFinite(
+      assertDefined(state.resourceEconomy?.co2?.temperatureAnomaly, {
+        location: 'trackCoralReefCollapse',
+        valueName: 'state.resourceEconomy.co2.temperatureAnomaly',
+        month: state.currentMonth,
+        additionalInfo: { context: 'Required for coral reef collapse tracking' }
+      }),
+      {
+        location: 'trackCoralReefCollapse',
+        valueName: 'temperatureAnomaly',
+        month: state.currentMonth,
+      }
+    );
+
+    const oceanPH = assertFinite(
+      assertDefined(state.oceanAcidificationSystem?.pHLevel, {
+        location: 'trackCoralReefCollapse',
+        valueName: 'state.oceanAcidificationSystem.pHLevel',
+        month: state.currentMonth,
+        additionalInfo: { context: 'Required for coral reef calcification tracking' }
+      }),
+      {
+        location: 'trackCoralReefCollapse',
+        valueName: 'oceanPH',
+>>>>>>> Stashed changes
         month: state.currentMonth,
       }
     );
@@ -884,7 +963,19 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Gradual decline phase
     if (!institutional.collapsed) {
       // Deterioration accelerates with crises
-      const crisisCount = state.planetaryBoundariesSystem?.boundariesBreached ?? 0;
+      const crisisCount = assertFinite(
+        assertDefined(state.planetaryBoundariesSystem?.boundariesBreached, {
+          location: 'trackInstitutionalCollapse',
+          valueName: 'state.planetaryBoundariesSystem.boundariesBreached',
+          month: state.currentMonth,
+          additionalInfo: { context: 'Required for institutional deterioration calculation' }
+        }),
+        {
+          location: 'trackInstitutionalCollapse',
+          valueName: 'crisisCount',
+          month: state.currentMonth,
+        }
+      );
       const deteriorationRate = Math.min(0.5, crisisCount * 0.05); // [EXPERT-ESTIMATE]
 
       institutional.corruptionIndex += deteriorationRate * rng();
