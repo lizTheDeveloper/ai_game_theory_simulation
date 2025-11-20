@@ -7094,6 +7094,7 @@ The simulation runs via a **phase-based architecture** with **95 phases** execut
     - DystopiaProgressionPhase → defensive-ai
     - TechnologyDiffusionPhase → tech-tree, extinction-progress
     - PositiveTippingPointsPhase → tech-tree
+    - **PlanetaryBoundariesPhase → nitrogen-food-coupling** (**NEW Nov 20** - prevents race condition reading `globalFoodProductionIndex`)
   - **Validation:** All dependencies validated at engine startup - throws detailed errors if circular dependencies or invalid ordering detected
   - **See:** Phase Dependency System section below for complete documentation
 

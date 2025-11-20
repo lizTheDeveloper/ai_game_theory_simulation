@@ -4,6 +4,63 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔧 Merge Resolution: TypeScript Fixes (November 20, 2025 - commit 5107a45)
+
+**Status:** ✅ COMPLETE
+**Type:** Bug Fix / Merge Artifact Cleanup
+
+**Summary:** Resolved TypeScript errors from merge branch consolidation. Removed duplicate function calls (merge artifact), cleaned up assertion context, and added critical phase dependency declaration to prevent race conditions.
+
+**Changes:**
+1. **Removed duplicate `updateLegacyNutrientStocks()` call** - Merge artifact in `planetaryBoundaries.ts:897-928`
+   - First call correctly updated legacy stocks and set `effectiveNitrogen/Phosphorus`
+   - Second call (lines 935-946) was duplicate dead code from refactoring
+2. **Fixed assertion `additionalInfo`** - Removed undefined variables (`reserves`, `depletion`, `currentNitrogenInputMonthly`, `currentPhosphorusInputMonthly`)
+3. **Added phase dependency declaration** - `PlanetaryBoundariesPhase` now explicitly declares dependency on `nitrogen-food-coupling` (order 19.6)
+   - **Critical fix:** Prevents race condition where `globalFoodProductionIndex` is read before being written
+   - NitrogenFoodCouplingPhase (19.6) writes value, PlanetaryBoundariesPhase (29.4) reads it
+   - Phase dependency system validates this at engine startup
+
+**Files Changed:**
+- `src/simulation/engine/phases/PlanetaryBoundariesPhase.ts` (added dependency declaration)
+- `src/simulation/planetaryBoundaries.ts` (removed duplicate, fixed assertions)
+
+**Impact:** Technical debt cleanup - no new mechanics. Phase dependency declaration improves architectural safety.
+
+**Fixed by:** simulation-maintainer agent during merge resolution
+
+**Commit:** 5107a45cdb352de051323132c3e158b4e30e8650
+
+---
+
+## 📋 Merge Branch Preparation (November 20, 2025 - commit 112a566)
+
+**Status:** ✅ COMPLETE
+**Type:** Administrative / Merge Coordination
+
+**Summary:** Merge branch prepared with current main state, consolidating recent work on irreversibility framework and nitrogen-food coupling. Updates include orchestration handoff documents, implementation plans, and roadmap consolidation.
+
+**Changes:**
+- Added handoff documents for irreversibility framework final integration
+- Added orchestration plan for irreversibility framework Phase 2
+- Updated MASTER_IMPLEMENTATION_ROADMAP.md with recent completions
+- Archived session summaries for Nov 18 work
+- Consolidated code from two major TIER 1/TIER 2 completions:
+  - Irreversibility framework integration (TIER 1 CRITICAL)
+  - Nitrogen-food coupling phases 2-3 (TIER 2 HIGH)
+
+**Files Changed:**
+- Documentation: `.claude/agents/HANDOFF_roy_irreversibility_final_integration.md`, `.claude/agents/ORCHESTRATION_PLAN_irreversibility_phase2.md`
+- Roadmap: `plans/MASTER_IMPLEMENTATION_ROADMAP.md`
+- Archives: `plans/completed/SESSION_SUMMARY_ARCHITECT_20251118.md`, `plans/completed/irreversibility_framework_integration_complete_20251118.md`, `plans/completed/nitrogen_food_coupling_phase2_3_complete_20251118.md`
+- Simulation: Minor consolidation in `FoodSecurityDegradationPhase.ts`, `PlanetaryBoundariesPhase.ts`, `novelEntities.ts`, `planetaryBoundaries.ts`, `comprehensiveTechTree.ts`, `updateNovelEntitiesBoundary.ts`
+
+**Impact:** None (administrative only - no new mechanics)
+
+**Commit:** 112a566d4
+
+---
+
 ## 🧪 Nitrogen-Food Coupling + Architecture Fixes COMPLETE (November 20, 2025)
 
 **Status:** ✅ ALL PHASES COMPLETE

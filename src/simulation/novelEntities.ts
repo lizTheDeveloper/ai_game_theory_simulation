@@ -16,8 +16,10 @@
 import { GameState } from '@/types/game';
 import { NovelEntitiesSystem } from '@/types/novelEntities';
 import { RootCause } from '@/types/population';
-import { assertStateProperty } from './utils/assertions';
+import { assertStateProperty, assertFinite } from './utils/assertions';
 import { addMortalityRisk } from './bayesianMortality';
+import { asymptoteRecovery, legacyStockRelease } from './utils/irreversibility';
+import { isTechDeployed } from './techTree/helpers';
 
 /**
  * Initialize novel entities system state (2025 baseline - ALREADY BREACHED)
@@ -187,11 +189,94 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     ));
   }
   
+  // === IRREVERSIBILITY FRAMEWORK INTEGRATION (Nov 18, 2025) ===
+  // Apply asymptotic recovery and legacy stock release mechanics
+  // Research: Cousins 2022 (75-year half-life), Sörengård 2024 (energy trap)
+
+  // Check fusion deployment (required for cleanup to be effective)
+  const fusionDeployment = isTechDeployed(state, 'fusion_power');
+  const hasFusion = fusionDeployment > 0.3;  // 30%+ deployment threshold
+
+  // PREVENTION-FIRST PARADIGM (60-90% effective, no energy trap)
+  // Research: Prevention avoids dilution problem entirely (Sörengård 2024)
+  const preventionEffectiveness = ne.greenChemistryDeployment * 0.7 + ne.chemicalBansDeployment * 0.9;
+
+  // CLEANUP EFFECTIVENESS (10-25% max, requires fusion)
+  // Research: Dilution makes cleanup 6-9 orders of magnitude harder (Sörengård 2024)
+  let cleanupEffectiveness = 0;
+  if (hasFusion) {
+    // Cleanup only works with abundant energy AND high concentrations
+    const industrialCleanupEff = ne.bioremediationDeployment * 0.25;  // 25% max (industrial sites)
+    const environmentalCleanupEff = ne.bioremediationDeployment * 0.01;  // 1% max (diffuse contamination)
+
+    // Weighted by contamination type
+    cleanupEffectiveness = (industrialCleanupEff * 0.3) + (environmentalCleanupEff * 0.7);
+
+    console.log(`⚡ FUSION ENERGY: Novel entities cleanup active (${(cleanupEffectiveness * 100).toFixed(1)}% effectiveness)`);
+  } else if (ne.bioremediationDeployment > 0.1) {
+    console.log(`⚠️ ENERGY TRAP: Bioremediation blocked without fusion energy (deployment: ${(fusionDeployment * 100).toFixed(0)}%, need: 30%+)`);
+  }
+
+  // COMBINED EFFECTIVENESS (prevention + cleanup)
+  const totalEffectiveness = Math.min(0.90, preventionEffectiveness + cleanupEffectiveness);
+
+  // Apply asymptotic recovery to syntheticChemicalLoad
+  // Uses 75-year half-life, 15% asymptotic floor
+  const boundary = state.planetaryBoundariesSystem?.boundaries?.novel_entities;
+  if (boundary && boundary.minimumAsymptoticValue !== undefined && boundary.recoveryHalfLife !== undefined) {
+    const targetLoad = boundary.minimumAsymptoticValue;  // 0.15 (15% floor)
+    const halfLife = boundary.recoveryHalfLife;  // 75 years
+
+    // Apply recovery with effectiveness modifier
+    const recoveryRate = totalEffectiveness * 0.01;  // Scale to monthly rate
+    const currentLoadNormalized = ne.syntheticChemicalLoad;
+
+    // Apply asymptotic recovery (exponential approach to 15% floor)
+    ne.syntheticChemicalLoad = assertFinite(
+      asymptoteRecovery(
+        currentLoadNormalized * 100,  // Convert to 0-100 scale
+        targetLoad * 100,  // Target 15
+        halfLife,
+        targetLoad,  // 0.15 minimum
+        1/12  // Monthly timestep
+      ) / 100,  // Convert back to 0-1 scale
+      {
+        location: 'updateNovelEntitiesSystem[asymptotic recovery]',
+        valueName: 'syntheticChemicalLoad',
+        month: state.currentMonth,
+      }
+    );
+
+    // Apply legacy stock release (atmospheric redeposition continues)
+    if (boundary.legacyStock !== undefined && ne.atmosphericReservoirStock !== undefined) {
+      const { newStock, released } = legacyStockRelease(
+        ne.atmosphericReservoirStock,
+        50,  // 50-year atmospheric half-life (Cousins 2022)
+        1/12  // Monthly timestep
+      );
+
+      ne.atmosphericReservoirStock = assertFinite(newStock, {
+        location: 'updateNovelEntitiesSystem[legacy stock]',
+        valueName: 'atmosphericReservoirStock',
+        month: state.currentMonth,
+      });
+
+      // Released contamination re-enters environment (futile cleanup cycle)
+      const recontaminationRate = released / 180000;  // Normalize to [0, 1]
+      ne.environmentalContamination = Math.min(1.0, (ne.environmentalContamination || 0) + recontaminationRate * 0.001);
+
+      // Log significant recontamination events
+      if (released > 1000 && state.currentMonth % 12 === 0) {
+        console.log(`🌍 LEGACY STOCK RELEASE: ${(released / 1000).toFixed(1)}k Mt PFAS re-entering environment (atmospheric cycling)`);
+      }
+    }
+  }
+
   // === MICROPLASTICS ===
   // Persistent, everywhere, breaks down into smaller pieces but never disappears
   let microplasticRate = (economicStage * 0.0015) + (manufacturingCap * 0.0008);
   microplasticRate *= (1.0 - ne.circularEconomyDeployment * 0.5); // Reduce plastic use
-  
+
   ne.microplasticConcentration = Math.min(1.0, ne.microplasticConcentration + microplasticRate);
   
   // === PFAS ("FOREVER CHEMICALS") ===

@@ -59,9 +59,9 @@ export class NitrogenFoodCouplingPhase implements SimulationPhase {
       month: state.currentMonth
     });
 
-    // Store multiplier somewhere food security can read it
-    // TODO: Add field to GameState for nitrogen food production multiplier
-    // For now, just log it
+    // CRITICAL FIX (Nov 20, 2025): Store in state to prevent race condition
+    // PlanetaryBoundariesPhase reads this value instead of calling updateNitrogenFoodCoupling() again
+    state.planetaryBoundariesSystem.globalFoodProductionIndex = validatedMultiplier;
 
     // Log annually for visibility
     if (state.currentMonth % 12 === 0) {
