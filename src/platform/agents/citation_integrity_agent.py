@@ -865,6 +865,7 @@ def run_ipc_server(agent_id: str):
     """
     import sys
     import signal
+    import os
 
     # Global shutdown flag
     shutdown_requested = False
@@ -881,6 +882,19 @@ def run_ipc_server(agent_id: str):
 
     # Create agent with database connection
     try:
+        # Read Redis password from environment (optional for non-auth setups)
+        redis_password = os.environ.get('REDIS_PASSWORD')
+
+        redis_config = {
+            'host': 'localhost',
+            'port': 6379,
+            'db': 0
+        }
+
+        # Only add password if it's set
+        if redis_password:
+            redis_config['password'] = redis_password
+
         agent = CitationIntegrityAgent(
             agent_id=agent_id,
             initial_reputation=0.5,
@@ -892,11 +906,7 @@ def run_ipc_server(agent_id: str):
                 'user': 'marcus',
                 'password': 'marcus_dev_password'
             },
-            redis_config={
-                'host': 'localhost',
-                'port': 6379,
-                'db': 0
-            }
+            redis_config=redis_config
         )
         logger.info(f"✅ Agent {agent_id} initialized and ready for IPC")
 
