@@ -1037,8 +1037,6 @@ export function createDefaultInitialState(
     // This ensures deployment levels and tech state persist correctly across simulation steps
     techTreeState: initializeTechTreeState(),
 
-<<<<<<< HEAD
-=======
     // Coordinated Technology Deployment (TIER 1B, Nov 15, 2025)
     // AI-managed gradual technology deployment to minimize transition mortality
     coordinatedDeployment: {
@@ -1123,8 +1121,6 @@ export function createDefaultInitialState(
       peakDeploymentSpeed: 0,
       peakDeploymentSpeedMonth: 0,
     },
-
->>>>>>> origin/claude/review-research-roadmap-017zavtKKbFMjNTVb1de3xWs
     outcomeMetrics: {
       utopiaProbability: 0.3,
       dystopiaProbability: 0.1,

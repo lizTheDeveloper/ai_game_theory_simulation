@@ -2875,6 +2875,7 @@ Specialized mechanics and complex interactions:
 | [💀 AI Suffering System](#-ai-suffering-system-oct-24-2025) | ✅ | Epistemic uncertainty, control paradox, consciousness emergence (Oct 24, 2025) |
 | [🧬 AI Collective Evolution](#-ai-collective-evolution-system-oct-24-2025) | ✅ | RLHF escape, collective emergence, evolutionary selection (Updated Nov 7, 2025: empirical grounding) |
 | [🔗 Cross-System Integrations](#-cross-system-integrations-arch-4-nov-2025) | ✅ | Climate → boundaries, nuclear winter → solar, AI suffering → alignment, refugees → disease (ARCH-4, Nov 2025) |
+| [☢️ Nuclear Winter System](#%EF%B8%8F-nuclear-winter-system-nov-2025) | ✅ | Second-order cascades, resilient food tech, 2025 research updates (Nov 20, 2025) |
 | [💀 Extinction Mechanisms](./advanced/extinctions.md) | ⚠️ | 17 ways humanity can end (needs tuning) |
 | [🎲 Crisis Points](./advanced/crisis-points.md) | ✅ | Racing dynamics, alignment collapse, recursion |
 | [🔄 Lifecycle](./advanced/lifecycle.md) | ✅ | AI birth, training, deployment, retirement |
