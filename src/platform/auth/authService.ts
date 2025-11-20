@@ -489,10 +489,11 @@ export class AuthService {
         throw new Error('❌ Account is disabled');
       }
 
-      // Revoke old refresh token (token rotation)
+      // Delete old refresh token (token rotation)
+      // Note: We delete instead of marking revoked to prevent duplicate key
+      // violations when JWT generates identical token strings within same second
       await client.query(
-        `UPDATE refresh_tokens
-         SET revoked = true, revoked_at = NOW()
+        `DELETE FROM refresh_tokens
          WHERE token = $1`,
         [refreshToken]
       );
