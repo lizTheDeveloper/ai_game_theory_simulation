@@ -887,8 +887,8 @@ def run_ipc_server(agent_id: str):
             exploration_rate=0.2,
             db_config={
                 'host': 'localhost',
-                'port': 5432,
-                'database': 'marcus_dev',
+                'port': 5433,
+                'database': 'marcus_test',
                 'user': 'marcus',
                 'password': 'marcus_dev_password'
             },
