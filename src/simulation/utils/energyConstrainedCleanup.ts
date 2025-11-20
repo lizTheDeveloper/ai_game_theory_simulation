@@ -92,7 +92,14 @@ export function applyEnergyConstrainedCleanup(
 
   if (!energyReq || !tech.minimumConcentration) {
     // Legacy cleanup tech without energy model - use base effectiveness
-    const baseEffect = (tech.effects.novelEntitiesReduction ?? 0) * (tech.deploymentLevel ?? 0);
+    // Check all possible effect properties (pfasReduction, microplasticReduction, pollutionReduction, novelEntitiesReduction)
+    const baseEffect = (
+      tech.effects.pfasReduction ??
+      tech.effects.microplasticReduction ??
+      tech.effects.pollutionReduction ??
+      tech.effects.novelEntitiesReduction ??
+      0
+    ) * (tech.deploymentLevel ?? 0);
     return {
       grossEffectiveness: baseEffect,
       concentrationFactor: 1.0,
@@ -159,7 +166,14 @@ export function applyEnergyConstrainedCleanup(
   const energyFactor = Math.min(1.0, renewableSurplus / Math.max(0.001, requiredEnergy));
 
   // 4. Base effectiveness (from tech definition)
-  const baseEffectiveness = (tech.effects.novelEntitiesReduction ?? 0) * (tech.deploymentLevel ?? 0);
+  // Check all possible effect properties (pfasReduction, microplasticReduction, pollutionReduction, novelEntitiesReduction)
+  const baseEffectiveness = (
+    tech.effects.pfasReduction ??
+    tech.effects.microplasticReduction ??
+    tech.effects.pollutionReduction ??
+    tech.effects.novelEntitiesReduction ??
+    0
+  ) * (tech.deploymentLevel ?? 0);
 
   // 5. Apply constraints
   const grossEffectiveness = baseEffectiveness * concentrationFactor * energyFactor;
