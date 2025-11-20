@@ -48,7 +48,7 @@ git pull origin claude/build-marcus-agent-016LTPXuAb6A3hYDwTvMjyof
 
 ### Issue 2: Integration Tests (18/18 Failures → All Passing)
 
-**Six blockers resolved:**
+**Seven blockers resolved:**
 
 **2A. API Contract Mismatch**
 - Validation errors now return `{ error: "Bad Request" }` instead of `{ error: "Validation failed" }`
@@ -73,6 +73,11 @@ git pull origin claude/build-marcus-agent-016LTPXuAb6A3hYDwTvMjyof
 **2F. Role Validation**
 - Changed test role from 'analyst' to 'operator' (matches production schema constraint)
 - Production only accepts: admin, operator, viewer
+
+**2G. Refresh Token Collision**
+- JWT tokens are deterministic - same user + same second = same token
+- Changed token rotation from UPDATE (mark revoked) to DELETE
+- Prevents duplicate key violations when tokens generated within same second
 - This was the final blocker
 
 ---

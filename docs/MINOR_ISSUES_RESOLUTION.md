@@ -68,12 +68,14 @@ All 18 integration tests were failing due to multiple issues:
 4. Jest configuration issues
 5. Database table name mismatch
 6. Role validation constraint (analyst vs operator)
+7. Refresh token collision (duplicate key violations)
 
 **Impact:**
 - Integration test suite showed 100% failure rate
 - API contract mismatches between tests and implementation
 - Environment configuration issues
 - Database schema incompatibility
+- Token refresh failures
 
 **Root Causes:**
 
@@ -228,6 +230,46 @@ const testUser = {
 
 Also renamed test from "should allow analyst role assignment" to "should allow operator role assignment".
 
+**2G. Refresh Token Collision**
+
+Tests failed when refreshing tokens due to duplicate key violations.
+
+**Error:**
+```
+duplicate key value violates unique constraint "refresh_tokens_pkey"
+Key (token)=(eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...) already exists.
+```
+
+**Root Cause:**
+JWT tokens are deterministic - same payload (userId, email, role) + same timestamp (in seconds) = identical token string.
+
+When refreshing tokens:
+1. Old token marked as `revoked = true` (UPDATE) but not deleted
+2. New token generated within same second → identical token string
+3. INSERT fails because old token row still exists with that primary key
+
+**Fix:**
+Updated `src/platform/auth/authService.ts` (lines 492-499):
+```typescript
+// Before:
+await client.query(
+  `UPDATE refresh_tokens
+   SET revoked = true, revoked_at = NOW()
+   WHERE token = $1`,
+  [refreshToken]
+);
+
+// After:
+await client.query(
+  `DELETE FROM refresh_tokens
+   WHERE token = $1`,
+  [refreshToken]
+);
+```
+
+**Trade-off:**
+Deleting tokens removes audit trail of revoked tokens. For production with strict audit requirements, consider using UUID primary key + unique constraint on token instead.
+
 **Benefits:**
 - ✅ Tests now match implementation (API contracts aligned)
 - ✅ Auto-detects PostgreSQL port (handles non-standard configurations)
@@ -235,6 +277,7 @@ Also renamed test from "should allow analyst role assignment" to "should allow o
 - ✅ Jest parses TypeScript correctly (no config errors)
 - ✅ Database schema matches production (correct table names)
 - ✅ Role validation matches production constraints (only valid roles accepted)
+- ✅ Token refresh works reliably (no duplicate key violations)
 - ✅ Follows REST API conventions (error field = HTTP status text)
 - ✅ Includes summary message for better UX
 - ✅ Maintains detailed field-level error information
@@ -343,6 +386,7 @@ After deployment, verify:
 - Jest configuration errors
 - Database table name mismatch (audit_logs vs auth_audit_log)
 - Role validation constraint (analyst not a valid role)
+- Refresh token collision (duplicate key violations)
 
 **All Fixes Applied:**
 - ✅ API contracts aligned (error: "Bad Request")
@@ -351,6 +395,7 @@ After deployment, verify:
 - ✅ Jest config cleaned up
 - ✅ Table names match production schema
 - ✅ Role validation fixed (analyst → operator)
+- ✅ Token refresh fixed (DELETE instead of UPDATE)
 
 **Command:** `./scripts/run_integration_tests.sh` (recommended) or `npm test -- authFlow.test.ts`
 
