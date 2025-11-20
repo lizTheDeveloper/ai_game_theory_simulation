@@ -37,6 +37,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Helper functions: `getTechDeployment()`, `isTechUnlocked()`, `rebuildDeploymentIndex()`
   - Migrated high-usage files: nuclearWinter.ts, resourceDepletion.ts, ClimateDeploymentPhase.ts
   - Fixed type safety issues (unsafe globalDeployments.find() → type-safe getTechDeployment())
+- **Extinction Debt O(n) Optimization (commit 04a7be8, Nov 20):** Fixed O(n²) array compaction in IrreversibilityTrackingPhase
+  - **Previous:** `splice(i, 1)` in loop caused n deletions × n array shifts = O(n²) complexity
+  - **Optimized:** Two-pointer in-place compaction (single O(n) pass, no allocations, no shifts)
+  - **Impact:** 33× reduction in array operations (10,000 → 300 for 200 debts, 50% removal rate)
+  - **Determinism:** Preserved (same iteration order, same RNG consumption)
+  - **Performance assertion:** Warns if queue exceeds 500 items (normal: <100 debts)
+  - **Documentation:** `reviews/extinction_debt_performance_fix_20251120.md`
 - **Performance False Alarm Investigation (Nov 20):** 3 "HIGH priority" issues were false alarms
   - Issue 1: Performance regression (7x slowdown) - DEBUNKED (actual: 56.98ms avg, 79-114ms profile, well within 120ms budget)
   - Issue 2: Nuclear winter type mismatch - DOESN'T EXIST (TypeScript: 0 errors)
