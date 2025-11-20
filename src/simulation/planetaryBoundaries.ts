@@ -2090,7 +2090,12 @@ export function updateBiosphereIntegrityIndex(
     }
   });
 
-  const yearsElapsed = (state.currentMonth || 1) / 12;
+  // Roy's fix (Nov 20, 2025): currentMonth should ALWAYS exist - if undefined, that's a bug
+  const yearsElapsed = assertFinite(state.currentMonth, {
+    location: 'updateBiosphereIntegrityIndex',
+    valueName: 'state.currentMonth',
+    month: state.currentMonth
+  }) / 12;
   const extinctionsPerYear = assertFinite(speciesLost / Math.max(1, yearsElapsed), {
     location: 'updateBiosphereIntegrityIndex:extinctionRate',
     valueName: 'extinctionsPerYear',

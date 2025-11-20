@@ -102,26 +102,12 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-<<<<<<< Updated upstream
-    // Get current temperature anomaly - Roy's fix: no silent fallbacks
+    // Get current temperature anomaly - no silent fallbacks
     const tempAnomaly = assertStateProperty(
       state,
       'resourceEconomy.co2.temperatureAnomaly',
       {
         location: 'trackIceSheetHysteresis',
-=======
-    // Get current temperature anomaly
-    const tempAnomaly = assertFinite(
-      assertDefined(state.resourceEconomy?.co2?.temperatureAnomaly, {
-        location: 'trackIceSheetHysteresis',
-        valueName: 'state.resourceEconomy.co2.temperatureAnomaly',
-        month: state.currentMonth,
-        additionalInfo: { context: 'Required for ice sheet hysteresis tracking' }
-      }),
-      {
-        location: 'trackIceSheetHysteresis',
-        valueName: 'temperatureAnomaly',
->>>>>>> Stashed changes
         month: state.currentMonth,
       }
     );
@@ -226,24 +212,11 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-<<<<<<< Updated upstream
     const tempAnomaly = assertStateProperty(
       state,
       'resourceEconomy.co2.temperatureAnomaly',
       {
         location: 'trackPermafrostThaw',
-=======
-    const tempAnomaly = assertFinite(
-      assertDefined(state.resourceEconomy?.co2?.temperatureAnomaly, {
-        location: 'trackPermafrostThaw',
-        valueName: 'state.resourceEconomy.co2.temperatureAnomaly',
-        month: state.currentMonth,
-        additionalInfo: { context: 'Required for permafrost thaw tracking' }
-      }),
-      {
-        location: 'trackPermafrostThaw',
-        valueName: 'temperatureAnomaly',
->>>>>>> Stashed changes
         month: state.currentMonth,
       }
     );
@@ -349,24 +322,11 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-<<<<<<< Updated upstream
     const tempAnomaly = assertStateProperty(
       state,
       'resourceEconomy.co2.temperatureAnomaly',
       {
         location: 'trackAMOCWeakening',
-=======
-    const tempAnomaly = assertFinite(
-      assertDefined(state.resourceEconomy?.co2?.temperatureAnomaly, {
-        location: 'trackAMOCWeakening',
-        valueName: 'state.resourceEconomy.co2.temperatureAnomaly',
-        month: state.currentMonth,
-        additionalInfo: { context: 'Required for AMOC weakening tracking' }
-      }),
-      {
-        location: 'trackAMOCWeakening',
-        valueName: 'temperatureAnomaly',
->>>>>>> Stashed changes
         month: state.currentMonth,
       }
     );
@@ -730,7 +690,6 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-<<<<<<< Updated upstream
     const tempAnomaly = assertStateProperty(
       state,
       'resourceEconomy.co2.temperatureAnomaly',
@@ -744,32 +703,6 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
       'oceanAcidificationSystem.pHLevel',
       {
         location: 'trackCoralReefCollapse',
-=======
-    const tempAnomaly = assertFinite(
-      assertDefined(state.resourceEconomy?.co2?.temperatureAnomaly, {
-        location: 'trackCoralReefCollapse',
-        valueName: 'state.resourceEconomy.co2.temperatureAnomaly',
-        month: state.currentMonth,
-        additionalInfo: { context: 'Required for coral reef collapse tracking' }
-      }),
-      {
-        location: 'trackCoralReefCollapse',
-        valueName: 'temperatureAnomaly',
-        month: state.currentMonth,
-      }
-    );
-
-    const oceanPH = assertFinite(
-      assertDefined(state.oceanAcidificationSystem?.pHLevel, {
-        location: 'trackCoralReefCollapse',
-        valueName: 'state.oceanAcidificationSystem.pHLevel',
-        month: state.currentMonth,
-        additionalInfo: { context: 'Required for coral reef calcification tracking' }
-      }),
-      {
-        location: 'trackCoralReefCollapse',
-        valueName: 'oceanPH',
->>>>>>> Stashed changes
         month: state.currentMonth,
       }
     );

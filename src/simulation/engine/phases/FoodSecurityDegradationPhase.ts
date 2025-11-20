@@ -23,7 +23,8 @@ import {
   assertInRange,
   assertStateProperty
 } from '@/simulation/utils/assertions';
-import { updateNitrogenFoodCoupling } from '@/simulation/nitrogenFoodCoupling';
+// REMOVED (Nov 20, 2025): updateNitrogenFoodCoupling import
+// This phase no longer calls it directly - reads cached values from state instead
 
 export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly id = 'food-security-degradation';
@@ -31,11 +32,13 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly order = 19.7;  // AFTER QualityOfLifePhase (19.5), BEFORE population (20.5)
 
   // DEPENDENCIES (Nov 6, 2025): Requires quality of life baseline calculation
-  // UPDATED (Nov 17, 2025): Added planetary_boundaries to ensure nitrogen-food coupling runs first
+  // UPDATED (Nov 20, 2025): Added nitrogen-food-coupling dependency (RACE CONDITION FIX)
+  //   - nitrogen-food-coupling MUST run before this phase
+  //   - This phase READS nitrogen values from state (single-writer pattern)
   readonly dependencies = [
     'quality-of-life',          // Order 19.5: Food baseline calculated
     'extreme-weather-events',   // Order 15.2: Weather disrupts food production
-    'planetary_boundaries',     // Order 21.0: Nitrogen-food coupling updates regional nitrogen state
+    'nitrogen-food-coupling',   // Order 19.6: CRITICAL - Nitrogen values must be calculated BEFORE this phase reads them
   ];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
@@ -50,26 +53,21 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       return { events: [] };
     }
 
-    // === TIER 2 HIGH: UPDATE NITROGEN-FOOD COUPLING (Nov 15, 2025) ===
-    // Calculate regional nitrogen reduction effects from deployed technologies
+    // === RACE CONDITION FIX (Nov 20, 2025) ===
+    // REMOVED: Duplicate call to updateNitrogenFoodCoupling()
+    // NitrogenFoodCouplingPhase (order 19.6) already called it and stored results in state
+    // This phase (order 19.7) now READS the cached values from regionalNitrogenManagement
     // Research: Science Advances (2024), Zhang et al. (2021)
-    // Expected impact: Realistic nitrogen-food trade-offs with regional differentiation
-    if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
-      const { updateNitrogenFoodCoupling, getNitrogenReductionDeployment } = require('../../nitrogenFoodCoupling');
-
-      // Extract nitrogen-reducing technology deployment levels from tech tree
-      // Technologies (research-backed):
-      // 1. Precision Agriculture (30% reduction)
-      // 2. Biological Nitrogen Fixation (25% reduction)
-      // 3. Circular Food Systems (20% reduction)
-      // 4. Ecosystem Restoration (15% reduction)
-      // 5. Nitrogen Monitoring Networks (10% reduction)
-      // 6. Green Ammonia Production (40% reduction)
-      const nitrogenTechEffectiveness = getNitrogenReductionDeployment(state);
-
-      // Call nitrogen coupling update - this updates regionalNitrogenManagement state
-      updateNitrogenFoodCoupling(state, nitrogenTechEffectiveness);
-    }
+    //
+    // SYNCHRONIZATION STRATEGY: Single-writer pattern
+    // - NitrogenFoodCouplingPhase is the ONLY phase that calls updateNitrogenFoodCoupling()
+    // - All other phases READ from state.planetaryBoundariesSystem.regionalNitrogenManagement
+    // - This ensures deterministic state mutations (critical for Monte Carlo reproducibility)
+    //
+    // Previously: This phase was calling updateNitrogenFoodCoupling() a second time, causing:
+    // 1. Non-deterministic state mutations (which phase "wins"?)
+    // 2. Wasted computation (calculating same values twice)
+    // 3. Potential for divergent values if RNG is used differently
 
     // Validate required systems (use assertions for cleaner error messages)
     const phosphorusReserves = assertStateProperty(state.phosphorusSystem, 'reserves', {

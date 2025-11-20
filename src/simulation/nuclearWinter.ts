@@ -893,6 +893,12 @@ function updateRadiationZones(state: GameState, winter: NuclearWinterState): voi
   }
   
   // Remove zones with negligible radiation (<1%)
-  winter.radiationZones = winter.radiationZones.filter(z => z.currentLevel > 0.01);
+  // PERFORMANCE: In-place splice instead of filter() to avoid O(n) allocations per month
+  // Backward iteration prevents index shifting issues when removing elements
+  for (let i = winter.radiationZones.length - 1; i >= 0; i--) {
+    if (winter.radiationZones[i].currentLevel <= 0.01) {
+      winter.radiationZones.splice(i, 1);
+    }
+  }
 }
 

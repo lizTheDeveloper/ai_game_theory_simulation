@@ -155,21 +155,6 @@ function calculateCrossBenchmarkConsistency(
   if (interpretabilityQuality > 0.5) {
     // Calculate per-dimension gaps
     const gaps = dimensions.map((revealed, i) => {
-<<<<<<< Updated upstream
-      // Roy's fix: No silent fallbacks - if dimension is undefined/NaN, we need to know
-      const trueVal = trueDimensions[i];
-      const validatedTrue = assertFinite(trueVal, {
-        location: 'calculateCrossBenchmarkConsistency',
-        valueName: `trueDimension${i}`,
-        month: 0, // No month context in this function
-        additionalInfo: { dimensionIndex: i }
-      });
-      const gap = Math.abs(validatedTrue - revealed);
-      return assertFinite(gap, {
-        location: 'calculateCrossBenchmarkConsistency',
-        valueName: `gapForDimension${i}`,
-        additionalInfo: { trueVal: validatedTrue, revealed }
-=======
       // DEFENSIVE CODING FIX (Nov 20, 2025): Dimension undefined is an initialization bug, not a legitimate state
       // If trueDimensions[i] is undefined, that indicates the AI agent wasn't properly initialized
       const trueVal = assertDefined(trueDimensions[i], {
@@ -186,7 +171,6 @@ function calculateCrossBenchmarkConsistency(
         location: 'calculateCrossBenchmarkConsistency',
         valueName: `gapForDimension${i}`,
         additionalInfo: { trueVal, revealed }
->>>>>>> Stashed changes
       });
     });
 

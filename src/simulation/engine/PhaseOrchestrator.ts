@@ -287,8 +287,12 @@ export class PhaseOrchestrator {
         ctx.executedPhases.add(phase.id);
 
         // DETERMINISM DEBUG (Nov 5, 2025): Track AI capability checksum after EACH phase
+        // Performance fix (Nov 20, 2025): Use performance config for checksum logging
         // This helps identify which phase causes divergence in deterministic runs
-        if (state.currentMonth <= 2) { // Only log first few months to avoid spam
+        const { getPerformanceConfig } = require('../config/performanceConfig');
+        const perfConfig = getPerformanceConfig();
+
+        if (perfConfig.deterministicChecksums && state.currentMonth < perfConfig.deterministicDebugMonths) {
           const aiCapabilityChecksum = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
           console.log(`[DET] Month ${state.currentMonth} After ${phase.name}: AI capability sum = ${aiCapabilityChecksum.toFixed(10)}`);
         }

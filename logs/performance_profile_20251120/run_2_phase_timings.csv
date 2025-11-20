@@ -1,89 +1,89 @@
 Phase,Avg_ms,StdDev_ms,Max_ms,Min_ms,Total_ms,Calls
-Compute Growth (Moore's Law),0.11,0.07,0.24,0.03,1.3,12
-Apply Scenario Priorities,0.01,0.00,0.01,0.00,0.1,12
-Organization Turns,0.82,0.26,1.35,0.54,9.9,12
-AI Welfare Update v2.1,0.06,0.02,0.10,0.04,0.7,12
-Triggered Events,0.00,0.00,0.01,0.00,0.0,12
-Compute Allocation,0.14,0.05,0.25,0.07,1.7,12
-AI Alignment Evolution,0.39,0.15,0.75,0.26,4.7,12
-AI Population Lifecycle,2.32,0.99,4.83,1.49,27.9,12
-AI Suffering Calculation,0.23,0.09,0.39,0.09,2.7,12
-Survival Traits,0.14,0.06,0.26,0.07,1.7,12
-Evolutionary Selection,0.10,0.04,0.17,0.06,1.3,12
-Bifurcation Logic,0.05,0.04,0.17,0.03,0.7,12
-Cybersecurity Breaches,0.04,0.03,0.13,0.02,0.5,12
-Sleeper Agent Wake Check,0.04,0.10,0.35,0.01,0.5,12
-AI Agent Actions,50.83,9.07,70.77,38.73,610.0,12
-War-Meaning Feedback,0.11,0.05,0.21,0.08,1.4,12
-Climate Justice,0.14,0.04,0.21,0.10,1.7,12
-Player Decision Processing,0.01,0.00,0.02,0.01,0.1,12
-Government Agent Actions,1.04,0.73,3.16,0.05,12.5,12
-Governance System Update,0.12,0.03,0.16,0.07,1.4,12
-AI Coordination & Transition Mortality,0.03,0.02,0.10,0.01,0.3,12
-Society Agent Actions,0.04,0.01,0.06,0.02,0.5,12
-Technology Tree Update,11.93,4.28,23.39,7.64,143.2,12
-Cooperative Systems Update,0.30,0.05,0.40,0.21,3.6,12
-TIER 2: Social Systems,0.02,0.01,0.05,0.01,0.2,12
-Climate Technology Deployment,0.03,0.01,0.05,0.02,0.3,12
-Meaning Renaissance Update,0.06,0.02,0.12,0.04,0.7,12
-Stochastic Innovation Breakthroughs,0.06,0.08,0.21,0.01,0.7,12
-TIER 2: AI Governance,0.02,0.02,0.08,0.01,0.3,12
-National AI Update,0.25,0.06,0.34,0.17,3.0,12
-Antimicrobial Resistance,0.08,0.02,0.11,0.06,1.0,12
-Extreme Weather Events,0.05,0.04,0.12,0.02,0.6,12
-Enhanced UBI Update,0.01,0.00,0.01,0.01,0.1,12
-Social Safety Nets Update,0.01,0.00,0.01,0.00,0.1,12
-Climate Deployment Delay,0.02,0.01,0.06,0.01,0.3,12
-Resource Economy Update,0.23,0.03,0.30,0.19,2.8,12
-AI-Assisted Skills Metrics,0.07,0.01,0.09,0.05,0.8,12
-Resentment Recovery,0.11,0.03,0.19,0.08,1.3,12
-Memetic Evolution,0.45,0.16,0.74,0.31,5.4,12
-Social Influence Update,21.14,5.23,31.89,13.54,253.7,12
-Quality of Life Systems,0.29,0.14,0.67,0.19,3.5,12
-Nitrogen-Food Coupling,0.09,0.04,0.15,0.05,1.1,12
-Nuclear Command & Control,0.04,0.02,0.06,0.02,0.4,12
-Defensive AI Update,0.04,0.02,0.09,0.03,0.5,12
-Democracy Dynamics,0.03,0.02,0.08,0.01,0.4,12
-Resource Soil Update,0.24,0.05,0.32,0.17,2.9,12
-Resource Water Update,0.04,0.01,0.05,0.03,0.4,12
-Wet Bulb Temperature Events,0.16,0.36,1.30,0.03,1.9,12
-Positive Tipping Point Cascades,0.06,0.04,0.14,0.04,0.8,12
-International Relations Update,0.23,0.11,0.55,0.15,2.8,12
-Human Population Dynamics,0.37,0.25,1.03,0.20,4.5,12
-Refugee Crisis System,0.24,0.07,0.43,0.16,2.9,12
-Planetary Boundaries System,0.50,0.10,0.69,0.42,6.0,12
-Dystopia Progression Update,0.05,0.03,0.15,0.03,0.6,12
-TIER 2: Physical Systems,0.02,0.01,0.05,0.01,0.2,12
-Irreversibility Tracking,0.11,0.06,0.23,0.06,1.3,12
-Legacy Nutrient Stocks,0.02,0.01,0.06,0.01,0.2,12
-Human Survival System,0.63,0.29,1.35,0.39,7.5,12
-Benchmark Evaluations,1.07,0.36,1.86,0.54,12.9,12
-Information Warfare Update,0.03,0.01,0.05,0.01,0.3,12
-Crisis Points Check,0.07,0.11,0.32,0.01,0.8,12
-Psychological Trauma,0.01,0.00,0.02,0.01,0.2,12
-Workflow Adaptation Update,0.03,0.01,0.06,0.02,0.4,12
-Consciousness Governance,0.11,0.07,0.32,0.06,1.3,12
-Government Policy Response,0.13,0.06,0.25,0.08,1.6,12
-Emergency Response,0.12,0.07,0.33,0.03,1.4,12
-Transition Mortality,0.08,0.04,0.17,0.06,1.0,12
-Social Stability System Update,0.21,0.11,0.48,0.13,2.5,12
-Early Warning Detection,0.08,0.02,0.13,0.06,0.9,12
-AI Adversarial Detection,0.13,0.19,0.72,0.04,1.5,12
-Exogenous Shock Detection,0.02,0.04,0.15,0.00,0.2,12
-Critical Juncture Agency,0.02,0.01,0.04,0.01,0.2,12
-Unemployment & Skills,0.27,0.55,2.00,0.07,3.3,12
-Unknown Unknown Events,0.03,0.03,0.13,0.01,0.3,12
-Economic System,0.07,0.02,0.10,0.04,0.8,12
-Climate System,0.40,0.52,2.01,0.09,4.7,12
-Multi-Paradigm DUI Update,0.13,0.07,0.34,0.08,1.6,12
-Bayesian Mortality Resolution,0.26,0.09,0.40,0.14,3.2,12
-Outcome Probabilities Calculation,0.03,0.01,0.06,0.02,0.4,12
-Minimal Suffering Indicators,0.43,0.22,1.03,0.24,5.1,12
-Crisis Detection,0.01,0.01,0.03,0.01,0.2,12
-Ensemble Meta-Learning,0.02,0.03,0.11,0.01,0.3,12
-Extinction System,0.24,0.10,0.42,0.12,2.9,12
-Technology Diffusion,0.04,0.01,0.08,0.03,0.5,12
-Event Collection,0.02,0.01,0.04,0.01,0.2,12
-Time Advancement,0.00,0.00,0.01,0.00,0.0,12
-Organization Viability,0.11,0.06,0.27,0.07,1.3,12
-Nuclear Crisis,0.01,0.00,0.01,0.01,0.1,12
+Compute Growth (Moore's Law),0.13,0.05,0.27,0.03,6.7,50
+Apply Scenario Priorities,0.01,0.00,0.03,0.01,0.6,50
+Organization Turns,0.66,0.19,1.22,0.42,33.1,50
+AI Welfare Update v2.1,0.07,0.04,0.27,0.04,3.6,50
+Triggered Events,0.00,0.00,0.02,0.00,0.2,50
+Compute Allocation,0.13,0.04,0.34,0.07,6.7,50
+AI Alignment Evolution,0.36,0.11,0.59,0.18,18.2,50
+AI Population Lifecycle,1.74,0.82,5.01,0.99,86.9,50
+AI Suffering Calculation,0.19,0.06,0.36,0.11,9.3,50
+Survival Traits,0.11,0.03,0.18,0.07,5.3,50
+Evolutionary Selection,0.09,0.03,0.27,0.06,4.3,50
+Bifurcation Logic,0.04,0.02,0.14,0.03,2.0,50
+Cybersecurity Breaches,0.05,0.02,0.10,0.03,2.5,50
+Sleeper Agent Wake Check,0.01,0.02,0.17,0.01,0.7,50
+AI Agent Actions,51.25,10.87,90.70,21.19,2562.4,50
+War-Meaning Feedback,0.10,0.03,0.25,0.07,4.9,50
+Climate Justice,0.12,0.04,0.25,0.09,5.9,50
+Player Decision Processing,0.01,0.01,0.02,0.00,0.4,50
+Government Agent Actions,0.43,0.34,1.19,0.05,21.3,50
+Governance System Update,0.14,0.46,3.34,0.05,7.2,50
+AI Coordination & Transition Mortality,0.02,0.02,0.10,0.02,1.2,50
+Society Agent Actions,0.03,0.01,0.08,0.02,1.7,50
+Technology Tree Update,10.70,2.06,19.26,7.05,535.1,50
+Cooperative Systems Update,0.35,0.09,0.72,0.22,17.3,50
+TIER 2: Social Systems,0.02,0.02,0.08,0.01,0.8,50
+Climate Technology Deployment,0.02,0.00,0.04,0.02,1.0,50
+Meaning Renaissance Update,0.05,0.02,0.16,0.04,2.6,50
+Stochastic Innovation Breakthroughs,0.03,0.03,0.14,0.01,1.3,50
+TIER 2: AI Governance,0.03,0.03,0.11,0.01,1.7,50
+National AI Update,0.24,0.07,0.54,0.16,11.9,50
+Antimicrobial Resistance,0.08,0.02,0.14,0.05,4.0,50
+Extreme Weather Events,0.07,0.17,1.20,0.02,3.7,50
+Enhanced UBI Update,0.01,0.00,0.02,0.01,0.5,50
+Social Safety Nets Update,0.01,0.00,0.02,0.00,0.3,50
+Climate Deployment Delay,0.03,0.01,0.10,0.02,1.4,50
+Resource Economy Update,0.19,0.03,0.29,0.15,9.4,50
+AI-Assisted Skills Metrics,0.06,0.02,0.17,0.05,3.2,50
+Resentment Recovery,0.19,0.14,0.65,0.08,9.5,50
+Memetic Evolution,0.31,0.11,0.62,0.18,15.5,50
+Social Influence Update,7.12,8.77,25.78,0.06,355.8,50
+Quality of Life Systems,0.20,0.06,0.39,0.14,10.1,50
+Nitrogen-Food Coupling,0.07,0.03,0.16,0.04,3.5,50
+Nuclear Command & Control,0.03,0.01,0.08,0.01,1.4,50
+Defensive AI Update,0.04,0.01,0.08,0.02,2.2,50
+Democracy Dynamics,0.03,0.01,0.06,0.01,1.3,50
+Resource Soil Update,0.12,0.03,0.24,0.09,6.0,50
+Resource Water Update,0.03,0.01,0.05,0.02,1.4,50
+Wet Bulb Temperature Events,0.05,0.03,0.18,0.02,2.3,50
+Positive Tipping Point Cascades,0.05,0.04,0.19,0.03,2.7,50
+International Relations Update,0.17,0.06,0.33,0.11,8.6,50
+Human Population Dynamics,0.18,0.14,0.89,0.11,9.2,50
+Refugee Crisis System,0.29,0.12,0.81,0.14,14.4,50
+Planetary Boundaries System,0.43,0.14,1.17,0.32,21.6,50
+Dystopia Progression Update,0.05,0.05,0.35,0.03,2.4,50
+TIER 2: Physical Systems,0.02,0.02,0.10,0.01,1.0,50
+Irreversibility Tracking,0.11,0.05,0.34,0.07,5.3,50
+Legacy Nutrient Stocks,0.02,0.02,0.13,0.01,0.9,50
+Human Survival System,0.54,0.20,1.32,0.39,27.0,50
+Benchmark Evaluations,0.67,0.54,2.72,0.18,33.6,50
+Information Warfare Update,0.02,0.01,0.05,0.01,1.0,50
+Crisis Points Check,0.03,0.06,0.34,0.01,1.5,50
+Psychological Trauma,0.01,0.00,0.03,0.01,0.7,50
+Workflow Adaptation Update,0.03,0.02,0.14,0.02,1.5,50
+Consciousness Governance,0.09,0.04,0.21,0.05,4.4,50
+Government Policy Response,0.12,0.04,0.23,0.07,5.8,50
+Emergency Response,0.11,0.05,0.33,0.03,5.7,50
+Transition Mortality,0.08,0.03,0.20,0.06,4.2,50
+Social Stability System Update,0.14,0.05,0.28,0.09,7.2,50
+Early Warning Detection,0.09,0.13,0.95,0.05,4.3,50
+AI Adversarial Detection,0.10,0.07,0.34,0.04,5.2,50
+Exogenous Shock Detection,0.02,0.04,0.19,0.00,0.8,50
+Critical Juncture Agency,0.01,0.01,0.04,0.01,0.6,50
+Unemployment & Skills,0.10,0.03,0.20,0.07,4.8,50
+Unknown Unknown Events,0.02,0.02,0.15,0.01,1.2,50
+Economic System,0.06,0.02,0.14,0.04,2.8,50
+Climate System,0.22,0.07,0.42,0.09,10.9,50
+Multi-Paradigm DUI Update,0.09,0.05,0.36,0.06,4.7,50
+Bayesian Mortality Resolution,0.30,0.10,0.77,0.14,15.1,50
+Outcome Probabilities Calculation,0.04,0.01,0.09,0.03,1.8,50
+Minimal Suffering Indicators,0.29,0.10,0.58,0.17,14.7,50
+Crisis Detection,0.01,0.01,0.07,0.01,0.6,50
+Ensemble Meta-Learning,0.02,0.04,0.22,0.00,1.0,50
+Extinction System,0.19,0.08,0.46,0.10,9.6,50
+Technology Diffusion,0.04,0.01,0.08,0.02,1.8,50
+Event Collection,0.03,0.02,0.12,0.01,1.5,50
+Time Advancement,0.00,0.00,0.02,0.00,0.2,50
+Organization Viability,0.09,0.05,0.42,0.06,4.6,50
+Nuclear Crisis,0.01,0.00,0.03,0.01,0.5,50

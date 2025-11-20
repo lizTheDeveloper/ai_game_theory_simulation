@@ -246,9 +246,13 @@ export function updateProjects(org: Organization, state: GameState): void {
   });
   
   // Remove completed projects
-  org.currentProjects = org.currentProjects.filter(
-    p => absoluteMonth < p.completionMonth
-  );
+  // PERFORMANCE: In-place splice instead of filter() to avoid O(n) allocations per org per month
+  // Backward iteration prevents index shifting issues when removing elements
+  for (let i = org.currentProjects.length - 1; i >= 0; i--) {
+    if (absoluteMonth >= org.currentProjects[i].completionMonth) {
+      org.currentProjects.splice(i, 1);
+    }
+  }
 }
 
 /**
@@ -1148,7 +1152,11 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
         capitalRaised += recoveredCapital;
 
         // Remove from org projects
-        org.currentProjects = org.currentProjects.filter(p => p.id !== project.id);
+        // PERFORMANCE: In-place splice instead of filter() to avoid O(n) allocations
+        const projectIndex = org.currentProjects.findIndex(p => p.id === project.id);
+        if (projectIndex !== -1) {
+          org.currentProjects.splice(projectIndex, 1);
+        }
 
         console.log(`   ❌ PROJECT CANCELED: ${project.id} (recovered $${recoveredCapital.toFixed(1)}M)`);
       });
@@ -1256,7 +1264,11 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
             org.capital += salePrice;
 
             // Remove from seller's ownership
-            org.ownedDataCenters = org.ownedDataCenters.filter(id => id !== dc.id);
+            // PERFORMANCE: In-place splice instead of filter() to avoid O(n) allocations
+            const dcIndex = org.ownedDataCenters.indexOf(dc.id);
+            if (dcIndex !== -1) {
+              org.ownedDataCenters.splice(dcIndex, 1);
+            }
 
             assetSaleCapital += salePrice;
             assetSaleCostReduction += dc.operationalCost;
@@ -1281,7 +1293,11 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
               org.capital += salePrice;
 
               // Remove from seller's ownership
-              org.ownedDataCenters = org.ownedDataCenters.filter(id => id !== dc.id);
+              // PERFORMANCE: In-place splice instead of filter() to avoid O(n) allocations
+              const dcIndex = org.ownedDataCenters.indexOf(dc.id);
+              if (dcIndex !== -1) {
+                org.ownedDataCenters.splice(dcIndex, 1);
+              }
 
               assetSaleCapital += salePrice;
               assetSaleCostReduction += dc.operationalCost;

@@ -18,6 +18,13 @@
  *
  * Order: 22.0 (AFTER legacy nutrients (21.5), BEFORE food security calculation)
  *
+ * SYNCHRONIZATION (Nov 20, 2025 - RACE CONDITION FIX):
+ * This phase is the SINGLE WRITER for nitrogen-food coupling state.
+ * - Calls updateNitrogenFoodCoupling() and stores results in state
+ * - Other phases (e.g., FoodSecurityDegradationPhase) MUST declare dependency on this phase
+ * - Other phases MUST READ from state.planetaryBoundariesSystem.regionalNitrogenManagement
+ * - NEVER call updateNitrogenFoodCoupling() from other phases (creates race condition)
+ *
  * @see research/nitrogen_food_coupling_20251115.md
  * @see src/simulation/nitrogenFoodCoupling.ts
  */

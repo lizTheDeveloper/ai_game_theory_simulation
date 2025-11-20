@@ -31,7 +31,13 @@ import {
  * @throws Error if any parameter fails validation
  */
 export function validateSimulationConfig(): void {
-  console.log('🔍 Validating simulation configuration...');
+  // Performance fix (Nov 20, 2025): Use performance config for verbose logging
+  const { getPerformanceConfig } = require('./performanceConfig');
+  const perfConfig = getPerformanceConfig();
+
+  if (perfConfig.verboseInitialization) {
+    console.log('🔍 Validating simulation configuration...');
+  }
 
   let validationErrors: string[] = [];
 

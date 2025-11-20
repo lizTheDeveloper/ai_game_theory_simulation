@@ -27,11 +27,8 @@ import {
   assertFinite,
   assertInRange,
   assertProbability,
-<<<<<<< Updated upstream
-  assertStateProperty
-=======
+  assertStateProperty,
   assertDefined
->>>>>>> Stashed changes
 } from '@/simulation/utils/assertions';
 
 /**
