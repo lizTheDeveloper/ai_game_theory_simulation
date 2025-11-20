@@ -1,9 +1,1 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-COMPLETE - 432s
-=======
 GIT OPERATIONS
->>>>>>> origin/auto/researcher-20251120_163001
-=======
-GIT OPERATIONS
->>>>>>> origin/auto/researcher-20251120_193002

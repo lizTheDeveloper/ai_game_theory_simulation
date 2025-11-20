@@ -11,12 +11,11 @@
 
 ```yaml
 oldest_source: 1998
-newest_source: 2025
+newest_source: 2025-01 (AI Diffusion Framework)
 last_verified: 2025-11-20
-primary_sources: 11
+primary_sources: 12
 verification_status: VERIFIED
-research_quality: A- (peer-reviewed + official UN/NIST sources + arXiv preprints, includes historical context)
-update_notes: Added May 2025 (arXiv:2505.04592) and November 2025 (arXiv:2511.10783) governance proposals
+research_quality: A- (peer-reviewed + official UN/NIST sources, includes historical context)
 ```
 
 ---
@@ -38,11 +37,73 @@ update_notes: Added May 2025 (arXiv:2505.04592) and November 2025 (arXiv:2511.10
 - God mode 30% mortality (8.15B → 5.71B) likely reflects uncoordinated deployment scenario
 - Coordinated deployment with transition support should reduce mortality to <5%
 
+**2025 Update (January):**
+- **US AI Diffusion Framework:** Three-tier export control system for advanced AI chips effective Jan 13, 2025
+- **Tier 1 (18 allies):** Unrestricted access (Five Eyes + Japan, Netherlands, South Korea, Taiwan, NATO allies)
+- **Tier 2 (majority of world):** Caps at ~50,000 advanced AI chips through 2027 (can double with agreement)
+- **Tier 3 (adversaries):** Effectively blocked from importing advanced chips
+- **Model weights controls:** First-ever export controls on frontier AI model weights
+- **Coordination challenge:** EU enacted separate European Chips Act 2024 - overlapping regimes
+
 ---
 
 ## Section 1: International Coordination Frameworks (2024-2025)
 
-### 1.1 Multilateral Governance Proliferation
+### 1.1 US AI Diffusion Framework (January 2025)
+
+**Source:** Federal Register, Framework for Artificial Intelligence Diffusion (Jan 15, 2025)
+
+**Citation:** U.S. Department of Commerce. (2025). Framework for Artificial Intelligence Diffusion. *Federal Register*, 90(9), FR Doc 2025-00636. https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion
+
+**Key Developments:**
+- **Effective date:** January 13, 2025
+- **Scope:** Export controls on advanced AI chips and model weights worldwide
+- **Mechanism:** Three-tier country classification system
+
+**Three-Tier System:**
+
+**Tier 1 (18 countries - unrestricted access):**
+- Five Eyes: Australia, Canada, New Zealand, United Kingdom
+- Major partners: Japan, Netherlands, South Korea, Taiwan
+- Close NATO allies
+- Rationale: Trusted partners with equivalent security standards
+
+**Tier 2 (majority of world - limited access):**
+- Cap: ~50,000 advanced AI chips through 2027
+- Flexibility: Can double if state reaches agreement with US
+- Enforcement: Computing power must be hosted in "trusted and secure environments"
+- Purpose: Prevent diversion to Tier 3 countries while enabling development
+
+**Tier 3 (adversaries - blocked):**
+- Effectively prohibited from importing advanced chips
+- Includes countries of concern for AI safety/security
+
+**Model Weights Controls (NEW):**
+- First-ever export controls on frontier AI model weights
+- Applies to "most advanced AI models"
+- Prevents model exfiltration to adversaries
+
+**International Coordination Challenges:**
+- EU enacted separate European Chips Act (2024) → overlapping regimes
+- Criticism: May fragment global AI ecosystem rather than harmonize
+- Debate: Effectiveness vs. undermining US AI leadership
+
+**Citations:**
+1. CSIS (2025). "Understanding U.S. Allies' Current Legal Authority to Implement AI and Semiconductor Export Controls." Center for Strategic and International Studies.
+2. Carnegie Endowment (2025). "With Its Latest Rule, the U.S. Tries to Govern AI's Global Spread." Carnegie Endowment for International Peace.
+3. RAND (2025). "Understanding the Artificial Intelligence Diffusion Framework." RAND Corporation, PEA3776-1.
+4. Anthropic (2025). "Securing America's Compute Advantage: Anthropic's Position on the Diffusion Rule." https://www.anthropic.com/news/securing-america-s-compute-advantage-anthropic-s-position-on-the-diffusion-rule
+
+**Simulation Implications:**
+- Compute access becomes geopolitically stratified (3 tiers)
+- AI capability development diverges by country tier
+- Coordination quality variable: Tier 1 countries share governance burden, Tier 2/3 excluded
+- Black markets for chips/models become strategic concern
+- Model weights controls enable "AI alignment export" - only deploy aligned models globally
+
+---
+
+### 1.2 Multilateral Governance Proliferation
 
 **Source:** ITU AI Governance Day 2024 (reported in Oxford Academic 2025)
 
@@ -274,154 +335,6 @@ update_notes: Added May 2025 (arXiv:2505.04592) and November 2025 (arXiv:2511.10
 - AGILE Index Research Team (2025). "AI Governance InternationaL Evaluation Index (AGILE Index) 2025." arXiv:2507.11546.
 
 **Confidence:** 70% (comprehensive methodology, limited peer review as arXiv preprint)
-
----
-
-## Section 4.5: Frontier AI Governance Proposals (May-November 2025)
-
-### 4.5.1 Global Moratorium Framework (May 2025)
-
-**Source:** "AI Governance to Avoid Extinction" (May 2025), arXiv:2505.04592
-
-**Core Proposal:** Global moratorium on frontier AI development until justified confidence exists that progress can resume without catastrophic risk
-
-**Governance Scenarios:**
-1. **Off Switch and Halt (Preferred):** Technical, legal, and institutional infrastructure to shut down dangerous AI projects globally on demand
-2. **US National Project:** Government-led centralized development with unilateral control
-3. **Light-Touch (Current):** Minimal intervention - assessed as inherently unsafe due to racing dynamics
-4. **Mutual Assured AI Malfunction (MAIM):** Deterrence through visibility and sabotage threats
-
-**Timeline Considerations:**
-- **Immediate:** Build "Off Switch" infrastructure before political will emerges
-- **Near-term:** Frontier systems capable of catastrophic risk likely in "2020s or decades"
-- **Halt duration:** Could require "decades of dedicated research" before safe resumption
-
-**Off-Switch Infrastructure Components:**
-- **Compute monitoring:** Track specialized chip distribution/usage globally
-- **Model weight security:** Prevent theft and proliferation
-- **Algorithmic secret protection:** Safeguard training methodologies
-- **Emergency response systems:** Rapid shutdown for rogue projects
-- **Verification mechanisms:** Ensure compliance with development restrictions
-
-**Coordination Requirements:**
-- **International scope:** Halt must be genuinely global to prevent circumvention
-- **Non-state actor management:** Controls preventing terrorist or rogue state access
-- **Institutional frameworks:** Multilateral enforcement (potentially UN Security Council-based)
-- **Security protocols:** State-proof security for sensitive AI information
-
-**Quantitative Gaps:** Paper lacks specific compute thresholds, cost estimates, verification accuracy requirements, or minimum coalition size
-
-**Citation:**
-- arXiv:2505.04592 (May 2025). "AI Governance to Avoid Extinction: The Strategic Landscape and Actionable Research Questions."
-
-**Confidence:** 60% (arXiv preprint, conceptual framework without empirical validation, lacks quantitative parameters)
-
-**Simulation Parameters:**
-- `globalMoratoriumProposed`: true (as of May 2025)
-- `offSwitchInfrastructure`: 0.10 (early conceptual stage)
-- `politicalWillForHalt`: 0.15 (growing awareness, limited action)
-
----
-
-### 4.5.2 US-China Bilateral Framework (November 2025)
-
-**Source:** "An International Agreement to Prevent the Premature Creation of Artificial Superintelligence" (November 2025), arXiv:2511.10783
-
-**Core Proposal:** Bilateral US-China agreement as foundation for global ASI prevention framework, with staged expansion to other nations
-
-**Catastrophic Risk Estimates:**
-- **Anthropic CEO Dario Amodei:** 10-25% chance of catastrophic outcomes
-- **Yoshua Bengio:** 20% probability of catastrophic outcome
-- **AI Conference Survey:** 38% of respondents estimate ≥10% chance of outcome as bad as human extinction
-
-**Leadership Structure:**
-- **Executive Council:** US and PRC as initial members with consensus requirement and mutual veto power
-- **Coalition Technical Body (CTB):** Manages technical implementation across divisions
-- **Expansion mechanism:** Gradual inclusion of additional nations through deliberative sessions
-
-**Quantitative Thresholds:**
-| Parameter | Value |
-|-----------|-------|
-| **Hard Training Prohibition** | 10²⁴ FLOP |
-| **Post-Training Prohibition** | 10²³ FLOP |
-| **Monitored Training Band** | 10²²-10²⁴ FLOP |
-| **Covered Chip Cluster (CCC) Threshold** | >16 H100-equivalents (~$500k USD) |
-| **H100 Equivalent Unit** | 990 TFLOP/s FP16 |
-
-**Verification Mechanisms:**
-1. **Hardware tracking:** Mandatory CCC reporting, supply chain monitoring, power consumption analysis, satellite surveillance
-2. **Chip-use verification:** Physical inspector access, on-chip tamper-resistant monitoring
-3. **Human intelligence:** Whistleblower programs, sting operations, black market monitoring
-4. **Technical oversight:** Access to training code, data, and model checkpoints
-
-**Chip Consolidation Timeline:**
-- **Day 1:** Clusters >10,000 H100-equivalents
-- **Day 10:** Clusters >1,000 H100-equivalents
-- **Day 100:** Clusters >100 H100-equivalents
-- **Year 2:** All covered chip clusters consolidated
-
-**Implementation Stages:**
-1. Transparency and confidence-building measures
-2. Enhanced communication frameworks
-3. Establishing commitments, limits, verification foundations
-4. Institutionalization and deployment
-5. Solving ASI safety challenges
-6. Safe superintelligence implementation
-
-**Enforcement Against Non-Parties:**
-- Export controls on AI chips and manufacturing equipment
-- Economic sanctions and visa bans
-- "Reasonable measures" to dissuade covert development
-- Potential escalation for serious violations
-
-**Stakeholder Requirements:**
-- **Primary:** US and PRC participation prerequisite (centers of frontier AI development)
-- **Secondary:** UNSC members and nations with substantial economic/military resources
-- **Taiwan:** Special attention due to chip manufacturing dominance (NPT-style arrangements)
-- **Research community:** "Thousands or tens of thousands" affected by research restrictions
-
-**Citation:**
-- arXiv:2511.10783v1 (November 2025). "An International Agreement to Prevent the Premature Creation of Artificial Superintelligence."
-
-**Confidence:** 65% (arXiv preprint, detailed quantitative thresholds provided, bilateral framework politically challenging, lacks peer review)
-
-**Simulation Parameters:**
-- `usChinaBilateralFramework`: false (proposed November 2025, not adopted)
-- `computeThresholdMonitoring`: 0.05 (chip tracking exists but limited)
-- `catastrophicRiskConsensus`: 0.30 (growing expert agreement on 10-25% extinction risk)
-- `bilateralCoordinationProbability`: 0.20 (US-China tensions complicate cooperation)
-- `globalEnforcementCapacity`: 0.15 (export controls exist, comprehensive framework absent)
-
----
-
-### 4.5.3 Comparative Analysis: Moratorium vs. Bilateral Framework
-
-**Timeline:**
-- **Moratorium (May 2025):** Immediate global halt, decades-long research phase
-- **Bilateral (Nov 2025):** Staged 6-phase implementation, ASI safety solving before deployment
-
-**Scope:**
-- **Moratorium:** All frontier AI development halted globally
-- **Bilateral:** Specific compute thresholds (10²² - 10²⁴ FLOP monitored, >10²⁴ FLOP prohibited)
-
-**Verification:**
-- **Moratorium:** Conceptual (compute monitoring, model weight security)
-- **Bilateral:** Detailed (chip tracking, physical inspections, on-chip monitoring, human intelligence)
-
-**Political Feasibility:**
-- **Moratorium:** Requires "sufficient political will" emergence (no mechanism specified)
-- **Bilateral:** US-China consensus as foundation (challenging but concrete path)
-
-**Quantitative Specificity:**
-- **Moratorium:** Low (lacks thresholds, cost estimates, coalition size)
-- **Bilateral:** High (specific FLOP thresholds, chip consolidation timelines, CCC definition)
-
-**Implementation Readiness:**
-- **Moratorium:** Early conceptual stage (10% infrastructure)
-- **Bilateral:** Detailed technical framework (could begin immediately if political will exists)
-
-**Simulation Implications:**
-Both proposals recognize 10-25% catastrophic risk and propose coordination as mitigation. Key difference: moratorium seeks complete halt, bilateral seeks controlled development with strict monitoring. Current simulation should model coordination quality as spectrum including both scenarios.
 
 ---
 
@@ -700,13 +613,9 @@ interface CoordinatedDeployment {
 
 8. Future of Life Institute (2025). "2025 AI Safety Index." Assessment report on industry safety testing practices.
 
-9. arXiv:2505.04592 (May 2025). "AI Governance to Avoid Extinction: The Strategic Landscape and Actionable Research Questions."
-
-10. arXiv:2511.10783v1 (November 2025). "An International Agreement to Prevent the Premature Creation of Artificial Superintelligence."
-
 ### Historical Context
 
-11. Benedick, R. E. (1998). *Ozone Diplomacy: New Directions in Safeguarding the Planet.* Harvard University Press.
+9. Benedick, R. E. (1998). *Ozone Diplomacy: New Directions in Safeguarding the Planet.* Harvard University Press.
 
 ---
 
