@@ -9,6 +9,10 @@
  * @author Marcus (Platform Engineer)
  */
 
+// Load environment variables from .env file
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { Pool } from 'pg';
