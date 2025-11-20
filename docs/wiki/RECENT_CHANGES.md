@@ -4,6 +4,35 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔧 Merge Resolution: TypeScript Fixes (November 20, 2025 - commit 5107a45)
+
+**Status:** ✅ COMPLETE
+**Type:** Bug Fix / Merge Artifact Cleanup
+
+**Summary:** Resolved TypeScript errors from merge branch consolidation. Removed duplicate function calls (merge artifact), cleaned up assertion context, and added critical phase dependency declaration to prevent race conditions.
+
+**Changes:**
+1. **Removed duplicate `updateLegacyNutrientStocks()` call** - Merge artifact in `planetaryBoundaries.ts:897-928`
+   - First call correctly updated legacy stocks and set `effectiveNitrogen/Phosphorus`
+   - Second call (lines 935-946) was duplicate dead code from refactoring
+2. **Fixed assertion `additionalInfo`** - Removed undefined variables (`reserves`, `depletion`, `currentNitrogenInputMonthly`, `currentPhosphorusInputMonthly`)
+3. **Added phase dependency declaration** - `PlanetaryBoundariesPhase` now explicitly declares dependency on `nitrogen-food-coupling` (order 19.6)
+   - **Critical fix:** Prevents race condition where `globalFoodProductionIndex` is read before being written
+   - NitrogenFoodCouplingPhase (19.6) writes value, PlanetaryBoundariesPhase (29.4) reads it
+   - Phase dependency system validates this at engine startup
+
+**Files Changed:**
+- `src/simulation/engine/phases/PlanetaryBoundariesPhase.ts` (added dependency declaration)
+- `src/simulation/planetaryBoundaries.ts` (removed duplicate, fixed assertions)
+
+**Impact:** Technical debt cleanup - no new mechanics. Phase dependency declaration improves architectural safety.
+
+**Fixed by:** simulation-maintainer agent during merge resolution
+
+**Commit:** 5107a45cdb352de051323132c3e158b4e30e8650
+
+---
+
 ## 📋 Merge Branch Preparation (November 20, 2025 - commit 112a566)
 
 **Status:** ✅ COMPLETE
