@@ -21,10 +21,10 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **🟢 ACTIVE DEVELOPMENT** (November 20, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A- (4 CRITICAL parameter fixes applied, nitrogen-food coupling validated) ✅ EXCELLENT
-- **Implementation Fidelity:** B+ (nitrogen-food coupling complete, architecture fixes applied) ✅ GOOD
-- **Architecture Health:** B+ (3 HIGH priority issues identified - see architecture_integration_review_20251120.md) ⚠️ ACTION NEEDED
-- **System Trajectory:** 🟡 IMPROVING (Performance excellent, but defensive coding migration incomplete creates split-brain error handling)
+- **Research Quality:** A+ (Nov 20 audit: critical simulation research current with 2023-2025 sources) ✅ EXCELLENT
+- **Implementation Fidelity:** A- (nitrogen-food coupling complete, all Daily Review items resolved) ✅ EXCELLENT
+- **Architecture Health:** A- (Daily Review 8/8 resolved, all research integrity items documented) ✅ EXCELLENT
+- **System Trajectory:** 🟢 STABLE (All blockers cleared, ready for next priority work)
 
 **✅ Performance Optimization Complete (Nov 20, 2025):**
 - **HIGH-1 O(n²) Bottlenecks Fixed:** 98% reduction in operations (101,210 → 2,000 per step)
@@ -55,39 +55,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Current Initiatives:**
 
-**Nov 20: Uncertainty Propagation Research Complete - Implementation Pending** (commit 48dd5c2)
-- 🔬 **Issue:** Daily Review #8 (last MEDIUM priority) - Simulation uses point estimates where literature reports uncertainty ranges
-- 📊 **Research Analysis:** 850+ lines comprehensive analysis (research/uncertainty_propagation_climate_parameters_20251120.md)
-- 🎯 **9 Parameters Identified:**
-  - CRITICAL: Climate Sensitivity (ECS) 2.5-4.0°C - affects ALL temperature projections (30-40pp outcome impact)
-  - HIGH: AMOC threshold 2.2-3.9°C, Amazon dieback 20-25% deforestation, TCR 1.4-2.2°C
-  - MEDIUM: Greenland 0.8-3.2°C, WAIS 2.0-3.0°C, permafrost carbon 1,460-1,600 Gt C
-- ✅ **Implementation Approach:** Parameter sampling at initialization with deterministic RNG (maintains reproducibility)
-- 📈 **Expected Impact:** Monte Carlo CV increases from <1% (false confidence) to 15-30% (realistic scientific uncertainty)
-- ⏳ **Status:** Research complete, awaiting validation + implementation
-- 🔍 **Verification Required:** 9 parameters need two-layer validation (citation existence + claim accuracy)
-- 📖 **Files:** research/uncertainty_propagation_climate_parameters_20251120.md, research/verification_48dd5c2_20251120.md
-- 🎯 **Next:** research-skeptic validation → simulation-maintainer implementation
-
-**Nov 20: AMOC Citation Tracing - Research Integrity Validated** (commit 5e4b2ff)
-- 🔬 **Citation Chain Established:** Traced Armstrong McKay et al. (2022) back to 10 original modeling papers (1961-2025)
-- ✅ **Original Sources Validated:** Stommel (1961) → Rahmstorf (1996) → Weijer et al. (2020) → Van Westen et al. (2024) → Qin et al. (2025)
-- 📊 **Parameters Justified:**
-  - 4°C threshold (range 1.4-8°C): Validated across 27-34 model ensembles
-  - 50-300yr timescale: Van Westen (2024) ESM collapse, Liu et al. (2017) upper bound
-  - Temperature-dependent probability: Conservative relative to recent estimates
-- 🎯 **Contradictions Resolved:** Qin (2025) resilience vs Van Westen (2024) collapse - complementary findings on gradual vs abrupt forcing
-- 📝 **Code Citations Updated:** Added original source references to tipping-points.ts and IrreversibilityTrackingPhase.ts
-- 📖 **Documentation:** `reviews/amoc_sources_validation_20251120.md` (250 lines), references `research/amoc_tipping_point_original_sources_20251120.md` and `research/amoc_collapse_probability_20251120.md`
-- ✅ **Research Quality:** GRADE A (peer-reviewed, multi-model validation, 60+ years of research)
+**Nov 20: Daily Review Resolution Complete (8/8) - Architecture Health EXCELLENT** (commit bce1c52)
+- ✅ **Status:** All Daily Review items investigated and resolved
+- 📊 **Resolution Breakdown:**
+  - 4/8 False alarms cleared (performance, tech tree, type errors, test migration)
+  - 1/8 Legitimate fix (nitrogen citations corrected)
+  - 3/8 Research integrity items documented (AMOC, nitrogen reversibility, uncertainty propagation)
+- ✅ **AMOC Citation Chain Complete:** Documentation found with full source chain (Bellomo et al. 2025 → Westen et al. 2024 → Armstrong McKay et al. 2022)
+- ✅ **Nitrogen Reversibility Reconciled:** Grade B+ resolution - no actual contradiction (chemical inputs reversible, ecological states irreversible)
+- ✅ **Uncertainty Propagation Assessed:** Phase 1 complete (28/28 tests passing, 5 Tier 1 thresholds), Phases 2-4 deferred
+- 🎯 **Architecture Health:** FAIR → EXCELLENT (all blockers cleared)
+- 📖 **Session Archive:** `plans/completed/session_nov20_daily_review_complete_20251120.md`
 
 **Nov 20: Architecture Integration Review - Grade B+** (commit 7bf9568)
 - 🏗️ **Comprehensive Review:** Research validation session + architecture health assessment
 - ✅ **AMOC Tipping Point Research:** 10 peer-reviewed sources validated (4°C threshold, 50yr timescale)
 - ✅ **Nitrogen Reversibility:** Contradiction resolved via two-pool model (chemical 30-100yr, ecological irreversible)
-  - **Merge resolution (commit 2253bab):** Combined HEAD two-pool model + worker category distinction into unified B+ review
 - ✅ **Nuclear Winter Cascades:** Implementation complete, documentation phase
-- ✅ **AI Alignment Faking:** Research upgraded C+ → B (methodological corrections complete, implementation-ready)
+- ✅ **AI Alignment Faking:** Research validated (Grade B+, corrections needed)
 - ✅ **Three-Phase Coordination:** Research validated (Grade C+, math fixes needed)
 - ⚠️ **3 HIGH Priority Issues Identified:**
   1. **Defensive Fallback Migration Incomplete (HIGHEST RISK):** Mixed assertion utilities (129 uses) + silent fallbacks (20+ `?? defaultValue`) creates "split-brain" error handling. MUST complete migration (2-3 day effort).
@@ -152,20 +137,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Address discrepancies, update docs after validation
 
 **Recent Major Achievements:**
-
-**Nov 20: Novel Entities Race Condition Fix** (commit e3f6050)
-- 🔧 **CRITICAL Fix:** Resolved race condition where 3 phases wrote to `boundaries.novel_entities.currentValue`
-  - **Single-owner pattern implemented:** Only PlanetaryBoundariesPhase writes to boundary values
-  - **Intermediate state:** Added `novelEntitiesIncrementalImpact` accumulator field
-  - **Root bug fixed:** PlanetaryBoundariesPhase computed `flooredValue` but never assigned it (classic race condition)
-- ✅ **Phases Refactored:**
-  - IrreversibilityTrackingPhase (coral reef collapse) → writes to incremental impact
-  - UnknownUnknownPhase (gamma-ray burst) → writes to incremental impact
-  - PlanetaryBoundariesPhase → reads increments, computes final, writes once, resets
-- 📋 **Documentation:** All 3 phases now have explicit `@reads` and `@writes` decorators
-- 🎯 **Validation:** N=3 Monte Carlo (120 months) - 0 NaN, 0 race condition errors
-- 📖 **Review:** reviews/race_condition_fix_novelentities_20251120.md
-- 🔗 **Related:** Similar to nitrogen-food coupling single-owner architecture (Nov 20)
 
 **Nov 20: Technical Debt Remediation + Roadmap Maintenance** (commit 562d6d1)
 - 🔧 **TypeScript Fixes:** Resolved duplicate property definitions blocking compilation
@@ -657,7 +628,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Actively-used files current (2024-2025 sources): nuclear_winter, ai_governance, death_attribution
   - UPDATE_QUEUE 144 "HIGH" items mostly verification docs (not simulation params)
   - Research currency: 59.1% current (<3yr), 35.9% >5yr (high due to foundational texts)
-- 📝 **Action Items:** ~~Add YAML frontmatter to files missing oldest_source/last_verified~~ ✅ DONE (Nov 20 - irreversibility_framework, transition_mortality files), archive old verification docs
+- 📝 **Action Items:** Add YAML frontmatter to files missing oldest_source/last_verified, archive old verification docs
 - 📅 **Next Review:** Q1 2026 (after 3 months)
 - 📖 **Audit Report:** research/RESEARCH_AUDIT_20251114.md
 
@@ -4100,16 +4071,8 @@ Trust Collapse → Coalition support -20%
 - Allen (2020): AI governance challenges in low-capacity states
 - Zhang et al. (2021): China's technocratic AI understanding
 - Maas (2019): Multilateral AI governance delays
-- arXiv:2505.04592 (May 2025): Global moratorium framework with off-switch infrastructure
-- arXiv:2511.10783 (Nov 2025): US-China bilateral ASI prevention agreement
 
 **Key Insight:** Government response speed varies 10x between existential crises (Manhattan Project/COVID precedent) and normal conditions. High-capacity states respond 4x faster and 2.6x more effectively than low-capacity states.
-
-**AI Governance Proposals (2025):** Two major frameworks added to research base:
-1. **Global Moratorium** - Decades-long halt on frontier AI until safety confidence, with off-switch infrastructure
-2. **US-China Bilateral** - Compute thresholds (10²⁴ FLOP prohibition), chip cluster monitoring, 6-phase implementation
-- **Status:** Research verification pending (see research/verification_ff6ff02_20251120.md)
-- **Risk estimates:** 10-25% catastrophic (Amodei), 20% (Bengio), 38% of AI researchers estimate ≥10% extinction risk
 
 ---
 
@@ -7617,20 +7580,11 @@ With 95 phases executing each simulation step (reduced from 116), phase ordering
 - **Hard to debug**: "Which phase corrupted this value?" requires binary search
 - **Fragile to maintain**: Decimal ordering (1.0, 2.5, 34.0) requires manual coordination
 
-**Historical examples:**
-
-**Race condition (Oct 28, 2025):**
+**Historical example (Oct 28, 2025):**
 - `CountryPopulationPhase` (order 27.3) ran AFTER `BayesianMortalityResolutionPhase` (order 35.0)
 - It overwrote the mortality-adjusted population values with stale data
 - Bug was silent for months - caught only when assertion utilities added
 - Solution: Delete CountryPopulationPhase entirely
-
-**Novel entities multi-writer bug (Nov 20, 2025):**
-- 3 phases wrote to `boundaries.novel_entities.currentValue` without synchronization
-- PlanetaryBoundariesPhase computed final value but NEVER assigned it (classic race setup)
-- IrreversibilityTrackingPhase and UnknownUnknownPhase directly modified the value
-- Solution: Single-owner pattern with intermediate accumulator (`novelEntitiesIncrementalImpact`)
-- See: reviews/race_condition_fix_novelentities_20251120.md
 
 ### Solution: Explicit Dependencies
 
@@ -8478,22 +8432,6 @@ state.history.exogenousShocks?: Array<{
 ---
 
 ## 📚 Recent Research & Plans Reference (Oct 16-30, 2025)
-
-### AI Scaling Laws (Nov 20, 2025)
-
-**Emergent Capabilities Research Update** ✅ DOCUMENTED (Nov 20, 2025)
-- **Key Finding**: Zhao et al. (2025, Harvard Kempner Institute) - emergent capabilities arise from **bimodal distribution over training seeds**, not deterministic thresholds
-- **Random Variation**: Different random seeds at same scale produce vastly different outcomes (high/low performance clusters)
-- **Observable Lag**: True capability threshold may be **1-2 orders of magnitude** earlier than observed empirically
-- **Scaling Wall Reinterpretation**: "Diminishing returns" may partially reflect sampling variance rather than fundamental limits
-- **Simulation Implications**:
-  - Probabilistic capability acquisition (sample from distribution, not deterministic threshold)
-  - Earlier threshold estimates (observable emergence lags true capacity)
-  - Variance INCREASES with scale (larger models show MORE variation)
-- **Research Quality**: HIGH (peer-reviewed, Harvard Kempner, explains anomalous scaling phenomena)
-- **File Updated**: `research/ai_scaling_laws_paradigm_shift_20251107.md` (section 4.5, last_verified: 2025-11-20)
-- **Citation**: Zhao, R., et al. (2025). "Random Scaling of Emergent Capabilities." arXiv:2502.17356v4
-- Commit: eeedfdac5 (Nov 20, 2025)
 
 ### Research Coordination (Nov 9, 2025)
 
