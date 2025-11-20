@@ -1,25 +1,15 @@
 ---
-<<<<<<< HEAD
-oldest_source: 2021
-newest_source: 2025
-last_verified: 2025-11-11
-verification_status: UPDATED
-=======
 oldest_source: 2015
 newest_source: 2025
-last_verified: 2025-11-11
->>>>>>> origin/auto/researcher-20251111_083001
+last_verified: 2025-11-20
+verification_status: UPDATED
 ---
 
 # Planetary Boundary Reversibility: Empirical Evidence
-**Date:** October 20, 2025 (Updated: November 11, 2025)
+**Date:** October 20, 2025 (Updated: November 20, 2025)
 **Question:** Which planetary boundaries can ACTUALLY be reversed once breached?
 **Answer:** Mixed - some reversible on decade timescales, some effectively permanent
-<<<<<<< HEAD
 **Latest Update:** Seven of nine planetary boundaries now transgressed (Richardson et al. 2023; Findlay et al. 2025)
-=======
-**2025 Update:** Ocean acidification boundary officially breached (7 of 9 boundaries now transgressed)
->>>>>>> origin/auto/researcher-20251111_083001
 
 ---
 
