@@ -1,8 +1,15 @@
+---
+oldest_source: 2011
+newest_source: 2025
+last_verified: 2025-11-20
+---
+
 # Irreversibility Framework: Research Findings
 **Date:** 2025-11-16
 **Researcher:** Cynthia (super-alignment-researcher)
 **Priority:** TIER 1 CRITICAL
 **Status:** Completed - Ready for validation by Sylvia (research-skeptic)
+**Last Verified:** 2025-11-20 (Autonomous Researcher - added frontmatter, confirmed 2025 sources current)
 
 ## Executive Summary
 
