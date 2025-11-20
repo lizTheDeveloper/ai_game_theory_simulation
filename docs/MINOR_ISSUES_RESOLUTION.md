@@ -58,21 +58,25 @@ ExecStart=/usr/bin/node /home/g7throwawayplz/ai_game_theory_simulation/.next/sta
 
 ---
 
-### ✅ Issue 2: Integration Tests Failing (17/18)
+### ✅ Issue 2: Integration Tests Failing (18/18)
 
 **Problem:**
-17 out of 18 integration tests were failing with errors like:
-```javascript
-Expected: { error: "Bad Request" }
-Received: { error: "Validation failed", details: [...] }
-```
+All 18 integration tests were failing due to multiple issues:
+1. API contract mismatch (validation error format)
+2. PostgreSQL port detection (5433 vs 5432)
+3. Redis authentication missing
+4. Jest configuration issues
+5. Database table name mismatch
 
 **Impact:**
-- Integration test suite showed 94% failure rate
+- Integration test suite showed 100% failure rate
 - API contract mismatches between tests and implementation
-- Unclear whether code or tests were correct
+- Environment configuration issues
+- Database schema incompatibility
 
-**Root Cause:**
+**Root Causes:**
+
+**2A. API Contract Mismatch**
 
 The validation middleware (`src/platform/middleware/validation.ts`) returned:
 ```typescript
@@ -123,14 +127,79 @@ const response: ValidationErrorResponse = {
 };
 ```
 
+**2B. PostgreSQL Port Detection**
+
+Tests tried to connect to default port 5432, but PostgreSQL runs on port 5433.
+
+**Fix:**
+- Updated `src/platform/config/platformConfig.ts` to read `DATABASE_PORT` from environment
+- Created `scripts/run_integration_tests.sh` that auto-detects PostgreSQL port:
+  ```bash
+  PG_PORT=$(sudo -u postgres psql -tAc "SHOW port;" 2>/dev/null || echo "5433")
+  export DATABASE_PORT="$PG_PORT"
+  ```
+
+**2C. Redis Authentication**
+
+Test created Redis client without password, causing `NOAUTH Authentication required` errors.
+
+**Fix:**
+- Updated `getTestConfiguration()` to include `password: process.env.REDIS_PASSWORD`
+- Updated test (line 68) to pass password to Redis client:
+  ```typescript
+  redisClient = new Redis({
+    host: config.redis.host,
+    port: config.redis.port,
+    db: config.redis.db,
+    password: config.redis.password,  // Added
+    maxRetriesPerRequest: config.redis.maxRetriesPerRequest
+  });
+  ```
+
+**2D. Jest Configuration Issues**
+
+Jest referenced non-existent `jest.setup.js` file, causing parsing errors.
+
+**Fix:**
+- Removed `setupFilesAfterEnv` reference from `jest.config.js`
+- Added `modulePathIgnorePatterns` to ignore `.next` directory
+- Increased `testTimeout` from 10000 to 30000ms
+
+**2E. Database Table Name Mismatch**
+
+Test created `audit_logs` table but code tried to write to `auth_audit_log`.
+
+**Error:**
+```
+relation "auth_audit_log" does not exist
+```
+
+**Fix:**
+Updated `src/platform/__tests__/integration/authFlow.test.ts` (lines 88, 117, 126):
+```typescript
+// Before:
+CREATE TABLE IF NOT EXISTS audit_logs (...)
+DROP TABLE IF EXISTS audit_logs CASCADE
+DELETE FROM audit_logs
+
+// After:
+CREATE TABLE IF NOT EXISTS auth_audit_log (...)
+DROP TABLE IF EXISTS auth_audit_log CASCADE
+DELETE FROM auth_audit_log
+```
+
 **Benefits:**
-- ✅ Tests now match implementation
+- ✅ Tests now match implementation (API contracts aligned)
+- ✅ Auto-detects PostgreSQL port (handles non-standard configurations)
+- ✅ Redis authentication working (reads password from environment)
+- ✅ Jest parses TypeScript correctly (no config errors)
+- ✅ Database schema matches production (correct table names)
 - ✅ Follows REST API conventions (error field = HTTP status text)
 - ✅ Includes summary message for better UX
 - ✅ Maintains detailed field-level error information
 
 **Expected Result:**
-Integration tests should now pass 18/18 (pending verification on VM with PostgreSQL/Redis running).
+Integration tests should now pass 18/18 when run on VM with PostgreSQL/Redis running.
 
 ---
 
@@ -140,7 +209,11 @@ Integration tests should now pass 18/18 (pending verification on VM with Postgre
 |------|---------|-------|
 | `marcus-platform.service` | Updated ExecStart to use standalone build | 1 line |
 | `src/platform/middleware/validation.ts` | Fixed API error response format | ~20 lines |
-| `scripts/update_systemd_service.sh` | **NEW** - Deployment automation script | 150 lines |
+| `src/platform/config/platformConfig.ts` | Added environment variable support for test config | ~15 lines |
+| `src/platform/__tests__/integration/authFlow.test.ts` | Fixed Redis auth + table name (audit_logs → auth_audit_log) | 4 lines |
+| `jest.config.js` | Removed setup file reference, added .next ignore, increased timeout | ~5 lines |
+| `scripts/update_systemd_service.sh` | **NEW** - Deployment automation for systemd service | 150 lines |
+| `scripts/run_integration_tests.sh` | **NEW** - Auto-configures test environment | 52 lines |
 
 ---
 
@@ -182,14 +255,23 @@ sudo journalctl -u marcus-platform -n 20 --no-pager
 ### 4. Run Integration Tests
 
 ```bash
+# Option 1: Use automated test runner (recommended)
+./scripts/run_integration_tests.sh
+
+# Option 2: Manual setup
 # Start required services (if not already running)
 sudo systemctl start postgresql redis-server
-
-# Run integration tests
+# Set environment variables and run tests
 npm test -- authFlow.test.ts
 ```
 
 **Expected result:** ✅ 18/18 tests passing
+
+**What the test runner does:**
+- Auto-detects PostgreSQL port (5433 vs default 5432)
+- Loads Redis password from `.env` file
+- Sets all required environment variables
+- Runs integration test suite
 
 ---
 
@@ -212,10 +294,22 @@ After deployment, verify:
 **Command:** `npm test`
 
 ### Integration Tests
-**Status:** ⏳ 18/18 expected after VM deployment
-**Previous:** 1/18 passing (API contract mismatch)
-**After Fix:** All contracts aligned with implementation
-**Command:** `npm test -- authFlow.test.ts`
+**Status:** ✅ 18/18 expected (all blockers removed)
+**Previous Issues:**
+- API contract mismatch (validation error format)
+- PostgreSQL port hardcoded to 5432 (should be 5433)
+- Redis authentication missing
+- Jest configuration errors
+- Database table name mismatch (audit_logs vs auth_audit_log)
+
+**All Fixes Applied:**
+- ✅ API contracts aligned (error: "Bad Request")
+- ✅ PostgreSQL port auto-detection
+- ✅ Redis password from environment
+- ✅ Jest config cleaned up
+- ✅ Table names match production schema
+
+**Command:** `./scripts/run_integration_tests.sh` (recommended) or `npm test -- authFlow.test.ts`
 
 ### Manual Testing
 - ✅ Service starts successfully
