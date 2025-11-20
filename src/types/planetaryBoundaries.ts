@@ -555,6 +555,9 @@ export interface LegacyNutrientStock {
     halfLife: number;      // Years for half-life decay (~100 years)
   };
   atmosphericDeposition: number;  // Mt N/year from atmospheric transport
+  // HIGH-1 FIX (Nov 20, 2025): Store effective pollution values for planetary boundaries to read
+  effectiveNitrogen?: number;    // Mt N/month (current inputs + legacy releases)
+  effectivePhosphorus?: number;  // Mt P/month (current inputs + legacy releases)
 }
 
 /**

@@ -500,19 +500,13 @@ export function applyAllTechEffects(
       }
     }
 
-    // Update nitrogen-food coupling if any nitrogen-reducing techs deployed
-    if (nitrogenReducingTechs.length > 0) {
-      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
-      const globalFoodProductionIndex = updateNitrogenFoodCoupling(
-        gameState,
-        nitrogenReducingTechs
-      );
-
-      // Log nitrogen coupling updates (annually)
-      if (gameState.currentMonth % 12 === 0) {
-        console.log(`🌾 Nitrogen-food coupling updated: ${nitrogenReducingTechs.length} techs deployed, Global food index: ${globalFoodProductionIndex.toFixed(3)}`);
-      }
-    }
+    // CRITICAL-2 FIX (Nov 20, 2025): Removed duplicate call to updateNitrogenFoodCoupling
+    // NitrogenFoodCouplingPhase (order 19.6) is the ONLY place that should call this function
+    // Tech deployment is automatically picked up by getNitrogenReductionDeployment()
+    // which reads state.techTreeState.regionalDeployment
+    //
+    // Original code caused read-modify-write race condition by calling update function
+    // multiple times per step (once here in effectsEngine, once in NitrogenFoodCouplingPhase)
   }
 
   // Apply global effects

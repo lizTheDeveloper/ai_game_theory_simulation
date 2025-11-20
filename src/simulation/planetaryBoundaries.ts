@@ -880,52 +880,28 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Base calculation (depletion factor)
     const depletion = 1 - reserves; // reserves is already 0-1 scale
 
-    // TIER 2 HIGH: Update legacy nutrient stocks and nitrogen-food coupling
-    // Legacy stocks create INERTIA - even with 100% input reduction, pollution stays high for decades
-    // Nitrogen-food coupling: reducing nitrogen hurts crop yields (regional nonlinear penalties)
+    // HIGH-1 FIX (Nov 20, 2025): READ effective nutrient pollution from state
+    // LegacyNutrientStocksPhase (order 21.5) already updated these values
+    // NitrogenFoodCouplingPhase (order 19.6) already updated nitrogen-food coupling
+    // This phase (21.0) just READS the results - no more circular update calls
     let effectiveNitrogen = 0;
     let effectivePhosphorus = 0;
-    let globalFoodProductionIndex = 1.0;
 
     // 2025 baseline: 120 Mt N/year = 10 Mt N/month, 25 Mt P/year = 2.08 Mt P/month
     const BASELINE_N_INPUT_PER_MONTH = 10;  // Mt N/month
     const BASELINE_P_INPUT_PER_MONTH = 2.08; // Mt P/month
 
-    if (system.legacyNutrientStock) {
-      // Import update functions dynamically to avoid circular dependencies
-      const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
-      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
-
-      // Get deployed nitrogen-reducing technologies
-      // TODO (TIER 2 HIGH): Connect to actual technology deployment
-      // 6 biogeochemical restoration technologies from research (nitrogen_food_coupling_20251115.md):
-      // 1. Precision agriculture (25-30% N reduction) - TIER 3 or god mode policy
-      // 2. Vertical/indoor farming (60% N reduction) - TIER 3 or god mode policy
-      // 3. Food waste reduction (30% demand reduction) - TIER 3 or god mode policy
-      // 4. Nitroplast integration (20-40% reduction, 2040+, 40% success probability) - TIER 4 breakthrough
-      // 5. Precision fermentation (30-50% agricultural N reduction) - TIER 3 or god mode policy
-      // 6. Dietary shift (protein transition 50:50 A:P ratio) - TIER 3 or god mode policy
-      const deployedTechEffectiveness: number[] = [];
-      // For now, no technologies deployed (baseline scenario)
-
-      // Update nitrogen-food coupling and get global food production impact
-      globalFoodProductionIndex = updateNitrogenFoodCoupling(state, deployedTechEffectiveness);
-
-      // Current nitrogen and phosphorus inputs (Mt/month)
-      // Food production index can modify this (lower food production = less nitrogen needed)
-      const currentNInput = BASELINE_N_INPUT_PER_MONTH * globalFoodProductionIndex;  // Mt N/month
-      const currentPInput = BASELINE_P_INPUT_PER_MONTH * Math.sqrt(globalFoodProductionIndex);  // Mt P/month (less elastic than N)
-
-      // Update stocks and get effective pollution (current + legacy releases)
-      const effective = updateLegacyNutrientStocks(state, currentNInput, currentPInput);
-      effectiveNitrogen = effective.effectiveNitrogen;
-      effectivePhosphorus = effective.effectivePhosphorus;
+    if (system.legacyNutrientStock?.effectiveNitrogen !== undefined &&
+        system.legacyNutrientStock?.effectivePhosphorus !== undefined) {
+      // Read from state (updated by LegacyNutrientStocksPhase)
+      effectiveNitrogen = system.legacyNutrientStock.effectiveNitrogen;
+      effectivePhosphorus = system.legacyNutrientStock.effectivePhosphorus;
     } else {
-      // No legacy tracking - inputs scale with depletion
-      const currentNitrogenInput = BASELINE_N_INPUT_PER_MONTH * (1 - depletion);
-      const currentPhosphorusInput = BASELINE_P_INPUT_PER_MONTH * (1 - depletion);
-      effectiveNitrogen = currentNitrogenInput;
-      effectivePhosphorus = currentPhosphorusInput;
+      // Fallback if phases haven't run yet (shouldn't happen in normal flow)
+      // Use baseline scaled by phosphorus depletion as proxy
+      effectiveNitrogen = BASELINE_N_INPUT_PER_MONTH * (1 - depletion);
+      effectivePhosphorus = BASELINE_P_INPUT_PER_MONTH * (1 - depletion);
+      console.log('⚠️ WARNING: effectiveNitrogen/Phosphorus not set by LegacyNutrientStocksPhase, using baseline fallback');
     }
 
     // Boundary value calculation
