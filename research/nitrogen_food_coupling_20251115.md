@@ -1,9 +1,19 @@
+---
+oldest_source: 2002
+newest_source: 2025
+last_verified: 2025-11-19
+status: used_in_simulation
+verification_status: UPDATED
+---
+
 # Nitrogen-Food Production Coupling Research
 ## Biogeochemical Boundary Implementation Parameters
 
-**Research Date:** 2025-11-15
+**Research Date:** 2025-11-15 (Updated: 2025-11-19)
+**Researcher:** Original author (2025-11-15), autonomous-researcher (2024-2025 updates)
 **Priority:** TIER 2 HIGH - Blocking biogeochemical boundary implementation
 **Context:** God mode testing shows only 10% effectiveness for biogeochemical flows boundary. Need to model nitrogen-food coupling: 120 Mt N/year reduction (60%) required for planetary boundaries, but this nitrogen currently feeds ~3 billion people.
+**Last Verified:** 2025-11-19
 
 ---
 
@@ -693,9 +703,103 @@ Famine_Risk = max(0, Food_Deficit / (Population * N_per_capita))
 
 ---
 
-## 8. Research Gaps and Uncertainties
+## 8. Latest 2024-2025 Research Updates
 
-### 8.1 High-Priority Unknowns
+### 8.1 Wheat Production Under Climate Change (July 2024)
+
+**Citation:** "Global needs for nitrogen fertilizer to improve wheat yield under climate change." PubMed PMID: 38965400 (July 2024)
+
+**Key Finding:** To achieve a 52% increase in global average wheat yield under mid-century high warming scenarios, fertilizer use would need to increase **fourfold**, which would unavoidably lead to higher environmental impacts.
+
+**Mechanism:**
+- Climate change reduces wheat yield potential through heat stress, water stress, and altered growing seasons
+- To maintain current yields under warming, more nitrogen input is required per unit output
+- To increase yields to meet population growth, nitrogen inputs scale nonlinearly
+- 4x fertilizer increase would push biogeochemical boundary transgression to catastrophic levels
+
+**Simulation Implications:**
+- Add climate-nitrogen coupling: Higher temperatures → lower nitrogen use efficiency
+- Model competing pressures: Food security requires MORE nitrogen, planetary boundaries require LESS
+- Track "nitrogen dilemma": Climate change forces choice between hunger and ecosystem collapse
+
+---
+
+### 8.2 Nitrogen Production Outstrips Needs 2-Fold (2024)
+
+**Citation:** "Nitrogen fertiliser production outstrips global needs and exceeds planetary boundaries by factor of two." Planet Tracker (2024)
+
+**Key Findings:**
+- World uses **2x as much nitrogen fertilizer as needed**
+- Only 30-35% of nitrogen-based fertilizer taken up by plants
+- Current production exceeds planetary boundaries by factor of 2
+
+**Regional Heterogeneity:**
+- Overfertilization in developed nations (Europe, North America, East Asia)
+- Underfertilization in Sub-Saharan Africa, parts of South Asia
+- 11% N-fertilizer savings possible in India through integrated management
+- 49% savings in Ethiopia, 44% in Malawi (organic + inorganic integration)
+
+**Simulation Implications:**
+- Model regional nitrogen allocation: Some regions reduce by 50%, others increase by 20%
+- Track global vs. regional boundaries: Global reduction possible through redistribution
+- Add policy mechanism: Nitrogen quota trading between regions
+
+---
+
+### 8.3 China Nitrogen Use Within Planetary Boundaries (2024)
+
+**Citation:** "Keeping Nitrogen Use in China within the Planetary Boundary Using a Spatially Explicit Approach." *Environmental Science & Technology* (2024). DOI: 10.1021/acs.est.4c00908
+
+**Key Findings:**
+- China exceeds planetary nitrogen boundaries regionally
+- Spatially explicit approach identifies hotspots for targeted reduction
+- Current NUE in China: 61% → 50% (declining due to overuse)
+- Precision targeting can achieve boundary compliance without food security loss
+
+**Simulation Implications:**
+- Add subnational nitrogen tracking (not just country-level)
+- Model targeted reduction in hotspots vs. blanket reduction
+- Track NUE trends: Can decline over time with overuse
+
+---
+
+### 8.4 Agricultural Nitrogen as Global Threat (Mongabay 2024)
+
+**Citation:** "Agricultural nitrogen pollution is global threat, but circular solutions await." Mongabay (January 2024)
+
+**Key Findings:**
+- Nitrogen pollution causing overshoot of several planetary boundaries simultaneously
+- Nitrogen and phosphorus biogeochemical cycles were first boundaries dangerously transgressed
+- Circular economy solutions (manure recycling, crop rotation, precision agriculture) offer pathways
+- Current fertilizer use: 2% of world's energy, 1.4-5% of global GHG emissions
+
+**Simulation Implications:**
+- Track co-benefits: Nitrogen reduction → GHG reduction → climate improvement
+- Model circular agriculture adoption rate: 0-10% by 2030, 10-40% by 2050
+- Add energy-nitrogen coupling: Reduced fertilizer production → reduced energy demand
+
+---
+
+### 8.5 Spatially Differentiated Responses to Price Spikes (Nature Sustainability 2023)
+
+**Citation:** "Spatially differentiated nitrogen supply is key in a global food–fertilizer price crisis." *Nature Sustainability* (2023). DOI: 10.1038/s41893-023-01166-w
+
+**Key Findings:**
+- During nitrogen fertilizer price spikes (2022 crisis), spatially differentiated responses required
+- Potential savings: 11% India, 49% Ethiopia, 44% Malawi
+- Overfertilization in some regions compensates for underfertilization in others
+- Global redistribution can improve both food security AND environmental outcomes
+
+**Simulation Implications:**
+- Model fertilizer price shocks (energy crisis, war, trade disruption)
+- Track regional food security vs. nitrogen use: Decouple through redistribution
+- Add policy: Emergency nitrogen reallocation during price crises
+
+---
+
+## 9. Research Gaps and Uncertainties
+
+### 9.1 High-Priority Unknowns
 
 1. **Nitroplast engineering feasibility:** Can it be transferred to crops? Timeline? Yield penalty from N fixation energy cost?
 2. **Global legacy nutrient stocks:** No comprehensive estimate exists - critical for recovery timelines
@@ -704,14 +808,14 @@ Famine_Risk = max(0, Food_Deficit / (Population * N_per_capita))
 5. **Social acceptance of GMOs:** Will nitroplast crops face regulatory/public barriers?
 6. **Nonlinear tipping points:** Is there a critical N reduction threshold that triggers abrupt food system collapse?
 
-### 8.2 Lower-Priority Uncertainties
+### 9.2 Lower-Priority Uncertainties
 
 1. **Active sediment management cost-effectiveness:** No recent (2024) economic studies found
 2. **Phytoremediation scaling limits:** What % of agricultural land can realistically be converted to buffer wetlands?
 3. **Regional NUE improvement trajectories:** Will China/India reverse declining trends?
 4. **Dietary shift social dynamics:** What drives A:P ratio changes beyond economics?
 
-### 8.3 Recommended Follow-Up Research
+### 9.3 Recommended Follow-Up Research
 
 1. **Nitrogen reduction-famine relationship:** Find historical case studies or modeling papers on abrupt fertilizer reduction impacts
 2. **Nitroplast development roadmap:** Track progress in plant genetic engineering, interview experts on timeline
