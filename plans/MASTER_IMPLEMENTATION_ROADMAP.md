@@ -462,6 +462,17 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Irreversibility framework (Nov 18), Nitrogen-food coupling (Nov 18), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Three-Phase Coordination (commit 8da0700)** - ⏳ VALIDATION PHASE (Nov 20, 2025)
+  - **Research File:** `research/verification_8da0700_20251120.md` (19 citations, 40-60 claims)
+  - **Systems:** ClimateDeploymentDelayPhase, TransitionManagementSystem, Novel Entities enhancements
+  - **Priority Claims:**
+    - CRITICAL: Kenya UBI -48% mortality (NBER WP 34152)
+    - CRITICAL: Great Leap Forward 5% vs 30% inconsistency
+    - CRITICAL: Irreversibility 80-95% range (Cousins 2022)
+    - HIGH: Climate tech parameters (20+ values, 6 papers)
+    - HIGH: Post-Soviet mortality 74% → 15% mapping
+  - **High Uncertainty:** irreversibleFraction [0.80-0.95], reboundFactor [0.5-0.9] (sensitivity analysis REQUIRED)
+  - **Next Steps:** Research-skeptic review → claim verification → discrepancy resolution → docs update
 - [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
   - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
   - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)
