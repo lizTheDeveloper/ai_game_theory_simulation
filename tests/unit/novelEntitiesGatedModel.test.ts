@@ -174,10 +174,10 @@ describe('Novel Entities Gated Remediation Model', () => {
       const floor = boundary.peakValue * 0.90;
       assert.strictEqual(floor, 1.8);
 
-      // Contamination decreases
-      boundary.currentValue = 1.7;
+      // Contamination decreases to 1.9 (above floor)
+      boundary.currentValue = 1.9;
 
-      // Can clean to 1.7 (above floor)
+      // Can clean to 1.9 (above floor of 1.8)
       assert.ok(boundary.currentValue > floor);
 
       // Try to clean to 1.5 (below floor)
