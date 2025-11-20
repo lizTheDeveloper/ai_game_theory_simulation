@@ -85,6 +85,16 @@ describe('Auth Flow Integration Tests', () => {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
+      CREATE TABLE IF NOT EXISTS refresh_tokens (
+        token VARCHAR(500) PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        expires_at TIMESTAMP NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        revoked BOOLEAN NOT NULL DEFAULT false,
+        revoked_at TIMESTAMP,
+        CONSTRAINT valid_expiry CHECK (expires_at > created_at)
+      );
+
       CREATE TABLE IF NOT EXISTS auth_audit_log (
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users(id),
@@ -170,8 +180,9 @@ describe('Auth Flow Integration Tests', () => {
   });
 
   afterAll(async () => {
-    // Clean up database
+    // Clean up database (in reverse order of creation due to foreign keys)
     await dbPool.query('DROP TABLE IF EXISTS auth_audit_log CASCADE');
+    await dbPool.query('DROP TABLE IF EXISTS refresh_tokens CASCADE');
     await dbPool.query('DROP TABLE IF EXISTS users CASCADE');
     await dbPool.query('DROP FUNCTION IF EXISTS reset_failed_attempts(INTEGER) CASCADE');
     await dbPool.query('DROP FUNCTION IF EXISTS check_and_lock_account(VARCHAR, INTEGER, INTEGER) CASCADE');
@@ -181,8 +192,9 @@ describe('Auth Flow Integration Tests', () => {
   });
 
   beforeEach(async () => {
-    // Clear test data before each test
+    // Clear test data before each test (in order that respects foreign keys)
     await dbPool.query('DELETE FROM auth_audit_log');
+    await dbPool.query('DELETE FROM refresh_tokens');
     await dbPool.query('DELETE FROM users');
     await redisClient.flushdb();
   });
