@@ -481,13 +481,9 @@ export class ClimateDeploymentPhase implements SimulationPhase {
    * @returns Deployment level [0, 1]
    */
   private getTechDeploymentLevel(state: GameState, techId: string): number {
-    const globalDeployments = state.techTreeState.regionalDeployment['global'];
-    if (!globalDeployments) {
-      return 0;
-    }
-
-    const deployment = globalDeployments.find(d => d.techId === techId);
-    return deployment ? deployment.deploymentLevel : 0;
+    // HIGH PERFORMANCE FIX (Nov 20, 2025): Use O(1) lookup instead of O(n) find()
+    const { getTechDeployment } = require('../../techTree/engine');
+    return getTechDeployment(state.techTreeState, techId);
   }
 
   /**
@@ -521,5 +517,10 @@ export class ClimateDeploymentPhase implements SimulationPhase {
         effects: {},
       });
     }
+
+    // HIGH PERFORMANCE FIX (Nov 20, 2025): Update O(1) deployment index
+    // Update index immediately so getTechDeploymentLevel returns correct value
+    const currentMax = state.techTreeState.deployedTechMap[techId] ?? 0;
+    state.techTreeState.deployedTechMap[techId] = Math.max(currentMax, level);
   }
 }
