@@ -490,7 +490,10 @@ export function applyAllTechEffects(
   if (gameState.planetaryBoundariesSystem?.regionalNitrogenManagement) {
     // Collect all nitrogen-reducing tech deployments
     const nitrogenReducingTechs: number[] = [];
-    for (const [region, deployments] of Object.entries(techTreeState.regionalDeployment)) {
+    // FIX (Nov 19, 2025): Sort regions for deterministic iteration (non-determinism bug)
+    // CRITICAL: Object.entries() order is implementation-dependent in some JS engines
+    const sortedRegions = Object.entries(techTreeState.regionalDeployment).sort((a, b) => a[0].localeCompare(b[0]));
+    for (const [region, deployments] of sortedRegions) {
       for (const deployment of deployments) {
         const tech = getTechById(deployment.techId);
         if (tech && deployment.effects.nitrogenReduction && deployment.deploymentLevel > 0) {
