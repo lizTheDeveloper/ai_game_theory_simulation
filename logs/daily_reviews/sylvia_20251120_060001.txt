@@ -1,0 +1,100 @@
+Now let me perform a critical review of the latest research additions and changes:
+
+## Research Skeptic Review - Daily Health Check
+
+### Summary of Quality Concerns
+
+After reviewing the codebase changes from the last 24 hours, I've identified several areas of concern regarding code quality, defensive coding practices, and research integrity.
+
+### CRITICAL Findings
+
+**None identified** - No immediate system-breaking issues that would cause crashes or data corruption.
+
+### Code Quality Issues
+
+#### 1. **Performance Regression - 7x Slowdown**
+- **Severity:** HIGH
+- **Location:** Multiple phases, particularly Unemployment & Skills Phase (53ms)
+- **Impact:** Step execution degraded from ~104ms to ~750ms after LLM logging merge
+- **Root Cause:** Likely excessive logging in simulation hot paths
+- **Defensive Violation:** Performance budget exceeded without fail-loud detection
+
+#### 2. **Test Framework Migration Half-Complete**
+- **Severity:** HIGH  
+- **Location:** tests/ directory with mixed .ts and .ts.SKIP files
+- **Impact:** Test coverage gaps, unclear which tests are actually running
+- **Defensive Violation:** Partial migration creates "split-brain" testing worse than either pure approach
+- **Evidence:** Tests marked as SKIP without clear migration timeline
+
+#### 3. **Type Safety Regression**
+- **Severity:** HIGH
+- **Location:** src/simulation/nuclearWinter.ts:499-517
+- **Issue:** Accessing `state.technologyTree.deployed` when type shows `technologyTree: TechnologyNode[]`
+- **Defensive Violation:** Runtime type mismatch not caught by assertions
+
+### Defensive Anti-Patterns Detected
+
+#### 1. **Duplicate Function Definition**
+- **Location:** tests/integration/novel-entities-irreversibility.test.ts
+- **Lines:** 29-36 and 99-105
+- **Issue:** `createSeededRng` function defined twice in same file
+- **Impact:** Potential variable shadowing, confusing code structure
+
+#### 2. **Mixed Assertion Patterns**
+- **Pattern:** Some phases using assertion utilities, others still have defensive fallbacks
+- **Examples:** New CoordinatedDeploymentPhase uses assertions properly, but legacy code still has `?? defaultValue` patterns in tests
+- **Risk:** Inconsistent error handling makes debugging harder
+
+#### 3. **Magic Numbers Without Documentation**
+- **Locations:** Multiple new systems
+- **Examples:** 
+  - 0.05 decay rates in nuclear winter
+  - 0.20 ocean-dependent population
+  - 75 GJ/ton energy requirement
+- **Defensive Violation:** Hard-coded values should be configuration constants with research citations
+
+### Research Integrity Analysis
+
+#### Positive Findings
+1. **Excellent Source Quality** in new research:
+   - Ocean acidification: 100% peer-reviewed, 2024-2025 sources
+   - Novel entities: 41 sources with uncertainty ranges documented  
+   - Nitrogen coupling: Properly cited Science Advances 2024
+
+2. **Parameter Justification**:
+   - CoordinatedDeploymentPhase has detailed mortality baselines with historical precedents
+   - Energy requirements for PFAS cleanup properly sourced (EPA 2024)
+
+#### Areas of Concern
+
+1. **Unverified Parameter Corrections**:
+   - **Location:** Phosphorus baseline changed from 13.3 Mt to 18.2 Mt
+   - **Issue:** No new citation provided for the 37% increase
+   - **Research Note:** Claims "clarification" but this is a substantial parameter change
+
+2. **Citation Accuracy**:
+   - All recent citations (Bouttes et al. 2025, Jury et al. 2024) appear legitimate
+   - Cross-referenced against publication venues (Global Change Biology, Nature Communications)
+   - **No fabricated sources detected**
+
+3. **Methodological Soundness**:
+   - Good use of regional differentiation (nitrogen overuse zones)
+   - Proper acknowledgment of uncertainty (irreversibility framework)
+   - Research → simulation mapping generally well-documented
+
+### Regression Risks
+
+1. **Performance:** 7x slowdown is a severe regression from baseline
+2. **Test Coverage:** Migration creating gaps in test coverage
+3. **Type Safety:** Nuclear winter type mismatches could cause runtime errors
+4. **Determinism:** Good - no Math.random() in production code detected
+
+### Overall Assessment
+
+**CRITICAL_FINDINGS:** 0  
+**REGRESSIONS_DETECTED:** 3 (performance, test coverage, type safety)  
+**RESEARCH_INTEGRITY:** GOOD
+
+The research quality remains high with proper citations and parameter justification. However, code quality is degrading under rapid development pressure. The performance regression needs immediate attention, and the test framework migration should be completed or rolled back to avoid extended periods of mixed coverage.
+
+The defensive coding patterns are improving in new code (good assertion usage in CoordinatedDeploymentPhase) but legacy code still contains anti-patterns. The partial migration creates confusion and should be addressed systematically.
