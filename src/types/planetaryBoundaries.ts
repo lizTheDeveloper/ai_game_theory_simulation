@@ -177,6 +177,11 @@ export interface PlanetaryBoundariesSystem {
   // Range: [0, 2] where 1.0 = baseline food production
   // Lower values indicate nitrogen constraint penalties on crop yields
   globalFoodProductionIndex?: number;
+
+  // === NOVEL ENTITIES BOUNDARY INCREMENTAL IMPACTS (HIGH-1 - Nov 20, 2025) ===
+  // Single-owner pattern: Other phases write increments here, PlanetaryBoundariesPhase reads and applies
+  // Prevents race condition from multiple phases writing to boundaries.novel_entities.currentValue
+  novelEntitiesIncrementalImpact?: number; // Cumulative delta to add this step (reset each step)
 }
 
 /**

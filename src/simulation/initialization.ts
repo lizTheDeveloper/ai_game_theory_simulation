@@ -759,6 +759,7 @@ export function createDefaultInitialState(
       informationIntegrity: 0.6,
       trustInAI: 0.5, // Moderate baseline trust in technology (2025)
       population: 8.0, // Convenience accessor (synced with humanPopulationSystem.population)
+      unemployment: 0.05, // FIX (Nov 20, 2025): Global unemployment rate ~5% (ILO 2024)
       // FIX: Initialize fields discovered missing by Monte Carlo validation (Oct 26, 2025)
       crisisResilience: 0.5,           // Baseline societal resilience
       localEconomyStrength: 0.3,       // Moderate local economy strength (globalized 2025 baseline)
