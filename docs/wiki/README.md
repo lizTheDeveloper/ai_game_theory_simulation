@@ -137,6 +137,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🎯 **Expected Impact:** Novel entities effectiveness 0% → 20-40% with full tech deployment
 - 📖 **Context:** Tests created during merge orchestrator run (20251119_214501)
 
+**Nov 20: Defensive Coding Merge Conflict Resolution** (commit a26da42)
+- 🔧 **MERGE RESOLUTION:** energyConstrainedCleanup.ts conflict resolved in favor of defensive patterns
+- 🔍 **Conflict:** HEAD used additional effect fields (pfasReduction, microplasticReduction), feature branch used explicit error throwing
+- ✅ **Resolution:** Accept Roy's defensive pattern (fail-loudly) over silent fallbacks
+- 🛡️ **Defensive Coding Standards:** Aligns with Nov 16, 2025 principles (no silent fallbacks in simulation code)
+- 🎯 **Changes Preserved:**
+  - RNG validation (CRITICAL-3 regression fix from Nov 7)
+  - Energy requirement field expansion (kWhPerKg, kWhPerM3, annualTWhRequired)
+  - Effect field checking with explicit error throwing when missing
+  - assertFinite for all calculated values
+- 📊 **Trade-off:** HEAD checked pfasReduction/microplasticReduction specifically; Roy's version checks novelEntitiesReduction/pollutionReduction with explicit errors if missing
+- 💭 **Rationale:** Better to fail loudly with clear error than silently fall back when tech misconfigured
+
 **Nov 20: Renewable Capacity Calculation Fix** (commit b54fd12)
 - 🐛 **BUG FIX:** energyConstrainedCleanup assertion failure on non-existent renewableCapacity field
 - 🔍 **Root Cause:** EnergySystem doesn't have renewableCapacity field, must calculate from capacity sources
