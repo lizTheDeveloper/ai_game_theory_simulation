@@ -19,7 +19,10 @@ export function initializeNationalAI(): NationalAISystem {
   const nations: NationalAICapability[] = [];
 
   // Initialize all 9 nations from baselines
-  for (const [nationName, baseline] of Object.entries(NATIONAL_AI_BASELINES_2023)) {
+  // FIX (Nov 19, 2025): Sort nations for deterministic iteration (non-determinism bug)
+  // CRITICAL: Object.entries() order affects simulation with international cooperation mechanics
+  const sortedNations = Object.entries(NATIONAL_AI_BASELINES_2023).sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [nationName, baseline] of sortedNations) {
     nations.push({
       nation: nationName as NationName,
 

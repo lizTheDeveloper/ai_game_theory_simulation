@@ -158,8 +158,27 @@ export function applyEnergyConstrainedCleanup(
   const requiredEnergy = (estimatedStock * energyPerTon) / 1000; // Convert GJ to EJ
   const energyFactor = Math.min(1.0, renewableSurplus / Math.max(0.001, requiredEnergy));
 
+  // DEBUG (Nov 19, 2025): Log energy gating details every 12 months
+  if (state.currentMonth % 12 === 0 && tech.techType === 'cleanup') {
+    console.log(`\n⚡ Energy Constraint Debug (${tech.id}):`);
+    console.log(`  Renewable capacity: ${renewableCapacity.toFixed(2)} EJ`);
+    console.log(`  Energy demand: ${energyDemand.toFixed(2)} EJ`);
+    console.log(`  Renewable surplus: ${renewableSurplus.toFixed(2)} EJ`);
+    console.log(`  Estimated stock: ${estimatedStock.toFixed(2)} Mt`);
+    console.log(`  Energy per ton: ${energyPerTon} GJ/ton`);
+    console.log(`  Required energy: ${requiredEnergy.toFixed(2)} EJ`);
+    console.log(`  Energy factor: ${(energyFactor * 100).toFixed(2)}%`);
+  }
+
   // 4. Base effectiveness (from tech definition)
-  const baseEffectiveness = (tech.effects.novelEntitiesReduction ?? 0) * (tech.deploymentLevel ?? 0);
+  // FIX (Nov 19, 2025): Check all possible effect names (pfasReduction, microplasticReduction, pollutionReduction)
+  // CRITICAL BUG: Was only checking novelEntitiesReduction, which no techs have
+  const effectValue = tech.effects.novelEntitiesReduction
+    ?? tech.effects.pfasReduction
+    ?? tech.effects.microplasticReduction
+    ?? tech.effects.pollutionReduction
+    ?? 0;
+  const baseEffectiveness = effectValue * (tech.deploymentLevel ?? 0);
 
   // 5. Apply constraints
   const grossEffectiveness = baseEffectiveness * concentrationFactor * energyFactor;
