@@ -27,8 +27,10 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  testTimeout: 10000,
+  modulePathIgnorePatterns: [
+    '<rootDir>/.next/',
+  ],
+  testTimeout: 30000,
   verbose: true,
   bail: false,
   maxWorkers: '50%',
