@@ -4,6 +4,75 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔬 HIGH Priority Research Validation Complete (November 20, 2025 - commit 45ddb35)
+
+**Status:** ✅ COMPLETE
+**Priority:** HIGH (Research Integrity)
+**Type:** Research Validation + Citation Verification
+
+**Summary:** Completed 4 HIGH-priority research validation items from roadmap. Located original AMOC modeling papers, reconciled nitrogen reversibility contradiction, and performed claim-by-claim verification of alignment faking and three-phase coordination research.
+
+**Validation Results:**
+
+1. **AMOC Citation Verification (research/amoc_original_sources_20251120.md)**
+   - **Issue:** Armstrong McKay et al. (2022) cites IPCC AR6, not original modeling papers
+   - **Resolution:** Located 3 original sources:
+     - Weijer et al. (2019): Bistability regime 0.15-0.22 Sv freshwater hosing
+     - Jackson & Wood (2018): First eddy-permitting GCM showing hysteresis
+     - van Westen et al. (2024): First strongly-eddying model (0.125 Sv collapse threshold)
+   - **Outcome:** ✅ AMOC tipping point thresholds now sourced to original modeling papers
+
+2. **Nitrogen Reversibility Reconciliation (reviews/nitrogen_reversibility_reconciliation_20251120.md)**
+   - **Issue:** "Slow-reversible" vs "irreversible" terminology appeared contradictory
+   - **Resolution:** Category error resolved - different timescales for different processes
+     - Soil nitrogen pools: Slow-reversible (decades-centuries)
+     - Novel entities (PFAS, microplastics): Truly irreversible (millennia+)
+   - **Outcome:** ✅ No contradiction - terms apply to different boundary components
+
+3. **Alignment Faking Validation (reviews/alignment_faking_validation_20251120.md - 700+ lines)**
+   - **Commit:** a898195 (July 2024)
+   - **Grade:** C+ (acceptable with corrections)
+   - **Findings:** 4 critical corrections needed:
+     - Anthropic (2024) paper title inaccurate
+     - Omitted disclaimers about sandbagging detection limitations
+     - Overstated strategic deception capabilities
+     - Missing context on model architecture effects
+   - **Outcome:** ⚠️ Corrections required before relying on parameters
+
+4. **Three-Phase Coordination Validation (reviews/verification_8da0700_critique_20251120.md)**
+   - **Commit:** 8da0700 (October 2024)
+   - **Grade:** C (conditional - fixes required)
+   - **Critical Issues:**
+     - Great Leap Forward: Comment says 5%, code uses 30% (6× discrepancy)
+     - Irreversibility claim (80-95%) needs re-sourcing
+     - Kenya UBI verification incomplete
+   - **Outcome:** ⚠️ Must resolve before implementation proceeds
+
+**Files Added:**
+- `research/amoc_original_sources_20251120.md` (475 lines)
+- `reviews/nitrogen_reversibility_reconciliation_20251120.md`
+- `reviews/alignment_faking_validation_20251120.md` (700+ lines)
+- `reviews/verification_8da0700_critique_20251120.md`
+- `.claude/tasks/VALIDATION_WORKFLOW_STATUS.md` (workflow coordination)
+- `.claude/tasks/validation_8da0700_handoff.md` (research-skeptic handoff)
+
+**Documentation Updates:**
+- `docs/wiki/BIBLIOGRAPHY.md`: Added 3 AMOC original sources (Weijer 2019, Jackson 2018, van Westen 2024)
+
+**Next Steps:**
+1. Apply 4 corrections to alignment faking research
+2. Resolve Great Leap Forward 5% vs 30% discrepancy
+3. Re-source irreversibility 80-95% claim or remove
+4. Complete Kenya UBI verification (NBER WP 34152)
+
+**Research Quality Gate:** 4 of 10 HIGH-priority validation items complete (40% progress)
+
+**Source:** `plans/SIMULATION_ROADMAP.md` HIGH Priority Research Validation Queue
+
+**Commit:** 45ddb350a31ecee39053874712281cb544e19d62
+
+---
+
 ## ⚡ Tech Tree O(1) Lookup Optimization (November 20, 2025 - commit 4cf5a00)
 
 **Status:** ✅ COMPLETE
