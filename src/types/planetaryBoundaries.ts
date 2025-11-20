@@ -170,6 +170,13 @@ export interface PlanetaryBoundariesSystem {
   // Regional differentiation: overuse zones vs underuse zones
   // Key mechanic: Nitrogen reduction impacts vary by region
   regionalNitrogenManagement?: RegionalNitrogenManagement[];
+
+  // === GLOBAL FOOD PRODUCTION INDEX (TIER 2 HIGH - Nov 20, 2025) ===
+  // Computed by NitrogenFoodCouplingPhase, consumed by PlanetaryBoundariesPhase
+  // Prevents race condition from calling updateNitrogenFoodCoupling() multiple times
+  // Range: [0, 2] where 1.0 = baseline food production
+  // Lower values indicate nitrogen constraint penalties on crop yields
+  globalFoodProductionIndex?: number;
 }
 
 /**
