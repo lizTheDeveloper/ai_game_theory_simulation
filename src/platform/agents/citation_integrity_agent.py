@@ -381,6 +381,7 @@ class CitationIntegrityAgent:
                 host=config.get('host', 'localhost'),
                 port=config.get('port', 6379),
                 db=config.get('db', 0),
+                password=config.get('password'),  # Support Redis auth
                 decode_responses=True
             )
             # Test connection
