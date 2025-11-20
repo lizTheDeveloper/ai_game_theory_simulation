@@ -55,7 +55,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Current Initiatives:**
 
-<<<<<<< HEAD
+**Nov 20: AMOC Citation Tracing - Research Integrity Validated** (commit 5e4b2ff)
+- 🔬 **Citation Chain Established:** Traced Armstrong McKay et al. (2022) back to 10 original modeling papers (1961-2025)
+- ✅ **Original Sources Validated:** Stommel (1961) → Rahmstorf (1996) → Weijer et al. (2020) → Van Westen et al. (2024) → Qin et al. (2025)
+- 📊 **Parameters Justified:**
+  - 4°C threshold (range 1.4-8°C): Validated across 27-34 model ensembles
+  - 50-300yr timescale: Van Westen (2024) ESM collapse, Liu et al. (2017) upper bound
+  - Temperature-dependent probability: Conservative relative to recent estimates
+- 🎯 **Contradictions Resolved:** Qin (2025) resilience vs Van Westen (2024) collapse - complementary findings on gradual vs abrupt forcing
+- 📝 **Code Citations Updated:** Added original source references to tipping-points.ts and IrreversibilityTrackingPhase.ts
+- 📖 **Documentation:** `reviews/amoc_sources_validation_20251120.md` (250 lines), references `research/amoc_tipping_point_original_sources_20251120.md` and `research/amoc_collapse_probability_20251120.md`
+- ✅ **Research Quality:** GRADE A (peer-reviewed, multi-model validation, 60+ years of research)
+
 **Nov 20: Architecture Integration Review - Grade B+** (commit 7bf9568)
 - 🏗️ **Comprehensive Review:** Research validation session + architecture health assessment
 - ✅ **AMOC Tipping Point Research:** 10 peer-reviewed sources validated (4°C threshold, 50yr timescale)
@@ -70,7 +81,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🎯 **Performance Status:** EXCELLENT (O(n²) → O(1) optimizations working, 79-114ms avg well within budget)
 - 📊 **Overall Grade:** B+ (would be A- after completing defensive coding migration)
 - 📖 **Full Review:** `reviews/architecture_integration_review_20251120.md`
-=======
+
 **Nov 20: Research Currency Audit Complete** (commit deaf5d1)
 - 🔍 **Audit:** Validated 164 HIGH priority items from UPDATE_QUEUE
 - ✅ **Finding:** Critical simulation research current (2023-2025 peer-reviewed sources)
@@ -82,7 +93,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📈 **Quality Assessment:** A+ (no critical gaps identified)
 - 💡 **Recommendation:** Revise UPDATE_QUEUE criteria to focus on simulation-used research, exclude documentation files (40% of HIGH items)
 - 📖 **Status File:** `logs/autonomous/researcher/status_current.txt`
->>>>>>> merge/auto/researcher-20251120_153001_20251120_204501
 
 **Nov 20: AI Welfare Framework - 2025 Research Update** (commit 1f01089)
 - 🔬 **Latest Sources:** Kyle Fish (Anthropic), Robert Long et al. (Eleos AI), Trends in Cognitive Sciences (2025), Claude 4 evaluations
