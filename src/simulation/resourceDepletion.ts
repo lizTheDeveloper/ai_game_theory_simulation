@@ -495,10 +495,11 @@ function updateRenewableRegeneration(state: GameState, resources: ResourceEconom
       'nitroplast_integration'
     ];
 
+    // HIGH PERFORMANCE FIX (Nov 20, 2025): Use O(1) lookup instead of O(n) find()
     // Extract effectiveness values for nitrogen-reducing technologies
+    const { getTechDeployment } = require('./techTree/engine');
     const techEffectiveness = nitrogenTechs.map(techId => {
-      const deployment = globalDeployments.find((d: any) => d.techId === techId);
-      return deployment ? deployment.deploymentLevel : 0;
+      return getTechDeployment(state.techTreeState, techId);
     });
 
     // Calculate global nitrogen reduction
