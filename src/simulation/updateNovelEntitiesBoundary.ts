@@ -98,8 +98,9 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
   const cleanupTechs = allTech.filter(tech =>
     tech.techType === 'cleanup' &&
     tech.deploymentLevel > 0 &&
-    (tech.effects.pfasReduction !== undefined ||
-     tech.effects.microplasticReduction !== undefined ||
+    ((tech.effects as any).pfasReduction !== undefined ||
+     (tech.effects as any).microplasticReduction !== undefined ||
+     tech.effects.novelEntitiesReduction !== undefined ||
      tech.effects.pollutionReduction !== undefined)
   );
 
