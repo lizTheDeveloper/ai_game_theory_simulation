@@ -27,7 +27,11 @@ import {
   assertFinite,
   assertInRange,
   assertProbability,
+<<<<<<< Updated upstream
   assertStateProperty
+=======
+  assertDefined
+>>>>>>> Stashed changes
 } from '@/simulation/utils/assertions';
 
 /**
@@ -133,9 +137,28 @@ function calculateDeploymentSpeed(state: GameState): number {
  */
 function calculateCoordinationQuality(state: GameState): number {
   // Base: AI agent capability (proxy for AI governance quality)
-  const aiAgents = state.aiAgents ?? [];
+  const aiAgents = assertDefined(state.aiAgents, {
+    location: 'calculateCoordinationQuality',
+    valueName: 'state.aiAgents',
+    additionalInfo: { context: 'Required for AI governance quality calculation' }
+  });
+
   const avgAICapability = aiAgents.length > 0
-    ? aiAgents.reduce((sum, a) => sum + (a.capability ?? 0), 0) / aiAgents.length
+    ? aiAgents.reduce((sum, a) => {
+        const capability = assertFinite(
+          assertDefined(a.capability, {
+            location: 'calculateCoordinationQuality',
+            valueName: `agent[${a.id}].capability`,
+            additionalInfo: { context: 'Required for average AI capability calculation', agentId: a.id }
+          }),
+          {
+            location: 'calculateCoordinationQuality',
+            valueName: `agent[${a.id}].capability`,
+            additionalInfo: { agentId: a.id }
+          }
+        );
+        return sum + capability;
+      }, 0) / aiAgents.length
     : 0;
   const aiGovernanceProxy = Math.min(avgAICapability / 10, 0.9); // Cap at 0.9
 

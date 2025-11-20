@@ -26,7 +26,7 @@
 
 import type { GameState } from '@/types/game';
 import type { RegionalNitrogenManagement } from '@/types/planetaryBoundaries';
-import { assertFinite, assertInRange, assertProbability } from '@/simulation/utils/assertions';
+import { assertFinite, assertInRange, assertProbability, assertDefined } from '@/simulation/utils/assertions';
 
 /**
  * Regional overuse baselines from research
@@ -43,6 +43,7 @@ const REGIONAL_OVERUSE: Record<string, number> = {
   europe: 0.15,         // 15% overuse (CAP subsidies drive overuse)
   latinAmerica: 0.10,   // 10% overuse (expanding agriculture)
   subSaharanAfrica: -0.10,  // 10% UNDERUSE (fertilizer poverty trap)
+  global: 0.20,         // 20% overuse (weighted global average, used for simplified calculations)
 };
 
 /**
@@ -76,8 +77,17 @@ export function calculateNitrogenYieldPenalty(
     additionalInfo: { region }
   });
 
-  // Get regional overuse baseline (default to global average if region unknown)
-  const regionalOveruse = REGIONAL_OVERUSE[region] ?? 0.20;  // Default 20% overuse
+  // Get regional overuse baseline
+  // DEFENSIVE CODING FIX (Nov 20, 2025): Unknown region is a bug, not a legitimate state
+  // If region isn't in REGIONAL_OVERUSE map, that indicates incorrect region identifier
+  const regionalOveruse = assertDefined(REGIONAL_OVERUSE[region], {
+    location: 'calculateNitrogenReductionYieldPenalty',
+    valueName: `REGIONAL_OVERUSE[${region}]`,
+    additionalInfo: {
+      context: 'Unknown region identifier - must be one of: ' + Object.keys(REGIONAL_OVERUSE).join(', '),
+      providedRegion: region
+    }
+  });
 
   // === ZONE 1: OVERUSE REDUCTION (no penalty) ===
   if (validatedReduction <= regionalOveruse) {

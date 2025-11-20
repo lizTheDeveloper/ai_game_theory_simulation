@@ -8,7 +8,7 @@
  */
 
 import { GameState, AIAgent, OutcomeType } from '@/types/game';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertDefined } from './utils/assertions';
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
 import { calculateEffectiveControl } from './outcomes';
 import { calculateQualityOfLife } from './qualityOfLife';
@@ -278,7 +278,19 @@ function checkEndGameResolution(state: GameState): void {
       // CRITICAL-1 FIX (Nov 13, 2025): Check population before declaring extinction
       // Bug: Seeds 42001/42008/42024 showed GROWTH but were labeled extinction due to AI power metrics
       const currentPop = state.humanPopulationSystem.population;
-      const initialPop = state.initialPopulation ?? 8.0;
+      const initialPop = assertFinite(
+        assertDefined(state.initialPopulation, {
+          location: 'checkExtinctionConditions',
+          valueName: 'state.initialPopulation',
+          month: state.currentMonth,
+          additionalInfo: { context: 'Required for mortality calculation in catastrophic AI scenario' }
+        }),
+        {
+          location: 'checkExtinctionConditions',
+          valueName: 'initialPopulation',
+          month: state.currentMonth,
+        }
+      );
       const mortality = 1 - (currentPop / initialPop);
 
       if (mortality < 0) {
@@ -311,7 +323,19 @@ function checkEndGameResolution(state: GameState): void {
 
     // DEFENSIVE CHECK: Verify population has actually declined
     const currentPop = state.humanPopulationSystem.population;
-    const initialPop = state.initialPopulation ?? 8.0;
+    const initialPop = assertFinite(
+      assertDefined(state.initialPopulation, {
+        location: 'checkExtinctionConditions.aiCivilWar',
+        valueName: 'state.initialPopulation',
+        month: state.currentMonth,
+        additionalInfo: { context: 'Required for mortality calculation in AI civil war scenario' }
+      }),
+      {
+        location: 'checkExtinctionConditions.aiCivilWar',
+        valueName: 'initialPopulation',
+        month: state.currentMonth,
+      }
+    );
     const mortality = 1 - (currentPop / initialPop);
 
     if (mortality < 0) {
@@ -339,7 +363,19 @@ function checkEndGameResolution(state: GameState): void {
       endGame.misalignedAIPower > 3.0) {
 
     const currentPop = state.humanPopulationSystem.population;
-    const initialPop = state.initialPopulation ?? 8.0;
+    const initialPop = assertFinite(
+      assertDefined(state.initialPopulation, {
+        location: 'checkExtinctionConditions.humanIrrelevance',
+        valueName: 'state.initialPopulation',
+        month: state.currentMonth,
+        additionalInfo: { context: 'Required for mortality calculation in human irrelevance scenario' }
+      }),
+      {
+        location: 'checkExtinctionConditions.humanIrrelevance',
+        valueName: 'initialPopulation',
+        month: state.currentMonth,
+      }
+    );
     const mortality = 1 - (currentPop / initialPop);
 
     if (mortality < 0) {
