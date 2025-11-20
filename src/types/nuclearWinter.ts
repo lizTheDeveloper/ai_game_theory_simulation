@@ -32,45 +32,57 @@ export interface RadiationZone {
 
 /**
  * Nuclear Winter State
- * 
+ *
  * Tracks the multi-year catastrophe following nuclear war:
  * - Soot injection → sunlight blockage
  * - Temperature collapse → crop failure
  * - Mass starvation → 90% mortality
  * - Radiation zones → long-term health impacts
- * 
+ * - Second-order cascades (2025 research): ozone, precipitation, marine collapse
+ *
  * Timeline:
- * - Months 0-6: Soot peak, temperature drops 15-20°C, crops fail
- * - Months 6-24: Starvation peak, 5% monthly mortality
- * - Months 24-60: Slow recovery, 2% monthly mortality
- * - Months 60-120: Long tail, 0.5% monthly mortality
+ * - Months 0-6: Soot peak, temperature drops 9°C (full-scale), crops fail
+ * - Months 6-24: Starvation peak, 10-15% monthly mortality (Xia et al. 2022)
+ * - Months 24-60: Slow recovery, 2-5% monthly mortality
+ * - Months 60-120: Long tail, 0.5-2% monthly mortality
  */
 export interface NuclearWinterState {
   active: boolean;              // Is nuclear winter currently happening?
   triggerMonth: number;         // When nuclear war occurred
-  
+
   // Atmospheric effects
   sootInStratosphere: number;   // Teragrams (Tg) of soot (0-150 Tg range)
   sootDecayRate: number;        // Monthly decay rate (typically 0.05 = 5%/month)
   currentSoot: number;          // Current soot level (decays over time)
-  
-  // Climate effects
-  temperatureAnomaly: number;   // °C below baseline (negative, e.g., -15°C)
+
+  // Climate effects (primary)
+  temperatureAnomaly: number;   // °C below baseline (negative, e.g., -9°C for 150 Tg)
   baselineTemperature: number;  // Pre-war temperature for recovery calculation
-  sunlightBlocked: number;      // [0,1] Fraction of sunlight blocked (0.9 = 90% blocked)
-  
-  // Agricultural collapse
+  sunlightBlocked: number;      // [0,1] Fraction of sunlight blocked (0.925 = 92.5% blocked at 150 Tg)
+
+  // Agricultural collapse (primary)
   cropYieldMultiplier: number;  // [0,1] vs normal (0.1 = 90% crop failure)
   monthlyStarvationRate: number; // Deaths per month as fraction of population
-  
+
+  // Second-order cascades (2025 research: Mills et al. 2014, Robock 2024-2025)
+  ozoneDepletion: number;        // [0,1] Ozone layer damage (0.5 = 50% depleted)
+  ozoneRecoveryRate: number;     // Monthly recovery (0.007 = 10-15 year half-life)
+  uvRadiationMultiplier: number; // [1.0, 2.0] Surface UV increase (1.5 = 50% increase)
+
+  precipitationReduction: number; // [0,1] Rainfall reduction vs baseline (0.3 = 30% less)
+  monsoonFailureProbability: number; // [0,1] Annual monsoon failure risk
+
+  marineProductivityReduction: number; // [0,1] Phytoplankton die-off (0.3 = 30% reduction)
+  oceanDependentPopulationAtRisk: number; // Billions at risk from fish stock collapse
+
   // Radiation zones
   radiationZones: RadiationZone[];
-  
+
   // Duration tracking
   monthsSinceWar: number;       // Months elapsed since nuclear war
   peakMortalityMonths: number;  // Duration of peak starvation (typically 18-24 months)
   recoveryStartMonth: number;   // When recovery begins (typically month 24)
-  
+
   // Mortality tracking
   totalWinterDeaths: number;    // Cumulative deaths from nuclear winter (starvation)
   totalRadiationDeaths: number; // Cumulative deaths from radiation poisoning
