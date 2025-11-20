@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PROJECT_DIR="/home/lizthedeveloper_gmail_com/ai_game_theory_simulation"
+PROJECT_DIR="/home/user/ai_game_theory_simulation"
 
 # Source .env file to get API key
 if [ -f "$PROJECT_DIR/.env" ]; then
