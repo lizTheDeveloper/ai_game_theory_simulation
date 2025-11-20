@@ -27,6 +27,10 @@ This file contains the complete history of recent changes to the AI Game Theory 
    - **Resolution:** Category error resolved - different timescales for different processes
      - Soil nitrogen pools: Slow-reversible (decades-centuries)
      - Novel entities (PFAS, microplastics): Truly irreversible (millennia+)
+   - **Merge (commit 2253bab, Nov 20):** Combined two complementary analyses into unified review:
+     - HEAD version: Two-pool model (nutrient stocks + ecosystem states)
+     - Worker version: Category distinction (planetary boundaries vs tipping points)
+     - Result: Comprehensive framework clarifying nitrogen is NOT a tipping point (Armstrong McKay 2022), with both reversible inputs and slow-reversible legacy stocks
    - **Outcome:** ✅ No contradiction - terms apply to different boundary components
 
 3. **Alignment Faking Validation (reviews/alignment_faking_validation_20251120.md - 700+ lines)**

@@ -85,6 +85,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🏗️ **Comprehensive Review:** Research validation session + architecture health assessment
 - ✅ **AMOC Tipping Point Research:** 10 peer-reviewed sources validated (4°C threshold, 50yr timescale)
 - ✅ **Nitrogen Reversibility:** Contradiction resolved via two-pool model (chemical 30-100yr, ecological irreversible)
+  - **Merge resolution (commit 2253bab):** Combined HEAD two-pool model + worker category distinction into unified B+ review
 - ✅ **Nuclear Winter Cascades:** Implementation complete, documentation phase
 - ✅ **AI Alignment Faking:** Research upgraded C+ → B (methodological corrections complete, implementation-ready)
 - ✅ **Three-Phase Coordination:** Research validated (Grade C+, math fixes needed)
