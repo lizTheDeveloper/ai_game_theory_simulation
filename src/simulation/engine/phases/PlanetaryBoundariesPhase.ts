@@ -27,6 +27,7 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     'resource-water',           // Order 20.2: Ocean acidification + Freshwater (Batch 3: consolidated)
     'resource-soil',            // Order 20.1: Novel entities + Phosphorus (Batch 3: consolidated)
     'wet_bulb_temperature',     // Order 20.45: Heat stress events
+    'nitrogen-food-coupling',   // Order 19.6: CRITICAL - provides globalFoodProductionIndex (Nov 20, 2025 race condition fix)
   ];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {setDeterministicRng(rng);// Validate key planetary boundaries before update
