@@ -25,6 +25,8 @@ IS_VM="${IS_VM:-false}"
 if [ -d "/home/lizthedeveloper_gmail_com" ]; then
   IS_VM=true
   PROJECT_ROOT="/home/lizthedeveloper_gmail_com/ai_game_theory_simulation"
+elif [ -d "/home/user/ai_game_theory_simulation" ]; then
+  PROJECT_ROOT="/home/user/ai_game_theory_simulation"
 fi
 
 # ============================================
