@@ -55,6 +55,25 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Current Initiatives:**
 
+**Nov 20: Planetary Boundaries & AI Governance - 2024-2025 Research Update** (commit bf5d15c)
+- 🔬 **Research Update:** Updated 2 high-impact research files with latest peer-reviewed sources
+- 🌍 **Planetary Boundaries (Richardson et al. 2023 + Potsdam 2024):**
+  - Added Richardson et al. (2023) "Earth beyond six of nine planetary boundaries" from *Science Advances*
+  - Updated with 2024 Potsdam Institute Planetary Health Check
+  - Confirmed 6/9 boundaries transgressed (biogeochemical flows included)
+  - Validated phosphorus flow: 18.2 Tg P/year current vs 6.2 Tg P/year boundary (294% over)
+  - Research quality: A/A- (peer-reviewed, official institutional sources)
+- 🤖 **AI Governance (US AI Diffusion Framework 2025):**
+  - Added US AI Diffusion Framework (effective Jan 13, 2025)
+  - Three-tier export control system: Tier 1 (18 allies unrestricted), Tier 2 (50k chip cap), Tier 3 (blocked)
+  - First-ever model weights export controls for frontier AI models
+  - Sources: Federal Register, CSIS, Carnegie, RAND, Anthropic (2025)
+  - Primary sources: 9 → 12 citations
+- ✅ **Metadata Updated:**
+  - `parameter_verification_nitrogen_phosphorus_20251119.md`: last_verified 2025-11-20, newest_source 2024
+  - `ai_governance_international_coordination_20251113.md`: last_verified 2025-11-20, newest_source 2025-01
+- 📖 **Files:** research/parameter_verification_nitrogen_phosphorus_20251119.md, research/ai_governance_international_coordination_20251113.md
+
 **Nov 20: AI Welfare Framework - 2025 Research Update** (commit 1f01089)
 - 🔬 **Latest Sources:** Kyle Fish (Anthropic), Robert Long et al. (Eleos AI), Trends in Cognitive Sciences (2025), Claude 4 evaluations
 - 🧠 **15% Consciousness Estimate:** Kyle Fish (TIME 100 Most Influential in AI 2025): "15% chance Claude or another AI is conscious today"
