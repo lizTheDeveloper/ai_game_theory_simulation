@@ -38,6 +38,27 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Current Initiatives:**
 
+**⚠️ Nov 20: Split-Brain Error Handling Fix IN PROGRESS** (commit 6ab69c6)
+- 🎯 **Status:** PARTIAL (merge conflicts need resolution)
+- 🐛 **Issue:** CRITICAL architecture review identified mixed error handling - some paths use assertions (fail loud), others use `??` fallbacks (fail silent)
+- 🔧 **Fixes Applied:**
+  - **17 calculation fallbacks replaced** with proper assertion utilities
+  - **3 CRITICAL endGame.ts fixes** affecting extinction classification (initialPopulation fallbacks)
+  - **5 IrreversibilityTrackingPhase fixes** (temperature anomaly, ocean pH, habitat cover)
+  - **2 TransitionMortalityPhase fixes** (AI agent capability calculations)
+  - **Backwards assertion pattern fixed** (fallbacks defeating assertFinite calls)
+- 📁 **Files Modified:** 7 core simulation files
+  - behavioralDetection.ts, endGame.ts, IrreversibilityTrackingPhase.ts
+  - PlanetaryBoundariesPhase.ts, TransitionMortalityPhase.ts
+  - nitrogenFoodCoupling.ts, stateValidation.ts
+- ⚠️ **Merge Conflicts:** behavioralDetection.ts, IrreversibilityTrackingPhase.ts need resolution
+- 📊 **New Profiling Tool:** scripts/profilePhasePerformance.ts (120ms budget validation)
+- 📖 **Documentation:** reviews/split_brain_error_handling_fix_20251120.md (353 lines)
+- 🎯 **Next Steps:**
+  - Resolve merge conflicts (2 files)
+  - Run Monte Carlo N=10 validation
+  - Verify no assertion errors in normal simulation flow
+
 **Nov 20: Three-Phase Coordination Implementation MERGED** (commit 8da0700)
 - ✅ **Status:** IMPLEMENTED (awaiting research verification)
 - 🎯 **Systems Added:**
