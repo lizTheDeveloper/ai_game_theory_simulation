@@ -50,14 +50,11 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     const { updateLegacyNutrientStocks } = require('../../legacyNutrientStocks');
 
     // Calculate current monthly nutrient inputs
-    // Nitrogen baseline: 120 Mt N/year = optimized agricultural target (~60% reduction from ~200 Mt current)
-    // Current (2024): ~160-190 Mt N/year total, 110 Mt synthetic (Zhang et al. 2021)
-    // Planetary boundary: 62 Mt N/year safe limit (Steffen et al. 2015)
-    // Phosphorus baseline: 18.2 Mt P/year current inputs (Stockholm Resilience Centre 2025)
-    // Planetary boundary: 6.2 Mt P/year safe limit (Steffen et al. 2015)
+    // Baseline (2025): ~120 Mt N/year = 10 Mt N/month, ~18.2 Mt P/year = 1.52 Mt P/month
+    // Source: Stockholm Resilience Centre (Steffen et al. 2015), research/nitrogen_food_coupling_20251115.md
     // TODO (Phase 2): Connect to technology deployment + food system for dynamic calculation
-    const BASELINE_N_INPUT_PER_MONTH = 120 / 12;   // 10 Mt N/month (optimized target)
-    const BASELINE_P_INPUT_PER_MONTH = 18.2 / 12;  // 1.52 Mt P/month (Stockholm Resilience Centre 2025)
+    const BASELINE_N_INPUT_PER_MONTH = 120 / 12;  // 10 Mt N/month (current 2025 inputs, upper range)
+    const BASELINE_P_INPUT_PER_MONTH = 18.2 / 12; // 1.52 Mt P/month (Stockholm Resilience Centre)
 
     // Scale by phosphorus reserves depletion (simplified proxy for agricultural activity)
     const phosphorusReserves = state.phosphorusSystem?.reserves ?? 1.0;
@@ -69,6 +66,9 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     // Update Biosphere Integrity Index (BII) - Climate Mortality Phase 2 (Nov 6, 2025)
     // Species tracking with climate velocity modeling
     updateBiosphereIntegrityIndex(state, rng);
+
+    // NOTE: Legacy nutrient stocks already updated above (line 64)
+    // Duplicate declaration removed to fix esbuild error
 
     // Update all planetary boundaries (degradation mechanics)
     // This now reads legacy nutrient stock releases (via getLegacyContributionPercentage)
