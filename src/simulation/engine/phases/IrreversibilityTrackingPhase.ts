@@ -616,6 +616,16 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
 
     const extinctionDebt = state.tippingPoints!.extinctionDebt;
 
+    // PERFORMANCE ASSERTION: Detect pathological queue growth
+    // Normal: <100 debts (150-year max lag → ~10 debts per decade)
+    // Warning: 100-500 debts (investigate debt accumulation rate)
+    // Critical: >500 debts (likely bug or extreme scenario)
+    if (extinctionDebt.debtQueue.length > 500) {
+      console.warn(
+        `⚠️ PERFORMANCE: Extinction debt queue size ${extinctionDebt.debtQueue.length} exceeds 500. Investigate accumulation rate.`
+      );
+    }
+
     // === ADD NEW DEBT (from current habitat loss) ===
     // Research: Conservation Letters 2024 - 150-year avian extinction debt
     //           Nature Comms 2016 - Power-law decay with half-life increasing with area
@@ -678,14 +688,18 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     }
 
     // === PAY DEBT (extinctions from historical habitat loss) ===
-    // PERFORMANCE FIX (Nov 20, 2025): Use in-place splice instead of filter()
-    // filter() creates O(n) memory allocations per month, causing 7x slowdown
-    for (let i = extinctionDebt.debtQueue.length - 1; i >= 0; i--) {
-      const debt = extinctionDebt.debtQueue[i];
+    // PERFORMANCE FIX (Nov 20, 2025): O(n) compaction with two-pointer technique
+    // Previous approach: splice() caused O(n²) array shifts (n deletions × n shifts each)
+    // New approach: Single O(n) pass with in-place compaction (no allocations, no shifts)
+
+    let writeIndex = 0; // Pointer for keeping valid debts
+
+    for (let readIndex = 0; readIndex < extinctionDebt.debtQueue.length; readIndex++) {
+      const debt = extinctionDebt.debtQueue[readIndex];
       debt.monthsRemaining -= 1;
 
       if (debt.monthsRemaining <= 0) {
-        // Debt fully paid - extinctions occur
+        // Debt fully paid - extinctions occur (DO NOT copy to writeIndex)
         extinctionDebt.paidDebt += debt.speciesCount;
         extinctionDebt.totalDebt -= debt.speciesCount;
 
@@ -700,15 +714,25 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
           biosphere.extinctionContribution += 0.05; // Debt contributes to risk
         }
 
-        // Remove from queue in-place (backward iteration avoids index shifting issues)
-        extinctionDebt.debtQueue.splice(i, 1);
-      } else if (debt.monthsRemaining % 120 === 0) {
+        // Skip this debt (don't increment writeIndex)
+      } else {
+        // Keep this debt (copy to writeIndex if different)
+        if (writeIndex !== readIndex) {
+          extinctionDebt.debtQueue[writeIndex] = debt;
+        }
+        writeIndex++;
+
         // Log every 10 years
-        console.log(
-          `🦴 Extinction debt: ${debt.speciesCount.toFixed(1)} species (${(debt.monthsRemaining / 12).toFixed(0)} years remaining)`
-        );
+        if (debt.monthsRemaining % 120 === 0) {
+          console.log(
+            `🦴 Extinction debt: ${debt.speciesCount.toFixed(1)} species (${(debt.monthsRemaining / 12).toFixed(0)} years remaining)`
+          );
+        }
       }
     }
+
+    // Truncate array to new length (O(1) operation)
+    extinctionDebt.debtQueue.length = writeIndex;
   }
 
   // ============================================================================
