@@ -138,23 +138,32 @@ export function applyEnergyConstrainedCleanup(
   // Cleanup competes with other energy uses
 
   // Access renewable energy surplus (total renewable capacity - demand)
-  const renewableCapacity = assertStateProperty(
-    state.resourceEconomy?.energy,
-    'renewableCapacity',
-    {
-      location: 'applyEnergyConstrainedCleanup',
-      month: state.currentMonth,
-    }
-  );
+  // FIX (Nov 19, 2025): Calculate renewable capacity from capacity sources
+  // EnergySystem doesn't have renewableCapacity field, must sum individual sources
+  const energySystem = state.resourceEconomy?.energy;
+  if (!energySystem || !energySystem.capacity) {
+    // Energy system not initialized - skip energy constraint (graceful degradation)
+    const effectValue = tech.effects.novelEntitiesReduction
+      ?? tech.effects.pfasReduction
+      ?? tech.effects.microplasticReduction
+      ?? tech.effects.pollutionReduction
+      ?? 0;
+    const baseEffect = effectValue * (tech.deploymentLevel ?? 0);
+    return {
+      grossEffectiveness: baseEffect,
+      concentrationFactor: 1.0,
+      energyFactor: 1.0,
+      rebound: 0,
+      netEffectiveness: baseEffect,
+    };
+  }
 
-  const energyDemand = assertStateProperty(
-    state.resourceEconomy?.energy,
-    'demand',
-    {
-      location: 'applyEnergyConstrainedCleanup',
-      month: state.currentMonth,
-    }
-  );
+  const renewableCapacity = (energySystem.capacity.solar ?? 0)
+    + (energySystem.capacity.wind ?? 0)
+    + (energySystem.capacity.hydro ?? 0)
+    + (energySystem.capacity.fusion ?? 0);
+
+  const energyDemand = energySystem.totalDemand ?? 0;
 
   const renewableSurplus = Math.max(0, renewableCapacity - energyDemand);
 
