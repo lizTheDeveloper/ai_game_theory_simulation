@@ -22,6 +22,7 @@ import { validateCompoundCause, getCompoundConfidence } from './utils/deathAttri
 import { getTechDeploymentSafe } from './techTree/helpers';
 import { initializeRegionalMortalityStabilizers, initializeRegionalFamineState, initializeRegionalResilienceProfile } from './mortalityStabilizersInit';
 import { assertFinite, assertStateProperty, assertInRange, assertProbability } from './utils/assertions';
+import { debugLog, DEBUG_FLAGS } from './utils/debugFlags';
 
 /**
  * Initialize regional populations (2025 baseline)
@@ -701,8 +702,7 @@ export function aggregateGlobalPopulation(state: GameState): void {
     month: state.currentMonth
   });
 
-  // DEBUG: Log conversion
-  console.log(`🔍 aggregateGlobalPopulation: ${totalPopulation}M → ${totalPopulationBillions}B (month ${state.currentMonth})`);
+  // DEBUG: Log conversion (PERFORMANCE: Removed unconditional log from hot path - Nov 20, 2025)
 
   // Update global population
   state.humanPopulationSystem.population = assertFinite(totalPopulationBillions, {
@@ -1853,27 +1853,30 @@ function addSegmentSpecificCrisisDeaths(
   
   // Log significant events
   if (totalDeathsApplied > 0.001) {
-    const deathsInMillions = (totalDeathsApplied * 1000).toFixed(1);
-    const exposedPct = (exposedFraction * 100).toFixed(0);
-    const scope = exposedFraction >= 0.9 ? 'GLOBAL' : exposedFraction >= 0.4 ? 'SEMI-GLOBAL' : 'REGIONAL';
-    const cappedNote = scaleFactor < 1.0 ? ' [CAPPED]' : '';
-    
-    console.log(`💀 ${scope} CRISIS DEATHS (Segment-Specific): ${deathsInMillions}M casualties (${reason}) [${category.toUpperCase()}]${cappedNote}`);
-    console.log(`   Exposed: ${exposedPct}% of world, Base Mortality: ${(baseMortalityRate * 100).toFixed(1)}%`);
-    
-    // Show differential impact by segment
-    const maxImpact = segmentDeaths.reduce((max, sd) => Math.max(max, sd.mortality), 0);
-    if (maxImpact > baseMortalityRate * 1.5) {
-      const mostVulnerable = segmentDeaths.reduce((max, sd) => 
-        sd.mortality > max.mortality ? sd : max
-      );
-      const leastVulnerable = segmentDeaths.reduce((min, sd) => 
-        sd.mortality < min.mortality ? sd : min
-      );
-      console.log(`   Differential Impact: ${mostVulnerable.segment} ${(mostVulnerable.mortality * 100).toFixed(1)}% vs ${leastVulnerable.segment} ${(leastVulnerable.mortality * 100).toFixed(1)}%`);
+    // PERFORMANCE (Nov 20, 2025): Conditionalize crisis logging (hot path during crises)
+    if (DEBUG_FLAGS.ENABLED && DEBUG_FLAGS.CRISES) {
+      const deathsInMillions = (totalDeathsApplied * 1000).toFixed(1);
+      const exposedPct = (exposedFraction * 100).toFixed(0);
+      const scope = exposedFraction >= 0.9 ? 'GLOBAL' : exposedFraction >= 0.4 ? 'SEMI-GLOBAL' : 'REGIONAL';
+      const cappedNote = scaleFactor < 1.0 ? ' [CAPPED]' : '';
+
+      console.log(`💀 ${scope} CRISIS DEATHS (Segment-Specific): ${deathsInMillions}M casualties (${reason}) [${category.toUpperCase()}]${cappedNote}`);
+      console.log(`   Exposed: ${exposedPct}% of world, Base Mortality: ${(baseMortalityRate * 100).toFixed(1)}%`);
+
+      // Show differential impact by segment
+      const maxImpact = segmentDeaths.reduce((max, sd) => Math.max(max, sd.mortality), 0);
+      if (maxImpact > baseMortalityRate * 1.5) {
+        const mostVulnerable = segmentDeaths.reduce((max, sd) =>
+          sd.mortality > max.mortality ? sd : max
+        );
+        const leastVulnerable = segmentDeaths.reduce((min, sd) =>
+          sd.mortality < min.mortality ? sd : min
+        );
+        console.log(`   Differential Impact: ${mostVulnerable.segment} ${(mostVulnerable.mortality * 100).toFixed(1)}% vs ${leastVulnerable.segment} ${(leastVulnerable.mortality * 100).toFixed(1)}%`);
+      }
+
+      console.log(`   Population: ${pop.population.toFixed(3)}B remaining`);
     }
-    
-    console.log(`   Population: ${pop.population.toFixed(3)}B remaining`);
   }
   
   // Track if cap was reached
@@ -1992,10 +1995,13 @@ function addUniformCrisisDeaths(
       rootCauseStr = rootCause;
     }
 
-    console.log(`💀 ${scope} CRISIS DEATHS: ${deathsInMillionsFormatted}M casualties (${reason}) [${category.toUpperCase()}]${cappedNote}`);
-    console.log(`   Exposed: ${exposedPct}% of world, Mortality: ${(mortalityRate * 100).toFixed(1)}%`);
-    console.log(`   Root cause: ${rootCauseStr}, Confidence: ${confidence}`);
-    console.log(`   Population: ${pop.population.toFixed(3)}B remaining`);
+    // PERFORMANCE (Nov 20, 2025): Conditionalize crisis logging (hot path during crises)
+    if (DEBUG_FLAGS.ENABLED && DEBUG_FLAGS.CRISES) {
+      console.log(`💀 ${scope} CRISIS DEATHS: ${deathsInMillionsFormatted}M casualties (${reason}) [${category.toUpperCase()}]${cappedNote}`);
+      console.log(`   Exposed: ${exposedPct}% of world, Mortality: ${(mortalityRate * 100).toFixed(1)}%`);
+      console.log(`   Root cause: ${rootCauseStr}, Confidence: ${confidence}`);
+      console.log(`   Population: ${pop.population.toFixed(3)}B remaining`);
+    }
   }
 }
 
