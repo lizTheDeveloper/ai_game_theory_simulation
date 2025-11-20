@@ -85,7 +85,7 @@ describe('Auth Flow Integration Tests', () => {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
-      CREATE TABLE IF NOT EXISTS audit_logs (
+      CREATE TABLE IF NOT EXISTS auth_audit_log (
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users(id),
         action VARCHAR(100) NOT NULL,
@@ -114,7 +114,7 @@ describe('Auth Flow Integration Tests', () => {
 
   afterAll(async () => {
     // Clean up database
-    await dbPool.query('DROP TABLE IF EXISTS audit_logs CASCADE');
+    await dbPool.query('DROP TABLE IF EXISTS auth_audit_log CASCADE');
     await dbPool.query('DROP TABLE IF EXISTS users CASCADE');
 
     await dbPool.end();
@@ -123,7 +123,7 @@ describe('Auth Flow Integration Tests', () => {
 
   beforeEach(async () => {
     // Clear test data before each test
-    await dbPool.query('DELETE FROM audit_logs');
+    await dbPool.query('DELETE FROM auth_audit_log');
     await dbPool.query('DELETE FROM users');
     await redisClient.flushdb();
   });
