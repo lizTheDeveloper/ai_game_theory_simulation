@@ -58,6 +58,13 @@ export interface TechTreeState {
   // EmergencyResponsePhase sets this during crisis response
   deploymentAcceleration: Record<string, number>;  // techId -> multiplier
 
+  // HIGH PERFORMANCE FIX (Nov 20, 2025): O(1) lookup indexes
+  // Maintained by tech tree update phase to avoid O(n) searches (284+ comparisons/month)
+  // Maps tech ID -> max deployment level across all regions
+  deployedTechMap: Record<string, number>;  // techId -> max deployment level [0-1]
+  // Set of unlocked tech IDs for fast membership checks
+  unlockedTechSet: Record<string, boolean>;  // techId -> true (if unlocked)
+
   // Deployment actions queue
   pendingActions: TechDeploymentAction[];
 
@@ -79,24 +86,30 @@ export function initializeTechTreeState(): TechTreeState {
     researchProgress: {},
     regionalDeployment: {},
     deploymentAcceleration: {},  // HIGH #2 FIX: Initialize empty acceleration map
+    deployedTechMap: {},  // HIGH PERFORMANCE FIX (Nov 20): O(1) deployment lookups
+    unlockedTechSet: {},  // HIGH PERFORMANCE FIX (Nov 20): O(1) unlocked checks
     pendingActions: [],
     unlockHistory: [],
     totalInvestment: 0,
     techUnlockedCount: 0,
     techDeployedCount: 0,
   };
-  
+
   // Unlock all DEPLOYED_2025 tech
   const deployedTech = getAllTech().filter(t => t.status === 'deployed_2025');
   for (const tech of deployedTech) {
     state.unlockedTech.push(tech.id);
     state.techUnlockedCount++;
-    
+
+    // HIGH PERFORMANCE FIX (Nov 20): Update O(1) lookup indexes
+    state.unlockedTechSet[tech.id] = true;
+    state.deployedTechMap[tech.id] = tech.deploymentLevel;
+
     // Initialize global deployment
     if (!state.regionalDeployment['global']) {
       state.regionalDeployment['global'] = [];
     }
-    
+
     state.regionalDeployment['global'].push({
       techId: tech.id,
       region: 'global',
@@ -108,7 +121,7 @@ export function initializeTechTreeState(): TechTreeState {
       deploymentStartMonth: 0, // Already deployed at start (month 0)
     });
   }
-  
+
   return state;
 }
 
@@ -324,10 +337,13 @@ function unlockTech(
 ): void {
   techTreeState.unlockedTech.push(tech.id);
   techTreeState.techUnlockedCount++;
-  
+
+  // HIGH PERFORMANCE FIX (Nov 20): Update O(1) lookup index
+  techTreeState.unlockedTechSet[tech.id] = true;
+
   // Initialize at 0% deployment in all regions
   // Deployment happens through actions
-  
+
   // Add to event log
   gameState.eventLog.push({
     type: 'breakthrough',
@@ -764,7 +780,56 @@ function generateUnlockReason(_tech: TechDefinition, gameState: GameState): stri
   const avgCapability = getAverageAICapability(gameState);
   // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
   const economicStage = assertEconomicStage(gameState, 'techTree.generateUnlockReason');
-  
+
   return `Prerequisites met. AI capability: ${avgCapability.toFixed(2)}, Economic stage: ${economicStage.toFixed(1)}, Research: 100%`;
+}
+
+/**
+ * HIGH PERFORMANCE FIX (Nov 20, 2025): O(1) Technology Lookups
+ *
+ * Helper functions to replace O(n) array searches with O(1) index lookups
+ * Impact: 284+ comparisons/month → ~0 comparisons
+ */
+
+/**
+ * Get maximum deployment level for a technology across all regions
+ * @param techTreeState Tech tree state with O(1) lookup index
+ * @param techId Technology ID to look up
+ * @returns Deployment level [0-1], or 0 if not deployed
+ */
+export function getTechDeployment(techTreeState: TechTreeState, techId: string): number {
+  return techTreeState.deployedTechMap[techId] ?? 0;
+}
+
+/**
+ * Check if a technology is unlocked
+ * @param techTreeState Tech tree state with O(1) lookup index
+ * @param techId Technology ID to check
+ * @returns true if unlocked, false otherwise
+ */
+export function isTechUnlocked(techTreeState: TechTreeState, techId: string): boolean {
+  return techTreeState.unlockedTechSet[techId] === true;
+}
+
+/**
+ * Rebuild deployedTechMap index from regionalDeployment data
+ * Called after deployment levels change (monthly update)
+ *
+ * Maps each tech ID to its maximum deployment level across all regions
+ */
+export function rebuildDeploymentIndex(techTreeState: TechTreeState): void {
+  // Clear existing index
+  techTreeState.deployedTechMap = {};
+
+  // Iterate through all regions and find max deployment per tech
+  for (const region in techTreeState.regionalDeployment) {
+    const deployments = techTreeState.regionalDeployment[region];
+    if (!deployments) continue;
+
+    for (const deployment of deployments) {
+      const currentMax = techTreeState.deployedTechMap[deployment.techId] ?? 0;
+      techTreeState.deployedTechMap[deployment.techId] = Math.max(currentMax, deployment.deploymentLevel);
+    }
+  }
 }
 

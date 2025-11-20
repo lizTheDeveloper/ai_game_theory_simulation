@@ -495,8 +495,9 @@ function calculateResilientFoodMultiplier(state: GameState): number {
     return 1.0;  // No tech reduction (baseline scenario)
   }
 
-  // Get global deployments (null-safe access)
-  const globalDeployments = state.techTreeState.regionalDeployment['global'] || [];
+  // HIGH PERFORMANCE FIX (Nov 20, 2025): Use O(1) lookup instead of O(n) find()
+  // HIGH TYPE SAFETY FIX (Nov 20, 2025): Use getTechDeployment with proper assertions
+  const { getTechDeployment } = require('./techTree/engine');
 
   // Tech ID -> mortality reduction mapping
   const techMitigations = [
@@ -507,10 +508,11 @@ function calculateResilientFoodMultiplier(state: GameState): number {
   ];
 
   // Calculate cumulative mortality reduction from deployed techs
+  // Using O(1) lookup instead of O(n) array search
   const mortalityReduction = techMitigations.reduce((sum, tech) => {
-    const deployment = globalDeployments.find(d => d.techId === tech.id);
+    const deploymentLevel = getTechDeployment(state.techTreeState!, tech.id);
     // Only count if deployment level >= 80% (meaningful global coverage)
-    return sum + (deployment && deployment.deploymentLevel >= 0.8 ? tech.reduction : 0);
+    return sum + (deploymentLevel >= 0.8 ? tech.reduction : 0);
   }, 0);
 
   // Cap at 40% maximum reduction (IIASA 2025 optimistic case)
