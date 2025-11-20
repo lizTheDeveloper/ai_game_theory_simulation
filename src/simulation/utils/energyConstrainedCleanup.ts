@@ -86,22 +86,37 @@ export function applyEnergyConstrainedCleanup(
   });
 
   // 1. Check if tech has energy requirement (legacy tech without energy model uses old behavior)
-  // FIX (Nov 19, 2025): Check for ALL energy requirement fields (kWhPerKg, kWhPerM3, annualTWhRequired)
   const energyReq = typeof tech.energyRequirement === 'object'
-    ? (tech.energyRequirement.kWhPerKg
-      ?? tech.energyRequirement.kWhPerM3
-      ?? tech.energyRequirement.annualTWhRequired)
+    ? tech.energyRequirement.kWhPerKg ?? tech.energyRequirement.annualTWhRequired
     : tech.energyRequirement;
 
   if (!energyReq || !tech.minimumConcentration) {
     // Legacy cleanup tech without energy model - use base effectiveness
-    // FIX (Nov 19, 2025): Use correct effect fields
-    const effectValue = tech.effects.novelEntitiesReduction
-      ?? tech.effects.pfasReduction
-      ?? tech.effects.microplasticReduction
-      ?? tech.effects.pollutionReduction
-      ?? 0;
-    const baseEffect = effectValue * (tech.deploymentLevel ?? 0);
+    // Roy's fix: No silent fallbacks - if tech is missing properties, error surfaces immediately
+    const reduction = tech.effects.novelEntitiesReduction ?? tech.effects.pollutionReduction;
+    if (reduction === undefined) {
+      throw new Error(
+        `❌ Tech missing cleanup effect: ${tech.id}\n` +
+        `   Location: applyEnergyConstrainedCleanup\n` +
+        `   Expected: novelEntitiesReduction or pollutionReduction\n` +
+        `   Month: ${state.currentMonth}\n` +
+        `   Tech should not be in cleanup filter without an effect.`
+      );
+    }
+    const deployment = tech.deploymentLevel;
+    if (deployment === undefined) {
+      throw new Error(
+        `❌ Tech missing deploymentLevel: ${tech.id}\n` +
+        `   Location: applyEnergyConstrainedCleanup\n` +
+        `   Month: ${state.currentMonth}`
+      );
+    }
+    const baseEffect = assertFinite(reduction * deployment, {
+      location: 'applyEnergyConstrainedCleanup',
+      valueName: 'legacyBaseEffect',
+      month: state.currentMonth,
+      additionalInfo: { techId: tech.id, reduction, deployment },
+    });
     return {
       grossEffectiveness: baseEffect,
       concentrationFactor: 1.0,
@@ -138,32 +153,23 @@ export function applyEnergyConstrainedCleanup(
   // Cleanup competes with other energy uses
 
   // Access renewable energy surplus (total renewable capacity - demand)
-  // FIX (Nov 19, 2025): Calculate renewable capacity from capacity sources
-  // EnergySystem doesn't have renewableCapacity field, must sum individual sources
-  const energySystem = state.resourceEconomy?.energy;
-  if (!energySystem || !energySystem.capacity) {
-    // Energy system not initialized - skip energy constraint (graceful degradation)
-    const effectValue = tech.effects.novelEntitiesReduction
-      ?? tech.effects.pfasReduction
-      ?? tech.effects.microplasticReduction
-      ?? tech.effects.pollutionReduction
-      ?? 0;
-    const baseEffect = effectValue * (tech.deploymentLevel ?? 0);
-    return {
-      grossEffectiveness: baseEffect,
-      concentrationFactor: 1.0,
-      energyFactor: 1.0,
-      rebound: 0,
-      netEffectiveness: baseEffect,
-    };
-  }
+  const renewableCapacity = assertStateProperty(
+    state.resourceEconomy?.energy,
+    'renewableCapacity',
+    {
+      location: 'applyEnergyConstrainedCleanup',
+      month: state.currentMonth,
+    }
+  );
 
-  const renewableCapacity = (energySystem.capacity.solar ?? 0)
-    + (energySystem.capacity.wind ?? 0)
-    + (energySystem.capacity.hydro ?? 0)
-    + (energySystem.capacity.fusion ?? 0);
-
-  const energyDemand = energySystem.totalDemand ?? 0;
+  const energyDemand = assertStateProperty(
+    state.resourceEconomy?.energy,
+    'demand',
+    {
+      location: 'applyEnergyConstrainedCleanup',
+      month: state.currentMonth,
+    }
+  );
 
   const renewableSurplus = Math.max(0, renewableCapacity - energyDemand);
 
@@ -176,27 +182,31 @@ export function applyEnergyConstrainedCleanup(
   const requiredEnergy = (estimatedStock * energyPerTon) / 1000; // Convert GJ to EJ
   const energyFactor = Math.min(1.0, renewableSurplus / Math.max(0.001, requiredEnergy));
 
-  // DEBUG (Nov 19, 2025): Log energy gating details every 12 months
-  if (state.currentMonth % 12 === 0 && tech.techType === 'cleanup') {
-    console.log(`\n⚡ Energy Constraint Debug (${tech.id}):`);
-    console.log(`  Renewable capacity: ${renewableCapacity.toFixed(2)} EJ`);
-    console.log(`  Energy demand: ${energyDemand.toFixed(2)} EJ`);
-    console.log(`  Renewable surplus: ${renewableSurplus.toFixed(2)} EJ`);
-    console.log(`  Estimated stock: ${estimatedStock.toFixed(2)} Mt`);
-    console.log(`  Energy per ton: ${energyPerTon} GJ/ton`);
-    console.log(`  Required energy: ${requiredEnergy.toFixed(2)} EJ`);
-    console.log(`  Energy factor: ${(energyFactor * 100).toFixed(2)}%`);
+  // 4. Base effectiveness (from tech definition) - Roy's fix: no silent fallbacks
+  const reduction = tech.effects.novelEntitiesReduction ?? tech.effects.pollutionReduction;
+  if (reduction === undefined) {
+    throw new Error(
+      `❌ Tech missing cleanup effect: ${tech.id}\n` +
+      `   Location: applyEnergyConstrainedCleanup\n` +
+      `   Expected: novelEntitiesReduction or pollutionReduction\n` +
+      `   Month: ${state.currentMonth}\n` +
+      `   Tech has energy model but no effectiveness value - this is a bug.`
+    );
   }
-
-  // 4. Base effectiveness (from tech definition)
-  // FIX (Nov 19, 2025): Check all possible effect names (pfasReduction, microplasticReduction, pollutionReduction)
-  // CRITICAL BUG: Was only checking novelEntitiesReduction, which no techs have
-  const effectValue = tech.effects.novelEntitiesReduction
-    ?? tech.effects.pfasReduction
-    ?? tech.effects.microplasticReduction
-    ?? tech.effects.pollutionReduction
-    ?? 0;
-  const baseEffectiveness = effectValue * (tech.deploymentLevel ?? 0);
+  const deployment = tech.deploymentLevel;
+  if (deployment === undefined) {
+    throw new Error(
+      `❌ Tech missing deploymentLevel: ${tech.id}\n` +
+      `   Location: applyEnergyConstrainedCleanup\n` +
+      `   Month: ${state.currentMonth}`
+    );
+  }
+  const baseEffectiveness = assertFinite(reduction * deployment, {
+    location: 'applyEnergyConstrainedCleanup',
+    valueName: 'baseEffectiveness',
+    month: state.currentMonth,
+    additionalInfo: { techId: tech.id, reduction, deployment },
+  });
 
   // 5. Apply constraints
   const grossEffectiveness = baseEffectiveness * concentrationFactor * energyFactor;

@@ -155,15 +155,19 @@ function calculateCrossBenchmarkConsistency(
   if (interpretabilityQuality > 0.5) {
     // Calculate per-dimension gaps
     const gaps = dimensions.map((revealed, i) => {
-      // FIXED: Use assertFinite to detect if dimensions have invalid values (not just missing)
+      // Roy's fix: No silent fallbacks - if dimension is undefined/NaN, we need to know
       const trueVal = trueDimensions[i];
-      // If dimension is undefined, use 0 (legitimate case: dimension not yet initialized)
-      // If dimension is NaN or Infinity, this will be caught by assertFinite on the result
-      const safeVal = trueVal ?? 0;
-      return assertFinite(Math.abs(safeVal - revealed), {
+      const validatedTrue = assertFinite(trueVal, {
+        location: 'calculateCrossBenchmarkConsistency',
+        valueName: `trueDimension${i}`,
+        month: 0, // No month context in this function
+        additionalInfo: { dimensionIndex: i }
+      });
+      const gap = Math.abs(validatedTrue - revealed);
+      return assertFinite(gap, {
         location: 'calculateCrossBenchmarkConsistency',
         valueName: `gapForDimension${i}`,
-        additionalInfo: { trueVal: safeVal, revealed }
+        additionalInfo: { trueVal: validatedTrue, revealed }
       });
     });
 
