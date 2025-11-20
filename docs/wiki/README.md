@@ -6542,7 +6542,10 @@ Applies monthly food security degradation during active crises.
 
 **Research Foundation**:
 - Historical food crises show 5-15% monthly decline in food availability
-- Multiple simultaneous crises have compounding effects
+- Multiple simultaneous crises have compounding effects (see `research/crisis_cascade_multipliers_20251020.md`)
+  - Sun et al. (2024): COVID-19 cascades across 70% of global GDP (multi-country CGE analysis)
+  - Faramarzi et al. (2024): ~2× multiplier for crisis severity escalation (meta-analysis of 27 studies)
+  - Joshi et al. (2021): ~1.5-2× multiplier for climate + pandemic shocks (toxic synergism)
 - Infrastructure breakdown accelerates food system collapse
 
 **Mechanics**:
