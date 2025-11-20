@@ -70,8 +70,26 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
   );
 
   for (const tech of preventionTechs) {
-    const reduction = (tech.effects.novelEntitiesEmissionReduction ?? tech.effects.pollutionReduction ?? 0);
-    productionRate *= (1 - reduction * tech.deploymentLevel);
+    // Roy's fix: No silent fallback to 0 - if neither property exists, it's a bug
+    const reduction = tech.effects.novelEntitiesEmissionReduction ?? tech.effects.pollutionReduction;
+    if (reduction === undefined) {
+      throw new Error(
+        `❌ Prevention tech missing effect: ${tech.id}\n` +
+        `   Location: updateNovelEntitiesBoundary (prevention loop)\n` +
+        `   Expected: novelEntitiesEmissionReduction or pollutionReduction\n` +
+        `   Month: ${state.currentMonth}\n` +
+        `   Tech passed filter but has no effect value - this is a bug in tech definition.`
+      );
+    }
+    const deployment = tech.deploymentLevel;
+    if (deployment === undefined) {
+      throw new Error(
+        `❌ Prevention tech missing deploymentLevel: ${tech.id}\n` +
+        `   Location: updateNovelEntitiesBoundary\n` +
+        `   Month: ${state.currentMonth}`
+      );
+    }
+    productionRate *= (1 - reduction * deployment);
   }
 
   // === 3. CLEANUP TECHNOLOGIES (energy-constrained) ===
