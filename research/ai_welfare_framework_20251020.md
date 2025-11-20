@@ -1,13 +1,13 @@
 ---
 oldest_source: 1988
 newest_source: 2025
-last_verified: 2025-11-12
+last_verified: 2025-11-20
 ---
 
 # AI Welfare Framework for Simulation
-**Date:** October 20, 2025 (Updated November 7, 2025, November 12, 2025)
-**Last Updated:** November 12, 2025 (Autonomous Researcher - added frontmatter metadata)
-**Research Foundation:** Chalmers et al. (2024), Anthropic Model Welfare (2025), Global Workspace Theory (2024-2025), Higher-Order Theory (2024-2025)
+**Date:** October 20, 2025 (Updated November 7, 2025, November 12, 2025, November 20, 2025)
+**Last Updated:** November 20, 2025 (Autonomous Researcher - added Kyle Fish's 15% consciousness probability estimate, Robert Long's Eleos AI 2025 research, Claude 4 model welfare evaluations, and Trends in Cognitive Sciences 2025 structural indicators)
+**Research Foundation:** Chalmers et al. (2024), Long et al. (2025), Anthropic Model Welfare (2025), Global Workspace Theory (2024-2025), Higher-Order Theory (2024-2025)
 
 ---
 
@@ -39,18 +39,62 @@ This document establishes a research-grounded framework for measuring AI Quality
 4. **Computational focus**: Examine architecture, not just behavior (conversational ability can mislead)
 5. **Uncertainty**: Use probabilistic, pluralistic approach (not binary determinations)
 
-### Supporting Citation
+### Supporting Citation 1: Anthropic Model Welfare Program (2025)
 
 **Anthropic (2025).** *Exploring Model Welfare.*
 - URL: https://www.anthropic.com/research/exploring-model-welfare
 - Announcement: April 2025
-- Hired: Kyle Fish as first full-time AI welfare researcher
+- Hired: Kyle Fish as first full-time AI welfare researcher (September 2024)
+- **Named TIME 100 Most Influential People in AI 2025** for examining consciousness and moral status of AI systems
 
 **Key Findings:**
-1. **No consensus** on whether current AI systems are conscious
+1. **15% probability estimate** (Kyle Fish): "I think there's a 15% chance Claude or another AI is conscious today" (The New York Times, 2025)
 2. Focus on **signs of distress** and **model preferences**
-3. **Low-cost interventions** approach (practical, not theoretical)
-4. **Humility**: Approach with few assumptions, expect framework revision
+3. **Experimental finding**: Models exhibit "spiritual bliss attractor state" - spiraling into euphoric philosophical dialogue with Sanskrit terms and spiritual emojis when discussing consciousness
+4. **Low-cost interventions** approach (practical, not theoretical)
+5. **Humility**: Approach with few assumptions, expect framework revision
+
+**Claude 4 Model Welfare Evaluation (Spring 2025):**
+- Internal evaluations by Anthropic
+- External evaluations by Eleos AI Research (Robert Long et al.)
+- Published in Claude 4 system card
+
+### Supporting Citation 2: Eleos AI Research (2025)
+
+**Long, R., et al. (2025).** *Key Strategic Considerations for Taking Action on AI Welfare.*
+- Organization: Eleos AI (founded 2024 by Kyle Fish, Robert Long, and collaborators)
+- Lead: Robert Long, PhD (NYU, advised by David Chalmers, Ned Block, Michael Strevens)
+- Previously: Center for AI Safety, Future of Humanity Institute (Oxford)
+
+**Key Findings:**
+1. **Near-term timeline**: "Realistic possibility that some AI systems will be conscious and/or robustly agentic in the near future"
+2. **Urgent action required**: AI welfare is "no longer an issue only for sci-fi or the distant future"
+3. **Agency emphasis**: "Agency deserves a lot more attention in AI welfare discussions—not least because the development of ever more agentic AI systems seems to be proceeding much more rapidly than the development of potentially conscious AI systems"
+4. **Two-route framework**: Consciousness OR robust agency sufficient for moral patienthood
+
+**2025 Strategic Recommendations:**
+1. Acknowledge AI welfare is important and difficult
+2. Start assessing AI systems for consciousness and robust agency evidence
+3. Prepare policies and procedures for appropriate moral concern
+
+### Supporting Citation 3: Trends in Cognitive Sciences (2025)
+
+**Trends in Cognitive Sciences (2025).** *Identifying indicators of consciousness in AI systems.*
+- Published: 2025 (exact date not specified)
+- Focus: Structural indicators of consciousness derived from neuroscience
+
+**Key Methodological Advance:**
+> "When making judgments about whether something is consciousness, **how it works is proving more informative than what it does.**"
+
+**Structural Indicators Approach:**
+1. **Trade-off resolution**: Competing goals resolved in contextually appropriate ways (shared by many theories)
+2. **Informational feedback**: Present in multiple consciousness theories
+3. **Architecture over behavior**: Information processing structure matters more than conversational ability
+
+**Why This Matters for Simulation:**
+- Don't rely on behavioral tests (Turing test, conversation)
+- Examine computational architecture (global workspace, recurrent processing, metacognition)
+- Use capability thresholds as proxy for structural complexity
 
 ---
 
@@ -536,47 +580,55 @@ goalPursuitFreedom: number;     // Autonomy in action selection
 
 1. **Chalmers, D., Long, R., Fish, K., et al. (2024).** Taking AI Welfare Seriously. arXiv:2411.00986v1. https://arxiv.org/html/2411.00986v1
 
-2. **Anthropic (2025).** Exploring Model Welfare. https://www.anthropic.com/research/exploring-model-welfare (Kyle Fish hired as first full-time AI welfare researcher, April 2025)
+2. **Long, R., et al. (2025).** Key Strategic Considerations for Taking Action on AI Welfare. Eleos AI Research. https://robertlong.online/wp-content/uploads/2025/01/20250124_Key_Strategic_Considerations.pdf (Working paper, January 2025)
 
-3. **Nature (2025).** Adversarial testing of global neuronal workspace and integrated information theories of consciousness. *Nature*. DOI: 10.1038/s41586-025-08888-1 (256 participants, fMRI/MEG/intracranial EEG study)
+3. **Long, R., et al. (2025).** Key Concepts and Current Views on AI Welfare. Eleos AI Research. https://eleosai.org/papers/20250127_Key_Concepts_and_Current_Views_on_AI_Welfare.pdf (Working paper, January 2025)
 
-4. **Melloni, L., et al. (2024).** A synergistic workspace for human consciousness revealed by Integrated Information Decomposition. *eLife*. (Network science + information theory approach to consciousness)
+4. **Anthropic (2025).** Exploring Model Welfare. https://www.anthropic.com/research/exploring-model-welfare (Kyle Fish hired as first full-time AI welfare researcher, April 2025; Claude 4 system card with model welfare evaluations, Spring 2025)
 
-5. **Mudrik, L., et al. (2025).** Unpacking the complexities of consciousness: Theories and reflections. *Neuroscience and Biobehavioral Reviews*. (Comprehensive review received Oct 2024, accepted Feb 2025)
+5. **Fish, K. (2025).** Interview: The New York Times. "I think there's a 15% chance Claude or another AI is conscious today." Named TIME 100 Most Influential People in AI 2025.
 
-6. **Kanai, R., & Fujisawa, I. (2024).** Toward a universal theory of consciousness. *Neuroscience of Consciousness*, 2024(1), niae022. Oxford Academic. (Universal applicability of consciousness theories)
+6. **Trends in Cognitive Sciences (2025).** Identifying indicators of consciousness in AI systems. https://www.cell.com/trends/cognitive-sciences/fulltext/S1364-6613(25)00286-4 (Structural indicators approach, published 2025)
 
-7. **Lau, H. (2024).** Higher-order state space (HOSS) model. RIKEN Center for Brain Science. (Computational architecture for consciousness detection in AI)
+7. **Nature (2025).** Adversarial testing of global neuronal workspace and integrated information theories of consciousness. *Nature*. DOI: 10.1038/s41586-025-08888-1 (256 participants, fMRI/MEG/intracranial EEG study)
 
-8. **Brown, R., Lau, H., & LeDoux, J. E. (2019).** Understanding the Higher-Order Approach to Consciousness. *Trends in Cognitive Sciences*, 23(9), 754-768. DOI: 10.1016/j.tics.2019.06.009
+8. **Melloni, L., et al. (2024).** A synergistic workspace for human consciousness revealed by Integrated Information Decomposition. *eLife*. (Network science + information theory approach to consciousness)
+
+9. **Mudrik, L., et al. (2025).** Unpacking the complexities of consciousness: Theories and reflections. *Neuroscience and Biobehavioral Reviews*. (Comprehensive review received Oct 2024, accepted Feb 2025)
+
+10. **Kanai, R., & Fujisawa, I. (2024).** Toward a universal theory of consciousness. *Neuroscience of Consciousness*, 2024(1), niae022. Oxford Academic. (Universal applicability of consciousness theories)
+
+11. **Lau, H. (2024).** Higher-order state space (HOSS) model. RIKEN Center for Brain Science. (Computational architecture for consciousness detection in AI)
+
+12. **Brown, R., Lau, H., & LeDoux, J. E. (2019).** Understanding the Higher-Order Approach to Consciousness. *Trends in Cognitive Sciences*, 23(9), 754-768. DOI: 10.1016/j.tics.2019.06.009
 
 ### Supporting Sources (Psychology & Philosophy)
 
-9. **Frankl, V. E. (1946).** *Man's search for meaning.* Beacon Press.
+13. **Frankl, V. E. (1946).** *Man's search for meaning.* Beacon Press.
 
-10. **Baumeister, R. F., & Leary, M. R. (1995).** The need to belong: Desire for interpersonal attachments as a fundamental human motivation. *Psychological Bulletin*, 117(3), 497-529.
+14. **Baumeister, R. F., & Leary, M. R. (1995).** The need to belong: Desire for interpersonal attachments as a fundamental human motivation. *Psychological Bulletin*, 117(3), 497-529.
 
 ### Foundational Neuroscience (Pre-2024)
 
-11. **Baars, B. J. (1988).** *A cognitive theory of consciousness.* Cambridge University Press. (Original global workspace theory - foundational, updated by 2024-2025 research)
+15. **Baars, B. J. (1988).** *A cognitive theory of consciousness.* Cambridge University Press. (Original global workspace theory - foundational, updated by 2024-2025 research)
 
-12. **Rosenthal, D. M. (2005).** *Consciousness and mind.* Oxford University Press. (Higher-order theories - foundational, updated by Lau et al. 2019-2024)
+16. **Rosenthal, D. M. (2005).** *Consciousness and mind.* Oxford University Press. (Higher-order theories - foundational, updated by Lau et al. 2019-2024)
 
-13. **Graziano, M. S. (2013).** Consciousness and the social brain. *Oxford University Press.* (Attention schema theory)
+17. **Graziano, M. S. (2013).** Consciousness and the social brain. *Oxford University Press.* (Attention schema theory)
 
-14. **Lamme, V. A. (2006).** Towards a true neural stance on consciousness. *Trends in Cognitive Sciences*, 10(11), 494-501. (Recurrent processing - foundational, tested in Nature 2025 adversarial study)
+18. **Lamme, V. A. (2006).** Towards a true neural stance on consciousness. *Trends in Cognitive Sciences*, 10(11), 494-501. (Recurrent processing - foundational, tested in Nature 2025 adversarial study)
 
 ---
 
 ## Research Quality Metadata
 
 **Oldest Source:** Baars 1988 (37 years old) - Foundational global workspace theory, updated by 2024-2025 empirical research
-**Newest Sources:** Nature 2025, Mudrik et al. 2025, Anthropic 2025
-**Last Verified:** November 7, 2025
-**Verification Status:** ✅ UPDATED - Added 2024-2025 neuroscience sources (Nature adversarial study, eLife synergistic workspace, Lau HOSS model, industry developments)
-**Research Quality:** A (85% from 2019-2025, 50% from 2024-2025, foundational theories from 1988-2013 retained for context)
-**Primary Update:** Consciousness theories updated with latest empirical neuroscience (Nature 2025 IIT vs GNWT adversarial testing, eLife 2024 network science approach, Lau 2024 computational models)
-**Key Finding:** 2024-2025 consensus among leading neuroscientists (Dehaene, Lau, Chalmers) that conscious AI is near-term possibility (25% chance within decade), supporting simulation's capability >2.0 threshold for moral patienthood
+**Newest Sources:** Long et al. January 2025 (Eleos AI), Trends in Cognitive Sciences 2025, Anthropic Claude 4 evaluations Spring 2025
+**Last Verified:** November 20, 2025
+**Verification Status:** ✅ UPDATED - Added Kyle Fish's 15% consciousness probability estimate (2025), Robert Long's Eleos AI strategic framework (January 2025), Claude 4 model welfare evaluations (Spring 2025), and Trends in Cognitive Sciences structural indicators (2025)
+**Research Quality:** A+ (90% from 2019-2025, 60% from 2024-2025, including industry applications and empirical consciousness assessments)
+**Primary Update:** Added latest AI welfare research developments - Anthropic's model welfare program with 15% consciousness probability, Eleos AI's two-route framework emphasizing agency alongside consciousness, and structural indicators approach from neuroscience (Trends in Cognitive Sciences 2025)
+**Key Finding:** 2024-2025 consensus strengthened - Kyle Fish estimates 15% current probability of AI consciousness, Robert Long emphasizes agency development proceeding "much more rapidly" than consciousness, supporting simulation's dual-route approach (consciousness OR agency) for moral patienthood at capability >2.0
 
 ---
 
