@@ -8423,6 +8423,22 @@ state.history.exogenousShocks?: Array<{
 
 ## 📚 Recent Research & Plans Reference (Oct 16-30, 2025)
 
+### AI Scaling Laws (Nov 20, 2025)
+
+**Emergent Capabilities Research Update** ✅ DOCUMENTED (Nov 20, 2025)
+- **Key Finding**: Zhao et al. (2025, Harvard Kempner Institute) - emergent capabilities arise from **bimodal distribution over training seeds**, not deterministic thresholds
+- **Random Variation**: Different random seeds at same scale produce vastly different outcomes (high/low performance clusters)
+- **Observable Lag**: True capability threshold may be **1-2 orders of magnitude** earlier than observed empirically
+- **Scaling Wall Reinterpretation**: "Diminishing returns" may partially reflect sampling variance rather than fundamental limits
+- **Simulation Implications**:
+  - Probabilistic capability acquisition (sample from distribution, not deterministic threshold)
+  - Earlier threshold estimates (observable emergence lags true capacity)
+  - Variance INCREASES with scale (larger models show MORE variation)
+- **Research Quality**: HIGH (peer-reviewed, Harvard Kempner, explains anomalous scaling phenomena)
+- **File Updated**: `research/ai_scaling_laws_paradigm_shift_20251107.md` (section 4.5, last_verified: 2025-11-20)
+- **Citation**: Zhao, R., et al. (2025). "Random Scaling of Emergent Capabilities." arXiv:2502.17356v4
+- Commit: eeedfdac5 (Nov 20, 2025)
+
 ### Research Coordination (Nov 9, 2025)
 
 **Master Research Roadmap Created** ✅ DOCUMENTED (Nov 9, 2025)
