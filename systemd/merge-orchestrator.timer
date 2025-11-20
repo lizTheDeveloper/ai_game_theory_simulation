@@ -1,0 +1,11 @@
+[Unit]
+Description=Merge Orchestrator Timer - Hourly at :45
+Requires=merge-orchestrator.service
+
+[Timer]
+# Run at :45 past each hour
+OnCalendar=*:45
+Persistent=true
+
+[Install]
+WantedBy=timers.target
