@@ -128,6 +128,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 20: Novel Entities Race Condition Fix** (commit e3f6050)
+- 🔧 **CRITICAL Fix:** Resolved race condition where 3 phases wrote to `boundaries.novel_entities.currentValue`
+  - **Single-owner pattern implemented:** Only PlanetaryBoundariesPhase writes to boundary values
+  - **Intermediate state:** Added `novelEntitiesIncrementalImpact` accumulator field
+  - **Root bug fixed:** PlanetaryBoundariesPhase computed `flooredValue` but never assigned it (classic race condition)
+- ✅ **Phases Refactored:**
+  - IrreversibilityTrackingPhase (coral reef collapse) → writes to incremental impact
+  - UnknownUnknownPhase (gamma-ray burst) → writes to incremental impact
+  - PlanetaryBoundariesPhase → reads increments, computes final, writes once, resets
+- 📋 **Documentation:** All 3 phases now have explicit `@reads` and `@writes` decorators
+- 🎯 **Validation:** N=3 Monte Carlo (120 months) - 0 NaN, 0 race condition errors
+- 📖 **Review:** reviews/race_condition_fix_novelentities_20251120.md
+- 🔗 **Related:** Similar to nitrogen-food coupling single-owner architecture (Nov 20)
+
 **Nov 20: Technical Debt Remediation + Roadmap Maintenance** (commit 562d6d1)
 - 🔧 **TypeScript Fixes:** Resolved duplicate property definitions blocking compilation
   - src/simulation/initialization.ts (duplicate temperature/pH properties)
@@ -618,7 +632,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Actively-used files current (2024-2025 sources): nuclear_winter, ai_governance, death_attribution
   - UPDATE_QUEUE 144 "HIGH" items mostly verification docs (not simulation params)
   - Research currency: 59.1% current (<3yr), 35.9% >5yr (high due to foundational texts)
-- 📝 **Action Items:** Add YAML frontmatter to files missing oldest_source/last_verified, archive old verification docs
+- 📝 **Action Items:** ~~Add YAML frontmatter to files missing oldest_source/last_verified~~ ✅ DONE (Nov 20 - irreversibility_framework, transition_mortality files), archive old verification docs
 - 📅 **Next Review:** Q1 2026 (after 3 months)
 - 📖 **Audit Report:** research/RESEARCH_AUDIT_20251114.md
 
@@ -7578,11 +7592,20 @@ With 95 phases executing each simulation step (reduced from 116), phase ordering
 - **Hard to debug**: "Which phase corrupted this value?" requires binary search
 - **Fragile to maintain**: Decimal ordering (1.0, 2.5, 34.0) requires manual coordination
 
-**Historical example (Oct 28, 2025):**
+**Historical examples:**
+
+**Race condition (Oct 28, 2025):**
 - `CountryPopulationPhase` (order 27.3) ran AFTER `BayesianMortalityResolutionPhase` (order 35.0)
 - It overwrote the mortality-adjusted population values with stale data
 - Bug was silent for months - caught only when assertion utilities added
 - Solution: Delete CountryPopulationPhase entirely
+
+**Novel entities multi-writer bug (Nov 20, 2025):**
+- 3 phases wrote to `boundaries.novel_entities.currentValue` without synchronization
+- PlanetaryBoundariesPhase computed final value but NEVER assigned it (classic race setup)
+- IrreversibilityTrackingPhase and UnknownUnknownPhase directly modified the value
+- Solution: Single-owner pattern with intermediate accumulator (`novelEntitiesIncrementalImpact`)
+- See: reviews/race_condition_fix_novelentities_20251120.md
 
 ### Solution: Explicit Dependencies
 
