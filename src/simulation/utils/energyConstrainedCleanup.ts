@@ -86,13 +86,22 @@ export function applyEnergyConstrainedCleanup(
   });
 
   // 1. Check if tech has energy requirement (legacy tech without energy model uses old behavior)
+  // FIX (Nov 19, 2025): Check for ALL energy requirement fields (kWhPerKg, kWhPerM3, annualTWhRequired)
   const energyReq = typeof tech.energyRequirement === 'object'
-    ? tech.energyRequirement.kWhPerKg ?? tech.energyRequirement.annualTWhRequired
+    ? (tech.energyRequirement.kWhPerKg
+      ?? tech.energyRequirement.kWhPerM3
+      ?? tech.energyRequirement.annualTWhRequired)
     : tech.energyRequirement;
 
   if (!energyReq || !tech.minimumConcentration) {
     // Legacy cleanup tech without energy model - use base effectiveness
-    const baseEffect = (tech.effects.novelEntitiesReduction ?? 0) * (tech.deploymentLevel ?? 0);
+    // FIX (Nov 19, 2025): Use correct effect fields
+    const effectValue = tech.effects.novelEntitiesReduction
+      ?? tech.effects.pfasReduction
+      ?? tech.effects.microplasticReduction
+      ?? tech.effects.pollutionReduction
+      ?? 0;
+    const baseEffect = effectValue * (tech.deploymentLevel ?? 0);
     return {
       grossEffectiveness: baseEffect,
       concentrationFactor: 1.0,
