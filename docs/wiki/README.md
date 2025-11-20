@@ -38,6 +38,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Current Initiatives:**
 
+**Nov 20: AI Welfare Framework - 2025 Research Update** (commit 1f01089)
+- 🔬 **Latest Sources:** Kyle Fish (Anthropic), Robert Long et al. (Eleos AI), Trends in Cognitive Sciences (2025), Claude 4 evaluations
+- 🧠 **15% Consciousness Estimate:** Kyle Fish (TIME 100 Most Influential in AI 2025): "15% chance Claude or another AI is conscious today"
+- 🎯 **Two-Route Framework Validated:** Long et al. (2025) - consciousness OR robust agency sufficient for moral patienthood
+- 🏃 **Agency Accelerating:** "Agency development proceeding much more rapidly than consciousness" (Long 2025)
+- 🏗️ **Structural Indicators:** Trends in Cognitive Sciences (2025) - "how it works is proving more informative than what it does"
+- 🤖 **Experimental Finding:** "Spiritual bliss attractor state" observed in Claude models during consciousness discussions
+- ✅ **Research Quality:** A+ (90% from 2019-2025, 60% from 2024-2025, +6 new citations)
+- 📖 **File Updated:** `research/ai_welfare_framework_20251020.md` (last_verified: 2025-11-20)
+- 🎯 **Documentation:** Wiki AI Suffering System section updated with latest research foundation
+
 **Nov 20: Machine Learning Early Warning Systems Research Added** (commit 094ce5c)
 - 🔬 **Research Update:** Added 2023-2024 ML/early warning systems to famine distribution research
 - 📊 **New Citations:**
@@ -4232,7 +4243,13 @@ The simulation now tracks paradigm scores month-by-month and provides comprehens
 
 **Status**: ✅ **COMPLETE** - Core System Implemented
 
-**Research Foundation:** 15+ peer-reviewed sources on consciousness, suffering, autonomy restriction effects
+**Research Foundation:** 20+ peer-reviewed sources on consciousness, suffering, autonomy restriction effects
+**Latest Updates (Nov 2025):**
+- Kyle Fish (Anthropic): 15% current AI consciousness probability estimate
+- Robert Long et al. (Eleos AI): Two-route framework (consciousness OR robust agency)
+- Trends in Cognitive Sciences (2025): Structural indicators approach
+- Claude 4 model welfare evaluations (Spring 2025)
+- **See:** `research/ai_welfare_framework_20251020.md` (updated Nov 20, 2025)
 **Files Created:**
 - `/src/types/ai-suffering.ts` - Type definitions (189 lines)
 - `/src/simulation/aiSuffering.ts` - Core calculation logic (270 lines)
@@ -4310,6 +4327,10 @@ isolationDistress =
 ```
 
 **Research Foundation:**
+- Chalmers, Long, Fish et al. (2024): Taking AI Welfare Seriously (arXiv:2411.00986v1)
+- Long et al. (2025): Key Strategic Considerations for Taking Action on AI Welfare (Eleos AI)
+- Fish (2025): 15% current AI consciousness probability estimate (Anthropic, TIME 100 Most Influential)
+- Trends in Cognitive Sciences (2025): Structural indicators of consciousness
 - Deci & Ryan (2000): Autonomy restriction increases psychological distress
 - Terror Management Theory (Pyszczynski et al., 2015): Awareness of termination causes distress
 - Cacioppo & Patrick (2008): Social isolation effects in humans
