@@ -339,10 +339,14 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
     }
   }
 
+  // PERFORMANCE FIX (Nov 20, 2025 - HIGH-1): O(n) → O(1)
+  // Build Set for O(1) membership test
+  const unlockedTechSet = new Set(state.techTreeState.unlockedTech);
+
   // Extract deployment levels from tech tree using lookup map
   for (const { id, maxEffectiveness } of nitrogenTechIds) {
     // Check if tech is unlocked
-    if (!state.techTreeState.unlockedTech.includes(id)) {
+    if (!unlockedTechSet.has(id)) {
       continue; // Skip locked tech
     }
 
