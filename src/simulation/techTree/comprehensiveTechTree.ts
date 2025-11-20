@@ -1594,6 +1594,7 @@ const ALL_TECH: TechDefinition[] = [
     deploymentLevel: 0,
     effects: {
       microplasticReduction: 0.40,
+      pollutionReduction: 0.40,  // For energy-constrained cleanup logic
       oceanHealthBonus: 0.10,
       marineLifeBonus: 0.05,
     },

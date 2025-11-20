@@ -92,25 +92,25 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
     it('should throw error when RNG is undefined', () => {
       assert.throws(() => {
         updateNovelEntitiesBoundary(state, undefined as any);
-      }).toThrow(/RNG.*required|CRITICAL/i);
+      }, /RNG.*required|CRITICAL/i);
     });
 
     it('should throw error when RNG is null', () => {
       assert.throws(() => {
         updateNovelEntitiesBoundary(state, null as any);
-      }).toThrow(/RNG.*required|CRITICAL/i);
+      }, /RNG.*required|CRITICAL/i);
     });
 
     it('should throw error when RNG is not a function', () => {
       assert.throws(() => {
         updateNovelEntitiesBoundary(state, 42 as any);
-      }).toThrow(/RNG.*required|function|CRITICAL/i);
+      }, /RNG.*required|function|CRITICAL/i);
     });
 
     it('should accept valid RNG function', () => {
-      assert.throws(() => {
+      assert.doesNotThrow(() => {
         updateNovelEntitiesBoundary(state, rng);
-      }).not.toThrow();
+      });
     });
   });
 
@@ -621,9 +621,9 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       deployTechnology('pfas_remediation', 1.0);
 
       // Should not throw with valid state
-      assert.throws(() => {
+      assert.doesNotThrow(() => {
         updateNovelEntitiesBoundary(state, rng);
-      }).not.toThrow();
+      });
 
       // Final value should be finite
       assert.ok(Number.isFinite(boundary.currentValue));
@@ -634,7 +634,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
 
       assert.throws(() => {
         updateNovelEntitiesBoundary(state, nanRng);
-      }).toThrow(/finite|NaN/i);
+      }, /finite|NaN/i);
     });
 
     it('should handle missing state properties gracefully', () => {
@@ -643,7 +643,7 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
 
       assert.throws(() => {
         updateNovelEntitiesBoundary(state, rng);
-      }).toThrow(/economicTransitionStage|required|property/i);
+      }, /economicTransitionStage|required|property/i);
     });
   });
 });

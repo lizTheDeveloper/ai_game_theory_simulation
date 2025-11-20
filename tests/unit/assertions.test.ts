@@ -399,15 +399,17 @@ describe('Assertion Utilities - Domain-Specific', () => {
     it('should accept valid shock magnitude', () => {
       const result = assertShockMagnitude(0.3, {
         location: 'test',
+        valueName: 'shockMagnitude',
         shockType: 'economic',
       });
       assert.strictEqual(result, 0.3);
     });
 
-    it('should reject negative magnitude', () => {
+    it('should reject out-of-range magnitude', () => {
       assert.throws(() => {
-        assertShockMagnitude(-0.1, {
+        assertShockMagnitude(-1.5, {
           location: 'test',
+          valueName: 'shockMagnitude',
           shockType: 'economic',
         });
       });
@@ -418,7 +420,7 @@ describe('Assertion Utilities - Domain-Specific', () => {
     it('should accept valid allocation', () => {
       const result = assertResourceAllocation(0.25, {
         location: 'test',
-        resourceType: 'research',
+        valueName: 'allocation',
       });
       assert.strictEqual(result, 0.25);
     });
@@ -427,7 +429,7 @@ describe('Assertion Utilities - Domain-Specific', () => {
       assert.throws(() => {
         assertResourceAllocation(-0.1, {
           location: 'test',
-          resourceType: 'research',
+          valueName: 'allocation',
         });
       });
     });
@@ -435,17 +437,23 @@ describe('Assertion Utilities - Domain-Specific', () => {
 
   describe('assertPopulationChange', () => {
     it('should accept valid population change', () => {
-      const result = assertPopulationChange(0.01, {
+      const oldPop = 8.0;
+      const newPop = 8.08; // 1% increase
+      const result = assertPopulationChange(newPop, oldPop, {
         location: 'test',
+        valueName: 'population',
         month: 10,
       });
-      assert.strictEqual(result, 0.01);
+      assert.strictEqual(result, newPop);
     });
 
     it('should reject extreme positive change', () => {
       assert.throws(() => {
-        assertPopulationChange(1.5, {
+        const oldPop = 8.0;
+        const newPop = 20.0; // 150% increase - extreme
+        assertPopulationChange(newPop, oldPop, {
           location: 'test',
+          valueName: 'population',
           month: 10,
         });
       });
@@ -500,18 +508,20 @@ describe('Assertion Utilities - Domain-Specific', () => {
 
   describe('assertAICapability', () => {
     it('should accept valid AI capability', () => {
-      const result = assertAICapability(0.5, {
+      const result = assertAICapability(3, {
         location: 'test',
-        capabilityType: 'physical',
+        valueName: 'capability',
+        dimension: 'physical',
         month: 10,
       });
-      assert.strictEqual(result, 0.5);
+      assert.strictEqual(result, 3);
     });
 
     it('should accept boundary values', () => {
       assert.strictEqual(
         assertAICapability(0, {
           location: 'test',
+          valueName: 'capability',
           capabilityType: 'cognitive',
           month: 10,
         }),
@@ -521,7 +531,8 @@ describe('Assertion Utilities - Domain-Specific', () => {
       assert.strictEqual(
         assertAICapability(1, {
           location: 'test',
-          capabilityType: 'cognitive',
+          valueName: 'capability',
+          dimension: 'cognitive',
           month: 10,
         }),
         1
@@ -532,7 +543,8 @@ describe('Assertion Utilities - Domain-Specific', () => {
       assert.throws(() => {
         assertAICapability(-0.1, {
           location: 'test',
-          capabilityType: 'research',
+          valueName: 'capability',
+          dimension: 'research',
           month: 10,
         });
       });
