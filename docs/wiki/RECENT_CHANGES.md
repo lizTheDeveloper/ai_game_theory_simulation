@@ -4,6 +4,52 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🌊 AMOC Temperature-Dependent Collapse + Irreversibility Citation Fix (November 20, 2025 - commit e8b2a92)
+
+**Status:** ✅ COMPLETE
+**Type:** Research Validation / Parameter Update
+**Priority:** HIGH
+
+**Summary:** Replaced fixed 5% AMOC collapse probability with temperature-dependent function based on research validation. Fixed irreversibility documentation with Thompson et al. (2024) clarification (no contradiction exists).
+
+**Changes:**
+
+1. **AMOC Collapse Probability** (`src/simulation/engine/phases/IrreversibilityTrackingPhase.ts`)
+   - Replaced fixed 5% probability with temperature-dependent function:
+     - <+2°C: ~0.5% annual (extremely unlikely)
+     - +2-2.2°C: ~1-5% annual (outlier tail risk)
+     - +2.2-3°C: ~5-50% annual (rising risk)
+     - +3-3.9°C: ~50-90% annual (high risk)
+     - >+3.9°C: ~90% annual (very likely)
+   - Research: Bellomo et al. Nature Communications (2025), Westen et al. Science Advances (2024)
+   - See: `research/amoc_collapse_probability_20251120.md`
+
+2. **Irreversibility Documentation** (`src/simulation/novelEntities.ts`)
+   - Fixed Kane citation (2020, not 2022)
+   - Added Thompson et al. PNAS Nexus (2024) clarification
+   - Documented uncertainty range (87.5% ± 7.5%)
+   - **Key clarification:** Thompson does NOT contradict 87.5% parameter
+     - Thompson is conceptual analysis, not quantitative empirical study
+     - "60-70% reversible" applies to CLIMATE SYSTEM (precipitation), not persistent pollutants
+     - See: `research/irreversibility_reconciliation_20251120.md` (Grade C, NO CONTRADICTION)
+
+**Research Foundation:**
+- Addresses HIGH priority research validation concern from Daily Review
+- Temperature-dependent probability more accurately reflects research consensus
+- No contradiction between climate system reversibility (60-70%) and Novel Entities irreversibility (87.5%)
+
+**Testing:**
+- Type checking: ✅ PASS
+- Monte Carlo validation: Blocked by unrelated initialization bug (pre-existing)
+
+**Files Changed:**
+- `src/simulation/engine/phases/IrreversibilityTrackingPhase.ts` (AMOC probability function)
+- `src/simulation/novelEntities.ts` (citation fix + Thompson clarification)
+
+**Commit:** e8b2a92784b712effdd10567fd59b1e446800018
+
+---
+
 ## 🔧 Merge Resolution: TypeScript Fixes (November 20, 2025 - commit 5107a45)
 
 **Status:** ✅ COMPLETE
