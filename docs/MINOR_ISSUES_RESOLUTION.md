@@ -67,6 +67,7 @@ All 18 integration tests were failing due to multiple issues:
 3. Redis authentication missing
 4. Jest configuration issues
 5. Database table name mismatch
+6. Role validation constraint (analyst vs operator)
 
 **Impact:**
 - Integration test suite showed 100% failure rate
@@ -188,12 +189,52 @@ DROP TABLE IF EXISTS auth_audit_log CASCADE
 DELETE FROM auth_audit_log
 ```
 
+Also added missing `refresh_tokens` table and PostgreSQL functions (`reset_failed_attempts`, `check_and_lock_account`).
+
+**2F. Role Validation Constraint**
+
+Tests used `role: 'analyst'` but production schema only accepts specific roles.
+
+**Error:**
+```
+400 Bad Request - Validation failed
+```
+
+**Root Cause:**
+The production schema (`auth-schema.sql` line 23) enforces:
+```sql
+CONSTRAINT valid_role CHECK (role IN ('admin', 'operator', 'viewer'))
+```
+
+But tests used `role: 'analyst'` which is not in the allowed list.
+
+**Fix:**
+Updated `src/platform/__tests__/integration/authFlow.test.ts`:
+```typescript
+// Before:
+const testUser = {
+  email: 'test@example.com',
+  password: 'SecurePassword123!',
+  role: 'analyst'  // Not a valid role!
+};
+
+// After:
+const testUser = {
+  email: 'test@example.com',
+  password: 'SecurePassword123!',
+  role: 'operator'  // Valid production role
+};
+```
+
+Also renamed test from "should allow analyst role assignment" to "should allow operator role assignment".
+
 **Benefits:**
 - ✅ Tests now match implementation (API contracts aligned)
 - ✅ Auto-detects PostgreSQL port (handles non-standard configurations)
 - ✅ Redis authentication working (reads password from environment)
 - ✅ Jest parses TypeScript correctly (no config errors)
 - ✅ Database schema matches production (correct table names)
+- ✅ Role validation matches production constraints (only valid roles accepted)
 - ✅ Follows REST API conventions (error field = HTTP status text)
 - ✅ Includes summary message for better UX
 - ✅ Maintains detailed field-level error information
@@ -301,6 +342,7 @@ After deployment, verify:
 - Redis authentication missing
 - Jest configuration errors
 - Database table name mismatch (audit_logs vs auth_audit_log)
+- Role validation constraint (analyst not a valid role)
 
 **All Fixes Applied:**
 - ✅ API contracts aligned (error: "Bad Request")
@@ -308,6 +350,7 @@ After deployment, verify:
 - ✅ Redis password from environment
 - ✅ Jest config cleaned up
 - ✅ Table names match production schema
+- ✅ Role validation fixed (analyst → operator)
 
 **Command:** `./scripts/run_integration_tests.sh` (recommended) or `npm test -- authFlow.test.ts`
 

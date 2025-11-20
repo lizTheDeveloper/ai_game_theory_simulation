@@ -48,7 +48,7 @@ git pull origin claude/build-marcus-agent-016LTPXuAb6A3hYDwTvMjyof
 
 ### Issue 2: Integration Tests (18/18 Failures → All Passing)
 
-**Five blockers resolved:**
+**Six blockers resolved:**
 
 **2A. API Contract Mismatch**
 - Validation errors now return `{ error: "Bad Request" }` instead of `{ error: "Validation failed" }`
@@ -68,6 +68,11 @@ git pull origin claude/build-marcus-agent-016LTPXuAb6A3hYDwTvMjyof
 
 **2E. Database Table Name**
 - Fixed `audit_logs` → `auth_audit_log` (matches production schema)
+- Added missing `refresh_tokens` table and PostgreSQL functions
+
+**2F. Role Validation**
+- Changed test role from 'analyst' to 'operator' (matches production schema constraint)
+- Production only accepts: admin, operator, viewer
 - This was the final blocker
 
 ---
