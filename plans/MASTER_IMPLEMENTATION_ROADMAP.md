@@ -30,7 +30,12 @@
 7. ✅ Nitrogen reversibility - RESOLVED (no contradiction - category error: climate vs. novel entities)
 
 ### Remaining Issues ⚠️
-8. ⚠️ Uncertainty propagation missing (MEDIUM priority)
+8. ⏳ Uncertainty propagation - RESEARCH COMPLETE (Nov 20, 22:00 UTC)
+   - Research analysis: `research/uncertainty_propagation_climate_parameters_20251120.md` (850+ lines)
+   - Handoff document: `.claude/HANDOFF_uncertainty_propagation_20251120.md`
+   - Status: Ready for implementation OR validation-first (research-skeptic)
+   - Priority: MEDIUM (research integrity)
+   - Next: Spawn simulation-maintainer (fast track) OR research-skeptic (quality gate)
 
 **Lesson Learned:** Daily Review automation requires manual validation. 50% false positive rate indicates heuristic improvement needed.
 
