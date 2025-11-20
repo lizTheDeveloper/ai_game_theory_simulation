@@ -96,6 +96,61 @@ describe('Auth Flow Integration Tests', () => {
         failure_reason TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+
+      -- PostgreSQL functions required by AuthService
+      CREATE OR REPLACE FUNCTION reset_failed_attempts(user_id_param INTEGER)
+      RETURNS VOID AS $$
+      BEGIN
+        UPDATE users
+        SET failed_login_attempts = 0,
+            locked_until = NULL,
+            last_login = NOW()
+        WHERE id = user_id_param;
+      END;
+      $$ LANGUAGE plpgsql;
+
+      CREATE OR REPLACE FUNCTION check_and_lock_account(
+        user_email VARCHAR(255),
+        max_attempts INTEGER DEFAULT 5,
+        lockout_minutes INTEGER DEFAULT 15
+      )
+      RETURNS BOOLEAN AS $$
+      DECLARE
+        current_attempts INTEGER;
+        user_id_val INTEGER;
+      BEGIN
+        -- Get user ID and failed attempts
+        SELECT id, failed_login_attempts INTO user_id_val, current_attempts
+        FROM users
+        WHERE email = user_email;
+
+        IF NOT FOUND THEN
+          RETURN false;
+        END IF;
+
+        -- Increment failed attempts
+        UPDATE users
+        SET failed_login_attempts = failed_login_attempts + 1
+        WHERE id = user_id_val;
+
+        -- Check if we should lock the account
+        IF current_attempts + 1 >= max_attempts THEN
+          UPDATE users
+          SET locked_until = NOW() + (lockout_minutes || ' minutes')::INTERVAL,
+              failed_login_attempts = 0
+          WHERE id = user_id_val;
+
+          -- Log the lockout
+          INSERT INTO auth_audit_log (user_id, email, event_type, success, failure_reason)
+          VALUES (user_id_val, user_email, 'account_locked', false,
+                  format('Account locked after %s failed login attempts', max_attempts));
+
+          RETURN true;  -- Account locked
+        END IF;
+
+        RETURN false;  -- Not locked yet
+      END;
+      $$ LANGUAGE plpgsql;
     `);
 
     // Initialize services
@@ -118,6 +173,8 @@ describe('Auth Flow Integration Tests', () => {
     // Clean up database
     await dbPool.query('DROP TABLE IF EXISTS auth_audit_log CASCADE');
     await dbPool.query('DROP TABLE IF EXISTS users CASCADE');
+    await dbPool.query('DROP FUNCTION IF EXISTS reset_failed_attempts(INTEGER) CASCADE');
+    await dbPool.query('DROP FUNCTION IF EXISTS check_and_lock_account(VARCHAR, INTEGER, INTEGER) CASCADE');
 
     await dbPool.end();
     await redisClient.quit();
