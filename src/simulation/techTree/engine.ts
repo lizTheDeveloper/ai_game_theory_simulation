@@ -128,10 +128,15 @@ export function updateTechTree(
   rng: () => number
 ): TechUnlockEvent[] {
   const unlockEvents: TechUnlockEvent[] = [];
-  
+
+  // PERFORMANCE FIX (Nov 20, 2025 - HIGH-1): O(n) → O(1)
+  // Build Set for O(1) membership test (array.includes is O(n))
+  // Impact: 710 operations → 71 operations per step
+  const unlockedTechSet = new Set(techTreeState.unlockedTech);
+
   // 1. Check for tech unlocks
-  const lockedTech = getAllTech().filter(t => 
-    !techTreeState.unlockedTech.includes(t.id) && 
+  const lockedTech = getAllTech().filter(t =>
+    !unlockedTechSet.has(t.id) &&
     (t.status === 'unlockable' || t.status === 'future')
   );
   
@@ -213,15 +218,19 @@ export function checkUnlockConditions(
   blockers: string[];
 } {
   const blockers: string[] = [];
-  
+
+  // PERFORMANCE FIX (Nov 20, 2025 - HIGH-1): O(n) → O(1)
+  // Build Set for O(1) membership test
+  const unlockedTechSet = new Set(techTreeState.unlockedTech);
+
   // Already unlocked?
-  if (techTreeState.unlockedTech.includes(tech.id)) {
+  if (unlockedTechSet.has(tech.id)) {
     return { canUnlock: false, reason: 'Already unlocked', unlockedBy: 'combination', blockers };
   }
-  
+
   // 1. Check prerequisites
   for (const prereqId of tech.prerequisites) {
-    if (!techTreeState.unlockedTech.includes(prereqId)) {
+    if (!unlockedTechSet.has(prereqId)) {
       const prereqTech = getTechById(prereqId);
       blockers.push(`Prerequisite not unlocked: ${prereqTech?.name || prereqId}`);
     }

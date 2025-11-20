@@ -1492,23 +1492,41 @@ timestamp: state.currentMonth,
     
     canExecute: (state) => {
       // Can only seize if private DCs exist
+      // PERFORMANCE FIX (Nov 20, 2025 - HIGH-1): O(n²) → O(n)
+      // Build datacenter ownership index once (O(n)), not in filter (O(n²))
+      const dcOwnership = new Map<string, any>();
+      for (const org of state.organizations) {
+        for (const dcId of org.ownedDataCenters) {
+          dcOwnership.set(dcId, org);
+        }
+      }
+
       const privateDCs = state.computeInfrastructure.dataCenters
         .filter(dc => {
-          const org = state.organizations.find(o => o.ownedDataCenters.includes(dc.id));
+          const org = dcOwnership.get(dc.id);
           return org && org.type === 'private';
         });
-      
+
       return privateDCs.length > 0;
     },
     
-    execute: (state, random, agentId?: string) => {      
+    execute: (state, random, agentId?: string) => {
+      // PERFORMANCE FIX (Nov 20, 2025 - HIGH-1): O(n²) → O(n)
+      // Build datacenter ownership index once (O(n))
+      const dcOwnership = new Map<string, any>();
+      for (const org of state.organizations) {
+        for (const dcId of org.ownedDataCenters) {
+          dcOwnership.set(dcId, org);
+        }
+      }
+
       // Find largest private data center
       const privateDCs = state.computeInfrastructure.dataCenters
         .filter((dc: any) => {
-          const org = state.organizations.find((o: any) => o.ownedDataCenters.includes(dc.id));
+          const org = dcOwnership.get(dc.id);
           return org && org.type === 'private';
         });
-      
+
       if (privateDCs.length === 0) {
         return {
           success: false,
@@ -1517,9 +1535,9 @@ timestamp: state.currentMonth,
           message: 'No private data centers to seize'
         };
       }
-      
+
       const target = privateDCs.sort((a: any, b: any) => b.capacity - a.capacity)[0];
-      const oldOrg = state.organizations.find((o: any) => o.ownedDataCenters.includes(target.id));
+      const oldOrg = dcOwnership.get(target.id);
       const govOrg = state.organizations.find((o: any) => o.type === 'government');
       
       if (!oldOrg || !govOrg) {

@@ -87,6 +87,14 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
       additionalInfo: { reason: 'RNG required for deterministic simulation' }
     });
 
+    // CRITICAL: transitionManagementSystem state must exist after bootstrap
+    assertDefined(state.transitionManagementSystem, {
+      location: 'CoordinatedDeploymentPhase.execute',
+      valueName: 'transitionManagementSystem',
+      month: state.currentMonth,
+      additionalInfo: { reason: 'transitionManagementSystem state missing after bootstrap' }
+    });
+
     const transition = state.transitionManagementSystem;
 
     // === STEP 1: Assess Coordination Quality ===
