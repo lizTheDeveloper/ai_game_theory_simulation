@@ -66,7 +66,10 @@ async function profileSimulation() {
     engine.orchestrator.enablePerformanceTiming();
     engine.orchestrator.setSlowPhaseThreshold(5);
 
-    const state = createDefaultInitialState();
+    // Get RNG from engine (matches worker pattern)
+    const seededRng = engine.getRNG();
+    const rngFunction = () => seededRng.next();
+    const state = createDefaultInitialState(rngFunction);
     const runStart = performance.now();
     const result = engine.run(state);
     const runDuration = performance.now() - runStart;
