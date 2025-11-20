@@ -23,7 +23,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **SYSTEM HEALTH:**
 - **Research Quality:** A- (4 CRITICAL parameter fixes applied, nitrogen-food coupling validated) ✅ EXCELLENT
 - **Implementation Fidelity:** B+ (nitrogen-food coupling complete, architecture fixes applied) ✅ GOOD
-- **Architecture Health:** GOOD (3 HIGH priority issues from daily review all debunked - see roy_performance_investigation_20251120.md) ✅ RESTORED
+- **Architecture Health:** GOOD (3 HIGH priority issues from daily review all debunked - see performance_false_alarm_debunked_20251120.md) ✅ RESTORED
 - **System Trajectory:** 🟢 STABLE (False alarm investigation complete, actual performance within budget: 79-114ms avg)
 
 **✅ Performance Optimization Complete (Nov 20, 2025):**
@@ -32,13 +32,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Changes:** 7 optimizations across 7 files (indices infrastructure, Set-based lookups)
 - **Validation:** Monte Carlo N=10 (5 successful runs, 0.066-0.081s/month)
 - **Documentation:** `devlogs/performance_optimization_20251120.md`
-- **Previous Investigation (Nov 20):** 3 "HIGH priority" issues were false alarms
-  - Issue 1: Performance regression (7x slowdown) - DEBUNKED (actual: 79-114ms, within 120ms budget)
+- **Performance False Alarm Investigation (Nov 20):** 3 "HIGH priority" issues were false alarms
+  - Issue 1: Performance regression (7x slowdown) - DEBUNKED (actual: 56.98ms avg, 79-114ms profile, well within 120ms budget)
   - Issue 2: Nuclear winter type mismatch - DOESN'T EXIST (TypeScript: 0 errors)
   - Issue 3: Technology linear searches - NOT A BOTTLENECK (1.2μs vs 50ms AI logic)
-  - Root cause: Broken profiling script (missing RNG) + speculation escalated without validation
-  - Lesson: Run diagnostics BEFORE claiming regressions
-  - See: `reviews/roy_performance_investigation_20251120.md`
+  - Root cause: Broken profiling/benchmark scripts (missing RNG after CRITICAL-3 fix) + speculation escalated without validation
+  - Time wasted: 105 minutes debugging non-existent issue
+  - Lesson: ALWAYS measure BEFORE claiming regressions
+  - See: `reviews/performance_false_alarm_debunked_20251120.md` (comprehensive), `reviews/roy_performance_investigation_20251120.md` (initial)
 
 **Current Initiatives:**
 
@@ -3323,13 +3324,13 @@ const baseMortalityRate = assertStateProperty(
 - **Optimization impact:** <1ms benefit (not worth complexity)
 
 **Root Cause Analysis:**
-- Broken profiling script prevented actual measurements
+- Broken profiling/benchmark scripts prevented actual measurements (missing RNG after Nov 7 CRITICAL-3 fix)
 - Speculation escalated to urgency without validation
-- 75 minutes spent debunking false alarms
+- 105 minutes spent debunking false alarms (2 investigations on same day)
 
-**Lesson:** Run diagnostics BEFORE claiming regressions. Validate with data, not speculation.
+**Lesson:** ALWAYS run diagnostics BEFORE claiming regressions. Validate with data, not speculation.
 
-**Documentation:** `reviews/roy_performance_investigation_20251120.md`
+**Documentation:** `reviews/performance_false_alarm_debunked_20251120.md` (comprehensive), `reviews/roy_performance_investigation_20251120.md` (initial)
 
 ### Research-Validated Domain Bounds
 
