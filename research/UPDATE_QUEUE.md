@@ -1,11 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 11/19/2025, 10:30:04 PM
-**Files Scanned:** 473
-=======
-**Generated:** 11/19/2025, 8:30:04 PM
-**Files Scanned:** 470
->>>>>>> Stashed changes
+**Generated:** 11/20/2025, 8:30:04 AM
+**Files Scanned:** 479
 
 ---
 
@@ -17,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 161 (34.0%)
+**Count:** 163 (34.0%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -223,6 +218,11 @@
 - **Oldest source:** 1999 (26 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/ai_coordination_transition_management_20251117.md`
+
+### `ai_coordination_transition_management_20251120.md`
+- **Oldest source:** 1998 (27 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_coordination_transition_management_20251120.md`
 
 ### `ai_governance_international_coordination_20251113.md`
 - **Oldest source:** 1998 (27 years old)
@@ -463,6 +463,11 @@
 - **Oldest source:** 2008 (17 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/instrumental_convergence_citation_verification_20251029.md`
+
+### `integrity_validation_20251120.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/integrity_validation_20251120.md`
 
 ### `irreversibility_framework_20251116.md`
 - **Oldest source:** 2011 (14 years old)
@@ -828,7 +833,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 22 (4.7%)
+**Count:** 22 (4.6%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -857,11 +862,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< Updated upstream
-**Count:** 290 (61.3%)
-=======
-**Count:** 287 (61.1%)
->>>>>>> Stashed changes
+**Count:** 294 (61.4%)
 
 All sources <3 years old. No action required.
 
@@ -871,19 +872,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< Updated upstream
-| Total files | 473 |
-=======
-| Total files | 470 |
->>>>>>> Stashed changes
+| Total files | 479 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 161 (34.0%) |
-| MEDIUM | 22 (4.7%) |
-<<<<<<< Updated upstream
-| LOW | 290 (61.3%) |
-=======
-| LOW | 287 (61.1%) |
->>>>>>> Stashed changes
+| HIGH | 163 (34.0%) |
+| MEDIUM | 22 (4.6%) |
+| LOW | 294 (61.4%) |
 | Average age | 7.5 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -891,13 +884,9 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< Updated upstream
-| Current (<3yr) | 290 | 61.3% |
-=======
-| Current (<3yr) | 287 | 61.1% |
->>>>>>> Stashed changes
-| Warning (3-5yr) | 22 | 4.7% |
-| Critical (>5yr) | 161 | 34.0% |
+| Current (<3yr) | 294 | 61.4% |
+| Warning (3-5yr) | 22 | 4.6% |
+| Critical (>5yr) | 163 | 34.0% |
 
 ### Targets
 
@@ -909,7 +898,7 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-1. Update 161 HIGH priority file(s) within 1 month
+1. Update 163 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 

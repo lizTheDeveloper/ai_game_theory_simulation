@@ -1,0 +1,300 @@
+{
+  "config": {
+    "runs": 3,
+    "maxMonths": 12,
+    "baseSeed": 42,
+    "outputDir": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/performance_profile_20251120"
+  },
+  "timestamp": "2025-11-20T08:14:12.694Z",
+  "budgetTarget": 120,
+  "overallStats": {
+    "meanAvgStep": 97.82778969444443,
+    "meanP95Step": 156.86170399999983,
+    "peakStep": 230.28829100000007,
+    "budgetUsage": 81.52315807870369,
+    "budgetViolation": false
+  },
+  "orchestrationOverhead": {
+    "totalPhaseTimeMs": 1161.6999999999998,
+    "totalStepTimeMs": 1173.9334763333331,
+    "overheadMs": 12.233476333333329,
+    "overheadPct": 1.042092808490597,
+    "perPhaseOverheadMs": 0.14061467049808424
+  },
+  "top20Phases": [
+    {
+      "name": "AI Agent Actions",
+      "meanAvgMs": 46.583333333333336,
+      "meanTotalMs": 559.0333333333333,
+      "meanMaxMs": 64.10666666666667,
+      "meanCalls": 12,
+      "cv": 10.724537740861052
+    },
+    {
+      "name": "Social Influence Update",
+      "meanAvgMs": 21.343333333333334,
+      "meanTotalMs": 256.1333333333333,
+      "meanMaxMs": 30.713333333333335,
+      "meanCalls": 12,
+      "cv": 10.293626467992354
+    },
+    {
+      "name": "Technology Tree Update",
+      "meanAvgMs": 10.886666666666665,
+      "meanTotalMs": 130.66666666666666,
+      "meanMaxMs": 20.596666666666668,
+      "meanCalls": 12,
+      "cv": 15.071827113367178
+    },
+    {
+      "name": "AI Population Lifecycle",
+      "meanAvgMs": 2.1366666666666663,
+      "meanTotalMs": 25.666666666666668,
+      "meanMaxMs": 4.026666666666666,
+      "meanCalls": 12,
+      "cv": 19.864930722416926
+    },
+    {
+      "name": "Benchmark Evaluations",
+      "meanAvgMs": 1.03,
+      "meanTotalMs": 12.433333333333332,
+      "meanMaxMs": 2.6166666666666667,
+      "meanCalls": 12,
+      "cv": 12.977305926060467
+    },
+    {
+      "name": "Organization Turns",
+      "meanAvgMs": 0.9833333333333333,
+      "meanTotalMs": 11.766666666666666,
+      "meanMaxMs": 2.6666666666666665,
+      "meanCalls": 12,
+      "cv": 33.2790902136268
+    },
+    {
+      "name": "Government Agent Actions",
+      "meanAvgMs": 0.9266666666666667,
+      "meanTotalMs": 11.133333333333333,
+      "meanMaxMs": 2.73,
+      "meanCalls": 12,
+      "cv": 22.033658749803678
+    },
+    {
+      "name": "Human Survival System",
+      "meanAvgMs": 0.7566666666666667,
+      "meanTotalMs": 9.1,
+      "meanMaxMs": 2.57,
+      "meanCalls": 12,
+      "cv": 34.46837469959217
+    },
+    {
+      "name": "Planetary Boundaries System",
+      "meanAvgMs": 0.67,
+      "meanTotalMs": 8,
+      "meanMaxMs": 2.22,
+      "meanCalls": 12,
+      "cv": 42.37334198978624
+    },
+    {
+      "name": "Minimal Suffering Indicators",
+      "meanAvgMs": 0.6,
+      "meanTotalMs": 7.166666666666667,
+      "meanMaxMs": 3.1933333333333334,
+      "meanCalls": 12,
+      "cv": 23.13406979295224
+    },
+    {
+      "name": "Memetic Evolution",
+      "meanAvgMs": 0.5166666666666666,
+      "meanTotalMs": 6.2,
+      "meanMaxMs": 1.3866666666666667,
+      "meanCalls": 12,
+      "cv": 28.372430228769062
+    },
+    {
+      "name": "AI Alignment Evolution",
+      "meanAvgMs": 0.45333333333333337,
+      "meanTotalMs": 5.466666666666666,
+      "meanMaxMs": 1.16,
+      "meanCalls": 12,
+      "cv": 36.484224206044935
+    },
+    {
+      "name": "Human Population Dynamics",
+      "meanAvgMs": 0.45333333333333337,
+      "meanTotalMs": 5.466666666666666,
+      "meanMaxMs": 2.1566666666666667,
+      "meanCalls": 12,
+      "cv": 40.84689533038572
+    },
+    {
+      "name": "Resource Economy Update",
+      "meanAvgMs": 0.4266666666666667,
+      "meanTotalMs": 5.133333333333334,
+      "meanMaxMs": 1.46,
+      "meanCalls": 12,
+      "cv": 63.53633003546082
+    },
+    {
+      "name": "Bayesian Mortality Resolution",
+      "meanAvgMs": 0.4166666666666667,
+      "meanTotalMs": 5.033333333333333,
+      "meanMaxMs": 1.11,
+      "meanCalls": 12,
+      "cv": 56.60247344418793
+    },
+    {
+      "name": "Quality of Life Systems",
+      "meanAvgMs": 0.37666666666666665,
+      "meanTotalMs": 4.566666666666666,
+      "meanMaxMs": 1.37,
+      "meanCalls": 12,
+      "cv": 48.34159392477049
+    },
+    {
+      "name": "Cooperative Systems Update",
+      "meanAvgMs": 0.36333333333333334,
+      "meanTotalMs": 4.333333333333333,
+      "meanMaxMs": 1.03,
+      "meanCalls": 12,
+      "cv": 32.74599687628395
+    },
+    {
+      "name": "International Relations Update",
+      "meanAvgMs": 0.3466666666666667,
+      "meanTotalMs": 4.166666666666667,
+      "meanMaxMs": 1.4333333333333336,
+      "meanCalls": 12,
+      "cv": 47.59372565678685
+    },
+    {
+      "name": "Extinction System",
+      "meanAvgMs": 0.33666666666666667,
+      "meanTotalMs": 4.066666666666667,
+      "meanMaxMs": 1.3033333333333335,
+      "meanCalls": 12,
+      "cv": 49.246851942359946
+    },
+    {
+      "name": "Climate System",
+      "meanAvgMs": 0.33666666666666667,
+      "meanTotalMs": 4,
+      "meanMaxMs": 1.3566666666666667,
+      "meanCalls": 12,
+      "cv": 33.105452469901955
+    }
+  ],
+  "highVariancePhases": [
+    {
+      "name": "Resource Economy Update",
+      "meanAvgMs": 0.4266666666666667,
+      "meanTotalMs": 5.133333333333334,
+      "meanMaxMs": 1.46,
+      "meanCalls": 12,
+      "cv": 63.53633003546082
+    },
+    {
+      "name": "Bayesian Mortality Resolution",
+      "meanAvgMs": 0.4166666666666667,
+      "meanTotalMs": 5.033333333333333,
+      "meanMaxMs": 1.11,
+      "meanCalls": 12,
+      "cv": 56.60247344418793
+    },
+    {
+      "name": "Extreme Weather Events",
+      "meanAvgMs": 0.29000000000000004,
+      "meanTotalMs": 3.5,
+      "meanMaxMs": 2.78,
+      "meanCalls": 12,
+      "cv": 117.03836378260095
+    },
+    {
+      "name": "Multi-Paradigm DUI Update",
+      "meanAvgMs": 0.22,
+      "meanTotalMs": 2.6666666666666665,
+      "meanMaxMs": 1.12,
+      "meanCalls": 12,
+      "cv": 61.09650046562409
+    },
+    {
+      "name": "Emergency Response",
+      "meanAvgMs": 0.16333333333333333,
+      "meanTotalMs": 1.9666666666666668,
+      "meanMaxMs": 0.6333333333333333,
+      "meanCalls": 12,
+      "cv": 55.740817484684335
+    },
+    {
+      "name": "Consciousness Governance",
+      "meanAvgMs": 0.15333333333333335,
+      "meanTotalMs": 1.8666666666666665,
+      "meanMaxMs": 0.5433333333333333,
+      "meanCalls": 12,
+      "cv": 54.39128697042089
+    },
+    {
+      "name": "Transition Mortality",
+      "meanAvgMs": 0.14333333333333334,
+      "meanTotalMs": 1.7333333333333334,
+      "meanMaxMs": 0.5033333333333333,
+      "meanCalls": 12,
+      "cv": 62.48850624439258
+    },
+    {
+      "name": "Compute Growth (Moore's Law)",
+      "meanAvgMs": 0.14,
+      "meanTotalMs": 1.7000000000000002,
+      "meanMaxMs": 0.42333333333333334,
+      "meanCalls": 12,
+      "cv": 74.45950367196139
+    },
+    {
+      "name": "Antimicrobial Resistance",
+      "meanAvgMs": 0.13,
+      "meanTotalMs": 1.5999999999999999,
+      "meanMaxMs": 0.37000000000000005,
+      "meanCalls": 12,
+      "cv": 65.5728812950996
+    },
+    {
+      "name": "AI-Assisted Skills Metrics",
+      "meanAvgMs": 0.11,
+      "meanTotalMs": 1.2999999999999998,
+      "meanMaxMs": 0.4333333333333334,
+      "meanCalls": 12,
+      "cv": 57.97311051426966
+    }
+  ],
+  "runs": [
+    {
+      "run": 1,
+      "seed": 42,
+      "totalDurationMs": 1468.7358800000002,
+      "monthsSimulated": 13,
+      "avgStepMs": 114.14393816666667,
+      "maxStepMs": 230.28829100000007,
+      "minStepMs": 80.19167300000004,
+      "p95StepMs": 230.28829100000007
+    },
+    {
+      "run": 2,
+      "seed": 43,
+      "totalDurationMs": 1293.6850239999999,
+      "monthsSimulated": 13,
+      "avgStepMs": 99.99000008333341,
+      "maxStepMs": 133.25806899999998,
+      "minStepMs": 81.63037299999996,
+      "p95StepMs": 133.25806899999998
+    },
+    {
+      "run": 3,
+      "seed": 44,
+      "totalDurationMs": 1025.6103360000002,
+      "monthsSimulated": 13,
+      "avgStepMs": 79.34943083333319,
+      "maxStepMs": 107.03875199999948,
+      "minStepMs": 56.38741499999969,
+      "p95StepMs": 107.03875199999948
+    }
+  ]
+}
