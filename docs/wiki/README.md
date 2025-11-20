@@ -153,6 +153,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - ✅ currentRegime deterministic
 - 🎯 **Impact:** Confirms Nov 14 dependency declarations successfully fixed CRITICAL-1 race condition
 
+**Nov 19: Planetary Boundaries & Tipping Points - COP30 2025 Update** (commit 911de02)
+- 📚 **Latest Sources:** Global Tipping Points Report 2025 (COP30 November release), PIK Planetary Health Check 2024, BioScience 2025
+- 🚨 **FIRST TIPPING POINT CROSSED:** Warm-water coral reefs confirmed at 1.4°C (no longer "likely" - now definitive)
+- 🌊 **7th Boundary Transgressed:** Ocean acidification documented as 7th crossed limit (2025, PIK Planetary Health Check)
+- ⚠️ **Overshoot Risk:** Even with temperature reversal, tipping risk remains HIGH due to hysteresis (ice sheets, coral ecosystems)
+- 🌍 **Cascading Systems:** Amazon + AMOC + Greenland + W. Antarctic identified as high-risk cascade cluster
+- 👥 **Human Impact:** 2B people exposed to lethal heat at 2°C warming
+- 🔬 **Language Shift:** BioScience 2025 describes Earth as "planet on the brink" (escalation from "risk" to "brink")
+- 📖 **Documentation:** research/planetary_boundaries_tipping_points_2024_2025.md (updated, 3 new 2025 sources)
+- ⚠️ **Status:** NEEDS VALIDATION - Verification file created (verification_911de02_20251119.md)
+- 🎯 **Priority:** HIGH - Coral reef status change + overshoot hysteresis affect tipping cascade mechanics
+- 🔄 **Workflow:** Queued for orchestrator validation (citation + claim verification required)
+
 **Nov 15: Planetary Boundaries & Tipping Points 2025 Research Update** (commit d88ce24)
 - 📚 **New Research:** Comprehensive 2025 update from Rockström (2025) & BioScience 2025 State of Climate
 - 🚨 **Critical Updates:** 7/9 planetary boundaries transgressed (up from 6), ocean acidification crossed 2020
