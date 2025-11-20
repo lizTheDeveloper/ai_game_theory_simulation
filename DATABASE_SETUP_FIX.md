@@ -22,99 +22,114 @@ ERROR:  relation "users" does not exist
 
 ## ✅ Solution: Run Migrations
 
-### Step 1: Apply Complete Schema Migration
+### Step 1: Apply All Migrations (RECOMMENDED)
 
 **On your VM, run:**
 ```bash
 cd /home/g7throwawayplz/ai_game_theory_simulation
 
-# Apply the complete schema migration (creates users table + initial data)
-sudo -u postgres psql -d marcus_test -f src/platform/database/migrations/005_complete_schema.sql
+# Pull the latest migration script
+git pull origin claude/build-marcus-agent-016LTPXuAb6A3hYDwTvMjyof
+
+# Run the comprehensive migration script
+./scripts/apply_all_migrations.sh
 ```
 
 **What this does:**
-- Drops and recreates: `users`, `citation_analyses`, `agent_behaviors`, `audit_logs` tables
-- Creates all necessary indices
-- Creates default admin user: `admin@marcus.local` (password: `SecurePassword123!`)
-- Creates test user: `test@example.com`
+- Copies migration files to /tmp (where postgres user can access them)
+- Applies migrations 003, 004, 005, 006 in order
+- Creates tables in BOTH `marcus_test` and `marcus` databases
+- Verifies tables and users after each database
+- Shows summary and next steps
+
+**Migrations applied:**
+- **003:** CSP violations tracking table
+- **004:** Password reset tokens table
+- **005:** Complete schema (users, citation_analyses, agent_behaviors, audit_logs)
+- **006:** Agent system schema
 
 **Expected output:**
 ```
-DROP TABLE
-DROP TABLE
-DROP TABLE
-DROP TABLE
-CREATE TABLE
-CREATE TABLE
-CREATE TABLE
-CREATE TABLE
-CREATE INDEX
-CREATE INDEX
-...
-INSERT 0 1
-INSERT 0 1
+🔄 MARCUS 3.0 - Database Migration Script
+==========================================
 
- tablename
------------------
+📁 Copying migration files to /tmp...
+✅ Available migrations:
+003_csp_violations.sql
+004_password_reset_tokens.sql
+005_complete_schema.sql
+006_agent_system_schema.sql
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Applying migrations to database: marcus_test
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 Applying migration 003 (CSP violations)...
+✅ Migration 003 applied
+
+📋 Applying migration 004 (password reset tokens)...
+✅ Migration 004 applied
+
+📋 Applying migration 005 (complete schema - users, citations, agents, audit)...
+✅ Migration 005 applied
+
+📋 Applying migration 006 (agent system)...
+✅ Migration 006 applied
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ All migrations applied to marcus_test
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 Tables in marcus_test:
  agent_behaviors
+ agent_states
  audit_logs
  citation_analyses
+ csp_violations
+ password_reset_tokens
  users
-(4 rows)
 
- user_count
-------------
-          2
-(1 row)
-```
+✅ Users table exists
 
----
-
-### Step 2: Apply Agent System Schema Migration
-
-**Run:**
-```bash
-sudo -u postgres psql -d marcus_test -f src/platform/database/migrations/006_agent_system_schema.sql
-```
-
-**What this does:**
-- Creates additional tables for agent system (if not already present)
-- Extends agent functionality tables
-
----
-
-### Step 3: Verify Tables Created
-
-**Check that tables exist:**
-```bash
-sudo -u postgres psql -d marcus_test -c "\dt"
-```
-
-**Expected output:**
-```
-                  List of relations
- Schema |       Name        | Type  |  Owner
---------+-------------------+-------+----------
- public | agent_behaviors   | table | postgres
- public | audit_logs        | table | postgres
- public | citation_analyses | table | postgres
- public | users             | table | postgres
-(4 rows)
-```
-
-**Check admin user exists:**
-```bash
-sudo -u postgres psql -d marcus_test -c "SELECT email, role, is_active FROM users;"
-```
-
-**Expected output:**
-```
+👥 Users in marcus_test:
         email         | role     | is_active
 ----------------------+----------+-----------
  admin@marcus.local   | admin    | t
  test@example.com     | operator | t
-(2 rows)
+
+[Same output for marcus database...]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ DATABASE MIGRATIONS COMPLETE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+---
+
+### Step 2: Verify Migration Success (Optional)
+
+**The migration script already shows verification, but you can double-check:**
+
+```bash
+# Check tables in marcus_test
+sudo -u postgres psql -d marcus_test -c "\dt"
+
+# Check admin user exists
+sudo -u postgres psql -d marcus_test -c "SELECT email, role, is_active FROM users;"
+```
+
+**Expected tables:**
+- agent_behaviors
+- agent_states (existing)
+- audit_logs
+- citation_analyses
+- csp_violations
+- password_reset_tokens
+- users
+
+**Expected users:**
+- admin@marcus.local (admin role, active)
+- test@example.com (operator role, active)
 
 ---
 
@@ -297,28 +312,39 @@ curl -X POST http://localhost:3000/api/auth/login \
 
 ## 🎯 Quick Command Summary
 
-**Complete database setup:**
+**Complete database setup (RECOMMENDED - use the migration script):**
 ```bash
 cd /home/g7throwawayplz/ai_game_theory_simulation
 
-# 1. Run migrations
-sudo -u postgres psql -d marcus_test -f src/platform/database/migrations/005_complete_schema.sql
-sudo -u postgres psql -d marcus_test -f src/platform/database/migrations/006_agent_system_schema.sql
+# 1. Pull latest code (includes migration script)
+git pull origin claude/build-marcus-agent-016LTPXuAb6A3hYDwTvMjyof
 
-# 2. Verify tables
-sudo -u postgres psql -d marcus_test -c "\dt"
+# 2. Run comprehensive migration script
+./scripts/apply_all_migrations.sh
 
-# 3. Fix script email (Option A - edit script)
-sed -i 's/admin@marcus-platform.local/admin@marcus.local/' scripts/change_admin_password.sh
-
-# 4. Run admin password script
+# 3. Run admin password change script (already fixed)
 sudo ./scripts/change_admin_password.sh
+
+# 4. Save credentials to password manager!
 
 # 5. Restart platform
 sudo systemctl restart marcus-platform
 
 # 6. Run tests
 npm test
+```
+
+**Alternative: Manual migration (if script fails):**
+```bash
+cd /tmp
+cp ~/ai_game_theory_simulation/src/platform/database/migrations/*.sql .
+sudo -u postgres psql -d marcus_test -f 003_csp_violations.sql
+sudo -u postgres psql -d marcus_test -f 004_password_reset_tokens.sql
+sudo -u postgres psql -d marcus_test -f 005_complete_schema.sql
+sudo -u postgres psql -d marcus_test -f 006_agent_system_schema.sql
+sudo -u postgres psql -d marcus_test -c "\dt"
+rm *.sql
+cd ~/ai_game_theory_simulation
 ```
 
 ---
