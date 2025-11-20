@@ -37,7 +37,7 @@ import {
 export class IrreversibilityTrackingPhase implements SimulationPhase {
   readonly id = 'irreversibility_tracking';
   readonly name = 'Irreversibility Tracking';
-  readonly order = 21.5; // After planetary boundaries (21.0), before crisis detection
+  readonly order = 21.4; // After planetary boundaries (21.0), before legacy nutrients (21.5)
 
   readonly dependencies = ['planetary_boundaries'] as const;
 

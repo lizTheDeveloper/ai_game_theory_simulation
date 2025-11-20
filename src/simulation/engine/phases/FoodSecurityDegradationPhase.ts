@@ -23,19 +23,17 @@ import {
   assertInRange,
   assertStateProperty
 } from '@/simulation/utils/assertions';
-import { updateNitrogenFoodCoupling } from '@/simulation/nitrogenFoodCoupling';
 
 export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly id = 'food-security-degradation';
   readonly name = 'Food Security Degradation';
-  readonly order = 19.7;  // AFTER QualityOfLifePhase (19.5), BEFORE population (20.5)
+  readonly order = 19.7;  // AFTER QualityOfLifePhase (19.5), BEFORE HumanPopulationPhase (20.52)
 
   // DEPENDENCIES (Nov 6, 2025): Requires quality of life baseline calculation
-  // UPDATED (Nov 17, 2025): Added planetary_boundaries to ensure nitrogen-food coupling runs first
+  // UPDATED (Nov 20, 2025): No longer calls updateNitrogenFoodCoupling - just reads state
   readonly dependencies = [
     'quality-of-life',          // Order 19.5: Food baseline calculated
     'extreme-weather-events',   // Order 15.2: Weather disrupts food production
-    'planetary_boundaries',     // Order 21.0: Nitrogen-food coupling updates regional nitrogen state
   ];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
@@ -50,26 +48,11 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       return { events: [] };
     }
 
-    // === TIER 2 HIGH: UPDATE NITROGEN-FOOD COUPLING (Nov 15, 2025) ===
-    // Calculate regional nitrogen reduction effects from deployed technologies
+    // === TIER 2 HIGH: NITROGEN-FOOD COUPLING (Nov 15, 2025) ===
+    // NitrogenFoodCouplingPhase (order 19.6) already updated regionalNitrogenManagement state.
+    // This phase (19.7) just READS the results and applies them to food security.
     // Research: Science Advances (2024), Zhang et al. (2021)
     // Expected impact: Realistic nitrogen-food trade-offs with regional differentiation
-    if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
-      const { updateNitrogenFoodCoupling, getNitrogenReductionDeployment } = require('../../nitrogenFoodCoupling');
-
-      // Extract nitrogen-reducing technology deployment levels from tech tree
-      // Technologies (research-backed):
-      // 1. Precision Agriculture (30% reduction)
-      // 2. Biological Nitrogen Fixation (25% reduction)
-      // 3. Circular Food Systems (20% reduction)
-      // 4. Ecosystem Restoration (15% reduction)
-      // 5. Nitrogen Monitoring Networks (10% reduction)
-      // 6. Green Ammonia Production (40% reduction)
-      const nitrogenTechEffectiveness = getNitrogenReductionDeployment(state);
-
-      // Call nitrogen coupling update - this updates regionalNitrogenManagement state
-      updateNitrogenFoodCoupling(state, nitrogenTechEffectiveness);
-    }
 
     // Validate required systems (use assertions for cleaner error messages)
     const phosphorusReserves = assertStateProperty(state.phosphorusSystem, 'reserves', {

@@ -306,42 +306,54 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
     return deployments; // Return empty array if no tech tree
   }
 
-  // Extract deployment levels from tech tree
-  // Tech tree uses regional deployment, so we aggregate across all regions
+  // HIGH-4 FIX (Nov 20, 2025): O(n²) → O(n+m) optimization using lookup map
+  // Build lookup map: techId → { totalDeployment, regionCount }
+  // Reduces from O(n×m×p) to O(m×p + n) where n=nitrogenTechs, m=regions, p=deployedTechs
+  const deploymentMap = new Map<string, { totalDeployment: number; regionCount: number }>();
+
+  for (const region in state.techTreeState.regionalDeployment) {
+    const regionalTechs = state.techTreeState.regionalDeployment[region];
+    if (!regionalTechs) continue;
+
+    for (const deployedTech of regionalTechs) {
+      const existing = deploymentMap.get(deployedTech.techId);
+      if (existing) {
+        existing.totalDeployment += deployedTech.deploymentLevel;
+        existing.regionCount++;
+      } else {
+        deploymentMap.set(deployedTech.techId, {
+          totalDeployment: deployedTech.deploymentLevel,
+          regionCount: 1
+        });
+      }
+    }
+  }
+
+  // Extract deployment levels from tech tree using lookup map
   for (const { id, maxEffectiveness } of nitrogenTechIds) {
     // Check if tech is unlocked
     if (!state.techTreeState.unlockedTech.includes(id)) {
       continue; // Skip locked tech
     }
 
-    // Aggregate deployment across all regions
-    let totalDeployment = 0;
-    let regionCount = 0;
+    // Lookup aggregated deployment from map (O(1) instead of O(m×p))
+    const deployment = deploymentMap.get(id);
+    if (!deployment) continue;
 
-    for (const region in state.techTreeState.regionalDeployment) {
-      const regionalTechs = state.techTreeState.regionalDeployment[region];
-      const deployedTech = regionalTechs?.find(t => t.techId === id);
-
-      if (deployedTech) {
-        totalDeployment += deployedTech.deploymentLevel;
-        regionCount++;
-      }
-    }
+    const { totalDeployment, regionCount } = deployment;
 
     // Calculate average deployment across regions
-    if (regionCount > 0) {
-      const avgDeployment = totalDeployment / regionCount;
+    const avgDeployment = totalDeployment / regionCount;
 
-      // Validate deployment level
-      const validatedDeployment = assertProbability(avgDeployment, {
-        location: 'getNitrogenReductionDeployment',
-        valueName: `${id}.deploymentLevel`,
-        additionalInfo: { regionCount, totalDeployment }
-      });
+    // Validate deployment level
+    const validatedDeployment = assertProbability(avgDeployment, {
+      location: 'getNitrogenReductionDeployment',
+      valueName: `${id}.deploymentLevel`,
+      additionalInfo: { regionCount, totalDeployment }
+    });
 
-      // Add weighted effectiveness
-      deployments.push(validatedDeployment * maxEffectiveness);
-    }
+    // Add weighted effectiveness
+    deployments.push(validatedDeployment * maxEffectiveness);
   }
 
   return deployments;
@@ -357,15 +369,27 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
  * 4. Aggregate to global food production index
  * 5. Update regional management state (separate read/write for safety)
  *
+ * CRITICAL: This function MUST be called exactly ONCE per simulation step
+ * to avoid read-modify-write race conditions.
+ *
  * @param state - Current game state
  * @returns Global food production multiplier [0, 2] where 1.0 = baseline
  */
 export function updateNitrogenFoodCoupling(state: GameState): number {
-  // Initialize regional management if not present
+  // CRITICAL-2 FIX: Assertion to detect multiple calls per step
   if (!state.planetaryBoundariesSystem.regionalNitrogenManagement) {
-    console.log('⚠️ WARNING: regionalNitrogenManagement not initialized, creating default');
-    state.planetaryBoundariesSystem.regionalNitrogenManagement = initializeRegionalNitrogenManagement();
+    throw new Error('❌ CRITICAL: regionalNitrogenManagement not initialized. Must be created in initialization.ts.');
   }
+
+  // Track last update month to detect multiple calls per step
+  const nitrogenState = state.planetaryBoundariesSystem.regionalNitrogenManagement;
+  if ((nitrogenState as any).__lastUpdateMonth === state.currentMonth) {
+    throw new Error(
+      `❌ CRITICAL: updateNitrogenFoodCoupling called multiple times in month ${state.currentMonth}. ` +
+      `This creates read-modify-write race conditions. Check phase execution order.`
+    );
+  }
+  (nitrogenState as any).__lastUpdateMonth = state.currentMonth;
 
   const regions = state.planetaryBoundariesSystem.regionalNitrogenManagement;
 
