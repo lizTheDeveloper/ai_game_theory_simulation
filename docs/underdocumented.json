@@ -73170,7 +73170,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 179,
+=======
+    "line": 196,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73178,7 +73182,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 180,
+=======
+    "line": 197,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73186,7 +73194,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 181,
+=======
+    "line": 198,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73194,7 +73206,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 210,
+=======
+    "line": 227,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73202,7 +73218,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 211,
+=======
+    "line": 228,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73210,7 +73230,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 212,
+=======
+    "line": 229,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73218,7 +73242,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 213,
+=======
+    "line": 230,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -73226,7 +73254,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 230,
+=======
+    "line": 247,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73234,7 +73266,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 231,
+=======
+    "line": 248,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73242,7 +73278,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 232,
+=======
+    "line": 249,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73250,7 +73290,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 247,
+=======
+    "line": 264,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73258,7 +73302,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 248,
+=======
+    "line": 265,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73266,7 +73314,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 249,
+=======
+    "line": 266,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -73274,7 +73326,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 257,
+=======
+    "line": 274,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -73282,7 +73338,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 258,
+=======
+    "line": 275,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -73290,7 +73350,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/FoodSecurityDegradationPhase.ts",
+<<<<<<< HEAD
     "line": 259,
+=======
+    "line": 276,
+>>>>>>> origin/auto/worker-20251119_220001
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
