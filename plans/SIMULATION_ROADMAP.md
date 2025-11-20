@@ -39,6 +39,34 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **AI Governance 2025 Proposals (Global Moratorium + US-China Bilateral)** - HIGH (Added Nov 20, 2025)
+     - **Context:** Two major 2025 governance frameworks from arXiv preprints with detailed quantitative parameters
+     - **Research File:** research/ai_governance_international_coordination_20251113.md (updated with sections 4.5.1-4.5.3)
+     - **Sources Added:**
+       - arXiv:2505.04592 (May 2025) - "AI Governance to Avoid Extinction" (global moratorium)
+       - arXiv:2511.10783 (Nov 2025) - "International Agreement to Prevent ASI" (US-China bilateral)
+     - **Key Claims Requiring Verification:**
+       - Catastrophic risk estimates: 10-25% (Amodei), 20% (Bengio), 38% (AI conference survey)
+       - Compute thresholds: 10²⁴ FLOP hard prohibition, 10²³ FLOP post-training, 10²²-10²⁴ FLOP monitoring
+       - Chip cluster definitions: >16 H100-equivalents (~$500k), 990 TFLOP/s FP16 per H100
+       - Consolidation timeline: Day 1 (>10k H100s), Day 10 (>1k), Day 100 (>100), Year 2 (all)
+       - Verification mechanisms: On-chip monitoring, satellite surveillance, sting operations, whistleblowers
+       - Timeline estimates: "2020s or decades" for catastrophic-risk frontier systems, "decades of research" for safety
+       - 6-phase implementation structure
+       - Off-switch infrastructure components (5 specific categories)
+     - **Verification File:** research/verification_ff6ff02_20251120.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Should simulation model global moratorium scenario as distinct from bilateral?
+       - Add compute threshold enforcement mechanics to government phase?
+       - Model chip cluster tracking and consolidation timeline?
+       - Add coordination quality spectrum (moratorium vs bilateral vs status quo)?
+       - Should catastrophic risk estimates affect AI agent behavior?
+     - **Affected Systems:** Government coordination, AI governance, international cooperation
+     - **Priority:** HIGH - Major governance frameworks with detailed quantitative parameters
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, documentation updated, awaiting orchestrator
+     - **Commit:** ff6ff02
+     - **Next Steps:** Two-layer verification (paper existence + claim accuracy) → Parameter integration → Monte Carlo N≥10
+
    - **Defensive Coding & Error Handling Philosophy** - HIGH (Added Nov 20, 2025)
      - **Context:** Split-brain error handling fix - systematic shift from silent fallbacks to fail-loudly assertions
      - **Implementation:** 17 calculation fallbacks replaced across 7 files (commit 6ab69c6)
