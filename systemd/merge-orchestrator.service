@@ -1,0 +1,15 @@
+[Unit]
+Description=Merge Orchestrator - Process Feature Branches
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/home/user/ai_game_theory_simulation
+ExecStart=/home/user/ai_game_theory_simulation/scripts/merge-orchestrator.sh
+StandardOutput=append:/home/user/ai_game_theory_simulation/logs/systemd_merge.log
+StandardError=append:/home/user/ai_game_theory_simulation/logs/systemd_merge.log
+TimeoutStartSec=1800
+
+[Install]
+WantedBy=multi-user.target
