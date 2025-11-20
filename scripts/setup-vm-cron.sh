@@ -14,6 +14,9 @@ IS_VM=false
 if [ -d "/home/lizthedeveloper_gmail_com" ]; then
   IS_VM=true
   PROJECT_ROOT="/home/lizthedeveloper_gmail_com/ai_game_theory_simulation"
+elif [ -d "/home/user/ai_game_theory_simulation" ]; then
+  IS_VM=true  # Claude Code environment
+  PROJECT_ROOT="/home/user/ai_game_theory_simulation"
 else
   PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fi
