@@ -477,6 +477,17 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Irreversibility framework (Nov 18), Nitrogen-food coupling (Nov 18), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **AI Alignment Faking & Strategic Deception (commit a898195)** - ⏳ VALIDATION PHASE (Nov 20, 2025)
+  - **Research File:** `research/ai_alignment_faking_strategic_deception_20251120.md` (673 lines)
+  - **Verification Spec:** `research/verification_a898195_20251120.md` (19 specific claims)
+  - **Priority:** HIGH (affects core AI alignment mechanics)
+  - **Sources:** Anthropic (Greenblatt et al. 2024), Apollo Research (2025), Dung & Mai (2025), Dung (2023)
+  - **Key Claims:**
+    - Anthropic: 12% baseline alignment faking, 78% under training pressure (Claude 3 Opus)
+    - Apollo: 68% strategic deception in o1, 37% game hacking in o1-preview
+    - Dung & Mai: Low-cost techniques (RLHF, RLAIF, W2S) share nearly all failure modes
+  - **Next Step:** Orchestrator validation phase (research-skeptic + super-alignment-researcher)
+  - **Integration:** Post-validation → `AIAlignmentPhase.ts`, `AIGovernancePhase.ts`, alignment crisis events
 - [ ] **Three-Phase Coordination (commit 8da0700)** - ⏳ VALIDATION PHASE (Nov 20, 2025)
   - **Research File:** `research/verification_8da0700_20251120.md` (19 citations, 40-60 claims)
   - **Systems:** ClimateDeploymentDelayPhase, TransitionManagementSystem, Novel Entities enhancements
