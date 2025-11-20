@@ -17914,7 +17914,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 100,
+    "line": 102,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -17922,7 +17922,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 101,
+    "line": 103,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -17930,7 +17930,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 105,
+    "line": 109,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -17938,7 +17938,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 106,
+    "line": 110,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -17946,7 +17946,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 107,
+    "line": 111,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -17954,7 +17954,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 108,
+    "line": 112,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -17962,7 +17962,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 109,
+    "line": 113,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -17970,7 +17970,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 117,
+    "line": 121,
     "type": "property",
     "name": "cascades",
     "currentDoc": "(none)",
@@ -17978,7 +17978,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 120,
+    "line": 124,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -17986,7 +17986,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 121,
+    "line": 125,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -17994,7 +17994,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 125,
+    "line": 129,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18002,7 +18002,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 126,
+    "line": 130,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -18010,7 +18010,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 127,
+    "line": 131,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18018,7 +18018,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 128,
+    "line": 132,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -18026,7 +18026,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 129,
+    "line": 133,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18034,7 +18034,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 137,
+    "line": 141,
     "type": "property",
     "name": "cascades",
     "currentDoc": "(none)",
@@ -18042,7 +18042,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 140,
+    "line": 144,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18050,7 +18050,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 141,
+    "line": 145,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18058,7 +18058,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 145,
+    "line": 149,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18066,7 +18066,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 146,
+    "line": 150,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -18074,7 +18074,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 147,
+    "line": 151,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18082,7 +18082,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 148,
+    "line": 152,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -18090,7 +18090,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 149,
+    "line": 153,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18098,7 +18098,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 160,
+    "line": 164,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18106,7 +18106,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 161,
+    "line": 165,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18114,7 +18114,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 166,
+    "line": 170,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -18122,7 +18122,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 167,
+    "line": 171,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18130,7 +18130,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 168,
+    "line": 172,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -18138,7 +18138,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 169,
+    "line": 173,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18146,7 +18146,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 177,
+    "line": 181,
     "type": "property",
     "name": "cascades",
     "currentDoc": "(none)",
@@ -18154,7 +18154,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 180,
+    "line": 184,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18162,7 +18162,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 181,
+    "line": 185,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18170,7 +18170,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 185,
+    "line": 189,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18178,7 +18178,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 187,
+    "line": 191,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18186,7 +18186,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 189,
+    "line": 193,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18194,7 +18194,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 200,
+    "line": 204,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18202,7 +18202,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 201,
+    "line": 205,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18210,7 +18210,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 205,
+    "line": 209,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18218,7 +18218,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 207,
+    "line": 211,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18226,7 +18226,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 209,
+    "line": 213,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -76202,7 +76202,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 404,
+    "line": 412,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -76210,7 +76210,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 405,
+    "line": 413,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -76218,7 +76218,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 406,
+    "line": 414,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76226,7 +76226,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 417,
+    "line": 425,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -76234,7 +76234,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 418,
+    "line": 426,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -76242,7 +76242,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 419,
+    "line": 427,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76250,7 +76250,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 420,
+    "line": 428,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -76258,7 +76258,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 422,
+    "line": 430,
     "type": "property",
     "name": "annualProbability",
     "currentDoc": "(none)",
@@ -76266,7 +76266,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 435,
+    "line": 443,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -76274,7 +76274,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 436,
+    "line": 444,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -76282,7 +76282,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 437,
+    "line": 445,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -76290,7 +76290,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 440,
+    "line": 448,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76298,7 +76298,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 467,
+    "line": 475,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -76306,7 +76306,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 468,
+    "line": 476,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -76314,7 +76314,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 469,
+    "line": 477,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -76322,7 +76322,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 478,
+    "line": 486,
     "type": "property",
     "name": "regions",
     "currentDoc": "(none)",
@@ -76330,7 +76330,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 479,
+    "line": 487,
     "type": "property",
     "name": "southeast",
     "currentDoc": "(none)",
@@ -76338,47 +76338,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 481,
-    "type": "property",
-    "name": "tipped",
-    "currentDoc": "(none)",
-    "context": "tipped: false,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 484,
-    "type": "property",
-    "name": "northwest",
-    "currentDoc": "(none)",
-    "context": "northwest: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 486,
-    "type": "property",
-    "name": "tipped",
-    "currentDoc": "(none)",
-    "context": "tipped: false,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 487,
-    "type": "property",
-    "name": "savannaTransitionProgress",
-    "currentDoc": "(none)",
-    "context": "savannaTransitionProgress: 0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 489,
-    "type": "property",
-    "name": "brazilian",
-    "currentDoc": "(none)",
-    "context": "brazilian: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 491,
     "type": "property",
     "name": "tipped",
     "currentDoc": "(none)",
@@ -76388,13 +76348,53 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 492,
     "type": "property",
+    "name": "northwest",
+    "currentDoc": "(none)",
+    "context": "northwest: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 494,
+    "type": "property",
+    "name": "tipped",
+    "currentDoc": "(none)",
+    "context": "tipped: false,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 495,
+    "type": "property",
     "name": "savannaTransitionProgress",
     "currentDoc": "(none)",
     "context": "savannaTransitionProgress: 0,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 495,
+    "line": 497,
+    "type": "property",
+    "name": "brazilian",
+    "currentDoc": "(none)",
+    "context": "brazilian: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 499,
+    "type": "property",
+    "name": "tipped",
+    "currentDoc": "(none)",
+    "context": "tipped: false,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 500,
+    "type": "property",
+    "name": "savannaTransitionProgress",
+    "currentDoc": "(none)",
+    "context": "savannaTransitionProgress: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 503,
     "type": "property",
     "name": "collapsed",
     "currentDoc": "(none)",
@@ -76402,7 +76402,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 543,
+    "line": 551,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -76410,7 +76410,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 544,
+    "line": 552,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -76418,7 +76418,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 545,
+    "line": 553,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -76426,7 +76426,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 546,
+    "line": 554,
     "type": "property",
     "name": "impact",
     "currentDoc": "(none)",
@@ -76434,7 +76434,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 547,
+    "line": 555,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76442,7 +76442,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 582,
+    "line": 590,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -76450,7 +76450,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 583,
+    "line": 591,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -76458,7 +76458,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 584,
+    "line": 592,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -76466,7 +76466,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 587,
+    "line": 595,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76474,7 +76474,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 615,
+    "line": 623,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -76482,7 +76482,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 616,
+    "line": 624,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -76490,7 +76490,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 617,
+    "line": 625,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -76498,7 +76498,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 653,
+    "line": 661,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -76506,7 +76506,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 654,
+    "line": 662,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -76514,7 +76514,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 655,
+    "line": 663,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76522,7 +76522,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 656,
+    "line": 664,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -76530,7 +76530,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 659,
+    "line": 667,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -76538,7 +76538,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 660,
+    "line": 668,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -76546,7 +76546,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 661,
+    "line": 669,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76554,7 +76554,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 690,
+    "line": 698,
     "type": "property",
     "name": "speciesCount",
     "currentDoc": "(none)",
@@ -76562,7 +76562,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 691,
+    "line": 699,
     "type": "property",
     "name": "debtTimescaleMonths",
     "currentDoc": "(none)",
@@ -76570,7 +76570,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 692,
+    "line": 700,
     "type": "property",
     "name": "monthsRemaining",
     "currentDoc": "(none)",
@@ -76578,7 +76578,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 693,
+    "line": 701,
     "type": "property",
     "name": "extinctionProbabilityPerMonth",
     "currentDoc": "(none)",
@@ -76586,7 +76586,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 756,
+    "line": 764,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -76594,7 +76594,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 757,
+    "line": 765,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -76602,27 +76602,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 758,
+    "line": 766,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
     "context": "events: any[]"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 764,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'trackCoralReefCollapse',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 765,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
@@ -76642,7 +76626,23 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 784,
+    "line": 780,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'trackCoralReefCollapse',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 781,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 792,
     "type": "property",
     "name": "bleachedPercent",
     "currentDoc": "(none)",
@@ -76650,7 +76650,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 785,
+    "line": 793,
     "type": "property",
     "name": "recoveryPossible",
     "currentDoc": "(none)",
@@ -76658,7 +76658,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 786,
+    "line": 794,
     "type": "property",
     "name": "dissolutionActive",
     "currentDoc": "(none)",
@@ -76666,7 +76666,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 837,
+    "line": 845,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -76674,7 +76674,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 838,
+    "line": 846,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -76682,7 +76682,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 839,
+    "line": 847,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -76690,7 +76690,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 842,
+    "line": 850,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76698,7 +76698,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 870,
+    "line": 878,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -76706,7 +76706,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 871,
+    "line": 879,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -76714,7 +76714,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 872,
+    "line": 880,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -76722,7 +76722,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 880,
+    "line": 888,
     "type": "property",
     "name": "languagesExtinct",
     "currentDoc": "(none)",
@@ -76730,7 +76730,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 931,
+    "line": 939,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -76738,7 +76738,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 932,
+    "line": 940,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -76746,7 +76746,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 933,
+    "line": 941,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -76754,7 +76754,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 944,
+    "line": 952,
     "type": "property",
     "name": "collapsed",
     "currentDoc": "(none)",
@@ -76762,7 +76762,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 945,
+    "line": 953,
     "type": "property",
     "name": "gradualDeclineMonths",
     "currentDoc": "(none)",
@@ -76770,7 +76770,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 968,
+    "line": 976,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -76778,7 +76778,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 969,
+    "line": 977,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -76786,7 +76786,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 970,
+    "line": 978,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76794,7 +76794,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 971,
+    "line": 979,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -76802,7 +76802,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 974,
+    "line": 982,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -76810,7 +76810,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 975,
+    "line": 983,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -76818,7 +76818,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 976,
+    "line": 984,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76826,7 +76826,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1002,
+    "line": 1010,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -76834,7 +76834,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1003,
+    "line": 1011,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -76842,7 +76842,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1004,
+    "line": 1012,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -76850,7 +76850,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1007,
+    "line": 1015,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -76858,7 +76858,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1061,
+    "line": 1069,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -76866,7 +76866,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1062,
+    "line": 1070,
     "type": "property",
     "name": "min",
     "currentDoc": "(none)",
@@ -76874,7 +76874,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1063,
+    "line": 1071,
     "type": "property",
     "name": "max",
     "currentDoc": "(none)",
@@ -76882,7 +76882,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1064,
+    "line": 1072,
     "type": "property",
     "name": "mode",
     "currentDoc": "(none)",
