@@ -1709,17 +1709,11 @@ The research foundation has shifted from **primarily theoretical** (2008-2019) t
 16. arXiv:2503.13754. (2025). "From Autonomous Agents to Integrated Systems, A New Paradigm: Orchestrated Distributed Intelligence."
 17. Rosenberg, L., et al. (2024). "Collective Superintelligence: Enabling Real-Time Conversational Deliberations among Humans and AI Agents at Unprecedented Scale." IntechOpen.
 
-<<<<<<< HEAD
-### Coordination Mechanisms
-18. arXiv:2502.14743. (2025). "Multi-Agent Coordination across Diverse Applications: A Survey."
-19. arXiv:2501.06322. (2025). "Multi-Agent Collaboration Mechanisms: A Survey of LLMs."
-=======
 ### Coordination Mechanisms and Social Dynamics (2025)
-16. arXiv:2502.14743. (2025). "Multi-Agent Coordination across Diverse Applications: A Survey."
-17. Tran, K.-T., Dao, D., Nguyen, M.-D., Pham, Q.-V., O'Sullivan, B., & Nguyen, H. D. (2025). "Multi-Agent Collaboration Mechanisms: A Survey of LLMs." arXiv:2501.06322v1.
-18. Ashery, A. F., Aiello, L. M., & Baronchelli, A. (2025). "Emergent social conventions and collective bias in LLM populations." *Science Advances*, 11(20), eadt5455. DOI: 10.1126/sciadv.adt5455.
-19. Chen, T.-Y., Chen, W.-N., Wei, F.-F., Guo, X.-Q., Song, W.-X., Zhu, R., Lin, Q., & Zhang, J. (2025). "The Confluence of Evolutionary Computation and Multi-Agent Systems: A Survey." *IEEE/CAA Journal of Automatica Sinica*, 12(3). DOI: 10.1109/JAS.2025.125246.
->>>>>>> origin/auto/worker-20251114_013001
+18. arXiv:2502.14743. (2025). "Multi-Agent Coordination across Diverse Applications: A Survey."
+19. Tran, K.-T., Dao, D., Nguyen, M.-D., Pham, Q.-V., O'Sullivan, B., & Nguyen, H. D. (2025). "Multi-Agent Collaboration Mechanisms: A Survey of LLMs." arXiv:2501.06322v1.
+20. Ashery, A. F., Aiello, L. M., & Baronchelli, A. (2025). "Emergent social conventions and collective bias in LLM populations." *Science Advances*, 11(20), eadt5455. DOI: 10.1126/sciadv.adt5455.
+21. Chen, T.-Y., Chen, W.-N., Wei, F.-F., Guo, X.-Q., Song, W.-X., Zhu, R., Lin, Q., & Zhang, J. (2025). "The Confluence of Evolutionary Computation and Multi-Agent Systems: A Survey." *IEEE/CAA Journal of Automatica Sinica*, 12(3). DOI: 10.1109/JAS.2025.125246.
 
 ### Evolutionary Computation and Fitness Landscapes
 20. MIT Press *Artificial Life* Journal, Vol 31 (2024). Multiple articles on evolutionary dynamics.
@@ -1736,8 +1730,6 @@ The research foundation has shifted from **primarily theoretical** (2008-2019) t
 27. arXiv:2501.00940. (2025). "SPADE: Enhancing Adaptive Cyber Deception Strategies with Generative AI and Structured Prompt Engineering."
 28. Alanezi, M., & AL-Azzawi, R. M. A. (2024). "AI-Powered cyber threats: A systematic review." *Mesopotamian Journal of CyberSecurity*, 4(3), 166-188. https://doi.org/10.58496/MJCS/2024/021
 29. Achuthan, K., Ramanathan, S., Srinivas, S., & Raman, R. (2024). "Advancing cybersecurity and privacy with artificial intelligence: current trends and future research directions." *Frontiers in Big Data*, 7. https://doi.org/10.3389/fdata.2024.1497535
-<<<<<<< HEAD
-=======
 
 ---
 
