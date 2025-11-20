@@ -39,6 +39,36 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Defensive Coding & Error Handling Philosophy** - HIGH (Added Nov 20, 2025)
+     - **Context:** Split-brain error handling fix - systematic shift from silent fallbacks to fail-loudly assertions
+     - **Implementation:** 17 calculation fallbacks replaced across 7 files (commit 6ab69c6)
+     - **Files Modified:**
+       - behavioralDetection.ts, endGame.ts, IrreversibilityTrackingPhase.ts
+       - PlanetaryBoundariesPhase.ts, TransitionMortalityPhase.ts
+       - nitrogenFoodCoupling.ts, stateValidation.ts
+     - **Key Claims Requiring Verification:**
+       - Silent fallbacks hide bugs in scientific computing (vs graceful degradation)
+       - Backwards assertion pattern (fallback before validation) is anti-pattern
+       - CRITICAL severity justified for extinction classification fallbacks
+       - Clear boundaries for when fallbacks ARE appropriate (display, config, external interfaces)
+       - 120ms performance budget justification (new profiling script)
+     - **Verification File:** research/verification_6ab69c6_20251120.md (two-layer: existence + claim accuracy)
+     - **Suggested Sources:**
+       - Wilson et al. (2014) "Best Practices for Scientific Computing" (PLOS Biology)
+       - McConnell (2004) *Code Complete* Ch.8 (Defensive Programming contexts)
+       - Hatton (1997) "T-experiments: errors in scientific software" (IEEE)
+       - Hunt & Thomas (1999) *Pragmatic Programmer* (Dead Programs Tell No Lies)
+       - Goldberg (1991) "Floating-point arithmetic" (ACM)
+       - Meyer (1992) "Design by Contract" (IEEE Computer)
+     - **Integration Questions:**
+       - Are fallback vs assertion boundaries well-defined?
+       - Should CLAUDE.md error handling guidance be updated?
+       - Does testing strategy validate assertion coverage?
+     - **Blockers:**
+       - ⚠️ Merge conflicts in behavioralDetection.ts and IrreversibilityTrackingPhase.ts
+       - Monte Carlo N=10 validation pending (verify no false-positive assertions)
+     - **Status:** ⚠️ READY FOR VALIDATION - Implementation partial (conflicts), verification file created, awaiting orchestrator
+
    - **Ocean Acidification 2024-2025 Coral Studies** - HIGH (Added Nov 19, 2025)
      - **Context:** Research update with SSP-specific carbonate production projections and coral resilience under combined stressors
      - **Research File:** research/ocean_acidification_planetary_boundary_2025.md (updated with 2 new peer-reviewed studies)
