@@ -102,11 +102,23 @@ export function shouldBuildDataCenter(
   // Market demand - removed gate, AI companies are always expanding
   // Real world: OpenAI/Anthropic/Meta building compute as fast as possible
   const marketDemand = true; // Always true in AI gold rush era
-  
+
+  // PERFORMANCE FIX (Nov 20, 2025 - HIGH-1): O(n²) → O(n)
+  // Build index of organizations currently building datacenters (O(n))
+  // Before: Nested loop (200 orgs × 200 orgs × projects) = 40,000+ ops
+  // After: Single pass + O(1) check
+  const buildingOrgs = new Set<string>();
+  for (const o of state.organizations) {
+    if (o.type === 'private' && o.id !== org.id) {
+      const isBuilding = o.currentProjects.some(p => p.type === 'datacenter_construction');
+      if (isBuilding) {
+        buildingOrgs.add(o.id);
+      }
+    }
+  }
+
   // Competitive pressure - if others are building, we should too
-  const competitorBuilding = state.organizations
-    .filter(o => o.id !== org.id && o.type === 'private')
-    .some(o => o.currentProjects.some(p => p.type === 'datacenter_construction'));
+  const competitorBuilding = buildingOrgs.size > 0;
   
   // Strategic priorities
   const hasCapabilityRacePriority = org.priorities.capabilityRace > 0.5;

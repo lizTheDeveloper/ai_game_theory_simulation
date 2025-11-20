@@ -15,7 +15,7 @@
 
 import { describe, it, beforeEach } from 'node:test';
 import assert from 'node:assert';
-import { initializeGameState } from '../../src/simulation/initialization.js';
+import { createTestState } from '../../src/simulation/initialization.js';
 import type { GameState } from '../../src/types/game.js';
 import {
   assertFinite,
@@ -307,7 +307,7 @@ describe('Assertion Utilities - GameState Functions', () => {
   let state: GameState;
 
   beforeEach(() => {
-    state = initializeGameState();
+    state = createTestState();
   });
 
   describe('assertEconomicStage', () => {

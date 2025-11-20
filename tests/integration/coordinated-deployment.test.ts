@@ -114,10 +114,10 @@ test('CoordinatedDeploymentPhase: fails loudly if state missing after bootstrap'
   const phase = new CoordinatedDeploymentPhase();
   const rng = createSeededRNG('test-missing-state');
 
-  // Create state WITHOUT coordinatedDeployment (after bootstrap)
+  // Create state WITHOUT transitionManagementSystem (after bootstrap)
   const state = createMinimalState({
     currentMonth: 12, // Post-bootstrap
-    coordinatedDeployment: undefined
+    transitionManagementSystem: undefined as any
   });
 
   // Should throw with clear error message
@@ -125,7 +125,7 @@ test('CoordinatedDeploymentPhase: fails loudly if state missing after bootstrap'
     () => phase.execute(state, rng),
     {
       name: 'Error',
-      message: /CRITICAL.*coordinatedDeployment state missing/
+      message: /transitionManagementSystem state missing/
     },
     'Should fail loudly when state missing after bootstrap'
   );
@@ -635,7 +635,7 @@ test('CoordinatedDeploymentPhase: produces deterministic results with same seed'
   console.log('✓ Phase produces deterministic results with same seed');
 });
 
-test('CoordinatedDeploymentPhase: produces different results with different seeds', () => {
+test('CoordinatedDeploymentPhase: produces consistent results (no randomness)', () => {
   const phase = new CoordinatedDeploymentPhase();
 
   // Run 1
@@ -643,28 +643,28 @@ test('CoordinatedDeploymentPhase: produces different results with different seed
   const rng1 = createSeededRNG('seed-A');
   phase.execute(state1, rng1);
 
-  // Run 2 (different seed)
+  // Run 2 (different seed, but same initial state)
   const state2 = createMinimalState();
   const rng2 = createSeededRNG('seed-B');
   phase.execute(state2, rng2);
 
-  // Outputs should differ (with high probability)
-  const deployment1 = state1.coordinatedDeployment!;
-  const deployment2 = state2.coordinatedDeployment!;
+  // Outputs should be IDENTICAL (phase is deterministic, doesn't use RNG)
+  const transition1 = state1.transitionManagementSystem;
+  const transition2 = state2.transitionManagementSystem;
 
-  // At least one randomized value should differ
-  const hasVariation =
-    deployment1.supportSystems.universalBasicIncome !== deployment2.supportSystems.universalBasicIncome ||
-    deployment1.supportSystems.retrainingPrograms !== deployment2.supportSystems.retrainingPrograms ||
-    deployment1.supportSystems.foodSecurity !== deployment2.supportSystems.foodSecurity ||
-    deployment1.supportSystems.healthcareAccess !== deployment2.supportSystems.healthcareAccess;
-
-  assert.ok(
-    hasVariation,
-    'Different seeds should produce different randomized values'
+  // Key metrics should be identical
+  assert.strictEqual(
+    transition1.coordinationQuality,
+    transition2.coordinationQuality,
+    'Coordination quality should be identical with same state inputs'
+  );
+  assert.strictEqual(
+    transition1.mortalityThisMonth,
+    transition2.mortalityThisMonth,
+    'Mortality should be identical with same state inputs'
   );
 
-  console.log('✓ Phase produces different results with different seeds');
+  console.log('✓ Phase produces consistent results (no randomness)');
 });
 
 test('CoordinatedDeploymentPhase: maintains determinism across multiple steps', () => {
