@@ -32,6 +32,11 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Changes:** 7 optimizations across 7 files (indices infrastructure, Set-based lookups)
 - **Validation:** Monte Carlo N=10 (5 successful runs, 0.066-0.081s/month)
 - **Documentation:** `devlogs/performance_optimization_20251120.md`
+- **Tech Tree O(1) Lookups (commit ebbfcb6, Nov 20):** Replaced 284+ O(n) array searches per month with instant Record lookups
+  - Added `deployedTechMap` and `unlockedTechSet` indexes to TechTreeState
+  - Helper functions: `getTechDeployment()`, `isTechUnlocked()`, `rebuildDeploymentIndex()`
+  - Migrated high-usage files: nuclearWinter.ts, resourceDepletion.ts, ClimateDeploymentPhase.ts
+  - Fixed type safety issues (unsafe globalDeployments.find() → type-safe getTechDeployment())
 - **Performance False Alarm Investigation (Nov 20):** 3 "HIGH priority" issues were false alarms
   - Issue 1: Performance regression (7x slowdown) - DEBUNKED (actual: 56.98ms avg, 79-114ms profile, well within 120ms budget)
   - Issue 2: Nuclear winter type mismatch - DOESN'T EXIST (TypeScript: 0 errors)
@@ -7264,7 +7269,7 @@ The simulation runs via a **phase-based architecture** with **95 phases** execut
 **11.0-25.0: System Updates**
 - GovernanceQualityPhase (11.0): Democratic resilience, AI augmentation
 - UpwardSpiralsPhase (12.0): 6 virtuous cascades
-- TechTreePhase (12.5): Technology deployment, effects
+- TechTreePhase (12.5): Technology deployment, effects (O(1) lookups via deployedTechMap/unlockedTechSet - Nov 20, 2025)
 - MeaningRenaissancePhase (13.0): Cultural flourishing
 - ConflictResolutionPhase (14.0): Diplomatic AI, peace dividend
 - DiplomaticAIPhase (15.0): Hegemonic AI alignment
