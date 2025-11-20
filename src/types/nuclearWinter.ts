@@ -86,5 +86,9 @@ export interface NuclearWinterState {
   // Mortality tracking
   totalWinterDeaths: number;    // Cumulative deaths from nuclear winter (starvation)
   totalRadiationDeaths: number; // Cumulative deaths from radiation poisoning
+
+  // Performance cache (Nov 20, 2025 - Architecture Review HIGH #2)
+  // Cached at war trigger, since deployed techs can't change during nuclear winter
+  cachedResilientFoodMultiplier?: number; // [0.6, 1.0] mortality multiplier from pre-deployed tech
 }
 

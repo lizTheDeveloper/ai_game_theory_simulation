@@ -151,13 +151,15 @@ export function triggerNuclearWinter(
   );
 
   // Calculate resilient food technology multiplier (technologies deployed BEFORE war)
-  const resilientFoodMultiplier = calculateResilientFoodMultiplier(state);
+  // HIGH #2 FIX (Nov 20, 2025): Cache this value at trigger time since deployed techs
+  // can't change during nuclear winter. Avoids 4 sequential .find() calls every month.
+  winter.cachedResilientFoodMultiplier = calculateResilientFoodMultiplier(state);
 
   // Calculate starvation rate (with resilient food tech reduction if deployed)
   winter.monthlyStarvationRate = calculateStarvationRate(
     winter.cropYieldMultiplier,
     winter.monthsSinceWar,
-    resilientFoodMultiplier
+    winter.cachedResilientFoodMultiplier
   );
   
   // Add radiation zones for hit countries
@@ -489,35 +491,27 @@ function calculateStarvationRate(
  */
 function calculateResilientFoodMultiplier(state: GameState): number {
   // Check if tech tree system exists (early game might not have it)
-  if (!state.technologyResearch) {
+  if (!state.techTreeState) {
     return 1.0;  // No tech reduction (baseline scenario)
   }
 
-  let mortalityReduction = 0;  // Cumulative mortality reduction
+  // Get global deployments (null-safe access)
+  const globalDeployments = state.techTreeState.regionalDeployment['global'] || [];
 
-  // 1. Strategic grain reserves: 20% mortality reduction
-  const grainReserves = state.technologyResearch.deployed.find(t => t.id === 'strategic_grain_reserves');
-  if (grainReserves && grainReserves.deploymentLevel >= 0.8) {
-    mortalityReduction += 0.20;  // 20% reduction
-  }
+  // Tech ID -> mortality reduction mapping
+  const techMitigations = [
+    { id: 'strategic_grain_reserves', reduction: 0.20 },
+    { id: 'cold_tolerant_crops', reduction: 0.15 },
+    { id: 'emergency_greenhouse_networks', reduction: 0.10 },
+    { id: 'emergency_food_distribution_ai', reduction: 0.10 }
+  ];
 
-  // 2. Cold-tolerant crops: 15% yield recovery
-  const coldTolerantCrops = state.technologyResearch.deployed.find(t => t.id === 'cold_tolerant_crops');
-  if (coldTolerantCrops && coldTolerantCrops.deploymentLevel >= 0.8) {
-    mortalityReduction += 0.15;  // 15% reduction
-  }
-
-  // 3. Emergency greenhouses: 10% yield recovery (energy-limited)
-  const emergencyGreenhouses = state.technologyResearch.deployed.find(t => t.id === 'emergency_greenhouse_networks');
-  if (emergencyGreenhouses && emergencyGreenhouses.deploymentLevel >= 0.8) {
-    mortalityReduction += 0.10;  // 10% reduction
-  }
-
-  // 4. Emergency food distribution AI: 10% mortality reduction
-  const distributionAI = state.technologyResearch.deployed.find(t => t.id === 'emergency_food_distribution_ai');
-  if (distributionAI && distributionAI.deploymentLevel >= 0.8) {
-    mortalityReduction += 0.10;  // 10% reduction
-  }
+  // Calculate cumulative mortality reduction from deployed techs
+  const mortalityReduction = techMitigations.reduce((sum, tech) => {
+    const deployment = globalDeployments.find(d => d.techId === tech.id);
+    // Only count if deployment level >= 80% (meaningful global coverage)
+    return sum + (deployment && deployment.deploymentLevel >= 0.8 ? tech.reduction : 0);
+  }, 0);
 
   // Cap at 40% maximum reduction (IIASA 2025 optimistic case)
   const cappedReduction = Math.min(0.40, mortalityReduction);
@@ -764,9 +758,11 @@ export function updateNuclearWinter(state: GameState): void {
     winter.precipitationReduction  // Now calculated from cascades
   );
 
-  // 5. Calculate resilient food technology multiplier (locked in at war trigger)
-  // Note: Technologies deployed AFTER war don't help (infrastructure collapsed)
-  const resilientFoodMultiplier = calculateResilientFoodMultiplier(state);
+  // 5. Get resilient food technology multiplier (cached at war trigger)
+  // HIGH #2 FIX (Nov 20, 2025): Use cached value instead of recalculating every month.
+  // Technologies deployed AFTER war don't help (infrastructure collapsed), so we
+  // locked this in at trigger time. Fallback to 1.0 (no reduction) if cache missing.
+  const resilientFoodMultiplier = winter.cachedResilientFoodMultiplier ?? 1.0;
 
   // 6. Update starvation rate (with resilient food tech reduction)
   winter.monthlyStarvationRate = calculateStarvationRate(
