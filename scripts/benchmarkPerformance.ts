@@ -41,7 +41,11 @@ async function benchmarkSimulation(steps: number = 100) {
 
   // Create engine and initial state
   const engine = new SimulationEngine({ seed: 123456 });
-  let state = createDefaultInitialState();
+
+  // Get RNG from engine (matches worker pattern - Nov 20, 2025 fix)
+  const seededRng = engine.getRNG();
+  const rngFunction = () => seededRng.next();
+  let state = createDefaultInitialState(rngFunction);
 
   // Warm-up run (with console suppressed)
   console.log('Warming up...');
@@ -59,7 +63,7 @@ async function benchmarkSimulation(steps: number = 100) {
   const memorySnapshots: number[] = [];
 
   // Reset state for actual benchmark
-  state = createDefaultInitialState();
+  state = createDefaultInitialState(rngFunction);
 
   for (let i = 0; i < steps; i++) {
     const startTime = performance.now();
@@ -156,8 +160,12 @@ const main = async () => {
   console.log('║   Console.log Bug Fix Verification                    ║');
   console.log('╚═══════════════════════════════════════════════════════╝');
 
-  // Get steps from command line (default 100)
-  const steps = process.argv[2] ? parseInt(process.argv[2]) : 100;
+  // Get steps from command line (support both bare number and --steps=N)
+  const args = process.argv.slice(2);
+  const stepsArg = args.find(arg => arg.startsWith('--steps='));
+  const steps = stepsArg
+    ? parseInt(stepsArg.split('=')[1])
+    : (args[0] ? parseInt(args[0]) : 100);
 
   // Don't suppress here - let benchmarkSimulation handle it
   try {
