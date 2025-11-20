@@ -4061,8 +4061,16 @@ Trust Collapse → Coalition support -20%
 - Allen (2020): AI governance challenges in low-capacity states
 - Zhang et al. (2021): China's technocratic AI understanding
 - Maas (2019): Multilateral AI governance delays
+- arXiv:2505.04592 (May 2025): Global moratorium framework with off-switch infrastructure
+- arXiv:2511.10783 (Nov 2025): US-China bilateral ASI prevention agreement
 
 **Key Insight:** Government response speed varies 10x between existential crises (Manhattan Project/COVID precedent) and normal conditions. High-capacity states respond 4x faster and 2.6x more effectively than low-capacity states.
+
+**AI Governance Proposals (2025):** Two major frameworks added to research base:
+1. **Global Moratorium** - Decades-long halt on frontier AI until safety confidence, with off-switch infrastructure
+2. **US-China Bilateral** - Compute thresholds (10²⁴ FLOP prohibition), chip cluster monitoring, 6-phase implementation
+- **Status:** Research verification pending (see research/verification_ff6ff02_20251120.md)
+- **Risk estimates:** 10-25% catastrophic (Amodei), 20% (Bengio), 38% of AI researchers estimate ≥10% extinction risk
 
 ---
 

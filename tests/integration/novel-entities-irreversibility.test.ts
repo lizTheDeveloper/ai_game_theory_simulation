@@ -542,9 +542,9 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       delete state.planetaryBoundariesSystem.boundaries.novel_entities;
 
       // Should not throw (early return)
-      assert.throws(() => {
+      assert.doesNotThrow(() => {
         updateNovelEntitiesBoundary(state, rng);
-      }).not.toThrow();
+      });
     });
   });
 
