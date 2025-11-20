@@ -37,7 +37,7 @@ describe('Auth Flow Integration Tests', () => {
   const testUser = {
     email: 'test@example.com',
     password: 'SecurePassword123!',
-    role: 'analyst'
+    role: 'operator'
   };
 
   const testAdmin = {
@@ -456,16 +456,16 @@ describe('Auth Flow Integration Tests', () => {
       expect(response.body.user.role).toBe('viewer');
     });
 
-    it('should allow analyst role assignment', async () => {
+    it('should allow operator role assignment', async () => {
       const response = await request(app)
         .post('/auth/register')
         .send({
           ...testUser,
-          role: 'analyst'
+          role: 'operator'
         })
         .expect(201);
 
-      expect(response.body.user.role).toBe('analyst');
+      expect(response.body.user.role).toBe('operator');
     });
 
     it('should allow admin role assignment', async () => {
