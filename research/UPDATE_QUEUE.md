@@ -1,7 +1,12 @@
 # Research Update Queue
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Generated:** 11/20/2025, 8:30:04 AM
 **Files Scanned:** 479
+=======
+**Generated:** 11/20/2025, 9:30:04 AM
+**Files Scanned:** 478
+>>>>>>> Stashed changes
 =======
 **Generated:** 11/20/2025, 9:30:04 AM
 **Files Scanned:** 478
@@ -18,7 +23,11 @@
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 163 (34.0%)
+=======
+**Count:** 162 (33.9%)
+>>>>>>> Stashed changes
 =======
 **Count:** 162 (33.9%)
 >>>>>>> Stashed changes
@@ -872,7 +881,11 @@
 ## ✅ LOW (Monitor Only)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 **Count:** 294 (61.4%)
+=======
+**Count:** 294 (61.5%)
+>>>>>>> Stashed changes
 =======
 **Count:** 294 (61.5%)
 >>>>>>> Stashed changes
@@ -886,11 +899,19 @@ All sources <3 years old. No action required.
 | Metric | Value |
 |--------|-------|
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 | Total files | 479 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 163 (34.0%) |
 | MEDIUM | 22 (4.6%) |
 | LOW | 294 (61.4%) |
+=======
+| Total files | 478 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 162 (33.9%) |
+| MEDIUM | 22 (4.6%) |
+| LOW | 294 (61.5%) |
+>>>>>>> Stashed changes
 =======
 | Total files | 478 |
 | CRITICAL | 0 (0.0%) |
@@ -906,9 +927,15 @@ All sources <3 years old. No action required.
 | Status | Files | Percentage |
 |--------|-------|------------|
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 | Current (<3yr) | 294 | 61.4% |
 | Warning (3-5yr) | 22 | 4.6% |
 | Critical (>5yr) | 163 | 34.0% |
+=======
+| Current (<3yr) | 294 | 61.5% |
+| Warning (3-5yr) | 22 | 4.6% |
+| Critical (>5yr) | 162 | 33.9% |
+>>>>>>> Stashed changes
 =======
 | Current (<3yr) | 294 | 61.5% |
 | Warning (3-5yr) | 22 | 4.6% |
@@ -926,7 +953,11 @@ All sources <3 years old. No action required.
 ## 🔄 Next Steps
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 1. Update 163 HIGH priority file(s) within 1 month
+=======
+1. Update 162 HIGH priority file(s) within 1 month
+>>>>>>> Stashed changes
 =======
 1. Update 162 HIGH priority file(s) within 1 month
 >>>>>>> Stashed changes
