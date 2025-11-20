@@ -23,7 +23,7 @@ import type {
   RNGFunction
 } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertProbability, assertFinite } from '@/simulation/utils/assertions';
+import { assertProbability, assertFinite, assertDefined } from '@/simulation/utils/assertions';
 
 export class Tier2SocialSystemsPhase implements SimulationPhase {
   id = 'tier2_social_systems';
@@ -76,7 +76,9 @@ export class Tier2SocialSystemsPhase implements SimulationPhase {
 
     // === UNLOCK CONDITIONS ===
     if (!centaurState.unlocked) {
-      const unemployment = state.globalMetrics.unemployment || 0;
+      // LEGITIMATE FALLBACK: unemployment is optional (set by UnemploymentPhase order 30.0, this phase runs at 12.61)
+      // Initialized to 0.05 in initialization.ts, updated by UnemploymentPhase after first run
+      const unemployment = state.globalMetrics.unemployment ?? 0.05;
       const meaningCrisis = state.socialAccumulation.meaningCrisisLevel;
       // FIX (Nov 12, 2025): alignmentResearchInvestment is [0,10+], not [0,100]
       // Convert to [0,1] probability range for assertion validation
@@ -204,8 +206,22 @@ export class Tier2SocialSystemsPhase implements SimulationPhase {
 
     // === UNLOCK CONDITIONS ===
     if (!cohesionState.unlocked) {
-      const unemployment = state.globalMetrics.unemployment || 0;
-      const socialCohesion = state.socialAccumulation.socialCohesion?.trust || 0.70;
+      // LEGITIMATE FALLBACK: unemployment is optional (set by UnemploymentPhase order 30.0, this phase runs at 12.61)
+      // Initialized to 0.05 in initialization.ts, updated by UnemploymentPhase after first run
+      const unemployment = state.globalMetrics.unemployment ?? 0.05;
+      // socialAccumulation.socialCohesion.trust is REQUIRED field
+      const socialCohesionState = assertDefined(state.socialAccumulation.socialCohesion, {
+        location: 'Tier2SocialSystemsPhase.executeCommunityCohesion',
+        valueName: 'state.socialAccumulation.socialCohesion',
+        month: state.currentMonth,
+        expectedSource: 'socialAccumulation initialization'
+      });
+      const socialCohesion = assertDefined(socialCohesionState.trust, {
+        location: 'Tier2SocialSystemsPhase.executeCommunityCohesion',
+        valueName: 'socialCohesionState.trust',
+        month: state.currentMonth,
+        expectedSource: 'SocialCohesionState initialization'
+      });
       const meaningCrisis = state.socialAccumulation.meaningCrisisLevel;
 
       const shouldUnlock =

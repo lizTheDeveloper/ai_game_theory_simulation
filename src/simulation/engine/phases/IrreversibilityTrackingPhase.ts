@@ -16,7 +16,12 @@
  * 4. Uncertainty ranges for ALL parameters
  * 5. Empirical vs model-derived flagged
  *
- * Order: 21.5 (after planetary boundaries update, before crisis detection)
+ * Order: 21.4 (after planetary boundaries update, before crisis detection)
+ *
+ * @reads state.resourceEconomy.co2, state.amazonForest, state.coralReefs, state.iceSheets, etc.
+ * @writes state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact (adds coral collapse impact)
+ *         state.environmentalAccumulation.biodiversityIndex
+ *         state.tippingPoints.* (various tipping point states)
  */
 
 import {

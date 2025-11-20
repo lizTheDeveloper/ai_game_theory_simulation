@@ -987,7 +987,15 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     novelEntitiesBoundary.peak = Math.max(novelEntitiesBoundary.peak, novelEntitiesValue);
   }
 
-  let finalNovelEntitiesValue = novelEntitiesValue;
+  // HIGH-1 FIX (Roy, Nov 20, 2025): Read and apply incremental impacts from other phases
+  // Single-owner pattern: This phase is the ONLY writer to boundaries.novel_entities.currentValue
+  // Other phases (IrreversibilityTracking, UnknownUnknown) write to novelEntitiesIncrementalImpact
+  const incrementalImpact = system.novelEntitiesIncrementalImpact || 0;
+
+  let finalNovelEntitiesValue = novelEntitiesValue + incrementalImpact;
+
+  // Reset incremental impact for next step
+  system.novelEntitiesIncrementalImpact = 0;
 
   // === LEGACY STOCK RELEASE (if enabled) ===
   if (novelEntitiesBoundary.legacyStock !== undefined && novelEntitiesBoundary.legacyStock > 0) {
@@ -1056,6 +1064,23 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     console.log(`     Attempted: ${finalNovelEntitiesValue.toFixed(3)} | Actual: ${flooredValue.toFixed(3)}`);
     console.log(`     Cousins 2022: Global PFAS distribution prevents full remediation`);
   }
+
+  // HIGH-1 FIX (Roy, Nov 20, 2025): CRITICAL - Actually assign the computed value!
+  // This was computed but never written - classic race condition setup
+  // SINGLE-OWNER ENFORCEMENT: Only this phase writes to novel_entities.currentValue
+  system.boundaries.novel_entities.currentValue = assertFinite(flooredValue, {
+    location: 'updatePlanetaryBoundaries:novelEntities[final]',
+    valueName: 'novel_entities.currentValue',
+    month: state.currentMonth,
+    additionalInfo: {
+      novelEntitiesValue,
+      finalNovelEntitiesValue,
+      flooredValue,
+      irreversibleFloor,
+      peak: novelEntitiesBoundary.peak,
+      incrementalImpact
+    }
+  });
 
   updateBoundaryStatus(system.boundaries.novel_entities);
 

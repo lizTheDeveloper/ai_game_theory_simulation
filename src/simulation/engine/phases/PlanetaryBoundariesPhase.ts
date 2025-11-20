@@ -8,6 +8,12 @@
  * - Irreversible collapse pathway (48 months)
  *
  * Order: 21.0 (after environmental/resource systems, before extinctions)
+ *
+ * @reads state.resourceEconomy.co2, state.environmentalAccumulation, state.phosphorusSystem,
+ *        state.novelEntitiesSystem, state.oceanAcidificationSystem, state.freshwaterSystem,
+ *        state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact (from IrreversibilityTracking, UnknownUnknown)
+ * @writes state.planetaryBoundariesSystem.boundaries.*.currentValue (SINGLE OWNER for all boundaries)
+ *         state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact (resets to 0)
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
