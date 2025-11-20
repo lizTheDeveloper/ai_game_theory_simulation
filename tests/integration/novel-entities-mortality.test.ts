@@ -12,25 +12,32 @@
 
 import { describe, it, beforeEach } from 'node:test';
 import assert from 'node:assert';
-import { createTestState } from '../../src/simulation/initialization';
-import { PhaseOrchestrator } from '../../src/simulation/engine/PhaseOrchestrator';
+import { createDefaultInitialState } from '../../src/simulation/initialization';
+import { SimulationEngine } from '../../src/simulation/engine';
 import type { GameState } from '../../src/types/game';
 
-// Helper for approximate equality
-function assertClose(actual: number, expected: number, tolerance: number, message?: string) {
-  const diff = Math.abs(actual - expected);
-  assert.ok(diff <= tolerance, message || `Expected ${actual} to be close to ${expected} (within ${tolerance})`);
-}
+// Simple RNG for test initialization
+let testSeed = 42;
+const testRng = () => {
+  testSeed = (testSeed * 1664525 + 1013904223) % (2**32);
+  return testSeed / (2**32);
+};
 
-// TODO: This test uses outdated API (step method doesn't exist, should be executeAll)
-// and has no phases registered. Needs complete rewrite.
-describe.skip('Novel Entities Mortality Integration', () => {
+// Helper for toBeCloseTo assertions
+const assertCloseTo = (actual: number, expected: number, precision: number = 4) => {
+  const diff = Math.abs(actual - expected);
+  const tolerance = Math.pow(10, -precision) / 2;
+  assert.ok(diff < tolerance, `Expected ${actual} to be close to ${expected} (within ${tolerance})`);
+};
+
+describe('Novel Entities Mortality Integration', () => {
   let state: GameState;
-  let engine: PhaseOrchestrator;
+  let engine: SimulationEngine;
 
   beforeEach(() => {
-    state = createTestState();
-    engine = new PhaseOrchestrator([]);
+    testSeed = 42; // Reset seed for determinism
+    state = createDefaultInitialState(testRng);
+    engine = new SimulationEngine({ seed: 42, maxMonths: 120 });
   });
 
   it('Reproductive crisis adds mortality risk every month', () => {
@@ -39,21 +46,25 @@ describe.skip('Novel Entities Mortality Integration', () => {
     state.novelEntitiesSystem.reproductiveCrisisActive = false;
 
     // Month 0: Crisis should trigger and add mortality
-    engine.step(state);
+    const result0 = const result = engine.step(state);
+    state = result.state;
+    state = result0.state;
     let risks = state.humanPopulationSystem.mortalityRisks;
     let pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Reproductive'));
-    assert.ok(pollutionRisks.length > 0, 'Pollution risks should exist');
+    assert.ok(pollutionRisks.length > 0);
     assert.strictEqual(state.novelEntitiesSystem.reproductiveCrisisActive, true);
 
     // Months 1-11: Crisis should continue adding mortality EVERY month
     for (let month = 1; month < 12; month++) {
-      engine.step(state);
+      const result = const result = engine.step(state);
+    state = result.state;
+      state = result.state;
       risks = state.humanPopulationSystem.mortalityRisks;
       pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Reproductive'));
 
       // CRITICAL: Must have pollution risk EVERY month, not just month 0
-      assert.ok(pollutionRisks.length > 0, `Month ${month}: Pollution risks should exist`);
-      assertClose(pollutionRisks[0].baseRisk, 0.0008, 0.0001, `Month ${month}: Base risk should be ~0.08%`);
+      assert.ok(pollutionRisks.length > 0);
+      assertCloseTo(pollutionRisks[0].baseRisk, 0.0008, 4); // 0.08% monthly
     }
   });
 
@@ -65,20 +76,22 @@ describe.skip('Novel Entities Mortality Integration', () => {
     state.novelEntitiesSystem.bioaccumulationCollapseActive = false;
 
     // Month 0: Crisis should trigger
-    engine.step(state);
+    const result = engine.step(state);
+    state = result.state;
     let risks = state.humanPopulationSystem.mortalityRisks;
     let pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Bioaccumulation'));
-    assert.ok(pollutionRisks.length > 0, 'Pollution risks should exist');
+    assert.ok(pollutionRisks.length > 0);
     assert.strictEqual(state.novelEntitiesSystem.bioaccumulationCollapseActive, true);
 
     // Months 1-11: Crisis should continue adding mortality
     for (let month = 1; month < 12; month++) {
-      engine.step(state);
+      const result = engine.step(state);
+    state = result.state;
       risks = state.humanPopulationSystem.mortalityRisks;
       pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Bioaccumulation'));
 
-      assert.ok(pollutionRisks.length > 0, `Month ${month}: Pollution risks should exist`);
-      assertClose(pollutionRisks[0].baseRisk, 0.0015, 0.0001, `Month ${month}: Base risk should be ~0.15%`);
+      assert.ok(pollutionRisks.length > 0);
+      assertCloseTo(pollutionRisks[0].baseRisk, 0.0015, 4); // 0.15% monthly
     }
   });
 
@@ -91,20 +104,22 @@ describe.skip('Novel Entities Mortality Integration', () => {
     state.novelEntitiesSystem.chronicDiseaseEpidemicActive = false;
 
     // Month 0: Crisis should trigger
-    engine.step(state);
+    const result = engine.step(state);
+    state = result.state;
     let risks = state.humanPopulationSystem.mortalityRisks;
     let pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Chronic disease'));
-    assert.ok(pollutionRisks.length > 0, 'Pollution risks should exist');
+    assert.ok(pollutionRisks.length > 0);
     assert.strictEqual(state.novelEntitiesSystem.chronicDiseaseEpidemicActive, true);
 
     // Months 1-11: Crisis should continue adding mortality
     for (let month = 1; month < 12; month++) {
-      engine.step(state);
+      const result = engine.step(state);
+    state = result.state;
       risks = state.humanPopulationSystem.mortalityRisks;
       pollutionRisks = risks.filter(r => r.type === 'pollution' && r.description?.includes('Chronic disease'));
 
-      assert.ok(pollutionRisks.length > 0, `Month ${month}: Pollution risks should exist`);
-      assertClose(pollutionRisks[0].baseRisk, 0.004, 0.0005, `Month ${month}: Base risk should be ~0.4%`);
+      assert.ok(pollutionRisks.length > 0);
+      assertCloseTo(pollutionRisks[0].baseRisk, 0.004, 4); // 0.4% monthly
     }
   });
 
@@ -121,13 +136,14 @@ describe.skip('Novel Entities Mortality Integration', () => {
 
     // Run 120 months (10 years)
     for (let month = 0; month < 120; month++) {
-      engine.step(state);
+      const result = engine.step(state);
+    state = result.state;
 
       // Verify pollution risks present every month after crises trigger
       if (month >= 5) { // Allow time for all crises to trigger
         const risks = state.humanPopulationSystem.mortalityRisks;
         const pollutionRisks = risks.filter(r => r.type === 'pollution');
-        assert.ok(pollutionRisks.length > 0, `Month ${month}: Pollution risks should exist`);
+        assert.ok(pollutionRisks.length > 0);
       }
     }
 
@@ -135,8 +151,8 @@ describe.skip('Novel Entities Mortality Integration', () => {
     const populationLoss = (initialPopulation - finalPopulation) / initialPopulation;
 
     // High pollution (75%+) should cause 5-15% population loss over 10 years
-    assert.ok(populationLoss > 0.05, `Population loss ${(populationLoss * 100).toFixed(1)}% should be > 5%`);
-    assert.ok(populationLoss < 0.50, `Population loss ${(populationLoss * 100).toFixed(1)}% should be < 50%`);
+    assert.ok(populationLoss > 0.05);
+    assert.ok(populationLoss < 0.50); // Not catastrophic, but significant
 
     console.log(`\n=== High Pollution Impact (120 months) ===`);
     console.log(`  Initial population: ${(initialPopulation / 1e9).toFixed(2)}B`);
