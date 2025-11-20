@@ -17,9 +17,9 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Database configuration
-DB_NAME="${DATABASE_NAME:-marcus}"
+DB_NAME="${DATABASE_NAME:-marcus_test}"
 DB_USER="${DATABASE_USER:-marcus}"
-ADMIN_EMAIL="admin@marcus-platform.local"
+ADMIN_EMAIL="admin@marcus.local"
 
 # Generate a secure random password (24 characters, alphanumeric + special chars)
 echo "📝 Generating secure random password..."
