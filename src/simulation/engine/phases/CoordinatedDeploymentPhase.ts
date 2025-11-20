@@ -84,7 +84,7 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
     assertDefined(rng, {
       location: 'CoordinatedDeploymentPhase.execute',
       valueName: 'rng',
-      additionalInfo: 'RNG required for deterministic simulation'
+      additionalInfo: { reason: 'RNG required for deterministic simulation' }
     });
 
     const transition = state.transitionManagementSystem;
