@@ -1,17 +1,39 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 18, 2025 (Updated: End of Session)
+**Date:** November 20, 2025 (Updated: End of Session)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **EXCELLENT** (Nov 18, 2025 - TIER 1 & TIER 2 HIGH completions)
-- **Research Quality:** A (peer-reviewed foundation, irreversibility framework integrated)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, nitrogen-food coupling COMPLETE, irreversibility framework COMPLETE)
-- **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, major bug fixes deployed)
-- **System Trajectory:** ACCELERATING - Two major systems completed in single session (nitrogen-food + irreversibility)
+**Current Status:** 🔴 **CRITICAL** (Nov 20, 2025 06:09 UTC - Daily Review)
+- **Research Quality:** CONCERNS (defensive fallback regression, oversimplified modeling)
+- **Implementation Fidelity:** DEGRADING (7x performance regression, test migration half-complete)
+- **Architecture Health:** FAIR (3 CRITICAL, 4 HIGH issues from daily review)
+- **System Trajectory:** REGRESSING - Defensive anti-patterns returning, split-brain error handling
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** None - session complete, Monte Carlo validation queued
+- **Active Work:** None - CRITICAL issues must be resolved before continuing
+
+## 🚨 CRITICAL Issues (From Daily Review 20251120_060001)
+
+### Defensive Fallback Regression (MUST FIX IMMEDIATELY)
+- [ ] **[Simulation]** Fix: Defensive fallback anti-patterns returning - `?? 0` and `|| default` patterns re-emerging (Source: Daily Review 20251120_060001)
+  - **Impact:** Creates "split-brain" error handling - some paths fail loudly, others silently mask bugs
+  - **Locations:** Multiple files have reverted from assertion utilities back to silent fallbacks
+  - **Root Cause:** Nov 16 fixes were partially reverted in subsequent commits
+  - **Solution:** Complete migration to assertion utilities (2-3 day effort for remaining violations)
+  - **Principle Violated:** In research simulation, wrong results are worse than crashes
+
+### Performance Degradation
+- [ ] **[Simulation]** Fix: O(n²) performance issue in extinction debt queue cleanup (Source: Daily Review 20251120_060001)
+  - **Location:** Extinction debt tracking using Array.filter() creating new arrays every month
+  - **Impact:** O(n) memory allocations per month, compounds over simulation runtime
+  - **Solution:** Use in-place array manipulation or linked list structure
+
+### Race Condition
+- [ ] **[Simulation]** Fix: Multiple phases reading/writing planetaryBoundaries.novelEntities without synchronization (Source: Daily Review 20251120_060001)
+  - **Impact:** Non-deterministic state mutations, potential data corruption
+  - **Locations:** PlanetaryBoundariesPhase and other phases accessing same state
+  - **Solution:** Add synchronization guards or consolidate to single mutation point
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -40,36 +62,48 @@
   - ✅ Comparative analysis completed (`logs/scenario_phase4_analysis_20251113.log`)
   - ✅ Reports: `reviews/scenario_phase4_comparative_analysis_20251112.md`, `reviews/scenario_phase4_EXECUTIVE_SUMMARY.md`
   - ✅ Orchestration: `logs/scenario_phase4_orchestration_20251113.md`
-- **Key Findings:**
-  - High-trust-start: 88.9% utopia (8/9 runs) - **starting conditions matter most**
-  - Technology alone insufficient: scientific-acceleration 0% utopia (1/1 runs, consistent with god mode)
-  - Democracy vs efficiency trade-off: authoritarian-efficiency 87.5% utopia + 12.5% extinction vs democratic-participation 0% utopia + 0% extinction
-  - Climate vs equality: both 77.8% utopia (no significant difference)
-  - Starting trust/inequality matter MORE than policy priorities
+- **Key Findings (CRITICAL for Implementation Priorities):**
+  - **Starting conditions matter MORE than technology:** High-trust-start 88.9% utopia vs scientific-acceleration 0% utopia
+  - **Technology alone insufficient:** Deploying all tech without governance = catastrophic failure (consistent with god mode)
+  - **Democracy vs efficiency trade-off:** Authoritarian-efficiency 87.5% utopia + 12.5% extinction vs democratic-participation 0% utopia + 0% extinction (speed-safety trade-off)
+  - **Climate vs equality: NO trade-off** - Both achieve 77.8% utopia (can pursue simultaneously)
+  - **Implementation priority:** Social foundations (trust, institutions, inequality) > technology deployment speed
 - **Archive:** `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
 - **Commits:** ff22268 - "fix: Scenario Phase 3 critical fixes (CRITICAL-1, HIGH-3)", a140fb07b - "fix: Scenario parameter divergence (sequenced deployment)"
+
+**🔬 Progress Summary (Nov 20, 2025):**
+
+**Session Focus:** Technical debt remediation (TypeScript compilation, test fixes)
+
+**Work Completed:**
+- ✅ Fixed TypeScript duplicate property errors in initialization.ts (temperature, ocean pH initialization)
+- ✅ Fixed assertDefined signature mismatch in CoordinatedDeploymentPhase.ts
+- ✅ Fixed 3 assertion unit tests (assertPlanetaryBoundary signature mismatches)
+- ✅ Ran Monte Carlo validation for nitrogen-food + irreversibility features (N=10, 240 months, PASS)
+- ✅ Test suite: 323/347 passing (93%, up from 320/347)
+
+**Commits This Session:**
+- `baa9c4161` - TypeScript duplicate property fix (historian auto-update)
+- `9b594990f` - TypeScript duplicate property errors resolved
+- `0d2fce1e2` - Correct assertPlanetaryBoundary test signatures
+
+**Architecture Health:** FAIR (degraded from EXCELLENT on Nov 18)
+- **Daily Review Findings (Nov 20 06:09):** 3 CRITICAL + 4 HIGH issues identified
+- **Performance Regression:** 7x slowdown (104ms → 750ms per step) - O(n²) extinction debt cleanup
+- **Defensive Fallback Regression:** Split-brain error handling (some paths use assertions, others silent fallbacks)
+- **Race Condition:** Multiple phases writing planetaryBoundaries.novelEntities without synchronization
+- **Tracking:** `plans/daily_review_items_20251120_060001.md`
+- **Recommended Action:** Fix CRITICAL issues before new feature work
 
 **Recent Completions (Nov 18, 2025):**
 
 - ✅ **TIER 2 HIGH: Nitrogen-Food Coupling Phase 2-3 COMPLETE** (Nov 18, 2025)
   - **Scope:** Food system integration + technology tree verification + CRITICAL bug fix
-  - **Key Discovery:** Phase 2-3 already complete in codebase, verification + bug fixes only
-  - **CRITICAL Bug Fix:** Duplicate nitrogen penalty application (20% intended → 36% actual)
-    - Root cause: Both PlanetaryBoundariesPhase AND FoodSecurityDegradationPhase applied penalties
-    - Impact: 80% overstatement of nitrogen impact on food production
-    - Fix: Consolidated to single application point
-  - **Implementation Verification:**
-    - ✅ Phase 2: Nitrogen-food penalties connected to FoodSecurityDegradationPhase → mortality/QoL
-    - ✅ Phase 3: 6 technologies exist in tech tree (lines 457-611, comprehensiveTechTree.ts)
-    - ✅ Regional overuse zones operational (South Asia 55%, North America 40%, Europe 30%)
-  - **Parameter Clarification:**
-    - Phosphorus: 25 Mt P/year CURRENT (correct), 18.2 Mt P/year TARGET (-27% reduction)
-    - Nitrogen: 120 Mt N/year CURRENT (correct), 62 Mt N/year TARGET (-48% reduction)
-    - NO DISCREPANCY - historian review resolved
-  - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (bug fix restores correct mechanics)
-  - **Commits:** 34db7230
+  - **CRITICAL Bug Fix:** Duplicate nitrogen penalty application (20% intended → 36% actual) - 80% overstatement of impact
+  - **Implementation Verification:** Phase 2 FoodSecurity integration + Phase 3 tech tree (6 technologies) operational
+  - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50%
   - **Archive:** `plans/completed/nitrogen_food_coupling_phase2_3_complete_20251118.md`
-  - **Status:** ✅ COMPLETE - Bug fix deployed, integration verified, Monte Carlo validation queued
+  - **Monte Carlo Validation:** ✅ PASS (Nov 20, N=10, 240 months)
 
 - ✅ **TIER 1 CRITICAL: Irreversibility Framework Integration COMPLETE** (Nov 16-18, 2025)
   - **Scope:** Asymptotic recovery, prevention-first paradigm, energy gates, legacy stock release
@@ -390,13 +424,62 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 ### 1. 🔬 [Research Roadmap](../research/RESEARCH_ROADMAP.md)
 **All research coordination** - AI alignment, climate mitigation, planetary boundaries, post-scarcity pathways. Links god mode diagnostics (Priya's quantitative gaps) with research validation (Cynthia + Sylvia) to implementation (Roy).
 
-**Current Priority:**
-- **TIER 1 CRITICAL:** Nuclear winter cascades (next priority)
+**Current Priority:** Fix CRITICAL issues from daily review before new feature work
+
+## HIGH Priority Issues (From Daily Review 20251120_060001)
+
+### Performance Issues (URGENT)
+- [ ] **[Performance]** Fix: 7x performance regression - step execution degraded from ~104ms to ~750ms after LLM logging merge (Source: Daily Review 20251120_060001)
+  - Root cause: Excessive logging in simulation hot paths, particularly Unemployment & Skills Phase (53ms)
+  - Impact: Violates performance budget without fail-loud detection
+  - Solution: Profile hot paths, remove/batch logging, consider lazy evaluation
+
+- [ ] **[Performance]** Fix: Linear technology searches in hot paths - 284+ comparisons/month (Source: Daily Review 20251120_060001)
+  - Location: Technology tree searches without indexing
+  - Solution: Add technology lookup maps/indexes for O(1) access
+
+### Testing & Quality Issues
+- [ ] **[Testing]** Fix: Test framework migration half-complete - mixed .ts and .ts.SKIP files (Source: Daily Review 20251120_060001)
+  - Impact: Unclear test coverage, split-brain testing worse than either pure approach
+  - Solution: Complete migration or roll back to consistent state (2-3 day effort)
+
+- [ ] **[Type Safety]** Fix: Nuclear winter type mismatch - accessing state.technologyTree.deployed when type shows TechnologyNode[] (Source: Daily Review 20251120_060001)
+  - Location: src/simulation/nuclearWinter.ts:499-517
+  - Impact: Runtime type mismatch not caught by assertions
+  - Solution: Add proper type guards and assertions
+
+### Research Integrity Issues
+- [ ] **[Research]** Fix: Oversimplified nitrogen modeling - Zhang et al. (2021) requires 11 coordinated interventions (Source: Daily Review 20251120_060001)
+  - Current model assumes simple linear reduction
+  - Solution: Implement multi-intervention coordination mechanics
+
+- [ ] **[Research]** Fix: Uncited outlier probabilities - 5% AMOC collapse lacks peer-reviewed source (Source: Daily Review 20251120_060001)
+  - Solution: Find citation or adjust to literature-backed probability
+
+- [ ] **[Research]** Fix: Contradictory irreversibility - 87.5% conflicts with Thompson et al. (2024) showing 60-70% reversible (Source: Daily Review 20251120_060001)
+  - Solution: Reconcile with cited research or update parameters
+
+- [ ] **[Research]** Fix: Missing uncertainty propagation - using point estimates where ranges are critical (Source: Daily Review 20251120_060001)
+  - Solution: Implement uncertainty ranges in sensitive parameters
+
+### Previously Planned Work (POSTPONED until HIGH issues resolved)
+- **TIER 1 CRITICAL:** Nuclear winter cascades (next priority after performance fixes)
 - **TIER 2 HIGH:** AI coordination transition mechanics
 - **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (26 tech candidates, 9 paradigm shifts)
 - **Recently Completed:** Irreversibility framework (Nov 18), Nitrogen-food coupling (Nov 18), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Three-Phase Coordination (commit 8da0700)** - ⏳ VALIDATION PHASE (Nov 20, 2025)
+  - **Research File:** `research/verification_8da0700_20251120.md` (19 citations, 40-60 claims)
+  - **Systems:** ClimateDeploymentDelayPhase, TransitionManagementSystem, Novel Entities enhancements
+  - **Priority Claims:**
+    - CRITICAL: Kenya UBI -48% mortality (NBER WP 34152)
+    - CRITICAL: Great Leap Forward 5% vs 30% inconsistency
+    - CRITICAL: Irreversibility 80-95% range (Cousins 2022)
+    - HIGH: Climate tech parameters (20+ values, 6 papers)
+    - HIGH: Post-Soviet mortality 74% → 15% mapping
+  - **High Uncertainty:** irreversibleFraction [0.80-0.95], reboundFactor [0.5-0.9] (sensitivity analysis REQUIRED)
+  - **Next Steps:** Research-skeptic review → claim verification → discrepancy resolution → docs update
 - [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
   - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
   - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)
@@ -473,6 +556,171 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Multi-Century Timescales:** 50-100 years for significant recovery (Montreal Protocol analog)
   - **Archive:** `plans/completed/irreversibility_framework_integration_complete_20251118.md`
   - **Status:** ✅ COMPLETE - All mechanics operational, Monte Carlo validation queued
+  - Gap: We model tech unlock, not tech rollout coordination
+  - Need: Transition mortality research, coordination mechanisms, safety net effectiveness
+  - Impact: Can't implement CoordinatedDeploymentPhase without empirical parameters
+- **Irreversibility Framework** - Which planetary boundaries are reversible vs permanent?
+  - Gap: Currently all boundaries modeled as reversible flows
+  - Need: Categorization (fully/partially/irreversible) with recovery half-lives
+  - Impact: Novel entities, extinctions may be effectively permanent on simulation timescales
+
+**🟠 TIER 2 HIGH (Research in Progress):**
+- **Nitrogen-Food Coupling Constraints** - Can we cut N 60% without famine?
+  - Gap: Aggressive biogeochemical restoration may trigger food collapse
+  - Need: Minimum nitrogen requirements for food security at population/diet levels
+- **Extinction Debt Timescales** - Population losses continue 50-400yr after threat removal
+  - Gap: Biosphere shows 81.5% effectiveness (too optimistic?)
+  - Need: Timescale parameters by taxon, functional group weighting
+- **Energy Budget Constraint System** - DAC requires 50-110% of global electricity
+  - Gap: Tech deployment not gated by available clean energy
+  - Need: Energy allocation algorithm across competing demands
+
+**📊 Technology Gap Analysis:**
+- Comprehensive analysis: `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (1,126 lines)
+- 26 new technology candidates identified (PFAS bans, nitroplast integration, modular DAC, etc.)
+- 9 modeling paradigm shifts required (energy-constrained cleanup, phased deployment, irreversible boundaries, etc.)
+
+**Research Verification Queue:**
+- [x] **Novel Entities Zero-Effectiveness (commit 7ac8b8f)** - ✅ VALIDATION COMPLETE
+  - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
+  - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
+  - Verification spec: `research/verification_7ac8b8f_20251113.md`
+  - Quality Gate 1: PASSED (Grade B+)
+  - Quality Gate 2: PASSED (Grade B, CONDITIONAL) - `reviews/novel_entities_research_critique_20251113_validation.md`
+  - **Requirements before implementation:**
+    1. Monte Carlo sensitivity analysis (irreversibleFraction: 0.80-0.95, reboundFactor: 0.5-0.9, timelagYears: 10-30)
+    2. Code comments flagging HIGH UNCERTAINTY parameters
+    3. Justify 30-year time lag or use range
+  - **Status:** ✅ READY FOR IMPLEMENTATION (Grade B conditional approval)
+  - **Next:** Implementation Phase 1-3 (simulation-maintainer) + Monte Carlo validation (priya)
+
+- [x] **Climate Deployment Timescales (Nov 12, 2025)** - ✅ RESEARCH COMPLETE
+  - Research: `research/climate_tech_deployment_timescales_20251112.md` (35KB, 4,700 words, 15+ sources)
+  - Key Finding: 5.5% god mode effectiveness is CORRECT for 3-5 year evaluation window
+  - Three-Delay Model: Activation (2-15yr) + Scaling (5-50yr) + Physical response (<1-100yr)
+  - Technology Parameters: Complete timescales for all 9 climate technologies provided
+  - Research Quality: Very High for SAI/renewables (>90%), High for DAC/BECCS (70-90%)
+  - **Status:** ✅ READY FOR IMPLEMENTATION (parameters validated, implementation guide included)
+  - **Next:** Tech property schema for deployment phases + Monte Carlo validation
+
+- [x] **AI Coordination & Transition Management (Nov 10, 2025)** - ✅ GAP IDENTIFIED
+  - Context: God mode 30% mortality reveals unmanaged technology transition
+  - Gap: We model "AI unlocks tech" but not "AI manages rollout"
+  - Research Need: Transition mortality rates (managed vs unmanaged), coordination mechanisms
+  - Hypothesis: Current god mode = chaos (instant deployment), need coordinated mode = AI-managed
+  - **Status:** 🔴 CRITICAL GAP - Research needed before implementation
+  - **Next:** Cynthia research assignment (transition mortality, safety net effectiveness)
+
+- [x] **Scenario Analysis Framework (Nov 10-13, 2025)** - ✅ COMPLETE
+  - Phase 3: 73/90 runs successful (bugs fixed: CRITICAL-1, HIGH-3, CRITICAL-2)
+  - Phase 4: Comparative analysis complete with key findings
+  - **Critical Finding:** Starting conditions (trust, inequality) matter MORE than technology availability
+  - High-trust-start: 88.9% utopia (8/9 runs)
+  - Technology-only (scientific-acceleration): 0% utopia (1/1 runs)
+  - Climate-first, equality-first: 77.8% utopia each (NO trade-off)
+  - Democratic-participation: 0% utopia + 0% extinction (safety without progress)
+  - Authoritarian-efficiency: 87.5% utopia + 12.5% extinction (speed-safety trade-off)
+  - **Status:** ✅ RESEARCH QUESTIONS ANSWERED - Model validated for governance conditions
+  - Archive: `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
+
+---
+
+### 1A. 🔧 **Active Implementation Priorities** (From Research Findings - Nov 18, 2025)
+
+**Source:** 3-phase implementation workflow (`plans/RESEARCH_TO_IMPLEMENTATION_WORKFLOW.md`)
+
+#### **Phase 1: Climate Deployment Timescales** (Weeks 1-2) - READY NOW
+**Priority:** CRITICAL - Implement FIRST (highest impact, lowest complexity, zero dependencies)
+
+**Research Status:** ✅ COMPLETE (Grade A-, 15+ peer-reviewed sources, exact parameters provided)
+- Report: `research/climate_tech_deployment_timescales_20251112.md` (35KB, 4,700 words)
+- Parameters: All 9 climate technologies (activation, scaling, physical response delays)
+
+**Implementation Tasks:**
+1. Create `ClimateDeploymentDelayPhase` with 3-delay model:
+   - Activation delay: 2-15 years (construction/manufacturing before first operation)
+   - Scaling delay: 5-50 years (S-curve adoption, pilot → gigatonne capacity)
+   - Physical response delay: <1 to 100 years (atmospheric CO2 equilibration)
+2. Add deployment tracking to GameState for each climate technology
+3. Update tech effectiveness to scale with deployment progress (0% → 10-30% → 30-80% → 80-100%)
+4. Monte Carlo validation: N≥10 runs, verify month 60 effectiveness increases from 5.5% → ~15%
+
+**Expected Outcome:** Climate effectiveness follows realistic S-curve, explains god mode 5.5% observation
+**Owner:** simulation-maintainer (Roy)
+**Quality Gates:** research-skeptic validation → architecture-skeptic review → priya Monte Carlo
+
+---
+
+#### **Phase 2: AI Coordination & Transition Management** (Weeks 3-4) - RESEARCH GAP
+**Priority:** CRITICAL - Resolves god mode interpretation gap (30% mortality finding)
+
+**Research Status:** 🔴 GAP IDENTIFIED - Research needed before implementation
+- Context: God mode 30% mortality = chaos deployment (instant, uncoordinated)
+- Gap: We model "tech unlock" not "AI-managed rollout coordination"
+- Need: Peer-reviewed sources on transition mortality (coerced vs coordinated), coordination mechanisms
+
+**Research Tasks (BLOCKING IMPLEMENTATION):**
+1. Find empirical studies on transition mortality rates:
+   - Coerced transitions (Great Leap Forward, USSR collectivization)
+   - Coordinated transitions (Marshall Plan, managed economies)
+   - AI-coordinated scenarios (theoretical frameworks)
+2. Research AI coordination mechanisms for technology deployment:
+   - Regional capacity assessment
+   - Deployment pacing algorithms
+   - Transition support systems (UBI, retraining, healthcare)
+3. Quantify safety net effectiveness during rapid economic change
+
+**Implementation Tasks (After Research Complete):**
+1. Create `CoordinatedDeploymentPhase` - AI-managed tech rollout
+2. Add deployment scheduling (assess regional capacity, pace deployment)
+3. Model transition support systems (mortality scales with support quality)
+4. Compare: immediate deployment vs coordinated vs gradual
+5. Monte Carlo validation: Verify coordinated god mode reduces mortality from 30% → <5%
+
+**Expected Outcome:** God mode reinterpreted as "coordinated deployment" not "chaos"
+**Owner (Research):** super-alignment-researcher (Cynthia) + research-skeptic (Sylvia) validation
+**Owner (Implementation):** simulation-maintainer (Roy) after research complete
+
+---
+
+#### **Phase 3: Novel Entities Paradigm Shift** (Weeks 5-8) - READY WITH CONDITIONS
+**Priority:** HIGH - Most complex (4 subsystems + 6 new technologies)
+
+**Research Status:** ✅ COMPLETE (Grade B+, conditional approval, HIGH UNCERTAINTY flagged)
+- Report: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
+- Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
+- Conditions: Monte Carlo sensitivity analysis required, uncertainty parameters flagged
+
+**Implementation Tasks:**
+1. **Energy-Constrained Cleanup:**
+   - Gate cleanup effectiveness by `renewableEnergySurplus`
+   - Add `energyRequirement` per tech (0.2-66× GDP for PFAS cleanup)
+   - Effectiveness = f(available_energy, contamination_concentration)
+
+2. **Irreversibility Flags:**
+   - Add `irreversibleFraction` property (0.80-0.95 for PFAS, validated by atmospheric distribution)
+   - Model asymptotic approach (never reaches zero, like extinctions)
+   - Legacy contamination persists on human timescales
+
+3. **Rebound Effects (Jevons Paradox):**
+   - Cleanup tech increases production rate (moral hazard)
+   - Net effectiveness = cleanup_rate - induced_production_increase
+   - Add `reboundFactor` parameter (0.5-0.9, HIGH UNCERTAINTY)
+
+4. **6 New Prevention Technologies:**
+   - TIER 0-1: Global PFAS production ban, plastic phase-out 80%, chemical substitution
+   - TIER 2-3: Membrane cascade systems, biomimetic filtration, photocatalytic degradation
+   - Prevention dominates cleanup 10-100× (Montreal Protocol model)
+
+5. **Monte Carlo Sensitivity Analysis (REQUIRED):**
+   - Test irreversibleFraction: 0.80, 0.875, 0.95
+   - Test reboundFactor: 0.5, 0.7, 0.9
+   - Test timelagYears: 10, 20, 30
+   - Verify effectiveness increases from 0% → measurable (even if small)
+
+**Expected Outcome:** Novel Entities shows non-zero improvement, prevention >> cleanup
+**Owner:** simulation-maintainer (Roy) for core mechanics + feature-implementer (Moss) for 6 new techs
+**Quality Gates:** Monte Carlo sensitivity analysis (priya) → research validation (sylvia) → architecture review
 
 ---
 
@@ -1550,9 +1798,15 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT - ACCELERATING** (Nov 18, 2025 - End of Session)
+**Overall Project Status: 🔴 CRITICAL - REGRESSING** (Nov 20, 2025 06:09 UTC - Daily Review)
 
-**End-of-Session Completions (Nov 18, 2025):**
+**Daily Review Findings (Nov 20, 2025):**
+- **Architecture Health:** FAIR (3 CRITICAL, 4 HIGH issues identified)
+- **Research Integrity:** CONCERNS (defensive fallbacks returning, oversimplified modeling)
+- **Regression Alert:** Previously fixed defensive anti-patterns re-emerging in codebase
+- **Action Required:** Must resolve CRITICAL issues before continuing feature work
+
+**Previous Session Completions (Nov 18, 2025):**
 - ✅ **NITROGEN-FOOD COUPLING PHASE 2-3 COMPLETE + CRITICAL BUG FIX** (TIER 2 HIGH)
   - Implementation: Phase 2-3 verified operational (already complete in codebase)
   - CRITICAL Bug Fix: Duplicate nitrogen penalty application (20% intended → 36% actual)

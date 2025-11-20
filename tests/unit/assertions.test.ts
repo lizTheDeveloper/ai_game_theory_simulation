@@ -541,18 +541,18 @@ describe('Assertion Utilities - Domain-Specific', () => {
 
   describe('assertPlanetaryBoundary', () => {
     it('should accept valid boundary value', () => {
-      const result = assertPlanetaryBoundary(1.2, {
+      const result = assertPlanetaryBoundary(1.2, 'temperature', {
         location: 'test',
-        boundaryType: 'climate',
+        valueName: 'temperatureAnomaly',
         month: 10,
       });
       assert.strictEqual(result, 1.2);
     });
 
     it('should accept values < 1 (safe zone)', () => {
-      const result = assertPlanetaryBoundary(0.8, {
+      const result = assertPlanetaryBoundary(0.8, 'biodiversity', {
         location: 'test',
-        boundaryType: 'biodiversity',
+        valueName: 'biodiversityIndex',
         month: 10,
       });
       assert.strictEqual(result, 0.8);
@@ -560,9 +560,9 @@ describe('Assertion Utilities - Domain-Specific', () => {
 
     it('should reject negative values', () => {
       assert.throws(() => {
-        assertPlanetaryBoundary(-0.5, {
+        assertPlanetaryBoundary(-0.5, 'co2', {
           location: 'test',
-          boundaryType: 'climate',
+          valueName: 'atmosphericCO2',
           month: 10,
         });
       });

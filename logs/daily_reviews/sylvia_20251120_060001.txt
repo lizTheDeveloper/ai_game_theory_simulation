@@ -1,0 +1,89 @@
+Based on my critical review, I've identified significant concerns that need immediate attention. Let me provide the summary in the requested format:
+
+## Summary of Quality Concerns
+
+### Critical Findings
+1. **Defensive Fallback Regression** - The `?? 0` anti-patterns that were explicitly fixed on Nov 16 have returned in multiple files, creating a dangerous "split-brain" error handling state
+2. **Performance Degradation** - Array.filter() creating new arrays every month in extinction debt tracking (O(n) allocations)
+3. **Race Condition** - Multiple phases reading/writing `planetaryBoundaries.novelEntities` without synchronization guards
+
+### Regression Risks
+- Test framework conversion (vitest → Node native) is incomplete, leaving some tests with `.SKIP` extensions
+- Mixed test frameworks creating unpredictable test suite behavior
+- Previously fixed assertion patterns reverted to silent fallbacks
+
+### Defensive Anti-Patterns Detected
+```typescript
+// Found in multiple locations:
+const value = someCalculation() ?? 0;  // Hides NaN/undefined bugs
+const pH = state.oceanHealth?.pH || 8.1;  // Silent fallback
+```
+
+These patterns violate the core principle: **In research simulation, wrong results are worse than crashes.**
+
+### Research Integrity Issues
+1. **Oversimplified nitrogen modeling** - Zhang et al. (2021) requires 11 coordinated interventions, model assumes simple linear reduction
+2. **Uncited outlier probabilities** - 5% AMOC collapse lacks peer-reviewed source
+3. **Contradictory irreversibility** - 87.5% irreversibility conflicts with Thompson et al. (2024) showing 60-70% reversible
+4. **Missing uncertainty propagation** - Point estimates used where ranges are critical
+
+### Additional Concerns
+- Repeated energy calculations in every tech effect (performance issue)
+- Regional heterogeneity oversimplified (6 regions for 195 countries)
+- Feedback loops applied instantly (should have realistic delays)
+- "MODEL-DERIVED" parameters without citing which model
+
+## Final Assessment
+
+**CRITICAL_FINDINGS:** 3  
+**REGRESSIONS_DETECTED:** 4  
+**RESEARCH_INTEGRITY:** CONCERNS
+
+The codebase shows troubling signs of technical debt accumulation and regression of previously fixed issues. The defensive fallback regression is particularly concerning as it directly violates the research simulation's core principle of failing loudly rather than producing incorrect results. Immediate action required to prevent error propagation in Monte Carlo runs.
+hould be configuration constants with research citations
+
+### Research Integrity Analysis
+
+#### Positive Findings
+1. **Excellent Source Quality** in new research:
+   - Ocean acidification: 100% peer-reviewed, 2024-2025 sources
+   - Novel entities: 41 sources with uncertainty ranges documented  
+   - Nitrogen coupling: Properly cited Science Advances 2024
+
+2. **Parameter Justification**:
+   - CoordinatedDeploymentPhase has detailed mortality baselines with historical precedents
+   - Energy requirements for PFAS cleanup properly sourced (EPA 2024)
+
+#### Areas of Concern
+
+1. **Unverified Parameter Corrections**:
+   - **Location:** Phosphorus baseline changed from 13.3 Mt to 18.2 Mt
+   - **Issue:** No new citation provided for the 37% increase
+   - **Research Note:** Claims "clarification" but this is a substantial parameter change
+
+2. **Citation Accuracy**:
+   - All recent citations (Bouttes et al. 2025, Jury et al. 2024) appear legitimate
+   - Cross-referenced against publication venues (Global Change Biology, Nature Communications)
+   - **No fabricated sources detected**
+
+3. **Methodological Soundness**:
+   - Good use of regional differentiation (nitrogen overuse zones)
+   - Proper acknowledgment of uncertainty (irreversibility framework)
+   - Research → simulation mapping generally well-documented
+
+### Regression Risks
+
+1. **Performance:** 7x slowdown is a severe regression from baseline
+2. **Test Coverage:** Migration creating gaps in test coverage
+3. **Type Safety:** Nuclear winter type mismatches could cause runtime errors
+4. **Determinism:** Good - no Math.random() in production code detected
+
+### Overall Assessment
+
+**CRITICAL_FINDINGS:** 0  
+**REGRESSIONS_DETECTED:** 3 (performance, test coverage, type safety)  
+**RESEARCH_INTEGRITY:** GOOD
+
+The research quality remains high with proper citations and parameter justification. However, code quality is degrading under rapid development pressure. The performance regression needs immediate attention, and the test framework migration should be completed or rolled back to avoid extended periods of mixed coverage.
+
+The defensive coding patterns are improving in new code (good assertion usage in CoordinatedDeploymentPhase) but legacy code still contains anti-patterns. The partial migration creates confusion and should be addressed systematically.
