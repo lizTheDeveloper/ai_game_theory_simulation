@@ -72,6 +72,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🎯 **Expected Impact:** Novel entities effectiveness 0% → 20-40% with full tech deployment
 - 📖 **Context:** Tests created during merge orchestrator run (20251119_214501)
 
+**Nov 20: Renewable Capacity Calculation Fix** (commit b54fd12)
+- 🐛 **BUG FIX:** energyConstrainedCleanup assertion failure on non-existent renewableCapacity field
+- 🔍 **Root Cause:** EnergySystem doesn't have renewableCapacity field, must calculate from capacity sources
+- ✅ **Fix:** Calculate renewableCapacity = solar + wind + hydro + fusion capacities
+- 🛡️ **Graceful Degradation:** If energy system not initialized, skip energy constraint (returns base effectiveness)
+- 💥 **Impact:** Monte Carlo runs were crashing at month 0 with assertion failure
+- 🎯 **Status:** Bug fix complete, ready for validation
+
 **Nov 20: Energy-Constrained Cleanup Bug Fix** (commit 818ba1f)
 - 🐛 **CRITICAL BUG FIX:** energyConstrainedCleanup baseEffectiveness was always 0
 - 🔍 **Root Cause:** Function checked `tech.effects.novelEntitiesReduction` but no techs have this property
@@ -5293,6 +5301,8 @@ interface EnergySystem {
     deployment: number;                // Building new climate tech
     operation: number;                 // Running deployed climate tech
   };
+  // NOTE: No renewableCapacity field - calculate from capacity sources:
+  // renewableCapacity = capacity.solar + capacity.wind + capacity.hydro + capacity.fusion
 }
 
 // BreakthroughTechnology additions
