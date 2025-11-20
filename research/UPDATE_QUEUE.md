@@ -1,14 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-**Generated:** 11/20/2025, 5:30:05 PM
-=======
-**Generated:** 11/20/2025, 6:30:04 PM
->>>>>>> Stashed changes
-=======
-**Generated:** 11/20/2025, 6:30:04 PM
->>>>>>> Stashed changes
-**Files Scanned:** 484
+**Generated:** 11/20/2025, 7:30:05 PM
+**Files Scanned:** 486
 
 ---
 
@@ -20,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 164 (33.9%)
+**Count:** 165 (34.0%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -276,6 +268,11 @@
 - **Oldest source:** 2018 (7 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/alignment_technique_network_completion_20251031.md`
+
+### `amoc_original_sources_20251120.md`
+- **Oldest source:** 1996 (29 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/amoc_original_sources_20251120.md`
 
 ### `arch4_cross_system_integrations_20251108.md`
 - **Oldest source:** 2012 (13 years old)
@@ -846,7 +843,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 22 (4.5%)
+**Count:** 23 (4.7%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -863,6 +860,7 @@
 - `government-modeling-approaches_20251019.md` - Oldest: 2020 (5 years)
 - `government_climate_investment_adoption_patterns_20251024.md` - Oldest: 2020 (5 years)
 - `government_climate_investment_verification_20251031.md` - Oldest: 2020 (5 years)
+- `irreversibility_reconciliation_20251120.md` - Oldest: 2020 (5 years)
 - `kangas_ubi_finland_verification_20251030.md` - Oldest: 2020 (5 years)
 - `malthusian-overshoot-causation-attribution_20251018.md` - Oldest: 2020 (5 years)
 - `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
@@ -875,7 +873,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 298 (61.6%)
+**Count:** 298 (61.3%)
 
 All sources <3 years old. No action required.
 
@@ -885,33 +883,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 484 |
+| Total files | 486 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 164 (33.9%) |
-| MEDIUM | 22 (4.5%) |
-| LOW | 298 (61.6%) |
-| Average age | 7.4 years |
+| HIGH | 165 (34.0%) |
+| MEDIUM | 23 (4.7%) |
+| LOW | 298 (61.3%) |
+| Average age | 7.5 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 298 | 61.6% |
-| Warning (3-5yr) | 22 | 4.5% |
-| Critical (>5yr) | 164 | 33.9% |
+| Current (<3yr) | 298 | 61.3% |
+| Warning (3-5yr) | 23 | 4.7% |
+| Critical (>5yr) | 165 | 34.0% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 33.9% critical (>5yr)
+- **Current:** 34.0% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 164 HIGH priority file(s) within 1 month
+1. Update 165 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
