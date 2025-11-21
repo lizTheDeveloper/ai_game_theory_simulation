@@ -225,7 +225,7 @@
   - **Priority:** HIGH
   - **Completed:** 2025-11-21
 
-**Phase 3: Operational (Week 3) - 6 scripts**
+**Phase 3: Operational (Week 3) - 6 scripts** ✅ ALL COMPLETE
 
 - [x] **4.9** Create `scripts/test_migrate_postgres_port.sh` ✅ COMPLETE
   - **Purpose:** Validate PostgreSQL port migration script
@@ -234,35 +234,40 @@
   - **Priority:** MEDIUM
   - **Completed:** 2025-11-21
 
-- [ ] **4.10** Create `scripts/test_marcus_backup_restore.sh`
+- [x] **4.10** Create `scripts/test_marcus_backup_restore.sh` ✅ COMPLETE
   - **Purpose:** DR readiness
   - **Tests:** Backup creation, integrity, restore, point-in-time recovery
   - **Time:** 🕐 2-3 hours
   - **Priority:** MEDIUM
+  - **Completed:** 2025-11-21
 
-- [ ] **4.11** Create `scripts/test_marcus_monitoring.sh`
+- [x] **4.11** Create `scripts/test_marcus_monitoring.sh` ✅ COMPLETE
   - **Purpose:** Observability
   - **Tests:** Prometheus scraping, log aggregation, alerts, health checks
   - **Time:** 🕐 2-3 hours
   - **Priority:** MEDIUM
+  - **Completed:** 2025-11-21
 
-- [ ] **4.12** Create `scripts/test_marcus_upgrade.sh`
+- [x] **4.12** Create `scripts/test_marcus_upgrade.sh` ✅ COMPLETE
   - **Purpose:** Upgrade safety
   - **Tests:** Migration rollback, zero-downtime, config migration
   - **Time:** 🕐 2-3 hours
   - **Priority:** MEDIUM
+  - **Completed:** 2025-11-21
 
-- [ ] **4.13** Create `scripts/debug_marcus_agent.sh`
+- [x] **4.13** Create `scripts/debug_marcus_agent.sh` ✅ COMPLETE
   - **Purpose:** Agent debugging helper
   - **Tests:** Verbose logging, state capture, replay, profiling
   - **Time:** 🕐 1-2 hours
   - **Priority:** LOW
+  - **Completed:** 2025-11-21
 
-- [ ] **4.14** Create `scripts/check_marcus_logs.sh`
+- [x] **4.14** Create `scripts/check_marcus_logs.sh` ✅ COMPLETE
   - **Purpose:** Log analysis
   - **Tests:** Error rate, anomalies, security events, pattern matching
   - **Time:** 🕐 1-2 hours
   - **Priority:** LOW
+  - **Completed:** 2025-11-21
 
 **Success Criteria:**
 - ✅ All 14 test scripts created (4 Phase 1 + 4 Phase 2 + 6 Phase 3)
