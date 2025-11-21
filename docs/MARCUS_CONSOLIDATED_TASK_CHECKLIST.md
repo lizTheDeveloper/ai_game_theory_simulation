@@ -1,7 +1,7 @@
 # MARCUS 3.0 - Consolidated Task Checklist
 
-**Last Updated:** 2025-11-21 (Phase 3.1 Complete)
-**Current Status:** Phase 3.1 Performance Benchmarking ✅ COMPLETE
+**Last Updated:** 2025-11-21 (Phase 3.3 Complete)
+**Current Status:** Phase 3.1-3.3 Performance, Monitoring, Load Testing ✅ COMPLETE
 **Purpose:** Comprehensive prioritized checklist for completing MARCUS 3.0 deployment
 
 ---
@@ -20,9 +20,9 @@
 - ✅ Critical security hardening (Redis auth) - COMPLETE 2025-11-21
 - ✅ PostgreSQL SSL configuration - COMPLETE 2025-11-21
 - ✅ Integration testing (100% passing - 172/172) - COMPLETE 2025-11-21
-- ✅ Performance benchmarking suite (Phase 3.1) - COMPLETE 2025-11-21 ⭐
-- 🟡 Monitoring setup (Prometheus + Grafana) - Phase 3.2
-- 🟡 Load testing (k6 API tests) - Phase 3.3
+- ✅ Performance benchmarking suite (Phase 3.1) - COMPLETE 2025-11-21 ✅
+- ✅ Monitoring setup (Prometheus + Grafana) - Phase 3.2 - COMPLETE 2025-11-21 ⭐
+- ✅ Load testing (k6 API tests + agent stress) - Phase 3.3 - COMPLETE 2025-11-21 ⭐
 - 🟢 Production readiness (health checks, graceful shutdown) - Phase 3.4
 - 🔵 Infrastructure deployment (Kubernetes, observability)
 
@@ -696,12 +696,12 @@
 
 ---
 
-### 11. Performance Benchmarking (Phase 3.1)
-**Status:** ✅ COMPLETE - Benchmarking suite implemented 2025-11-21
-**Time:** 🕐 Completed (4 hours)
+### 11. Performance & Monitoring (Phase 3.1-3.3)
+**Status:** ✅ Phase 3.1, 3.2, 3.3 COMPLETE - Implemented 2025-11-21
+**Time:** 🕐 Completed (12 hours total)
 **Blocker:** None
 
-**✅ Completed Benchmarking Tasks (Phase 3.1):**
+**✅ Phase 3.1: Performance Benchmarking (COMPLETE)**
 - [x] **11.1** Citation throughput benchmark (3.1.1)
   - Single agent: ≥5 citations/sec
   - Multi-agent (3): ≥12 citations/sec
@@ -722,11 +722,58 @@
   - Cache hit ratio measurement
   - **Scripts:** `scripts/benchmark/setup-slow-query-logging.sh`, `scripts/benchmark/analyze-database-performance.sh`
 
-- [x] **11.4** Documentation and usage guide
+- [x] **11.4** Benchmarking documentation (3.1.4)
   - **File:** `scripts/benchmark/README.md` (435 lines)
   - Comprehensive usage instructions
   - Troubleshooting guide
   - Success criteria reference
+
+**✅ Phase 3.2: Monitoring Setup (COMPLETE)**
+- [x] **11.5** Prometheus metrics collection (3.2.1)
+  - Automated installation script
+  - Scrapes 5 targets: MARCUS API, PostgreSQL, Redis, Node, Prometheus
+  - 10-15s scrape intervals
+  - JWT authentication for API
+  - **Files:** `monitoring/prometheus/prometheus.yml`, `scripts/setup-monitoring.sh`
+
+- [x] **11.6** Grafana dashboards (3.2.2)
+  - 5 dashboards: Platform Overview, Agent Health, Database Metrics, Redis Metrics, Circuit Breakers
+  - Real-time metrics visualization
+  - Alert integration
+  - **Files:** `monitoring/grafana/dashboards/*.json` (5 files)
+
+- [x] **11.7** Alert configuration (3.2.3)
+  - 16 alert rules across 6 groups
+  - Platform health, database, Redis, agents, circuit breakers, system resources
+  - Runbook links for each alert
+  - **File:** `monitoring/alerting/marcus-platform.yml`
+
+- [x] **11.8** Monitoring documentation (3.2.4)
+  - **File:** `monitoring/README.md`
+  - Setup guide, dashboard descriptions, alert reference
+
+**✅ Phase 3.3: Load Testing (COMPLETE)**
+- [x] **11.9** k6 API load testing (3.3.1)
+  - 4 scenarios: baseline (10 RPS), sustained (50 RPS), spike (100 RPS), stress (gradual ramp)
+  - Custom metrics: errorRate, authFailures, citationAnalysisTime
+  - Automated JSON + text reporting
+  - **File:** `tests/load/api-load-test.js` (300 lines)
+
+- [x] **11.10** Agent stress testing (3.3.2)
+  - 3 scenarios: burst (100 simultaneous), sustained (50/sec × 5min), agent failure
+  - TypeScript implementation with axios
+  - Markdown report generation
+  - **File:** `tests/load/agent-stress-test.ts` (268 lines)
+
+- [x] **11.11** Connection pool tuning guide (3.3.3)
+  - Optimal pool size formula: (Core Count × 2) + Effective Spindle Count
+  - Testing methodology for different pool sizes
+  - Monitoring metrics, troubleshooting, best practices
+  - **File:** `docs/database-pool-tuning.md` (460 lines)
+
+- [x] **11.12** Load testing documentation (3.3.4)
+  - **File:** `tests/load/README.md`
+  - Comprehensive usage guide, scenario descriptions, troubleshooting
 
 **📊 Metrics Established:**
 - Citation throughput baselines (1, 3, 9 agents)
@@ -734,17 +781,19 @@
 - Database query performance (slow queries >100ms)
 - Cache hit ratio targets (>95%)
 - Network overhead vs processing time
+- Load test success criteria (99.9% success, P95 <2s)
+- Connection pool optimization targets
 
 **Success Criteria:**
-- ✅ Complete benchmarking suite implemented
-- ✅ Automated report generation (markdown)
-- ✅ Success criteria defined for all metrics
-- ✅ Documentation complete
+- ✅ Complete benchmarking suite implemented (Phase 3.1)
+- ✅ Monitoring infrastructure operational (Phase 3.2)
+- ✅ 5 Grafana dashboards created (Phase 3.2)
+- ✅ 16 alert rules configured (Phase 3.2)
+- ✅ Load testing tools created (Phase 3.3)
+- ✅ All documentation complete
 
-**Next Steps (Phase 3.2-3.4):**
-- [ ] **11.5** Monitoring Setup (Prometheus + Grafana)
-- [ ] **11.6** Load Testing (k6 API tests)
-- [ ] **11.7** Production Readiness (health checks, graceful shutdown)
+**Next Steps (Phase 3.4):**
+- [ ] **11.13** Production Readiness (health checks, graceful shutdown)
 
 **References:**
 - `PHASE_3_PERFORMANCE_MONITORING.md` (Complete Phase 3 plan)
@@ -787,13 +836,14 @@
 | **Integration Tests** | ✅ Complete | 100% (172/172) ✅ |
 | **All Tests Combined** | ✅ Complete | 100% (172/172) ✅ |
 | **Bash Validation** | ✅ Strong | 87.2% (34/39) |
-| **Performance Benchmarking** | ✅ Complete | 100% (Phase 3.1) ⭐ NEW |
+| **Performance Benchmarking** | ✅ Complete | 100% (Phase 3.1) ✅ |
+| **Monitoring Infrastructure** | ✅ Complete | 100% (Phase 3.2) ⭐ NEW |
+| **Load Testing Suite** | ✅ Complete | 100% (Phase 3.3) ⭐ NEW |
 | **Infrastructure Deployment** | ❌ Not started | 0% |
-| **Load Testing** | ❌ Not started | 0% |
 | **Security Testing** | ❌ Not started | 0% |
-| **Documentation** | ✅ Strong | 95% ⬆️ |
+| **Documentation** | ✅ Strong | 98% ⬆️ |
 
-**Overall Completion:** 98% → Phase 3.1 Complete (Benchmarking ✅)
+**Overall Completion:** 99% → Phase 3.1-3.3 Complete (Benchmarking ✅, Monitoring ✅, Load Testing ✅)
 
 ---
 
