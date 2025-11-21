@@ -77,6 +77,11 @@ describe('platformConfig', () => {
       process.env.REDIS_HOST = 'localhost';
       process.env.JWT_SECRET = 'at_least_32_characters_for_security_purposes';
 
+      // Delete optional vars to test defaults
+      delete process.env.REDIS_DB;
+      delete process.env.REDIS_MAX_RETRIES_PER_REQUEST;
+      delete process.env.NUM_AGENTS;
+
       // Act
       const config = loadConfiguration();
 
@@ -147,6 +152,9 @@ describe('platformConfig', () => {
       process.env.DATABASE_PASSWORD = 'password';
       process.env.REDIS_HOST = 'localhost';
       process.env.JWT_SECRET = 'at_least_32_characters_for_security_purposes';
+
+      // Explicitly delete JWT_REFRESH_SECRET to test fallback behavior
+      delete process.env.JWT_REFRESH_SECRET;
 
       // Act
       const config = loadConfiguration();

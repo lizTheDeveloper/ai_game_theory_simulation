@@ -42,11 +42,17 @@ apply_migrations() {
 
     # Apply migrations in order (only the ones that exist)
     # Note: 001 and 002 don't exist, starting from 003
+    # Using 003_csp_violations_fixed.sql instead of broken 003_csp_violations.sql
 
-    if [ -f "003_csp_violations.sql" ]; then
-        echo "📋 Applying migration 003 (CSP violations)..."
-        sudo -u postgres psql -d "$DB_NAME" -f 003_csp_violations.sql
+    if [ -f "003_csp_violations_fixed.sql" ]; then
+        echo "📋 Applying migration 003 (CSP violations - FIXED)..."
+        sudo -u postgres psql -d "$DB_NAME" -f 003_csp_violations_fixed.sql
         echo "✅ Migration 003 applied"
+        echo ""
+    elif [ -f "003_csp_violations.sql" ]; then
+        echo "⚠️  Warning: Using old 003_csp_violations.sql (has syntax errors)"
+        echo "📋 Applying migration 003 (CSP violations)..."
+        sudo -u postgres psql -d "$DB_NAME" -f 003_csp_violations.sql || echo "❌ Migration 003 failed (expected - syntax error)"
         echo ""
     fi
 
@@ -68,6 +74,13 @@ apply_migrations() {
         echo "📋 Applying migration 006 (agent system)..."
         sudo -u postgres psql -d "$DB_NAME" -f 006_agent_system_schema.sql
         echo "✅ Migration 006 applied"
+        echo ""
+    fi
+
+    if [ -f "007_missing_test_tables.sql" ]; then
+        echo "📋 Applying migration 007 (refresh_tokens & auth_audit_log)..."
+        sudo -u postgres psql -d "$DB_NAME" -f 007_missing_test_tables.sql
+        echo "✅ Migration 007 applied"
         echo ""
     fi
 
@@ -114,10 +127,11 @@ echo "✅ DATABASE MIGRATIONS COMPLETE"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 echo "📋 Summary:"
-echo "  ✅ Migration 003: CSP violations tracking"
+echo "  ✅ Migration 003: CSP violations tracking (FIXED version)"
 echo "  ✅ Migration 004: Password reset tokens"
 echo "  ✅ Migration 005: Complete schema (users, citations, agents, audit)"
 echo "  ✅ Migration 006: Agent system schema"
+echo "  ✅ Migration 007: Missing test tables (refresh_tokens, auth_audit_log)"
 echo ""
 echo "🎯 Next steps:"
 echo "  1. Verify admin user exists:"

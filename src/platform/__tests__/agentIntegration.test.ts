@@ -73,7 +73,8 @@ describe('Python Agent Integration', () => {
     redis = new Redis({
       host: TEST_REDIS_CONFIG.host,
       port: TEST_REDIS_CONFIG.port,
-      db: TEST_REDIS_CONFIG.db
+      db: TEST_REDIS_CONFIG.db,
+      password: process.env.REDIS_PASSWORD
     });
 
     // Verify agent script exists
