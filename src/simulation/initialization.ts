@@ -1245,6 +1245,16 @@ export function createDefaultInitialState(
       maxSafeDeploymentSpeed: 0.05,        // 5%/year threshold (research-backed)
       recentDeploymentsCount: 0,           // Track tech deployments in last 12 months
 
+      // === COORDINATION FAILURES (Nov 21, 2025) ===
+      coordinationFailures: 0,             // No failures at initialization
+      coordinationFailureActive: false,    // No active failure
+      coordinationFailureMultiplier: 1.0,  // No multiplier initially
+      coordinationFailureMonth: 0,         // No failure yet
+
+      // === REBOUND EFFECTS (Nov 21, 2025) ===
+      reboundEffectiveness: 1.0,           // 100% effectiveness initially
+      reboundDecayRate: 0.075,             // 7.5% annual decay (conservative)
+
       // === REGIONAL HETEROGENEITY ===
       regionalReadiness: {
         OECD: 0.85,                        // High-income, strong institutions
