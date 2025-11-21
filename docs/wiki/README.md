@@ -55,6 +55,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Current Initiatives:**
 
+**Nov 21: Initialization Bug Fixes - State Access Errors Resolved** (commit 9223cb5)
+- 🐛 **Bug 1 Fixed:** initialPopulation timing bug (engine.ts)
+  - Previously: initialPopulation only set at END of simulation loop
+  - Now: Set immediately at START after capturing savedInitialPopulation
+  - Impact: Prevents undefined access during simulation execution
+- 🐛 **Bug 2 Fixed:** renewableCapacity field access bug (energyConstrainedCleanup.ts)
+  - Previously: Tried to access non-existent state.resourceEconomy.energy.renewableCapacity field
+  - Now: Calculate from individual capacity sources (solar + wind + hydro + fusion)
+  - Also fixed: 'demand' → 'totalDemand' (correct field name)
+  - Impact: Prevents assertion failures during energy-constrained cleanup
+- ✅ **Validation:** Monte Carlo N=10, 120 months - all runs successful, no NaN/assertion errors
+- 🛡️ **Defensive Coding:** Used assertStateProperty for all field access
+
 **Nov 21: AI Alignment Faking Validation Workflow - Task Files Added** (commit 7d3c0f6)
 - 🔄 **Orchestrator Workflow:** Task coordination files created for two-agent validation workflow
 - 👥 **Agents Assigned:**
