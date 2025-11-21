@@ -11,7 +11,7 @@
         "type": "stat",
         "gridPos": {"h": 6, "w": 24, "x": 0, "y": 0},
         "targets": [
-          {"expr": "circuit_breaker_state", "legendFormat": "{{service}} - {{state}}"}
+          {"expr": "marcus_circuit_breaker_state", "legendFormat": "{{breaker_name}}"}
         ],
         "fieldConfig": {
           "defaults": {
@@ -30,7 +30,7 @@
         "type": "graph",
         "gridPos": {"h": 8, "w": 12, "x": 0, "y": 6},
         "targets": [
-          {"expr": "rate(circuit_breaker_trips_total[5m])", "legendFormat": "{{service}}"}
+          {"expr": "rate(marcus_circuit_breaker_failures_total[5m])", "legendFormat": "{{breaker_name}}"}
         ]
       },
       {
@@ -39,7 +39,7 @@
         "type": "graph",
         "gridPos": {"h": 8, "w": 12, "x": 12, "y": 6},
         "targets": [
-          {"expr": "circuit_breaker_recovery_time_seconds", "legendFormat": "{{service}}"}
+          {"expr": "marcus_circuit_breaker_recovery_time_seconds", "legendFormat": "{{breaker_name}}"}
         ],
         "yaxes": [{"format": "s"}]
       },
@@ -49,7 +49,7 @@
         "type": "graph",
         "gridPos": {"h": 8, "w": 24, "x": 0, "y": 14},
         "targets": [
-          {"expr": "rate(circuit_breaker_requests_total{result=\"success\"}[5m]) / rate(circuit_breaker_requests_total[5m])", "legendFormat": "{{service}}"}
+          {"expr": "rate(marcus_circuit_breaker_requests_total{result=\"success\"}[5m]) / rate(marcus_circuit_breaker_requests_total[5m])", "legendFormat": "{{breaker_name}}"}
         ],
         "fieldConfig": {"defaults": {"unit": "percentunit", "min": 0, "max": 1}}
       }

@@ -18,7 +18,7 @@
         "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
         "targets": [
           {
-            "expr": "rate(http_requests_total{job=\"marcus-platform\"}[5m])",
+            "expr": "rate(marcus_http_requests_total{job=\"marcus-platform\"}[5m])",
             "legendFormat": "{{method}} {{path}}"
           }
         ]
@@ -30,7 +30,7 @@
         "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
         "targets": [
           {
-            "expr": "rate(http_requests_total{job=\"marcus-platform\",status=~\"5..\"}[5m]) / rate(http_requests_total{job=\"marcus-platform\"}[5m]) * 100",
+            "expr": "rate(marcus_http_requests_total{job=\"marcus-platform\",status=~\"5..\"}[5m]) / rate(marcus_http_requests_total{job=\"marcus-platform\"}[5m]) * 100",
             "legendFormat": "Error Rate %"
           }
         ],
@@ -46,7 +46,7 @@
         "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
         "targets": [
           {
-            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"marcus-platform\"}[5m]))",
+            "expr": "histogram_quantile(0.95, rate(marcus_http_request_duration_seconds_bucket{job=\"marcus-platform\"}[5m]))",
             "legendFormat": "P95 Latency"
           }
         ],
@@ -59,7 +59,7 @@
         "gridPos": {"h": 4, "w": 6, "x": 12, "y": 8},
         "targets": [
           {
-            "expr": "http_active_connections{job=\"marcus-platform\"}",
+            "expr": "marcus_http_active_connections{job=\"marcus-platform\"}",
             "legendFormat": "Active"
           }
         ]

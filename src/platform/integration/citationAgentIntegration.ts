@@ -25,6 +25,7 @@ import Redis from 'ioredis';
 import { Counter, Histogram, Gauge, register as promRegister } from 'prom-client';
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import { agentStatus as agentStatusMetric, agentRequestDuration, citationAnalysisCounter, citationAnalysisDuration } from '../monitoring/metricsEndpoint';
 
 // ============================================================================
 // Type Definitions
@@ -861,6 +862,17 @@ export class CitationAgentOrchestrator {
     this.metricsCollector.recordLatency(latency);
     this.metricsCollector.recordConsensus(consensus);
 
+    // Update Prometheus metrics for citation analysis
+    for (const result of validResults) {
+      citationAnalysisCounter.inc({
+        agent_id: result.agentId || 'unknown',
+        result: 'success'
+      });
+      citationAnalysisDuration.observe({
+        agent_id: result.agentId || 'unknown'
+      }, latency / 1000); // Convert to seconds
+    }
+
     // Persist results
     await this.stateManager.saveAnalysis(aggregated);
 
@@ -1051,8 +1063,15 @@ export class CitationAgentOrchestrator {
       try {
         const status = await agent.getStatus();
         statuses.push(status);
+
+        // Update Prometheus agent status metric (1 = healthy, 0 = unhealthy)
+        agentStatusMetric.set({ agent_id: agent.agentId }, status.isHealthy ? 1 : 0);
       } catch (err) {
         console.error(`Failed to get status for agent ${agent.agentId}:`, err);
+
+        // Update Prometheus agent status metric (0 = unhealthy/failed)
+        agentStatusMetric.set({ agent_id: agent.agentId }, 0);
+
         // Include unhealthy status even if query fails
         statuses.push({
           agentId: agent.agentId,

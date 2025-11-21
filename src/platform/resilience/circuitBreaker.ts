@@ -29,6 +29,8 @@
  * @author Marcus (Platform Engineer)
  */
 
+import { circuitBreakerState, circuitBreakerFailures } from '../monitoring/metricsEndpoint';
+
 export enum CircuitState {
   CLOSED = 'CLOSED',    // Normal operation
   OPEN = 'OPEN',        // Circuit is open, requests fail fast
@@ -118,6 +120,22 @@ export class CircuitBreaker {
     if (config.resetTimeout < 1) {
       throw new Error('resetTimeout must be >= 1');
     }
+
+    // Initialize Prometheus metrics
+    this.updatePrometheusMetrics();
+  }
+
+  /**
+   * Update Prometheus metrics for circuit breaker state
+   */
+  private updatePrometheusMetrics(): void {
+    const breakerName = this.config.name || 'unnamed';
+
+    // Map state to numeric value (0=CLOSED, 1=HALF_OPEN, 2=OPEN)
+    const stateValue = this.state === CircuitState.CLOSED ? 0 :
+                       this.state === CircuitState.HALF_OPEN ? 1 : 2;
+
+    circuitBreakerState.set({ breaker_name: breakerName }, stateValue);
   }
 
   /**
@@ -133,6 +151,7 @@ export class CircuitBreaker {
         console.log(`🔄 Circuit breaker ${this.config.name || 'unnamed'}: Transitioning to HALF_OPEN`);
         this.state = CircuitState.HALF_OPEN;
         this.consecutiveSuccesses = 0;
+        this.updatePrometheusMetrics();
       } else {
         // Circuit still open
         this.totalRejections++;
@@ -189,6 +208,7 @@ export class CircuitBreaker {
         this.state = CircuitState.CLOSED;
         this.failures = 0;
         this.consecutiveFailures = 0;
+        this.updatePrometheusMetrics();
       }
     }
   }
@@ -225,6 +245,10 @@ export class CircuitBreaker {
     this.state = CircuitState.OPEN;
     this.nextAttemptTime = Date.now() + this.config.resetTimeout;
     console.warn(`⏰ Circuit breaker ${this.config.name || 'unnamed'}: Next attempt at ${new Date(this.nextAttemptTime).toISOString()}`);
+
+    // Update Prometheus metrics
+    this.updatePrometheusMetrics();
+    circuitBreakerFailures.inc({ breaker_name: this.config.name || 'unnamed' });
   }
 
   /**

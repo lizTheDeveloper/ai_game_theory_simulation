@@ -11,8 +11,8 @@
         "type": "stat",
         "gridPos": {"h": 6, "w": 8, "x": 0, "y": 0},
         "targets": [
-          {"expr": "count(agent_status{status=\"healthy\"})", "legendFormat": "Healthy"},
-          {"expr": "count(agent_status{status=\"unhealthy\"})", "legendFormat": "Unhealthy"}
+          {"expr": "count(marcus_agent_status == 1)", "legendFormat": "Healthy"},
+          {"expr": "count(marcus_agent_status == 0)", "legendFormat": "Unhealthy"}
         ]
       },
       {
@@ -21,7 +21,7 @@
         "type": "graph",
         "gridPos": {"h": 8, "w": 16, "x": 8, "y": 0},
         "targets": [
-          {"expr": "rate(citations_analyzed_total[5m])", "legendFormat": "{{agent_id}}"}
+          {"expr": "rate(marcus_citation_analysis_total[5m])", "legendFormat": "{{agent_id}}"}
         ]
       },
       {
@@ -30,7 +30,7 @@
         "type": "graph",
         "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
         "targets": [
-          {"expr": "histogram_quantile(0.95, rate(agent_response_time_seconds_bucket[5m]))", "legendFormat": "{{agent_id}}"}
+          {"expr": "histogram_quantile(0.95, rate(marcus_agent_request_duration_seconds_bucket[5m]))", "legendFormat": "{{agent_id}}"}
         ],
         "alert": {"conditions": [{"evaluator": {"params": [0.5], "type": "gt"}}]}
       },
@@ -40,7 +40,7 @@
         "type": "graph",
         "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
         "targets": [
-          {"expr": "rate(agent_errors_total[5m])", "legendFormat": "{{agent_id}} - {{error_type}}"}
+          {"expr": "rate(marcus_citation_analysis_total{result=\"error\"}[5m])", "legendFormat": "{{agent_id}}"}
         ]
       }
     ]

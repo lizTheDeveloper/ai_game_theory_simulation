@@ -146,6 +146,33 @@ export const activeTokens = new promClient.Gauge({
 });
 
 /**
+ * Normalize URL path for metrics (group similar paths together)
+ * Examples:
+ *   /api/citations/123 -> /api/citations/:id
+ *   /health -> /health
+ */
+function normalizeRoutePath(path: string): string {
+  // Remove query parameters
+  const pathWithoutQuery = path.split('?')[0];
+
+  // Common route patterns
+  const patterns = [
+    { regex: /^\/api\/citations\/[^\/]+$/, replacement: '/api/citations/:id' },
+    { regex: /^\/api\/agents\/[^\/]+$/, replacement: '/api/agents/:id' },
+    { regex: /^\/api\/users\/[^\/]+$/, replacement: '/api/users/:id' },
+    { regex: /^\/api\/citations\/[^\/]+\/verify$/, replacement: '/api/citations/:id/verify' },
+  ];
+
+  for (const pattern of patterns) {
+    if (pattern.regex.test(pathWithoutQuery)) {
+      return pattern.replacement;
+    }
+  }
+
+  return pathWithoutQuery;
+}
+
+/**
  * Express middleware to track HTTP request metrics
  */
 export function metricsMiddleware(req: Request, res: Response, next: Function): void {
@@ -156,18 +183,20 @@ export function metricsMiddleware(req: Request, res: Response, next: Function): 
 
   res.on('finish', () => {
     const duration = (Date.now() - start) / 1000; // Convert to seconds
-    const route = req.route?.path || req.path || 'unknown';
+
+    // Normalize the route path for better metric grouping
+    const route = normalizeRoutePath(req.path);
 
     httpRequestDuration.observe({
       method: req.method,
       route,
-      status_code: res.statusCode
+      status_code: res.statusCode.toString()
     }, duration);
 
     httpRequestCounter.inc({
       method: req.method,
       route,
-      status_code: res.statusCode
+      status_code: res.statusCode.toString()
     });
 
     activeConnections.dec();
