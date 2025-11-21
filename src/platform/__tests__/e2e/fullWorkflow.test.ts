@@ -14,7 +14,7 @@ import { getTestConfiguration } from '../../config/platformConfig';
 describe('E2E: Full Citation Analysis Workflow', () => {
   let dbPool: Pool;
   let redisClient: Redis;
-  let app: any; // Will be imported dynamically
+  let app: any; // Will be initialized from PlatformServer
 
   beforeAll(async () => {
     // Get test configuration
@@ -38,9 +38,29 @@ describe('E2E: Full Citation Analysis Workflow', () => {
       maxRetriesPerRequest: config.redis.maxRetriesPerRequest
     });
 
-    // Import app (dynamically to allow test config to load first)
-    const { app: testApp } = await import('../../api/server');
-    app = testApp;
+    // Initialize Express app from PlatformServer
+    const { PlatformServer, getDefaultConfig } = await import('../../api/server');
+    const serverConfig = getDefaultConfig();
+    const server = new PlatformServer(serverConfig);
+    app = server.getApp();
+
+    // Drop existing tables (in case of previous test failures)
+    // Ignore errors if tables owned by different user
+    try {
+      await dbPool.query('DROP TABLE IF EXISTS citation_analyses CASCADE');
+    } catch (err) {
+      // Table may not exist or owned by different user - that's OK
+    }
+    try {
+      await dbPool.query('DROP TABLE IF EXISTS refresh_tokens CASCADE');
+    } catch (err) {
+      // Table may not exist or owned by different user - that's OK
+    }
+    try {
+      await dbPool.query('DROP TABLE IF EXISTS users CASCADE');
+    } catch (err) {
+      // Table may not exist or owned by different user - that's OK
+    }
 
     // Create test schema
     await dbPool.query(`
@@ -86,10 +106,22 @@ describe('E2E: Full Citation Analysis Workflow', () => {
   });
 
   afterAll(async () => {
-    // Cleanup
-    await dbPool.query('DROP TABLE IF EXISTS citation_analyses CASCADE');
-    await dbPool.query('DROP TABLE IF EXISTS refresh_tokens CASCADE');
-    await dbPool.query('DROP TABLE IF EXISTS users CASCADE');
+    // Cleanup (ignore permission errors if tables owned by different user)
+    try {
+      await dbPool.query('DROP TABLE IF EXISTS citation_analyses CASCADE');
+    } catch (err) {
+      // Ignore - may not have permission
+    }
+    try {
+      await dbPool.query('DROP TABLE IF EXISTS refresh_tokens CASCADE');
+    } catch (err) {
+      // Ignore - may not have permission
+    }
+    try {
+      await dbPool.query('DROP TABLE IF EXISTS users CASCADE');
+    } catch (err) {
+      // Ignore - may not have permission
+    }
     await dbPool.end();
     await redisClient.quit();
   });

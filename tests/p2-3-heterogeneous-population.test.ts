@@ -130,10 +130,8 @@ describe('P2.3: Heterogeneous Population Segments', () => {
       const initialPop = state.humanPopulationSystem.population;
       
       // Apply a crisis with 10% base mortality
-      addAcuteCrisisDeaths(state, 0.10, 'Test Crisis', 1.0, 'other', {
-        primary: 'other',
-        mechanism: 'Test crisis for differential mortality'
-      });
+      // rootCause must be a RootCause string ('conflict', 'climate', etc.) or CompoundCause object
+      addAcuteCrisisDeaths(state, 0.10, 'Test Crisis', 1.0, 'other', 'conflict', 'MEDIUM');
       
       const finalPop = state.humanPopulationSystem.population;
       const totalDeaths = initialPop - finalPop;
@@ -289,10 +287,7 @@ describe('P2.3: Heterogeneous Population Segments', () => {
         
         // Apply small crisis every few months
         if (i % 3 === 0) {
-          addAcuteCrisisDeaths(state, 0.02, `Month ${i} Crisis`, 0.5, 'other', {
-            primary: 'other',
-            mechanism: 'Recurring test crisis'
-          });
+          addAcuteCrisisDeaths(state, 0.02, `Month ${i} Crisis`, 0.5, 'other', 'natural', 'LOW');
         }
       }
       
@@ -310,10 +305,7 @@ describe('P2.3: Heterogeneous Population Segments', () => {
       
       // Apply severe crisis
       for (let i = 0; i < 5; i++) {
-        addAcuteCrisisDeaths(state, 0.05, `Crisis Month ${i}`, 1.0, 'cascade', {
-          primary: 'cascade',
-          mechanism: 'Test crisis cascade'
-        });
+        addAcuteCrisisDeaths(state, 0.05, `Crisis Month ${i}`, 1.0, 'cascade', 'climate', 'HIGH');
       }
       
       updateSocietyAggregates(state);

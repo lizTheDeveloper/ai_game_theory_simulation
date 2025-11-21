@@ -69,6 +69,13 @@ describe('Auth Flow Integration Tests', () => {
       maxRetriesPerRequest: config.redis.maxRetriesPerRequest
     });
 
+    // Drop existing tables (in case of previous test failures)
+    await dbPool.query('DROP TABLE IF EXISTS auth_audit_log CASCADE');
+    await dbPool.query('DROP TABLE IF EXISTS refresh_tokens CASCADE');
+    await dbPool.query('DROP TABLE IF EXISTS users CASCADE');
+    await dbPool.query('DROP FUNCTION IF EXISTS reset_failed_attempts(INTEGER) CASCADE');
+    await dbPool.query('DROP FUNCTION IF EXISTS check_and_lock_account(VARCHAR, INTEGER, INTEGER) CASCADE');
+
     // Create database schema
     await dbPool.query(`
       CREATE TABLE IF NOT EXISTS users (
