@@ -1,7 +1,7 @@
 # MARCUS 3.0 Production Runbook
 
-**Version:** 1.0
-**Last Updated:** 2025-11-19
+**Version:** 2.0
+**Last Updated:** 2025-11-21
 **Maintainer:** Platform Team
 
 ---
@@ -543,6 +543,448 @@ tail -f /opt/marcus/logs/marcus-$(date +%Y-%m-%d).log
 
 ---
 
+## Common Incident Procedures
+
+This section provides step-by-step procedures for handling common production incidents.
+
+### Incident Response Framework
+
+**All incidents should follow this framework:**
+
+1. **Detect** - Alert triggers or user report
+2. **Triage** - Assess severity and impact
+3. **Mitigate** - Stop the bleeding (rollback, scale, failover)
+4. **Investigate** - Root cause analysis
+5. **Resolve** - Permanent fix
+6. **Document** - Post-mortem and prevention
+
+**Severity Levels:**
+- **P1 (Critical):** Complete service outage, data loss, security breach
+- **P2 (High):** Partial outage, severe degradation affecting >50% users
+- **P3 (Medium):** Degraded performance, minor feature outage
+- **P4 (Low):** Minor issues, no user impact
+
+### Incident 1: Complete Service Outage
+
+**Symptoms:**
+- `/health` endpoint returns 5xx errors
+- All API requests failing
+- No logs being written
+
+**Immediate Actions (5 minutes):**
+
+```bash
+# 1. Verify outage scope
+curl -I https://marcus-platform.com/health
+
+# 2. Check service status
+sudo systemctl status marcus-platform
+pm2 status marcus
+
+# 3. Check system resources
+top -bn1 | head -20
+df -h
+free -h
+
+# 4. Check for OOM kills
+dmesg | grep -i "out of memory"
+sudo journalctl -k | grep -i "killed process"
+```
+
+**Mitigation (10 minutes):**
+
+```bash
+# Option A: Restart service
+pm2 restart marcus --update-env
+
+# Option B: Rollback to last known good version
+cd /opt/marcus
+git log --oneline -5  # Find last working commit
+git checkout <last-good-commit>
+npm ci --production
+npm run build
+pm2 restart marcus
+
+# Option C: Scale horizontally (if load-related)
+# Add more instances via load balancer config
+```
+
+**Communication:**
+- Post status update to status page within 5 minutes
+- Notify #incidents Slack channel
+- Send customer email if outage >15 minutes
+
+**Post-Incident:**
+- Run full post-mortem meeting within 48 hours
+- Update monitoring alerts to catch earlier
+- Add regression test if code-related
+
+### Incident 2: Database Performance Degradation
+
+**Symptoms:**
+- `pg_stat_database_blocked` > 10
+- API response times p95 > 3 seconds
+- Connection pool exhaustion warnings
+
+**Immediate Actions:**
+
+```bash
+# 1. Identify slow queries
+sudo -u postgres psql marcus_production <<EOF
+SELECT
+    pid,
+    now() - pg_stat_activity.query_start AS duration,
+    query,
+    state
+FROM pg_stat_activity
+WHERE state != 'idle'
+AND query_start < now() - interval '30 seconds'
+ORDER BY duration DESC
+LIMIT 10;
+EOF
+
+# 2. Check for locks
+sudo -u postgres psql marcus_production <<EOF
+SELECT
+    blocked_locks.pid AS blocked_pid,
+    blocked_activity.usename AS blocked_user,
+    blocking_locks.pid AS blocking_pid,
+    blocking_activity.usename AS blocking_user,
+    blocked_activity.query AS blocked_statement,
+    blocking_activity.query AS blocking_statement
+FROM pg_catalog.pg_locks blocked_locks
+JOIN pg_catalog.pg_stat_activity blocked_activity ON blocked_locks.pid = blocked_activity.pid
+JOIN pg_catalog.pg_locks blocking_locks ON blocking_locks.locktype = blocked_locks.locktype
+JOIN pg_catalog.pg_stat_activity blocking_activity ON blocking_locks.pid = blocking_activity.pid
+WHERE NOT blocked_locks.GRANTED;
+EOF
+
+# 3. Check connection count
+sudo -u postgres psql -c "SELECT count(*) FROM pg_stat_activity;"
+```
+
+**Mitigation:**
+
+```bash
+# Option A: Kill long-running queries
+sudo -u postgres psql marcus_production -c "
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE query_start < now() - interval '5 minutes'
+AND state = 'active';
+"
+
+# Option B: Clear lock contention
+sudo -u postgres psql marcus_production -c "
+SELECT pg_cancel_backend(pid)
+FROM pg_stat_activity
+WHERE wait_event_type = 'Lock';
+"
+
+# Option C: Emergency VACUUM
+sudo -u postgres vacuumdb -z marcus_production
+
+# Option D: Increase connection pool (temporary)
+# Update .env
+DATABASE_POOL_MAX=100
+pm2 restart marcus --update-env
+```
+
+**Root Cause Investigation:**
+- Review pg_stat_statements for slowest queries
+- Check for missing indexes
+- Analyze query execution plans (EXPLAIN ANALYZE)
+- Review recent schema changes
+
+### Incident 3: Memory Leak
+
+**Symptoms:**
+- Heap usage steadily increasing over time
+- OOM kills in system logs
+- Service restarts required daily
+
+**Immediate Actions:**
+
+```bash
+# 1. Check current memory usage
+pm2 monit
+
+# 2. Take heap snapshot
+node --inspect dist/server.js &
+PID=$!
+
+# Connect with Chrome DevTools
+# chrome://inspect → Take heap snapshot
+
+# 3. Check for process leaks
+ps aux | grep node | wc -l  # Should be stable
+
+# 4. Monitor garbage collection
+NODE_OPTIONS="--expose-gc --trace-gc" pm2 restart marcus
+pm2 logs marcus | grep -i "scavenge\|marksweep"
+```
+
+**Mitigation:**
+
+```bash
+# Short-term: Restart on schedule
+pm2 delete marcus
+pm2 start ecosystem.config.js --cron-restart="0 4 * * *"
+
+# Medium-term: Increase heap size
+NODE_OPTIONS="--max-old-space-size=4096" pm2 restart marcus
+
+# Long-term: Fix leak in code (requires investigation)
+```
+
+**Investigation Tools:**
+```bash
+# Generate heap dump
+kill -USR2 $PID  # Sends signal to generate heapdump
+
+# Analyze with Chrome DevTools Memory Profiler
+# Look for detached DOM nodes, unclosed connections
+```
+
+### Incident 4: Redis Connection Failure
+
+**Symptoms:**
+- Session management failing
+- Rate limiting not working
+- Queue processing stopped
+
+**Immediate Actions:**
+
+```bash
+# 1. Check Redis service
+sudo systemctl status redis
+redis-cli PING
+
+# 2. Check Redis logs
+sudo journalctl -u redis -n 100
+
+# 3. Check memory usage
+redis-cli INFO memory
+
+# 4. Check for blocked clients
+redis-cli CLIENT LIST | grep -i blocked
+```
+
+**Mitigation:**
+
+```bash
+# Option A: Restart Redis
+sudo systemctl restart redis
+
+# Option B: Flush evicted keys
+redis-cli FLUSHDB  # WARNING: Clears all data!
+
+# Option C: Increase maxmemory
+sudo sed -i 's/maxmemory .*/maxmemory 8gb/' /etc/redis/redis.conf
+sudo systemctl restart redis
+
+# Option D: Failover to replica (if configured)
+redis-cli SLAVEOF NO ONE  # Promote replica to master
+```
+
+**Data Loss Assessment:**
+- Sessions: Users will need to re-authenticate
+- Rate limits: Temporarily reset (acceptable)
+- Job queues: May lose in-flight jobs (check queue persistence)
+
+### Incident 5: Certificate Expiration
+
+**Symptoms:**
+- Browser warnings "Your connection is not private"
+- API clients failing with SSL errors
+- Monitoring alerts: `ssl_cert_expiry_days < 7`
+
+**Immediate Actions:**
+
+```bash
+# 1. Check certificate expiration
+echo | openssl s_client -connect marcus-platform.com:443 2>/dev/null | \
+  openssl x509 -noout -dates
+
+# 2. Verify certbot auto-renewal
+sudo certbot renew --dry-run
+```
+
+**Mitigation:**
+
+```bash
+# Option A: Manual renewal
+sudo certbot renew --force-renewal
+sudo systemctl reload nginx
+
+# Option B: Use existing backup cert
+sudo cp /etc/letsencrypt/live/marcus-platform.com/fullchain.pem.backup \
+  /etc/letsencrypt/live/marcus-platform.com/fullchain.pem
+sudo systemctl reload nginx
+
+# Option C: Emergency self-signed cert (last resort)
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /etc/ssl/private/emergency.key \
+  -out /etc/ssl/certs/emergency.crt
+
+# Update nginx config temporarily
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+**Prevention:**
+- Set up monitoring alert 30 days before expiration
+- Verify certbot cron job runs weekly
+- Test renewal process quarterly
+
+### Incident 6: API Performance Degradation
+
+**Symptoms:**
+- Response times p95 > 1s (normal: <300ms)
+- Increased error rate (>1%)
+- User complaints about slowness
+
+**Immediate Actions:**
+
+```bash
+# 1. Check current performance
+curl -w "@curl-format.txt" -o /dev/null -s https://marcus-platform.com/health
+
+# curl-format.txt:
+# time_total: %{time_total}s
+# time_connect: %{time_connect}s
+# time_starttransfer: %{time_starttransfer}s
+
+# 2. Check active requests
+pm2 monit
+
+# 3. Check database query times
+# (see Database Performance Degradation)
+
+# 4. Check for external API issues
+curl -w "time_total: %{time_total}\n" https://api.anthropic.com/v1/health
+```
+
+**Mitigation:**
+
+```bash
+# Option A: Add more API servers
+# Scale horizontally via load balancer
+
+# Option B: Enable aggressive caching
+redis-cli CONFIG SET maxmemory-policy allkeys-lfu
+
+# Option C: Enable circuit breakers
+# Update .env
+CIRCUIT_BREAKER_THRESHOLD=10
+pm2 restart marcus --update-env
+
+# Option D: Rate limit aggressive users
+redis-cli KEYS "ratelimit:*" | head -20
+# Identify and block abusive IPs
+```
+
+**Investigation:**
+- Review Prometheus dashboards for anomalies
+- Check for N+1 query patterns
+- Analyze distributed tracing (if enabled)
+- Review recent deployments
+
+### Incident 7: Agent Process Failures
+
+**Symptoms:**
+- Citation analysis jobs stuck in PENDING
+- Agent spawn errors in logs
+- `marcus_agent_failures` metric increasing
+
+**Immediate Actions:**
+
+```bash
+# 1. Check running agent processes
+ps aux | grep python | grep citation_analyzer
+
+# 2. Check agent logs
+tail -f /var/log/marcus/agents-$(date +%Y-%m-%d).log
+
+# 3. Check for zombie processes
+ps aux | grep defunct
+
+# 4. Check Python dependencies
+pip3 list | grep -i anthropic
+```
+
+**Mitigation:**
+
+```bash
+# Option A: Restart agent pool
+pkill -f "python.*citation_analyzer"
+pm2 restart marcus  # Will respawn agents
+
+# Option B: Clear agent queue
+redis-cli DEL marcus:agent:queue
+
+# Option C: Reduce agent concurrency (if resource-limited)
+# Update .env
+MAX_AGENT_PROCESSES=5
+pm2 restart marcus
+
+# Option D: Switch to fallback analysis (if available)
+# Update .env
+FALLBACK_ANALYSIS_MODE=true
+pm2 restart marcus
+```
+
+**Data Recovery:**
+- Retry failed jobs from database
+- Notify affected users
+- Queue cleanup script
+
+### Incident 8: Security Breach
+
+**Symptoms:**
+- Unusual authentication patterns
+- Unexpected database changes
+- Security scanning alerts
+- User reports of unauthorized access
+
+**CRITICAL: Follow security incident runbook**
+
+**Immediate Actions (DO NOT DELAY):**
+
+```bash
+# 1. Isolate affected systems
+sudo ufw deny from <suspicious-ip>
+
+# 2. Rotate all secrets immediately
+./scripts/rotate_all_secrets.sh
+
+# 3. Invalidate all sessions
+redis-cli FLUSHDB
+
+# 4. Enable maintenance mode
+touch /opt/marcus/MAINTENANCE_MODE
+
+# 5. Capture forensic evidence
+sudo tar czf /secure/forensics-$(date +%Y%m%d-%H%M%S).tar.gz \
+  /var/log/marcus \
+  /var/log/nginx \
+  /var/log/auth.log
+
+# 6. Notify security team immediately
+# Send to: security@yourdomain.com
+```
+
+**Escalation:**
+- Immediately escalate to CTO
+- Contact legal team if PII exposed
+- Notify customers within 72 hours (GDPR requirement)
+
+**Post-Incident:**
+- Full security audit required
+- Penetration test before resuming service
+- Mandatory post-mortem with security team
+
+---
+
 ## Troubleshooting
 
 ### Service Won't Start
@@ -820,20 +1262,213 @@ pip3 check
 
 ---
 
-## Contacts
+## Contacts & Escalation Paths
 
-**On-Call Rotation:** See PagerDuty schedule
+### On-Call Rotation
 
-**Escalation:**
-1. Platform Team Lead: platform-lead@yourdomain.com
-2. CTO: cto@yourdomain.com
+**Primary On-Call:** See PagerDuty schedule (https://yourdomain.pagerduty.com)
+
+**Rotation Schedule:**
+- Week 1-2: Platform Team A
+- Week 3-4: Platform Team B
+- Rotation changes Monday 09:00 UTC
+
+**On-Call Responsibilities:**
+- Respond to PagerDuty alerts within 15 minutes
+- Triage and mitigate P1/P2 incidents
+- Escalate to secondary on-call if needed
+- Write incident summary within 24 hours
+
+### Escalation Matrix
+
+**For Platform/Infrastructure Issues:**
+
+| Severity | First Contact | Response Time | Escalate To | Escalation Time |
+|----------|--------------|---------------|-------------|-----------------|
+| P1 (Critical) | On-Call Engineer | 15 min | Platform Team Lead | 30 min |
+| P2 (High) | On-Call Engineer | 30 min | Platform Team Lead | 2 hours |
+| P3 (Medium) | On-Call Engineer | 2 hours | Platform Team Lead | Next business day |
+| P4 (Low) | Create ticket | Next business day | - | - |
+
+**For Security Incidents:**
+
+| Severity | First Contact | Response Time | Escalate To | Escalation Time |
+|----------|--------------|---------------|-------------|-----------------|
+| P1 (Data Breach) | Security Team + CTO | Immediately | Legal Team | 1 hour |
+| P2 (Attempted Breach) | Security Team | 30 min | CTO | 4 hours |
+| P3 (Vulnerability) | Security Team | 4 hours | - | - |
+
+**For Data/Database Issues:**
+
+| Severity | First Contact | Response Time | Escalate To | Escalation Time |
+|----------|--------------|---------------|-------------|-----------------|
+| P1 (Data Loss) | DBA + Platform Lead | Immediately | CTO | 30 min |
+| P2 (Corruption) | DBA | 30 min | Platform Lead | 2 hours |
+| P3 (Performance) | DBA | 2 hours | Platform Lead | Next business day |
+
+### Contact Directory
+
+**Internal Teams:**
+
+**Platform Team:**
+- Team Lead: platform-lead@yourdomain.com
+- Secondary: platform-secondary@yourdomain.com
+- Slack Channel: #platform-incidents
+- PagerDuty: +1-555-PLATFORM
+
+**Database Administration:**
+- DBA Lead: dba-lead@yourdomain.com
+- Slack Channel: #database-ops
+- PagerDuty: +1-555-DBA-TEAM
+
+**Security Team:**
+- Security Lead: security@yourdomain.com
+- Incident Hotline: +1-555-SECURITY (24/7)
+- Slack Channel: #security-incidents (private)
+- Email: security-incidents@yourdomain.com
+
+**Engineering Leadership:**
+- VP Engineering: vp-eng@yourdomain.com
+- CTO: cto@yourdomain.com
+- Slack: @cto, @vp-eng
 
 **External Vendors:**
-- Anthropic API Support: support@anthropic.com
-- AWS Support: aws.amazon.com/support
+
+**Cloud Provider (AWS/GCP):**
+- AWS Support Portal: https://console.aws.amazon.com/support
+- AWS Premium Support: +1-206-266-4064 (24/7)
+- GCP Support Portal: https://console.cloud.google.com/support
+- GCP Premium Support: +1-877-355-5787 (24/7)
+
+**Anthropic (AI API):**
+- Support Email: support@anthropic.com
+- Status Page: https://status.anthropic.com
+- API Docs: https://docs.anthropic.com
+
+**Database Hosting (if managed):**
+- RDS Support: via AWS Support Portal
+- Cloud SQL Support: via GCP Support Portal
+
+**CDN/DNS Provider:**
+- Cloudflare Support: https://dash.cloudflare.com/support
+- Route 53 Support: via AWS Support Portal
+
+**Monitoring & Alerting:**
+- PagerDuty Support: support@pagerduty.com
+- PagerDuty Status: https://status.pagerduty.com
+- Prometheus Community: https://prometheus.io/community
+
+### Communication Channels
+
+**Incident Communication:**
+- **Internal:** #incidents Slack channel (all hands)
+- **External:** status.yourdomain.com (customer-facing)
+- **Email:** incidents@yourdomain.com (incident team only)
+
+**Status Page Updates:**
+```bash
+# Update status page (example using statuspage.io)
+curl -X PATCH "https://api.statuspage.io/v1/pages/<page-id>/incidents/<incident-id>" \
+  -H "Authorization: OAuth <token>" \
+  -d '{
+    "incident": {
+      "status": "investigating",
+      "body": "We are investigating elevated error rates on the API"
+    }
+  }'
+```
+
+**Customer Communication Templates:**
+
+**Initial Incident Notice (< 15 minutes):**
+```
+Subject: [Incident] MARCUS Platform - Service Degradation
+
+We are currently investigating reports of [issue description].
+Our team is actively working on resolution.
+
+Status: Investigating
+Started: [timestamp]
+Impact: [% of users affected]
+
+Updates will be posted every 30 minutes at: https://status.yourdomain.com
+```
+
+**Resolution Notice:**
+```
+Subject: [Resolved] MARCUS Platform - Service Restored
+
+The incident affecting [service] has been resolved.
+
+Incident Summary:
+- Start: [timestamp]
+- End: [timestamp]
+- Duration: [X hours Y minutes]
+- Root Cause: [brief explanation]
+
+Next Steps:
+- Post-mortem will be published within 48 hours
+- Preventive measures being implemented
+
+We apologize for any inconvenience.
+```
+
+### Escalation Decision Tree
+
+```
+┌─────────────────────────────┐
+│   Incident Detected         │
+└──────────┬──────────────────┘
+           │
+           ▼
+┌─────────────────────────────┐
+│  Is service completely down?│
+│  OR Data loss/breach?       │
+└──────────┬──────────────────┘
+           │
+    ┌──────┴──────┐
+    │ YES         │ NO
+    ▼             ▼
+┌─────────┐   ┌──────────────────┐
+│ P1      │   │ Assess impact    │
+│ Critical│   │ >50% users: P2   │
+│         │   │ <50% users: P3   │
+└────┬────┘   └────┬─────────────┘
+     │             │
+     ▼             ▼
+┌─────────────┐   ┌──────────────┐
+│ 1. Page CTO │   │ Page On-Call │
+│ 2. All hands│   └──────┬───────┘
+│ 3. Start    │          │
+│    war room │          ▼
+└─────┬───────┘   ┌──────────────┐
+      │           │ Can resolve  │
+      │           │ in 2 hours?  │
+      │           └──────┬───────┘
+      │                  │
+      │           ┌──────┴──────┐
+      │           │ YES         │ NO
+      │           ▼             ▼
+      │      ┌─────────┐   ┌────────────┐
+      │      │ Execute │   │ Escalate to│
+      │      │ runbook │   │ Team Lead  │
+      │      └────┬────┘   └─────┬──────┘
+      │           │              │
+      └───────────┴──────────────┘
+                  │
+                  ▼
+          ┌───────────────┐
+          │ Post-mortem   │
+          │ within 48h    │
+          └───────────────┘
+```
 
 ---
 
-**Document Version:** 1.0
-**Last Review:** 2025-11-19
-**Next Review:** 2026-02-19
+**Document Version:** 2.0
+**Last Review:** 2025-11-21
+**Next Review:** 2026-02-21
+
+**Changelog:**
+- v2.0 (2025-11-21): Added comprehensive incident procedures (8 scenarios), enhanced escalation matrix, communication templates
+- v1.0 (2025-11-19): Initial runbook creation
