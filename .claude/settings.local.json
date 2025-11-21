@@ -169,7 +169,8 @@
       "Bash(./scripts/verify_security.sh:*)",
       "Bash(chmod:*)",
       "Bash(./scripts/test_marcus_database.sh:*)",
-      "Bash(./scripts/test_marcus_auth.sh:*)"
+      "Bash(./scripts/test_marcus_auth.sh:*)",
+      "Bash(unzip:*)"
     ],
     "deny": [],
     "ask": [],
