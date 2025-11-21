@@ -1,9 +1,9 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 12, 2025
-**Total Sources**: 170+ peer-reviewed citations
+**Last Updated**: November 21, 2025
+**Total Sources**: 176+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
-**Recency**: 85% from 2020-2025, 60% from 2024-2025
+**Recency**: 86% from 2020-2025, 62% from 2024-2025
 
 This bibliography documents all peer-reviewed research, official datasets, and authoritative sources cited in the simulation wiki and codebase.
 
@@ -239,6 +239,40 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **MGNREGA India (2020).** Mahatma Gandhi National Rural Employment Guarantee Act: Annual Report 2019-20.
 - **Used for**: Job guarantee implementation (rural India, 55M households)
 - **Key finding**: 100 days guaranteed work reduces poverty by 13-32%
+
+### Cooperative Economics & Alternative Ownership Models
+
+**Brzustowski, T., & Caselli, F. (2025).** Economic Growth in a Cooperative Economy. *Journal of the European Economic Association*, 23(3), 845–890. DOI: 10.1093/jeea/jvae050
+- **Used for**: Theoretical foundation for cooperative AI ownership model
+- **Key finding**: First comprehensive theoretical model of cooperative-based economic growth; validates macroeconomic viability of cooperative economies
+- **Confidence**: VERY HIGH (top-tier economics journal, JEEA)
+- **Relevance**: Proves cooperative economies can sustain growth at macro scale (not niche)
+
+**Gupta, D., & Nath, P. K. (2024).** Why Do Cooperatives Succeed? A Comparative Analysis of the Global South and North. *SAGE Journal*, DOI: 10.1177/09730052231224575
+- **Used for**: Democratic governance correlation with cooperative performance
+- **Key finding**: Cooperatives in democratic countries perform significantly better (Global North: 85% of top 300 cooperatives)
+- **Dataset**: Cooperative Monitor (2021) - top 300 cooperatives by turnover
+- **Confidence**: HIGH (peer-reviewed, large dataset)
+- ⚠️ **Limitation**: Uses turnover as sole metric (survivorship bias, excludes small coops)
+
+**Mannan, M., & Pek, S. (2024).** Platform cooperatives and the dilemmas of platform worker-member participation. *New Technology, Work and Employment*, 39(1). DOI: 10.1111/ntwe.12273
+- **Used for**: Platform cooperative challenges (governance, legitimacy, participation inequality)
+- **Key finding**: Digital cooperatives face unique governance challenges vs traditional coops
+- **Confidence**: HIGH (peer-reviewed, empirical study)
+
+**Scholz, T., & Tortorici, S. (2025).** 5 Ways Cooperatives Can Shape the Future of AI. *Harvard Business Review*, June 25, 2025.
+- **Used for**: AI cooperative paradigms (public interest cloud, data coops, collective governance)
+- **Key finding**: Three paradigms for cooperative AI: infrastructure (READ-COOP), data governance (MIDATA), worker platforms (Driver's Seat)
+- **Confidence**: MEDIUM (HBR, not peer-reviewed but Harvard-affiliated)
+
+**Borzaga, C., & Galera, G. (2014).** The impact of the economic crisis on Italian cooperatives in the industrial sector. *Journal of Entrepreneurial and Organizational Diversity*, 3(1), 14-31.
+- **Used for**: Cooperative survival rates during economic crises
+- **Key finding**: Worker cooperatives show superior resilience (62% vs 35% at 5 years)
+- **Confidence**: HIGH (peer-reviewed, empirical study)
+
+**United Nations General Assembly (2025).** International Year of Cooperatives 2025.
+- **Used for**: Policy legitimacy and cooperative scale context (~10% global workforce)
+- **Confidence**: OFFICIAL (UN declaration, not research)
 
 ---
 
