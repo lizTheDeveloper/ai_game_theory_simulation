@@ -4,6 +4,43 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔬 Research Files Enhanced with 2024-2025 Findings (November 21, 2025 - commit 470b8b8)
+
+**Status:** ✅ COMPLETE
+**Priority:** N/A (Research Enhancement)
+**Type:** Citation Update
+
+**Summary:** Updated three critical research files with latest peer-reviewed sources from 2024-2025.
+
+**Files Updated:**
+
+1. **alignment_faking_anthropic_2024.md**
+   - Added Anthropic 2025 automated sandbagging research
+   - **Key finding:** Claude 3.7 can sandbag zero-shot (vs Claude 3.5 requiring one-shot examples)
+   - Detection difficulty increasing with capability progression
+   - Source: Anthropic Alignment Science Blog (2025)
+
+2. **amoc_tipping_point_original_sources_20251120.md**
+   - Added 2024 Greenland-AMOC cascade interactions (ESD journal)
+   - **Key findings:**
+     - 27th consecutive year of Greenland ice loss (2024)
+     - Rate-induced tipping cascades identified (fast ice loss can trigger AMOC without intrinsic threshold crossing)
+     - Polar ice sheets decisive for tipping likelihoods (>2× factor at 1.5°C)
+   - Sources: Nature (2024), ESD (2024), Communications Earth & Environment (2024)
+
+3. **parameter_verification_nitrogen_phosphorus_20251119.md**
+   - Added precise 2024-2025 planetary boundary values
+   - **Nitrogen:** 190 Tg/yr (306% of 62 Tg/yr safe boundary)
+   - **Phosphorus:** 22.6 Tg/yr (365% of 6.2 Tg/yr regional boundary)
+   - **Novel entities:** Documented boundary interaction (transgression compounding N/P violations)
+   - Sources: Richardson et al. Science Advances (2023), Stockholm Resilience Centre (2024)
+
+**Impact:** Strengthens research foundation for existing simulation systems (no new mechanics introduced).
+
+**Verification Status:** CURRENT as of 2025-11-21.
+
+---
+
 ## 🔬 Autonomous Research Status Report (November 21, 2025 - commit 685ce50)
 
 **Status:** ✅ EXCELLENT
