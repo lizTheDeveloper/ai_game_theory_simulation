@@ -289,6 +289,15 @@ This document provides a comprehensive index of all MARCUS-related documentation
 | `final_deployment_checklist.sh` | Pre-deployment verification |
 | `check_docker_redis.sh` | Docker Redis validation |
 
+### Performance Benchmarking Scripts ⭐ **NEW**
+
+| Script | Purpose |
+|--------|---------|
+| `benchmark/citation-throughput.ts` | Citation analysis throughput benchmark (Phase 3.1.1) |
+| `benchmark/agent-latency.ts` | Agent IPC latency measurement (Phase 3.1.2) |
+| `benchmark/setup-slow-query-logging.sh` | PostgreSQL slow query logging setup (Phase 3.1.3) |
+| `benchmark/analyze-database-performance.sh` | Database performance analysis and report generation |
+
 ### Deployment Scripts
 
 | Script | Purpose |
@@ -469,6 +478,13 @@ DELETE /api/admin/users/:id           - Deactivate user (admin only)
 - Fixed implementation gaps
 - Technical debt resolution
 - Quality improvements
+
+**📄 [`PHASE_3_PERFORMANCE_MONITORING.md`](../PHASE_3_PERFORMANCE_MONITORING.md)** ⭐ **NEW**
+- **Purpose:** MARCUS 3.0 Phase 3 performance benchmarking and monitoring plan
+- 4 major areas: Benchmarking (3.1), Monitoring (3.2), Load Testing (3.3), Production Readiness (3.4)
+- 11 deliverables with success criteria
+- Target metrics: 25 citations/sec, P95 <2s, 99.9% uptime
+- **Status:** Phase 3.1 (Performance Benchmarking) - IN PROGRESS
 
 ### Task Documentation
 
@@ -738,13 +754,26 @@ These documents are part of the broader project but contain relevant MARCUS info
 
 ## 🆕 Recent Additions (2025-11-21)
 
+### Phase 3 Performance & Monitoring (In Progress) 🚀
+
+- ✅ `PHASE_3_PERFORMANCE_MONITORING.md` - **Comprehensive Phase 3 plan (437 lines, 11 deliverables)** 📊
+- ✅ `scripts/benchmark/citation-throughput.ts` - **Citation throughput benchmark (Phase 3.1.1)** ⚡
+- ✅ `scripts/benchmark/agent-latency.ts` - **Agent IPC latency measurement (Phase 3.1.2)** ⚡
+- ✅ `scripts/benchmark/setup-slow-query-logging.sh` - **PostgreSQL slow query logging (Phase 3.1.3)** 🔍
+- ✅ `scripts/benchmark/analyze-database-performance.sh` - **Database performance analysis** 🔍
+
+### Phase 2 Security Hardening (Complete) 🔒
+
+- ✅ `plans/completed/MARCUS_3.0_PHASE_2_SECURITY_COMPLETE_20251120.md` - **Phase 2 completion summary**
+- ✅ `MARCUS_SESSION_SUMMARY_20251120.md` - **Session handoff documentation**
 - ✅ `MARCUS_MASTER_TABLE_OF_CONTENTS.md` - Complete documentation index (this file)
 - ✅ `MARCUS_CONSOLIDATED_TASK_CHECKLIST.md` - **96 prioritized tasks to 100% completion** ⭐
 - ✅ `MARCUS_SECURITY_HARDENING_COMPLETE.md` - **Security hardening completion report** 🔒
-- ✅ `MARCUS_INTEGRATION_TEST_FIXES.md` - **Integration test progress (72.2% passing)** 🧪
+- ✅ `MARCUS_INTEGRATION_TEST_FIXES.md` - **Integration test progress (98.8% passing)** 🧪
 - ✅ `SECURITY_IMPROVEMENTS.md` - OWASP-compliant credential management
 - ✅ `MARCUS_TEST_SUITE.md` - Comprehensive test suite documentation
 - ✅ `scripts/apply_all_migrations.sh` - Updated for new migrations
+- ✅ `scripts/migrate_postgres_port.sh` - PostgreSQL port migration (5433 → 5432)
 - ✅ `.env.test` - Test environment configuration
 - ✅ `003_csp_violations_fixed.sql` - Fixed CSP violations migration
 - ✅ `007_missing_test_tables.sql` - Missing test tables migration
