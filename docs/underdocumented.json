@@ -89242,7 +89242,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 843,
+    "line": 846,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -89250,7 +89250,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1083,
+    "line": 1086,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
@@ -89258,7 +89258,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1084,
+    "line": 1087,
     "type": "property",
     "name": "development",
     "currentDoc": "(none)",
@@ -89266,7 +89266,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1085,
+    "line": 1088,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -89274,47 +89274,47 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1086,
+    "line": 1089,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
     "context": "indigenous: indigenousScore.value"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1112,
-    "type": "property",
-    "name": "western",
-    "currentDoc": "(none)",
-    "context": "western: paradigmScores.western.value,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1113,
-    "type": "property",
-    "name": "development",
-    "currentDoc": "(none)",
-    "context": "development: paradigmScores.development.value,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1114,
-    "type": "property",
-    "name": "ecological",
-    "currentDoc": "(none)",
-    "context": "ecological: paradigmScores.ecological.value,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
     "line": 1115,
     "type": "property",
+    "name": "western",
+    "currentDoc": "(none)",
+    "context": "western: paradigmScores.western.value,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+    "line": 1116,
+    "type": "property",
+    "name": "development",
+    "currentDoc": "(none)",
+    "context": "development: paradigmScores.development.value,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+    "line": 1117,
+    "type": "property",
+    "name": "ecological",
+    "currentDoc": "(none)",
+    "context": "ecological: paradigmScores.ecological.value,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
+    "line": 1118,
+    "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
     "context": "indigenous: indigenousScore.value"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1177,
+    "line": 1180,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
@@ -89322,7 +89322,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1182,
+    "line": 1185,
     "type": "property",
     "name": "development",
     "currentDoc": "(none)",
@@ -89330,7 +89330,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1187,
+    "line": 1190,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -89338,7 +89338,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1192,
+    "line": 1195,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
@@ -89346,7 +89346,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1200,
+    "line": 1203,
     "type": "property",
     "name": "primaryOutcome",
     "currentDoc": "(none)",
@@ -89354,7 +89354,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1204,
+    "line": 1207,
     "type": "property",
     "name": "extinctionClassification",
     "currentDoc": "(none)",
@@ -89362,7 +89362,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1278,
+    "line": 1281,
     "type": "property",
     "name": "finalState",
     "currentDoc": "(none)",
@@ -89370,7 +89370,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1282,
+    "line": 1285,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -89378,7 +89378,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1287,
+    "line": 1290,
     "type": "property",
     "name": "criticalEvents",
     "currentDoc": "(none)",
@@ -89386,7 +89386,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine.ts",
-    "line": 1288,
+    "line": 1291,
     "type": "property",
     "name": "economicStageReached",
     "currentDoc": "(none)",
@@ -101113,6 +101113,190 @@
     "context": "message: `Subsidized ${targetOrg.name} with $20M`"
   },
   {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 345,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'adjust_redistribution_policy',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 346,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Adjust Redistribution Policy',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 347,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Set ongoing redistribution as % of GDP via progressive taxation and transfers (minimal 5%, moderate 15%, aggressive 25%, transformative 35%). Repeatable action for adjusting equality.',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 348,
+    "type": "property",
+    "name": "agentType",
+    "currentDoc": "(none)",
+    "context": "agentType: 'government',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 349,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'economic',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 350,
+    "type": "property",
+    "name": "energyCost",
+    "currentDoc": "(none)",
+    "context": "energyCost: 2,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 352,
+    "type": "property",
+    "name": "canExecute",
+    "currentDoc": "(none)",
+    "context": "canExecute: (state: GameState): boolean => {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 357,
+    "type": "property",
+    "name": "execute",
+    "currentDoc": "(none)",
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 416,
+    "type": "property",
+    "name": "success",
+    "currentDoc": "(none)",
+    "context": "success: true,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 417,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 418,
+    "type": "property",
+    "name": "giniCoefficient",
+    "currentDoc": "(none)",
+    "context": "giniCoefficient: newGini,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 419,
+    "type": "property",
+    "name": "redistributionPercent",
+    "currentDoc": "(none)",
+    "context": "redistributionPercent: redistributionPercent * 100,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 420,
+    "type": "property",
+    "name": "gdpRedistributed",
+    "currentDoc": "(none)",
+    "context": "gdpRedistributed: gdp * redistributionPercent"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 422,
+    "type": "property",
+    "name": "events",
+    "currentDoc": "(none)",
+    "context": "events: [{"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 423,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: `redistribution_${state.currentMonth}_${Math.floor(random() * 1000000)}`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 424,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'policy',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 425,
+    "type": "property",
+    "name": "timestamp",
+    "currentDoc": "(none)",
+    "context": "timestamp: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 426,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 'info',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 427,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: 'Government',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 428,
+    "type": "property",
+    "name": "title",
+    "currentDoc": "(none)",
+    "context": "title: 'Redistribution Policy Adjusted',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 429,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `Government set redistribution to ${(redistributionPercent * 100).toFixed(1)}% of GDP. Gini coefficient: ${currentGini.toFixed(3)} → ${newGini.toFixed(3)} (target: ${targetGini.toFixed(3)})`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 430,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: { giniChange: adjustment }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/economicActions.ts",
+    "line": 432,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: `💰 Redistribution set to ${(redistributionPercent * 100).toFixed(1)}% GDP, Gini: ${newGini.toFixed(3)}`"
+  },
+  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/environmentalActions.ts",
     "line": 32,
     "type": "property",
@@ -102457,6 +102641,174 @@
     "context": "message: `Reverse engineering reduced to ${Math.round(newRate*100)}%`"
   },
   {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 175,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'invest_governance_capacity',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 176,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Invest in Governance Capacity',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 177,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Improve institutional quality, transparency, and citizen participation. Requires resources but strengthens democratic resilience. Focus: institutions, transparency, or participation.',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 178,
+    "type": "property",
+    "name": "agentType",
+    "currentDoc": "(none)",
+    "context": "agentType: 'government',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 179,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'international',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 180,
+    "type": "property",
+    "name": "energyCost",
+    "currentDoc": "(none)",
+    "context": "energyCost: 2,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 182,
+    "type": "property",
+    "name": "canExecute",
+    "currentDoc": "(none)",
+    "context": "canExecute: (state: GameState): boolean => {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 193,
+    "type": "property",
+    "name": "execute",
+    "currentDoc": "(none)",
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 260,
+    "type": "property",
+    "name": "success",
+    "currentDoc": "(none)",
+    "context": "success: true,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 261,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 262,
+    "type": "property",
+    "name": "investmentStrength",
+    "currentDoc": "(none)",
+    "context": "investmentStrength: investmentStrength"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 264,
+    "type": "property",
+    "name": "events",
+    "currentDoc": "(none)",
+    "context": "events: [{"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 265,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: `governance_invest_${state.currentMonth}_${Math.floor(random() * 1000000)}`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 266,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'policy',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 267,
+    "type": "property",
+    "name": "timestamp",
+    "currentDoc": "(none)",
+    "context": "timestamp: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 268,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 'constructive',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 269,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: 'Government',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 270,
+    "type": "property",
+    "name": "title",
+    "currentDoc": "(none)",
+    "context": "title: 'Governance Capacity Investment',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 271,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `Government invested in ${focus}. Capacity: ${oldCapacity.toFixed(2)} → ${state.government.governanceQuality.institutionalCapacity.toFixed(2)}, Transparency: ${oldTransparency.toFixed(2)} → ${state.government.governanceQuality.transparency.toFixed(2)}, Participation: ${oldParticipation.toFixed(2)} → ${state.government.governanceQuality.participationRate.toFixed(2)}`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 272,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: { governanceQuality: investmentStrength }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/internationalActions.ts",
+    "line": 274,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: `🏛️ Governance investment (${focus}): capacity ${state.government.governanceQuality.institutionalCapacity.toFixed(2)}, transparency ${state.government.governanceQuality.transparency.toFixed(2)}, participation ${state.government.governanceQuality.participationRate.toFixed(2)}`"
+  },
+  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/regulationActions.ts",
     "line": 30,
     "type": "property",
@@ -103607,6 +103959,182 @@
     "name": "message",
     "currentDoc": "(none)",
     "context": "message: 'Government started building national data center'"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 143,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'allocate_research_budget',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 144,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Allocate Research Budget',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 145,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Set ongoing research budget allocation as % of GDP (low 0.5%, medium 1.5%, high 3.0%, maximum 5.0%). Repeatable action for adjusting research priorities.',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 146,
+    "type": "property",
+    "name": "agentType",
+    "currentDoc": "(none)",
+    "context": "agentType: 'government',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 147,
+    "type": "property",
+    "name": "category",
+    "currentDoc": "(none)",
+    "context": "category: 'research',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 148,
+    "type": "property",
+    "name": "energyCost",
+    "currentDoc": "(none)",
+    "context": "energyCost: 1,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 150,
+    "type": "property",
+    "name": "canExecute",
+    "currentDoc": "(none)",
+    "context": "canExecute: (state: GameState): boolean => {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 162,
+    "type": "property",
+    "name": "execute",
+    "currentDoc": "(none)",
+    "context": "execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 203,
+    "type": "property",
+    "name": "success",
+    "currentDoc": "(none)",
+    "context": "success: true,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 204,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 205,
+    "type": "property",
+    "name": "researchBudget",
+    "currentDoc": "(none)",
+    "context": "researchBudget: monthlyBudget,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 206,
+    "type": "property",
+    "name": "allocationPercent",
+    "currentDoc": "(none)",
+    "context": "allocationPercent: allocationPercent * 100"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 208,
+    "type": "property",
+    "name": "events",
+    "currentDoc": "(none)",
+    "context": "events: [{"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 209,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: `research_budget_${state.currentMonth}_${Math.floor(random() * 1000000)}`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 210,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'policy',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 211,
+    "type": "property",
+    "name": "timestamp",
+    "currentDoc": "(none)",
+    "context": "timestamp: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 212,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 'info',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 213,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: 'government',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 214,
+    "type": "property",
+    "name": "title",
+    "currentDoc": "(none)",
+    "context": "title: 'Research Budget Allocated',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 215,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `Government allocated ${(allocationPercent * 100).toFixed(1)}% of GDP ($${monthlyBudget.toFixed(1)}B/month) to research. Alignment investment: ${state.government.alignmentResearchInvestment.toFixed(1)}/10`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 216,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: { researchBudget: monthlyBudget }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/researchActions.ts",
+    "line": 218,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: `🔬 Research budget allocated: ${(allocationPercent * 100).toFixed(1)}% GDP ($${monthlyBudget.toFixed(1)}B/month)`"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/actions/rightsActions.ts",
@@ -106746,7 +107274,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 471,
+    "line": 481,
     "type": "property",
     "name": "dangerousAIs",
     "currentDoc": "(none)",
@@ -106754,7 +107282,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 477,
+    "line": 487,
     "type": "property",
     "name": "highTensions",
     "currentDoc": "(none)",
@@ -106762,7 +107290,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 482,
+    "line": 492,
     "type": "property",
     "name": "activeCrises",
     "currentDoc": "(none)",
@@ -106770,7 +107298,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 490,
+    "line": 500,
     "type": "property",
     "name": "madStrength",
     "currentDoc": "(none)",
@@ -106778,7 +107306,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 494,
+    "line": 504,
     "type": "property",
     "name": "currentCoverage",
     "currentDoc": "(none)",
@@ -106786,7 +107314,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 593,
+    "line": 603,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -106794,7 +107322,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 594,
+    "line": 604,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -106802,7 +107330,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 595,
+    "line": 605,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -106810,7 +107338,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 596,
+    "line": 606,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -106818,7 +107346,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 602,
+    "line": 612,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -106826,7 +107354,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 603,
+    "line": 613,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -106834,7 +107362,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 604,
+    "line": 614,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -106842,7 +107370,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 605,
+    "line": 615,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -106850,7 +107378,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 611,
+    "line": 621,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -106858,7 +107386,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 612,
+    "line": 622,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -106866,7 +107394,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 613,
+    "line": 623,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -106874,7 +107402,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 614,
+    "line": 624,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -106882,7 +107410,47 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 731,
+    "line": 741,
+    "type": "property",
+    "name": "climate",
+    "currentDoc": "(none)",
+    "context": "climate: scenarioPriorities.climateSpending ?? 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
+    "line": 742,
+    "type": "property",
+    "name": "redistribution",
+    "currentDoc": "(none)",
+    "context": "redistribution: scenarioPriorities.redistributionLevel ?? 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
+    "line": 743,
+    "type": "property",
+    "name": "alignment",
+    "currentDoc": "(none)",
+    "context": "alignment: scenarioPriorities.alignmentResearch ?? 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
+    "line": 744,
+    "type": "property",
+    "name": "scientific",
+    "currentDoc": "(none)",
+    "context": "scientific: scenarioPriorities.scientificResearch ?? 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
+    "line": 745,
+    "type": "property",
+    "name": "democratic",
+    "currentDoc": "(none)",
+    "context": "democratic: scenarioPriorities.democraticParticipation ?? 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
+    "line": 826,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -106890,7 +107458,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 732,
+    "line": 827,
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
@@ -106898,7 +107466,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 862,
+    "line": 957,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -106906,7 +107474,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 863,
+    "line": 958,
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
@@ -106914,7 +107482,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 941,
+    "line": 1044,
     "type": "property",
     "name": "success",
     "currentDoc": "(none)",
@@ -106922,7 +107490,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 942,
+    "line": 1045,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -106930,7 +107498,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 943,
+    "line": 1046,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -106938,7 +107506,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/core/governmentCore.ts",
-    "line": 944,
+    "line": 1047,
     "type": "property",
     "name": "message",
     "currentDoc": "(none)",
@@ -155236,13 +155804,413 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
     "line": 264,
     "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Green New Deal',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 265,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Progressive climate policy with jobs guarantee + UBI + high redistribution (US/EU model)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 266,
+    "type": "property",
+    "name": "governmentPriorities",
+    "currentDoc": "(none)",
+    "context": "governmentPriorities: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 269,
+    "type": "property",
+    "name": "alignmentResearch",
+    "currentDoc": "(none)",
+    "context": "alignmentResearch: 0.3,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 273,
+    "type": "property",
+    "name": "startingConditions",
+    "currentDoc": "(none)",
+    "context": "startingConditions: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 276,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 277,
+    "type": "property",
+    "name": "strategy",
+    "currentDoc": "(none)",
+    "context": "strategy: 'sequenced',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 279,
+    "type": "property",
+    "name": "deploymentInterval",
+    "currentDoc": "(none)",
+    "context": "deploymentInterval: 6,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 280,
+    "type": "property",
+    "name": "techList",
+    "currentDoc": "(none)",
+    "context": "techList: ["
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 288,
+    "type": "property",
+    "name": "expectedOutcome",
+    "currentDoc": "(none)",
+    "context": "expectedOutcome: 'Strong environmental outcomes + high social cohesion, but potential economic transition costs',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 289,
+    "type": "property",
+    "name": "researchBasis",
+    "currentDoc": "(none)",
+    "context": "researchBasis: ["
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 297,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Techno-Optimist Path',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 298,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Accelerationist approach: maximize innovation, minimal regulation, market-driven solutions',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 299,
+    "type": "property",
+    "name": "governmentPriorities",
+    "currentDoc": "(none)",
+    "context": "governmentPriorities: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 306,
+    "type": "property",
+    "name": "startingConditions",
+    "currentDoc": "(none)",
+    "context": "startingConditions: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 309,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 313,
+    "type": "property",
+    "name": "expectedOutcome",
+    "currentDoc": "(none)",
+    "context": "expectedOutcome: 'Rapid breakthrough rate + faster crisis response, but potential inequality/social cohesion costs',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 314,
+    "type": "property",
+    "name": "researchBasis",
+    "currentDoc": "(none)",
+    "context": "researchBasis: ["
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 322,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Degrowth Path',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 323,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Ecological economics: consumption reduction, restoration priority, strong redistribution',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 324,
+    "type": "property",
+    "name": "governmentPriorities",
+    "currentDoc": "(none)",
+    "context": "governmentPriorities: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 327,
+    "type": "property",
+    "name": "alignmentResearch",
+    "currentDoc": "(none)",
+    "context": "alignmentResearch: 0.3,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 331,
+    "type": "property",
+    "name": "startingConditions",
+    "currentDoc": "(none)",
+    "context": "startingConditions: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 335,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 336,
+    "type": "property",
+    "name": "strategy",
+    "currentDoc": "(none)",
+    "context": "strategy: 'sequenced',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 337,
+    "type": "property",
+    "name": "priority",
+    "currentDoc": "(none)",
+    "context": "priority: 'dependency-ordered',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 339,
+    "type": "property",
+    "name": "techList",
+    "currentDoc": "(none)",
+    "context": "techList: ["
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 348,
+    "type": "property",
+    "name": "expectedOutcome",
+    "currentDoc": "(none)",
+    "context": "expectedOutcome: 'Strong environmental restoration, high social cohesion, but slower tech deployment',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 349,
+    "type": "property",
+    "name": "researchBasis",
+    "currentDoc": "(none)",
+    "context": "researchBasis: ["
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 357,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Authoritarian Climate Action',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 358,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'Centralized top-down climate policy with rapid deployment (China/Singapore model)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 359,
+    "type": "property",
+    "name": "governmentPriorities",
+    "currentDoc": "(none)",
+    "context": "governmentPriorities: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 362,
+    "type": "property",
+    "name": "alignmentResearch",
+    "currentDoc": "(none)",
+    "context": "alignmentResearch: 0.5,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 366,
+    "type": "property",
+    "name": "startingConditions",
+    "currentDoc": "(none)",
+    "context": "startingConditions: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 371,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 372,
+    "type": "property",
+    "name": "strategy",
+    "currentDoc": "(none)",
+    "context": "strategy: 'sequenced',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 373,
+    "type": "property",
+    "name": "priority",
+    "currentDoc": "(none)",
+    "context": "priority: 'dependency-ordered',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 375,
+    "type": "property",
+    "name": "deploymentLevel",
+    "currentDoc": "(none)",
+    "context": "deploymentLevel: 1.0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 377,
+    "type": "property",
+    "name": "expectedOutcome",
+    "currentDoc": "(none)",
+    "context": "expectedOutcome: 'Rapid environmental improvement, but fragile (low trust/cooperation) - crisis vulnerability',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 378,
+    "type": "property",
+    "name": "researchBasis",
+    "currentDoc": "(none)",
+    "context": "researchBasis: ["
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 386,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'Nordic Social Democracy',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 387,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: 'High redistribution + high participation + strong safety nets (Sweden/Denmark/Norway model)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 388,
+    "type": "property",
+    "name": "governmentPriorities",
+    "currentDoc": "(none)",
+    "context": "governmentPriorities: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 391,
+    "type": "property",
+    "name": "alignmentResearch",
+    "currentDoc": "(none)",
+    "context": "alignmentResearch: 0.4,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 395,
+    "type": "property",
+    "name": "startingConditions",
+    "currentDoc": "(none)",
+    "context": "startingConditions: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 403,
+    "type": "property",
+    "name": "techDeployment",
+    "currentDoc": "(none)",
+    "context": "techDeployment: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 404,
+    "type": "property",
+    "name": "strategy",
+    "currentDoc": "(none)",
+    "context": "strategy: 'sequenced',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 405,
+    "type": "property",
+    "name": "priority",
+    "currentDoc": "(none)",
+    "context": "priority: 'dependency-ordered',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 409,
+    "type": "property",
+    "name": "expectedOutcome",
+    "currentDoc": "(none)",
+    "context": "expectedOutcome: 'Balanced outcomes: strong environment + high social cohesion + gradual tech deployment',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 410,
+    "type": "property",
+    "name": "researchBasis",
+    "currentDoc": "(none)",
+    "context": "researchBasis: ["
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 423,
+    "type": "property",
     "name": "climateFirst",
     "currentDoc": "(none)",
     "context": "climateFirst: CLIMATE_FIRST,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 265,
+    "line": 424,
     "type": "property",
     "name": "equalityFirst",
     "currentDoc": "(none)",
@@ -155250,7 +156218,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 266,
+    "line": 425,
     "type": "property",
     "name": "aiAlignmentFirst",
     "currentDoc": "(none)",
@@ -155258,7 +156226,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 267,
+    "line": 426,
     "type": "property",
     "name": "democraticParticipation",
     "currentDoc": "(none)",
@@ -155266,7 +156234,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 268,
+    "line": 427,
     "type": "property",
     "name": "scientificAcceleration",
     "currentDoc": "(none)",
@@ -155274,7 +156242,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 269,
+    "line": 428,
     "type": "property",
     "name": "authoritarianEfficiency",
     "currentDoc": "(none)",
@@ -155282,7 +156250,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 272,
+    "line": 431,
     "type": "property",
     "name": "highTrustStart",
     "currentDoc": "(none)",
@@ -155290,7 +156258,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 273,
+    "line": 432,
     "type": "property",
     "name": "lowInequalityStart",
     "currentDoc": "(none)",
@@ -155298,7 +156266,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 274,
+    "line": 433,
     "type": "property",
     "name": "strongInstitutionsStart",
     "currentDoc": "(none)",
@@ -155306,7 +156274,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 277,
+    "line": 436,
     "type": "property",
     "name": "renewableEnergyFirst",
     "currentDoc": "(none)",
@@ -155314,7 +156282,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 278,
+    "line": 437,
     "type": "property",
     "name": "carbonRemovalFirst",
     "currentDoc": "(none)",
@@ -155322,7 +156290,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 279,
+    "line": 438,
     "type": "property",
     "name": "foundationsFirst",
     "currentDoc": "(none)",
@@ -155330,7 +156298,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 280,
+    "line": 439,
     "type": "property",
     "name": "adaptiveDeployment",
     "currentDoc": "(none)",
@@ -155338,7 +156306,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 283,
+    "line": 442,
     "type": "property",
     "name": "idealConditions",
     "currentDoc": "(none)",
@@ -155346,11 +156314,51 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
-    "line": 284,
+    "line": 443,
     "type": "property",
     "name": "worstCase",
     "currentDoc": "(none)",
     "context": "worstCase: WORST_CASE,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 446,
+    "type": "property",
+    "name": "greenNewDeal",
+    "currentDoc": "(none)",
+    "context": "greenNewDeal: GREEN_NEW_DEAL,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 447,
+    "type": "property",
+    "name": "technoOptimist",
+    "currentDoc": "(none)",
+    "context": "technoOptimist: TECHNO_OPTIMIST,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 448,
+    "type": "property",
+    "name": "degrowth",
+    "currentDoc": "(none)",
+    "context": "degrowth: DEGROWTH,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 449,
+    "type": "property",
+    "name": "authoritarianClimateAction",
+    "currentDoc": "(none)",
+    "context": "authoritarianClimateAction: AUTHORITARIAN_CLIMATE_ACTION,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/definitions.ts",
+    "line": 450,
+    "type": "property",
+    "name": "nordicSocialDemocracy",
+    "currentDoc": "(none)",
+    "context": "nordicSocialDemocracy: NORDIC_SOCIAL_DEMOCRACY,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/scenarios/types.ts",
@@ -188930,7 +189938,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 175,
+    "line": 200,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -188938,7 +189946,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 176,
+    "line": 201,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -188946,7 +189954,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 184,
+    "line": 242,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -188954,23 +189962,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 185,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 226,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'applyEnergyConstrainedCleanup',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 227,
+    "line": 243,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -188978,7 +189970,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 228,
+    "line": 244,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -188986,7 +189978,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 229,
+    "line": 245,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -188994,7 +189986,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 245,
+    "line": 261,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -189002,7 +189994,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 246,
+    "line": 262,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -189010,7 +190002,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 247,
+    "line": 263,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -189018,7 +190010,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 248,
+    "line": 264,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -189026,7 +190018,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 249,
+    "line": 265,
     "type": "property",
     "name": "techId",
     "currentDoc": "(none)",
@@ -189034,7 +190026,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 250,
+    "line": 266,
     "type": "property",
     "name": "uncertaintyRange",
     "currentDoc": "(none)",
@@ -189042,7 +190034,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 259,
+    "line": 275,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -189050,7 +190042,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 260,
+    "line": 276,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -189058,7 +190050,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 261,
+    "line": 277,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -189066,7 +190058,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 262,
+    "line": 278,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -189074,7 +190066,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts",
-    "line": 263,
+    "line": 279,
     "type": "property",
     "name": "techId",
     "currentDoc": "(none)",
