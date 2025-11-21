@@ -32,6 +32,7 @@ import { createCORSMiddleware, getDefaultCORSConfig } from '../middleware/corsMi
 import { createSecurityHeadersMiddleware, getDefaultSecurityHeadersConfig, getDevelopmentSecurityHeadersConfig } from '../middleware/securityHeaders';
 import { AuditLogger, createAuditMiddleware } from '../middleware/auditLogger';
 import { metricsMiddleware } from '../monitoring/metricsEndpoint';
+import { HealthCheckService } from '../monitoring/healthChecks';
 
 // ============================================================================
 // Server Configuration
@@ -87,6 +88,7 @@ export class PlatformServer {
   private authService: AuthService;
   private jwtMiddleware: JWTMiddleware;
   private auditLogger: AuditLogger;
+  private healthCheckService: HealthCheckService;
   private config: ServerConfig;
   private server: any;
 
@@ -108,6 +110,7 @@ export class PlatformServer {
       enableDatabaseLogging: true,
       minSeverity: 'low',
     });
+    this.healthCheckService = new HealthCheckService(this.pool, this.redis);
 
     this.setupMiddleware();
     this.setupRoutes();
@@ -206,28 +209,61 @@ export class PlatformServer {
    * Setup API routes
    */
   private setupRoutes(): void {
-    // Health check endpoint (public)
+    // ========================================================================
+    // Health Check Endpoints (Kubernetes-compatible)
+    // ========================================================================
+
+    // Comprehensive health check endpoint (public)
+    // Returns detailed status of all components
     this.app.get('/health', async (req: Request, res: Response) => {
       try {
-        // Check database connectivity
-        await this.pool.query('SELECT 1');
+        const healthStatus = await this.healthCheckService.getHealthStatus();
 
-        // Check Redis connectivity
-        await this.redis.ping();
+        // Determine HTTP status code based on health
+        const statusCode = healthStatus.status === 'healthy' ? 200 :
+                          healthStatus.status === 'degraded' ? 200 : 503;
 
-        res.status(200).json({
-          status: 'healthy',
-          timestamp: new Date().toISOString(),
-          uptime: process.uptime(),
-          database: 'connected',
-          redis: 'connected',
-        });
+        res.status(statusCode).json(healthStatus);
       } catch (err) {
+        console.error('❌ Health check error:', err);
         res.status(503).json({
           status: 'unhealthy',
           timestamp: new Date().toISOString(),
-          database: 'error',
-          redis: 'error',
+          uptime: 0,
+          error: (err as Error).message,
+        });
+      }
+    });
+
+    // Readiness probe endpoint (Kubernetes readiness)
+    // Indicates if the service is ready to accept traffic
+    this.app.get('/ready', async (req: Request, res: Response) => {
+      try {
+        const readiness = await this.healthCheckService.getReadinessStatus();
+        const statusCode = readiness.ready ? 200 : 503;
+        res.status(statusCode).json(readiness);
+      } catch (err) {
+        console.error('❌ Readiness check error:', err);
+        res.status(503).json({
+          ready: false,
+          timestamp: new Date().toISOString(),
+          message: 'Readiness check failed',
+          error: (err as Error).message,
+        });
+      }
+    });
+
+    // Liveness probe endpoint (Kubernetes liveness)
+    // Indicates if the service should be restarted
+    this.app.get('/live', (req: Request, res: Response) => {
+      try {
+        const liveness = this.healthCheckService.getLivenessStatus();
+        res.status(200).json(liveness);
+      } catch (err) {
+        console.error('❌ Liveness check error:', err);
+        res.status(503).json({
+          alive: false,
+          timestamp: new Date().toISOString(),
           error: (err as Error).message,
         });
       }
