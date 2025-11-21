@@ -29,6 +29,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 21: Critical Population Aggregation Bug Fix** (commit 96d82b1)
+- 🐛 **CRITICAL FIX:** BayesianMortalityResolutionPhase now aggregates regional populations to global level
+- **Problem:** `resolveMortality()` applied deaths to regional populations but never recalculated global population
+- **Impact:** Mortality risks were calculated and tracked but had NO EFFECT on simulated global population
+- **Root Cause:** Missing call to `aggregateGlobalPopulation(state)` after mortality resolution
+- **Fix:** Added aggregation call after mortality resolution (line 98 of BayesianMortalityResolutionPhase.ts)
+- **Phase Ordering:** HumanPopulationPhase (20.52) handles births/natural changes → BayesianMortalityResolutionPhase (35.0) applies crisis mortality
+- ✅ **Result:** Crisis-driven deaths (novel entities, climate, famine, disease, etc) now correctly reduce population
+- 📝 **Documentation:** Updated docs/wiki/systems/bayesian-mortality.md with aggregation requirement
+
 **Nov 21: Autonomous Research Status Report** (commit 685ce50)
 - 🔬 **Research Currency Audit:** Comprehensive review of simulation research foundation
 - ✅ **Finding:** All simulation-referenced research files updated within 14 days
