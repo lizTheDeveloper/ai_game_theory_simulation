@@ -65458,30 +65458,6 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 106,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'CoordinatedDeploymentPhase.execute',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 107,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'rng',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 108,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { reason: 'RNG required for deterministic simulation' }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
     "line": 113,
     "type": "property",
     "name": "location",
@@ -65494,27 +65470,19 @@
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'transitionManagementSystem',"
+    "context": "valueName: 'rng',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
     "line": 115,
     "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 116,
-    "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { reason: 'transitionManagementSystem state missing after bootstrap' }"
+    "context": "additionalInfo: { reason: 'RNG required for deterministic simulation' }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 161,
+    "line": 120,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -65522,15 +65490,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 162,
+    "line": 121,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'monthlyMortality',"
+    "context": "valueName: 'transitionManagementSystem',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 163,
+    "line": 122,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -65538,7 +65506,39 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 164,
+    "line": 123,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { reason: 'transitionManagementSystem state missing after bootstrap' }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 189,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CoordinatedDeploymentPhase.execute (coordination failure)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 190,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'mortalityFraction after coordination failure',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 191,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 192,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -65546,23 +65546,39 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 216,
+    "line": 193,
+    "type": "property",
+    "name": "originalMortality",
+    "currentDoc": "(none)",
+    "context": "originalMortality: mortalityFraction / coordinationFailureMultiplier,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 195,
+    "type": "property",
+    "name": "failureActive",
+    "currentDoc": "(none)",
+    "context": "failureActive: transition.coordinationFailureActive"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 215,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'CoordinatedDeploymentPhase.execute (regional mortality)',"
+    "context": "location: 'CoordinatedDeploymentPhase.execute (rebound decay)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 216,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'reboundEffectiveness after annual decay',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
     "line": 217,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: `${region.name} population after transition deaths`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 218,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -65570,7 +65586,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 219,
+    "line": 218,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -65580,13 +65596,53 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
     "line": 221,
     "type": "property",
-    "name": "populationBefore",
+    "name": "yearsActive",
     "currentDoc": "(none)",
-    "context": "populationBefore: region.population,"
+    "context": "yearsActive: Math.floor(transition.monthsOfActiveDeployment / 12)"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 236,
+    "line": 240,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CoordinatedDeploymentPhase.execute (rebound effect)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 241,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'mortalityFraction after rebound effect',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 242,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 243,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 244,
+    "type": "property",
+    "name": "reboundEffectiveness",
+    "currentDoc": "(none)",
+    "context": "reboundEffectiveness: transition.reboundEffectiveness,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 256,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -65594,7 +65650,79 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 237,
+    "line": 257,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'monthlyMortality',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 258,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 259,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 311,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CoordinatedDeploymentPhase.execute (regional mortality)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 312,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: `${region.name} population after transition deaths`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 313,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 314,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 316,
+    "type": "property",
+    "name": "populationBefore",
+    "currentDoc": "(none)",
+    "context": "populationBefore: region.population,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 331,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'CoordinatedDeploymentPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+    "line": 332,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -65602,7 +65730,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 238,
+    "line": 333,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -65610,7 +65738,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 239,
+    "line": 334,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -65618,7 +65746,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 242,
+    "line": 337,
     "type": "property",
     "name": "populationBefore",
     "currentDoc": "(none)",
@@ -65626,7 +65754,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 338,
+    "line": 433,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -65634,7 +65762,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 339,
+    "line": 434,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -65642,7 +65770,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 340,
+    "line": 435,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -65650,7 +65778,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 341,
+    "line": 436,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -65658,7 +65786,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 347,
+    "line": 442,
     "type": "property",
     "name": "trustCeiling",
     "currentDoc": "(none)",
@@ -65666,7 +65794,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 348,
+    "line": 443,
     "type": "property",
     "name": "governanceCeiling",
     "currentDoc": "(none)",
@@ -65674,7 +65802,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 386,
+    "line": 481,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -65682,7 +65810,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 387,
+    "line": 482,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -65690,7 +65818,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 388,
+    "line": 483,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -65698,7 +65826,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 389,
+    "line": 484,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -65706,7 +65834,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 394,
+    "line": 489,
     "type": "property",
     "name": "note",
     "currentDoc": "(none)",
@@ -65714,7 +65842,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 421,
+    "line": 516,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -65722,7 +65850,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 422,
+    "line": 517,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -65730,7 +65858,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 423,
+    "line": 518,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -65738,7 +65866,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 424,
+    "line": 519,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -65746,7 +65874,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 476,
+    "line": 571,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -65754,7 +65882,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 477,
+    "line": 572,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -65762,7 +65890,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 478,
+    "line": 573,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -65770,7 +65898,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 479,
+    "line": 574,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -65778,7 +65906,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 484,
+    "line": 579,
     "type": "property",
     "name": "note",
     "currentDoc": "(none)",
@@ -65786,7 +65914,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 539,
+    "line": 634,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -65794,7 +65922,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 540,
+    "line": 635,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -65802,7 +65930,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 541,
+    "line": 636,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -65810,7 +65938,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 542,
+    "line": 637,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -65818,7 +65946,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 545,
+    "line": 640,
     "type": "property",
     "name": "note",
     "currentDoc": "(none)",
@@ -65826,7 +65954,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 584,
+    "line": 679,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -65834,7 +65962,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 585,
+    "line": 680,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -65842,7 +65970,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 586,
+    "line": 681,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -65850,7 +65978,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 602,
+    "line": 697,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -65858,7 +65986,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 603,
+    "line": 698,
     "type": "property",
     "name": "coordination",
     "currentDoc": "(none)",
@@ -65866,7 +65994,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 604,
+    "line": 699,
     "type": "property",
     "name": "support",
     "currentDoc": "(none)",
@@ -65874,7 +66002,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 605,
+    "line": 700,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -65882,7 +66010,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
-    "line": 606,
+    "line": 701,
     "type": "property",
     "name": "speed",
     "currentDoc": "(none)",
@@ -112842,7 +112970,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1274,
+    "line": 1282,
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -112850,7 +112978,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1275,
+    "line": 1283,
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -112858,7 +112986,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1276,
+    "line": 1284,
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -112866,7 +112994,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1277,
+    "line": 1285,
     "type": "property",
     "name": "controlCapability",
     "currentDoc": "(none)",
@@ -112874,7 +113002,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1278,
+    "line": 1286,
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -112882,7 +113010,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1280,
+    "line": 1288,
     "type": "property",
     "name": "exogenousShocks",
     "currentDoc": "(none)",
@@ -112890,7 +113018,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1281,
+    "line": 1289,
     "type": "property",
     "name": "criticalJunctureEscapes",
     "currentDoc": "(none)",
@@ -112898,7 +113026,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1282,
+    "line": 1290,
     "type": "property",
     "name": "cooperativeSpirals",
     "currentDoc": "(none)",
@@ -112906,7 +113034,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1283,
+    "line": 1291,
     "type": "property",
     "name": "cooperativeOwnershipEvents",
     "currentDoc": "(none)",
@@ -112914,7 +113042,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1343,
+    "line": 1351,
     "type": "property",
     "name": "aiAgents",
     "currentDoc": "(none)",
@@ -112922,7 +113050,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1344,
+    "line": 1352,
     "type": "property",
     "name": "government",
     "currentDoc": "(none)",
@@ -112930,7 +113058,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1348,
+    "line": 1356,
     "type": "property",
     "name": "society",
     "currentDoc": "(none)",
@@ -112938,7 +113066,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1352,
+    "line": 1360,
     "type": "property",
     "name": "globalMetrics",
     "currentDoc": "(none)",
@@ -112946,7 +113074,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/initialization.ts",
-    "line": 1356,
+    "line": 1364,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
